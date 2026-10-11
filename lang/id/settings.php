@@ -263,7 +263,7 @@ return [
     'cluster_storefront_title' => '5. Toko Online, Reservasi & Pemesanan Mandiri',
     'cluster_storefront_desc' => 'Modul etalase storefront online, custom order, slot jadwal, dan kurir pengiriman.',
     'cluster_accounting_title' => '6. Keuangan & Akuntansi Lengkap Korporasi',
-    'cluster_accounting_desc' => 'Modul bagan akun (COA) standar SAK EMKM, buku jurnal berpasangan, buku besar, neraca saldo, neraca posisi keuangan, dan rekonsiliasi bank.',
+    'cluster_accounting_desc' => 'Modul bagan akun (COA), buku jurnal berpasangan, buku besar, neraca saldo, neraca posisi keuangan, dan rekonsiliasi bank.',
 
     // Notifications & Flash Alerts
     'update_success_general' => 'Profil bisnis dan pengaturan berhasil diperbarui.',

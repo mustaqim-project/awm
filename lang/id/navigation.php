@@ -3,12 +3,23 @@
 declare(strict_types=1);
 
 return [
-    // 4 Master Clusters
+    // 4 Master Clusters (Legacy Compatibility) & 9 Explicit Domain Clusters
     'clusters' => [
+        // Legacy keys (Preserved for tests & backward-compatibility)
         'daily_ops' => 'Operasional Harian',
         'master_data' => 'Master Data & Katalog',
         'reports_finance' => 'Laporan & Keuangan',
         'settings_hub' => 'Pusat Pengaturan',
+
+        // 9 Standard Domain Clusters
+        'core_business' => 'Core Bisnis',
+        'inventory' => 'Inventory',
+        'finance_accounting' => 'Finance & Accounting',
+        'crm' => 'CRM',
+        'hrm' => 'HRM',
+        'marketing' => 'Social Media & Marketing',
+        'reporting' => 'Reporting',
+        'settings' => 'Setting',
     ],
 
     // Cluster Names Aliases
@@ -17,16 +28,29 @@ return [
     'cluster_finance_reports' => 'Laporan & Keuangan',
     'cluster_settings_hub' => 'Pusat Pengaturan',
 
+    // 9 Explicit Clusters Aliases
+    'cluster_core_business' => 'Core Bisnis',
+    'cluster_inventory' => 'Inventory',
+    'cluster_finance_accounting' => 'Finance & Accounting',
+    'cluster_crm' => 'CRM',
+    'cluster_hrm' => 'HRM',
+    'cluster_marketing' => 'Social Media & Marketing',
+    'cluster_reporting' => 'Reporting',
+    'cluster_settings' => 'Setting',
+
     // Cluster Groups
-    'pos_resto_group' => 'Kasir & POS Resto',
+    'pos_resto_group' => 'Kasir & POS',
     'b2b_sales_group' => 'Penjualan B2B',
     'inventory_catalog_group' => 'Master Produk & Bahan',
+    'inventory_stocks_group' => 'Stok & Multi-Gudang',
     'purchasing_group' => 'Pemasok & Pengadaan',
     'customers_group' => 'Pelanggan & CRM',
     'employees_payroll_group' => 'Karyawan & Payroll',
     'finance_accounting_group' => 'Keuangan & Akuntansi',
-    'reports_analytics_group' => 'Kalkulasi & Laporan',
+    'costing_group' => 'Kalkulasi HPP & Margin',
+    'reports_analytics_group' => 'Laporan & Analitik',
     'settings_group' => 'Pengaturan Usaha',
+    'marketing_group' => 'Pemasaran & Media Sosial',
 
     // Cluster 1: Daily Operations
     'daily_ops' => 'Operasional Harian',
@@ -35,21 +59,21 @@ return [
     'portal_attendance' => 'Portal & Presensi',
     'ai_assistant' => 'Asisten Cerdas AI',
     'pending_approvals' => 'Persetujuan Pending',
-    'pos_terminal' => 'Terminal Kasir POS',
-    'pos_resto' => 'Kasir & POS Resto',
-    'pos_open' => 'Buka Kasir POS',
+    'pos_terminal' => 'Kasir & POS',
+    'pos_resto' => 'Kasir & POS',
+    'pos_open' => 'Buka Kasir',
     'pos_shifts' => 'Transaksi Kasir & Shift',
     'kitchen_kds' => 'Layar Dapur (KDS)',
-    'dinein_tables' => 'Meja & QR Resto',
+    'dinein_tables' => 'Meja & Pemesanan QR',
     'b2b_sales' => 'Penjualan B2B & Faktur',
     'sales_orders' => 'Pesanan Penjualan (SO)',
     'quotations' => 'Surat Penawaran',
     'invoices' => 'Faktur Penjualan (Invoice)',
     'sales_returns' => 'Retur Penjualan',
     'services' => 'Layanan & Servis',
-    'services_workshop' => 'Layanan & Servis Bengkel',
-    'services_spk' => 'SPK Servis & Pekerjaan',
-    'services_mechanics' => 'Riwayat Mekanik & Nopol',
+    'services_workshop' => 'Layanan & Servis',
+    'services_spk' => 'Order Kerja & SPK',
+    'services_mechanics' => 'Petugas & Pelaksana',
     'owner_community' => 'Komunitas Owner',
     'exclusive_badge' => 'Eksklusif',
 
@@ -133,7 +157,9 @@ return [
     'storefront_orders' => 'Pesanan Toko Online',
     'landing_page' => 'Landing Page Usaha',
     'popup_promo' => 'Pop Up Promo',
-    'reservations' => 'Reservasi Meja',
+    'reservations' => 'Booking & Reservasi',
+    'booking_service' => 'Booking Servis',
+    'reservations_resto' => 'Reservasi Meja Resto',
     'shipping_settings' => 'Pengaturan Ongkir',
     'storefront_settings' => 'Pengaturan Toko Online',
     'whatsapp_business' => 'WhatsApp Bisnis',
@@ -188,4 +214,14 @@ return [
     'all_branches' => 'Semua Cabang',
     'templates_business' => 'Template Bisnis',
     'sales_report' => 'Laporan Penjualan',
+    'ai_engine_label' => 'Engine AI:',
+    'manage_quota' => 'Kelola Kuota',
+    'products_quota_label' => 'Katalog Produk:',
+    'recipes_quota_label' => 'Resep / BOM:',
+    'invoices_quota_label' => 'Invoice Bulan Ini:',
+    'quota_details' => 'Detail Kuota ›',
+    'sales_orders_short' => 'Pesanan',
+    'services_short' => 'Servis',
+    'calc_hpp_short' => 'HPP',
+    'plan_free_solo' => 'Paket Free (Solo)',
 ];

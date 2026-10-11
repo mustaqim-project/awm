@@ -69,6 +69,8 @@
 
     @include('public.partials.seo', [
         'fallbackImage' => asset('assets/seo/cooca-og-default.jpg'),
+        'noindex' => $noindex ?? false,
+        'robots' => $robots ?? null,
     ])
 
     <!-- Webmaster Verification -->

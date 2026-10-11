@@ -263,7 +263,7 @@ return [
     'cluster_storefront_title' => '5. Online Storefront, Reservations & Self-Ordering',
     'cluster_storefront_desc' => 'Storefront catalog, custom orders, delivery calendar slots, and merchant shipping.',
     'cluster_accounting_title' => '6. Full Corporate Accounting & Finance',
-    'cluster_accounting_desc' => 'Standard SAK EMKM chart of accounts (COA), double-entry journals, general ledger, balance sheet, and bank reconciliation.',
+    'cluster_accounting_desc' => 'Chart of accounts (COA), double-entry journals, general ledger, balance sheet, and bank reconciliation.',
 
     // Notifications & Flash Alerts
     'update_success_general' => 'Business profile and settings updated successfully.',

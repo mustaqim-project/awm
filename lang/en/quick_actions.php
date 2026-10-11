@@ -138,7 +138,7 @@ return [
         'kds_desc' => 'Live kitchen display',
         'tables_title' => 'Tables & QR',
         'tables_desc' => 'Dine-in self order',
-        'services_title' => 'Services & SPK',
-        'services_desc' => 'Workshop work orders',
+        'services_title' => 'Services & Tasks',
+        'services_desc' => 'Service catalog & tasks',
     ],
 ];

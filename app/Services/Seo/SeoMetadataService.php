@@ -194,16 +194,16 @@ final class SeoMetadataService
      */
     public static function resolveRobots(?string $robots = null, bool $noindex = false): string
     {
-        if ($noindex || View::hasSection('noindex')) {
-            return 'noindex, follow';
-        }
-
         if ($robots !== null) {
             return $robots;
         }
 
         if (View::hasSection('robots')) {
             return trim((string) View::yieldContent('robots'));
+        }
+
+        if ($noindex || View::hasSection('noindex')) {
+            return 'noindex, follow';
         }
 
         // Automatically set noindex on faceted search or filter queries to protect crawl budget

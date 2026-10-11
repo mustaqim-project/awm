@@ -69,4 +69,10 @@ return [
     'realtime_synced' => 'Real-Time Synced',
     'copyright_footer' => 'Business Operating System.',
     'detail' => 'Detail',
+    'network_offline_notice' => 'Offline Mode — Please check your internet connection',
+    'network_online_restored' => 'Internet connection restored',
+    'enterprise_quality' => 'Enterprise Quality & Safety',
+    'cooca_roadmap' => 'Cooca Roadmap',
+    'storage_safe_to_prune' => 'Safe to Prune',
+    'storage_auto_rebuilt' => 'Auto Rebuilt',
 ];

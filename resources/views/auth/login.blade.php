@@ -1,4 +1,4 @@
-@extends('layouts.public_marketing', ['title' => 'Masuk - COOCA', 'noindex' => true])
+@extends('layouts.public_marketing', ['title' => 'Masuk - COOCA', 'noindex' => true, 'robots' => 'noindex, nofollow'])
 
 @section('content')
     <div class="min-h-[calc(100vh-14rem)] flex flex-col justify-center py-12 sm:py-16 px-4 sm:px-6 lg:px-8">

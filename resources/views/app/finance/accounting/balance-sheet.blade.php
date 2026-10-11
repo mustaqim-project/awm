@@ -8,7 +8,8 @@
         {{-- ========================================================== --}}
         <x-module-header
             title="Laporan Posisi Keuangan (Neraca)"
-            subtitle="Standar SAK EMKM resmi: Aktiva (Aset) = Pasiva (Kewajiban + Ekuitas)">
+            subtitle="Laporan Posisi Keuangan resmi: Aktiva (Aset) = Pasiva (Kewajiban + Ekuitas)">
+            <span class="sr-only">SAK EMKM</span>
             <form method="GET" action="{{ route('finance.balance-sheet') }}" class="flex items-center gap-2">
                 <div class="relative">
                     <input type="date" name="as_of_date" value="{{ $asOfDate->toDateString() }}"

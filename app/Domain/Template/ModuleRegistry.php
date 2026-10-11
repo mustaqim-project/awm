@@ -227,10 +227,10 @@ final class ModuleRegistry
                 ],
             ],
             self::MODULE_SERVICE_WORKSHOP => [
-                'name' => 'Layanan Servis & Bengkel (PKB/SPK)',
-                'description' => 'Surat Perintah Kerja (SPK), estimasi biaya servis, pendaftaran kendaraan/nopol, dan riwayat pekerjaan mekanik.',
-                'icon' => 'wrench',
-                'category' => 'Layanan Servis',
+                'name' => 'Layanan & Servis (Order Kerja / SPK)',
+                'description' => 'Katalog tarif jasa, Surat Perintah Kerja (SPK), estimasi biaya layanan, dan riwayat pekerjaan petugas.',
+                'icon' => 'briefcase',
+                'category' => 'Layanan & Jasa',
                 'permissions' => [
                     'products.view',
                     'products.create',
@@ -271,15 +271,12 @@ final class ModuleRegistry
             ],
             'fnb_catering' => [
                 self::MODULE_POS_DINEIN,
-                self::MODULE_POS_RETAIL,
             ],
             'fnb_frozen_food' => [
                 self::MODULE_POS_DINEIN,
-                self::MODULE_POS_RETAIL,
             ],
             'fnb_catering_diet' => [
                 self::MODULE_POS_DINEIN,
-                self::MODULE_POS_RETAIL,
                 self::MODULE_LABOR_MACHINES,
                 self::MODULE_INVENTORY_WAREHOUSE,
             ],
@@ -287,15 +284,12 @@ final class ModuleRegistry
             // ─── 3. MANUFAKTUR & PRODUKSI ────────────────────────────────────
             'mfg_garment' => [
                 self::MODULE_POS_DINEIN,
-                self::MODULE_POS_RETAIL,
             ],
             'mfg_precision' => [
                 self::MODULE_POS_DINEIN,
-                self::MODULE_POS_RETAIL,
             ],
             'mfg_furniture' => [
                 self::MODULE_POS_DINEIN,
-                self::MODULE_POS_RETAIL,
             ],
             'mfg_craft' => [
                 self::MODULE_POS_DINEIN,
@@ -303,15 +297,12 @@ final class ModuleRegistry
             ],
             'mfg_printing' => [
                 self::MODULE_POS_DINEIN,
-                self::MODULE_POS_RETAIL,
             ],
             'mfg_cosmetics' => [
                 self::MODULE_POS_DINEIN,
-                self::MODULE_POS_RETAIL,
             ],
             'mfg_tailor_custom' => [
                 self::MODULE_POS_DINEIN,
-                self::MODULE_POS_RETAIL,
                 self::MODULE_INVENTORY_WAREHOUSE,
             ],
 
@@ -332,19 +323,16 @@ final class ModuleRegistry
             // ─── 5. JASA PROFESIONAL & PROYEK B2B ───────────────────────────
             'service_agency' => [
                 self::MODULE_POS_DINEIN,
-                self::MODULE_POS_RETAIL,
                 self::MODULE_RECIPE_BOM,
                 self::MODULE_INVENTORY_WAREHOUSE,
                 self::MODULE_PROCUREMENT,
             ],
             'service_contractor' => [
                 self::MODULE_POS_DINEIN,
-                self::MODULE_POS_RETAIL,
                 self::MODULE_RECIPE_BOM,
             ],
             'service_event' => [
                 self::MODULE_POS_DINEIN,
-                self::MODULE_POS_RETAIL,
                 self::MODULE_RECIPE_BOM,
                 self::MODULE_INVENTORY_WAREHOUSE,
             ],
@@ -379,13 +367,11 @@ final class ModuleRegistry
             // ─── 7. DISTRIBUSI & PERTANIAN ───────────────────────────────────
             'distributor_fmcg' => [
                 self::MODULE_POS_DINEIN,
-                self::MODULE_POS_RETAIL,
                 self::MODULE_RECIPE_BOM,
                 self::MODULE_LABOR_MACHINES,
             ],
             'agri_farming' => [
                 self::MODULE_POS_DINEIN,
-                self::MODULE_POS_RETAIL,
                 self::MODULE_LABOR_MACHINES,
             ],
         ];

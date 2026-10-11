@@ -138,7 +138,7 @@ return [
         'kds_desc' => 'Pesanan dapur live',
         'tables_title' => 'Meja & QR',
         'tables_desc' => 'Dine-in self order',
-        'services_title' => 'Servis & SPK',
-        'services_desc' => 'Pekerjaan bengkel',
+        'services_title' => 'Layanan & Servis',
+        'services_desc' => 'Katalog servis & jasa',
     ],
 ];

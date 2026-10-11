@@ -32,6 +32,13 @@
             messages: @json(__('messages')),
             finance: @json(__('finance')),
             pos: @json(__('pos')),
+            inventory: @json(__('inventory')),
+            purchasing: @json(__('purchasing')),
+            customers: @json(__('customers')),
+            crm: @json(__('crm')),
+            services: @json(__('services')),
+            settings: @json(__('settings')),
+            storefront: @json(__('storefront')),
         };
 
         // Universal Client-Side i18n Helper
@@ -2413,6 +2420,44 @@
         </div>
     </div>
 
+
+    <!-- Coming Soon: intercept development feature links globally -->
+    <script>
+        (function() {
+            document.addEventListener('click', function(e) {
+                const a = e.target.closest('a');
+                if (!a) return;
+                const href = a.getAttribute('href') || '';
+                const fullHref = a.href || '';
+
+                if (fullHref.includes('billing/checkout') && fullHref.includes('ai_token')) {
+                    e.preventDefault();
+                    window.dispatchEvent(new CustomEvent('cooca-coming-soon', {
+                        detail: {
+                            title: 'Top Up Token AI',
+                            icon: 'bot',
+                            desc: 'Fitur pembelian token AI untuk mengaktifkan AI Assistant, analisis penjualan, dan prediksi tren kasir POS. Segera tersedia!',
+                            color: 'amber'
+                        }
+                    }));
+                    return;
+                }
+
+                if (fullHref.includes('/pos/ai') || href.includes('/pos/ai')) {
+                    e.preventDefault();
+                    window.dispatchEvent(new CustomEvent('cooca-coming-soon', {
+                        detail: {
+                            title: 'AI Assistant',
+                            icon: 'bot',
+                            desc: 'Fitur AI Cockpit untuk analisis penjualan, prediksi tren, dan asisten pintar kasir POS berbasis Gemini AI.',
+                            color: 'purple'
+                        }
+                    }));
+                    return;
+                }
+            }, true);
+        })();
+    </script>
 
     <!-- Guided Product Tour Engine -->
     <script src="{{ asset('js/onboarding/tour-config.js') }}"></script>

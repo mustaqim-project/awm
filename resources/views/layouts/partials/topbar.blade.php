@@ -217,7 +217,14 @@
             </div>
         @endif
 
-        @if (\App\Support\Context::hasPermission('pos.terminal'))
+        @php
+            $hasPosModule = ($activeBiz?->isModuleEnabled(\App\Domain\Template\ModuleRegistry::MODULE_POS_RETAIL) ?? true)
+                || ($activeBiz?->isModuleEnabled(\App\Domain\Template\ModuleRegistry::MODULE_POS_DINEIN) ?? true);
+            $hasServiceModule = ($activeBiz && !$activeBiz->isFoodIndustry() && ($activeBiz->isWorkshop() || $activeBiz->isServiceSector()) && $activeBiz->isModuleEnabled(\App\Domain\Template\ModuleRegistry::MODULE_SERVICE_WORKSHOP));
+            $hasB2bModule = $activeBiz?->isModuleEnabled(\App\Domain\Template\ModuleRegistry::MODULE_B2B_SALES) ?? true;
+        @endphp
+
+        @if ($hasPosModule && \App\Support\Context::hasPermission('pos.terminal'))
             <!-- Primary Action CTA: Kasir POS (Desktop md+) -->
             <a href="{{ route('pos.terminal') }}"
                 class="hidden md:flex h-8 px-3 rounded-[9px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[12px] font-semibold shadow-[0_1px_2px_rgba(0,122,255,0.25)] active:scale-[0.97] active:opacity-80 items-center gap-1.5 transition-all shrink-0 cursor-pointer"
@@ -230,6 +237,34 @@
             <a href="{{ route('pos.terminal') }}" aria-label="{{ __('navigation.open_pos') }}" title="{{ __('navigation.open_pos') }}"
                 class="md:hidden h-8 w-8 rounded-[9px] bg-[#007AFF] hover:bg-[#0071E3] text-white shadow-[0_1px_2px_rgba(0,122,255,0.25)] active:scale-[0.97] active:opacity-80 inline-flex items-center justify-center transition-all shrink-0 cursor-pointer">
                 <i data-lucide="calculator" class="w-4 h-4"></i>
+            </a>
+        @elseif ($hasServiceModule && (\App\Support\Context::hasPermission('products.view') || \App\Support\Context::isOwner()))
+            <!-- Primary Action CTA: Layanan & SPK Bengkel/Jasa -->
+            <a href="{{ route('services.index') }}"
+                class="hidden md:flex h-8 px-3 rounded-[9px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[12px] font-semibold shadow-[0_1px_2px_rgba(0,122,255,0.25)] active:scale-[0.97] active:opacity-80 items-center gap-1.5 transition-all shrink-0 cursor-pointer"
+                title="{{ __('navigation.services_spk') }}">
+                <i data-lucide="wrench" class="w-3.5 h-3.5 shrink-0"></i>
+                <span class="whitespace-nowrap">{{ __('navigation.services_spk') }}</span>
+            </a>
+
+            <!-- Mobile Quick Action CTA: Layanan & SPK -->
+            <a href="{{ route('services.index') }}" aria-label="{{ __('navigation.services_spk') }}" title="{{ __('navigation.services_spk') }}"
+                class="md:hidden h-8 w-8 rounded-[9px] bg-[#007AFF] hover:bg-[#0071E3] text-white shadow-[0_1px_2px_rgba(0,122,255,0.25)] active:scale-[0.97] active:opacity-80 inline-flex items-center justify-center transition-all shrink-0 cursor-pointer">
+                <i data-lucide="wrench" class="w-4 h-4"></i>
+            </a>
+        @elseif ($hasB2bModule && (\App\Support\Context::hasPermission('sales.view') || \App\Support\Context::isOwner()))
+            <!-- Primary Action CTA: Pesanan Penjualan B2B -->
+            <a href="{{ route('sales.orders.index') }}"
+                class="hidden md:flex h-8 px-3 rounded-[9px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[12px] font-semibold shadow-[0_1px_2px_rgba(0,122,255,0.25)] active:scale-[0.97] active:opacity-80 items-center gap-1.5 transition-all shrink-0 cursor-pointer"
+                title="{{ __('navigation.sales_orders') }}">
+                <i data-lucide="check-square" class="w-3.5 h-3.5 shrink-0"></i>
+                <span class="whitespace-nowrap">{{ __('navigation.sales_orders') }}</span>
+            </a>
+
+            <!-- Mobile Quick Action CTA: Pesanan Penjualan B2B -->
+            <a href="{{ route('sales.orders.index') }}" aria-label="{{ __('navigation.sales_orders') }}" title="{{ __('navigation.sales_orders') }}"
+                class="md:hidden h-8 w-8 rounded-[9px] bg-[#007AFF] hover:bg-[#0071E3] text-white shadow-[0_1px_2px_rgba(0,122,255,0.25)] active:scale-[0.97] active:opacity-80 inline-flex items-center justify-center transition-all shrink-0 cursor-pointer">
+                <i data-lucide="check-square" class="w-4 h-4"></i>
             </a>
         @elseif (\App\Support\Context::hasPermission('costing.view_margin'))
             <!-- Primary Action CTA: Hitung HPP -->
@@ -729,7 +764,7 @@
                 $topbarShowCorporateAccounting = $activeBiz ? $activeBiz->isModuleEnabled(\App\Domain\Template\ModuleRegistry::MODULE_ACCOUNTING_CORPORATE) : true;
             @endphp
             @if ($topbarShowCorporateAccounting)
-                { title: 'Bagan Akun (Chart of Accounts)', desc: 'Daftar struktur akun buku besar hierarki multi-tier standar SAK EMKM', category: 'Keuangan & Biaya', route: '{{ route('finance.coa.index') }}', icon: 'list-tree', keywords: 'coa bagan akun chart of accounts perkiraan kode akun hierarki aktiva kewajiban ekuitas' },
+                { title: 'Bagan Akun (Chart of Accounts)', desc: 'Daftar struktur akun buku besar hierarki multi-tier standar akuntansi', category: 'Keuangan & Biaya', route: '{{ route('finance.coa.index') }}', icon: 'list-tree', keywords: 'coa bagan akun chart of accounts perkiraan kode akun hierarki aktiva kewajiban ekuitas' },
                 { title: 'Buku Jurnal Keuangan', desc: 'Jurnal umum debit-kredit otomatis dari seluruh transaksi usaha', category: 'Keuangan & Biaya', route: '{{ route('finance.journals.index') }}', icon: 'file-text', keywords: 'jurnal journal entry akuntansi debit kredit transaksi pembukuan balance' },
                 { title: 'Buku Besar Umum (General Ledger)', desc: 'Rincian mutasi kronologis debit-kredit akun dengan audit trail lengkap', category: 'Keuangan & Biaya', route: '{{ route('finance.general-ledger') }}', icon: 'book-open', keywords: 'buku besar general ledger gl akun mutasi rincian saldo running' },
                 { title: 'Rekonsiliasi Bank', desc: 'Pencocokan rekening koran bank dengan catatan kas & bank sistem', category: 'Keuangan & Biaya', route: '{{ route('finance.reconciliations.index') }}', icon: 'git-compare', keywords: 'rekonsiliasi bank bank reconciliation rekening koran statement matching' },
@@ -748,7 +783,7 @@
             // 7. Laporan & Analitik
             { title: 'Pusat Laporan Bisnis', desc: 'Suite analitik dan ringkasan eksekutif seluruh laporan usaha', category: 'Laporan & Analitik', route: '{{ route('reports.index') }}', icon: 'bar-chart-3', keywords: 'laporan reports pusat report analitik analytics suite bisnis lengkap summary' },
             @if ($topbarShowCorporateAccounting ?? true)
-                { title: 'Neraca Posisi Keuangan (Balance Sheet)', desc: 'Laporan posisi keuangan aset, liabilitas, dan ekuitas standar SAK EMKM', category: 'Laporan & Analitik', route: '{{ route('finance.balance-sheet') }}', icon: 'scale', keywords: 'neraca balance sheet posisi keuangan aset pasiva modal sak emkm ekuitas assets liabilities' },
+                { title: 'Neraca Posisi Keuangan (Balance Sheet)', desc: 'Laporan posisi keuangan aset, liabilitas, dan ekuitas perusahaan', category: 'Laporan & Analitik', route: '{{ route('finance.balance-sheet') }}', icon: 'scale', keywords: 'neraca balance sheet posisi keuangan aset pasiva modal sak emkm ekuitas assets liabilities' },
                 { title: 'Neraca Saldo (Trial Balance)', desc: 'Daftar saldo debit dan kredit seluruh akun buku besar periode berjalan', category: 'Laporan & Analitik', route: '{{ route('finance.trial-balance') }}', icon: 'table-properties', keywords: 'neraca saldo trial balance debit kredit pembukuan penutupan saldo awal mutasi' },
             @endif
             { title: 'Laporan Laba Rugi (Profit & Loss)', desc: 'Laporan pendapatan bersih, total beban, dan laba/rugi usaha', category: 'Laporan & Analitik', route: '{{ route('reports.index', ['tab' => 'income_statement']) }}', icon: 'pie-chart', keywords: 'laba rugi income statement profit loss net profit omset beban pnl' },
@@ -782,6 +817,7 @@
                 { title: 'Paket Berlangganan & Kuota', desc: 'Status paket langganan aktif, batas pemakaian fitur, dan upgrade', category: 'Pengaturan Usaha', route: '{{ route('billing.limits') }}', icon: 'credit-card', keywords: 'paket langganan subscription kuota billing limit quota upgrade tagihan perpanjang' },
             @endif
             { title: 'Bantuan & Kontak Dukungan', desc: 'Layanan bantuan teknis dan laporan kendala penggunaan sistem', category: 'Pengaturan Usaha', route: '{{ route('feedback.bugs.index') }}', icon: 'help-circle', keywords: 'bantuan support help tiket cs panduan kendala error kontak bug tickets' },
+            { title: 'Komunitas & Event Bisnis', desc: 'Wadah berbagi insight bisnis, pendaftaran event, dan presensi jejaring UMKM', category: 'Pengaturan Usaha', route: '{{ route('community.index') }}', icon: 'users', keywords: 'komunitas community owner event seminar workshop bazaar forum diskusi tips umkm kolaborasi jejaring bisnis' },
         @endif
     ],
     get filteredItems() {

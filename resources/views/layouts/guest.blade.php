@@ -1,6 +1,7 @@
 @extends('layouts.public_marketing', [
     'title' => $title ?? 'Cooca - Business Operating System',
     'noindex' => true,
+    'robots' => 'noindex, nofollow',
 ])
 
 @section('content')

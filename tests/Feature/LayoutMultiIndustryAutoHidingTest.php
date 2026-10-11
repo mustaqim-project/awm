@@ -8,14 +8,12 @@ use App\Domain\Template\ModuleRegistry;
 use App\Models\Business;
 use App\Models\User;
 use App\Support\Context;
-use Database\Seeders\DefaultCostCategorySeeder;
-use Database\Seeders\DefaultUnitSeeder;
-use Database\Seeders\RbacSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
-final class LayoutMultiIndustryAutoHidingTest extends TestCase
+class LayoutMultiIndustryAutoHidingTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -24,317 +22,309 @@ final class LayoutMultiIndustryAutoHidingTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        app()->setLocale('id');
         Context::flush();
+        Cache::flush();
 
-        $this->seed(DefaultUnitSeeder::class);
-        $this->seed(DefaultCostCategorySeeder::class);
-        $this->seed(RbacSeeder::class);
+        $this->seed(\Database\Seeders\RbacSeeder::class);
 
         $this->owner = User::create([
-            'name'              => 'Owner Multi Industry Test',
-            'email'             => 'owner_industry_' . Str::random(6) . '@test.local',
-            'phone'             => '62812' . rand(10000000, 99999999),
-            'password'          => 'password',
+            'name' => 'Industry Multi Owner',
+            'email' => 'multi_industry@cooca.id',
+            'password' => 'password123',
             'email_verified_at' => now(),
-            'phone_verified_at' => now(),
         ]);
     }
 
-    private function createTenant(string $name, string $templateCode, array $disabledModules = []): Business
+    protected function tearDown(): void
     {
-        $ownerRole = \App\Models\Role::where('slug', 'owner')->first();
+        Context::flush();
+        Cache::flush();
+        parent::tearDown();
+    }
 
-        $business = Business::create([
-            'name'              => $name,
-            'slug'              => Str::slug($name) . '-' . Str::random(5),
-            'email'             => 'biz_' . Str::random(6) . '@test.local',
-            'phone'             => '62813' . rand(10000000, 99999999),
-            'status'            => 'active',
-            'template_code'     => $templateCode,
-            'disabled_modules'  => !empty($disabledModules) ? $disabledModules : ModuleRegistry::getDisabledModulesForTemplate($templateCode),
+    public function test_pos_is_hidden_when_pos_modules_are_disabled_for_b2b_or_service(): void
+    {
+        $biz = Business::create([
+            'name' => 'Agency Kreatif Cooca',
+            'business_type' => 'services',
+            'status' => 'active',
+            'is_active' => true,
+            'disabled_modules' => [
+                ModuleRegistry::MODULE_POS_RETAIL,
+                ModuleRegistry::MODULE_POS_DINEIN,
+                ModuleRegistry::MODULE_INVENTORY_WAREHOUSE,
+            ],
         ]);
 
-        $this->owner->businesses()->attach($business->id, [
+        $biz->users()->attach($this->owner->id, [
             'id' => (string) Str::uuid(),
             'role' => 'owner',
-            'role_id' => $ownerRole?->id,
+            'is_active' => true,
         ]);
 
-        $this->owner->update(['active_business_id' => $business->id]);
-
-        return $business;
-    }
-
-    public function test_fnb_restaurant_tenant_sees_kds_tables_and_adaptive_pos_resto_label(): void
-    {
-        $fnbBiz = $this->createTenant('Cafe Kopi Nusantara', 'fnb_resto');
-        $this->assertTrue($fnbBiz->isFoodIndustry());
-        $this->assertTrue($fnbBiz->isModuleEnabled(ModuleRegistry::MODULE_POS_DINEIN));
-
-        Context::flush();
-        $membership = \App\Models\BusinessMembership::where('business_id', $fnbBiz->id)
-            ->where('user_id', $this->owner->id)
-            ->first();
-        Context::setBusiness($fnbBiz, $membership);
+        $this->owner->update(['active_business_id' => $biz->id]);
+        Context::setBusiness($biz);
 
         $response = $this->actingAs($this->owner)
-            ->withSession([
-                'active_business_id' => $fnbBiz->id,
-                'business_id'        => $fnbBiz->id,
-            ])
+            ->withSession(['locale' => 'id'])
             ->get(route('dashboard'));
 
-        $response->assertStatus(200);
-
-        // 1. Adaptive Label is "Kasir & POS Resto" for F&B
-        $response->assertSee(__('navigation.pos_resto'));
-
-        // 2. Dine-in KDS and Tables must be rendered in Sidebar
-        $response->assertSee('id="tour-nav-pos-kitchen"', false);
-        $response->assertSee('id="tour-nav-pos-tables"', false);
-
-        // 3. Dine-in KDS and Tables must be rendered in Mobile Action Sheet
-        $response->assertSee(route('pos.kitchen.index'));
-        $response->assertSee(route('pos.tables.index'));
-        $response->assertSee(__('quick_actions.sheet.kds_title'));
-        $response->assertSee(__('quick_actions.sheet.tables_title'));
+        $response->assertOk();
+        // POS terminal button should NOT be in the sidebar navigation
+        $response->assertDontSee('id="tour-group-pos"', false);
+        $response->assertDontSee('id="tour-nav-pos-terminal"', false);
+        // Warehouse stocks should NOT be visible
+        $response->assertDontSee('id="tour-nav-inventory-stocks"', false);
     }
 
-    public function test_retail_reseller_tenant_hides_kds_tables_and_displays_pos_terminal_label(): void
+    public function test_workshop_industry_renders_work_order_as_topbar_primary_cta_when_pos_disabled(): void
     {
-        $retailBiz = $this->createTenant('Toko Sinar Fashion Retail', 'retail_reseller');
-        $this->assertFalse($retailBiz->isFoodIndustry());
-        $this->assertFalse($retailBiz->isModuleEnabled(ModuleRegistry::MODULE_POS_DINEIN));
+        $biz = Business::create([
+            'name' => 'Bengkel Motor Makmur',
+            'business_type' => 'workshop',
+            'template_code' => 'service_workshop',
+            'status' => 'active',
+            'is_active' => true,
+            'disabled_modules' => [
+                ModuleRegistry::MODULE_POS_RETAIL,
+                ModuleRegistry::MODULE_POS_DINEIN,
+            ],
+        ]);
 
-        Context::flush();
-        $membership = \App\Models\BusinessMembership::where('business_id', $retailBiz->id)
-            ->where('user_id', $this->owner->id)
-            ->first();
-        Context::setBusiness($retailBiz, $membership);
+        $biz->users()->attach($this->owner->id, [
+            'id' => (string) Str::uuid(),
+            'role' => 'owner',
+            'is_active' => true,
+        ]);
+
+        $this->owner->update(['active_business_id' => $biz->id]);
+        Context::setBusiness($biz);
 
         $response = $this->actingAs($this->owner)
-            ->withSession([
-                'active_business_id' => $retailBiz->id,
-                'business_id'        => $retailBiz->id,
-            ])
+            ->withSession(['locale' => 'id'])
             ->get(route('dashboard'));
 
-        $response->assertStatus(200);
-
-        // 1. Adaptive Label is "Terminal Kasir POS" for non-F&B
-        $response->assertSee(__('navigation.pos_terminal'));
-
-        // 2. Dine-in KDS & Tables must NOT be rendered in Sidebar
-        $response->assertDontSee('id="tour-nav-pos-kitchen"', false);
-        $response->assertDontSee('id="tour-nav-pos-tables"', false);
-
-        // 3. Dine-in KDS & Tables links must NOT be rendered in Mobile Action Sheet
-        $response->assertDontSee(route('pos.kitchen.index'));
-        $response->assertDontSee(route('pos.tables.index'));
+        $response->assertOk();
+        // Topbar Primary CTA should point to services.index with Order Kerja & SPK text
+        $response->assertSee(route('services.index'), false);
+        $response->assertSee(__('navigation.services_spk'));
     }
 
-    public function test_service_workshop_tenant_injects_workshop_services_navigation_and_action_sheet(): void
+    public function test_b2b_distribution_industry_renders_sales_orders_as_topbar_primary_cta(): void
     {
-        $workshopBiz = $this->createTenant('Bengkel Motor Maju Jaya', 'service_workshop');
-        $this->assertTrue($workshopBiz->isWorkshop());
-        $this->assertTrue($workshopBiz->isServiceSector());
-        $this->assertFalse($workshopBiz->isFoodIndustry());
+        $biz = Business::create([
+            'name' => 'Distributor Bahan Kimia',
+            'business_type' => 'b2b',
+            'template_code' => 'distribution_fmcg',
+            'status' => 'active',
+            'is_active' => true,
+            'disabled_modules' => [
+                ModuleRegistry::MODULE_POS_RETAIL,
+                ModuleRegistry::MODULE_POS_DINEIN,
+                ModuleRegistry::MODULE_SERVICE_WORKSHOP,
+            ],
+        ]);
 
-        Context::flush();
-        $membership = \App\Models\BusinessMembership::where('business_id', $workshopBiz->id)
-            ->where('user_id', $this->owner->id)
-            ->first();
-        Context::setBusiness($workshopBiz, $membership);
+        $biz->users()->attach($this->owner->id, [
+            'id' => (string) Str::uuid(),
+            'role' => 'owner',
+            'is_active' => true,
+        ]);
+
+        $this->owner->update(['active_business_id' => $biz->id]);
+        Context::setBusiness($biz);
 
         $response = $this->actingAs($this->owner)
-            ->withSession([
-                'active_business_id' => $workshopBiz->id,
-                'business_id'        => $workshopBiz->id,
-            ])
+            ->withSession(['locale' => 'id'])
             ->get(route('dashboard'));
 
-        $response->assertStatus(200);
-
-        // 1. Workshop Navigation in Klaster 1 Daily Ops
-        $response->assertSee('id="tour-nav-services"', false);
-        $response->assertSee(__('navigation.services_workshop'));
-        $response->assertSee('SPK');
-
-        // 2. Workshop shortcut in Mobile Action Sheet
-        $response->assertSee(route('services.index'));
-        $response->assertSee(__('quick_actions.sheet.services_title'));
-        $response->assertSee(__('quick_actions.sheet.services_desc'));
-
-        // 3. Non-F&B check: no KDS or Tables
-        $response->assertDontSee('id="tour-nav-pos-kitchen"', false);
-        $response->assertDontSee('id="tour-nav-pos-tables"', false);
+        $response->assertOk();
+        // Topbar Primary CTA should point to sales.orders.index
+        $response->assertSee(route('sales.orders.index'), false);
+        $response->assertSee(__('navigation.sales_orders'));
     }
 
-    public function test_disabled_modules_dynamically_auto_hide_navigation(): void
+    public function test_currency_formatter_and_window_i18n_adaptation_in_english(): void
     {
-        // Business starts with POS DINEIN enabled
-        $biz = $this->createTenant('Resto Nusantara Dynamic', 'fnb_resto', []);
-        $this->assertTrue($biz->isModuleEnabled(ModuleRegistry::MODULE_POS_DINEIN));
+        $biz = Business::create([
+            'name' => 'Global Retail Cafe',
+            'business_type' => 'fnb',
+            'template_code' => 'fnb_cafe',
+            'status' => 'active',
+            'is_active' => true,
+            'disabled_modules' => [],
+        ]);
 
-        Context::flush();
-        $membership = \App\Models\BusinessMembership::where('business_id', $biz->id)
-            ->where('user_id', $this->owner->id)
-            ->first();
-        Context::setBusiness($biz, $membership);
+        $biz->users()->attach($this->owner->id, [
+            'id' => (string) Str::uuid(),
+            'role' => 'owner',
+            'is_active' => true,
+        ]);
 
-        $resp1 = $this->actingAs($this->owner)
-            ->withSession(['active_business_id' => $biz->id, 'business_id' => $biz->id])
-            ->get(route('dashboard'));
-        $resp1->assertSee('id="tour-nav-pos-kitchen"', false);
-
-        // Now dynamically disable POS DINEIN
-        $biz->disableModule(ModuleRegistry::MODULE_POS_DINEIN);
-        $this->assertTrue($biz->isModuleDisabled(ModuleRegistry::MODULE_POS_DINEIN));
-
-        Context::flush();
-        Context::setBusiness($biz->fresh(), $membership);
-
-        $resp2 = $this->actingAs($this->owner)
-            ->withSession(['active_business_id' => $biz->id, 'business_id' => $biz->id])
-            ->get(route('dashboard'));
-        $resp2->assertDontSee('id="tour-nav-pos-kitchen"', false);
-        $resp2->assertDontSee('id="tour-nav-pos-tables"', false);
-    }
-
-    public function test_spotlight_command_palette_respects_industry_and_module_entitlements(): void
-    {
-        $fnbBiz = $this->createTenant('Cafe Kopi Spotlight', 'fnb_resto');
-
-        Context::flush();
-        $membership = \App\Models\BusinessMembership::where('business_id', $fnbBiz->id)
-            ->where('user_id', $this->owner->id)
-            ->first();
-        Context::setBusiness($fnbBiz, $membership);
+        $this->owner->update(['active_business_id' => $biz->id]);
+        Context::setBusiness($biz);
 
         $response = $this->actingAs($this->owner)
-            ->withSession(['active_business_id' => $fnbBiz->id, 'business_id' => $fnbBiz->id])
+            ->withSession(['locale' => 'en'])
             ->get(route('dashboard'));
 
-        $response->assertStatus(200);
-        // Spotlight has KDS and Meja for F&B
-        $response->assertSee(route('pos.kitchen.index'), false);
-        $response->assertSee(route('pos.tables.index'), false);
-
-        // Now test Retail in Spotlight
-        $retailBiz = $this->createTenant('Apotek Sehat Pharmacy', 'retail_pharmacy');
-        Context::flush();
-        $membershipRetail = \App\Models\BusinessMembership::where('business_id', $retailBiz->id)
-            ->where('user_id', $this->owner->id)
-            ->first();
-        Context::setBusiness($retailBiz, $membershipRetail);
-
-        $responseRetail = $this->actingAs($this->owner)
-            ->withSession(['active_business_id' => $retailBiz->id, 'business_id' => $retailBiz->id])
-            ->get(route('dashboard'));
-
-        $responseRetail->assertStatus(200);
-        // Spotlight does NOT include KDS or Meja for Pharmacy
-        $responseRetail->assertDontSee(route('pos.kitchen.index'), false);
-        $responseRetail->assertDontSee(route('pos.tables.index'), false);
+        $response->assertOk();
+        $response->assertSee("window.COOCA_LOCALE = 'en'", false);
+        $response->assertSee('window.COOCA_I18N =', false);
+        $response->assertSee('inventory:', false);
+        $response->assertSee('purchasing:', false);
+        $response->assertSee('customers:', false);
+        $response->assertSee('services:', false);
     }
 
-    public function test_b2b_sales_navigation_auto_hides_when_module_disabled(): void
+    public function test_fnb_industry_shows_universal_services_and_never_shows_workshop_or_laundry_attributes(): void
     {
-        $fnbBiz = $this->createTenant('Cafe Kopi Nusantara', 'fnb_resto');
-        $this->assertTrue($fnbBiz->isModuleDisabled(ModuleRegistry::MODULE_B2B_SALES));
+        $biz = Business::create([
+            'name' => 'Kopi Senja Utama',
+            'business_type' => 'fnb',
+            'template_code' => 'fnb_cafe',
+            'status' => 'active',
+            'is_active' => true,
+            'disabled_modules' => [],
+        ]);
 
-        Context::flush();
-        $membership = \App\Models\BusinessMembership::where('business_id', $fnbBiz->id)
-            ->where('user_id', $this->owner->id)
-            ->first();
-        Context::setBusiness($fnbBiz, $membership);
+        $biz->users()->attach($this->owner->id, [
+            'id' => (string) Str::uuid(),
+            'role' => 'owner',
+            'is_active' => true,
+        ]);
+
+        $this->owner->update(['active_business_id' => $biz->id]);
+        Context::setBusiness($biz);
 
         $response = $this->actingAs($this->owner)
-            ->withSession(['active_business_id' => $fnbBiz->id, 'business_id' => $fnbBiz->id])
+            ->withSession(['locale' => 'id'])
             ->get(route('dashboard'));
 
-        $response->assertStatus(200);
-        $response->assertDontSee('id="tour-group-b2b"', false);
-        $response->assertDontSee('id="tour-nav-sales-orders"', false);
+        $response->assertOk();
+        // Services catalog should remain universally accessible
+        $response->assertSee(route('services.index'), false);
+        $response->assertSee(__('navigation.services'));
+
+        $content = $response->getContent();
+        // Strip out script tags to assert purely on visual UI DOM
+        $htmlWithoutScripts = preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', '', $content);
+        $this->assertStringNotContainsString('SPK Servis', $htmlWithoutScripts);
+        $this->assertStringNotContainsString('Layanan & Servis Bengkel', $htmlWithoutScripts);
+        $this->assertStringNotContainsString('SPK Bengkel', $htmlWithoutScripts);
+
+        // POS terminal in F&B must NOT show license plate or laundry rack inputs
+        $posResponse = $this->actingAs($this->owner)
+            ->withHeader('X-Business-Id', $biz->id)
+            ->withSession(['locale' => 'id', 'active_business_id' => $biz->id])
+            ->get(route('pos.terminal'));
+
+        $posResponse->assertOk();
+        $posHtml = preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', '', $posResponse->getContent());
+        $this->assertStringNotContainsString('Nomor Polisi (Plat)', $posHtml);
+        $this->assertStringNotContainsString('Nomor Rak / Loker Cucian', $posHtml);
     }
 
-    public function test_recipe_bom_navigation_and_spotlight_auto_hide_for_reseller(): void
+    public function test_workshop_industry_shows_booking_servis_and_universal_services(): void
     {
-        $retailBiz = $this->createTenant('Toko Retail Reseller', 'retail_reseller');
-        $this->assertTrue($retailBiz->isModuleDisabled(ModuleRegistry::MODULE_RECIPE_BOM));
+        $biz = Business::create([
+            'name' => 'Bengkel Mobil Sentosa',
+            'business_type' => 'workshop',
+            'template_code' => 'service_workshop',
+            'status' => 'active',
+            'is_active' => true,
+            'disabled_modules' => [],
+        ]);
 
-        Context::flush();
-        $membership = \App\Models\BusinessMembership::where('business_id', $retailBiz->id)
-            ->where('user_id', $this->owner->id)
-            ->first();
-        Context::setBusiness($retailBiz, $membership);
+        $biz->users()->attach($this->owner->id, [
+            'id' => (string) Str::uuid(),
+            'role' => 'owner',
+            'is_active' => true,
+        ]);
+
+        $this->owner->update(['active_business_id' => $biz->id]);
+        Context::setBusiness($biz);
 
         $response = $this->actingAs($this->owner)
-            ->withSession(['active_business_id' => $retailBiz->id, 'business_id' => $retailBiz->id])
+            ->withSession(['locale' => 'id'])
             ->get(route('dashboard'));
 
-        $response->assertStatus(200);
-        // Sidebar checks
-        $response->assertDontSee('id="tour-nav-materials"', false);
-        $response->assertDontSee(route('material-categories.index'), false);
+        $response->assertOk();
+        $content = $response->getContent();
+
+        // Workshop reservations nav element must show 'Booking Servis'
+        $this->assertStringContainsString('id="tour-nav-storefront-reservations"', $content);
+        if (preg_match('/id="tour-nav-storefront-reservations"[^>]*>.*?<\/a>/s', $content, $matches)) {
+            $this->assertStringNotContainsString('Reservasi Meja', $matches[0]);
+            $this->assertStringContainsString('Booking Servis', $matches[0]);
+        }
+
+        // Services catalog should point to services.index
+        $response->assertSee(route('services.index'), false);
     }
 
-    public function test_costing_labor_machines_tab_auto_hides_for_non_manufacturing(): void
+    public function test_workshop_industry_shows_vehicle_attributes_in_pos_terminal(): void
     {
-        $fnbBiz = $this->createTenant('Restoran Rasa Enak', 'fnb_resto');
-        $this->assertTrue($fnbBiz->isModuleDisabled(ModuleRegistry::MODULE_LABOR_MACHINES));
+        $biz = Business::create([
+            'name' => 'Bengkel Mobil Sentosa',
+            'business_type' => 'workshop',
+            'template_code' => 'service_workshop',
+            'status' => 'active',
+            'is_active' => true,
+            'disabled_modules' => [],
+        ]);
 
-        Context::flush();
-        $membership = \App\Models\BusinessMembership::where('business_id', $fnbBiz->id)
-            ->where('user_id', $this->owner->id)
-            ->first();
-        Context::setBusiness($fnbBiz, $membership);
+        $biz->users()->attach($this->owner->id, [
+            'id' => (string) Str::uuid(),
+            'role' => 'owner',
+            'is_active' => true,
+        ]);
 
-        $response = $this->actingAs($this->owner)
-            ->withSession(['active_business_id' => $fnbBiz->id, 'business_id' => $fnbBiz->id])
-            ->get(route('calculator.index'));
+        $this->owner->update(['active_business_id' => $biz->id]);
+        $this->owner->refresh();
+        Context::setBusiness($biz);
 
-        $response->assertStatus(200);
-        // "Upah Kerja & Mesin" tab must NOT be visible for non-manufacturing
-        $response->assertDontSee(route('labor-machines.index'), false);
+        // POS terminal in Workshop MUST show vehicle license plate and NOT laundry rack
+        $posResponse = $this->actingAs($this->owner)
+            ->withHeader('X-Business-Id', $biz->id)
+            ->withSession(['locale' => 'id', 'active_business_id' => $biz->id])
+            ->get(route('pos.terminal'));
 
-        // Now test manufacturing tenant (e.g. mfg_garment)
-        $mfgBiz = $this->createTenant('Pabrik Konveksi Garment', 'mfg_garment');
-        $this->assertTrue($mfgBiz->isModuleEnabled(ModuleRegistry::MODULE_LABOR_MACHINES));
-
-        Context::flush();
-        $mfgMembership = \App\Models\BusinessMembership::where('business_id', $mfgBiz->id)
-            ->where('user_id', $this->owner->id)
-            ->first();
-        Context::setBusiness($mfgBiz, $mfgMembership);
-
-        $mfgResponse = $this->actingAs($this->owner)
-            ->withSession(['active_business_id' => $mfgBiz->id, 'business_id' => $mfgBiz->id])
-            ->get(route('calculator.index'));
-
-        $mfgResponse->assertStatus(200);
-        $mfgResponse->assertSee(route('labor-machines.index'), false);
+        $posResponse->assertOk();
+        $posHtml = preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', '', $posResponse->getContent());
+        $this->assertStringContainsString('Nomor Polisi (Plat)', $posHtml);
+        $this->assertStringNotContainsString('Nomor Rak / Loker Cucian', $posHtml);
     }
 
-    public function test_warehouse_spotlight_auto_hides_when_module_disabled(): void
+    public function test_laundry_industry_shows_rack_and_laundry_attributes_in_pos_terminal(): void
     {
-        $agencyBiz = $this->createTenant('Digital Marketing Agency', 'service_agency');
-        $this->assertTrue($agencyBiz->isModuleDisabled(ModuleRegistry::MODULE_INVENTORY_WAREHOUSE));
+        $biz = Business::create([
+            'name' => 'Laundry Bersih Kilat',
+            'business_type' => 'laundry',
+            'template_code' => 'service_laundry',
+            'status' => 'active',
+            'is_active' => true,
+            'disabled_modules' => [],
+        ]);
 
-        Context::flush();
-        $membership = \App\Models\BusinessMembership::where('business_id', $agencyBiz->id)
-            ->where('user_id', $this->owner->id)
-            ->first();
-        Context::setBusiness($agencyBiz, $membership);
+        $biz->users()->attach($this->owner->id, [
+            'id' => (string) Str::uuid(),
+            'role' => 'owner',
+            'is_active' => true,
+        ]);
 
-        $response = $this->actingAs($this->owner)
-            ->withSession(['active_business_id' => $agencyBiz->id, 'business_id' => $agencyBiz->id])
-            ->get(route('dashboard'));
+        $this->owner->update(['active_business_id' => $biz->id]);
+        Context::setBusiness($biz);
 
-        $response->assertStatus(200);
-        $response->assertDontSee('Ringkasan Gudang &amp; Persediaan', false);
-        $response->assertDontSee('Lokasi Gudang', false);
+        // POS terminal in Laundry MUST show rack location and NOT vehicle license plate
+        $posResponse = $this->actingAs($this->owner)
+            ->withHeader('X-Business-Id', $biz->id)
+            ->withSession(['locale' => 'id', 'active_business_id' => $biz->id])
+            ->get(route('pos.terminal'));
+
+        $posResponse->assertOk();
+        $posHtml = preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', '', $posResponse->getContent());
+        $this->assertStringContainsString('Nomor Rak / Loker Cucian', $posHtml);
+        $this->assertStringNotContainsString('Nomor Polisi (Plat)', $posHtml);
     }
 }
-

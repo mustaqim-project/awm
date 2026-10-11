@@ -27,6 +27,7 @@
    - [3.13 Pusat Otorisasi Dokumen (MAR Engine)](#313-pusat-otorisasi-dokumen-mar---maker-approver-releaser)
    - [3.14 Portal Karyawan & Presensi Mandiri (Staff Personal Attendance & Workstation Hub)](#314-portal-karyawan--presensi-mandiri-staff-personal-attendance--workstation-hub)
    - [3.15 Integrasi Model Context Protocol & AI Gateway (MCP Server)](#315-integrasi-model-context-protocol--ai-gateway-mcp-server)
+   - [3.16 Komunitas & Manajemen Event UMKM (Community & Event Hub)](#316-komunitas--manajemen-event-umkm-community--event-hub)
 4. [Panduan Rekayasa Developer & AI Agent (Engineering Blueprint)](#4-panduan-rekayasa-developer--ai-agent-engineering-blueprint)
    - [4.1 Struktur 33 Domain Packages DDD](#41-struktur-33-domain-packages-ddd)
    - [4.2 Aturan Scoping Tenant & Proteksi Keamanan](#42-aturan-scoping-tenant--proteksi-keamanan)
@@ -55,6 +56,8 @@
    - [4.25 Arsitektur Universal Multi-Tenant Model Context Protocol (MCP) Server & Multi-Provider AI Adapter Hub](#425-arsitektur-universal-multi-tenant-model-context-protocol-mcp-server--multi-provider-ai-adapter-hub)
    - [4.26 Arsitektur Mobile REST API Gateway (COOCA MY OWN & COOCA Customer Marketplace)](#426-arsitektur-mobile-rest-api-gateway-cooca-my-own--cooca-customer-marketplace)
    - [4.27 Implementasi Frontend Mobile App Flutter (mobile_app)](#427-implementasi-frontend-mobile-app-flutter-mobile_app)
+   - [4.28 Arsitektur Master Layout Shell v2.0 & Standar Modalisasi Apple HIG](#428-arsitektur-master-layout-shell-v20--standar-modalisasi-apple-hig)
+   - [4.29 Arsitektur Community & Event Management (Universal Subscription Access, Geofencing GPS Check-in & Digital Barcode Scanner)](#429-arsitektur-community--event-management-universal-subscription-access-geofencing-gps-check-in--digital-barcode-scanner)
 
 ---
 
@@ -285,6 +288,18 @@ Aplikasi ini dirancang untuk dapat dioperasikan secara percaya diri oleh **gener
   - **Manajemen Token Mandiri:** Pemilik usaha dapat membuat token akses aman, mengatur batas kedaluwarsa, membatasi hak akses (*abilities* seperti hanya baca produk atau pencatatan pengeluaran), serta mencabut (*revoke*) token kapan saja.
   - **Panduan Konfigurasi Interaktif 6 Provider:** Menyajikan petunjuk instalasi copy-paste instan untuk Claude Desktop, Cursor IDE, ChatGPT Custom Actions, Google Gemini Python SDK, Ollama, dan n8n/Dify.
   - **Pemantauan Audit Trail Real-time:** Setiap interaksi AI tercatat transparan di tabel log aktivitas, mencakup nama tool, status eksekusi, provider yang digunakan, latency eksekusi (ms), dan IP address.
+
+### 3.16 Komunitas & Manajemen Event UMKM (Community & Event Hub)
+* **Kapan Digunakan?** Saat pemilik usaha ingin berjejaring dengan sesama pebisnis, mengikuti webinar/workshop edukasi, mendaftarkan diri ke pameran atau bazaar bisnis, serta mengelola kehadiran secara praktis.
+* **Fitur Utama bagi Pelaku Usaha:**
+  - **Akses Universal Tanpa Batas Langganan:** Terbuka bebas untuk seluruh pengguna COOCA baik tier Free, Standard, Premium, maupun Prestige tanpa restriksi paket.
+  - **Spotlight Event Terbaru di Atas Feed:** Banner kartu Bento di bagian paling atas halaman Komunitas (`/community`) selalu menampilkan event bisnis terdekat dan terhangat. Event yang sudah berakhir otomatis disembunyikan agar informasi tetap relevan dan segar.
+  - **Informasi Lengkap Transparan:** Setiap kartu event memuat lokasi fisik/gedung, jadwal pelaksanaan (tanggal & waktu), kapasitas kuota & jumlah pendaftar terkini, serta batas waktu pendaftaran (*registration deadline*).
+  - **Pendaftaran Instan 1-Klik:** Pemilik usaha cukup mengklik tombol "Daftar Event", sistem langsung menerbitkan tiket digital resmi tanpa formulir rumit.
+  - **Tiket Digital & Presensi Mandiri Multi-Metode:**
+    - **Presensi Lokasi (GPS Geofencing):** Saat berada di venue acara, peserta cukup membuka tiket dan mengklik "Presensi Lokasi Saat Ini". Sistem mencocokkan koordinat GPS smartphone dengan batas radius venue acara.
+    - **Presensi Barcode/QR Code:** Setiap tiket dilengkapi barcode linier dan QR code berbasis grafis tajam SVG. Peserta dapat memindai barcode venue atau panitia memindai tiket peserta di gerbang registrasi.
+    - **Manajemen Tiket:** Tab khusus "Tiket Saya" memudahkan peserta melihat riwayat kehadiran, waktu check-in, dan membatalkan pendaftaran jika berhalangan hadir.
 
 ---
 
@@ -717,6 +732,27 @@ Sistem mengimplementasikan standarisasi menyeluruh pada modul Storefront & Marke
 
 *Dokumentasi Lengkap Modul:* [`docs/system/modules/mcp-server-and-ai-integrations.md`](file:///c:/laragon/www/cooca_core/docs/system/modules/mcp-server-and-ai-integrations.md)
 
+### 4.28 Arsitektur Master Shell Antarmuka v2.0 (macOS Sonoma / iOS 18 Apple HIG & Quick Action Modals Encapsulation)
+
+Master layout antarmuka Cooca (`resources/views/layouts/app.blade.php`) beserta seluruh partial pendukungnya telah distandarisasi secara modular sesuai arsitektur Apple HIG v2.0 (macOS Sonoma Toolbar & iOS 18 Glassmorphism):
+1. **Dekomposisi Master Layout Ramping:**
+   - Menghilangkan monolitik inline Alpine modal state dari `app.blade.php` (~300 baris) dan mengenkapsulasinya secara mandiri ke dalam `layouts/partials/quick-actions.blade.php`.
+   - Mengintegrasikan dialog pencarian cepat terpadu `layouts/partials/spotlight.blade.php` (Cmd/Ctrl + K), navigasi sidebar terstruktur `layouts/partials/sidebar.blade.php`, dan toolbar horizontal `layouts/partials/topbar.blade.php`.
+2. **Reaktifitas Lucide Icons & Scroll Lock Spotlight:**
+   - Input pencarian Spotlight (`@input`) secara reaktif memicu `window.createCoocaIcons()` via `$nextTick` sehingga seluruh hasil pencarian dinamis langsung dirender sebagai SVG tanpa keterlambatan.
+   - Mengunci scroll latar belakang body saat Spotlight terbuka (`overflow-hidden`) dan mendaftarkan kontainer Spotlight ke `MutationObserver targetNodes`.
+3. **Gestur Sentuhan & Ergonomi Drawer Mobile:**
+   - Drawer mobile distandarisasi ke `w-72 max-w-[84vw]` menyisakan 16% backdrop yang mudah disentuh.
+   - Dilengkapi *swipe-to-close touch gesture* (`@touchstart` & `@touchend`) dengan ambang batas geser 45px ke kiri.
+4. **Viewport-Fit=Cover & PWA Status Bar Standar Apple:**
+   - Menambahkan `viewport-fit=cover` pada meta viewport untuk mengaktifkan kalkulasi `env(safe-area-inset-*)` pada perangkat iPhone dengan notch / dynamic island.
+   - Mengonfigurasi `theme-color` adaptif terang (`#F2F2F7`) dan gelap (`#1E1E1E`), serta standalone web app meta tags.
+5. **Toast Stacking Elevation & Dynamic Island Status Jaringan:**
+   - Toast container diposisikan pada elevasi tertinggi `z-[100000]` di atas seluruh backdrop modal.
+   - Kapsul *Dynamic Island* (`z-[100001]`) mendeteksi status koneksi internet *offline/online* secara real-time.
+6. **Aksesibilitas Penuh WAI-ARIA:**
+   - Seluruh modal cepat dan action sheet dilengkapi atribut standar `role="dialog"`, `aria-modal="true"`, dan `aria-labelledby="modal-title-*"`.
+
 ---
 
 ## 5. Matriks Penelusuran Pengetahuan (Traceability Matrix)
@@ -911,3 +947,51 @@ Repositori Flutter berada di `c:\laragon\www\mobile_app` dengan dukungan multi-p
    - `CustomerCheckoutScreen` (stepper 3-tahap, ekspedisi JNE, voucher, GoPay).
    - `CustomerOrderTrackingScreen` (stepper pelacakan pesanan #COD-001234).
    - `CustomerProfileScreen` (akun pembeli, pesanan saya, voucher, alamat).
+
+---
+
+### 4.28 Arsitektur Master Layout Shell v2.0 & Standar Modalisasi Apple HIG
+
+1. **Dekomposisi Master Shell (`resources/views/layouts/app.blade.php`):**
+   - Mengadopsi arsitektur modular terpisah untuk menjaga performa rendering SSR Blade:
+     - `layouts/partials/topbar.blade.php`: Header horizontal Apple HIG dengan sinkronisasi tinggi `h-16` (64px), penyembunyian kontrol sekunder pada mobile (`< 640px`) guna mencegah *heading title ellipsis choke*, serta eliminasi fake pulse dots.
+     - `layouts/partials/sidebar.blade.php`: Lebar sidebar konsisten 288px (`w-72`), sinkronisasi 100% antara collapsed flyouts dengan link navigasi ekspansi, serta injeksi Storefront Orders & Reservasi ke Klaster 1 Daily Ops.
+     - `layouts/partials/spotlight.blade.php`: Command Palette modal mandiri Apple HIG (`Cmd/Ctrl + K`) dengan pencarian cerdas terisolasi.
+     - `layouts/partials/quick-actions.blade.php`: iOS 18 Action Sheet mobile dan 4 modal transaksi cepat (Pengeluaran, Pemasukan, Penerimaan Stok, Bahan Masuk) dengan standar XXL di Desktop/Tablet dan Bottom Sheet responsif di Mobile.
+2. **Harmonisasi Spacing & Safe-Area Mobile:**
+   - Menghilangkan anomali double bottom padding (`pb-36` pada `<main>` dan `mb-24` pada `<footer>`). Kontainer utama dinormalisasi ke `pb-28 lg:pb-10`.
+   - Floating bottom tab bar menerapkan padding dinamis `pb-[max(0.5rem,env(safe-area-inset-bottom))]` untuk mencegah tab kasir dan menu tertutup oleh *home indicator bar* iPhone.
+3. **Pemberantasan Anti-Pill & Fake Pulses:**
+   - Menghilangkan badge pill dekoratif statis pada sidebar (`3D`, `SPK`, `Eksklusif`) dan titik hijau berkedip palsu pada modul 3D Office.
+4. **Multi-Industry Dynamic Context-Aware Auto-Hiding (20 Sektor Industri Bisnis):**
+   - Menegakkan prinsip dynamic context-aware auto-hiding berbasis template aktif bisnis (`$activeBiz->isModuleEnabled(\App\Domain\Template\ModuleRegistry::MODULE_...)`).
+   - Fitur, menu sidebar, flyout, topbar action CTA, spotlight item, dan quick actions yang tidak relevan dengan industri bisnis otomatis disembunyikan:
+     - Kasir POS (`pos.terminal`, `pos.orders`) otomatis disembunyikan untuk bisnis B2B sales murni, agensi kreatif, dan konsultan.
+     - Meja makan & KDS Dapur (`pos.tables`, `pos.kitchen`) otomatis disembunyikan untuk retail umum, butik, apotek, bengkel, dan barbershop.
+     - Pergudangan & Multi-Gudang (`inventory.stocks`, `inventory.transfers`, `inventory.opnames`, `inventory.movements`) otomatis disembunyikan jika `MODULE_INVENTORY_WAREHOUSE` tidak aktif (misal: jasa pangkas rambut, laundry, klinik).
+     - Kalkulasi HPP & Resep BOM (`calculator.index`, `materials.index`, meter resep di kartu kuota sidebar) otomatis disembunyikan jika `MODULE_RECIPE_BOM` / `MODULE_LABOR_MACHINES` tidak aktif.
+     - Topbar Primary CTA beradaptasi dinamis: Kasir POS (Retail/F&B), SPK Servis (Bengkel/Jasa), Pesanan Penjualan (B2B Distributor), atau Hitung HPP (Manufaktur/Bakery).
+5. **Multi-Language & i18n Universal Localization (Mandat Zero Hardcoded Text 100%):**
+   - Menghilangkan 100% residual hardcoded strings di master layout dan partials dengan simetri bilingual (`lang/id` dan `lang/en`).
+   - Domain localization injeksi client-side `window.COOCA_I18N` mencakup 17 domain komprehensif (`common`, `quick_actions`, `navigation`, `portal`, `hrm`, `ai`, `validation`, `messages`, `finance`, `pos`, `inventory`, `purchasing`, `customers`, `crm`, `services`, `settings`, `storefront`).
+   - Standarisasi `window.formatCurrency` adaptif terhadap locale aktif (`id-ID` dengan simbol Rp vs `en-US` dengan font monospace `tabular-nums`).
+
+---
+
+### 4.29 Arsitektur Community & Event Management (Universal Subscription Access, Geofencing GPS Check-in & Digital Barcode Scanner)
+
+1. **Aksesibilitas Universal Tanpa Restriksi Langganan:**
+   - Fitur Komunitas dan Event dibuka bebas untuk seluruh pengguna tanpa pembatasan paket subscription (`Free`, `Standard`, `Premium`, `Prestige`).
+   - Tenant dapat mendaftarkan diri, memperoleh tiket digital, dan melakukan presensi kehadiran langsung dari panel operasional maupun modal tiket mandiri.
+2. **Filter Event Mendatang (Upcoming Scope Enforcement):**
+   - Halaman Komunitas tenant (`/community`) memprioritaskan kartu Bento Event di posisi paling atas layar.
+   - Menggunakan scope query `CommunityEvent::upcoming()` (`where('end_time', '>=', now())`), menjamin event yang telah lewat tidak lagi membebani feed antarmuka komunitas.
+3. **Arsitektur Presensi Presisi Ganda (GPS Geofencing & Barcode):**
+   - **GPS Geofencing:** Menggunakan kalkulasi matematis Haversine Formula (`EventCheckinService::calculateDistanceMeters()`) untuk menghitung jarak akurat antara koordinat lintang/bujur pengguna dengan koordinat venue acara. Kehadiran diterima jika jarak berada dalam toleransi radius yang ditetapkan admin (`checkin_radius_meters`, default 200 meter).
+   - **Barcode & QR Scanner Mandiri:** Menghasilkan tiket digital dengan kode unik `EVT-YYYYMMDD-XXXXXX`. Menggunakan library `bacon/bacon-qr-code` (`SvgImageBackEnd`) dan generator linear barcode SVG murni tanpa dependensi aset eksternal. Peserta dapat memindai barcode venue atau panitia memindai tiket peserta via scanner kamera langsung di browser.
+4. **Admin Event Management Console (`/admin/events`):**
+   - Dashboard KPI event interaktif (Total Events, Total Registrations, Upcoming Events, Attended Rate).
+   - CRUD manajemen event lengkap: tanggal mulai/selesai, batas waktu pendaftaran, kuota peserta, nama & alamat lokasi, koordinat GPS (latitude/longitude), dan radius check-in.
+   - Roster peserta live dengan status kehadiran (`registered`, `attended`, `cancelled`), scanner kamera panitia, check-in manual cadangan, dan ekspor data hadir format CSV spreadsheet.
+
+

@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\AdminAiTokenController;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminBillingPackageController;
 use App\Http\Controllers\Admin\AdminBusinessController;
+use App\Http\Controllers\Admin\AdminCommunityEventController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminErrorLogController;
 use App\Http\Controllers\Admin\AdminFeedbackController;
@@ -168,6 +169,19 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
         // CMS Leads
         Route::get('/leads', [AdminLeadController::class, 'index'])->name('leads.index');
         Route::get('/leads/export', [AdminLeadController::class, 'export'])->name('leads.export');
+
+        // Community Events Management & Check-in Hub
+        Route::prefix('events')->name('events.')->group(function (): void {
+            Route::get('/', [AdminCommunityEventController::class, 'index'])->name('index');
+            Route::get('/create', [AdminCommunityEventController::class, 'create'])->name('create');
+            Route::post('/', [AdminCommunityEventController::class, 'store'])->name('store');
+            Route::get('/{event}', [AdminCommunityEventController::class, 'show'])->name('show');
+            Route::get('/{event}/edit', [AdminCommunityEventController::class, 'edit'])->name('edit');
+            Route::put('/{event}', [AdminCommunityEventController::class, 'update'])->name('update');
+            Route::delete('/{event}', [AdminCommunityEventController::class, 'destroy'])->name('destroy');
+            Route::post('/{event}/checkin', [AdminCommunityEventController::class, 'checkin'])->name('checkin');
+            Route::get('/{event}/export', [AdminCommunityEventController::class, 'export'])->name('export');
+        });
 
         // CMS Template Excel Unduhan
         Route::prefix('templates')->name('templates.')->group(function (): void {

@@ -31,7 +31,7 @@ window.TOUR_STEPS = [
     tourStep('switch-business', '#tour-switch-business', 'Ganti Bisnis', 'Berpindah ke bisnis lain yang Anda kelola.'),
     tourStep('dashboard', '#tour-nav-dashboard', 'Dashboard', 'Ringkasan omzet, transaksi, margin, persediaan, dan indikator operasional bisnis.'),
     tourStep('ai', '#tour-nav-ai', 'AI Assistant', 'Asisten analisis bisnis berbasis AI. Saat ini masih ditandai Segera.', 'bot'),
-    tourStep('community', '#tour-nav-community', 'Komunitas Owner', 'Forum owner untuk berbagi pengalaman dan strategi bisnis. Saat ini masih ditandai Segera.', 'users'),
+    tourStep('community', '#tour-nav-community', 'Komunitas & Event', 'Forum diskusi pengusaha dan pendaftaran event jejaring bisnis UMKM.', 'users'),
 
     tourStep('group-sales', '#tour-group-sales', 'Kasir & Penjualan', 'Group transaksi, pelanggan, pesanan, dan retur penjualan.', 'shopping-cart'),
     tourStep('pos-terminal', '#tour-nav-pos-terminal', 'Terminal Kasir POS', 'Buat transaksi penjualan dan cetak struk.', 'calculator'),

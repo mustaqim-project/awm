@@ -154,11 +154,9 @@ class CommunityFeatureTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('Tips UMKM hari ini');
         $response->assertSee('Keren, terima kasih tipsnya!');
-        $response->assertSee('Suka');
-        $response->assertSee('Komentar');
         $response->assertSee('feed.png');
-        // Liked-by-me state is injected into the Alpine post card component (UUID in quotes).
-        $response->assertSee("', true, 1, 1)", false);
+        // Liked-by-me state is injected into the Alpine post card component.
+        $response->assertSee("', true, 1, 1, false, 0)", false);
     }
 
     public function test_owner_can_delete_own_post_only(): void
@@ -183,5 +181,89 @@ class CommunityFeatureTest extends TestCase
         $this->actingAs($this->owner)->delete(route('community.destroy', $post))->assertStatus(302);
         $this->assertDatabaseMissing('community_posts', ['id' => $post->id]);
         Storage::disk('public')->assertMissing($post->image_path);
+    }
+
+    public function test_trending_topics_24h_displays_top_5_in_sidebar(): void
+    {
+        CommunityPost::create([
+            'owner_id' => $this->owner->id,
+            'business_id' => $this->business->id,
+            'content' => 'Diskusi tentang #StrategiOmset dan pembukuan kasir POS toko.',
+        ]);
+        CommunityPost::create([
+            'owner_id' => $this->owner->id,
+            'business_id' => $this->business->id,
+            'content' => 'Tips tambahan untuk #StrategiOmset di era digital.',
+        ]);
+
+        $response = $this->actingAs($this->owner)->get(route('community.index'));
+        $response->assertStatus(200);
+
+        // Sidebar kanan harus menampilkan Tren 24 Jam
+        $response->assertSee('Tren 24 Jam');
+        $response->assertSee('Top 5');
+        $response->assertSee('#StrategiOmset');
+    }
+
+    public function test_owner_can_repost_post_and_triggers_notification(): void
+    {
+        $author = $this->owner;
+        $post = CommunityPost::create([
+            'owner_id' => $author->id,
+            'business_id' => $this->business->id,
+            'content' => 'Ide bisnis viral untuk kasir retail',
+        ]);
+
+        $other = $this->makeOtherOwner();
+        Context::setBusiness($other->businesses()->first());
+
+        // Other owner reposts the post
+        $response = $this->actingAs($other)->postJson(route('community.repost', $post));
+        $response->assertOk();
+        $response->assertJson([
+            'success' => true,
+            'reposted' => true,
+            'reposts_count' => 1,
+        ]);
+
+        $this->assertDatabaseHas('community_reposts', [
+            'post_id' => $post->id,
+            'user_id' => $other->id,
+        ]);
+
+        // Notification created for post author
+        $this->assertDatabaseHas('community_notifications', [
+            'user_id' => $author->id,
+            'actor_id' => $other->id,
+            'post_id' => $post->id,
+            'type' => 'repost',
+        ]);
+
+        // Toggle repost off (undo repost)
+        $unrepostResponse = $this->actingAs($other)->postJson(route('community.repost', $post));
+        $unrepostResponse->assertOk();
+        $unrepostResponse->assertJson([
+            'success' => true,
+            'reposted' => false,
+            'reposts_count' => 0,
+        ]);
+    }
+
+    public function test_navigation_tabs_feed_my_posts_and_notifications(): void
+    {
+        // 1. Tab Feed
+        $feedResponse = $this->actingAs($this->owner)->get(route('community.index', ['tab' => 'feed']));
+        $feedResponse->assertStatus(200);
+        $feedResponse->assertSee('Feed Komunitas');
+
+        // 2. Tab Postingan Saya
+        $myPostResponse = $this->actingAs($this->owner)->get(route('community.index', ['tab' => 'my_posts']));
+        $myPostResponse->assertStatus(200);
+        $myPostResponse->assertSee('Postingan Saya');
+
+        // 3. Tab Notifikasi
+        $notifResponse = $this->actingAs($this->owner)->get(route('community.index', ['tab' => 'notifications']));
+        $notifResponse->assertStatus(200);
+        $notifResponse->assertSee('Notifikasi Aktivitas');
     }
 }

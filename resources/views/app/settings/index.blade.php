@@ -1757,8 +1757,8 @@
                             'bg' => 'bg-[#007AFF]/10',
                             'keys' => ['pos_retail', 'pos_dinein'],
                             'impacts' => [
-                                'pos_retail' => 'Kasir & POS Resto: Buka Kasir POS, Transaksi Kasir & Shift, Laporan Kasir',
-                                'pos_dinein' => 'Kasir & POS Resto: KDS Layar Dapur, Pengaturan Meja QR',
+                                'pos_retail' => ($business?->isFoodIndustry() ? 'Kasir & POS Resto: Buka Kasir POS, Transaksi Kasir & Shift, Laporan Kasir' : 'Kasir & POS: Buka Kasir POS, Transaksi Kasir & Shift, Laporan Kasir'),
+                                'pos_dinein' => 'Restoran & Dine-In: KDS Layar Dapur, Pengaturan Meja QR',
                             ],
                         ],
                         'b2b' => [
@@ -1822,7 +1822,7 @@
                             'bg' => 'bg-[#007AFF]/10',
                             'keys' => ['accounting_corporate'],
                             'impacts' => [
-                                'accounting_corporate' => 'Akuntansi Korporasi: Bagan Akun (COA), Buku Jurnal Keuangan, Buku Besar Akun, Neraca Keuangan SAK EMKM, Neraca Saldo, Rekonsiliasi Bank',
+                                'accounting_corporate' => 'Akuntansi Korporasi: Bagan Akun (COA), Buku Jurnal Keuangan, Buku Besar Akun, Neraca Keuangan, Neraca Saldo, Rekonsiliasi Bank',
                             ],
                         ],
                     ];

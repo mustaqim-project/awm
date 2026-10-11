@@ -42,6 +42,11 @@ class CommunityPost extends Model
         return $this->hasMany(CommunityComment::class, 'post_id')->latest();
     }
 
+    public function reposts(): HasMany
+    {
+        return $this->hasMany(CommunityRepost::class, 'post_id')->latest();
+    }
+
     public function getImageUrlAttribute(): ?string
     {
         return $this->image_path ? Storage::disk('public')->url($this->image_path) : null;
@@ -54,5 +59,14 @@ class CommunityPost extends Model
         }
 
         return $this->likes()->where('user_id', $user->getAuthIdentifier())->exists();
+    }
+
+    public function isRepostedBy(?User $user): bool
+    {
+        if ($user === null) {
+            return false;
+        }
+
+        return $this->reposts()->where('user_id', $user->getAuthIdentifier())->exists();
     }
 }

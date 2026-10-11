@@ -3,12 +3,23 @@
 declare(strict_types=1);
 
 return [
-    // 4 Master Clusters
+    // 4 Master Clusters (Legacy Compatibility) & 9 Explicit Domain Clusters
     'clusters' => [
+        // Legacy keys (Preserved for tests & backward-compatibility)
         'daily_ops' => 'Daily Operations',
         'master_data' => 'Master Data & Catalog',
         'reports_finance' => 'Reports & Finance',
         'settings_hub' => 'Settings Hub',
+
+        // 9 Standard Domain Clusters
+        'core_business' => 'Core Business',
+        'inventory' => 'Inventory',
+        'finance_accounting' => 'Finance & Accounting',
+        'crm' => 'CRM',
+        'hrm' => 'HRM',
+        'marketing' => 'Social Media & Marketing',
+        'reporting' => 'Reporting',
+        'settings' => 'Settings',
     ],
 
     // Cluster Names Aliases
@@ -17,16 +28,29 @@ return [
     'cluster_finance_reports' => 'Reports & Finance',
     'cluster_settings_hub' => 'Settings Hub',
 
+    // 9 Explicit Clusters Aliases
+    'cluster_core_business' => 'Core Business',
+    'cluster_inventory' => 'Inventory',
+    'cluster_finance_accounting' => 'Finance & Accounting',
+    'cluster_crm' => 'CRM',
+    'cluster_hrm' => 'HRM',
+    'cluster_marketing' => 'Social Media & Marketing',
+    'cluster_reporting' => 'Reporting',
+    'cluster_settings' => 'Settings',
+
     // Cluster Groups
-    'pos_resto_group' => 'POS & Dine-in Tables',
+    'pos_resto_group' => 'Cashier & POS',
     'b2b_sales_group' => 'B2B Sales & Invoices',
     'inventory_catalog_group' => 'Master Products & Materials',
+    'inventory_stocks_group' => 'Stocks & Multi-Warehouse',
     'purchasing_group' => 'Purchasing & Vendors',
     'customers_group' => 'Customers & CRM',
     'employees_payroll_group' => 'Staff & Payroll',
     'finance_accounting_group' => 'Finance & Accounting',
-    'reports_analytics_group' => 'Costing & Reports',
+    'costing_group' => 'Costing & Margin Analysis',
+    'reports_analytics_group' => 'Reports & Analytics',
     'settings_group' => 'Business Settings',
+    'marketing_group' => 'Marketing & Social Media',
 
     // Cluster 1: Daily Operations
     'daily_ops' => 'Daily Operations',
@@ -35,21 +59,21 @@ return [
     'portal_attendance' => 'Portal & Attendance',
     'ai_assistant' => 'AI Smart Assistant',
     'pending_approvals' => 'Pending Approvals',
-    'pos_terminal' => 'POS Cashier Terminal',
-    'pos_resto' => 'Restaurant POS & Tables',
-    'pos_open' => 'Open POS Cashier',
+    'pos_terminal' => 'Cashier & POS',
+    'pos_resto' => 'Cashier & POS',
+    'pos_open' => 'Open Cashier',
     'pos_shifts' => 'Cashier Shifts & Records',
     'kitchen_kds' => 'Kitchen Display (KDS)',
-    'dinein_tables' => 'Tables & Restaurant QR',
+    'dinein_tables' => 'Tables & QR Orders',
     'b2b_sales' => 'B2B Sales & Invoices',
     'sales_orders' => 'Sales Orders (SO)',
     'quotations' => 'Price Quotations',
     'invoices' => 'Sales Invoices',
     'sales_returns' => 'Sales Returns',
-    'services' => 'Services & Repairs',
-    'services_workshop' => 'Workshop & Repair Services',
-    'services_spk' => 'Work Orders (SPK)',
-    'services_mechanics' => 'Vehicle & Mechanic History',
+    'services' => 'Services & Tasks',
+    'services_workshop' => 'Services & Tasks',
+    'services_spk' => 'Work Orders & SPK',
+    'services_mechanics' => 'Technicians & Staff',
     'owner_community' => 'Owner Community',
     'exclusive_badge' => 'Exclusive',
 
@@ -94,7 +118,7 @@ return [
     'receivables' => 'Accounts Receivable',
     'payables' => 'Accounts Payable',
     'settlements' => 'Sales Funds Settlement',
-    'accounting_corporate' => 'Corporate Accounting (SAK EMKM)',
+    'accounting_corporate' => 'Corporate Accounting',
     'coa' => 'Chart of Accounts (COA)',
     'journals' => 'Journal Entries',
     'general_ledger' => 'General Ledger',
@@ -133,7 +157,9 @@ return [
     'storefront_orders' => 'Storefront Orders',
     'landing_page' => 'Landing Page CMS',
     'popup_promo' => 'Promo Popups',
-    'reservations' => 'Table Reservations',
+    'reservations' => 'Bookings & Reservations',
+    'booking_service' => 'Service Booking',
+    'reservations_resto' => 'Restaurant Reservations',
     'shipping_settings' => 'Shipping & Delivery Settings',
     'storefront_settings' => 'Online Store Settings',
     'whatsapp_business' => 'WhatsApp Business',
@@ -188,4 +214,14 @@ return [
     'all_branches' => 'All Branches',
     'templates_business' => 'Business Templates',
     'sales_report' => 'Sales Reports',
+    'ai_engine_label' => 'AI Engine:',
+    'manage_quota' => 'Manage Quota',
+    'products_quota_label' => 'Product Catalog:',
+    'recipes_quota_label' => 'Recipe / BOM:',
+    'invoices_quota_label' => 'Invoices This Month:',
+    'quota_details' => 'Quota Details ›',
+    'sales_orders_short' => 'Orders',
+    'services_short' => 'Services',
+    'calc_hpp_short' => 'Costing',
+    'plan_free_solo' => 'Free Plan (Solo)',
 ];

@@ -389,3 +389,41 @@ Cooca BUKAN template AI generik. Cooca adalah **Platform Sistem Operasi Bisnis U
 5. **Tipografi Murni Sebagai Pahlawan:** Membangun hierarki visual melalui kontras skala ukuran font, bobot tebal/sedang, dan saturasi warna teks semantik, bukan dengan membungkus teks ke dalam kapsul.
 6. **Mandat Eliminasi Total Elemen Fluff (Hapus Sampahnya, Jangan Cuma Copot Bajunya):** Dilarang keras menghilangkan bungkus kapsul tapi tetap membiarkan teks hiasannya melayang di antarmuka (*"sama aja bohong"*). Jika suatu teks adalah hiasan buatan bot AI (`Live 6 Bulan`, `Organik`, `Terverifikasi`, `Platform-Wide`, `AI-Powered...`, `Live Cloud`, `INSIGHT`, `Bebas Biaya`), **HAPUS TOTAL ELEMEN DAN TEKS TERSEBUT DARI KODE!**
 
+---
+
+## 14. Arsitektur Master Shell Antarmuka v2.0 (Topbar, Sidebar, Spotlight, Quick Actions)
+
+### 14.1 Dekomposisi Modular Master Shell (`app.blade.php`)
+Untuk menjamin performa rendering, keterbacaan kode, dan kemudahan pemeliharaan (*maintainability*), master layout `layouts/app.blade.php` didekomposisi menjadi partials modular yang ramping:
+- `layouts/partials/topbar.blade.php`: Header horizontal Apple HIG dengan sinkronisasi tinggi 64px (`h-16`), dynamic page title, dan adaptasi responsif mobile (penyembunyian kapsul sekunder pada layar `< 640px` agar judul halaman tidak terpotong).
+- `layouts/partials/sidebar.blade.php`: Navigasi sidebar 288px (`w-72`) desktop & drawer mobile (`max-w-[86vw]`), terbagi dalam 6 klaster terstruktur (Daily Ops, Master Data, Finance, Omnichannel, HRM, Platform Admin). Flyout collapsed disinkronkan 100% dengan link navigasi ekspansi.
+- `layouts/partials/spotlight.blade.php`: Apple HIG Command Palette (390 baris) dengan akses pintasan global `Cmd/Ctrl + K`, live filtering pencarian cerdas, dan navigasi keyboard.
+- `layouts/partials/quick-actions.blade.php`: Lembar aksi cepat mobile (iOS 18 Action Sheet) dan 4 formulir transaksi cepat Apple HIG Bento (Catat Pengeluaran, Catat Pemasukan, Terima Stok Barang Masuk, Catat Bahan Masuk) dengan format XXL di desktop/tablet dan Bottom Sheet responsif di mobile.
+
+### 14.2 Harmonisasi Geometri Spacing & Safe Area Mobile
+- **Standarisasi Kontainer Utama (`#main-content`)**: Menggunakan padding dasar `pb-28 lg:pb-10`, menghapus redundansi ruang kosong berlebih di bagian bawah layar.
+- **Eliminasi Double Bottom Void**: Footer sistem membuang margin bawah ganda `mb-24`.
+- **Perlindungan Gesture Bar iOS**: Floating bottom navigation bar (`fixed bottom-3`) menerapkan `pb-[max(0.5rem,env(safe-area-inset-bottom))]` untuk melindungi tombol navigasi dari gesture bar iPhone.
+- **Standarisasi Lebar Sidebar**: Konsistensi mutlak pada 288px (`w-72`), menyelaraskan selector desktop `.app-sidebar` dengan drawer geser mobile.
+
+### 14.3 Standarisasi Tahap 2: Spotlight Reactive Refresh, Mobile Drawer Gestures, Viewport-Fit & Modals Encapsulation
+- **Spotlight Dynamic Lucide Refresh & Scroll Locking**:
+  - Pada input pencarian Spotlight (`@input`), `$nextTick` memicu `window.createCoocaIcons()` agar item hasil pencarian yang di-*render* secara reaktif oleh Alpine `x-for` langsung mengubah tag `<i data-lucide="...">` menjadi SVG tanpa penundaan.
+  - Membuka Spotlight mengunci *scroll* dokumen latar belakang (`document.body.classList.add('overflow-hidden')`) dan mengembalikannya saat ditutup (`close()`).
+  - Container root Spotlight didaftarkan dalam `MutationObserver targetNodes` (`document.getElementById('spotlight-modal-root')`) serta mengimplementasikan `role="dialog" aria-modal="true" aria-label="Spotlight Quick Search"`.
+- **Mobile Drawer Gestures & Width Ergonomics**:
+  - Lebar drawer mobile distandarisasi ke `w-72 max-w-[84vw]`, menyisakan minimal 16% area *backdrop* yang mudah disentuh untuk menutup menu.
+  - Ditambahkan *swipe-to-close gesture* berbasis sentuhan sentuhan jari (`@touchstart` & `@touchend`) dengan ambang batas pergeseran 45px ke arah kiri untuk menutup drawer secara alami.
+- **Mobile Viewport-Fit=Cover & PWA Status Bar**:
+  - Tag meta viewport `<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">` wajib memiliki parameter `viewport-fit=cover` agar fungsi CSS `env(safe-area-inset-bottom)` dan `env(safe-area-inset-top)` aktif pada iOS Safari / PWA Standalone.
+  - Dilengkapi deklarasi `<meta name="theme-color" content="#F2F2F7" media="(prefers-color-scheme: light)">`, `<meta name="theme-color" content="#1E1E1E" media="(prefers-color-scheme: dark)">`, `<meta name="apple-mobile-web-app-capable" content="yes">`, dan status bar `default`.
+- **Enkapsulasi Modular Penuh Quick Actions**:
+  - Seluruh *state* Alpine (`x-data`), *form models*, *input handlers*, kalkulasi HPP/Rupiah, pemanggilan API AJAX, dan *toast notification engine* dipindahkan 100% ke dalam `layouts/partials/quick-actions.blade.php`.
+  - Berkas `layouts/app.blade.php` bersih dari definisi *state* formulir modal inline.
+  - Toast banner diposisikan pada elevasi tertinggi `z-[100000]` sehingga pesan kesalahan validasi tidak pernah tertutup oleh *backdrop* modal (`z-[99999]`).
+- **Dynamic Island Offline / Online Indicator**:
+  - Master layout menyematkan kapsul indikator status jaringan *Apple Dynamic Island* (`top-3 left-1/2 -translate-x-1/2 z-[100001] rounded-full`) yang mendengarkan event *online/offline* browser secara reaktif tanpa mengganggu alur kerja pengguna.
+- **Aksesibilitas ARIA Dialog Standar WAI-ARIA**:
+  - Seluruh modal cepat (Quick Expense, Quick Income, Quick Stock-In, Quick Material, dan iOS 18 Action Sheet) dilengkapi atribut `role="dialog"`, `aria-modal="true"`, dan `aria-labelledby="modal-title-*"` yang merujuk pada elemen judul modal masing-masing.
+
+

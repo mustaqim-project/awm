@@ -38,6 +38,11 @@ final class OwnerStorageQuotaService
 
     public function getBaseLimitBytes(?User $owner = null): int
     {
+        $settingGb = SystemSetting::get('owner_storage_limit_gb');
+        if ($settingGb !== null && $settingGb !== '' && (int) $settingGb === 0) {
+            return 0;
+        }
+
         if ($owner !== null) {
             $tier = $this->getHighestTierForOwner($owner);
             $gb = match ($tier) {
