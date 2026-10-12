@@ -6,6 +6,7 @@ namespace Tests\Feature;
 
 use App\Domain\Storage\OwnerStorageQuotaService;
 use App\Models\Business;
+use App\Models\BusinessSubscription;
 use App\Models\CommunityComment;
 use App\Models\CommunityLike;
 use App\Models\CommunityPost;
@@ -35,6 +36,14 @@ class CommunityFeatureTest extends TestCase
         $this->business->users()->attach($this->owner->id, ['id' => (string) Str::uuid(), 'role' => 'owner']);
         $this->owner->update(['active_business_id' => $this->business->id]);
         Context::setBusiness($this->business);
+
+        // Berikan subscription aktif untuk test suite operasional
+        BusinessSubscription::create([
+            'business_id' => $this->business->id,
+            'plan_code' => BusinessSubscription::PLAN_CORE,
+            'status' => BusinessSubscription::STATUS_ACTIVE,
+            'starts_at' => now(),
+        ]);
     }
 
     private function makeOtherOwner(): User
@@ -43,6 +52,14 @@ class CommunityFeatureTest extends TestCase
         $otherBusiness = Business::create(['name' => 'Warung Lain']);
         $otherBusiness->users()->attach($other->id, ['id' => (string) Str::uuid(), 'role' => 'owner']);
         $other->update(['active_business_id' => $otherBusiness->id]);
+
+        BusinessSubscription::create([
+            'business_id' => $otherBusiness->id,
+            'plan_code' => BusinessSubscription::PLAN_CORE,
+            'status' => BusinessSubscription::STATUS_ACTIVE,
+            'starts_at' => now(),
+        ]);
+
         return $other;
     }
 
@@ -185,7 +202,7 @@ class CommunityFeatureTest extends TestCase
 
     public function test_trending_topics_24h_displays_top_5_in_sidebar(): void
     {
-        CommunityPost::create([
+        $post1 = CommunityPost::create([
             'owner_id' => $this->owner->id,
             'business_id' => $this->business->id,
             'content' => 'Diskusi tentang #StrategiOmset dan pembukuan kasir POS toko.',
@@ -196,6 +213,12 @@ class CommunityFeatureTest extends TestCase
             'content' => 'Tips tambahan untuk #StrategiOmset di era digital.',
         ]);
 
+        \App\Models\CommunityComment::create([
+            'post_id' => $post1->id,
+            'user_id' => $this->owner->id,
+            'content' => 'Diskusi yang sangat bermanfaat untuk #KomentarViral UMKM.',
+        ]);
+
         $response = $this->actingAs($this->owner)->get(route('community.index'));
         $response->assertStatus(200);
 
@@ -203,6 +226,7 @@ class CommunityFeatureTest extends TestCase
         $response->assertSee('Tren 24 Jam');
         $response->assertSee('Top 5');
         $response->assertSee('#StrategiOmset');
+        $response->assertSee('#KomentarViral');
     }
 
     public function test_owner_can_repost_post_and_triggers_notification(): void
@@ -265,5 +289,86 @@ class CommunityFeatureTest extends TestCase
         $notifResponse = $this->actingAs($this->owner)->get(route('community.index', ['tab' => 'notifications']));
         $notifResponse->assertStatus(200);
         $notifResponse->assertSee('Notifikasi Aktivitas');
+    }
+
+    public function test_unsubscribed_owner_is_blocked_from_creating_post(): void
+    {
+        $freeUser = User::create(['name' => 'Owner Gratis', 'email' => 'free@community.test', 'password' => 'password']);
+        $freeBiz = Business::create(['name' => 'Usaha Gratisan']);
+        $freeBiz->users()->attach($freeUser->id, ['id' => (string) Str::uuid(), 'role' => 'owner']);
+        $freeUser->update(['active_business_id' => $freeBiz->id]);
+        Context::setBusiness($freeBiz);
+
+        $response = $this->actingAs($freeUser)
+            ->withSession(['active_business_id' => $freeBiz->id])
+            ->post(route('community.store'), [
+                'content' => 'Saya belum berlangganan, coba posting.',
+            ]);
+
+        $response->assertSessionHas('error');
+        $this->assertDatabaseMissing('community_posts', [
+            'owner_id' => $freeUser->id,
+            'content' => 'Saya belum berlangganan, coba posting.',
+        ]);
+    }
+
+    public function test_unsubscribed_owner_is_blocked_from_commenting(): void
+    {
+        $post = CommunityPost::create([
+            'owner_id' => $this->owner->id,
+            'business_id' => $this->business->id,
+            'content' => 'Postingan untuk diskusi berbayar',
+        ]);
+
+        $freeUser = User::create(['name' => 'Owner Gratis Komen', 'email' => 'free_comment@community.test', 'password' => 'password']);
+        $freeBiz = Business::create(['name' => 'Usaha Komen']);
+        $freeBiz->users()->attach($freeUser->id, ['id' => (string) Str::uuid(), 'role' => 'owner']);
+        $freeUser->update(['active_business_id' => $freeBiz->id]);
+        Context::setBusiness($freeBiz);
+
+        $response = $this->actingAs($freeUser)
+            ->withSession(['active_business_id' => $freeBiz->id])
+            ->postJson(route('community.comment', $post), [
+                'content' => 'Coba komentar tanpa subscribe',
+            ]);
+
+        $response->assertStatus(403);
+        $response->assertJson([
+            'success' => false,
+            'code' => 'SUBSCRIPTION_REQUIRED',
+        ]);
+        $this->assertDatabaseMissing('community_comments', [
+            'user_id' => $freeUser->id,
+            'content' => 'Coba komentar tanpa subscribe',
+        ]);
+    }
+
+    public function test_unsubscribed_owner_is_blocked_from_reposting(): void
+    {
+        $post = CommunityPost::create([
+            'owner_id' => $this->owner->id,
+            'business_id' => $this->business->id,
+            'content' => 'Postingan untuk repost berbayar',
+        ]);
+
+        $freeUser = User::create(['name' => 'Owner Gratis Repost', 'email' => 'free_repost@community.test', 'password' => 'password']);
+        $freeBiz = Business::create(['name' => 'Usaha Repost']);
+        $freeBiz->users()->attach($freeUser->id, ['id' => (string) Str::uuid(), 'role' => 'owner']);
+        $freeUser->update(['active_business_id' => $freeBiz->id]);
+        Context::setBusiness($freeBiz);
+
+        $response = $this->actingAs($freeUser)
+            ->withSession(['active_business_id' => $freeBiz->id])
+            ->postJson(route('community.repost', $post));
+
+        $response->assertStatus(403);
+        $response->assertJson([
+            'success' => false,
+            'code' => 'SUBSCRIPTION_REQUIRED',
+        ]);
+        $this->assertDatabaseMissing('community_reposts', [
+            'user_id' => $freeUser->id,
+            'post_id' => $post->id,
+        ]);
     }
 }

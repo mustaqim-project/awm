@@ -1697,4 +1697,23 @@ final class EntitlementService
 
         return $payment->fresh();
     }
+
+    /**
+     * Can business / user participate in community (post, comment, repost)?
+     * Wajib memiliki paket langganan aktif (Standard, Premium, atau Prestige).
+     */
+    public function canParticipateInCommunity(Business $business, ?User $user = null): bool
+    {
+        $sub = $this->getSubscription($business);
+        if ($sub->isCorePlan()) {
+            return true;
+        }
+
+        if ($user instanceof User) {
+            $highestTier = app(OwnerStorageQuotaService::class)->getHighestTierForOwner($user);
+            return $highestTier !== BusinessSubscription::TIER_FREE;
+        }
+
+        return false;
+    }
 }

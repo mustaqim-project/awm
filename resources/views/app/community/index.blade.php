@@ -76,6 +76,12 @@
                 this.selectedTicket = data.ticket;
                 this.selectedTicket.event_id = eventId;
             } else {
+                if (data.payment_url) {
+                    if (confirm((data.message || 'Pembayaran tiket belum selesai.') + '\n\nBuka halaman pembayaran QRIS sekarang?')) {
+                        window.location.href = data.payment_url;
+                        return;
+                    }
+                }
                 this.ticketError = data.message;
             }
         } catch (e) {
@@ -251,7 +257,7 @@
                 <div class="flex items-center justify-between text-xs font-semibold">
                     <span class="text-slate-600 dark:text-slate-400 flex items-center gap-1.5">
                         <i data-lucide="hard-drive" class="w-3.5 h-3.5 text-amber-500"></i>
-                        <span>Kapasitas Cloud</span>
+                        <span>Kuota Storage</span>
                     </span>
                     <span class="font-mono text-slate-900 dark:text-white">{{ $storageSummary['percentage'] ?? 0 }}%</span>
                 </div>
@@ -279,10 +285,10 @@
                         </div>
                         <div>
                             <h2 class="text-sm font-bold text-slate-900 dark:text-white leading-tight">
-                                Agenda Event Komunitas Terbaru
+                                Event &amp; Agenda Komunitas Terbaru
                             </h2>
                             <span class="text-[10px] text-slate-400 dark:text-slate-500">
-                                Berbayar &amp; Free · Offline &amp; Online
+                                Aktif Semua Paket · Berbayar &amp; Free · Offline &amp; Online
                             </span>
                         </div>
                     </div>
@@ -319,7 +325,8 @@
                         class="flex gap-3.5 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar pb-1 pt-1 -mx-1 px-1">
                         @foreach($upcomingEvents as $evt)
                             @php
-                                $userRegistered = $evt->isUserRegistered(auth()->user());
+                                $userReg = $evt->getUserRegistration(auth()->user());
+                                $userRegistered = $userReg !== null && $userReg->status !== \App\Models\CommunityEventRegistration::STATUS_CANCELLED;
                                 $regOpen = $evt->isRegistrationOpen();
                             @endphp
                             <div class="w-[280px] sm:w-[310px] shrink-0 snap-start bg-slate-50/90 dark:bg-white/[0.03] border border-slate-200/80 dark:border-white/10 rounded-xl p-3.5 flex flex-col justify-between gap-3 hover:border-[#007AFF]/40 dark:hover:border-[#0A84FF]/40 transition">
@@ -380,16 +387,24 @@
 
                                 <div class="pt-1">
                                     @if($userRegistered)
-                                        <button type="button" @click="viewTicket('{{ $evt->id }}')"
-                                            class="w-full py-2 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 transition flex items-center justify-center gap-1.5 shadow-2xs cursor-pointer">
-                                            <i data-lucide="ticket" class="w-3.5 h-3.5"></i>
-                                            <span>Tiket &amp; Check-in</span>
-                                        </button>
+                                        @if($userReg && $userReg->isPendingPayment())
+                                            <a href="{{ route('community.events.payment.show', $userReg) }}"
+                                                class="w-full py-2 rounded-xl text-xs font-bold text-white bg-amber-600 hover:bg-amber-500 transition flex items-center justify-center gap-1.5 shadow-2xs">
+                                                <i data-lucide="qr-code" class="w-3.5 h-3.5"></i>
+                                                <span>Bayar QRIS ({{ $userReg->getFormattedAmountPaid() }})</span>
+                                            </a>
+                                        @else
+                                            <button type="button" @click="viewTicket('{{ $evt->id }}')"
+                                                class="w-full py-2 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 transition flex items-center justify-center gap-1.5 shadow-2xs cursor-pointer">
+                                                <i data-lucide="ticket" class="w-3.5 h-3.5"></i>
+                                                <span>Tiket &amp; Check-in</span>
+                                            </button>
+                                        @endif
                                     @elseif($regOpen)
                                         <form method="POST" action="{{ route('community.events.register', $evt) }}">
                                             @csrf
                                             <button type="submit"
-                                                class="w-full py-2 rounded-xl text-xs font-bold text-white bg-[#007AFF] hover:bg-[#0062CC] transition flex items-center justify-center gap-1.5 shadow-2xs active:scale-[0.98] cursor-pointer">
+                                                class="w-full py-2 rounded-xl text-xs font-bold text-white {{ $evt->isPaid() ? 'bg-amber-600 hover:bg-amber-500 shadow-amber-600/20' : 'bg-[#007AFF] hover:bg-[#0062CC] shadow-[#007AFF]/20' }} transition flex items-center justify-center gap-1.5 shadow-2xs active:scale-[0.98] cursor-pointer">
                                                 <i data-lucide="{{ $evt->isPaid() ? 'credit-card' : 'user-plus' }}" class="w-3.5 h-3.5"></i>
                                                 <span>{{ $evt->isFree() ? 'Daftar Event (Gratis)' : 'Beli Tiket (' . $evt->formatted_price . ')' }}</span>
                                             </button>
@@ -470,7 +485,7 @@
 
             <!-- 2D. KONTEN TAB FEED & POSTINGAN SAYA -->
             @else
-                <!-- Post Composer (Desain Ramping ala Threads / X.com) -->
+                <!-- Post Composer (Desain Ramping ala Threads / X.com - Tampil Normal untuk Semua Pengguna) -->
                 <div id="composer-section"
                     class="bg-white dark:bg-[#1C1C1E] rounded-2xl border border-slate-200/80 dark:border-white/10 p-4 sm:p-5 shadow-2xs"
                     x-data="{
@@ -480,22 +495,52 @@
                         isSubmitting: false,
                         onInput(e) {
                             this.charCount = e.target.value.length;
+                        },
+                        handlePostSubmit(e) {
+                            if (!window.__isSubscribedCommunity) {
+                                e.preventDefault();
+                                promptSubscribe('menerbitkan postingan di komunitas');
+                                return false;
+                            }
+                            this.isSubmitting = true;
                         }
                     }">
 
                     <form method="POST" action="{{ route('community.store') }}" enctype="multipart/form-data"
-                        @submit="isSubmitting = true" class="space-y-3">
+                        @submit="handlePostSubmit($event)" class="space-y-3">
                         @csrf
 
                         <div class="flex items-start gap-3">
                             <!-- User Avatar -->
-                            <div class="w-10 h-10 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold text-sm flex items-center justify-center shrink-0 shadow-2xs">
-                                {{ strtoupper(substr(auth()->user()->name ?? 'O', 0, 1)) }}
+                            <div class="relative">
+                                <div class="w-10 h-10 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold text-sm flex items-center justify-center shrink-0 shadow-2xs">
+                                    {{ strtoupper(substr(auth()->user()->name ?? 'O', 0, 1)) }}
+                                </div>
+                                @if($isSubscribed)
+                                    <span class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-amber-500 text-slate-900 flex items-center justify-center text-[9px] font-black border-2 border-white dark:border-[#1C1C1E]" title="Pelanggan Aktif Cooca">
+                                        ★
+                                    </span>
+                                @endif
                             </div>
 
                             <!-- Borderless Textarea Input -->
                             <div class="flex-1 min-w-0">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="text-xs font-bold text-slate-900 dark:text-white">{{ auth()->user()->name ?? 'Owner' }}</span>
+                                    @if($isSubscribed)
+                                        <span class="inline-flex items-center gap-1 px-1.5 py-0.2 rounded-md text-[10px] font-bold bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 border border-amber-200/60 dark:border-amber-800/60">
+                                            <i data-lucide="crown" class="w-2.5 h-2.5"></i>
+                                            <span>Subscribed</span>
+                                        </span>
+                                    @else
+                                        <span class="inline-flex items-center gap-1 px-1.5 py-0.2 rounded-md text-[10px] font-medium bg-slate-100 dark:bg-white/5 text-slate-500 dark:text-slate-400">
+                                            <span>Member Komunitas</span>
+                                        </span>
+                                    @endif
+                                </div>
                                 <textarea name="content" required rows="3" maxlength="5000" @input="onInput($event)"
+                                    @focus="if(!window.__isSubscribedCommunity) { $el.blur(); promptSubscribe('menerbitkan postingan di komunitas'); }"
+                                    @click="if(!window.__isSubscribedCommunity) { $el.blur(); promptSubscribe('menerbitkan postingan di komunitas'); }"
                                     placeholder="Apa yang sedang Anda pikirkan untuk bisnis hari ini? Bagikan tips, pertanyaan, atau update toko..."
                                     class="w-full bg-transparent border-0 p-0 text-[14px] sm:text-[15px] text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-0 resize-none leading-relaxed"></textarea>
 
@@ -517,6 +562,7 @@
                             <div class="flex items-center gap-1.5 flex-wrap">
                                 <!-- Image Upload Button -->
                                 <label class="p-2 rounded-full text-slate-500 hover:text-[#007AFF] hover:bg-[#007AFF]/10 dark:hover:bg-white/10 transition cursor-pointer"
+                                    @click="if(!window.__isSubscribedCommunity) { $event.preventDefault(); promptSubscribe('mengunggah foto di komunitas'); }"
                                     title="Sisipkan Foto">
                                     <i data-lucide="image" class="w-4 h-4"></i>
                                     <input type="file" name="image" accept="image/jpeg,image/png,image/webp,image/gif"
@@ -526,16 +572,16 @@
                                 </label>
 
                                 <!-- Quick Tag Pills -->
-                                <button type="button" @click="appendTag('#TipsBisnis')"
-                                    class="px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 transition">
+                                <button type="button" @click="if(!window.__isSubscribedCommunity) { promptSubscribe('menambahkan topik tren'); } else { appendTag('#TipsBisnis'); }"
+                                    class="px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 transition cursor-pointer">
                                     #TipsBisnis
                                 </button>
-                                <button type="button" @click="appendTag('#ManajemenPOS')"
-                                    class="hidden sm:inline-block px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 transition">
+                                <button type="button" @click="if(!window.__isSubscribedCommunity) { promptSubscribe('menambahkan topik tren'); } else { appendTag('#ManajemenPOS'); }"
+                                    class="hidden sm:inline-block px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 transition cursor-pointer">
                                     #ManajemenPOS
                                 </button>
-                                <button type="button" @click="appendTag('#ArusKas')"
-                                    class="hidden sm:inline-block px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 transition">
+                                <button type="button" @click="if(!window.__isSubscribedCommunity) { promptSubscribe('menambahkan topik tren'); } else { appendTag('#ArusKas'); }"
+                                    class="hidden sm:inline-block px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 transition cursor-pointer">
                                     #ArusKas
                                 </button>
                             </div>
@@ -543,6 +589,7 @@
                             <div class="flex items-center gap-3">
                                 <span class="text-[11px] font-mono text-slate-400" x-show="charCount > 0" x-text="charCount + '/5000'"></span>
                                 <button type="submit" :disabled="isSubmitting"
+                                    @click="if(!window.__isSubscribedCommunity) { $event.preventDefault(); promptSubscribe('menerbitkan postingan di komunitas'); }"
                                     class="px-5 py-2 rounded-full text-xs font-bold text-white bg-[#007AFF] hover:bg-[#0062CC] active:scale-95 transition disabled:opacity-50 cursor-pointer shadow-xs">
                                     <span x-text="isSubmitting ? 'Memposting...' : 'Posting'"></span>
                                 </button>
@@ -709,13 +756,16 @@
                                             @endforelse
                                         </div>
 
-                                        <!-- Reply Input -->
+                                        <!-- Reply Input (Tampil Normal untuk Semua Pengguna, Block & Tampilkan Swal Alert saat Diklik jika Belum Subscribe) -->
                                         <form class="flex items-center gap-2 pt-1" @submit.prevent="submitComment($el)">
                                             @csrf
                                             <input type="text" name="content" required maxlength="1000"
+                                                @focus="if(!window.__isSubscribedCommunity) { $el.blur(); promptSubscribe('membalas komentar diskusi'); }"
+                                                @click="if(!window.__isSubscribedCommunity) { $el.blur(); promptSubscribe('membalas komentar diskusi'); }"
                                                 placeholder="Tulis balasan Anda..."
                                                 class="flex-1 bg-slate-50 dark:bg-white/[0.05] border border-slate-200 dark:border-white/10 rounded-full px-4 py-1.5 text-xs text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-[#007AFF]">
                                             <button type="submit"
+                                                @click="if(!window.__isSubscribedCommunity) { $event.preventDefault(); promptSubscribe('membalas komentar diskusi'); }"
                                                 class="px-4 py-1.5 rounded-full bg-[#007AFF] hover:bg-[#0062CC] text-white text-xs font-bold transition cursor-pointer shrink-0">
                                                 Balas
                                             </button>
@@ -1031,6 +1081,68 @@
 
 @push('scripts')
 <script>
+    window.__isSubscribedCommunity = {{ $isSubscribed ? 'true' : 'false' }};
+
+    function appendTag(tag) {
+        const textarea = document.querySelector('textarea[name="content"]');
+        if (!textarea) return;
+        const current = textarea.value.trim();
+        if (current.includes(tag)) return;
+        textarea.value = current ? current + ' ' + tag : tag + ' ';
+        textarea.dispatchEvent(new Event('input'));
+        textarea.focus();
+    }
+
+    function copyLink(postId) {
+        const url = window.location.origin + '/community#' + postId;
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(url).then(() => {
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        toast: true,
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Tautan postingan disalin!',
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                }
+            });
+        }
+    }
+
+    function promptSubscribe(actionName = 'mengakses fitur ini') {
+        if (typeof Swal !== 'undefined') {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Akses Khusus Berlangganan',
+                html: `<div class="space-y-2 text-center text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+                    <p>Untuk <strong>${actionName}</strong>, akun bisnis Anda wajib memiliki paket langganan aktif.</p>
+                    <p class="text-xs text-slate-400">Tingkatkan paket bisnis Anda untuk membuka hak posting, membalas komentar, dan me-repost wawasan komunitas.</p>
+                </div>`,
+                showCancelButton: true,
+                confirmButtonText: 'Berlangganan Sekarang',
+                cancelButtonText: 'Nanti Saja',
+                confirmButtonColor: '#007AFF',
+                cancelButtonColor: '#8E8E93',
+                reverseButtons: true,
+                customClass: {
+                    popup: 'rounded-3xl dark:bg-[#1C1C1E] dark:text-white border border-slate-200 dark:border-white/10',
+                    confirmButton: 'rounded-xl font-bold px-4 py-2.5',
+                    cancelButton: 'rounded-xl font-semibold px-4 py-2.5'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '{{ route('billing.limits') }}';
+                }
+            });
+        } else {
+            if (confirm(`Untuk ${actionName}, akun Anda wajib berlangganan.\n\nBuka halaman paket langganan sekarang?`)) {
+                window.location.href = '{{ route('billing.limits') }}';
+            }
+        }
+    }
+
     function postCard(postId, initialLiked, initialLikesCount, initialCommentsCount, initialReposted, initialRepostsCount) {
         return {
             liked: initialLiked,
@@ -1064,6 +1176,10 @@
             },
 
             async toggleRepost() {
+                if (!window.__isSubscribedCommunity) {
+                    promptSubscribe('me-repost wawasan komunitas');
+                    return;
+                }
                 try {
                     const res = await fetch('/community/' + postId + '/repost', {
                         method: 'POST',
@@ -1073,8 +1189,15 @@
                             'Accept': 'application/json'
                         }
                     });
-                    if (!res.ok) return;
                     const data = await res.json();
+                    if (!res.ok) {
+                        if (data.code === 'SUBSCRIPTION_REQUIRED' || res.status === 403) {
+                            promptSubscribe('me-repost wawasan komunitas');
+                        } else {
+                            alert(data.message || 'Gagal memproses repost.');
+                        }
+                        return;
+                    }
                     if (data.success) {
                         this.reposted = data.reposted;
                         this.repostsCount = data.reposts_count;
@@ -1085,6 +1208,10 @@
             },
 
             async submitComment(form) {
+                if (!window.__isSubscribedCommunity) {
+                    promptSubscribe('membalas komentar diskusi');
+                    return;
+                }
                 const input = form.querySelector('input[name="content"]');
                 const content = input.value.trim();
                 if (!content) return;
@@ -1099,8 +1226,15 @@
                         },
                         body: JSON.stringify({ content: content })
                     });
-                    if (!res.ok) return;
                     const data = await res.json();
+                    if (!res.ok) {
+                        if (data.code === 'SUBSCRIPTION_REQUIRED' || res.status === 403) {
+                            promptSubscribe('membalas komentar diskusi');
+                        } else {
+                            alert(data.message || 'Gagal mengirim komentar.');
+                        }
+                        return;
+                    }
                     if (data.success) {
                         input.value = '';
                         if (data.comment) {

@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Web;
 
+use App\Domain\Billing\EntitlementService;
+use App\Domain\Community\ContentModerationService;
 use App\Domain\Community\EventCheckinService;
 use App\Domain\Community\EventTicketService;
 use App\Domain\Community\TrendingTopicService;
+use App\Domain\Payment\TripayService;
 use App\Domain\Storage\OwnerStorageQuotaService;
 use App\Domain\Storage\TenantStorage;
 use App\Http\Controllers\Controller;
@@ -24,6 +27,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 final class CommunityWebController extends Controller
@@ -35,6 +39,9 @@ final class CommunityWebController extends Controller
         private readonly EventCheckinService $checkinService = new EventCheckinService,
         private readonly EventTicketService $ticketService = new EventTicketService,
         private readonly TrendingTopicService $trendingService = new TrendingTopicService,
+        private readonly ContentModerationService $moderationService = new ContentModerationService,
+        private readonly EntitlementService $entitlementService = new EntitlementService,
+        private readonly TripayService $tripayService = new TripayService,
     ) {}
 
     /**
@@ -139,6 +146,9 @@ final class CommunityWebController extends Controller
         // Storage summary for the upload warning.
         $storageSummary = $this->storageQuota->getSummary($user);
 
+        // Subscription access check (Wajib subscribe untuk posting, komentar, dan repost)
+        $isSubscribed = $this->entitlementService->canParticipateInCommunity($business, $user);
+
         return view('app.community.index', compact(
             'business',
             'posts',
@@ -149,7 +159,8 @@ final class CommunityWebController extends Controller
             'activeTopic',
             'activeSearch',
             'notifications',
-            'unreadNotificationsCount'
+            'unreadNotificationsCount',
+            'isSubscribed'
         ));
     }
 
@@ -180,7 +191,8 @@ final class CommunityWebController extends Controller
     }
 
     /**
-     * Register for a community event (1-click registration).
+     * Register for a community event.
+     * Untuk event berbayar, pembayaran via QRIS seperti langganan SaaS.
      */
     public function registerEvent(Request $request, CommunityEvent $event): RedirectResponse|JsonResponse
     {
@@ -200,15 +212,40 @@ final class CommunityWebController extends Controller
             ->where('user_id', $user->getAuthIdentifier())
             ->first();
 
+        $isPaidEvent = $event->isPaid();
+
         if ($registration) {
-            if ($registration->status === CommunityEventRegistration::STATUS_CANCELLED) {
-                $registration->update([
-                    'status' => CommunityEventRegistration::STATUS_REGISTERED,
-                    'amount_paid' => $event->isPaid() ? (float) $event->price : 0,
-                    'payment_status' => 'paid',
-                    'registered_at' => Carbon::now(),
-                ]);
+            // Jika sudah terdaftar dan lunas
+            if ($registration->status !== CommunityEventRegistration::STATUS_CANCELLED && $registration->isPaid()) {
+                $msg = "Anda sudah terdaftar dan tiket sudah aktif untuk event '{$event->title}'.";
+                if ($request->wantsJson()) {
+                    return response()->json(['success' => true, 'message' => $msg, 'registration' => $registration]);
+                }
+                return back()->with('info', $msg);
             }
+
+            // Jika statusnya pending payment untuk event berbayar
+            if ($isPaidEvent && $registration->isPendingPayment() && ! $registration->isExpired()) {
+                if ($request->wantsJson()) {
+                    return response()->json([
+                        'success' => true,
+                        'is_paid_event' => true,
+                        'redirect_url' => route('community.events.payment.show', $registration),
+                        'message' => "Lanjutkan pembayaran QRIS untuk tiket event '{$event->title}'.",
+                    ]);
+                }
+                return redirect()->route('community.events.payment.show', $registration);
+            }
+
+            // Re-activate registration
+            $registration->update([
+                'status' => CommunityEventRegistration::STATUS_REGISTERED,
+                'amount_paid' => $isPaidEvent ? (float) $event->price : 0,
+                'payment_status' => $isPaidEvent ? CommunityEventRegistration::PAYMENT_STATUS_PENDING : CommunityEventRegistration::PAYMENT_STATUS_PAID,
+                'payment_method' => 'qris',
+                'payment_gateway' => 'tripay',
+                'registered_at' => Carbon::now(),
+            ]);
         } else {
             $ticketCode = $this->ticketService->generateTicketCode();
             $registration = CommunityEventRegistration::create([
@@ -216,25 +253,59 @@ final class CommunityWebController extends Controller
                 'user_id' => $user->getAuthIdentifier(),
                 'business_id' => $business->id,
                 'ticket_code' => $ticketCode,
-                'amount_paid' => $event->isPaid() ? (float) $event->price : 0,
-                'payment_status' => 'paid',
+                'amount_paid' => $isPaidEvent ? (float) $event->price : 0,
+                'payment_status' => $isPaidEvent ? CommunityEventRegistration::PAYMENT_STATUS_PENDING : CommunityEventRegistration::PAYMENT_STATUS_PAID,
+                'payment_method' => 'qris',
+                'payment_gateway' => 'tripay',
                 'registered_at' => Carbon::now(),
                 'status' => CommunityEventRegistration::STATUS_REGISTERED,
             ]);
         }
 
-        $priceNote = $event->isPaid() ? " [Tiket {$event->formatted_price}]" : " [Gratis]";
-        $successMsg = "Pendaftaran berhasil! Anda terdaftar pada event '{$event->title}'{$priceNote}. Tiket digital dan barcode check-in siap digunakan.";
+        // EVENT BERBAYAR: Inisialisasi Transaksi QRIS seperti Pembayaran Subscribe
+        if ($isPaidEvent) {
+            $tripayRes = $this->tripayService->createEventRegistrationTransaction($registration, 'QRIS');
+            if ($tripayRes['success'] ?? false) {
+                $registration->update([
+                    'gateway_reference' => $tripayRes['reference'] ?? null,
+                    'gateway_pay_code' => $tripayRes['pay_code'] ?? null,
+                    'gateway_qr_url' => $tripayRes['qr_url'] ?? null,
+                    'gateway_qr_string' => $tripayRes['qr_string'] ?? null,
+                    'gateway_fee' => (float) ($tripayRes['fee'] ?? 0),
+                    'gateway_expired_at' => isset($tripayRes['expired_time'])
+                        ? Carbon::createFromTimestamp($tripayRes['expired_time'])
+                        : Carbon::now()->addMinutes(15),
+                ]);
+            }
+
+            if ($request->wantsJson()) {
+                return response()->json([
+                    'success' => true,
+                    'is_paid_event' => true,
+                    'redirect_url' => route('community.events.payment.show', $registration),
+                    'message' => "Silakan scan kode QRIS untuk menyelesaikan pembayaran tiket event '{$event->title}'.",
+                    'registration' => $registration,
+                ]);
+            }
+
+            return redirect()->route('community.events.payment.show', $registration)
+                ->with('info', "Silakan scan kode QRIS untuk menyelesaikan pembayaran tiket event '{$event->title}'.");
+        }
+
+        // EVENT GRATIS: Langsung aktif
+        $registration->update(['paid_at' => Carbon::now()]);
+        $successMsg = "Pendaftaran berhasil! Anda terdaftar pada event '{$event->title}' [Gratis]. Tiket digital dan barcode check-in siap digunakan.";
 
         if ($request->wantsJson()) {
             return response()->json([
                 'success' => true,
+                'is_paid_event' => false,
                 'message' => $successMsg,
                 'registration' => $registration,
             ]);
         }
 
-        return back()->with('success', $successMsg);
+        return back(fallback: route('community.events.index'))->with('success', $successMsg);
     }
 
     /**
@@ -276,6 +347,99 @@ final class CommunityWebController extends Controller
     }
 
     /**
+     * Show event QRIS payment page (Identical to Subscription QRIS Payment).
+     */
+    public function showEventPayment(Request $request, CommunityEventRegistration $registration): View|RedirectResponse
+    {
+        $user = $request->user();
+        abort_unless($user !== null, 403);
+        abort_unless((string) $registration->user_id === (string) $user->getAuthIdentifier(), 403);
+
+        $registration->load(['event', 'business', 'user']);
+        $event = $registration->event;
+
+        // Jika sudah lunas, langsung arahkan ke events
+        if ($registration->isPaid()) {
+            return redirect()->route('community.events.index')
+                ->with('success', "Pembayaran tiket event '{$event->title}' telah lunas. Tiket digital Anda siap digunakan!");
+        }
+
+        // Jika belum ada QR string (misal gagal saat inisialisasi awal), generate kembali
+        if (empty($registration->gateway_qr_string) && ! $registration->isPaid()) {
+            $tripayRes = $this->tripayService->createEventRegistrationTransaction($registration, 'QRIS');
+            if ($tripayRes['success'] ?? false) {
+                $registration->update([
+                    'gateway_reference' => $tripayRes['reference'] ?? null,
+                    'gateway_pay_code' => $tripayRes['pay_code'] ?? null,
+                    'gateway_qr_url' => $tripayRes['qr_url'] ?? null,
+                    'gateway_qr_string' => $tripayRes['qr_string'] ?? null,
+                    'gateway_fee' => (float) ($tripayRes['fee'] ?? 0),
+                    'gateway_expired_at' => isset($tripayRes['expired_time'])
+                        ? Carbon::createFromTimestamp($tripayRes['expired_time'])
+                        : Carbon::now()->addMinutes(15),
+                ]);
+            }
+        }
+
+        // SVG QR Code untuk tampilan cadangan & visual instan
+        $qrString = $registration->gateway_qr_string ?: $registration->ticket_code;
+        $qrisSvg = $this->ticketService->generateQrCodeSvg($qrString, 280);
+
+        return view('app.community.event_payment', compact('registration', 'event', 'qrisSvg'));
+    }
+
+    /**
+     * Check real-time payment status of event registration (JSON polling).
+     */
+    public function checkEventPaymentStatus(Request $request, CommunityEventRegistration $registration): JsonResponse
+    {
+        $user = $request->user();
+        abort_unless($user !== null, 403);
+        abort_unless((string) $registration->user_id === (string) $user->getAuthIdentifier(), 403);
+
+        // Jika menggunakan gateway TriPay dan ada gateway_reference dan belum paid, sinkronkan ke gateway
+        if (! $registration->isPaid() && $registration->gateway_reference) {
+            $gatewayDetail = $this->tripayService->getTransactionDetail($registration->gateway_reference);
+            if ($gatewayDetail && in_array(strtoupper((string) ($gatewayDetail['status'] ?? '')), ['PAID', 'SETTLED', 'SUCCESS'], true)) {
+                $registration->markAsPaid();
+            }
+        }
+
+        return response()->json([
+            'success' => true,
+            'is_paid' => $registration->isPaid(),
+            'payment_status' => $registration->payment_status,
+            'ticket_code' => $registration->ticket_code,
+            'paid_at' => $registration->paid_at?->translatedFormat('d M Y, H:i') . ' WIB',
+            'redirect_url' => route('community.events.index'),
+        ]);
+    }
+
+    /**
+     * Simulate successful QRIS payment (Dev / Testing / Instant Sandbox).
+     */
+    public function simulateEventPayment(Request $request, CommunityEventRegistration $registration): RedirectResponse|JsonResponse
+    {
+        $user = $request->user();
+        abort_unless($user !== null, 403);
+        abort_unless((string) $registration->user_id === (string) $user->getAuthIdentifier(), 403);
+
+        $registration->markAsPaid();
+
+        $msg = "Simulasi pembayaran QRIS berhasil! Tiket event '{$registration->event->title}' sekarang lunas dan aktif.";
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => $msg,
+                'redirect_url' => route('community.events.index'),
+            ]);
+        }
+
+        return redirect()->route('community.events.index')->with('success', $msg);
+    }
+
+    /**
      * Get digital ticket details with SVG Barcode and SVG QR Code.
      */
     public function getEventTicket(Request $request, CommunityEvent $event): JsonResponse
@@ -294,6 +458,15 @@ final class CommunityWebController extends Controller
                 'success' => false,
                 'message' => 'Tiket tidak ditemukan. Anda belum terdaftar pada event ini.',
             ], 404);
+        }
+
+        if ($event->isPaid() && ! $registration->isPaid()) {
+            return response()->json([
+                'success' => false,
+                'is_pending_payment' => true,
+                'payment_url' => route('community.events.payment.show', $registration),
+                'message' => "Tiket belum aktif karena pembayaran QRIS sebesar {$event->formatted_price} belum diselesaikan. Silakan selesaikan pembayaran terlebih dahulu.",
+            ], 402);
         }
 
         $qrCodeSvg = $this->ticketService->generateQrCodeSvg($registration->ticket_code, 240);
@@ -384,10 +557,21 @@ final class CommunityWebController extends Controller
         $user = $request->user();
         abort_unless($user !== null, 403);
 
+        if (! $this->entitlementService->canParticipateInCommunity($business, $user)) {
+            return back()->withInput()->with('error', 'Akses membuat postingan komunitas khusus untuk member yang telah berlangganan (subscribe) paket Cooca. Silakan aktifkan paket langganan bisnis Anda.');
+        }
+
         $validated = $request->validate([
             'content' => ['required', 'string', 'max:5000'],
             'image' => ['nullable', 'file', 'image', 'mimes:jpeg,png,webp,gif', 'max:' . (self::MAX_IMAGE_BYTES / 1024)],
         ]);
+
+        try {
+            $cleanContent = $this->moderationService->validateOrFail($validated['content']);
+        } catch (ValidationException $e) {
+            $firstError = $e->validator->errors()->first('content') ?: 'Konten mengandung kata yang dilarang.';
+            return back()->withInput()->withErrors($e->validator->errors())->with('error', $firstError);
+        }
 
         $imagePath = null;
         if ($request->hasFile('image')) {
@@ -418,7 +602,7 @@ final class CommunityWebController extends Controller
         CommunityPost::create([
             'owner_id' => $user->getAuthIdentifier(),
             'business_id' => $business->id,
-            'content' => $validated['content'],
+            'content' => $cleanContent,
             'image_path' => $imagePath,
         ]);
 
@@ -475,6 +659,15 @@ final class CommunityWebController extends Controller
         abort_unless($user !== null, 403);
         $business = Context::requireBusiness();
 
+        if (! $this->entitlementService->canParticipateInCommunity($business, $user)) {
+            return response()->json([
+                'success' => false,
+                'code' => 'SUBSCRIPTION_REQUIRED',
+                'message' => 'Akses repost postingan komunitas khusus untuk member yang telah berlangganan (subscribe). Silakan tingkatkan paket Anda untuk membagikan postingan.',
+                'upgrade_url' => route('billing.limits'),
+            ], 403);
+        }
+
         $repost = CommunityRepost::where('post_id', $post->id)
             ->where('user_id', $user->getAuthIdentifier())
             ->first();
@@ -516,15 +709,34 @@ final class CommunityWebController extends Controller
     {
         $user = $request->user();
         abort_unless($user !== null, 403);
+        $business = Context::business() ?? $user->activeBusiness ?? $user->businesses()->first();
+
+        if (! $business || ! $this->entitlementService->canParticipateInCommunity($business, $user)) {
+            return response()->json([
+                'success' => false,
+                'code' => 'SUBSCRIPTION_REQUIRED',
+                'message' => 'Akses komentar komunitas khusus untuk member yang telah berlangganan (subscribe). Silakan tingkatkan paket Anda untuk ikut berdiskusi.',
+                'upgrade_url' => route('billing.limits'),
+            ], 403);
+        }
 
         $validated = $request->validate([
             'content' => ['required', 'string', 'max:1000'],
         ]);
 
+        try {
+            $cleanContent = $this->moderationService->validateOrFail($validated['content']);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->validator->errors()->first('content') ?: 'Komentar mengandung kata yang dilarang.',
+            ], 422);
+        }
+
         $comment = CommunityComment::create([
             'post_id' => $post->id,
             'user_id' => $user->getAuthIdentifier(),
-            'content' => $validated['content'],
+            'content' => $cleanContent,
         ]);
 
         $comment->load(['user']);

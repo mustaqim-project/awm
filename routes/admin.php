@@ -183,6 +183,17 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
             Route::get('/{event}/export', [AdminCommunityEventController::class, 'export'])->name('export');
         });
 
+        // Community Word Filters & Moderation Rules (Judol, Scam, Kata Kasar, Pornografi)
+        Route::prefix('word-filters')->name('word-filters.')->group(function (): void {
+            Route::get('/', [\App\Http\Controllers\Admin\AdminWordFilterController::class, 'index'])->name('index');
+            Route::post('/', [\App\Http\Controllers\Admin\AdminWordFilterController::class, 'store'])->name('store');
+            Route::post('/bulk', [\App\Http\Controllers\Admin\AdminWordFilterController::class, 'bulkStore'])->name('bulk-store');
+            Route::put('/{wordFilter}', [\App\Http\Controllers\Admin\AdminWordFilterController::class, 'update'])->name('update');
+            Route::post('/{wordFilter}/toggle', [\App\Http\Controllers\Admin\AdminWordFilterController::class, 'toggle'])->name('toggle');
+            Route::delete('/{wordFilter}', [\App\Http\Controllers\Admin\AdminWordFilterController::class, 'destroy'])->name('destroy');
+            Route::post('/seed-defaults', [\App\Http\Controllers\Admin\AdminWordFilterController::class, 'seedDefaults'])->name('seed-defaults');
+        });
+
         // CMS Template Excel Unduhan
         Route::prefix('templates')->name('templates.')->group(function (): void {
             Route::get('/', [AdminTemplateController::class, 'index'])->name('index');

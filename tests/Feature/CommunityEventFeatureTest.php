@@ -407,17 +407,25 @@ class CommunityEventFeatureTest extends TestCase
         $this->assertFalse($paidOnlineEvent->isOffline());
         $this->assertSame('Rp 149.000', $paidOnlineEvent->formatted_price);
 
-        // 2. Register for paid event
+        // 2. Register for paid event (mengarahkan ke instruksi pembayaran QRIS)
         $regResponse = $this->actingAs($this->owner)->post(route('community.events.register', $paidOnlineEvent));
-        $regResponse->assertSessionHas('success');
 
         $registration = CommunityEventRegistration::where('event_id', $paidOnlineEvent->id)
             ->where('user_id', $this->owner->id)
             ->firstOrFail();
 
+        $regResponse->assertRedirect(route('community.events.payment.show', $registration));
         $this->assertEquals(149000, $registration->amount_paid);
+        $this->assertEquals(CommunityEventRegistration::PAYMENT_STATUS_PENDING, $registration->payment_status);
 
-        // 3. Inspect Ticket payload via JSON API
+        // Sebelum bayar, akses tiket ditolak dengan HTTP 402
+        $unpaidTicketResponse = $this->actingAs($this->owner)->getJson(route('community.events.ticket', $paidOnlineEvent));
+        $unpaidTicketResponse->assertStatus(402);
+
+        // Selesaikan pembayaran QRIS via simulation / markAsPaid
+        $registration->markAsPaid();
+
+        // 3. Inspect Ticket payload via JSON API setelah pembayaran lunas
         $ticketResponse = $this->actingAs($this->owner)->getJson(route('community.events.ticket', $paidOnlineEvent));
         $ticketResponse->assertStatus(200);
         $ticketResponse->assertJson([

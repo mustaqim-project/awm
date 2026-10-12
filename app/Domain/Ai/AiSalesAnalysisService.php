@@ -18,6 +18,8 @@ use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use App\Models\Quotation;
 use App\Models\QuotationItem;
+use App\Models\Unit;
+use App\Models\AuditLog;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -933,16 +935,29 @@ final class AiSalesAnalysisService
         $entitlement->deductAiTokens($business, 1500, 'execute_action', $user);
 
         if ($actionType === 'create_invoice') {
-            $customer = !empty($payload['customer_id']) 
-                ? Customer::where('business_id', $business->id)->find($payload['customer_id'])
-                : Customer::where('business_id', $business->id)->first();
+            if (! empty($payload['customer_id'])) {
+                $customer = Customer::where('business_id', $business->id)->find($payload['customer_id']);
+                if (! $customer) {
+                    throw new \InvalidArgumentException('Pelanggan yang dipilih tidak valid atau bukan milik bisnis Anda.');
+                }
+            } else {
+                $customer = Customer::where('business_id', $business->id)->first();
+            }
 
-            if (!$customer) {
+            if (! $customer) {
                 $customer = Customer::create([
                     'business_id' => $business->id,
                     'name' => $payload['customer_name'] ?? 'Pelanggan Umum',
                     'phone' => '08123456789',
                 ]);
+            }
+
+            $product = null;
+            if (! empty($payload['product_id'])) {
+                $product = Product::where('business_id', $business->id)->find($payload['product_id']);
+                if (! $product) {
+                    throw new \InvalidArgumentException('Produk yang dipilih tidak valid atau bukan milik bisnis Anda.');
+                }
             }
 
             $invPrefix = 'INV-' . date('Ym') . '-';
@@ -956,56 +971,73 @@ final class AiSalesAnalysisService
             }
             $invNumber = $invPrefix . str_pad((string) $seq, 4, '0', STR_PAD_LEFT);
 
-            $qty = (float) ($payload['quantity'] ?? 1);
-            $price = (float) ($payload['unit_price'] ?? 10000);
+            $qty = max(0.001, (float) ($payload['quantity'] ?? 1));
+            $price = max(0.0, (float) ($payload['unit_price'] ?? 10000));
             $subtotal = $qty * $price;
-
-            $product = !empty($payload['product_id']) ? Product::where('business_id', $business->id)->find($payload['product_id']) : null;
             $hpp = $product ? (float) $product->base_cost * $qty : 0.0;
-
-            $invoice = Invoice::create([
-                'business_id' => $business->id,
-                'customer_id' => $customer->id,
-                'invoice_number' => $invNumber,
-                'invoice_date' => Carbon::today()->toDateString(),
-                'due_date' => Carbon::today()->addDays(14)->toDateString(),
-                'status' => Invoice::STATUS_UNPAID,
-                'subtotal' => $subtotal,
-                'total_amount' => $subtotal,
-                'balance_due' => $subtotal,
-                'total_hpp_cost' => $hpp,
-                'total_gross_profit' => $subtotal - $hpp,
-                'payment_terms' => 'Net 14',
-                'notes' => 'Diterbitkan otomatis via AI Assistant (Dikonfirmasi oleh Pengguna)',
-            ]);
-
             $defaultUnitId = $product?->output_unit_id ?? Unit::where('business_id', $business->id)->first()?->id;
 
-            InvoiceItem::create([
-                'invoice_id' => $invoice->id,
-                'product_id' => $product?->id,
-                'item_name' => $payload['product_name'] ?? 'Item Transaksi',
-                'quantity' => $qty,
-                'unit_id' => $defaultUnitId,
-                'unit_price' => $price,
-                'unit_hpp' => $product ? (float) $product->base_cost : 0.0,
-                'subtotal' => $subtotal,
-                'total_hpp' => $hpp,
-            ]);
+            return DB::transaction(function () use ($business, $user, $customer, $product, $invNumber, $subtotal, $hpp, $defaultUnitId, $qty, $price, $payload) {
+                $invoice = Invoice::create([
+                    'business_id' => $business->id,
+                    'customer_id' => $customer->id,
+                    'invoice_number' => $invNumber,
+                    'invoice_date' => Carbon::today()->toDateString(),
+                    'due_date' => Carbon::today()->addDays(14)->toDateString(),
+                    'status' => Invoice::STATUS_UNPAID,
+                    'subtotal' => $subtotal,
+                    'total_amount' => $subtotal,
+                    'balance_due' => $subtotal,
+                    'total_hpp_cost' => $hpp,
+                    'total_gross_profit' => $subtotal - $hpp,
+                    'payment_terms' => 'Net 14',
+                    'notes' => "Diterbitkan otomatis via AI Assistant (Dikonfirmasi oleh {$user->name})",
+                ]);
 
-            return [
-                'success' => true,
-                'message' => "Faktur {$invoice->invoice_number} berhasil diterbitkan!",
-                'redirect_url' => route('invoices.show', $invoice),
-            ];
+                InvoiceItem::create([
+                    'invoice_id' => $invoice->id,
+                    'product_id' => $product?->id,
+                    'item_name' => $payload['product_name'] ?? ($product?->name ?? 'Item Transaksi'),
+                    'quantity' => $qty,
+                    'unit_id' => $defaultUnitId,
+                    'unit_price' => $price,
+                    'unit_hpp' => $product ? (float) $product->base_cost : 0.0,
+                    'subtotal' => $subtotal,
+                    'total_hpp' => $hpp,
+                ]);
+
+                AuditLog::create([
+                    'business_id' => $business->id,
+                    'user_id' => $user->id,
+                    'auditable_type' => Invoice::class,
+                    'auditable_id' => $invoice->id,
+                    'action' => 'ai_pos_invoice_created',
+                    'notes' => "Invoice diterbitkan otomatis via AI POS Assistant oleh {$user->name}",
+                    'new_values' => ['invoice_number' => $invoice->invoice_number, 'total_amount' => $subtotal],
+                    'ip_address' => request()->ip() ?? '127.0.0.1',
+                    'user_agent' => request()->userAgent() ?? 'COOCA-POS-AI',
+                    'created_at' => now(),
+                ]);
+
+                return [
+                    'success' => true,
+                    'message' => "Faktur {$invoice->invoice_number} berhasil diterbitkan!",
+                    'redirect_url' => route('invoices.show', $invoice),
+                ];
+            });
         }
 
         if ($actionType === 'create_quotation') {
-            $customer = !empty($payload['customer_id']) 
-                ? Customer::where('business_id', $business->id)->find($payload['customer_id'])
-                : Customer::where('business_id', $business->id)->first();
+            if (! empty($payload['customer_id'])) {
+                $customer = Customer::where('business_id', $business->id)->find($payload['customer_id']);
+                if (! $customer) {
+                    throw new \InvalidArgumentException('Pelanggan yang dipilih tidak valid atau bukan milik bisnis Anda.');
+                }
+            } else {
+                $customer = Customer::where('business_id', $business->id)->first();
+            }
 
-            if (!$customer) {
+            if (! $customer) {
                 $customer = Customer::create([
                     'business_id' => $business->id,
                     'name' => $payload['customer_name'] ?? 'Calon Klien',
@@ -1013,28 +1045,49 @@ final class AiSalesAnalysisService
                 ]);
             }
 
-            $product = !empty($payload['product_id']) ? Product::where('business_id', $business->id)->find($payload['product_id']) : null;
+            $product = null;
+            if (! empty($payload['product_id'])) {
+                $product = Product::where('business_id', $business->id)->find($payload['product_id']);
+                if (! $product) {
+                    throw new \InvalidArgumentException('Produk yang dipilih tidak valid atau bukan milik bisnis Anda.');
+                }
+            }
 
-            $pipeline = app(SalesPipelineService::class);
-            $quotation = $pipeline->createQuotation($business, [
-                'customer_id' => $customer->id,
-                'date' => Carbon::today()->toDateString(),
-                'notes' => 'Diterbitkan otomatis via AI Assistant (Dikonfirmasi oleh Pengguna)',
-                'items' => [
-                    [
-                        'product_id' => $product?->id,
-                        'product_name' => $payload['product_name'] ?? ($product?->name ?? 'Item Penawaran'),
-                        'unit_price' => $payload['unit_price'] ?? 10000,
-                        'quantity' => $payload['quantity'] ?? 1,
+            return DB::transaction(function () use ($business, $user, $customer, $product, $payload) {
+                $pipeline = app(SalesPipelineService::class);
+                $quotation = $pipeline->createQuotation($business, [
+                    'customer_id' => $customer->id,
+                    'date' => Carbon::today()->toDateString(),
+                    'notes' => "Diterbitkan otomatis via AI Assistant (Dikonfirmasi oleh {$user->name})",
+                    'items' => [
+                        [
+                            'product_id' => $product?->id,
+                            'product_name' => $payload['product_name'] ?? ($product?->name ?? 'Item Penawaran'),
+                            'unit_price' => max(0.0, (float) ($payload['unit_price'] ?? 10000)),
+                            'quantity' => max(0.001, (float) ($payload['quantity'] ?? 1)),
+                        ],
                     ],
-                ],
-            ]);
+                ]);
 
-            return [
-                'success' => true,
-                'message' => "Surat Penawaran {$quotation->quotation_number} berhasil diterbitkan!",
-                'redirect_url' => route('sales.quotations.show', $quotation),
-            ];
+                AuditLog::create([
+                    'business_id' => $business->id,
+                    'user_id' => $user->id,
+                    'auditable_type' => Quotation::class,
+                    'auditable_id' => $quotation->id,
+                    'action' => 'ai_pos_quotation_created',
+                    'notes' => "Surat penawaran diterbitkan otomatis via AI POS Assistant oleh {$user->name}",
+                    'new_values' => ['quotation_number' => $quotation->quotation_number],
+                    'ip_address' => request()->ip() ?? '127.0.0.1',
+                    'user_agent' => request()->userAgent() ?? 'COOCA-POS-AI',
+                    'created_at' => now(),
+                ]);
+
+                return [
+                    'success' => true,
+                    'message' => "Surat Penawaran {$quotation->quotation_number} berhasil diterbitkan!",
+                    'redirect_url' => route('sales.quotations.show', $quotation),
+                ];
+            });
         }
 
         // Delegate operational actions to AiActionExecutor for unified audit trail & execution

@@ -91,18 +91,22 @@ final class PosAiWebController extends Controller
     /**
      * Execute confirmed AI Action Draft (Human-in-the-Loop).
      */
-    public function executeAction(Request $request): JsonResponse
+    public function executeAction(\App\Http\Requests\Ai\ExecuteAiPosActionRequest $request): JsonResponse
     {
         $business = Context::requireBusiness();
-        $user = auth()->user();
+        $user = Context::user() ?? auth()->user();
 
-        $validated = $request->validate([
-            'action_type' => ['required', 'string'],
-            'payload' => ['required', 'array'],
-        ]);
+        if (! $user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Autentikasi diperlukan untuk mengeksekusi aksi.',
+            ], 401);
+        }
+
+        $validated = $request->validated();
 
         try {
-            $result = $this->aiService->executeActionDraft($business, $user, $validated['action_type'], $validated['payload']);
+            $result = $this->aiService->executeActionDraft($business, $user, (string) $validated['action_type'], (array) $validated['payload']);
 
             return response()->json([
                 'success' => true,

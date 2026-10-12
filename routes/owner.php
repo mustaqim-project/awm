@@ -17,6 +17,7 @@ use App\Http\Controllers\Web\CommunityWebController;
 use App\Http\Controllers\Web\Crm\CrmWebController;
 use App\Http\Controllers\Web\CustomerWebController;
 use App\Http\Controllers\Web\DashboardWebController;
+use App\Http\Controllers\Web\DocumentationWebController;
 use App\Http\Controllers\Web\FeedbackWebController;
 use App\Http\Controllers\Web\Finance\AccountingWebController;
 use App\Http\Controllers\Web\Finance\CashLedgerWebController;
@@ -468,6 +469,9 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
             Route::get('/feedback/features/{featureRequest}', [FeedbackWebController::class, 'showFeature'])->name('feedback.features.show');
         });
 
+        // Dokumentasi & Panduan Penggunaan Sistem Cooca (Dapat diakses oleh seluruh pengguna)
+        Route::get('/docs', [DocumentationWebController::class, 'index'])->name('docs.index');
+
         // Community Feed & Events (Active for all subscription tiers: Free, Standard, Premium, Prestige)
         Route::get('/community', [CommunityWebController::class, 'index'])->name('community.index');
         Route::post('/community', [CommunityWebController::class, 'store'])->name('community.store');
@@ -483,6 +487,11 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         Route::get('/community/events/{event}/ticket', [CommunityWebController::class, 'getEventTicket'])->name('community.events.ticket');
         Route::post('/community/events/{event}/checkin-location', [CommunityWebController::class, 'checkinLocation'])->name('community.events.checkin-location');
         Route::post('/community/events/{event}/checkin-barcode', [CommunityWebController::class, 'checkinBarcode'])->name('community.events.checkin-barcode');
+
+        // Community Event QRIS Payment
+        Route::get('/community/events/registrations/{registration}/payment', [CommunityWebController::class, 'showEventPayment'])->name('community.events.payment.show');
+        Route::get('/community/events/registrations/{registration}/payment-status', [CommunityWebController::class, 'checkEventPaymentStatus'])->name('community.events.payment.status');
+        Route::post('/community/events/registrations/{registration}/simulate-pay', [CommunityWebController::class, 'simulateEventPayment'])->name('community.events.payment.simulate');
 
         // Dedicated SaaS Billing & Limits (RBAC & Multi-Tenant Secured)
         Route::get('/billing', [BillingAndLimitWebController::class, 'index'])->middleware('require.permission:billing.view')->name('billing');

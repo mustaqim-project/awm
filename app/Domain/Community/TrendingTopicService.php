@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Community;
 
+use App\Models\CommunityComment;
 use App\Models\CommunityPost;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -26,7 +27,7 @@ final class TrendingTopicService
     ];
 
     /**
-     * Topik bawaan/kurasi UMKM Indonesia sebagai fallback berkualitas saat feed baru dimulai.
+     * Topik bawaan/kurasi UMKM Indonesia sebagai fallback saat aktivitas 24 jam masih kosong/baru.
      */
     private const FALLBACK_TOPICS = [
         ['topic' => '#TipsBisnis', 'count' => 14, 'category' => 'Strategi Usaha'],
@@ -37,38 +38,67 @@ final class TrendingTopicService
     ];
 
     /**
-     * Mengambil 5 kata / topik teratas dalam 24 jam terakhir.
+     * Mengambil 5 kata / topik teratas yang sering diposting dan dikomentari dalam 24 jam terakhir.
      *
      * @return array<int, array{topic: string, count: int, category: string}>
      */
     public function getTopTrendingTopics(int $limit = 5): array
     {
-        // 1. Ambil postingan 24 jam terakhir
-        $recentPosts = CommunityPost::where('created_at', '>=', Carbon::now()->subHours(24))
-            ->pluck('content');
+        $since24h = Carbon::now()->subHours(24);
 
-        // Jika dalam 24 jam data masih sedikit (< 3), perluas horizon ke 7 hari
-        if ($recentPosts->count() < 3) {
-            $recentPosts = CommunityPost::where('created_at', '>=', Carbon::now()->subDays(7))
-                ->pluck('content');
+        // 1. Ambil postingan 24 jam terakhir beserta jumlah komentar yang masuk dalam 24 jam
+        $recentPosts = CommunityPost::withCount(['comments' => function ($q) use ($since24h): void {
+            $q->where('created_at', '>=', $since24h);
+        }])
+        ->where(function ($q) use ($since24h): void {
+            $q->where('created_at', '>=', $since24h)
+              ->orWhereHas('comments', function ($cq) use ($since24h): void {
+                  $cq->where('created_at', '>=', $since24h);
+              });
+        })
+        ->get();
+
+        // 2. Ambil komentar independen dalam 24 jam terakhir
+        $recentComments = CommunityComment::where('created_at', '>=', $since24h)->pluck('content');
+
+        // Jika aktivitas dalam 24 jam masih sangat sedikit (< 3), perluas rentang ke 7 hari
+        if (($recentPosts->count() + $recentComments->count()) < 3) {
+            $since7d = Carbon::now()->subDays(7);
+            $recentPosts = CommunityPost::withCount(['comments' => function ($q) use ($since7d): void {
+                $q->where('created_at', '>=', $since7d);
+            }])
+            ->where(function ($q) use ($since7d): void {
+                $q->where('created_at', '>=', $since7d)
+                  ->orWhereHas('comments', function ($cq) use ($since7d): void {
+                      $cq->where('created_at', '>=', $since7d);
+                  });
+            })
+            ->get();
+
+            $recentComments = CommunityComment::where('created_at', '>=', $since7d)->pluck('content');
         }
 
-        if ($recentPosts->isEmpty()) {
+        // Jika basis data masih baru dan belum ada postingan/komentar sama sekali, gunakan fallback kurasi
+        if ($recentPosts->isEmpty() && $recentComments->isEmpty()) {
             return array_slice(self::FALLBACK_TOPICS, 0, $limit);
         }
 
         $frequencies = [];
 
-        foreach ($recentPosts as $content) {
-            // A. Ekstraksi Hashtag (contoh: #TipsBisnis, #KasirPOS)
+        // A. Analisis Konten Postingan (memperhitungkan postingan + lonjakan komentar)
+        foreach ($recentPosts as $post) {
+            $engagementWeight = 1 + (int) ($post->comments_count ?? 0);
+            $content = $post->content;
+
+            // Ekstraksi Hashtag dari postingan
             if (preg_match_all('/#([a-zA-Z0-9_]+)/u', $content, $hashtags)) {
                 foreach ($hashtags[0] as $tag) {
                     $normTag = '#' . ucfirst(ltrim($tag, '#'));
-                    $frequencies[$normTag] = ($frequencies[$normTag] ?? 0) + 3; // Bobot lebih tinggi untuk tag
+                    $frequencies[$normTag] = ($frequencies[$normTag] ?? 0) + ($engagementWeight * 2);
                 }
             }
 
-            // B. Ekstraksi Kata Bermakna
+            // Ekstraksi Kata Kunci Bermakna dari postingan
             $cleanText = preg_replace('/[^\p{L}\p{N}\s]/u', ' ', mb_strtolower($content));
             $words = preg_split('/\s+/u', (string) $cleanText, -1, PREG_SPLIT_NO_EMPTY) ?: [];
 
@@ -78,12 +108,36 @@ final class TrendingTopicService
                     continue;
                 }
 
-                // Normalisasi kapitalisasi
                 $formattedWord = ucfirst($word);
-
                 if (! isset($seenInPost[$formattedWord])) {
-                    $frequencies[$formattedWord] = ($frequencies[$formattedWord] ?? 0) + 1;
+                    $frequencies[$formattedWord] = ($frequencies[$formattedWord] ?? 0) + $engagementWeight;
                     $seenInPost[$formattedWord] = true;
+                }
+            }
+        }
+
+        // B. Analisis Konten Komentar (ekstraksi kata & hashtag yang ditulis di dalam komentar)
+        foreach ($recentComments as $commentContent) {
+            if (preg_match_all('/#([a-zA-Z0-9_]+)/u', $commentContent, $commentHashtags)) {
+                foreach ($commentHashtags[0] as $tag) {
+                    $normTag = '#' . ucfirst(ltrim($tag, '#'));
+                    $frequencies[$normTag] = ($frequencies[$normTag] ?? 0) + 2;
+                }
+            }
+
+            $cleanText = preg_replace('/[^\p{L}\p{N}\s]/u', ' ', mb_strtolower($commentContent));
+            $words = preg_split('/\s+/u', (string) $cleanText, -1, PREG_SPLIT_NO_EMPTY) ?: [];
+
+            $seenInComment = [];
+            foreach ($words as $word) {
+                if (mb_strlen($word) < 4 || in_array($word, self::STOPWORDS, true)) {
+                    continue;
+                }
+
+                $formattedWord = ucfirst($word);
+                if (! isset($seenInComment[$formattedWord])) {
+                    $frequencies[$formattedWord] = ($frequencies[$formattedWord] ?? 0) + 1;
+                    $seenInComment[$formattedWord] = true;
                 }
             }
         }

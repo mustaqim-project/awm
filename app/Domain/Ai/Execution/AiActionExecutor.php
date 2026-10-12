@@ -155,6 +155,13 @@ final class AiActionExecutor
                     return ['valid' => false, 'reason' => 'Produk terkait sudah tidak aktif atau dihapus.'];
                 }
             }
+            $customerId = $payload['customer_id'] ?? null;
+            if ($customerId) {
+                $customer = Customer::where('business_id', $business->id)->find($customerId);
+                if (! $customer) {
+                    return ['valid' => false, 'reason' => 'Pelanggan terkait tidak valid atau bukan milik bisnis Anda.'];
+                }
+            }
         }
 
         if ($proposal->action_type === 'create_purchase_order') {
@@ -162,7 +169,7 @@ final class AiActionExecutor
             if ($supplierId) {
                 $supplier = Supplier::where('business_id', $business->id)->find($supplierId);
                 if (! $supplier) {
-                    return ['valid' => false, 'reason' => 'Supplier terkait sudah tidak terdaftar.'];
+                    return ['valid' => false, 'reason' => 'Supplier terkait sudah tidak terdaftar atau bukan milik bisnis Anda.'];
                 }
             }
         }
@@ -174,9 +181,14 @@ final class AiActionExecutor
     {
         $payload = $proposal->payload ?? [];
 
-        $customer = ! empty($payload['customer_id'])
-            ? Customer::where('business_id', $business->id)->find($payload['customer_id'])
-            : Customer::where('business_id', $business->id)->first();
+        if (! empty($payload['customer_id'])) {
+            $customer = Customer::where('business_id', $business->id)->find($payload['customer_id']);
+            if (! $customer) {
+                throw new \InvalidArgumentException('Pelanggan yang dipilih tidak valid atau bukan milik bisnis Anda.');
+            }
+        } else {
+            $customer = Customer::where('business_id', $business->id)->first();
+        }
 
         if (! $customer) {
             $customer = Customer::create([
@@ -259,9 +271,14 @@ final class AiActionExecutor
     {
         $payload = $proposal->payload ?? [];
 
-        $supplier = ! empty($payload['supplier_id'])
-            ? Supplier::where('business_id', $business->id)->find($payload['supplier_id'])
-            : Supplier::where('business_id', $business->id)->first();
+        if (! empty($payload['supplier_id'])) {
+            $supplier = Supplier::where('business_id', $business->id)->find($payload['supplier_id']);
+            if (! $supplier) {
+                throw new \InvalidArgumentException('Pemasok yang dipilih tidak valid atau bukan milik bisnis Anda.');
+            }
+        } else {
+            $supplier = Supplier::where('business_id', $business->id)->first();
+        }
 
         $poPrefix = 'PO-' . date('Ym') . '-';
         $latest = PurchaseOrder::where('business_id', $business->id)

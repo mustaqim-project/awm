@@ -250,7 +250,12 @@
                                 </div>
                                 <div>
                                     <label class="block text-[11px] font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('ai.actions.unit_price') }}</label>
-                                    <input type="number" x-model.number="editUnitPrice" min="0" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-zinc-800 border border-black/10 dark:border-white/10 text-xs font-mono font-bold text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500">
+                                    <div class="relative">
+                                        <input type="number" x-model.number="editUnitPrice" min="0" step="100" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-zinc-800 border border-black/10 dark:border-white/10 text-xs font-mono font-bold text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500">
+                                    </div>
+                                    <span class="text-[10.5px] text-amber-700 dark:text-amber-400 font-mono font-bold mt-1 block">
+                                        Rp <span x-text="new Intl.NumberFormat('id-ID').format(editUnitPrice || 0)"></span>
+                                    </span>
                                 </div>
                             </div>
 

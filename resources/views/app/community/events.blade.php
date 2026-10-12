@@ -29,6 +29,12 @@
                 this.selectedTicket = data.ticket;
                 this.selectedTicket.event_id = eventId;
             } else {
+                if (data.payment_url) {
+                    if (confirm((data.message || 'Pembayaran tiket belum selesai.') + '\n\nBuka halaman pembayaran QRIS sekarang?')) {
+                        window.location.href = data.payment_url;
+                        return;
+                    }
+                }
                 this.ticketError = data.message;
             }
         } catch (e) {
@@ -189,7 +195,8 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach($upcomingEvents as $evt)
                     @php
-                        $userRegistered = $evt->isUserRegistered(auth()->user());
+                        $userReg = $evt->getUserRegistration(auth()->user());
+                        $userRegistered = $userReg !== null && $userReg->status !== \App\Models\CommunityEventRegistration::STATUS_CANCELLED;
                         $regOpen = $evt->isRegistrationOpen();
                     @endphp
                     <div class="bg-white dark:bg-slate-900/90 rounded-2xl border border-slate-200/90 dark:border-slate-800/90 shadow-xs overflow-hidden flex flex-col justify-between hover:border-emerald-500/40 transition">
@@ -271,13 +278,21 @@
                         <!-- Footer Actions -->
                         <div class="p-5 pt-0">
                             @if($userRegistered)
-                                <div class="flex items-center gap-2">
-                                    <button type="button" @click="viewTicket('{{ $evt->id }}')"
-                                        class="flex-1 py-2.5 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 active:scale-[0.98] transition flex items-center justify-center gap-1.5 shadow-xs cursor-pointer">
-                                        <i data-lucide="ticket" class="w-4 h-4"></i>
-                                        <span>Lihat Tiket &amp; Check-in</span>
-                                    </button>
-                                </div>
+                                @if($userReg && $userReg->isPendingPayment())
+                                    <a href="{{ route('community.events.payment.show', $userReg) }}"
+                                        class="w-full py-2.5 rounded-xl text-xs font-bold text-white bg-amber-600 hover:bg-amber-500 active:scale-[0.98] transition flex items-center justify-center gap-1.5 shadow-sm shadow-amber-600/20">
+                                        <i data-lucide="qr-code" class="w-4 h-4"></i>
+                                        <span>Lanjutkan Bayar QRIS ({{ $userReg->getFormattedAmountPaid() }})</span>
+                                    </a>
+                                @else
+                                    <div class="flex items-center gap-2">
+                                        <button type="button" @click="viewTicket('{{ $evt->id }}')"
+                                            class="flex-1 py-2.5 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 active:scale-[0.98] transition flex items-center justify-center gap-1.5 shadow-xs cursor-pointer">
+                                            <i data-lucide="ticket" class="w-4 h-4"></i>
+                                            <span>Lihat Tiket &amp; Check-in</span>
+                                        </button>
+                                    </div>
+                                @endif
                             @elseif($regOpen)
                                 <form method="POST" action="{{ route('community.events.register', $evt) }}">
                                     @csrf
@@ -332,9 +347,13 @@
                                     <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-50 text-rose-700">
                                         Dibatalkan
                                     </span>
+                                @elseif($reg->isPendingPayment())
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800">
+                                        <i data-lucide="clock" class="w-3 h-3 mr-1 text-amber-600"></i> Menunggu Bayar QRIS
+                                    </span>
                                 @else
-                                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-700">
-                                        Terdaftar (Belum Hadir)
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-400 border border-blue-200">
+                                        <i data-lucide="check-circle" class="w-3 h-3 mr-1"></i> Tiket Siap (Lunas)
                                     </span>
                                 @endif
                             </div>
@@ -366,11 +385,19 @@
 
                         <div class="flex items-center gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
                             @if($reg->status !== 'cancelled')
-                                <button type="button" @click="viewTicket('{{ $reg->event_id }}')"
-                                    class="flex-1 py-2 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 transition flex items-center justify-center gap-1.5 cursor-pointer">
-                                    <i data-lucide="scan-barcode" class="w-4 h-4"></i>
-                                    <span>Buka Tiket Digital</span>
-                                </button>
+                                @if($reg->isPendingPayment())
+                                    <a href="{{ route('community.events.payment.show', $reg) }}"
+                                        class="flex-1 py-2 rounded-xl text-xs font-bold text-white bg-amber-600 hover:bg-amber-500 transition flex items-center justify-center gap-1.5 shadow-xs">
+                                        <i data-lucide="qr-code" class="w-4 h-4"></i>
+                                        <span>Bayar via QRIS</span>
+                                    </a>
+                                @else
+                                    <button type="button" @click="viewTicket('{{ $reg->event_id }}')"
+                                        class="flex-1 py-2 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 transition flex items-center justify-center gap-1.5 cursor-pointer">
+                                        <i data-lucide="scan-barcode" class="w-4 h-4"></i>
+                                        <span>Buka Tiket Digital</span>
+                                    </button>
+                                @endif
                                 @if(! $reg->isCheckedIn())
                                     <form method="POST" action="{{ route('community.events.cancel', $reg->event) }}" onsubmit="return confirm('Batalkan pendaftaran event ini?')">
                                         @csrf

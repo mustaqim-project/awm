@@ -494,14 +494,15 @@ final class AiCompanyWebController extends Controller
 
         try {
             if ($request->has('payload') && is_array($request->input('payload'))) {
-                $current = $proposal->payload ?? [];
-                $merged = array_merge($current, $request->input('payload'));
-                if (isset($merged['quantity']) && (isset($merged['unit_price']) || isset($merged['unit_cost']))) {
-                    $cost = (float) $merged['quantity'] * (float) ($merged['unit_price'] ?? $merged['unit_cost']);
-                    $merged['total_amount'] = $cost;
-                    $proposal->estimated_cost = $cost;
+                $sanitized = $this->sanitizeActionPayloadRevision(
+                    $request->input('payload'),
+                    $proposal->payload ?? [],
+                    $proposal->estimated_cost
+                );
+                $proposal->payload = $sanitized['merged'];
+                if ($sanitized['total_cost'] !== null) {
+                    $proposal->estimated_cost = $sanitized['total_cost'];
                 }
-                $proposal->payload = $merged;
             }
 
             $proposal->update([
@@ -550,19 +551,15 @@ final class AiCompanyWebController extends Controller
             return response()->json(['success' => false, 'message' => 'Anda tidak memiliki hak akses untuk merevisi usulan ini.'], 403);
         }
 
-        $revised = $request->input('payload', []);
-        $current = $proposal->payload ?? [];
-        $merged = array_merge($current, $revised);
-
-        $cost = $proposal->estimated_cost;
-        if (isset($merged['quantity']) && (isset($merged['unit_price']) || isset($merged['unit_cost']))) {
-            $cost = (float) $merged['quantity'] * (float) ($merged['unit_price'] ?? $merged['unit_cost']);
-            $merged['total_amount'] = $cost;
-        }
+        $sanitized = $this->sanitizeActionPayloadRevision(
+            $request->input('payload', []),
+            $proposal->payload ?? [],
+            $proposal->estimated_cost
+        );
 
         $proposal->update([
-            'payload' => $merged,
-            'estimated_cost' => $cost,
+            'payload' => $sanitized['merged'],
+            'estimated_cost' => $sanitized['total_cost'] ?? $proposal->estimated_cost,
             'status' => AiActionProposal::STATUS_PENDING,
             'reason' => ($proposal->reason ? $proposal->reason . ' ' : '') . "(Direvisi oleh pemilik: {$user->name})",
         ]);
@@ -934,6 +931,64 @@ final class AiCompanyWebController extends Controller
             'timestamp' => now()->toIso8601String(),
             'metrics' => $data,
         ]);
+    }
+
+    /**
+     * Sanitasi dan filter payload revisi proposal.
+     * Melindungi sistem dari manipulasi atribut kritis/struktural (business_id, user_id, action_type, status).
+     *
+     * @param array<string, mixed> $inputPayload
+     * @param array<string, mixed> $currentPayload
+     * @return array{merged: array<string, mixed>, total_cost: ?float}
+     */
+    protected function sanitizeActionPayloadRevision(array $inputPayload, array $currentPayload, float|int|string|null $currentCost = null): array
+    {
+        $disallowedKeys = [
+            'business_id',
+            'created_by',
+            'user_id',
+            'id',
+            'status',
+            'action_type',
+            'executor',
+            'approved_by',
+            'approved_at',
+        ];
+
+        $cleanUpdates = [];
+        foreach ($inputPayload as $key => $value) {
+            if (in_array($key, $disallowedKeys, true)) {
+                continue;
+            }
+
+            if ($key === 'quantity') {
+                $cleanUpdates['quantity'] = max(0.001, (float) $value);
+            } elseif ($key === 'unit_price') {
+                $cleanUpdates['unit_price'] = max(0.0, (float) $value);
+            } elseif ($key === 'unit_cost') {
+                $cleanUpdates['unit_cost'] = max(0.0, (float) $value);
+            } elseif ($key === 'discount_percent') {
+                $cleanUpdates['discount_percent'] = min(100.0, max(0.0, (float) $value));
+            } elseif (is_string($value)) {
+                $cleanUpdates[$key] = strip_tags(trim($value));
+            } else {
+                $cleanUpdates[$key] = $value;
+            }
+        }
+
+        $merged = array_merge($currentPayload, $cleanUpdates);
+
+        $numericCost = $currentCost !== null ? (float) $currentCost : null;
+        if (isset($merged['quantity']) && (isset($merged['unit_price']) || isset($merged['unit_cost']))) {
+            $rate = (float) ($merged['unit_price'] ?? $merged['unit_cost']);
+            $numericCost = (float) $merged['quantity'] * $rate;
+            $merged['total_amount'] = $numericCost;
+        }
+
+        return [
+            'merged' => $merged,
+            'total_cost' => $numericCost,
+        ];
     }
 }
 

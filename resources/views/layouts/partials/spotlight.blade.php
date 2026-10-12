@@ -210,6 +210,7 @@
             @if ($canAccessBilling)
                 { title: 'Paket Berlangganan & Kuota', desc: 'Status paket langganan aktif, batas pemakaian fitur, dan upgrade', category: 'Pengaturan Usaha', route: '{{ route('billing.limits') }}', icon: 'credit-card', keywords: 'paket langganan subscription kuota billing limit quota upgrade tagihan perpanjang' },
             @endif
+            { title: 'Buku Panduan & Dokumentasi', desc: 'Panduan lengkap cara penggunaan seluruh fitur ERP, Kasir POS, dan modul Cooca', category: 'Pengaturan Usaha', route: '{{ route('docs.index') }}', icon: 'book-open', keywords: 'panduan dokumentasi docs guide manual tutorial cara pakai buku petunjuk kasir pos stok akuntansi' },
             { title: 'Bantuan & Kontak Dukungan', desc: 'Layanan bantuan teknis dan laporan kendala penggunaan sistem', category: 'Pengaturan Usaha', route: '{{ route('feedback.bugs.index') }}', icon: 'help-circle', keywords: 'bantuan support help tiket cs panduan kendala error kontak bug tickets' },
             { title: 'Komunitas & Event Bisnis', desc: 'Wadah berbagi insight bisnis, pendaftaran event, dan presensi jejaring UMKM', category: 'Pengaturan Usaha', route: '{{ route('community.index') }}', icon: 'users', keywords: 'komunitas community owner event seminar workshop bazaar forum diskusi tips umkm kolaborasi jejaring bisnis' },
         @endif

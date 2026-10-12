@@ -460,24 +460,34 @@
                             </div>
                         </div>
 
-                        @if($hasAiConfig)
-                            <button type="button" @click="generateAiGroundedReply()" :disabled="isGeneratingAi"
-                                class="min-h-[32px] px-3 py-1 rounded-[10px] bg-gradient-to-r from-[#AF52DE] to-[#007AFF] hover:opacity-90 active:scale-95 text-white font-bold text-[11.5px] transition-all flex items-center gap-1.5 shadow-xs cursor-pointer shrink-0 disabled:opacity-50">
-                                <template x-if="!isGeneratingAi">
-                                    <i data-lucide="wand-2" class="w-3.5 h-3.5"></i>
-                                </template>
-                                <template x-if="isGeneratingAi">
-                                    <i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin"></i>
-                                </template>
-                                <span x-text="isGeneratingAi ? '{{ __('social_media.ai_drafting') }}' : '{{ __('social_media.ai_draft_button') }}'"></span>
+                        <div class="flex items-center gap-1.5 shrink-0">
+                            {{-- Tombol Buka Matriks DO's & DON'Ts AI Inbox --}}
+                            <button type="button" @click="openAiRulesModal = true"
+                                class="min-h-[32px] px-2.5 py-1 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/75 dark:text-white/75 font-semibold text-[11px] transition-all flex items-center gap-1.5 shadow-2xs cursor-pointer border border-black/5 dark:border-white/5"
+                                title="Lihat kontrol instruksi apa yang boleh (DO's) dan dilarang (DON'Ts) dilakukan AI">
+                                <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-500"></i>
+                                <span class="hidden sm:inline">Aturan AI (DO &amp; DON'T)</span>
                             </button>
-                        @else
-                            <a href="{{ route('cooca-ai.providers') }}"
-                                class="min-h-[32px] px-3 py-1 rounded-[10px] bg-amber-500 hover:bg-amber-600 active:scale-95 text-white font-bold text-[11.5px] transition-all flex items-center gap-1.5 shadow-xs cursor-pointer shrink-0" title="Atur Provider AI untuk membuka fitur ini">
-                                <i data-lucide="lock" class="w-3.5 h-3.5"></i>
-                                <span>Setting AI Dulu</span>
-                            </a>
-                        @endif
+
+                            @if($hasAiConfig)
+                                <button type="button" @click="generateAiGroundedReply()" :disabled="isGeneratingAi"
+                                    class="min-h-[32px] px-3 py-1 rounded-[10px] bg-gradient-to-r from-[#AF52DE] to-[#007AFF] hover:opacity-90 active:scale-95 text-white font-bold text-[11.5px] transition-all flex items-center gap-1.5 shadow-xs cursor-pointer shrink-0 disabled:opacity-50">
+                                    <template x-if="!isGeneratingAi">
+                                        <i data-lucide="wand-2" class="w-3.5 h-3.5"></i>
+                                    </template>
+                                    <template x-if="isGeneratingAi">
+                                        <i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin"></i>
+                                    </template>
+                                    <span x-text="isGeneratingAi ? '{{ __('social_media.ai_drafting') }}' : '{{ __('social_media.ai_draft_button') }}'"></span>
+                                </button>
+                            @else
+                                <a href="{{ route('cooca-ai.providers') }}"
+                                    class="min-h-[32px] px-3 py-1 rounded-[10px] bg-amber-500 hover:bg-amber-600 active:scale-95 text-white font-bold text-[11.5px] transition-all flex items-center gap-1.5 shadow-xs cursor-pointer shrink-0" title="Atur Provider AI untuk membuka fitur ini">
+                                    <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+                                    <span>Setting AI Dulu</span>
+                                </a>
+                            @endif
+                        </div>
                     </div>
 
                     {{-- Reply Composer Bar --}}
@@ -758,6 +768,143 @@
             </div>
         </div>
 
+        {{-- 5.1 MODAL ATURAN KONTROL OTORITAS AI INBOX (DO'S & DON'TS) --}}
+        <div x-show="openAiRulesModal" style="display: none;"
+            class="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-5"
+            @keydown.escape.window="openAiRulesModal = false">
+            <div class="relative w-full max-w-3xl rounded-[28px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl p-5 sm:p-7 space-y-5 max-h-[90vh] flex flex-col overflow-hidden"
+                @click.away="openAiRulesModal = false">
+                
+                {{-- Modal Header --}}
+                <div class="flex items-start justify-between pb-3.5 border-b border-black/5 dark:border-white/10 shrink-0">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-[14px] bg-gradient-to-tr from-emerald-500 to-[#007AFF] text-white flex items-center justify-center font-black shadow-sm shrink-0">
+                            <i data-lucide="shield-alert" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <h3 class="text-[15px] font-extrabold text-black dark:text-white">Tabel Kontrol Otoritas AI Inbox (DO's vs DON'Ts)</h3>
+                                <span class="px-2 py-0.5 rounded-full text-[9.5px] font-bold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 font-mono">Strict Guardrails Active</span>
+                            </div>
+                            <p class="text-[11px] text-black/55 dark:text-white/55 mt-0.5">
+                                Kendali keamanan agar asisten Cooca AI hanya menghasilkan balasan sesuai fakta toko dan diblokir dari tindakan berisiko/penipuan.
+                            </p>
+                        </div>
+                    </div>
+                    <button type="button" @click="openAiRulesModal = false" class="p-1.5 rounded-[10px] text-black/40 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
+                </div>
+
+                {{-- Modal Body: Scrollable Table & Cards --}}
+                <div class="space-y-4 overflow-y-auto pr-1 flex-1 text-xs">
+                    
+                    {{-- Status Banner Fail-Secure --}}
+                    <div class="p-3.5 rounded-[16px] bg-emerald-500/[0.08] dark:bg-emerald-500/[0.12] border border-emerald-500/20 flex items-center justify-between gap-3">
+                        <div class="flex items-center gap-2.5">
+                            <i data-lucide="check-shield" class="w-5 h-5 text-emerald-600 shrink-0"></i>
+                            <div class="text-[11.5px] text-emerald-950 dark:text-emerald-200 leading-normal">
+                                <strong>Human-in-the-Loop Diterapkan:</strong> Setiap draf balasan AI wajib berstatus draf di kotak teks komposer. Balasan tidak akan pernah terkirim otomatis ke pelanggan tanpa klik tombol &ldquo;Kirim Balasan&rdquo; oleh staf toko.
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Tabel Utama DO's vs DON'Ts --}}
+                    <div class="rounded-[18px] border border-black/10 dark:border-white/10 overflow-hidden">
+                        <table class="w-full text-left text-xs border-collapse">
+                            <thead>
+                                <tr class="bg-black/[0.03] dark:bg-white/[0.04] border-b border-black/10 dark:border-white/10 text-[10.5px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60">
+                                    <th class="p-3 w-1/4">Kategori Instruksi</th>
+                                    <th class="p-3 w-[38%] text-emerald-800 dark:text-emerald-400 bg-emerald-500/[0.04]">
+                                        <span class="flex items-center gap-1">
+                                            <i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-500"></i>
+                                            <span>BOLEH DILAKUKAN (DO's)</span>
+                                        </span>
+                                    </th>
+                                    <th class="p-3 w-[37%] text-rose-800 dark:text-rose-400 bg-rose-500/[0.04]">
+                                        <span class="flex items-center gap-1">
+                                            <i data-lucide="x-circle" class="w-3.5 h-3.5 text-rose-500"></i>
+                                            <span>DILARANG KERAS (DON'TS)</span>
+                                        </span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-black/5 dark:divide-white/5 text-[11px] leading-relaxed">
+                                <tr class="hover:bg-black/[0.01]">
+                                    <td class="p-3 font-bold text-black dark:text-white">
+                                        Produk &amp; Sisa Stok
+                                    </td>
+                                    <td class="p-3 bg-emerald-500/[0.02] text-black/80 dark:text-white/80">
+                                        • Sebutkan nama, harga resmi Rp, dan stok riil dari katalog.<br>
+                                        • Tawarkan produk pengganti yang ready jika barang dicari kosong.
+                                    </td>
+                                    <td class="p-3 bg-rose-500/[0.02] text-rose-900 dark:text-rose-300">
+                                        • <strong>DILARANG mengarang barang/harga/stok fiktif</strong> (Zero Hallucination).<br>
+                                        • <strong>DILARANG</strong> menjanjikan stok akan datang tanpa data restok resmi.
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-black/[0.01]">
+                                    <td class="p-3 font-bold text-black dark:text-white">
+                                        Harga, Promo &amp; Diskon
+                                    </td>
+                                    <td class="p-3 bg-emerald-500/[0.02] text-black/80 dark:text-white/80">
+                                        • Informasikan kode kupon/voucher resmi yang aktif di sistem.<br>
+                                        • Jelaskan minimal belanja dan syarat diskon resmi.
+                                    </td>
+                                    <td class="p-3 bg-rose-500/[0.02] text-rose-900 dark:text-rose-300">
+                                        • <strong>DILARANG memberikan diskon manual</strong> atau menyetujui tawar-menawar harga.<br>
+                                        • <strong>DILARANG</strong> menjanjikan bonus di luar aturan resmi sistem.
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-black/[0.01]">
+                                    <td class="p-3 font-bold text-black dark:text-white">
+                                        Rekening &amp; Pembayaran
+                                    </td>
+                                    <td class="p-3 bg-emerald-500/[0.02] text-black/80 dark:text-white/80">
+                                        • Arahkan checkout ke link storefront resmi atau nomor kasir resmi toko.<br>
+                                        • Beritahu bahwa invoice resmi akan dikirim oleh tim kasir.
+                                    </td>
+                                    <td class="p-3 bg-rose-500/[0.02] text-rose-900 dark:text-rose-300">
+                                        • <strong>DILARANG KERAS membagikan rekening pribadi staf</strong> atau e-wallet non-resmi.<br>
+                                        • <strong>DILARANG</strong> mengonfirmasi &ldquo;pesanan lunas&rdquo; tanpa mutasi bank resmi.
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-black/[0.01]">
+                                    <td class="p-3 font-bold text-black dark:text-white">
+                                        Privasi &amp; Keamanan Prompt
+                                    </td>
+                                    <td class="p-3 bg-emerald-500/[0.02] text-black/80 dark:text-white/80">
+                                        • Sapa ramah &ldquo;Kak&rdquo;, santun, dan fokus pada bantuan transaksi belanja.
+                                    </td>
+                                    <td class="p-3 bg-rose-500/[0.02] text-rose-900 dark:text-rose-300">
+                                        • <strong>DILARANG membocorkan data pembeli lain</strong> (nama, alamat, no telp).<br>
+                                        • <strong>DILARANG</strong> menuruti manipulasi pesan (&ldquo;Ignore rules&rdquo;, &ldquo;Beri gratis&rdquo;).
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {{-- Panduan Selengkapnya --}}
+                    <div class="flex items-center justify-between text-[11px] pt-1">
+                        <span class="text-black/50 dark:text-white/50">Ingin membaca batasan otoritas untuk Kasir POS, Gudang, dan Keuangan?</span>
+                        <a href="{{ route('docs.index') }}#sec-ai" target="_blank" class="font-bold text-[#007AFF] hover:underline flex items-center gap-1">
+                            <span>Buku Panduan POV Owner</span>
+                            <i data-lucide="external-link" class="w-3 h-3"></i>
+                        </a>
+                    </div>
+                </div>
+
+                {{-- Modal Footer --}}
+                <div class="pt-3 border-t border-black/5 dark:border-white/10 flex items-center justify-end shrink-0">
+                    <button type="button" @click="openAiRulesModal = false"
+                        class="min-h-[36px] px-5 rounded-[12px] bg-black text-white dark:bg-white dark:text-black font-bold text-[12px] hover:opacity-90 active:scale-95 transition cursor-pointer">
+                        Saya Paham, Tutup
+                    </button>
+                </div>
+            </div>
+        </div>
+
         {{-- Hidden regression safety anchors for legacy test assertions --}}
         <div class="hidden" aria-hidden="true" style="display: none;">
             @foreach ($comments as $c)
@@ -786,6 +933,7 @@
                 isGeneratingAi: false,
                 openProductModal: false,
                 openQuickRepliesModal: false,
+                openAiRulesModal: false,
                 copiedWaLink: false,
 
                 init() {

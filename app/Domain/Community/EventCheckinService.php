@@ -43,6 +43,13 @@ final class EventCheckinService
             ];
         }
 
+        if ($event->isPaid() && ! $registration->isPaid()) {
+            return [
+                'success' => false,
+                'message' => 'Check-in gagal. Tiket event berbayar ini belum lunas. Silakan selesaikan pembayaran QRIS terlebih dahulu.',
+            ];
+        }
+
         if ($registration->isCheckedIn()) {
             return [
                 'success' => true,
@@ -123,6 +130,13 @@ final class EventCheckinService
             return [
                 'success' => false,
                 'message' => 'Status pendaftaran peserta ini telah dibatalkan.',
+            ];
+        }
+
+        if ($event->isPaid() && ! $registration->isPaid()) {
+            return [
+                'success' => false,
+                'message' => 'Check-in ditolak: Pembayaran tiket event belum lunas. Silakan selesaikan pembayaran QRIS terlebih dahulu.',
             ];
         }
 

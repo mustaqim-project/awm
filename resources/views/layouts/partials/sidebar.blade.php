@@ -60,6 +60,7 @@
         request()->routeIs('billing.*') ||
         request()->routeIs('community.*') ||
         request()->routeIs('feedback.*') ||
+        request()->routeIs('docs.*') ||
         request()->routeIs('profile.*') ||
         $isApprovalsRoute;
 
@@ -1858,7 +1859,22 @@
                 </button>
             </div>
 
-            {{-- 9.8 Bantuan & Pelaporan Bug --}}
+            {{-- 9.8 Buku Panduan & Dokumentasi Sistem Cooca --}}
+            <div class="relative group"
+                @mouseenter="if(sidebarCollapsed) activeFlyout = 'docs'"
+                @mouseleave="activeFlyout = null">
+                <a href="{{ route('docs.index') }}" id="tour-nav-docs"
+                    {{ request()->routeIs('docs.*') ? 'aria-current="page"' : '' }}
+                    :title="sidebarCollapsed ? 'Panduan & Dokumentasi' : ''"
+                    class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('docs.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
+                    <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('docs.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/15 text-[#007AFF] dark:bg-[#0A84FF]/20 dark:text-[#0A84FF]' }} flex items-center justify-center shrink-0">
+                        <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+                    </span>
+                    <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>Panduan &amp; Dokumentasi</span>
+                </a>
+            </div>
+
+            {{-- 9.9 Bantuan & Pelaporan Bug --}}
             @if (\App\Support\Context::isOwner())
                 <div class="relative group"
                     @mouseenter="if(sidebarCollapsed) activeFlyout = 'support'"

@@ -653,4 +653,96 @@ final class TripayService
 
         return null;
     }
+
+    /**
+     * Request creation of a TriPay transaction for Community Event Ticket via QRIS.
+     *
+     * @return array<string, mixed>
+     */
+    public function createEventRegistrationTransaction(\App\Models\CommunityEventRegistration $registration, string $channelCode = 'QRIS'): array
+    {
+        $amount = (int) round((float) $registration->amount_paid);
+        $merchantRef = 'EVT-' . strtoupper($registration->ticket_code);
+        $signature = $this->generateSignature($merchantRef, $amount);
+
+        $customerName = $registration->user?->name ?: 'Peserta Event';
+        $customerEmail = $registration->user?->email ?: 'peserta@cooca.id';
+        $customerPhone = preg_replace('/[^0-9]/', '', (string) ($registration->user?->phone ?: '081234567890'));
+        if (str_starts_with($customerPhone, '0')) {
+            $customerPhone = '62' . substr($customerPhone, 1);
+        }
+
+        $eventTitle = $registration->event?->title ?: 'Tiket Event Bisnis Cooca';
+
+        $payload = [
+            'method' => strtoupper(trim($channelCode)),
+            'merchant_ref' => $merchantRef,
+            'amount' => $amount,
+            'customer_name' => $customerName,
+            'customer_email' => $customerEmail,
+            'customer_phone' => $customerPhone,
+            'order_items' => [
+                [
+                    'name' => mb_substr($eventTitle, 0, 100),
+                    'price' => $amount,
+                    'quantity' => 1,
+                ],
+            ],
+            'return_url' => route('community.events.payment.show', $registration->id),
+            'expired_time' => time() + 900,
+            'signature' => $signature,
+        ];
+
+        // Jika API key tidak diset atau dalam mode testing/sandbox tanpa API key, sediakan mock QRIS dinamis yang valid
+        if (empty($this->apiKey) || app()->environment('testing')) {
+            $fakeRef = 'DEV-EVT-' . strtoupper(\Illuminate\Support\Str::random(10));
+            $fakeQrString = '00020101021226600014ID.LINKAJA.WWW01189360091400000000000215ID1020304050520458125303360540' . strlen((string) $amount) . $amount . '5802ID5910COOCA_EVENT6007JAKARTA6304';
+            return [
+                'success' => true,
+                'reference' => $fakeRef,
+                'merchant_ref' => $merchantRef,
+                'payment_method' => $channelCode,
+                'pay_code' => $fakeRef,
+                'qr_url' => 'https://tripay.co.id/qr/' . $fakeRef,
+                'qr_string' => $fakeQrString,
+                'checkout_url' => 'https://tripay.co.id/checkout/' . $fakeRef,
+                'fee' => $this->calculateQrisFee((float) $amount),
+                'expired_time' => time() + 900,
+                'instructions' => [],
+            ];
+        }
+
+        try {
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $this->apiKey,
+                'Accept' => 'application/json',
+            ])->timeout(12)->post($this->baseUrl . 'transaction/create', $payload);
+
+            $body = (array) $response->json();
+
+            if ($response->successful() && ($body['success'] ?? false)) {
+                $data = (array) ($body['data'] ?? []);
+                $fee = (float) ($data['total_fee'] ?? $this->calculateQrisFee((float) $amount));
+
+                return [
+                    'success' => true,
+                    'reference' => (string) ($data['reference'] ?? ''),
+                    'merchant_ref' => (string) ($data['merchant_ref'] ?? $merchantRef),
+                    'payment_method' => (string) ($data['payment_method'] ?? $channelCode),
+                    'pay_code' => $data['pay_code'] ?? null,
+                    'qr_url' => $data['qr_url'] ?? null,
+                    'qr_string' => $data['qr_string'] ?? null,
+                    'checkout_url' => $data['checkout_url'] ?? null,
+                    'fee' => $fee,
+                    'expired_time' => (int) ($data['expired_time'] ?? (time() + 900)),
+                    'instructions' => (array) ($data['instructions'] ?? []),
+                    'raw_response' => $data,
+                ];
+            }
+
+            return ['success' => false, 'message' => $body['message'] ?? 'Gagal membuat tagihan QRIS event'];
+        } catch (Throwable $e) {
+            return ['success' => false, 'message' => $e->getMessage()];
+        }
+    }
 }

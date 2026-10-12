@@ -345,6 +345,7 @@
             { title: 'Monitoring Token AI', desc: 'Pantau konsumsi Gemini AI token', url: '{{ route('admin.ai-tokens.index') }}', icon: 'sparkles', cat: 'Integrasi' },
             { title: 'Database Leads', desc: 'Database prospek & kontak calon tenant', url: '{{ route('admin.leads.index') }}', icon: 'users-round', cat: 'Pemasaran' },
             { title: 'Event Komunitas', desc: 'Kelola jadwal meetup, workshop & check-in peserta', url: '{{ route('admin.events.index') }}', icon: 'calendar', cat: 'Pemasaran' },
+            { title: 'Moderasi Kata Terlarang', desc: 'Filter kata judol, scam, kata kasar & pornografi', url: '{{ route('admin.word-filters.index') }}', icon: 'shield-alert', cat: 'Pemasaran' },
             { title: 'Artikel & Edukasi', desc: 'CMS blog bisnis & artikel UMKM', url: '{{ route('admin.posts.index') }}', icon: 'file-text', cat: 'Pemasaran' },
             { title: 'Template Excel', desc: 'Unduhan berkas spreadsheet master UMKM', url: '{{ route('admin.templates.index') }}', icon: 'file-spreadsheet', cat: 'Pemasaran' },
             { title: 'Kebijakan & Legalitas', desc: 'CMS Kebijakan Privasi & Syarat Ketentuan', url: '{{ route('admin.legal-pages.index') }}', icon: 'scale', cat: 'Pemasaran' },
@@ -571,6 +572,12 @@
                     class="flex items-center gap-2.5 px-3 h-10 rounded-[12px] transition-all {{ request()->routeIs('admin.events.*') ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25 font-semibold' : 'text-[#3C3C43]/80 dark:text-[#EBEBF5]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
                     <i data-lucide="calendar" class="w-4.5 h-4.5 shrink-0" stroke-width="1.8"></i>
                     <span class="whitespace-nowrap truncate min-w-0 flex-1">Event Komunitas</span>
+                </a>
+
+                <a href="{{ route('admin.word-filters.index') }}"
+                    class="flex items-center gap-2.5 px-3 h-10 rounded-[12px] transition-all {{ request()->routeIs('admin.word-filters.*') ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25 font-semibold' : 'text-[#3C3C43]/80 dark:text-[#EBEBF5]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
+                    <i data-lucide="shield-alert" class="w-4.5 h-4.5 shrink-0" stroke-width="1.8"></i>
+                    <span class="whitespace-nowrap truncate min-w-0 flex-1">Moderasi Kata Terlarang</span>
                 </a>
 
                 <a href="{{ route('admin.posts.index') }}"
