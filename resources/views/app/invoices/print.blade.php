@@ -300,7 +300,7 @@
                     @if ($invoice->notes)
                         <div>
                             <div class="font-bold text-slate-900 mb-0.5">Catatan Pembayaran:</div>
-                            <div class="text-slate-600 whitespace-pre-line">{{ $invoice->notes }}</div>
+                            <div class="text-slate-600 whitespace-pre-line leading-relaxed">{{ $invoice->notes }}</div>
                         </div>
                     @endif
 

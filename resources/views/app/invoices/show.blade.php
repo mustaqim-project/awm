@@ -262,7 +262,7 @@
                 @if($invoice->notes)
                 <div class="p-3 rounded-[10px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5">
                     <div class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wide mb-0.5">Catatan Faktur:</div>
-                    <div class="text-black/70 dark:text-white/70">{{ $invoice->notes }}</div>
+                    <div class="text-black/70 dark:text-white/70 whitespace-pre-line leading-relaxed">{{ $invoice->notes }}</div>
                 </div>
                 @endif
 
