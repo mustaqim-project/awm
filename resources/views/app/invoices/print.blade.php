@@ -171,6 +171,9 @@
                 <div class="space-y-0.5">
                     <h1 class="text-base font-bold text-slate-950 uppercase tracking-wide leading-tight">
                         {{ $business->name }}</h1>
+                    @if($invoice->sender_name)
+                        <div class="text-xs font-semibold text-slate-800">Pengirim: {{ $invoice->sender_name }}</div>
+                    @endif
                     <p class="text-xs text-slate-600">
                         {{ $business->address ?? 'Alamat Kantor Operasional' }}</p>
                     <p class="text-xs text-slate-600">
@@ -207,6 +210,9 @@
             <div class="space-y-1.5">
                 <div class="font-bold text-slate-500 uppercase tracking-wider text-[10px]">Ditagihkan Kepada:</div>
                 <div class="text-sm font-bold text-slate-950">{{ $invoice->customer?->name ?? 'Pelanggan' }}</div>
+                @if($invoice->recipient_name)
+                    <div class="text-xs font-semibold text-slate-800">Nama Penerima / UP: {{ $invoice->recipient_name }}</div>
+                @endif
                 @if ($invoice->customer?->company_name)
                     <div class="font-semibold text-slate-800">{{ $invoice->customer->company_name }}</div>
                 @endif
