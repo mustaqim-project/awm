@@ -143,7 +143,23 @@ class BusinessLandingPage extends Model
      */
     public function getThemePreset(): string
     {
-        return $this->theme_preset ?: ($this->industry_preset ?: 'artisan_brew');
+        if (! empty($this->theme_preset)) {
+            return $this->theme_preset;
+        }
+
+        $business = $this->relationLoaded('business') ? $this->business : $this->business()->first();
+        if ($business) {
+            $detected = app(\App\Domain\Storefront\StorefrontThemeService::class)->detectThemeKeyForBusiness($business);
+            if ($detected) {
+                return $detected;
+            }
+        }
+
+        if (! empty($this->industry_preset)) {
+            return $this->industry_preset;
+        }
+
+        return 'modern_umkm';
     }
 
     public function business(): BelongsTo

@@ -16,10 +16,40 @@
     <meta name="theme-color" content="{{ $initialDarkMode ? '#0B0F19' : ($activeTheme['bg_color'] ?? '#FAF7F2') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    {{-- Apple HIG Mobile Web App Compatibility --}}
+    {{-- Persistent Elegant Dark Mode Initialization --}}
+    <script>
+        (function() {
+            const savedDark = localStorage.getItem('storefront_dark_mode');
+            if (savedDark === 'true') {
+                document.documentElement.classList.add('dark');
+            } else if (savedDark === 'false') {
+                document.documentElement.classList.remove('dark');
+            }
+        })();
+
+        window.toggleDarkMode = function() {
+            const html = document.documentElement;
+            const isDark = html.classList.toggle('dark');
+            try {
+                localStorage.setItem('storefront_dark_mode', isDark ? 'true' : 'false');
+                const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+                if (themeColorMeta) {
+                    themeColorMeta.setAttribute('content', isDark ? '{{ $activeTheme['dark_bg'] ?? '#0B0F19' }}' : '{{ $activeTheme['bg_color'] ?? '#FAF7F2' }}');
+                }
+            } catch (e) {}
+            if (typeof lucide !== 'undefined') {
+                setTimeout(() => lucide.createIcons(), 50);
+            }
+        };
+    </script>
+
+    {{-- Apple HIG Mobile Web App Compatibility & PWA Meta Tags (§web-ios-pwa-redesign) --}}
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="{{ $business->name }}">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="format-detection" content="telephone=no">
 
     {{-- SEO & Social Media Metadata Architecture --}}
     @php
@@ -35,6 +65,10 @@
     ])
 
     @stack('seo')
+
+    @if (!empty($defaultBrandImg))
+        <link rel="apple-touch-icon" href="{{ $defaultBrandImg }}">
+    @endif
 
     {{-- Dynamic Google Fonts Loader (§PRD-07 & 25 Industry Themes) --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -107,6 +141,12 @@
         html.dark,
         .dark {
             color-scheme: dark;
+            --theme-bg: {{ $activeTheme['dark_bg'] ?? '#0B0F19' }};
+            --theme-card: {{ $activeTheme['dark_card'] ?? '#181E2A' }};
+        }
+
+        .dark body {
+            background-color: var(--theme-bg);
         }
 
         /* Universal Apple HIG Form Controls & Dropdown Styling (§Dark Mode Accessibility) */
@@ -253,11 +293,18 @@
         </div>
     @endif
 
-    {{-- 4. Bento Apple HIG Navbar (§PRD-07 & §PRD-20) --}}
-    @include('public.storefront.layouts.navbar')
+    {{-- 4. Dynamic Theme-Specific Navbar with Global Fallback --}}
+    @php
+        $bundleDir = $activeTheme['bundle_dir'] ?? 'modern_umkm';
+    @endphp
+    @if (view()->exists("public.storefront.themes.{$bundleDir}.navbar"))
+        @include("public.storefront.themes.{$bundleDir}.navbar")
+    @else
+        @include('public.storefront.layouts.navbar')
+    @endif
 
-    {{-- 5. Main Content Area --}}
-    <main class="flex-1 w-full">
+    {{-- 5. Main Content Area (pb-20 for mobile bottom tab bar safe space) --}}
+    <main class="flex-1 w-full pb-20 md:pb-0">
         @yield('content')
     </main>
 
@@ -275,8 +322,20 @@
 
     @include('public.storefront.components.order_track_modal', ['business' => $business])
 
-    {{-- 7. Bento Storefront Footer --}}
-    @include('public.storefront.layouts.footer')
+    {{-- Apple iOS Mobile Bottom Tab Bar (§PRD-07 & §web-ios-pwa-redesign) --}}
+    @include('public.storefront.components.mobile_bottom_tab_bar', [
+        'business' => $business,
+        'landingPage' => $landingPage,
+        'activeTheme' => $activeTheme,
+        'hasWhatsapp' => $hasWhatsapp ?? false,
+    ])
+
+    {{-- 7. Dynamic Theme-Specific Footer with Global Fallback --}}
+    @if (view()->exists("public.storefront.themes.{$bundleDir}.footer"))
+        @include("public.storefront.themes.{$bundleDir}.footer")
+    @else
+        @include('public.storefront.layouts.footer')
+    @endif
 
     {{-- 8. Alpine.js Global Cart Store --}}
     <script>

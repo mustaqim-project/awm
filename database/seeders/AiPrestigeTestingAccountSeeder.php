@@ -147,8 +147,8 @@ final class AiPrestigeTestingAccountSeeder extends Seeder
 
             // Sync Memberships
             $business->users()->syncWithoutDetaching([
-                $ownerUser->id   => ['id' => (string) Str::uuid(), 'role' => 'owner'],
-                $aliasUser->id   => ['id' => (string) Str::uuid(), 'role' => 'owner'],
+                $ownerUser->id   => ['id' => (string) Str::uuid(), 'role' => 'owner', 'role_id' => null],
+                $aliasUser->id   => ['id' => (string) Str::uuid(), 'role' => 'owner', 'role_id' => null],
                 $baristaUser->id => ['id' => (string) Str::uuid(), 'role' => 'cashier'],
                 $cashierUser->id => ['id' => (string) Str::uuid(), 'role' => 'cashier'],
             ]);

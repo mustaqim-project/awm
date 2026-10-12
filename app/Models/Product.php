@@ -770,6 +770,7 @@ class Product extends Model
     public function modifierGroups()
     {
         return $this->belongsToMany(ModifierGroup::class, 'product_modifier_groups', 'product_id', 'modifier_group_id')
+            ->using(ProductModifierGroup::class)
             ->withPivot('sort_order')
             ->orderByPivot('sort_order');
     }

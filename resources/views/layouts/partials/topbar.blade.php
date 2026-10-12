@@ -156,7 +156,7 @@
 </style>
 <!-- Topbar Header (Apple macOS Toolbar Architecture) -->
 <header
-    class="app-topbar h-16 glass-header sticky top-0 z-30 flex items-center justify-between px-4 sm:px-7 lg:px-9 border-b border-black/5 dark:border-white/10 transition-all">
+    class="app-topbar h-16 glass-header sticky top-0 z-[35] flex items-center justify-between px-4 sm:px-7 lg:px-9 border-b border-black/5 dark:border-white/10 transition-all">
     <!-- Left Cluster: Mobile Trigger + Desktop Sidebar Toggle + Title -->
     <div class="app-topbar-title flex items-center gap-2.5 sm:gap-4 min-w-0 flex-1">
         <!-- Mobile Drawer Toggle -->

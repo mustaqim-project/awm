@@ -5,132 +5,7 @@
 ])
 
 @section('content')
-<div class="max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-8 space-y-6 pb-28 sm:pb-32 lg:pb-10" x-data="{
-    showAddGroupModal: false,
-    showEditGroupModal: false,
-    showAddOptionModal: false,
-    showEditOptionModal: false,
-
-    deleteGroupModalOpen: false,
-    deleteGroupTarget: { id: '', name: '' },
-    deleteOptionModalOpen: false,
-    deleteOptionTarget: { id: '', name: '' },
-
-    selectedGroup: null,
-    groupForm: { id: '', name: '', description: '', selection_type: 'single', min_selection: 0, max_selection: 1, is_required: false, sort_order: 0, product_ids: [] },
-
-    selectedOption: null,
-    optionForm: {
-        id: '',
-        group_id: '',
-        name: '',
-        price_delta: 0,
-        affects_material: false,
-        sort_order: 0,
-        is_active: true,
-        materials: []
-    },
-
-    openAddOption(group) {
-        this.selectedGroup = group;
-        this.optionForm = {
-            id: '',
-            group_id: group.id,
-            name: '',
-            price_delta: 0,
-            affects_material: false,
-            sort_order: 0,
-            is_active: true,
-            materials: []
-        };
-        this.showAddOptionModal = true;
-    },
-
-    openEditOption(group, opt) {
-        this.selectedGroup = group;
-        this.selectedOption = opt;
-        this.optionForm = {
-            id: opt.id,
-            group_id: group.id,
-            name: opt.name,
-            price_delta: Number(opt.price_delta || 0),
-            affects_material: Boolean(opt.affects_material),
-            sort_order: Number(opt.sort_order || 0),
-            is_active: Boolean(opt.is_active),
-            materials: (opt.materials || []).map(m => ({
-                material_id: m.material_id,
-                quantity: Number(m.quantity || 1),
-                unit_id: m.unit_id || ''
-            }))
-        };
-        this.showEditOptionModal = true;
-    },
-
-    openAddGroup() {
-        this.groupForm = { id: '', name: '', description: '', selection_type: 'single', min_selection: 0, max_selection: 1, is_required: false, sort_order: 0, product_ids: [] };
-        this.showAddGroupModal = true;
-    },
-
-    openEditGroup(group) {
-        this.selectedGroup = group;
-        this.groupForm = {
-            id: group.id,
-            name: group.name,
-            description: group.description || '',
-            selection_type: group.selection_type || 'single',
-            min_selection: Number(group.min_selection || 0),
-            max_selection: Number(group.max_selection || 1),
-            is_required: Boolean(group.is_required),
-            sort_order: Number(group.sort_order || 0),
-            product_ids: (group.products || []).map(p => p.id)
-        };
-        this.showEditGroupModal = true;
-    },
-
-    addMaterialRow() {
-        this.optionForm.materials.push({
-            material_id: '',
-            quantity: 1,
-            unit_id: ''
-        });
-    },
-
-    removeMaterialRow(index) {
-        this.optionForm.materials.splice(index, 1);
-    },
-
-    openDeleteGroup(id, name) {
-        this.deleteGroupTarget = { id, name };
-        this.deleteGroupModalOpen = true;
-    },
-    closeDeleteGroup() {
-        this.deleteGroupModalOpen = false;
-        this.deleteGroupTarget = { id: '', name: '' };
-    },
-    submitDeleteGroup() {
-        if (this.deleteGroupTarget.id) {
-            const form = document.getElementById('form-delete-group-' + this.deleteGroupTarget.id);
-            if (form) {
-                form.submit();
-            }
-        }
-    },
-
-    openDeleteOption(id, name) {
-        this.deleteOptionTarget = { id, name };
-        this.deleteOptionModalOpen = true;
-    },
-    closeDeleteOption() {
-        this.deleteOptionModalOpen = false;
-        this.deleteOptionTarget = { id: '', name: '' };
-    },
-    submitDeleteOption() {
-        if (this.deleteOptionTarget.id) {
-            const form = document.getElementById('form-delete-option-' + this.deleteOptionTarget.id);
-            if (form) form.submit();
-        }
-    }
-}">
+<div class="max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-8 space-y-6 pb-28 sm:pb-32 lg:pb-10" x-data="modifierManager()">
 
     <!-- ===================================================== -->
     <!-- 1. TOOLBAR / PAGE HEADER                              -->
@@ -441,7 +316,7 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                             <div>
                                 <label class="block font-medium text-black/70 dark:text-white/70 mb-1 text-[13px]">{{ __('products.label_min_selection') }}</label>
                                 <input type="number" name="min_selection" x-model.number="groupForm.min_selection" min="0" max="20"
@@ -452,21 +327,86 @@
                                 <input type="number" name="max_selection" x-model.number="groupForm.max_selection" min="1" max="50"
                                     class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] px-3.5 text-[16px] sm:text-[14px] font-semibold tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                             </div>
+                            <div>
+                                <label class="block font-medium text-black/70 dark:text-white/70 mb-1 text-[13px]">{{ __('products.th_status') }}</label>
+                                <select name="is_active" x-model="groupForm.is_active"
+                                    class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] px-3 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                    <option value="1" :value="true">{{ __('products.status_active') }}</option>
+                                    <option value="0" :value="false">{{ __('products.status_inactive') }}</option>
+                                </select>
+                            </div>
                         </div>
 
-                        <!-- Products Multi-Select Assignment -->
-                        <div class="p-4 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] space-y-2">
-                            <label class="block font-semibold text-black/80 dark:text-white/80 text-[13px]">{{ __('products.label_bulk_product_assignment') }}</label>
-                            <p class="text-[11.5px] text-black/45 dark:text-white/45">{{ __('products.sub_bulk_product_assignment') }}</p>
-                            <div class="max-h-40 overflow-y-auto p-2 rounded-[12px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] space-y-1 text-[12.5px]">
-                                @foreach($products as $prod)
-                                <label class="flex items-center gap-2.5 p-2 rounded-[8px] hover:bg-black/[0.03] dark:hover:bg-white/[0.04] cursor-pointer">
-                                    <input type="checkbox" name="product_ids[]" value="{{ $prod->id }}" :checked="groupForm.product_ids.includes('{{ $prod->id }}')"
-                                        class="rounded-[4px] border-black/20 text-[#007AFF] focus:ring-[#007AFF]">
-                                    <span class="text-black dark:text-white font-medium">{{ $prod->name }}</span>
-                                    <span class="text-[11px] text-black/40 dark:text-white/40 ml-auto tabular-nums">{{ $business->currency_symbol }} {{ number_format($prod->selling_price, 0, ',', '.') }}</span>
-                                </label>
-                                @endforeach
+                        <!-- Products Multi-Select Assignment (Searchable Bulk Filter) -->
+                        <div class="p-4 sm:p-5 rounded-[18px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] space-y-3">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+                                <div class="min-w-0">
+                                    <label class="block font-semibold text-black/80 dark:text-white/80 text-[13px] tracking-tight">
+                                        {{ __('products.label_bulk_product_assignment') }}
+                                    </label>
+                                    <p class="text-[11.5px] text-black/45 dark:text-white/45 leading-relaxed">
+                                        {{ __('products.sub_bulk_product_assignment') }}
+                                    </p>
+                                </div>
+                                <div class="flex items-center gap-1.5 self-start sm:self-auto shrink-0 flex-wrap">
+                                    <span class="text-[11px] font-semibold px-2.5 py-1 rounded-full bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF] tabular-nums border border-[#007AFF]/15">
+                                        <span x-text="groupForm.product_ids.length"></span> / {{ $products->count() }} Terpilih
+                                    </span>
+                                    <button type="button" @click="selectAllProducts()"
+                                        class="h-7 px-2.5 rounded-[8px] text-[11.5px] font-medium text-[#007AFF] dark:text-[#0A84FF] bg-[#007AFF]/8 hover:bg-[#007AFF]/15 transition active:scale-95">
+                                        <span x-text="productSearch.trim() ? 'Pilih Hasil Cari' : 'Pilih Semua'"></span>
+                                    </button>
+                                    <button type="button" @click="clearAllProducts()"
+                                        class="h-7 px-2 rounded-[8px] text-[11.5px] font-medium text-black/50 dark:text-white/50 hover:text-[#FF3B30] hover:bg-[#FF3B30]/10 transition active:scale-95">
+                                        <span x-text="productSearch.trim() ? 'Batalkan Hasil' : 'Kosongkan'"></span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Live Search Input Box -->
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-black/40 dark:text-white/40">
+                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                    </svg>
+                                </div>
+                                <input type="text" x-model="productSearch"
+                                    placeholder="Cari nama produk atau SKU... (Contoh: Gayo, Latte, Tea)"
+                                    class="w-full h-10 pl-9 pr-8 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 placeholder:text-black/35 dark:placeholder:text-white/35 transition">
+                                <button type="button" x-show="productSearch.length > 0" @click="productSearch = ''"
+                                    class="absolute inset-y-0 right-0 pr-2.5 flex items-center text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white transition">
+                                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <!-- Filtered Products List Box -->
+                            <div class="max-h-60 overflow-y-auto p-1.5 rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] space-y-0.5 text-[12.5px] divide-y divide-black/[0.03] dark:divide-white/[0.04]">
+                                @forelse($products as $prod)
+                                    <label x-show="isProductVisible('{{ $prod->id }}')"
+                                        class="flex items-center gap-3 p-2.5 rounded-[10px] hover:bg-black/[0.03] dark:hover:bg-white/[0.04] cursor-pointer transition select-none group">
+                                        <input type="checkbox" name="product_ids[]" value="{{ (string)$prod->id }}" x-model="groupForm.product_ids"
+                                            class="w-4 h-4 rounded-[4px] border-black/20 dark:border-white/20 text-[#007AFF] focus:ring-[#007AFF] cursor-pointer shrink-0">
+                                        <div class="min-w-0 flex-1">
+                                            <div class="text-black dark:text-white font-medium truncate group-hover:text-[#007AFF] dark:group-hover:text-[#0A84FF] transition-colors">
+                                                {{ $prod->name }}
+                                            </div>
+                                            @if($prod->sku)
+                                                <div class="text-[11px] text-black/40 dark:text-white/40 font-mono">
+                                                    SKU: {{ $prod->sku }}
+                                                </div>
+                                            @endif
+                                        </div>
+                                        <span class="text-[12px] font-semibold text-black/70 dark:text-white/70 ml-auto tabular-nums shrink-0">
+                                            {{ $business->currency_symbol }} {{ number_format($prod->selling_price, 0, ',', '.') }}
+                                        </span>
+                                    </label>
+                                @empty
+                                    <div class="p-6 text-center text-[12.5px] text-black/40 dark:text-white/40">
+                                        Belum ada produk aktif yang terdaftar.
+                                    </div>
+                                @endforelse
                             </div>
                         </div>
                     </div>
@@ -547,7 +487,7 @@
                                 class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] px-3.5 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                         </div>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                             <div>
                                 <label class="block font-medium text-black/70 dark:text-white/70 mb-1 text-[13px]">{{ __('products.label_price_delta') }} <span class="text-[#FF3B30]">*</span></label>
                                 <input type="number" name="price_delta" x-model.number="optionForm.price_delta" min="0" step="500" required
@@ -562,6 +502,15 @@
                                     class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] px-3 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                                     <option value="0" :value="false">{{ __('products.affects_material_no') }}</option>
                                     <option value="1" :value="true">{{ __('products.affects_material_yes') }}</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block font-medium text-black/70 dark:text-white/70 mb-1 text-[13px]">{{ __('products.th_status') }}</label>
+                                <select name="is_active" x-model="optionForm.is_active"
+                                    class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] px-3 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                    <option value="1" :value="true">{{ __('products.status_active') }}</option>
+                                    <option value="0" :value="false">{{ __('products.status_inactive') }}</option>
                                 </select>
                             </div>
                         </div>
@@ -696,4 +645,216 @@
     </template>
 
 </div>
+
+@push('scripts')
+<script>
+    function modifierManager() {
+        return {
+            productsMap: @json($products->mapWithKeys(fn($p) => [(string)$p->id => strtolower($p->name . ' ' . ($p->sku ?? ''))])),
+            productSearch: '',
+            showAddGroupModal: false,
+            showEditGroupModal: false,
+            showAddOptionModal: false,
+            showEditOptionModal: false,
+            selectedGroup: null,
+            selectedOption: null,
+            deleteGroupModalOpen: false,
+            deleteGroupTarget: { id: '', name: '' },
+            deleteOptionModalOpen: false,
+            deleteOptionTarget: { id: '', name: '' },
+            groupForm: {
+                id: '',
+                name: '',
+                description: '',
+                selection_type: 'single',
+                min_selection: 0,
+                max_selection: 1,
+                is_required: false,
+                is_active: true,
+                sort_order: 0,
+                product_ids: []
+            },
+            optionForm: {
+                id: '',
+                group_id: '',
+                name: '',
+                price_delta: 0,
+                affects_material: false,
+                sort_order: 0,
+                is_active: true,
+                materials: []
+            },
+
+            isProductVisible(id) {
+                if (!this.productSearch || !this.productSearch.trim()) return true;
+                const q = this.productSearch.toLowerCase().trim();
+                const searchStr = this.productsMap[id];
+                return searchStr ? searchStr.includes(q) : true;
+            },
+
+            selectAllProducts() {
+                if (this.productSearch && this.productSearch.trim()) {
+                    const q = this.productSearch.toLowerCase().trim();
+                    const matched = Object.entries(this.productsMap)
+                        .filter(([id, searchStr]) => searchStr.includes(q))
+                        .map(([id]) => id);
+                    this.groupForm.product_ids = [...new Set([...this.groupForm.product_ids, ...matched])];
+                } else {
+                    this.groupForm.product_ids = Object.keys(this.productsMap);
+                }
+            },
+
+            clearAllProducts() {
+                if (this.productSearch && this.productSearch.trim()) {
+                    const q = this.productSearch.toLowerCase().trim();
+                    const matchedSet = new Set(
+                        Object.entries(this.productsMap)
+                            .filter(([id, searchStr]) => searchStr.includes(q))
+                            .map(([id]) => id)
+                    );
+                    this.groupForm.product_ids = this.groupForm.product_ids.filter(id => !matchedSet.has(id));
+                } else {
+                    this.groupForm.product_ids = [];
+                }
+            },
+
+            openAddGroup() {
+                this.productSearch = '';
+                this.selectedGroup = null;
+                this.groupForm = {
+                    id: '',
+                    name: '',
+                    description: '',
+                    selection_type: 'single',
+                    min_selection: 0,
+                    max_selection: 1,
+                    is_required: false,
+                    is_active: true,
+                    sort_order: 0,
+                    product_ids: []
+                };
+                this.showAddGroupModal = true;
+            },
+
+            openEditGroup(group) {
+                this.productSearch = '';
+                this.selectedGroup = group;
+                this.groupForm = {
+                    id: group.id,
+                    name: group.name,
+                    description: group.description || '',
+                    selection_type: group.selection_type || 'single',
+                    min_selection: Number(group.min_selection || 0),
+                    max_selection: Number(group.max_selection || 1),
+                    is_required: Boolean(group.is_required),
+                    is_active: group.is_active !== undefined ? Boolean(group.is_active) : true,
+                    sort_order: Number(group.sort_order || 0),
+                    product_ids: (group.products || []).map(p => String(p.id))
+                };
+                this.showEditGroupModal = true;
+            },
+
+            openAddOption(group) {
+                this.selectedGroup = group;
+                this.selectedOption = null;
+                this.optionForm = {
+                    id: '',
+                    group_id: group.id,
+                    name: '',
+                    price_delta: 0,
+                    affects_material: false,
+                    sort_order: 0,
+                    is_active: true,
+                    materials: []
+                };
+                this.showAddOptionModal = true;
+            },
+
+            openEditOption(group, opt) {
+                this.selectedGroup = group;
+                this.selectedOption = opt;
+                this.optionForm = {
+                    id: opt.id,
+                    group_id: group.id,
+                    name: opt.name,
+                    price_delta: Number(opt.price_delta || 0),
+                    affects_material: Boolean(opt.affects_material),
+                    sort_order: Number(opt.sort_order || 0),
+                    is_active: Boolean(opt.is_active),
+                    materials: (opt.materials || []).map(m => ({
+                        material_id: m.material_id,
+                        quantity: Number(m.quantity || 1),
+                        unit_id: m.unit_id || ''
+                    }))
+                };
+                this.showEditOptionModal = true;
+                this.$nextTick(() => {
+                    if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                        window.lucide.createIcons();
+                    }
+                });
+            },
+
+            addMaterialRow() {
+                this.optionForm.materials.push({
+                    material_id: '',
+                    quantity: 1,
+                    unit_id: ''
+                });
+                this.$nextTick(() => {
+                    if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                        window.lucide.createIcons();
+                    }
+                });
+            },
+
+            removeMaterialRow(index) {
+                this.optionForm.materials.splice(index, 1);
+            },
+
+            openDeleteGroup(id, name) {
+                this.deleteGroupTarget = { id: id, name: name };
+                this.deleteGroupModalOpen = true;
+            },
+
+            closeDeleteGroup() {
+                this.deleteGroupModalOpen = false;
+                this.deleteGroupTarget = { id: '', name: '' };
+            },
+
+            submitDeleteGroup() {
+                if (this.deleteGroupTarget.id) {
+                    const form = document.getElementById('form-delete-group-' + this.deleteGroupTarget.id);
+                    if (form) form.submit();
+                }
+            },
+
+            openDeleteOption(id, name) {
+                this.deleteOptionTarget = { id: id, name: name };
+                this.deleteOptionModalOpen = true;
+            },
+
+            closeDeleteOption() {
+                this.deleteOptionModalOpen = false;
+                this.deleteOptionTarget = { id: '', name: '' };
+            },
+
+            submitDeleteOption() {
+                if (this.deleteOptionTarget.id) {
+                    const form = document.getElementById('form-delete-option-' + this.deleteOptionTarget.id);
+                    if (form) form.submit();
+                }
+            }
+        };
+    }
+
+    if (window.Alpine) {
+        Alpine.data('modifierManager', modifierManager);
+    } else {
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('modifierManager', modifierManager);
+        });
+    }
+</script>
+@endpush
 @endsection

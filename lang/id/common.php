@@ -45,7 +45,7 @@ return [
     'no_panic_microcopy' => 'Tenang: Riwayat data dan pembukuan masa lalu Anda tetap aman tersimpan.',
     'unauthorized' => 'Aksi ini tidak diizinkan untuk akun Anda.',
     'not_found' => 'Data yang diminta tidak ditemukan.',
-    'api_docs' => 'Dokumentasi API',
+    'api_docs' => 'Dokumentasi',
     'business_templates' => '20 Template Bisnis',
     'saved_successfully' => 'Data berhasil disimpan.',
     'deleted_successfully' => 'Data berhasil dihapus.',

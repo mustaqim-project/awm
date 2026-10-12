@@ -45,7 +45,7 @@ return [
     'no_panic_microcopy' => 'Don\'t worry: Your past transaction history and bookkeeping records remain safe and secure.',
     'unauthorized' => 'This action is unauthorized for your account.',
     'not_found' => 'The requested resource was not found.',
-    'api_docs' => 'API Docs',
+    'api_docs' => 'Docs',
     'business_templates' => '20 Business Templates',
     'saved_successfully' => 'Data saved successfully.',
     'deleted_successfully' => 'Data deleted successfully.',

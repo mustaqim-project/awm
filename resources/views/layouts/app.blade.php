@@ -2110,7 +2110,7 @@
                 class="px-6 lg:px-10 py-4 border-t border-black/5 dark:border-white/5 text-black/45 dark:text-white/45 text-[12px] flex flex-col sm:flex-row items-center justify-between gap-2 mb-24 lg:mb-0">
                 <div>&copy; {{ date('Y') }} Cooca (cooca.id). {{ __('common.copyright_footer') ?? 'Business Operating System.' }}</div>
                 <div class="flex items-center gap-3">
-                    <a href="{{ url('/api/v1/docs') }}" target="_blank"
+                    <a href="{{ url('/docs') }}" target="_blank"
                         class="hover:text-[#007AFF] transition-colors">{{ __('common.api_docs') }}</a>
                     <span>•</span>
                     <a href="{{ route('settings.index') }}" class="hover:text-[#007AFF] transition-colors">{{ __('navigation.templates_business') }}</a>

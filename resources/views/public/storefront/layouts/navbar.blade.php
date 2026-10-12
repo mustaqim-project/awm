@@ -101,7 +101,15 @@
                 </a>
             </div>
 
-            {{-- Quick Order Tracking Modal Trigger --}}
+            {{-- Elegant Dark Mode Toggle --}}
+            <button type="button"
+                @click="toggleDarkMode()"
+                class="p-2 rounded-xl text-neutral-700 dark:text-neutral-300 bg-black/[0.03] dark:bg-white/[0.05] hover:bg-black/[0.06] dark:hover:bg-white/[0.08] transition border border-black/[0.04] dark:border-white/[0.06] flex items-center justify-center min-h-[36px] min-w-[36px]"
+                title="Toggle Elegant Dark Mode"
+                aria-label="Toggle Elegant Dark Mode">
+                <i data-lucide="sun" class="w-4 h-4 hidden dark:inline"></i>
+                <i data-lucide="moon" class="w-4 h-4 inline dark:hidden"></i>
+            </button>
             <button type="button" @click="$dispatch('open-order-track-modal')"
                 class="hidden sm:flex items-center justify-center p-2 rounded-xl text-neutral-700 dark:text-neutral-300 bg-black/[0.03] dark:bg-white/[0.05] hover:bg-black/[0.06] dark:hover:bg-white/[0.08] transition border border-black/[0.04] dark:border-white/[0.06]"
                 title="{{ __('storefront.nav.tracking') }}"
@@ -253,9 +261,18 @@
         @endif
 
         <div class="pt-3 border-t border-black/[0.06] dark:border-white/[0.08] space-y-2">
+            {{-- Dark Mode Toggle in Mobile Drawer --}}
+            <button type="button" @click="toggleDarkMode()"
+                class="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl font-semibold text-xs bg-black/[0.03] dark:bg-white/[0.05] text-neutral-700 dark:text-neutral-300 min-h-[44px]">
+                <i data-lucide="moon" class="w-4 h-4 block dark:hidden"></i>
+                <i data-lucide="sun" class="w-4 h-4 hidden dark:block text-amber-400"></i>
+                <span class="block dark:hidden">Mode Gelap</span>
+                <span class="hidden dark:block">Mode Terang</span>
+            </button>
+
             {{-- Quick Order Tracking in Mobile Drawer --}}
             <button type="button" @click="mobileMenuOpen = false; $dispatch('open-order-track-modal')"
-                class="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl font-semibold text-xs bg-black/[0.03] dark:bg-white/[0.05] text-neutral-700 dark:text-neutral-300">
+                class="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl font-semibold text-xs bg-black/[0.03] dark:bg-white/[0.05] text-neutral-700 dark:text-neutral-300 min-h-[44px]">
                 <i data-lucide="search" class="w-4 h-4"></i>
                 <span>{{ __('storefront.nav.tracking') }}</span>
             </button>

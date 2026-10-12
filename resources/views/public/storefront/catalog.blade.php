@@ -6,9 +6,10 @@
     $catOgImage = $landingPage->og_image_url ?: ($landingPage->hero_image_url ?: ($business->logo_url ?: asset('assets/seo/cooca-og-default.jpg')));
     $catCanonical = url('/' . $business->slug . '/katalog');
 
-    // Fase 5: Resolve active theme preset for conditional sector-specific partials
+    // Resolve active theme preset for sector-specific partials
     $activeTheme = $theme ?? app(\App\Domain\Storefront\StorefrontThemeService::class)->resolveTheme($landingPage);
     $themePreset = $activeTheme['id'] ?? 'artisan_brew';
+    $bundleDir = $activeTheme['bundle_dir'] ?? 'universal_storefront';
     $isArtisanBrew = $themePreset === 'artisan_brew';
 @endphp
 
@@ -48,11 +49,10 @@
                     {{ $isArtisanBrew ? 'Menu Kopi' : 'Katalog Toko' }}
                 </span>
             </div>
-            <h1 class="font-heading font-extrabold text-2xl sm:text-4xl"
-                style="{{ $isArtisanBrew ? 'color: #3D2B1F;' : '' }}">
+            <h1 class="font-heading font-extrabold text-2xl sm:text-4xl text-neutral-900 dark:text-white">
                 {{ $isArtisanBrew ? 'Menu & Katalog Kopi' : 'Katalog Produk & Layanan' }}
             </h1>
-            <p class="text-sm max-w-2xl" style="{{ $isArtisanBrew ? 'color: #8B5A2B99;' : '' }}">
+            <p class="text-sm max-w-2xl text-neutral-600 dark:text-neutral-400">
                 {{ $isArtisanBrew
                     ? 'Temukan biji kopi spesialti, minuman signature, dan pastry pilihan dari ' . $business->name . '.'
                     : 'Jelajahi seluruh koleksi produk dan layanan resmi ' . $business->name . '. Temukan barang kebutuhan Anda dengan harga terbaik.' }}
@@ -122,80 +122,17 @@
         @endif
 
         {{-- Product Grid --}}
-        {{-- Fase 5: artisan_brew uses coffee-specific product cards --}}
         @if ($products->isNotEmpty())
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
                 @foreach ($products as $item)
-                    @if ($isArtisanBrew)
-                        @include('public.storefront.themes.fnb_cafe.product_card', ['item' => $item])
+                    @if (view()->exists("public.storefront.themes.{$bundleDir}.product_card"))
+                        @include("public.storefront.themes.{$bundleDir}.product_card", ['item' => $item])
+                    @elseif (view()->exists("public.storefront.themes.modern_umkm.product_card"))
+                        @include("public.storefront.themes.modern_umkm.product_card", ['item' => $item])
+                    @elseif (view()->exists("public.storefront.themes.universal_storefront.product_card"))
+                        @include("public.storefront.themes.universal_storefront.product_card", ['item' => $item])
                     @else
-                    @php
-                        $pdpUrl = url('/' . $business->slug . '/produk/' . ($item->slug ?: $item->id));
-                        $hasPrice = ($item->show_price_on_web ?? true) && $item->selling_price > 0;
-                    @endphp
-                    <div
-                        class="group flex flex-col rounded-[20px] overflow-hidden bg-white dark:bg-neutral-800/80 border border-black/5 dark:border-white/10 shadow-sm hover:shadow-xl transition-all duration-300">
-                        {{-- Thumbnail --}}
-                        <a href="{{ $pdpUrl }}"
-                            class="relative aspect-square overflow-hidden bg-neutral-100 dark:bg-neutral-900 block">
-                            @if ($item->image_url)
-                                <img src="{{ $item->image_url }}" alt="{{ $item->name }}"
-                                    class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-                                    loading="lazy">
-                            @else
-                                <div class="w-full h-full flex items-center justify-center text-neutral-400">
-                                    <i data-lucide="package" class="w-12 h-12 stroke-1"></i>
-                                </div>
-                            @endif
-
-                            @if ($item->is_preorder)
-                                <span
-                                    class="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-[8px] text-[10px] font-bold bg-amber-500 text-white shadow-sm">
-                                    Pre-Order
-                                </span>
-                            @endif
-                        </a>
-
-                        {{-- Info --}}
-                        <div class="p-4 flex flex-col flex-1">
-                            @if ($item->category)
-                                <span
-                                    class="text-[11px] font-medium text-neutral-400 dark:text-neutral-500 uppercase tracking-wider mb-1 line-clamp-1">
-                                    {{ $item->category->name }}
-                                </span>
-                            @endif
-
-                            <a href="{{ $pdpUrl }}"
-                                class="font-heading font-bold text-sm sm:text-base text-neutral-900 dark:text-white group-hover:text-theme-primary transition line-clamp-2 leading-snug mb-2">
-                                {{ $item->name }}
-                            </a>
-
-                            <div
-                                class="mt-auto pt-3 flex items-center justify-between gap-2 border-t border-black/5 dark:border-white/10">
-                                <div class="flex flex-col">
-                                    <span class="text-[10px] text-neutral-400 font-medium">Harga</span>
-                                    <span class="font-bold text-sm sm:text-base text-neutral-900 dark:text-white"
-                                        style="font-variant-numeric: tabular-nums;">
-                                        {{ $hasPrice ? 'Rp ' . number_format((float) $item->selling_price, 0, ',', '.') : 'Hubungi Toko' }}
-                                    </span>
-                                </div>
-
-                                @if ($hasPrice)
-                                    <button type="button"
-                                        @click="$store.cart.add({ id: '{{ $item->id }}', name: '{{ addslashes($item->name) }}', price: {{ (float) $item->selling_price }}, image_url: '{{ $item->image_url }}' }, 1)"
-                                        class="p-2.5 rounded-[12px] bg-neutral-100 dark:bg-neutral-700 hover:bg-theme-primary hover:text-white text-neutral-700 dark:text-neutral-200 transition active:scale-[0.95] min-w-[44px] min-h-[44px] flex items-center justify-center"
-                                        title="Tambah ke Keranjang">
-                                        <i data-lucide="plus" class="w-4 h-4"></i>
-                                    </button>
-                                @else
-                                    <a href="{{ $pdpUrl }}"
-                                        class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700 text-xs font-semibold text-neutral-700 dark:text-neutral-300">
-                                        Lihat
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
+                        @include("public.storefront.components.product_card", ['product' => $item, 'business' => $business])
                     @endif
                 @endforeach
             </div>

@@ -76,6 +76,30 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * Determine if this user has one of the specified roles.
+     * Checks active business context first, then active_business_id membership, or any membership.
+     */
+    public function hasRole(string ...$roles): bool
+    {
+        $activeRole = \App\Support\Context::role();
+        if ($activeRole !== null && in_array($activeRole, $roles, true)) {
+            return true;
+        }
+
+        if ($this->active_business_id) {
+            $membershipRole = $this->memberships()
+                ->where('business_id', $this->active_business_id)
+                ->value('role');
+
+            if ($membershipRole !== null && in_array($membershipRole, $roles, true)) {
+                return true;
+            }
+        }
+
+        return $this->memberships()->whereIn('role', $roles)->exists();
+    }
+
+    /**
      * Determine if user's phone number has been verified via WhatsApp OTP.
      * Permanent lifetime verification until phone number is changed.
      */

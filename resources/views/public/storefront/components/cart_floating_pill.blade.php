@@ -8,8 +8,7 @@
     x-transition:leave="transition ease-in duration-200 transform"
     x-transition:leave-start="opacity-100 translate-y-0 scale-100"
     x-transition:leave-end="opacity-0 translate-y-8 scale-95"
-    class="fixed bottom-4 inset-x-4 sm:inset-x-auto sm:right-6 sm:max-w-md z-40"
-    style="bottom: calc(1rem + env(safe-area-inset-bottom, 0px));">
+    class="fixed bottom-[calc(4.75rem+env(safe-area-inset-bottom,0px))] inset-x-4 sm:inset-x-auto sm:right-6 sm:bottom-6 sm:max-w-md z-40">
     
     <div class="bg-neutral-900/90 dark:bg-white/95 text-white dark:text-neutral-900 backdrop-blur-2xl px-4 sm:px-5 py-3 rounded-2xl sm:rounded-3xl shadow-[0_16px_40px_rgba(0,0,0,0.3)] border border-white/10 dark:border-black/10 flex items-center justify-between gap-4">
         

@@ -117,6 +117,12 @@ final class RbacSeeder extends Seeder
             // ─── Landing Page & Storefront CMS ────────────────────────
             'cms.manage'                  => ['Kelola Landing Page CMS',                'cms',         'Mengatur website mini publik bisnis, katalog unggulan, banner, dan kontak.'],
             'storefront.popup.manage'     => ['Kelola Pop Up Toko Online',              'cms',         'Mengatur promo pop up, banner pengumuman modal, frekuensi tampil, dan tombol aksi di storefront publik.'],
+            'storefront.manage'           => ['Kelola Toko Online',                     'storefront',  'Mengatur profil toko online, jam buka, dan konfigurasi checkout.'],
+            'storefront.orders.view'      => ['Lihat Pesanan Toko Online',              'storefront',  'Melihat daftar pesanan dan rincian transaksi belanja toko online.'],
+            'storefront.orders.process'   => ['Proses Pesanan Toko Online',             'storefront',  'Mengonfirmasi pesanan, memverifikasi pembayaran, dan input resi pengiriman.'],
+            'storefront.shipping.manage'  => ['Kelola Ongkir & Kurir Toko',             'storefront',  'Mengatur aturan ongkos kirim flat/radius, kurir toko, dan opsi pickup.'],
+            'storefront.reservations.manage' => ['Kelola Reservasi & Booking',          'storefront',  'Melihat, mengonfirmasi booking jadwal dan alokasi meja reservasi pelanggan.'],
+            'storefront.po.manage'        => ['Kelola PO Klien Toko',                   'storefront',  'Menerima dan memproses pesanan purchase order (PO) bertahap dari pelanggan.'],
 
             // ─── Reports ─────────────────────────────────────────────
             'reports.view'                => ['Lihat Laporan',                          'reports',     'Akses halaman laporan dan analitik.'],
@@ -243,6 +249,12 @@ final class RbacSeeder extends Seeder
             'marketplace.manage',
             'cms.manage',
             'storefront.popup.manage',
+            'storefront.manage',
+            'storefront.orders.view',
+            'storefront.orders.process',
+            'storefront.shipping.manage',
+            'storefront.reservations.manage',
+            'storefront.po.manage',
             'reports.view',
             'reports.financial',
             'reports.export',

@@ -24,8 +24,8 @@
 
 @if ($hasWhatsapp && $waNumber)
     @if ($mode === 'floating')
-        {{-- Floating WhatsApp Bubble Widget --}}
-        <div class="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 z-30 flex flex-col items-end"
+        {{-- Floating WhatsApp Bubble Widget (Desktop & Tablet; Mobile uses Bottom Tab Bar) --}}
+        <div class="hidden md:flex fixed bottom-6 right-6 z-30 flex-col items-end"
             x-data="{ waChatOpen: false }">
             
             {{-- WhatsApp Greeting Card Modal --}}

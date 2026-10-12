@@ -19,11 +19,6 @@
                 <h1 class="text-[20px] font-semibold text-black dark:text-white tracking-tight">
                     Website &amp; Profil Digital: {{ $business->name }}
                 </h1>
-                <p class="text-[13px] text-black/50 dark:text-white/50 leading-relaxed">
-                    Kelola halaman landing page profesional, katalog layanan, galeri foto suasana usaha, kontak WhatsApp
-                    1-klik, dan optimasi SEO Google.
-                </p>
-
                 <!-- Public URL bar capsule -->
                 <div class="pt-1 flex flex-wrap items-center gap-2 text-[12px]">
                     <span class="text-black/50 dark:text-white/50 font-medium">Tautan Publik:</span>
@@ -68,7 +63,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
                         </svg>
-                        <span>Preset Industri (25)</span>
+                        <span>Preset Industri</span>
                     </button>
 
                     <button type="button" @click="togglePublish()" :disabled="saving"
@@ -101,15 +96,6 @@
                     </svg>
                     <span x-text="saving ? 'Menyiapkan...' : 'Preview Live'">Preview Live</span>
                 </button>
-
-                <a href="{{ $publicUrl }}" target="_blank"
-                    class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)] flex-1 sm:flex-none">
-                    <span>Buka Website</span>
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-                    </svg>
-                </a>
             </div>
         </header>
 
@@ -362,13 +348,13 @@
                             </div>
 
                             <!-- ============================================================ -->
-                            <!-- 20 TEMPLATE TEMA INDUSTRI OTENTIK (§PRD-07 §2.C)              -->
+                            <!-- 21 TEMPLATE TEMA INDUSTRI OTENTIK & UNIVERSAL STOREFRONT        -->
                             <!-- ============================================================ -->
                             <div class="pt-4 border-t border-black/5 dark:border-white/5 space-y-3">
                                 <div>
                                     <div class="flex items-center justify-between">
                                         <h3 class="text-[14px] font-semibold text-black dark:text-white">
-                                            20 Template Tema Industri Otentik
+                                            21 Template Tema Industri Otentik &amp; Universal Storefront
                                         </h3>
                                         <span class="text-[11px] font-mono text-[#007AFF] bg-[#007AFF]/10 px-2 py-0.5 rounded-full font-bold">
                                             PRD-07 Berstandar Internasional
@@ -2197,6 +2183,10 @@
                 ],
 
                 themePresets: [{
+                        hex: '#8B5A2B',
+                        label: 'Artisan Warm Wood (Default)'
+                    },
+                    {
                         hex: '#007AFF',
                         label: 'System Blue'
                     },
@@ -2246,7 +2236,7 @@
                 form: {
                     industry_preset: @json($landingPage->industry_preset ?? 'retail'),
                     theme_preset: @json($landingPage->getThemePreset()),
-                    theme_color: @json($landingPage->theme_color ?? '#007AFF'),
+                    theme_color: @json($landingPage->theme_color ?? '#8B5A2B'),
                     dark_mode: @json((bool) ($landingPage->dark_mode ?? false)),
                     announcement_badge: @json($landingPage->announcement_badge ?? ''),
                     headline: @json($landingPage->headline ?? ''),

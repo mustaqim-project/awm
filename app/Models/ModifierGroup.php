@@ -70,6 +70,7 @@ class ModifierGroup extends Model
     public function products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class, 'product_modifier_groups', 'modifier_group_id', 'product_id')
+            ->using(ProductModifierGroup::class)
             ->withPivot('sort_order')
             ->withTimestamps();
     }

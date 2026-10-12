@@ -960,7 +960,7 @@
                                     @endif
                                 </div>
 
-                                @if (\App\Support\Context::isOwner() || auth()->user()?->hasRole('owner') || auth()->user()?->hasRole('supervisor'))
+                                @if (\App\Support\Context::isOwner() || \App\Support\Context::hasPermission('inventory.manage'))
                                     <div class="flex items-center gap-2 shrink-0">
                                         <form id="reject-adj-{{ $adj->id }}" method="POST" action="{{ route('inventory.adjustments.reject', $adj->id) }}">
                                             @csrf

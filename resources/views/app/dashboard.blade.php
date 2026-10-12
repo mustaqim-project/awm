@@ -19,27 +19,24 @@
 
     <div class="space-y-6 pb-28 sm:pb-32 lg:pb-12" x-data="dashboardCockpit()">
 
-        <!-- ========================================== -->
-        <!-- 0. BREADCRUMB BAR (APPLE MINIMALIST)       -->
-        <!-- ========================================== -->
-        <nav class="flex items-center gap-1.5 text-[12px] text-black/50 dark:text-white/50 py-0.5 whitespace-nowrap print:hidden"
-            aria-label="Breadcrumb">
-            <a href="{{ route('dashboard') }}" class="hover:text-[#007AFF] transition-colors font-medium">{{ __('dashboard.breadcrumb_dashboard') }}</a>
-            <i data-lucide="chevron-right" class="w-3.5 h-3.5 opacity-40"></i>
-            <span class="text-black/80 dark:text-white/80 font-medium">{{ __('dashboard.breadcrumb_cockpit') }}</span>
-        </nav>
 
         <!-- ========================================== -->
         <!-- 1. TOP HEADER BANNER & ACTION COCKPIT      -->
         <!-- ========================================== -->
         <div
-            class="relative z-30 rounded-[16px] backdrop-blur-md bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 p-5 sm:p-6 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5 transition-colors shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
-            <div class="space-y-1.5 z-10 max-w-2xl">
-                <div class="flex items-center gap-2">
-                    <span class="text-[11px] sm:text-[12px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40">
-                        {{ __('dashboard.cockpit_tag', ['business' => $business->name ?? 'Usaha']) }}
-                    </span>
-                </div>
+            class="relative z-20 rounded-[16px] backdrop-blur-md bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 p-5 sm:p-6 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5 transition-colors shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+            <div class="space-y-1.5 max-w-2xl">
+                <!-- ========================================== -->
+                <!-- 0. BREADCRUMB BAR (APPLE MINIMALIST)       -->
+                <!-- ========================================== -->
+                <nav class="flex items-center gap-1.5 text-[12px] text-black/50 dark:text-white/50 py-0.5 whitespace-nowrap print:hidden"
+                    aria-label="Breadcrumb">
+                    <a href="{{ route('dashboard') }}"
+                        class="hover:text-[#007AFF] transition-colors font-medium">{{ __('dashboard.breadcrumb_dashboard') }}</a>
+                    <i data-lucide="chevron-right" class="w-3.5 h-3.5 opacity-40"></i>
+                    <span
+                        class="text-black/80 dark:text-white/80 font-medium">{{ __('dashboard.breadcrumb_cockpit') }}</span>
+                </nav>
 
                 <div class="flex items-center gap-3 flex-wrap">
                     <h1 class="text-[20px] sm:text-[24px] font-bold text-black dark:text-white tracking-tight">
@@ -60,13 +57,12 @@
                     @endif
                 </div>
 
-                <p class="text-[13px] text-black/60 dark:text-white/60 leading-relaxed">
-                    {{ __('dashboard.banner_desc') }}
-                </p>
+
             </div>
 
             <!-- Quick Action Buttons Hub (Apple HIG macOS Toolbar on Desktop, Clean Group on Mobile) -->
-            <div class="relative z-30 flex items-center gap-2 w-full lg:w-auto flex-wrap sm:flex-nowrap" x-data="{ quickMenuOpen: false }">
+            <div class="relative z-10 flex items-center gap-2 w-full lg:w-auto flex-wrap sm:flex-nowrap"
+                x-data="{ quickMenuOpen: false }">
                 @if (\App\Support\Context::hasPermission('pos.terminal'))
                     <a href="{{ route('pos.terminal') }}"
                         class="min-h-[44px] px-4 py-2.5 rounded-[12px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#007AFF] transition-all flex items-center justify-center gap-2 shadow-[0_1px_2px_rgba(0,122,255,0.25)] flex-1 sm:flex-none shrink-0">
@@ -84,7 +80,8 @@
                 @endif
 
                 @php
-                    $hasAnyQuickAction = \App\Support\Context::hasPermission('expenses.manage') ||
+                    $hasAnyQuickAction =
+                        \App\Support\Context::hasPermission('expenses.manage') ||
                         \App\Support\Context::hasPermission('expenses.view') ||
                         \App\Support\Context::hasPermission('finance.cash_bank') ||
                         \App\Support\Context::isOwner() ||
@@ -94,17 +91,18 @@
                 @endphp
 
                 @if ($hasAnyQuickAction)
-                    <div class="relative z-40 flex-1 sm:flex-none shrink-0">
+                    <div class="relative z-20 flex-1 sm:flex-none shrink-0">
                         <button type="button" @click="quickMenuOpen = !quickMenuOpen"
                             class="w-full sm:w-auto min-h-[44px] px-3.5 py-2.5 rounded-[12px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.97] active:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#007AFF] transition-all flex items-center justify-center gap-2">
                             <i data-lucide="plus" class="w-4 h-4 text-[#007AFF] shrink-0"></i>
                             <span class="whitespace-nowrap">{{ __('dashboard.action_quick_actions') }}</span>
-                            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-black/40 dark:text-white/40 transition-transform duration-200" :class="quickMenuOpen ? 'rotate-180' : ''"></i>
+                            <i data-lucide="chevron-down"
+                                class="w-3.5 h-3.5 text-black/40 dark:text-white/40 transition-transform duration-200"
+                                :class="quickMenuOpen ? 'rotate-180' : ''"></i>
                         </button>
 
                         <!-- Apple HIG Dropdown Menu Popover -->
-                        <div x-show="quickMenuOpen" x-cloak
-                            @click.outside="quickMenuOpen = false"
+                        <div x-show="quickMenuOpen" x-cloak @click.outside="quickMenuOpen = false"
                             @keydown.escape.window="quickMenuOpen = false"
                             x-transition:enter="transition ease-out duration-150"
                             x-transition:enter-start="opacity-0 scale-95 translate-y-1"
@@ -112,8 +110,8 @@
                             x-transition:leave="transition ease-in duration-100"
                             x-transition:leave-start="opacity-100 scale-100 translate-y-0"
                             x-transition:leave-end="opacity-0 scale-95 translate-y-1"
-                            class="absolute left-0 right-0 sm:left-auto sm:right-0 mt-2 w-full sm:w-56 rounded-[16px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 shadow-[0_16px_36px_rgba(0,0,0,0.2)] dark:shadow-[0_16px_36px_rgba(0,0,0,0.6)] p-1.5 z-50 divide-y divide-black/5 dark:divide-white/5">
-                            
+                            class="absolute left-0 right-0 sm:left-auto sm:right-0 mt-2 w-full sm:w-56 rounded-[16px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 shadow-[0_16px_36px_rgba(0,0,0,0.2)] dark:shadow-[0_16px_36px_rgba(0,0,0,0.6)] p-1.5 z-30 divide-y divide-black/5 dark:divide-white/5">
+
                             <div class="py-1">
                                 @if (\App\Support\Context::hasPermission('expenses.manage') || \App\Support\Context::hasPermission('expenses.view'))
                                     <button type="button" @click="quickMenuOpen = false; $dispatch('open-quick-expense')"
@@ -123,7 +121,10 @@
                                     </button>
                                 @endif
 
-                                @if (\App\Support\Context::hasPermission('finance.cash_bank') || \App\Support\Context::hasPermission('expenses.manage') || \App\Support\Context::isOwner())
+                                @if (
+                                    \App\Support\Context::hasPermission('finance.cash_bank') ||
+                                        \App\Support\Context::hasPermission('expenses.manage') ||
+                                        \App\Support\Context::isOwner())
                                     <button type="button" @click="quickMenuOpen = false; $dispatch('open-quick-income')"
                                         class="w-full min-h-[44px] px-3 py-2 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.08] active:scale-[0.98] flex items-center gap-2.5 transition text-left">
                                         <i data-lucide="arrow-down-left" class="w-4 h-4 text-[#34C759] shrink-0"></i>
@@ -158,7 +159,7 @@
         <!-- ======================================================= -->
         <!-- 2. DYNAMIC ANALYTICS COCKPIT (PERIOD FILTER, KPIS, CHARTS) -->
         <!-- ======================================================= -->
-        <div id="analytics-cockpit" class="relative space-y-5 sm:space-y-6">
+        <div id="analytics-cockpit" class="relative z-0 space-y-5 sm:space-y-6">
 
             <!-- Asynchronous Loading Spinner Overlay -->
             <div class="dash-loading-overlay rounded-[18px]" data-loading-overlay hidden>
@@ -210,7 +211,8 @@
                                 {{ $analytics['range']['to'] }}
                             </span>
                         </div>
-                        <p class="text-[12px] text-black/50 dark:text-white/50 mt-1">{{ __('dashboard.performance_desc') }}</p>
+                        <p class="text-[12px] text-black/50 dark:text-white/50 mt-1">{{ __('dashboard.performance_desc') }}
+                        </p>
                     </div>
 
                     <!-- Period Filter Controls (Apple Segmented Control Group) -->
@@ -244,7 +246,8 @@
                         <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto" x-show="customOpen">
                             <input type="date" class="period-date" x-model="from" :max="to"
                                 aria-label="{{ __('dashboard.date_from') }}">
-                            <span class="text-[12px] text-black/40 dark:text-white/40 font-medium">{{ __('dashboard.date_to') }}</span>
+                            <span
+                                class="text-[12px] text-black/40 dark:text-white/40 font-medium">{{ __('dashboard.date_to') }}</span>
                             <input type="date" class="period-date" x-model="to" :min="from"
                                 aria-label="{{ __('dashboard.date_end') }}">
                             <button type="submit" class="period-apply">{{ __('dashboard.apply') }}</button>
@@ -288,7 +291,8 @@
                             data-kpi-value data-kpi="net">
                             Rp {{ number_format($analytics['kpis']['net'], 0, ',', '.') }}
                         </div>
-                        <div class="kpi-foot" title="{{ __('dashboard.kpi_net_profit_sub') }}">{{ __('dashboard.kpi_net_profit_sub') }}</div>
+                        <div class="kpi-foot" title="{{ __('dashboard.kpi_net_profit_sub') }}">
+                            {{ __('dashboard.kpi_net_profit_sub') }}</div>
                     </div>
                 </div>
 
@@ -310,7 +314,8 @@
                             data-kpi-value data-kpi="profit">
                             Rp {{ number_format($analytics['kpis']['profit'], 0, ',', '.') }}
                         </div>
-                        <div class="kpi-foot" title="{{ __('dashboard.kpi_gross_profit_sub') }}">{{ __('dashboard.kpi_gross_profit_sub') }}</div>
+                        <div class="kpi-foot" title="{{ __('dashboard.kpi_gross_profit_sub') }}">
+                            {{ __('dashboard.kpi_gross_profit_sub') }}</div>
                     </div>
                 </div>
 
@@ -330,7 +335,8 @@
                         <div class="kpi-foot"
                             title="{{ __('dashboard.kpi_avg_ticket_label', ['avg' => 'Rp ' . number_format($analytics['kpis']['avg_ticket'], 0, ',', '.'), 'unpaid' => 'Rp ' . number_format($stats['unpaid_invoices_amount'] ?? 0, 0, ',', '.')]) }}">
                             {{ __('dashboard.kpi_avg_short') }}: <b data-kpi="avg_ticket">Rp
-                                {{ number_format($analytics['kpis']['avg_ticket'], 0, ',', '.') }}</b> / tx · {{ __('dashboard.kpi_unpaid_short') }}: <span class="tabular-nums font-semibold">Rp
+                                {{ number_format($analytics['kpis']['avg_ticket'], 0, ',', '.') }}</b> / tx ·
+                            {{ __('dashboard.kpi_unpaid_short') }}: <span class="tabular-nums font-semibold">Rp
                                 {{ number_format($stats['unpaid_invoices_amount'] ?? 0, 0, ',', '.') }}</span>
                         </div>
                     </div>
@@ -430,15 +436,18 @@
                             <!-- Empty State -->
                             <div class="chart-state chart-empty" data-empty hidden>
                                 <i data-lucide="bar-chart-2" class="w-10 h-10 text-black/20 dark:text-white/20 mb-1"></i>
-                                <p class="font-semibold text-black/70 dark:text-white/70">{{ __('dashboard.chart_no_tx') }}</p>
+                                <p class="font-semibold text-black/70 dark:text-white/70">
+                                    {{ __('dashboard.chart_no_tx') }}</p>
                                 <span class="chart-state-note">{{ __('dashboard.chart_no_tx_note') }}</span>
                             </div>
 
                             <!-- Error State -->
                             <div class="chart-state chart-error" data-error hidden>
                                 <i data-lucide="alert-triangle" class="w-10 h-10 text-[#FF3B30] mb-1"></i>
-                                <p class="font-semibold text-black/70 dark:text-white/70">{{ __('dashboard.chart_failed') }}</p>
-                                <button type="button" onclick="renderTrend()" class="chart-retry">{{ __('dashboard.chart_retry') }}</button>
+                                <p class="font-semibold text-black/70 dark:text-white/70">
+                                    {{ __('dashboard.chart_failed') }}</p>
+                                <button type="button" onclick="renderTrend()"
+                                    class="chart-retry">{{ __('dashboard.chart_retry') }}</button>
                             </div>
                         </div>
                     </div>
@@ -487,9 +496,21 @@
                     <!-- Donut 2: Tipe Layanan Kasir (Dinamis Sesuai Industri Usaha) -->
                     @php
                         $isFoodBiz = $business?->isFoodIndustry() ?? true;
-                        $orderChartTitle = $isFoodBiz ? __('dashboard.order_method_food') : __('dashboard.order_method_general');
-                        $orderChartSub   = $isFoodBiz ? __('dashboard.order_method_food_sub') : __('dashboard.order_method_general_sub');
-                        $orderChartIcon  = $isFoodBiz ? 'utensils' : ($business?->isWorkshop() ? 'wrench' : ($business?->isLaundry() ? 'shirt' : ($business?->isPharmacy() ? 'pill' : 'tag')));
+                        $orderChartTitle = $isFoodBiz
+                            ? __('dashboard.order_method_food')
+                            : __('dashboard.order_method_general');
+                        $orderChartSub = $isFoodBiz
+                            ? __('dashboard.order_method_food_sub')
+                            : __('dashboard.order_method_general_sub');
+                        $orderChartIcon = $isFoodBiz
+                            ? 'utensils'
+                            : ($business?->isWorkshop()
+                                ? 'wrench'
+                                : ($business?->isLaundry()
+                                    ? 'shirt'
+                                    : ($business?->isPharmacy()
+                                        ? 'pill'
+                                        : 'tag')));
                     @endphp
                     <div class="chart-wrap chart-card-md" data-chart="orders">
                         <div class="chart-head">
@@ -498,7 +519,8 @@
                                 <i data-lucide="{{ $orderChartIcon }}" class="w-3.5 h-3.5"></i>
                             </div>
                             <div>
-                                <h3 class="text-[14px] font-semibold text-black dark:text-white tracking-tight">{{ $orderChartTitle }}</h3>
+                                <h3 class="text-[14px] font-semibold text-black dark:text-white tracking-tight">
+                                    {{ $orderChartTitle }}</h3>
                                 <p class="text-[11px] text-black/50 dark:text-white/50">{{ $orderChartSub }}</p>
                             </div>
                         </div>
@@ -529,8 +551,10 @@
                                 <i data-lucide="layers" class="w-3.5 h-3.5"></i>
                             </div>
                             <div>
-                                <h3 class="text-[14px] font-semibold text-black dark:text-white tracking-tight">{{ __('dashboard.categories_title') }}</h3>
-                                <p class="text-[11px] text-black/50 dark:text-white/50">{{ __('dashboard.categories_sub') }}</p>
+                                <h3 class="text-[14px] font-semibold text-black dark:text-white tracking-tight">
+                                    {{ __('dashboard.categories_title') }}</h3>
+                                <p class="text-[11px] text-black/50 dark:text-white/50">
+                                    {{ __('dashboard.categories_sub') }}</p>
                             </div>
                         </div>
                         <div class="chart-canvas-wrap chart-canvas-wrap-md chart-donut pt-1">
@@ -560,8 +584,10 @@
                                 <i data-lucide="credit-card" class="w-3.5 h-3.5"></i>
                             </div>
                             <div>
-                                <h3 class="text-[14px] font-semibold text-black dark:text-white tracking-tight">{{ __('dashboard.payment_title') }}</h3>
-                                <p class="text-[11px] text-black/50 dark:text-white/50">{{ __('dashboard.payment_sub') }}</p>
+                                <h3 class="text-[14px] font-semibold text-black dark:text-white tracking-tight">
+                                    {{ __('dashboard.payment_title') }}</h3>
+                                <p class="text-[11px] text-black/50 dark:text-white/50">{{ __('dashboard.payment_sub') }}
+                                </p>
                             </div>
                         </div>
                         <div class="chart-canvas-wrap chart-canvas-wrap-md chart-donut pt-1">
@@ -603,7 +629,8 @@
                                     {{ __('dashboard.top_products_title') }}
                                 </h3>
                             </div>
-                            <span class="panel-count" data-panel-count="products">{{ count($analytics['top_products']) }}
+                            <span class="panel-count"
+                                data-panel-count="products">{{ count($analytics['top_products']) }}
                                 {{ __('dashboard.products_unit') }}</span>
                         </div>
 
@@ -631,7 +658,7 @@
                                                         title="{{ $p['name'] }}">
                                                         {{ $p['name'] }}
                                                         @if (!empty($p['code']))
-                                                             <span class="dash-code">{{ $p['code'] }}</span>
+                                                            <span class="dash-code">{{ $p['code'] }}</span>
                                                         @endif
                                                     </td>
                                                     <td class="text-right text-black/60 dark:text-white/60 font-semibold">
@@ -640,8 +667,7 @@
                                                         class="text-right text-[#34C759] dark:text-[#30D158] font-semibold">
                                                         Rp {{ number_format($p['revenue'], 0, ',', '.') }}</td>
                                                     <td>
-                                                        <div class="pbar"
-                                                            title="{{ $p['pct'] }}%"><i
+                                                        <div class="pbar" title="{{ $p['pct'] }}%"><i
                                                                 style="width: {{ $p['pct'] }}%"></i></div>
                                                     </td>
                                                 </tr>
@@ -654,7 +680,8 @@
                             <div class="panel-empty" data-panel-empty="products"
                                 {{ count($analytics['top_products']) > 0 ? 'hidden' : '' }}>
                                 <i data-lucide="trophy" class="w-8 h-8 text-black/20 dark:text-white/20"></i>
-                                <p class="font-semibold text-black/70 dark:text-white/70">{{ __('dashboard.top_products_empty') }}</p>
+                                <p class="font-semibold text-black/70 dark:text-white/70">
+                                    {{ __('dashboard.top_products_empty') }}</p>
                                 <span class="chart-state-note">{{ __('dashboard.top_products_empty_note') }}</span>
                             </div>
                         </div>
@@ -674,7 +701,8 @@
                                 </h3>
                             </div>
                             <span class="panel-count"
-                                data-panel-count="materials">{{ count($analytics['top_materials']) }} {{ __('dashboard.materials_unit') }}</span>
+                                data-panel-count="materials">{{ count($analytics['top_materials']) }}
+                                {{ __('dashboard.materials_unit') }}</span>
                         </div>
 
                         <div class="table-body-scroll custom-scrollbar">
@@ -705,8 +733,7 @@
                                                             class="dash-unit">{{ $m['unit'] }}</span>
                                                     </td>
                                                     <td>
-                                                        <div class="pbar"
-                                                            title="{{ $m['pct'] }}%"><i
+                                                        <div class="pbar" title="{{ $m['pct'] }}%"><i
                                                                 style="width: {{ $m['pct'] }}%"></i></div>
                                                     </td>
                                                 </tr>
@@ -719,7 +746,8 @@
                             <div class="panel-empty" data-panel-empty="materials"
                                 {{ count($analytics['top_materials']) > 0 ? 'hidden' : '' }}>
                                 <i data-lucide="package-open" class="w-8 h-8 text-black/20 dark:text-white/20"></i>
-                                <p class="font-semibold text-black/70 dark:text-white/70">{{ __('dashboard.top_materials_empty') }}</p>
+                                <p class="font-semibold text-black/70 dark:text-white/70">
+                                    {{ __('dashboard.top_materials_empty') }}</p>
                                 <span class="chart-state-note">{{ __('dashboard.top_materials_empty_note') }}</span>
                             </div>
                         </div>
@@ -797,7 +825,8 @@
                             <div class="panel-empty" data-panel-empty="low_stock"
                                 {{ count($analytics['low_stock']) > 0 ? 'hidden' : '' }}>
                                 <i data-lucide="check-circle-2" class="w-8 h-8 text-[#34C759]"></i>
-                                <p class="font-semibold text-black/70 dark:text-white/70">{{ __('dashboard.low_stock_all_safe') }}</p>
+                                <p class="font-semibold text-black/70 dark:text-white/70">
+                                    {{ __('dashboard.low_stock_all_safe') }}</p>
                                 <span class="chart-state-note">{{ __('dashboard.low_stock_all_safe_note') }}</span>
                             </div>
                         </div>
@@ -816,7 +845,8 @@
                                 {{ __('dashboard.insights_title') }}
                             </h3>
                         </div>
-                        <span class="text-[11px] font-medium text-black/45 dark:text-white/45">{{ __('dashboard.insights_summary') }}</span>
+                        <span
+                            class="text-[11px] font-medium text-black/45 dark:text-white/45">{{ __('dashboard.insights_summary') }}</span>
                     </div>
                     <p class="chart-sub flex-shrink-0">{{ __('dashboard.insights_sub') }}</p>
 
@@ -868,7 +898,8 @@
                         <div class="insight-empty" data-insights-empty
                             {{ count($analytics['insights']) > 0 ? 'hidden' : '' }}>
                             <i data-lucide="compass" class="w-8 h-8 text-black/20 dark:text-white/20"></i>
-                            <p class="font-semibold text-black/70 dark:text-white/70">{{ __('dashboard.insights_empty') }}
+                            <p class="font-semibold text-black/70 dark:text-white/70">
+                                {{ __('dashboard.insights_empty') }}
                             </p>
                             <span class="chart-state-note">{{ __('dashboard.insights_empty_note') }}</span>
                         </div>
@@ -896,8 +927,10 @@
                             <i data-lucide="receipt" class="w-4 h-4"></i>
                         </div>
                         <div>
-                            <h2 class="text-[15px] font-semibold text-black dark:text-white tracking-tight">{{ __('dashboard.recent_orders_title') }}</h2>
-                            <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('dashboard.recent_orders_sub') }}</p>
+                            <h2 class="text-[15px] font-semibold text-black dark:text-white tracking-tight">
+                                {{ __('dashboard.recent_orders_title') }}</h2>
+                            <p class="text-[12px] text-black/50 dark:text-white/50">
+                                {{ __('dashboard.recent_orders_sub') }}</p>
                         </div>
                     </div>
                     @if (\App\Support\Context::hasPermission('pos.orders'))
@@ -916,9 +949,11 @@
                             <i data-lucide="receipt" class="w-6 h-6"></i>
                         </div>
                         <div>
-                            <h3 class="text-[15px] font-semibold text-black dark:text-white">{{ __('dashboard.no_orders_today') }}
+                            <h3 class="text-[15px] font-semibold text-black dark:text-white">
+                                {{ __('dashboard.no_orders_today') }}
                             </h3>
-                            <p class="text-[13px] text-black/50 dark:text-white/50 mt-0.5">{{ __('dashboard.no_orders_today_sub') }}</p>
+                            <p class="text-[13px] text-black/50 dark:text-white/50 mt-0.5">
+                                {{ __('dashboard.no_orders_today_sub') }}</p>
                         </div>
                         @if (\App\Support\Context::hasPermission('pos.terminal'))
                             <a href="{{ route('pos.terminal') }}"
@@ -974,8 +1009,10 @@
                             <i data-lucide="package" class="w-4 h-4"></i>
                         </div>
                         <div>
-                            <h2 class="text-[15px] font-semibold text-black dark:text-white tracking-tight">{{ __('dashboard.products_catalog_title') }}</h2>
-                            <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('dashboard.products_catalog_sub') }}</p>
+                            <h2 class="text-[15px] font-semibold text-black dark:text-white tracking-tight">
+                                {{ __('dashboard.products_catalog_title') }}</h2>
+                            <p class="text-[12px] text-black/50 dark:text-white/50">
+                                {{ __('dashboard.products_catalog_sub') }}</p>
                         </div>
                     </div>
                     @if (\App\Support\Context::hasPermission('products.view'))
@@ -994,9 +1031,11 @@
                             <i data-lucide="box" class="w-6 h-6"></i>
                         </div>
                         <div>
-                            <h3 class="text-[15px] font-semibold text-black dark:text-white">{{ __('dashboard.no_products_yet') }}
+                            <h3 class="text-[15px] font-semibold text-black dark:text-white">
+                                {{ __('dashboard.no_products_yet') }}
                             </h3>
-                            <p class="text-[13px] text-black/50 dark:text-white/50 mt-0.5">{{ __('dashboard.no_products_yet_sub') }}</p>
+                            <p class="text-[13px] text-black/50 dark:text-white/50 mt-0.5">
+                                {{ __('dashboard.no_products_yet_sub') }}</p>
                         </div>
                         @if (\App\Support\Context::hasPermission('costing.manage') || \App\Support\Context::hasPermission('products.create'))
                             <a href="{{ route('calculator.index') }}"
@@ -1105,7 +1144,8 @@
                             <i data-lucide="calculator" class="w-4 h-4"></i>
                         </div>
                         <div>
-                            <h2 class="text-[15px] font-semibold text-black dark:text-white tracking-tight">{{ __('dashboard.sim_title') }}</h2>
+                            <h2 class="text-[15px] font-semibold text-black dark:text-white tracking-tight">
+                                {{ __('dashboard.sim_title') }}</h2>
                             <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('dashboard.sim_sub') }}</p>
                         </div>
                     </div>
@@ -1120,7 +1160,8 @@
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 mb-4">
                     <div>
-                        <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1.5">{{ __('dashboard.est_base_cogs') }}</label>
+                        <label
+                            class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1.5">{{ __('dashboard.est_base_cogs') }}</label>
                         <div class="relative">
                             <div
                                 class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-black/40 dark:text-white/40 text-[13px] font-medium tabular-nums">
@@ -1134,7 +1175,8 @@
 
                     <div>
                         <div class="flex items-center justify-between mb-1.5">
-                            <label class="block text-[12px] font-medium text-black/60 dark:text-white/60">{{ __('dashboard.target_gross_margin') }}</label>
+                            <label
+                                class="block text-[12px] font-medium text-black/60 dark:text-white/60">{{ __('dashboard.target_gross_margin') }}</label>
                             <span class="text-[13px] font-bold tabular-nums text-[#007AFF]"
                                 x-text="quickMargin + '%'"></span>
                         </div>
@@ -1144,7 +1186,8 @@
 
                         <!-- Quick Margin Presets (Apple Segmented Control Style) -->
                         <div class="flex items-center gap-2 mt-2.5">
-                            <span class="text-[11px] text-black/40 dark:text-white/40 font-medium">{{ __('dashboard.quick_choices') }}</span>
+                            <span
+                                class="text-[11px] text-black/40 dark:text-white/40 font-medium">{{ __('dashboard.quick_choices') }}</span>
                             <div
                                 class="inline-flex p-0.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.06] text-[11px] font-semibold">
                                 <template x-for="preset in [30, 40, 50, 60]">
@@ -1164,31 +1207,39 @@
                 <div
                     class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-4 p-3.5 sm:p-4 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 transition-colors">
                     <div class="p-2 sm:p-0 rounded-lg sm:rounded-none bg-black/[0.01] sm:bg-transparent">
-                        <div class="text-[11px] font-medium text-black/50 dark:text-white/50 truncate">{{ __('dashboard.rec_price') }}
+                        <div class="text-[11px] font-medium text-black/50 dark:text-white/50 truncate">
+                            {{ __('dashboard.rec_price') }}
                         </div>
                         <div
                             class="text-[17px] sm:text-[20px] font-bold text-[#34C759] dark:text-[#30D158] tabular-nums mt-0.5">
-                            Rp <span x-text="calculatedPrice.toLocaleString(document.documentElement.lang === 'en' ? 'en-US' : 'id-ID')"></span>
+                            Rp <span
+                                x-text="calculatedPrice.toLocaleString(document.documentElement.lang === 'en' ? 'en-US' : 'id-ID')"></span>
                         </div>
-                        <div class="text-[10px] text-black/35 dark:text-white/35 mt-0.5 hidden sm:block">{{ __('dashboard.formula_cogs') }}</div>
+                        <div class="text-[10px] text-black/35 dark:text-white/35 mt-0.5 hidden sm:block">
+                            {{ __('dashboard.formula_cogs') }}</div>
                     </div>
 
                     <div class="p-2 sm:p-0 rounded-lg sm:rounded-none bg-black/[0.01] sm:bg-transparent">
-                        <div class="text-[11px] font-medium text-black/50 dark:text-white/50 truncate">{{ __('dashboard.gross_profit_unit') }}
+                        <div class="text-[11px] font-medium text-black/50 dark:text-white/50 truncate">
+                            {{ __('dashboard.gross_profit_unit') }}
                         </div>
                         <div class="text-[17px] sm:text-[20px] font-bold text-[#007AFF] tabular-nums mt-0.5">
-                            Rp <span x-text="grossProfit.toLocaleString(document.documentElement.lang === 'en' ? 'en-US' : 'id-ID')"></span>
+                            Rp <span
+                                x-text="grossProfit.toLocaleString(document.documentElement.lang === 'en' ? 'en-US' : 'id-ID')"></span>
                         </div>
-                        <div class="text-[10px] text-black/35 dark:text-white/35 mt-0.5 hidden sm:block">{{ __('dashboard.est_profit') }}</div>
+                        <div class="text-[10px] text-black/35 dark:text-white/35 mt-0.5 hidden sm:block">
+                            {{ __('dashboard.est_profit') }}</div>
                     </div>
 
                     <div class="p-2 sm:p-0 rounded-lg sm:rounded-none bg-black/[0.01] sm:bg-transparent">
-                        <div class="text-[11px] font-medium text-black/50 dark:text-white/50 truncate">{{ __('dashboard.markup_cogs') }}</div>
+                        <div class="text-[11px] font-medium text-black/50 dark:text-white/50 truncate">
+                            {{ __('dashboard.markup_cogs') }}</div>
                         <div
                             class="text-[17px] sm:text-[20px] font-bold text-[#FF9500] dark:text-[#FF9F0A] tabular-nums mt-0.5">
                             <span x-text="markupEquivalent"></span>%
                         </div>
-                        <div class="text-[10px] text-black/35 dark:text-white/35 mt-0.5 hidden sm:block">{{ __('dashboard.price_increase') }}</div>
+                        <div class="text-[10px] text-black/35 dark:text-white/35 mt-0.5 hidden sm:block">
+                            {{ __('dashboard.price_increase') }}</div>
                     </div>
                 </div>
             </div>
@@ -1197,7 +1248,8 @@
             <div
                 class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 p-5 sm:p-6 flex flex-col justify-between space-y-4 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
                 <div>
-                    <h2 class="text-[15px] font-semibold text-black dark:text-white tracking-tight mb-1">{{ __('dashboard.shortcuts_title') }}</h2>
+                    <h2 class="text-[15px] font-semibold text-black dark:text-white tracking-tight mb-1">
+                        {{ __('dashboard.shortcuts_title') }}</h2>
                     <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('dashboard.shortcuts_sub') }}</p>
                 </div>
 

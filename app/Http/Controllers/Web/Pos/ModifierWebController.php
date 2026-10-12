@@ -60,6 +60,9 @@ final class ModifierWebController extends Controller implements HasMiddleware
         if ($request->has('is_required')) {
             $request->merge(['is_required' => filter_var($request->input('is_required'), FILTER_VALIDATE_BOOLEAN)]);
         }
+        if ($request->has('is_active')) {
+            $request->merge(['is_active' => filter_var($request->input('is_active'), FILTER_VALIDATE_BOOLEAN)]);
+        }
 
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:150'],
@@ -69,12 +72,15 @@ final class ModifierWebController extends Controller implements HasMiddleware
             'max_selection' => ['required', 'integer', 'min:1'],
             'is_required' => ['nullable', 'boolean'],
             'sort_order' => ['nullable', 'integer'],
+            'is_active' => ['nullable', 'boolean'],
             'product_ids' => ['nullable', 'array'],
             'product_ids.*' => [
                 'string',
                 Rule::exists('products', 'id')->where('business_id', $business->id),
             ],
         ]);
+
+        $validated['product_ids'] = (array) $request->input('product_ids', []);
 
         try {
             $group = $this->modifierService->createGroup($business, $validated);
@@ -137,6 +143,8 @@ final class ModifierWebController extends Controller implements HasMiddleware
                 Rule::exists('products', 'id')->where('business_id', $business->id),
             ],
         ]);
+
+        $validated['product_ids'] = (array) $request->input('product_ids', []);
 
         try {
             $this->modifierService->updateGroup($group, $validated);
@@ -227,6 +235,7 @@ final class ModifierWebController extends Controller implements HasMiddleware
         $request->merge([
             'affects_material' => $affectsMaterial,
             'materials' => $filteredMaterials,
+            'is_active' => $request->has('is_active') ? filter_var($request->input('is_active'), FILTER_VALIDATE_BOOLEAN) : true,
         ]);
 
         $validated = $request->validate([
@@ -234,6 +243,7 @@ final class ModifierWebController extends Controller implements HasMiddleware
             'price_delta' => ['nullable', 'numeric', 'min:0'],
             'affects_material' => ['required', 'boolean'],
             'sort_order' => ['nullable', 'integer'],
+            'is_active' => ['nullable', 'boolean'],
             'materials' => ['nullable', 'array'],
             'materials.*.material_id' => [
                 'required',
@@ -246,6 +256,7 @@ final class ModifierWebController extends Controller implements HasMiddleware
 
         $validated['affects_material'] = $affectsMaterial;
         $validated['materials'] = $filteredMaterials;
+        $validated['is_active'] = $request->input('is_active', true);
 
         try {
             $option = $this->modifierService->addOption($group, $validated);

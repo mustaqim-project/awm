@@ -9,8 +9,9 @@
 
     // Fase 5: Resolve active theme preset for conditional sector-specific partials
     $activeTheme = $theme ?? app(\App\Domain\Storefront\StorefrontThemeService::class)->resolveTheme($landingPage);
-    $themePreset = $activeTheme['id'] ?? 'artisan_brew';
-    $isArtisanBrew = $themePreset === 'artisan_brew';
+    $themePreset = $activeTheme['id'] ?? 'business_corporate';
+    $bundleDir = $activeTheme['bundle_dir'] ?? 'business_corporate';
+    $isArtisanBrew = in_array($themePreset, ['coffee_beverage', 'artisan_brew'], true);
 @endphp
 
 @section('title', $pageTitle)
@@ -44,156 +45,54 @@
     <div class="space-y-16 sm:space-y-24 pb-20">
 
         {{-- ========================================================================= --}}
-        {{-- HERO SECTION (Theme Hero Preset Architecture)                             --}}
-        {{-- Fase 5: artisan_brew uses sector-specific coffee hero partial              --}}
+        {{-- HERO SECTION (Theme Hero Preset Architecture per 21 Industry Themes)       --}}
         {{-- ========================================================================= --}}
-        @if ($isArtisanBrew)
-            @include('public.storefront.themes.fnb_cafe.hero')
-        @else
-        <section class="relative overflow-hidden pt-8 pb-16 sm:pt-16 sm:pb-24">
-            <div class="max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-
-                    {{-- Hero Copy --}}
-                    <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
-                        <div
-                            class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-[8px] text-xs font-semibold theme-badge shadow-sm">
-                            <span class="w-2 h-2 rounded-full bg-current"></span>
-                            <span>{{ $activeTheme['industry'] ?? 'Toko Resmi & Terverifikasi' }}</span>
-                        </div>
-
-                        <h1
-                            class="font-heading font-extrabold text-3xl sm:text-5xl lg:text-6xl text-neutral-900 dark:text-white tracking-tight leading-[1.15]">
-                            {{ $landingPage->headline ?: $business->name }}
-                        </h1>
-
-                        <p
-                            class="text-base sm:text-lg text-neutral-600 dark:text-neutral-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-                            {{ $landingPage->subheadline ?: 'Temukan produk & layanan terbaik kami dengan kualitas terjamin, pemesanan mudah, dan pengiriman aman ke seluruh wilayah.' }}
-                        </p>
-
-                        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4 pt-2">
-                            @if ($landingPage->isPageActive('catalog'))
-                                <a href="{{ url('/' . $business->slug . '/katalog') }}"
-                                    class="px-6 py-3.5 text-sm sm:text-base font-semibold theme-btn-primary shadow-md flex items-center gap-2 min-h-[48px]">
-                                    <span>{{ $landingPage->cta_primary_text ?: 'Jelajahi Katalog' }}</span>
-                                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                                </a>
-                            @endif
-
-                            @if ($hasWhatsapp)
-                                <a href="{{ $landingPage->getWhatsAppUrl() }}" target="_blank" rel="noopener"
-                                    class="px-6 py-3.5 text-sm sm:text-base font-semibold rounded-[12px] bg-white dark:bg-neutral-800 text-neutral-800 dark:text-white border border-black/10 dark:border-white/10 hover:bg-neutral-50 dark:hover:bg-neutral-700 shadow-sm transition flex items-center gap-2 min-h-[48px]">
-                                    <i data-lucide="message-circle" class="w-4 h-4 text-emerald-500"></i>
-                                    <span>Tanya CS WhatsApp</span>
-                                </a>
-                            @endif
-                        </div>
-                    </div>
-
-                    {{-- Hero Visual / Hero Banner Image --}}
-                    <div class="lg:col-span-5">
-                        <div class="relative mx-auto max-w-md lg:max-w-none">
-                            @php
-                                $heroImg =
-                                    $landingPage->hero_image_url ?:
-                                    'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1000&auto=format&fit=crop&q=80';
-                            @endphp
-                            <div
-                                class="relative rounded-[20px] overflow-hidden shadow-2xl border border-black/5 dark:border-white/10 aspect-[4/3] sm:aspect-[1/1] bg-neutral-100 dark:bg-neutral-800">
-                                <img src="{{ $heroImg }}" alt="{{ $business->name }}"
-                                    class="w-full h-full object-cover">
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent">
-                                </div>
-
-                                {{-- Floating Live Card on Image --}}
-                                <div
-                                    class="absolute bottom-4 left-4 right-4 p-4 rounded-[16px] bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md border border-white/20 dark:border-black/20 text-xs shadow-lg flex items-center justify-between">
-                                    <div class="flex items-center gap-2.5">
-                                        <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
-                                        <span class="font-semibold text-neutral-900 dark:text-white">Buka Hari Ini & Siap
-                                            Melayani</span>
-                                    </div>
-                                    <span class="text-neutral-500 font-mono">100% Ori</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
+        @if (view()->exists("public.storefront.themes.{$bundleDir}.hero"))
+            @include("public.storefront.themes.{$bundleDir}.hero")
+        @elseif (view()->exists("public.storefront.themes.modern_umkm.hero"))
+            @include("public.storefront.themes.modern_umkm.hero")
+        @elseif (view()->exists("public.storefront.themes.universal_storefront.hero"))
+            @include("public.storefront.themes.universal_storefront.hero")
         @endif
 
         {{-- ========================================================================= --}}
-        {{-- CATEGORY SHORTCUT CHIPS                                                    --}}
-        {{-- Fase 5: artisan_brew uses coffee-themed horizontal pill chips              --}}
+        {{-- SECTOR FEATURES BANNER (Distinct Highlights per 21 Industry Themes)       --}}
         {{-- ========================================================================= --}}
-        @if ($isArtisanBrew)
-            @include('public.storefront.themes.fnb_cafe.category_chips')
-        @else
-        @if ($productCategories->isNotEmpty() && $landingPage->isPageActive('catalog'))
-            <section class="max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex items-center justify-between gap-4 mb-6">
-                    <div>
-                        <h2 class="font-heading font-bold text-xl sm:text-2xl text-neutral-900 dark:text-white">Kategori
-                            Pilihan</h2>
-                        <p class="text-xs sm:text-sm text-neutral-500">Pilih kategori untuk memfilter etalase belanja</p>
-                    </div>
-                    <a href="{{ url('/' . $business->slug . '/katalog') }}"
-                        class="text-xs sm:text-sm font-semibold text-theme-primary hover:underline flex items-center gap-1">
-                        <span>Lihat Semua</span>
-                        <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-                    </a>
-                </div>
-
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4">
-                    @foreach ($productCategories->take(6) as $cat)
-                        <a href="{{ url('/' . $business->slug . '/katalog?category=' . $cat->id) }}"
-                            class="p-4 rounded-[16px] bg-white dark:bg-neutral-800/80 border border-black/5 dark:border-white/10 hover:border-theme-primary/50 hover:shadow-md transition text-center group flex flex-col items-center justify-center gap-2">
-                            <div
-                                class="w-10 h-10 rounded-full flex items-center justify-center theme-badge group-hover:scale-110 transition duration-200">
-                                <i data-lucide="tag" class="w-5 h-5"></i>
-                            </div>
-                            <span
-                                class="font-medium text-xs sm:text-sm text-neutral-800 dark:text-neutral-200 group-hover:text-theme-primary line-clamp-1">
-                                {{ $cat->name }}
-                            </span>
-                        </a>
-                    @endforeach
-                </div>
-            </section>
-        @endif
+        @if (view()->exists("public.storefront.themes.{$bundleDir}.features_banner"))
+            @include("public.storefront.themes.{$bundleDir}.features_banner")
+        @elseif (view()->exists("public.storefront.themes.modern_umkm.features_banner"))
+            @include("public.storefront.themes.modern_umkm.features_banner")
         @endif
 
         {{-- ========================================================================= --}}
-        {{-- FEATURED PRODUCTS GRID (Zero Modal! Dedicated Links to PDP / Instant Cart) --}}
+        {{-- CATEGORY SHORTCUT CHIPS (Sector-specific or Universal Fallback)           --}}
+        {{-- ========================================================================= --}}
+        @if (view()->exists("public.storefront.themes.{$bundleDir}.category_chips"))
+            @include("public.storefront.themes.{$bundleDir}.category_chips")
+        @elseif (view()->exists("public.storefront.themes.modern_umkm.category_chips"))
+            @include("public.storefront.themes.modern_umkm.category_chips")
+        @elseif (view()->exists("public.storefront.themes.universal_storefront.category_chips"))
+            @include("public.storefront.themes.universal_storefront.category_chips")
+        @endif
+
+        {{-- ========================================================================= --}}
+        {{-- FEATURED PRODUCTS GRID (Dynamic 21 Themes Product Cards)                  --}}
         {{-- ========================================================================= --}}
         @if ($featuredProducts->isNotEmpty())
             <section class="max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
                     <div>
-                        @if ($isArtisanBrew)
-                            <div class="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-2"
-                                style="background: {{ $activeTheme['badge_bg'] ?? '#8B5A2B1A' }}; color: {{ $activeTheme['badge_text'] ?? '#8B5A2B' }};">
-                                <i data-lucide="coffee" class="w-3 h-3 inline-block mr-0.5"></i> Rekomendasi Barista
-                            </div>
-                            <h2 class="font-heading font-extrabold text-2xl sm:text-3xl" style="color: #3D2B1F;">
-                                Kopi Pilihan & Menu Favorit
-                            </h2>
-                        @else
-                        <div class="inline-block px-3 py-1 rounded-[8px] text-xs font-semibold theme-badge mb-2">Unggulan
+                        <div class="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-2"
+                            style="background: {{ $activeTheme['badge_bg'] ?? 'rgba(0,0,0,0.05)' }}; color: {{ $activeTheme['badge_text'] ?? 'var(--theme-primary)' }};">
+                            <i data-lucide="sparkles" class="w-3 h-3 inline-block mr-0.5"></i> {{ $activeTheme['industry'] ?? 'Koleksi Pilihan' }}
                         </div>
                         <h2 class="font-heading font-extrabold text-2xl sm:text-3xl text-neutral-900 dark:text-white">
-                            Produk Terlaris & Rekomendasi
+                            {{ $isArtisanBrew ? 'Kopi Pilihan & Menu Favorit' : 'Produk Terlaris & Rekomendasi' }}
                         </h2>
-                        @endif
                     </div>
                     @if ($landingPage->isPageActive('catalog'))
                         <a href="{{ url('/' . $business->slug . '/katalog') }}"
-                            class="inline-flex items-center gap-1.5 px-4 py-2 rounded-{{ $isArtisanBrew ? 'full' : '[12px]' }} border text-xs sm:text-sm font-medium transition min-h-[40px]"
-                            style="{{ $isArtisanBrew ? 'border-color: rgba(139, 90, 43, 0.15); color: #8B5A2B;' : '' }}"
-                            {!! $isArtisanBrew ? '' : 'class="border-black/10 dark:border-white/10 hover:bg-neutral-100 dark:hover:bg-neutral-800"' !!}>
+                            class="inline-flex items-center gap-1.5 px-4 py-2 rounded-2xl border border-black/10 dark:border-white/10 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-xs sm:text-sm font-medium transition min-h-[40px] text-neutral-800 dark:text-neutral-200">
                             <span>{{ $isArtisanBrew ? 'Lihat Semua Menu' : 'Buka Katalog Lengkap' }}</span>
                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </a>
@@ -202,76 +101,14 @@
 
                 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
                     @foreach ($featuredProducts as $item)
-                        @if ($isArtisanBrew)
-                            @include('public.storefront.themes.fnb_cafe.product_card', ['item' => $item])
+                        @if (view()->exists("public.storefront.themes.{$bundleDir}.product_card"))
+                            @include("public.storefront.themes.{$bundleDir}.product_card", ['item' => $item])
+                        @elseif (view()->exists("public.storefront.themes.modern_umkm.product_card"))
+                            @include("public.storefront.themes.modern_umkm.product_card", ['item' => $item])
+                        @elseif (view()->exists("public.storefront.themes.universal_storefront.product_card"))
+                            @include("public.storefront.themes.universal_storefront.product_card", ['item' => $item])
                         @else
-                        @php
-                            $pdpUrl = url('/' . $business->slug . '/produk/' . ($item->slug ?: $item->id));
-                            $hasPrice = ($item->show_price_on_web ?? true) && $item->selling_price > 0;
-                        @endphp
-                        <div
-                            class="group flex flex-col rounded-[20px] overflow-hidden bg-white dark:bg-neutral-800/80 border border-black/5 dark:border-white/10 shadow-sm hover:shadow-xl transition-all duration-300">
-                            {{-- Product Image Thumbnail --}}
-                            <a href="{{ $pdpUrl }}"
-                                class="relative aspect-square overflow-hidden bg-neutral-100 dark:bg-neutral-900 block">
-                                @if ($item->image_url)
-                                    <img src="{{ $item->image_url }}" alt="{{ $item->name }}"
-                                        class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                                @else
-                                    <div class="w-full h-full flex items-center justify-center text-neutral-400">
-                                        <i data-lucide="package" class="w-12 h-12 stroke-1"></i>
-                                    </div>
-                                @endif
-
-                                @if ($item->is_preorder)
-                                    <span
-                                        class="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-[8px] text-[10px] font-bold bg-amber-500 text-white shadow-sm">
-                                        Pre-Order
-                                    </span>
-                                @endif
-                            </a>
-
-                            {{-- Product Content --}}
-                            <div class="p-4 flex flex-col flex-1">
-                                @if ($item->category)
-                                    <span
-                                        class="text-[11px] font-medium text-neutral-400 dark:text-neutral-500 uppercase tracking-wider mb-1 line-clamp-1">
-                                        {{ $item->category->name }}
-                                    </span>
-                                @endif
-
-                                <a href="{{ $pdpUrl }}"
-                                    class="font-heading font-bold text-sm sm:text-base text-neutral-900 dark:text-white group-hover:text-theme-primary transition line-clamp-2 leading-snug mb-2">
-                                    {{ $item->name }}
-                                </a>
-
-                                <div
-                                    class="mt-auto pt-3 flex items-center justify-between gap-2 border-t border-black/5 dark:border-white/10">
-                                    <div class="flex flex-col">
-                                        <span class="text-[10px] text-neutral-400 font-medium">Harga</span>
-                                        <span class="font-bold text-sm sm:text-base text-neutral-900 dark:text-white"
-                                            style="font-variant-numeric: tabular-nums;">
-                                            {{ $hasPrice ? 'Rp ' . number_format((float) $item->selling_price, 0, ',', '.') : 'Hubungi Toko' }}
-                                        </span>
-                                    </div>
-
-                                    {{-- Quick Add to Cart --}}
-                                    @if ($hasPrice)
-                                        <button type="button"
-                                            @click="$store.cart.add({ id: '{{ $item->id }}', name: '{{ addslashes($item->name) }}', price: {{ (float) $item->selling_price }}, image_url: '{{ $item->image_url }}' }, 1)"
-                                            class="p-2.5 rounded-[12px] bg-neutral-100 dark:bg-neutral-700 hover:bg-theme-primary hover:text-white text-neutral-700 dark:text-neutral-200 transition active:scale-[0.95] min-w-[44px] min-h-[44px] flex items-center justify-center"
-                                            title="Tambah ke Keranjang">
-                                            <i data-lucide="plus" class="w-4 h-4"></i>
-                                        </button>
-                                    @else
-                                        <a href="{{ $pdpUrl }}"
-                                            class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-700 text-xs font-semibold text-neutral-700 dark:text-neutral-300">
-                                            Detail
-                                        </a>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
+                            @include("public.storefront.components.product_card", ['product' => $item, 'business' => $business])
                         @endif
                     @endforeach
                 </div>
@@ -336,7 +173,7 @@
         {{-- ========================================================================= --}}
         {{-- FASE 5: QR DINE-IN ORDER SECTION (artisan_brew / fnb_cafe only)           --}}
         {{-- ========================================================================= --}}
-        @if ($isArtisanBrew)
+        @if ($bundleDir === 'fnb_cafe' && view()->exists('public.storefront.themes.fnb_cafe.qr_dinein'))
             <section class="max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8">
                 @include('public.storefront.themes.fnb_cafe.qr_dinein')
             </section>

@@ -41,7 +41,7 @@ class BusinessLandingPageWebController extends Controller
 
             $defaults = [
                 'industry_preset'         => $presetKey,
-                'theme_color'             => $landingPage->theme_color ?: ($preset['theme_color'] ?? '#10B981'),
+                'theme_color'             => $landingPage->theme_color ?: ($preset['theme_color'] ?? '#8B5A2B'),
                 'headline'                => $landingPage->headline ?: ($preset['headline'] ?? ''),
                 'subheadline'             => $landingPage->subheadline ?: ($preset['subheadline'] ?? ''),
                 'announcement_badge'      => $landingPage->announcement_badge ?: ($preset['announcement_badge'] ?? ''),

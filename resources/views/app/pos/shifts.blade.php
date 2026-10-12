@@ -595,7 +595,7 @@
             </div>
 
             @php
-                $isSupervisor = \App\Support\Context::isOwner() || auth()->user()?->hasRole('owner') || auth()->user()?->can('pos.supervisor_pin');
+                $isSupervisor = \App\Support\Context::isOwner() || \App\Support\Context::isAdminOrOwner() || \App\Support\Context::hasPermission('pos.supervisor_pin');
             @endphp
 
             <form :action="'{{ url('/pos/shifts') }}/' + selectedShiftId + '/close'" method="POST" @submit="isSubmitting = true" class="space-y-6">
