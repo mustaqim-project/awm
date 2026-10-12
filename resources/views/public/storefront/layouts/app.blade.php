@@ -4,8 +4,12 @@
     $activePages = $landingPage->getActivePages();
     $currentRoute = request()->path();
     $currentLocale = app()->getLocale();
+    $bundleDir = $activeTheme['bundle_dir'] ?? 'modern_umkm';
 @endphp
-<!DOCTYPE html>
+
+@if (view()->exists("public.storefront.layouts.{$bundleDir}.app"))
+    @include("public.storefront.layouts.{$bundleDir}.app")
+@else
 <html lang="{{ str_replace('_', '-', $currentLocale) }}" class="scroll-smooth {{ $initialDarkMode ? 'dark' : '' }}">
 
 <head>
@@ -428,3 +432,4 @@
 </body>
 
 </html>
+@endif
