@@ -852,6 +852,12 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
             Route::post('/inbox/customer-labels', [SocialMediaWebController::class, 'updateCustomerLabels'])->middleware('require.permission:social_media.manage')->name('inbox.customer-labels');
             Route::post('/inbox/customer-notes', [SocialMediaWebController::class, 'addCustomerNote'])->middleware('require.permission:social_media.manage')->name('inbox.customer-notes');
 
+            // Custom AI Guardrails (DO's & DON'Ts) for Inbox
+            Route::get('/inbox/ai-rules', [AiCompanyWebController::class, 'getRules'])->name('inbox.ai-rules.index');
+            Route::post('/inbox/ai-rules', [AiCompanyWebController::class, 'storeRule'])->middleware('require.permission:social_media.manage')->name('inbox.ai-rules.store');
+            Route::patch('/inbox/ai-rules/{rule}/toggle', [AiCompanyWebController::class, 'toggleRule'])->middleware('require.permission:social_media.manage')->name('inbox.ai-rules.toggle');
+            Route::delete('/inbox/ai-rules/{rule}', [AiCompanyWebController::class, 'deleteRule'])->middleware('require.permission:social_media.manage')->name('inbox.ai-rules.destroy');
+
             // Analytics & Insights
             Route::get('/insights', [SocialMediaWebController::class, 'insights'])->name('insights.index');
             Route::post('/insights/accounts/sync', [SocialMediaWebController::class, 'syncAccountsInsights'])->middleware('throttle:10,1')->name('insights.accounts.sync');
