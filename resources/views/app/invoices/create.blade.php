@@ -65,12 +65,17 @@
 
     onCustomerChange() {
         const cust = this.customers.find(c => c.id === this.customerId);
-        if (cust && cust.payment_terms_days) {
-            const days = parseInt(cust.payment_terms_days) || 30;
-            this.paymentTerms = 'Net ' + days;
-            const d = new Date(this.invoiceDate || new Date());
-            d.setDate(d.getDate() + days);
-            this.dueDate = d.toISOString().split('T')[0];
+        if (cust) {
+            if (!this.recipientName || this.recipientName === '') {
+                this.recipientName = cust.name || cust.company_name || '';
+            }
+            if (cust.payment_terms_days) {
+                const days = parseInt(cust.payment_terms_days) || 30;
+                this.paymentTerms = 'Net ' + days;
+                const d = new Date(this.invoiceDate || new Date());
+                d.setDate(d.getDate() + days);
+                this.dueDate = d.toISOString().split('T')[0];
+            }
         }
     },
 
@@ -79,6 +84,9 @@
         const po = this.availablePos.find(p => p.id === this.purchaseOrderId);
         if (po) {
             this.customerId = po.customer_id;
+            if (po.customer && (!this.recipientName || this.recipientName === '')) {
+                this.recipientName = po.customer.name || po.customer.company_name || '';
+            }
             this.discountType = po.discount_type || 'percentage';
             this.discountValue = parseFloat(po.discount_value) || 0;
             this.taxPercentage = parseFloat(po.tax_percentage) || 0;
@@ -234,6 +242,18 @@
                             </option>
                         @endforeach
                     </select>
+                </div>
+
+                <!-- Nama Pengirim -->
+                <div>
+                    <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">Nama Pengirim / Penjual</label>
+                    <input type="text" name="sender_name" x-model="senderName" placeholder="{{ $business->name }}" class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                </div>
+
+                <!-- Nama Penerima -->
+                <div>
+                    <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">Nama Penerima / Kontak Klien</label>
+                    <input type="text" name="recipient_name" x-model="recipientName" placeholder="Nama penerima barang / PIC" class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                 </div>
 
                 <div>
