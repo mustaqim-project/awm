@@ -264,10 +264,10 @@
     </main>
 
     {{-- 6. Floating Elements & Bento Widgets --}}
-    @include('public.storefront.components.cart_floating_pill')
+    @includeFirst(['public.storefront.components.' . $bundleDir . '.cart_floating_pill', 'public.storefront.components.cart_floating_pill'])
 
     @if ($hasWhatsapp)
-        @include('public.storefront.components.whatsapp_inquiry', [
+        @includeFirst(['public.storefront.components.' . $bundleDir . '.whatsapp_inquiry', 'public.storefront.components.whatsapp_inquiry'], [
             'hasWhatsapp' => $hasWhatsapp,
             'business' => $business,
             'landingPage' => $landingPage,
@@ -275,10 +275,10 @@
         ])
     @endif
 
-    @include('public.storefront.components.order_track_modal', ['business' => $business])
+    @includeFirst(['public.storefront.components.' . $bundleDir . '.order_track_modal', 'public.storefront.components.order_track_modal'], ['business' => $business])
 
     {{-- Apple iOS Mobile Bottom Tab Bar (§PRD-07 & §web-ios-pwa-redesign) --}}
-    @include('public.storefront.components.mobile_bottom_tab_bar', [
+    @includeFirst(['public.storefront.components.' . $bundleDir . '.mobile_bottom_tab_bar', 'public.storefront.components.mobile_bottom_tab_bar'], [
         'business' => $business,
         'landingPage' => $landingPage,
         'activeTheme' => $activeTheme,

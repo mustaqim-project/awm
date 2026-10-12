@@ -442,8 +442,14 @@ class BusinessLandingPageWebController extends Controller
     {
         $business = Context::requireBusiness();
         $presetKey = $request->input('preset', $business->template_code ?: 'retail_reseller');
-
         $preset = IndustryPresets::get($presetKey, $business->name);
+
+        $themeService = app(\App\Domain\Storefront\StorefrontThemeService::class);
+        $resolvedTheme = $themeService->getTheme($presetKey);
+        $preset['theme_preset'] = $resolvedTheme['id'] ?? 'modern_umkm';
+        if (! empty($resolvedTheme['primary_color']) && empty($preset['theme_color'])) {
+            $preset['theme_color'] = $resolvedTheme['primary_color'];
+        }
 
         return response()->json([
             'success' => true,

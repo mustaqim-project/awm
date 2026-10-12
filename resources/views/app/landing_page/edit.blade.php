@@ -350,41 +350,189 @@
                             <!-- ============================================================ -->
                             <!-- 21 TEMPLATE TEMA INDUSTRI OTENTIK & UNIVERSAL STOREFRONT        -->
                             <!-- ============================================================ -->
-                            <div class="pt-4 border-t border-black/5 dark:border-white/5 space-y-3">
-                                <div>
-                                    <div class="flex items-center justify-between">
-                                        <h3 class="text-[14px] font-semibold text-black dark:text-white">
-                                            21 Template Tema Industri Otentik &amp; Universal Storefront
-                                        </h3>
-                                        <span class="text-[11px] font-mono text-[#007AFF] bg-[#007AFF]/10 px-2 py-0.5 rounded-full font-bold">
-                                            PRD-07 Berstandar Internasional
-                                        </span>
+                            <!-- ============================================================ -->
+                            <!-- 21 TEMPLATE TEMA INDUSTRI OTENTIK & UNIVERSAL STOREFRONT        -->
+                            <!-- ============================================================ -->
+                            @php
+                                $themeCategoryMap = [
+                                    // Kuliner & Minuman (8)
+                                    'food_restaurant'           => 'fnb',
+                                    'coffee_beverage'           => 'fnb',
+                                    'bakery_cake'               => 'fnb',
+                                    'fnb_bakery'                => 'fnb',
+                                    'fnb_cafe'                  => 'fnb',
+                                    'fnb_catering'              => 'fnb',
+                                    'fnb_fastfood'              => 'fnb',
+                                    'fnb_resto'                 => 'fnb',
+
+                                    // Retail & Toko (11)
+                                    'online_store'              => 'retail',
+                                    'product_showcase'          => 'retail',
+                                    'wholesale_distributor'     => 'retail',
+                                    'modern_umkm'               => 'retail',
+                                    'retail_bookstore'          => 'retail',
+                                    'retail_building'           => 'retail',
+                                    'retail_electronics'        => 'retail',
+                                    'retail_fashion'            => 'retail',
+                                    'retail_florist'            => 'retail',
+                                    'retail_grocery'            => 'retail',
+                                    'retail_pharmacy'           => 'retail',
+
+                                    // Jasa & Layanan & Reservasi (10)
+                                    'service_business'          => 'service',
+                                    'booking_appointment'       => 'service',
+                                    'event_wedding'             => 'service',
+                                    'hospitality_accommodation' => 'service',
+                                    'service_beauty'            => 'service',
+                                    'service_carwash'           => 'service',
+                                    'service_laundry'           => 'service',
+                                    'service_petshop'           => 'service',
+                                    'service_printing'          => 'service',
+                                    'service_workshop'          => 'service',
+
+                                    // Industri, Logistik, Properti & Agro (4)
+                                    'manufacturing_factory'     => 'industry',
+                                    'agriculture_farm'          => 'industry',
+                                    'logistics_transportation'  => 'industry',
+                                    'construction_property'     => 'industry',
+
+                                    // Kesehatan, Kebugaran, Edukasi & Personal (4)
+                                    'health_beauty'             => 'lifestyle',
+                                    'education_courses'         => 'lifestyle',
+                                    'personal_brand'            => 'lifestyle',
+                                    'service_fitness'           => 'lifestyle',
+
+                                    // Korporat, Agensi & Universal (5)
+                                    'business_corporate'        => 'corporate',
+                                    'professional_services'     => 'corporate',
+                                    'portfolio_creative'        => 'corporate',
+                                    'service_agency'            => 'corporate',
+                                    'universal_storefront'      => 'corporate',
+                                ];
+
+                                $categoryCounts = [
+                                    'all'       => count($themePresets),
+                                    'fnb'       => 0,
+                                    'retail'    => 0,
+                                    'service'   => 0,
+                                    'industry'  => 0,
+                                    'lifestyle' => 0,
+                                    'corporate' => 0,
+                                ];
+
+                                foreach ($themePresets as $k => $preset) {
+                                    $cat = $themeCategoryMap[$k] ?? 'corporate';
+                                    if (isset($categoryCounts[$cat])) {
+                                        $categoryCounts[$cat]++;
+                                    }
+                                }
+                            @endphp
+                            <div class="pt-5 border-t border-black/5 dark:border-white/5 space-y-4">
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                    <div>
+                                        <div class="flex items-center gap-2">
+                                            <h3 class="text-[15px] font-semibold text-black dark:text-white">
+                                                Koleksi {{ count($themePresets) }} Tema Industri Otentik &amp; Storefront
+                                            </h3>
+                                            <span class="text-[10px] font-mono font-bold text-[#007AFF] bg-[#007AFF]/10 px-2 py-0.5 rounded-full">
+                                                {{ count($themePresets) }} Tema Tersedia
+                                            </span>
+                                        </div>
+                                        <p class="text-[12px] text-black/55 dark:text-white/55 mt-0.5">
+                                            Seluruh {{ count($themePresets) }} tema visual dirancang spesifik dengan font Google Fonts, palet warna otentik, dan arsitektur hero per sektor usaha.
+                                        </p>
                                     </div>
-                                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">
-                                        Pilih arsitektur visual yang dirancang khusus untuk sektor industri bisnis Anda. Setiap tema memiliki palet warna, tipografi Google Fonts, dan gaya hero yang otentik.
-                                    </p>
+
+                                    <!-- Quick Reset / Active Theme Pill -->
+                                    <div class="flex items-center gap-2 text-[11px] bg-black/[0.03] dark:bg-white/[0.04] px-3 py-1.5 rounded-[10px] border border-black/5 dark:border-white/5 shrink-0">
+                                        <span class="text-black/45 dark:text-white/45">Tema Aktif:</span>
+                                        <strong class="text-[#007AFF] font-semibold uppercase font-mono" x-text="form.theme_preset"></strong>
+                                    </div>
                                 </div>
 
-                                <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 pt-1">
+                                <!-- Filter Controls: Search & Category Tabs -->
+                                <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 pt-1">
+                                    <!-- Category Segmented Control -->
+                                    <div class="flex items-center gap-1 overflow-x-auto no-scrollbar p-1 bg-black/[0.03] dark:bg-white/[0.04] rounded-[11px] border border-black/5 dark:border-white/5 text-[11px]">
+                                        <button type="button" @click="themeFilterCategory = 'all'"
+                                            :class="themeFilterCategory === 'all' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
+                                            class="px-2.5 py-1 rounded-[8px] transition whitespace-nowrap cursor-pointer">
+                                            Semua ({{ $categoryCounts['all'] }})
+                                        </button>
+                                        <button type="button" @click="themeFilterCategory = 'fnb'"
+                                            :class="themeFilterCategory === 'fnb' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
+                                            class="px-2.5 py-1 rounded-[8px] transition whitespace-nowrap cursor-pointer">
+                                            Kuliner ({{ $categoryCounts['fnb'] }})
+                                        </button>
+                                        <button type="button" @click="themeFilterCategory = 'retail'"
+                                            :class="themeFilterCategory === 'retail' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
+                                            class="px-2.5 py-1 rounded-[8px] transition whitespace-nowrap cursor-pointer">
+                                            Retail &amp; Toko ({{ $categoryCounts['retail'] }})
+                                        </button>
+                                        <button type="button" @click="themeFilterCategory = 'service'"
+                                            :class="themeFilterCategory === 'service' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
+                                            class="px-2.5 py-1 rounded-[8px] transition whitespace-nowrap cursor-pointer">
+                                            Jasa &amp; Reservasi ({{ $categoryCounts['service'] }})
+                                        </button>
+                                        <button type="button" @click="themeFilterCategory = 'industry'"
+                                            :class="themeFilterCategory === 'industry' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
+                                            class="px-2.5 py-1 rounded-[8px] transition whitespace-nowrap cursor-pointer">
+                                            Industri &amp; Agro ({{ $categoryCounts['industry'] }})
+                                        </button>
+                                        <button type="button" @click="themeFilterCategory = 'lifestyle'"
+                                            :class="themeFilterCategory === 'lifestyle' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
+                                            class="px-2.5 py-1 rounded-[8px] transition whitespace-nowrap cursor-pointer">
+                                            Kesehatan &amp; Edu ({{ $categoryCounts['lifestyle'] }})
+                                        </button>
+                                        <button type="button" @click="themeFilterCategory = 'corporate'"
+                                            :class="themeFilterCategory === 'corporate' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
+                                            class="px-2.5 py-1 rounded-[8px] transition whitespace-nowrap cursor-pointer">
+                                            Korporat &amp; Kreatif ({{ $categoryCounts['corporate'] }})
+                                        </button>
+                                    </div>
+
+                                    <!-- Search Input -->
+                                    <div class="relative w-full md:w-64">
+                                        <input type="text" x-model="themeSearch" placeholder="Cari tema, nama atau industri..."
+                                            class="w-full h-8.5 pl-8.5 pr-7 text-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 rounded-[10px] text-black dark:text-white placeholder-black/40 dark:placeholder-white/40 focus:outline-hidden focus:ring-1 focus:ring-[#007AFF] transition">
+                                        <svg class="w-3.5 h-3.5 absolute left-2.5 top-2.5 text-black/40 dark:text-white/40 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M16.65 11a5.65 5.65 0 11-11.3 0 5.65 5.65 0 0111.3 0z"/>
+                                        </svg>
+                                        <button type="button" x-show="themeSearch" @click="themeSearch = ''" class="absolute right-2 top-2 text-black/40 hover:text-black dark:text-white/40 dark:hover:text-white">
+                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Grid of All 21 Themes -->
+                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 pt-1">
                                     @foreach ($themePresets as $tKey => $tPreset)
-                                        <div @click="form.theme_preset = '{{ $tKey }}'; form.theme_color = '{{ $tPreset['primary_color'] }}'"
-                                             :class="form.theme_preset === '{{ $tKey }}' ? 'ring-2 ring-[#007AFF] border-[#007AFF] bg-[#007AFF]/5 dark:bg-[#007AFF]/10' : 'border-black/5 dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.03] hover:border-black/20 dark:hover:border-white/20'"
-                                             class="p-3.5 rounded-[12px] border cursor-pointer transition flex flex-col justify-between gap-3 relative group">
+                                        @php
+                                            $tCat = $themeCategoryMap[$tKey] ?? 'all';
+                                            $searchIndex = strtolower($tPreset['name'] . ' ' . $tPreset['industry'] . ' ' . $tKey . ' ' . $tPreset['description']);
+                                        @endphp
+                                        <div x-show="(themeFilterCategory === 'all' || themeFilterCategory === '{{ $tCat }}') && (!themeSearch || '{{ addslashes($searchIndex) }}'.toLowerCase().includes(themeSearch.toLowerCase().trim()))"
+                                             x-transition:enter="transition ease-out duration-150"
+                                             x-transition:enter-start="opacity-0 scale-95"
+                                             x-transition:enter-end="opacity-100 scale-100"
+                                             @click="form.theme_preset = '{{ $tKey }}'; form.theme_color = '{{ $tPreset['primary_color'] }}'"
+                                             :class="form.theme_preset === '{{ $tKey }}' ? 'ring-2 ring-[#007AFF] border-[#007AFF] bg-[#007AFF]/5 dark:bg-[#007AFF]/10 shadow-sm' : 'border-black/5 dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.03] hover:border-black/20 dark:hover:border-white/20'"
+                                             class="p-3.5 rounded-[14px] border cursor-pointer transition flex flex-col justify-between gap-3 relative group active:scale-[0.99]">
                                             
                                             <div>
-                                                <div class="flex items-center justify-between gap-2 mb-1.5">
-                                                    <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full"
+                                                <div class="flex items-center justify-between gap-2 mb-2">
+                                                    <span class="text-[9.5px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full"
                                                           style="background-color: {{ $tPreset['primary_color'] }}20; color: {{ $tPreset['primary_color'] }};">
                                                         {{ $tPreset['industry'] }}
                                                     </span>
-                                                    <div x-show="form.theme_preset === '{{ $tKey }}'" x-cloak class="w-4 h-4 rounded-full bg-[#007AFF] text-white flex items-center justify-center text-[10px]">
+                                                    <div x-show="form.theme_preset === '{{ $tKey }}'" x-cloak class="w-4 h-4 rounded-full bg-[#007AFF] text-white flex items-center justify-center text-[10px] shadow-xs">
                                                         <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
                                                         </svg>
                                                     </div>
                                                 </div>
 
-                                                <div class="font-bold text-[13px] text-black dark:text-white">
+                                                <div class="font-bold text-[13.5px] text-black dark:text-white group-hover:text-[#007AFF] transition-colors">
                                                     {{ $tPreset['name'] }}
                                                 </div>
                                                 <div class="text-[11px] text-black/50 dark:text-white/50 line-clamp-2 mt-1 leading-snug">
@@ -392,12 +540,12 @@
                                                 </div>
                                             </div>
 
-                                            <div class="pt-2 border-t border-black/5 dark:border-white/5 flex items-center justify-between text-[10px] text-black/40 dark:text-white/40">
-                                                <div class="flex items-center gap-1.5">
-                                                    <span class="w-3.5 h-3.5 rounded-full border border-black/10" style="background-color: {{ $tPreset['primary_color'] }};"></span>
-                                                    <span class="w-3.5 h-3.5 rounded-full border border-black/10" style="background-color: {{ $tPreset['accent_color'] }};"></span>
+                                            <div class="pt-2 border-t border-black/5 dark:border-white/5 flex items-center justify-between text-[10.5px] text-black/45 dark:text-white/45">
+                                                <div class="flex items-center gap-1.5" title="Palet Warna Tema">
+                                                    <span class="w-3.5 h-3.5 rounded-full border border-black/10 shadow-2xs" style="background-color: {{ $tPreset['primary_color'] }};"></span>
+                                                    <span class="w-3.5 h-3.5 rounded-full border border-black/10 shadow-2xs" style="background-color: {{ $tPreset['accent_color'] }};"></span>
                                                 </div>
-                                                <span class="font-medium truncate max-w-[120px]">{{ $tPreset['font_heading'] }}</span>
+                                                <span class="font-medium truncate max-w-[125px] font-mono text-[10px]" title="Font Tipografi">{{ $tPreset['font_heading'] }}</span>
                                             </div>
                                         </div>
                                     @endforeach
@@ -2135,6 +2283,8 @@
                 saveMessage: '',
                 saveError: '',
                 isPublished: @json((bool) $landingPage->is_published),
+                themeFilterCategory: 'all',
+                themeSearch: '',
 
                 tabs: [{
                         id: 'general',
@@ -2622,6 +2772,7 @@
                             if (data.preset) {
                                 const p = data.preset;
                                 this.form.industry_preset = presetKey;
+                                if (p.theme_preset) this.form.theme_preset = p.theme_preset;
                                 if (p.theme_color) this.form.theme_color = p.theme_color;
                                 if (p.headline) this.form.headline = p.headline;
                                 if (p.subheadline) this.form.subheadline = p.subheadline;

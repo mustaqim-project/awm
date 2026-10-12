@@ -10,7 +10,7 @@ use App\Models\BusinessLandingPage;
 final class StorefrontThemeService
 {
     /**
-     * Complete catalogue of 21 Distinct Storefront Landing Page Themes.
+     * Complete catalogue of 42 Distinct Storefront Landing Page Themes.
      * Each theme has unique visual identity, typography, layout archetype, and palette.
      *
      * @var array<string, array<string, mixed>>
@@ -456,6 +456,447 @@ final class StorefrontThemeService
             'border_radius' => '16px',
             'description' => 'Bio profil kepemimpinan pemikiran, portofolio karya & buku, undangan sesi pembicara/trainer, dan link media sosial terintegrasi.',
         ],
+
+        // 22. FnB Bakery (Velvet Patisserie)
+        'fnb_bakery' => [
+            'id' => 'fnb_bakery',
+            'bundle_dir' => 'fnb_bakery',
+            'name' => 'Velvet Patisserie (Bakery)',
+            'industry' => 'Bakery, Cake Shop, Pastry & Dessert',
+            'font_heading' => 'Playfair Display',
+            'font_body' => 'Plus Jakarta Sans',
+            'google_fonts' => 'family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600',
+            'primary_color' => '#EA580C',
+            'accent_color' => '#FBBF24',
+            'bg_color' => '#FFFBF7',
+            'card_bg' => '#FFFFFF',
+            'header_dark' => false,
+            'hero_style' => 'patisserie_luxury',
+            'badge_bg' => '#EA580C15',
+            'badge_text' => '#EA580C',
+            'border_radius' => '16px',
+            'description' => 'Pastel rose & champagne gold elegance, artisan bread hangat, kue ulang tahun custom, dan etalase dessert premium.',
+        ],
+
+        // 23. FnB Cafe (Artisan Brew)
+        'fnb_cafe' => [
+            'id' => 'fnb_cafe',
+            'bundle_dir' => 'fnb_cafe',
+            'name' => 'Artisan Brew (Cafe & Coffee)',
+            'industry' => 'Coffee Shop, Cafe, Boba & Kedai Kopi',
+            'font_heading' => 'Playfair Display',
+            'font_body' => 'Plus Jakarta Sans',
+            'google_fonts' => 'family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600',
+            'primary_color' => '#8B5A2B',
+            'accent_color' => '#C88A58',
+            'bg_color' => '#FAF7F2',
+            'card_bg' => '#FFFFFF',
+            'header_dark' => false,
+            'hero_style' => 'artisan_cozy',
+            'badge_bg' => '#8B5A2B15',
+            'badge_text' => '#8B5A2B',
+            'border_radius' => '16px',
+            'description' => 'Specialty coffee roastery, aroma biji kopi nusantara, manual brew bar, QR meja dine-in, dan live roasting.',
+        ],
+
+        // 24. FnB Catering (Epicurean Box)
+        'fnb_catering' => [
+            'id' => 'fnb_catering',
+            'bundle_dir' => 'fnb_catering',
+            'name' => 'Epicurean Box (Catering & Bento)',
+            'industry' => 'Catering Harian, Prasmanan & Bento Box',
+            'font_heading' => 'Outfit',
+            'font_body' => 'Plus Jakarta Sans',
+            'google_fonts' => 'family=Outfit:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600',
+            'primary_color' => '#059669',
+            'accent_color' => '#F59E0B',
+            'bg_color' => '#F0FDF4',
+            'card_bg' => '#FFFFFF',
+            'header_dark' => false,
+            'hero_style' => 'healthy_bento',
+            'badge_bg' => '#05966915',
+            'badge_text' => '#059669',
+            'border_radius' => '16px',
+            'description' => 'Healthy emerald green, meal prep diet mingguan, bento meeting kantor, paket prasmanan pesta, dan higienitas bersertifikat.',
+        ],
+
+        // 25. FnB Fastfood (Neon Crunch)
+        'fnb_fastfood' => [
+            'id' => 'fnb_fastfood',
+            'bundle_dir' => 'fnb_fastfood',
+            'name' => 'Neon Crunch (Fast Food & Snack)',
+            'industry' => 'Fast Food, Burger, Ayam Crispy & Snack',
+            'font_heading' => 'Outfit',
+            'font_body' => 'Inter',
+            'google_fonts' => 'family=Outfit:wght@700;800;900&family=Inter:wght@400;500;600',
+            'primary_color' => '#DC2626',
+            'accent_color' => '#FBBF24',
+            'bg_color' => '#FEF2F2',
+            'card_bg' => '#FFFFFF',
+            'header_dark' => false,
+            'hero_style' => 'energy_fastfood',
+            'badge_bg' => '#DC262615',
+            'badge_text' => '#DC2626',
+            'border_radius' => '18px',
+            'description' => 'Energi tinggi neon red-yellow, paket combo hemat, ayam krispi pedas, burger keju lumer, dan pemesanan takeaway ekspres.',
+        ],
+
+        // 26. FnB Resto (Nusantara Feast)
+        'fnb_resto' => [
+            'id' => 'fnb_resto',
+            'bundle_dir' => 'fnb_resto',
+            'name' => 'Nusantara Feast (Resto & Kuliner)',
+            'industry' => 'Restoran Nusantara, Seafood & Kuliner Lokal',
+            'font_heading' => 'DM Serif Display',
+            'font_body' => 'Plus Jakarta Sans',
+            'google_fonts' => 'family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@400;500;600',
+            'primary_color' => '#C2410C',
+            'accent_color' => '#B45309',
+            'bg_color' => '#FFF7ED',
+            'card_bg' => '#FFFFFF',
+            'header_dark' => false,
+            'hero_style' => 'terracotta_spice',
+            'badge_bg' => '#C2410C15',
+            'badge_text' => '#C2410C',
+            'border_radius' => '16px',
+            'description' => 'Kekayaan rempah nusantara, menu signature keluarga, reservasi meja makan malam, dan suasana tradisional berkelas.',
+        ],
+
+        // 27. Retail Bookstore (Bibliotheca)
+        'retail_bookstore' => [
+            'id' => 'retail_bookstore',
+            'bundle_dir' => 'retail_bookstore',
+            'name' => 'Bibliotheca (Toko Buku & Stationery)',
+            'industry' => 'Buku, Alat Tulis, Musik & Perlengkapan Sekolah',
+            'font_heading' => 'Merriweather',
+            'font_body' => 'Inter',
+            'google_fonts' => 'family=Merriweather:wght@400;700;900&family=Inter:wght@400;500;600',
+            'primary_color' => '#78350F',
+            'accent_color' => '#D97706',
+            'bg_color' => '#FFFBEB',
+            'card_bg' => '#FFFFFF',
+            'header_dark' => false,
+            'hero_style' => 'parchment_library',
+            'badge_bg' => '#78350F15',
+            'badge_text' => '#78350F',
+            'border_radius' => '12px',
+            'description' => 'Parchment paper aesthetic, kurasi buku original penerbit resmi, alat seni lukis & tulis, serta santuari baca yang tenang.',
+        ],
+
+        // 28. Retail Building (Ironclad Builder)
+        'retail_building' => [
+            'id' => 'retail_building',
+            'bundle_dir' => 'retail_building',
+            'name' => 'Ironclad Builder (Bahan Bangunan)',
+            'industry' => 'Toko Bangunan, Material, Besi & Perkakas',
+            'font_heading' => 'Barlow Semi Condensed',
+            'font_body' => 'Inter',
+            'google_fonts' => 'family=Barlow+Semi+Condensed:wght@600;700;800&family=Inter:wght@400;500;600',
+            'primary_color' => '#D97706',
+            'accent_color' => '#334155',
+            'bg_color' => '#F8FAFC',
+            'card_bg' => '#FFFFFF',
+            'header_dark' => false,
+            'hero_style' => 'heavy_contractor',
+            'badge_bg' => '#D9770615',
+            'badge_text' => '#D97706',
+            'border_radius' => '10px',
+            'description' => 'Heavy industrial slate, semen SNI, baja ringan, keramik, cat dinding, kalkulator proyek, dan armada kirim truk material.',
+        ],
+
+        // 29. Retail Electronics (Nexus Cyber)
+        'retail_electronics' => [
+            'id' => 'retail_electronics',
+            'bundle_dir' => 'retail_electronics',
+            'name' => 'Nexus Cyber (Elektronik & Gadget)',
+            'industry' => 'Gadget, Smartphone, Laptop & Komputer',
+            'font_heading' => 'Space Grotesk',
+            'font_body' => 'Inter',
+            'google_fonts' => 'family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600',
+            'primary_color' => '#0284C7',
+            'accent_color' => '#06B6D4',
+            'bg_color' => '#0B0F19',
+            'card_bg' => '#181E2A',
+            'header_dark' => true,
+            'hero_style' => 'cyber_tech',
+            'badge_bg' => '#0284C720',
+            'badge_text' => '#38BDF8',
+            'border_radius' => '16px',
+            'description' => 'Nuansa dark cyber futuristik, spesifikasi teknis mendalam, perbandingan gadget, garansi resmi distributor, dan cicilan instan.',
+        ],
+
+        // 30. Retail Fashion (Vogue Minimalist)
+        'retail_fashion' => [
+            'id' => 'retail_fashion',
+            'bundle_dir' => 'retail_fashion',
+            'name' => 'Vogue Minimalist (Fashion & Butik)',
+            'industry' => 'Butik Fashion, Pakaian Pria/Wanita & Aksesoris',
+            'font_heading' => 'Cormorant Garamond',
+            'font_body' => 'Plus Jakarta Sans',
+            'google_fonts' => 'family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600',
+            'primary_color' => '#18181B',
+            'accent_color' => '#A1A1AA',
+            'bg_color' => '#FAFAFA',
+            'card_bg' => '#FFFFFF',
+            'header_dark' => false,
+            'hero_style' => 'editorial_lookbook',
+            'badge_bg' => '#18181B15',
+            'badge_text' => '#18181B',
+            'border_radius' => '14px',
+            'description' => 'Editorial lookbook monokrom, busana muslim & modern ready-to-wear, size chart presisi, dan koleksi busana musiman.',
+        ],
+
+        // 31. Retail Florist (Flora Romance)
+        'retail_florist' => [
+            'id' => 'retail_florist',
+            'bundle_dir' => 'retail_florist',
+            'name' => 'Flora Romance (Florist & Karangan Bunga)',
+            'industry' => 'Florist, Bunga Segar, Buket Wisuda & Papan Bunga',
+            'font_heading' => 'Bodoni Moda',
+            'font_body' => 'Plus Jakarta Sans',
+            'google_fonts' => 'family=Bodoni+Moda:ital,opsz,wght@0,6..96,600;0,6..96,700;1,6..96,500&family=Plus+Jakarta+Sans:wght@400;500;600',
+            'primary_color' => '#E11D48',
+            'accent_color' => '#059669',
+            'bg_color' => '#FFF1F2',
+            'card_bg' => '#FFFFFF',
+            'header_dark' => false,
+            'hero_style' => 'botanical_garden',
+            'badge_bg' => '#E11D4815',
+            'badge_text' => '#E11D48',
+            'border_radius' => '16px',
+            'description' => 'Keindahan botani segar, buket bunga wisuda, standing flower ucapan selamat, kartu ucapan custom, dan kirim same-day.',
+        ],
+
+        // 32. Retail Grocery (Fresh Mart)
+        'retail_grocery' => [
+            'id' => 'retail_grocery',
+            'bundle_dir' => 'retail_grocery',
+            'name' => 'Fresh Mart (Minimarket & Sembako)',
+            'industry' => 'Minimarket, Sayur Buah, Sembako & Supermarket',
+            'font_heading' => 'Plus Jakarta Sans',
+            'font_body' => 'Inter',
+            'google_fonts' => 'family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600',
+            'primary_color' => '#16A34A',
+            'accent_color' => '#EA580C',
+            'bg_color' => '#F0FDF4',
+            'card_bg' => '#FFFFFF',
+            'header_dark' => false,
+            'hero_style' => 'fresh_supermarket',
+            'badge_bg' => '#16A34A15',
+            'badge_text' => '#16A34A',
+            'border_radius' => '14px',
+            'description' => 'Pasar modern segar, sembako harga agen, sayuran hidroponik, kebutuhan dapur harian lengkap, dan kurir antar ke rumah.',
+        ],
+
+        // 33. Retail Pharmacy (Clinical Pure)
+        'retail_pharmacy' => [
+            'id' => 'retail_pharmacy',
+            'bundle_dir' => 'retail_pharmacy',
+            'name' => 'Clinical Pure (Apotek & Alkes)',
+            'industry' => 'Apotek, Obat Resep Dokter, Vitamin & Alat Medis',
+            'font_heading' => 'Plus Jakarta Sans',
+            'font_body' => 'Inter',
+            'google_fonts' => 'family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600',
+            'primary_color' => '#0D9488',
+            'accent_color' => '#0284C7',
+            'bg_color' => '#F0FDFA',
+            'card_bg' => '#FFFFFF',
+            'header_dark' => false,
+            'hero_style' => 'trusted_pharmacy',
+            'badge_bg' => '#0D948815',
+            'badge_text' => '#0D9488',
+            'border_radius' => '14px',
+            'description' => 'Kepercayaan medis teal higienis, izin BPOM & SIA resmi, upload foto resep dokter, dan konsultasi apoteker terpercaya.',
+        ],
+
+        // 34. Service Agency (Sovereign Enterprise)
+        'service_agency' => [
+            'id' => 'service_agency',
+            'bundle_dir' => 'service_agency',
+            'name' => 'Sovereign Enterprise (Konsultan & Agency)',
+            'industry' => 'Creative Agency, Software House, IT & Konsultan',
+            'font_heading' => 'Cormorant Garamond',
+            'font_body' => 'Inter',
+            'google_fonts' => 'family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600',
+            'primary_color' => '#1E3A8A',
+            'accent_color' => '#D97706',
+            'bg_color' => '#F8FAFC',
+            'card_bg' => '#FFFFFF',
+            'header_dark' => false,
+            'hero_style' => 'agency_prestige',
+            'badge_bg' => '#1E3A8A15',
+            'badge_text' => '#1E3A8A',
+            'border_radius' => '14px',
+            'description' => 'Prestise korporat navy, portofolio proyek bergengsi, alur proposal RFQ formal, klausul NDA terjamin, dan kontrak B2B terstruktur.',
+        ],
+
+        // 35. Service Beauty (Aura Glamour)
+        'service_beauty' => [
+            'id' => 'service_beauty',
+            'bundle_dir' => 'service_beauty',
+            'name' => 'Aura Glamour (Klinik Estetika & Salon)',
+            'industry' => 'Klinik Kecantikan, Estetika Kulit, Salon & Spa',
+            'font_heading' => 'Playfair Display',
+            'font_body' => 'Plus Jakarta Sans',
+            'google_fonts' => 'family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600',
+            'primary_color' => '#BE185D',
+            'accent_color' => '#D4AF37',
+            'bg_color' => '#FDF2F8',
+            'card_bg' => '#FFFFFF',
+            'header_dark' => false,
+            'hero_style' => 'rose_luxury_spa',
+            'badge_bg' => '#BE185D15',
+            'badge_text' => '#BE185D',
+            'border_radius' => '18px',
+            'description' => 'Kemewahan rose gold & berry wine, reservasi facial & perawatan kulit, dokter estetik profesional, dan hasil glowing nyata.',
+        ],
+
+        // 36. Service Carwash (Hydro Shield)
+        'service_carwash' => [
+            'id' => 'service_carwash',
+            'bundle_dir' => 'service_carwash',
+            'name' => 'Hydro Shield (Auto Detailing & Cuci Mobil)',
+            'industry' => 'Cuci Mobil Hidrolik, Detailing, Coating & Salon Mobil',
+            'font_heading' => 'Orbitron',
+            'font_body' => 'Inter',
+            'google_fonts' => 'family=Orbitron:wght@600;700;800&family=Inter:wght@400;500;600',
+            'primary_color' => '#0284C7',
+            'accent_color' => '#38BDF8',
+            'bg_color' => '#0B0F19',
+            'card_bg' => '#181E2A',
+            'header_dark' => true,
+            'hero_style' => 'hydro_gloss',
+            'badge_bg' => '#0284C720',
+            'badge_text' => '#38BDF8',
+            'border_radius' => '14px',
+            'description' => 'Dark glossy hydrophobic aesthetic, snow wash salju aktif, nano ceramic coating anti-gores, dan reservasi slot cuci ekspres.',
+        ],
+
+        // 37. Service Fitness (Titan Kinetic)
+        'service_fitness' => [
+            'id' => 'service_fitness',
+            'bundle_dir' => 'service_fitness',
+            'name' => 'Titan Kinetic (Gym & Fitness Center)',
+            'industry' => 'Pusat Kebugaran, Gym, Yoga & Personal Trainer',
+            'font_heading' => 'Bebas Neue',
+            'font_body' => 'Inter',
+            'google_fonts' => 'family=Bebas+Neue&family=Inter:wght@400;500;600',
+            'primary_color' => '#10B981',
+            'accent_color' => '#F59E0B',
+            'bg_color' => '#171717',
+            'card_bg' => '#262626',
+            'header_dark' => true,
+            'hero_style' => 'athletic_power',
+            'badge_bg' => '#10B98120',
+            'badge_text' => '#34D399',
+            'border_radius' => '12px',
+            'description' => 'Athletic power hitam & hijau neon, jadwal kelas mingguan (HIIT/Pilates), pendaftaran member online, dan bimbingan coach bersertifikat.',
+        ],
+
+        // 38. Service Laundry (Aqua Bubble)
+        'service_laundry' => [
+            'id' => 'service_laundry',
+            'bundle_dir' => 'service_laundry',
+            'name' => 'Aqua Bubble (Laundry Kiloan & Dry Clean)',
+            'industry' => 'Laundry Kiloan, Dry Clean, Cuci Sepatu & Karpet',
+            'font_heading' => 'Plus Jakarta Sans',
+            'font_body' => 'Inter',
+            'google_fonts' => 'family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600',
+            'primary_color' => '#0284C7',
+            'accent_color' => '#06B6D4',
+            'bg_color' => '#F0F9FF',
+            'card_bg' => '#FFFFFF',
+            'header_dark' => false,
+            'hero_style' => 'bubble_fresh',
+            'badge_bg' => '#0284C715',
+            'badge_text' => '#0284C7',
+            'border_radius' => '16px',
+            'description' => 'Nuansa air higienis, garansi 1 mesin 1 pelanggan, deterjen ramah serat kain, pelacak status cuci, dan jemput-antar laundry gratis.',
+        ],
+
+        // 39. Service Petshop (Playful Paws)
+        'service_petshop' => [
+            'id' => 'service_petshop',
+            'bundle_dir' => 'service_petshop',
+            'name' => 'Playful Paws (Pet Shop & Grooming)',
+            'industry' => 'Pet Shop, Klinik Hewan, Grooming Anabul & Pet Hotel',
+            'font_heading' => 'Quicksand',
+            'font_body' => 'Plus Jakarta Sans',
+            'google_fonts' => 'family=Quicksand:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600',
+            'primary_color' => '#D97706',
+            'accent_color' => '#059669',
+            'bg_color' => '#FFFBEB',
+            'card_bg' => '#FFFFFF',
+            'header_dark' => false,
+            'hero_style' => 'playful_pets',
+            'badge_bg' => '#D9770615',
+            'badge_text' => '#D97706',
+            'border_radius' => '18px',
+            'description' => 'Karakter ceria hangat ramah anabul, booking mandi grooming anti-kutu, kamar pet hotel ber-AC, dan makanan kucing/anjing premium.',
+        ],
+
+        // 40. Service Printing (Pixel Print)
+        'service_printing' => [
+            'id' => 'service_printing',
+            'bundle_dir' => 'service_printing',
+            'name' => 'Pixel Print (Percetakan & Desain Digital)',
+            'industry' => 'Percetakan Digital, Banner, Sablon Kaos & Offset',
+            'font_heading' => 'Syne',
+            'font_body' => 'Inter',
+            'google_fonts' => 'family=Syne:wght@600;700;800&family=Inter:wght@400;500;600',
+            'primary_color' => '#7C3AED',
+            'accent_color' => '#EC4899',
+            'bg_color' => '#FAF5FF',
+            'card_bg' => '#FFFFFF',
+            'header_dark' => false,
+            'hero_style' => 'cmyk_creative',
+            'badge_bg' => '#7C3AED15',
+            'badge_text' => '#7C3AED',
+            'border_radius' => '14px',
+            'description' => 'Studio cetak kreatif CMYK ungu magis, print spanduk kilat, sablon DTF kaos satuan, custom stiker kemasan, dan upload file desain.',
+        ],
+
+        // 41. Service Workshop (Apex Velocity)
+        'service_workshop' => [
+            'id' => 'service_workshop',
+            'bundle_dir' => 'service_workshop',
+            'name' => 'Apex Velocity (Bengkel Mobil & Motor)',
+            'industry' => 'Bengkel Mobil, Motor, Ganti Oli & Sparepart Asli',
+            'font_heading' => 'Chakra Petch',
+            'font_body' => 'Inter',
+            'google_fonts' => 'family=Chakra+Petch:wght@600;700&family=Inter:wght@400;500;600',
+            'primary_color' => '#EA580C',
+            'accent_color' => '#38BDF8',
+            'bg_color' => '#0F172A',
+            'card_bg' => '#1E293B',
+            'header_dark' => true,
+            'hero_style' => 'racing_mechanic',
+            'badge_bg' => '#EA580C20',
+            'badge_text' => '#FB923C',
+            'border_radius' => '12px',
+            'description' => 'Racing mechanic carbon dark, booking tune-up berkala tanpa antre, oli & sparepart orisinil bergaransi, dan cek kelistrikan scanner.',
+        ],
+
+        // 42. Universal Storefront
+        'universal_storefront' => [
+            'id' => 'universal_storefront',
+            'bundle_dir' => 'universal_storefront',
+            'name' => 'Universal Storefront (Bento Multi-Bisnis)',
+            'industry' => 'Universal Storefront untuk Segala Jenis Usaha',
+            'font_heading' => 'Plus Jakarta Sans',
+            'font_body' => 'Inter',
+            'google_fonts' => 'family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600',
+            'primary_color' => '#007AFF',
+            'accent_color' => '#34C759',
+            'bg_color' => '#FFFFFF',
+            'card_bg' => '#F8FAFC',
+            'header_dark' => false,
+            'hero_style' => 'apple_bento_universal',
+            'badge_bg' => '#007AFF15',
+            'badge_text' => '#007AFF',
+            'border_radius' => '16px',
+            'description' => 'Arsitektur Bento Grid Apple HIG yang universal, adaptif, modern, dan sangat fleksibel untuk berbagai model bisnis UMKM.',
+        ],
     ];
 
     /**
@@ -490,6 +931,7 @@ final class StorefrontThemeService
         'nexus_cyber' => 'online_store',
         'fashion' => 'online_store',
         'electronics' => 'online_store',
+        'elektronik' => 'online_store',
 
         // 4. Product Showcase
         'product_showcase' => 'product_showcase',
@@ -497,6 +939,8 @@ final class StorefrontThemeService
         'hero_product' => 'product_showcase',
         'skincare' => 'product_showcase',
         'beauty_product' => 'product_showcase',
+        'mfg_cosmetics' => 'product_showcase',
+        'cosmetics' => 'product_showcase',
 
         // 5. Food & Restaurant
         'food_restaurant' => 'food_restaurant',
@@ -507,6 +951,9 @@ final class StorefrontThemeService
         'neon_crunch' => 'food_restaurant',
         'fnb_fastfood' => 'food_restaurant',
         'kuliner' => 'food_restaurant',
+        'fnb_cloud_kitchen' => 'food_restaurant',
+        'fnb_frozen_food' => 'food_restaurant',
+        'fnb_catering_diet' => 'food_restaurant',
 
         // 6. Coffee & Beverage
         'coffee_beverage' => 'coffee_beverage',
@@ -531,10 +978,13 @@ final class StorefrontThemeService
         'aqua_bubble' => 'service_business',
         'laundry' => 'service_business',
         'service_carwash' => 'service_business',
+        'service_autodetailing' => 'service_business',
         'hydro_shield' => 'service_business',
         'cleaning' => 'service_business',
         'service_petshop' => 'service_business',
         'playful_paws' => 'service_business',
+        'petshop' => 'service_business',
+        'mfg_tailor_custom' => 'service_business',
 
         // 9. Portfolio & Creative
         'portfolio_creative' => 'portfolio_creative',
@@ -544,6 +994,7 @@ final class StorefrontThemeService
         'service_printing' => 'portfolio_creative',
         'design' => 'portfolio_creative',
         'studio' => 'portfolio_creative',
+        'studio_foto' => 'portfolio_creative',
 
         // 10. Professional Services
         'professional_services' => 'professional_services',
@@ -552,6 +1003,7 @@ final class StorefrontThemeService
         'tax' => 'professional_services',
         'legal' => 'professional_services',
         'law' => 'professional_services',
+        'notaris' => 'professional_services',
 
         // 11. Manufacturing & Factory
         'manufacturing_factory' => 'manufacturing_factory',
@@ -561,6 +1013,11 @@ final class StorefrontThemeService
         'oem' => 'manufacturing_factory',
         'maklon' => 'manufacturing_factory',
         'konveksi' => 'manufacturing_factory',
+        'mfg_garment' => 'manufacturing_factory',
+        'mfg_precision' => 'manufacturing_factory',
+        'mfg_furniture' => 'manufacturing_factory',
+        'mfg_craft' => 'manufacturing_factory',
+        'mfg_printing' => 'manufacturing_factory',
 
         // 12. Wholesale & Distributor
         'wholesale_distributor' => 'wholesale_distributor',
@@ -570,6 +1027,7 @@ final class StorefrontThemeService
         'fresh_mart' => 'wholesale_distributor',
         'retail_grocery' => 'wholesale_distributor',
         'sembako' => 'wholesale_distributor',
+        'distributor_fmcg' => 'wholesale_distributor',
 
         // 13. Construction & Property
         'construction_property' => 'construction_property',
@@ -579,6 +1037,7 @@ final class StorefrontThemeService
         'ironclad_builder' => 'construction_property',
         'retail_building' => 'construction_property',
         'architecture' => 'construction_property',
+        'service_contractor' => 'construction_property',
 
         // 14. Booking & Appointment
         'booking_appointment' => 'booking_appointment',
@@ -589,6 +1048,7 @@ final class StorefrontThemeService
         'bengkel' => 'booking_appointment',
         'salon' => 'booking_appointment',
         'barbershop' => 'booking_appointment',
+        'service_barbershop' => 'booking_appointment',
 
         // 15. Event & Wedding
         'event_wedding' => 'event_wedding',
@@ -599,6 +1059,8 @@ final class StorefrontThemeService
         'flora_romance' => 'event_wedding',
         'retail_florist' => 'event_wedding',
         'catering' => 'event_wedding',
+        'service_event' => 'event_wedding',
+        'florist' => 'event_wedding',
 
         // 16. Hospitality & Accommodation
         'hospitality_accommodation' => 'hospitality_accommodation',
@@ -635,6 +1097,8 @@ final class StorefrontThemeService
         'pertanian' => 'agriculture_farm',
         'peternakan' => 'agriculture_farm',
         'perikanan' => 'agriculture_farm',
+        'agri_farming' => 'agriculture_farm',
+        'hidroponik' => 'agriculture_farm',
 
         // 20. Logistics & Transportation
         'logistics_transportation' => 'logistics_transportation',
@@ -652,6 +1116,8 @@ final class StorefrontThemeService
         'freelance' => 'personal_brand',
         'titan_kinetic' => 'personal_brand',
         'service_fitness' => 'personal_brand',
+        'gym' => 'personal_brand',
+        'fitness' => 'personal_brand',
     ];
 
     /**
@@ -700,6 +1166,7 @@ final class StorefrontThemeService
         'pharmacy' => 'health_beauty',
         'agriculture' => 'agriculture_farm',
         'farm' => 'agriculture_farm',
+        'trading' => 'agriculture_farm',
         'logistics' => 'logistics_transportation',
         'transport' => 'logistics_transportation',
         'personal' => 'personal_brand',
@@ -754,10 +1221,12 @@ final class StorefrontThemeService
         'service_agency' => 'business_corporate',
         'universal_storefront' => 'modern_umkm',
         'universal_clean' => 'modern_umkm',
+        'agri_farming' => 'agriculture_farm',
+        'distributor_fmcg' => 'wholesale_distributor',
     ];
 
     /**
-     * Get all available theme presets (21 distinct themes).
+     * Get all available theme presets (42 distinct themes).
      *
      * @return array<string, array<string, mixed>>
      */
@@ -784,14 +1253,19 @@ final class StorefrontThemeService
             return self::THEMES[self::ALIASES[$presetKey]];
         }
 
-        // 3. Scan bundle_dir inside THEMES
+        // 3. Match on TEMPLATE_CODE_MAP
+        if (isset(self::TEMPLATE_CODE_MAP[$presetKey]) && isset(self::THEMES[self::TEMPLATE_CODE_MAP[$presetKey]])) {
+            return self::THEMES[self::TEMPLATE_CODE_MAP[$presetKey]];
+        }
+
+        // 4. Scan bundle_dir inside THEMES
         foreach (self::THEMES as $theme) {
             if (($theme['bundle_dir'] ?? null) === $presetKey) {
                 return $theme;
             }
         }
 
-        // 4. Default fallback: Modern UMKM
+        // 5. Default fallback: Modern UMKM
         return self::THEMES['modern_umkm'];
     }
 
