@@ -2,7 +2,7 @@
 {{-- AGRICULTURE & FARM HERO SECTION (`agriculture_farm`)                     --}}
 {{-- Agrarian editorial dignity, farm-fresh harvest story & fair-trade pillars  --}}
 {{-- ========================================================================= --}}
-<section class="relative overflow-hidden bg-gradient-to-b from-emerald-50/80 via-[#F8FAF6] to-white dark:from-[#0A140E] dark:via-[#0F1C14] dark:to-[#0A140E] border-b border-emerald-900/10 dark:border-emerald-500/15 transition-colors">
+<section class="relative overflow-hidden bg-gradient-to-b from-emerald-50/70 via-[#F7FAF4] to-white dark:from-[#07130A] dark:via-[#0D1F12] dark:to-[#07130A] border-b border-emerald-900/10 dark:border-emerald-500/15 transition-colors">
     {{-- Ambient Botanical Glow Accents --}}
     <div class="absolute -top-32 right-10 w-96 h-96 bg-emerald-500/15 dark:bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
     <div class="absolute bottom-0 left-10 w-80 h-80 bg-amber-500/10 dark:bg-amber-500/5 rounded-full blur-2xl pointer-events-none"></div>
@@ -14,7 +14,7 @@
             <div class="lg:col-span-7 space-y-6 text-left">
                 
                 {{-- Morning Picking Live Status Pill --}}
-                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-700/10 dark:bg-emerald-400/10 border border-emerald-700/20 dark:border-emerald-400/20 text-xs font-semibold text-emerald-900 dark:text-emerald-200">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-800/10 dark:bg-emerald-400/10 border border-emerald-800/20 dark:border-emerald-400/25 text-xs font-semibold text-emerald-900 dark:text-emerald-200">
                     <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0"></span>
                     <span class="text-[11px] font-bold tracking-wide">🌾 Petik Segar Subuh Tadi &bull; Langsung dari Lahan Petani</span>
                 </div>
@@ -57,7 +57,7 @@
 
                     @if (!empty($hasWhatsapp))
                         <a href="{{ $landingPage->getWhatsAppUrl() }}" target="_blank" rel="noopener"
-                            class="px-5 sm:px-6 py-3.5 rounded-2xl bg-white dark:bg-emerald-950/50 hover:bg-emerald-50 dark:hover:bg-emerald-900/60 text-neutral-800 dark:text-emerald-100 border border-emerald-900/15 dark:border-emerald-400/20 font-semibold text-sm transition-all flex items-center justify-center gap-2 shadow-2xs min-h-[48px]">
+                            class="px-5 sm:px-6 py-3.5 rounded-2xl bg-white dark:bg-emerald-950/50 hover:bg-emerald-50 dark:hover:bg-emerald-900/60 text-neutral-800 dark:text-emerald-100 border border-emerald-900/15 dark:border-emerald-400/25 font-semibold text-sm transition-all flex items-center justify-center gap-2 shadow-2xs min-h-[48px]">
                             <i data-lucide="message-circle" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
                             <span>Pasokan Grosir / Suplai B2B</span>
                         </a>
@@ -90,14 +90,14 @@
                             <img src="{{ $landingPage->hero_image_url }}" alt="{{ $business->name }}"
                                 class="w-full h-full object-cover">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                            <div class="absolute bottom-4 inset-x-4 p-3 rounded-2xl bg-white/90 dark:bg-[#0A140E]/90 backdrop-blur-md border border-white/20 text-xs">
-                                <span class="font-bold text-emerald-800 dark:text-emerald-300 block">Kebun Asri Terverifikasi</span>
-                                <span class="text-[11px] text-neutral-600 dark:text-neutral-300">Dipetik &amp; dikirim langsung hari ini</span>
+                            <div class="absolute bottom-4 inset-x-4 p-3.5 rounded-2xl bg-white/92 dark:bg-[#07130A]/92 backdrop-blur-md border border-white/20 text-xs">
+                                <span class="font-bold text-emerald-800 dark:text-emerald-300 block text-sm">Kebun Asri Terverifikasi</span>
+                                <span class="text-[11px] text-neutral-600 dark:text-neutral-300">Dipetik &amp; dikirim langsung hari ini dalam kondisi segar</span>
                             </div>
                         </div>
                     @else
                         {{-- Farm Harvest Bento Showcase Card --}}
-                        <div class="rounded-3xl p-7 sm:p-8 bg-gradient-to-br from-emerald-800 via-emerald-900 to-[#0A140E] text-white shadow-2xl border border-emerald-700/40 relative overflow-hidden">
+                        <div class="rounded-3xl p-7 sm:p-8 bg-gradient-to-br from-emerald-800 via-emerald-900 to-[#07130A] text-white shadow-2xl border border-emerald-700/40 relative overflow-hidden">
                             <div class="absolute -right-12 -bottom-12 w-64 h-64 bg-emerald-500/20 rounded-full blur-2xl pointer-events-none"></div>
 
                             <div class="relative z-10 space-y-5">

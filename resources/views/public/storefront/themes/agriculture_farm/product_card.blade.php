@@ -34,7 +34,7 @@
     ];
 @endphp
 
-<div class="group flex flex-col rounded-2xl sm:rounded-3xl overflow-hidden bg-white dark:bg-[#112117] border border-emerald-900/10 dark:border-emerald-500/15 shadow-[0_4px_16px_rgba(21,128,61,0.04)] hover:shadow-[0_16px_36px_rgba(21,128,61,0.12)] hover:-translate-y-1 transition-all duration-300">
+<div class="group flex flex-col rounded-2xl sm:rounded-3xl overflow-hidden bg-white dark:bg-[#0D1F12] border border-emerald-900/10 dark:border-emerald-500/15 shadow-[0_4px_16px_rgba(21,128,61,0.04)] hover:shadow-[0_16px_36px_rgba(21,128,61,0.12)] hover:-translate-y-1 transition-all duration-300">
     
     {{-- 1. Media Visual & Freshness Badges --}}
     <a href="{{ $pdpUrl }}" class="relative aspect-[4/3] overflow-hidden bg-emerald-50/50 dark:bg-emerald-950/40 block focus:outline-none">
@@ -51,7 +51,7 @@
         {{-- Floating Badges --}}
         <div class="absolute top-2.5 inset-x-2.5 flex items-start justify-between gap-1.5 pointer-events-none">
             @if ($prod->category)
-                <span class="px-2.5 py-1 rounded-xl text-[10px] font-bold tracking-wide uppercase bg-white/90 dark:bg-[#0A140E]/90 text-emerald-900 dark:text-emerald-200 backdrop-blur-md shadow-2xs border border-emerald-900/10">
+                <span class="px-2.5 py-1 rounded-xl text-[10px] font-bold tracking-wide uppercase bg-white/92 dark:bg-[#07130A]/92 text-emerald-900 dark:text-emerald-200 backdrop-blur-md shadow-2xs border border-emerald-900/10">
                     {{ $prod->category->name }}
                 </span>
             @else
@@ -59,7 +59,7 @@
             @endif
 
             @if ($hasDiscount)
-                <span class="px-2 py-0.5 rounded-lg text-[10px] font-extrabold bg-rose-600 text-white shadow-2xs animate-pulse">
+                <span class="px-2 py-0.5 rounded-lg text-[10px] font-extrabold bg-rose-600 text-white shadow-2xs animate-pulse font-mono tabular-nums">
                     -{{ $discountPercent }}%
                 </span>
             @elseif ($isOutOfStock)
@@ -77,9 +77,9 @@
 
     {{-- 2. Content & Description --}}
     <div class="p-4 sm:p-5 flex flex-col flex-1 justify-between gap-3">
-        <div class="space-y-1">
-            <a href="{{ $pdpUrl }}" class="focus:outline-none">
-                <h3 class="font-heading font-normal text-lg sm:text-xl text-neutral-900 dark:text-emerald-50 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors line-clamp-1 leading-snug">
+        <div class="space-y-1.5">
+            <a href="{{ $pdpUrl }}" class="focus:outline-none block">
+                <h3 class="font-heading font-normal text-base sm:text-lg text-neutral-900 dark:text-emerald-50 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors line-clamp-2 leading-snug">
                     {{ $prod->name }}
                 </h3>
             </a>

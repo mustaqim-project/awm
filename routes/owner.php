@@ -298,6 +298,8 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
             Route::get('/invoices/{invoice}', [InvoiceWebController::class, 'show'])->name('invoices.show');
             Route::get('/invoices/{invoice}/print', [InvoiceWebController::class, 'print'])->name('invoices.print');
         });
+        Route::get('/invoices/{invoice}/edit', [InvoiceWebController::class, 'edit'])->middleware('require.permission:invoices.edit')->name('invoices.edit');
+        Route::put('/invoices/{invoice}', [InvoiceWebController::class, 'update'])->middleware('require.permission:invoices.edit')->name('invoices.update');
         Route::post('/invoices/{invoice}/payments', [InvoiceWebController::class, 'recordPayment'])->middleware('require.permission:invoices.record_payment')->name('invoices.payments.store');
         Route::post('/invoices/{invoice}/confirm', [InvoiceWebController::class, 'confirm'])->middleware('require.permission:invoices.create')->name('invoices.confirm');
         Route::post('/invoices/{invoice}/remind', [InvoiceWebController::class, 'sendTermReminder'])->middleware('require.permission:invoices.view')->name('invoices.remind');

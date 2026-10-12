@@ -17,51 +17,47 @@
     $isAbout = str_contains($currentPath, "{$bSlug}/tentang");
 @endphp
 
-<nav class="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/90 dark:bg-[#121620]/90 backdrop-blur-xl border-t border-black/5 dark:border-white/10 pb-[env(safe-area-inset-bottom,0px)]">
-    <div class="grid grid-cols-4 h-14 items-center text-[10px]">
+<nav class="md:hidden fixed bottom-0 inset-x-0 z-40 bg-[#FFFDF5]/95 dark:bg-[#18110B]/95 backdrop-blur-2xl border-t border-amber-900/10 dark:border-amber-500/20 pb-[env(safe-area-inset-bottom,0px)] shadow-[0_-4px_20px_rgba(0,0,0,0.06)]">
+    <div class="grid grid-cols-4 h-15 items-center text-[10px]">
         {{-- Home Tab --}}
         <a href="{{ url('/' . $bSlug) }}"
-            class="flex flex-col items-center justify-center gap-1 transition-colors"
-            style="color: {{ $isHome ? '#D97706' : 'rgba(156, 163, 175, 1)' }};">
+            class="flex flex-col items-center justify-center gap-1 transition-all duration-150 active:scale-95 min-h-[48px] {{ $isHome ? 'text-amber-700 dark:text-amber-400 font-bold' : 'text-neutral-500 dark:text-neutral-400 hover:text-amber-600' }}">
             <i data-lucide="home" class="w-5 h-5 {{ $isHome ? 'stroke-[2.2]' : 'stroke-[1.6]' }}"></i>
-            <span class="font-medium {{ $isHome ? 'font-bold' : '' }}">Beranda</span>
+            <span>Beranda</span>
         </a>
 
-        {{-- Catalog Tab --}}
+        {{-- Catalog / Roti & Kue Tab --}}
         <a href="{{ url('/' . $bSlug . '/katalog') }}"
-            class="flex flex-col items-center justify-center gap-1 transition-colors"
-            style="color: {{ $isCatalog ? '#D97706' : 'rgba(156, 163, 175, 1)' }};">
-            <i data-lucide="store" class="w-5 h-5 {{ $isCatalog ? 'stroke-[2.2]' : 'stroke-[1.6]' }}"></i>
-            <span class="font-medium {{ $isCatalog ? 'font-bold' : '' }}">Katalog</span>
+            class="flex flex-col items-center justify-center gap-1 transition-all duration-150 active:scale-95 min-h-[48px] {{ $isCatalog ? 'text-amber-700 dark:text-amber-400 font-bold' : 'text-neutral-500 dark:text-neutral-400 hover:text-amber-600' }}">
+            <i data-lucide="cake-slice" class="w-5 h-5 {{ $isCatalog ? 'stroke-[2.2]' : 'stroke-[1.6]' }}"></i>
+            <span>Roti &amp; Kue</span>
         </a>
 
         {{-- Cart Tab --}}
         <a href="{{ url('/' . $bSlug . '/checkout') }}"
-            class="flex flex-col items-center justify-center gap-1 relative transition-colors"
-            style="color: {{ $isCart ? '#D97706' : 'rgba(156, 163, 175, 1)' }};">
+            class="flex flex-col items-center justify-center gap-1 relative transition-all duration-150 active:scale-95 min-h-[48px] {{ $isCart ? 'text-amber-700 dark:text-amber-400 font-bold' : 'text-neutral-500 dark:text-neutral-400 hover:text-amber-600' }}">
             <div class="relative">
                 <i data-lucide="shopping-bag" class="w-5 h-5 {{ $isCart ? 'stroke-[2.2]' : 'stroke-[1.6]' }}"></i>
                 <template x-if="$store.cart.count() > 0">
-                    <span class="absolute -top-1.5 -right-2 w-4 h-4 rounded-full text-white text-[9px] font-bold flex items-center justify-center shadow-xs"
-                          style="background-color: #D97706;"
+                    <span class="absolute -top-1.5 -right-2.5 px-1 min-w-[16px] h-4 rounded-full bg-amber-600 text-white text-[9px] font-bold font-mono tabular-nums flex items-center justify-center shadow-2xs"
                           x-text="$store.cart.count()"></span>
                 </template>
             </div>
-            <span class="font-medium {{ $isCart ? 'font-bold' : '' }}">Pesanan</span>
+            <span>Pesanan</span>
         </a>
 
-        {{-- WA / Profile Tab --}}
+        {{-- WA / Tanya Baker Tab --}}
         @php
             $waNum = preg_replace('/[^0-9]/', '', (string) ($landingPage->whatsapp_number ?: $business->phone));
             if (str_starts_with($waNum, '0')) {
                 $waNum = '62' . substr($waNum, 1);
             }
-            $waLink = $waNum ? 'https://wa.me/' . $waNum : url('/' . $bSlug . '/tentang');
+            $waLink = $waNum ? 'https://wa.me/' . $waNum : url('/' . $bSlug . '/tentang-kami');
         @endphp
         <a href="{{ $waLink }}" target="{{ $waNum ? '_blank' : '_self' }}"
-            class="flex flex-col items-center justify-center gap-1 transition-colors text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200">
+            class="flex flex-col items-center justify-center gap-1 transition-all duration-150 active:scale-95 min-h-[48px] text-neutral-500 dark:text-neutral-400 hover:text-amber-600">
             <i data-lucide="message-circle" class="w-5 h-5 stroke-[1.6]"></i>
-            <span class="font-medium">Kontak</span>
+            <span>Tanya Baker</span>
         </a>
     </div>
 </nav>

@@ -37,6 +37,7 @@
             savedAddresses: @js($customerAddresses ?? []),
             defaultAddress: @js($customerAddresses->firstWhere('is_default', true) ?: $customerAddresses->first()),
             biteshipServiceFee: @js((float) (\App\Models\SystemSetting::get('biteship_service_fee') ?? config('services.biteship.service_fee', 1000))),
+            minOrderAmount: @js((float) ($storeSetting->min_order_amount ?? 0)),
         };
 
         function storefrontCheckout(config) {
@@ -423,6 +424,11 @@
                         alert(window.COOCA_I18N?.cart_empty || 'Keranjang belanja Anda masih kosong.');
                         return;
                     }
+                    if (config.minOrderAmount > 0 && cart.subtotal() < config.minOrderAmount) {
+                        this.errorMessage = 'Minimum total belanja adalah Rp ' + Number(config.minOrderAmount).toLocaleString('id-ID') + '. Total keranjang Anda saat ini: Rp ' + cart.subtotal().toLocaleString('id-ID') + '.';
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                        return;
+                    }
                     if (!this.customerName || !this.customerPhone) {
                         alert('Nama dan Nomor WhatsApp wajib diisi.');
                         return;
@@ -443,30 +449,30 @@
                         _token: config.csrfToken,
                         customer_name: this.customerName,
                         customer_phone: this.customerPhone,
-                        customer_email: this.customerEmail,
-                        shipping_address: this.shippingAddress,
+                        customer_email: this.customerEmail || null,
+                        shipping_address: this.shippingAddress || null,
                         destination_postal_code: this.destinationPostalCode || null,
-                        destination_latitude: this.latitude,
-                        destination_longitude: this.longitude,
+                        destination_latitude: this.latitude || null,
+                        destination_longitude: this.longitude || null,
                         biteship_area_id: this.biteshipAreaId || null,
                         destination_area_id: this.biteshipAreaId || null,
                         save_to_address_book: this.selectedAddressId === 'new' ? this.saveAddressToBook : false,
                         address_label: this.addressLabel || 'Rumah',
-                        notes: this.notes,
+                        notes: this.notes || null,
                         fulfillment_type: this.fulfillmentType === 'delivery' ? 'merchant_delivery' : 'pickup',
-                        pickup_location_id: this.fulfillmentType === 'pickup' ? this.selectedPickupLocationId : null,
+                        pickup_location_id: (this.fulfillmentType === 'pickup' && this.selectedPickupLocationId) ? this.selectedPickupLocationId : null,
                         pos_table_id: null,
                         shipping_rule_id: this.fulfillmentType === 'delivery' ? (this.selectedShippingOptionId || this.selectedShippingRuleId) : null,
                         shipping_fee: this.fulfillmentType === 'delivery' ? this.shippingCost : 0,
-                        courier_company: this.fulfillmentType === 'delivery' ? this.selectedCourierCode : null,
-                        courier_type: this.fulfillmentType === 'delivery' ? this.selectedCourierService : null,
-                        courier_name: this.fulfillmentType === 'delivery' ? this.selectedCourierName : null,
-                        biteship_service_fee: this.fulfillmentType === 'delivery' ? this.serviceFee : 0,
+                        courier_company: this.fulfillmentType === 'delivery' ? (this.selectedCourierCode || null) : null,
+                        courier_type: this.fulfillmentType === 'delivery' ? (this.selectedCourierService || null) : null,
+                        courier_name: this.fulfillmentType === 'delivery' ? (this.selectedCourierName || null) : null,
+                        biteship_service_fee: this.fulfillmentType === 'delivery' ? (this.serviceFee || 0) : 0,
                         payment_gateway: 'tripay',
                         payment_channel: 'QRIS',
-                        payment_method_id: this.selectedPaymentMethod || null,
+                        payment_method_id: this.selectedPaymentMethod ? this.selectedPaymentMethod : null,
                         items: cart.items.map(i => ({
-                            product_id: i.id,
+                            product_id: i.id || i.product_id,
                             quantity: i.quantity,
                             notes: i.notes || ''
                         }))
@@ -489,8 +495,13 @@
                             cart.clear();
                             window.location.href = data.order.tracking_url;
                         } else {
-                            this.errorMessage = data.message || 'Terjadi kesalahan saat memproses pesanan. Silakan coba lagi.';
+                            if (data.errors && typeof data.errors === 'object') {
+                                this.errorMessage = Object.values(data.errors).flat().join('. ') || data.message || 'Data formulir tidak valid.';
+                            } else {
+                                this.errorMessage = data.message || 'Terjadi kesalahan saat memproses pesanan. Silakan coba lagi.';
+                            }
                             this.isSubmitting = false;
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
                         }
                     } catch (err) {
                         this.errorMessage = 'Gagal menghubungi server. Periksa koneksi internet Anda.';
@@ -1145,6 +1156,13 @@
                                 <span class="text-theme-primary font-extrabold" style="font-variant-numeric: tabular-nums;"
                                     x-text="'Rp ' + grandTotal().toLocaleString('id-ID')"></span>
                             </div>
+                        </div>
+
+                        {{-- Inline Error Notice in summary column --}}
+                        <div x-show="errorMessage" x-cloak
+                            class="p-3.5 rounded-xl bg-red-50 dark:bg-red-950/60 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-xs flex items-center gap-2.5">
+                            <i data-lucide="alert-circle" class="w-4 h-4 shrink-0 text-red-500"></i>
+                            <span x-text="errorMessage"></span>
                         </div>
 
                         {{-- Confirm Order Button --}}

@@ -10,27 +10,26 @@
     x-transition:leave-end="opacity-0 translate-y-8 scale-95"
     class="fixed bottom-[calc(4.75rem+env(safe-area-inset-bottom,0px))] inset-x-4 sm:inset-x-auto sm:right-6 sm:bottom-6 sm:max-w-md z-40">
     
-    <div class="bg-neutral-900/95 dark:bg-white/95 text-white dark:text-neutral-900 backdrop-blur-2xl px-4 sm:px-5 py-3 rounded-2xl sm:rounded-3xl shadow-[0_16px_40px_rgba(0,0,0,0.3)] border border-white/10 dark:border-black/10 flex items-center justify-between gap-4">
+    <div class="bg-[#07130A]/95 text-white backdrop-blur-2xl px-4 sm:px-5 py-3 rounded-2xl sm:rounded-3xl shadow-[0_16px_40px_rgba(7,19,10,0.5)] border border-emerald-500/25 flex items-center justify-between gap-4">
         
         {{-- Item Count & Dynamic Subtotal --}}
         <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm text-white shadow-xs shrink-0 font-mono tabular-nums"
-                style="background-color: #15803D;">
+            <div class="w-10 h-10 rounded-xl bg-emerald-700 text-white flex items-center justify-center font-bold text-sm shadow-xs shrink-0 font-mono tabular-nums">
                 <span x-text="$store.cart.count()"></span>
             </div>
             <div>
-                <div class="text-[11px] text-neutral-400 dark:text-neutral-500 font-medium">
-                    Keranjang Panen
+                <div class="text-[11px] text-emerald-300/80 font-medium flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+                    <span>Keranjang Panen</span>
                 </div>
-                <div class="text-sm sm:text-base font-bold font-mono tracking-tight tabular-nums"
+                <div class="text-sm sm:text-base font-bold font-mono tracking-tight tabular-nums text-white"
                     x-text="'Rp ' + $store.cart.subtotal().toLocaleString('id-ID')"></div>
             </div>
         </div>
 
         {{-- Direct Checkout CTA --}}
         <a href="{{ url('/' . $business->slug . '/checkout') }}"
-            class="px-4 py-2.5 rounded-xl font-semibold text-xs sm:text-sm text-white shadow-xs flex items-center gap-2 hover:opacity-90 active:scale-95 transition-all duration-150 shrink-0"
-            style="background-color: #15803D;">
+            class="px-4 py-2.5 rounded-xl font-semibold text-xs sm:text-sm text-white bg-emerald-600 hover:bg-emerald-500 shadow-xs flex items-center gap-2 active:scale-95 transition-all duration-150 shrink-0 min-h-[40px]">
             <span>{{ __('storefront.checkout.pay_now') }}</span>
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
         </a>

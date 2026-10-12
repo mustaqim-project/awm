@@ -124,6 +124,8 @@ final class InvoiceWebController extends Controller
             'location_id' => ['nullable', 'exists:locations,id'],
             'purchase_order_id' => ['nullable', 'exists:purchase_orders,id'],
             'invoice_number' => ['nullable', 'string', 'max:100'],
+            'sender_name' => ['nullable', 'string', 'max:150'],
+            'recipient_name' => ['nullable', 'string', 'max:150'],
             'invoice_date' => ['required', 'date'],
             'due_date' => ['nullable', 'date'],
             'status' => ['nullable', 'string', 'in:draft,sent,unpaid'],
@@ -151,6 +153,82 @@ final class InvoiceWebController extends Controller
         $invoice = $this->invoiceService->createFromProducts($business, $customer, $validated['items'], $validated);
 
         return redirect()->route('invoices.show', $invoice->id)->with('success', "Faktur {$invoice->invoice_number} berhasil diterbitkan.");
+    }
+
+    /**
+     * Show form for editing an existing draft invoice.
+     */
+    public function edit(Invoice $invoice): View|RedirectResponse
+    {
+        $business = Context::requireBusiness();
+        abort_unless($invoice->business_id === $business->id, 403);
+
+        if ($invoice->status !== Invoice::STATUS_DRAFT) {
+            return redirect()->route('invoices.show', $invoice->id)
+                ->with('error', "Faktur [{$invoice->invoice_number}] dengan status [{$invoice->status}] tidak dapat diedit. Hanya draf faktur yang dapat disunting sebelum diterbitkan.");
+        }
+
+        $invoice->load(['customer', 'purchaseOrder', 'items.product', 'items.unit']);
+
+        $customers = Customer::where('is_active', true)->orderBy('name')->get();
+        $products = Product::where('is_active', true)->with('outputUnit')->orderBy('name')->get();
+        $units = Unit::all();
+        $locations = \App\Models\Location::where('is_active', true)->orderBy('name')->get();
+
+        return view('app.invoices.edit', compact(
+            'business',
+            'invoice',
+            'customers',
+            'products',
+            'units',
+            'locations'
+        ));
+    }
+
+    /**
+     * Update an existing draft invoice with line items.
+     */
+    public function update(Request $request, Invoice $invoice): RedirectResponse
+    {
+        $business = Context::requireBusiness();
+        abort_unless($invoice->business_id === $business->id, 403);
+
+        if ($invoice->status !== Invoice::STATUS_DRAFT) {
+            return redirect()->route('invoices.show', $invoice->id)
+                ->with('error', 'Hanya faktur berstatus Draf yang dapat disunting.');
+        }
+
+        $validated = $request->validate([
+            'customer_id' => ['required', 'exists:customers,id'],
+            'location_id' => ['nullable', 'exists:locations,id'],
+            'sender_name' => ['nullable', 'string', 'max:150'],
+            'recipient_name' => ['nullable', 'string', 'max:150'],
+            'invoice_date' => ['required', 'date'],
+            'due_date' => ['nullable', 'date'],
+            'discount_type' => ['nullable', 'string', 'in:fixed,percentage'],
+            'discount_value' => ['nullable', 'numeric', 'gte:0'],
+            'tax_percentage' => ['nullable', 'numeric', 'gte:0', 'lte:100'],
+            'shipping_cost' => ['nullable', 'numeric', 'gte:0'],
+            'payment_terms' => ['nullable', 'string', 'max:100'],
+            'notes' => ['nullable', 'string'],
+            'terms_conditions' => ['nullable', 'string'],
+            'items' => ['required', 'array', 'min:1'],
+            'items.*.product_id' => ['nullable', 'exists:products,id'],
+            'items.*.item_name' => ['required', 'string', 'max:255'],
+            'items.*.sku' => ['nullable', 'string', 'max:100'],
+            'items.*.description' => ['nullable', 'string'],
+            'items.*.quantity' => ['required', 'numeric', 'gt:0'],
+            'items.*.unit_id' => ['required', 'exists:units,id'],
+            'items.*.unit_price' => ['required', 'numeric', 'gte:0'],
+            'items.*.unit_hpp' => ['nullable', 'numeric', 'gte:0'],
+        ]);
+
+        /** @var Customer $customer */
+        $customer = Customer::findOrFail($validated['customer_id']);
+
+        $this->invoiceService->updateDraft($invoice, $customer, $validated['items'], $validated);
+
+        return redirect()->route('invoices.show', $invoice->id)->with('success', "Draf Faktur {$invoice->invoice_number} berhasil diperbarui.");
     }
 
     /**
@@ -237,6 +315,8 @@ final class InvoiceWebController extends Controller
             fputcsv($file, [
                 'No',
                 'Nomor Faktur',
+                'Nama Pengirim',
+                'Nama Penerima',
                 'Tanggal Faktur',
                 'Jatuh Tempo',
                 'Nama Pelanggan',
@@ -260,6 +340,8 @@ final class InvoiceWebController extends Controller
                 fputcsv($file, [
                     $no++,
                     $inv->invoice_number,
+                    $inv->sender_name ?: $business->name,
+                    $inv->recipient_name ?: ($inv->customer?->name ?? '-'),
                     $inv->invoice_date?->format('Y-m-d'),
                     $inv->due_date?->format('Y-m-d'),
                     $inv->customer?->name ?? '-',

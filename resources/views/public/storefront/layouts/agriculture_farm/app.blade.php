@@ -18,10 +18,10 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
     <meta name="color-scheme" content="light dark">
-    <meta name="theme-color" content="{{ $initialDarkMode ? '#0A140E' : ($activeTheme['bg_color'] ?? '#F8FAF6') }}">
+    <meta name="theme-color" content="{{ $initialDarkMode ? '#07130A' : ($activeTheme['bg_color'] ?? '#F7FAF4') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    {{-- Persistent Elegant Dark Mode Initialization --}}
+    {{-- Persistent Agrarian Dark Mode Script --}}
     <script>
         (function() {
             const savedDark = localStorage.getItem('storefront_dark_mode');
@@ -39,7 +39,7 @@
                 localStorage.setItem('storefront_dark_mode', isDark ? 'true' : 'false');
                 const themeColorMeta = document.querySelector('meta[name="theme-color"]');
                 if (themeColorMeta) {
-                    themeColorMeta.setAttribute('content', isDark ? '{{ $activeTheme['dark_bg'] ?? '#0A140E' }}' : '{{ $activeTheme['bg_color'] ?? '#F8FAF6' }}');
+                    themeColorMeta.setAttribute('content', isDark ? '{{ $activeTheme['dark_bg'] ?? '#07130A' }}' : '{{ $activeTheme['bg_color'] ?? '#F7FAF4' }}');
                 }
             } catch (e) {}
             if (typeof lucide !== 'undefined') {
@@ -97,10 +97,26 @@
                         theme: {
                             primary: '{{ $activeTheme['primary_color'] ?? '#15803D' }}',
                             accent: '{{ $activeTheme['accent_color'] ?? '#B45309' }}',
-                            bg: '{{ $activeTheme['bg_color'] ?? '#F8FAF6' }}',
+                            bg: '{{ $activeTheme['bg_color'] ?? '#F7FAF4' }}',
                             card: '{{ $activeTheme['card_bg'] ?? '#FFFFFF' }}',
                             badgeBg: '{{ $activeTheme['badge_bg'] ?? '#15803D15' }}',
                             badgeText: '{{ $activeTheme['badge_text'] ?? '#15803D' }}',
+                        },
+                        agri: {
+                            50: '#F2F8F1',
+                            100: '#E2F0DF',
+                            200: '#C7E2C2',
+                            300: '#A1CE9B',
+                            400: '#73B46B',
+                            500: '#4D9844',
+                            600: '#3A7C32',
+                            700: '#2F6229',
+                            800: '#284F24',
+                            900: '#22421F',
+                            950: '#0E240D',
+                            soil: '#92400E',
+                            amber: '#D97706',
+                            gold: '#F59E0B',
                         }
                     },
                     borderRadius: {
@@ -132,10 +148,10 @@
         :root {
             --theme-primary: {{ $activeTheme['primary_color'] ?? '#15803D' }};
             --theme-accent: {{ $activeTheme['accent_color'] ?? '#B45309' }};
-            --theme-bg: {{ $activeTheme['bg_color'] ?? '#F8FAF6' }};
+            --theme-bg: {{ $activeTheme['bg_color'] ?? '#F7FAF4' }};
             --theme-card: {{ $activeTheme['card_bg'] ?? '#FFFFFF' }};
             --theme-radius: 18px;
-            --font-heading: 'DM Serif Display', serif;
+            --font-heading: 'DM Serif Display', Georgia, serif;
             --font-body: 'Plus Jakarta Sans', sans-serif;
         }
 
@@ -146,8 +162,8 @@
         html.dark,
         .dark {
             color-scheme: dark;
-            --theme-bg: #0A140E;
-            --theme-card: #112117;
+            --theme-bg: #07130A;
+            --theme-card: #0D1F12;
         }
 
         body {
@@ -174,14 +190,14 @@
         .theme-surface {
             background-color: var(--theme-card);
             border-radius: var(--theme-radius);
-            box-shadow: 0 4px 20px -2px rgba(21, 128, 61, 0.04);
+            box-shadow: 0 4px 20px -2px rgba(21, 128, 61, 0.05);
             border: 1px solid rgba(21, 128, 61, 0.08);
         }
 
         .dark .theme-surface {
-            background-color: #112117;
-            border-color: rgba(34, 197, 94, 0.15);
-            box-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.45);
+            background-color: #0D1F12;
+            border-color: rgba(74, 222, 128, 0.15);
+            box-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.55);
         }
 
         .theme-btn-primary {
@@ -199,6 +215,16 @@
         .theme-btn-primary:active {
             transform: translateY(0) scale(0.98);
         }
+
+        /* Subtle Agrarian Organic Pattern */
+        .bg-agri-pattern {
+            background-image: radial-gradient(rgba(21, 128, 61, 0.06) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .dark .bg-agri-pattern {
+            background-image: radial-gradient(rgba(74, 222, 128, 0.07) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
     </style>
 
     {{-- Universal Typography Hierarchy --}}
@@ -207,7 +233,7 @@
     @stack('styles')
 </head>
 
-<body class="min-h-screen flex flex-col text-neutral-900 dark:text-emerald-50 transition-colors duration-300 antialiased selection:bg-emerald-700 selection:text-white"
+<body class="min-h-screen flex flex-col text-neutral-900 dark:text-emerald-50 transition-colors duration-300 antialiased selection:bg-emerald-700 selection:text-white bg-agri-pattern"
     x-data="{
         mobileMenuOpen: false
     }">
@@ -222,14 +248,14 @@
 
     {{-- 2. Agri Harvest Announcement Bar --}}
     @if ($landingPage->announcement_badge)
-        <div class="bg-gradient-to-r from-emerald-800 via-emerald-700 to-green-900 text-white text-xs sm:text-sm font-medium py-2 px-4 text-center tracking-wide shadow-xs flex items-center justify-center gap-2">
+        <div class="bg-gradient-to-r from-emerald-900 via-emerald-800 to-green-950 text-white text-xs sm:text-sm font-medium py-2 px-4 text-center tracking-wide shadow-xs flex items-center justify-center gap-2 border-b border-emerald-700/30">
             <i data-lucide="sprout" class="w-3.5 h-3.5 text-amber-300 shrink-0"></i>
             <span>{{ $landingPage->announcement_badge }}</span>
         </div>
     @else
-        <div class="bg-emerald-900 text-emerald-100 text-[11px] sm:text-xs font-medium py-1.5 px-4 text-center tracking-wide flex items-center justify-center gap-2 border-b border-emerald-800/40">
+        <div class="bg-gradient-to-r from-emerald-950 via-emerald-900 to-green-950 text-emerald-100 text-[11px] sm:text-xs font-medium py-1.5 px-4 text-center tracking-wide flex items-center justify-center gap-2 border-b border-emerald-800/40">
             <span class="inline-block w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
-            <span>Musim Panen Segar &bull; Pengiriman langsung dari kebun binaan mitra tani Nusantara</span>
+            <span>Musim Panen Segar &bull; Pengiriman langsung dari kebun binaan mitra tani Nusantara &bull; Petik Pagi Hari</span>
         </div>
     @endif
 
@@ -258,8 +284,8 @@
     {{-- 4. Agriculture Theme Navbar --}}
     @include('public.storefront.themes.agriculture_farm.navbar')
 
-    {{-- 5. Main Content Area (pb-20 for Apple mobile bottom tab bar space) --}}
-    <main class="flex-1 w-full pb-20 md:pb-0">
+    {{-- 5. Main Content Area (pb-24 for Apple mobile bottom tab bar comfort) --}}
+    <main class="flex-1 w-full pb-24 md:pb-0">
         @yield('content')
     </main>
 

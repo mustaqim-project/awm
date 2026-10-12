@@ -78,8 +78,11 @@ final class InvoiceController extends Controller
 
         $validated = $request->validate([
             'customer_id' => ['required', 'exists:customers,id'],
+            'location_id' => ['nullable', 'exists:locations,id'],
             'purchase_order_id' => ['nullable', 'exists:purchase_orders,id'],
             'invoice_number' => ['nullable', 'string', 'max:100'],
+            'sender_name' => ['nullable', 'string', 'max:150'],
+            'recipient_name' => ['nullable', 'string', 'max:150'],
             'invoice_date' => ['required', 'date'],
             'due_date' => ['nullable', 'date'],
             'status' => ['nullable', 'string', 'in:draft,sent,unpaid'],
@@ -109,6 +112,55 @@ final class InvoiceController extends Controller
             'message' => "Faktur {$invoice->invoice_number} berhasil diterbitkan.",
             'invoice' => $invoice->load(['customer', 'items', 'payments']),
         ], Response::HTTP_CREATED);
+    }
+
+    /**
+     * Update draft invoice.
+     */
+    public function update(Request $request, Invoice $invoice): JsonResponse
+    {
+        $business = Context::requireBusiness();
+        if ($invoice->business_id !== $business->id) {
+            return response()->json(['message' => 'Faktur tidak ditemukan.'], Response::HTTP_NOT_FOUND);
+        }
+
+        if ($invoice->status !== Invoice::STATUS_DRAFT) {
+            return response()->json(['message' => 'Hanya faktur berstatus Draf yang dapat disunting.'], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $validated = $request->validate([
+            'customer_id' => ['required', 'exists:customers,id'],
+            'location_id' => ['nullable', 'exists:locations,id'],
+            'sender_name' => ['nullable', 'string', 'max:150'],
+            'recipient_name' => ['nullable', 'string', 'max:150'],
+            'invoice_date' => ['required', 'date'],
+            'due_date' => ['nullable', 'date'],
+            'discount_type' => ['nullable', 'string', 'in:fixed,percentage'],
+            'discount_value' => ['nullable', 'numeric', 'gte:0'],
+            'tax_percentage' => ['nullable', 'numeric', 'gte:0', 'lte:100'],
+            'shipping_cost' => ['nullable', 'numeric', 'gte:0'],
+            'payment_terms' => ['nullable', 'string', 'max:100'],
+            'notes' => ['nullable', 'string'],
+            'terms_conditions' => ['nullable', 'string'],
+            'items' => ['required', 'array', 'min:1'],
+            'items.*.product_id' => ['nullable', 'exists:products,id'],
+            'items.*.item_name' => ['required', 'string', 'max:255'],
+            'items.*.sku' => ['nullable', 'string', 'max:100'],
+            'items.*.description' => ['nullable', 'string'],
+            'items.*.quantity' => ['required', 'numeric', 'gt:0'],
+            'items.*.unit_id' => ['required', 'exists:units,id'],
+            'items.*.unit_price' => ['required', 'numeric', 'gte:0'],
+            'items.*.unit_hpp' => ['nullable', 'numeric', 'gte:0'],
+        ]);
+
+        /** @var Customer $customer */
+        $customer = Customer::findOrFail($validated['customer_id']);
+        $updatedInvoice = $this->invoiceService->updateDraft($invoice, $customer, $validated['items'], $validated);
+
+        return response()->json([
+            'message' => "Draf Faktur {$updatedInvoice->invoice_number} berhasil diperbarui.",
+            'invoice' => $updatedInvoice->load(['customer', 'items', 'payments']),
+        ], Response::HTTP_OK);
     }
 
     /**

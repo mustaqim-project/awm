@@ -16,10 +16,10 @@
         $waNumber = '62' . substr($waNumber, 1);
     }
 
-    $defaultGreeting = $landingPage->whatsapp_welcome_message ?: 'Halo, saya tertarik dengan pasokan hasil tani segar dari kebun Anda. Boleh info stok dan pengiriman?';
+    $defaultGreeting = $landingPage->whatsapp_welcome_message ?: 'Halo, saya tertarik dengan pasokan hasil tani & panen segar dari kebun Anda. Boleh info stok dan jadwal pengiriman?';
     
     if ($productName) {
-        $defaultGreeting = 'Halo ' . $business->name . ', saya ingin konsultasi mengenai: *' . $productName . '* di ' . url()->current();
+        $defaultGreeting = 'Halo ' . $business->name . ', saya ingin konsultasi & pesan komoditas: *' . $productName . '* di ' . url()->current();
     }
 
     $waUrl = 'https://wa.me/' . $waNumber . '?text=' . urlencode($defaultGreeting);
@@ -37,48 +37,49 @@
                 x-transition:leave="transition ease-in duration-150"
                 x-transition:leave-start="opacity-100 translate-y-0 scale-100"
                 x-transition:leave-end="opacity-0 translate-y-3 scale-95"
-                class="mb-3 p-4 rounded-3xl bg-white/95 dark:bg-[#181E2A]/95 backdrop-blur-2xl shadow-[0_16px_36px_rgba(0,0,0,0.18)] border border-black/[0.08] dark:border-white/[0.1] max-w-xs text-xs space-y-3">
+                class="mb-3 p-4 sm:p-5 rounded-3xl bg-white/95 dark:bg-[#0D1F12]/95 backdrop-blur-2xl shadow-[0_16px_36px_rgba(7,19,10,0.25)] border border-emerald-900/10 dark:border-emerald-500/20 max-w-xs text-xs space-y-3">
                 
-                <div class="flex items-center justify-between gap-3 border-b border-black/[0.06] dark:border-white/[0.08] pb-2.5">
-                    <div class="flex items-center gap-2">
-                        <div class="w-8 h-8 rounded-full bg-[#25D366] text-white flex items-center justify-center font-bold text-xs shadow-xs">
-                            <i data-lucide="message-circle" class="w-4 h-4"></i>
+                <div class="flex items-center justify-between gap-3 border-b border-emerald-900/8 dark:border-emerald-500/15 pb-3">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-9 h-9 rounded-2xl bg-[#25D366] text-white flex items-center justify-center font-bold text-xs shadow-xs shrink-0">
+                            <i data-lucide="message-circle" class="w-5 h-5"></i>
                         </div>
                         <div>
-                            <span class="font-bold text-neutral-900 dark:text-white block leading-tight">{{ $business->name }}</span>
-                            <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-medium flex items-center gap-1">
+                            <span class="font-heading font-normal text-sm text-neutral-900 dark:text-emerald-50 block leading-tight">{{ $business->name }}</span>
+                            <span class="text-[10px] text-emerald-700 dark:text-emerald-400 font-semibold flex items-center gap-1 mt-0.5">
                                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                                Layanan Pelanggan Online
+                                Posko Tani Siap Melayani
                             </span>
                         </div>
                     </div>
                     <button type="button" @click="waChatOpen = false"
-                        class="text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 transition p-1">
+                        class="text-neutral-400 hover:text-neutral-600 dark:hover:text-emerald-200 transition p-1"
+                        aria-label="Tutup Dialog">
                         <i data-lucide="x" class="w-4 h-4"></i>
                     </button>
                 </div>
 
-                <p class="text-neutral-600 dark:text-neutral-300 leading-relaxed text-xs">
-                    {{ $landingPage->whatsapp_welcome_message ?: 'Halo, saya tertarik dengan pasokan hasil tani segar dari kebun Anda. Boleh info stok dan pengiriman?' }}
+                <p class="text-neutral-600 dark:text-emerald-200/80 leading-relaxed text-xs">
+                    {{ $defaultGreeting }}
                 </p>
 
-                <a href="{{ $waUrl }}" target="_blank"
-                    class="w-full py-2.5 px-3 rounded-2xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all duration-150 active:scale-95">
+                <a href="{{ $waUrl }}" target="_blank" rel="noopener"
+                    class="w-full py-2.5 px-3 rounded-2xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-xs transition-all duration-150 active:scale-95 min-h-[42px]">
                     <i data-lucide="message-circle" class="w-4 h-4"></i>
-                    <span>Chat Sekarang via WA</span>
+                    <span>Chat Petani via WhatsApp</span>
                 </a>
             </div>
 
             <button type="button" @click="waChatOpen = !waChatOpen"
-                class="w-13 h-13 rounded-full text-white shadow-[0_10px_25px_rgba(37,211,102,0.4)] flex items-center justify-center hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer"
+                class="w-13 h-13 rounded-2xl sm:rounded-3xl text-white shadow-[0_10px_25px_rgba(37,211,102,0.4)] flex items-center justify-center hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer border border-white/20"
                 style="background-color: #25D366;"
                 aria-label="Chat WhatsApp">
                 <i data-lucide="message-circle" class="w-6 h-6"></i>
             </button>
         </div>
     @else
-        <a href="{{ $waUrl }}" target="_blank"
-            class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-xs sm:text-sm text-white shadow-xs transition-all active:scale-95"
+        <a href="{{ $waUrl }}" target="_blank" rel="noopener"
+            class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-xs sm:text-sm text-white shadow-xs transition-all active:scale-95 min-h-[42px]"
             style="background-color: #25D366;">
             <i data-lucide="message-circle" class="w-4 h-4"></i>
             <span>{{ $customLabel ?: 'Tanya via WhatsApp' }}</span>

@@ -1,3 +1,7 @@
+{{-- ========================================================================= --}}
+{{-- ARTISAN BAKERY & PATISSERIE MASTER LAYOUT (`layouts/bakery_cake/app.blade.php`) --}}
+{{-- Warm Hearthstone Canvas, Cormorant Garamond & Fresh-from-the-Oven Aesthetics --}}
+{{-- ========================================================================= --}}
 @php
     $initialDarkMode = filter_var($landingPage->dark_mode ?? false, FILTER_VALIDATE_BOOLEAN);
     $activeTheme = $theme ?? app(\App\Domain\Storefront\StorefrontThemeService::class)->resolveTheme($landingPage);
@@ -14,10 +18,10 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
     <meta name="color-scheme" content="light dark">
-    <meta name="theme-color" content="{{ $initialDarkMode ? '#FFFDF5' : ($activeTheme['bg_color'] ?? '#FFFDF5') }}">
+    <meta name="theme-color" content="{{ $initialDarkMode ? '#18110B' : ($activeTheme['bg_color'] ?? '#FFFDF5') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    {{-- Persistent Elegant Dark Mode Initialization --}}
+    {{-- Persistent Artisan Dark Mode Script --}}
     <script>
         (function() {
             const savedDark = localStorage.getItem('storefront_dark_mode');
@@ -35,7 +39,7 @@
                 localStorage.setItem('storefront_dark_mode', isDark ? 'true' : 'false');
                 const themeColorMeta = document.querySelector('meta[name="theme-color"]');
                 if (themeColorMeta) {
-                    themeColorMeta.setAttribute('content', isDark ? '{{ $activeTheme['dark_bg'] ?? '#0B0F19' }}' : '{{ $activeTheme['bg_color'] ?? '#FFFDF5' }}');
+                    themeColorMeta.setAttribute('content', isDark ? '{{ $activeTheme['dark_bg'] ?? '#18110B' }}' : '{{ $activeTheme['bg_color'] ?? '#FFFDF5' }}');
                 }
             } catch (e) {}
             if (typeof lucide !== 'undefined') {
@@ -60,8 +64,8 @@
         'siteName' => $business->name,
         'fallbackImage' => $defaultBrandImg ?: asset('assets/seo/cooca-og-default.jpg'),
         'url' => $canonicalUrl ?? (View::hasSection('canonical') ? trim((string) View::yieldContent('canonical')) : url('/' . $business->slug)),
-        'title' => $pageTitle ?? (View::hasSection('title') ? trim((string) View::yieldContent('title')) : ($landingPage->meta_title ?: $business->name . ' - ' . ($landingPage->headline ?: 'Toko Online Resmi'))),
-        'description' => $ogDescription ?? (View::hasSection('description') ? trim((string) View::yieldContent('description')) : ($landingPage->meta_description ?: ($landingPage->subheadline ?: ($business->description ?: 'Belanja aneka produk dan layanan berkualitas langsung dari ' . $business->name . ' dengan jaminan kualitas dan pengiriman terpercaya.')))),
+        'title' => $pageTitle ?? (View::hasSection('title') ? trim((string) View::yieldContent('title')) : ($landingPage->meta_title ?: $business->name . ' - ' . ($landingPage->headline ?: 'Artisan Bakery & Patisserie'))),
+        'description' => $ogDescription ?? (View::hasSection('description') ? trim((string) View::yieldContent('description')) : ($landingPage->meta_description ?: ($landingPage->subheadline ?: ($business->description ?: 'Nikmati kelezatan roti artisan segar dari oven, kue tart perayaan custom, dan pastry mentega murni dari ' . $business->name . '.')))),
         'keywords' => View::hasSection('keywords') ? trim((string) View::yieldContent('keywords')) : ($landingPage->meta_keywords ?? null),
     ])
 
@@ -71,12 +75,12 @@
         <link rel="apple-touch-icon" href="{{ $defaultBrandImg }}">
     @endif
 
-    {{-- Dynamic Google Fonts Loader: Cormorant Garamond & Poppins --}}
+    {{-- Dynamic Google Fonts: Cormorant Garamond & Plus Jakarta Sans --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?{!! $activeTheme['google_fonts'] ?? 'family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Poppins:wght@400;500;600' !!}&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    {{-- Tailwind CSS CDN & Theme Config --}}
+    {{-- Tailwind CSS CDN & Bakery Theme Tokens --}}
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -84,9 +88,9 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        heading: ['"{{ $activeTheme['font_heading'] ?? 'Cormorant Garamond' }}"', 'sans-serif'],
-                        body: ['"{{ $activeTheme['font_body'] ?? 'Poppins' }}"', 'sans-serif'],
-                        sans: ['"{{ $activeTheme['font_body'] ?? 'Poppins' }}"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                        heading: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+                        body: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
                         mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
                     },
                     colors: {
@@ -97,6 +101,24 @@
                             card: '{{ $activeTheme['card_bg'] ?? '#FFFFFF' }}',
                             badgeBg: '{{ $activeTheme['badge_bg'] ?? '#D9770615' }}',
                             badgeText: '{{ $activeTheme['badge_text'] ?? '#D97706' }}',
+                        },
+                        bakery: {
+                            50: '#FFFDF5',
+                            100: '#FEF9E7',
+                            200: '#FCF0C3',
+                            300: '#F9E295',
+                            400: '#F5CE5D',
+                            500: '#EDB732',
+                            600: '#D9981E',
+                            700: '#B57416',
+                            800: '#925717',
+                            900: '#784617',
+                            950: '#45240A',
+                            crust: '#92400E',
+                            butter: '#F59E0B',
+                            velvet: '#BE185D',
+                            rose: '#E11D48',
+                            hearth: '#18110B',
                         }
                     },
                     borderRadius: {
@@ -119,7 +141,7 @@
         window.COOCA_BUSINESS_ID = @js($business->id);
     </script>
 
-    {{-- Authentic Theme Dynamic CSS Tokens --}}
+    {{-- Authentic Bakery Dynamic CSS Tokens --}}
     <style>
         [x-cloak] {
             display: none !important;
@@ -130,9 +152,9 @@
             --theme-accent: {{ $activeTheme['accent_color'] ?? '#BE185D' }};
             --theme-bg: {{ $activeTheme['bg_color'] ?? '#FFFDF5' }};
             --theme-card: {{ $activeTheme['card_bg'] ?? '#FFFFFF' }};
-            --theme-radius: {{ $activeTheme['border_radius'] ?? '18px' }};
-            --font-heading: '{{ $activeTheme['font_heading'] ?? 'Cormorant Garamond' }}', sans-serif;
-            --font-body: '{{ $activeTheme['font_body'] ?? 'Poppins' }}', sans-serif;
+            --theme-radius: 18px;
+            --font-heading: 'Cormorant Garamond', Georgia, serif;
+            --font-body: 'Plus Jakarta Sans', sans-serif;
         }
 
         html {
@@ -142,12 +164,8 @@
         html.dark,
         .dark {
             color-scheme: dark;
-            --theme-bg: {{ $activeTheme['dark_bg'] ?? '#0B0F19' }};
-            --theme-card: {{ $activeTheme['dark_card'] ?? '#181E2A' }};
-        }
-
-        .dark body {
-            background-color: var(--theme-bg);
+            --theme-bg: #18110B;
+            --theme-card: #221810;
         }
 
         body {
@@ -157,8 +175,13 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
+        .dark body {
+            background-color: var(--theme-bg);
+        }
+
         h1, h2, h3, h4, .font-heading {
             font-family: var(--font-heading);
+            letter-spacing: -0.015em;
         }
 
         .font-mono, .tabular-nums {
@@ -169,13 +192,14 @@
         .theme-surface {
             background-color: var(--theme-card);
             border-radius: var(--theme-radius);
-            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 20px -2px rgba(217, 119, 6, 0.05);
+            border: 1px solid rgba(217, 119, 6, 0.12);
         }
 
         .dark .theme-surface {
-            background-color: #181E2A;
-            border-color: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.4);
+            background-color: #221810;
+            border-color: rgba(245, 158, 11, 0.18);
+            box-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.55);
         }
 
         .theme-btn-primary {
@@ -186,7 +210,7 @@
         }
 
         .theme-btn-primary:hover {
-            opacity: 0.92;
+            opacity: 0.94;
             transform: translateY(-1px);
         }
 
@@ -194,10 +218,14 @@
             transform: translateY(0) scale(0.98);
         }
 
-        .theme-badge {
-            background-color: {{ $activeTheme['badge_bg'] ?? '#D9770615' }};
-            color: {{ $activeTheme['badge_text'] ?? 'var(--theme-primary)' }};
-            border-radius: 9999px;
+        /* Subtle Warm Hearth Pattern */
+        .bg-bakery-pattern {
+            background-image: radial-gradient(rgba(217, 119, 6, 0.06) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .dark .bg-bakery-pattern {
+            background-image: radial-gradient(rgba(245, 158, 11, 0.06) 1px, transparent 1px);
+            background-size: 24px 24px;
         }
     </style>
 
@@ -207,7 +235,7 @@
     @stack('styles')
 </head>
 
-<body class="min-h-screen flex flex-col text-neutral-900 dark:text-neutral-100 transition-colors duration-300 antialiased selection:bg-theme-primary selection:text-white"
+<body class="min-h-screen flex flex-col text-neutral-900 dark:text-amber-50 transition-colors duration-300 antialiased selection:bg-amber-700 selection:text-white bg-bakery-pattern"
     x-data="{
         mobileMenuOpen: false
     }">
@@ -216,19 +244,24 @@
     @if (!$landingPage->is_published)
         <div class="sticky top-0 z-[100] w-full bg-[#FF9500] text-black font-semibold text-xs py-2 px-4 text-center flex items-center justify-center gap-2 shadow-sm">
             <i data-lucide="eye" class="w-4 h-4 shrink-0"></i>
-            <span>Mode Preview Bisnis &mdash; Halaman ini masih berstatus draft privat dan belum dipublikasikan ke umum.</span>
+            <span>Mode Preview Dapur Roti &mdash; Halaman ini masih berstatus draft privat dan belum dipublikasikan ke umum.</span>
         </div>
     @endif
 
-    {{-- 2. Announcement Bar (If configured) --}}
+    {{-- 2. Fresh Oven Batch Announcement Bar --}}
     @if ($landingPage->announcement_badge)
-        <div class="bg-gradient-to-r from-theme-primary to-theme-accent text-white text-xs sm:text-sm font-medium py-2 px-4 text-center tracking-wide shadow-sm flex items-center justify-center gap-2">
-            <span class="inline-block w-2 h-2 rounded-full bg-white animate-pulse"></span>
+        <div class="bg-gradient-to-r from-amber-900 via-amber-800 to-yellow-950 text-white text-xs sm:text-sm font-medium py-2 px-4 text-center tracking-wide shadow-xs flex items-center justify-center gap-2 border-b border-amber-700/30">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-300 shrink-0"></i>
             <span>{{ $landingPage->announcement_badge }}</span>
         </div>
+    @else
+        <div class="bg-gradient-to-r from-[#2A180E] via-[#3D2314] to-[#2A180E] text-amber-100 text-[11px] sm:text-xs font-medium py-1.5 px-4 text-center tracking-wide flex items-center justify-center gap-2 border-b border-amber-900/50">
+            <span class="inline-block w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+            <span>Batch Hangat Dari Oven &bull; Ragi Alami &amp; Mentega Murni &bull; Pre-Order Custom Cake &amp; Hampers</span>
+        </div>
     @endif
 
-    {{-- 3. Store Operating Days Status Alert --}}
+    {{-- 3. Bakery Operating Days Alert --}}
     @php
         $dayMap = [
             'monday' => 'Senin',
@@ -244,25 +277,21 @@
         $isStoreOpenToday = empty($operatingDays) || in_array($currentDayOfWeek, $operatingDays, true);
     @endphp
     @if (!$isStoreOpenToday)
-        <div class="bg-amber-500/10 border-b border-amber-500/20 py-2 px-4 text-amber-800 dark:text-amber-300 text-xs text-center flex items-center justify-center gap-2">
+        <div class="bg-amber-500/10 border-b border-amber-500/20 py-2 px-4 text-amber-900 dark:text-amber-300 text-xs text-center flex items-center justify-center gap-2">
             <i data-lucide="clock" class="w-4 h-4 text-amber-500 shrink-0"></i>
-            <span>{{ __('storefront.contact.closed_today') }} ({{ $dayMap[$currentDayOfWeek] ?? '' }}). {{ __('storefront.messages.order_placed') }}</span>
+            <span>Dapur Roti Libur Hari Ini ({{ $dayMap[$currentDayOfWeek] ?? '' }}). Pesanan yang masuk akan dipanggang dan dikirim pada hari operasional berikutnya.</span>
         </div>
     @endif
 
-    {{-- 4. Theme Navbar --}}
-    @if (view()->exists("public.storefront.themes.bakery_cake.navbar"))
-        @include("public.storefront.themes.bakery_cake.navbar")
-    @else
-        @include('public.storefront.layouts.navbar')
-    @endif
+    {{-- 4. Bakery Theme Navbar --}}
+    @include('public.storefront.themes.bakery_cake.navbar')
 
-    {{-- 5. Main Content Area (pb-20 for mobile bottom tab bar safe space) --}}
-    <main class="flex-1 w-full pb-20 md:pb-0">
+    {{-- 5. Main Content Area (pb-24 for Apple mobile bottom tab bar comfort) --}}
+    <main class="flex-1 w-full pb-24 md:pb-0">
         @yield('content')
     </main>
 
-    {{-- 6. Reusable Bento Widgets & Floating Elements --}}
+    {{-- 6. Floating Elements & Bento Widgets --}}
     @includeFirst(['public.storefront.components.' . $bundleDir . '.cart_floating_pill', 'public.storefront.components.cart_floating_pill'])
 
     @if ($hasWhatsapp)
@@ -284,12 +313,8 @@
         'hasWhatsapp' => $hasWhatsapp ?? false,
     ])
 
-    {{-- 7. Theme Footer --}}
-    @if (view()->exists("public.storefront.themes.bakery_cake.footer"))
-        @include("public.storefront.themes.bakery_cake.footer")
-    @else
-        @include('public.storefront.layouts.footer')
-    @endif
+    {{-- 7. Bakery Theme Footer --}}
+    @include('public.storefront.themes.bakery_cake.footer')
 
     {{-- 8. Alpine.js Global Cart Store --}}
     <script>

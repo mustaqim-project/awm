@@ -650,6 +650,7 @@ Route::prefix('v1')->group(function (): void {
                 Route::get('/invoices', [InvoiceController::class, 'index'])->middleware('require.permission:invoices.view');
                 Route::post('/invoices', [InvoiceController::class, 'store'])->middleware('require.permission:invoices.create');
                 Route::get('/invoices/{invoice}', [InvoiceController::class, 'show'])->middleware('require.permission:invoices.view');
+                Route::put('/invoices/{invoice}', [InvoiceController::class, 'update'])->middleware('require.permission:invoices.edit');
                 Route::post('/invoices/{invoice}/payments', [InvoiceController::class, 'recordPayment'])->middleware('require.permission:invoices.record_payment');
                 Route::delete('/invoices/{invoice}', [InvoiceController::class, 'destroy'])->middleware('require.permission:invoices.delete');
                 Route::get('/returns', [\App\Http\Controllers\Api\V1\Sales\SalesReturnController::class, 'index'])->middleware('require.permission:sales.returns');

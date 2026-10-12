@@ -2,7 +2,7 @@
 {{-- AGRICULTURE & FARM STOREFRONT FOOTER (`agriculture_farm`)                --}}
 {{-- Agrarian trust pillars, wholesale hotline, farm location & quality promise--}}
 {{-- ========================================================================= --}}
-<footer class="mt-auto bg-[#07130A] text-emerald-200/80 border-t border-emerald-950/80 pt-14 pb-8 transition-colors">
+<footer class="mt-auto bg-[#050F08] text-emerald-200/80 border-t border-emerald-950 pt-14 pb-10 transition-colors">
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 mb-12">
 
@@ -13,7 +13,7 @@
                         <img src="{{ $business->logo_url ?: $landingPage->logo_url }}" alt="{{ $business->name }}"
                             class="w-10 h-10 rounded-2xl object-cover ring-2 ring-emerald-500/20">
                     @else
-                        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-600 to-green-900 text-white flex items-center justify-center font-heading text-lg shadow-sm border border-emerald-500/30">
+                        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-600 to-green-900 text-white flex items-center justify-center font-heading text-lg shadow-xs border border-emerald-500/30">
                             {{ strtoupper(substr($business->name, 0, 2)) }}
                         </div>
                     @endif
@@ -46,28 +46,32 @@
                 </h4>
                 <ul class="space-y-2.5 text-xs text-emerald-200/70">
                     <li>
-                        <a href="{{ url('/' . $business->slug) }}" class="hover:text-emerald-300 transition-colors">
-                            Beranda Utama
+                        <a href="{{ url('/' . $business->slug) }}" class="hover:text-emerald-300 transition-colors flex items-center gap-1.5">
+                            <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-emerald-500"></i>
+                            <span>Beranda Utama</span>
                         </a>
                     </li>
                     @if ($landingPage->isPageActive('catalog'))
                         <li>
-                            <a href="{{ url('/' . $business->slug . '/katalog') }}" class="hover:text-emerald-300 transition-colors">
-                                Katalog Komoditas &amp; Bibit
+                            <a href="{{ url('/' . $business->slug . '/katalog') }}" class="hover:text-emerald-300 transition-colors flex items-center gap-1.5">
+                                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-emerald-500"></i>
+                                <span>Katalog Komoditas &amp; Bibit</span>
                             </a>
                         </li>
                     @endif
                     @if ($landingPage->isPageActive('about'))
                         <li>
-                            <a href="{{ url('/' . $business->slug . '/tentang-kami') }}" class="hover:text-emerald-300 transition-colors">
-                                Profil Kebun &amp; Mitra Tani
+                            <a href="{{ url('/' . $business->slug . '/tentang-kami') }}" class="hover:text-emerald-300 transition-colors flex items-center gap-1.5">
+                                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-emerald-500"></i>
+                                <span>Profil Kebun &amp; Mitra Tani</span>
                             </a>
                         </li>
                     @endif
                     @if ($landingPage->isPageActive('contact'))
                         <li>
-                            <a href="{{ url('/' . $business->slug . '/kontak') }}" class="hover:text-emerald-300 transition-colors">
-                                Pemesanan Partai Besar / B2B
+                            <a href="{{ url('/' . $business->slug . '/kontak') }}" class="hover:text-emerald-300 transition-colors flex items-center gap-1.5">
+                                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-emerald-500"></i>
+                                <span>Pemesanan Partai Besar / B2B</span>
                             </a>
                         </li>
                     @endif
@@ -105,7 +109,7 @@
 
                     <div class="p-3 rounded-2xl bg-black/40 border border-emerald-900/40 text-[11px] text-emerald-300/80 space-y-1">
                         <span class="font-bold text-emerald-100 block">Jadwal Petik &amp; Kirim:</span>
-                        <p class="leading-relaxed">Senin &ndash; Sabtu: Mulai 06:00 WIB (Kondisi Segar Embun Pagi)</p>
+                        <p class="leading-relaxed">Senin &ndash; Sabtu: Mulai 05:00 WIB (Kondisi Segar Embun Pagi)</p>
                     </div>
                 </div>
             </div>
@@ -134,7 +138,7 @@
         </div>
 
         {{-- Bottom Copyright & Attribution Bar --}}
-        <div class="pt-6 border-t border-emerald-950/80 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-emerald-300/60">
+        <div class="pt-6 border-t border-emerald-950 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-emerald-300/60">
             <p>&copy; {{ date('Y') }} {{ $business->name }}. Hak cipta dilindungi.</p>
             <div class="flex items-center gap-2 text-[11px]">
                 <span>Rantai Pasok Pangan Berkelanjutan &bull;</span>

@@ -38,6 +38,8 @@ class Invoice extends Model
         'purchase_order_id',
         'sales_order_id',
         'invoice_number',
+        'sender_name',
+        'recipient_name',
         'invoice_date',
         'due_date',
         'status',

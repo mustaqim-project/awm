@@ -32,6 +32,18 @@ final class PublicOrderTrackingController extends Controller
     {
         $business = Business::where('slug', $slug)->where('is_active', true)->firstOrFail();
 
+        // Convert empty strings to null for nullable fields to avoid UUID validation errors
+        $nullableFields = ['pickup_location_id', 'payment_method_id', 'pos_table_id', 'shipping_rule_id', 'customer_email', 'shipping_address', 'destination_postal_code', 'notes'];
+        $toMerge = [];
+        foreach ($nullableFields as $field) {
+            if ($request->has($field) && $request->input($field) === '') {
+                $toMerge[$field] = null;
+            }
+        }
+        if (!empty($toMerge)) {
+            $request->merge($toMerge);
+        }
+
         $validated = $request->validate([
             'customer_name'           => ['required', 'string', 'min:2', 'max:150'],
             'customer_phone'          => ['required', 'string', 'min:8', 'max:30'],

@@ -14,10 +14,10 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
     <meta name="color-scheme" content="light dark">
-    <meta name="theme-color" content="{{ $initialDarkMode ? '#F5F3FF' : ($activeTheme['bg_color'] ?? '#F5F3FF') }}">
+    <meta name="theme-color" content="{{ $initialDarkMode ? '#0E0B17' : ($activeTheme['bg_color'] ?? '#F5F3FF') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    {{-- Persistent Elegant Dark Mode Initialization --}}
+    {{-- Persistent Dark Mode Script --}}
     <script>
         (function() {
             const savedDark = localStorage.getItem('storefront_dark_mode');
@@ -35,7 +35,7 @@
                 localStorage.setItem('storefront_dark_mode', isDark ? 'true' : 'false');
                 const themeColorMeta = document.querySelector('meta[name="theme-color"]');
                 if (themeColorMeta) {
-                    themeColorMeta.setAttribute('content', isDark ? '{{ $activeTheme['dark_bg'] ?? '#0B0F19' }}' : '{{ $activeTheme['bg_color'] ?? '#F5F3FF' }}');
+                    themeColorMeta.setAttribute('content', isDark ? '{{ $activeTheme['dark_bg'] ?? '#0E0B17' }}' : '{{ $activeTheme['bg_color'] ?? '#F5F3FF' }}');
                 }
             } catch (e) {}
             if (typeof lucide !== 'undefined') {
@@ -44,7 +44,7 @@
         };
     </script>
 
-    {{-- Apple HIG Mobile Web App Compatibility & PWA Meta Tags (§web-ios-pwa-redesign) --}}
+    {{-- Apple HIG & Mobile Web App Meta Tags (§responsive-ui-ux & §web-ios-pwa-redesign) --}}
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="{{ $business->name }}">
@@ -60,8 +60,8 @@
         'siteName' => $business->name,
         'fallbackImage' => $defaultBrandImg ?: asset('assets/seo/cooca-og-default.jpg'),
         'url' => $canonicalUrl ?? (View::hasSection('canonical') ? trim((string) View::yieldContent('canonical')) : url('/' . $business->slug)),
-        'title' => $pageTitle ?? (View::hasSection('title') ? trim((string) View::yieldContent('title')) : ($landingPage->meta_title ?: $business->name . ' - ' . ($landingPage->headline ?: 'Toko Online Resmi'))),
-        'description' => $ogDescription ?? (View::hasSection('description') ? trim((string) View::yieldContent('description')) : ($landingPage->meta_description ?: ($landingPage->subheadline ?: ($business->description ?: 'Belanja aneka produk dan layanan berkualitas langsung dari ' . $business->name . ' dengan jaminan kualitas dan pengiriman terpercaya.')))),
+        'title' => $pageTitle ?? (View::hasSection('title') ? trim((string) View::yieldContent('title')) : ($landingPage->meta_title ?: $business->name . ' - ' . ($landingPage->headline ?: 'Reservasi Layanan & Janji Temu Resmi'))),
+        'description' => $ogDescription ?? (View::hasSection('description') ? trim((string) View::yieldContent('description')) : ($landingPage->meta_description ?: ($landingPage->subheadline ?: ($business->description ?: 'Reservasi jadwal kunjungan dan sesi layanan profesional di ' . $business->name . ' dengan konfirmasi instan tanpa antre.')))),
         'keywords' => View::hasSection('keywords') ? trim((string) View::yieldContent('keywords')) : ($landingPage->meta_keywords ?? null),
     ])
 
@@ -71,12 +71,12 @@
         <link rel="apple-touch-icon" href="{{ $defaultBrandImg }}">
     @endif
 
-    {{-- Dynamic Google Fonts Loader: Plus Jakarta Sans & Inter --}}
+    {{-- Dynamic Google Fonts Loader: Plus Jakarta Sans (Headings) & Inter (Body UI) --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?{!! $activeTheme['google_fonts'] ?? 'family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600' !!}&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    {{-- Tailwind CSS CDN & Theme Config --}}
+    {{-- Tailwind CSS CDN & Theme Configuration --}}
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -84,12 +84,30 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        heading: ['"{{ $activeTheme['font_heading'] ?? 'Plus Jakarta Sans' }}"', 'sans-serif'],
-                        body: ['"{{ $activeTheme['font_body'] ?? 'Inter' }}"', 'sans-serif'],
-                        sans: ['"{{ $activeTheme['font_body'] ?? 'Inter' }}"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                        heading: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        body: ['"Inter"', 'sans-serif'],
+                        sans: ['"Inter"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
                         mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
                     },
                     colors: {
+                        booking: {
+                            50: '#F5F3FF',
+                            100: '#EDE9FE',
+                            200: '#DDD6FE',
+                            300: '#C4B5FD',
+                            400: '#A78BFA',
+                            500: '#8B5CF6',
+                            600: '#7C3AED',
+                            700: '#6D28D9',
+                            800: '#5B21B6',
+                            900: '#4C1D95',
+                            950: '#2E1065',
+                        },
+                        obsidian: {
+                            800: '#1D172E',
+                            900: '#161224',
+                            950: '#0E0B17',
+                        },
                         theme: {
                             primary: '{{ $activeTheme['primary_color'] ?? '#7C3AED' }}',
                             accent: '{{ $activeTheme['accent_color'] ?? '#F43F5E' }}',
@@ -100,7 +118,7 @@
                         }
                     },
                     borderRadius: {
-                        'theme': '{{ $activeTheme['border_radius'] ?? '18px' }}',
+                        'theme': '{{ $activeTheme['border_radius'] ?? '20px' }}',
                     }
                 }
             }
@@ -111,7 +129,7 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    {{-- Global JavaScript Bridge: i18n & Context Injection --}}
+    {{-- Global JavaScript Bridge --}}
     <script>
         window.COOCA_I18N = @js(__('storefront.messages'));
         window.COOCA_LANG = @js($currentLocale);
@@ -119,7 +137,7 @@
         window.COOCA_BUSINESS_ID = @js($business->id);
     </script>
 
-    {{-- Authentic Theme Dynamic CSS Tokens --}}
+    {{-- Dynamic Booking & Appointment Design Tokens --}}
     <style>
         [x-cloak] {
             display: none !important;
@@ -130,9 +148,9 @@
             --theme-accent: {{ $activeTheme['accent_color'] ?? '#F43F5E' }};
             --theme-bg: {{ $activeTheme['bg_color'] ?? '#F5F3FF' }};
             --theme-card: {{ $activeTheme['card_bg'] ?? '#FFFFFF' }};
-            --theme-radius: {{ $activeTheme['border_radius'] ?? '18px' }};
-            --font-heading: '{{ $activeTheme['font_heading'] ?? 'Plus Jakarta Sans' }}', sans-serif;
-            --font-body: '{{ $activeTheme['font_body'] ?? 'Inter' }}', sans-serif;
+            --theme-radius: {{ $activeTheme['border_radius'] ?? '20px' }};
+            --font-heading: 'Plus Jakarta Sans', sans-serif;
+            --font-body: 'Inter', sans-serif;
         }
 
         html {
@@ -142,12 +160,8 @@
         html.dark,
         .dark {
             color-scheme: dark;
-            --theme-bg: {{ $activeTheme['dark_bg'] ?? '#0B0F19' }};
-            --theme-card: {{ $activeTheme['dark_card'] ?? '#181E2A' }};
-        }
-
-        .dark body {
-            background-color: var(--theme-bg);
+            --theme-bg: #0E0B17;
+            --theme-card: #161224;
         }
 
         body {
@@ -157,47 +171,38 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        h1, h2, h3, h4, .font-heading {
-            font-family: var(--font-heading);
+        .dark body {
+            background-color: #0E0B17;
         }
 
-        .font-mono, .tabular-nums {
+        h1, h2, h3, h4, .font-heading {
+            font-family: var(--font-heading);
+            letter-spacing: -0.02em;
+        }
+
+        .tabular-nums, .font-mono {
             font-variant-numeric: tabular-nums;
             font-feature-settings: "tnum";
         }
 
-        .theme-surface {
-            background-color: var(--theme-card);
-            border-radius: var(--theme-radius);
-            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+        /* Subtle Slot Grid Texture */
+        .bg-booking-pattern {
+            background-image: radial-gradient(rgba(124, 58, 237, 0.08) 1px, transparent 1px);
+            background-size: 24px 24px;
         }
 
-        .dark .theme-surface {
-            background-color: #181E2A;
-            border-color: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.4);
+        .dark .bg-booking-pattern {
+            background-image: radial-gradient(rgba(167, 139, 250, 0.07) 1px, transparent 1px);
+            background-size: 24px 24px;
         }
 
-        .theme-btn-primary {
-            background-color: var(--theme-primary);
-            color: #FFFFFF;
-            border-radius: var(--theme-radius);
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        /* Custom Scrollbar */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
         }
-
-        .theme-btn-primary:hover {
-            opacity: 0.92;
-            transform: translateY(-1px);
-        }
-
-        .theme-btn-primary:active {
-            transform: translateY(0) scale(0.98);
-        }
-
-        .theme-badge {
-            background-color: {{ $activeTheme['badge_bg'] ?? '#7C3AED15' }};
-            color: {{ $activeTheme['badge_text'] ?? 'var(--theme-primary)' }};
-            border-radius: 9999px;
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
     </style>
 
@@ -207,7 +212,7 @@
     @stack('styles')
 </head>
 
-<body class="min-h-screen flex flex-col text-neutral-900 dark:text-neutral-100 transition-colors duration-300 antialiased selection:bg-theme-primary selection:text-white"
+<body class="min-h-screen flex flex-col text-slate-900 dark:text-purple-100 bg-booking-pattern transition-colors duration-300 antialiased selection:bg-purple-600 selection:text-white"
     x-data="{
         mobileMenuOpen: false
     }">
@@ -216,19 +221,19 @@
     @if (!$landingPage->is_published)
         <div class="sticky top-0 z-[100] w-full bg-[#FF9500] text-black font-semibold text-xs py-2 px-4 text-center flex items-center justify-center gap-2 shadow-sm">
             <i data-lucide="eye" class="w-4 h-4 shrink-0"></i>
-            <span>Mode Preview Bisnis &mdash; Halaman ini masih berstatus draft privat dan belum dipublikasikan ke umum.</span>
+            <span>Mode Preview Bisnis &mdash; Halaman reservasi ini masih berstatus draft privat dan belum dipublikasikan ke umum.</span>
         </div>
     @endif
 
-    {{-- 2. Announcement Bar (If configured) --}}
+    {{-- 2. Announcement Bar --}}
     @if ($landingPage->announcement_badge)
-        <div class="bg-gradient-to-r from-theme-primary to-theme-accent text-white text-xs sm:text-sm font-medium py-2 px-4 text-center tracking-wide shadow-sm flex items-center justify-center gap-2">
+        <div class="bg-gradient-to-r from-purple-700 via-purple-800 to-rose-600 text-white text-xs sm:text-sm font-semibold py-2 px-4 text-center tracking-wide shadow-xs flex items-center justify-center gap-2">
             <span class="inline-block w-2 h-2 rounded-full bg-white animate-pulse"></span>
             <span>{{ $landingPage->announcement_badge }}</span>
         </div>
     @endif
 
-    {{-- 3. Store Operating Days Status Alert --}}
+    {{-- 3. Operating Days Alert --}}
     @php
         $dayMap = [
             'monday' => 'Senin',
@@ -244,9 +249,9 @@
         $isStoreOpenToday = empty($operatingDays) || in_array($currentDayOfWeek, $operatingDays, true);
     @endphp
     @if (!$isStoreOpenToday)
-        <div class="bg-amber-500/10 border-b border-amber-500/20 py-2 px-4 text-amber-800 dark:text-amber-300 text-xs text-center flex items-center justify-center gap-2">
-            <i data-lucide="clock" class="w-4 h-4 text-amber-500 shrink-0"></i>
-            <span>{{ __('storefront.contact.closed_today') }} ({{ $dayMap[$currentDayOfWeek] ?? '' }}). {{ __('storefront.messages.order_placed') }}</span>
+        <div class="bg-purple-500/10 border-b border-purple-500/20 py-2.5 px-4 text-purple-900 dark:text-purple-200 text-xs text-center flex items-center justify-center gap-2">
+            <i data-lucide="clock" class="w-4 h-4 text-purple-600 dark:text-purple-400 shrink-0"></i>
+            <span>{{ __('storefront.contact.closed_today') }} ({{ $dayMap[$currentDayOfWeek] ?? '' }}). Reservasi slot online tetap dapat diajukan untuk hari kerja berikutnya.</span>
         </div>
     @endif
 
@@ -257,12 +262,12 @@
         @include('public.storefront.layouts.navbar')
     @endif
 
-    {{-- 5. Main Content Area (pb-20 for mobile bottom tab bar safe space) --}}
-    <main class="flex-1 w-full pb-20 md:pb-0">
+    {{-- 5. Main Content Area (pb-24 on mobile ensures bottom tab bar never covers content) --}}
+    <main class="flex-1 w-full pb-24 md:pb-0">
         @yield('content')
     </main>
 
-    {{-- 6. Reusable Bento Widgets & Floating Elements --}}
+    {{-- 6. Floating Cart & Widgets --}}
     @includeFirst(['public.storefront.components.' . $bundleDir . '.cart_floating_pill', 'public.storefront.components.cart_floating_pill'])
 
     @if ($hasWhatsapp)
@@ -276,7 +281,7 @@
 
     @includeFirst(['public.storefront.components.' . $bundleDir . '.order_track_modal', 'public.storefront.components.order_track_modal'], ['business' => $business])
 
-    {{-- Apple iOS Mobile Bottom Tab Bar (§PRD-07 & §web-ios-pwa-redesign) --}}
+    {{-- Apple HIG Mobile Bottom Tab Bar --}}
     @includeFirst(['public.storefront.components.' . $bundleDir . '.mobile_bottom_tab_bar', 'public.storefront.components.mobile_bottom_tab_bar'], [
         'business' => $business,
         'landingPage' => $landingPage,
@@ -291,7 +296,7 @@
         @include('public.storefront.layouts.footer')
     @endif
 
-    {{-- 8. Alpine.js Global Cart Store --}}
+    {{-- 8. Alpine.js Global Cart & Booking Store --}}
     <script>
         document.addEventListener('alpine:init', () => {
             const STORAGE_KEY = 'cooca_cart_{{ $business->id }}';
@@ -333,10 +338,14 @@
                             price: parseFloat(product.price || product.selling_price || 0),
                             image_url: product.image_url || null,
                             quantity: qty,
+                            duration: product.duration || '60 Menit',
                             notes: notes || '',
                         });
                     }
                     this.save();
+
+                    // Dispatch visual feedback event
+                    window.dispatchEvent(new CustomEvent('cart-item-added', { detail: { product } }));
                 },
 
                 remove(productId) {
@@ -368,6 +377,25 @@
 
                 subtotal() {
                     return this.items.reduce((acc, item) => acc + ((parseFloat(item.price) || 0) * (parseInt(item.quantity) || 1)), 0);
+                }
+            });
+
+            // Global Order Tracking Store Compatibility
+            Alpine.store('orderTracking', {
+                isOpen: false,
+                identifier: '',
+                loading: false,
+
+                open() {
+                    this.isOpen = true;
+                },
+                close() {
+                    this.isOpen = false;
+                },
+                submit(slug) {
+                    if (!this.identifier.trim()) return;
+                    this.loading = true;
+                    window.location.href = '/' + slug + '/pesanan/' + encodeURIComponent(this.identifier.trim());
                 }
             });
         });

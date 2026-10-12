@@ -10,26 +10,26 @@
     $enUrl = $currentUrl . '?' . http_build_query(array_merge($queryParams, ['lang' => 'en']));
 @endphp
 
-<header class="sticky top-0 z-40 w-full bg-white/90 dark:bg-[#0A140E]/90 backdrop-blur-2xl border-b border-emerald-900/10 dark:border-emerald-500/15 transition-colors duration-300">
+<header class="sticky top-0 z-40 w-full bg-white/92 dark:bg-[#07130A]/92 backdrop-blur-2xl border-b border-emerald-900/10 dark:border-emerald-500/20 transition-colors duration-300">
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-3 sm:gap-6">
 
         {{-- 1. Farm Brand Identity --}}
         <a href="{{ url('/' . $business->slug) }}" class="flex items-center gap-3 shrink-0 group focus:outline-none">
             @if ($business->logo_url || $landingPage->logo_url)
                 <img src="{{ $business->logo_url ?: $landingPage->logo_url }}" alt="{{ $business->name }}"
-                    class="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl object-cover ring-2 ring-emerald-600/20 dark:ring-emerald-400/30 group-hover:scale-105 transition-transform duration-200">
+                    class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl object-cover ring-2 ring-emerald-600/25 dark:ring-emerald-400/30 group-hover:scale-105 transition-transform duration-300 shadow-xs">
             @else
-                <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-br from-emerald-700 via-green-800 to-emerald-950 text-white flex items-center justify-center font-heading text-lg sm:text-xl shadow-sm group-hover:scale-105 transition-transform duration-200 border border-emerald-500/20">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-emerald-700 via-emerald-800 to-green-950 text-white flex items-center justify-center font-heading text-lg sm:text-xl shadow-xs group-hover:scale-105 transition-transform duration-300 border border-emerald-500/25">
                     <span class="italic font-bold">{{ strtoupper(substr($business->name, 0, 2)) }}</span>
                 </div>
             @endif
             <div class="flex flex-col min-w-0">
-                <span class="font-heading font-normal text-base sm:text-lg text-neutral-900 dark:text-emerald-50 leading-tight truncate max-w-[150px] sm:max-w-[220px] group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition">
+                <span class="font-heading font-normal text-base sm:text-lg lg:text-xl text-neutral-900 dark:text-emerald-50 leading-tight truncate max-w-[150px] sm:max-w-[240px] group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors">
                     {{ $business->name }}
                 </span>
-                <span class="text-[10px] sm:text-[11px] font-semibold text-emerald-800 dark:text-emerald-400/90 tracking-wider uppercase flex items-center gap-1.5 truncate">
+                <span class="text-[10px] sm:text-[11px] font-semibold text-emerald-800 dark:text-emerald-400/90 tracking-wider uppercase flex items-center gap-1.5 truncate mt-0.5">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span>Hasil Bumi &amp; Pertanian Organik</span>
+                    <span>Sentra Tani &amp; Kebun Organik</span>
                 </span>
             </div>
         </a>
@@ -134,7 +134,7 @@
         x-transition:leave="transition ease-in duration-150"
         x-transition:leave-start="opacity-100 translate-y-0"
         x-transition:leave-end="opacity-0 -translate-y-2"
-        class="lg:hidden border-t border-emerald-900/10 dark:border-emerald-500/15 bg-white/95 dark:bg-[#0A140E]/95 backdrop-blur-2xl px-4 py-4 space-y-1">
+        class="lg:hidden border-t border-emerald-900/10 dark:border-emerald-500/15 bg-white/95 dark:bg-[#07130A]/95 backdrop-blur-2xl px-4 py-4 space-y-1">
 
         <a href="{{ url('/' . $business->slug) }}" @click="mobileMenuOpen = false"
             class="block px-3.5 py-2.5 rounded-xl text-xs font-semibold {{ request()->is($business->slug) ? 'bg-emerald-700/10 text-emerald-800 dark:text-emerald-300 font-bold' : 'text-neutral-700 dark:text-neutral-300' }}">

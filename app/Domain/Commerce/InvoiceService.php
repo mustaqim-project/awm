@@ -71,6 +71,8 @@ final class InvoiceService
                 'location_id' => $locationId,
                 'purchase_order_id' => $attributes['purchase_order_id'] ?? null,
                 'invoice_number' => $invoiceNumber,
+                'sender_name' => $attributes['sender_name'] ?? null,
+                'recipient_name' => $attributes['recipient_name'] ?? null,
                 'invoice_date' => $invoiceDate->toDateString(),
                 'due_date' => $dueDate->toDateString(),
                 'status' => Invoice::STATUS_DRAFT,
@@ -83,6 +85,90 @@ final class InvoiceService
                 'terms_conditions' => $attributes['terms_conditions'] ?? null,
                 'created_by' => $attributes['created_by'] ?? null,
             ]);
+
+            foreach ($itemsData as $itemData) {
+                $productId = $itemData['product_id'] ?? null;
+                $product = $productId ? Product::find($productId) : null;
+
+                $itemName = $itemData['item_name'] ?? ($product?->name ?? 'Produk');
+                $sku = $itemData['sku'] ?? ($product?->code ?? null);
+                $unitId = $itemData['unit_id'] ?? ($product?->output_unit_id);
+                $unitPrice = (float) $itemData['unit_price'];
+                $unitHpp = isset($itemData['unit_hpp']) ? (float) $itemData['unit_hpp'] : (float) ($product?->base_cost ?? 0.0);
+
+                InvoiceItem::create([
+                    'invoice_id' => $invoice->id,
+                    'product_id' => $productId,
+                    'item_name' => $itemName,
+                    'sku' => $sku,
+                    'description' => $itemData['description'] ?? null,
+                    'quantity' => (float) $itemData['quantity'],
+                    'unit_id' => $unitId,
+                    'unit_price' => $unitPrice,
+                    'unit_hpp' => $unitHpp,
+                ]);
+            }
+
+            $invoice->recalculateTotals();
+
+            return $invoice->fresh(['items', 'customer', 'location']);
+        });
+    }
+
+    /**
+     * Update an existing draft invoice with line items.
+     *
+     * @param  array<int, array{
+     *     product_id?: string|null,
+     *     item_name?: string|null,
+     *     sku?: string|null,
+     *     description?: string|null,
+     *     quantity: float|int,
+     *     unit_id: string,
+     *     unit_price: float|int,
+     *     unit_hpp?: float|int|null
+     * }>  $itemsData
+     * @param  array<string, mixed>  $attributes
+     */
+    public function updateDraft(
+        Invoice $invoice,
+        Customer $customer,
+        array $itemsData,
+        array $attributes = []
+    ): Invoice {
+        if ($invoice->status !== Invoice::STATUS_DRAFT) {
+            throw new InvalidArgumentException('Hanya draf faktur yang dapat disunting.');
+        }
+
+        if (empty($itemsData)) {
+            throw new InvalidArgumentException('Invoice must contain at least one line item.');
+        }
+
+        return DB::transaction(function () use ($invoice, $customer, $itemsData, $attributes) {
+            $invoiceDate = ! empty($attributes['invoice_date']) ? Carbon::parse($attributes['invoice_date']) : ($invoice->invoice_date ?? Carbon::today());
+            $termsDays = (int) ($attributes['payment_terms_days'] ?? $customer->payment_terms_days ?? 30);
+            $dueDate = ! empty($attributes['due_date'])
+                ? Carbon::parse($attributes['due_date'])
+                : $invoiceDate->copy()->addDays($termsDays);
+
+            $invoice->update([
+                'customer_id' => $customer->id,
+                'location_id' => $attributes['location_id'] ?? $invoice->location_id,
+                'sender_name' => $attributes['sender_name'] ?? null,
+                'recipient_name' => $attributes['recipient_name'] ?? null,
+                'invoice_date' => $invoiceDate->toDateString(),
+                'due_date' => $dueDate->toDateString(),
+                'discount_type' => $attributes['discount_type'] ?? 'fixed',
+                'discount_value' => (float) ($attributes['discount_value'] ?? 0.0),
+                'tax_percentage' => (float) ($attributes['tax_percentage'] ?? 0.0),
+                'shipping_cost' => (float) ($attributes['shipping_cost'] ?? 0.0),
+                'payment_terms' => $attributes['payment_terms'] ?? $invoice->payment_terms ?? "Net {$termsDays}",
+                'notes' => $attributes['notes'] ?? null,
+                'terms_conditions' => $attributes['terms_conditions'] ?? null,
+            ]);
+
+            // Re-sync line items
+            $invoice->items()->delete();
 
             foreach ($itemsData as $itemData) {
                 $productId = $itemData['product_id'] ?? null;
