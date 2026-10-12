@@ -1091,11 +1091,33 @@
                 </div>
             </div>
             <div class="flex items-center gap-2 shrink-0">
+                <a href="{{ route('social-media.inbox.index', ['rules' => 1]) }}" class="h-8 px-3 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-[11.5px] font-bold flex items-center gap-1.5 transition border border-emerald-500/20">
+                    <i data-lucide="sliders" class="w-3.5 h-3.5 text-emerald-500"></i>
+                    <span>Buka Tabel Input DO &amp; DON'Ts</span>
+                </a>
                 <a href="{{ route('social-media.inbox.index') }}" class="h-8 px-3 rounded-xl bg-purple-500/10 hover:bg-purple-500/20 text-purple-700 dark:text-purple-300 text-[11.5px] font-bold flex items-center gap-1.5 transition">
                     <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
                     <span>Tinjau Inbox AI</span>
                 </a>
             </div>
+        </div>
+
+        <!-- Panduan Lokasi Formulir & Tabel Input Interaktif DO's & DON'Ts -->
+        <div class="p-4 rounded-xl bg-gradient-to-r from-emerald-500/10 via-[#007AFF]/5 to-purple-500/10 border border-emerald-500/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="space-y-1 text-xs">
+                <div class="font-extrabold text-emerald-950 dark:text-emerald-200 flex items-center gap-1.5">
+                    <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600"></i>
+                    <span>Lokasi Formulir Input &amp; Tabel Kelola Aturan Khusus Toko Anda:</span>
+                </div>
+                <p class="text-black/70 dark:text-white/70 leading-relaxed text-[11.5px]">
+                    Tabel input interaktif tersedia di halaman <strong>Inbox Media Sosial</strong>. Klik tombol <strong>&ldquo;Aturan AI (DO &amp; DON'T)&rdquo;</strong> di header atas atau di atas kotak komposer chat untuk membuka form input, daftar aturan aktif, toggle on/off, dan hapus aturan toko.
+                </p>
+            </div>
+            <a href="{{ route('social-media.inbox.index', ['rules' => 1]) }}"
+                class="shrink-0 h-8 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white text-[11.5px] font-bold flex items-center justify-center gap-1.5 transition shadow-xs whitespace-nowrap">
+                <i data-lucide="sliders" class="w-3.5 h-3.5"></i>
+                <span>Buka Tabel Input Sekarang</span>
+            </a>
         </div>
 
         <!-- 1. KONTROL KHUSUS: PENGELOLAAN INBOX SOCIAL MEDIA & CHAT PELANGGAN -->

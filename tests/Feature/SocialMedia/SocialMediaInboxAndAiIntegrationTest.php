@@ -303,4 +303,52 @@ final class SocialMediaInboxAndAiIntegrationTest extends TestCase
         // Verifikasi status komentar parent di-update menjadi replied
         $this->assertSame('replied', $comment->fresh()->status);
     }
+
+    public function test_owner_can_manage_ai_guardrails_via_inbox_endpoints(): void
+    {
+        // 1. Store a new DO rule
+        $response = $this->actingAs($this->owner)
+            ->postJson(route('social-media.inbox.ai-rules.store'), [
+                'type' => 'do',
+                'domain' => 'inbox',
+                'instruction' => 'Selalu tawarkan voucher GAJIAN10 untuk pembelian di atas Rp 100.000',
+            ]);
+
+        $response->assertStatus(201);
+        $this->assertTrue($response->json('success'));
+        $ruleId = $response->json('rule.id');
+
+        $this->assertDatabaseHas('ai_guardrails', [
+            'id' => $ruleId,
+            'business_id' => $this->business->id,
+            'type' => 'do',
+            'domain' => 'inbox',
+            'is_active' => true,
+        ]);
+
+        // 2. Index rules
+        $indexResponse = $this->actingAs($this->owner)
+            ->getJson(route('social-media.inbox.ai-rules.index'));
+
+        $indexResponse->assertStatus(200);
+        $this->assertTrue($indexResponse->json('success'));
+        $this->assertCount(1, $indexResponse->json('rules'));
+
+        // 3. Toggle rule active state
+        $toggleResponse = $this->actingAs($this->owner)
+            ->patchJson(route('social-media.inbox.ai-rules.toggle', ['rule' => $ruleId]));
+
+        $toggleResponse->assertStatus(200);
+        $this->assertFalse($toggleResponse->json('rule.is_active'));
+
+        // 4. Delete rule
+        $deleteResponse = $this->actingAs($this->owner)
+            ->deleteJson(route('social-media.inbox.ai-rules.destroy', ['rule' => $ruleId]));
+
+        $deleteResponse->assertStatus(200);
+        $this->assertDatabaseMissing('ai_guardrails', [
+            'id' => $ruleId,
+        ]);
+    }
 }
+

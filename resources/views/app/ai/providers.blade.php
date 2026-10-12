@@ -75,6 +75,32 @@
         </div>
     </div>
 
+    <!-- AI Guardrails & Rules Card -->
+    <div class="p-5 rounded-2xl bg-gradient-to-r from-emerald-500/10 via-[#007AFF]/5 to-indigo-500/10 border border-emerald-500/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="flex items-start gap-3.5">
+            <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                <i data-lucide="shield-check" class="w-5 h-5"></i>
+            </div>
+            <div class="space-y-1 text-xs">
+                <div class="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2">
+                    <span>Tabel &amp; Formulir Input Aturan AI (DO's &amp; DON'Ts)</span>
+                    <span class="px-2 py-0.5 rounded-full text-[9.5px] font-bold bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20 font-mono">Aktif</span>
+                </div>
+                <p class="text-slate-600 dark:text-zinc-300 leading-relaxed">
+                    Kontrol instruksi apa yang boleh dilakukan (DO's) dan dilarang keras dilakukan (DON'Ts) oleh AI saat melayani pelanggan di Inbox obrolan, kasir POS, maupun modul pengadaan.
+                </p>
+            </div>
+        </div>
+        <div class="shrink-0">
+            <a href="{{ route('social-media.inbox.index', ['rules' => 1]) }}"
+               class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-bold text-xs shadow-sm transition flex items-center gap-1.5 whitespace-nowrap">
+                <i data-lucide="sliders" class="w-4 h-4"></i>
+                <span>Buka Tabel Kelola Aturan</span>
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+            </a>
+        </div>
+    </div>
+
     @php
         $providerPortals = [
             'openai' => [

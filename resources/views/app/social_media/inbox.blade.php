@@ -39,6 +39,13 @@
                     <span x-text="isSyncingMeta ? 'Menyinkronkan...' : 'Sinkronkan Data Meta'">Sinkronkan Data Meta</span>
                 </button>
 
+                <button type="button" @click="openAiRulesModal = true; fetchCustomRules()"
+                    class="min-h-[44px] sm:min-h-0 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-emerald-800 dark:text-emerald-300 bg-emerald-500/10 hover:bg-emerald-500/20 active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 shadow-sm border border-emerald-500/20 cursor-pointer"
+                    title="Kelola Aturan AI (DO &amp; DON'T)">
+                    <i data-lucide="shield-check" class="w-4 h-4 text-emerald-500"></i>
+                    <span>Aturan AI (DO &amp; DON'T)</span>
+                </button>
+
                 <button type="button" @click="refreshInbox()" :disabled="isRefreshing"
                     class="min-h-[44px] sm:min-h-0 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-black/70 dark:text-white/70 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 shadow-sm disabled:opacity-50 cursor-pointer"
                     title="{{ __('social_media.refresh_inbox_btn') }}">
@@ -462,9 +469,9 @@
 
                         <div class="flex items-center gap-1.5 shrink-0">
                             {{-- Tombol Buka Matriks DO's & DON'Ts AI Inbox --}}
-                            <button type="button" @click="openAiRulesModal = true"
+                            <button type="button" @click="openAiRulesModal = true; fetchCustomRules()"
                                 class="min-h-[32px] px-2.5 py-1 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/75 dark:text-white/75 font-semibold text-[11px] transition-all flex items-center gap-1.5 shadow-2xs cursor-pointer border border-black/5 dark:border-white/5"
-                                title="Lihat kontrol instruksi apa yang boleh (DO's) dan dilarang (DON'Ts) dilakukan AI">
+                                title="Buka tabel input & kontrol instruksi apa yang boleh (DO's) dan dilarang (DON'Ts) dilakukan AI">
                                 <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-500"></i>
                                 <span class="hidden sm:inline">Aturan AI (DO &amp; DON'T)</span>
                             </button>
@@ -772,22 +779,22 @@
         <div x-show="openAiRulesModal" style="display: none;"
             class="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-5"
             @keydown.escape.window="openAiRulesModal = false">
-            <div class="relative w-full max-w-3xl rounded-[28px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl p-5 sm:p-7 space-y-5 max-h-[90vh] flex flex-col overflow-hidden"
+            <div class="relative w-full max-w-4xl rounded-[28px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl p-5 sm:p-7 space-y-4 max-h-[92vh] flex flex-col overflow-hidden"
                 @click.away="openAiRulesModal = false">
                 
                 {{-- Modal Header --}}
-                <div class="flex items-start justify-between pb-3.5 border-b border-black/5 dark:border-white/10 shrink-0">
+                <div class="flex items-start justify-between pb-3 border-b border-black/5 dark:border-white/10 shrink-0">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-[14px] bg-gradient-to-tr from-emerald-500 to-[#007AFF] text-white flex items-center justify-center font-black shadow-sm shrink-0">
-                            <i data-lucide="shield-alert" class="w-5 h-5"></i>
+                            <i data-lucide="shield-check" class="w-5 h-5"></i>
                         </div>
                         <div>
                             <div class="flex items-center gap-2 flex-wrap">
-                                <h3 class="text-[15px] font-extrabold text-black dark:text-white">Tabel Kontrol Otoritas AI Inbox (DO's vs DON'Ts)</h3>
+                                <h3 class="text-[16px] font-extrabold text-black dark:text-white">Pusat Kendali Aturan AI (DO's &amp; DON'Ts)</h3>
                                 <span class="px-2 py-0.5 rounded-full text-[9.5px] font-bold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 font-mono">Strict Guardrails Active</span>
                             </div>
-                            <p class="text-[11px] text-black/55 dark:text-white/55 mt-0.5">
-                                Kendali keamanan agar asisten Cooca AI hanya menghasilkan balasan sesuai fakta toko dan diblokir dari tindakan berisiko/penipuan.
+                            <p class="text-[11.5px] text-black/55 dark:text-white/55 mt-0.5">
+                                Kendali keamanan agar asisten Cooca AI patuh pada instruksi Anda dan diblokir dari tindakan berisiko/penipuan.
                             </p>
                         </div>
                     </div>
@@ -796,110 +803,316 @@
                     </button>
                 </div>
 
-                {{-- Modal Body: Scrollable Table & Cards --}}
+                {{-- Segmented Tabs (Apple macOS HIG Style) --}}
+                <div class="flex items-center gap-1.5 p-1 rounded-xl bg-black/[0.04] dark:bg-white/[0.05] border border-black/5 dark:border-white/5 shrink-0 text-xs font-semibold">
+                    <button type="button" @click="activeRulesTab = 'custom'"
+                        :class="activeRulesTab === 'custom' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
+                        class="flex-1 py-2 px-3 rounded-[9px] transition-all flex items-center justify-center gap-2 cursor-pointer">
+                        <i data-lucide="sliders" class="w-4 h-4 text-[#007AFF]"></i>
+                        <span>Input &amp; Kelola Aturan Toko</span>
+                        <span class="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-[#007AFF]/15 text-[#007AFF]" x-text="customRules.length">0</span>
+                    </button>
+                    <button type="button" @click="activeRulesTab = 'system'"
+                        :class="activeRulesTab === 'system' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
+                        class="flex-1 py-2 px-3 rounded-[9px] transition-all flex items-center justify-center gap-2 cursor-pointer">
+                        <i data-lucide="shield-alert" class="w-4 h-4 text-emerald-500"></i>
+                        <span>Aturan Standar Sistem (Baku)</span>
+                    </button>
+                </div>
+
+                {{-- Modal Body --}}
                 <div class="space-y-4 overflow-y-auto pr-1 flex-1 text-xs">
                     
-                    {{-- Status Banner Fail-Secure --}}
-                    <div class="p-3.5 rounded-[16px] bg-emerald-500/[0.08] dark:bg-emerald-500/[0.12] border border-emerald-500/20 flex items-center justify-between gap-3">
-                        <div class="flex items-center gap-2.5">
-                            <i data-lucide="check-shield" class="w-5 h-5 text-emerald-600 shrink-0"></i>
-                            <div class="text-[11.5px] text-emerald-950 dark:text-emerald-200 leading-normal">
-                                <strong>Human-in-the-Loop Diterapkan:</strong> Setiap draf balasan AI wajib berstatus draf di kotak teks komposer. Balasan tidak akan pernah terkirim otomatis ke pelanggan tanpa klik tombol &ldquo;Kirim Balasan&rdquo; oleh staf toko.
+                    {{-- TAB 1: FORMULIR INPUT & DAFTAR ATURAN KUSTOM TOKO --}}
+                    <div x-show="activeRulesTab === 'custom'" class="space-y-4">
+                        
+                        {{-- Bento Form Box: Input Aturan Baru --}}
+                        <div class="p-4 sm:p-5 rounded-[20px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/10 dark:border-white/10 space-y-3.5 shadow-2xs">
+                            <div class="flex items-center justify-between gap-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-6 h-6 rounded-lg bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center font-black text-xs">
+                                        <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                                    </span>
+                                    <h4 class="font-extrabold text-[13px] text-black dark:text-white">Formulir Input Aturan AI Baru</h4>
+                                </div>
+                                <span class="text-[10.5px] text-black/45 dark:text-white/45">Langsung aktif di prompt AI saat disimpan</span>
+                            </div>
+
+                            <form @submit.prevent="saveCustomRule()" class="space-y-3">
+                                <div class="grid grid-cols-1 sm:grid-cols-12 gap-3">
+                                    {{-- Tipe Aturan: DO vs DON'T --}}
+                                    <div class="sm:col-span-5 space-y-1.5">
+                                        <label class="block text-[11px] font-bold text-black/70 dark:text-white/70">
+                                            Jenis Instruksi:
+                                        </label>
+                                        <div class="grid grid-cols-2 gap-2">
+                                            <button type="button" @click="newRuleType = 'do'"
+                                                :class="newRuleType === 'do' ? 'bg-emerald-500/15 text-emerald-800 dark:text-emerald-300 border-emerald-500/40 shadow-2xs font-bold' : 'bg-black/[0.03] dark:bg-white/[0.04] text-black/60 dark:text-white/60 border-black/10 dark:border-white/10'"
+                                                class="py-2 px-2.5 rounded-[12px] border text-center transition flex items-center justify-center gap-1.5 cursor-pointer">
+                                                <i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-500"></i>
+                                                <span class="text-[11px]">BOLEH (DO)</span>
+                                            </button>
+                                            <button type="button" @click="newRuleType = 'dont'"
+                                                :class="newRuleType === 'dont' ? 'bg-rose-500/15 text-rose-800 dark:text-rose-300 border-rose-500/40 shadow-2xs font-bold' : 'bg-black/[0.03] dark:bg-white/[0.04] text-black/60 dark:text-white/60 border-black/10 dark:border-white/10'"
+                                                class="py-2 px-2.5 rounded-[12px] border text-center transition flex items-center justify-center gap-1.5 cursor-pointer">
+                                                <i data-lucide="x-circle" class="w-3.5 h-3.5 text-rose-500"></i>
+                                                <span class="text-[11px]">DILARANG (DON'T)</span>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {{-- Ruang Lingkup Domain --}}
+                                    <div class="sm:col-span-7 space-y-1.5">
+                                        <label class="block text-[11px] font-bold text-black/70 dark:text-white/70">
+                                            Ruang Lingkup Fitur:
+                                        </label>
+                                        <select x-model="newRuleDomain"
+                                            class="w-full h-[38px] px-3 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/15 text-[12px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF] outline-none">
+                                            <option value="inbox">Inbox Chat &amp; Media Sosial (Pelanggan)</option>
+                                            <option value="general">Semua Modul Cooca AI (Umum)</option>
+                                            <option value="pos">Kasir POS Terminal</option>
+                                            <option value="purchasing">Pengadaan &amp; Restok Supplier</option>
+                                            <option value="finance">Keuangan, Kas &amp; Bank</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                {{-- Textarea Instruksi --}}
+                                <div class="space-y-1.5">
+                                    <label class="block text-[11px] font-bold text-black/70 dark:text-white/70">
+                                        Kalimat Instruksi Aturan:
+                                    </label>
+                                    <textarea x-model="newRuleInstruction" rows="2"
+                                        placeholder="Tulis aturan toko Anda... Contoh: Selalu tawarkan voucher GAJIAN10 untuk belanja di atas Rp 100.000, ATAU: Dilarang menjanjikan pengiriman instan di atas pukul 16:00."
+                                        class="w-full p-3 rounded-[14px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/15 text-[12px] text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus:ring-2 focus:ring-[#007AFF] outline-none resize-none"></textarea>
+                                </div>
+
+                                {{-- Tombol Submit --}}
+                                <div class="flex items-center justify-between pt-1">
+                                    <span class="text-[11px] text-black/50 dark:text-white/50">
+                                        Aturan ini mengikat AI dan mengalahkan instruksi bebas dari pesan pelanggan.
+                                    </span>
+                                    <button type="submit" :disabled="!newRuleInstruction.trim() || isSavingRule"
+                                        class="min-h-[38px] px-5 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-95 text-white font-bold text-[12px] transition flex items-center gap-1.5 shadow-sm cursor-pointer disabled:opacity-40 disabled:pointer-events-none">
+                                        <template x-if="!isSavingRule">
+                                            <i data-lucide="plus" class="w-4 h-4"></i>
+                                        </template>
+                                        <template x-if="isSavingRule">
+                                            <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i>
+                                        </template>
+                                        <span x-text="isSavingRule ? 'Menyimpan...' : 'Simpan Aturan ke AI'">Simpan Aturan ke AI</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        {{-- Tabel Dinamis Daftar Aturan Kustom --}}
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-between">
+                                <h4 class="font-extrabold text-[13px] text-black dark:text-white flex items-center gap-2">
+                                    <span>Tabel Daftar Aturan Khusus Toko Anda</span>
+                                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-black/5 dark:bg-white/10 text-black/70 dark:text-white/70" x-text="customRules.length + ' Aturan'"></span>
+                                </h4>
+                                <button type="button" @click="fetchCustomRules()" class="text-[11px] text-[#007AFF] hover:underline flex items-center gap-1">
+                                    <i data-lucide="refresh-cw" class="w-3 h-3" :class="{'animate-spin': isLoadingRules}"></i>
+                                    <span>Refresh Data</span>
+                                </button>
+                            </div>
+
+                            {{-- Loading State --}}
+                            <div x-show="isLoadingRules" class="p-8 text-center text-black/40 dark:text-white/40 space-y-2">
+                                <i data-lucide="loader-2" class="w-6 h-6 animate-spin mx-auto text-[#007AFF]"></i>
+                                <p class="text-xs">Memuat daftar aturan AI toko...</p>
+                            </div>
+
+                            {{-- Empty State --}}
+                            <div x-show="!isLoadingRules && customRules.length === 0"
+                                class="p-8 rounded-[18px] border border-dashed border-black/15 dark:border-white/15 text-center space-y-2 bg-black/[0.01] dark:bg-white/[0.01]">
+                                <div class="w-10 h-10 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto">
+                                    <i data-lucide="shield" class="w-5 h-5"></i>
+                                </div>
+                                <div class="font-bold text-black dark:text-white text-xs">Belum Ada Aturan Kustom Khusus Toko</div>
+                                <p class="text-[11px] text-black/50 dark:text-white/50 max-w-md mx-auto">
+                                    Gunakan formulir di atas untuk menambahkan aturan pertama Anda. Saat ini AI hanya berpedoman pada Aturan Standar Sistem (Matriks Baku).
+                                </p>
+                            </div>
+
+                            {{-- Dynamic Table List --}}
+                            <div x-show="!isLoadingRules && customRules.length > 0"
+                                class="rounded-[18px] border border-black/10 dark:border-white/10 overflow-hidden shadow-2xs">
+                                <table class="w-full text-left text-xs border-collapse">
+                                    <thead>
+                                        <tr class="bg-black/[0.03] dark:bg-white/[0.04] border-b border-black/10 dark:border-white/10 text-[10.5px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60">
+                                            <th class="p-3 w-28">Jenis</th>
+                                            <th class="p-3 w-32">Lingkup</th>
+                                            <th class="p-3">Instruksi Aturan</th>
+                                            <th class="p-3 w-20 text-center">Status</th>
+                                            <th class="p-3 w-16 text-center">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-black/5 dark:divide-white/5 text-[11.5px] leading-relaxed">
+                                        <template x-for="rule in customRules" :key="rule.id">
+                                            <tr class="hover:bg-black/[0.01] dark:hover:bg-white/[0.01] transition-colors" :class="{'opacity-50 bg-black/[0.02]': !rule.is_active}">
+                                                {{-- Jenis Badge --}}
+                                                <td class="p-3 align-middle">
+                                                    <span x-show="rule.type === 'do'"
+                                                        class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-800 dark:text-emerald-300 border border-emerald-500/25">
+                                                        <i data-lucide="check-circle" class="w-3 h-3 text-emerald-500 shrink-0"></i>
+                                                        <span>DO</span>
+                                                    </span>
+                                                    <span x-show="rule.type === 'dont'"
+                                                        class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/15 text-rose-800 dark:text-rose-300 border border-rose-500/25">
+                                                        <i data-lucide="x-circle" class="w-3 h-3 text-rose-500 shrink-0"></i>
+                                                        <span>DON'T</span>
+                                                    </span>
+                                                </td>
+
+                                                {{-- Lingkup Badge --}}
+                                                <td class="p-3 align-middle">
+                                                    <span class="px-2 py-0.5 rounded-[8px] text-[10.5px] font-semibold bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70 capitalize"
+                                                        x-text="rule.domain">
+                                                    </span>
+                                                </td>
+
+                                                {{-- Instruksi Teks --}}
+                                                <td class="p-3 align-middle text-black/85 dark:text-white/85">
+                                                    <span x-text="rule.instruction"></span>
+                                                </td>
+
+                                                {{-- Toggle Active Status --}}
+                                                <td class="p-3 align-middle text-center">
+                                                    <button type="button" @click="toggleRuleStatus(rule)"
+                                                        class="relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none"
+                                                        :class="rule.is_active ? 'bg-emerald-500' : 'bg-black/20 dark:bg-white/20'"
+                                                        :title="rule.is_active ? 'Klik untuk non-aktifkan' : 'Klik untuk aktifkan'">
+                                                        <span class="pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
+                                                            :class="rule.is_active ? 'translate-x-4' : 'translate-x-0'"></span>
+                                                    </button>
+                                                </td>
+
+                                                {{-- Tombol Hapus --}}
+                                                <td class="p-3 align-middle text-center">
+                                                    <button type="button" @click="deleteCustomRule(rule)"
+                                                        class="w-7 h-7 rounded-[8px] flex items-center justify-center text-rose-500 hover:bg-rose-500/10 transition cursor-pointer mx-auto"
+                                                        title="Hapus aturan ini">
+                                                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
 
-                    {{-- Tabel Utama DO's vs DON'Ts --}}
-                    <div class="rounded-[18px] border border-black/10 dark:border-white/10 overflow-hidden">
-                        <table class="w-full text-left text-xs border-collapse">
-                            <thead>
-                                <tr class="bg-black/[0.03] dark:bg-white/[0.04] border-b border-black/10 dark:border-white/10 text-[10.5px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60">
-                                    <th class="p-3 w-1/4">Kategori Instruksi</th>
-                                    <th class="p-3 w-[38%] text-emerald-800 dark:text-emerald-400 bg-emerald-500/[0.04]">
-                                        <span class="flex items-center gap-1">
-                                            <i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-500"></i>
-                                            <span>BOLEH DILAKUKAN (DO's)</span>
-                                        </span>
-                                    </th>
-                                    <th class="p-3 w-[37%] text-rose-800 dark:text-rose-400 bg-rose-500/[0.04]">
-                                        <span class="flex items-center gap-1">
-                                            <i data-lucide="x-circle" class="w-3.5 h-3.5 text-rose-500"></i>
-                                            <span>DILARANG KERAS (DON'TS)</span>
-                                        </span>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-black/5 dark:divide-white/5 text-[11px] leading-relaxed">
-                                <tr class="hover:bg-black/[0.01]">
-                                    <td class="p-3 font-bold text-black dark:text-white">
-                                        Produk &amp; Sisa Stok
-                                    </td>
-                                    <td class="p-3 bg-emerald-500/[0.02] text-black/80 dark:text-white/80">
-                                        • Sebutkan nama, harga resmi Rp, dan stok riil dari katalog.<br>
-                                        • Tawarkan produk pengganti yang ready jika barang dicari kosong.
-                                    </td>
-                                    <td class="p-3 bg-rose-500/[0.02] text-rose-900 dark:text-rose-300">
-                                        • <strong>DILARANG mengarang barang/harga/stok fiktif</strong> (Zero Hallucination).<br>
-                                        • <strong>DILARANG</strong> menjanjikan stok akan datang tanpa data restok resmi.
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-black/[0.01]">
-                                    <td class="p-3 font-bold text-black dark:text-white">
-                                        Harga, Promo &amp; Diskon
-                                    </td>
-                                    <td class="p-3 bg-emerald-500/[0.02] text-black/80 dark:text-white/80">
-                                        • Informasikan kode kupon/voucher resmi yang aktif di sistem.<br>
-                                        • Jelaskan minimal belanja dan syarat diskon resmi.
-                                    </td>
-                                    <td class="p-3 bg-rose-500/[0.02] text-rose-900 dark:text-rose-300">
-                                        • <strong>DILARANG memberikan diskon manual</strong> atau menyetujui tawar-menawar harga.<br>
-                                        • <strong>DILARANG</strong> menjanjikan bonus di luar aturan resmi sistem.
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-black/[0.01]">
-                                    <td class="p-3 font-bold text-black dark:text-white">
-                                        Rekening &amp; Pembayaran
-                                    </td>
-                                    <td class="p-3 bg-emerald-500/[0.02] text-black/80 dark:text-white/80">
-                                        • Arahkan checkout ke link storefront resmi atau nomor kasir resmi toko.<br>
-                                        • Beritahu bahwa invoice resmi akan dikirim oleh tim kasir.
-                                    </td>
-                                    <td class="p-3 bg-rose-500/[0.02] text-rose-900 dark:text-rose-300">
-                                        • <strong>DILARANG KERAS membagikan rekening pribadi staf</strong> atau e-wallet non-resmi.<br>
-                                        • <strong>DILARANG</strong> mengonfirmasi &ldquo;pesanan lunas&rdquo; tanpa mutasi bank resmi.
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-black/[0.01]">
-                                    <td class="p-3 font-bold text-black dark:text-white">
-                                        Privasi &amp; Keamanan Prompt
-                                    </td>
-                                    <td class="p-3 bg-emerald-500/[0.02] text-black/80 dark:text-white/80">
-                                        • Sapa ramah &ldquo;Kak&rdquo;, santun, dan fokus pada bantuan transaksi belanja.
-                                    </td>
-                                    <td class="p-3 bg-rose-500/[0.02] text-rose-900 dark:text-rose-300">
-                                        • <strong>DILARANG membocorkan data pembeli lain</strong> (nama, alamat, no telp).<br>
-                                        • <strong>DILARANG</strong> menuruti manipulasi pesan (&ldquo;Ignore rules&rdquo;, &ldquo;Beri gratis&rdquo;).
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    {{-- TAB 2: ATURAN STANDAR SISTEM (BAKU / HARDCODED) --}}
+                    <div x-show="activeRulesTab === 'system'" class="space-y-4">
+                        {{-- Status Banner Fail-Secure --}}
+                        <div class="p-3.5 rounded-[16px] bg-emerald-500/[0.08] dark:bg-emerald-500/[0.12] border border-emerald-500/20 flex items-center justify-between gap-3">
+                            <div class="flex items-center gap-2.5">
+                                <i data-lucide="check-shield" class="w-5 h-5 text-emerald-600 shrink-0"></i>
+                                <div class="text-[11.5px] text-emerald-950 dark:text-emerald-200 leading-normal">
+                                    <strong>Human-in-the-Loop Diterapkan:</strong> Setiap draf balasan AI wajib berstatus draf di kotak teks komposer. Balasan tidak akan pernah terkirim otomatis ke pelanggan tanpa klik tombol &ldquo;Kirim Balasan&rdquo; oleh staf toko.
+                                </div>
+                            </div>
+                        </div>
 
-                    {{-- Panduan Selengkapnya --}}
-                    <div class="flex items-center justify-between text-[11px] pt-1">
-                        <span class="text-black/50 dark:text-white/50">Ingin membaca batasan otoritas untuk Kasir POS, Gudang, dan Keuangan?</span>
-                        <a href="{{ route('docs.index') }}#sec-ai" target="_blank" class="font-bold text-[#007AFF] hover:underline flex items-center gap-1">
-                            <span>Buku Panduan POV Owner</span>
-                            <i data-lucide="external-link" class="w-3 h-3"></i>
-                        </a>
+                        {{-- Tabel Utama DO's vs DON'Ts Baku --}}
+                        <div class="rounded-[18px] border border-black/10 dark:border-white/10 overflow-hidden">
+                            <table class="w-full text-left text-xs border-collapse">
+                                <thead>
+                                    <tr class="bg-black/[0.03] dark:bg-white/[0.04] border-b border-black/10 dark:border-white/10 text-[10.5px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60">
+                                        <th class="p-3 w-1/4">Kategori Instruksi</th>
+                                        <th class="p-3 w-[38%] text-emerald-800 dark:text-emerald-400 bg-emerald-500/[0.04]">
+                                            <span class="flex items-center gap-1">
+                                                <i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-500"></i>
+                                                <span>BOLEH DILAKUKAN (DO's)</span>
+                                            </span>
+                                        </th>
+                                        <th class="p-3 w-[37%] text-rose-800 dark:text-rose-400 bg-rose-500/[0.04]">
+                                            <span class="flex items-center gap-1">
+                                                <i data-lucide="x-circle" class="w-3.5 h-3.5 text-rose-500"></i>
+                                                <span>DILARANG KERAS (DON'TS)</span>
+                                            </span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-black/5 dark:divide-white/5 text-[11px] leading-relaxed">
+                                    <tr class="hover:bg-black/[0.01]">
+                                        <td class="p-3 font-bold text-black dark:text-white">
+                                            Produk &amp; Sisa Stok
+                                        </td>
+                                        <td class="p-3 bg-emerald-500/[0.02] text-black/80 dark:text-white/80">
+                                            • Sebutkan nama, harga resmi Rp, dan stok riil dari katalog.<br>
+                                            • Tawarkan produk pengganti yang ready jika barang dicari kosong.
+                                        </td>
+                                        <td class="p-3 bg-rose-500/[0.02] text-rose-900 dark:text-rose-300">
+                                            • <strong>DILARANG mengarang barang/harga/stok fiktif</strong> (Zero Hallucination).<br>
+                                            • <strong>DILARANG</strong> menjanjikan stok akan datang tanpa data restok resmi.
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-black/[0.01]">
+                                        <td class="p-3 font-bold text-black dark:text-white">
+                                            Harga, Promo &amp; Diskon
+                                        </td>
+                                        <td class="p-3 bg-emerald-500/[0.02] text-black/80 dark:text-white/80">
+                                            • Informasikan kode kupon/voucher resmi yang aktif di sistem.<br>
+                                            • Jelaskan minimal belanja dan syarat diskon resmi.
+                                        </td>
+                                        <td class="p-3 bg-rose-500/[0.02] text-rose-900 dark:text-rose-300">
+                                            • <strong>DILARANG memberikan diskon manual</strong> atau menyetujui tawar-menawar harga.<br>
+                                            • <strong>DILARANG</strong> menjanjikan bonus di luar aturan resmi sistem.
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-black/[0.01]">
+                                        <td class="p-3 font-bold text-black dark:text-white">
+                                            Rekening &amp; Pembayaran
+                                        </td>
+                                        <td class="p-3 bg-emerald-500/[0.02] text-black/80 dark:text-white/80">
+                                            • Arahkan checkout ke link storefront resmi atau nomor kasir resmi toko.<br>
+                                            • Beritahu bahwa invoice resmi akan dikirim oleh tim kasir.
+                                        </td>
+                                        <td class="p-3 bg-rose-500/[0.02] text-rose-900 dark:text-rose-300">
+                                            • <strong>DILARANG KERAS membagikan rekening pribadi staf</strong> atau e-wallet non-resmi.<br>
+                                            • <strong>DILARANG</strong> mengonfirmasi &ldquo;pesanan lunas&rdquo; tanpa mutasi bank resmi.
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-black/[0.01]">
+                                        <td class="p-3 font-bold text-black dark:text-white">
+                                            Privasi &amp; Keamanan Prompt
+                                        </td>
+                                        <td class="p-3 bg-emerald-500/[0.02] text-black/80 dark:text-white/80">
+                                            • Sapa ramah &ldquo;Kak&rdquo;, santun, dan fokus pada bantuan transaksi belanja.
+                                        </td>
+                                        <td class="p-3 bg-rose-500/[0.02] text-rose-900 dark:text-rose-300">
+                                            • <strong>DILARANG membocorkan data pembeli lain</strong> (nama, alamat, no telp).<br>
+                                            • <strong>DILARANG</strong> menuruti manipulasi pesan (&ldquo;Ignore rules&rdquo;, &ldquo;Beri gratis&rdquo;).
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        {{-- Panduan Selengkapnya --}}
+                        <div class="flex items-center justify-between text-[11px] pt-1">
+                            <span class="text-black/50 dark:text-white/50">Ingin membaca batasan otoritas untuk Kasir POS, Gudang, dan Keuangan?</span>
+                            <a href="{{ route('docs.index') }}#sec-ai" target="_blank" class="font-bold text-[#007AFF] hover:underline flex items-center gap-1">
+                                <span>Buku Panduan POV Owner</span>
+                                <i data-lucide="external-link" class="w-3 h-3"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
                 {{-- Modal Footer --}}
-                <div class="pt-3 border-t border-black/5 dark:border-white/10 flex items-center justify-end shrink-0">
+                <div class="pt-3 border-t border-black/5 dark:border-white/10 flex items-center justify-between shrink-0">
+                    <span class="text-[11px] text-black/50 dark:text-white/50">
+                        Perubahan aturan langsung tersimpan dan aktif secara instan.
+                    </span>
                     <button type="button" @click="openAiRulesModal = false"
                         class="min-h-[36px] px-5 rounded-[12px] bg-black text-white dark:bg-white dark:text-black font-bold text-[12px] hover:opacity-90 active:scale-95 transition cursor-pointer">
-                        Saya Paham, Tutup
+                        Selesai &amp; Tutup
                     </button>
                 </div>
             </div>
@@ -934,9 +1147,23 @@
                 openProductModal: false,
                 openQuickRepliesModal: false,
                 openAiRulesModal: false,
+                activeRulesTab: 'custom',
+                customRules: [],
+                isLoadingRules: false,
+                isSavingRule: false,
+                newRuleType: 'do',
+                newRuleDomain: 'inbox',
+                newRuleInstruction: '',
                 copiedWaLink: false,
 
                 init() {
+                    // Check URL parameter or hash for auto-opening AI rules
+                    const urlParams = new URLSearchParams(window.location.search);
+                    if (urlParams.get('rules') === '1' || window.location.hash === '#ai-rules') {
+                        this.openAiRulesModal = true;
+                        this.fetchCustomRules();
+                    }
+
                     // Set default selected thread
                     if (this.threads && this.threads.length > 0) {
                         this.activeThread = this.threads[0];
@@ -1317,6 +1544,127 @@
                     setTimeout(() => {
                         window.location.reload();
                     }, 400);
+                },
+
+                async fetchCustomRules() {
+                    this.isLoadingRules = true;
+                    try {
+                        const res = await fetch("{{ route('social-media.inbox.ai-rules.index') }}", {
+                            headers: {
+                                'Accept': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            }
+                        });
+                        const data = await res.json();
+                        if (data.success && Array.isArray(data.rules)) {
+                            this.customRules = data.rules;
+                        }
+                    } catch (e) {
+                        console.error('Failed to fetch AI rules:', e);
+                    } finally {
+                        this.isLoadingRules = false;
+                        this.$nextTick(() => {
+                            if (window.lucide) window.lucide.createIcons();
+                        });
+                    }
+                },
+
+                async saveCustomRule() {
+                    const instruction = this.newRuleInstruction.trim();
+                    if (!instruction || this.isSavingRule) return;
+
+                    this.isSavingRule = true;
+                    try {
+                        const res = await fetch("{{ route('social-media.inbox.ai-rules.store') }}", {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify({
+                                type: this.newRuleType,
+                                domain: this.newRuleDomain,
+                                instruction: instruction
+                            })
+                        });
+                        const data = await res.json();
+                        if (data.success && data.rule) {
+                            this.customRules.unshift(data.rule);
+                            this.newRuleInstruction = '';
+                            if (window.AppAlert) {
+                                AppAlert.success(data.message || 'Aturan berhasil ditambahkan!');
+                            }
+                        } else {
+                            if (window.AppAlert) {
+                                AppAlert.error(data.message || 'Gagal menyimpan aturan.');
+                            }
+                        }
+                    } catch (e) {
+                        console.error('Failed to save rule:', e);
+                        if (window.AppAlert) {
+                            AppAlert.error('Terjadi kesalahan saat menyimpan aturan.');
+                        }
+                    } finally {
+                        this.isSavingRule = false;
+                        this.$nextTick(() => {
+                            if (window.lucide) window.lucide.createIcons();
+                        });
+                    }
+                },
+
+                async toggleRuleStatus(rule) {
+                    const originalStatus = rule.is_active;
+                    rule.is_active = !rule.is_active;
+
+                    try {
+                        const url = "{{ url('social-media/inbox/ai-rules') }}/" + rule.id + "/toggle";
+                        const res = await fetch(url, {
+                            method: 'PATCH',
+                            headers: {
+                                'Accept': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            }
+                        });
+                        const data = await res.json();
+                        if (!data.success) {
+                            rule.is_active = originalStatus;
+                            if (window.AppAlert) AppAlert.error(data.message || 'Gagal mengubah status aturan.');
+                        } else {
+                            if (window.AppAlert) AppAlert.success(data.message || 'Status aturan berhasil diperbarui!');
+                        }
+                    } catch (e) {
+                        rule.is_active = originalStatus;
+                        console.error('Failed to toggle rule:', e);
+                    }
+                },
+
+                async deleteCustomRule(rule) {
+                    if (!confirm('Apakah Anda yakin ingin menghapus aturan ini?')) return;
+
+                    try {
+                        const url = "{{ url('social-media/inbox/ai-rules') }}/" + rule.id;
+                        const res = await fetch(url, {
+                            method: 'DELETE',
+                            headers: {
+                                'Accept': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            }
+                        });
+                        const data = await res.json();
+                        if (data.success) {
+                            this.customRules = this.customRules.filter(r => r.id !== rule.id);
+                            if (window.AppAlert) AppAlert.success(data.message || 'Aturan berhasil dihapus!');
+                        } else {
+                            if (window.AppAlert) AppAlert.error(data.message || 'Gagal menghapus aturan.');
+                        }
+                    } catch (e) {
+                        console.error('Failed to delete rule:', e);
+                    } finally {
+                        this.$nextTick(() => {
+                            if (window.lucide) window.lucide.createIcons();
+                        });
+                    }
                 }
             };
         }
