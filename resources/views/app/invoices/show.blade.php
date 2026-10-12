@@ -36,6 +36,14 @@
                 <span>Daftar</span>
             </a>
 
+            {{-- Tombol Edit Draf Faktur (hanya tampil saat draft) --}}
+            @if($invoice->status === 'draft' && (\App\Support\Context::hasPermission('invoices.edit') || \App\Support\Context::hasPermission('invoices.create')))
+            <a href="{{ route('invoices.edit', $invoice->id) }}" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-[#FF9500] dark:text-[#FF9F0A] bg-[#FF9500]/10 dark:bg-[#FF9500]/20 hover:bg-[#FF9500]/15 dark:hover:bg-[#FF9500]/30 active:scale-[0.97] transition-all flex items-center justify-center gap-1.5">
+                <i data-lucide="edit-3" class="w-4 h-4"></i>
+                <span>Edit Draf</span>
+            </a>
+            @endif
+
             {{-- Tombol Konfirmasi & Rilis Faktur (hanya tampil saat draft) --}}
             @if($invoice->status === 'draft' && (\App\Support\Context::hasPermission('invoices.create') || \App\Support\Context::hasPermission('invoices.edit')))
             <button type="button" @click="confirmReleaseModalOpen = true" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#34C759] hover:bg-[#2FB350] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5 shadow-[0_1px_2px_rgba(52,199,89,0.25)]">
@@ -137,8 +145,11 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-[13px]">
             <!-- Seller Info -->
             <div class="p-4 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 space-y-1">
-                <span class="text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40">Pihak Penjual</span>
+                <span class="text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40">Pihak Penjual / Pengirim</span>
                 <div class="text-[15px] font-semibold text-black dark:text-white mt-1">{{ $business->name }}</div>
+                @if($invoice->sender_name)
+                    <div class="text-[12px] font-medium text-[#007AFF]">Pengirim / PIC: {{ $invoice->sender_name }}</div>
+                @endif
                 <p class="text-black/60 dark:text-white/60 leading-snug">{{ $business->address ?? 'Alamat Kantor Pusat Bisnis' }}</p>
                 <div class="text-black/50 dark:text-white/50 text-[12px] pt-1">
                     Mata Uang: <span class="font-medium text-black/70 dark:text-white/70">{{ $business->currency_code }} ({{ $business->currency_symbol }})</span>
@@ -147,8 +158,11 @@
 
             <!-- Customer Info -->
             <div class="p-4 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 space-y-1">
-                <span class="text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40">Ditagihkan Kepada</span>
+                <span class="text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40">Ditagihkan Kepada / Penerima</span>
                 <div class="text-[15px] font-semibold text-black dark:text-white mt-1">{{ $invoice->customer?->name ?? 'Pelanggan' }}</div>
+                @if($invoice->recipient_name)
+                    <div class="text-[12px] font-medium text-[#34C759] dark:text-[#30D158]">Penerima / PIC: {{ $invoice->recipient_name }}</div>
+                @endif
                 @if($invoice->customer?->company_name)
                     <div class="text-[12px] font-medium text-[#007AFF]">{{ $invoice->customer->company_name }}</div>
                 @endif
