@@ -233,6 +233,11 @@
                                 <a href="{{ route('invoices.show', $inv->id) }}" class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#007AFF] hover:bg-[#007AFF]/8 transition-colors flex items-center" title="Lihat Faktur">
                                     Detail
                                 </a>
+                                @if($inv->status === 'draft' && (\App\Support\Context::hasPermission('invoices.edit') || \App\Support\Context::hasPermission('invoices.create')))
+                                    <a href="{{ route('invoices.edit', $inv->id) }}" class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#FF9500] hover:bg-[#FF9500]/10 transition-colors flex items-center" title="Edit Draf Faktur">
+                                        Edit
+                                    </a>
+                                @endif
                                 <a href="{{ route('invoices.print', $inv->id) }}" target="_blank" class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition-colors flex items-center" title="Cetak Faktur">
                                     Cetak
                                 </a>
@@ -315,6 +320,11 @@
                     <a href="{{ route('invoices.show', $inv->id) }}" class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium text-[#007AFF] bg-[#007AFF]/10 flex items-center">
                         Detail
                     </a>
+                    @if($inv->status === 'draft' && (\App\Support\Context::hasPermission('invoices.edit') || \App\Support\Context::hasPermission('invoices.create')))
+                        <a href="{{ route('invoices.edit', $inv->id) }}" class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium text-[#FF9500] bg-[#FF9500]/10 flex items-center">
+                            Edit
+                        </a>
+                    @endif
                     @if($inv->status === 'draft' || $inv->status === 'void')
                         <button type="button" @click="openDelete('{{ route('invoices.destroy', $inv->id) }}', '{{ addslashes($inv->invoice_number) }}')" class="h-8 w-8 rounded-[8px] text-[#FF3B30] bg-[#FF3B30]/10 flex items-center justify-center">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
