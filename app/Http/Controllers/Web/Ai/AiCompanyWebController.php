@@ -990,5 +990,100 @@ final class AiCompanyWebController extends Controller
             'total_cost' => $numericCost,
         ];
     }
+
+    /**
+     * Dapatkan daftar aturan DO & DON'T kustom untuk tenant aktif.
+     * Route: GET /cooca-ai/rules
+     */
+    public function getRules(Request $request): JsonResponse
+    {
+        $business = Context::requireBusiness();
+        $domain = $request->query('domain');
+
+        $query = \App\Models\AiGuardrail::where('business_id', $business->id)->latest();
+        if ($domain) {
+            $query->where('domain', $domain);
+        }
+
+        $rules = $query->get();
+
+        return response()->json([
+            'success' => true,
+            'rules' => $rules,
+        ]);
+    }
+
+    /**
+     * Simpan aturan DO atau DON'T kustom baru untuk tenant aktif.
+     * Route: POST /cooca-ai/rules
+     */
+    public function storeRule(Request $request): JsonResponse
+    {
+        $business = Context::requireBusiness();
+        $user = Context::user();
+
+        $validated = $request->validate([
+            'domain' => ['required', 'string', 'in:inbox,pos,purchasing,finance,general'],
+            'type' => ['required', 'string', 'in:do,dont'],
+            'instruction' => ['required', 'string', 'min:3', 'max:1000'],
+        ]);
+
+        $rule = \App\Models\AiGuardrail::create([
+            'business_id' => $business->id,
+            'domain' => $validated['domain'],
+            'type' => $validated['type'],
+            'instruction' => strip_tags(trim($validated['instruction'])),
+            'is_active' => true,
+            'created_by' => $user?->id,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Aturan ' . strtoupper($rule->type) . ' berhasil ditambahkan!',
+            'rule' => $rule,
+        ], 201);
+    }
+
+    /**
+     * Aktifkan / Non-aktifkan aturan kustom.
+     * Route: PATCH /cooca-ai/rules/{rule}/toggle
+     */
+    public function toggleRule(\App\Models\AiGuardrail $rule): JsonResponse
+    {
+        $business = Context::requireBusiness();
+
+        if ($rule->business_id !== $business->id) {
+            return response()->json(['success' => false, 'message' => 'Aturan tidak ditemukan.'], 404);
+        }
+
+        $rule->is_active = ! $rule->is_active;
+        $rule->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Status aturan berhasil diperbarui.',
+            'rule' => $rule,
+        ]);
+    }
+
+    /**
+     * Hapus aturan kustom.
+     * Route: DELETE /cooca-ai/rules/{rule}
+     */
+    public function deleteRule(\App\Models\AiGuardrail $rule): JsonResponse
+    {
+        $business = Context::requireBusiness();
+
+        if ($rule->business_id !== $business->id) {
+            return response()->json(['success' => false, 'message' => 'Aturan tidak ditemukan.'], 404);
+        }
+
+        $rule->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Aturan berhasil dihapus.',
+        ]);
+    }
 }
 

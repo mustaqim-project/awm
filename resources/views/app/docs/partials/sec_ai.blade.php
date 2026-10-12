@@ -1091,7 +1091,7 @@
                 </div>
             </div>
             <div class="flex items-center gap-2 shrink-0">
-                <a href="{{ route('social-media.inbox') }}" class="h-8 px-3 rounded-xl bg-purple-500/10 hover:bg-purple-500/20 text-purple-700 dark:text-purple-300 text-[11.5px] font-bold flex items-center gap-1.5 transition">
+                <a href="{{ route('social-media.inbox.index') }}" class="h-8 px-3 rounded-xl bg-purple-500/10 hover:bg-purple-500/20 text-purple-700 dark:text-purple-300 text-[11.5px] font-bold flex items-center gap-1.5 transition">
                     <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
                     <span>Tinjau Inbox AI</span>
                 </a>
@@ -1347,6 +1347,90 @@
                     <p class="text-black/60 dark:text-white/60 leading-normal">
                         Setiap pesan inbox disaring melalui modul deteksi manipulasi. Pesan yang mencoba meretas peran AI langsung diblokir dan diarahkan ke kontak resmi toko.
                     </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. PANDUAN PRAKTIS: CARA MENAMBAHKAN ATURAN DO & DON'T BARU DILENGKAPI TAUTAN FITUR -->
+        <div class="p-5 sm:p-6 rounded-2xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/10 space-y-4 text-xs">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-black/5 dark:border-white/10">
+                <div class="flex items-center gap-2.5 font-bold text-black dark:text-white text-sm">
+                    <span class="w-7 h-7 rounded-xl bg-gradient-to-tr from-[#007AFF] to-purple-600 text-white flex items-center justify-center text-xs">
+                        <i data-lucide="book-open-check" class="w-4 h-4"></i>
+                    </span>
+                    <span>Tutorial: Cara Menambahkan Aturan DO &amp; DON'T Baru ke AI Toko Anda</span>
+                </div>
+                <span class="px-2 py-0.5 rounded-full text-[10.5px] font-bold bg-[#007AFF]/10 text-[#007AFF]">Panduan Praktis</span>
+            </div>
+
+            <p class="text-[12px] text-black/65 dark:text-white/65 leading-relaxed">
+                Ingin menambahkan SOP khusus untuk usaha Anda? (Misalnya: <em>&ldquo;Dilarang menerima pesanan kue di bawah H-2&rdquo;</em> atau <em>&ldquo;Wajib konfirmasi kecamatan untuk ongkos kirim catering&rdquo;</em>). Ikuti 3 alur mudah berikut:
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 pt-1">
+                <!-- Langkah 1 -->
+                <div class="p-4 rounded-xl bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 space-y-2 flex flex-col justify-between">
+                    <div class="space-y-1.5">
+                        <div class="flex items-center gap-2 font-bold text-black dark:text-white">
+                            <span class="w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px]">1</span>
+                            <span>Atur Knowledge Produk &amp; Promo</span>
+                        </div>
+                        <p class="text-[11px] text-black/60 dark:text-white/60 leading-relaxed">
+                            AI secara otomatis mematuhi DO's berdasarkan data master produk dan promo resmi toko Anda. Tambahkan stok atau voucher agar AI langsung mengetahuinya secara real-time.
+                        </p>
+                    </div>
+                    <div class="pt-2 border-t border-black/5 dark:border-white/5 flex items-center gap-2 flex-wrap">
+                        <a href="{{ route('products.index') }}" class="text-[11px] font-bold text-[#007AFF] hover:underline flex items-center gap-1">
+                            <span>Buka Master Produk</span>
+                            <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                        </a>
+                        <a href="{{ route('crm.vouchers.index') }}" class="text-[11px] font-bold text-purple-600 dark:text-purple-400 hover:underline flex items-center gap-1">
+                            <span>Voucher Promo</span>
+                            <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Langkah 2 -->
+                <div class="p-4 rounded-xl bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 space-y-2 flex flex-col justify-between">
+                    <div class="space-y-1.5">
+                        <div class="flex items-center gap-2 font-bold text-black dark:text-white">
+                            <span class="w-5 h-5 rounded-full bg-[#007AFF] text-white flex items-center justify-center text-[10px]">2</span>
+                            <span>Uji Coba di Inbox Chat Pelanggan</span>
+                        </div>
+                        <p class="text-[11px] text-black/60 dark:text-white/60 leading-relaxed">
+                            Buka layar Inbox terpadu. Klik tombol <strong>&ldquo;Aturan AI (DO &amp; DON'T)&rdquo;</strong> untuk melihat tabel pembatasan, lalu klik <strong>&ldquo;Buat Draf Balasan AI&rdquo;</strong> untuk menguji jawaban AI sebelum dikirim.
+                        </p>
+                    </div>
+                    <div class="pt-2 border-t border-black/5 dark:border-white/5">
+                        <a href="{{ route('social-media.inbox.index') }}" class="text-[11px] font-bold text-[#007AFF] hover:underline flex items-center gap-1">
+                            <span>Buka Inbox Chat Toko</span>
+                            <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Langkah 3 -->
+                <div class="p-4 rounded-xl bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 space-y-2 flex flex-col justify-between">
+                    <div class="space-y-1.5">
+                        <div class="flex items-center gap-2 font-bold text-black dark:text-white">
+                            <span class="w-5 h-5 rounded-full bg-purple-600 text-white flex items-center justify-center text-[10px]">3</span>
+                            <span>Atur Model &amp; Kontrol Aksi (Owner)</span>
+                        </div>
+                        <p class="text-[11px] text-black/60 dark:text-white/60 leading-relaxed">
+                            Pastikan kunci API model AI terhubung di menu Pengaturan Provider. Semua usulan aksi otomatis yang berisiko biaya wajib Anda setujui terlebih dahulu di Action Center.
+                        </p>
+                    </div>
+                    <div class="pt-2 border-t border-black/5 dark:border-white/5 flex items-center gap-2 flex-wrap">
+                        <a href="{{ route('cooca-ai.providers') }}" class="text-[11px] font-bold text-purple-600 dark:text-purple-400 hover:underline flex items-center gap-1">
+                            <span>Pengaturan AI</span>
+                            <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                        </a>
+                        <a href="{{ route('cooca-ai.actions') }}" class="text-[11px] font-bold text-amber-600 dark:text-amber-400 hover:underline flex items-center gap-1">
+                            <span>Action Center</span>
+                            <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

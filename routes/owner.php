@@ -587,6 +587,12 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
             Route::get('/agents/avatars', [AiCompanyWebController::class, 'getAgentAvatars'])->name('agents.avatars');
             Route::post('/agents/{role}/avatar', [AiCompanyWebController::class, 'updateAgentAvatar'])->name('agents.avatar.update');
             Route::get('/live-metrics', [AiCompanyWebController::class, 'liveMetrics'])->name('live-metrics');
+
+            // Custom AI Guardrails (DO's & DON'Ts Management)
+            Route::get('/rules', [AiCompanyWebController::class, 'getRules'])->name('rules.index');
+            Route::post('/rules', [AiCompanyWebController::class, 'storeRule'])->name('rules.store');
+            Route::patch('/rules/{rule}/toggle', [AiCompanyWebController::class, 'toggleRule'])->name('rules.toggle');
+            Route::delete('/rules/{rule}', [AiCompanyWebController::class, 'deleteRule'])->name('rules.destroy');
         });
 
         // Legacy /ai Compatibility: 301 Permanent Canonical Redirects & Named Fallbacks
@@ -837,6 +843,7 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
 
             // Comments & Unified Omnichannel Inbox
             Route::get('/inbox', [SocialMediaWebController::class, 'inbox'])->name('inbox.index');
+            Route::get('/inbox-redirect', [SocialMediaWebController::class, 'inbox'])->name('inbox');
             Route::post('/comments/{comment}/reply', [SocialMediaWebController::class, 'replyComment'])->middleware(['throttle:15,1', 'require.permission:social_media.manage'])->name('comments.reply');
             Route::post('/inbox/send-reply', [SocialMediaWebController::class, 'sendReply'])->middleware(['throttle:30,1', 'require.permission:social_media.manage'])->name('inbox.send-reply');
             Route::post('/inbox/sync-meta', [SocialMediaWebController::class, 'syncMetaInbox'])->middleware(['throttle:10,1', 'require.permission:social_media.manage'])->name('inbox.sync-meta');

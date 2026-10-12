@@ -102,10 +102,34 @@ class CustomerSupportAiService
             );
         }
 
+        // 3. Ambil aturan custom DOs dan DONTs khusus yang diinput oleh pemilik toko
+        $customRules = \App\Models\AiGuardrail::where('business_id', $business->id)
+            ->where('is_active', true)
+            ->whereIn('domain', ['inbox', 'general'])
+            ->get();
+
+        $customDos = [];
+        $customDonts = [];
+        foreach ($customRules as $rule) {
+            if ($rule->type === 'do') {
+                $customDos[] = '• ' . $rule->instruction;
+            } else {
+                $customDonts[] = '• ' . $rule->instruction;
+            }
+        }
+
+        $customRulesText = '';
+        if (! empty($customDos) || ! empty($customDonts)) {
+            $customRulesText = "\n\n=== ATURAN KHUSUS TAMBAHAN DARI PEMILIK USAHA ({$business->name}) ===\n" .
+                (! empty($customDos) ? "ATURAN BOLEH DILAKUKAN (CUSTOM DO'S):\n" . implode("\n", $customDos) . "\n" : '') .
+                (! empty($customDonts) ? "DILARANG KERAS DILAKUKAN (CUSTOM DON'TS):\n" . implode("\n", $customDonts) . "\n" : '');
+        }
+
         $knowledgeText = "=== KATALOG PRODUK RESMI TOKO (DATA REAL SISTEM COOCA) ===\n" .
             (empty($productSummaries) ? "Belum ada produk terdaftar di sistem.\n" : implode("\n", $productSummaries)) .
             "\n\n=== PROMO & VOUCHER TOKO ===\n" .
-            (empty($voucherSummaries) ? "Tidak ada voucher promo aktif saat ini.\n" : implode("\n", $voucherSummaries));
+            (empty($voucherSummaries) ? "Tidak ada voucher promo aktif saat ini.\n" : implode("\n", $voucherSummaries)) .
+            $customRulesText;
 
         $channelName = match (strtolower($channel)) {
             'messenger'          => 'Meta Messenger',
