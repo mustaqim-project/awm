@@ -393,10 +393,9 @@
                     <div>
                         <div class="text-slate-500">Diterima dan Disetujui Oleh,</div>
                         <div class="font-bold text-slate-950 mt-1">
-                            {{ $invoice->customer?->company_name ?? ($invoice->customer?->name ?? 'Pelanggan') }}</div>
+                            {{ $invoice->recipient_name ?: ($invoice->customer?->company_name ?? ($invoice->customer?->name ?? 'Pelanggan')) }}</div>
                     </div>
-                    <div class="border-t border-slate-400 w-48 mx-auto pt-1 font-semibold text-slate-700">( Tanda
-                        Tangan &amp; Cap )</div>
+                    <div class="border-t border-slate-400 w-48 mx-auto pt-1 font-semibold text-slate-700">( {{ $invoice->recipient_name ?: 'Tanda Tangan & Cap' }} )</div>
                 </div>
 
                 <div class="space-y-16">
@@ -404,8 +403,7 @@
                         <div class="text-slate-500">{{ $business->name }},</div>
                         <div class="font-bold text-slate-950 mt-1">Hormat Kami,</div>
                     </div>
-                    <div class="border-t border-slate-400 w-48 mx-auto pt-1 font-semibold text-slate-700">( Bagian
-                        Keuangan )</div>
+                    <div class="border-t border-slate-400 w-48 mx-auto pt-1 font-semibold text-slate-700">( {{ $invoice->sender_name ?: 'Bagian Keuangan' }} )</div>
                 </div>
             </div>
         </div>

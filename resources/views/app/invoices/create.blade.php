@@ -424,8 +424,8 @@
                     </div>
 
                     <div>
-                        <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">Catatan Tagihan (Tampil pada Faktur)</label>
-                        <input type="text" name="notes" placeholder="Terima kasih atas kerja sama bisnis Anda..." class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                        <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">Catatan Tagihan (Tampil pada Faktur - Mendukung Baris Baru)</label>
+                        <textarea name="notes" rows="3" placeholder="Terima kasih atas kerja sama bisnis Anda...&#10;Catatan tambahan baris kedua..." class="w-full bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] p-3 text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition leading-relaxed">{{ old('notes') }}</textarea>
                     </div>
 
                     <div>
