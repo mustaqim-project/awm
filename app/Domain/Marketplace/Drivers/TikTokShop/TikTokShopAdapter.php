@@ -531,8 +531,9 @@ class TikTokShopAdapter implements MarketplaceAdapterInterface
             $payload = [
                 'title'          => $product->name,
                 'description'    => ! empty($product->description) ? strip_tags($product->description) : $product->name,
-                'category_id'    => (string) ($options['category_id'] ?? '600001'),
-                'main_images'    => ! empty($imageUriList) ? $imageUriList : [['uri' => 'tos-alisg-i-aphluv4x22/placeholder']],
+                'category_id'       => (string) ($options['category_id'] ?? '600001'),
+                'listing_platforms' => ['TIKTOK_SHOP', 'TOKOPEDIA'],
+                'main_images'       => ! empty($imageUriList) ? $imageUriList : [['uri' => 'tos-alisg-i-aphluv4x22/placeholder']],
                 'package_weight' => [
                     'value' => (string) max(0.1, (float) ($product->weight ?? 0.5)),
                     'unit'  => 'KILOGRAM',

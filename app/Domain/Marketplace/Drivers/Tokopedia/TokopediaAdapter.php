@@ -113,10 +113,18 @@ class TokopediaAdapter implements MarketplaceAdapterInterface
         ];
     }
 
-    public function pushStock(MarketplaceAccount $account, MarketplaceProductMapping $mapping, int $stock): bool
+    protected function isReviewOrMock(MarketplaceAccount $account): bool
     {
         $token = (string) $account->access_token;
-        if (! $this->hasCredentials() || str_starts_with($token, 'enc_') || str_contains($token, 'review') || ! is_numeric($mapping->external_product_id)) {
+        return ! $this->hasCredentials()
+            || str_starts_with($token, 'enc_')
+            || str_contains($token, 'review')
+            || ($account->business && in_array($account->business->slug, ['meta-reviewer-store', 'shopee-reviewer-store'], true));
+    }
+
+    public function pushStock(MarketplaceAccount $account, MarketplaceProductMapping $mapping, int $stock): bool
+    {
+        if ($this->isReviewOrMock($account) || ! is_numeric($mapping->external_product_id)) {
             $mapping->channel_stock = max(0, $stock);
             $mapping->save();
             return true;
@@ -154,8 +162,7 @@ class TokopediaAdapter implements MarketplaceAdapterInterface
 
     public function pushPrice(MarketplaceAccount $account, MarketplaceProductMapping $mapping, float $price): bool
     {
-        $token = (string) $account->access_token;
-        if (! $this->hasCredentials() || str_starts_with($token, 'enc_') || str_contains($token, 'review') || ! is_numeric($mapping->external_product_id)) {
+        if ($this->isReviewOrMock($account) || ! is_numeric($mapping->external_product_id)) {
             $mapping->channel_price = round($price);
             $mapping->save();
             return true;

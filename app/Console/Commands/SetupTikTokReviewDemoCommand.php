@@ -132,9 +132,36 @@ class SetupTikTokReviewDemoCommand extends Command
             ]
         );
 
-        $this->info("✓ TikTok Shop account connected: {$account->shop_name} ({$account->shop_id}) for [{$business->name}]");
+        // 1b. Create or Update Connected Tokopedia Account
+        $tokpedAccount = MarketplaceAccount::updateOrCreate(
+            [
+                'business_id' => $business->id,
+                'channel'     => MarketplaceAccount::CHANNEL_TOKOPEDIA,
+            ],
+            [
+                'shop_id'                  => 'TKP-' . substr($shopId, 5),
+                'shop_name'                => 'COOCA Official Store Tokopedia',
+                'status'                   => MarketplaceAccount::STATUS_CONNECTED,
+                'access_token'             => 'enc_tokopedia_token_review_' . Str::random(32),
+                'refresh_token'            => 'enc_tokopedia_refresh_review_' . Str::random(32),
+                'token_expires_at'         => now()->addYear(),
+                'refresh_token_expires_at' => now()->addYears(2),
+                'is_active'                => true,
+                'auto_sync_stock'          => true,
+                'auto_sync_price'          => true,
+                'stock_buffer'             => 2,
+                'price_multiplier'         => 1.08,
+                'settings'                 => [
+                    'authorized_at' => now()->toIso8601String(),
+                ],
+                'last_synced_at'           => now()->subMinutes(3),
+                'error_message'            => null,
+            ]
+        );
 
-        // 2. Map existing physical products to TikTok Shop
+        $this->info("✓ Tokopedia account connected: {$tokpedAccount->shop_name} ({$tokpedAccount->shop_id}) for [{$business->name}]");
+
+        // 2. Map existing physical products to TikTok Shop & Tokopedia
         $products = Product::where('business_id', $business->id)
             ->where(function ($q) {
                 $q->where('type', Product::TYPE_GOODS)->orWhereNull('type');
@@ -183,6 +210,7 @@ class SetupTikTokReviewDemoCommand extends Command
         foreach ($products as $idx => $prod) {
             $effectivePrice = round((float) $prod->selling_price * 1.08);
 
+            // TikTok Shop Mapping
             MarketplaceProductMapping::updateOrCreate(
                 [
                     'business_id' => $business->id,
@@ -205,10 +233,35 @@ class SetupTikTokReviewDemoCommand extends Command
                     'last_stock_synced_at'  => now()->subMinutes(10),
                 ]
             );
+
+            // Tokopedia Mapping
+            MarketplaceProductMapping::updateOrCreate(
+                [
+                    'business_id' => $business->id,
+                    'product_id'  => $prod->id,
+                    'channel'     => MarketplaceAccount::CHANNEL_TOKOPEDIA,
+                ],
+                [
+                    'marketplace_account_id' => $tokpedAccount->id,
+                    'external_product_id'   => 'TKP' . str_pad((string) ($idx + 1001), 7, '0', STR_PAD_RIGHT),
+                    'external_sku_code'     => $prod->code ?: ('TKP-SKU-' . str_pad((string) ($idx + 1), 4, '0', STR_PAD_LEFT)),
+                    'external_product_name' => $prod->name,
+                    'channel_price'         => $effectivePrice,
+                    'price_multiplier'      => 1.08,
+                    'sync_price_auto'       => true,
+                    'sync_stock_auto'       => true,
+                    'stock_buffer'          => 2,
+                    'is_active'             => true,
+                    'sync_status'           => MarketplaceProductMapping::STATUS_SYNCED,
+                    'last_price_synced_at'  => now()->subMinutes(10),
+                    'last_stock_synced_at'  => now()->subMinutes(10),
+                ]
+            );
+
             $mappedCount++;
         }
 
-        $this->info("✓ Mapped {$mappedCount} products to TikTok Shop with 1.08 multiplier and stock buffer 2.");
+        $this->info("✓ Mapped {$mappedCount} products to TikTok Shop & Tokopedia with 1.08 multiplier and stock buffer 2.");
 
         // 3. Seed Realistic Indonesian TikTok Shop Orders
         $sampleOrders = [
