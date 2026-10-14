@@ -42,6 +42,7 @@ return [
     'perm_analytics_read'      => 'Sales Forecasting & AI (analytics_get_sales_forecast)',
     'perm_crm_read'            => 'Customer CRM Search (crm_search_customer)',
     'perm_whatsapp_send'       => 'Send WhatsApp Notification (whatsapp_send_notification)',
+    'perm_services_manage'     => 'Manage Services, Tariffs & Rates (services_manage_service)',
 
     'token_created_success'    => 'New MCP access key generated successfully!',
     'token_revoked_success'    => 'Access key :name has been revoked.',
@@ -63,7 +64,7 @@ return [
     'tab_ollama'               => 'Local / Ollama',
     'tab_n8n'                  => 'n8n & Dify Automation',
     'tab_langchain'            => 'LangChain & Python',
-    'tools_catalog_title'      => '19 Domain Tools Catalog & AI Prompt Recommendations',
+    'tools_catalog_title'      => '20 Domain Tools Catalog & AI Prompt Recommendations',
     'tools_catalog_desc'       => 'Operational capabilities in COOCA ID that your AI assistant can call directly.',
     'troubleshooting_title'    => 'Troubleshooting & Common Issues',
     'btn_copy_config'          => 'Copy Ready-to-Use Config',

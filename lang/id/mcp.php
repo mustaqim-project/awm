@@ -42,6 +42,7 @@ return [
     'perm_analytics_read'      => 'Prediksi Penjualan & AI (analytics_get_sales_forecast)',
     'perm_crm_read'            => 'Cari Profil Pelanggan (crm_search_customer)',
     'perm_whatsapp_send'       => 'Kirim Pesan WhatsApp (whatsapp_send_notification)',
+    'perm_services_manage'     => 'Kelola Jasa, Layanan & Tarif (services_manage_service)',
 
     'token_created_success'    => 'Kunci akses MCP berhasil diterbitkan!',
     'token_revoked_success'    => 'Kunci akses :name berhasil dicabut.',
@@ -63,7 +64,7 @@ return [
     'tab_ollama'               => 'Local / Ollama',
     'tab_n8n'                  => 'n8n & Dify Automation',
     'tab_langchain'            => 'LangChain & Python',
-    'tools_catalog_title'      => 'Katalog 19 Domain Tools & Rekomendasi Prompt AI',
+    'tools_catalog_title'      => 'Katalog 20 Domain Tools & Rekomendasi Prompt AI',
     'tools_catalog_desc'       => 'Daftar kapabilitas operasional COOCA ID yang dapat dipanggil langsung oleh asisten AI Anda.',
     'troubleshooting_title'    => 'Pusat Solusi & Pemecahan Kendala (Troubleshooting)',
     'btn_copy_config'          => 'Salin Konfigurasi Siap Pakai',
