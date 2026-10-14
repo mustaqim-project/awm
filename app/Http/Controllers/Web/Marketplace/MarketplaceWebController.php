@@ -92,7 +92,7 @@ class MarketplaceWebController extends Controller
         $riskFilter      = (string) $request->input('risk', 'all');
 
         $query = Product::where('business_id', $business->id)
-            ->with(['marketplaceMappings', 'category', 'images'])
+            ->with(['marketplaceMappings', 'category', 'images', 'outputUnit', 'stocks'])
             ->latest();
 
         if ($typeFilter === 'goods') {
@@ -112,9 +112,7 @@ class MarketplaceWebController extends Controller
         }
 
         if ($riskFilter === 'out_of_stock') {
-            $query->where(function ($q) {
-                $q->where('stock', '<=', 0)->orWhereNull('stock');
-            });
+            $query->outOfStock();
         }
 
         if ($request->filled('q')) {

@@ -249,6 +249,36 @@ class Product extends Model
         return $query->where('is_preorder', true);
     }
 
+    public function scopeOutOfStock($query)
+    {
+        return $query->where(function ($q) {
+            $q->where('type', self::TYPE_GOODS)->orWhereNull('type');
+        })->where(function ($q) {
+            $q->where(function ($sub) {
+                $sub->whereNotNull('direct_material_id')
+                    ->whereRaw('(SELECT COALESCE(SUM(quantity), 0) FROM inventory_stocks WHERE inventory_stocks.material_id = products.direct_material_id AND inventory_stocks.business_id = products.business_id) <= 0');
+            })->orWhere(function ($sub) {
+                $sub->whereNull('direct_material_id')
+                    ->whereRaw('(SELECT COALESCE(SUM(quantity), 0) FROM inventory_stocks WHERE inventory_stocks.product_id = products.id AND inventory_stocks.business_id = products.business_id) <= 0');
+            });
+        });
+    }
+
+    public function scopeInStock($query)
+    {
+        return $query->where(function ($q) {
+            $q->where('type', self::TYPE_GOODS)->orWhereNull('type');
+        })->where(function ($q) {
+            $q->where(function ($sub) {
+                $sub->whereNotNull('direct_material_id')
+                    ->whereRaw('(SELECT COALESCE(SUM(quantity), 0) FROM inventory_stocks WHERE inventory_stocks.material_id = products.direct_material_id AND inventory_stocks.business_id = products.business_id) > 0');
+            })->orWhere(function ($sub) {
+                $sub->whereNull('direct_material_id')
+                    ->whereRaw('(SELECT COALESCE(SUM(quantity), 0) FROM inventory_stocks WHERE inventory_stocks.product_id = products.id AND inventory_stocks.business_id = products.business_id) > 0');
+            });
+        });
+    }
+
     public function getImageUrlAttribute(): ?string
     {
         if (! $this->image_path) {
@@ -667,6 +697,26 @@ class Product extends Model
     public function getTotalStockAttribute(): float
     {
         return $this->calculateEffectiveStock() ?? 0.0;
+    }
+
+    /**
+     * Virtual stock attribute for backward-compatibility.
+     */
+    public function getStockAttribute(): float
+    {
+        return $this->total_stock;
+    }
+
+    /**
+     * Output unit name accessor.
+     */
+    public function getUnitAttribute(): string
+    {
+        if ($this->relationLoaded('outputUnit')) {
+            return $this->outputUnit?->name ?? 'pcs';
+        }
+
+        return $this->outputUnit()->value('name') ?? 'pcs';
     }
 
     /**
