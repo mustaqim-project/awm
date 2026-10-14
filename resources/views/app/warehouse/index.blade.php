@@ -5,330 +5,336 @@
 ])
 
 @section('content')
-<div class="max-w-[1360px] mx-auto space-y-6 pb-28 lg:pb-12" x-data="{
-    showCreateModal: new URLSearchParams(window.location.search).get('add') === 'warehouse',
-    showCreateOutletModal: false,
-    showEditModal: false,
-    filterTab: new URLSearchParams(window.location.search).get('type') || 'all',
-    gpsLoading: false,
-    gpsSuccess: false,
-    gpsError: '',
-    activeGpsTarget: null,
+<script>
+function warehouseIndexHub() {
+    return {
+        showCreateModal: new URLSearchParams(window.location.search).get('add') === 'warehouse',
+        showCreateOutletModal: false,
+        showEditModal: false,
+        filterTab: new URLSearchParams(window.location.search).get('type') || 'all',
+        gpsLoading: false,
+        gpsSuccess: false,
+        gpsError: '',
+        activeGpsTarget: null,
 
-    // Create Outlet Form Data
-    outletForm: {
-        name: '',
-        code: '',
-        phone: '',
-        address: '',
-        province: '',
-        city: '',
-        district: '',
-        village: '',
-        postal_code: '',
-        biteship_area_id: '',
-        biteship_area_label: '',
-        latitude: '',
-        longitude: '',
-        geofence_radius_meters: 100,
-        is_primary: false,
-        is_online_fulfillment: true,
-        allow_storefront_pickup: true
-    },
+        // Create Outlet Form Data
+        outletForm: {
+            name: '',
+            code: '',
+            phone: '',
+            address: '',
+            province: '',
+            city: '',
+            district: '',
+            village: '',
+            postal_code: '',
+            biteship_area_id: '',
+            biteship_area_label: '',
+            latitude: '',
+            longitude: '',
+            geofence_radius_meters: 100,
+            is_primary: false,
+            is_online_fulfillment: true,
+            allow_storefront_pickup: true
+        },
 
-    // Create Warehouse Form Data
-    warehouseForm: {
-        parent_id: '',
-        name: '',
-        code: '',
-        phone: '',
-        address: '',
-        province: '',
-        city: '',
-        district: '',
-        village: '',
-        postal_code: '',
-        biteship_area_id: '',
-        biteship_area_label: '',
-        latitude: '',
-        longitude: '',
-        geofence_radius_meters: 100,
-        is_primary: false,
-        is_online_fulfillment: true,
-        allow_storefront_pickup: true
-    },
+        // Create Warehouse Form Data
+        warehouseForm: {
+            parent_id: '',
+            name: '',
+            code: '',
+            phone: '',
+            address: '',
+            province: '',
+            city: '',
+            district: '',
+            village: '',
+            postal_code: '',
+            biteship_area_id: '',
+            biteship_area_label: '',
+            latitude: '',
+            longitude: '',
+            geofence_radius_meters: 100,
+            is_primary: false,
+            is_online_fulfillment: true,
+            allow_storefront_pickup: true
+        },
 
-    // Edit Form Data
-    editData: {
-        id: null,
-        parent_id: '',
-        name: '',
-        type: 'warehouse',
-        code: '',
-        phone: '',
-        address: '',
-        province: '',
-        city: '',
-        district: '',
-        village: '',
-        postal_code: '',
-        biteship_area_id: '',
-        biteship_area_label: '',
-        latitude: '',
-        longitude: '',
-        geofence_radius_meters: 100,
-        is_primary: false,
-        is_online_fulfillment: true,
-        allow_storefront_pickup: true,
-        is_active: true,
-        timezone_mode: 'inherit',
-        timezone: '{{ $business->timezone ?? "Asia/Jakarta" }}',
-        operating_hours_mode: 'inherit',
-        operating_hours: null
-    },
+        // Edit Form Data
+        editData: {
+            id: null,
+            parent_id: '',
+            name: '',
+            type: 'warehouse',
+            code: '',
+            phone: '',
+            address: '',
+            province: '',
+            city: '',
+            district: '',
+            village: '',
+            postal_code: '',
+            biteship_area_id: '',
+            biteship_area_label: '',
+            latitude: '',
+            longitude: '',
+            geofence_radius_meters: 100,
+            is_primary: false,
+            is_online_fulfillment: true,
+            allow_storefront_pickup: true,
+            is_active: true,
+            timezone_mode: 'inherit',
+            timezone: @json($business->timezone ?? 'Asia/Jakarta'),
+            operating_hours_mode: 'inherit',
+            operating_hours: null
+        },
 
-    defaultOperatingHours: @json(\App\Support\TimezoneHelper::normalizeOperatingHours($business->operating_hours)),
+        defaultOperatingHours: @json(\App\Support\TimezoneHelper::normalizeOperatingHours($business->operating_hours)),
 
-    addEditPeriod(dayKey) {
-        if (!this.editData.operating_hours) {
-            this.editData.operating_hours = JSON.parse(JSON.stringify(this.defaultOperatingHours));
-        }
-        if (!this.editData.operating_hours[dayKey]) {
-            this.editData.operating_hours[dayKey] = { day_name: dayKey, is_open: true, periods: [] };
-        }
-        if (!Array.isArray(this.editData.operating_hours[dayKey].periods)) {
-            this.editData.operating_hours[dayKey].periods = [];
-        }
-        this.editData.operating_hours[dayKey].periods.push({ start: '17:00', end: '22:00' });
-    },
-
-    removeEditPeriod(dayKey, index) {
-        if (this.editData.operating_hours && this.editData.operating_hours[dayKey] && Array.isArray(this.editData.operating_hours[dayKey].periods)) {
-            this.editData.operating_hours[dayKey].periods.splice(index, 1);
-        }
-    },
-
-    isOvernight(period) {
-        if (!period || !period.start || !period.end) return false;
-        return period.end < period.start;
-    },
-
-    // Biteship Search Autocomplete State
-    biteshipQuery: '',
-    biteshipResults: [],
-    biteshipSearching: false,
-    biteshipTarget: null,
-
-    deleteModalOpen: false,
-    deleteTarget: { id: null, name: '' },
-
-    setFilter(type) {
-        this.filterTab = type;
-        const url = new URL(window.location.href);
-        if (type === 'all') {
-            url.searchParams.delete('type');
-        } else {
-            url.searchParams.set('type', type);
-        }
-        window.history.replaceState({}, '', url.toString());
-    },
-
-    openEdit(loc) {
-        this.editData = {
-            id: loc.id,
-            parent_id: loc.parent_id || '',
-            name: loc.name || '',
-            type: loc.type || 'warehouse',
-            code: loc.code || '',
-            phone: loc.phone || '',
-            address: loc.address || '',
-            province: loc.province || '',
-            city: loc.city || '',
-            district: loc.district || '',
-            village: loc.village || '',
-            postal_code: loc.postal_code || '',
-            biteship_area_id: loc.biteship_area_id || '',
-            biteship_area_label: loc.biteship_area_id ? ((loc.district ? loc.district + ', ' : '') + (loc.city || '') + (loc.postal_code ? ' (' + loc.postal_code + ')' : '')) : '',
-            latitude: (loc.latitude !== null && loc.latitude !== undefined) ? loc.latitude : '',
-            longitude: (loc.longitude !== null && loc.longitude !== undefined) ? loc.longitude : '',
-            geofence_radius_meters: loc.geofence_radius_meters ?? 100,
-            is_primary: Boolean(loc.is_primary),
-            is_online_fulfillment: Boolean(loc.is_online_fulfillment !== false && loc.is_online_fulfillment !== 0),
-            allow_storefront_pickup: Boolean(loc.allow_storefront_pickup !== false && loc.allow_storefront_pickup !== 0),
-            is_active: Boolean(loc.is_active),
-            timezone_mode: loc.timezone_mode || 'inherit',
-            timezone: loc.timezone || '{{ $business->timezone ?? "Asia/Jakarta" }}',
-            operating_hours_mode: loc.operating_hours_mode || 'inherit',
-            operating_hours: loc.operating_hours ? JSON.parse(JSON.stringify(loc.operating_hours)) : JSON.parse(JSON.stringify(this.defaultOperatingHours))
-        };
-        this.biteshipResults = [];
-        this.biteshipQuery = '';
-        this.gpsError = '';
-        this.gpsSuccess = false;
-        this.showEditModal = true;
-    },
-
-    async detectGps(target) {
-        this.activeGpsTarget = target;
-        this.gpsLoading = true;
-        this.gpsError = '';
-        this.gpsSuccess = false;
-
-        if (!navigator.geolocation) {
-            this.gpsError = '{{ __("warehouse.actions.detecting_gps") }}';
-            this.gpsLoading = false;
-            return;
-        }
-
-        navigator.geolocation.getCurrentPosition(
-            async (pos) => {
-                const lat = Number(pos.coords.latitude.toFixed(6));
-                const lng = Number(pos.coords.longitude.toFixed(6));
-
-                let formObj = null;
-                if (target === 'outlet') formObj = this.outletForm;
-                else if (target === 'warehouse') formObj = this.warehouseForm;
-                else if (target === 'edit') formObj = this.editData;
-
-                if (formObj) {
-                    formObj.latitude = lat;
-                    formObj.longitude = lng;
-                }
-
-                this.gpsLoading = false;
-                this.gpsSuccess = true;
-
-                // Auto Reverse-Geocode & auto-lookup Biteship
-                try {
-                    const res = await fetch(`{{ route('geo.reverse-geocode') }}?lat=${lat}&lng=${lng}`);
-                    const data = await res.json();
-                    if (data && data.success && formObj) {
-                        if (!formObj.address && (data.road || data.display_name)) {
-                            formObj.address = data.road || data.display_name;
-                        }
-                        if (data.province) formObj.province = data.province;
-                        if (data.city) formObj.city = data.city;
-                        if (data.district) formObj.district = data.district;
-                        if (data.village) formObj.village = data.village;
-                        if (data.postal_code) formObj.postal_code = data.postal_code;
-
-                        // If biteship_area_id is empty, auto search area by postal code or district
-                        if (!formObj.biteship_area_id && (data.postal_code || data.village || data.district)) {
-                            const q = data.postal_code || data.village || data.district;
-                            this.autoFillBiteship(target, q);
-                        }
-                    }
-                } catch (err) {
-                    console.warn('Reverse geocode error:', err);
-                }
-
-                setTimeout(() => { this.gpsSuccess = false; }, 4000);
-            },
-            (err) => {
-                this.gpsLoading = false;
-                if (err.code === 1) {
-                    this.gpsError = '{{ __("warehouse.gps_errors.permission_denied") }}';
-                } else if (err.code === 2) {
-                    this.gpsError = '{{ __("warehouse.gps_errors.position_unavailable") }}';
-                } else {
-                    this.gpsError = '{{ __("warehouse.gps_errors.timeout") }}';
-                }
-                setTimeout(() => { this.gpsError = ''; }, 5000);
-            },
-            { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
-        );
-    },
-
-    async autoFillBiteship(target, query) {
-        try {
-            const res = await fetch(`{{ route('geo.search-areas') }}?query=${encodeURIComponent(query)}`);
-            const data = await res.json();
-            if (data && data.areas && data.areas.length > 0) {
-                const first = data.areas[0];
-                let formObj = target === 'outlet' ? this.outletForm : (target === 'warehouse' ? this.warehouseForm : this.editData);
-                if (formObj && !formObj.biteship_area_id) {
-                    formObj.biteship_area_id = first.id;
-                    formObj.biteship_area_label = first.label || `${first.district || ''}, ${first.city || ''} (${first.postal_code || ''})`;
-                    if (!formObj.postal_code && first.postal_code) formObj.postal_code = first.postal_code;
-                    if (!formObj.city && first.city) formObj.city = first.city;
-                    if (!formObj.district && first.district) formObj.district = first.district;
-                    if (!formObj.village && first.village) formObj.village = first.village;
-                    if (!formObj.province && first.province) formObj.province = first.province;
-                }
+        addEditPeriod(dayKey) {
+            if (!this.editData.operating_hours) {
+                this.editData.operating_hours = JSON.parse(JSON.stringify(this.defaultOperatingHours));
             }
-        } catch (e) {
-            console.warn('Auto Biteship search error:', e);
-        }
-    },
+            if (!this.editData.operating_hours[dayKey]) {
+                this.editData.operating_hours[dayKey] = { day_name: dayKey, is_open: true, periods: [] };
+            }
+            if (!Array.isArray(this.editData.operating_hours[dayKey].periods)) {
+                this.editData.operating_hours[dayKey].periods = [];
+            }
+            this.editData.operating_hours[dayKey].periods.push({ start: '17:00', end: '22:00' });
+        },
 
-    searchBiteship(target, query) {
-        this.biteshipTarget = target;
-        this.biteshipQuery = query;
-        if (!query || query.trim().length < 2) {
+        removeEditPeriod(dayKey, index) {
+            if (this.editData.operating_hours && this.editData.operating_hours[dayKey] && Array.isArray(this.editData.operating_hours[dayKey].periods)) {
+                this.editData.operating_hours[dayKey].periods.splice(index, 1);
+            }
+        },
+
+        isOvernight(period) {
+            if (!period || !period.start || !period.end) return false;
+            return period.end < period.start;
+        },
+
+        // Biteship Search Autocomplete State
+        biteshipQuery: '',
+        biteshipResults: [],
+        biteshipSearching: false,
+        biteshipTarget: null,
+
+        deleteModalOpen: false,
+        deleteTarget: { id: null, name: '' },
+
+        setFilter(type) {
+            this.filterTab = type;
+            const url = new URL(window.location.href);
+            if (type === 'all') {
+                url.searchParams.delete('type');
+            } else {
+                url.searchParams.set('type', type);
+            }
+            window.history.replaceState({}, '', url.toString());
+        },
+
+        openEdit(loc) {
+            this.editData = {
+                id: loc.id,
+                parent_id: loc.parent_id || '',
+                name: loc.name || '',
+                type: loc.type || 'warehouse',
+                code: loc.code || '',
+                phone: loc.phone || '',
+                address: loc.address || '',
+                province: loc.province || '',
+                city: loc.city || '',
+                district: loc.district || '',
+                village: loc.village || '',
+                postal_code: loc.postal_code || '',
+                biteship_area_id: loc.biteship_area_id || '',
+                biteship_area_label: loc.biteship_area_id ? ((loc.district ? loc.district + ', ' : '') + (loc.city || '') + (loc.postal_code ? ' (' + loc.postal_code + ')' : '')) : '',
+                latitude: (loc.latitude !== null && loc.latitude !== undefined) ? loc.latitude : '',
+                longitude: (loc.longitude !== null && loc.longitude !== undefined) ? loc.longitude : '',
+                geofence_radius_meters: loc.geofence_radius_meters ?? 100,
+                is_primary: Boolean(loc.is_primary),
+                is_online_fulfillment: Boolean(loc.is_online_fulfillment !== false && loc.is_online_fulfillment !== 0),
+                allow_storefront_pickup: Boolean(loc.allow_storefront_pickup !== false && loc.allow_storefront_pickup !== 0),
+                is_active: Boolean(loc.is_active),
+                timezone_mode: loc.timezone_mode || 'inherit',
+                timezone: loc.timezone || @json($business->timezone ?? 'Asia/Jakarta'),
+                operating_hours_mode: loc.operating_hours_mode || 'inherit',
+                operating_hours: loc.operating_hours ? JSON.parse(JSON.stringify(loc.operating_hours)) : JSON.parse(JSON.stringify(this.defaultOperatingHours))
+            };
             this.biteshipResults = [];
-            return;
-        }
-        this.biteshipSearching = true;
-        fetch(`{{ route('geo.search-areas') }}?query=${encodeURIComponent(query)}`)
-            .then(r => r.json())
-            .then(data => {
-                this.biteshipResults = data.areas || [];
-                this.biteshipSearching = false;
-            })
-            .catch(() => {
+            this.biteshipQuery = '';
+            this.gpsError = '';
+            this.gpsSuccess = false;
+            this.showEditModal = true;
+        },
+
+        async detectGps(target) {
+            this.activeGpsTarget = target;
+            this.gpsLoading = true;
+            this.gpsError = '';
+            this.gpsSuccess = false;
+
+            if (!navigator.geolocation) {
+                this.gpsError = @json(__('warehouse.actions.detecting_gps'));
+                this.gpsLoading = false;
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(
+                async (pos) => {
+                    const lat = Number(pos.coords.latitude.toFixed(6));
+                    const lng = Number(pos.coords.longitude.toFixed(6));
+
+                    let formObj = null;
+                    if (target === 'outlet') formObj = this.outletForm;
+                    else if (target === 'warehouse') formObj = this.warehouseForm;
+                    else if (target === 'edit') formObj = this.editData;
+
+                    if (formObj) {
+                        formObj.latitude = lat;
+                        formObj.longitude = lng;
+                    }
+
+                    this.gpsLoading = false;
+                    this.gpsSuccess = true;
+
+                    // Auto Reverse-Geocode & auto-lookup Biteship
+                    try {
+                        const res = await fetch(`{{ route('geo.reverse-geocode') }}?lat=${lat}&lng=${lng}`);
+                        const data = await res.json();
+                        if (data && data.success && formObj) {
+                            if (!formObj.address && (data.road || data.display_name)) {
+                                formObj.address = data.road || data.display_name;
+                            }
+                            if (data.province) formObj.province = data.province;
+                            if (data.city) formObj.city = data.city;
+                            if (data.district) formObj.district = data.district;
+                            if (data.village) formObj.village = data.village;
+                            if (data.postal_code) formObj.postal_code = data.postal_code;
+
+                            // If biteship_area_id is empty, auto search area by postal code or district
+                            if (!formObj.biteship_area_id && (data.postal_code || data.village || data.district)) {
+                                const q = data.postal_code || data.village || data.district;
+                                this.autoFillBiteship(target, q);
+                            }
+                        }
+                    } catch (err) {
+                        console.warn('Reverse geocode error:', err);
+                    }
+
+                    setTimeout(() => { this.gpsSuccess = false; }, 4000);
+                },
+                (err) => {
+                    this.gpsLoading = false;
+                    if (err.code === 1) {
+                        this.gpsError = @json(__('warehouse.gps_errors.permission_denied'));
+                    } else if (err.code === 2) {
+                        this.gpsError = @json(__('warehouse.gps_errors.position_unavailable'));
+                    } else {
+                        this.gpsError = @json(__('warehouse.gps_errors.timeout'));
+                    }
+                    setTimeout(() => { this.gpsError = ''; }, 5000);
+                },
+                { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+            );
+        },
+
+        async autoFillBiteship(target, query) {
+            try {
+                const res = await fetch(`{{ route('geo.search-areas') }}?query=${encodeURIComponent(query)}`);
+                const data = await res.json();
+                if (data && data.areas && data.areas.length > 0) {
+                    const first = data.areas[0];
+                    let formObj = target === 'outlet' ? this.outletForm : (target === 'warehouse' ? this.warehouseForm : this.editData);
+                    if (formObj && !formObj.biteship_area_id) {
+                        formObj.biteship_area_id = first.id;
+                        formObj.biteship_area_label = first.label || `${first.district || ''}, ${first.city || ''} (${first.postal_code || ''})`;
+                        if (!formObj.postal_code && first.postal_code) formObj.postal_code = first.postal_code;
+                        if (!formObj.city && first.city) formObj.city = first.city;
+                        if (!formObj.district && first.district) formObj.district = first.district;
+                        if (!formObj.village && first.village) formObj.village = first.village;
+                        if (!formObj.province && first.province) formObj.province = first.province;
+                    }
+                }
+            } catch (e) {
+                console.warn('Auto Biteship search error:', e);
+            }
+        },
+
+        searchBiteship(target, query) {
+            this.biteshipTarget = target;
+            this.biteshipQuery = query;
+            if (!query || query.trim().length < 2) {
                 this.biteshipResults = [];
-                this.biteshipSearching = false;
-            });
-    },
+                return;
+            }
+            this.biteshipSearching = true;
+            fetch(`{{ route('geo.search-areas') }}?query=${encodeURIComponent(query)}`)
+                .then(r => r.json())
+                .then(data => {
+                    this.biteshipResults = data.areas || [];
+                    this.biteshipSearching = false;
+                })
+                .catch(() => {
+                    this.biteshipResults = [];
+                    this.biteshipSearching = false;
+                });
+        },
 
-    selectBiteshipArea(target, area) {
-        let formObj = target === 'outlet' ? this.outletForm : (target === 'warehouse' ? this.warehouseForm : this.editData);
-        if (formObj) {
-            formObj.biteship_area_id = area.id;
-            formObj.biteship_area_label = area.label || `${area.district || ''}, ${area.city || ''} (${area.postal_code || ''})`;
-            if (area.province) formObj.province = area.province;
-            if (area.city) formObj.city = area.city;
-            if (area.district) formObj.district = area.district;
-            if (area.village) formObj.village = area.village;
-            if (area.postal_code) formObj.postal_code = area.postal_code;
-            if (area.latitude && !formObj.latitude) formObj.latitude = area.latitude;
-            if (area.longitude && !formObj.longitude) formObj.longitude = area.longitude;
-        }
-        this.biteshipResults = [];
-        this.biteshipQuery = '';
-    },
+        selectBiteshipArea(target, area) {
+            let formObj = target === 'outlet' ? this.outletForm : (target === 'warehouse' ? this.warehouseForm : this.editData);
+            if (formObj) {
+                formObj.biteship_area_id = area.id;
+                formObj.biteship_area_label = area.label || `${area.district || ''}, ${area.city || ''} (${area.postal_code || ''})`;
+                if (area.province) formObj.province = area.province;
+                if (area.city) formObj.city = area.city;
+                if (area.district) formObj.district = area.district;
+                if (area.village) formObj.village = area.village;
+                if (area.postal_code) formObj.postal_code = area.postal_code;
+                if (area.latitude && !formObj.latitude) formObj.latitude = area.latitude;
+                if (area.longitude && !formObj.longitude) formObj.longitude = area.longitude;
+            }
+            this.biteshipResults = [];
+            this.biteshipQuery = '';
+        },
 
-    clearBiteshipArea(target) {
-        let formObj = target === 'outlet' ? this.outletForm : (target === 'warehouse' ? this.warehouseForm : this.editData);
-        if (formObj) {
-            formObj.biteship_area_id = '';
-            formObj.biteship_area_label = '';
-        }
-        this.biteshipResults = [];
-        this.biteshipQuery = '';
-    },
+        clearBiteshipArea(target) {
+            let formObj = target === 'outlet' ? this.outletForm : (target === 'warehouse' ? this.warehouseForm : this.editData);
+            if (formObj) {
+                formObj.biteship_area_id = '';
+                formObj.biteship_area_label = '';
+            }
+            this.biteshipResults = [];
+            this.biteshipQuery = '';
+        },
 
-    openDelete(id, name) {
-        this.deleteTarget = { id, name };
-        this.deleteModalOpen = true;
-    },
-    closeDelete() {
-        this.deleteModalOpen = false;
-        this.deleteTarget = { id: null, name: '' };
-    },
-    submitDelete() {
-        if (this.deleteTarget.id) {
-            const form = document.getElementById('form-delete-location-' + this.deleteTarget.id);
-            if (form) form.submit();
+        openDelete(id, name) {
+            this.deleteTarget = { id, name };
+            this.deleteModalOpen = true;
+        },
+        closeDelete() {
+            this.deleteModalOpen = false;
+            this.deleteTarget = { id: null, name: '' };
+        },
+        submitDelete() {
+            if (this.deleteTarget.id) {
+                const form = document.getElementById('form-delete-location-' + this.deleteTarget.id);
+                if (form) form.submit();
+            }
+        },
+        matchesFilter(type) {
+            if (this.filterTab === 'all') return true;
+            if (this.filterTab === 'outlet') return type === 'outlet' || type === 'store' || type === 'central_kitchen';
+            if (this.filterTab === 'warehouse') return type === 'warehouse';
+            return true;
         }
-    },
-    matchesFilter(type) {
-        if (this.filterTab === 'all') return true;
-        if (this.filterTab === 'outlet') return type === 'outlet' || type === 'store' || type === 'central_kitchen';
-        if (this.filterTab === 'warehouse') return type === 'warehouse';
-        return true;
-    }
-}">
+    };
+}
+</script>
+
+<div class="max-w-[1360px] mx-auto space-y-6 pb-28 lg:pb-12" x-data="warehouseIndexHub()">
 
     {{-- ===================================================== --}}
     {{-- 1. TOOLBAR / PAGE HEADER                                --}}

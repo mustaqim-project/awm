@@ -97,6 +97,7 @@ return [
         'storefront_shipping' => 'Pengiriman Storefront',
         'change' => 'Ganti',
         'select' => 'Pilih',
+        'manage_branches_link' => 'Kelola Cabang',
     ],
 
     'gps_errors' => [
@@ -130,6 +131,27 @@ return [
         'is_active' => 'Status Operasional Aktif',
         'status' => 'Status',
         'actions' => 'Aksi',
+        'timezone_mode' => 'Pengaturan Zona Waktu',
+        'timezone' => 'Pilih Zona Waktu',
+        'operating_hours_mode' => 'Pengaturan Jam Operasional',
+    ],
+
+    'timezone_modes' => [
+        'inherit' => 'Ikuti Zona Waktu Bisnis',
+        'custom' => 'Zona Waktu Khusus Cabang',
+    ],
+
+    'operating_hours_modes' => [
+        'inherit' => 'Ikuti Jam Operasional Bisnis',
+        'custom' => 'Jam Operasional Khusus Lokasi Ini',
+        'custom_hint' => 'Tentukan jadwal buka, tutup, dan periode operasional khusus untuk cabang ini.',
+    ],
+
+    'hours' => [
+        'open' => 'Buka',
+        'closed' => 'Tutup',
+        'overnight' => 'Lintas Hari (Overnight)',
+        'add_period' => 'Tambah Jam Buka',
     ],
 
     'placeholders' => [
@@ -159,6 +181,8 @@ return [
         'geofence_gps_desc' => 'Digunakan untuk validasi absensi karyawan dan radius jangkauan kurir lokal.',
         'operational_settings' => '4. Pengaturan Layanan & Status Operasional',
         'operational_settings_desc' => 'Konfigurasi integrasi toko online, pengambilan mandiri, dan status aktif.',
+        'timezone_and_hours' => 'Zona Waktu & Jam Operasional Cabang',
+        'timezone_and_hours_desc' => 'Pengaturan zona waktu dan jam kerja spesifik untuk lokasi ini.',
     ],
 
     'inspector' => [

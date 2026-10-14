@@ -136,6 +136,16 @@ Sistem menerapkan arsitektur **Global Identity dengan Multi-Tenant Shopping Cart
   - **Kredit:** Pendapatan Penjualan Toko Online (Akun `4-4003`) sebesar total penjualan `amount`.
 * **Idempotensi Finansial:** Mencegah pembukuan berulang jika TriPay mengirimkan webhook duplikat untuk referensi transaksi yang sama.
 
+### 3.12 Standarisasi Antarmuka Detail Pesanan Toko Online (Bento Apple HIG v2.0)
+* **Arsitektur Header 3-Baris Terpadu:**
+  - Baris 1: Typographic overline tanpa kapsul warna (`TOKO ONLINE & PESANAN > Daftar Pesanan > #ORDER_NUMBER`).
+  - Baris 2: Judul H1 `Pesanan #ORDER_NUMBER` + Badge Status Siklus Pesanan (Apple Semantic Tint) + Action Bar terpadu (Cetak Label Resi 100x150mm, Tampilan Pelanggan, Hubungi WA).
+  - Baris 3: Subtitle faktual 1 kalimat (Waktu pemesanan WIB, Saluran pesanan, dan Metode pemenuhan).
+* **Grid 2-Kolom Terstruktur:**
+  - **Kolom Kiri (8 Kolom):** Rincian item pesanan dan breakdown finansial (Subtotal, Ongkir, Biaya Platform Biteship, Diskon, Grand Total), Kartu Multi-Drop PO Batches bertahap, Kartu Profil Pelanggan & Alamat Kirim, serta Kartu Logistik & Ekspedisi Pengiriman Mandiri.
+  - **Kolom Kanan (4 Kolom - Sticky Desktop):** Kartu Verifikasi Pembayaran (Rangkuman Gateway TriPay atau Verifikasi Bukti Transfer Manual dengan Lightbox Zoom) dan Kartu Status Operasional Cepat.
+* **Standar Mobile & Touch Accessibility:** Seluruh elemen `<input>`, `<select>`, `<textarea>` wajib berukuran font minimum 16px pada mobile (`text-[16px] sm:text-sm`) untuk mencegah auto-zoom iOS Safari, dengan target sentuh tombol minimal 40–44px.
+
 ---
 
 ## 4. Aturan Bisnis E-Commerce (Business Rules)

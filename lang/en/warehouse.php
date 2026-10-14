@@ -97,6 +97,7 @@ return [
         'storefront_shipping' => 'Storefront Shipping',
         'change' => 'Change',
         'select' => 'Select',
+        'manage_branches_link' => 'Manage Branches',
     ],
 
     'gps_errors' => [
@@ -130,6 +131,27 @@ return [
         'is_active' => 'Operational Active Status',
         'status' => 'Status',
         'actions' => 'Actions',
+        'timezone_mode' => 'Timezone Setting',
+        'timezone' => 'Select Timezone',
+        'operating_hours_mode' => 'Operating Hours Setting',
+    ],
+
+    'timezone_modes' => [
+        'inherit' => 'Inherit Business Timezone',
+        'custom' => 'Custom Branch Timezone',
+    ],
+
+    'operating_hours_modes' => [
+        'inherit' => 'Inherit Business Operating Hours',
+        'custom' => 'Custom Operating Hours for This Location',
+        'custom_hint' => 'Specify custom opening, closing, and break periods for this location.',
+    ],
+
+    'hours' => [
+        'open' => 'Open',
+        'closed' => 'Closed',
+        'overnight' => 'Overnight Shift',
+        'add_period' => 'Add Operating Period',
     ],
 
     'placeholders' => [
@@ -159,6 +181,8 @@ return [
         'geofence_gps_desc' => 'Utilized for employee attendance clock-in validation and local courier boundaries.',
         'operational_settings' => '4. Fulfillment & Operational Status',
         'operational_settings_desc' => 'Storefront integration, customer pickup availability, and active status.',
+        'timezone_and_hours' => 'Branch Timezone & Operating Hours',
+        'timezone_and_hours_desc' => 'Configure specific timezone and operating hours for this location.',
     ],
 
     'inspector' => [

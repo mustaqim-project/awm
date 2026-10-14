@@ -33,6 +33,108 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-10-14-354] Restrukturisasi & Standardisasi Tampilan Detail Pesanan Toko Online (Storefront Orders Show) Sesuai Standar Owner Panel Apple Bento HIG v2.0
+
+- **Date:** 2026-10-14
+- **Status:** COMPLETED
+- **Module:** Storefront & Commerce (/storefront/orders/{order}), Bento Apple HIG v2.0 UI, Information Architecture (IA)
+- **Feature:** Unified 3-Row Header (Overline, H1+Badge+Action Bar, Factual Subtitle), Grid Bento 2-Kolom Terstruktur, Lightbox Zoom, Touch-Friendly Mobile Inputs & Modals
+- **Work Type:** UI/UX | Refactoring | Frontend Architecture | Mobile Accessibility
+
+#### 1. Business Context & Objective
+- **Konteks:** Pada halaman detail pesanan toko online (`https://cooca.id/storefront/orders/{uuid}`), pengguna/pemilik usaha membutuhkan antarmuka yang rapi, profesional, dan seragam dengan standar Owner Panel COOCA (Bento Apple HIG v2.0). Sebelumnya, tata letak header menggunakan tombol sirkular ad-hoc tanpa overline breadcrumb terpadu, kartu logistik terselip di dalam kartu pelanggan, tombol aksi tidak konsisten, serta input form di mobile berisiko mengalami auto-zoom Safari karena ukuran font < 16px.
+- **Masalah/Target:**
+  1. Menegakkan arsitektur header 3 baris terpadu: Baris 1 overline breadcrumb kategori (`TOKO ONLINE & PESANAN > Daftar Pesanan > #ORDER_NUMBER`), Baris 2 judul H1 besar + badge status siklus pesanan Apple tint + action buttons terpadu (Cetak Label Resi 100x150mm, Tampilan Pelanggan, Hubungi WA), Baris 3 subtitle faktual 1 kalimat (waktu pemesanan WIB, tipe saluran, dan metode pemenuhan).
+  2. Menstandarkan seluruh kartu Bento menjadi `rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] p-5 sm:p-6 shadow-xs` dengan padding dan tipografi proporsional.
+  3. Memisahkan modul Logistik & Resi Ekspedisi (Biteship Dispatch, input/auto resi, cetak label, sinkronisasi kurir) menjadi kartu Bento mandiri yang lapang dan mudah ditemukan.
+  4. Menerapkan posisi sticky desktop (`lg:sticky lg:top-6`) pada kolom kanan untuk kartu verifikasi bukti pembayaran dan status operasional, sehingga alur pemrosesan pesanan tetap terlihat saat meninjau rincian item pesanan yang panjang.
+  5. Menstandarkan 4 modal aksi (Tolak Bukti Transfer, Verifikasi Pembayaran Lunas, Zoom Lightbox Bukti Transfer, Input/Ubah Nomor Resi) dengan Apple HIG backdrop blur (`backdrop-blur-md`), sudut melengkung `rounded-[24px]`, target sentuh minimum 44px, dan ukuran font input `text-[16px] sm:text-sm` (anti auto-zoom Safari).
+  6. Menjamin seluruh business logic, variabel Alpine.js, route Laravel, dan form submission tetap berfungsi 100% tanpa regresi.
+
+#### 2. What Was Done
+- **Unified 3-Row Header Standard:**
+  - Mengganti top bar lama dengan struktur 3 baris standar Owner Panel COOCA.
+  - Menempatkan tombol navigasi kembali berbentuk rounded-xl (`w-10 h-10 rounded-xl bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1]`) berdampingan dengan H1 dan status badge.
+  - Mengelompokkan tombol aksi utama dan sekunder (`Cetak Label Resi`, `Tampilan Pelanggan`, `Hubungi WA`) di baris 2 sejajar dengan H1 title.
+- **Restrukturisasi Grid Bento 2-Kolom (8 Cols & 4 Cols):**
+  - Kolom Kiri (8 Kolom):
+    - Formulir penawaran harga khusus (Quotation Form) saat pesanan bertipe `request_order` dan berstatus `pending_review`.
+    - Kartu Rincian Item Pesanan dengan visual pemisah `divide-y`, catatan varian/porsi, dan breakdown finansial (Subtotal, Ongkir, Biaya Platform Biteship, Diskon, Grand Total).
+    - Kartu Jadwal Pengiriman Multi-Drop (PO Batches) untuk pesanan instansi / B2B dengan form inline status per drop.
+    - Kartu Profil Pelanggan & Alamat Pengiriman lengkap dengan kode pos dan catatan khusus.
+    - Kartu Logistik & Ekspedisi Pengiriman mandiri dengan indikator status pengiriman ekspedisi, tombol salin resi instan, tautan live tracking Biteship, cetak label AWB, dan request pickup kurir.
+  - Kolom Kanan (4 Kolom):
+    - Diberikan atribut `lg:sticky lg:top-6` untuk menjaga tombol verifikasi pembayaran dan tahapan operasional tetap berada dalam jangkauan pandangan saat menelusuri halaman.
+    - Kartu Pembayaran TriPay Gateway otomatis atau verifikasi transfer manual dengan thumbnail gambar interaktif.
+    - Kartu Status Operasional dengan dropdown tahapan order (`processing`, `ready`, `completed`, `cancelled`) dan tombol simpan.
+- **Standardisasi Modals Apple HIG:**
+  - Modal Tolak Bukti Transfer: Mendukung responsive mobile bottom sheet dengan grab bar dan textarea ergonomis.
+  - Modal Verifikasi Pembayaran: Tampilan dialog konfirmasi Apple Alert dengan catatan penenang jiwa alokasi pemotongan stok otomatis.
+  - Modal Zoom Gambar: Lightbox resolusi tinggi dengan latar belakang `bg-black/85 backdrop-blur-md`.
+  - Modal Input / Terbitkan Resi: Dilengkapi fitur input manual dan tombol **Auto Resi** untuk menghasilkan nomor resi internal toko.
+
+#### 3. Technical Changes
+- **Files Affected:**
+  - `resources/views/app/storefront/orders/show.blade.php`
+  - `docs/system/modules/commerce.md`
+  - `docs/AiWorkHistory.md`
+- **Database Changes:** Tidak ada (murni perbaikan arsitektur visual antarmuka dan UX tanpa mengubah skema tabel).
+
+#### 4. Testing & Verification
+- **PHP Syntax Linting:**
+  - `php -l resources/views/app/storefront/orders/show.blade.php`: PASS (No syntax errors detected).
+- **Automated Feature Tests:**
+  - `php artisan test --filter=MerchantOrder`: PASS (5 tests, 14 assertions, 100% lulus).
+- **Zero Raw Emoji Verification:** Seluruh ikon antarmuka menggunakan Semantic SVG Lucide (`package`, `printer`, `external-link`, `message-circle`, `truck`, `credit-card`, `refresh-cw`, `shield-check`, dll).
+
+---
+
+### [WORK-2026-10-14-353] Perbaikan UI Warehouse: Eliminasi Kebocoran Raw JavaScript ke DOM & Standardisasi Skrip Alpine.js
+
+- **Date:** 2026-10-14
+- **Status:** COMPLETED
+- **Module:** Warehouse & Multi-Gudang (/warehouse), Apple Bento HIG UI, Multi-Language i18n
+- **Feature:** Alpine.js Script Isolation (warehouseIndexHub & warehouseShowEditModal), Resolusi Escaping Quote JSON, Kelengkapan Kamus Lokalisasi Warehouse (ID/EN)
+- **Work Type:** Bug Fix | UI/UX | Frontend Architecture | Automated Testing
+
+#### 1. Business Context & Objective
+- **Konteks:** Pada halaman pengelolaan gudang (`https://cooca.id/warehouse`), pengguna melihat teks potongan kode JavaScript mentah tercetak langsung pada tampilan antarmuka (DOM leakage). Hal ini mengganggu kerapian estetika Apple Bento HIG, merusak interaksi modal edit, serta berpotensi membingungkan pengguna UMKM yang mengelola titik persediaan dan operasional logistik.
+- **Masalah/Target:**
+  1. Mengaudit dan menemukan akar penyebab (root cause) bocornya kode JavaScript pada file Blade tampilan warehouse.
+  2. Memperbaiki arsitektur deklarasi Alpine.js dari inline attribute string (`x-data="{ ... }"`) menjadi fungsi terisolasi dalam blok `<script>` (`warehouseIndexHub()`), sehingga injeksi JSON Blade (`@json(...)`) dievaluasi sebagai native JavaScript tanpa risiko tabrakan tanda kutip (quote collision).
+  3. Mencegah potensi celah serupa pada tampilan detail gudang (`resources/views/app/warehouse/show.blade.php`).
+  4. Menyelaraskan kamus dwibahasa di `lang/id/warehouse.php` dan `lang/en/warehouse.php` untuk parameter jam operasional, timezone, dan tautan kelola cabang.
+  5. Menjalankan pengujian fitur lengkap dan memastikan 100% tes lulus tanpa regresi.
+
+#### 2. What Was Done
+- **Identifikasi Root Cause:**
+  - Ditemukan bahwa pada `resources/views/app/warehouse/index.blade.php`, baris 8–331 mendeklarasikan objek Alpine.js yang sangat panjang (>320 baris) langsung di dalam atribut HTML: `x-data="{ ... defaultOperatingHours: @json(...), ... }"`.
+  - Direktif Blade `@json(...)` menghasilkan tanda kutip ganda standar JSON (`{"monday": ...}`). Karena atribut `x-data="..."` dibungkus tanda kutip ganda, tanda kutip pertama di dalam JSON langsung menutup atribut HTML secara prematur.
+  - Akibatnya, lebih dari 240 baris kode JS fungsi (`addEditPeriod`, `detectGps`, `searchBiteship`, `matchesFilter`, dll) diperlakukan oleh browser sebagai plain text di dalam elemen DOM dan tumpah ke layar pengguna.
+- **Refactoring Alpine.js Script Isolation:**
+  - Mengisolasi seluruh objek Alpine ke dalam fungsi skrip `<script>function warehouseIndexHub() { ... }</script>` pada `resources/views/app/warehouse/index.blade.php` dan menyederhanakan root node menjadi `x-data="warehouseIndexHub()"`.
+  - Melakukan perbaikan preventif serupa pada modal edit `resources/views/app/warehouse/show.blade.php` dengan fungsi `<script>function warehouseShowEditModal() { ... }</script>`.
+- **Kelengkapan Kamus Bahasa (ID & EN):**
+  - Mendaftarkan entri yang hilang pada `lang/id/warehouse.php` dan `lang/en/warehouse.php`:
+    - `actions.manage_branches_link`
+    - `sections.timezone_and_hours` & `sections.timezone_and_hours_desc`
+    - `fields.timezone_mode`, `fields.timezone`, `fields.operating_hours_mode`
+    - `timezone_modes.inherit` & `timezone_modes.custom`
+    - `operating_hours_modes.inherit`, `operating_hours_modes.custom`, & `operating_hours_modes.custom_hint`
+    - `hours.open`, `hours.closed`, `hours.overnight`, & `hours.add_period`
+- **Penyelarasan Automated Test Suite:**
+  - Memperbarui `tests/Feature/WarehouseAndSupplierAuditTest.php` agar memeriksa tombol header terkini (`__('warehouse.actions.manage_branches_link')` dan `__('warehouse.actions.add_warehouse')`) serta memvalidasi redirect URL `warehouse.index?add=outlet` ke `settings.index?tab=branches`.
+  - Menjalankan testing: Seluruh 32 tes di `WarehouseAndSupplierAuditTest` berhasil lulus 100% (386 assertions, 0 failure).
+
+#### 3. Technical Changes
+- **Files Modified:**
+  - `resources/views/app/warehouse/index.blade.php`
+  - `resources/views/app/warehouse/show.blade.php`
+  - `lang/id/warehouse.php`
+  - `lang/en/warehouse.php`
+  - `tests/Feature/WarehouseAndSupplierAuditTest.php`
+- **Database Changes:** Tidak ada (murni perbaikan frontend Blade/Alpine dan lokalisasi).
+
 ### [WORK-2026-10-14-352] Upgrade MCP AI Gateway: Domain Tool Pengelolaan Jasa & Layanan (https://cooca.id/services)
 
 - **Date:** 2026-10-14

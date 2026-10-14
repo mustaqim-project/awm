@@ -269,8 +269,8 @@ class WarehouseAndSupplierAuditTest extends TestCase
         $responseId->assertSee('Cabang &amp; Gudang Logistik', false);
         $responseId->assertSee('Total Lokasi');
         $responseId->assertSee('Nilai Aset Stok');
-        $responseId->assertSee('+ Cabang / Outlet');
-        $responseId->assertSee('+ Gudang Logistik');
+        $responseId->assertSee(__('warehouse.actions.manage_branches_link'));
+        $responseId->assertSee(__('warehouse.actions.add_warehouse'));
 
         // 2. English Locale Render
         $responseEn = $this->withSession(['locale' => 'en'])->actingAs($this->userA)->get(route('warehouse.index'));
@@ -278,8 +278,8 @@ class WarehouseAndSupplierAuditTest extends TestCase
         $responseEn->assertSee('Branches &amp; Logistics Warehouses', false);
         $responseEn->assertSee('Total Locations');
         $responseEn->assertSee('Inventory Asset Value');
-        $responseEn->assertSee('+ Branch / Outlet');
-        $responseEn->assertSee('+ Logistics Warehouse');
+        $responseEn->assertSee(__('warehouse.actions.manage_branches_link'));
+        $responseEn->assertSee(__('warehouse.actions.add_warehouse'));
 
         // Ensure zero raw language key leaks in the rendered HTML
         $content = $responseEn->getContent();
@@ -361,9 +361,9 @@ class WarehouseAndSupplierAuditTest extends TestCase
         $resAddWarehouse = $this->actingAs($this->userA)->get(route('warehouse.index', ['add' => 'warehouse']));
         $resAddWarehouse->assertOk();
 
-        // 2. Deep link add outlet modal
+        // 2. Deep link add outlet modal redirects to settings branches
         $resAddOutlet = $this->actingAs($this->userA)->get(route('warehouse.index', ['add' => 'outlet']));
-        $resAddOutlet->assertOk();
+        $resAddOutlet->assertRedirect(route('settings.index', ['tab' => 'branches', 'add' => 1]));
 
         // 3. Filter query type
         $resTypeWarehouse = $this->actingAs($this->userA)->get(route('warehouse.index', ['type' => 'warehouse']));

@@ -1089,12 +1089,13 @@
                     </button>
                 </div>
 
-                <form action="{{ route('warehouse.update', $location->id) }}" method="POST"
-                    x-data="{
+                <script>
+                function warehouseShowEditModal() {
+                    return {
                         submitting: false,
-                        tzMode: '{{ $location->timezone_mode ?? 'inherit' }}',
-                        customTimezone: '{{ $location->timezone ?? ($business->timezone ?? 'Asia/Jakarta') }}',
-                        ohMode: '{{ $location->operating_hours_mode ?? 'inherit' }}',
+                        tzMode: @json($location->timezone_mode ?? 'inherit'),
+                        customTimezone: @json($location->timezone ?? ($business->timezone ?? 'Asia/Jakarta')),
+                        ohMode: @json($location->operating_hours_mode ?? 'inherit'),
                         operatingHours: @json(\App\Support\TimezoneHelper::normalizeOperatingHours($location->operating_hours ?: $business->operating_hours)),
                         addPeriod(dayKey) {
                             if (!this.operatingHours[dayKey]) {
@@ -1114,7 +1115,12 @@
                             if (!period || !period.start || !period.end) return false;
                             return period.end < period.start;
                         }
-                    }"
+                    };
+                }
+                </script>
+
+                <form action="{{ route('warehouse.update', $location->id) }}" method="POST"
+                    x-data="warehouseShowEditModal()"
                     @submit="submitting = true" class="flex flex-col flex-1 overflow-hidden">
                     @csrf
                     @method('PUT')
