@@ -546,7 +546,9 @@ final class MerchantOrderController extends Controller
         // Generate vector SVG barcode and QR tracking code
         $barcodeSvg = $this->barcodeService->generateSvg($waybillNumber, 55);
         $trackingUrl = $order->shipping_tracking_url ?: url("/{$business->slug}/order/{$order->tracking_token}");
-        $qrSvg = $this->qrCodeService->generateSvg($trackingUrl, null, 220);
+        $rawQrSvg = $this->qrCodeService->generateSvg($trackingUrl, null, 220);
+        $qrSvg = preg_replace('/<\?xml.*?\?>/is', '', $rawQrSvg) ?? $rawQrSvg;
+        $qrSvg = preg_replace('/<svg([^>]*)width="[^"]*"([^>]*)height="[^"]*"/i', '<svg$1width="100%"$2height="100%" preserveAspectRatio="xMidYMid meet"', $qrSvg) ?? $qrSvg;
 
         // Calculate estimated total package weight
         $totalWeightGrams = 0;

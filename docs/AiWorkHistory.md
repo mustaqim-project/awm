@@ -33,6 +33,41 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-10-14-355] Perbaikan Tampilan Label Resi Pengiriman: Presisi Skalabilitas Vektor QR Code Sesuai Kotak Frame Resi
+
+- **Date:** 2026-10-14
+- **Status:** COMPLETED
+- **Module:** Storefront & Commerce (/storefront/orders/{order}/shipping-label), Thermal Shipping Label (100x150mm & A4)
+- **Feature:** Resolusi Overflow Vektor QR Code Tracking pada Label Resi Pengiriman
+- **Work Type:** Bug Fix | UI/UX | SVG Rendering | Thermal Print Layout
+
+#### 1. Business Context & Objective
+- **Konteks:** Pada halaman cetak label resi pengiriman (`https://cooca.id/storefront/orders/{uuid}/shipping-label`), pengguna menemukan bahwa kode QR pelacakan paket (tracking live) merembes dan keluar secara masif dari kotak bingkai hitam yang disediakan di pojok kanan bawah label resi, bahkan meluap hingga ke latar belakang kertas cetak. Hal ini merusak tampilan cetak resi thermal 100x150mm dan dapat mengganggu keterbacaan pemindai scanner kurir ekspedisi.
+- **Masalah/Target:**
+  1. Mengidentifikasi akar masalah: SVG QR Code yang di-generate dari `TableQrCodeService` membawa atribut bawaan `width="220" height="220"` pixel tetap, sementara wadah di Blade hanya berdimensi `20mm` (~75px) tanpa aturan CSS pemaksa ukuran 100% dan tanpa `overflow: hidden`.
+  2. Menormalkan output SVG di `MerchantOrderController::shippingLabel()` agar menghilangkan XML declaration dan mengubah `width="220" height="220"` menjadi `width="100%" height="100%" preserveAspectRatio="xMidYMid meet"`.
+  3. Memperbarui styling CSS wadah `.qr-box` pada `resources/views/app/storefront/orders/shipping_label.blade.php` baik untuk mode tampilan layar maupun `@media print` thermal printer (`width: 22mm; height: 22mm; overflow: hidden; display: flex; align-items: center; justify-content: center;`).
+  4. Menjamin kode QR berada tepat dan presisi di dalam kotaknya tanpa meluap ke luar frame.
+
+#### 2. What Was Done
+- **Normalisasi Vektor SVG di Controller:**
+  - Pada `MerchantOrderController::shippingLabel()`, menambahkan regex strip untuk tag `<?xml ... ?>` dan penyesuaian atribut `width="100%" height="100%"` dengan `preserveAspectRatio="xMidYMid meet"` pada elemen root `<svg>`.
+- **CSS & HTML Reinforcement pada Template Label:**
+  - Menambahkan kelas khusus `.qr-box` dan `.qr-box svg` di blok `<style>` dan `@media print` dengan deklarasi `width: 100% !important; height: 100% !important; max-width: 100% !important; max-height: 100% !important; display: block !important; object-fit: contain;`.
+  - Menerapkan utilitas Tailwind pelindung `[&>svg]:w-full [&>svg]:h-full [&>svg]:max-w-full [&>svg]:max-h-full [&>svg]:block overflow-hidden` pada wadah `.qr-box`.
+- **Testing & Quality Assurance:**
+  - Pengujian PHP syntax linting: Berhasil tanpa error.
+  - Pengujian otomatis PHPUnit `ShippingWaybillAndLabelTest`: 4 test cases, 20 assertions lulus 100%.
+
+#### 3. Technical Changes
+- **Files Affected:**
+  - `app/Http/Controllers/Web/Commerce/MerchantOrderController.php`
+  - `resources/views/app/storefront/orders/shipping_label.blade.php`
+  - `docs/AiWorkHistory.md`
+- **Database Changes:** Tidak ada.
+
+---
+
 ### [WORK-2026-10-14-354] Restrukturisasi & Standardisasi Tampilan Detail Pesanan Toko Online (Storefront Orders Show) Sesuai Standar Owner Panel Apple Bento HIG v2.0
 
 - **Date:** 2026-10-14

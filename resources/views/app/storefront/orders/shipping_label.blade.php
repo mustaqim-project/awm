@@ -50,6 +50,30 @@
             padding: 8mm;
         }
 
+        /* QR Code Container & Scaling */
+        .qr-box {
+            width: 22mm;
+            height: 22mm;
+            box-sizing: border-box;
+            border: 1.5px solid #000000;
+            padding: 1mm;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .qr-box svg {
+            width: 100% !important;
+            height: 100% !important;
+            max-width: 100% !important;
+            max-height: 100% !important;
+            display: block !important;
+            object-fit: contain;
+        }
+
         @media print {
             body {
                 background-color: #ffffff !important;
@@ -78,6 +102,26 @@
                 max-width: 140mm !important;
                 min-height: 200mm !important;
                 padding: 6mm !important;
+            }
+
+            .qr-box {
+                width: 22mm !important;
+                height: 22mm !important;
+                border: 1.5px solid #000000 !important;
+                overflow: hidden !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                padding: 1mm !important;
+                box-sizing: border-box !important;
+            }
+
+            .qr-box svg {
+                width: 100% !important;
+                height: 100% !important;
+                max-width: 100% !important;
+                max-height: 100% !important;
+                display: block !important;
             }
 
             @page {
@@ -269,7 +313,7 @@
                 <p>Kurir / Penerima dapat memindai kode QR di samping untuk mengecek riwayat perjalanan paket secara real-time.</p>
                 <p class="mono text-[8.5px] text-gray-400 mt-1">Dicetak dari COOCA Logistics Hub</p>
             </div>
-            <div class="w-[20mm] h-[20mm] shrink-0 border border-black p-0.5 bg-white">
+            <div class="qr-box w-[22mm] h-[22mm] shrink-0 border-[1.5px] border-black p-1 bg-white flex items-center justify-center overflow-hidden [&>svg]:w-full [&>svg]:h-full [&>svg]:max-w-full [&>svg]:max-h-full [&>svg]:block">
                 {!! $qrSvg !!}
             </div>
         </div>
