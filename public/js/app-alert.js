@@ -738,23 +738,43 @@
             if (event && typeof event.preventDefault === 'function') {
                 event.preventDefault();
             }
+
+            let targetForm = form;
+            let dlgMessage = message;
+            let dlgTitle = title;
+            let dlgType = type;
+
+            // Handle flexible argument signatures:
+            // 1. confirmSubmit(event, form, message, title, type) -> standard
+            // 2. confirmSubmit(event, title, message) -> legacy 3-args without form reference
+            if (typeof form === 'string') {
+                dlgTitle = form;
+                dlgMessage = message || form;
+                dlgType = (title && typeof title === 'string' && title !== 'Konfirmasi Tindakan') ? title : 'info';
+                targetForm = (event && event.target && (event.target.tagName === 'FORM' ? event.target : event.target.closest('form')))
+                    || (event && event.currentTarget && (event.currentTarget.tagName === 'FORM' ? event.currentTarget : event.currentTarget.closest('form')))
+                    || document.querySelector('form');
+            }
+
+            const confirmBtnText = (dlgType === 'danger') ? 'Hapus' : 'Ya, Lanjutkan';
+
             this.confirm({
-                title: title,
-                message: message,
-                type: type,
-                confirmText: type === 'danger' ? 'Hapus' : 'Ya, Lanjutkan',
+                title: dlgTitle || 'Konfirmasi Tindakan',
+                message: dlgMessage || 'Apakah Anda yakin ingin melanjutkan tindakan ini?',
+                type: dlgType,
+                confirmText: confirmBtnText,
                 cancelText: 'Batal'
             }).then((confirmed) => {
-                if (confirmed) {
+                if (confirmed && targetForm && typeof targetForm.submit === 'function') {
                     // Temporarily remove onsubmit to prevent re-interception loop
-                    const oldOnSubmit = form.onsubmit;
-                    form.onsubmit = null;
-                    if (typeof form.requestSubmit === 'function') {
-                        form.requestSubmit();
+                    const oldOnSubmit = targetForm.onsubmit;
+                    targetForm.onsubmit = null;
+                    if (typeof targetForm.requestSubmit === 'function') {
+                        targetForm.requestSubmit();
                     } else {
-                        form.submit();
+                        targetForm.submit();
                     }
-                    form.onsubmit = oldOnSubmit;
+                    targetForm.onsubmit = oldOnSubmit;
                 }
             });
             return false;

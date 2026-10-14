@@ -942,7 +942,10 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
                 Route::post('/products/{product}/publish', [MarketplaceWebController::class, 'publishProduct'])->name('products.publish');
                 Route::post('/products/{product}/sync-price', [MarketplaceWebController::class, 'syncProductPrice'])->name('products.sync-price');
                 Route::post('/products/{product}/sync-stock', [MarketplaceWebController::class, 'syncProductStock'])->name('products.sync-stock');
+                Route::post('/products/{product}/deactivate', [MarketplaceWebController::class, 'deactivateProduct'])->name('products.deactivate');
+                Route::post('/products/{product}/activate', [MarketplaceWebController::class, 'activateProduct'])->name('products.activate');
                 Route::post('/products/sync-all', [MarketplaceWebController::class, 'syncAll'])->middleware('throttle:10,1')->name('products.sync-all');
+                Route::post('/products/pull', [MarketplaceWebController::class, 'pullProducts'])->middleware('throttle:10,1')->name('products.pull');
 
                 // Marketplace Orders
                 Route::post('/orders/pull', [MarketplaceWebController::class, 'pullOrders'])->middleware('throttle:10,1')->name('orders.pull');

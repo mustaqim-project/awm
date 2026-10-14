@@ -84,9 +84,11 @@ class MarketplaceWebController extends Controller
         $isPharmacy      = $business->isPharmacy();
         $isServiceSector = $business->isServiceSector();
         $typeFilter      = (string) $request->input('type', 'all');
+        $channelFilter   = (string) $request->input('channel', 'all');
+        $riskFilter      = (string) $request->input('risk', 'all');
 
         $query = Product::where('business_id', $business->id)
-            ->with(['marketplaceMappings', 'category'])
+            ->with(['marketplaceMappings', 'category', 'images'])
             ->latest();
 
         if ($typeFilter === 'goods') {
@@ -95,6 +97,20 @@ class MarketplaceWebController extends Controller
             });
         } elseif ($typeFilter === 'service') {
             $query->where('type', Product::TYPE_SERVICE);
+        }
+
+        if ($channelFilter === 'unmapped') {
+            $query->doesntHave('marketplaceMappings');
+        } elseif (in_array($channelFilter, ['shopee', 'tiktok_shop', 'tokopedia'], true)) {
+            $query->whereHas('marketplaceMappings', function ($q) use ($channelFilter) {
+                $q->where('channel', $channelFilter)->where('is_active', true);
+            });
+        }
+
+        if ($riskFilter === 'out_of_stock') {
+            $query->where(function ($q) {
+                $q->where('stock', '<=', 0)->orWhereNull('stock');
+            });
         }
 
         if ($request->filled('q')) {
@@ -115,7 +131,9 @@ class MarketplaceWebController extends Controller
             'marketplaceCategories',
             'isPharmacy',
             'isServiceSector',
-            'typeFilter'
+            'typeFilter',
+            'channelFilter',
+            'riskFilter'
         ));
 
     }
@@ -374,6 +392,14 @@ class MarketplaceWebController extends Controller
             ? round((float) $product->selling_price * $priceMultiplier)
             : (float) ($channelPrice ?? $product->selling_price);
 
+        if ($effectivePrice <= 0) {
+            $msg = "Harga jual saluran tidak boleh Rp 0 atau kosong untuk mencegah risiko transaksi gratis yang merugikan.";
+            if ($request->wantsJson()) {
+                return response()->json(['success' => false, 'error' => $msg], 422);
+            }
+            return back()->with('error', $msg);
+        }
+
         $baseCost = (float) ($product->base_cost ?? 0.0);
 
         if ($baseCost > 0 && $effectivePrice < $baseCost && ! $request->boolean('allow_below_cost')) {
@@ -519,7 +545,7 @@ class MarketplaceWebController extends Controller
     /**
      * Trigger batch sync for an entire marketplace account or all accounts.
      */
-    public function syncAll(Request $request): RedirectResponse
+    public function syncAll(Request $request): RedirectResponse|JsonResponse
     {
         $business = Context::requireBusiness();
 
@@ -528,16 +554,49 @@ class MarketplaceWebController extends Controller
             ->where('is_active', true)
             ->get();
 
+        if ($accounts->isEmpty()) {
+            $msg = 'Belum ada akun marketplace (Shopee, TikTok Shop, Tokopedia) yang terhubung aktif. Hubungkan akun di Hub Integrasi terlebih dahulu.';
+            if ($request->wantsJson() || $request->ajax()) {
+                return response()->json(['success' => false, 'message' => $msg], 422);
+            }
+            return back()->with('error', $msg);
+        }
+
         $totalSuccess = 0;
-        $totalFailed = 0;
+        $totalFailed  = 0;
+        $totalMapped  = 0;
 
         foreach ($accounts as $account) {
             $result = $this->syncService->syncAllForAccount($account);
+            $totalMapped  += $result['total'];
             $totalSuccess += $result['success'];
             $totalFailed  += $result['failed'];
         }
 
-        return back()->with('success', "Sinkronisasi massal selesai! {$totalSuccess} berhasil, {$totalFailed} gagal.");
+        if ($totalMapped === 0) {
+            $msg = 'Belum ada produk aktif yang dipetakan ke saluran marketplace terhubung.';
+            if ($request->wantsJson() || $request->ajax()) {
+                return response()->json(['success' => true, 'message' => $msg, 'total' => 0]);
+            }
+            return back()->with('info', $msg);
+        }
+
+        $msg = "Sinkronisasi massal berhasil! {$totalSuccess} produk sukses disinkronkan ke seluruh saluran marketplace terhubung.";
+        if ($totalFailed > 0) {
+            $msg .= " ({$totalFailed} produk perlu ditinjau).";
+        }
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => $msg,
+                'total'   => $totalMapped,
+                'success_count' => $totalSuccess,
+                'failed_count'  => $totalFailed,
+            ]);
+        }
+
+        return back()->with('success', $msg);
     }
 
     /**
@@ -567,6 +626,58 @@ class MarketplaceWebController extends Controller
     }
 
     /**
+     * Pull / Import products from connected marketplace accounts into COOCA.
+     */
+    public function pullProducts(Request $request): RedirectResponse|JsonResponse
+    {
+        $business = Context::requireBusiness();
+        $channel = $request->input('channel');
+
+        $query = MarketplaceAccount::where('business_id', $business->id)
+            ->where('status', MarketplaceAccount::STATUS_CONNECTED)
+            ->where('is_active', true);
+
+        if (! empty($channel) && $channel !== 'all') {
+            $query->where('channel', $channel);
+        }
+
+        $accounts = $query->get();
+
+        if ($accounts->isEmpty()) {
+            $msg = 'Tidak ada akun marketplace terhubung yang aktif. Hubungkan akun di Hub Integrasi terlebih dahulu.';
+            if ($request->wantsJson() || $request->ajax()) {
+                return response()->json(['success' => false, 'message' => $msg], 422);
+            }
+            return back()->with('error', $msg);
+        }
+
+        $totalFetched  = 0;
+        $totalImported = 0;
+        $totalLinked   = 0;
+
+        foreach ($accounts as $account) {
+            $res = $this->syncService->pullProductsFromChannel($account);
+            $totalFetched  += $res['total_fetched'] ?? 0;
+            $totalImported += $res['imported_new'] ?? 0;
+            $totalLinked   += $res['linked_existing'] ?? 0;
+        }
+
+        $msg = "Penarikan katalog selesai! {$totalImported} produk baru ditambahkan ke COOCA, {$totalLinked} produk berhasil ditautkan ke etalase online.";
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => $msg,
+                'total_fetched' => $totalFetched,
+                'imported_new' => $totalImported,
+                'linked_existing' => $totalLinked,
+            ]);
+        }
+
+        return back()->with('success', $msg);
+    }
+
+    /**
      * 1-Click Publish / Push product listing and gallery images directly to a marketplace channel.
      */
     public function publishProduct(Request $request, Product $product): RedirectResponse|JsonResponse
@@ -589,6 +700,22 @@ class MarketplaceWebController extends Controller
             'allow_below_cost' => ['nullable', 'boolean'],
         ]);
 
+
+        $syncPriceAuto   = $request->boolean('sync_price_auto', true);
+        $priceMultiplier = (float) ($validated['price_multiplier'] ?? 1.00);
+        $channelPrice    = ! empty($validated['channel_price']) ? (float) $validated['channel_price'] : null;
+
+        $effectivePrice = $syncPriceAuto 
+            ? round((float) $product->selling_price * $priceMultiplier)
+            : (float) ($channelPrice ?? $product->selling_price);
+
+        if ($effectivePrice <= 0) {
+            $msg = "Harga jual saluran tidak boleh Rp 0 atau kosong untuk mencegah risiko penerbitan produk gratis.";
+            if ($request->wantsJson() || $request->ajax()) {
+                return response()->json(['success' => false, 'error' => $msg], 422);
+            }
+            return back()->with('error', $msg);
+        }
 
         $result = $this->syncService->publishProductToChannel($product, $validated['channel'], $validated);
 
@@ -615,6 +742,46 @@ class MarketplaceWebController extends Controller
         }
 
         return back()->with('success', $msg);
+    }
+
+    /**
+     * Deactivate / delist product from a marketplace channel.
+     */
+    public function deactivateProduct(Request $request, Product $product): JsonResponse|RedirectResponse
+    {
+        $business = Context::requireBusiness();
+        if ($product->business_id !== $business->id) {
+            abort(404);
+        }
+
+        $channel = (string) $request->input('channel', 'tiktok_shop');
+        $result  = $this->syncService->deactivateProductOnChannel($product, $channel);
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json($result, $result['success'] ? 200 : 422);
+        }
+
+        return back()->with($result['success'] ? 'success' : 'error', $result['message']);
+    }
+
+    /**
+     * Activate product back onto a marketplace channel.
+     */
+    public function activateProduct(Request $request, Product $product): JsonResponse|RedirectResponse
+    {
+        $business = Context::requireBusiness();
+        if ($product->business_id !== $business->id) {
+            abort(404);
+        }
+
+        $channel = (string) $request->input('channel', 'tiktok_shop');
+        $result  = $this->syncService->activateProductOnChannel($product, $channel);
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json($result, $result['success'] ? 200 : 422);
+        }
+
+        return back()->with($result['success'] ? 'success' : 'error', $result['message']);
     }
 }
 

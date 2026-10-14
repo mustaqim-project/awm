@@ -79,6 +79,76 @@ class MarketplaceProductMapping extends Model
         return round($basePrice * $multiplier, 2);
     }
 
+    /**
+     * Get effective stock allocated to this marketplace channel after safety buffer subtraction.
+     */
+    public function getEffectiveStock(?int $physicalStock = null): int
+    {
+        if (! $this->sync_stock_auto && $this->custom_stock !== null) {
+            return max(0, (int) $this->custom_stock);
+        }
+
+        $stock = $physicalStock !== null ? $physicalStock : (int) ($this->product?->stock ?? 0);
+        $buffer = (int) ($this->stock_buffer ?? 0);
+
+        return max(0, $stock - $buffer);
+    }
+
+    /**
+     * Check if the effective channel price is below the base cost (HPP).
+     */
+    public function isBelowCost(): bool
+    {
+        $baseCost = (float) ($this->product?->base_cost ?? 0);
+        return $baseCost > 0 && $this->getEffectivePrice() < $baseCost;
+    }
+
+    /**
+     * Calculate nominal loss per unit if price is below base cost (HPP).
+     */
+    public function getCostDeficit(): float
+    {
+        $baseCost = (float) ($this->product?->base_cost ?? 0);
+        $effectivePrice = $this->getEffectivePrice();
+        return max(0.0, $baseCost - $effectivePrice);
+    }
+
+    /**
+     * Check if margin becomes negative after marketplace platform fee deductions.
+     */
+    public function isMarginNegativeAfterFees(float $feeRate = 0.08): bool
+    {
+        $baseCost = (float) ($this->product?->base_cost ?? 0);
+        if ($baseCost <= 0) {
+            return false;
+        }
+        $netPayout = $this->getEffectivePrice() * (1 - $feeRate);
+        return $netPayout < $baseCost;
+    }
+
+    /**
+     * Calculate estimated net margin after marketplace platform fees.
+     */
+    public function getNetMargin(float $feeRate = 0.08): float
+    {
+        $effectivePrice = $this->getEffectivePrice();
+        $adminFee = $effectivePrice * $feeRate;
+        $baseCost = (float) ($this->product?->base_cost ?? 0);
+        return ($effectivePrice - $adminFee) - $baseCost;
+    }
+
+    /**
+     * Calculate estimated net margin percentage.
+     */
+    public function getMarginPercent(float $feeRate = 0.08): float
+    {
+        $effectivePrice = $this->getEffectivePrice();
+        if ($effectivePrice <= 0) {
+            return 0.0;
+        }
+        return round(($this->getNetMargin($feeRate) / $effectivePrice) * 100, 1);
+    }
+
     public function getChannelLabel(): string
     {
         return match ($this->channel) {

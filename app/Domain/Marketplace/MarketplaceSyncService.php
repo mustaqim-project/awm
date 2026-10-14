@@ -6,10 +6,13 @@ namespace App\Domain\Marketplace;
 
 use App\Models\Business;
 use App\Models\InventoryStock;
+use App\Models\Location;
 use App\Models\MarketplaceAccount;
 use App\Models\MarketplaceProductMapping;
 use App\Models\MarketplaceSyncLog;
 use App\Models\Product;
+use App\Models\ProductCategory;
+use App\Models\Unit;
 use Illuminate\Support\Facades\Log;
 
 class MarketplaceSyncService
@@ -221,13 +224,25 @@ class MarketplaceSyncService
             ];
         }
 
-        $mappings = MarketplaceProductMapping::where('marketplace_account_id', $account->id)->get();
+        $mappings = MarketplaceProductMapping::where('business_id', $account->business_id)
+            ->where(function ($q) use ($account) {
+                $q->where('marketplace_account_id', $account->id)
+                  ->orWhere('channel', $account->channel);
+            })
+            ->where('is_active', true)
+            ->get();
+
         $successCount = 0;
         $failCount    = 0;
 
         foreach ($mappings as $mapping) {
-            $okPrice = $this->syncProductPrice($mapping);
-            $okStock = $this->syncProductStock($mapping);
+            if (empty($mapping->marketplace_account_id)) {
+                $mapping->marketplace_account_id = $account->id;
+                $mapping->save();
+            }
+
+            $okPrice = $mapping->sync_price_auto ? $this->syncProductPrice($mapping) : true;
+            $okStock = $mapping->sync_stock_auto ? $this->syncProductStock($mapping) : true;
 
             if ($okPrice && $okStock) {
                 $successCount++;
@@ -299,6 +314,13 @@ class MarketplaceSyncService
             ? round((float) $product->selling_price * $priceMultiplier)
             : (float) ($channelPrice ?? $product->selling_price);
 
+        if ($effectivePrice <= 0) {
+            return [
+                'success' => false,
+                'message' => 'Harga jual saluran tidak boleh Rp 0 atau kosong untuk mencegah risiko kerugian pesanan gratis.',
+            ];
+        }
+
         $baseCost = (float) ($product->base_cost ?? 0.0);
 
         if ($baseCost > 0 && $effectivePrice < $baseCost && empty($options['allow_below_cost'])) {
@@ -325,6 +347,39 @@ class MarketplaceSyncService
         }
 
         $adapter = $this->manager->driver($normalizedChannel);
+
+        // MENCEGAH DUPLIKASI DATA DI SELLER CENTER TIKTOK SHOP / MARKETPLACE:
+        // Jika produk sudah memiliki listing aktif (external_product_id) dan bukan dipaksa 'force_new_listing',
+        // lakukan update harga & stok pada listing yang sudah ada, JANGAN buat produk baru lagi!
+        $existingMapping = MarketplaceProductMapping::where('business_id', $product->business_id)
+            ->where('product_id', $product->id)
+            ->where('channel', $normalizedChannel)
+            ->first();
+
+        if ($existingMapping && ! empty($existingMapping->external_product_id) && empty($options['force_new_listing'])) {
+            $existingMapping->marketplace_account_id = $account->id;
+            $existingMapping->channel_price         = $channelPrice;
+            $existingMapping->sync_price_auto       = $syncPriceAuto;
+            $existingMapping->price_multiplier      = $priceMultiplier;
+            $existingMapping->custom_stock          = isset($options['custom_stock']) && $options['custom_stock'] !== '' ? (int) $options['custom_stock'] : null;
+            $existingMapping->sync_stock_auto       = ! empty($options['sync_stock_auto'] ?? true);
+            $existingMapping->stock_buffer          = (int) ($options['stock_buffer'] ?? 0);
+            $existingMapping->is_active             = true;
+            $existingMapping->sync_status           = MarketplaceProductMapping::STATUS_SYNCED;
+            $existingMapping->save();
+
+            $priceOk = $this->syncProductPrice($existingMapping);
+            $stockOk = $this->syncProductStock($existingMapping);
+
+            return [
+                'success'             => true,
+                'channel_name'        => $adapter->getName(),
+                'mapping'             => $existingMapping,
+                'external_product_id' => $existingMapping->external_product_id,
+                'message'             => "Produk sudah terdaftar di {$adapter->getName()} (Item ID: {$existingMapping->external_product_id}). Harga & stok listing yang ada berhasil diperbarui (mencegah duplikat baru di seller center).",
+                'is_updated'          => true,
+            ];
+        }
 
         try {
             $publishResult = $adapter->publishProduct($account, $product, array_merge($options, [
@@ -354,6 +409,7 @@ class MarketplaceSyncService
                 [
                     'marketplace_account_id' => $account->id,
                     'external_product_id'   => $externalId,
+                    'external_sku_id'       => $publishResult['external_sku_id'] ?? null,
                     'external_sku_code'     => $externalSku,
                     'external_product_name' => $product->name,
                     'channel_price'         => $channelPrice,
@@ -419,6 +475,345 @@ class MarketplaceSyncService
                 'message' => "Gagal menerbitkan produk ke {$adapter->getName()}: " . $e->getMessage(),
             ];
         }
+    }
+
+    /**
+     * Deactivate / delist a product from a marketplace channel.
+     */
+    public function deactivateProductOnChannel(Product $product, string $channel): array
+    {
+        $normalizedChannel = match (strtolower($channel)) {
+            'shopee'                      => 'shopee',
+            'tiktok', 'tiktok-tokopedia' => 'tiktok_shop',
+            'tokopedia'                   => 'tokopedia',
+            default                       => $channel,
+        };
+
+        $mapping = MarketplaceProductMapping::where('business_id', $product->business_id)
+            ->where('product_id', $product->id)
+            ->where('channel', $normalizedChannel)
+            ->first();
+
+        if (! $mapping || empty($mapping->external_product_id)) {
+            return [
+                'success' => false,
+                'message' => 'Produk ini belum memiliki listing terhubung di channel tersebut.',
+            ];
+        }
+
+        $account = $mapping->account ?? MarketplaceAccount::where('business_id', $product->business_id)
+            ->where('channel', $normalizedChannel)
+            ->first();
+
+        if (! $account) {
+            return [
+                'success' => false,
+                'message' => 'Akun marketplace tidak ditemukan.',
+            ];
+        }
+
+        $adapter = $this->manager->driver($normalizedChannel);
+
+        // 1. If adapter supports deactivateProduct (e.g. TikTok Shop API /product/202309/products/deactivate)
+        if (method_exists($adapter, 'deactivateProduct')) {
+            $res = $adapter->deactivateProduct($account, $mapping->external_product_id);
+            if (! empty($res['success'])) {
+                $mapping->is_active = false;
+                $mapping->sync_status = MarketplaceProductMapping::STATUS_PAUSED;
+                $mapping->save();
+
+                MarketplaceSyncLog::log(
+                    businessId: $product->business_id,
+                    channel: $normalizedChannel,
+                    entityType: 'product',
+                    action: 'deactivate_product',
+                    status: 'success',
+                    entityId: $mapping->id,
+                    payload: ['external_product_id' => $mapping->external_product_id],
+                    marketplaceAccountId: $account->id
+                );
+
+                return [
+                    'success' => true,
+                    'message' => "Listing \"{$product->name}\" berhasil dinonaktifkan dari etalase {$adapter->getName()}.",
+                ];
+            }
+
+            return $res;
+        }
+
+        // 2. Fallback: Set stock to 0 to make it unavailable/out-of-stock
+        $mapping->is_active = false;
+        $mapping->custom_stock = 0;
+        $mapping->sync_stock_auto = false;
+        $mapping->save();
+        $this->syncProductStock($mapping);
+
+        return [
+            'success' => true,
+            'message' => "Sinkronisasi dimatikan dan stok saluran diset 0 unit (Habis).",
+        ];
+    }
+
+    /**
+     * Activate a product back onto a marketplace channel.
+     */
+    public function activateProductOnChannel(Product $product, string $channel): array
+    {
+        $normalizedChannel = match (strtolower($channel)) {
+            'shopee'                      => 'shopee',
+            'tiktok', 'tiktok-tokopedia' => 'tiktok_shop',
+            'tokopedia'                   => 'tokopedia',
+            default                       => $channel,
+        };
+
+        $mapping = MarketplaceProductMapping::where('business_id', $product->business_id)
+            ->where('product_id', $product->id)
+            ->where('channel', $normalizedChannel)
+            ->first();
+
+        if (! $mapping || empty($mapping->external_product_id)) {
+            return [
+                'success' => false,
+                'message' => 'Produk ini belum memiliki listing terhubung di channel tersebut.',
+            ];
+        }
+
+        $account = $mapping->account ?? MarketplaceAccount::where('business_id', $product->business_id)
+            ->where('channel', $normalizedChannel)
+            ->first();
+
+        if (! $account) {
+            return [
+                'success' => false,
+                'message' => 'Akun marketplace tidak ditemukan.',
+            ];
+        }
+
+        $adapter = $this->manager->driver($normalizedChannel);
+
+        if (method_exists($adapter, 'activateProduct')) {
+            $res = $adapter->activateProduct($account, $mapping->external_product_id);
+            if (! empty($res['success'])) {
+                $mapping->is_active = true;
+                $mapping->sync_status = MarketplaceProductMapping::STATUS_SYNCED;
+                $mapping->save();
+
+                // Re-sync price and stock
+                $this->syncProductPrice($mapping);
+                $this->syncProductStock($mapping);
+
+                MarketplaceSyncLog::log(
+                    businessId: $product->business_id,
+                    channel: $normalizedChannel,
+                    entityType: 'product',
+                    action: 'activate_product',
+                    status: 'success',
+                    entityId: $mapping->id,
+                    payload: ['external_product_id' => $mapping->external_product_id],
+                    marketplaceAccountId: $account->id
+                );
+
+                return [
+                    'success' => true,
+                    'message' => "Listing \"{$product->name}\" berhasil diaktifkan kembali di etalase {$adapter->getName()}.",
+                ];
+            }
+
+            return $res;
+        }
+
+        $mapping->is_active = true;
+        $mapping->sync_stock_auto = true;
+        $mapping->save();
+        $this->syncProductStock($mapping);
+
+        return [
+            'success' => true,
+            'message' => "Listing diaktifkan dan stok kembali disinkronkan dari gudang.",
+        ];
+    }
+
+    /**
+     * Pull/Import products from a connected marketplace channel into COOCA.
+     *
+     * @return array{success: bool, message: string, total_fetched: int, imported_new: int, linked_existing: int}
+     */
+    public function pullProductsFromChannel(MarketplaceAccount $account, array $params = []): array
+    {
+        if (! $account->isConnected() || ! ($account->is_active ?? true)) {
+            return [
+                'success' => false,
+                'message' => 'Akun marketplace tidak aktif atau belum terhubung.',
+                'total_fetched' => 0,
+                'imported_new' => 0,
+                'linked_existing' => 0,
+            ];
+        }
+
+        $businessId = $account->business_id;
+        $adapter = $this->manager->driver($account->channel);
+
+        try {
+            $result = $adapter->getProducts($account, $params);
+            $items = $result['products'] ?? [];
+        } catch (\Throwable $e) {
+            Log::error("Failed to pull products from {$account->channel}: " . $e->getMessage());
+            return [
+                'success' => false,
+                'message' => 'Gagal mengambil data produk dari marketplace: ' . $e->getMessage(),
+                'total_fetched' => 0,
+                'imported_new' => 0,
+                'linked_existing' => 0,
+            ];
+        }
+
+        if (empty($items)) {
+            return [
+                'success' => true,
+                'message' => "Tidak ada produk aktif ditemukan di toko {$adapter->getName()}.",
+                'total_fetched' => 0,
+                'imported_new' => 0,
+                'linked_existing' => 0,
+            ];
+        }
+
+        $importedNew = 0;
+        $linkedExisting = 0;
+
+        $defaultUnit = Unit::where('code', 'pcs')->first() ?? Unit::first();
+        $defaultCategory = ProductCategory::firstOrCreate(
+            ['business_id' => $businessId, 'name' => 'Marketplace'],
+            ['slug' => 'marketplace']
+        );
+        $primaryLocation = Location::where('business_id', $businessId)->first();
+
+        foreach ($items as $item) {
+            $externalId = (string) $item['id'];
+            $name = trim((string) ($item['name'] ?? ''));
+            if ($name === '' || $externalId === '') {
+                continue;
+            }
+
+            $sku = ! empty($item['sku']) ? trim((string) $item['sku']) : null;
+            $price = (float) ($item['price'] ?? 0);
+            $stock = max(0, (int) ($item['stock'] ?? 0));
+
+            // 1. Check if mapping already exists
+            $existingMapping = MarketplaceProductMapping::where('business_id', $businessId)
+                ->where('channel', $account->channel)
+                ->where('external_product_id', $externalId)
+                ->first();
+
+            if ($existingMapping && $existingMapping->product) {
+                $existingMapping->channel_price = $price;
+                $existingMapping->channel_stock = $stock;
+                $existingMapping->sync_status = MarketplaceProductMapping::STATUS_SYNCED;
+                $existingMapping->last_price_synced_at = now();
+                $existingMapping->last_stock_synced_at = now();
+                $existingMapping->save();
+
+                $linkedExisting++;
+                continue;
+            }
+
+            // 2. Check if product already exists in COOCA by SKU or Name
+            $product = Product::withoutGlobalScopes()
+                ->where('business_id', $businessId)
+                ->where(function ($q) use ($sku, $name): void {
+                    if ($sku) {
+                        $q->where('code', $sku)->orWhere('name', $name);
+                    } else {
+                        $q->where('name', $name);
+                    }
+                })->first();
+
+            if (! $product) {
+                $code = $sku ?: ('MP-' . strtoupper(substr($account->channel, 0, 2)) . '-' . substr($externalId, -6));
+
+                $product = Product::create([
+                    'business_id'         => $businessId,
+                    'type'                => Product::TYPE_GOODS,
+                    'category_id'         => $defaultCategory?->id,
+                    'output_unit_id'      => $defaultUnit?->id,
+                    'code'                => $code,
+                    'name'                => $name,
+                    'description'         => "Diimpor dari katalog toko {$adapter->getName()}",
+                    'base_cost'           => (float) round($price * 0.7),
+                    'selling_price'       => $price,
+                    'stock'               => $stock,
+                    'min_stock'           => 0,
+                    'weight'              => 200.0,
+                    'is_active'           => true,
+                    'show_in_website'     => true,
+                    'show_in_pos'         => true,
+                    'show_in_sales_order' => true,
+                ]);
+
+                if ($primaryLocation && $stock > 0) {
+                    InventoryStock::updateOrCreate(
+                        [
+                            'business_id' => $businessId,
+                            'location_id' => $primaryLocation->id,
+                            'product_id'  => $product->id,
+                        ],
+                        [
+                            'quantity'          => $stock,
+                            'reserved_quantity' => 0,
+                            'avg_purchase_cost' => (float) round($price * 0.7),
+                            'last_cost'         => (float) round($price * 0.7),
+                        ]
+                    );
+                }
+
+                $importedNew++;
+            } else {
+                $linkedExisting++;
+            }
+
+            // 3. Create or update mapping
+            MarketplaceProductMapping::updateOrCreate(
+                [
+                    'business_id' => $businessId,
+                    'product_id'  => $product->id,
+                    'channel'     => $account->channel,
+                ],
+                [
+                    'marketplace_account_id' => $account->id,
+                    'external_product_id'    => $externalId,
+                    'channel_price'          => $price,
+                    'channel_stock'          => $stock,
+                    'sync_price_auto'        => true,
+                    'sync_stock_auto'        => true,
+                    'is_active'              => true,
+                    'sync_status'            => MarketplaceProductMapping::STATUS_SYNCED,
+                    'last_price_synced_at'   => now(),
+                    'last_stock_synced_at'   => now(),
+                ]
+            );
+        }
+
+        MarketplaceSyncLog::log(
+            businessId: $businessId,
+            channel: $account->channel,
+            entityType: 'product',
+            action: 'pull_products',
+            status: 'success',
+            payload: [
+                'total_fetched'   => count($items),
+                'imported_new'    => $importedNew,
+                'linked_existing' => $linkedExisting,
+            ],
+            marketplaceAccountId: $account->id
+        );
+
+        return [
+            'success'         => true,
+            'message'         => "Berhasil menarik produk dari {$adapter->getName()}: {$importedNew} produk baru ditambahkan ke COOCA, {$linkedExisting} produk berhasil ditautkan.",
+            'total_fetched'   => count($items),
+            'imported_new'    => $importedNew,
+            'linked_existing' => $linkedExisting,
+        ];
     }
 }
 

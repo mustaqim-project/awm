@@ -7,19 +7,44 @@
 @section('content')
 @php
     $productsMap = $products->getCollection()->keyBy('id')->map(function ($p) {
+        $primaryImgUrl = $p->image_url ?? $p->image ?? null;
+        $gallery = [];
+        if ($p->relationLoaded('images') && $p->images) {
+            foreach ($p->images as $img) {
+                $gallery[] = [
+                    'id' => (string) $img->id,
+                    'url' => $img->image_url,
+                    'caption' => $img->caption,
+                    'is_primary' => (bool) $img->is_primary,
+                ];
+            }
+        }
+        if (empty($gallery) && $primaryImgUrl) {
+            $gallery[] = [
+                'id' => 'primary',
+                'url' => $primaryImgUrl,
+                'caption' => 'Foto Utama',
+                'is_primary' => true,
+            ];
+        }
+
         return [
             'id' => (string) $p->id,
             'name' => $p->name,
             'code' => $p->code ?? '',
             'selling_price' => (float) $p->selling_price,
             'base_cost' => (float) $p->base_cost,
-            'stock' => $p->stock ?? 0,
+            'stock' => (int) ($p->stock ?? 0),
             'unit' => $p->unit ?? 'pcs',
+            'weight' => (float) ($p->weight ?: 200),
+            'length' => (float) ($p->length ?: 10),
+            'width' => (float) ($p->width ?: 10),
+            'height' => (float) ($p->height ?: 10),
             'description' => $p->description ?? '',
             'category' => $p->category ? ['name' => $p->category->name] : null,
-            'images' => $p->images ?? [],
-            'image' => $p->image,
-            'marketplace_mappings' => $p->marketplaceMappings->map(function ($m) {
+            'gallery_images' => $gallery,
+            'image_url' => $primaryImgUrl,
+            'marketplace_mappings' => $p->marketplaceMappings->map(function ($m) use ($p) {
                 return [
                     'id' => (string) $m->id,
                     'channel' => $m->channel,
@@ -28,9 +53,14 @@
                     'channel_price' => $m->channel_price,
                     'sync_price_auto' => (bool) $m->sync_price_auto,
                     'price_multiplier' => (float) ($m->price_multiplier ?? 1.0),
+                    'effective_price' => (float) $m->getEffectivePrice(),
                     'sync_stock_auto' => (bool) $m->sync_stock_auto,
                     'stock_buffer' => (int) ($m->stock_buffer ?? 0),
                     'custom_stock' => $m->custom_stock,
+                    'effective_stock' => (int) $m->getEffectiveStock((int) ($p->stock ?? 0)),
+                    'is_below_cost' => (bool) $m->isBelowCost(),
+                    'is_margin_negative' => (bool) $m->isMarginNegativeAfterFees(),
+                    'cost_deficit' => (float) $m->getCostDeficit(),
                     'is_active' => (bool) $m->is_active,
                     'raw_metadata' => $m->raw_metadata,
                 ];
@@ -51,18 +81,40 @@
         title="Pengaturan Multi-Harga &amp; Stok Marketplace"
         subtitle="Tetapkan harga berbeda per channel (Shopee, TikTok Shop, Tokopedia) untuk menutupi biaya admin marketplace serta sinkronisasi stok otomatis.">
         <x-slot:actions>
-            <form method="POST" action="{{ route('marketplace-hub.products.sync-all') }}" onsubmit="return AppAlert.confirmSubmit(event, 'Mulai Sinkronisasi Massal?', 'Data harga dan stok seluruh produk aktif akan dikirimkan serentak ke Shopee, TikTok Shop, dan Tokopedia.')">
+            {{-- 1-Click Pull / Import Products from Marketplace --}}
+            <form method="POST" action="{{ route('marketplace-hub.products.pull') }}" onsubmit="return typeof AppAlert !== 'undefined' ? AppAlert.confirmSubmit(event, this, 'Sistem akan mengambil seluruh produk aktif dari toko online terhubung (TikTok Shop, Shopee, Tokopedia), membuat master produk baru di COOCA (jika belum ada), dan menautkan SKU serta stok secara otomatis.', 'Tarik Katalog dari Toko Marketplace?', 'info') : true">
                 @csrf
+                <input type="hidden" name="channel" value="all">
                 <button type="submit"
-                    class="min-h-[44px] sm:min-h-0 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 shadow-sm cursor-pointer">
-                    <i data-lucide="refresh-cw" class="w-4 h-4"></i>
-                    <span>Sinkronisasi Massal Semua</span>
+                    class="min-h-[44px] sm:min-h-0 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#34C759] hover:bg-[#30B753] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 shadow-sm cursor-pointer"
+                    title="Tarik seluruh data produk dari sistem seller (TikTok Shop, Shopee, Tokopedia) ke COOCA">
+                    <i data-lucide="download" class="w-4 h-4"></i>
+                    <span>Tarik Produk dari Toko</span>
                 </button>
             </form>
+
+            {{-- 1-Click Push / Sync All Price & Stock to Marketplace --}}
+            <form method="POST" action="{{ route('marketplace-hub.products.sync-all') }}" onsubmit="return typeof AppAlert !== 'undefined' ? AppAlert.confirmSubmit(event, this, 'Data harga dan stok seluruh produk aktif akan dikirimkan serentak ke Shopee, TikTok Shop, dan Tokopedia.', 'Mulai Sinkronisasi Massal?', 'info') : true">
+                @csrf
+                <button type="submit"
+                    class="min-h-[44px] sm:min-h-0 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 shadow-sm cursor-pointer"
+                    title="Kirim pembaruan harga dan stok dari COOCA ke seluruh marketplace">
+                    <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                    <span>Sinkronkan ke Toko</span>
+                </button>
+            </form>
+
+            <a href="{{ route('import.index') }}"
+                class="min-h-[44px] sm:min-h-0 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] flex items-center justify-center gap-1.5 cursor-pointer"
+                title="Impor massal dari file Excel/CSV">
+                <i data-lucide="file-spreadsheet" class="w-4 h-4"></i>
+                <span class="hidden md:inline">Impor Excel</span>
+            </a>
+
             <a href="{{ route('marketplace-hub.index') }}"
                 class="min-h-[44px] sm:min-h-0 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] flex items-center justify-center gap-1.5 cursor-pointer">
                 <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                <span>Kembali ke Hub</span>
+                <span>Kembali</span>
             </a>
         </x-slot:actions>
     </x-module-header>
@@ -106,13 +158,60 @@
         </div>
     @endif
 
+    {{-- SELLER CENTER ONBOARDING & REVERSE SYNC BANNER --}}
+    <div x-data="{ expanded: false }" class="rounded-[20px] bg-gradient-to-r from-[#007AFF]/5 via-[#34C759]/5 to-transparent border border-black/5 dark:border-white/10 p-4 sm:p-5">
+        <div class="flex items-start justify-between gap-4">
+            <div class="flex items-start gap-3.5">
+                <div class="w-10 h-10 rounded-[12px] bg-[#34C759]/15 flex items-center justify-center shrink-0">
+                    <i data-lucide="store" class="w-5 h-5 text-[#34C759]"></i>
+                </div>
+                <div>
+                    <h4 class="text-[14px] font-bold text-black dark:text-white flex items-center gap-2 flex-wrap">
+                        <span>Sudah Memiliki Produk di Seller Center (TikTok / Shopee / Tokopedia)?</span>
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#34C759] text-white">REVERSE SYNC</span>
+                    </h4>
+                    <p class="text-[12.5px] text-black/70 dark:text-white/70 leading-relaxed mt-0.5">
+                        Anda tidak perlu input ulang satu per satu. COOCA mendukung penarikan otomatis katalog langsung dari akun marketplace terhubung ke master data COOCA.
+                    </p>
+                </div>
+            </div>
+            <button @click="expanded = !expanded" type="button" class="text-[12px] font-semibold text-[#007AFF] hover:underline shrink-0 flex items-center gap-1 cursor-pointer">
+                <span x-text="expanded ? 'Tutup Panduan' : 'Lihat Cara Tarik Data'"></span>
+                <i data-lucide="chevron-down" class="w-3.5 h-3.5 transition-transform" :class="expanded ? 'rotate-180' : ''"></i>
+            </button>
+        </div>
+
+        <div x-show="expanded" x-collapse class="mt-4 pt-4 border-t border-black/5 dark:border-white/10 grid grid-cols-1 md:grid-cols-2 gap-4 text-[12.5px]">
+            <div class="p-3.5 rounded-[14px] bg-white/60 dark:bg-black/20 border border-black/5 dark:border-white/5 space-y-1.5">
+                <div class="flex items-center gap-2 font-bold text-black dark:text-white">
+                    <span class="w-5 h-5 rounded-full bg-[#34C759] text-white text-[11px] flex items-center justify-center">1</span>
+                    <span>Opsi Otomatis: Tarik via API Langsung</span>
+                </div>
+                <p class="text-black/60 dark:text-white/60">
+                    Klik tombol hijau <strong>"Tarik Produk dari Toko"</strong> di atas. COOCA akan membaca seluruh produk aktif di Seller Center Anda, membuat master produk baru di COOCA, serta memetakan SKU dan stok otomatis.
+                </p>
+            </div>
+            <div class="p-3.5 rounded-[14px] bg-white/60 dark:bg-black/20 border border-black/5 dark:border-white/5 space-y-1.5">
+                <div class="flex items-center gap-2 font-bold text-black dark:text-white">
+                    <span class="w-5 h-5 rounded-full bg-[#007AFF] text-white text-[11px] flex items-center justify-center">2</span>
+                    <span>Opsi File: Impor Massal Excel / CSV</span>
+                </div>
+                <p class="text-black/60 dark:text-white/60">
+                    Ekspor daftar produk dari Seller Center marketplace Anda (menu Ekspor / Mass Update), lalu unggah file ke <a href="{{ route('import.index') }}" class="text-[#007AFF] font-bold hover:underline">Pusat Impor Data COOCA</a> untuk memproses ribuan SKU sekaligus.
+                </p>
+            </div>
+        </div>
+    </div>
+
     <!-- ===================================================== -->
-    <!-- 2. SEARCH & FILTER BAR                                -->
+    <!-- 2. SEARCH & MULTI-CHANNEL FILTER BAR                  -->
     <!-- ===================================================== -->
-    <div class="rounded-[18px] bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 p-3.5 sm:p-4 backdrop-blur-md flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3.5 shadow-xs">
-        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 flex-1">
+    <div class="rounded-[20px] bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 p-3.5 sm:p-4 backdrop-blur-md space-y-3 shadow-xs">
+        <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
             <form method="GET" action="{{ route('marketplace-hub.products') }}" class="flex-1 flex items-center gap-2">
                 <input type="hidden" name="type" value="{{ request('type', 'all') }}">
+                <input type="hidden" name="channel" value="{{ request('channel', 'all') }}">
+                <input type="hidden" name="risk" value="{{ request('risk', 'all') }}">
                 <div class="relative flex-1">
                     <i data-lucide="search" class="w-4 h-4 text-black/40 dark:text-white/40 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
                     <input type="text" name="q" value="{{ request('q') }}"
@@ -120,35 +219,78 @@
                         class="w-full h-10 pl-9 pr-4 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.06] dark:border-white/[0.08] text-[13px] text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/30">
                 </div>
                 <button type="submit"
-                    class="h-10 px-4 rounded-[12px] text-[13px] font-bold text-black dark:text-white bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] cursor-pointer">
+                    class="h-10 px-4 rounded-[12px] text-[13px] font-bold text-black dark:text-white bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] cursor-pointer transition-colors">
                     Cari
                 </button>
-                @if(request()->filled('q'))
-                    <a href="{{ route('marketplace-hub.products', ['type' => request('type', 'all')]) }}" class="h-10 px-3 rounded-[12px] text-[12.5px] font-medium text-black/50 hover:text-black dark:hover:text-white flex items-center">
-                        Reset
+                @if(request()->filled('q') || request('channel', 'all') !== 'all' || request('type', 'all') !== 'all' || request('risk', 'all') !== 'all')
+                    <a href="{{ route('marketplace-hub.products') }}" class="h-10 px-3 rounded-[12px] text-[12.5px] font-medium text-black/50 hover:text-black dark:hover:text-white flex items-center transition-colors">
+                        Reset Filter
                     </a>
                 @endif
             </form>
 
-            <!-- Type Filter Segmented Pill -->
-            <div class="flex items-center gap-1 p-1 rounded-[13px] bg-black/[0.04] dark:bg-white/[0.06] shrink-0 self-start sm:self-auto">
-                <a href="{{ route('marketplace-hub.products', array_merge(request()->query(), ['type' => 'all', 'page' => 1])) }}"
-                    class="px-3 py-1.5 rounded-[9px] text-[12px] font-semibold transition-all {{ request('type', 'all') === 'all' ? 'bg-white dark:bg-[#2C2C2E] shadow-xs text-black dark:text-white' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
-                    Semua
-                </a>
-                <a href="{{ route('marketplace-hub.products', array_merge(request()->query(), ['type' => 'goods', 'page' => 1])) }}"
-                    class="px-3 py-1.5 rounded-[9px] text-[12px] font-semibold transition-all {{ request('type', 'all') === 'goods' ? 'bg-white dark:bg-[#2C2C2E] shadow-xs text-[#007AFF]' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
-                    Barang Fisik
-                </a>
-                <a href="{{ route('marketplace-hub.products', array_merge(request()->query(), ['type' => 'service', 'page' => 1])) }}"
-                    class="px-3 py-1.5 rounded-[9px] text-[12px] font-semibold transition-all {{ request('type', 'all') === 'service' ? 'bg-white dark:bg-[#2C2C2E] shadow-xs text-[#FF9500]' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
-                    Layanan Jasa
-                </a>
+            <div class="flex items-center gap-2 self-start md:self-auto text-[12px] text-black/60 dark:text-white/60">
+                <span class="font-medium">Total: <strong class="text-black dark:text-white">{{ $products->total() }}</strong> Produk</span>
             </div>
         </div>
 
-        <div class="flex items-center gap-2 self-start md:self-auto text-[12px] text-black/60 dark:text-white/60">
-            <span class="font-medium">Total: {{ $products->total() }} Produk</span>
+        <!-- Filter Segmented Tabs (Channel + Type + Risk) -->
+        <div class="flex flex-wrap items-center justify-between gap-2.5 pt-2 border-t border-black/[0.04] dark:border-white/[0.06]">
+            <!-- 1. Channel Filter Pills -->
+            <div class="flex items-center gap-1 p-1 rounded-[13px] bg-black/[0.04] dark:bg-white/[0.06] flex-wrap">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-black/40 dark:text-white/40 px-2">Saluran:</span>
+                <a href="{{ route('marketplace-hub.products', array_merge(request()->query(), ['channel' => 'all', 'page' => 1])) }}"
+                    class="px-3 py-1 rounded-[8px] text-[11.5px] font-semibold transition-all {{ request('channel', 'all') === 'all' ? 'bg-white dark:bg-[#2C2C2E] shadow-xs text-black dark:text-white font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
+                    Semua
+                </a>
+                <a href="{{ route('marketplace-hub.products', array_merge(request()->query(), ['channel' => 'tiktok_shop', 'page' => 1])) }}"
+                    class="px-3 py-1 rounded-[8px] text-[11.5px] font-semibold transition-all flex items-center gap-1.5 {{ request('channel') === 'tiktok_shop' ? 'bg-white dark:bg-[#2C2C2E] shadow-xs text-black dark:text-white font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
+                    <span class="w-1.5 h-1.5 rounded-full bg-black dark:bg-white"></span>
+                    <span>TikTok Shop</span>
+                </a>
+                <a href="{{ route('marketplace-hub.products', array_merge(request()->query(), ['channel' => 'shopee', 'page' => 1])) }}"
+                    class="px-3 py-1 rounded-[8px] text-[11.5px] font-semibold transition-all flex items-center gap-1.5 {{ request('channel') === 'shopee' ? 'bg-white dark:bg-[#2C2C2E] shadow-xs text-[#EE4D2D] font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#EE4D2D]"></span>
+                    <span>Shopee</span>
+                </a>
+                <a href="{{ route('marketplace-hub.products', array_merge(request()->query(), ['channel' => 'tokopedia', 'page' => 1])) }}"
+                    class="px-3 py-1 rounded-[8px] text-[11.5px] font-semibold transition-all flex items-center gap-1.5 {{ request('channel') === 'tokopedia' ? 'bg-white dark:bg-[#2C2C2E] shadow-xs text-[#00AA5B] font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#00AA5B]"></span>
+                    <span>Tokopedia</span>
+                </a>
+                <a href="{{ route('marketplace-hub.products', array_merge(request()->query(), ['channel' => 'unmapped', 'page' => 1])) }}"
+                    class="px-3 py-1 rounded-[8px] text-[11.5px] font-semibold transition-all {{ request('channel') === 'unmapped' ? 'bg-white dark:bg-[#2C2C2E] shadow-xs text-[#007AFF] font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
+                    Belum Terpetakan
+                </a>
+            </div>
+
+            <div class="flex items-center gap-2 flex-wrap">
+                <!-- 2. Type Filter Pills -->
+                <div class="flex items-center gap-1 p-1 rounded-[13px] bg-black/[0.04] dark:bg-white/[0.06]">
+                    <a href="{{ route('marketplace-hub.products', array_merge(request()->query(), ['type' => 'all', 'page' => 1])) }}"
+                        class="px-2.5 py-1 rounded-[8px] text-[11.5px] font-semibold transition-all {{ request('type', 'all') === 'all' ? 'bg-white dark:bg-[#2C2C2E] shadow-xs text-black dark:text-white' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
+                        Semua Tipe
+                    </a>
+                    <a href="{{ route('marketplace-hub.products', array_merge(request()->query(), ['type' => 'goods', 'page' => 1])) }}"
+                        class="px-2.5 py-1 rounded-[8px] text-[11.5px] font-semibold transition-all {{ request('type', 'all') === 'goods' ? 'bg-white dark:bg-[#2C2C2E] shadow-xs text-[#007AFF]' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
+                        Barang Fisik
+                    </a>
+                    <a href="{{ route('marketplace-hub.products', array_merge(request()->query(), ['type' => 'service', 'page' => 1])) }}"
+                        class="px-2.5 py-1 rounded-[8px] text-[11.5px] font-semibold transition-all {{ request('type', 'all') === 'service' ? 'bg-white dark:bg-[#2C2C2E] shadow-xs text-[#FF9500]' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
+                        Jasa
+                    </a>
+                </div>
+
+                <!-- 3. Risk Alert Pill -->
+                <div class="flex items-center gap-1 p-1 rounded-[13px] bg-black/[0.04] dark:bg-white/[0.06]">
+                    <a href="{{ route('marketplace-hub.products', array_merge(request()->query(), ['risk' => request('risk') === 'out_of_stock' ? 'all' : 'out_of_stock', 'page' => 1])) }}"
+                        class="px-2.5 py-1 rounded-[8px] text-[11.5px] font-semibold transition-all flex items-center gap-1 {{ request('risk') === 'out_of_stock' ? 'bg-[#FF3B30] text-white shadow-xs font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}"
+                        title="Tampilkan hanya produk dengan stok fisik habis">
+                        <i data-lucide="package-x" class="w-3.5 h-3.5"></i>
+                        <span>Stok Kosong</span>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -192,6 +334,7 @@
 
                             $isRestrictedDrug = $isPharmacy && $product->isRestrictedPharmacyProduct();
                             $isServiceItem    = $product->isService();
+                            $photoCount       = ($product->relationLoaded('images') ? $product->images->count() : 0) + ($product->image ? 1 : 0);
                         @endphp
                         <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.015] transition-colors">
                             <!-- Column 1: Product Name & Code -->
@@ -210,18 +353,25 @@
                                         </span>
                                     @endif
                                 </div>
-                                <div class="flex items-center gap-2 text-[11.5px] text-black/50 dark:text-white/50 mt-0.5 flex-wrap">
-                                    <span class="font-mono">{{ $product->code ?? 'NO-SKU' }}</span>
+                                <div class="flex items-center gap-2 text-[11.5px] text-black/50 dark:text-white/50 mt-1 flex-wrap">
+                                    <span class="font-mono bg-black/[0.04] dark:bg-white/[0.06] px-1.5 py-0.5 rounded">{{ $product->code ?? 'NO-SKU' }}</span>
                                     <span>•</span>
                                     @if($isServiceItem)
                                         <span class="text-[#FF9500] font-medium">Non-Fisik (Jasa)</span>
                                     @else
-                                        <span>Stok Fisik: <strong class="text-black dark:text-white">{{ $product->stock ?? 0 }}</strong> {{ $product->unit ?? 'pcs' }}</span>
+                                        <span>Stok Fisik: <strong class="{{ ($product->stock ?? 0) <= 0 ? 'text-[#FF3B30]' : 'text-black dark:text-white' }}">{{ $product->stock ?? 0 }}</strong> {{ $product->unit ?? 'pcs' }}</span>
                                     @endif
                                     @if($product->base_cost > 0)
                                         <span>•</span>
                                         <span>HPP: <strong class="font-mono text-black dark:text-white">Rp {{ number_format((float)$product->base_cost, 0, ',', '.') }}</strong></span>
                                     @endif
+                                    <span>•</span>
+                                    <span class="text-[11px] text-black/45 dark:text-white/45">Berat: {{ (int)($product->weight ?: 200) }}g</span>
+                                    <span>•</span>
+                                    <span class="inline-flex items-center gap-1 text-[11px] {{ $photoCount >= 5 ? 'text-[#34C759]' : 'text-black/50 dark:text-white/50' }}">
+                                        <i data-lucide="camera" class="w-3 h-3"></i>
+                                        <span>{{ $photoCount }} Foto</span>
+                                    </span>
                                 </div>
                             </td>
 
@@ -249,8 +399,26 @@
                                     <div class="font-bold text-[#EE4D2D] text-[13px]">
                                         Rp {{ number_format((float)$shopeeMapping->getEffectivePrice(), 0, ',', '.') }}
                                     </div>
-                                    <div class="text-[10.5px] text-black/50 dark:text-white/50">
-                                        {{ $shopeeMapping->sync_price_auto ? 'Otomatis' : 'Harga Khusus' }}
+                                    @if($shopeeMapping->isBelowCost())
+                                        <div class="mt-0.5">
+                                            <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9.5px] font-bold bg-[#FF3B30]/15 text-[#FF3B30] border border-[#FF3B30]/30" title="Harga jual saluran di bawah modal dasar HPP!">
+                                                <i data-lucide="shield-alert" class="w-2.5 h-2.5"></i>
+                                                <span>Di Bawah HPP</span>
+                                            </span>
+                                        </div>
+                                    @elseif($shopeeMapping->isMarginNegativeAfterFees())
+                                        <div class="mt-0.5">
+                                            <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9.5px] font-semibold bg-[#FF9500]/15 text-[#FF9500]" title="Potensi defisit margin setelah potongan komisi platform ~8%">
+                                                <i data-lucide="alert-triangle" class="w-2.5 h-2.5"></i>
+                                                <span>Margin Tipis</span>
+                                            </span>
+                                        </div>
+                                    @endif
+                                    <div class="text-[10.5px] text-black/50 dark:text-white/50 mt-0.5">
+                                        <span>Stok: <strong>{{ $shopeeMapping->getEffectiveStock($product->stock ?? 0) }}</strong></span>
+                                        @if($shopeeMapping->sync_stock_auto && $shopeeMapping->stock_buffer > 0)
+                                            <span class="text-[9.5px] opacity-75" title="Stok Pengaman Toko Offline">(Buf: {{ $shopeeMapping->stock_buffer }})</span>
+                                        @endif
                                     </div>
                                     <button type="button" @click="openMapping('{{ $product->id }}', 'shopee')"
                                         class="text-[11px] font-semibold text-[#007AFF] hover:underline mt-1 inline-block cursor-pointer">
@@ -281,8 +449,26 @@
                                     <div class="font-bold text-black dark:text-white text-[13px]">
                                         Rp {{ number_format((float)$tiktokMapping->getEffectivePrice(), 0, ',', '.') }}
                                     </div>
-                                    <div class="text-[10.5px] text-black/50 dark:text-white/50">
-                                        {{ $tiktokMapping->sync_price_auto ? 'Otomatis' : 'Harga Khusus' }}
+                                    @if($tiktokMapping->isBelowCost())
+                                        <div class="mt-0.5">
+                                            <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9.5px] font-bold bg-[#FF3B30]/15 text-[#FF3B30] border border-[#FF3B30]/30" title="Harga jual saluran di bawah modal dasar HPP!">
+                                                <i data-lucide="shield-alert" class="w-2.5 h-2.5"></i>
+                                                <span>Di Bawah HPP</span>
+                                            </span>
+                                        </div>
+                                    @elseif($tiktokMapping->isMarginNegativeAfterFees())
+                                        <div class="mt-0.5">
+                                            <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9.5px] font-semibold bg-[#FF9500]/15 text-[#FF9500]" title="Potensi defisit margin setelah potongan komisi platform ~8%">
+                                                <i data-lucide="alert-triangle" class="w-2.5 h-2.5"></i>
+                                                <span>Margin Tipis</span>
+                                            </span>
+                                        </div>
+                                    @endif
+                                    <div class="text-[10.5px] text-black/50 dark:text-white/50 mt-0.5">
+                                        <span>Stok: <strong>{{ $tiktokMapping->getEffectiveStock($product->stock ?? 0) }}</strong></span>
+                                        @if($tiktokMapping->sync_stock_auto && $tiktokMapping->stock_buffer > 0)
+                                            <span class="text-[9.5px] opacity-75" title="Stok Pengaman Toko Offline">(Buf: {{ $tiktokMapping->stock_buffer }})</span>
+                                        @endif
                                     </div>
                                     <button type="button" @click="openMapping('{{ $product->id }}', 'tiktok_shop')"
                                         class="text-[11px] font-semibold text-[#007AFF] hover:underline mt-1 inline-block cursor-pointer">
@@ -313,8 +499,26 @@
                                     <div class="font-bold text-[#00AA5B] text-[13px]">
                                         Rp {{ number_format((float)$tokpedMapping->getEffectivePrice(), 0, ',', '.') }}
                                     </div>
-                                    <div class="text-[10.5px] text-black/50 dark:text-white/50">
-                                        {{ $tokpedMapping->sync_price_auto ? 'Otomatis' : 'Harga Khusus' }}
+                                    @if($tokpedMapping->isBelowCost())
+                                        <div class="mt-0.5">
+                                            <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9.5px] font-bold bg-[#FF3B30]/15 text-[#FF3B30] border border-[#FF3B30]/30" title="Harga jual saluran di bawah modal dasar HPP!">
+                                                <i data-lucide="shield-alert" class="w-2.5 h-2.5"></i>
+                                                <span>Di Bawah HPP</span>
+                                            </span>
+                                        </div>
+                                    @elseif($tokpedMapping->isMarginNegativeAfterFees())
+                                        <div class="mt-0.5">
+                                            <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9.5px] font-semibold bg-[#FF9500]/15 text-[#FF9500]" title="Potensi defisit margin setelah potongan komisi platform ~8%">
+                                                <i data-lucide="alert-triangle" class="w-2.5 h-2.5"></i>
+                                                <span>Margin Tipis</span>
+                                            </span>
+                                        </div>
+                                    @endif
+                                    <div class="text-[10.5px] text-black/50 dark:text-white/50 mt-0.5">
+                                        <span>Stok: <strong>{{ $tokpedMapping->getEffectiveStock($product->stock ?? 0) }}</strong></span>
+                                        @if($tokpedMapping->sync_stock_auto && $tokpedMapping->stock_buffer > 0)
+                                            <span class="text-[9.5px] opacity-75" title="Stok Pengaman Toko Offline">(Buf: {{ $tokpedMapping->stock_buffer }})</span>
+                                        @endif
                                     </div>
                                     <button type="button" @click="openMapping('{{ $product->id }}', 'tokopedia')"
                                         class="text-[11px] font-semibold text-[#007AFF] hover:underline mt-1 inline-block cursor-pointer">
@@ -417,7 +621,7 @@
             </div>
 
             <!-- Form -->
-            <form method="POST" action="{{ route('marketplace-hub.products.map') }}" @submit="submitting = true" class="space-y-6">
+            <form method="POST" action="{{ route('marketplace-hub.products.map') }}" @submit="handleFormSubmit($event)" class="space-y-6">
                 @csrf
                 <input type="hidden" name="product_id" :value="form.product_id">
                 <input type="hidden" name="channel" :value="form.channel">
@@ -543,20 +747,39 @@
                         <!-- 2. Marketplace Listing Status & Item ID/SKU -->
                         <div class="space-y-3">
                             <div class="p-3.5 rounded-[16px] border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 text-[12.5px]"
-                                :class="form.marketplace_item_id ? 'bg-[#34C759]/10 border-[#34C759]/20 text-[#248A3D] dark:text-[#30D158]' : 'bg-[#007AFF]/10 border-[#007AFF]/20 text-[#007AFF]'">
+                                :class="form.marketplace_item_id ? (form.is_active ? 'bg-[#34C759]/10 border-[#34C759]/20 text-[#248A3D] dark:text-[#30D158]' : 'bg-[#FF9500]/10 border-[#FF9500]/20 text-[#FF9500]') : 'bg-[#007AFF]/10 border-[#007AFF]/20 text-[#007AFF]'">
                                 <div class="flex items-center gap-2.5">
-                                    <i :data-lucide="form.marketplace_item_id ? 'check-circle-2' : 'sparkles'" class="w-4 h-4 shrink-0"></i>
+                                    <i :data-lucide="form.marketplace_item_id ? (form.is_active ? 'check-circle-2' : 'pause-circle') : 'sparkles'" class="w-4 h-4 shrink-0"></i>
                                     <div>
                                         <template x-if="form.marketplace_item_id">
-                                            <span>Terhubung di channel: <strong class="font-mono" x-text="form.marketplace_item_id"></strong></span>
+                                            <div class="flex items-center gap-2 flex-wrap">
+                                                <span>Item ID: <strong class="font-mono" x-text="form.marketplace_item_id"></strong></span>
+                                                <span class="font-bold px-2 py-0.5 rounded text-[10.5px]" :class="form.is_active ? 'bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158]' : 'bg-[#FF9500]/20 text-[#FF9500]'" x-text="form.is_active ? 'Aktif di Etalase' : 'Non-Aktif / Tarik dari Etalase'"></span>
+                                            </div>
                                         </template>
                                         <template x-if="!form.marketplace_item_id">
                                             <span>Belum terdaftar di channel ini. Klik <strong>"1-Click Terbitkan"</strong> di bawah untuk otomatis upload galeri &amp; terbitkan listing baru.</span>
                                         </template>
                                     </div>
                                 </div>
-                                <div x-show="selectedProduct" class="shrink-0 text-[11px] font-semibold opacity-90 px-2.5 py-0.5 rounded-full bg-white/60 dark:bg-black/20 border border-current/20">
-                                    <span x-text="((selectedProduct?.images ? selectedProduct.images.length : 0) + (selectedProduct?.image ? 1 : 0)) + ' Foto Siap Terbit'"></span>
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <template x-if="form.marketplace_item_id && form.channel === 'tiktok_shop'">
+                                        <div class="flex items-center gap-1.5">
+                                            <button type="button" x-show="form.is_active" @click="toggleChannelProductStatus('deactivate')" :disabled="togglingStatus"
+                                                class="px-2.5 py-1 rounded-[10px] text-[11px] font-bold bg-[#FF3B30]/15 text-[#FF3B30] hover:bg-[#FF3B30]/25 transition-all flex items-center gap-1 cursor-pointer">
+                                                <i data-lucide="eye-off" class="w-3.5 h-3.5"></i>
+                                                <span x-text="togglingStatus ? 'Memproses...' : 'Tarik dari Etalase'"></span>
+                                            </button>
+                                            <button type="button" x-show="!form.is_active" @click="toggleChannelProductStatus('activate')" :disabled="togglingStatus"
+                                                class="px-2.5 py-1 rounded-[10px] text-[11px] font-bold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158] hover:bg-[#34C759]/25 transition-all flex items-center gap-1 cursor-pointer">
+                                                <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                                                <span x-text="togglingStatus ? 'Memproses...' : 'Aktifkan ke Etalase'"></span>
+                                            </button>
+                                        </div>
+                                    </template>
+                                    <div x-show="selectedProduct" class="shrink-0 text-[11px] font-semibold opacity-90 px-2.5 py-0.5 rounded-full bg-white/60 dark:bg-black/20 border border-current/20">
+                                        <span x-text="((selectedProduct?.images ? selectedProduct.images.length : 0) + (selectedProduct?.image ? 1 : 0)) + ' Foto'"></span>
+                                    </div>
                                 </div>
                             </div>
 
@@ -765,6 +988,21 @@
                                         Unit yang selalu dicadangkan untuk kasir toko offline (tidak akan dikirim ke marketplace).
                                     </div>
                                 </div>
+
+                                <!-- Live anti-overselling stock calculation -->
+                                <div class="p-2.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.06] dark:border-white/[0.08] text-[11.5px] text-black/70 dark:text-white/70 flex items-center justify-between gap-2" x-show="selectedProduct">
+                                    <div class="flex items-center gap-1.5">
+                                        <i data-lucide="shield-check" class="w-4 h-4 text-[#34C759]"></i>
+                                        <span>Simulasi Alokasi Marketplace:</span>
+                                    </div>
+                                    <div class="font-mono font-bold text-black dark:text-white">
+                                        <span x-text="selectedProduct ? selectedProduct.stock : 0"></span> (Gudang) - <span x-text="form.stock_buffer || 0"></span> (Buffer) = <span class="text-[#007AFF] text-[13px]" x-text="effectiveChannelStock"></span> unit
+                                    </div>
+                                </div>
+                                <div x-show="isBufferExceedingStock" class="p-2.5 rounded-[12px] bg-[#FF9500]/10 border border-[#FF9500]/25 text-[#FF9500] text-[11.5px] flex items-center gap-2">
+                                    <i data-lucide="shield-alert" class="w-4 h-4 shrink-0"></i>
+                                    <span>Cadangan buffer melebihi stok gudang! Stok saluran otomatis diset 0 unit untuk mencegah overselling.</span>
+                                </div>
                             </div>
 
                             <!-- If Manual: Custom Stock -->
@@ -794,9 +1032,66 @@
                         </div>
                     </div>
 
-                    <!-- ================= RIGHT COLUMN: LIVE FINANCIAL CALCULATOR & TIPS (5 COLS) ================= -->
+                    <!-- ================= RIGHT COLUMN: PRE-FLIGHT INSPECTION, FINANCIAL CALCULATOR & TIPS (5 COLS) ================= -->
                     <div class="lg:col-span-5 space-y-4">
                         
+                        <!-- Pre-flight Listing Readiness Inspection (Apple HIG Bento) -->
+                        <div class="rounded-[22px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] p-5 space-y-3.5 shadow-xs" x-show="selectedProduct">
+                            <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-3">
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="clipboard-check" class="w-4 h-4 text-[#34C759]"></i>
+                                    <h4 class="text-[13px] font-bold text-black dark:text-white">Pemeriksaan Kesiapan Listing</h4>
+                                </div>
+                                <template x-if="galleryPhotos.length >= 5">
+                                    <span class="text-[10.5px] font-bold px-2.5 py-0.5 rounded-full bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]">
+                                        ✓ Optimal (5+ Foto)
+                                    </span>
+                                </template>
+                                <template x-if="galleryPhotos.length > 0 && galleryPhotos.length < 5">
+                                    <span class="text-[10.5px] font-bold px-2.5 py-0.5 rounded-full bg-[#007AFF]/10 text-[#007AFF]">
+                                        <span x-text="galleryPhotos.length + ' Foto'"></span>
+                                    </span>
+                                </template>
+                                <template x-if="galleryPhotos.length === 0">
+                                    <span class="text-[10.5px] font-bold px-2.5 py-0.5 rounded-full bg-[#FF3B30]/15 text-[#FF3B30]">
+                                        ⚠️ Tanpa Foto
+                                    </span>
+                                </template>
+                            </div>
+
+                            <!-- Gallery thumbnails preview strip -->
+                            <div class="space-y-1.5">
+                                <div class="flex items-center justify-between text-[11px] text-black/50 dark:text-white/50">
+                                    <span>Galeri Foto Listing (<span x-text="galleryPhotos.length"></span> foto siap sync):</span>
+                                    <span x-show="galleryPhotos.length >= 5" class="text-[#34C759] font-medium">Sesuai standar TikTok Shop &amp; Tokopedia</span>
+                                    <span x-show="galleryPhotos.length > 0 && galleryPhotos.length < 5" class="text-black/40 dark:text-white/40">Saran: minimal 5 foto</span>
+                                </div>
+                                <div class="flex items-center gap-2 overflow-x-auto pb-1 custom-scrollbar">
+                                    <template x-for="(photo, pidx) in galleryPhotos" :key="pidx">
+                                        <div class="relative w-12 h-12 rounded-[10px] overflow-hidden border border-black/10 dark:border-white/10 shrink-0 group bg-black/5 dark:bg-white/5">
+                                            <img :src="photo.url" class="w-full h-full object-cover" :alt="photo.caption || 'Foto Produk'">
+                                            <span class="absolute bottom-0 inset-x-0 bg-black/70 text-white text-[8px] font-bold text-center py-0.5 truncate" x-text="pidx === 0 ? 'Utama' : '#' + (pidx + 1)"></span>
+                                        </div>
+                                    </template>
+                                    <div x-show="galleryPhotos.length === 0" class="w-full py-3 text-center text-[11.5px] text-[#FF3B30] bg-[#FF3B30]/10 rounded-[10px] border border-[#FF3B30]/20 font-medium">
+                                        ⚠️ Belum ada foto produk. Harap upload foto di menu Produk &amp; Jasa.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Logistics Specs (Weight & Dimensions) -->
+                            <div class="grid grid-cols-2 gap-2 text-[11.5px] pt-1">
+                                <div class="p-2 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.04] dark:border-white/[0.06]">
+                                    <span class="text-black/50 dark:text-white/50 block text-[10.5px]">Berat Paket Ekspedisi:</span>
+                                    <span class="font-bold text-black dark:text-white font-mono" x-text="(selectedProduct?.weight || 200) + ' gram'"></span>
+                                </div>
+                                <div class="p-2 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.04] dark:border-white/[0.06]">
+                                    <span class="text-black/50 dark:text-white/50 block text-[10.5px]">Dimensi Paket (P×L×T):</span>
+                                    <span class="font-bold text-black dark:text-white font-mono" x-text="(selectedProduct?.length || 10) + '×' + (selectedProduct?.width || 10) + '×' + (selectedProduct?.height || 10) + ' cm'"></span>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Financial Summary Card (Apple HIG Bento) -->
                         <div class="rounded-[22px] bg-gradient-to-br from-black/[0.02] to-black/[0.05] dark:from-white/[0.03] dark:to-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] p-5 space-y-4 shadow-xs">
                             <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-3">
@@ -840,8 +1135,19 @@
                                 </div>
                             </div>
 
+                            <!-- Zero-Price Warning (Accidental Free Product Guard) -->
+                            <div x-show="isZeroPrice" class="p-3.5 rounded-[16px] bg-[#FF3B30]/10 border border-[#FF3B30]/30 space-y-1 text-[#FF3B30]">
+                                <div class="flex items-center gap-2 text-[12px] font-bold">
+                                    <i data-lucide="alert-octagon" class="w-4 h-4 shrink-0"></i>
+                                    <span>PERINGATAN HARGA NOL (GRATIS)</span>
+                                </div>
+                                <p class="text-[11.5px] text-black/80 dark:text-white/80 leading-tight">
+                                    Harga jual saluran tidak boleh Rp 0 atau kosong untuk mencegah pesanan gratis yang merugikan toko.
+                                </p>
+                            </div>
+
                             <!-- Anti-Margin Bleed Alert & Risk Consent (Guardrail 3) -->
-                            <div x-show="isBelowCost" class="p-3.5 rounded-[16px] bg-[#FF3B30]/10 border border-[#FF3B30]/30 space-y-2.5 text-[#FF3B30]">
+                            <div x-show="!isZeroPrice && isBelowCost" class="p-3.5 rounded-[16px] bg-[#FF3B30]/10 border border-[#FF3B30]/30 space-y-2.5 text-[#FF3B30]">
                                 <div class="flex items-start gap-2.5">
                                     <i data-lucide="shield-alert" class="w-4 h-4 shrink-0 mt-0.5 text-[#FF3B30]"></i>
                                     <div class="space-y-1">
@@ -863,7 +1169,7 @@
                             </div>
 
                             <!-- Bleed Warning if Margin is Negative but above Base Cost -->
-                            <div x-show="!isBelowCost && computedNetMargin < 0" class="p-3 rounded-[12px] bg-[#FF3B30]/10 border border-[#FF3B30]/20 flex items-start gap-2.5 text-[#FF3B30]">
+                            <div x-show="!isZeroPrice && !isBelowCost && computedNetMargin < 0" class="p-3 rounded-[12px] bg-[#FF3B30]/10 border border-[#FF3B30]/20 flex items-start gap-2.5 text-[#FF3B30]">
                                 <i data-lucide="alert-octagon" class="w-4 h-4 shrink-0 mt-0.5"></i>
                                 <div class="text-[11.5px] leading-tight font-medium">
                                     <strong>Peringatan Potensi Rugi!</strong> Harga jual saluran setelah potongan fee platform (~8%) berada di bawah modal dasar (HPP).
@@ -910,7 +1216,7 @@
                             class="h-11 px-4 rounded-[14px] text-[13px] font-semibold text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] transition-all cursor-pointer">
                             Batal
                         </button>
-                        <button type="button" @click="publishToMarketplace()" :disabled="publishing || submitting || (isBelowCost && !form.allow_below_cost)"
+                        <button type="button" @click="publishToMarketplace()" :disabled="publishing || submitting || isZeroPrice || (isBelowCost && !form.allow_below_cost)"
                             class="h-11 px-5 rounded-[14px] text-[13px] font-bold text-white bg-[#34C759] hover:bg-[#28A745] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer"
                             title="Upload listing baru dan seluruh foto galeri langsung ke marketplace">
                             <svg x-show="publishing" class="animate-spin w-4 h-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -918,15 +1224,15 @@
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
                             <i x-show="!publishing" data-lucide="cloud-upload" class="w-4 h-4"></i>
-                            <span x-text="publishing ? 'Menerbitkan Listing...' : '1-Click Terbitkan ke ' + (form.channel === 'tiktok_shop' ? 'TikTok Shop' : (form.channel === 'tokopedia' ? 'Tokopedia' : 'Shopee'))"></span>
+                            <span x-text="publishing ? 'Menyinkronkan...' : (isZeroPrice ? 'Masukkan Harga Terlebih Dahulu' : (form.marketplace_item_id ? 'Perbarui Listing di ' : '1-Click Terbitkan ke ') + (form.channel === 'tiktok_shop' ? 'TikTok Shop' : (form.channel === 'tokopedia' ? 'Tokopedia' : 'Shopee')))"></span>
                         </button>
-                        <button type="submit" :disabled="submitting || publishing || (isBelowCost && !form.allow_below_cost)"
+                        <button type="submit" :disabled="submitting || publishing || isZeroPrice || (isBelowCost && !form.allow_below_cost)"
                             class="h-11 px-5 rounded-[14px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer">
                             <svg x-show="submitting" class="animate-spin w-4 h-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
-                            <span x-text="submitting ? 'Menyimpan Pengaturan...' : (isBelowCost && !form.allow_below_cost ? 'Buka Kunci Risiko untuk Simpan' : 'Simpan Pengaturan Saluran')"></span>
+                            <span x-text="submitting ? 'Menyimpan Pengaturan...' : (isZeroPrice ? 'Masukkan Harga Saluran' : (isBelowCost && !form.allow_below_cost ? 'Buka Kunci Risiko untuk Simpan' : 'Simpan Pengaturan Saluran'))"></span>
                         </button>
 
                     </div>
@@ -957,6 +1263,7 @@
             syncModal: false,
             submitting: false,
             publishing: false,
+            togglingStatus: false,
             selectedProduct: null,
             categories: config.categories || [],
             productsMap: config.products || {},
@@ -1113,11 +1420,42 @@
                 this.stockMode = mode;
                 this.form.sync_stock_auto = (mode === 'auto');
             },
+            handleFormSubmit(e) {
+                if (this.isZeroPrice) {
+                    e.preventDefault();
+                    if (window.AppAlert) {
+                        AppAlert.toast('Harga efektif saluran tidak boleh Rp 0 atau kosong untuk mencegah pesanan gratis.', 'warning');
+                    } else {
+                        alert('Harga efektif saluran tidak boleh Rp 0 atau kosong untuk mencegah pesanan gratis.');
+                    }
+                    return false;
+                }
+                if (this.isBelowCost && !this.form.allow_below_cost) {
+                    e.preventDefault();
+                    if (window.AppAlert) {
+                        AppAlert.toast('Buka kunci persetujuan risiko harga di bawah modal dasar (HPP) untuk melanjutkan.', 'warning');
+                    } else {
+                        alert('Buka kunci persetujuan risiko harga di bawah modal dasar (HPP) untuk melanjutkan.');
+                    }
+                    return false;
+                }
+                this.submitting = true;
+            },
             async publishToMarketplace() {
                 if (!this.selectedProduct) return;
+                if (this.isZeroPrice) {
+                    if (window.AppAlert) {
+                        AppAlert.toast('Harga efektif saluran tidak boleh Rp 0 atau kosong.', 'warning');
+                    } else {
+                        alert('Harga efektif saluran tidak boleh Rp 0 atau kosong.');
+                    }
+                    return;
+                }
                 if (this.isBelowCost && !this.form.allow_below_cost) {
                     if (window.AppAlert) {
                         AppAlert.toast('Buka kunci persetujuan risiko harga di bawah modal dasar (HPP) untuk melanjutkan.', 'warning');
+                    } else {
+                        alert('Buka kunci persetujuan risiko harga di bawah modal dasar (HPP) untuk melanjutkan.');
                     }
                     return;
                 }
@@ -1127,7 +1465,7 @@
                 if (window.AppAlert && typeof window.AppAlert['confirm'] === 'function') {
                     const confirmed = await window.AppAlert['confirm'](
                         `1-Click Terbitkan ke ${channelName}?`,
-                        `Produk "${this.selectedProduct.name}" beserta foto utama dan seluruh galeri fotonya akan langsung diunggah dan dibuatkan listing baru di ${channelName}.`
+                        `Produk "${this.selectedProduct.name}" beserta foto utama dan seluruh galeri fotonya (${this.galleryPhotos.length} foto) akan langsung diunggah dan dibuatkan listing baru di ${channelName}.`
                     );
                     if (!confirmed) return;
                 }
@@ -1197,6 +1535,108 @@
                 } finally {
                     this.publishing = false;
                 }
+            },
+            async toggleChannelProductStatus(action) {
+                if (!this.selectedProduct || !this.form.marketplace_item_id) return;
+                const isDeactivate = action === 'deactivate';
+                const actionText = isDeactivate ? 'menonaktifkan / menarik produk dari etalase' : 'mengaktifkan kembali produk di etalase';
+                const channelName = this.form.channel === 'tiktok_shop' ? 'TikTok Shop' : (this.form.channel === 'tokopedia' ? 'Tokopedia' : 'Shopee');
+                
+                if (window.AppAlert && typeof window.AppAlert['confirm'] === 'function') {
+                    const confirmed = await window.AppAlert['confirm'](
+                        `Konfirmasi ${isDeactivate ? 'Tarik dari Etalase' : 'Aktifkan Produk'}?`,
+                        `Apakah Anda yakin ingin ${actionText} "${this.selectedProduct.name}" di ${channelName}?`
+                    );
+                    if (!confirmed) return;
+                }
+
+                this.togglingStatus = true;
+                try {
+                    const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+                    const endpoint = isDeactivate ? 'deactivate' : 'activate';
+                    const url = `/marketplace-hub/products/${this.selectedProduct.id}/${endpoint}`;
+
+                    const res = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': token || ''
+                        },
+                        body: JSON.stringify({
+                            channel: this.form.channel
+                        })
+                    });
+
+                    const data = await res.json();
+                    if (!res.ok || !data.success) {
+                        throw new Error(data.message || data.error || 'Gagal mengubah status etalase produk.');
+                    }
+
+                    this.form.is_active = !isDeactivate;
+
+                    if (window.AppAlert) {
+                        AppAlert.toast(data.message || 'Status produk berhasil diperbarui.', 'success');
+                    }
+                } catch (err) {
+                    if (window.AppAlert) {
+                        AppAlert.toast(err.message, 'error');
+                    } else {
+                        alert(err.message);
+                    }
+                } finally {
+                    this.togglingStatus = false;
+                }
+            },
+            get galleryPhotos() {
+                if (!this.selectedProduct) return [];
+                const photos = [];
+                if (this.selectedProduct.image) {
+                    photos.push({
+                        url: this.selectedProduct.image.startsWith('http') ? this.selectedProduct.image : ('/storage/' + this.selectedProduct.image),
+                        caption: 'Foto Utama'
+                    });
+                }
+                if (Array.isArray(this.selectedProduct.gallery_images)) {
+                    for (const img of this.selectedProduct.gallery_images) {
+                        const u = (typeof img === 'string') ? img : (img.image_url || img.path || '');
+                        if (u) {
+                            photos.push({
+                                url: u.startsWith('http') ? u : ('/storage/' + u),
+                                caption: img.caption || 'Foto Galeri'
+                            });
+                        }
+                    }
+                } else if (Array.isArray(this.selectedProduct.images)) {
+                    for (const img of this.selectedProduct.images) {
+                        const u = (typeof img === 'string') ? img : (img.image_url || img.path || '');
+                        if (u) {
+                            photos.push({
+                                url: u.startsWith('http') ? u : ('/storage/' + u),
+                                caption: img.caption || 'Foto Galeri'
+                            });
+                        }
+                    }
+                }
+                return photos;
+            },
+            get effectiveChannelStock() {
+                if (!this.selectedProduct) return 0;
+                if (this.stockMode === 'manual') {
+                    return Math.max(0, parseInt(this.form.custom_stock) || 0);
+                }
+                const physical = parseInt(this.selectedProduct.stock) || 0;
+                const buffer = parseInt(this.form.stock_buffer) || 0;
+                return Math.max(0, physical - buffer);
+            },
+            get isBufferExceedingStock() {
+                if (!this.selectedProduct || this.stockMode !== 'auto') return false;
+                const physical = parseInt(this.selectedProduct.stock) || 0;
+                const buffer = parseInt(this.form.stock_buffer) || 0;
+                return buffer > 0 && buffer >= physical;
+            },
+            get isZeroPrice() {
+                return !this.computedEffectivePrice || this.computedEffectivePrice <= 0;
             },
             get nominalDiffVsStore() {
                 if (!this.selectedProduct) return { amount: 0, rawDiff: 0, percent: 0, isHigher: true };

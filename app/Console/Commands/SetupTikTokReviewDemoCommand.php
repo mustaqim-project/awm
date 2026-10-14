@@ -22,8 +22,10 @@ class SetupTikTokReviewDemoCommand extends Command
      */
     protected $signature = 'marketplace:setup-tiktok-review
                             {--business= : Business ID or Slug (defaults to active/first business)}
-                            {--shop-id=IDLSA982736192 : TikTok Shop ID / Open ID}
-                            {--shop-name=COOCA Official Store Indonesia : Official TikTok Shop Name}
+                            {--shop-id= : TikTok Shop ID / Open ID}
+                            {--shop-name= : Official TikTok Shop Name}
+                            {--token= : Real TikTok Shop Access Token}
+                            {--cipher= : Real TikTok Shop Cipher}
                             {--disconnect : Disconnect instead of connect}';
 
     /**
@@ -60,8 +62,10 @@ class SetupTikTokReviewDemoCommand extends Command
             return self::FAILURE;
         }
 
-        $shopId   = (string) $this->option('shop-id');
-        $shopName = (string) $this->option('shop-name');
+        $shopId   = (string) ($this->option('shop-id') ?: '');
+        $shopName = (string) ($this->option('shop-name') ?: '');
+        $token    = (string) ($this->option('token') ?: '');
+        $cipher   = (string) ($this->option('cipher') ?: '');
 
         if ($this->option('disconnect')) {
             foreach ($businesses as $business) {
@@ -82,16 +86,20 @@ class SetupTikTokReviewDemoCommand extends Command
         }
 
         foreach ($businesses as $business) {
-            $this->setupBusiness($business, $shopId, $shopName);
+            $this->setupBusiness($business, $shopId, $shopName, $token, $cipher);
         }
+
+        $displayShopName = $shopName ?: ($token ? 'TikTok Shop Sandbox' : 'COOCA Official Store Indonesia');
+        $displayShopId   = $shopId ?: 'IDLSA982736192';
 
         $this->newLine();
         $this->info('================================================================');
         $this->info('  TIKTOK SHOP PARTNER REVIEW DEMO STATE READY (SEMUA BISNIS)     ');
         $this->info('================================================================');
-        $this->info("TikTok Shop:    {$shopName}");
-        $this->info("Shop ID:        {$shopId}");
+        $this->info("TikTok Shop:    {$displayShopName}");
+        $this->info("Shop ID:        {$displayShopId}");
         $this->info("Status:         CONNECTED (Terhubung Aktif di " . $businesses->count() . " Bisnis)");
+        $this->info("Mode:           " . ($token ? 'LIVE / SANDBOX REAL API' : 'MOCK REVIEWER DEMO'));
         $this->info("Hub URL:        " . url('/owner/marketplace-hub'));
         $this->info("Orders URL:     " . url('/owner/marketplace-hub/orders?channel=tiktok_shop'));
         $this->info("Products URL:   " . url('/owner/marketplace-hub/products?channel=tiktok_shop'));
@@ -100,8 +108,12 @@ class SetupTikTokReviewDemoCommand extends Command
         return self::SUCCESS;
     }
 
-    protected function setupBusiness(Business $business, string $shopId, string $shopName): void
+    protected function setupBusiness(Business $business, string $shopId = '', string $shopName = '', string $token = '', string $cipher = ''): void
     {
+        $resolvedShopId   = ! empty($shopId) ? $shopId : 'IDLSA982736192';
+        $resolvedShopName = ! empty($shopName) ? $shopName : (! empty($token) ? 'SANDBOX7689733143264134919' : 'COOCA Official Store Indonesia');
+        $resolvedToken    = ! empty($token) ? $token : ('enc_tiktok_shop_token_review_' . Str::random(32));
+        $resolvedCipher   = ! empty($cipher) ? $cipher : (! empty($shopId) ? $shopId : 'tUJNoAAAAABC7l1QgdMPAmxODwq4WNmlIv0SUQ15rAK9fFUA4_k7YQ');
 
         // 1. Create or Update Connected TikTok Shop Account
         $account = MarketplaceAccount::updateOrCreate(
@@ -110,11 +122,11 @@ class SetupTikTokReviewDemoCommand extends Command
                 'channel'     => MarketplaceAccount::CHANNEL_TIKTOK,
             ],
             [
-                'shop_id'                  => $shopId,
-                'shop_name'                => $shopName,
+                'shop_id'                  => $resolvedShopId,
+                'shop_name'                => $resolvedShopName,
                 'status'                   => MarketplaceAccount::STATUS_CONNECTED,
-                'access_token'             => 'enc_tiktok_shop_token_review_' . Str::random(32),
-                'refresh_token'            => 'enc_tiktok_shop_refresh_review_' . Str::random(32),
+                'access_token'             => $resolvedToken,
+                'refresh_token'            => ! empty($token) ? null : ('enc_tiktok_shop_refresh_review_' . Str::random(32)),
                 'token_expires_at'         => now()->addYear(),
                 'refresh_token_expires_at' => now()->addYears(2),
                 'is_active'                => true,
@@ -123,7 +135,7 @@ class SetupTikTokReviewDemoCommand extends Command
                 'stock_buffer'             => 2,
                 'price_multiplier'         => 1.08,
                 'settings'                 => [
-                    'shop_cipher'        => $shopId,
+                    'shop_cipher'        => $resolvedCipher,
                     'seller_base_region' => 'ID',
                     'authorized_at'      => now()->toIso8601String(),
                 ],
