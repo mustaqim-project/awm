@@ -90,6 +90,7 @@ class MarketplaceWebController extends Controller
         $typeFilter      = (string) $request->input('type', 'all');
         $channelFilter   = (string) $request->input('channel', 'all');
         $riskFilter      = (string) $request->input('risk', 'all');
+        $statusFilter    = (string) $request->input('status', 'all');
 
         $query = Product::where('business_id', $business->id)
             ->with(['marketplaceMappings', 'category', 'images', 'outputUnit', 'stocks'])
@@ -106,9 +107,18 @@ class MarketplaceWebController extends Controller
         if ($channelFilter === 'unmapped') {
             $query->doesntHave('marketplaceMappings');
         } elseif (in_array($channelFilter, ['shopee', 'tiktok_shop', 'tokopedia'], true)) {
-            $query->whereHas('marketplaceMappings', function ($q) use ($channelFilter) {
-                $q->where('channel', $channelFilter)->where('is_active', true);
+            $query->whereHas('marketplaceMappings', function ($q) use ($channelFilter, $statusFilter) {
+                $q->where('channel', $channelFilter);
+                if ($statusFilter === 'active') {
+                    $q->where('is_active', true);
+                } elseif ($statusFilter === 'inactive') {
+                    $q->where('is_active', false);
+                }
             });
+        } elseif ($statusFilter === 'active') {
+            $query->whereHas('marketplaceMappings', fn ($q) => $q->where('is_active', true));
+        } elseif ($statusFilter === 'inactive') {
+            $query->whereHas('marketplaceMappings', fn ($q) => $q->where('is_active', false));
         }
 
         if ($riskFilter === 'out_of_stock') {
@@ -135,7 +145,8 @@ class MarketplaceWebController extends Controller
             'isServiceSector',
             'typeFilter',
             'channelFilter',
-            'riskFilter'
+            'riskFilter',
+            'statusFilter'
         ));
 
     }
@@ -443,6 +454,14 @@ class MarketplaceWebController extends Controller
             ]
         );
 
+
+        if ($mapping->wasChanged('is_active') && ! empty($mapping->external_product_id)) {
+            if (! $mapping->is_active) {
+                $this->syncService->deactivateProductOnChannel($product, $validated['channel']);
+            } else {
+                $this->syncService->activateProductOnChannel($product, $validated['channel']);
+            }
+        }
 
         if ($request->wantsJson()) {
             return response()->json(['success' => true, 'mapping' => $mapping, 'message' => __('marketplace.sku_mapping_saved')]);
@@ -756,7 +775,7 @@ class MarketplaceWebController extends Controller
             abort(404);
         }
 
-        $channel = (string) $request->input('channel', 'tiktok_shop');
+        $channel = (string) $request->input('channel', 'all');
         $result  = $this->syncService->deactivateProductOnChannel($product, $channel);
 
         if ($request->wantsJson() || $request->ajax()) {
@@ -776,7 +795,7 @@ class MarketplaceWebController extends Controller
             abort(404);
         }
 
-        $channel = (string) $request->input('channel', 'tiktok_shop');
+        $channel = (string) $request->input('channel', 'all');
         $result  = $this->syncService->activateProductOnChannel($product, $channel);
 
         if ($request->wantsJson() || $request->ajax()) {

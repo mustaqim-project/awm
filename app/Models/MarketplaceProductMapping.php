@@ -18,6 +18,7 @@ class MarketplaceProductMapping extends Model
     public const STATUS_PENDING = 'pending';
     public const STATUS_FAILED = 'failed';
     public const STATUS_DISABLED = 'disabled';
+    public const STATUS_PAUSED = 'paused';
 
     protected $fillable = [
         'business_id',

@@ -442,6 +442,110 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
         ];
     }
 
+    /**
+     * Unlist / Deactivate a product on Shopee.
+     */
+    public function deactivateProduct(MarketplaceAccount $account, array|string $productIds): array
+    {
+        $productIds = (array) $productIds;
+        $timestamp   = time();
+        $path        = '/api/v2/product/unlist_item';
+        $accessToken = (string) $account->access_token;
+
+        if ($this->hasCredentials() && ! empty($accessToken)) {
+            $sign = $this->generateSignature($path, $timestamp, $accessToken, $account->shop_id);
+            $url  = sprintf(
+                '%s%s?partner_id=%s&timestamp=%s&access_token=%s&shop_id=%s&sign=%s',
+                $this->host,
+                $path,
+                $this->partnerId,
+                $timestamp,
+                $accessToken,
+                $account->shop_id,
+                $sign
+            );
+
+            $itemList = [];
+            foreach ($productIds as $pId) {
+                $itemList[] = [
+                    'item_id' => (int) $pId,
+                    'unlist'  => true,
+                ];
+            }
+
+            try {
+                $response = Http::timeout(15)->post($url, ['item_list' => $itemList]);
+                $data     = $response->json();
+                $success  = $response->successful() && empty($data['error']);
+
+                return [
+                    'success'      => $success,
+                    'message'      => $success ? 'Produk berhasil ditarik dari etalase Shopee.' : ($data['message'] ?? $data['error'] ?? 'Gagal menonaktifkan produk di Shopee.'),
+                    'raw_response' => $data,
+                ];
+            } catch (\Throwable $e) {
+                return ['success' => false, 'message' => $e->getMessage()];
+            }
+        }
+
+        return [
+            'success' => true,
+            'message' => 'Produk dinonaktifkan dari etalase Shopee.',
+        ];
+    }
+
+    /**
+     * Re-list / Activate a product on Shopee.
+     */
+    public function activateProduct(MarketplaceAccount $account, array|string $productIds): array
+    {
+        $productIds = (array) $productIds;
+        $timestamp   = time();
+        $path        = '/api/v2/product/unlist_item';
+        $accessToken = (string) $account->access_token;
+
+        if ($this->hasCredentials() && ! empty($accessToken)) {
+            $sign = $this->generateSignature($path, $timestamp, $accessToken, $account->shop_id);
+            $url  = sprintf(
+                '%s%s?partner_id=%s&timestamp=%s&access_token=%s&shop_id=%s&sign=%s',
+                $this->host,
+                $path,
+                $this->partnerId,
+                $timestamp,
+                $accessToken,
+                $account->shop_id,
+                $sign
+            );
+
+            $itemList = [];
+            foreach ($productIds as $pId) {
+                $itemList[] = [
+                    'item_id' => (int) $pId,
+                    'unlist'  => false,
+                ];
+            }
+
+            try {
+                $response = Http::timeout(15)->post($url, ['item_list' => $itemList]);
+                $data     = $response->json();
+                $success  = $response->successful() && empty($data['error']);
+
+                return [
+                    'success'      => $success,
+                    'message'      => $success ? 'Produk berhasil diaktifkan kembali di etalase Shopee.' : ($data['message'] ?? $data['error'] ?? 'Gagal mengaktifkan produk di Shopee.'),
+                    'raw_response' => $data,
+                ];
+            } catch (\Throwable $e) {
+                return ['success' => false, 'message' => $e->getMessage()];
+            }
+        }
+
+        return [
+            'success' => true,
+            'message' => 'Produk diaktifkan di etalase Shopee.',
+        ];
+    }
+
     public function handleWebhook(Request $request, string $rawBody, array $headers): array
     {
         $signHeader = $headers['x-shopee-sign'][0] 

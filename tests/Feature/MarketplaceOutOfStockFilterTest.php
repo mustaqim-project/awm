@@ -101,4 +101,105 @@ final class MarketplaceOutOfStockFilterTest extends TestCase
         $response->assertSee('Kemeja Batik Habis');
         $response->assertDontSee('Sepatu Lari Ready');
     }
+
+    public function test_marketplace_product_can_be_deactivated_and_activated_on_channels(): void
+    {
+        $product = Product::create([
+            'business_id'    => $this->business->id,
+            'output_unit_id' => $this->unit->id,
+            'code'           => 'PRD-MKT',
+            'name'           => 'Produk Omnichannel Keren',
+            'selling_price'  => 150000,
+            'is_active'      => true,
+        ]);
+
+        $shopeeAccount = \App\Models\MarketplaceAccount::create([
+            'business_id' => $this->business->id,
+            'channel'     => 'shopee',
+            'shop_id'     => 'shopee_shop_1',
+            'shop_name'   => 'Shopee Store Test',
+            'status'      => \App\Models\MarketplaceAccount::STATUS_CONNECTED,
+            'is_active'   => true,
+        ]);
+
+        $tokpedAccount = \App\Models\MarketplaceAccount::create([
+            'business_id' => $this->business->id,
+            'channel'     => 'tokopedia',
+            'shop_id'     => 'tokped_shop_1',
+            'shop_name'   => 'Tokopedia Store Test',
+            'status'      => \App\Models\MarketplaceAccount::STATUS_CONNECTED,
+            'is_active'   => true,
+        ]);
+
+        $shopeeMapping = \App\Models\MarketplaceProductMapping::create([
+            'business_id'            => $this->business->id,
+            'marketplace_account_id' => $shopeeAccount->id,
+            'product_id'             => $product->id,
+            'channel'                => 'shopee',
+            'external_product_id'    => 'shp-999',
+            'channel_price'          => 160000,
+            'is_active'              => true,
+            'sync_status'            => \App\Models\MarketplaceProductMapping::STATUS_SYNCED,
+        ]);
+
+        $tokpedMapping = \App\Models\MarketplaceProductMapping::create([
+            'business_id'            => $this->business->id,
+            'marketplace_account_id' => $tokpedAccount->id,
+            'product_id'             => $product->id,
+            'channel'                => 'tokopedia',
+            'external_product_id'    => 'tkp-888',
+            'channel_price'          => 165000,
+            'is_active'              => true,
+            'sync_status'            => \App\Models\MarketplaceProductMapping::STATUS_SYNCED,
+        ]);
+
+        // 1. Deactivate on Shopee only
+        $resShopee = $this->actingAs($this->user)
+            ->postJson(route('marketplace-hub.products.deactivate', $product->id), [
+                'channel' => 'shopee',
+            ]);
+
+        $resShopee->assertStatus(200);
+        $resShopee->assertJson(['success' => true]);
+
+        $this->assertFalse($shopeeMapping->fresh()->is_active);
+        $this->assertTrue($tokpedMapping->fresh()->is_active);
+
+        // 2. Deactivate all channels
+        $resAll = $this->actingAs($this->user)
+            ->postJson(route('marketplace-hub.products.deactivate', $product->id), [
+                'channel' => 'all',
+            ]);
+
+        $resAll->assertStatus(200);
+        $resAll->assertJson(['success' => true]);
+
+        $this->assertFalse($shopeeMapping->fresh()->is_active);
+        $this->assertFalse($tokpedMapping->fresh()->is_active);
+
+        // 3. Status filter verifies inactive mapping is returned under ?status=inactive
+        $resInactive = $this->actingAs($this->user)
+            ->get(route('marketplace-hub.products', ['status' => 'inactive']));
+        $resInactive->assertStatus(200);
+        $resInactive->assertSee('Produk Omnichannel Keren');
+
+        // 4. Reactivate all channels
+        $resActivate = $this->actingAs($this->user)
+            ->postJson(route('marketplace-hub.products.activate', $product->id), [
+                'channel' => 'all',
+            ]);
+
+        $resActivate->assertStatus(200);
+        $resActivate->assertJson(['success' => true]);
+
+        $this->assertTrue($shopeeMapping->fresh()->is_active);
+        $this->assertTrue($tokpedMapping->fresh()->is_active);
+
+        // 5. Status filter verifies active mapping is returned under ?status=active
+        $resActive = $this->actingAs($this->user)
+            ->get(route('marketplace-hub.products', ['status' => 'active']));
+        $resActive->assertStatus(200);
+        $resActive->assertSee('Produk Omnichannel Keren');
+    }
 }
+

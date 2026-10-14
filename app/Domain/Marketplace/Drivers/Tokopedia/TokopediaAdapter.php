@@ -342,6 +342,80 @@ class TokopediaAdapter implements MarketplaceAdapterInterface
         ];
     }
 
+    /**
+     * Deactivate / set status to INACTIVE for a product on Tokopedia.
+     */
+    public function deactivateProduct(MarketplaceAccount $account, array|string $productIds): array
+    {
+        $productIds = array_map('intval', (array) $productIds);
+        if ($this->hasCredentials() && ! empty($account->access_token)) {
+            $url = $this->host . '/v2/products/fs/' . $this->fsId . '/set-status';
+            try {
+                $response = Http::withHeaders([
+                    'Authorization' => 'Bearer ' . $account->access_token,
+                    'Content-Type'  => 'application/json',
+                ])->timeout(15)->post($url, [
+                    'shop_id'     => (int) $account->shop_id,
+                    'product_ids' => $productIds,
+                    'status'      => 'INACTIVE',
+                ]);
+
+                $data = $response->json();
+                $success = $response->successful() && empty($data['header']['error_code']);
+
+                return [
+                    'success'      => $success,
+                    'message'      => $success ? 'Produk berhasil dinonaktifkan dari etalase Tokopedia.' : ($data['header']['messages'] ?? 'Gagal menonaktifkan produk di Tokopedia.'),
+                    'raw_response' => $data,
+                ];
+            } catch (\Throwable $e) {
+                return ['success' => false, 'message' => $e->getMessage()];
+            }
+        }
+
+        return [
+            'success' => true,
+            'message' => 'Produk dinonaktifkan dari etalase Tokopedia.',
+        ];
+    }
+
+    /**
+     * Activate / set status to ACTIVE for a product on Tokopedia.
+     */
+    public function activateProduct(MarketplaceAccount $account, array|string $productIds): array
+    {
+        $productIds = array_map('intval', (array) $productIds);
+        if ($this->hasCredentials() && ! empty($account->access_token)) {
+            $url = $this->host . '/v2/products/fs/' . $this->fsId . '/set-status';
+            try {
+                $response = Http::withHeaders([
+                    'Authorization' => 'Bearer ' . $account->access_token,
+                    'Content-Type'  => 'application/json',
+                ])->timeout(15)->post($url, [
+                    'shop_id'     => (int) $account->shop_id,
+                    'product_ids' => $productIds,
+                    'status'      => 'ACTIVE',
+                ]);
+
+                $data = $response->json();
+                $success = $response->successful() && empty($data['header']['error_code']);
+
+                return [
+                    'success'      => $success,
+                    'message'      => $success ? 'Produk berhasil diaktifkan kembali di etalase Tokopedia.' : ($data['header']['messages'] ?? 'Gagal mengaktifkan produk di Tokopedia.'),
+                    'raw_response' => $data,
+                ];
+            } catch (\Throwable $e) {
+                return ['success' => false, 'message' => $e->getMessage()];
+            }
+        }
+
+        return [
+            'success' => true,
+            'message' => 'Produk diaktifkan di etalase Tokopedia.',
+        ];
+    }
+
     public function handleWebhook(Request $request, string $rawBody, array $headers): array
     {
         $token = $headers['x-tkpd-token'][0] 

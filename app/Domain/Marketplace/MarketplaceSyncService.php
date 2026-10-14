@@ -478,10 +478,14 @@ class MarketplaceSyncService
     }
 
     /**
-     * Deactivate / delist a product from a marketplace channel.
+     * Deactivate / delist a product from a marketplace channel, or all channels if $channel === 'all'.
      */
     public function deactivateProductOnChannel(Product $product, string $channel): array
     {
+        if (strtolower($channel) === 'all') {
+            return $this->deactivateProductOnAllChannels($product);
+        }
+
         $normalizedChannel = match (strtolower($channel)) {
             'shopee'                      => 'shopee',
             'tiktok', 'tiktok-tokopedia' => 'tiktok_shop',
@@ -506,15 +510,19 @@ class MarketplaceSyncService
             ->first();
 
         if (! $account) {
+            $mapping->is_active = false;
+            $mapping->sync_status = MarketplaceProductMapping::STATUS_PAUSED;
+            $mapping->save();
+
             return [
-                'success' => false,
-                'message' => 'Akun marketplace tidak ditemukan.',
+                'success' => true,
+                'message' => 'Akun marketplace tidak terhubung, listing berhasil dinonaktifkan di sistem COOCA.',
             ];
         }
 
         $adapter = $this->manager->driver($normalizedChannel);
 
-        // 1. If adapter supports deactivateProduct (e.g. TikTok Shop API /product/202309/products/deactivate)
+        // 1. If adapter supports deactivateProduct (e.g. TikTok Shop API, Shopee unlist_item, Tokopedia set-status)
         if (method_exists($adapter, 'deactivateProduct')) {
             $res = $adapter->deactivateProduct($account, $mapping->external_product_id);
             if (! empty($res['success'])) {
@@ -556,10 +564,56 @@ class MarketplaceSyncService
     }
 
     /**
-     * Activate a product back onto a marketplace channel.
+     * Deactivate / delist product from all mapped marketplace channels.
+     */
+    public function deactivateProductOnAllChannels(Product $product): array
+    {
+        $mappings = MarketplaceProductMapping::where('business_id', $product->business_id)
+            ->where('product_id', $product->id)
+            ->whereNotNull('external_product_id')
+            ->get();
+
+        if ($mappings->isEmpty()) {
+            return [
+                'success' => false,
+                'message' => 'Produk ini belum memiliki listing terhubung di marketplace manapun.',
+            ];
+        }
+
+        $successCount = 0;
+        $failedCount  = 0;
+        $channelNames = [];
+
+        foreach ($mappings as $mapping) {
+            $res = $this->deactivateProductOnChannel($product, $mapping->channel);
+            if (! empty($res['success'])) {
+                $successCount++;
+                $channelNames[] = $mapping->getChannelLabel();
+            } else {
+                $failedCount++;
+            }
+        }
+
+        $channelsList = implode(', ', array_unique($channelNames));
+        return [
+            'success'       => $successCount > 0,
+            'message'       => $successCount > 0
+                ? "Produk \"{$product->name}\" berhasil dinonaktifkan dari etalase {$channelsList}."
+                : 'Gagal menonaktifkan produk dari saluran marketplace.',
+            'success_count' => $successCount,
+            'failed_count'  => $failedCount,
+        ];
+    }
+
+    /**
+     * Activate a product back onto a marketplace channel, or all channels if $channel === 'all'.
      */
     public function activateProductOnChannel(Product $product, string $channel): array
     {
+        if (strtolower($channel) === 'all') {
+            return $this->activateProductOnAllChannels($product);
+        }
+
         $normalizedChannel = match (strtolower($channel)) {
             'shopee'                      => 'shopee',
             'tiktok', 'tiktok-tokopedia' => 'tiktok_shop',
@@ -584,9 +638,13 @@ class MarketplaceSyncService
             ->first();
 
         if (! $account) {
+            $mapping->is_active = true;
+            $mapping->sync_status = MarketplaceProductMapping::STATUS_SYNCED;
+            $mapping->save();
+
             return [
-                'success' => false,
-                'message' => 'Akun marketplace tidak ditemukan.',
+                'success' => true,
+                'message' => 'Akun marketplace belum terhubung, status listing diaktifkan di sistem COOCA.',
             ];
         }
 
@@ -631,6 +689,48 @@ class MarketplaceSyncService
         return [
             'success' => true,
             'message' => "Listing diaktifkan dan stok kembali disinkronkan dari gudang.",
+        ];
+    }
+
+    /**
+     * Activate product back onto all mapped marketplace channels.
+     */
+    public function activateProductOnAllChannels(Product $product): array
+    {
+        $mappings = MarketplaceProductMapping::where('business_id', $product->business_id)
+            ->where('product_id', $product->id)
+            ->whereNotNull('external_product_id')
+            ->get();
+
+        if ($mappings->isEmpty()) {
+            return [
+                'success' => false,
+                'message' => 'Produk ini belum memiliki listing terhubung di marketplace manapun.',
+            ];
+        }
+
+        $successCount = 0;
+        $failedCount  = 0;
+        $channelNames = [];
+
+        foreach ($mappings as $mapping) {
+            $res = $this->activateProductOnChannel($product, $mapping->channel);
+            if (! empty($res['success'])) {
+                $successCount++;
+                $channelNames[] = $mapping->getChannelLabel();
+            } else {
+                $failedCount++;
+            }
+        }
+
+        $channelsList = implode(', ', array_unique($channelNames));
+        return [
+            'success'       => $successCount > 0,
+            'message'       => $successCount > 0
+                ? "Listing \"{$product->name}\" berhasil diaktifkan kembali di etalase {$channelsList}."
+                : 'Gagal mengaktifkan produk di saluran marketplace.',
+            'success_count' => $successCount,
+            'failed_count'  => $failedCount,
         ];
     }
 

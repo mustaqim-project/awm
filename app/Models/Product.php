@@ -76,6 +76,28 @@ class Product extends Model
         'is_bundle' => false,
     ];
 
+    protected static function booted(): void
+    {
+        static::updated(function (Product $product): void {
+            // When product is deactivated in COOCA master catalog, cascade delist to all marketplace channels
+            if ($product->wasChanged('is_active') && ! $product->is_active) {
+                try {
+                    app(\App\Domain\Marketplace\MarketplaceSyncService::class)->deactivateProductOnAllChannels($product);
+                } catch (\Throwable $e) {
+                    \Illuminate\Support\Facades\Log::warning("Marketplace auto-deactivation failed for product {$product->id}: {$e->getMessage()}");
+                }
+            }
+        });
+
+        static::deleted(function (Product $product): void {
+            try {
+                app(\App\Domain\Marketplace\MarketplaceSyncService::class)->deactivateProductOnAllChannels($product);
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::warning("Marketplace auto-deactivation on product deletion failed for product {$product->id}: {$e->getMessage()}");
+            }
+        });
+    }
+
     public function getTypeAttribute(?string $value): string
     {
         return $value ?: self::TYPE_GOODS;
