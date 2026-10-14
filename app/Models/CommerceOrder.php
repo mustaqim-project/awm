@@ -287,5 +287,45 @@ class CommerceOrder extends Model
     {
         return max(0.0, (float) $this->total_amount - (float) ($this->gateway_fee ?? 0.0));
     }
+
+    /**
+     * Universal neutral status label compatible across all 20 business sectors.
+     */
+    public function getStatusLabelAttribute(): string
+    {
+        return match ($this->status) {
+            self::STATUS_DRAFT => 'Draf Pesanan',
+            self::STATUS_PENDING_REVIEW => 'Menunggu Peninjauan',
+            self::STATUS_PENDING_PAYMENT => 'Menunggu Pembayaran',
+            self::STATUS_PROOF_SUBMITTED => 'Menunggu Konfirmasi',
+            self::STATUS_PAYMENT_REJECTED => 'Pembayaran Ditolak',
+            self::STATUS_PAID => 'Lunas',
+            self::STATUS_PROCESSING => 'Diproses (Sedang Dikerjakan)',
+            self::STATUS_READY => 'Siap (Siap Diambil / Kirim)',
+            self::STATUS_SHIPPED => 'Dalam Pengiriman',
+            self::STATUS_DELIVERED => 'Telah Terkirim',
+            self::STATUS_FULFILLED => 'Terpenuhi',
+            self::STATUS_COMPLETED => 'Selesai',
+            self::STATUS_CANCELLED => 'Dibatalkan',
+            self::STATUS_EXPIRED => 'Kedaluwarsa',
+            default => ucfirst(str_replace('_', ' ', (string) $this->status)),
+        };
+    }
+
+    /**
+     * Universal payment status label.
+     */
+    public function getPaymentStatusLabelAttribute(): string
+    {
+        return match ($this->payment_status) {
+            self::PAYMENT_UNPAID => 'Belum Dibayar',
+            self::PAYMENT_VERIFYING => 'Menunggu Verifikasi',
+            self::PAYMENT_PAID => 'Lunas',
+            self::PAYMENT_FAILED => 'Gagal',
+            self::PAYMENT_REFUNDED => 'Dikembalikan (Refund)',
+            default => ucfirst(str_replace('_', ' ', (string) $this->payment_status)),
+        };
+    }
 }
+
 

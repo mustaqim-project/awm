@@ -50,17 +50,36 @@ class TikTokShopAdapter implements MarketplaceAdapterInterface
         return ! empty($this->appKey) && ! empty($this->appSecret);
     }
 
-    public function generateSignature(string $path, array $params): string
+    public function generateSignature(string $path, array $params, array|string|null $body = null): string
     {
-        ksort($params);
-        $signStr = $this->appSecret . $path;
+        // Step 1: Filter query parameters excluding sign and access_token, sort alphabetically
+        $filtered = [];
         foreach ($params as $k => $v) {
             if ($k !== 'sign' && $k !== 'access_token') {
-                $signStr .= $k . $v;
+                $filtered[$k] = (string) $v;
             }
         }
-        $signStr .= $this->appSecret;
+        ksort($filtered);
 
+        // Step 2: Concatenate all parameters in format {key}{value}
+        $paramString = '';
+        foreach ($filtered as $k => $v) {
+            $paramString .= $k . $v;
+        }
+
+        // Step 3: Append paramString to API request path
+        $signStr = $path . $paramString;
+
+        // Step 4: If request body exists (and not multipart), append stringified JSON body
+        if (! empty($body)) {
+            $bodyStr = is_string($body) ? $body : json_encode($body, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+            $signStr .= $bodyStr;
+        }
+
+        // Step 5: Wrap the string with app_secret at start and end
+        $signStr = $this->appSecret . $signStr . $this->appSecret;
+
+        // Step 6: Encode using HMAC-SHA256 hex digest
         return hash_hmac('sha256', $signStr, $this->appSecret);
     }
 
@@ -108,6 +127,22 @@ class TikTokShopAdapter implements MarketplaceAdapterInterface
 
         $tokenData = $data['data'] ?? [];
         $sellerName = $tokenData['seller_name'] ?? ('TikTok Shop #' . ($tokenData['open_id'] ?? 'Store'));
+        $shopCipher = null;
+
+        // Auto-fetch authorized shop cipher if credentials and access_token are present
+        if (! empty($tokenData['access_token'])) {
+            try {
+                $shopResp = $this->getAuthorizedShops((string) $tokenData['access_token']);
+                if (! empty($shopResp['shops'][0]['cipher'])) {
+                    $shopCipher = (string) $shopResp['shops'][0]['cipher'];
+                    if (! empty($shopResp['shops'][0]['name'])) {
+                        $sellerName = (string) $shopResp['shops'][0]['name'];
+                    }
+                }
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::warning("TikTok Shop fetch authorized shops notice: {$e->getMessage()}");
+            }
+        }
 
         return [
             'shop_id'            => (string) ($tokenData['open_id'] ?? ($tokenData['seller_base_region'] ?? 'ID_SHOP')),
@@ -119,6 +154,24 @@ class TikTokShopAdapter implements MarketplaceAdapterInterface
             'extra'              => [
                 'seller_base_region' => $tokenData['seller_base_region'] ?? 'ID',
                 'user_type'          => $tokenData['user_type'] ?? 0,
+                'shop_cipher'        => $shopCipher ?? ($tokenData['open_id'] ?? 'ID_SHOP'),
+                'capabilities'       => [
+                    'product_basic'         => true,
+                    'product_write'         => true,
+                    'product_delete'        => true,
+                    'global_product'        => true,
+                    'order_info'            => true,
+                    'fulfillment_basic'     => true,
+                    'fulfillment_package'   => true,
+                    'delivery_status'       => true,
+                    'logistics'             => true,
+                    'shop_info'             => true,
+                    'authorization_info'    => true,
+                    'finance_info'          => true,
+                    'promotion_info'        => true,
+                    'promotion_write'       => true,
+                    'return_refund_basic'   => true,
+                ],
             ],
         ];
     }
@@ -155,12 +208,10 @@ class TikTokShopAdapter implements MarketplaceAdapterInterface
         $timestamp = time();
 
         $queryParams = [
-            'app_key'   => $this->appKey,
-            'timestamp' => $timestamp,
+            'app_key'     => $this->appKey,
+            'timestamp'   => $timestamp,
             'shop_cipher' => $account->settings['shop_cipher'] ?? $account->shop_id,
         ];
-        $sign = $this->generateSignature($path, $queryParams);
-        $queryParams['sign'] = $sign;
 
         $body = [
             'skus' => [
@@ -174,6 +225,9 @@ class TikTokShopAdapter implements MarketplaceAdapterInterface
                 ],
             ],
         ];
+
+        // Sign with body per nodejs_sdk generate-sign.ts
+        $queryParams['sign'] = $this->generateSignature($path, $queryParams, $body);
 
         $url = $this->host . $path . '?' . http_build_query($queryParams);
 
@@ -197,8 +251,6 @@ class TikTokShopAdapter implements MarketplaceAdapterInterface
             'timestamp'   => $timestamp,
             'shop_cipher' => $account->settings['shop_cipher'] ?? $account->shop_id,
         ];
-        $sign = $this->generateSignature($path, $queryParams);
-        $queryParams['sign'] = $sign;
 
         $body = [
             'skus' => [
@@ -212,6 +264,9 @@ class TikTokShopAdapter implements MarketplaceAdapterInterface
                 ],
             ],
         ];
+
+        // Sign with body per nodejs_sdk generate-sign.ts
+        $queryParams['sign'] = $this->generateSignature($path, $queryParams, $body);
 
         $url = $this->host . $path . '?' . http_build_query($queryParams);
 
@@ -236,16 +291,20 @@ class TikTokShopAdapter implements MarketplaceAdapterInterface
             'page_size'   => (string) ($params['limit'] ?? 20),
             'shop_cipher' => $account->settings['shop_cipher'] ?? $account->shop_id,
         ];
-        $sign = $this->generateSignature($path, $queryParams);
-        $queryParams['sign'] = $sign;
+
+        $body = [
+            'status' => 'ACTIVATE',
+        ];
+
+        // Sign with body per nodejs_sdk generate-sign.ts
+        $queryParams['sign'] = $this->generateSignature($path, $queryParams, $body);
 
         $url = $this->host . $path . '?' . http_build_query($queryParams);
 
         $response = Http::withHeaders([
             'x-tts-access-token' => (string) $account->access_token,
-        ])->timeout(15)->post($url, [
-            'status' => 'ACTIVATE',
-        ]);
+            'Content-Type'       => 'application/json',
+        ])->timeout(15)->post($url, $body);
 
         $data = $response->json();
         $items = [];
@@ -282,16 +341,20 @@ class TikTokShopAdapter implements MarketplaceAdapterInterface
             'page_size'   => '20',
             'shop_cipher' => $account->settings['shop_cipher'] ?? $account->shop_id,
         ];
-        $sign = $this->generateSignature($path, $queryParams);
-        $queryParams['sign'] = $sign;
+
+        $body = [
+            'order_status' => 'ALL',
+        ];
+
+        // Sign with body per nodejs_sdk generate-sign.ts
+        $queryParams['sign'] = $this->generateSignature($path, $queryParams, $body);
 
         $url = $this->host . $path . '?' . http_build_query($queryParams);
 
         $response = Http::withHeaders([
             'x-tts-access-token' => (string) $account->access_token,
-        ])->timeout(15)->post($url, [
-            'order_status' => 'ALL',
-        ]);
+            'Content-Type'       => 'application/json',
+        ])->timeout(15)->post($url, $body);
 
         $data = $response->json();
         $orders = [];
@@ -330,6 +393,7 @@ class TikTokShopAdapter implements MarketplaceAdapterInterface
             'timestamp'   => $timestamp,
             'shop_cipher' => $shopCipher,
         ];
+        // Multipart/form-data: query sign without body per generate-sign.ts step 4
         $queryParams['sign'] = $this->generateSignature($path, $queryParams);
 
         $url = $this->host . $path . '?' . http_build_query($queryParams);
@@ -372,7 +436,6 @@ class TikTokShopAdapter implements MarketplaceAdapterInterface
             'timestamp'   => $timestamp,
             'shop_cipher' => $shopCipher,
         ];
-        $queryParams['sign'] = $this->generateSignature($path, $queryParams);
 
         $price = (float) ($options['price'] ?? $options['channel_price'] ?? $product->selling_price);
         $stock = (int) ($options['stock'] ?? $options['custom_stock'] ?? 10);
@@ -398,8 +461,6 @@ class TikTokShopAdapter implements MarketplaceAdapterInterface
 
         // Live API call if credentials present
         if ($this->hasCredentials() && ! empty($account->access_token)) {
-            $url = $this->host . $path . '?' . http_build_query($queryParams);
-
             $payload = [
                 'title'          => $product->name,
                 'description'    => ! empty($product->description) ? strip_tags($product->description) : $product->name,
@@ -424,6 +485,10 @@ class TikTokShopAdapter implements MarketplaceAdapterInterface
                     ],
                 ],
             ];
+
+            // Sign with payload per nodejs_sdk generate-sign.ts
+            $queryParams['sign'] = $this->generateSignature($path, $queryParams, $payload);
+            $url = $this->host . $path . '?' . http_build_query($queryParams);
 
             try {
                 $response = Http::withHeaders([
@@ -458,6 +523,182 @@ class TikTokShopAdapter implements MarketplaceAdapterInterface
             'message'             => "Produk \"{$product->name}\" beserta " . ($product->images->count() + ($product->image ? 1 : 0)) . " foto galeri berhasil diterbitkan ke TikTok Shop Official Store.",
             'raw_response'        => ['product_id' => $generatedItemId, 'images_count' => count($imageUriList)],
         ];
+    }
+
+    /**
+     * Scope: seller.authorization.info
+     * Retrieve authorized shops and their shop_cipher tokens.
+     */
+    public function getAuthorizedShops(string $accessToken): array
+    {
+        $path        = '/authorization/202309/shops';
+        $timestamp   = time();
+        $queryParams = [
+            'app_key'   => $this->appKey,
+            'timestamp' => $timestamp,
+        ];
+        $queryParams['sign'] = $this->generateSignature($path, $queryParams);
+
+        $url = $this->host . $path . '?' . http_build_query($queryParams);
+
+        $response = Http::withHeaders([
+            'x-tts-access-token' => $accessToken,
+            'Content-Type'       => 'application/json',
+        ])->timeout(15)->get($url);
+
+        $data = $response->json();
+        return $data['data'] ?? [];
+    }
+
+    /**
+     * Scope: seller.product.delete
+     * Delete products from seller showcase.
+     */
+    public function deleteProduct(MarketplaceAccount $account, array|string $productIds): bool
+    {
+        $path        = '/product/202309/products';
+        $timestamp   = time();
+        $shopCipher  = $account->settings['shop_cipher'] ?? $account->shop_id;
+        $queryParams = [
+            'app_key'     => $this->appKey,
+            'timestamp'   => $timestamp,
+            'shop_cipher' => $shopCipher,
+        ];
+
+        $body = [
+            'product_ids' => (array) $productIds,
+        ];
+
+        $queryParams['sign'] = $this->generateSignature($path, $queryParams, $body);
+        $url = $this->host . $path . '?' . http_build_query($queryParams);
+
+        $response = Http::withHeaders([
+            'x-tts-access-token' => (string) $account->access_token,
+            'Content-Type'       => 'application/json',
+        ])->timeout(15)->delete($url, $body);
+
+        $data = $response->json();
+        return $response->successful() && ($data['code'] ?? -1) === 0;
+    }
+
+    /**
+     * Scope: seller.logistics
+     * Retrieve seller warehouse list.
+     */
+    public function getLogisticsWarehouses(MarketplaceAccount $account): array
+    {
+        $path        = '/logistics/202309/warehouses';
+        $timestamp   = time();
+        $shopCipher  = $account->settings['shop_cipher'] ?? $account->shop_id;
+        $queryParams = [
+            'app_key'     => $this->appKey,
+            'timestamp'   => $timestamp,
+            'shop_cipher' => $shopCipher,
+        ];
+        $queryParams['sign'] = $this->generateSignature($path, $queryParams);
+        $url = $this->host . $path . '?' . http_build_query($queryParams);
+
+        $response = Http::withHeaders([
+            'x-tts-access-token' => (string) $account->access_token,
+            'Content-Type'       => 'application/json',
+        ])->timeout(15)->get($url);
+
+        $data = $response->json();
+        return $data['data']['warehouses'] ?? [];
+    }
+
+    /**
+     * Scope: seller.finance.info
+     * Search settlement statements for financial reconciliation.
+     */
+    public function getSettlements(MarketplaceAccount $account, array $params = []): array
+    {
+        $path        = '/finance/202309/settlements/search';
+        $timestamp   = time();
+        $shopCipher  = $account->settings['shop_cipher'] ?? $account->shop_id;
+        $queryParams = [
+            'app_key'     => $this->appKey,
+            'timestamp'   => $timestamp,
+            'shop_cipher' => $shopCipher,
+        ];
+
+        $body = [
+            'page_size' => (int) ($params['page_size'] ?? 20),
+        ];
+
+        $queryParams['sign'] = $this->generateSignature($path, $queryParams, $body);
+        $url = $this->host . $path . '?' . http_build_query($queryParams);
+
+        $response = Http::withHeaders([
+            'x-tts-access-token' => (string) $account->access_token,
+            'Content-Type'       => 'application/json',
+        ])->timeout(15)->post($url, $body);
+
+        $data = $response->json();
+        return $data['data']['settlements'] ?? [];
+    }
+
+    /**
+     * Scope: seller.promotion.info
+     * Search promotion activities (discounts, flash sales).
+     */
+    public function getPromotions(MarketplaceAccount $account, array $params = []): array
+    {
+        $path        = '/promotion/202309/activities/search';
+        $timestamp   = time();
+        $shopCipher  = $account->settings['shop_cipher'] ?? $account->shop_id;
+        $queryParams = [
+            'app_key'     => $this->appKey,
+            'timestamp'   => $timestamp,
+            'shop_cipher' => $shopCipher,
+        ];
+
+        $body = [
+            'page_size' => (int) ($params['page_size'] ?? 20),
+            'status'    => (string) ($params['status'] ?? 'ALL'),
+        ];
+
+        $queryParams['sign'] = $this->generateSignature($path, $queryParams, $body);
+        $url = $this->host . $path . '?' . http_build_query($queryParams);
+
+        $response = Http::withHeaders([
+            'x-tts-access-token' => (string) $account->access_token,
+            'Content-Type'       => 'application/json',
+        ])->timeout(15)->post($url, $body);
+
+        $data = $response->json();
+        return $data['data']['activities'] ?? [];
+    }
+
+    /**
+     * Scope: seller.return_refund.basic
+     * Query return and refund disputes from buyers.
+     */
+    public function getReturnRefunds(MarketplaceAccount $account, array $params = []): array
+    {
+        $path        = '/return_refund/202309/returns/search';
+        $timestamp   = time();
+        $shopCipher  = $account->settings['shop_cipher'] ?? $account->shop_id;
+        $queryParams = [
+            'app_key'     => $this->appKey,
+            'timestamp'   => $timestamp,
+            'shop_cipher' => $shopCipher,
+        ];
+
+        $body = [
+            'page_size' => (int) ($params['page_size'] ?? 20),
+        ];
+
+        $queryParams['sign'] = $this->generateSignature($path, $queryParams, $body);
+        $url = $this->host . $path . '?' . http_build_query($queryParams);
+
+        $response = Http::withHeaders([
+            'x-tts-access-token' => (string) $account->access_token,
+            'Content-Type'       => 'application/json',
+        ])->timeout(15)->post($url, $body);
+
+        $data = $response->json();
+        return $data['data']['returns'] ?? [];
     }
 
     public function handleWebhook(Request $request, string $rawBody, array $headers): array

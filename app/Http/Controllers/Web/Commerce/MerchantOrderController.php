@@ -111,7 +111,40 @@ final class MerchantOrderController extends Controller
 
         $proof = $order->latestProof;
         if (! $proof) {
-            return back()->with('error', 'Tidak ada bukti transfer yang dapat diverifikasi.');
+            if ($order->isPaid()) {
+                return back()->with('info', "Pesanan #{$order->order_number} sudah berstatus LUNAS.");
+            }
+
+            try {
+                \Illuminate\Support\Facades\DB::transaction(function () use ($order) {
+                    $order->update([
+                        'status' => CommerceOrder::STATUS_PAID,
+                        'payment_status' => CommerceOrder::PAYMENT_PAID,
+                        'paid_at' => \Carbon\Carbon::now(),
+                        'rejection_reason' => null,
+                    ]);
+
+                    // Commit physical stock for goods
+                    foreach ($order->items as $item) {
+                        if ($item->product && $item->product->isGoods()) {
+                            $this->stockService->commitProductReservedStock(
+                                businessId: $order->business_id,
+                                locationId: $order->location_id,
+                                product: $item->product,
+                                productQuantity: (float) $item->quantity,
+                                unitCost: (float) $item->product->base_cost,
+                                referenceId: $order->id,
+                                referenceNumber: $order->order_number,
+                                userId: Auth::id()
+                            );
+                        }
+                    }
+                });
+
+                return back()->with('success', "Pembayaran QRIS pesanan #{$order->order_number} berhasil dikonfirmasi LUNAS! Stok telah dialokasikan.");
+            } catch (Throwable $e) {
+                return back()->with('error', $e->getMessage());
+            }
         }
 
         try {

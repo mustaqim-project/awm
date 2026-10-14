@@ -21829,4 +21829,47 @@ Business Owner / Merchant UMKM COOCA memerlukan satu pusat pengelolaan (_Single 
 - `php artisan test --filter=NetIncomeTaxComplianceTest` → **7 passed, 59 assertions (100% Success)**.
 - `php artisan view:cache` → **Blade templates cached successfully**.
 
+### [WORK-2026-10-14-356] Eksklusivitas Pembayaran QRIS & Standarisasi Status Operasional Netral Kompatibel 20 Sektor Usaha (Storefront Orders)
+
+- **Date:** 2026-10-14
+- **Status:** COMPLETED
+- **Module:** Storefront & Merchant Order Management (`app/Models/CommerceOrder.php`, `app/Http/Controllers/Web/Commerce/MerchantOrderController.php`, `resources/views/app/storefront/orders/show.blade.php`, `tests/Feature/CommerceStorefrontOrderShowQrisTest.php`)
+- **Feature:** Eksklusivitas Pembayaran QRIS (Eliminasi Manual Transfer) & Neutralisasi Status Operasional 20 Sektor Usaha
+  1. `app/Models/CommerceOrder.php`: Menambahkan accessor `getStatusLabelAttribute()` dan `getPaymentStatusLabelAttribute()` yang memetakan status ke terminologi bisnis universal netral (contoh: `Diproses (Sedang Dikerjakan / Disiapkan)`, `Siap (Siap Diambil / Siap Kirim)`, `Selesai (Pesanan Selesai / Diterima)`). Menghapus istilah yang bias sektoral seperti "dimasak" agar kompatibel untuk seluruh 20 sektor usaha COOCA (F&B, Retail, Laundry, Bengkel, Salon, Konveksi, Percetakan, Jasa, Rental, dll).
+  2. `resources/views/app/storefront/orders/show.blade.php`:
+     - Reorganisasi kartu ringkasan pembayaran menjadi **Pembayaran QRIS** (QRIS Standar Nasional / Gateway) Apple Bento card.
+     - Mengeliminasi komponen transfer manual (dropdown rekening toko, input rekening tujuan, upload bukti transfer konvensional).
+     - Menghadirkan modal konfirmasi verifikasi pelunasan QRIS instan (*manual settlement fallback*) dengan modal konfirmasi interaktif.
+     - Menyediakan input alasan pembatalan dinamis saat status `cancelled` dipilih.
+  3. `app/Http/Controllers/Web/Commerce/MerchantOrderController.php`:
+     - Memperbarui `verifyPayment()` untuk mendukung penyelesaian langsung pelunasan QRIS secara manual tanpa mewajibkan file lampiran bukti transfer, dengan komitmen alokasi stok (`StockService::commitProductReservedStock()`) dan event dispatching yang konsisten.
+  4. Pengujian & Penjaminan Kualitas:
+     - Dibuat rangkaian pengujian otomatis `CommerceStorefrontOrderShowQrisTest.php` yang memverifikasi eksklusivitas UI QRIS, label netral 20 sektor, dan endpoint settlement QRIS.
+- **Work Type:** UI/UX (Bento Apple HIG v2.0) | Multi-Industry Neutrality | Payment Hardening | Automated Testing
+
+#### 1. Business Context & Objective
+- **Konteks:** Menyelaraskan alur pembayaran Storefront COOCA dengan model operasional riil yang eksklusif menggunakan QRIS otomatis/gateway (tidak lagi menyediakan transfer manual rekening), serta memastikan seluruh terminologi status pesanan bersifat netral dan universal agar relevan bagi 20 sektor usaha UMKM di ekosistem COOCA tanpa bias F&B ("dimasak").
+
+#### 2. What Was Done
+- **Netralisasi Status 20 Sektor:**
+  - Status `processing` diubah dari "Diproses (Sedang Disiapkan/Dimasak)" menjadi "Diproses (Sedang Dikerjakan / Disiapkan)".
+  - Status `ready` distandarisasi menjadi "Siap (Siap Diambil / Siap Kirim)".
+  - Status `completed` distandarisasi menjadi "Selesai (Pesanan Selesai / Diterima)".
+  - Status `cancelled` distandarisasi menjadi "Batalkan Pesanan" dengan field alasan pembatalan opsional.
+- **Kartu Pembayaran QRIS Apple Bento:**
+  - Menampilkan status settlement QRIS (Lunas / Menunggu Pembayaran), QRIS Acquirer/Gateway reference, dan Pay Code.
+  - Tombol sinkronisasi status gateway real-time dan tombol verifikasi pelunasan QRIS manual terpadu.
+- **Penyesuaian Form Penawaran Harga (Quotation):**
+  - Mengubah opsi pemilihan rekening bank menjadi `QRIS Standar Nasional (Otomatis)`.
+  - Mengubah placeholder catatan menjadi netral universal.
+
+#### 3. Verification & Testing
+- `php -l app/Models/CommerceOrder.php` → **0 syntax errors**.
+- `php -l app/Http/Controllers/Web/Commerce/MerchantOrderController.php` → **0 syntax errors**.
+- `php -l resources/views/app/storefront/orders/show.blade.php` → **0 syntax errors**.
+- `php vendor/bin/phpunit tests/Feature/CommerceStorefrontOrderShowQrisTest.php` → **3 passed, 21 assertions (100% Success)**.
+- `php vendor/bin/phpunit tests/Feature/CommerceStorefrontCheckoutTest.php` → **13 passed, 81 assertions (100% Success)**.
+- `php vendor/bin/phpunit tests/Feature/Commerce/ShippingWaybillAndLabelTest.php` → **4 passed, 20 assertions (100% Success)**.
+
+
 

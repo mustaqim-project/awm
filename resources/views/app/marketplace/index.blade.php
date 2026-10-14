@@ -206,15 +206,18 @@
         <div class="col-span-1 md:col-span-2 rounded-[24px] bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/[0.06] dark:border-white/[0.08] backdrop-blur-md p-6 flex flex-col justify-between space-y-5 shadow-xs transition-all hover:shadow-md">
             <div class="space-y-4">
                 <!-- Channel Header -->
-                <div class="flex items-center justify-between">
+                <div class="flex items-center justify-between flex-wrap gap-2">
                     <div class="flex items-center gap-3.5">
                         <div class="w-12 h-12 rounded-[16px] bg-gradient-to-br from-black via-[#1C1C1E] to-[#00AA5B] text-white flex items-center justify-center font-black text-sm shadow-xs tracking-tight">
                             TT+TP
                         </div>
                         <div>
-                            <div class="flex items-center gap-2">
+                            <div class="flex items-center gap-2 flex-wrap">
                                 <h2 class="text-[17px] font-bold text-black dark:text-white">TikTok Shop + Tokopedia</h2>
                                 <span class="px-2 py-0.5 rounded-full text-[10.5px] font-bold bg-[#007AFF]/15 text-[#007AFF] border border-[#007AFF]/20">1 Terpadu</span>
+                                <span class="px-2 py-0.5 rounded-full text-[10.5px] font-semibold bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] border border-[#34C759]/20">
+                                    Node.js SDK Verified
+                                </span>
                             </div>
                             <p class="text-[12px] text-black/50 dark:text-white/50">TikTok Shop Partner Center (Kanal Penjualan TikTok &amp; Tokopedia Indonesia)</p>
                         </div>
@@ -248,6 +251,53 @@
                         </div>
                     </div>
 
+                    <!-- Achieved Capabilities Matrix (7 Pillars) -->
+                    <div class="p-3.5 rounded-[18px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.04] dark:border-white/[0.06] space-y-2.5">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[12px] font-bold text-black/80 dark:text-white/80 flex items-center gap-1.5">
+                                <i data-lucide="shield-check" class="w-4 h-4 text-[#34C759]"></i>
+                                <span>Kapabilitas Terintegrasi (Achieved Scopes)</span>
+                            </span>
+                            <span class="text-[11px] font-semibold text-[#34C759] bg-[#34C759]/10 px-2 py-0.5 rounded-full">
+                                7/7 Modul Aktif
+                            </span>
+                        </div>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px]">
+                            <div class="p-2 rounded-[12px] bg-white/60 dark:bg-[#2C2C2E]/60 border border-black/[0.04] dark:border-white/[0.06] flex items-center gap-2">
+                                <i data-lucide="package" class="w-3.5 h-3.5 text-[#007AFF] shrink-0"></i>
+                                <span class="truncate" title="seller.product.basic, write, delete, global">Produk &amp; Stok</span>
+                            </div>
+                            <div class="p-2 rounded-[12px] bg-white/60 dark:bg-[#2C2C2E]/60 border border-black/[0.04] dark:border-white/[0.06] flex items-center gap-2">
+                                <i data-lucide="shopping-bag" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
+                                <span class="truncate" title="seller.order.info, fulfillment.basic, package.write">Pesanan &amp; Resi</span>
+                            </div>
+                            <div class="p-2 rounded-[12px] bg-white/60 dark:bg-[#2C2C2E]/60 border border-black/[0.04] dark:border-white/[0.06] flex items-center gap-2">
+                                <i data-lucide="truck" class="w-3.5 h-3.5 text-[#FF9500] shrink-0"></i>
+                                <span class="truncate" title="seller.logistics">Gudang Logistik</span>
+                            </div>
+                            <div class="p-2 rounded-[12px] bg-white/60 dark:bg-[#2C2C2E]/60 border border-black/[0.04] dark:border-white/[0.06] flex items-center gap-2">
+                                <i data-lucide="wallet" class="w-3.5 h-3.5 text-[#AF52DE] shrink-0"></i>
+                                <span class="truncate" title="seller.finance.info">Settlement Keuangan</span>
+                            </div>
+                            <div class="p-2 rounded-[12px] bg-white/60 dark:bg-[#2C2C2E]/60 border border-black/[0.04] dark:border-white/[0.06] flex items-center gap-2">
+                                <i data-lucide="tag" class="w-3.5 h-3.5 text-[#FF2D55] shrink-0"></i>
+                                <span class="truncate" title="seller.promotion.info, write">Promo &amp; Diskon</span>
+                            </div>
+                            <div class="p-2 rounded-[12px] bg-white/60 dark:bg-[#2C2C2E]/60 border border-black/[0.04] dark:border-white/[0.06] flex items-center gap-2">
+                                <i data-lucide="rotate-ccw" class="w-3.5 h-3.5 text-[#5856D6] shrink-0"></i>
+                                <span class="truncate" title="seller.return_refund.basic">Retur &amp; Refund</span>
+                            </div>
+                            <div class="p-2 rounded-[12px] bg-white/60 dark:bg-[#2C2C2E]/60 border border-black/[0.04] dark:border-white/[0.06] flex items-center gap-2">
+                                <i data-lucide="store" class="w-3.5 h-3.5 text-[#00AA5B] shrink-0"></i>
+                                <span class="truncate" title="seller.shop.info, authorization.info">Shop Otorisasi</span>
+                            </div>
+                            <div class="p-2 rounded-[12px] bg-white/60 dark:bg-[#2C2C2E]/60 border border-black/[0.04] dark:border-white/[0.06] flex items-center gap-2">
+                                <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#007AFF] shrink-0"></i>
+                                <span class="truncate" title="Image Translation & Product Optimization">Optimasi Produk</span>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Active Toggle Form -->
                     <form method="POST" action="{{ route('marketplace-hub.toggle', 'tiktok_shop') }}" class="flex items-center justify-between pt-1">
                         @csrf
@@ -262,10 +312,30 @@
                         </button>
                     </form>
                 @else
-                    <div class="p-4 rounded-[18px] bg-[#007AFF]/5 dark:bg-[#007AFF]/10 border border-[#007AFF]/15 space-y-2">
+                    <div class="p-4 rounded-[18px] bg-[#007AFF]/5 dark:bg-[#007AFF]/10 border border-[#007AFF]/15 space-y-3">
                         <p class="text-[13px] text-black/75 dark:text-white/75 leading-relaxed">
                             Hubungkan akun <strong>TikTok Shop Partner</strong> Anda untuk mengelola penjualan TikTok Shop dan Tokopedia dalam 1 otorisasi terpadu. Sistem akan otomatis menyinkronkan stok gudang dan menarik pesanan masuk secara real-time.
                         </p>
+                        <div class="flex items-center gap-2 text-[11px] text-black/60 dark:text-white/60 flex-wrap">
+                            <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md">
+                                <i data-lucide="check" class="w-3 h-3 text-[#34C759]"></i> Produk &amp; Stok
+                            </span>
+                            <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md">
+                                <i data-lucide="check" class="w-3 h-3 text-[#34C759]"></i> Pesanan &amp; Fulfillment
+                            </span>
+                            <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md">
+                                <i data-lucide="check" class="w-3 h-3 text-[#34C759]"></i> Logistik
+                            </span>
+                            <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md">
+                                <i data-lucide="check" class="w-3 h-3 text-[#34C759]"></i> Keuangan &amp; Settlement
+                            </span>
+                            <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md">
+                                <i data-lucide="check" class="w-3 h-3 text-[#34C759]"></i> Promosi
+                            </span>
+                            <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md">
+                                <i data-lucide="check" class="w-3 h-3 text-[#34C759]"></i> Retur/Refund
+                            </span>
+                        </div>
                     </div>
                 @endif
             </div>
@@ -273,7 +343,7 @@
             <!-- Actions -->
             <div class="pt-3 border-t border-black/[0.04] dark:border-white/[0.06] flex items-center justify-between gap-3">
                 @if($tiktokConnected)
-                    <div class="flex items-center gap-2 flex-1">
+                    <div class="flex items-center gap-2 flex-1 flex-wrap">
                         <a href="{{ route('marketplace-hub.products', ['channel' => 'tiktok_shop']) }}"
                             class="h-10 px-4 rounded-[12px] text-[12.5px] font-bold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 transition-all flex items-center justify-center gap-1.5 cursor-pointer">
                             <i data-lucide="tag" class="w-4 h-4"></i>
@@ -283,6 +353,12 @@
                             class="h-10 px-4 rounded-[12px] text-[12.5px] font-bold text-[#00AA5B] bg-[#00AA5B]/10 hover:bg-[#00AA5B]/20 transition-all flex items-center justify-center gap-1.5 cursor-pointer">
                             <i data-lucide="tag" class="w-4 h-4"></i>
                             <span>Atur Harga &amp; Stok Tokopedia</span>
+                        </a>
+                        <a href="{{ route('marketplace-hub.orders', ['channel' => 'tiktok_shop']) }}"
+                            class="h-10 px-3.5 rounded-[12px] text-[12px] font-medium text-black/70 dark:text-white/70 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                            title="Lihat Pesanan TikTok">
+                            <i data-lucide="package" class="w-3.5 h-3.5"></i>
+                            <span>Pesanan</span>
                         </a>
                     </div>
                     <button type="button" @click="openDisconnect('tiktok_shop', 'TikTok Shop + Tokopedia')"
