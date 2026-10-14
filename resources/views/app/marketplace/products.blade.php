@@ -318,30 +318,30 @@
     <!-- ===================================================== -->
     <div class="rounded-[24px] bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/[0.06] dark:border-white/[0.08] backdrop-blur-md overflow-hidden shadow-xs">
         <div class="overflow-x-auto">
-            <table class="w-full text-left text-[13px] border-collapse">
+            <table class="w-full text-left text-[13px] border-collapse min-w-[920px]">
                 <thead>
-                    <tr class="border-b border-black/[0.06] dark:border-white/[0.08] bg-black/[0.02] dark:bg-white/[0.02] text-black/60 dark:text-white/60 font-semibold text-[11.5px] uppercase tracking-wider">
-                        <th class="py-3.5 px-4 sm:px-6">Produk Utama (COOCA)</th>
-                        <th class="py-3.5 px-4 text-center">Harga COOCA</th>
-                        <th class="py-3.5 px-4 text-center">
-                            <span class="inline-flex items-center gap-1 text-[#EE4D2D]">
+                    <tr class="border-b border-black/[0.06] dark:border-white/[0.08] bg-black/[0.02] dark:bg-white/[0.02] text-black/60 dark:text-white/60 font-semibold text-[11px] uppercase tracking-wider">
+                        <th class="py-3 px-4 sm:px-6 w-[36%]">Produk</th>
+                        <th class="py-3 px-3 text-right w-[13%]">Harga Toko</th>
+                        <th class="py-3 px-3 text-center w-[14%]">
+                            <span class="inline-flex items-center gap-1.5 text-[#EE4D2D]">
                                 <span class="w-2 h-2 rounded-full bg-[#EE4D2D]"></span>
                                 <span>Shopee</span>
                             </span>
                         </th>
-                        <th class="py-3.5 px-4 text-center">
-                            <span class="inline-flex items-center gap-1 text-black dark:text-white">
+                        <th class="py-3 px-3 text-center w-[14%]">
+                            <span class="inline-flex items-center gap-1.5 text-black dark:text-white">
                                 <span class="w-2 h-2 rounded-full bg-black dark:bg-white"></span>
                                 <span>TikTok Shop</span>
                             </span>
                         </th>
-                        <th class="py-3.5 px-4 text-center">
-                            <span class="inline-flex items-center gap-1 text-[#00AA5B]">
+                        <th class="py-3 px-3 text-center w-[14%]">
+                            <span class="inline-flex items-center gap-1.5 text-[#00AA5B]">
                                 <span class="w-2 h-2 rounded-full bg-[#00AA5B]"></span>
                                 <span>Tokopedia</span>
                             </span>
                         </th>
-                        <th class="py-3.5 px-4 sm:px-6 text-right">Aksi Sinkronisasi</th>
+                        <th class="py-3 px-4 sm:px-6 text-right w-[9%]">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
@@ -363,347 +363,376 @@
 
                             $isRestrictedDrug = $isPharmacy && $product->isRestrictedPharmacyProduct();
                             $isServiceItem    = $product->isService();
-                            $photoCount       = ($product->relationLoaded('images') ? $product->images->count() : 0) + ($product->image ? 1 : 0);
+                            $thumbUrl         = $product->image_url ?? $product->images->first()?->image_url;
                         @endphp
                         <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.015] transition-colors">
-                            <!-- Column 1: Product Name & Code -->
-                            <td class="py-4 px-4 sm:px-6">
-                                <div class="flex items-center gap-2 flex-wrap">
-                                    <div class="font-bold text-black dark:text-white text-[13.5px]">{{ $product->name }}</div>
-                                    @if(! $product->is_active)
-                                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#8E8E93]/15 text-[#8E8E93] border border-[#8E8E93]/20" title="Produk nonaktif di master data COOCA">
-                                            <i data-lucide="pause-circle" class="w-3 h-3"></i>
-                                            <span>Master Nonaktif</span>
-                                        </span>
-                                    @endif
-                                    @if($isRestrictedDrug)
-                                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10.5px] font-bold bg-[#FF3B30]/15 text-[#FF3B30] border border-[#FF3B30]/20" title="Obat keras BPOM RI dilarang di marketplace">
-                                            <i data-lucide="shield-alert" class="w-3 h-3"></i>
-                                            <span>Terkunci BPOM</span>
-                                        </span>
-                                    @elseif($isServiceItem)
-                                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10.5px] font-bold bg-[#FF9500]/15 text-[#FF9500] border border-[#FF9500]/20" title="Layanan Jasa Kasir Offline">
-                                            <i data-lucide="wrench" class="w-3 h-3"></i>
-                                            <span>Jasa Offline</span>
-                                        </span>
-                                    @endif
-                                </div>
-                                <div class="flex items-center gap-2 text-[11.5px] text-black/50 dark:text-white/50 mt-1 flex-wrap">
-                                    <span class="font-mono bg-black/[0.04] dark:bg-white/[0.06] px-1.5 py-0.5 rounded">{{ $product->code ?? 'NO-SKU' }}</span>
-                                    <span>•</span>
-                                    @if($isServiceItem)
-                                        <span class="text-[#FF9500] font-medium">Non-Fisik (Jasa)</span>
-                                    @else
-                                        <span>Stok Fisik: <strong class="{{ ($product->stock ?? 0) <= 0 ? 'text-[#FF3B30]' : 'text-black dark:text-white' }}">{{ $product->stock ?? 0 }}</strong> {{ $product->unit ?? 'pcs' }}</span>
-                                    @endif
-                                    @if($product->base_cost > 0)
-                                        <span>•</span>
-                                        <span>HPP: <strong class="font-mono text-black dark:text-white">Rp {{ number_format((float)$product->base_cost, 0, ',', '.') }}</strong></span>
-                                    @endif
-                                    <span>•</span>
-                                    <span class="text-[11px] text-black/45 dark:text-white/45">Berat: {{ (int)($product->weight ?: 200) }}g</span>
-                                    <span>•</span>
-                                    <span class="inline-flex items-center gap-1 text-[11px] {{ $photoCount >= 5 ? 'text-[#34C759]' : 'text-black/50 dark:text-white/50' }}">
-                                        <i data-lucide="camera" class="w-3 h-3"></i>
-                                        <span>{{ $photoCount }} Foto</span>
-                                    </span>
+                            <!-- Column 1: Product Name, Thumbnail, SKU & Stock -->
+                            <td class="py-3.5 px-4 sm:px-6">
+                                <div class="flex items-center gap-3">
+                                    <!-- Thumbnail -->
+                                    <div class="w-10 h-10 rounded-[10px] shrink-0 bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.06] dark:border-white/[0.08] overflow-hidden flex items-center justify-center">
+                                        @if($thumbUrl)
+                                            <img src="{{ $thumbUrl }}" alt="{{ $product->name }}" class="w-full h-full object-cover" loading="lazy">
+                                        @else
+                                            <i data-lucide="package" class="w-4 h-4 text-black/30 dark:text-white/30"></i>
+                                        @endif
+                                    </div>
+
+                                    <!-- Details -->
+                                    <div class="min-w-0 flex-1">
+                                        <div class="flex items-center gap-1.5 flex-wrap">
+                                            <button type="button" @click="openMapping('{{ $product->id }}', 'shopee')"
+                                                class="font-semibold text-black dark:text-white text-[13px] hover:text-[#007AFF] transition-colors text-left truncate max-w-[260px] sm:max-w-[340px]"
+                                                title="{{ $product->name }}">
+                                                {{ $product->name }}
+                                            </button>
+
+                                            @if(! $product->is_active)
+                                                <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9.5px] font-bold bg-[#8E8E93]/15 text-[#8E8E93]" title="Nonaktif di katalog master COOCA">
+                                                    <i data-lucide="pause-circle" class="w-2.5 h-2.5"></i>
+                                                    <span>Nonaktif</span>
+                                                </span>
+                                            @endif
+                                            @if($isRestrictedDrug)
+                                                <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9.5px] font-bold bg-[#FF3B30]/15 text-[#FF3B30]" title="Obat Keras BPOM">
+                                                    <i data-lucide="shield-alert" class="w-2.5 h-2.5"></i>
+                                                    <span>BPOM</span>
+                                                </span>
+                                            @elseif($isServiceItem)
+                                                <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9.5px] font-bold bg-[#FF9500]/15 text-[#FF9500]">
+                                                    <span>Jasa</span>
+                                                </span>
+                                            @endif
+                                        </div>
+
+                                        <div class="flex items-center gap-1.5 text-[11px] text-black/45 dark:text-white/45 mt-0.5 flex-wrap">
+                                            <span class="font-mono bg-black/[0.03] dark:bg-white/[0.06] px-1.5 py-0.2 rounded text-[10.5px] text-black/60 dark:text-white/60">
+                                                {{ $product->code ?? 'NO-SKU' }}
+                                            </span>
+                                            <span>•</span>
+                                            @if($isServiceItem)
+                                                <span class="text-[#FF9500]">Jasa Kasir</span>
+                                            @else
+                                                @if(($product->stock ?? 0) <= 0)
+                                                    <span class="inline-flex items-center gap-0.5 text-[#FF3B30] font-semibold">
+                                                        <i data-lucide="alert-circle" class="w-3 h-3"></i>
+                                                        <span>Stok Habis</span>
+                                                    </span>
+                                                @else
+                                                    <span>Stok: <strong class="text-black/80 dark:text-white/80 font-mono">{{ $product->stock ?? 0 }}</strong> {{ $product->unit ?? 'pcs' }}</span>
+                                                @endif
+                                            @endif
+                                            @if($product->category)
+                                                <span>•</span>
+                                                <span class="truncate max-w-[120px]">{{ $product->category->name }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
                             </td>
 
                             <!-- Column 2: COOCA Base Price -->
-                            <td class="py-4 px-4 text-center">
-                                <div class="font-bold text-black dark:text-white text-[13.5px]">
+                            <td class="py-3.5 px-3 text-right">
+                                <div class="font-bold font-mono text-black dark:text-white text-[13px] tracking-tight">
                                     Rp {{ number_format((float)$product->selling_price, 0, ',', '.') }}
                                 </div>
-                                <span class="text-[10.5px] font-medium text-black/45 dark:text-white/45">Toko Utama</span>
+                                @if($product->base_cost > 0)
+                                    <div class="text-[10.5px] font-mono text-black/40 dark:text-white/40 mt-0.5" title="Harga Pokok Penjualan (HPP)">
+                                        HPP {{ number_format((float)$product->base_cost, 0, ',', '.') }}
+                                    </div>
+                                @else
+                                    <div class="text-[10px] text-black/30 dark:text-white/30 mt-0.5">Toko Utama</div>
+                                @endif
                             </td>
 
                             <!-- Column 3: Shopee Price & Config -->
-                            <td class="py-4 px-4 text-center">
+                            <td class="py-3.5 px-3 text-center">
                                 @if($isRestrictedDrug)
-                                    <span class="h-7 px-2.5 rounded-[8px] text-[11px] font-semibold text-[#FF3B30] bg-[#FF3B30]/10 inline-flex items-center gap-1 cursor-not-allowed" title="Obat keras dilarang di marketplace sesuai regulasi BPOM RI">
-                                        <i data-lucide="lock" class="w-3 h-3"></i>
-                                        <span>Terkunci BPOM</span>
-                                    </span>
+                                    <div class="flex justify-center">
+                                        <span class="h-6 px-2 rounded-[6px] text-[10.5px] font-medium text-[#FF3B30] bg-[#FF3B30]/10 inline-flex items-center gap-1 cursor-not-allowed" title="Obat keras BPOM RI">
+                                            <i data-lucide="lock" class="w-3 h-3"></i>
+                                            <span>Terkunci</span>
+                                        </span>
+                                    </div>
                                 @elseif($isServiceItem)
-                                    <span class="h-7 px-2.5 rounded-[8px] text-[11px] font-semibold text-black/40 dark:text-white/40 bg-black/[0.04] dark:bg-white/[0.06] inline-flex items-center gap-1 cursor-not-allowed" title="Jasa pengerjaan tidak dapat dikirim via kurir marketplace">
-                                        <i data-lucide="ban" class="w-3 h-3"></i>
-                                        <span>Jasa Offline</span>
-                                    </span>
+                                    <div class="flex justify-center">
+                                        <span class="h-6 px-2 rounded-[6px] text-[10.5px] font-medium text-black/40 dark:text-white/40 bg-black/[0.04] dark:bg-white/[0.06] inline-flex items-center gap-1 cursor-not-allowed">
+                                            <i data-lucide="ban" class="w-3 h-3"></i>
+                                            <span>Jasa Offline</span>
+                                        </span>
+                                    </div>
                                 @elseif($shopeeMapping && ! empty($shopeeMapping->external_product_id))
                                     @if($shopeeMapping->is_active)
-                                        <div class="font-bold text-[#EE4D2D] text-[13px]">
-                                            Rp {{ number_format((float)$shopeeMapping->getEffectivePrice(), 0, ',', '.') }}
-                                        </div>
-                                        @if($shopeeMapping->isBelowCost())
-                                            <div class="mt-0.5">
-                                                <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9.5px] font-bold bg-[#FF3B30]/15 text-[#FF3B30] border border-[#FF3B30]/30" title="Harga jual saluran di bawah modal dasar HPP!">
-                                                    <i data-lucide="shield-alert" class="w-2.5 h-2.5"></i>
-                                                    <span>Di Bawah HPP</span>
-                                                </span>
-                                            </div>
-                                        @elseif($shopeeMapping->isMarginNegativeAfterFees())
-                                            <div class="mt-0.5">
-                                                <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9.5px] font-semibold bg-[#FF9500]/15 text-[#FF9500]" title="Potensi defisit margin setelah potongan komisi platform ~8%">
-                                                    <i data-lucide="alert-triangle" class="w-2.5 h-2.5"></i>
-                                                    <span>Margin Tipis</span>
-                                                </span>
-                                            </div>
-                                        @endif
-                                        <div class="text-[10.5px] text-black/50 dark:text-white/50 mt-0.5">
-                                            <span>Stok: <strong>{{ $shopeeMapping->getEffectiveStock($product->stock ?? 0) }}</strong></span>
-                                            @if($shopeeMapping->sync_stock_auto && $shopeeMapping->stock_buffer > 0)
-                                                <span class="text-[9.5px] opacity-75" title="Stok Pengaman Toko Offline">(Buf: {{ $shopeeMapping->stock_buffer }})</span>
-                                            @endif
-                                        </div>
-                                        <div class="flex items-center justify-center gap-2 mt-1">
+                                        <div class="flex flex-col items-center">
                                             <button type="button" @click="openMapping('{{ $product->id }}', 'shopee')"
-                                                class="text-[11px] font-semibold text-[#007AFF] hover:underline cursor-pointer">
-                                                Ubah
+                                                class="font-bold font-mono text-[12.5px] text-[#EE4D2D] hover:underline cursor-pointer tracking-tight"
+                                                title="Klik untuk ubah harga & aturan saluran">
+                                                Rp {{ number_format((float)$shopeeMapping->getEffectivePrice(), 0, ',', '.') }}
                                             </button>
-                                            <span class="text-black/20 dark:text-white/20 text-[10px]">•</span>
-                                            <button type="button" @click="toggleChannelProductDirect('{{ $product->id }}', 'shopee', 'deactivate')"
-                                                class="text-[11px] font-semibold text-[#FF3B30] hover:underline cursor-pointer" title="Tarik produk dari etalase Shopee">
-                                                Nonaktifkan
-                                            </button>
+                                            <div class="flex items-center gap-1 text-[10.5px] text-black/45 dark:text-white/45 mt-0.5">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]"></span>
+                                                <span class="font-mono">Stok {{ $shopeeMapping->getEffectiveStock($product->stock ?? 0) }}</span>
+                                                @if($shopeeMapping->isBelowCost())
+                                                    <span class="text-[#FF3B30]" title="Harga di bawah HPP!"><i data-lucide="alert-triangle" class="w-3 h-3"></i></span>
+                                                @endif
+                                            </div>
+                                            <div class="flex items-center gap-1.5 mt-0.5">
+                                                <button type="button" @click="openMapping('{{ $product->id }}', 'shopee')"
+                                                    class="text-[10px] text-black/40 dark:text-white/40 hover:text-[#007AFF] transition-colors cursor-pointer">
+                                                    Ubah
+                                                </button>
+                                                <span class="text-black/15 dark:text-white/15 text-[8px]">•</span>
+                                                <button type="button" @click="toggleChannelProductDirect('{{ $product->id }}', 'shopee', 'deactivate')"
+                                                    class="text-[10px] text-black/35 dark:text-white/35 hover:text-[#FF3B30] transition-colors cursor-pointer"
+                                                    title="Tarik produk dari etalase Shopee">
+                                                    Nonaktif
+                                                </button>
+                                            </div>
                                         </div>
                                     @else
-                                        <div class="space-y-1">
-                                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FF9500]/15 text-[#FF9500] border border-[#FF9500]/30" title="Listing dinonaktifkan / ditarik dari etalase Shopee">
-                                                <i data-lucide="eye-off" class="w-2.5 h-2.5"></i>
-                                                <span>Nonaktif</span>
-                                            </span>
-                                            <div class="text-[11.5px] text-black/40 dark:text-white/40 line-through">
+                                        <div class="flex flex-col items-center">
+                                            <div class="text-[11.5px] font-mono text-black/35 dark:text-white/35 line-through">
                                                 Rp {{ number_format((float)$shopeeMapping->getEffectivePrice(), 0, ',', '.') }}
                                             </div>
-                                            <div class="flex items-center justify-center gap-2 mt-1">
+                                            <div class="flex items-center gap-1.5 mt-1">
                                                 <button type="button" @click="toggleChannelProductDirect('{{ $product->id }}', 'shopee', 'activate')"
-                                                    class="h-6 px-2 rounded-[6px] text-[10.5px] font-bold text-[#34C759] bg-[#34C759]/15 hover:bg-[#34C759]/25 transition-all cursor-pointer flex items-center gap-1" title="Aktifkan kembali ke etalase Shopee">
-                                                    <i data-lucide="eye" class="w-3 h-3"></i>
+                                                    class="h-5 px-1.5 rounded-[5px] text-[10px] font-bold text-[#34C759] bg-[#34C759]/10 hover:bg-[#34C759]/20 transition-all cursor-pointer flex items-center gap-0.5"
+                                                    title="Aktifkan kembali ke etalase Shopee">
+                                                    <i data-lucide="eye" class="w-2.5 h-2.5"></i>
                                                     <span>Aktifkan</span>
                                                 </button>
                                                 <button type="button" @click="openMapping('{{ $product->id }}', 'shopee')"
-                                                    class="text-[11px] font-semibold text-[#007AFF] hover:underline cursor-pointer">
+                                                    class="text-[10px] text-black/40 dark:text-white/40 hover:text-[#007AFF] cursor-pointer">
                                                     Ubah
                                                 </button>
                                             </div>
                                         </div>
                                     @endif
                                 @else
-                                    <button type="button" @click="openMapping('{{ $product->id }}', 'shopee')"
-                                        class="h-7 px-2.5 rounded-[8px] text-[11px] font-semibold text-[#EE4D2D] bg-[#EE4D2D]/10 hover:bg-[#EE4D2D]/20 inline-flex items-center gap-1 cursor-pointer transition-colors" title="1-Click Terbitkan ke Shopee atau Petakan">
-                                        <i data-lucide="cloud-upload" class="w-3 h-3"></i>
-                                        <span>Terbitkan</span>
-                                    </button>
+                                    <div class="flex justify-center">
+                                        <button type="button" @click="openMapping('{{ $product->id }}', 'shopee')"
+                                            class="h-6 px-2 rounded-[6px] text-[10.5px] font-medium text-black/45 dark:text-white/45 bg-black/[0.03] dark:bg-white/[0.05] hover:bg-black/[0.06] hover:text-black dark:hover:text-white transition-all inline-flex items-center gap-1 cursor-pointer"
+                                            title="Hubungkan atau Terbitkan ke Shopee">
+                                            <i data-lucide="plus" class="w-3 h-3 opacity-60"></i>
+                                            <span>Hubungkan</span>
+                                        </button>
+                                    </div>
                                 @endif
                             </td>
 
                             <!-- Column 4: TikTok Shop Price & Config -->
-                            <td class="py-4 px-4 text-center">
+                            <td class="py-3.5 px-3 text-center">
                                 @if($isRestrictedDrug)
-                                    <span class="h-7 px-2.5 rounded-[8px] text-[11px] font-semibold text-[#FF3B30] bg-[#FF3B30]/10 inline-flex items-center gap-1 cursor-not-allowed" title="Obat keras dilarang di marketplace sesuai regulasi BPOM RI">
-                                        <i data-lucide="lock" class="w-3 h-3"></i>
-                                        <span>Terkunci BPOM</span>
-                                    </span>
+                                    <div class="flex justify-center">
+                                        <span class="h-6 px-2 rounded-[6px] text-[10.5px] font-medium text-[#FF3B30] bg-[#FF3B30]/10 inline-flex items-center gap-1 cursor-not-allowed" title="Obat keras BPOM RI">
+                                            <i data-lucide="lock" class="w-3 h-3"></i>
+                                            <span>Terkunci</span>
+                                        </span>
+                                    </div>
                                 @elseif($isServiceItem)
-                                    <span class="h-7 px-2.5 rounded-[8px] text-[11px] font-semibold text-black/40 dark:text-white/40 bg-black/[0.04] dark:bg-white/[0.06] inline-flex items-center gap-1 cursor-not-allowed" title="Jasa pengerjaan tidak dapat dikirim via kurir marketplace">
-                                        <i data-lucide="ban" class="w-3 h-3"></i>
-                                        <span>Jasa Offline</span>
-                                    </span>
+                                    <div class="flex justify-center">
+                                        <span class="h-6 px-2 rounded-[6px] text-[10.5px] font-medium text-black/40 dark:text-white/40 bg-black/[0.04] dark:bg-white/[0.06] inline-flex items-center gap-1 cursor-not-allowed">
+                                            <i data-lucide="ban" class="w-3 h-3"></i>
+                                            <span>Jasa Offline</span>
+                                        </span>
+                                    </div>
                                 @elseif($tiktokMapping && ! empty($tiktokMapping->external_product_id))
                                     @if($tiktokMapping->is_active)
-                                        <div class="font-bold text-black dark:text-white text-[13px]">
-                                            Rp {{ number_format((float)$tiktokMapping->getEffectivePrice(), 0, ',', '.') }}
-                                        </div>
-                                        @if($tiktokMapping->isBelowCost())
-                                            <div class="mt-0.5">
-                                                <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9.5px] font-bold bg-[#FF3B30]/15 text-[#FF3B30] border border-[#FF3B30]/30" title="Harga jual saluran di bawah modal dasar HPP!">
-                                                    <i data-lucide="shield-alert" class="w-2.5 h-2.5"></i>
-                                                    <span>Di Bawah HPP</span>
-                                                </span>
-                                            </div>
-                                        @elseif($tiktokMapping->isMarginNegativeAfterFees())
-                                            <div class="mt-0.5">
-                                                <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9.5px] font-semibold bg-[#FF9500]/15 text-[#FF9500]" title="Potensi defisit margin setelah potongan komisi platform ~8%">
-                                                    <i data-lucide="alert-triangle" class="w-2.5 h-2.5"></i>
-                                                    <span>Margin Tipis</span>
-                                                </span>
-                                            </div>
-                                        @endif
-                                        <div class="text-[10.5px] text-black/50 dark:text-white/50 mt-0.5">
-                                            <span>Stok: <strong>{{ $tiktokMapping->getEffectiveStock($product->stock ?? 0) }}</strong></span>
-                                            @if($tiktokMapping->sync_stock_auto && $tiktokMapping->stock_buffer > 0)
-                                                <span class="text-[9.5px] opacity-75" title="Stok Pengaman Toko Offline">(Buf: {{ $tiktokMapping->stock_buffer }})</span>
-                                            @endif
-                                        </div>
-                                        <div class="flex items-center justify-center gap-2 mt-1">
+                                        <div class="flex flex-col items-center">
                                             <button type="button" @click="openMapping('{{ $product->id }}', 'tiktok_shop')"
-                                                class="text-[11px] font-semibold text-[#007AFF] hover:underline cursor-pointer">
-                                                Ubah
+                                                class="font-bold font-mono text-[12.5px] text-black dark:text-white hover:underline cursor-pointer tracking-tight"
+                                                title="Klik untuk ubah harga & aturan saluran">
+                                                Rp {{ number_format((float)$tiktokMapping->getEffectivePrice(), 0, ',', '.') }}
                                             </button>
-                                            <span class="text-black/20 dark:text-white/20 text-[10px]">•</span>
-                                            <button type="button" @click="toggleChannelProductDirect('{{ $product->id }}', 'tiktok_shop', 'deactivate')"
-                                                class="text-[11px] font-semibold text-[#FF3B30] hover:underline cursor-pointer" title="Tarik produk dari etalase TikTok Shop">
-                                                Nonaktifkan
-                                            </button>
+                                            <div class="flex items-center gap-1 text-[10.5px] text-black/45 dark:text-white/45 mt-0.5">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]"></span>
+                                                <span class="font-mono">Stok {{ $tiktokMapping->getEffectiveStock($product->stock ?? 0) }}</span>
+                                                @if($tiktokMapping->isBelowCost())
+                                                    <span class="text-[#FF3B30]" title="Harga di bawah HPP!"><i data-lucide="alert-triangle" class="w-3 h-3"></i></span>
+                                                @endif
+                                            </div>
+                                            <div class="flex items-center gap-1.5 mt-0.5">
+                                                <button type="button" @click="openMapping('{{ $product->id }}', 'tiktok_shop')"
+                                                    class="text-[10px] text-black/40 dark:text-white/40 hover:text-[#007AFF] transition-colors cursor-pointer">
+                                                    Ubah
+                                                </button>
+                                                <span class="text-black/15 dark:text-white/15 text-[8px]">•</span>
+                                                <button type="button" @click="toggleChannelProductDirect('{{ $product->id }}', 'tiktok_shop', 'deactivate')"
+                                                    class="text-[10px] text-black/35 dark:text-white/35 hover:text-[#FF3B30] transition-colors cursor-pointer"
+                                                    title="Tarik produk dari etalase TikTok Shop">
+                                                    Nonaktif
+                                                </button>
+                                            </div>
                                         </div>
                                     @else
-                                        <div class="space-y-1">
-                                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FF9500]/15 text-[#FF9500] border border-[#FF9500]/30" title="Listing dinonaktifkan / ditarik dari etalase TikTok Shop">
-                                                <i data-lucide="eye-off" class="w-2.5 h-2.5"></i>
-                                                <span>Nonaktif</span>
-                                            </span>
-                                            <div class="text-[11.5px] text-black/40 dark:text-white/40 line-through">
+                                        <div class="flex flex-col items-center">
+                                            <div class="text-[11.5px] font-mono text-black/35 dark:text-white/35 line-through">
                                                 Rp {{ number_format((float)$tiktokMapping->getEffectivePrice(), 0, ',', '.') }}
                                             </div>
-                                            <div class="flex items-center justify-center gap-2 mt-1">
+                                            <div class="flex items-center gap-1.5 mt-1">
                                                 <button type="button" @click="toggleChannelProductDirect('{{ $product->id }}', 'tiktok_shop', 'activate')"
-                                                    class="h-6 px-2 rounded-[6px] text-[10.5px] font-bold text-[#34C759] bg-[#34C759]/15 hover:bg-[#34C759]/25 transition-all cursor-pointer flex items-center gap-1" title="Aktifkan kembali ke etalase TikTok Shop">
-                                                    <i data-lucide="eye" class="w-3 h-3"></i>
+                                                    class="h-5 px-1.5 rounded-[5px] text-[10px] font-bold text-[#34C759] bg-[#34C759]/10 hover:bg-[#34C759]/20 transition-all cursor-pointer flex items-center gap-0.5"
+                                                    title="Aktifkan kembali ke etalase TikTok Shop">
+                                                    <i data-lucide="eye" class="w-2.5 h-2.5"></i>
                                                     <span>Aktifkan</span>
                                                 </button>
                                                 <button type="button" @click="openMapping('{{ $product->id }}', 'tiktok_shop')"
-                                                    class="text-[11px] font-semibold text-[#007AFF] hover:underline cursor-pointer">
+                                                    class="text-[10px] text-black/40 dark:text-white/40 hover:text-[#007AFF] cursor-pointer">
                                                     Ubah
                                                 </button>
                                             </div>
                                         </div>
                                     @endif
                                 @else
-                                    <button type="button" @click="openMapping('{{ $product->id }}', 'tiktok_shop')"
-                                        class="h-7 px-2.5 rounded-[8px] text-[11px] font-semibold text-black dark:text-white bg-black/[0.06] dark:bg-white/[0.1] hover:bg-black/[0.1] inline-flex items-center gap-1 cursor-pointer transition-colors" title="1-Click Terbitkan ke TikTok Shop atau Petakan">
-                                        <i data-lucide="cloud-upload" class="w-3 h-3"></i>
-                                        <span>Terbitkan</span>
-                                    </button>
+                                    <div class="flex justify-center">
+                                        <button type="button" @click="openMapping('{{ $product->id }}', 'tiktok_shop')"
+                                            class="h-6 px-2 rounded-[6px] text-[10.5px] font-medium text-black/45 dark:text-white/45 bg-black/[0.03] dark:bg-white/[0.05] hover:bg-black/[0.06] hover:text-black dark:hover:text-white transition-all inline-flex items-center gap-1 cursor-pointer"
+                                            title="Hubungkan atau Terbitkan ke TikTok Shop">
+                                            <i data-lucide="plus" class="w-3 h-3 opacity-60"></i>
+                                            <span>Hubungkan</span>
+                                        </button>
+                                    </div>
                                 @endif
                             </td>
 
                             <!-- Column 5: Tokopedia Price & Config -->
-                            <td class="py-4 px-4 text-center">
+                            <td class="py-3.5 px-3 text-center">
                                 @if($isRestrictedDrug)
-                                    <span class="h-7 px-2.5 rounded-[8px] text-[11px] font-semibold text-[#FF3B30] bg-[#FF3B30]/10 inline-flex items-center gap-1 cursor-not-allowed" title="Obat keras dilarang di marketplace sesuai regulasi BPOM RI">
-                                        <i data-lucide="lock" class="w-3 h-3"></i>
-                                        <span>Terkunci BPOM</span>
-                                    </span>
+                                    <div class="flex justify-center">
+                                        <span class="h-6 px-2 rounded-[6px] text-[10.5px] font-medium text-[#FF3B30] bg-[#FF3B30]/10 inline-flex items-center gap-1 cursor-not-allowed" title="Obat keras BPOM RI">
+                                            <i data-lucide="lock" class="w-3 h-3"></i>
+                                            <span>Terkunci</span>
+                                        </span>
+                                    </div>
                                 @elseif($isServiceItem)
-                                    <span class="h-7 px-2.5 rounded-[8px] text-[11px] font-semibold text-black/40 dark:text-white/40 bg-black/[0.04] dark:bg-white/[0.06] inline-flex items-center gap-1 cursor-not-allowed" title="Jasa pengerjaan tidak dapat dikirim via kurir marketplace">
-                                        <i data-lucide="ban" class="w-3 h-3"></i>
-                                        <span>Jasa Offline</span>
-                                    </span>
+                                    <div class="flex justify-center">
+                                        <span class="h-6 px-2 rounded-[6px] text-[10.5px] font-medium text-black/40 dark:text-white/40 bg-black/[0.04] dark:bg-white/[0.06] inline-flex items-center gap-1 cursor-not-allowed">
+                                            <i data-lucide="ban" class="w-3 h-3"></i>
+                                            <span>Jasa Offline</span>
+                                        </span>
+                                    </div>
                                 @elseif($tokpedMapping && ! empty($tokpedMapping->external_product_id))
                                     @if($tokpedMapping->is_active)
-                                        <div class="font-bold text-[#00AA5B] text-[13px]">
-                                            Rp {{ number_format((float)$tokpedMapping->getEffectivePrice(), 0, ',', '.') }}
-                                        </div>
-                                        @if($tokpedMapping->isBelowCost())
-                                            <div class="mt-0.5">
-                                                <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9.5px] font-bold bg-[#FF3B30]/15 text-[#FF3B30] border border-[#FF3B30]/30" title="Harga jual saluran di bawah modal dasar HPP!">
-                                                    <i data-lucide="shield-alert" class="w-2.5 h-2.5"></i>
-                                                    <span>Di Bawah HPP</span>
-                                                </span>
-                                            </div>
-                                        @elseif($tokpedMapping->isMarginNegativeAfterFees())
-                                            <div class="mt-0.5">
-                                                <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9.5px] font-semibold bg-[#FF9500]/15 text-[#FF9500]" title="Potensi defisit margin setelah potongan komisi platform ~8%">
-                                                    <i data-lucide="alert-triangle" class="w-2.5 h-2.5"></i>
-                                                    <span>Margin Tipis</span>
-                                                </span>
-                                            </div>
-                                        @endif
-                                        <div class="text-[10.5px] text-black/50 dark:text-white/50 mt-0.5">
-                                            <span>Stok: <strong>{{ $tokpedMapping->getEffectiveStock($product->stock ?? 0) }}</strong></span>
-                                            @if($tokpedMapping->sync_stock_auto && $tokpedMapping->stock_buffer > 0)
-                                                <span class="text-[9.5px] opacity-75" title="Stok Pengaman Toko Offline">(Buf: {{ $tokpedMapping->stock_buffer }})</span>
-                                            @endif
-                                        </div>
-                                        <div class="flex items-center justify-center gap-2 mt-1">
+                                        <div class="flex flex-col items-center">
                                             <button type="button" @click="openMapping('{{ $product->id }}', 'tokopedia')"
-                                                class="text-[11px] font-semibold text-[#007AFF] hover:underline cursor-pointer">
-                                                Ubah
+                                                class="font-bold font-mono text-[12.5px] text-[#00AA5B] hover:underline cursor-pointer tracking-tight"
+                                                title="Klik untuk ubah harga & aturan saluran">
+                                                Rp {{ number_format((float)$tokpedMapping->getEffectivePrice(), 0, ',', '.') }}
                                             </button>
-                                            <span class="text-black/20 dark:text-white/20 text-[10px]">•</span>
-                                            <button type="button" @click="toggleChannelProductDirect('{{ $product->id }}', 'tokopedia', 'deactivate')"
-                                                class="text-[11px] font-semibold text-[#FF3B30] hover:underline cursor-pointer" title="Tarik produk dari etalase Tokopedia">
-                                                Nonaktifkan
-                                            </button>
+                                            <div class="flex items-center gap-1 text-[10.5px] text-black/45 dark:text-white/45 mt-0.5">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]"></span>
+                                                <span class="font-mono">Stok {{ $tokpedMapping->getEffectiveStock($product->stock ?? 0) }}</span>
+                                                @if($tokpedMapping->isBelowCost())
+                                                    <span class="text-[#FF3B30]" title="Harga di bawah HPP!"><i data-lucide="alert-triangle" class="w-3 h-3"></i></span>
+                                                @endif
+                                            </div>
+                                            <div class="flex items-center gap-1.5 mt-0.5">
+                                                <button type="button" @click="openMapping('{{ $product->id }}', 'tokopedia')"
+                                                    class="text-[10px] text-black/40 dark:text-white/40 hover:text-[#007AFF] transition-colors cursor-pointer">
+                                                    Ubah
+                                                </button>
+                                                <span class="text-black/15 dark:text-white/15 text-[8px]">•</span>
+                                                <button type="button" @click="toggleChannelProductDirect('{{ $product->id }}', 'tokopedia', 'deactivate')"
+                                                    class="text-[10px] text-black/35 dark:text-white/35 hover:text-[#FF3B30] transition-colors cursor-pointer"
+                                                    title="Tarik produk dari etalase Tokopedia">
+                                                    Nonaktif
+                                                </button>
+                                            </div>
                                         </div>
                                     @else
-                                        <div class="space-y-1">
-                                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FF9500]/15 text-[#FF9500] border border-[#FF9500]/30" title="Listing dinonaktifkan / ditarik dari etalase Tokopedia">
-                                                <i data-lucide="eye-off" class="w-2.5 h-2.5"></i>
-                                                <span>Nonaktif</span>
-                                            </span>
-                                            <div class="text-[11.5px] text-black/40 dark:text-white/40 line-through">
+                                        <div class="flex flex-col items-center">
+                                            <div class="text-[11.5px] font-mono text-black/35 dark:text-white/35 line-through">
                                                 Rp {{ number_format((float)$tokpedMapping->getEffectivePrice(), 0, ',', '.') }}
                                             </div>
-                                            <div class="flex items-center justify-center gap-2 mt-1">
+                                            <div class="flex items-center gap-1.5 mt-1">
                                                 <button type="button" @click="toggleChannelProductDirect('{{ $product->id }}', 'tokopedia', 'activate')"
-                                                    class="h-6 px-2 rounded-[6px] text-[10.5px] font-bold text-[#34C759] bg-[#34C759]/15 hover:bg-[#34C759]/25 transition-all cursor-pointer flex items-center gap-1" title="Aktifkan kembali ke etalase Tokopedia">
-                                                    <i data-lucide="eye" class="w-3 h-3"></i>
+                                                    class="h-5 px-1.5 rounded-[5px] text-[10px] font-bold text-[#34C759] bg-[#34C759]/10 hover:bg-[#34C759]/20 transition-all cursor-pointer flex items-center gap-0.5"
+                                                    title="Aktifkan kembali ke etalase Tokopedia">
+                                                    <i data-lucide="eye" class="w-2.5 h-2.5"></i>
                                                     <span>Aktifkan</span>
                                                 </button>
                                                 <button type="button" @click="openMapping('{{ $product->id }}', 'tokopedia')"
-                                                    class="text-[11px] font-semibold text-[#007AFF] hover:underline cursor-pointer">
+                                                    class="text-[10px] text-black/40 dark:text-white/40 hover:text-[#007AFF] cursor-pointer">
                                                     Ubah
                                                 </button>
                                             </div>
                                         </div>
                                     @endif
                                 @else
-                                    <button type="button" @click="openMapping('{{ $product->id }}', 'tokopedia')"
-                                        class="h-7 px-2.5 rounded-[8px] text-[11px] font-semibold text-[#00AA5B] bg-[#00AA5B]/10 hover:bg-[#00AA5B]/20 inline-flex items-center gap-1 cursor-pointer transition-colors" title="1-Click Terbitkan ke Tokopedia atau Petakan">
-                                        <i data-lucide="cloud-upload" class="w-3 h-3"></i>
-                                        <span>Terbitkan</span>
-                                    </button>
+                                    <div class="flex justify-center">
+                                        <button type="button" @click="openMapping('{{ $product->id }}', 'tokopedia')"
+                                            class="h-6 px-2 rounded-[6px] text-[10.5px] font-medium text-black/45 dark:text-white/45 bg-black/[0.03] dark:bg-white/[0.05] hover:bg-black/[0.06] hover:text-black dark:hover:text-white transition-all inline-flex items-center gap-1 cursor-pointer"
+                                            title="Hubungkan atau Terbitkan ke Tokopedia">
+                                            <i data-lucide="plus" class="w-3 h-3 opacity-60"></i>
+                                            <span>Hubungkan</span>
+                                        </button>
+                                    </div>
                                 @endif
                             </td>
 
-
-                            <!-- Column 6: Sync Actions -->
-                            <td class="py-4 px-4 sm:px-6 text-right">
+                            <!-- Column 6: Sync & Management Actions -->
+                            <td class="py-3.5 px-4 sm:px-6 text-right">
                                 @if($isRestrictedDrug || $isServiceItem)
-                                    <div class="flex items-center justify-end">
-                                        <span class="text-[11.5px] text-black/40 dark:text-white/40 italic font-medium">
-                                            {{ $isRestrictedDrug ? 'Restrisi BPOM' : 'Jasa Non-Ekspedisi' }}
-                                        </span>
-                                    </div>
-                                @elseif(! $hasAnyMapping)
-                                    <div class="flex items-center justify-end">
-                                        <span class="text-[11.5px] text-black/40 dark:text-white/40 italic">
-                                            Belum Ada Listing
-                                        </span>
-                                    </div>
+                                    <span class="text-[11px] text-black/35 dark:text-white/35 italic font-medium">
+                                        {{ $isRestrictedDrug ? 'Restriksi BPOM' : 'Jasa Offline' }}
+                                    </span>
                                 @else
-                                    <div class="flex items-center justify-end gap-1.5 flex-wrap">
-                                        <form method="POST" action="{{ route('marketplace-hub.products.sync-price', $product->id) }}" class="inline">
-                                            @csrf
-                                            <button type="submit" class="h-8 px-2.5 rounded-[9px] text-[11.5px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 transition-all flex items-center gap-1 cursor-pointer" title="Push Harga ke Seluruh Marketplace">
-                                                <i data-lucide="dollar-sign" class="w-3 h-3"></i>
-                                                <span>Sync Harga</span>
-                                            </button>
-                                        </form>
-                                        <form method="POST" action="{{ route('marketplace-hub.products.sync-stock', $product->id) }}" class="inline">
-                                            @csrf
-                                            <button type="submit" class="h-8 px-2.5 rounded-[9px] text-[11.5px] font-semibold text-[#34C759] bg-[#34C759]/10 hover:bg-[#34C759]/20 transition-all flex items-center gap-1 cursor-pointer" title="Push Stok ke Seluruh Marketplace">
-                                                <i data-lucide="box" class="w-3 h-3"></i>
-                                                <span>Sync Stok</span>
-                                            </button>
-                                        </form>
+                                    <div class="flex items-center justify-end gap-1 relative" x-data="{ openMenu: false }" @click.outside="openMenu = false">
+                                        <button type="button" @click="openMapping('{{ $product->id }}', 'shopee')"
+                                            class="h-7 px-2.5 rounded-[8px] text-[11.5px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 transition-all inline-flex items-center gap-1 cursor-pointer shadow-2xs">
+                                            <i data-lucide="sliders" class="w-3 h-3"></i>
+                                            <span>Kelola</span>
+                                        </button>
 
-                                        @if($hasActiveMapping)
-                                            <button type="button" @click="toggleChannelProductDirect('{{ $product->id }}', 'all', 'deactivate')"
-                                                class="h-8 px-2.5 rounded-[9px] text-[11.5px] font-semibold text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 transition-all flex items-center gap-1 cursor-pointer"
-                                                title="Tarik produk ini dari seluruh etalase marketplace (Shopee, TikTok Shop, Tokopedia)">
-                                                <i data-lucide="eye-off" class="w-3 h-3"></i>
-                                                <span>Delist Semua</span>
+                                        @if($hasAnyMapping)
+                                            <button type="button" @click="openMenu = !openMenu"
+                                                class="w-7 h-7 rounded-[8px] flex items-center justify-center text-black/50 dark:text-white/50 hover:bg-black/[0.06] dark:hover:bg-white/[0.08] transition-colors cursor-pointer"
+                                                title="Menu Aksi Tambahan">
+                                                <i data-lucide="more-horizontal" class="w-3.5 h-3.5"></i>
                                             </button>
-                                        @elseif($allMappingsInactive)
-                                            <button type="button" @click="toggleChannelProductDirect('{{ $product->id }}', 'all', 'activate')"
-                                                class="h-8 px-2.5 rounded-[9px] text-[11.5px] font-semibold text-white bg-[#34C759] hover:bg-[#30B753] transition-all flex items-center gap-1 cursor-pointer shadow-2xs"
-                                                title="Aktifkan kembali produk ini di seluruh etalase marketplace terhubung">
-                                                <i data-lucide="eye" class="w-3 h-3"></i>
-                                                <span>Aktifkan Semua</span>
-                                            </button>
+
+                                            <!-- Dropdown Menu -->
+                                            <div x-show="openMenu" x-cloak
+                                                x-transition:enter="transition ease-out duration-100"
+                                                x-transition:enter-start="transform opacity-0 scale-95"
+                                                x-transition:enter-end="transform opacity-100 scale-100"
+                                                x-transition:leave="transition ease-in duration-75"
+                                                x-transition:leave-start="transform opacity-100 scale-100"
+                                                x-transition:leave-end="transform opacity-0 scale-95"
+                                                class="absolute right-0 {{ $loop->index >= (count($products) - 3) && count($products) > 3 ? 'bottom-8' : 'top-8' }} z-50 w-52 rounded-[14px] bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.1] shadow-xl py-1 text-[12px] divide-y divide-black/[0.04] dark:divide-white/[0.06] text-left">
+                                                <div class="py-1">
+                                                    <form method="POST" action="{{ route('marketplace-hub.products.sync-price', $product->id) }}">
+                                                        @csrf
+                                                        <button type="submit" class="w-full text-left px-3 py-1.5 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] flex items-center gap-2 text-black/80 dark:text-white/80 transition-colors cursor-pointer">
+                                                            <i data-lucide="dollar-sign" class="w-3.5 h-3.5 text-[#007AFF]"></i>
+                                                            <span>Push Harga ke Toko</span>
+                                                        </button>
+                                                    </form>
+                                                    <form method="POST" action="{{ route('marketplace-hub.products.sync-stock', $product->id) }}">
+                                                        @csrf
+                                                        <button type="submit" class="w-full text-left px-3 py-1.5 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] flex items-center gap-2 text-black/80 dark:text-white/80 transition-colors cursor-pointer">
+                                                            <i data-lucide="box" class="w-3.5 h-3.5 text-[#34C759]"></i>
+                                                            <span>Push Stok ke Toko</span>
+                                                        </button>
+                                                    </form>
+                                                </div>
+
+                                                <div class="py-1">
+                                                    @if($hasActiveMapping)
+                                                        <button type="button" @click="openMenu = false; toggleChannelProductDirect('{{ $product->id }}', 'all', 'deactivate')"
+                                                            class="w-full text-left px-3 py-1.5 hover:bg-[#FF3B30]/10 flex items-center gap-2 text-[#FF3B30] transition-colors cursor-pointer">
+                                                            <i data-lucide="eye-off" class="w-3.5 h-3.5"></i>
+                                                            <span>Delist dari Semua Toko</span>
+                                                        </button>
+                                                    @elseif($allMappingsInactive)
+                                                        <button type="button" @click="openMenu = false; toggleChannelProductDirect('{{ $product->id }}', 'all', 'activate')"
+                                                            class="w-full text-left px-3 py-1.5 hover:bg-[#34C759]/10 flex items-center gap-2 text-[#34C759] transition-colors cursor-pointer">
+                                                            <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                                                            <span>Aktifkan Semua Toko</span>
+                                                        </button>
+                                                    @endif
+                                                </div>
+                                            </div>
                                         @endif
                                     </div>
                                 @endif
