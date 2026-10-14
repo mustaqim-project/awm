@@ -899,30 +899,30 @@
         <div
             class="hidden sm:block rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
             <div class="overflow-x-auto scrollbar-thin">
-                <table class="w-full text-left text-[13px]">
+                <table class="w-full text-left text-[13px] min-w-[1350px]">
                     <thead>
                         <tr
                             class="border-b border-black/[0.06] dark:border-white/[0.08] bg-black/[0.02] dark:bg-white/[0.02]">
                             <th
-                                class="py-3 px-5 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 whitespace-nowrap">
+                                class="py-3 px-5 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 whitespace-nowrap min-w-[280px]">
                                 {{ __('products.th_product_name_barcode') }}</th>
                             <th
-                                class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 whitespace-nowrap">
+                                class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 whitespace-nowrap min-w-[170px]">
                                 {{ __('products.th_category') }}</th>
                             <th
-                                class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 whitespace-nowrap">
+                                class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 whitespace-nowrap min-w-[140px]">
                                 {{ __('products.th_output_unit') }}</th>
                             <th
-                                class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 text-right whitespace-nowrap">
+                                class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 text-right whitespace-nowrap min-w-[130px]">
                                 {{ __('products.th_effective_cost') }}</th>
                             <th
-                                class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 text-right whitespace-nowrap">
+                                class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 text-right whitespace-nowrap min-w-[140px]">
                                 {{ __('products.th_selling_price') }}</th>
                             <th
-                                class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 text-center whitespace-nowrap">
+                                class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 text-center whitespace-nowrap min-w-[340px]">
                                 {{ __('products.th_channels_status') }}</th>
                             <th
-                                class="py-3 px-5 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 text-right whitespace-nowrap">
+                                class="py-3 px-5 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 text-right whitespace-nowrap min-w-[150px]">
                                 {{ __('products.th_actions') }}</th>
                         </tr>
                     </thead>
@@ -963,14 +963,14 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="py-3.5 px-4 text-black/60 dark:text-white/60">
+                                <td class="py-3.5 px-4 text-black/60 dark:text-white/60 whitespace-nowrap">
                                     {{ $prod->category?->name ?? __('products.category_general') }}
                                 </td>
-                                <td class="py-3.5 px-4 text-black/70 dark:text-white/70">
+                                <td class="py-3.5 px-4 text-black/70 dark:text-white/70 whitespace-nowrap">
                                     {{ $prod->outputUnit?->name ?? 'pcs' }} <span
                                         class="text-[11px] text-black/40 dark:text-white/40">({{ $prod->outputUnit?->code }})</span>
                                 </td>
-                                <td class="py-3.5 px-4 text-right tabular-nums">
+                                <td class="py-3.5 px-4 text-right tabular-nums whitespace-nowrap">
                                     @if ($effectiveHpp > 0)
                                         <div class="font-semibold text-black dark:text-white">
                                             {{ $business->currency_symbol }}
@@ -983,7 +983,7 @@
                                         <span class="text-black/40 dark:text-white/40 italic">{{ __('products.cost_not_calculated') }}</span>
                                     @endif
                                 </td>
-                                <td class="py-3.5 px-4 text-right tabular-nums">
+                                <td class="py-3.5 px-4 text-right tabular-nums whitespace-nowrap">
                                     @if ($prod->selling_price > 0)
                                         <div class="font-bold text-[#34C759] dark:text-[#30D158]">
                                             {{ $business->currency_symbol }}
@@ -998,7 +998,7 @@
                                     @endif
                                 </td>
                                 <td class="py-3.5 px-4 text-center whitespace-nowrap">
-                                    <div class="inline-flex items-center gap-1.5 flex-wrap justify-center">
+                                    <div class="inline-flex items-center gap-1 flex-nowrap justify-center">
                                         @if (\App\Support\Context::hasPermission('products.edit') || \App\Support\Context::hasPermission('products.manage'))
                                             <button type="button"
                                                 @click="toggleProductField('{{ $prod->id }}', 'show_in_website')"
@@ -1006,7 +1006,7 @@
                                                 :class="productToggles['{{ $prod->id }}']?.show_in_website ?
                                                     'bg-[#007AFF]/10 text-[#007AFF] border-[#007AFF]/30 font-semibold' :
                                                     'bg-black/[0.03] dark:bg-white/[0.04] text-black/35 dark:text-white/35 border-black/5 dark:border-white/5 opacity-60 line-through'"
-                                                class="h-6 px-1.5 rounded-[6px] border text-[11px] font-medium transition-all hover:scale-105 active:scale-95 flex items-center"
+                                                class="h-6 px-1.5 rounded-[6px] border text-[11px] font-medium transition-all hover:scale-105 active:scale-95 flex items-center shrink-0 whitespace-nowrap"
                                                 :title="__('products.channel_web_title')">
                                                 <span>{{ __('products.channel_web') }}</span>
                                             </button>
@@ -1016,7 +1016,7 @@
                                                 :class="productToggles['{{ $prod->id }}']?.show_in_pos ?
                                                     'bg-[#34C759]/10 text-[#34C759] dark:text-[#30D158] border-[#34C759]/30 font-semibold' :
                                                     'bg-black/[0.03] dark:bg-white/[0.04] text-black/35 dark:text-white/35 border-black/5 dark:border-white/5 opacity-60 line-through'"
-                                                class="h-6 px-1.5 rounded-[6px] border text-[11px] font-medium transition-all hover:scale-105 active:scale-95 flex items-center"
+                                                class="h-6 px-1.5 rounded-[6px] border text-[11px] font-medium transition-all hover:scale-105 active:scale-95 flex items-center shrink-0 whitespace-nowrap"
                                                 :title="__('products.channel_pos_title')">
                                                 <span>{{ __('products.channel_pos') }}</span>
                                             </button>
@@ -1027,7 +1027,7 @@
                                                 :class="productToggles['{{ $prod->id }}']?.show_in_sales_order ?
                                                     'bg-[#5856D6]/10 text-[#5856D6] dark:text-[#5E5CE6] border-[#5856D6]/30 font-semibold' :
                                                     'bg-black/[0.03] dark:bg-white/[0.04] text-black/35 dark:text-white/35 border-black/5 dark:border-white/5 opacity-60 line-through'"
-                                                class="h-6 px-1.5 rounded-[6px] border text-[11px] font-medium transition-all hover:scale-105 active:scale-95 flex items-center"
+                                                class="h-6 px-1.5 rounded-[6px] border text-[11px] font-medium transition-all hover:scale-105 active:scale-95 flex items-center shrink-0 whitespace-nowrap"
                                                 :title="__('products.channel_so_title')">
                                                 <span>{{ __('products.channel_so') }}</span>
                                             </button>
@@ -1037,7 +1037,7 @@
                                                 :class="productToggles['{{ $prod->id }}']?.show_price_on_web ?
                                                     'bg-[#30B0C7]/10 text-[#0071A4] dark:text-[#70D7FF] border-[#30B0C7]/30 font-semibold' :
                                                     'bg-black/[0.03] dark:bg-white/[0.04] text-black/35 dark:text-white/35 border-black/5 dark:border-white/5 opacity-60 line-through'"
-                                                class="h-6 px-1.5 rounded-[6px] border text-[11px] font-medium transition-all hover:scale-105 active:scale-95 flex items-center"
+                                                class="h-6 px-1.5 rounded-[6px] border text-[11px] font-medium transition-all hover:scale-105 active:scale-95 flex items-center shrink-0 whitespace-nowrap"
                                                 :title="__('products.channel_price_title')">
                                                 <span>{{ __('products.channel_price') }}</span>
                                             </button>
@@ -1047,7 +1047,7 @@
                                                 :class="productToggles['{{ $prod->id }}']?.is_preorder ?
                                                     'bg-[#FF9500]/10 text-[#FF9500] border-[#FF9500]/30 font-bold' :
                                                     'bg-black/[0.03] dark:bg-white/[0.04] text-black/35 dark:text-white/35 border-black/5 dark:border-white/5 opacity-60'"
-                                                class="h-6 px-1.5 rounded-[6px] border text-[11px] font-medium transition-all hover:scale-105 active:scale-95 flex items-center"
+                                                class="h-6 px-1.5 rounded-[6px] border text-[11px] font-medium transition-all hover:scale-105 active:scale-95 flex items-center shrink-0 whitespace-nowrap"
                                                 :title="__('products.channel_po_title')">
                                                 <span>{{ __('products.channel_po') }}</span>
                                             </button>
@@ -1057,32 +1057,32 @@
                                                 :class="productToggles['{{ $prod->id }}']?.is_active ?
                                                     'bg-[#34C759]/10 text-[#34C759] dark:text-[#30D158] border-[#34C759]/30 font-semibold' :
                                                     'bg-[#FF3B30]/10 text-[#FF3B30] border-[#FF3B30]/30 opacity-70'"
-                                                class="h-6 px-1.5 rounded-[6px] border text-[11px] font-medium transition-all hover:scale-105 active:scale-95 flex items-center"
+                                                class="h-6 px-1.5 rounded-[6px] border text-[11px] font-medium transition-all hover:scale-105 active:scale-95 flex items-center shrink-0 whitespace-nowrap"
                                                 :title="__('products.channel_status_title')">
                                                 <span
                                                     x-text="productToggles['{{ $prod->id }}']?.is_active ? '{{ __('products.status_active') }}' : '{{ __('products.status_inactive') }}'"></span>
                                             </button>
                                         @else
-                                            <span class="h-6 px-1.5 rounded-[6px] border text-[11px] font-medium"
+                                            <span class="h-6 px-1.5 rounded-[6px] border text-[11px] font-medium shrink-0 whitespace-nowrap"
                                                 :class="productToggles['{{ $prod->id }}']?.show_in_website ?
                                                     'bg-[#007AFF]/10 text-[#007AFF] border-[#007AFF]/30' :
                                                     'opacity-40 line-through'">{{ __('products.channel_web') }}</span>
-                                            <span class="h-6 px-1.5 rounded-[6px] border text-[11px] font-medium"
+                                            <span class="h-6 px-1.5 rounded-[6px] border text-[11px] font-medium shrink-0 whitespace-nowrap"
                                                 :class="productToggles['{{ $prod->id }}']?.show_in_pos ?
                                                     'bg-[#34C759]/10 text-[#34C759] dark:text-[#30D158] border-[#34C759]/30' :
                                                     'opacity-40 line-through'">{{ __('products.channel_pos') }}</span>
-                                            <span class="h-6 px-1.5 rounded-[6px] border text-[11px] font-medium"
+                                            <span class="h-6 px-1.5 rounded-[6px] border text-[11px] font-medium shrink-0 whitespace-nowrap"
                                                 :class="productToggles['{{ $prod->id }}']?.show_in_sales_order ?
                                                     'bg-[#5856D6]/10 text-[#5856D6] dark:text-[#5E5CE6] border-[#5856D6]/30' :
                                                     'opacity-40 line-through'">{{ __('products.channel_so') }}</span>
-                                            <span class="h-6 px-1.5 rounded-[6px] border text-[11px] font-medium"
+                                            <span class="h-6 px-1.5 rounded-[6px] border text-[11px] font-medium shrink-0 whitespace-nowrap"
                                                 :class="productToggles['{{ $prod->id }}']?.show_price_on_web ?
                                                     'bg-[#30B0C7]/10 text-[#0071A4] dark:text-[#70D7FF] border-[#30B0C7]/30' :
                                                     'opacity-40 line-through'">{{ __('products.channel_price') }}</span>
-                                            <span class="h-6 px-1.5 rounded-[6px] border text-[11px] font-medium"
+                                            <span class="h-6 px-1.5 rounded-[6px] border text-[11px] font-medium shrink-0 whitespace-nowrap"
                                                 :class="productToggles['{{ $prod->id }}']?.is_preorder ?
                                                     'bg-[#FF9500]/10 text-[#FF9500] border-[#FF9500]/30' : 'opacity-40'">{{ __('products.channel_po') }}</span>
-                                            <span class="h-6 px-1.5 rounded-[6px] border text-[11px] font-medium"
+                                            <span class="h-6 px-1.5 rounded-[6px] border text-[11px] font-medium shrink-0 whitespace-nowrap"
                                                 :class="productToggles['{{ $prod->id }}']?.is_active ?
                                                     'bg-[#34C759]/10 text-[#34C759]' : 'bg-[#FF3B30]/10 text-[#FF3B30]'"
                                                 x-text="productToggles['{{ $prod->id }}']?.is_active ? '{{ __('products.status_active') }}' : '{{ __('products.status_inactive') }}'"></span>
@@ -1090,7 +1090,7 @@
                                     </div>
                                 </td>
                                 <td class="py-3.5 px-5 text-right whitespace-nowrap">
-                                    <div class="flex items-center justify-end gap-1.5">
+                                    <div class="flex items-center justify-end gap-1.5 flex-nowrap shrink-0">
                                         @if (
                                             \App\Support\Context::hasPermission('products.view') ||
                                                 \App\Support\Context::hasPermission('products.manage') ||
