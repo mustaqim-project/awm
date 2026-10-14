@@ -12,6 +12,9 @@ use App\Http\Controllers\Controller;
 use App\Models\MarketplaceAccount;
 use App\Models\MarketplaceOrder;
 use App\Models\MarketplaceProductMapping;
+use App\Domain\Marketplace\MarketplaceChatService;
+use App\Models\MarketplaceConversation;
+use App\Models\MarketplaceMessage;
 use App\Models\MarketplaceSyncLog;
 use App\Models\Product;
 use App\Support\Context;
@@ -25,7 +28,8 @@ class MarketplaceWebController extends Controller
     public function __construct(
         protected MarketplaceManagerService $manager,
         protected MarketplaceSyncService $syncService,
-        protected MarketplaceOrderService $orderService
+        protected MarketplaceOrderService $orderService,
+        protected MarketplaceChatService $chatService
     ) {}
 
     /**
@@ -782,6 +786,100 @@ class MarketplaceWebController extends Controller
         }
 
         return back()->with($result['success'] ? 'success' : 'error', $result['message']);
+    }
+
+    /**
+     * Marketplace Live Chat: Omnichannel chat inbox (TikTok Shop, Shopee, Tokopedia).
+     */
+    public function chat(Request $request): View
+    {
+        $business = Context::requireBusiness();
+        $channel  = $request->query('channel');
+
+        $query = MarketplaceConversation::where('business_id', $business->id)
+            ->with(['account', 'messages'])
+            ->orderBy('last_message_at', 'desc');
+
+        if (! empty($channel) && $channel !== 'all') {
+            $query->where('channel', $channel);
+        }
+
+        $conversations = $query->paginate(20)->withQueryString();
+        $activeAccount = MarketplaceAccount::where('business_id', $business->id)
+            ->where('channel', MarketplaceAccount::CHANNEL_TIKTOK)
+            ->first();
+
+        return view('app.marketplace.chat', [
+            'business'      => $business,
+            'conversations' => $conversations,
+            'channel'       => $channel ?? 'all',
+            'activeAccount' => $activeAccount,
+        ]);
+    }
+
+    /**
+     * Get single conversation details with messages (JSON).
+     */
+    public function getConversationDetails(MarketplaceConversation $conversation): JsonResponse
+    {
+        $business = Context::requireBusiness();
+        if ($conversation->business_id !== $business->id) {
+            abort(404);
+        }
+
+        $conversation->load(['messages', 'account']);
+        $this->chatService->markAsRead($conversation);
+
+        return response()->json([
+            'success'      => true,
+            'conversation' => $conversation,
+        ]);
+    }
+
+    /**
+     * Send a chat message to buyer via TikTok Shop OpenAPI.
+     */
+    public function sendChatMessage(Request $request, MarketplaceConversation $conversation): JsonResponse
+    {
+        $business = Context::requireBusiness();
+        if ($conversation->business_id !== $business->id) {
+            abort(404);
+        }
+
+        $validated = $request->validate([
+            'message' => 'required|string|max:2000',
+            'type'    => 'nullable|string|in:TEXT,IMAGE',
+        ]);
+
+        try {
+            $type    = $validated['type'] ?? 'TEXT';
+            $message = $this->chatService->sendMessage($conversation, $type, $validated['message']);
+
+            return response()->json([
+                'success' => true,
+                'message' => $message,
+            ]);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'success' => false,
+                'error'   => $e->getMessage(),
+            ], 422);
+        }
+    }
+
+    /**
+     * Mark conversation as read.
+     */
+    public function markChatRead(MarketplaceConversation $conversation): JsonResponse
+    {
+        $business = Context::requireBusiness();
+        if ($conversation->business_id !== $business->id) {
+            abort(404);
+        }
+
+        $this->chatService->markAsRead($conversation);
+
+        return response()->json(['success' => true]);
     }
 }
 

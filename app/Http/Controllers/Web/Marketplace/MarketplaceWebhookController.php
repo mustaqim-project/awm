@@ -21,10 +21,10 @@ class MarketplaceWebhookController extends Controller
     public function handle(string $provider, Request $request): JsonResponse
     {
         $normalizedChannel = match (strtolower($provider)) {
-            'shopee'                           => 'shopee',
-            'tiktok', 'tiktok-tokopedia'      => 'tiktok_shop',
-            'tokopedia'                        => 'tokopedia',
-            default                            => abort(404),
+            'shopee'                                    => 'shopee',
+            'tiktok', 'tiktok_shop', 'tiktok-tokopedia' => 'tiktok_shop',
+            'tokopedia'                                 => 'tokopedia',
+            default                                     => abort(404),
         };
 
         try {
@@ -36,16 +36,31 @@ class MarketplaceWebhookController extends Controller
 
             if (! ($eventData['is_valid'] ?? false)) {
                 Log::warning("Invalid marketplace webhook signature from {$provider}", ['headers' => $headers]);
-                return response()->json(['success' => false, 'error' => 'Invalid signature'], 401);
+                return response()->json([
+                    'code'    => 401,
+                    'success' => false,
+                    'error'   => 'Invalid signature',
+                    'message' => 'Invalid signature',
+                ], 401);
             }
 
             // Dispatch background job to process webhook asynchronously
             ProcessMarketplaceWebhookJob::dispatch($normalizedChannel, $eventData);
 
-            return response()->json(['success' => true, 'message' => 'Webhook received']);
+            // TikTok Shop requires code: 0 to consider webhook delivered successfully
+            return response()->json([
+                'code'    => 0,
+                'success' => true,
+                'message' => 'Webhook received',
+            ], 200);
         } catch (\Throwable $e) {
             Log::error("Error handling marketplace webhook [{$provider}]: " . $e->getMessage());
-            return response()->json(['success' => false, 'error' => $e->getMessage()], 500);
+            return response()->json([
+                'code'    => 500,
+                'success' => false,
+                'error'   => $e->getMessage(),
+                'message' => $e->getMessage(),
+            ], 500);
         }
     }
 }

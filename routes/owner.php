@@ -928,6 +928,8 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
                 Route::get('/', [MarketplaceWebController::class, 'index'])->name('index');
                 Route::get('/products', [MarketplaceWebController::class, 'products'])->name('products');
                 Route::get('/orders', [MarketplaceWebController::class, 'orders'])->name('orders');
+                Route::get('/chat', [MarketplaceWebController::class, 'chat'])->name('chat');
+                Route::get('/chat/{conversation}', [MarketplaceWebController::class, 'getConversationDetails'])->name('chat.details');
                 Route::get('/logs', [MarketplaceWebController::class, 'logs'])->name('logs');
             });
 
@@ -936,6 +938,10 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
                 Route::post('/connect/{provider}', [MarketplaceWebController::class, 'connect'])->name('connect');
                 Route::post('/disconnect/{provider}', [MarketplaceWebController::class, 'disconnect'])->name('disconnect');
                 Route::post('/toggle/{provider}', [MarketplaceWebController::class, 'toggleActive'])->name('toggle');
+
+                // Omnichannel Chat Actions
+                Route::post('/chat/{conversation}/send', [MarketplaceWebController::class, 'sendChatMessage'])->name('chat.send');
+                Route::post('/chat/{conversation}/read', [MarketplaceWebController::class, 'markChatRead'])->name('chat.read');
 
                 // Product Mappings & Per-Channel Pricing
                 Route::post('/products/map', [MarketplaceWebController::class, 'updateMapping'])->name('products.map');

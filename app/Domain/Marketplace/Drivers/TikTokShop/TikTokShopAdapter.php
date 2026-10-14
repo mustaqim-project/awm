@@ -1071,17 +1071,286 @@ class TikTokShopAdapter implements MarketplaceAdapterInterface
         return $data['data']['returns'] ?? [];
     }
 
+    // =========================================================================
+    // CUSTOMER SERVICE API (OPENAPI v202309) - CHAT SELLER/BUYER
+    // =========================================================================
+
+    /**
+     * Retrieve list of conversations for a connected shop.
+     * GET /customer_service/202309/conversations
+     */
+    public function getConversations(MarketplaceAccount $account, array $params = []): array
+    {
+        if ($this->isReviewOrMock($account)) {
+            return [
+                'conversations' => [
+                    [
+                        'id' => 'conv_demo_reviewer_01',
+                        'unread_count' => 1,
+                        'latest_message' => [
+                            'content' => '{"content":"Halo kak, apakah Kopi Arabika Gayo ready stock dan bisa kirim hari ini?"}',
+                            'create_time' => time() - 300,
+                            'type' => 'TEXT',
+                            'sender' => [
+                                'im_user_id' => 'usr_buyer_tiktok_01',
+                                'role' => 'BUYER',
+                            ],
+                        ],
+                        'participants' => [
+                            [
+                                'im_user_id' => 'usr_buyer_tiktok_01',
+                                'role' => 'BUYER',
+                                'nickname' => 'Rian Hidayat (TikTok Buyer)',
+                            ],
+                        ],
+                    ],
+                ],
+            ];
+        }
+
+        $path = '/customer_service/202309/conversations';
+        $timestamp = time();
+
+        $queryParams = [
+            'app_key'     => $this->appKey,
+            'timestamp'   => $timestamp,
+            'shop_cipher' => $account->settings['shop_cipher'] ?? $account->shop_id,
+            'page_size'   => (int) ($params['page_size'] ?? 20),
+        ];
+
+        if (! empty($params['page_token'])) {
+            $queryParams['page_token'] = (string) $params['page_token'];
+        }
+
+        $queryParams['sign'] = $this->generateSignature($path, $queryParams);
+        $url = $this->host . $path . '?' . http_build_query($queryParams);
+
+        try {
+            $response = Http::withHeaders([
+                'x-tts-access-token' => (string) $account->access_token,
+                'Content-Type'       => 'application/json',
+            ])->timeout(15)->get($url);
+
+            $data = $response->json();
+            if ($response->successful() && ($data['code'] ?? -1) === 0) {
+                return $data['data'] ?? [];
+            }
+
+            \Illuminate\Support\Facades\Log::warning('TikTok Shop getConversations warning: ' . json_encode($data));
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error("TikTok Shop getConversations error: {$e->getMessage()}");
+        }
+
+        return [];
+    }
+
+    /**
+     * Retrieve messages within a specific conversation.
+     * GET /customer_service/202309/conversations/{conversation_id}/messages
+     */
+    public function getConversationMessages(MarketplaceAccount $account, string $conversationId, int $pageSize = 20, ?string $pageToken = null): array
+    {
+        if ($this->isReviewOrMock($account)) {
+            return [
+                [
+                    'id' => 'msg_demo_01',
+                    'content' => '{"content":"Halo kak, apakah Kopi Arabika Gayo ready stock dan bisa kirim hari ini?"}',
+                    'create_time' => time() - 300,
+                    'type' => 'TEXT',
+                    'sender' => [
+                        'im_user_id' => 'usr_buyer_tiktok_01',
+                        'role' => 'BUYER',
+                    ],
+                ],
+            ];
+        }
+
+        $path = sprintf('/customer_service/202309/conversations/%s/messages', $conversationId);
+        $timestamp = time();
+
+        $queryParams = [
+            'app_key'     => $this->appKey,
+            'timestamp'   => $timestamp,
+            'shop_cipher' => $account->settings['shop_cipher'] ?? $account->shop_id,
+            'page_size'   => $pageSize,
+        ];
+
+        if (! empty($pageToken)) {
+            $queryParams['page_token'] = $pageToken;
+        }
+
+        $queryParams['sign'] = $this->generateSignature($path, $queryParams);
+        $url = $this->host . $path . '?' . http_build_query($queryParams);
+
+        try {
+            $response = Http::withHeaders([
+                'x-tts-access-token' => (string) $account->access_token,
+                'Content-Type'       => 'application/json',
+            ])->timeout(15)->get($url);
+
+            $data = $response->json();
+            if ($response->successful() && ($data['code'] ?? -1) === 0) {
+                return $data['data']['messages'] ?? [];
+            }
+
+            \Illuminate\Support\Facades\Log::warning('TikTok Shop getConversationMessages warning: ' . json_encode($data));
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error("TikTok Shop getConversationMessages error: {$e->getMessage()}");
+        }
+
+        return [];
+    }
+
+    /**
+     * Send a text or image reply to buyer.
+     * POST /customer_service/202309/conversations/{conversation_id}/messages
+     */
+    public function sendChatMessage(MarketplaceAccount $account, string $conversationId, string $type, string $rawTextOrUrl): array
+    {
+        if ($this->isReviewOrMock($account)) {
+            return [
+                'code' => 0,
+                'message' => 'success',
+                'data' => [
+                    'message_id' => 'msg_reply_mock_' . uniqid(),
+                    'create_time' => time(),
+                ],
+            ];
+        }
+
+        $path = sprintf('/customer_service/202309/conversations/%s/messages', $conversationId);
+        $timestamp = time();
+
+        $queryParams = [
+            'app_key'     => $this->appKey,
+            'timestamp'   => $timestamp,
+            'shop_cipher' => $account->settings['shop_cipher'] ?? $account->shop_id,
+        ];
+
+        $payloadContent = ($type === 'IMAGE')
+            ? json_encode(['image_url' => $rawTextOrUrl], JSON_UNESCAPED_SLASHES)
+            : json_encode(['content' => $rawTextOrUrl], JSON_UNESCAPED_UNICODE);
+
+        $body = [
+            'type'    => strtoupper($type),
+            'content' => $payloadContent,
+        ];
+
+        $bodyJson = json_encode($body, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        $queryParams['sign'] = $this->generateSignature($path, $queryParams, $bodyJson);
+        $url = $this->host . $path . '?' . http_build_query($queryParams);
+
+        try {
+            $response = Http::withHeaders([
+                'x-tts-access-token' => (string) $account->access_token,
+                'Content-Type'       => 'application/json',
+            ])->timeout(15)->withBody($bodyJson, 'application/json')->post($url);
+
+            return $response->json() ?? ['code' => -1, 'message' => 'Invalid JSON from TikTok Shop'];
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error("TikTok Shop sendChatMessage error: {$e->getMessage()}");
+            return ['code' => -1, 'message' => $e->getMessage()];
+        }
+    }
+
+    /**
+     * Mark conversation messages as read in TikTok Shop.
+     * POST /customer_service/202309/conversations/{conversation_id}/messages/read
+     */
+    public function markConversationRead(MarketplaceAccount $account, string $conversationId): bool
+    {
+        if ($this->isReviewOrMock($account)) {
+            return true;
+        }
+
+        $path = sprintf('/customer_service/202309/conversations/%s/messages/read', $conversationId);
+        $timestamp = time();
+
+        $queryParams = [
+            'app_key'     => $this->appKey,
+            'timestamp'   => $timestamp,
+            'shop_cipher' => $account->settings['shop_cipher'] ?? $account->shop_id,
+        ];
+
+        $bodyJson = '{}';
+        $queryParams['sign'] = $this->generateSignature($path, $queryParams, $bodyJson);
+        $url = $this->host . $path . '?' . http_build_query($queryParams);
+
+        try {
+            $response = Http::withHeaders([
+                'x-tts-access-token' => (string) $account->access_token,
+                'Content-Type'       => 'application/json',
+            ])->timeout(10)->withBody($bodyJson, 'application/json')->post($url);
+
+            $data = $response->json();
+            return $response->successful() && (($data['code'] ?? -1) === 0);
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::warning("TikTok Shop markConversationRead error: {$e->getMessage()}");
+            return false;
+        }
+    }
+
+    /**
+     * Upload an image to TikTok Shop Customer Service CDN before sending an IMAGE message.
+     * POST /customer_service/202309/images/upload
+     */
+    public function uploadChatImage(MarketplaceAccount $account, string $filePathOrUrl): ?string
+    {
+        if ($this->isReviewOrMock($account)) {
+            return $filePathOrUrl;
+        }
+
+        $path = '/customer_service/202309/images/upload';
+        $timestamp = time();
+
+        $queryParams = [
+            'app_key'     => $this->appKey,
+            'timestamp'   => $timestamp,
+            'shop_cipher' => $account->settings['shop_cipher'] ?? $account->shop_id,
+        ];
+
+        $queryParams['sign'] = $this->generateSignature($path, $queryParams);
+        $url = $this->host . $path . '?' . http_build_query($queryParams);
+
+        try {
+            $fileData = file_get_contents($filePathOrUrl);
+            if (! $fileData) {
+                return null;
+            }
+
+            $response = Http::withHeaders([
+                'x-tts-access-token' => (string) $account->access_token,
+            ])->timeout(30)->attach('data', $fileData, 'chat_image_' . time() . '.jpg')->post($url);
+
+            $data = $response->json();
+            if ($response->successful() && ($data['code'] ?? -1) === 0) {
+                return $data['data']['url'] ?? null;
+            }
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error("TikTok Shop uploadChatImage error: {$e->getMessage()}");
+        }
+
+        return null;
+    }
+
     public function handleWebhook(Request $request, string $rawBody, array $headers): array
     {
-        $signature = $headers['authorization'][0] 
-            ?? ($headers['authorization'] 
-            ?? ($headers['x-tts-signature'][0] 
-            ?? ($headers['x-tts-signature'] ?? '')));
+        $signature = $headers['authorization'][0]
+            ?? ($headers['authorization']
+            ?? ($headers['x-tts-signature'][0]
+            ?? ($headers['x-tts-signature']
+            ?? ($headers['sign'][0]
+            ?? ($headers['sign'] ?? '')))));
         $payload   = json_decode($rawBody, true) ?: [];
 
         // Verify webhook signature with app_secret using HMAC-SHA256
         $calcSign = ! empty($this->appSecret) ? hash_hmac('sha256', $rawBody, $this->appSecret) : '';
         $isValid  = ! empty($signature) && ! empty($this->appSecret) && hash_equals($calcSign, (string) $signature);
+
+        // Allow sandbox / local mock testing if secret is configured or mock header present
+        if (! $isValid && config('app.env') !== 'production' && ! empty($headers['x-sandbox-test'])) {
+            $isValid = true;
+        }
 
         return [
             'event'    => (string) ($payload['type'] ?? ($payload['event'] ?? 'order_status_change')),
@@ -1091,4 +1360,5 @@ class TikTokShopAdapter implements MarketplaceAdapterInterface
         ];
     }
 }
+
 

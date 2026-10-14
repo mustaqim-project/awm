@@ -120,4 +120,12 @@ class MarketplaceAccount extends Model
     {
         return $this->hasMany(MarketplaceSyncLog::class, 'marketplace_account_id');
     }
+
+    /**
+     * @return HasMany<MarketplaceConversation, $this>
+     */
+    public function conversations(): HasMany
+    {
+        return $this->hasMany(MarketplaceConversation::class, 'marketplace_account_id');
+    }
 }

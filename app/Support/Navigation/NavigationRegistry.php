@@ -597,6 +597,14 @@ final class NavigationRegistry
                         'permission'    => 'products.view',
                     ],
                     [
+                        'key'           => 'chat',
+                        'label'         => 'Chat Omnichannel',
+                        'icon'          => 'message-square',
+                        'route'         => 'marketplace-hub.chat',
+                        'active_routes' => ['marketplace-hub.chat*'],
+                        'permission'    => 'products.view',
+                    ],
+                    [
                         'key'           => 'logs',
                         'label'         => 'Log Sinkronisasi',
                         'icon'          => 'activity',
