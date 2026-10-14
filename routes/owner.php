@@ -312,6 +312,7 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
             Route::get('/sales/returns/create', [SalesReturnWebController::class, 'create'])->name('sales.returns.create');
             Route::post('/sales/returns', [SalesReturnWebController::class, 'store'])->name('sales.returns.store');
             Route::get('/sales/returns/{return}', [SalesReturnWebController::class, 'show'])->name('sales.returns.show');
+            Route::get('/sales/returns/{return}/print', [SalesReturnWebController::class, 'print'])->name('sales.returns.print');
             Route::post('/sales/returns/{return}/approve', [SalesReturnWebController::class, 'approve'])->name('sales.returns.approve');
             Route::post('/sales/returns/{return}/complete', [SalesReturnWebController::class, 'complete'])->name('sales.returns.complete');
         });

@@ -212,6 +212,17 @@ final class SalesReturnWebController extends Controller
         ]);
     }
 
+    public function print(SalesReturn $return): View
+    {
+        $business = Context::requireBusiness();
+        abort_unless($return->business_id === $business->id, 403);
+
+        return view('app.sales.returns.print', [
+            'business' => $business,
+            'return'   => $return->load(['invoice.customer', 'posOrder.customer', 'customer', 'items.product', 'location']),
+        ]);
+    }
+
     public function approve(SalesReturn $return): RedirectResponse
     {
         $business = Context::requireBusiness();

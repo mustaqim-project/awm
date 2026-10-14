@@ -87,12 +87,13 @@
                     @endif
                 @endif
 
-                <!-- Print Button -->
-                <button type="button" onclick="window.print()"
-                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] transition flex items-center gap-1.5">
-                    <i data-lucide="printer" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
-                    <span>Cetak Nota</span>
-                </button>
+                <!-- Dedicated Print & PDF Route -->
+                <a href="{{ route('sales.returns.print', $return) }}" target="_blank"
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] shadow-[0_1px_2px_rgba(0,122,255,0.25)] transition flex items-center gap-1.5"
+                    title="Buka tampilan cetak & unduh PDF resmi dokumen ini">
+                    <i data-lucide="printer" class="w-4 h-4 text-white"></i>
+                    <span>Cetak / Unduh PDF</span>
+                </a>
 
                 <!-- Back Link -->
                 <a href="{{ route('sales.returns.index') }}"
@@ -102,6 +103,34 @@
                 </a>
             </div>
         </header>
+
+        <!-- Formal Print-Only Header (Kop Surat & Judul Dokumen) -->
+        <div class="hidden print:block pb-5 mb-5 border-b-2 border-slate-900">
+            <div class="flex justify-between items-start">
+                <div class="space-y-1 max-w-md">
+                    @if ($business->logo_url)
+                        <img src="{{ $business->logo_url }}" alt="{{ $business->name }}" class="max-h-12 max-w-[140px] object-contain mb-1">
+                    @endif
+                    <h1 class="text-base font-bold text-slate-950 uppercase tracking-wide leading-tight">{{ $business->legal_name ?: $business->name }}</h1>
+                    <p class="text-xs text-slate-600">{{ $business->address ?? 'Alamat Kantor / Toko Operasional' }}</p>
+                    <p class="text-xs text-slate-600">
+                        @if ($business->email) Email: {{ $business->email }} @endif
+                        @if ($business->phone) | Telp: {{ $business->phone }} @endif
+                    </p>
+                    @if ($business->tax_identification_number)
+                        <p class="text-xs text-slate-600 tabular-nums">NPWP: {{ $business->tax_identification_number }}</p>
+                    @endif
+                </div>
+                <div class="text-right space-y-0.5">
+                    <div class="text-lg font-bold tracking-wider text-slate-950 uppercase">NOTA RETUR PENJUALAN</div>
+                    <div class="text-xs text-slate-500 font-semibold tracking-wide uppercase">SALES RETURN NOTE</div>
+                    <div class="text-sm font-bold text-slate-800 font-mono mt-1">{{ $return->return_number }}</div>
+                    <div class="text-[11px] font-semibold text-slate-600 uppercase tracking-wider mt-1">
+                        STATUS: {{ strtoupper($return->status) }}
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Flash Notifications (Apple Banner Style) -->
         @if (session('success'))
@@ -497,3 +526,52 @@
 
     </div>
 @endsection
+
+@push('styles')
+    <style>
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 12mm 14mm 12mm 14mm;
+            }
+            body, html {
+                background-color: #ffffff !important;
+                color: #000000 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            aside, nav, #mobile-nav, #bottom-nav, .no-print, header, [role="navigation"] {
+                display: none !important;
+            }
+            .print\:hidden {
+                display: none !important;
+            }
+            .print\:block {
+                display: block !important;
+            }
+            .print\:grid {
+                display: grid !important;
+            }
+            .max-w-\[1100px\] {
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            .rounded-\[14px\], .rounded-\[24px\], .rounded-\[10px\] {
+                border-radius: 4px !important;
+                border: 1px solid #cbd5e1 !important;
+                box-shadow: none !important;
+                background-color: #ffffff !important;
+            }
+            table {
+                width: 100% !important;
+                page-break-inside: auto !important;
+            }
+            tr {
+                page-break-inside: avoid !important;
+            }
+        }
+    </style>
+@endpush
