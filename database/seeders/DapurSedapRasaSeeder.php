@@ -353,7 +353,7 @@ final class DapurSedapRasaSeeder extends Seeder
                     'PRD-STD-01',
                     'PRD-PRM-01',
                 ])
-                ->delete();
+                ->forceDelete();
 
             $productsData = [
                 // ── A. Menu Reguler Harian (Langsung Order Offline & Online) ──

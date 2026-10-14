@@ -70,6 +70,58 @@ final class TemplatesAndFinalHardeningTest extends TestCase
         ]);
     }
 
+    public function test_business_template_switching_does_not_fail_with_duplicate_product_or_material_code(): void
+    {
+        $biz = Business::create(['name' => 'Resto Dan Kopi Nusantara']);
+        $cafeTemplate = BusinessTypeTemplate::where('code', 'fnb_cafe')->firstOrFail();
+        $restoTemplate = BusinessTypeTemplate::where('code', 'fnb_resto')->firstOrFail();
+
+        // 1. Apply first template
+        $this->templateService->apply($biz, $cafeTemplate);
+
+        $this->assertDatabaseHas('products', [
+            'business_id' => $biz->id,
+            'code' => 'PRD-STD-01',
+        ]);
+
+        // 2. Switch/apply second template on the exact same business
+        // Must succeed smoothly without SQLSTATE[23000] 1062 Duplicate entry
+        $result = $this->templateService->apply($biz, $restoTemplate);
+
+        $this->assertIsArray($result);
+        $this->assertDatabaseHas('products', [
+            'business_id' => $biz->id,
+            'code' => 'PRD-STD-01',
+            'name' => 'Paket Produk Standar ' . $restoTemplate->name,
+        ]);
+    }
+
+    public function test_business_template_resilient_to_soft_deleted_products_and_materials(): void
+    {
+        $biz = Business::create(['name' => 'Usaha Pulih Data']);
+        $cafeTemplate = BusinessTypeTemplate::where('code', 'fnb_cafe')->firstOrFail();
+        $restoTemplate = BusinessTypeTemplate::where('code', 'fnb_resto')->firstOrFail();
+
+        $this->templateService->apply($biz, $cafeTemplate);
+
+        // Soft delete the seeded product & material
+        $product = Product::where('business_id', $biz->id)->where('code', 'PRD-STD-01')->firstOrFail();
+        $product->delete();
+        $this->assertTrue($product->trashed());
+
+        $material = \App\Models\Material::where('business_id', $biz->id)->where('code', 'MAT-RAW-01')->firstOrFail();
+        $material->delete();
+        $this->assertTrue($material->trashed());
+
+        // Reapply or apply another template - should restore and not crash on duplicate code
+        $result = $this->templateService->apply($biz, $restoTemplate);
+        $this->assertIsArray($result);
+
+        $restoredProduct = Product::where('business_id', $biz->id)->where('code', 'PRD-STD-01')->first();
+        $this->assertNotNull($restoredProduct);
+        $this->assertFalse($restoredProduct->trashed());
+    }
+
     public function test_multi_currency_exchange_rates_and_conversion(): void
     {
         $idr = Currency::where('code', 'IDR')->firstOrFail();

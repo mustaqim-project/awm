@@ -156,29 +156,73 @@ final class BusinessTemplateService
         // 1. Create Product Categories
         $prodCatMap = [];
         foreach ($definitions['product_categories'] as $pCat) {
-            $cat = ProductCategory::updateOrCreate(
-                ['business_id' => $business->id, 'slug' => Str::slug($pCat['name'])],
-                ['name' => $pCat['name'], 'description' => $pCat['description'] ?? null]
-            );
+            $catSlug = Str::slug($pCat['name']);
+            $cat = ProductCategory::withTrashed()
+                ->where('business_id', $business->id)
+                ->where('slug', $catSlug)
+                ->first();
+
+            if ($cat) {
+                if ($cat->trashed()) {
+                    $cat->restore();
+                }
+                $cat->update([
+                    'name' => $pCat['name'],
+                    'description' => $pCat['description'] ?? null,
+                ]);
+            } else {
+                $cat = ProductCategory::create([
+                    'business_id' => $business->id,
+                    'name' => $pCat['name'],
+                    'slug' => $catSlug,
+                    'description' => $pCat['description'] ?? null,
+                ]);
+            }
             $prodCatMap[$pCat['key']] = $cat;
         }
 
         // 2. Create Material Categories
         $matCatMap = [];
         foreach ($definitions['material_categories'] as $mCat) {
-            $cat = MaterialCategory::updateOrCreate(
-                ['business_id' => $business->id, 'slug' => Str::slug($mCat['name'])],
-                ['name' => $mCat['name'], 'description' => $mCat['description'] ?? null]
-            );
+            $catSlug = Str::slug($mCat['name']);
+            $cat = MaterialCategory::withTrashed()
+                ->where('business_id', $business->id)
+                ->where('slug', $catSlug)
+                ->first();
+
+            if ($cat) {
+                if ($cat->trashed()) {
+                    $cat->restore();
+                }
+                $cat->update([
+                    'name' => $mCat['name'],
+                    'description' => $mCat['description'] ?? null,
+                ]);
+            } else {
+                $cat = MaterialCategory::create([
+                    'business_id' => $business->id,
+                    'name' => $mCat['name'],
+                    'slug' => $catSlug,
+                    'description' => $mCat['description'] ?? null,
+                ]);
+            }
             $matCatMap[$mCat['key']] = $cat;
         }
 
         // 3. Create Labor Rates
         $laborMap = [];
         foreach ($definitions['labor_rates'] as $lData) {
-            $lr = LaborRate::updateOrCreate(
-                ['business_id' => $business->id, 'slug' => Str::slug($lData['name'])],
-                [
+            $lrSlug = Str::slug($lData['name']);
+            $lr = LaborRate::withTrashed()
+                ->where('business_id', $business->id)
+                ->where('slug', $lrSlug)
+                ->first();
+
+            if ($lr) {
+                if ($lr->trashed()) {
+                    $lr->restore();
+                }
+                $lr->update([
                     'name' => $lData['name'],
                     'basis' => $lData['basis'] ?? 'monthly',
                     'rate_amount' => $lData['rate_amount'],
@@ -186,41 +230,107 @@ final class BusinessTemplateService
                     'working_hours_per_day' => $lData['hours'] ?? 8,
                     'utilization_rate' => $lData['utilization'] ?? 80,
                     'is_subcontractor' => $lData['is_subcontractor'] ?? false,
-                ]
-            );
+                ]);
+            } else {
+                $lr = LaborRate::create([
+                    'business_id' => $business->id,
+                    'name' => $lData['name'],
+                    'slug' => $lrSlug,
+                    'basis' => $lData['basis'] ?? 'monthly',
+                    'rate_amount' => $lData['rate_amount'],
+                    'working_days_per_month' => $lData['days'] ?? 25,
+                    'working_hours_per_day' => $lData['hours'] ?? 8,
+                    'utilization_rate' => $lData['utilization'] ?? 80,
+                    'is_subcontractor' => $lData['is_subcontractor'] ?? false,
+                ]);
+            }
             $laborMap[$lData['key']] = $lr;
         }
 
         // 4. Create Machines / Equipment
         $machineMap = [];
         foreach ($definitions['machines'] as $mData) {
-            $m = Machine::updateOrCreate(
-                ['business_id' => $business->id, 'slug' => Str::slug($mData['name'])],
-                [
+            $mSlug = Str::slug($mData['name']);
+            $m = Machine::withTrashed()
+                ->where('business_id', $business->id)
+                ->where('slug', $mSlug)
+                ->first();
+
+            if ($m) {
+                if ($m->trashed()) {
+                    $m->restore();
+                }
+                $m->update([
                     'name' => $mData['name'],
                     'purchase_price' => $mData['price'],
                     'residual_value' => $mData['salvage'] ?? 0,
                     'useful_life_hours' => $mData['life_hours'],
                     'maintenance_cost_per_hour' => $mData['maintenance_hourly'] ?? 0,
                     'electricity_cost_per_hour' => ($mData['power_kw'] ?? 0) * 1500,
-                ]
-            );
+                ]);
+            } else {
+                $m = Machine::create([
+                    'business_id' => $business->id,
+                    'name' => $mData['name'],
+                    'slug' => $mSlug,
+                    'purchase_price' => $mData['price'],
+                    'residual_value' => $mData['salvage'] ?? 0,
+                    'useful_life_hours' => $mData['life_hours'],
+                    'maintenance_cost_per_hour' => $mData['maintenance_hourly'] ?? 0,
+                    'electricity_cost_per_hour' => ($mData['power_kw'] ?? 0) * 1500,
+                ]);
+            }
             $machineMap[$mData['key']] = $m;
         }
 
         // 5. Create Materials & Price History (No Supplier assigned per requirement)
         $materialMap = [];
         foreach ($definitions['materials'] as $mItem) {
-            $mat = Material::updateOrCreate(
-                ['business_id' => $business->id, 'slug' => Str::slug($mItem['name'])],
-                [
+            $targetCode = $mItem['code'] ?? 'MAT-' . strtoupper(Str::random(5));
+            $targetSlug = Str::slug($mItem['name']);
+
+            // Find existing material by code first, then by slug (including soft-deleted)
+            $mat = Material::withTrashed()
+                ->where('business_id', $business->id)
+                ->where('code', $targetCode)
+                ->first();
+
+            if (! $mat) {
+                $mat = Material::withTrashed()
+                    ->where('business_id', $business->id)
+                    ->where('slug', $targetSlug)
+                    ->first();
+            }
+
+            if ($mat) {
+                if ($mat->trashed()) {
+                    $mat->restore();
+                }
+                $mat->update([
                     'name' => $mItem['name'],
-                    'code' => $mItem['code'] ?? 'MAT-' . strtoupper(Str::random(5)),
                     'unit_id' => $mItem['unit']->id,
                     'category_id' => isset($mItem['category_key'], $matCatMap[$mItem['category_key']]) ? $matCatMap[$mItem['category_key']]->id : null,
                     'supplier_id' => null, // Explicitly no supplier
-                ]
-            );
+                ]);
+            } else {
+                // Generate collision-free code just in case
+                $finalCode = $targetCode;
+                $suffix = 1;
+                while (Material::withTrashed()->where('business_id', $business->id)->where('code', $finalCode)->exists()) {
+                    $suffix++;
+                    $finalCode = $targetCode . '-' . $suffix;
+                }
+
+                $mat = Material::create([
+                    'business_id' => $business->id,
+                    'name' => $mItem['name'],
+                    'slug' => $targetSlug,
+                    'code' => $finalCode,
+                    'unit_id' => $mItem['unit']->id,
+                    'category_id' => isset($mItem['category_key'], $matCatMap[$mItem['category_key']]) ? $matCatMap[$mItem['category_key']]->id : null,
+                    'supplier_id' => null, // Explicitly no supplier
+                ]);
+            }
 
             $mat->prices()->updateOrCreate(
                 ['effective_date' => now()->toDateString()],
@@ -241,28 +351,81 @@ final class BusinessTemplateService
         $costingService = new \App\Domain\Calculation\CostingResultService;
 
         foreach ($definitions['products'] as $pData) {
-            $product = Product::updateOrCreate(
-                ['business_id' => $business->id, 'slug' => Str::slug($pData['name'])],
-                [
+            $targetCode = $pData['code'] ?? 'PRD-' . strtoupper(Str::random(5));
+            $targetSlug = Str::slug($pData['name']);
+
+            // Find existing product by code first, then by slug (including soft-deleted)
+            $product = Product::withTrashed()
+                ->where('business_id', $business->id)
+                ->where('code', $targetCode)
+                ->first();
+
+            if (! $product) {
+                $product = Product::withTrashed()
+                    ->where('business_id', $business->id)
+                    ->where('slug', $targetSlug)
+                    ->first();
+            }
+
+            if ($product) {
+                if ($product->trashed()) {
+                    $product->restore();
+                }
+
+                $product->update([
                     'name' => $pData['name'],
-                    'code' => $pData['code'] ?? 'PRD-' . strtoupper(Str::random(5)),
+                    'slug' => $targetSlug,
                     'category_id' => isset($pData['category_key'], $prodCatMap[$pData['category_key']]) ? $prodCatMap[$pData['category_key']]->id : null,
                     'output_unit_id' => $pData['unit']->id,
                     'business_type_hint' => $template->industry_category,
                     'type' => $pData['type'] ?? ($pData['method'] === CostModel::METHOD_SERVICE ? Product::TYPE_SERVICE : Product::TYPE_GOODS),
                     'selling_price' => (float) ($pData['selling_price'] ?? 35000),
                     'base_cost' => (float) ($pData['base_cost'] ?? 15000),
-                ]
-            );
+                ]);
+            } else {
+                // Ensure code does not collide with any existing product (including soft-deleted)
+                $finalCode = $targetCode;
+                $suffix = 1;
+                while (Product::withTrashed()->where('business_id', $business->id)->where('code', $finalCode)->exists()) {
+                    $suffix++;
+                    $finalCode = $targetCode . '-' . $suffix;
+                }
 
-            $costModel = CostModel::updateOrCreate(
-                ['business_id' => $business->id, 'product_id' => $product->id, 'slug' => 'hpp-' . Str::slug($pData['name'])],
-                [
+                $product = Product::create([
+                    'business_id' => $business->id,
+                    'name' => $pData['name'],
+                    'slug' => $targetSlug,
+                    'code' => $finalCode,
+                    'category_id' => isset($pData['category_key'], $prodCatMap[$pData['category_key']]) ? $prodCatMap[$pData['category_key']]->id : null,
+                    'output_unit_id' => $pData['unit']->id,
+                    'business_type_hint' => $template->industry_category,
+                    'type' => $pData['type'] ?? ($pData['method'] === CostModel::METHOD_SERVICE ? Product::TYPE_SERVICE : Product::TYPE_GOODS),
+                    'selling_price' => (float) ($pData['selling_price'] ?? 35000),
+                    'base_cost' => (float) ($pData['base_cost'] ?? 15000),
+                ]);
+            }
+
+            // Reuse existing CostModel for this product if present, or create a new one
+            $costModel = CostModel::where('business_id', $business->id)
+                ->where('product_id', $product->id)
+                ->first();
+
+            if ($costModel) {
+                $costModel->update([
                     'name' => 'Model HPP ' . $pData['name'],
                     'method' => $pData['method'],
                     'is_active' => true,
-                ]
-            );
+                ]);
+            } else {
+                $costModel = CostModel::create([
+                    'business_id' => $business->id,
+                    'product_id' => $product->id,
+                    'slug' => 'hpp-' . Str::slug($pData['name']),
+                    'name' => 'Model HPP ' . $pData['name'],
+                    'method' => $pData['method'],
+                    'is_active' => true,
+                ]);
+            }
 
             // Attach Labor if present
             if (! empty($pData['labor_key']) && isset($laborMap[$pData['labor_key']])) {
