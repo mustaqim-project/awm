@@ -59,14 +59,24 @@ Audit trail seluruh aktivitas AI agent.
 
 ---
 
-## 3. Katalog Domain Tools MCP (10 Tools)
+## 3. Katalog Domain Tools MCP (20 Tools)
 
 | Nama Tool | Ability Scope | Deskripsi Operasional |
 |---|---|---|
 | `finance_record_expense` | `mcp:expenses:write` | Mencatat beban operasional lengkap dari receipt/struk fisik dengan auto-journal dan cash ledger. |
 | `finance_get_cash_and_bank_balances` | `mcp:finance:read` | Membaca likuiditas kas, saldo rekening bank, dan ringkasan mutasi kasir. |
-| `inventory_create_product` | `mcp:products:write` | Mendaftarkan produk baru, barcode/SKU, modal HPP, harga jual, dan stok awal. |
+| `finance_manage_invoice` | `mcp:finance:manage` | Mengelola faktur tagihan (invoice), rilis piutang, dan pencatatan pembayaran pelunasan. |
+| `inventory_create_product` | `mcp:products:manage` | Mendaftarkan produk fisik baru, barcode/SKU, modal HPP, harga jual, dan stok awal. |
 | `inventory_check_stock` | `mcp:products:read` | Meneliti stok barang real-time dan deteksi peringatan stok kritis (*low stock*). |
+| `services_manage_service` | `mcp:services:manage` | Mengelola katalog jasa dan layanan (https://cooca.id/services): daftar jasa/tarif, tambah layanan baru, update harga/status, serta pengarsipan dengan guard transaksi. |
+| `modifier_manage` | `mcp:products:manage` | Mengelola kelompok varian, topping, level pedas, dan opsi kustomisasi produk. |
+| `inventory_manage_material` | `mcp:inventory:manage` | Mengelola bahan baku (*raw materials*), satuan unit, dan update harga beli supplier. |
+| `inventory_manage_bom` | `mcp:inventory:manage` | Mengelola formula resep Bill of Materials (BOM) untuk pemotongan stok otomatis di kasir. |
+| `inventory_stock_opname` | `mcp:inventory:manage` | Melakukan audit fisik persediaan (*stock opname*) dan jurnal penyesuaian selisih otomatis. |
+| `purchasing_manage_supplier` | `mcp:purchasing:manage` | Mengelola direktori supplier, kontak, rekening bank, dan performa vendor pengadaan. |
+| `purchasing_manage_order` | `mcp:purchasing:manage` | Membuat Purchase Order (PO) pengadaan berjenjang dan mencatat penerimaan barang (GRN). |
+| `sales_manage_quotation` | `mcp:sales:manage` | Menerbitkan surat penawaran harga resmi B2B dan konversi 1-klik ke Sales Order. |
+| `sales_manage_order` | `mcp:sales:manage` | Memproses Pesanan Penjualan (SO), status pengiriman, dan penerbitan faktur tagihan invoice. |
 | `social_schedule_post` | `mcp:social:manage` | Menjadwalkan penerbitan materi promosi ke Instagram, TikTok, Facebook, dan X. |
 | `social_get_insights` | `mcp:social:read` | Mengambil ringkasan performa kampanye media sosial dan engagement metric. |
 | `report_get_profit_loss` | `mcp:reports:read` | Menghitung ringkasan laba rugi: omzet, HPP, laba kotor, beban, dan net margin. |

@@ -123,11 +123,12 @@ final class McpProtocolTest extends TestCase
         $response->assertStatus(200);
         $tools = $response->json('result.tools');
         $this->assertIsArray($tools);
-        $this->assertCount(19, $tools);
+        $this->assertCount(20, $tools);
 
         $toolNames = array_column($tools, 'name');
         $this->assertContains('finance_record_expense', $toolNames);
         $this->assertContains('inventory_create_product', $toolNames);
+        $this->assertContains('services_manage_service', $toolNames);
         $this->assertContains('report_get_profit_loss', $toolNames);
         $this->assertContains('whatsapp_send_notification', $toolNames);
         $this->assertContains('modifier_manage', $toolNames);

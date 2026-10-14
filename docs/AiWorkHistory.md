@@ -33,6 +33,57 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-10-14-352] Upgrade MCP AI Gateway: Domain Tool Pengelolaan Jasa & Layanan (https://cooca.id/services)
+
+- **Date:** 2026-10-14
+- **Status:** COMPLETED
+- **Module:** Model Context Protocol (MCP) AI Gateway, Services & Layanan (/services), Settings Integrations
+- **Feature:** MCP Tool services_manage_service (List, Create, Update, Delete/Archive), Token Ability mcp:services:manage, Bento Apple HIG Catalog Card #20, Financial Guard Rails
+- **Work Type:** Feature | Architecture | Security | UI/UX | Automated Testing
+
+#### 1. Business Context & Objective
+- **Konteks:** Pemilik usaha UMKM dan pengguna COOCA ID yang mengoperasikan AI Assistant eksternal (Claude, ChatGPT, Gemini, Cursor, Antigravity) memerlukan kemampuan operasional langsung untuk mengelola portofolio jasa dan layanan bisnis (`https://cooca.id/services`). Sebelumnya, MCP Gateway hanya memiliki 19 tool yang mencakup produk fisik, bahan baku, dan BOM, sehingga AI tidak memiliki domain tool khusus untuk mengelola tarif jasa, modal pengerjaan, dan unit hitungan layanan.
+- **Target:**
+  1. Menghadirkan MCP Tool `services_manage_service` yang aman dan berstandar JSON-RPC 2.0 / OpenAI / Anthropic / Gemini.
+  2. Mendukung 4 aksi terpadu: `list` (pencarian & filter jasa), `create` (pendaftaran jasa baru), `update` (perubahan tarif/HPP/kategori/status), dan `delete` (penghapusan atau pengarsipan dengan financial transaction guard).
+  3. Mendaftarkan tool ke `McpToolRegistry` dan menyediakan hak akses granular `mcp:services:manage`.
+  4. Memperbarui halaman Cockpit Integrasi MCP (`resources/views/app/settings/integrations/mcp.blade.php`) dengan kartu Bento Apple HIG ke-20, tombol 1-klik salin prompt contoh, tautan langsung ke `/services`, serta checkbox izin token baru.
+  5. Melokalisasi kamus dwibahasa di `lang/id/mcp.php` dan `lang/en/mcp.php`.
+  6. Menguji end-to-end dengan verifikasi 100% lolos (0 failure, 0 error).
+
+#### 2. What Was Done
+- **Pembangunan MCP Tool (`ServicesManageServiceTool.php`):**
+  - Mengimplementasikan `App\Domain\Mcp\Tools\ServicesManageServiceTool` mematuhi `McpToolInterface`.
+  - Mengisolasi seluruh mutasi database ke dalam konteks multi-tenant tenant `business_id` aktif.
+  - Mengotomatisasi relasi `ProductCategory` dan `Unit` (jasa, sesi, jam, paket, unit, pcs).
+  - Mengotomatisasi pembuatan `CostModel` bertipe `CostModel::METHOD_SERVICE` untuk setiap jasa yang didaftarkan.
+  - Memasang **Financial Transaction Guard**: jika jasa memiliki riwayat transaksi di kasir POS (`PosOrderItem`) atau faktur tagihan (`InvoiceItem`), aksi `delete` secara anggun melakukan pengarsipan (`is_active = false`) alih-alih hard-delete, guna menjaga integritas laporan laba rugi.
+  - Mencatat jejak audit `AuditLog` immutable (`mcp.services_manage_service.created`, `updated`, `archived`, `deleted`).
+- **Registrasi & Token Abilities:**
+  - Mendaftarkan `ServicesManageServiceTool` pada `McpToolRegistry`.
+  - Mendukung token ability `mcp:services:manage` serta wildcard `*` dan `mcp:services:*`.
+- **Cockpit Settings & UI Modernization (`mcp.blade.php`):**
+  - Menambahkan kartu katalog tool ke-20 dengan layout Bento Apple HIG, badge semantik, link langsung ke `route('services.index')`, dan prompt copyable.
+  - Menambahkan opsi hak akses `mcp:services:manage` pada modal sheet pembuatan kunci token baru.
+  - Memperbarui label katalog tool di kamus ID & EN menjadi "Katalog 20 Domain Tools".
+- **Pengujian & Validasi Nyata:**
+  - Menulis test suite lengkap di `tests/Feature/McpDomainToolsTest.php`: lifecycle CRUD jasa, pembuatan CostModel, pencatatan audit log, serta verifikasi Financial Guard.
+  - Menyesuaikan assertion pada `tests/Feature/McpProtocolTest.php` untuk memvalidasi ketersediaan 20 tools terdaftar.
+  - Menjalankan testing nyata: 20 tests di MCP suite lolos 100% (174 assertions) dan 15 tests di `ServiceAndProductSeparationTest` lolos 100% (82 assertions).
+
+#### 3. Technical Changes
+- **Files Created:**
+  - `app/Domain/Mcp/Tools/ServicesManageServiceTool.php`
+- **Files Modified:**
+  - `app/Domain/Mcp/Tools/McpToolRegistry.php`
+  - `resources/views/app/settings/integrations/mcp.blade.php`
+  - `lang/id/mcp.php`
+  - `lang/en/mcp.php`
+  - `tests/Feature/McpDomainToolsTest.php`
+  - `tests/Feature/McpProtocolTest.php`
+- **Database & Architecture:**
+  - Zero migration required: Memanfaatkan tabel `products` (`type = 'service'`), `cost_models`, dan `audit_logs` yang sudah ada secara efisien tanpa skema redundan.
+
 ### [WORK-2026-10-11-351] Aktivasi Komunitas Semua Tier Langganan, Modul Event Komunitas, Registrasi & Presensi (GPS Geofencing & Barcode Tiket), serta Admin Event Console
 
 - **Date:** 2026-10-11

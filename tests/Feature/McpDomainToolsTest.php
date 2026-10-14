@@ -10,6 +10,8 @@ use App\Models\Invoice;
 use App\Models\Location;
 use App\Models\Material;
 use App\Models\McpAccessToken;
+use App\Models\PosOrder;
+use App\Models\PosOrderItem;
 use App\Models\Product;
 use App\Models\PurchaseOrder;
 use App\Models\Quotation;
@@ -311,4 +313,144 @@ final class McpDomainToolsTest extends TestCase
         $this->assertEquals(500000, $payRes['payment']['amount']);
         $this->assertEquals(Invoice::STATUS_PARTIALLY_PAID, $payRes['invoice']['status']);
     }
+
+    public function test_mcp_services_manage_service_tool_lifecycle(): void
+    {
+        // 1. Create a new service via MCP
+        $createRes = $this->callTool('services_manage_service', [
+            'action'        => 'create',
+            'name'          => 'Servis Laptop Komprehensif',
+            'code'          => 'SRV-LAPTOP-01',
+            'selling_price' => 150000,
+            'base_cost'     => 30000,
+            'category_name' => 'Layanan IT',
+            'unit_name'     => 'Jasa',
+            'description'   => 'Pembersihan debu, ganti thermal paste, dan instalasi OS.',
+            'show_in_pos'   => true,
+            'show_in_website' => true,
+        ]);
+
+        $this->assertTrue($createRes['success']);
+        $this->assertEquals('Servis Laptop Komprehensif', $createRes['service']['name']);
+        $this->assertEquals(150000, $createRes['service']['selling_price']);
+        $this->assertEquals(30000, $createRes['service']['base_cost']);
+        $this->assertEquals(120000, $createRes['service']['margin_amount']);
+        $this->assertEquals('80%', $createRes['service']['margin_percentage']);
+        $serviceId = $createRes['service']['id'];
+
+        $this->assertDatabaseHas('products', [
+            'id'            => $serviceId,
+            'business_id'   => $this->business->id,
+            'type'          => Product::TYPE_SERVICE,
+            'name'          => 'Servis Laptop Komprehensif',
+            'code'          => 'SRV-LAPTOP-01',
+            'selling_price' => 150000,
+            'base_cost'     => 30000,
+            'is_active'     => true,
+        ]);
+
+        $this->assertDatabaseHas('cost_models', [
+            'business_id' => $this->business->id,
+            'product_id'  => $serviceId,
+            'method'      => \App\Models\CostModel::METHOD_SERVICE,
+        ]);
+
+        $this->assertDatabaseHas('audit_logs', [
+            'business_id'    => $this->business->id,
+            'action'         => 'mcp.services_manage_service.created',
+            'auditable_type' => Product::class,
+            'auditable_id'   => $serviceId,
+        ]);
+
+        // 2. List services via MCP
+        $listRes = $this->callTool('services_manage_service', [
+            'action' => 'list',
+            'search' => 'Laptop',
+        ]);
+
+        $this->assertTrue($listRes['success']);
+        $this->assertGreaterThanOrEqual(1, $listRes['total_services']);
+        $this->assertEquals('Servis Laptop Komprehensif', $listRes['services'][0]['name']);
+
+        // 3. Update service via MCP
+        $updateRes = $this->callTool('services_manage_service', [
+            'action'        => 'update',
+            'service_id'    => 'SRV-LAPTOP-01',
+            'selling_price' => 175000,
+            'base_cost'     => 35000,
+        ]);
+
+        $this->assertTrue($updateRes['success']);
+        $this->assertEquals(175000, $updateRes['service']['selling_price']);
+        $this->assertEquals(35000, $updateRes['service']['base_cost']);
+
+        $this->assertDatabaseHas('products', [
+            'id'            => $serviceId,
+            'selling_price' => 175000,
+            'base_cost'     => 35000,
+        ]);
+
+        // 4. Safe Delete (no transactions attached)
+        $delRes = $this->callTool('services_manage_service', [
+            'action'     => 'delete',
+            'service_id' => $serviceId,
+        ]);
+
+        $this->assertTrue($delRes['success']);
+        $this->assertEquals('deleted', $delRes['status']);
+        $this->assertSoftDeleted('products', ['id' => $serviceId]);
+    }
+
+    public function test_mcp_services_manage_service_financial_guard_archives_with_transactions(): void
+    {
+        // 1. Create a service
+        $createRes = $this->callTool('services_manage_service', [
+            'action'        => 'create',
+            'name'          => 'Ganti Oli Mesin',
+            'code'          => 'SRV-OLI-01',
+            'selling_price' => 50000,
+            'base_cost'     => 35000,
+        ]);
+        $serviceId = $createRes['service']['id'];
+
+        // 2. Attach a POS Order transaction to the service
+        $posOrder = PosOrder::create([
+            'business_id'      => $this->business->id,
+            'location_id'      => $this->location->id,
+            'user_id'          => $this->user->id,
+            'order_number'     => 'POS-202610-SRV01',
+            'order_date'       => now()->toDateString(),
+            'total_amount'     => 50000,
+            'subtotal'         => 50000,
+            'discount_amount'  => 0,
+            'tax_amount'       => 0,
+            'paid_amount'      => 50000,
+            'payment_status'   => 'paid',
+            'status'           => 'completed',
+        ]);
+
+        PosOrderItem::create([
+            'pos_order_id' => $posOrder->id,
+            'product_id'   => $serviceId,
+            'product_name' => 'Ganti Oli Mesin',
+            'product_code' => 'SRV-OLI-01',
+            'quantity'     => 1,
+            'unit_price'   => 50000,
+            'subtotal'     => 50000,
+        ]);
+
+        // 3. Attempt to delete service - should trigger financial guard and archive instead of deleting
+        $delRes = $this->callTool('services_manage_service', [
+            'action'     => 'delete',
+            'service_id' => $serviceId,
+        ]);
+
+        $this->assertTrue($delRes['success']);
+        $this->assertEquals('archived', $delRes['status']);
+        $this->assertDatabaseHas('products', [
+            'id'        => $serviceId,
+            'is_active' => false,
+        ]);
+    }
 }
+
