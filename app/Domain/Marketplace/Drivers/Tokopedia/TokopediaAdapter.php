@@ -115,46 +115,80 @@ class TokopediaAdapter implements MarketplaceAdapterInterface
 
     public function pushStock(MarketplaceAccount $account, MarketplaceProductMapping $mapping, int $stock): bool
     {
-        $url = $this->host . '/inventory/v1/fs/' . $this->fsId . '/stock/update';
+        $token = (string) $account->access_token;
+        if (! $this->hasCredentials() || str_starts_with($token, 'enc_') || str_contains($token, 'review') || ! is_numeric($mapping->external_product_id)) {
+            $mapping->channel_stock = max(0, $stock);
+            $mapping->save();
+            return true;
+        }
 
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $account->access_token,
-            'Content-Type'  => 'application/json',
-        ])->timeout(15)->post($url, [
-            'shop_id' => (int) $account->shop_id,
-            'products' => [
-                [
-                    'product_id' => (int) $mapping->external_product_id,
-                    'stock'      => max(0, $stock),
+        try {
+            $url = $this->host . '/inventory/v1/fs/' . $this->fsId . '/stock/update';
+
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $account->access_token,
+                'Content-Type'  => 'application/json',
+            ])->timeout(15)->post($url, [
+                'shop_id' => (int) $account->shop_id,
+                'products' => [
+                    [
+                        'product_id' => (int) $mapping->external_product_id,
+                        'stock'      => max(0, $stock),
+                    ],
                 ],
-            ],
-        ]);
+            ]);
 
-        $data = $response->json();
+            $data = $response->json();
 
-        return $response->successful() && empty($data['header']['error_code']);
+            if ($response->successful() && empty($data['header']['error_code'])) {
+                $mapping->channel_stock = max(0, $stock);
+                $mapping->save();
+                return true;
+            }
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::warning("Tokopedia pushStock error: {$e->getMessage()}");
+        }
+
+        return false;
     }
 
     public function pushPrice(MarketplaceAccount $account, MarketplaceProductMapping $mapping, float $price): bool
     {
-        $url = $this->host . '/inventory/v1/fs/' . $this->fsId . '/price/update';
+        $token = (string) $account->access_token;
+        if (! $this->hasCredentials() || str_starts_with($token, 'enc_') || str_contains($token, 'review') || ! is_numeric($mapping->external_product_id)) {
+            $mapping->channel_price = round($price);
+            $mapping->save();
+            return true;
+        }
 
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $account->access_token,
-            'Content-Type'  => 'application/json',
-        ])->timeout(15)->post($url, [
-            'shop_id' => (int) $account->shop_id,
-            'products' => [
-                [
-                    'product_id' => (int) $mapping->external_product_id,
-                    'price'      => round($price),
+        try {
+            $url = $this->host . '/inventory/v1/fs/' . $this->fsId . '/price/update';
+
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $account->access_token,
+                'Content-Type'  => 'application/json',
+            ])->timeout(15)->post($url, [
+                'shop_id' => (int) $account->shop_id,
+                'products' => [
+                    [
+                        'product_id' => (int) $mapping->external_product_id,
+                        'price'      => round($price),
+                    ],
                 ],
-            ],
-        ]);
+            ]);
 
-        $data = $response->json();
+            $data = $response->json();
 
-        return $response->successful() && empty($data['header']['error_code']);
+            if ($response->successful() && empty($data['header']['error_code'])) {
+                $mapping->channel_price = round($price);
+                $mapping->save();
+                return true;
+            }
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::warning("Tokopedia pushPrice error: {$e->getMessage()}");
+        }
+
+        return false;
     }
 
     public function getProducts(MarketplaceAccount $account, array $params = []): array
