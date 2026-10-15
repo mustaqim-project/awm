@@ -162,16 +162,16 @@ final class StorefrontPopupCmsTest extends TestCase
 
         Context::flush();
 
-        // Cashier visits GET /landing-page/popup -> should be redirected to dashboard
+        // Cashier visits GET /landing-page/popup -> should be redirected to portal
         $response = $this->actingAs($cashier)->get(route('landing-page.popup.edit'));
-        $response->assertRedirect(route('dashboard'));
+        $response->assertRedirect(route('portal'));
 
         // Cashier attempts PUT /landing-page/popup -> should also be redirected
         $putResponse = $this->actingAs($cashier)->put(route('landing-page.popup.update'), [
             'popup_enabled' => '1',
             'popup_frequency' => 'always',
         ]);
-        $putResponse->assertRedirect(route('dashboard'));
+        $putResponse->assertRedirect(route('portal'));
     }
 
     public function test_public_storefront_home_renders_popup_when_active(): void

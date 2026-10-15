@@ -11,185 +11,143 @@
         @include('app.storefront.partials.navigation', ['title' => 'Website & Profil Bisnis'])
 
         <!-- ========================================== -->
-        <!-- 1. TOP TOOLBAR & ACTION COCKPIT            -->
+        <!-- 1. UNIFIED ACTION COCKPIT & STATUS TOOLBAR -->
         <!-- ========================================== -->
-        <header
-            class="rounded-[14px] backdrop-blur-md bg-white/75 dark:bg-[#1C1C1E]/75 border border-black/5 dark:border-white/10 px-4 sm:px-6 py-3.5 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 transition-colors">
-            <div class="space-y-1.5 max-w-3xl">
-                <h1 class="text-[20px] font-semibold text-black dark:text-white tracking-tight">
-                    Website &amp; Profil Digital: {{ $business->name }}
-                </h1>
-                <!-- Public URL bar capsule -->
-                <div class="pt-1 flex flex-wrap items-center gap-2 text-[12px]">
-                    <span class="text-black/50 dark:text-white/50 font-medium">Tautan Publik:</span>
-                    <a href="{{ $publicUrl }}" target="_blank"
-                        class="font-mono text-[#007AFF] hover:underline font-semibold inline-flex items-center gap-1">
-                        <span>{{ $publicUrl }}</span>
-                        <svg class="w-3 h-3 text-[#007AFF]" fill="none" stroke="currentColor" stroke-width="2"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-                        </svg>
-                    </a>
-                    <span class="text-[11px] text-black/40 dark:text-white/40">URL mengikuti nama bisnis</span>
-                    <button type="button" @click="copyLink('{{ $publicUrl }}')"
-                        class="h-6 px-2 rounded-[6px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] text-black/80 dark:text-white/80 font-medium active:scale-[0.97] transition inline-flex items-center gap-1 text-[11px]">
-                        <svg class="w-3 h-3 text-black/60 dark:text-white/60" fill="none" stroke="currentColor"
-                            stroke-width="1.5" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
-                        </svg>
-                        <span x-text="copied ? 'Tersalin!' : 'Salin'">Salin</span>
-                    </button>
-                    <a href="https://api.whatsapp.com/send?text={{ urlencode('Halo, kunjungi profil dan katalog layanan kami di: ' . $publicUrl) }}"
-                        target="_blank"
-                        class="h-6 px-2 rounded-[6px] bg-[#34C759]/12 hover:bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] font-medium active:scale-[0.97] transition inline-flex items-center gap-1 text-[11px]">
-                        <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" />
-                        </svg>
-                        <span>Share ke WA</span>
-                    </a>
+        <div class="rounded-[18px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 p-3.5 sm:p-4 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3.5">
+            <!-- Left: Live Status & Meta Pills -->
+            <div class="flex items-center gap-2.5 flex-wrap">
+                <!-- Status Badge -->
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[12px] font-semibold border transition-all"
+                     :class="isPublished ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60 border-black/5 dark:border-white/10'">
+                    <span class="w-2 h-2 rounded-full" :class="isPublished ? 'bg-emerald-500 animate-pulse' : 'bg-black/30 dark:bg-white/30'"></span>
+                    <span x-text="isPublished ? 'Live Publik (Terbuka Umum)' : 'Draft Offline (Hanya Pemilik)'"></span>
                 </div>
+
+                <!-- Active Preset Pill -->
+                <div class="inline-flex items-center gap-1.5 text-[12px] text-black/60 dark:text-white/60 bg-black/[0.03] dark:bg-white/[0.04] px-3 py-1.5 rounded-full border border-black/5 dark:border-white/5">
+                    <span class="text-black/40 dark:text-white/40">Tema:</span>
+                    <strong class="text-[#007AFF] font-semibold uppercase font-mono" x-text="form.theme_preset || form.industry_preset"></strong>
+                </div>
+
+                <!-- Quick Copy Link -->
+                <button type="button" @click="copyLink('{{ $publicUrl }}')"
+                    class="h-8 px-2.5 rounded-[9px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.10] text-black/70 dark:text-white/70 font-medium active:scale-95 transition inline-flex items-center gap-1.5 text-[11.5px]">
+                    <i data-lucide="copy" class="w-3.5 h-3.5 opacity-70"></i>
+                    <span x-text="copied ? 'Tersalin!' : 'Salin URL'">Salin URL</span>
+                </button>
+
+                <!-- Share WA -->
+                <a href="https://api.whatsapp.com/send?text={{ urlencode('Halo, kunjungi website kami di: ' . $publicUrl) }}"
+                    target="_blank"
+                    class="h-8 px-2.5 rounded-[9px] bg-emerald-500/10 hover:bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-medium active:scale-95 transition inline-flex items-center gap-1.5 text-[11.5px]">
+                    <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+                    <span>Share WA</span>
+                </a>
             </div>
 
-            <!-- Toolbar Actions -->
-            <div class="flex flex-wrap items-center gap-2 z-10 w-full lg:w-auto">
+            <!-- Right: Studio Actions -->
+            <div class="flex items-center gap-2 flex-wrap">
                 @if (\App\Support\Context::hasPermission('cms.manage'))
+                    <!-- Preset Modal Button -->
                     <button type="button" @click="showPresetModal = true; $nextTick(() => { if (window.lucide) lucide.createIcons(); })"
-                        class="h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-[#B25E00] dark:text-[#FF9F0A] bg-[#FF9500]/10 hover:bg-[#FF9500]/15 active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5 flex-1 sm:flex-none">
-                        <svg class="w-4 h-4 text-[#FF9500] dark:text-[#FF9F0A]" fill="none" stroke="currentColor"
-                            stroke-width="1.5" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
-                        </svg>
+                        class="min-h-[38px] px-3.5 rounded-[11px] text-[12.5px] font-semibold text-[#B25E00] dark:text-[#FF9F0A] bg-[#FF9500]/10 hover:bg-[#FF9500]/15 active:scale-95 transition-all inline-flex items-center gap-1.5 border border-[#FF9500]/20">
+                        <i data-lucide="wand-2" class="w-3.5 h-3.5"></i>
                         <span>Preset Industri</span>
                     </button>
 
+                    <!-- Toggle Publish Button -->
                     <button type="button" @click="togglePublish()" :disabled="saving"
                         :class="isPublished
-                            ?
-                            'text-[#C41E17] dark:text-[#FF453A] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15' :
-                            'text-[#248A3D] dark:text-[#30D158] bg-[#34C759]/10 hover:bg-[#34C759]/15'"
-                        class="h-9 px-3.5 rounded-[10px] text-[13px] font-semibold active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5 flex-1 sm:flex-none disabled:opacity-50">
-                        <svg x-show="!isPublished" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                        <svg x-show="isPublished" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
-                        </svg>
+                            ? 'text-red-600 dark:text-red-400 bg-red-500/10 hover:bg-red-500/15 border border-red-500/20'
+                            : 'text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/15 border border-emerald-500/20'"
+                        class="min-h-[38px] px-3.5 rounded-[11px] text-[12.5px] font-semibold active:scale-95 transition-all inline-flex items-center gap-1.5 disabled:opacity-50">
+                        <i :data-lucide="isPublished ? 'eye-off' : 'globe'" class="w-3.5 h-3.5"></i>
                         <span x-text="isPublished ? 'Arsipkan Publik' : 'Terbitkan Sekarang'"></span>
                     </button>
                 @endif
 
+                <!-- Live Preview Button -->
                 <button type="button" @click="openPreview()" :disabled="saving"
-                    class="h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5 flex-1 sm:flex-none">
-                    <svg class="w-4 h-4 text-[#007AFF]" fill="none" stroke="currentColor" stroke-width="1.5"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z" />
-                    </svg>
+                    class="min-h-[38px] px-3.5 rounded-[11px] text-[12.5px] font-semibold text-black/80 dark:text-white/80 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.10] active:scale-95 transition-all inline-flex items-center gap-1.5 border border-black/5 dark:border-white/10">
+                    <i data-lucide="play" class="w-3.5 h-3.5 text-[#007AFF]"></i>
                     <span x-text="saving ? 'Menyiapkan...' : 'Preview Live'">Preview Live</span>
                 </button>
+
+                <!-- Primary Save Button -->
+                @if (\App\Support\Context::hasPermission('cms.manage'))
+                    <button type="button" @click="saveAll()" :disabled="saving"
+                        class="min-h-[38px] px-4 rounded-[11px] text-[12.5px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-95 transition-all inline-flex items-center gap-1.5 shadow-sm disabled:opacity-50">
+                        <i x-show="!saving" data-lucide="check" class="w-4 h-4"></i>
+                        <svg x-show="saving" class="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <span x-text="saving ? 'Menyimpan...' : 'Simpan'">Simpan</span>
+                    </button>
+                @endif
             </div>
-        </header>
-
-        <!-- ========================================== -->
-        <!-- 2. 4 COMMAND PILLARS (Flat Neutral KPI)    -->
-        <!-- ========================================== -->
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-
-            <!-- Pillar 1: Status Publikasi -->
-            <div
-                class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between">
-                <div>
-                    <span class="text-[12px] font-medium text-black/50 dark:text-white/50">Status Website</span>
-                    <div class="mt-2 text-[20px] sm:text-[22px] font-bold tabular-nums tracking-tight truncate"
-                        :class="isPublished ? 'text-[#34C759] dark:text-[#30D158]' : 'text-black/50 dark:text-white/50'"
-                        x-text="isPublished ? 'Live Publik' : 'Draft Offline'">
-                        {{ $landingPage->is_published ? 'Live Publik' : 'Draft Offline' }}
-                    </div>
-                </div>
-                <div
-                    class="mt-3 pt-2.5 border-t border-black/5 dark:border-white/5 text-[11px] text-black/50 dark:text-white/50 flex items-center justify-between">
-                    <span>Visibilitas</span>
-                    <span class="font-medium text-black dark:text-white"
-                        x-text="isPublished ? 'Terbuka Umum' : 'Hanya Pemilik'">
-                        {{ $landingPage->is_published ? 'Terbuka Umum' : 'Hanya Pemilik' }}
-                    </span>
-                </div>
-            </div>
-
-            <!-- Pillar 2: Layanan & Menu -->
-            <div
-                class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between">
-                <div>
-                    <span class="text-[12px] font-medium text-black/50 dark:text-white/50">Katalog Layanan &amp;
-                        Menu</span>
-                    <div
-                        class="mt-2 text-[20px] sm:text-[22px] font-bold tabular-nums text-black dark:text-white tracking-tight truncate">
-                        <span x-text="services.length">0</span> Layanan
-                    </div>
-                </div>
-                <div
-                    class="mt-3 pt-2.5 border-t border-black/5 dark:border-white/5 text-[11px] text-black/50 dark:text-white/50 flex items-center justify-between">
-                    <span>Sinkron POS</span>
-                    <span class="font-medium text-[#34C759] dark:text-[#30D158]">
-                        {{ $landingPage->show_pos_products ? $posProducts->count() . ' Terhubung' : 'Non-Aktif' }}
-                    </span>
-                </div>
-            </div>
-
-            <!-- Pillar 3: Kredibilitas & Keunggulan -->
-            <div
-                class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between">
-                <div>
-                    <span class="text-[12px] font-medium text-black/50 dark:text-white/50">Pilar Nilai &amp;
-                        Kredibilitas</span>
-                    <div
-                        class="mt-2 text-[20px] sm:text-[22px] font-bold tabular-nums text-[#5856D6] dark:text-[#5E5CE6] tracking-tight truncate">
-                        <span x-text="values.length">4</span> Pilar Nilai
-                    </div>
-                </div>
-                <div
-                    class="mt-3 pt-2.5 border-t border-black/5 dark:border-white/5 text-[11px] text-black/50 dark:text-white/50 flex items-center justify-between">
-                    <span>Ulasan &amp; FAQ</span>
-                    <span class="font-medium text-black dark:text-white">
-                        <span x-text="testimonials.length">0</span> ulasan · <span x-text="faqs.length">0</span> FAQ
-                    </span>
-                </div>
-            </div>
-
-            <!-- Pillar 4: Galeri Bisnis -->
-            <div
-                class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between">
-                <div>
-                    <span class="text-[12px] font-medium text-black/50 dark:text-white/50">Galeri Foto Bisnis</span>
-                    <div
-                        class="mt-2 text-[20px] sm:text-[22px] font-bold tabular-nums text-[#FF9500] dark:text-[#FF9F0A] tracking-tight truncate">
-                        <span x-text="galleryItems.length + newGalleryUploads.length">0</span> / 20 Foto
-                    </div>
-                </div>
-                <div
-                    class="mt-3 pt-2.5 border-t border-black/5 dark:border-white/5 text-[11px] text-black/50 dark:text-white/50 flex items-center justify-between">
-                    <span>Status Galeri</span>
-                    <span class="font-medium"
-                        :class="sectionVisibility.gallery ? 'text-[#34C759] dark:text-[#30D158]' :
-                            'text-black/40 dark:text-white/40'">
-                        <span x-text="sectionVisibility.gallery ? 'Aktif Tampil' : 'Disembunyikan'"></span>
-                    </span>
-                </div>
-            </div>
-
         </div>
 
         <!-- ========================================== -->
-        <!-- 3. MAIN FORM & STUDIO WORKSPACE (ARKETIPE B) -->
+        <!-- 2. COMPACT BENTO GLANCEABLE METRICS STRIP  -->
+        <!-- ========================================== -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+            <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 p-3.5 shadow-xs flex items-center gap-3">
+                <div class="w-9 h-9 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0">
+                    <i data-lucide="globe" class="w-4 h-4"></i>
+                </div>
+                <div class="min-w-0">
+                    <div class="text-[11px] font-medium text-black/50 dark:text-white/50">Status Website</div>
+                    <div class="text-[14px] font-bold text-black dark:text-white tracking-tight truncate"
+                         :class="isPublished ? 'text-emerald-600 dark:text-emerald-400' : 'text-black/50 dark:text-white/50'"
+                         x-text="isPublished ? 'Live Publik' : 'Draft Offline'">
+                        {{ $landingPage->is_published ? 'Live Publik' : 'Draft Offline' }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 p-3.5 shadow-xs flex items-center gap-3">
+                <div class="w-9 h-9 rounded-[10px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center shrink-0">
+                    <i data-lucide="sparkles" class="w-4 h-4"></i>
+                </div>
+                <div class="min-w-0">
+                    <div class="text-[11px] font-medium text-black/50 dark:text-white/50">Layanan &amp; Menu</div>
+                    <div class="text-[14px] font-bold text-black dark:text-white tracking-tight truncate">
+                        <span x-text="services.length">0</span> Layanan
+                        <span class="text-[11.5px] font-normal text-black/45 dark:text-white/45">· {{ $landingPage->show_pos_products ? $posProducts->count() . ' POS' : 'POS Non-aktif' }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 p-3.5 shadow-xs flex items-center gap-3">
+                <div class="w-9 h-9 rounded-[10px] bg-[#5856D6]/10 text-[#5856D6] flex items-center justify-center shrink-0">
+                    <i data-lucide="award" class="w-4 h-4"></i>
+                </div>
+                <div class="min-w-0">
+                    <div class="text-[11px] font-medium text-black/50 dark:text-white/50">Pilar &amp; Ulasan</div>
+                    <div class="text-[14px] font-bold text-black dark:text-white tracking-tight truncate">
+                        <span x-text="values.length">4</span> Pilar
+                        <span class="text-[11.5px] font-normal text-black/45 dark:text-white/45">· <span x-text="testimonials.length">0</span> Ulasan</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 p-3.5 shadow-xs flex items-center gap-3">
+                <div class="w-9 h-9 rounded-[10px] bg-[#FF9500]/10 text-[#FF9500] flex items-center justify-center shrink-0">
+                    <i data-lucide="image" class="w-4 h-4"></i>
+                </div>
+                <div class="min-w-0">
+                    <div class="text-[11px] font-medium text-black/50 dark:text-white/50">Galeri Foto</div>
+                    <div class="text-[14px] font-bold text-black dark:text-white tracking-tight truncate">
+                        <span x-text="galleryItems.length + newGalleryUploads.length">0</span> / 20 Foto
+                        <span class="text-[11.5px] font-normal text-emerald-600 dark:text-emerald-400" x-show="sectionVisibility.gallery">· Aktif</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- 3. MAIN FORM & STUDIO WORKSPACE            -->
         <!-- ========================================== -->
         <form action="{{ route('landing-page.update') }}" method="POST" id="landingPageForm"
             enctype="multipart/form-data" @submit.prevent="saveAll">
@@ -215,25 +173,27 @@
                 <!-- SIDEBAR TABS NAVIGATION (3 KOLOM DESKTOP - macOS Source List) -->
                 <div class="lg:col-span-3 space-y-3">
                     <div
-                        class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-3 lg:sticky lg:top-20 transition-colors">
+                        class="rounded-[18px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 p-3 lg:sticky lg:top-20 transition-colors shadow-xs">
 
                         <div
-                            class="px-2.5 pb-2 mb-1.5 border-b border-black/5 dark:border-white/5 flex items-center justify-between">
+                            class="px-2.5 pb-2.5 mb-1.5 border-b border-black/5 dark:border-white/5 flex items-center justify-between">
                             <span
-                                class="text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40">Bagian
-                                Studio</span>
+                                class="text-[11px] font-semibold uppercase tracking-wider text-black/45 dark:text-white/45">Bagian Studio</span>
                             <span class="text-[11px] font-mono font-semibold text-[#007AFF]">11 Bagian</span>
                         </div>
 
                         <!-- Horizontal scroll on mobile / vertical list on desktop -->
-                        <div class="flex lg:block gap-1 overflow-x-auto pb-1.5 lg:pb-0 snap-x snap-mandatory">
-                            <template x-for="tab in tabs" :key="tab.id">
-                                <button type="button" @click="activeTab = tab.id"
-                                    class="w-auto lg:w-full shrink-0 snap-start flex items-center justify-between gap-2 px-2.5 py-1.5 rounded-[8px] text-[13px] font-medium transition-colors text-left whitespace-nowrap mb-0.5 cursor-pointer"
+                        <div class="flex lg:block gap-1 overflow-x-auto no-scrollbar pb-1.5 lg:pb-0 snap-x snap-mandatory">
+                            <template x-for="(tab, index) in tabs" :key="tab.id">
+                                <button type="button" @click="activeTab = tab.id; $nextTick(() => { if (window.lucide) lucide.createIcons(); })"
+                                    class="w-auto lg:w-full shrink-0 snap-start flex items-center justify-between gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all text-left whitespace-nowrap mb-0.5 cursor-pointer"
                                     :class="activeTab === tab.id ?
-                                        'bg-[#007AFF] text-white font-semibold shadow-[0_1px_2px_rgba(0,122,255,0.25)]' :
+                                        'bg-[#007AFF] text-white font-semibold shadow-xs' :
                                         'text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5'">
-                                    <div class="flex items-center gap-2 min-w-0">
+                                    <div class="flex items-center gap-2.5 min-w-0">
+                                        <span class="w-5 h-5 rounded-[6px] flex items-center justify-center shrink-0 text-[10.5px] font-bold font-mono"
+                                              :class="activeTab === tab.id ? 'bg-white/20 text-white' : 'bg-black/5 dark:bg-white/10 text-black/60 dark:text-white/60'"
+                                              x-text="index + 1"></span>
                                         <span class="truncate" x-text="tab.label"></span>
                                     </div>
                                     <i x-show="activeTab === tab.id" data-lucide="chevron-right"
@@ -246,7 +206,8 @@
                         @if (\App\Support\Context::hasPermission('cms.manage'))
                             <div class="pt-3 mt-2 border-t border-black/5 dark:border-white/5 space-y-2">
                                 <button type="submit" :disabled="saving"
-                                    class="w-full h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-2 shadow-[0_1px_2px_rgba(0,122,255,0.25)] disabled:opacity-50 cursor-pointer">
+                                    class="w-full min-h-[38px] px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all flex items-center justify-center gap-2 shadow-xs disabled:opacity-50 cursor-pointer">
+                                    <i x-show="!saving" data-lucide="check" class="w-4 h-4"></i>
                                     <svg x-show="saving" class="w-4 h-4 animate-spin text-white" fill="none"
                                         viewBox="0 0 24 24">
                                         <circle class="opacity-25" cx="12" cy="12" r="10"
@@ -2042,6 +2003,28 @@
 
         </form>
 
+        <!-- Sticky Mobile Bottom Bar (Thumb-zone Quick Action) -->
+        @if (\App\Support\Context::hasPermission('cms.manage'))
+            <div class="fixed bottom-0 inset-x-0 z-40 bg-white/90 dark:bg-[#1C1C1E]/90 backdrop-blur-md border-t border-black/10 dark:border-white/10 p-3 block lg:hidden pb-[calc(12px+env(safe-area-inset-bottom))] shadow-lg">
+                <div class="max-w-md mx-auto flex items-center justify-between gap-3">
+                    <div class="min-w-0">
+                        <span class="text-[11px] font-semibold text-black/50 dark:text-white/50 block">Bagian Aktif:</span>
+                        <span class="text-[12.5px] font-bold text-black dark:text-white truncate block"
+                              x-text="(tabs.find(t => t.id === activeTab) || {}).label || 'Studio'"></span>
+                    </div>
+                    <button type="button" @click="saveAll()" :disabled="saving"
+                        class="min-h-[44px] px-5 rounded-[12px] bg-[#007AFF] text-white font-semibold text-[13px] hover:bg-[#0071E3] active:scale-95 transition-all inline-flex items-center gap-2 shadow-sm shrink-0 disabled:opacity-50">
+                        <i x-show="!saving" data-lucide="check" class="w-4 h-4"></i>
+                        <svg x-show="saving" class="w-4 h-4 animate-spin text-white" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <span x-text="saving ? 'Menyimpan...' : 'Simpan Perubahan'">Simpan Perubahan</span>
+                    </button>
+                </div>
+            </div>
+        @endif
+
         <!-- ============================================================ -->
         <!-- MODAL: LIVE PREVIEW DRAWER (Apple Sheet Style)               -->
         <!-- ============================================================ -->
@@ -2273,7 +2256,7 @@
     <script>
         function landingPageEditor() {
             return {
-                activeTab: 'general',
+                activeTab: new URLSearchParams(window.location.search).get('tab') || 'general',
                 showPresetModal: false,
                 showPreview: false,
                 previewUrl: @json($publicUrl),
@@ -2288,47 +2271,47 @@
 
                 tabs: [{
                         id: 'general',
-                        label: '1. Identitas & Tema'
+                        label: 'Identitas & Tema'
                     },
                     {
                         id: 'hero',
-                        label: '2. Banner Hero'
+                        label: 'Banner Hero'
                     },
                     {
                         id: 'about',
-                        label: '3. Profil & Nilai'
+                        label: 'Profil & Nilai'
                     },
                     {
                         id: 'services',
-                        label: '4. Katalog Layanan'
+                        label: 'Katalog Layanan'
                     },
                     {
                         id: 'products',
-                        label: '5. Produk POS'
+                        label: 'Produk POS'
                     },
                     {
                         id: 'gallery',
-                        label: '6. Galeri Suasana'
+                        label: 'Galeri Suasana'
                     },
                     {
                         id: 'testimonials',
-                        label: '7. Ulasan Pelanggan'
+                        label: 'Ulasan Pelanggan'
                     },
                     {
                         id: 'faq',
-                        label: '8. Tanya Jawab (FAQ)'
+                        label: 'Tanya Jawab (FAQ)'
                     },
                     {
                         id: 'contact',
-                        label: '9. Kontak & Lokasi'
+                        label: 'Kontak & Lokasi'
                     },
                     {
                         id: 'footer',
-                        label: '10. Konten Footer'
+                        label: 'Konten Footer'
                     },
                     {
                         id: 'seo',
-                        label: '11. Optimasi Google SEO'
+                        label: 'Optimasi Google SEO'
                     },
                 ],
 
@@ -2457,6 +2440,20 @@
                 operationalHours: @json($landingPage->operational_hours ?? []),
 
                 init() {
+                    const urlTab = new URLSearchParams(window.location.search).get('tab');
+                    if (urlTab && this.tabs.some(t => t.id === urlTab)) {
+                        this.activeTab = urlTab;
+                    }
+
+                    this.$watch('activeTab', (val) => {
+                        const url = new URL(window.location);
+                        url.searchParams.set('tab', val);
+                        window.history.replaceState({}, '', url);
+                        this.$nextTick(() => {
+                            if (window.lucide) lucide.createIcons();
+                        });
+                    });
+
                     if (!this.values || this.values.length === 0) {
                         this.values = [{
                                 title: 'Kualitas Terjamin',
