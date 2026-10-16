@@ -164,6 +164,97 @@ final class CustomerWebController extends Controller
     }
 
     /**
+     * Export customers to Excel.
+     */
+    public function export(Request $request): \Symfony\Component\HttpFoundation\StreamedResponse
+    {
+        $business = Context::requireBusiness();
+
+        $query = Customer::where('business_id', $business->id)->latest();
+        if ($request->filled('search')) {
+            $search = (string) $request->get('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('company_name', 'like', "%{$search}%")
+                    ->orWhere('code', 'like', "%{$search}%")
+                    ->orWhere('phone', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+
+        return app(\App\Domain\Import\DataExchangeService::class)->exportCustomers($business, $query);
+    }
+
+    /**
+     * Download Excel template for Customer import.
+     */
+    public function downloadTemplate(): \Symfony\Component\HttpFoundation\StreamedResponse
+    {
+        $business = Context::requireBusiness();
+        return app(\App\Domain\Import\DataExchangeService::class)->generateCustomerTemplate($business);
+    }
+
+    /**
+     * Preview uploaded customer Excel file.
+     */
+    public function previewImport(Request $request): JsonResponse
+    {
+        $business = Context::requireBusiness();
+
+        $request->validate([
+            'file' => ['required', 'file', 'max:5120', 'mimes:xlsx,xls,csv,txt'],
+        ]);
+
+        $preview = app(\App\Domain\Import\DataExchangeService::class)->parseAndPreviewCustomers($business, $request->file('file'));
+
+        return response()->json([
+            'success' => true,
+            'data' => $preview,
+        ]);
+    }
+
+    /**
+     * Execute confirmed customer import.
+     */
+    public function executeImport(Request $request): JsonResponse|RedirectResponse
+    {
+        $business = Context::requireBusiness();
+
+        $validated = $request->validate([
+            'rows' => ['required'],
+            'duplicate_strategy' => ['required', 'in:skip,update'],
+        ]);
+
+        $rows = is_string($validated['rows']) ? json_decode($validated['rows'], true) : $validated['rows'];
+        if (!is_array($rows) || empty($rows)) {
+            return response()->json(['success' => false, 'message' => 'Tidak ada data pelanggan yang valid untuk diimpor.'], 422);
+        }
+
+        $result = app(\App\Domain\Import\DataExchangeService::class)->executeCustomerImport($business, $rows, $validated['duplicate_strategy']);
+
+        $message = "Import Pelanggan Selesai: {$result['imported']} pelanggan baru berhasil ditambahkan";
+        if ($result['updated'] > 0) {
+            $message .= ", {$result['updated']} pelanggan diperbarui";
+        }
+        if ($result['skipped'] > 0) {
+            $message .= ", {$result['skipped']} duplikat/error dilewati";
+        }
+        $message .= '.';
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => $message,
+                'data' => $result,
+                'result' => $result,
+                'redirect_url' => route('customers.index'),
+            ]);
+        }
+
+        return redirect()->route('customers.index')->with('success', $message);
+    }
+
+    /**
      * Delete a customer.
      */
     public function destroy(Customer $customer): RedirectResponse
@@ -176,3 +267,4 @@ final class CustomerWebController extends Controller
         return redirect()->route('customers.index')->with('success', 'Pelanggan berhasil dihapus.');
     }
 }
+

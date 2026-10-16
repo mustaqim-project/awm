@@ -14,7 +14,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('business_id')->constrained('businesses')->cascadeOnDelete();
             $table->foreignUuid('supplier_id')->constrained('suppliers')->restrictOnDelete();
-            $table->foreignUuid('goods_receipt_id')->constrained('goods_receipts')->restrictOnDelete();
+            $table->foreignUuid('goods_receipt_id')->nullable()->constrained('goods_receipts')->nullOnDelete();
             $table->foreignUuid('purchase_order_id')->nullable()->constrained('purchase_orders')->nullOnDelete();
             $table->string('invoice_number', 64);
             $table->date('invoice_date');

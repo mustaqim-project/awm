@@ -18,6 +18,12 @@
         title="Pesanan Masuk Marketplace"
         subtitle="Pantau seluruh pesanan masuk dari Shopee, TikTok Shop, dan Tokopedia secara real-time yang memotong stok gudang otomatis.">
         <x-slot:actions>
+            <a href="{{ route('marketplace-hub.orders.export', request()->only(['channel', 'status', 'start_date', 'end_date'])) }}"
+                class="min-h-[44px] sm:min-h-0 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                title="Ekspor seluruh pesanan marketplace yang terfilter ke Excel (.xlsx)">
+                <i data-lucide="download" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
+                <span>Ekspor Excel</span>
+            </a>
             <button type="button" @click="pullModal = true"
                 class="min-h-[44px] sm:min-h-0 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 shadow-sm cursor-pointer">
                 <i data-lucide="download-cloud" class="w-4 h-4"></i>

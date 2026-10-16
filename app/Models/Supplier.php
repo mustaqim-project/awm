@@ -20,11 +20,13 @@ class Supplier extends Model
     protected $fillable = [
         'business_id',
         'name',
+        'code',
         'slug',
         'contact_person',
         'email',
         'phone',
         'address',
+        'payment_terms_days',
         'bank_name',
         'bank_account_number',
         'bank_account_holder',

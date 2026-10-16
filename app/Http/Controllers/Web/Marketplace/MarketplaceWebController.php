@@ -22,6 +22,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use App\Domain\Import\DataExchangeService;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class MarketplaceWebController extends Controller
 {
@@ -897,6 +899,17 @@ class MarketplaceWebController extends Controller
         $this->chatService->markAsRead($conversation);
 
         return response()->json(['success' => true]);
+    }
+
+    /**
+     * Export Marketplace Consolidated Orders to Excel.
+     */
+    public function exportOrders(Request $request): StreamedResponse
+    {
+        $business = Context::requireBusiness();
+        abort_unless(Context::hasPermission('marketplace.view'), 403);
+
+        return (new DataExchangeService())->exportMarketplaceOrders($business, $request->all());
     }
 }
 

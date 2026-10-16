@@ -221,6 +221,13 @@
                 ['label' => 'Bahan Baku', 'url' => route('materials.index')],
                 ['label' => 'Katalog Bahan Baku', 'url' => null],
             ]">
+            <a href="{{ route('materials.export') }}"
+                class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.97] transition-all flex items-center justify-center gap-2"
+                title="Export seluruh katalog bahan baku ke file Excel (.xlsx)">
+                <i data-lucide="download" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
+                <span>Export Excel</span>
+            </a>
+
             @if (\App\Support\Context::hasPermission('materials.create'))
                 <a href="{{ route('import.index', ['tab' => 'materials']) }}"
                     class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.97] transition-all flex items-center justify-center gap-2"

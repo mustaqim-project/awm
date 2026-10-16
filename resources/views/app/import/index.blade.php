@@ -1,7 +1,7 @@
 @extends('layouts.app', [
-    'title' => 'Import Bahan Baku, Produk & Resep Excel',
-    'headerTitle' => 'Import Massal Data Bisnis',
-    'headerSubtitle' => 'Unggah katalog bahan baku, produk jadi, dan formula resep/BOM dari file Excel atau CSV dengan validasi anti-duplikat',
+    'title' => 'Unified Data Exchange Hub - COOCA',
+    'headerTitle' => 'Unified Data Exchange Hub',
+    'headerSubtitle' => 'Pusat pertukaran data cerdas, spreadsheet template hidup, dan sinkronisasi 12 modul lintas domain bisnis dengan validasi anti-duplikat Apple HIG',
 ])
 
 @section('content')
@@ -514,7 +514,482 @@
         @endif
 
         {{-- ========================================================== --}}
+        {{-- BENTO OVERVIEW GRID: 6 KPI METRICS --}}
+        {{-- ========================================================== --}}
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+            {{-- Metric 1: Products --}}
+            <div @click="activeTab = 'products'" role="button"
+                class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-3.5 hover:border-[#007AFF]/40 dark:hover:border-[#0A84FF]/40 transition-all group cursor-pointer shadow-sm">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="w-8 h-8 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center font-bold text-[13px]">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"/></svg>
+                    </span>
+                    <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-[#007AFF]/10 text-[#007AFF]">BOM Link</span>
+                </div>
+                <div class="text-[20px] font-bold text-black dark:text-white tabular-nums tracking-tight">{{ number_format($totalProducts) }}</div>
+                <div class="text-[12px] font-semibold text-black/70 dark:text-white/70">Produk Jadi</div>
+                <div class="text-[10px] text-black/40 dark:text-white/40 truncate">Dropdown Formula BOM</div>
+            </div>
+
+            {{-- Metric 2: Materials --}}
+            <div @click="activeTab = 'materials'" role="button"
+                class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-3.5 hover:border-[#34C759]/40 dark:hover:border-[#30D158]/40 transition-all group cursor-pointer shadow-sm">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="w-8 h-8 rounded-[10px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center font-bold text-[13px]">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3"/></svg>
+                    </span>
+                    <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158]">Vendor</span>
+                </div>
+                <div class="text-[20px] font-bold text-black dark:text-white tabular-nums tracking-tight">{{ number_format($totalMaterials) }}</div>
+                <div class="text-[12px] font-semibold text-black/70 dark:text-white/70">Bahan Baku</div>
+                <div class="text-[10px] text-black/40 dark:text-white/40 truncate">Harga Beli & Satuan</div>
+            </div>
+
+            {{-- Metric 3: Recipes --}}
+            <div @click="activeTab = 'recipes'" role="button"
+                class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-3.5 hover:border-[#5856D6]/40 dark:hover:border-[#5E5CE6]/40 transition-all group cursor-pointer shadow-sm">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="w-8 h-8 rounded-[10px] bg-[#5856D6]/10 text-[#5856D6] flex items-center justify-center font-bold text-[13px]">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5m4.75-11.396a24.646 24.646 0 014.5 0m-4.5 0L5 14.5m9.75-11.396v5.714c0 .597.237 1.17.659 1.591L19 14.5m-4.25-11.396L19 14.5m-14 0l1.75 5.25A2.25 2.25 0 008.884 21h6.232a2.25 2.25 0 002.134-1.25L19 14.5m-14 0h14"/></svg>
+                    </span>
+                    <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-[#5856D6]/10 text-[#5856D6]">HPP Calc</span>
+                </div>
+                <div class="text-[20px] font-bold text-black dark:text-white tabular-nums tracking-tight">{{ number_format($totalRecipes) }}</div>
+                <div class="text-[12px] font-semibold text-black/70 dark:text-white/70">Formula BOM</div>
+                <div class="text-[10px] text-black/40 dark:text-white/40 truncate">Komposisi & Waste %</div>
+            </div>
+
+            {{-- Metric 4: Stocks --}}
+            <div @click="activeTab = 'inventory'" role="button"
+                class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-3.5 hover:border-[#AF52DE]/40 dark:hover:border-[#BF5AF2]/40 transition-all group cursor-pointer shadow-sm">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="w-8 h-8 rounded-[10px] bg-[#AF52DE]/10 text-[#AF52DE] flex items-center justify-center font-bold text-[13px]">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"/></svg>
+                    </span>
+                    <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-[#AF52DE]/10 text-[#8E32BC] dark:text-[#BF5AF2]">Dual SKU</span>
+                </div>
+                <div class="text-[20px] font-bold text-black dark:text-white tabular-nums tracking-tight">{{ number_format($totalStocks) }}</div>
+                <div class="text-[12px] font-semibold text-black/70 dark:text-white/70">Saldo Stok</div>
+                <div class="text-[10px] text-black/40 dark:text-white/40 truncate">Produk & Bahan Baku</div>
+            </div>
+
+            {{-- Metric 5: COA Accounts --}}
+            <a href="{{ route('finance.coa.index') }}"
+                class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-3.5 hover:border-[#FF9500]/40 dark:hover:border-[#FF9F0A]/40 transition-all group block shadow-sm">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="w-8 h-8 rounded-[10px] bg-[#FF9500]/10 text-[#FF9500] flex items-center justify-center font-bold text-[13px]">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </span>
+                    <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-[#FF9500]/10 text-[#B26A00] dark:text-[#FF9F0A]">Buku Besar</span>
+                </div>
+                <div class="text-[20px] font-bold text-black dark:text-white tabular-nums tracking-tight">{{ number_format($totalAccounts) }}</div>
+                <div class="text-[12px] font-semibold text-black/70 dark:text-white/70">Akun COA</div>
+                <div class="text-[10px] text-black/40 dark:text-white/40 truncate">Standar SAK EMKM</div>
+            </a>
+
+            {{-- Metric 6: Employees --}}
+            <a href="{{ url('/employees') }}"
+                class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-3.5 hover:border-[#30B0C7]/40 dark:hover:border-[#40C8E0]/40 transition-all group block shadow-sm">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="w-8 h-8 rounded-[10px] bg-[#30B0C7]/10 text-[#30B0C7] flex items-center justify-center font-bold text-[13px]">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"/></svg>
+                    </span>
+                    <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-[#30B0C7]/10 text-[#1C8A9E] dark:text-[#40C8E0]">Anggota Tim</span>
+                </div>
+                <div class="text-[20px] font-bold text-black dark:text-white tabular-nums tracking-tight">{{ number_format($totalEmployees) }}</div>
+                <div class="text-[12px] font-semibold text-black/70 dark:text-white/70">Karyawan</div>
+                <div class="text-[10px] text-black/40 dark:text-white/40 truncate">Payroll & Presensi</div>
+            </a>
+        </div>
+
+        {{-- ========================================================== --}}
+        {{-- UNIFIED 5-DOMAIN ARCHITECTURE DIRECTORY (APPLE HIG BENTO) --}}
+        {{-- ========================================================== --}}
+        <div class="space-y-3">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-[15px] font-bold text-black dark:text-white tracking-tight flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-[#007AFF]"></span>
+                        <span>Direktori Pertukaran Data 12 Modul (5 Domain Bisnis)</span>
+                    </h2>
+                    <p class="text-[12px] text-black/55 dark:text-white/55">Semua template Excel terintegrasi dengan validasi dinamis dropdown master tenant Anda.</p>
+                </div>
+                <span class="text-[11px] font-mono font-medium px-2.5 py-1 rounded-full bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60 border border-black/5 dark:border-white/5">
+                    Engine: PhpSpreadsheet Living Lookups
+                </span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                {{-- Domain 1: Master Data & CRM --}}
+                <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 space-y-3.5 shadow-sm">
+                    <div class="flex items-center justify-between border-b border-black/5 dark:border-white/5 pb-2.5">
+                        <div class="flex items-center gap-2">
+                            <span class="w-7 h-7 rounded-[8px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center font-bold text-[12px]">01</span>
+                            <div>
+                                <h3 class="text-[13px] font-bold text-black dark:text-white">Katalog & Master Data</h3>
+                                <p class="text-[11px] text-black/50 dark:text-white/50">Produk, Bahan Baku, BOM, Pelanggan, Pemasok</p>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#007AFF]/10 text-[#007AFF]">5 Modul</span>
+                    </div>
+
+                    <div class="space-y-2 text-[12px]">
+                        {{-- Produk Jadi --}}
+                        <div class="p-2.5 rounded-[10px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 flex items-center justify-between gap-2">
+                            <div>
+                                <div class="font-semibold text-black dark:text-white flex items-center gap-1.5">
+                                    <span>Produk Jadi</span>
+                                    <span class="text-[10px] font-normal text-[#007AFF] bg-[#007AFF]/10 px-1.5 rounded">Dropdown BOM</span>
+                                </div>
+                                <div class="text-[11px] text-black/50 dark:text-white/50">Katalog SKU, Barcode, Kategori, Harga</div>
+                            </div>
+                            <div class="flex items-center gap-1 shrink-0">
+                                <a href="{{ route('import.products.template', ['format' => 'xlsx']) }}" title="Download Template Excel Hidup"
+                                    class="h-7 px-2.5 rounded-[8px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-[#007AFF] font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+                                    <span>XLSX</span>
+                                </a>
+                                <button type="button" @click="activeTab = 'products'"
+                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-medium text-[11px] transition-all">
+                                    Tab
+                                </button>
+                            </div>
+                        </div>
+
+                        {{-- Bahan Baku --}}
+                        <div class="p-2.5 rounded-[10px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 flex items-center justify-between gap-2">
+                            <div>
+                                <div class="font-semibold text-black dark:text-white flex items-center gap-1.5">
+                                    <span>Bahan Baku</span>
+                                    <span class="text-[10px] font-normal text-[#34C759] bg-[#34C759]/10 px-1.5 rounded">Dropdown Vendor</span>
+                                </div>
+                                <div class="text-[11px] text-black/50 dark:text-white/50">Satuan dasar, HPP beli, kategori bahan</div>
+                            </div>
+                            <div class="flex items-center gap-1 shrink-0">
+                                <a href="{{ route('import.materials.template', ['format' => 'xlsx']) }}" title="Download Template Excel Hidup"
+                                    class="h-7 px-2.5 rounded-[8px] bg-[#34C759]/10 hover:bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+                                    <span>XLSX</span>
+                                </a>
+                                <button type="button" @click="activeTab = 'materials'"
+                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-medium text-[11px] transition-all">
+                                    Tab
+                                </button>
+                            </div>
+                        </div>
+
+                        {{-- Resep BOM --}}
+                        <div class="p-2.5 rounded-[10px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 flex items-center justify-between gap-2">
+                            <div>
+                                <div class="font-semibold text-black dark:text-white flex items-center gap-1.5">
+                                    <span>Formula Resep BOM</span>
+                                    <span class="text-[10px] font-normal text-[#5856D6] bg-[#5856D6]/10 px-1.5 rounded">Auto HPP</span>
+                                </div>
+                                <div class="text-[11px] text-black/50 dark:text-white/50">Relasi produk & bahan, takaran, waste %</div>
+                            </div>
+                            <div class="flex items-center gap-1 shrink-0">
+                                <a href="{{ route('import.recipes.template', ['format' => 'xlsx']) }}" title="Download Template Excel Hidup"
+                                    class="h-7 px-2.5 rounded-[8px] bg-[#5856D6]/10 hover:bg-[#5856D6]/20 text-[#5856D6] font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+                                    <span>XLSX</span>
+                                </a>
+                                <button type="button" @click="activeTab = 'recipes'"
+                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-medium text-[11px] transition-all">
+                                    Tab
+                                </button>
+                            </div>
+                        </div>
+
+                        {{-- Pelanggan & Supplier Quick Links --}}
+                        <div class="grid grid-cols-2 gap-2 pt-1">
+                            <a href="{{ url('/customers/template') }}" class="p-2 rounded-[8px] bg-black/[0.03] dark:bg-white/[0.04] hover:bg-black/[0.06] text-black/70 dark:text-white/70 text-[11px] flex items-center justify-between">
+                                <span class="font-medium">Template Pelanggan</span>
+                                <svg class="w-3.5 h-3.5 text-[#007AFF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+                            </a>
+                            <a href="{{ url('/suppliers/template') }}" class="p-2 rounded-[8px] bg-black/[0.03] dark:bg-white/[0.04] hover:bg-black/[0.06] text-black/70 dark:text-white/70 text-[11px] flex items-center justify-between">
+                                <span class="font-medium">Template Pemasok</span>
+                                <svg class="w-3.5 h-3.5 text-[#34C759]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Domain 2: Inventori & Logistik --}}
+                <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 space-y-3.5 shadow-sm">
+                    <div class="flex items-center justify-between border-b border-black/5 dark:border-white/5 pb-2.5">
+                        <div class="flex items-center gap-2">
+                            <span class="w-7 h-7 rounded-[8px] bg-[#AF52DE]/10 text-[#AF52DE] flex items-center justify-center font-bold text-[12px]">02</span>
+                            <div>
+                                <h3 class="text-[13px] font-bold text-black dark:text-white">Inventori & Gudang</h3>
+                                <p class="text-[11px] text-black/50 dark:text-white/50">Saldo Awal Dual-SKU & Stock Opname 2-Arah</p>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#AF52DE]/10 text-[#8E32BC] dark:text-[#BF5AF2]">2 Modul</span>
+                    </div>
+
+                    <div class="space-y-2 text-[12px]">
+                        {{-- Saldo Stok Awal --}}
+                        <div class="p-2.5 rounded-[10px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 flex items-center justify-between gap-2">
+                            <div>
+                                <div class="font-semibold text-black dark:text-white flex items-center gap-1.5">
+                                    <span>Saldo Stok Awal</span>
+                                    <span class="text-[10px] font-normal text-[#AF52DE] bg-[#AF52DE]/10 px-1.5 rounded">Dual SKU</span>
+                                </div>
+                                <div class="text-[11px] text-black/50 dark:text-white/50">Mendukung Produk & Bahan dalam 1 file</div>
+                            </div>
+                            <div class="flex items-center gap-1 shrink-0">
+                                <a href="{{ route('import.inventory.template', ['format' => 'xlsx']) }}" title="Download Template Excel Hidup"
+                                    class="h-7 px-2.5 rounded-[8px] bg-[#AF52DE]/10 hover:bg-[#AF52DE]/20 text-[#8E32BC] dark:text-[#BF5AF2] font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+                                    <span>XLSX</span>
+                                </a>
+                                <button type="button" @click="activeTab = 'inventory'"
+                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-medium text-[11px] transition-all">
+                                    Tab
+                                </button>
+                            </div>
+                        </div>
+
+                        {{-- Stock Opname 2-Arah --}}
+                        <div class="p-2.5 rounded-[10px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 flex items-center justify-between gap-2">
+                            <div>
+                                <div class="font-semibold text-black dark:text-white flex items-center gap-1.5">
+                                    <span>Stock Opname Fisik</span>
+                                    <span class="text-[10px] font-normal text-[#FF9500] bg-[#FF9500]/10 px-1.5 rounded">2-Arah</span>
+                                </div>
+                                <div class="text-[11px] text-black/50 dark:text-white/50">Lembar hitung fisik, selisih & penyesuaian</div>
+                            </div>
+                            <div class="flex items-center gap-1 shrink-0">
+                                <a href="{{ url('/inventory/opnames/export-blank') }}" title="Unduh Lembar Hitung Blanko"
+                                    class="h-7 px-2.5 rounded-[8px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#B26A00] dark:text-[#FF9F0A] font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+                                    <span>Lembar Hitung</span>
+                                </a>
+                                <a href="{{ route('inventory.opnames.index') }}"
+                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-medium text-[11px] flex items-center transition-all">
+                                    Modul
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="pt-2 text-[11px] text-black/50 dark:text-white/50 flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#AF52DE]"></span>
+                            <span>Mencatat mutasi awal & penyesuaian otomatis ke Kartu Stok.</span>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Domain 3: Keuangan & Akuntansi --}}
+                <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 space-y-3.5 shadow-sm">
+                    <div class="flex items-center justify-between border-b border-black/5 dark:border-white/5 pb-2.5">
+                        <div class="flex items-center gap-2">
+                            <span class="w-7 h-7 rounded-[8px] bg-[#FF9500]/10 text-[#FF9500] flex items-center justify-center font-bold text-[12px]">03</span>
+                            <div>
+                                <h3 class="text-[13px] font-bold text-black dark:text-white">Keuangan & Akuntansi</h3>
+                                <p class="text-[11px] text-black/50 dark:text-white/50">COA, Saldo Awal Neraca, AR & AP Aging</p>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#FF9500]/10 text-[#B26A00] dark:text-[#FF9F0A]">4 Modul</span>
+                    </div>
+
+                    <div class="space-y-2 text-[12px]">
+                        {{-- Bagan Akun COA --}}
+                        <div class="p-2.5 rounded-[10px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 flex items-center justify-between gap-2">
+                            <div>
+                                <div class="font-semibold text-black dark:text-white">Bagan Akun (COA)</div>
+                                <div class="text-[11px] text-black/50 dark:text-white/50">Hierarki Akun 5 Kategori Akuntansi</div>
+                            </div>
+                            <div class="flex items-center gap-1 shrink-0">
+                                <a href="{{ url('/finance/chart-of-accounts/template') }}" title="Template COA"
+                                    class="h-7 px-2.5 rounded-[8px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#B26A00] dark:text-[#FF9F0A] font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    <span>Template</span>
+                                </a>
+                                <a href="{{ route('finance.coa.index') }}"
+                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-medium text-[11px] flex items-center transition-all">
+                                    Buka
+                                </a>
+                            </div>
+                        </div>
+
+                        {{-- Saldo Awal Neraca --}}
+                        <div class="p-2.5 rounded-[10px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 flex items-center justify-between gap-2">
+                            <div>
+                                <div class="font-semibold text-black dark:text-white">Saldo Awal Neraca</div>
+                                <div class="text-[11px] text-black/50 dark:text-white/50">Validasi otomatis Debet = Kredit seimbang</div>
+                            </div>
+                            <div class="flex items-center gap-1 shrink-0">
+                                <a href="{{ url('/finance/balance-sheet/opening-template') }}" title="Template Saldo Awal"
+                                    class="h-7 px-2.5 rounded-[8px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#B26A00] dark:text-[#FF9F0A] font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    <span>Template</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        {{-- AR & AP Links --}}
+                        <div class="grid grid-cols-2 gap-2 pt-1">
+                            <a href="{{ url('/finance/receivables/template') }}" class="p-2 rounded-[8px] bg-black/[0.03] dark:bg-white/[0.04] hover:bg-black/[0.06] text-black/70 dark:text-white/70 text-[11px] flex items-center justify-between">
+                                <span class="font-medium">Template Piutang (AR)</span>
+                                <svg class="w-3.5 h-3.5 text-[#FF9500]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+                            </a>
+                            <a href="{{ url('/finance/payables/template') }}" class="p-2 rounded-[8px] bg-black/[0.03] dark:bg-white/[0.04] hover:bg-black/[0.06] text-black/70 dark:text-white/70 text-[11px] flex items-center justify-between">
+                                <span class="font-medium">Template Hutang (AP)</span>
+                                <svg class="w-3.5 h-3.5 text-[#FF9500]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Domain 4: SDM & Penggajian (HRM) --}}
+                <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 space-y-3.5 shadow-sm">
+                    <div class="flex items-center justify-between border-b border-black/5 dark:border-white/5 pb-2.5">
+                        <div class="flex items-center gap-2">
+                            <span class="w-7 h-7 rounded-[8px] bg-[#30B0C7]/10 text-[#30B0C7] flex items-center justify-center font-bold text-[12px]">04</span>
+                            <div>
+                                <h3 class="text-[13px] font-bold text-black dark:text-white">SDM & Penggajian (HRM)</h3>
+                                <p class="text-[11px] text-black/50 dark:text-white/50">Master Karyawan Massal & Mesin Presensi</p>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#30B0C7]/10 text-[#1C8A9E] dark:text-[#40C8E0]">2 Modul</span>
+                    </div>
+
+                    <div class="space-y-2 text-[12px]">
+                        {{-- Master Karyawan --}}
+                        <div class="p-2.5 rounded-[10px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 flex items-center justify-between gap-2">
+                            <div>
+                                <div class="font-semibold text-black dark:text-white flex items-center gap-1.5">
+                                    <span>Master Karyawan</span>
+                                    <span class="text-[10px] font-normal text-[#30B0C7] bg-[#30B0C7]/10 px-1.5 rounded">Gaji & Rekening</span>
+                                </div>
+                                <div class="text-[11px] text-black/50 dark:text-white/50">NIK, Jabatan, Gaji Pokok, Tunjangan, Bank</div>
+                            </div>
+                            <div class="flex items-center gap-1 shrink-0">
+                                <a href="{{ url('/employees/template') }}" title="Download Template Karyawan"
+                                    class="h-7 px-2.5 rounded-[8px] bg-[#30B0C7]/10 hover:bg-[#30B0C7]/20 text-[#1C8A9E] dark:text-[#40C8E0] font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+                                    <span>Template</span>
+                                </a>
+                                <a href="{{ url('/employees') }}"
+                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-medium text-[11px] flex items-center transition-all">
+                                    Kelola
+                                </a>
+                            </div>
+                        </div>
+
+                        {{-- Mesin Fingerprint --}}
+                        <div class="p-2.5 rounded-[10px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 flex items-center justify-between gap-2">
+                            <div>
+                                <div class="font-semibold text-black dark:text-white flex items-center gap-1.5">
+                                    <span>Mesin Fingerprint</span>
+                                    <span class="text-[10px] font-normal text-[#34C759] bg-[#34C759]/10 px-1.5 rounded">Multi-Brand</span>
+                                </div>
+                                <div class="text-[11px] text-black/50 dark:text-white/50">Solution, ZKTeco, Fingerspot CSV/XLSX</div>
+                            </div>
+                            <div class="flex items-center gap-1 shrink-0">
+                                <a href="{{ url('/attendance/template') }}" title="Template Log Mesin"
+                                    class="h-7 px-2.5 rounded-[8px] bg-[#34C759]/10 hover:bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+                                    <span>Template</span>
+                                </a>
+                                <a href="{{ url('/attendance') }}"
+                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-medium text-[11px] flex items-center transition-all">
+                                    Log
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="pt-2 text-[11px] text-black/50 dark:text-white/50 flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#30B0C7]"></span>
+                            <span>Mendukung auto shift-matching & deteksi keterlambatan.</span>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Domain 5: Omnichannel & Pengiriman (xl:col-span-2) --}}
+                <div class="xl:col-span-2 rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 space-y-3.5 shadow-sm">
+                    <div class="flex items-center justify-between border-b border-black/5 dark:border-white/5 pb-2.5">
+                        <div class="flex items-center gap-2">
+                            <span class="w-7 h-7 rounded-[8px] bg-[#5856D6]/10 text-[#5856D6] flex items-center justify-center font-bold text-[12px]">05</span>
+                            <div>
+                                <h3 class="text-[13px] font-bold text-black dark:text-white">Omnichannel & Ekspor Logistik</h3>
+                                <p class="text-[11px] text-black/50 dark:text-white/50">Manifest Dispatch Toko Online & Ekspor Terkonsolidasi Marketplace</p>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#5856D6]/10 text-[#5856D6]">2 Modul Ekspor</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-[12px]">
+                        {{-- Manifest Pengiriman --}}
+                        <div class="p-3 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 flex flex-col justify-between gap-3">
+                            <div>
+                                <div class="font-semibold text-black dark:text-white flex items-center gap-1.5">
+                                    <span>Manifest Pengiriman Toko Online</span>
+                                    <span class="text-[10px] font-normal text-[#5856D6] bg-[#5856D6]/10 px-1.5 rounded">JNE/J&T/SiCepat</span>
+                                </div>
+                                <div class="text-[11px] text-black/50 dark:text-white/50 mt-1 leading-relaxed">
+                                    Format lembar serah terima kurir logistik lengkap dengan nomor resi (AWB), nama kurir, detail penerima & berat paket.
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-black/5 dark:border-white/5">
+                                <a href="{{ url('/storefront/orders/export-dispatch') }}"
+                                    class="h-8 px-3 rounded-[8px] bg-[#5856D6]/10 hover:bg-[#5856D6]/20 text-[#5856D6] font-semibold text-[11px] flex items-center gap-1.5 transition-all">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+                                    <span>Unduh Manifest Hari Ini</span>
+                                </a>
+                                <a href="{{ url('/storefront/orders') }}" class="text-[11px] text-black/60 dark:text-white/60 hover:underline">
+                                    Buka Pesanan &rarr;
+                                </a>
+                            </div>
+                        </div>
+
+                        {{-- Konsolidasi Marketplace --}}
+                        <div class="p-3 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 flex flex-col justify-between gap-3">
+                            <div>
+                                <div class="font-semibold text-black dark:text-white flex items-center gap-1.5">
+                                    <span>Konsolidasi Pesanan Marketplace</span>
+                                    <span class="text-[10px] font-normal text-[#FF9500] bg-[#FF9500]/10 px-1.5 rounded">Shopee/TikTok/Tokopedia</span>
+                                </div>
+                                <div class="text-[11px] text-black/50 dark:text-white/50 mt-1 leading-relaxed">
+                                    Ekspor laporan penjualan multi-channel terkonsolidasi dengan status sinkronisasi harga dan stok terpusat.
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-black/5 dark:border-white/5">
+                                <a href="{{ route('marketplace-hub.orders.export') }}"
+                                    class="h-8 px-3 rounded-[8px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#B26A00] dark:text-[#FF9F0A] font-semibold text-[11px] flex items-center gap-1.5 transition-all">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+                                    <span>Ekspor Rekap Omnichannel</span>
+                                </a>
+                                <a href="{{ route('marketplace-hub.orders') }}" class="text-[11px] text-black/60 dark:text-white/60 hover:underline">
+                                    Marketplace Hub &rarr;
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- ========================================================== --}}
+        {{-- IN-HUB IMPORT WORKSPACE SECTION HEADER --}}
+        {{-- ========================================================== --}}
+        <div class="pt-4 border-t border-black/5 dark:border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+                <h2 class="text-[16px] font-bold text-black dark:text-white tracking-tight flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-[#34C759]"></span>
+                    <span>Pusat Eksekusi Impor Langsung (Pre-Commit Guaranteed)</span>
+                </h2>
+                <p class="text-[12px] text-black/55 dark:text-white/55">Pilih tab di bawah untuk upload spreadsheet, validasi baris, dan eksekusi import atomik.</p>
+            </div>
+            <div class="flex items-center gap-2 text-[11px] text-black/50 dark:text-white/50">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] font-semibold">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span>No Preview, No Commit</span>
+                </span>
+            </div>
+        </div>
+
+        {{-- ========================================================== --}}
         {{-- APPLE SEGMENTED TAB BAR --}}
+        {{-- ========================================================== --}}
         {{-- ========================================================== --}}
         <div class="p-1 rounded-[12px] bg-black/[0.06] dark:bg-white/[0.08] border border-black/5 dark:border-white/5 inline-flex flex-wrap gap-1 max-w-full overflow-x-auto">
             <button type="button" @click="activeTab = 'materials'"

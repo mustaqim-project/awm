@@ -24,6 +24,236 @@
         url.searchParams.set('tab', tabName);
         window.history.replaceState({}, '', url.toString());
     },
+
+    formatCurrency(num) {
+        return new Intl.NumberFormat(window.COOCA_LOCALE === 'en' ? 'en-US' : 'id-ID').format(num || 0);
+    },
+
+    // ==========================================
+    // SPRINT 3: IMPORT DATA KARYAWAN & ATTENDANCE
+    // ==========================================
+    showImportEmployeeModal: false,
+    importEmployeeFile: null,
+    importEmployeeFileName: '',
+    importEmployeePreview: null,
+    importEmployeeFilter: 'all',
+    importEmployeeDuplicateStrategy: 'skip',
+    importEmployeeLoading: false,
+    importEmployeeExecuting: false,
+
+    handleImportEmployeeFileSelect(event) {
+        const file = event.target.files[0];
+        if (file) {
+            this.importEmployeeFile = file;
+            this.importEmployeeFileName = file.name;
+            this.uploadAndPreviewEmployees();
+        }
+    },
+
+    uploadAndPreviewEmployees() {
+        if (!this.importEmployeeFile) return;
+        this.importEmployeeLoading = true;
+        const formData = new FormData();
+        formData.append('file', this.importEmployeeFile);
+        formData.append('_token', '{{ csrf_token() }}');
+
+        fetch('{{ route('hrm.employees.import-preview') }}', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json'
+            }
+        })
+        .then(res => {
+            if (!res.ok) {
+                return res.json().then(err => { throw new Error(err.message || 'Gagal memproses file Excel karyawan.'); });
+            }
+            return res.json();
+        })
+        .then(res => {
+            this.importEmployeeLoading = false;
+            if (res.success) {
+                this.importEmployeePreview = res.data;
+            } else {
+                alert(res.message || 'Gagal menganalisis file karyawan.');
+            }
+        })
+        .catch(err => {
+            this.importEmployeeLoading = false;
+            alert(err.message || 'Terjadi kesalahan saat mengunggah file.');
+        });
+    },
+
+    async executeEmployeeImport() {
+        if (!this.importEmployeePreview || !this.importEmployeePreview.rows || this.importEmployeePreview.rows.length === 0) {
+            return;
+        }
+
+        const totalToProcess = this.importEmployeeDuplicateStrategy === 'skip' 
+            ? this.importEmployeePreview.valid_count 
+            : (this.importEmployeePreview.valid_count + this.importEmployeePreview.duplicate_count);
+
+        if (totalToProcess <= 0) {
+            alert('Tidak ada baris karyawan yang siap diimpor.');
+            return;
+        }
+
+        if (!confirm('Apakah Anda yakin ingin memproses ' + totalToProcess + ' data staf ke sistem?')) {
+            return;
+        }
+
+        this.importEmployeeExecuting = true;
+        fetch('{{ route('hrm.employees.import-execute') }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                rows: this.importEmployeePreview.rows,
+                duplicate_strategy: this.importEmployeeDuplicateStrategy
+            })
+        })
+        .then(res => res.json())
+        .then(res => {
+            this.importEmployeeExecuting = false;
+            if (res.success) {
+                alert(res.message);
+                window.location.reload();
+            } else {
+                alert(res.message || 'Gagal mengeksekusi import karyawan.');
+            }
+        })
+        .catch(err => {
+            this.importEmployeeExecuting = false;
+            alert(err.message || 'Terjadi kesalahan sistem saat mengeksekusi import.');
+        });
+    },
+
+    resetEmployeeImport() {
+        this.importEmployeeFile = null;
+        this.importEmployeeFileName = '';
+        this.importEmployeePreview = null;
+        this.importEmployeeFilter = 'all';
+        this.importEmployeeDuplicateStrategy = 'skip';
+        this.importEmployeeLoading = false;
+        this.importEmployeeExecuting = false;
+    },
+
+    showImportAttendanceModal: false,
+    importAttendanceFile: null,
+    importAttendanceFileName: '',
+    importAttendancePreview: null,
+    importAttendanceFilter: 'all',
+    importAttendanceDuplicateStrategy: 'skip',
+    importAttendanceLoading: false,
+    importAttendanceExecuting: false,
+
+    handleImportAttendanceFileSelect(event) {
+        const file = event.target.files[0];
+        if (file) {
+            this.importAttendanceFile = file;
+            this.importAttendanceFileName = file.name;
+            this.uploadAndPreviewAttendance();
+        }
+    },
+
+    uploadAndPreviewAttendance() {
+        if (!this.importAttendanceFile) return;
+        this.importAttendanceLoading = true;
+        const formData = new FormData();
+        formData.append('file', this.importAttendanceFile);
+        formData.append('_token', '{{ csrf_token() }}');
+
+        fetch('{{ route('hrm.attendance.import-preview') }}', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json'
+            }
+        })
+        .then(res => {
+            if (!res.ok) {
+                return res.json().then(err => { throw new Error(err.message || 'Gagal memproses file Excel log presensi.'); });
+            }
+            return res.json();
+        })
+        .then(res => {
+            this.importAttendanceLoading = false;
+            if (res.success) {
+                this.importAttendancePreview = res.data;
+            } else {
+                alert(res.message || 'Gagal menganalisis file presensi mesin.');
+            }
+        })
+        .catch(err => {
+            this.importAttendanceLoading = false;
+            alert(err.message || 'Terjadi kesalahan saat mengunggah file.');
+        });
+    },
+
+    async executeAttendanceImport() {
+        if (!this.importAttendancePreview || !this.importAttendancePreview.rows || this.importAttendancePreview.rows.length === 0) {
+            return;
+        }
+
+        const totalToProcess = this.importAttendanceDuplicateStrategy === 'skip' 
+            ? this.importAttendancePreview.valid_count 
+            : (this.importAttendancePreview.valid_count + this.importAttendancePreview.duplicate_count);
+
+        if (totalToProcess <= 0) {
+            alert('Tidak ada baris log presensi yang siap diimpor.');
+            return;
+        }
+
+        if (!confirm('Apakah Anda yakin ingin memproses ' + totalToProcess + ' catatan presensi ke sistem?')) {
+            return;
+        }
+
+        this.importAttendanceExecuting = true;
+        fetch('{{ route('hrm.attendance.import-execute') }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                rows: this.importAttendancePreview.rows,
+                duplicate_strategy: this.importAttendanceDuplicateStrategy
+            })
+        })
+        .then(res => res.json())
+        .then(res => {
+            this.importAttendanceExecuting = false;
+            if (res.success) {
+                alert(res.message);
+                window.location.reload();
+            } else {
+                alert(res.message || 'Gagal mengeksekusi import presensi.');
+            }
+        })
+        .catch(err => {
+            this.importAttendanceExecuting = false;
+            alert(err.message || 'Terjadi kesalahan sistem saat mengeksekusi import.');
+        });
+    },
+
+    resetAttendanceImport() {
+        this.importAttendanceFile = null;
+        this.importAttendanceFileName = '';
+        this.importAttendancePreview = null;
+        this.importAttendanceFilter = 'all';
+        this.importAttendanceDuplicateStrategy = 'skip';
+        this.importAttendanceLoading = false;
+        this.importAttendanceExecuting = false;
+    },
+
     showAddEmployeeModal: false,
     showEditEmployeeModal: false,
     showAddLoanModal: false,
@@ -712,19 +942,47 @@
 
             <!-- Action CTA Dinamis sesuai Tab -->
             <template x-if="activeTab === 'employees'">
-                <button type="button" @click="showAddEmployeeModal = true"
-                    class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-4 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-bold flex items-center gap-2 shadow-[0_2px_8px_rgba(0,122,255,0.3)] transition active:scale-[0.98] cursor-pointer">
-                    <i data-lucide="plus" class="w-4 h-4"></i>
-                    <span>{{ __('hrm.btn_add_employee') }}</span>
-                </button>
+                <div class="flex items-center gap-2">
+                    <a href="{{ route('hrm.employees.export') }}"
+                        class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-3.5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold flex items-center gap-2 transition active:scale-[0.98] cursor-pointer"
+                        title="Ekspor seluruh data karyawan ke Excel">
+                        <i data-lucide="download" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
+                        <span class="hidden sm:inline">Ekspor Excel</span>
+                    </a>
+                    <button type="button" @click="showImportEmployeeModal = true"
+                        class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-3.5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold flex items-center gap-2 transition active:scale-[0.98] cursor-pointer"
+                        title="Impor master karyawan dari Excel">
+                        <i data-lucide="upload" class="w-4 h-4 text-[#007AFF]"></i>
+                        <span class="hidden sm:inline">Impor Karyawan</span>
+                    </button>
+                    <button type="button" @click="showAddEmployeeModal = true"
+                        class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-4 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-bold flex items-center gap-2 shadow-[0_2px_8px_rgba(0,122,255,0.3)] transition active:scale-[0.98] cursor-pointer">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                        <span>{{ __('hrm.btn_add_employee') }}</span>
+                    </button>
+                </div>
             </template>
 
             <template x-if="activeTab === 'attendance'">
-                <button type="button" @click="startFaceAttendance('in')"
-                    class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-4 rounded-[12px] bg-[#34C759] hover:bg-[#2FB34F] text-white text-[13px] font-bold flex items-center gap-2 shadow-[0_2px_8px_rgba(52,199,89,0.3)] transition active:scale-[0.98] cursor-pointer">
-                    <i data-lucide="scan-face" class="w-4 h-4"></i>
-                    <span>{{ __('hrm.btn_face_attendance') }}</span>
-                </button>
+                <div class="flex items-center gap-2">
+                    <a href="{{ route('hrm.attendance.export') }}"
+                        class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-3.5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold flex items-center gap-2 transition active:scale-[0.98] cursor-pointer"
+                        title="Ekspor log presensi ke Excel">
+                        <i data-lucide="download" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
+                        <span class="hidden sm:inline">Ekspor Presensi</span>
+                    </a>
+                    <button type="button" @click="showImportAttendanceModal = true"
+                        class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-3.5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold flex items-center gap-2 transition active:scale-[0.98] cursor-pointer"
+                        title="Impor log presensi dari mesin fingerprint/biometrik (ZKTeco, Solution, Fingerspot)">
+                        <i data-lucide="fingerprint" class="w-4 h-4 text-[#34C759]"></i>
+                        <span class="hidden sm:inline">Impor Mesin Fingerprint</span>
+                    </button>
+                    <button type="button" @click="startFaceAttendance('in')"
+                        class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-4 rounded-[12px] bg-[#34C759] hover:bg-[#2FB34F] text-white text-[13px] font-bold flex items-center gap-2 shadow-[0_2px_8px_rgba(52,199,89,0.3)] transition active:scale-[0.98] cursor-pointer">
+                        <i data-lucide="scan-face" class="w-4 h-4"></i>
+                        <span>{{ __('hrm.btn_face_attendance') }}</span>
+                    </button>
+                </div>
             </template>
 
             <template x-if="activeTab === 'corrections'">
@@ -4601,6 +4859,426 @@
                     </button>
                 </div>
             </form>
+        </div>
+    </div>
+
+
+    <!-- ======================================================== -->
+    <!-- MODAL IMPORT KARYAWAN MASSAL (BENTO XXL PRE-COMMIT)       -->
+    <!-- ======================================================== -->
+    <div x-show="showImportEmployeeModal" 
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-md" 
+        style="display: none;">
+
+        <div @click.outside="if (!importEmployeeExecuting) showImportEmployeeModal = false"
+            class="w-full max-w-5xl bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-[0_32px_64px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col max-h-[92vh]">
+
+            <!-- Modal Header -->
+            <div class="px-6 py-4 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-white dark:bg-[#1C1C1E]">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0">
+                        <i data-lucide="users" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base sm:text-lg font-bold text-black dark:text-white">Impor Data Karyawan Massal</h3>
+                        <p class="text-xs text-black/55 dark:text-white/55">Upload berkas Excel master staf untuk membuat akun, struktur gaji, dan penempatan cabang secara instan</p>
+                    </div>
+                </div>
+                <button type="button" @click="if (!importEmployeeExecuting) showImportEmployeeModal = false"
+                    class="w-8 h-8 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition cursor-pointer">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-6 overflow-y-auto space-y-6 flex-1">
+
+                <!-- State 1: Upload Dropzone -->
+                <div x-show="!importEmployeePreview" class="space-y-4">
+                    <label class="border-2 border-dashed border-black/15 dark:border-white/15 hover:border-[#007AFF] dark:hover:border-[#007AFF] rounded-[20px] p-8 sm:p-12 flex flex-col items-center justify-center text-center cursor-pointer transition bg-black/[0.01] hover:bg-[#007AFF]/[0.02] block">
+                        <input type="file" accept=".xlsx,.xls,.csv" @change="handleImportEmployeeFileSelect($event)" class="hidden">
+                        
+                        <div class="w-16 h-16 rounded-full bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center mb-4">
+                            <i data-lucide="file-spreadsheet" class="w-8 h-8" x-show="!importEmployeeLoading"></i>
+                            <i data-lucide="loader" class="w-8 h-8 animate-spin" x-show="importEmployeeLoading"></i>
+                        </div>
+
+                        <div class="space-y-1">
+                            <span class="text-base font-bold text-black dark:text-white block" x-text="importEmployeeLoading ? 'Menganalisis file Excel...' : 'Pilih atau Tarik File Excel Karyawan (.xlsx)'"></span>
+                            <span class="text-xs text-black/50 dark:text-white/50 block">Mendukung format data Excel (.xlsx) dengan kolom Nama, Email, No. WA, Role, Jabatan, Gaji Pokok, dan Lokasi</span>
+                        </div>
+
+                        <div class="mt-6 pt-5 border-t border-black/[0.06] dark:border-white/[0.08] w-full max-w-md flex items-center justify-center">
+                            <a href="{{ route('hrm.employees.template') }}"
+                               @click.stop
+                               class="px-3.5 py-2 rounded-[12px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-[#007AFF] text-[12.5px] font-semibold flex items-center gap-2 transition">
+                                <i data-lucide="download" class="w-4 h-4"></i>
+                                <span>Unduh Template Excel Karyawan</span>
+                            </a>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- State 2: Pre-Commit Preview -->
+                <div x-show="importEmployeePreview" class="space-y-5">
+                    <!-- KPI Cards -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                        <div class="p-3.5 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] space-y-1">
+                            <span class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">Total Staf</span>
+                            <div class="text-2xl font-bold font-mono text-black dark:text-white" x-text="importEmployeePreview ? importEmployeePreview.total_rows : 0"></div>
+                        </div>
+                        <div class="p-3.5 rounded-[16px] bg-emerald-500/[0.08] border border-emerald-500/20 space-y-1">
+                            <span class="text-[11px] font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">Siap Impor</span>
+                            <div class="text-2xl font-bold font-mono text-emerald-600 dark:text-emerald-400" x-text="importEmployeePreview ? importEmployeePreview.valid_count : 0"></div>
+                        </div>
+                        <div class="p-3.5 rounded-[16px] bg-amber-500/[0.08] border border-amber-500/20 space-y-1">
+                            <span class="text-[11px] font-semibold text-amber-700 dark:text-amber-400 uppercase tracking-wider">Sudah Terdaftar</span>
+                            <div class="text-2xl font-bold font-mono text-amber-600 dark:text-amber-400" x-text="importEmployeePreview ? importEmployeePreview.duplicate_count : 0"></div>
+                        </div>
+                        <div class="p-3.5 rounded-[16px] bg-rose-500/[0.08] border border-rose-500/20 space-y-1">
+                            <span class="text-[11px] font-semibold text-rose-700 dark:text-rose-400 uppercase tracking-wider">Format Salah</span>
+                            <div class="text-2xl font-bold font-mono text-rose-600 dark:text-rose-400" x-text="importEmployeePreview ? importEmployeePreview.error_count : 0"></div>
+                        </div>
+                    </div>
+
+                    <!-- Filter & Duplicate Strategy Bar -->
+                    <div class="p-4 rounded-[18px] bg-[#F5F5F7] dark:bg-[#252528] border border-black/[0.05] dark:border-white/[0.06] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div class="flex items-center gap-1 bg-black/[0.05] dark:bg-white/[0.08] p-1 rounded-[12px] text-[12px] font-medium">
+                            <button type="button" @click="importEmployeeFilter = 'all'"
+                                class="px-3 py-1.5 rounded-[8px] transition"
+                                :class="importEmployeeFilter === 'all' ? 'bg-white dark:bg-[#1C1C1E] text-black dark:text-white shadow-sm font-semibold' : 'text-black/60 dark:text-white/60'">
+                                Semua (<span x-text="importEmployeePreview ? importEmployeePreview.total_rows : 0"></span>)
+                            </button>
+                            <button type="button" @click="importEmployeeFilter = 'valid'"
+                                class="px-3 py-1.5 rounded-[8px] transition"
+                                :class="importEmployeeFilter === 'valid' ? 'bg-white dark:bg-[#1C1C1E] text-emerald-600 font-semibold shadow-sm' : 'text-black/60 dark:text-white/60'">
+                                Siap (<span x-text="importEmployeePreview ? importEmployeePreview.valid_count : 0"></span>)
+                            </button>
+                            <button type="button" @click="importEmployeeFilter = 'duplicate'"
+                                class="px-3 py-1.5 rounded-[8px] transition"
+                                :class="importEmployeeFilter === 'duplicate' ? 'bg-white dark:bg-[#1C1C1E] text-amber-600 font-semibold shadow-sm' : 'text-black/60 dark:text-white/60'">
+                                Duplikat (<span x-text="importEmployeePreview ? importEmployeePreview.duplicate_count : 0"></span>)
+                            </button>
+                            <button type="button" @click="importEmployeeFilter = 'error'"
+                                class="px-3 py-1.5 rounded-[8px] transition"
+                                :class="importEmployeeFilter === 'error' ? 'bg-white dark:bg-[#1C1C1E] text-rose-600 font-semibold shadow-sm' : 'text-black/60 dark:text-white/60'">
+                                Error (<span x-text="importEmployeePreview ? importEmployeePreview.error_count : 0"></span>)
+                            </button>
+                        </div>
+
+                        <div class="flex items-center gap-3 text-[12px]">
+                            <span class="text-black/50 dark:text-white/50 font-medium">Jika email/nomor sudah terdaftar:</span>
+                            <label class="flex items-center gap-1.5 cursor-pointer font-medium text-black dark:text-white">
+                                <input type="radio" value="skip" x-model="importEmployeeDuplicateStrategy" class="text-[#007AFF] focus:ring-0">
+                                <span>Lewati</span>
+                            </label>
+                            <label class="flex items-center gap-1.5 cursor-pointer font-medium text-black dark:text-white">
+                                <input type="radio" value="update" x-model="importEmployeeDuplicateStrategy" class="text-[#007AFF] focus:ring-0">
+                                <span>Perbarui Data</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Table -->
+                    <div class="border border-black/[0.08] dark:border-white/[0.1] rounded-[18px] overflow-hidden bg-white dark:bg-[#1C1C1E]">
+                        <div class="max-h-[380px] overflow-y-auto">
+                            <table class="w-full text-left text-[12px] border-collapse min-w-[800px]">
+                                <thead class="sticky top-0 bg-[#F5F5F7] dark:bg-[#252528] border-b border-black/[0.08] dark:border-white/[0.1] text-black/60 dark:text-white/60 font-semibold z-10">
+                                    <tr>
+                                        <th class="py-2.5 px-3 w-16 text-center">Status</th>
+                                        <th class="py-2.5 px-3">Nama Karyawan</th>
+                                        <th class="py-2.5 px-3">Email & No. WA</th>
+                                        <th class="py-2.5 px-3">Role & Jabatan</th>
+                                        <th class="py-2.5 px-3">Tipe Kerja</th>
+                                        <th class="py-2.5 px-3 text-right">Gaji Pokok</th>
+                                        <th class="py-2.5 px-3">Cabang / Lokasi</th>
+                                        <th class="py-2.5 px-3">Keterangan / Pesan</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.04]">
+                                    <template x-for="(row, idx) in (importEmployeePreview ? importEmployeePreview.rows.filter(r => importEmployeeFilter === 'all' || r.status === importEmployeeFilter) : [])" :key="idx">
+                                        <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition">
+                                            <td class="py-2.5 px-3 text-center">
+                                                <span x-show="row.status === 'valid'" class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Siap</span>
+                                                <span x-show="row.status === 'duplicate'" class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-600 border border-amber-500/20">Duplikat</span>
+                                                <span x-show="row.status === 'error'" class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/10 text-rose-600 border border-rose-500/20">Error</span>
+                                            </td>
+                                            <td class="py-2.5 px-3 font-semibold text-black dark:text-white" x-text="row.name || '-'"></td>
+                                            <td class="py-2.5 px-3 text-black/70 dark:text-white/70">
+                                                <div x-text="row.email || '-'"></div>
+                                                <div class="text-[11px] text-black/40 dark:text-white/40" x-text="row.phone || ''"></div>
+                                            </td>
+                                            <td class="py-2.5 px-3 text-black/70 dark:text-white/70">
+                                                <div class="font-medium text-black dark:text-white" x-text="row.job_title || '-'"></div>
+                                                <div class="text-[11px] text-black/50 dark:text-white/50 capitalize" x-text="'Role: ' + (row.role || 'staff')"></div>
+                                            </td>
+                                            <td class="py-2.5 px-3 text-black/70 dark:text-white/70 capitalize" x-text="row.employment_type || 'full_time'"></td>
+                                            <td class="py-2.5 px-3 text-right font-mono font-semibold text-black dark:text-white" x-text="'Rp ' + formatCurrency(row.base_salary)"></td>
+                                            <td class="py-2.5 px-3 text-black/70 dark:text-white/70" x-text="row.location_name || 'Kantor Pusat'"></td>
+                                            <td class="py-2.5 px-3">
+                                                <div class="space-y-0.5">
+                                                    <template x-for="(msg, mi) in row.messages" :key="mi">
+                                                        <div class="text-[11px]" :class="row.status === 'error' ? 'text-rose-600 dark:text-rose-400' : (row.status === 'duplicate' ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400')" x-text="msg"></div>
+                                                    </template>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="px-6 py-4 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-[#F9F9FB] dark:bg-[#252528]">
+                <div>
+                    <button type="button" x-show="importEmployeePreview" @click="resetEmployeeImport()"
+                        class="h-10 px-4 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold transition cursor-pointer flex items-center gap-1.5"
+                        :disabled="importEmployeeExecuting">
+                        <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                        <span>Ganti Berkas</span>
+                    </button>
+                </div>
+
+                <div class="flex items-center gap-2.5">
+                    <button type="button" @click="if (!importEmployeeExecuting) showImportEmployeeModal = false"
+                        class="h-10 px-5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold transition cursor-pointer"
+                        :disabled="importEmployeeExecuting">
+                        Batal
+                    </button>
+
+                    <button type="button" x-show="importEmployeePreview" @click="executeEmployeeImport()"
+                        class="h-10 px-6 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-semibold shadow-sm shadow-[#007AFF]/25 active:scale-[0.98] transition cursor-pointer flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                        :disabled="importEmployeeExecuting || !importEmployeePreview || (importEmployeeDuplicateStrategy === 'skip' ? importEmployeePreview.valid_count : (importEmployeePreview.valid_count + importEmployeePreview.duplicate_count)) === 0">
+                        <i data-lucide="loader" class="w-4 h-4 animate-spin" x-show="importEmployeeExecuting"></i>
+                        <i data-lucide="check" class="w-4 h-4" x-show="!importEmployeeExecuting"></i>
+                        <span x-text="importEmployeeExecuting ? 'Sedang Memproses...' : ('Komit Impor (' + (importEmployeeDuplicateStrategy === 'skip' ? importEmployeePreview.valid_count : (importEmployeePreview.valid_count + importEmployeePreview.duplicate_count)) + ' Karyawan)')"></span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- MODAL IMPORT PRESENSI MESIN (BENTO XXL PRE-COMMIT)        -->
+    <!-- ======================================================== -->
+    <div x-show="showImportAttendanceModal" 
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-md" 
+        style="display: none;">
+
+        <div @click.outside="if (!importAttendanceExecuting) showImportAttendanceModal = false"
+            class="w-full max-w-5xl bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-[0_32px_64px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col max-h-[92vh]">
+
+            <!-- Modal Header -->
+            <div class="px-6 py-4 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-white dark:bg-[#1C1C1E]">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-[12px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center shrink-0">
+                        <i data-lucide="fingerprint" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base sm:text-lg font-bold text-black dark:text-white">Impor Log Mesin Presensi Biometrik</h3>
+                        <p class="text-xs text-black/55 dark:text-white/55">Upload log presensi dari ZKTeco, Solution, Fingerspot, atau mesin absensi sidik jari lainnya</p>
+                    </div>
+                </div>
+                <button type="button" @click="if (!importAttendanceExecuting) showImportAttendanceModal = false"
+                    class="w-8 h-8 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition cursor-pointer">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-6 overflow-y-auto space-y-6 flex-1">
+
+                <!-- State 1: Upload Dropzone -->
+                <div x-show="!importAttendancePreview" class="space-y-4">
+                    <label class="border-2 border-dashed border-black/15 dark:border-white/15 hover:border-[#34C759] dark:hover:border-[#34C759] rounded-[20px] p-8 sm:p-12 flex flex-col items-center justify-center text-center cursor-pointer transition bg-black/[0.01] hover:bg-[#34C759]/[0.02] block">
+                        <input type="file" accept=".xlsx,.xls,.csv" @change="handleImportAttendanceFileSelect($event)" class="hidden">
+                        
+                        <div class="w-16 h-16 rounded-full bg-[#34C759]/10 text-[#34C759] flex items-center justify-center mb-4">
+                            <i data-lucide="file-spreadsheet" class="w-8 h-8" x-show="!importAttendanceLoading"></i>
+                            <i data-lucide="loader" class="w-8 h-8 animate-spin" x-show="importAttendanceLoading"></i>
+                        </div>
+
+                        <div class="space-y-1">
+                            <span class="text-base font-bold text-black dark:text-white block" x-text="importAttendanceLoading ? 'Menganalisis file presensi mesin...' : 'Pilih atau Tarik Berkas Log Presensi (.xlsx)'"></span>
+                            <span class="text-xs text-black/50 dark:text-white/50 block">Mendukung format kolom: Email / No. WA / Nama Karyawan, Tanggal (YYYY-MM-DD), Jam Masuk (HH:MM), Jam Keluar (HH:MM)</span>
+                        </div>
+
+                        <div class="mt-6 pt-5 border-t border-black/[0.06] dark:border-white/[0.08] w-full max-w-md flex items-center justify-center">
+                            <a href="{{ route('hrm.attendance.template') }}"
+                               @click.stop
+                               class="px-3.5 py-2 rounded-[12px] bg-[#34C759]/10 hover:bg-[#34C759]/20 text-[#34C759] text-[12.5px] font-semibold flex items-center gap-2 transition">
+                                <i data-lucide="download" class="w-4 h-4"></i>
+                                <span>Unduh Template Log Mesin Presensi</span>
+                            </a>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- State 2: Pre-Commit Preview -->
+                <div x-show="importAttendancePreview" class="space-y-5">
+                    <!-- KPI Cards -->
+                    <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+                        <div class="p-3.5 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] space-y-1">
+                            <span class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">Total Baris</span>
+                            <div class="text-2xl font-bold font-mono text-black dark:text-white" x-text="importAttendancePreview ? importAttendancePreview.total_rows : 0"></div>
+                        </div>
+                        <div class="p-3.5 rounded-[16px] bg-emerald-500/[0.08] border border-emerald-500/20 space-y-1">
+                            <span class="text-[11px] font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">Siap Impor</span>
+                            <div class="text-2xl font-bold font-mono text-emerald-600 dark:text-emerald-400" x-text="importAttendancePreview ? importAttendancePreview.valid_count : 0"></div>
+                        </div>
+                        <div class="p-3.5 rounded-[16px] bg-amber-500/[0.08] border border-amber-500/20 space-y-1">
+                            <span class="text-[11px] font-semibold text-amber-700 dark:text-amber-400 uppercase tracking-wider">Sudah Ada</span>
+                            <div class="text-2xl font-bold font-mono text-amber-600 dark:text-amber-400" x-text="importAttendancePreview ? importAttendancePreview.duplicate_count : 0"></div>
+                        </div>
+                        <div class="p-3.5 rounded-[16px] bg-rose-500/[0.08] border border-rose-500/20 space-y-1">
+                            <span class="text-[11px] font-semibold text-rose-700 dark:text-rose-400 uppercase tracking-wider">Format Salah</span>
+                            <div class="text-2xl font-bold font-mono text-rose-600 dark:text-rose-400" x-text="importAttendancePreview ? importAttendancePreview.error_count : 0"></div>
+                        </div>
+                        <div class="p-3.5 rounded-[16px] bg-[#34C759]/[0.08] border border-[#34C759]/20 space-y-1 col-span-2 sm:col-span-1">
+                            <span class="text-[11px] font-semibold text-[#34C759] uppercase tracking-wider">Total Jam Kerja</span>
+                            <div class="text-xl font-bold font-mono text-[#34C759]" x-text="importAttendancePreview ? (importAttendancePreview.total_work_hours + ' Jam') : '0 Jam'"></div>
+                        </div>
+                    </div>
+
+                    <!-- Filter & Duplicate Strategy Bar -->
+                    <div class="p-4 rounded-[18px] bg-[#F5F5F7] dark:bg-[#252528] border border-black/[0.05] dark:border-white/[0.06] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div class="flex items-center gap-1 bg-black/[0.05] dark:bg-white/[0.08] p-1 rounded-[12px] text-[12px] font-medium">
+                            <button type="button" @click="importAttendanceFilter = 'all'"
+                                class="px-3 py-1.5 rounded-[8px] transition"
+                                :class="importAttendanceFilter === 'all' ? 'bg-white dark:bg-[#1C1C1E] text-black dark:text-white shadow-sm font-semibold' : 'text-black/60 dark:text-white/60'">
+                                Semua (<span x-text="importAttendancePreview ? importAttendancePreview.total_rows : 0"></span>)
+                            </button>
+                            <button type="button" @click="importAttendanceFilter = 'valid'"
+                                class="px-3 py-1.5 rounded-[8px] transition"
+                                :class="importAttendanceFilter === 'valid' ? 'bg-white dark:bg-[#1C1C1E] text-emerald-600 font-semibold shadow-sm' : 'text-black/60 dark:text-white/60'">
+                                Siap (<span x-text="importAttendancePreview ? importAttendancePreview.valid_count : 0"></span>)
+                            </button>
+                            <button type="button" @click="importAttendanceFilter = 'duplicate'"
+                                class="px-3 py-1.5 rounded-[8px] transition"
+                                :class="importAttendanceFilter === 'duplicate' ? 'bg-white dark:bg-[#1C1C1E] text-amber-600 font-semibold shadow-sm' : 'text-black/60 dark:text-white/60'">
+                                Duplikat (<span x-text="importAttendancePreview ? importAttendancePreview.duplicate_count : 0"></span>)
+                            </button>
+                            <button type="button" @click="importAttendanceFilter = 'error'"
+                                class="px-3 py-1.5 rounded-[8px] transition"
+                                :class="importAttendanceFilter === 'error' ? 'bg-white dark:bg-[#1C1C1E] text-rose-600 font-semibold shadow-sm' : 'text-black/60 dark:text-white/60'">
+                                Error (<span x-text="importAttendancePreview ? importAttendancePreview.error_count : 0"></span>)
+                            </button>
+                        </div>
+
+                        <div class="flex items-center gap-3 text-[12px]">
+                            <span class="text-black/50 dark:text-white/50 font-medium">Jika log tanggal tersebut sudah ada:</span>
+                            <label class="flex items-center gap-1.5 cursor-pointer font-medium text-black dark:text-white">
+                                <input type="radio" value="skip" x-model="importAttendanceDuplicateStrategy" class="text-[#34C759] focus:ring-0">
+                                <span>Lewati</span>
+                            </label>
+                            <label class="flex items-center gap-1.5 cursor-pointer font-medium text-black dark:text-white">
+                                <input type="radio" value="update" x-model="importAttendanceDuplicateStrategy" class="text-[#34C759] focus:ring-0">
+                                <span>Perbarui Jam</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Table -->
+                    <div class="border border-black/[0.08] dark:border-white/[0.1] rounded-[18px] overflow-hidden bg-white dark:bg-[#1C1C1E]">
+                        <div class="max-h-[380px] overflow-y-auto">
+                            <table class="w-full text-left text-[12px] border-collapse min-w-[750px]">
+                                <thead class="sticky top-0 bg-[#F5F5F7] dark:bg-[#252528] border-b border-black/[0.08] dark:border-white/[0.1] text-black/60 dark:text-white/60 font-semibold z-10">
+                                    <tr>
+                                        <th class="py-2.5 px-3 w-16 text-center">Status</th>
+                                        <th class="py-2.5 px-3">Karyawan</th>
+                                        <th class="py-2.5 px-3">Tanggal</th>
+                                        <th class="py-2.5 px-3">Jam Masuk</th>
+                                        <th class="py-2.5 px-3">Jam Keluar</th>
+                                        <th class="py-2.5 px-3">Keterlambatan</th>
+                                        <th class="py-2.5 px-3">Durasi Kerja</th>
+                                        <th class="py-2.5 px-3">Status Presensi</th>
+                                        <th class="py-2.5 px-3">Keterangan / Diagnostik</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.04]">
+                                    <template x-for="(row, idx) in (importAttendancePreview ? importAttendancePreview.rows.filter(r => importAttendanceFilter === 'all' || r.status === importAttendanceFilter) : [])" :key="idx">
+                                        <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition">
+                                            <td class="py-2.5 px-3 text-center">
+                                                <span x-show="row.status === 'valid'" class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Siap</span>
+                                                <span x-show="row.status === 'duplicate'" class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-600 border border-amber-500/20">Duplikat</span>
+                                                <span x-show="row.status === 'error'" class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/10 text-rose-600 border border-rose-500/20">Error</span>
+                                            </td>
+                                            <td class="py-2.5 px-3 font-semibold text-black dark:text-white">
+                                                <div x-text="row.user_name || row.identifier"></div>
+                                                <div class="text-[11px] text-black/40 dark:text-white/40 font-mono" x-text="row.identifier"></div>
+                                            </td>
+                                            <td class="py-2.5 px-3 tabular-nums text-black/80 dark:text-white/80" x-text="row.date || '-'"></td>
+                                            <td class="py-2.5 px-3 font-mono font-bold text-emerald-600 dark:text-emerald-400" x-text="row.clock_in ? row.clock_in.substring(11, 16) : '-'"></td>
+                                            <td class="py-2.5 px-3 font-mono font-bold text-black/70 dark:text-white/70" x-text="row.clock_out ? row.clock_out.substring(11, 16) : '-'"></td>
+                                            <td class="py-2.5 px-3 tabular-nums" :class="row.late_minutes > 0 ? 'text-amber-600 dark:text-amber-400 font-bold' : 'text-black/50 dark:text-white/50'" x-text="row.late_minutes > 0 ? (row.late_minutes + ' mnt') : 'Tepat Waktu'"></td>
+                                            <td class="py-2.5 px-3 tabular-nums font-medium text-black dark:text-white" x-text="Math.floor((row.work_duration_minutes || 0) / 60) + 'j ' + ((row.work_duration_minutes || 0) % 60) + 'm'"></td>
+                                            <td class="py-2.5 px-3">
+                                                <span class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider"
+                                                    :class="row.attendance_status === 'late' ? 'bg-amber-500/10 text-amber-600' : 'bg-emerald-500/10 text-emerald-600'"
+                                                    x-text="row.attendance_status === 'late' ? 'Terlambat' : 'Hadir'"></span>
+                                            </td>
+                                            <td class="py-2.5 px-3">
+                                                <div class="space-y-0.5">
+                                                    <template x-for="(msg, mi) in row.messages" :key="mi">
+                                                        <div class="text-[11px]" :class="row.status === 'error' ? 'text-rose-600 dark:text-rose-400' : (row.status === 'duplicate' ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400')" x-text="msg"></div>
+                                                    </template>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="px-6 py-4 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-[#F9F9FB] dark:bg-[#252528]">
+                <div>
+                    <button type="button" x-show="importAttendancePreview" @click="resetAttendanceImport()"
+                        class="h-10 px-4 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold transition cursor-pointer flex items-center gap-1.5"
+                        :disabled="importAttendanceExecuting">
+                        <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                        <span>Ganti Berkas</span>
+                    </button>
+                </div>
+
+                <div class="flex items-center gap-2.5">
+                    <button type="button" @click="if (!importAttendanceExecuting) showImportAttendanceModal = false"
+                        class="h-10 px-5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold transition cursor-pointer"
+                        :disabled="importAttendanceExecuting">
+                        Batal
+                    </button>
+
+                    <button type="button" x-show="importAttendancePreview" @click="executeAttendanceImport()"
+                        class="h-10 px-6 rounded-[12px] bg-[#34C759] hover:bg-[#2FB34F] text-white text-[13px] font-semibold shadow-sm shadow-[#34C759]/25 active:scale-[0.98] transition cursor-pointer flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                        :disabled="importAttendanceExecuting || !importAttendancePreview || (importAttendanceDuplicateStrategy === 'skip' ? importAttendancePreview.valid_count : (importAttendancePreview.valid_count + importAttendancePreview.duplicate_count)) === 0">
+                        <i data-lucide="loader" class="w-4 h-4 animate-spin" x-show="importAttendanceExecuting"></i>
+                        <i data-lucide="check" class="w-4 h-4" x-show="!importAttendanceExecuting"></i>
+                        <span x-text="importAttendanceExecuting ? 'Sedang Memproses...' : ('Komit Impor (' + (importAttendanceDuplicateStrategy === 'skip' ? importAttendancePreview.valid_count : (importAttendancePreview.valid_count + importAttendancePreview.duplicate_count)) + ' Presensi)')"></span>
+                    </button>
+                </div>
+            </div>
+
         </div>
     </div>
 

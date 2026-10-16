@@ -23,6 +23,29 @@ final class MaterialWebController extends Controller
     public function __construct(private readonly MaterialCostService $costService = new MaterialCostService) {}
 
     /**
+     * Export materials to Excel.
+     */
+    public function export(Request $request): \Symfony\Component\HttpFoundation\StreamedResponse
+    {
+        $business = Context::requireBusiness();
+
+        $query = Material::where('business_id', $business->id)->latest();
+        if ($request->filled('search')) {
+            $search = (string) $request->get('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('sku', 'like', "%{$search}%")
+                    ->orWhere('code', 'like', "%{$search}%");
+            });
+        }
+        if ($request->filled('category_id')) {
+            $query->where('category_id', $request->get('category_id'));
+        }
+
+        return app(\App\Domain\Import\DataExchangeService::class)->exportMaterials($business, $query);
+    }
+
+    /**
      * Show materials list.
      */
     public function index(Request $request): View

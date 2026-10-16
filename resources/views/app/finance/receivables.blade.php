@@ -1,7 +1,122 @@
 @extends('layouts.app', ['title' => 'Piutang Usaha (AR Aging)'])
 
 @section('content')
-<div class="max-w-[1360px] mx-auto space-y-5 pb-28 lg:pb-12">
+<div class="max-w-[1360px] mx-auto space-y-5 pb-28 lg:pb-12" x-data="{
+    showImportModal: false,
+    importFile: null,
+    importFileName: '',
+    importLoading: false,
+    importPreview: null,
+    importFilter: 'all',
+    importDuplicateStrategy: 'skip',
+    importExecuting: false,
+
+    formatCurrency(num) {
+        return new Intl.NumberFormat(window.COOCA_LOCALE === 'en' ? 'en-US' : 'id-ID').format(num || 0);
+    },
+
+    handleImportFileSelect(event) {
+        const file = event.target.files[0];
+        if (file) {
+            this.importFile = file;
+            this.importFileName = file.name;
+            this.uploadAndPreviewReceivables();
+        }
+    },
+
+    uploadAndPreviewReceivables() {
+        if (!this.importFile) return;
+        this.importLoading = true;
+        const formData = new FormData();
+        formData.append('file', this.importFile);
+        formData.append('_token', '{{ csrf_token() }}');
+
+        fetch('{{ route('finance.receivables.import-preview') }}', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json'
+            }
+        })
+        .then(res => {
+            if (!res.ok) {
+                return res.json().then(err => { throw new Error(err.message || 'Gagal memproses file Excel.'); });
+            }
+            return res.json();
+        })
+        .then(res => {
+            this.importLoading = false;
+            if (res.success) {
+                this.importPreview = res.data;
+            } else {
+                alert(res.message || 'Gagal menganalisis file piutang.');
+            }
+        })
+        .catch(err => {
+            this.importLoading = false;
+            alert(err.message || 'Terjadi kesalahan saat mengunggah file.');
+        });
+    },
+
+    async executeReceivablesImport() {
+        if (!this.importPreview || !this.importPreview.rows || this.importPreview.rows.length === 0) {
+            return;
+        }
+
+        const totalToProcess = this.importDuplicateStrategy === 'skip' 
+            ? this.importPreview.valid_count 
+            : (this.importPreview.valid_count + this.importPreview.duplicate_count);
+
+        if (totalToProcess <= 0) {
+            alert('Tidak ada baris faktur piutang yang siap diimport.');
+            return;
+        }
+
+        if (!confirm('Apakah Anda yakin ingin memproses ' + totalToProcess + ' faktur piutang ke sistem?')) {
+            return;
+        }
+
+        this.importExecuting = true;
+        fetch('{{ route('finance.receivables.import-execute') }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                rows: this.importPreview.rows,
+                duplicate_strategy: this.importDuplicateStrategy
+            })
+        })
+        .then(res => res.json())
+        .then(res => {
+            this.importExecuting = false;
+            if (res.success) {
+                alert(res.message);
+                window.location.reload();
+            } else {
+                alert(res.message || 'Gagal mengeksekusi import piutang.');
+            }
+        })
+        .catch(err => {
+            this.importExecuting = false;
+            alert(err.message || 'Terjadi kesalahan sistem saat mengeksekusi import.');
+        });
+    },
+
+    resetImport() {
+        this.importFile = null;
+        this.importFileName = '';
+        this.importPreview = null;
+        this.importFilter = 'all';
+        this.importDuplicateStrategy = 'skip';
+        this.importLoading = false;
+        this.importExecuting = false;
+    }
+}">
 
     {{-- ========================================================== --}}
     {{-- TOOLBAR / PAGE HEADER                                      --}}
@@ -9,6 +124,20 @@
     <x-module-header
         title="Piutang Usaha (AR Aging)"
         subtitle="Analisis umur piutang pelanggan dan jadwal penagihan faktur tempo untuk kelancaran arus kas">
+        <a href="{{ route('finance.receivables.export') }}"
+           class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+           title="Export seluruh daftar piutang usaha ke file Excel (.xlsx)">
+            <i data-lucide="download" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
+            <span>Export Excel</span>
+        </a>
+
+        <button type="button" @click="showImportModal = true"
+           class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+           title="Import saldo piutang saldo awal / faktur belum lunas dari berkas Excel">
+            <i data-lucide="upload" class="w-4 h-4 text-[#007AFF]"></i>
+            <span>Import Saldo Awal</span>
+        </button>
+
         @if(\App\Support\Context::hasPermission('invoices.create'))
             <a href="{{ route('invoices.create') }}" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-2 shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
                 <i data-lucide="plus" class="w-4 h-4"></i>
@@ -365,6 +494,219 @@
             </div>
         </div>
         @endif
+    </div>
+
+    {{-- ========================================================== --}}
+    {{-- MODAL IMPORT PIUTANG PREVIEW (APPLE BENTO XXL MODAL)       --}}
+    {{-- ========================================================== --}}
+    <div x-show="showImportModal"
+        x-cloak
+        class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/40 backdrop-blur-md"
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0">
+
+        <div class="w-full max-w-5xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.3)] flex flex-col max-h-[92vh] overflow-hidden"
+            @click.away="if (!importExecuting) showImportModal = false"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 scale-95"
+            x-transition:enter-end="opacity-100 scale-100"
+            x-transition:leave="transition ease-in duration-150"
+            x-transition:leave-start="opacity-100 scale-100"
+            x-transition:leave-end="opacity-0 scale-95">
+
+            <!-- Header -->
+            <div class="px-6 py-4.5 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-[#F9F9FB] dark:bg-[#252528]">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0">
+                        <i data-lucide="file-spreadsheet" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-[17px] font-bold text-black dark:text-white">Import Saldo Awal Piutang Usaha (AR)</h3>
+                        <p class="text-[12px] text-black/50 dark:text-white/50">Unggah berkas Excel faktur penjualan terbuka / belum lunas untuk cut-off saldo awal</p>
+                    </div>
+                </div>
+
+                <button type="button" @click="if (!importExecuting) showImportModal = false"
+                    class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center transition">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- Body -->
+            <div class="p-6 overflow-y-auto space-y-5 flex-1">
+                
+                <!-- State 1: Drop Zone -->
+                <div x-show="!importPreview" class="space-y-4">
+                    <label class="border-2 border-dashed border-black/15 dark:border-white/15 hover:border-[#007AFF] dark:hover:border-[#0A84FF] rounded-[20px] p-8 flex flex-col items-center justify-center text-center cursor-pointer transition bg-black/[0.01] dark:bg-white/[0.01]">
+                        <input type="file" class="hidden" accept=".xlsx, .xls, .csv" @change="handleImportFileSelect($event)" :disabled="importLoading">
+                        
+                        <div class="space-y-3">
+                            <div class="w-14 h-14 mx-auto rounded-full bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center">
+                                <i data-lucide="upload-cloud" class="w-7 h-7" x-show="!importLoading"></i>
+                                <i data-lucide="loader" class="w-7 h-7 animate-spin" x-show="importLoading"></i>
+                            </div>
+                            <div class="space-y-1">
+                                <div class="text-[15px] font-bold text-black dark:text-white" x-text="importLoading ? 'Membaca dan Menganalisis Faktur Piutang...' : 'Pilih Berkas Excel Piutang atau Tarik ke Sini'"></div>
+                                <div class="text-[12px] text-black/50 dark:text-white/50">Mendukung format .XLSX template resmi piutang Cooca</div>
+                            </div>
+                            <div class="inline-flex items-center gap-2 pt-2">
+                                <a href="{{ route('finance.receivables.template') }}"
+                                   @click.stop
+                                   class="px-3 py-1.5 rounded-[10px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-[#007AFF] text-[12px] font-semibold flex items-center gap-1.5 transition">
+                                    <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                                    <span>Unduh Template Excel Piutang Usaha</span>
+                                </a>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- State 2: Pre-Commit Preview -->
+                <div x-show="importPreview" class="space-y-5">
+                    
+                    <!-- KPI Summary Cards -->
+                    <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+                        <div class="p-3.5 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] space-y-1">
+                            <span class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">Total Faktur</span>
+                            <div class="text-2xl font-bold font-mono text-black dark:text-white" x-text="importPreview ? importPreview.total_rows : 0"></div>
+                        </div>
+                        <div class="p-3.5 rounded-[16px] bg-emerald-500/[0.08] border border-emerald-500/20 space-y-1">
+                            <span class="text-[11px] font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">Siap Import</span>
+                            <div class="text-2xl font-bold font-mono text-emerald-600 dark:text-emerald-400" x-text="importPreview ? importPreview.valid_count : 0"></div>
+                        </div>
+                        <div class="p-3.5 rounded-[16px] bg-amber-500/[0.08] border border-amber-500/20 space-y-1">
+                            <span class="text-[11px] font-semibold text-amber-700 dark:text-amber-400 uppercase tracking-wider">Duplikat</span>
+                            <div class="text-2xl font-bold font-mono text-amber-600 dark:text-amber-400" x-text="importPreview ? importPreview.duplicate_count : 0"></div>
+                        </div>
+                        <div class="p-3.5 rounded-[16px] bg-rose-500/[0.08] border border-rose-500/20 space-y-1">
+                            <span class="text-[11px] font-semibold text-rose-700 dark:text-rose-400 uppercase tracking-wider">Error / Tidak Valid</span>
+                            <div class="text-2xl font-bold font-mono text-rose-600 dark:text-rose-400" x-text="importPreview ? importPreview.error_count : 0"></div>
+                        </div>
+                        <div class="p-3.5 rounded-[16px] bg-[#007AFF]/[0.08] border border-[#007AFF]/20 space-y-1 col-span-2 sm:col-span-1">
+                            <span class="text-[11px] font-semibold text-[#007AFF] uppercase tracking-wider">Nilai Piutang</span>
+                            <div class="text-lg font-bold font-mono text-[#007AFF]" x-text="importPreview ? ('Rp ' + formatCurrency(importPreview.total_balance_due)) : 0"></div>
+                        </div>
+                    </div>
+
+                    <!-- Filter & Strategy Bar -->
+                    <div class="p-4 rounded-[18px] bg-[#F5F5F7] dark:bg-[#252528] border border-black/[0.05] dark:border-white/[0.06] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div class="flex items-center gap-1 bg-black/[0.05] dark:bg-white/[0.08] p-1 rounded-[12px] text-[12px] font-medium">
+                            <button type="button" @click="importFilter = 'all'"
+                                class="px-3 py-1.5 rounded-[8px] transition"
+                                :class="importFilter === 'all' ? 'bg-white dark:bg-[#1C1C1E] text-black dark:text-white shadow-sm font-semibold' : 'text-black/60 dark:text-white/60'">
+                                Semua (<span x-text="importPreview ? importPreview.total_rows : 0"></span>)
+                            </button>
+                            <button type="button" @click="importFilter = 'valid'"
+                                class="px-3 py-1.5 rounded-[8px] transition"
+                                :class="importFilter === 'valid' ? 'bg-white dark:bg-[#1C1C1E] text-emerald-600 font-semibold shadow-sm' : 'text-black/60 dark:text-white/60'">
+                                Siap (<span x-text="importPreview ? importPreview.valid_count : 0"></span>)
+                            </button>
+                            <button type="button" @click="importFilter = 'duplicate'"
+                                class="px-3 py-1.5 rounded-[8px] transition"
+                                :class="importFilter === 'duplicate' ? 'bg-white dark:bg-[#1C1C1E] text-amber-600 font-semibold shadow-sm' : 'text-black/60 dark:text-white/60'">
+                                Duplikat (<span x-text="importPreview ? importPreview.duplicate_count : 0"></span>)
+                            </button>
+                            <button type="button" @click="importFilter = 'error'"
+                                class="px-3 py-1.5 rounded-[8px] transition"
+                                :class="importFilter === 'error' ? 'bg-white dark:bg-[#1C1C1E] text-rose-600 font-semibold shadow-sm' : 'text-black/60 dark:text-white/60'">
+                                Error (<span x-text="importPreview ? importPreview.error_count : 0"></span>)
+                            </button>
+                        </div>
+
+                        <div class="flex items-center gap-3 text-[12px]">
+                            <span class="text-black/50 dark:text-white/50 font-medium">Jika nomor faktur sudah ada:</span>
+                            <label class="flex items-center gap-1.5 cursor-pointer font-medium text-black dark:text-white">
+                                <input type="radio" value="skip" x-model="importDuplicateStrategy" class="text-[#007AFF] focus:ring-0">
+                                <span>Lewati</span>
+                            </label>
+                            <label class="flex items-center gap-1.5 cursor-pointer font-medium text-black dark:text-white">
+                                <input type="radio" value="update" x-model="importDuplicateStrategy" class="text-[#007AFF] focus:ring-0">
+                                <span>Perbarui Sisa Saldo</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Table -->
+                    <div class="border border-black/[0.08] dark:border-white/[0.1] rounded-[18px] overflow-hidden bg-white dark:bg-[#1C1C1E]">
+                        <div class="max-h-[380px] overflow-y-auto">
+                            <table class="w-full text-left text-[12px] border-collapse">
+                                <thead class="sticky top-0 bg-[#F5F5F7] dark:bg-[#252528] border-b border-black/[0.08] dark:border-white/[0.1] text-black/60 dark:text-white/60 font-semibold z-10">
+                                    <tr>
+                                        <th class="py-2.5 px-3 w-16 text-center">Status</th>
+                                        <th class="py-2.5 px-3">No. Faktur</th>
+                                        <th class="py-2.5 px-3">Pelanggan</th>
+                                        <th class="py-2.5 px-3">Tgl Faktur</th>
+                                        <th class="py-2.5 px-3">Jatuh Tempo</th>
+                                        <th class="py-2.5 px-3 text-right">Total Nilai</th>
+                                        <th class="py-2.5 px-3 text-right">Sisa Piutang</th>
+                                        <th class="py-2.5 px-3">Keterangan / Diagnostik</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.04]">
+                                    <template x-for="(row, idx) in (importPreview ? importPreview.rows.filter(r => importFilter === 'all' || r.status === importFilter) : [])" :key="idx">
+                                        <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition">
+                                            <td class="py-2.5 px-3 text-center">
+                                                <span x-show="row.status === 'valid'" class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Siap</span>
+                                                <span x-show="row.status === 'duplicate'" class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-600 border border-amber-500/20">Duplikat</span>
+                                                <span x-show="row.status === 'error'" class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/10 text-rose-600 border border-rose-500/20">Error</span>
+                                            </td>
+                                            <td class="py-2.5 px-3 font-mono font-bold text-black dark:text-white" x-text="row.invoice_number || '-'"></td>
+                                            <td class="py-2.5 px-3 font-medium text-black dark:text-white" x-text="row.customer_name || '-'"></td>
+                                            <td class="py-2.5 px-3 tabular-nums text-black/70 dark:text-white/70" x-text="row.invoice_date || '-'"></td>
+                                            <td class="py-2.5 px-3 tabular-nums text-black/70 dark:text-white/70" x-text="row.due_date || '-'"></td>
+                                            <td class="py-2.5 px-3 text-right font-mono text-black/70 dark:text-white/70" x-text="'Rp ' + formatCurrency(row.total_amount)"></td>
+                                            <td class="py-2.5 px-3 text-right font-mono font-bold text-emerald-600 dark:text-emerald-400" x-text="'Rp ' + formatCurrency(row.balance_due)"></td>
+                                            <td class="py-2.5 px-3">
+                                                <div class="space-y-0.5">
+                                                    <template x-for="(msg, mi) in row.messages" :key="mi">
+                                                        <div class="text-[11px]" :class="row.status === 'error' ? 'text-rose-600 dark:text-rose-400' : (row.status === 'duplicate' ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400')" x-text="msg"></div>
+                                                    </template>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Footer -->
+            <div class="px-6 py-4 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-[#F9F9FB] dark:bg-[#252528]">
+                <div>
+                    <button type="button" x-show="importPreview" @click="resetImport()"
+                        class="h-10 px-4 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold transition cursor-pointer flex items-center gap-1.5"
+                        :disabled="importExecuting">
+                        <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                        <span>Ganti Berkas</span>
+                    </button>
+                </div>
+
+                <div class="flex items-center gap-2.5">
+                    <button type="button" @click="if (!importExecuting) showImportModal = false"
+                        class="h-10 px-5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold transition cursor-pointer"
+                        :disabled="importExecuting">
+                        Batal
+                    </button>
+
+                    <button type="button" x-show="importPreview" @click="executeReceivablesImport()"
+                        class="h-10 px-6 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-semibold shadow-sm shadow-[#007AFF]/25 active:scale-[0.98] transition cursor-pointer flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                        :disabled="importExecuting || !importPreview || (importDuplicateStrategy === 'skip' ? importPreview.valid_count : (importPreview.valid_count + importPreview.duplicate_count)) === 0">
+                        <i data-lucide="loader" class="w-4 h-4 animate-spin" x-show="importExecuting"></i>
+                        <i data-lucide="check" class="w-4 h-4" x-show="!importExecuting"></i>
+                        <span x-text="importExecuting ? 'Sedang Memproses...' : ('Komit Import (' + (importDuplicateStrategy === 'skip' ? importPreview.valid_count : (importPreview.valid_count + importPreview.duplicate_count)) + ' Faktur)')"></span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
     </div>
 
 </div>

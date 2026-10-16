@@ -32,6 +32,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use App\Domain\Import\DataExchangeService;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 final class HrmWebController extends Controller
 {
@@ -1474,5 +1476,151 @@ final class HrmWebController extends Controller
 
         return redirect()->route('hrm.index', ['tab' => 'schedules'])
             ->with('success', 'Jadwal kerja karyawan berhasil dihapus.');
+    }
+
+    /**
+     * Export all employees to Excel.
+     */
+    public function exportEmployees(): StreamedResponse
+    {
+        $business = Context::requireBusiness();
+        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola staf.');
+
+        return (new DataExchangeService())->exportEmployees($business);
+    }
+
+    /**
+     * Download Employee Import Template.
+     */
+    public function employeeTemplate(): StreamedResponse
+    {
+        $business = Context::requireBusiness();
+        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola staf.');
+
+        return (new DataExchangeService())->generateEmployeeTemplate($business);
+    }
+
+    /**
+     * Preview Employee Import file.
+     */
+    public function previewEmployeeImport(Request $request): JsonResponse
+    {
+        $business = Context::requireBusiness();
+        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola staf.');
+
+        $request->validate([
+            'file' => ['required', 'file', 'mimes:xlsx,xls,csv', 'max:10240'],
+        ]);
+
+        $res = (new DataExchangeService())->parseAndPreviewEmployees($business, $request->file('file'));
+
+        return response()->json([
+            'success' => true,
+            'status' => 'success',
+            'data' => $res,
+            'result' => $res,
+        ]);
+    }
+
+    /**
+     * Execute Employee Import.
+     */
+    public function executeEmployeeImport(Request $request): JsonResponse
+    {
+        $business = Context::requireBusiness();
+        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola staf.');
+
+        $request->validate([
+            'rows' => ['required', 'array', 'min:1'],
+            'duplicate_strategy' => ['nullable', 'string', 'in:skip,update'],
+        ]);
+
+        $res = (new DataExchangeService())->executeEmployeeImport(
+            $business,
+            $request->input('rows'),
+            $request->input('duplicate_strategy', 'skip')
+        );
+
+        return response()->json([
+            'success' => true,
+            'status' => 'success',
+            'data' => $res,
+            'result' => $res,
+        ]);
+    }
+
+    /**
+     * Export Attendance Log to Excel.
+     */
+    public function exportAttendance(Request $request): StreamedResponse
+    {
+        $business = Context::requireBusiness();
+        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola staf.');
+
+        return (new DataExchangeService())->exportAttendance(
+            $business,
+            $request->query('start_date'),
+            $request->query('end_date')
+        );
+    }
+
+    /**
+     * Download Fingerprint Machine Attendance Template.
+     */
+    public function attendanceTemplate(): StreamedResponse
+    {
+        $business = Context::requireBusiness();
+        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola staf.');
+
+        return (new DataExchangeService())->generateFingerprintTemplate($business);
+    }
+
+    /**
+     * Preview Attendance Import file.
+     */
+    public function previewAttendanceImport(Request $request): JsonResponse
+    {
+        $business = Context::requireBusiness();
+        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola staf.');
+
+        $request->validate([
+            'file' => ['required', 'file', 'mimes:xlsx,xls,csv', 'max:10240'],
+        ]);
+
+        $res = (new DataExchangeService())->parseAndPreviewAttendance($business, $request->file('file'));
+
+        return response()->json([
+            'success' => true,
+            'status' => 'success',
+            'data' => $res,
+            'result' => $res,
+        ]);
+    }
+
+    /**
+     * Execute Attendance Import.
+     */
+    public function executeAttendanceImport(Request $request): JsonResponse
+    {
+        $business = Context::requireBusiness();
+        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola staf.');
+
+        $request->validate([
+            'rows' => ['required', 'array', 'min:1'],
+            'duplicate_strategy' => ['nullable', 'string', 'in:skip,update'],
+        ]);
+
+        $res = (new DataExchangeService())->executeAttendanceImport(
+            $business,
+            $request->input('rows'),
+            $request->input('duplicate_strategy', 'skip')
+        );
+
+        return response()->json([
+            'success' => true,
+            'status' => 'success',
+            'data' => $res,
+            'result' => $res,
+        ]);
     }
 }

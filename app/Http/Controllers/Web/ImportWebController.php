@@ -36,6 +36,10 @@ final class ImportWebController extends Controller
             $q->where('business_id', $business->id);
         })->count();
         $totalStocks = \App\Models\InventoryStock::where('business_id', $business->id)->count();
+        $totalCustomers = \App\Models\Customer::where('business_id', $business->id)->count();
+        $totalSuppliers = \App\Models\Supplier::where('business_id', $business->id)->count();
+        $totalAccounts = \App\Models\ChartOfAccount::where('business_id', $business->id)->count();
+        $totalEmployees = \App\Models\BusinessMembership::where('business_id', $business->id)->count();
 
         return view('app.import.index', compact(
             'business',
@@ -44,7 +48,11 @@ final class ImportWebController extends Controller
             'totalProducts',
             'totalMaterials',
             'totalRecipes',
-            'totalStocks'
+            'totalStocks',
+            'totalCustomers',
+            'totalSuppliers',
+            'totalAccounts',
+            'totalEmployees'
         ));
     }
 
@@ -54,6 +62,10 @@ final class ImportWebController extends Controller
     public function downloadProductTemplate(Request $request): StreamedResponse
     {
         $format = $request->query('format', 'xlsx') === 'csv' ? 'csv' : 'xlsx';
+        if ($format === 'xlsx') {
+            $business = Context::requireBusiness();
+            return app(\App\Domain\Import\DataExchangeService::class)->generateProductTemplate($business);
+        }
         return $this->importService->downloadProductTemplate($format);
     }
 
@@ -63,6 +75,10 @@ final class ImportWebController extends Controller
     public function downloadRecipeTemplate(Request $request): StreamedResponse
     {
         $format = $request->query('format', 'xlsx') === 'csv' ? 'csv' : 'xlsx';
+        if ($format === 'xlsx') {
+            $business = Context::requireBusiness();
+            return app(\App\Domain\Import\DataExchangeService::class)->generateRecipeTemplate($business);
+        }
         return $this->importService->downloadRecipeTemplate($format);
     }
 
@@ -202,6 +218,10 @@ final class ImportWebController extends Controller
     public function downloadMaterialTemplate(Request $request): StreamedResponse
     {
         $format = $request->query('format', 'xlsx') === 'csv' ? 'csv' : 'xlsx';
+        if ($format === 'xlsx') {
+            $business = Context::requireBusiness();
+            return app(\App\Domain\Import\DataExchangeService::class)->generateMaterialTemplate($business);
+        }
         return $this->importService->downloadMaterialTemplate($format);
     }
 
@@ -285,6 +305,10 @@ final class ImportWebController extends Controller
     public function downloadInventoryTemplate(Request $request): StreamedResponse
     {
         $format = $request->query('format', 'xlsx') === 'csv' ? 'csv' : 'xlsx';
+        if ($format === 'xlsx') {
+            $business = Context::requireBusiness();
+            return app(\App\Domain\Import\DataExchangeService::class)->generateInventoryStockTemplate($business);
+        }
         return $this->importService->downloadInventoryTemplate($format);
     }
 

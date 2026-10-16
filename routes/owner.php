@@ -146,6 +146,7 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
 
         // Materials & Pricing Management
         Route::get('/materials', [MaterialWebController::class, 'index'])->middleware('require.permission:materials.view')->name('materials.index');
+        Route::get('/materials/export', [MaterialWebController::class, 'export'])->middleware('require.permission:materials.view')->name('materials.export');
         Route::post('/materials', [MaterialWebController::class, 'store'])->middleware(['require.permission:materials.create', 'entitlement:material'])->name('materials.store');
         Route::put('/materials/{material}', [MaterialWebController::class, 'update'])->middleware('require.permission:materials.edit')->name('materials.update');
         Route::post('/materials/{material}/prices', [MaterialWebController::class, 'storePrice'])->middleware('require.permission:materials.edit')->name('materials.store-price');
@@ -153,6 +154,10 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
 
         // Supplier & Material Category Master Data
         Route::get('/suppliers', [SupplierWebController::class, 'index'])->middleware('require.permission:master_data.suppliers.view')->name('suppliers.index');
+        Route::get('/suppliers/export', [SupplierWebController::class, 'export'])->middleware('require.permission:master_data.suppliers.view')->name('suppliers.export');
+        Route::get('/suppliers/template', [SupplierWebController::class, 'downloadTemplate'])->middleware('require.permission:master_data.suppliers.view')->name('suppliers.template');
+        Route::post('/suppliers/import/preview', [SupplierWebController::class, 'previewImport'])->middleware('require.permission:master_data.suppliers.manage')->name('suppliers.import.preview');
+        Route::post('/suppliers/import/execute', [SupplierWebController::class, 'executeImport'])->middleware(['require.permission:master_data.suppliers.manage', 'entitlement:supplier'])->name('suppliers.import.execute');
         Route::post('/suppliers', [SupplierWebController::class, 'store'])->middleware(['require.permission:master_data.suppliers.manage', 'entitlement:supplier'])->name('suppliers.store');
         Route::put('/suppliers/{supplier}', [SupplierWebController::class, 'update'])->middleware('require.permission:master_data.suppliers.manage')->name('suppliers.update');
         Route::delete('/suppliers/{supplier}', [SupplierWebController::class, 'destroy'])->middleware('require.permission:master_data.suppliers.manage')->name('suppliers.destroy');
@@ -164,6 +169,7 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         // Products & BOM Management
         Route::middleware('require.permission:products.view')->group(function (): void {
             Route::get('/products', [ProductWebController::class, 'index'])->name('products.index');
+            Route::get('/products/export', [ProductWebController::class, 'export'])->name('products.export');
             Route::get('/products/{product}/bom', [ProductWebController::class, 'bom'])->name('products.bom');
             Route::get('/products/{product}/branch-prices', [ProductWebController::class, 'branchPrices'])->middleware('entitlement:branch_pricing')->name('products.branch_prices.index');
         });
@@ -218,6 +224,10 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
 
         // Customers Management (Commercial CRM)
         Route::get('/customers', [CustomerWebController::class, 'index'])->middleware('require.permission:customers.view')->name('customers.index');
+        Route::get('/customers/export', [CustomerWebController::class, 'export'])->middleware('require.permission:customers.view')->name('customers.export');
+        Route::get('/customers/template', [CustomerWebController::class, 'downloadTemplate'])->middleware('require.permission:customers.view')->name('customers.template');
+        Route::post('/customers/import/preview', [CustomerWebController::class, 'previewImport'])->middleware('require.permission:customers.create')->name('customers.import.preview');
+        Route::post('/customers/import/execute', [CustomerWebController::class, 'executeImport'])->middleware(['require.permission:customers.create', 'entitlement:customer'])->name('customers.import.execute');
         Route::post('/customers', [CustomerWebController::class, 'store'])->middleware(['require.permission:customers.create', 'entitlement:customer'])->name('customers.store');
         Route::put('/customers/{customer}', [CustomerWebController::class, 'update'])->middleware('require.permission:customers.edit')->name('customers.update');
         Route::delete('/customers/{customer}', [CustomerWebController::class, 'destroy'])->middleware('require.permission:customers.delete')->name('customers.destroy');
@@ -414,6 +424,18 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
             Route::post('/employees', [HrmWebController::class, 'storeEmployee'])->middleware('require.permission:users.manage')->name('employees.store');
             Route::put('/employees/{membership}', [HrmWebController::class, 'updateEmployee'])->middleware('require.permission:users.manage')->name('employees.update');
             Route::delete('/employees/{membership}', [HrmWebController::class, 'destroyEmployee'])->middleware('require.permission:users.manage')->name('employees.destroy');
+
+            // Master Karyawan Import & Export (Sprint 3)
+            Route::get('/employees/export', [HrmWebController::class, 'exportEmployees'])->middleware('require.permission:users.manage')->name('employees.export');
+            Route::get('/employees/template', [HrmWebController::class, 'employeeTemplate'])->middleware('require.permission:users.manage')->name('employees.template');
+            Route::post('/employees/import/preview', [HrmWebController::class, 'previewEmployeeImport'])->middleware('require.permission:users.manage')->name('employees.import-preview');
+            Route::post('/employees/import/execute', [HrmWebController::class, 'executeEmployeeImport'])->middleware('require.permission:users.manage')->name('employees.import-execute');
+
+            // Log Presensi Mesin Fingerprint Import & Export (Sprint 3)
+            Route::get('/attendance/export', [HrmWebController::class, 'exportAttendance'])->middleware('require.permission:users.manage')->name('attendance.export');
+            Route::get('/attendance/template', [HrmWebController::class, 'attendanceTemplate'])->middleware('require.permission:users.manage')->name('attendance.template');
+            Route::post('/attendance/import/preview', [HrmWebController::class, 'previewAttendanceImport'])->middleware('require.permission:users.manage')->name('attendance.import-preview');
+            Route::post('/attendance/import/execute', [HrmWebController::class, 'executeAttendanceImport'])->middleware('require.permission:users.manage')->name('attendance.import-execute');
 
             // Kasbon & Pinjaman Karyawan
             Route::post('/loans', [HrmWebController::class, 'storeLoan'])->middleware('require.permission:users.manage')->name('loans.store');
@@ -701,6 +723,9 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         Route::post('/inventory/adjustments/{adjustment}/approve', [InventoryWebController::class, 'approveAdjustment'])->middleware('require.permission:inventory.manage')->name('inventory.adjustments.approve');
         Route::post('/inventory/adjustments/{adjustment}/reject', [InventoryWebController::class, 'rejectAdjustment'])->middleware('require.permission:inventory.manage')->name('inventory.adjustments.reject');
         Route::post('/inventory/opnames', [InventoryWebController::class, 'storeOpname'])->middleware('require.permission:inventory.manage')->name('inventory.opnames.store');
+        Route::get('/inventory/opnames/export-blank', [InventoryWebController::class, 'exportBlankOpname'])->middleware('require.permission:inventory.view')->name('inventory.opnames.export-blank');
+        Route::post('/inventory/opnames/import-preview', [InventoryWebController::class, 'previewOpnameImport'])->middleware('require.permission:inventory.manage')->name('inventory.opnames.import-preview');
+        Route::post('/inventory/opnames/import-execute', [InventoryWebController::class, 'executeOpnameImport'])->middleware('require.permission:inventory.manage')->name('inventory.opnames.import-execute');
         Route::post('/inventory/opnames/{opname}/reconcile', [InventoryWebController::class, 'reconcileOpname'])->middleware('require.permission:inventory.manage')->name('inventory.opnames.reconcile');
         Route::post('/inventory/transfers', [InventoryWebController::class, 'storeTransfer'])->middleware(['require.permission:inventory.manage', 'entitlement:transfer_stock'])->name('inventory.transfers.store');
         Route::post('/inventory/transfers/{transfer}/receive', [InventoryWebController::class, 'receiveTransfer'])->middleware('require.permission:inventory.manage')->name('inventory.transfers.receive');
@@ -756,18 +781,34 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         });
 
         Route::get('/finance/receivables', [CashLedgerWebController::class, 'receivables'])->middleware('require.permission:finance.receivables')->name('finance.receivables');
+        Route::get('/finance/receivables/export', [CashLedgerWebController::class, 'exportReceivables'])->middleware('require.permission:finance.receivables')->name('finance.receivables.export');
+        Route::get('/finance/receivables/template', [CashLedgerWebController::class, 'receivablesTemplate'])->middleware('require.permission:finance.receivables')->name('finance.receivables.template');
+        Route::post('/finance/receivables/import-preview', [CashLedgerWebController::class, 'previewReceivables'])->middleware('require.permission:finance.receivables')->name('finance.receivables.import-preview');
+        Route::post('/finance/receivables/import-execute', [CashLedgerWebController::class, 'executeReceivables'])->middleware('require.permission:finance.receivables')->name('finance.receivables.import-execute');
+
         Route::get('/finance/payables', [CashLedgerWebController::class, 'payables'])->middleware('require.permission:finance.payables')->name('finance.payables');
+        Route::get('/finance/payables/export', [CashLedgerWebController::class, 'exportPayables'])->middleware('require.permission:finance.payables')->name('finance.payables.export');
+        Route::get('/finance/payables/template', [CashLedgerWebController::class, 'payablesTemplate'])->middleware('require.permission:finance.payables')->name('finance.payables.template');
+        Route::post('/finance/payables/import-preview', [CashLedgerWebController::class, 'previewPayables'])->middleware('require.permission:finance.payables')->name('finance.payables.import-preview');
+        Route::post('/finance/payables/import-execute', [CashLedgerWebController::class, 'executePayables'])->middleware('require.permission:finance.payables')->name('finance.payables.import-execute');
 
         // Corporate Accounting & Multi-Ledger Evolution
         Route::middleware('require.permission:accounting.view')->group(function (): void {
             // Bagan Akun (Chart of Accounts Tree Builder)
             Route::get('/finance/chart-of-accounts', [AccountingWebController::class, 'coaIndex'])->name('finance.coa.index');
+            Route::get('/finance/chart-of-accounts/export', [AccountingWebController::class, 'coaExport'])->name('finance.coa.export');
+            Route::get('/finance/chart-of-accounts/template', [AccountingWebController::class, 'coaTemplate'])->name('finance.coa.template');
+            Route::post('/finance/chart-of-accounts/import-preview', [AccountingWebController::class, 'coaImportPreview'])->name('finance.coa.import-preview');
+            Route::post('/finance/chart-of-accounts/import-execute', [AccountingWebController::class, 'coaImportExecute'])->middleware('require.permission:accounting.manage')->name('finance.coa.import-execute');
             Route::post('/finance/chart-of-accounts', [AccountingWebController::class, 'coaStore'])->middleware('require.permission:accounting.manage')->name('finance.coa.store');
             Route::put('/finance/chart-of-accounts/{account}', [AccountingWebController::class, 'coaUpdate'])->middleware('require.permission:accounting.manage')->name('finance.coa.update');
             Route::delete('/finance/chart-of-accounts/{account}', [AccountingWebController::class, 'coaDestroy'])->middleware('require.permission:accounting.manage')->name('finance.coa.destroy');
 
             // Laporan Keuangan SAK EMKM Resmi
             Route::get('/finance/balance-sheet', [AccountingWebController::class, 'balanceSheet'])->name('finance.balance-sheet');
+            Route::get('/finance/balance-sheet/opening-template', [AccountingWebController::class, 'openingBalanceTemplate'])->name('finance.balance-sheet.opening-template');
+            Route::post('/finance/balance-sheet/opening-preview', [AccountingWebController::class, 'openingBalancePreview'])->name('finance.balance-sheet.opening-preview');
+            Route::post('/finance/balance-sheet/opening-execute', [AccountingWebController::class, 'openingBalanceExecute'])->middleware('require.permission:accounting.manage')->name('finance.balance-sheet.opening-execute');
             Route::get('/finance/trial-balance', [AccountingWebController::class, 'trialBalance'])->name('finance.trial-balance');
             Route::get('/finance/general-ledger', [AccountingWebController::class, 'generalLedger'])->name('finance.general-ledger');
 
@@ -882,6 +923,7 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         // Omnichannel Storefront & Order Management
         Route::prefix('storefront')->name('storefront.')->middleware(['module:storefront_checkout', 'require.permission:storefront.orders.view'])->group(function (): void {
             Route::get('/orders', [MerchantOrderController::class, 'index'])->name('orders.index');
+            Route::get('/orders/export-dispatch', [MerchantOrderController::class, 'exportDispatch'])->name('orders.export-dispatch');
             Route::get('/orders/{order}', [MerchantOrderController::class, 'show'])->name('orders.show');
             Route::get('/orders/{order}/shipping-label', [MerchantOrderController::class, 'shippingLabel'])->name('orders.shipping_label');
             Route::post('/orders/{order}/waybill', [MerchantOrderController::class, 'updateWaybill'])->middleware('require.permission:storefront.orders.process')->name('orders.waybill.update');
@@ -929,6 +971,7 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
                 Route::get('/', [MarketplaceWebController::class, 'index'])->name('index');
                 Route::get('/products', [MarketplaceWebController::class, 'products'])->name('products');
                 Route::get('/orders', [MarketplaceWebController::class, 'orders'])->name('orders');
+                Route::get('/orders/export', [MarketplaceWebController::class, 'exportOrders'])->name('orders.export');
                 Route::get('/chat', [MarketplaceWebController::class, 'chat'])->name('chat');
                 Route::get('/chat/{conversation}', [MarketplaceWebController::class, 'getConversationDetails'])->name('chat.details');
                 Route::get('/logs', [MarketplaceWebController::class, 'logs'])->name('logs');

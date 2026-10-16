@@ -11,13 +11,16 @@ use App\Http\Controllers\Controller;
 use App\Models\BankStatement;
 use App\Models\BankStatementLine;
 use App\Models\CashAccount;
+use App\Domain\Import\DataExchangeService;
 use App\Models\ChartOfAccount;
 use App\Support\Context;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 final class AccountingWebController extends Controller
 {
@@ -418,5 +421,128 @@ final class AccountingWebController extends Controller
         }
 
         return (float) $cleaned;
+    }
+
+    /**
+     * Export Chart of Accounts to Excel.
+     */
+    public function coaExport(): StreamedResponse
+    {
+        $business = Context::requireBusiness();
+        return (new DataExchangeService())->exportCoa($business);
+    }
+
+    /**
+     * Download COA Import Template.
+     */
+    public function coaTemplate(): StreamedResponse
+    {
+        $business = Context::requireBusiness();
+        return (new DataExchangeService())->generateCoaTemplate($business);
+    }
+
+    /**
+     * Preview COA Import file.
+     */
+    public function coaImportPreview(Request $request): JsonResponse
+    {
+        $business = Context::requireBusiness();
+        $request->validate([
+            'file' => ['required', 'file', 'mimes:xlsx,xls,csv', 'max:10240'],
+        ]);
+
+        $res = (new DataExchangeService())->parseAndPreviewCoa($business, $request->file('file'));
+
+        return response()->json([
+            'success' => true,
+            'status' => 'success',
+            'data' => $res,
+            'result' => $res,
+        ]);
+    }
+
+    /**
+     * Execute COA Import.
+     */
+    public function coaImportExecute(Request $request): JsonResponse
+    {
+        $business = Context::requireBusiness();
+        $request->validate([
+            'rows' => ['required', 'array', 'min:1'],
+            'duplicate_strategy' => ['nullable', 'string', 'in:skip,update'],
+        ]);
+
+        $res = (new DataExchangeService())->executeCoaImport(
+            $business,
+            $request->input('rows'),
+            $request->input('duplicate_strategy', 'skip')
+        );
+
+        return response()->json([
+            'success' => true,
+            'status' => 'success',
+            'data' => $res,
+            'result' => $res,
+        ]);
+    }
+
+    /**
+     * Download Opening Balance Sheet Import Template.
+     */
+    public function openingBalanceTemplate(): StreamedResponse
+    {
+        $business = Context::requireBusiness();
+        return (new DataExchangeService())->generateOpeningBalanceTemplate($business);
+    }
+
+    /**
+     * Preview Opening Balance Sheet Import file.
+     */
+    public function openingBalancePreview(Request $request): JsonResponse
+    {
+        $business = Context::requireBusiness();
+        $request->validate([
+            'file' => ['required', 'file', 'mimes:xlsx,xls,csv', 'max:10240'],
+        ]);
+
+        $res = (new DataExchangeService())->parseAndPreviewOpeningBalance($business, $request->file('file'));
+
+        return response()->json([
+            'success' => true,
+            'status' => 'success',
+            'data' => $res,
+            'result' => $res,
+        ]);
+    }
+
+    /**
+     * Execute Opening Balance Sheet Import.
+     */
+    public function openingBalanceExecute(Request $request): JsonResponse
+    {
+        $business = Context::requireBusiness();
+        $request->validate([
+            'rows' => ['required', 'array', 'min:1'],
+            'entry_date' => ['nullable', 'date'],
+            'description' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        $res = (new DataExchangeService())->executeOpeningBalanceImport(
+            $business,
+            $request->input('rows'),
+            $request->input('entry_date'),
+            $request->input('description')
+        );
+
+        $isSuccess = (bool) ($res['success'] ?? false);
+        $statusCode = $isSuccess ? 200 : 422;
+
+        return response()->json([
+            'success' => $isSuccess,
+            'status' => $isSuccess ? 'success' : 'error',
+            'message' => $res['message'] ?? null,
+            'data' => $res,
+            'result' => $res,
+        ], $statusCode);
     }
 }

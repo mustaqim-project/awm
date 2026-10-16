@@ -160,17 +160,26 @@
                 @endforeach
             </div>
 
-            <form method="GET" action="{{ route('storefront.orders.index') }}" class="relative max-w-md w-full">
-                <input type="hidden" name="tab" value="{{ $statusTab }}">
-                @if (($typeFilter ?? 'all') !== 'all')
-                    <input type="hidden" name="type" value="{{ $typeFilter }}">
-                @endif
-                <i data-lucide="search"
-                    class="w-4 h-4 text-black/40 dark:text-white/40 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
-                <input type="search" name="search" value="{{ request('search') }}"
-                    placeholder="Cari nomor order, nama, atau no. WA..."
-                    class="w-full h-11 pl-10 pr-4 rounded-[12px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition-all shadow-sm">
-            </form>
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <form method="GET" action="{{ route('storefront.orders.index') }}" class="relative max-w-md w-full">
+                    <input type="hidden" name="tab" value="{{ $statusTab }}">
+                    @if (($typeFilter ?? 'all') !== 'all')
+                        <input type="hidden" name="type" value="{{ $typeFilter }}">
+                    @endif
+                    <i data-lucide="search"
+                        class="w-4 h-4 text-black/40 dark:text-white/40 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                    <input type="search" name="search" value="{{ request('search') }}"
+                        placeholder="Cari nomor order, nama, atau no. WA..."
+                        class="w-full h-11 pl-10 pr-4 rounded-[12px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition-all shadow-sm">
+                </form>
+
+                <a href="{{ route('storefront.orders.export-dispatch', array_filter(['tab' => $statusTab !== 'all' ? $statusTab : null, 'type' => ($typeFilter ?? 'all') !== 'all' ? $typeFilter : null, 'search' => request('search')])) }}"
+                    class="h-11 px-4 rounded-[12px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] hover:bg-black/[0.04] dark:hover:bg-white/[0.06] text-black dark:text-white text-[13px] font-semibold flex items-center justify-center gap-2 shadow-xs transition active:scale-[0.98] shrink-0"
+                    title="Ekspor seluruh pesanan untuk manifest kurir pengiriman (.xlsx)">
+                    <i data-lucide="truck" class="w-4 h-4 text-[#007AFF]"></i>
+                    <span>Ekspor Manifest Kurir</span>
+                </a>
+            </div>
         </div>
 
         {{-- MOBILE CARD LIST VIEW (< md) --}}

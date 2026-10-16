@@ -22,9 +22,9 @@ final class SupplierWebController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('require.permission:master_data.suppliers.view', only: ['index']),
-            new Middleware(['require.permission:master_data.suppliers.manage', 'entitlement:supplier'], only: ['store']),
-            new Middleware('require.permission:master_data.suppliers.manage', only: ['update', 'destroy']),
+            new Middleware('require.permission:master_data.suppliers.view', only: ['index', 'export', 'downloadTemplate']),
+            new Middleware(['require.permission:master_data.suppliers.manage', 'entitlement:supplier'], only: ['store', 'executeImport']),
+            new Middleware('require.permission:master_data.suppliers.manage', only: ['update', 'destroy', 'previewImport']),
         ];
     }
     /**
@@ -164,5 +164,95 @@ final class SupplierWebController extends Controller implements HasMiddleware
         }
 
         return back()->with('success', __('purchasing.supplier.messages.deleted_success'));
+    }
+
+    /**
+     * Export suppliers to Excel.
+     */
+    public function export(Request $request): \Symfony\Component\HttpFoundation\StreamedResponse
+    {
+        $business = Context::requireBusiness();
+
+        $query = Supplier::where('business_id', $business->id)->latest();
+        if ($request->filled('search')) {
+            $search = (string) $request->get('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('contact_person', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('phone', 'like', "%{$search}%");
+            });
+        }
+
+        return app(\App\Domain\Import\DataExchangeService::class)->exportSuppliers($business, $query);
+    }
+
+    /**
+     * Download Excel template for Supplier import.
+     */
+    public function downloadTemplate(): \Symfony\Component\HttpFoundation\StreamedResponse
+    {
+        $business = Context::requireBusiness();
+        return app(\App\Domain\Import\DataExchangeService::class)->generateSupplierTemplate($business);
+    }
+
+    /**
+     * Preview uploaded supplier Excel file.
+     */
+    public function previewImport(Request $request): JsonResponse
+    {
+        $business = Context::requireBusiness();
+
+        $request->validate([
+            'file' => ['required', 'file', 'max:5120', 'mimes:xlsx,xls,csv,txt'],
+        ]);
+
+        $preview = app(\App\Domain\Import\DataExchangeService::class)->parseAndPreviewSuppliers($business, $request->file('file'));
+
+        return response()->json([
+            'success' => true,
+            'data' => $preview,
+        ]);
+    }
+
+    /**
+     * Execute confirmed supplier import.
+     */
+    public function executeImport(Request $request): JsonResponse|RedirectResponse
+    {
+        $business = Context::requireBusiness();
+
+        $validated = $request->validate([
+            'rows' => ['required'],
+            'duplicate_strategy' => ['required', 'in:skip,update'],
+        ]);
+
+        $rows = is_string($validated['rows']) ? json_decode($validated['rows'], true) : $validated['rows'];
+        if (!is_array($rows) || empty($rows)) {
+            return response()->json(['success' => false, 'message' => 'Tidak ada data supplier yang valid untuk diimpor.'], 422);
+        }
+
+        $result = app(\App\Domain\Import\DataExchangeService::class)->executeSupplierImport($business, $rows, $validated['duplicate_strategy']);
+
+        $message = "Import Supplier Selesai: {$result['imported']} supplier baru berhasil ditambahkan";
+        if ($result['updated'] > 0) {
+            $message .= ", {$result['updated']} supplier diperbarui";
+        }
+        if ($result['skipped'] > 0) {
+            $message .= ", {$result['skipped']} duplikat/error dilewati";
+        }
+        $message .= '.';
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => $message,
+                'data' => $result,
+                'result' => $result,
+                'redirect_url' => route('suppliers.index'),
+            ]);
+        }
+
+        return redirect()->route('suppliers.index')->with('success', $message);
     }
 }

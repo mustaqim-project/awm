@@ -31,6 +31,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use App\Domain\Import\DataExchangeService;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 final class InventoryWebController extends Controller
 {
@@ -697,5 +699,66 @@ final class InventoryWebController extends Controller
         $this->stockService->completeStockTransfer($transfer, $user);
 
         return redirect()->back()->with('success', "Transfer Stok #{$transfer->transfer_number} telah diterima & stok diperbarui.");
+    }
+
+    /**
+     * Download Blank Stock Opname Sheet for physical counting.
+     */
+    public function exportBlankOpname(Request $request): StreamedResponse
+    {
+        $business = Context::requireBusiness();
+        $locationId = $request->query('location_id');
+
+        return (new DataExchangeService())->exportBlankOpnameSheet($business, $locationId);
+    }
+
+    /**
+     * Preview Physical Stock Opname Import with live variance calculation.
+     */
+    public function previewOpnameImport(Request $request): JsonResponse
+    {
+        $business = Context::requireBusiness();
+
+        $request->validate([
+            'file' => ['required', 'file', 'mimes:xlsx,xls,csv', 'max:10240'],
+            'location_id' => ['required', 'uuid', Rule::exists('locations', 'id')->where('business_id', $business->id)],
+        ]);
+
+        $res = (new DataExchangeService())->parseAndPreviewOpname($business, $request->file('file'), $request->string('location_id')->toString());
+
+        return response()->json([
+            'success' => true,
+            'status' => 'success',
+            'data' => $res,
+            'result' => $res,
+        ]);
+    }
+
+    /**
+     * Execute Stock Opname Physical Count Import.
+     */
+    public function executeOpnameImport(Request $request): JsonResponse
+    {
+        $business = Context::requireBusiness();
+
+        $request->validate([
+            'rows' => ['required', 'array', 'min:1'],
+            'location_id' => ['required', 'uuid', Rule::exists('locations', 'id')->where('business_id', $business->id)],
+            'notes' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        $res = (new DataExchangeService())->executeOpnameImport(
+            $business,
+            $request->input('rows'),
+            $request->string('location_id')->toString(),
+            $request->input('notes')
+        );
+
+        return response()->json([
+            'success' => $res['success'] ?? true,
+            'status' => 'success',
+            'data' => $res,
+            'result' => $res,
+        ]);
     }
 }

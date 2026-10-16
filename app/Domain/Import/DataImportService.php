@@ -1609,6 +1609,23 @@ final class DataImportService
         }
         $defaultLocation = $locations->first();
 
+        // Preload Products in business
+        $products = Product::withoutGlobalScopes()->where('business_id', $business->id)->with('outputUnit')->get();
+        $productBySku = [];
+        $productByName = [];
+        foreach ($products as $p) {
+            if ($p->code) {
+                $productBySku[strtolower(trim($p->code))] = $p;
+            }
+            if ($p->sku) {
+                $productBySku[strtolower(trim($p->sku))] = $p;
+            }
+            if ($p->barcode) {
+                $productBySku[strtolower(trim($p->barcode))] = $p;
+            }
+            $productByName[strtolower(trim($p->name))] = $p;
+        }
+
         // Preload Materials in business - Strict Master Data Requirement (Rule 01, 04, 07)
         $materials = Material::withoutGlobalScopes()->where('business_id', $business->id)->with('unit')->get();
         $materialPrices = MaterialPrice::withoutGlobalScopes()
@@ -1628,14 +1645,18 @@ final class DataImportService
             $materialByName[strtolower(trim($m->name))] = $m;
         }
 
-        // Preload existing material stocks in DB
+        // Preload existing stocks (both Material & Product) in DB
         $existingStocks = InventoryStock::withoutGlobalScopes()
             ->where('business_id', $business->id)
-            ->whereNotNull('material_id')
             ->get();
         $stockMap = [];
         foreach ($existingStocks as $st) {
-            $stockMap[$st->material_id . '_' . $st->location_id] = $st;
+            if ($st->material_id) {
+                $stockMap['m_' . $st->material_id . '_' . $st->location_id] = $st;
+            }
+            if ($st->product_id) {
+                $stockMap['p_' . $st->product_id . '_' . $st->location_id] = $st;
+            }
         }
 
         // Preload units
@@ -1654,37 +1675,99 @@ final class DataImportService
 
         foreach ($rawRows as $index => $row) {
             $rowNumber = $index + 2;
-            $itemIdent = trim((string) ($row['name'] ?? $row['material_name_or_sku'] ?? $row['material'] ?? $row['item_name_or_sku'] ?? $row['product'] ?? ''));
-            $sku = trim((string) ($row['sku'] ?? $row['code'] ?? ''));
-            $locIdent = trim((string) ($row['location'] ?? $row['gudang'] ?? ''));
-            $quantity = (float) ($row['quantity'] ?? $row['stok'] ?? $row['jumlah'] ?? 0);
-            $unitStr = trim((string) ($row['unit'] ?? $row['satuan'] ?? ''));
-            $unitCost = (float) ($row['unit_cost'] ?? $row['base_cost'] ?? $row['hpp'] ?? $row['harga_beli'] ?? 0);
-            $notes = trim((string) ($row['notes'] ?? $row['catatan'] ?? ''));
+            $itemIdent = trim((string) ($row['name'] ?? $row['nama_item'] ?? $row['nama_bahan_baku'] ?? $row['nama_produk'] ?? $row['material_name_or_sku'] ?? $row['material'] ?? $row['item_name_or_sku'] ?? $row['product'] ?? ''));
+            $sku = trim((string) ($row['sku'] ?? $row['kode_sku_bahan'] ?? $row['kode_sku'] ?? $row['code'] ?? ''));
+            $locIdent = trim((string) ($row['lokasi_outlet_gudang'] ?? $row['location'] ?? $row['gudang'] ?? ''));
+            $quantity = (float) ($row['jumlah_stok'] ?? $row['quantity'] ?? $row['stok'] ?? $row['jumlah'] ?? 0);
+            $unitStr = trim((string) ($row['satuan'] ?? $row['unit'] ?? ''));
+            $unitCost = (float) ($row['biaya_pokok_hpp_per_unit'] ?? $row['unit_cost'] ?? $row['base_cost'] ?? $row['hpp'] ?? $row['harga_beli'] ?? 0);
+            $notes = trim((string) ($row['catatan_alasan_saldo'] ?? $row['notes'] ?? $row['catatan'] ?? ''));
 
             $errors = [];
             $status = 'valid';
-            $statusReason = 'Siap dicatat ke mutasi saldo awal stok bahan baku.';
+            $statusReason = 'Siap dicatat ke mutasi saldo awal stok.';
 
             // 1. Validate Item Name / SKU
             if ($itemIdent === '' && $sku === '') {
-                $errors[] = 'Nama bahan baku atau kode/SKU tidak boleh kosong.';
+                $errors[] = 'Nama item atau kode/SKU tidak boleh kosong.';
             }
 
-            // 2. Resolve Material (Master Data MUST exist - Rule 04 & 07)
+            // 2. Resolve Product OR Material (Master Data MUST exist)
+            $resolvedProduct = null;
             $resolvedMaterial = null;
-            $lookupKeySku = $sku !== '' ? strtolower($sku) : '';
-            $lookupKeyName = $itemIdent !== '' ? strtolower($itemIdent) : '';
 
-            if ($lookupKeySku !== '' && isset($materialBySku[$lookupKeySku])) {
-                $resolvedMaterial = $materialBySku[$lookupKeySku];
-            } elseif ($lookupKeyName !== '' && isset($materialByName[$lookupKeyName])) {
-                $resolvedMaterial = $materialByName[$lookupKeyName];
+            $candidateSkus = [];
+            $candidateNames = [];
+
+            if ($sku !== '') {
+                $candidateSkus[] = strtolower($sku);
+                $candidateNames[] = strtolower($sku);
             }
 
-            if (!$resolvedMaterial) {
+            if ($itemIdent !== '') {
+                $cleanIdent = trim($itemIdent);
+                $candidateNames[] = strtolower($cleanIdent);
+                $candidateSkus[] = strtolower($cleanIdent);
+
+                // Strip leading tags like [PRODUK], [BAHAN], [ITEM]
+                if (preg_match('/^\[(PRODUK|BAHAN|ITEM)\]\s*(.*)$/i', $cleanIdent, $pm)) {
+                    $cleanIdent = trim($pm[2]);
+                    $candidateNames[] = strtolower($cleanIdent);
+                }
+
+                // Check trailing (SKU) e.g. "Kopi Susu (KOP-01)"
+                if (preg_match('/^(.*?)\s*\((.*?)\)$/', $cleanIdent, $sm)) {
+                    $candidateNames[] = strtolower(trim($sm[1]));
+                    $candidateSkus[] = strtolower(trim($sm[2]));
+                }
+
+                // Check "SKU | Name" or "Name | SKU"
+                if (str_contains($cleanIdent, '|')) {
+                    $parts = explode('|', $cleanIdent, 2);
+                    $candidateSkus[] = strtolower(trim($parts[0]));
+                    $candidateNames[] = strtolower(trim($parts[1]));
+                    $candidateNames[] = strtolower(trim($parts[0]));
+                    $candidateSkus[] = strtolower(trim($parts[1]));
+                }
+            }
+
+            // Check Product first (by SKU candidates, then Name candidates)
+            foreach ($candidateSkus as $c) {
+                if ($c !== '' && isset($productBySku[$c])) {
+                    $resolvedProduct = $productBySku[$c];
+                    break;
+                }
+            }
+            if (!$resolvedProduct) {
+                foreach ($candidateNames as $c) {
+                    if ($c !== '' && isset($productByName[$c])) {
+                        $resolvedProduct = $productByName[$c];
+                        break;
+                    }
+                }
+            }
+
+            // Check Material (by SKU candidates, then Name candidates)
+            if (!$resolvedProduct) {
+                foreach ($candidateSkus as $c) {
+                    if ($c !== '' && isset($materialBySku[$c])) {
+                        $resolvedMaterial = $materialBySku[$c];
+                        break;
+                    }
+                }
+                if (!$resolvedMaterial) {
+                    foreach ($candidateNames as $c) {
+                        if ($c !== '' && isset($materialByName[$c])) {
+                            $resolvedMaterial = $materialByName[$c];
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (!$resolvedProduct && !$resolvedMaterial) {
                 $identDisplay = $itemIdent ?: $sku;
-                $errors[] = "Bahan baku '{$identDisplay}' belum terdaftar di Master Data. Sesuai aturan sistem, Inventory berbasis Material. Silakan buat atau import Bahan Baku terlebih dahulu.";
+                $errors[] = "Item '{$identDisplay}' belum terdaftar di Master Data Produk maupun Bahan Baku. Silakan buat atau import Master Data terlebih dahulu.";
             }
 
             // 3. Resolve Location
@@ -1703,6 +1786,7 @@ final class DataImportService
 
             // 4. Resolve Unit
             $resolvedUnit = $unitMap[strtolower($unitStr)]
+                ?? ($resolvedProduct ? ($resolvedProduct->outputUnit ?? $unitMap[strtolower($resolvedProduct->unit ?? '')] ?? null) : null)
                 ?? $resolvedMaterial?->unit
                 ?? $unitMap['pcs']
                 ?? null;
@@ -1723,16 +1807,16 @@ final class DataImportService
             $isDbDuplicate = false;
             $isFileDuplicate = false;
 
-            $effectiveMatId = $resolvedMaterial?->id;
+            $effectiveKey = $resolvedProduct ? 'p_' . $resolvedProduct->id : ($resolvedMaterial ? 'm_' . $resolvedMaterial->id : null);
             $effectiveLocId = $resolvedLocation?->id;
 
-            if ($effectiveMatId && $effectiveLocId) {
-                $pairKey = $effectiveMatId . '_' . $effectiveLocId;
+            if ($effectiveKey && $effectiveLocId) {
+                $pairKey = $effectiveKey . '_' . $effectiveLocId;
 
                 // Check in-file duplicate
                 if (isset($seenPairs[$pairKey])) {
                     $isFileDuplicate = true;
-                    $statusReason = 'Duplikat di baris sebelumnya dalam file untuk bahan dan lokasi yang sama.';
+                    $statusReason = 'Duplikat di baris sebelumnya dalam file untuk item dan lokasi yang sama.';
                 }
 
                 // Check DB duplicate
@@ -1758,16 +1842,21 @@ final class DataImportService
                 $validCount++;
             }
 
-            $displayName = $resolvedMaterial?->name ?? ($itemIdent ?: $sku);
-            $displaySku = $resolvedMaterial?->code ?? $sku;
-            $resolvedCost = $unitCost > 0 ? $unitCost : (float) ($materialPrices->get($resolvedMaterial?->id)?->purchase_price ?? 0);
+            $displayName = $resolvedProduct?->name ?? $resolvedMaterial?->name ?? ($itemIdent ?: $sku);
+            $displaySku = $resolvedProduct?->code ?? $resolvedProduct?->sku ?? $resolvedMaterial?->code ?? $sku;
+            $resolvedCost = $unitCost > 0
+                ? $unitCost
+                : ($resolvedProduct
+                    ? (float) ($resolvedProduct->base_cost ?? 0)
+                    : (float) ($materialPrices->get($resolvedMaterial?->id)?->purchase_price ?? 0));
 
             $parsedRows[] = [
                 'row_number' => $rowNumber,
                 'item_name' => $displayName,
                 'sku' => $displaySku,
+                'item_type' => $resolvedProduct ? 'product' : 'material',
                 'material_id' => $resolvedMaterial?->id,
-                'product_id' => null,
+                'product_id' => $resolvedProduct?->id,
                 'location_name' => $resolvedLocation?->name ?? $locIdent,
                 'location_id' => $resolvedLocation?->id,
                 'quantity' => $quantity,
@@ -1792,7 +1881,7 @@ final class DataImportService
 
     /**
      * Execute batch inventory stock import using existing StockService and transaction workflow.
-     * Follows Rule 01, 04, 07: Strictly Material-based inventory. NO auto-creation of master data.
+     * Supports both Material and Product inventory stocks.
      *
      * @param  array<int, array<string, mixed>>  $rows
      * @param  string  $duplicateStrategy  'skip' | 'adjust' | 'initial'
@@ -1817,22 +1906,13 @@ final class DataImportService
                 }
 
                 $materialId = $row['material_id'] ?? null;
+                $productId = $row['product_id'] ?? null;
                 $locationId = $row['location_id'] ?? null;
                 $quantity = (float) ($row['quantity'] ?? 0);
                 $unitCost = (float) ($row['unit_cost'] ?? 0);
-                $notes = !empty($row['notes']) ? (string) $row['notes'] : 'Import Saldo Stok Bahan Baku Excel';
+                $notes = !empty($row['notes']) ? (string) $row['notes'] : 'Import Saldo Stok Excel';
 
-                if (!$materialId || !$locationId || $quantity <= 0) {
-                    $skipped++;
-                    continue;
-                }
-
-                // Verify Material exists in business (Rule 07)
-                $material = Material::withoutGlobalScopes()
-                    ->where('business_id', $business->id)
-                    ->find($materialId);
-
-                if (!$material) {
+                if ((!$materialId && !$productId) || !$locationId || $quantity <= 0) {
                     $skipped++;
                     continue;
                 }
@@ -1841,7 +1921,8 @@ final class DataImportService
                 $existingStock = InventoryStock::withoutGlobalScopes()
                     ->where('business_id', $business->id)
                     ->where('location_id', $locationId)
-                    ->where('material_id', $materialId)
+                    ->when($productId, fn ($q) => $q->where('product_id', $productId))
+                    ->when($materialId, fn ($q) => $q->where('material_id', $materialId))
                     ->first();
 
                 $isDuplicate = $existingStock && (float) $existingStock->quantity > 0;
@@ -1855,10 +1936,11 @@ final class DataImportService
                     ? StockMovement::TYPE_ADJUSTMENT
                     : StockMovement::TYPE_INITIAL;
 
-                // Mutate stock via existing atomic StockService on Master Material
+                // Mutate stock via atomic StockService on Product or Material
                 $this->stockService->recordMovement(
                     businessId: $business->id,
                     locationId: $locationId,
+                    productId: $productId,
                     movementType: $movementType,
                     quantityChange: $quantity,
                     unitCost: $unitCost,
@@ -1990,8 +2072,8 @@ final class DataImportService
             return 'waste_percentage';
         }
 
-        // Product specific aliases
-        if (str_contains($t, 'namaproduk') || $t === 'produk' || $t === 'product' || $t === 'nama' || $t === 'item') {
+        // Product and Item specific aliases
+        if (str_contains($t, 'namaproduk') || str_contains($t, 'namaitem') || str_contains($t, 'namabarang') || str_contains($t, 'productname') || str_contains($t, 'itemname') || $t === 'produk' || $t === 'product' || $t === 'nama' || $t === 'item') {
             return 'name';
         }
         if (str_contains($t, 'sku') || str_contains($t, 'kodeproduk') || $t === 'kode' || $t === 'code') {

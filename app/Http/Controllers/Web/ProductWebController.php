@@ -36,7 +36,7 @@ final class ProductWebController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('require.permission:products.view', only: ['index', 'bom', 'branchPrices']),
+            new Middleware('require.permission:products.view', only: ['index', 'bom', 'branchPrices', 'export']),
             new Middleware(['require.permission:products.create', 'entitlement:product'], only: ['store']),
             new Middleware('require.permission:products.edit', only: ['update', 'toggleSetting', 'togglePosImageVisibility', 'deleteGalleryImage']),
             new Middleware(['require.permission:products.edit', 'entitlement:recipe'], only: ['addBomItem', 'removeBomItem']),
@@ -47,6 +47,29 @@ final class ProductWebController extends Controller implements HasMiddleware
     }
 
     public function __construct(private readonly BomExplosionService $bomService = new BomExplosionService) {}
+
+    /**
+     * Export products to Excel.
+     */
+    public function export(Request $request): \Symfony\Component\HttpFoundation\StreamedResponse
+    {
+        $business = Context::requireBusiness();
+
+        $query = Product::goods()->where('business_id', $business->id)->latest();
+        if ($request->filled('search')) {
+            $search = (string) $request->get('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('code', 'like', "%{$search}%")
+                    ->orWhere('sku', 'like', "%{$search}%");
+            });
+        }
+        if ($request->filled('category_id')) {
+            $query->where('category_id', $request->input('category_id'));
+        }
+
+        return app(\App\Domain\Import\DataExchangeService::class)->exportProducts($business, $query);
+    }
 
     /**
      * List products.

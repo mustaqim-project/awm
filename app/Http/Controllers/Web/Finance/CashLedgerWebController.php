@@ -12,12 +12,15 @@ use App\Models\Invoice;
 use App\Models\PosOrder;
 use App\Models\PosOrderPayment;
 use App\Models\SupplierInvoice;
+use App\Domain\Import\DataExchangeService;
 use App\Support\Context;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use InvalidArgumentException;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 final class CashLedgerWebController extends Controller
 {
@@ -398,5 +401,101 @@ final class CashLedgerWebController extends Controller
         $status = $account->is_active ? 'diaktifkan' : 'dinonaktifkan';
 
         return back()->with('success', "Akun Rekening/Kas '{$account->name}' berhasil {$status}.");
+    }
+
+    // =========================================================================
+    // SPRINT 2: RECEIVABLES (AR) & PAYABLES (AP) IMPORT/EXPORT
+    // =========================================================================
+
+    public function exportReceivables(): StreamedResponse
+    {
+        $business = Context::requireBusiness();
+        return (new DataExchangeService())->exportReceivables($business);
+    }
+
+    public function receivablesTemplate(): StreamedResponse
+    {
+        $business = Context::requireBusiness();
+        return (new DataExchangeService())->generateReceivablesTemplate($business);
+    }
+
+    public function previewReceivables(Request $request): JsonResponse
+    {
+        $business = Context::requireBusiness();
+        $request->validate([
+            'file' => ['required', 'file', 'mimes:xlsx,xls,csv', 'max:10240'],
+        ]);
+
+        $res = (new DataExchangeService())->parseAndPreviewReceivables($business, $request->file('file'));
+
+        return response()->json([
+            'success' => true,
+            'status' => 'success',
+            'data' => $res,
+            'result' => $res,
+        ]);
+    }
+
+    public function executeReceivables(Request $request): JsonResponse
+    {
+        $business = Context::requireBusiness();
+        $request->validate([
+            'rows' => ['required', 'array', 'min:1'],
+        ]);
+
+        $res = (new DataExchangeService())->executeReceivablesImport($business, $request->input('rows'));
+
+        return response()->json([
+            'success' => true,
+            'status' => 'success',
+            'data' => $res,
+            'result' => $res,
+        ]);
+    }
+
+    public function exportPayables(): StreamedResponse
+    {
+        $business = Context::requireBusiness();
+        return (new DataExchangeService())->exportPayables($business);
+    }
+
+    public function payablesTemplate(): StreamedResponse
+    {
+        $business = Context::requireBusiness();
+        return (new DataExchangeService())->generatePayablesTemplate($business);
+    }
+
+    public function previewPayables(Request $request): JsonResponse
+    {
+        $business = Context::requireBusiness();
+        $request->validate([
+            'file' => ['required', 'file', 'mimes:xlsx,xls,csv', 'max:10240'],
+        ]);
+
+        $res = (new DataExchangeService())->parseAndPreviewPayables($business, $request->file('file'));
+
+        return response()->json([
+            'success' => true,
+            'status' => 'success',
+            'data' => $res,
+            'result' => $res,
+        ]);
+    }
+
+    public function executePayables(Request $request): JsonResponse
+    {
+        $business = Context::requireBusiness();
+        $request->validate([
+            'rows' => ['required', 'array', 'min:1'],
+        ]);
+
+        $res = (new DataExchangeService())->executePayablesImport($business, $request->input('rows'));
+
+        return response()->json([
+            'success' => true,
+            'status' => 'success',
+            'data' => $res,
+            'result' => $res,
+        ]);
     }
 }

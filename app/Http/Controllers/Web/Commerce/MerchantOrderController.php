@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use App\Domain\Import\DataExchangeService;
 use Throwable;
 
 final class MerchantOrderController extends Controller
@@ -647,6 +648,18 @@ final class MerchantOrderController extends Controller
         ]);
 
         return back()->with('success', "Nomor Resi / AWB berhasil diperbarui: {$waybill}");
+    }
+
+    /**
+     * Export Storefront Orders Dispatch Manifest to Excel.
+     */
+    public function exportDispatch(Request $request): StreamedResponse
+    {
+        $business = Context::business();
+        abort_unless($business, 404);
+        abort_unless(Context::hasPermission('storefront.orders.view'), 403);
+
+        return (new DataExchangeService())->exportStorefrontOrdersDispatch($business, $request->all());
     }
 }
 
