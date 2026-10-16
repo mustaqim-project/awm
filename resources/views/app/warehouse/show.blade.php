@@ -402,23 +402,120 @@
                 </div>
 
                 {{-- Stocks Table (Desktop) --}}
-                <div class="hidden sm:block overflow-x-auto">
+                <div class="hidden sm:block overflow-x-auto"
+                     x-data="{
+                         sortCol: null,
+                         sortAsc: true,
+                         sortBy(colIndex, type = 'string') {
+                             if (this.sortCol === colIndex) {
+                                 this.sortAsc = !this.sortAsc;
+                             } else {
+                                 this.sortCol = colIndex;
+                                 this.sortAsc = true;
+                             }
+                             const tbody = this.$refs.tableBody;
+                             const rows = Array.from(tbody.querySelectorAll('tr[data-sort-row]'));
+                             rows.sort((a, b) => {
+                                 let valA = a.getAttribute(`data-sort-${colIndex}`) || '';
+                                 let valB = b.getAttribute(`data-sort-${colIndex}`) || '';
+                                 if (type === 'number') {
+                                     valA = parseFloat(valA) || 0;
+                                     valB = parseFloat(valB) || 0;
+                                     return this.sortAsc ? valA - valB : valB - valA;
+                                 }
+                                 return this.sortAsc
+                                     ? valA.localeCompare(valB, undefined, { numeric: true, sensitivity: 'base' })
+                                     : valB.localeCompare(valA, undefined, { numeric: true, sensitivity: 'base' });
+                             });
+                             rows.forEach(row => tbody.appendChild(row));
+                         }
+                     }">
                     <table class="w-full text-left text-xs">
                         <thead>
-                            <tr class="border-b border-black/[0.06] dark:border-white/[0.08] text-[11px] font-bold uppercase tracking-wide text-slate-400 dark:text-slate-500 bg-slate-50/50 dark:bg-[#2C2C2E]/50">
-                                <th class="px-4 py-3">{{ __('warehouse.stock_table.col_item') }}</th>
-                                <th class="px-4 py-3">{{ __('warehouse.stock_table.col_category') }}</th>
-                                <th class="px-4 py-3 text-right">{{ __('warehouse.stock_table.col_qty') }}</th>
-                                <th class="px-4 py-3 text-right">{{ __('warehouse.stock_table.col_min_stock') }}</th>
-                                <th class="px-4 py-3 text-right">{{ __('warehouse.stock_table.col_unit_cost') }}</th>
-                                <th class="px-4 py-3 text-right">{{ __('warehouse.stock_table.col_total_val') }}</th>
-                                <th class="px-4 py-3 text-center">{{ __('warehouse.stock_table.col_status') }}</th>
+                            <tr class="border-b border-black/[0.06] dark:border-white/[0.08] text-[11px] font-bold uppercase tracking-wide text-slate-400 dark:text-slate-500 bg-slate-50/50 dark:bg-[#2C2C2E]/50 whitespace-nowrap">
+                                <!-- Col 0: Item -->
+                                <th class="px-4 py-3">
+                                    <button type="button" @click="sortBy(0, 'string')" class="group inline-flex items-center gap-1.5 font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+                                        <span>{{ __('warehouse.stock_table.col_item') }}</span>
+                                        <span class="transition-colors">
+                                            <svg x-show="sortCol !== 0" class="w-3.5 h-3.5 text-slate-300 dark:text-slate-600 group-hover:text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                                            <svg x-show="sortCol === 0 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+                                            <svg x-show="sortCol === 0 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                                        </span>
+                                    </button>
+                                </th>
+                                <!-- Col 1: Kategori -->
+                                <th class="px-4 py-3">
+                                    <button type="button" @click="sortBy(1, 'string')" class="group inline-flex items-center gap-1.5 font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+                                        <span>{{ __('warehouse.stock_table.col_category') }}</span>
+                                        <span class="transition-colors">
+                                            <svg x-show="sortCol !== 1" class="w-3.5 h-3.5 text-slate-300 dark:text-slate-600 group-hover:text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                                            <svg x-show="sortCol === 1 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+                                            <svg x-show="sortCol === 1 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                                        </span>
+                                    </button>
+                                </th>
+                                <!-- Col 2: Qty -->
+                                <th class="px-4 py-3 text-right">
+                                    <button type="button" @click="sortBy(2, 'number')" class="group inline-flex items-center justify-end gap-1.5 font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors ml-auto">
+                                        <span>{{ __('warehouse.stock_table.col_qty') }}</span>
+                                        <span class="transition-colors">
+                                            <svg x-show="sortCol !== 2" class="w-3.5 h-3.5 text-slate-300 dark:text-slate-600 group-hover:text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                                            <svg x-show="sortCol === 2 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+                                            <svg x-show="sortCol === 2 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                                        </span>
+                                    </button>
+                                </th>
+                                <!-- Col 3: Min Stock -->
+                                <th class="px-4 py-3 text-right">
+                                    <button type="button" @click="sortBy(3, 'number')" class="group inline-flex items-center justify-end gap-1.5 font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors ml-auto">
+                                        <span>{{ __('warehouse.stock_table.col_min_stock') }}</span>
+                                        <span class="transition-colors">
+                                            <svg x-show="sortCol !== 3" class="w-3.5 h-3.5 text-slate-300 dark:text-slate-600 group-hover:text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                                            <svg x-show="sortCol === 3 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+                                            <svg x-show="sortCol === 3 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                                        </span>
+                                    </button>
+                                </th>
+                                <!-- Col 4: Unit Cost -->
+                                <th class="px-4 py-3 text-right">
+                                    <button type="button" @click="sortBy(4, 'number')" class="group inline-flex items-center justify-end gap-1.5 font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors ml-auto">
+                                        <span>{{ __('warehouse.stock_table.col_unit_cost') }}</span>
+                                        <span class="transition-colors">
+                                            <svg x-show="sortCol !== 4" class="w-3.5 h-3.5 text-slate-300 dark:text-slate-600 group-hover:text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                                            <svg x-show="sortCol === 4 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+                                            <svg x-show="sortCol === 4 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                                        </span>
+                                    </button>
+                                </th>
+                                <!-- Col 5: Total Val -->
+                                <th class="px-4 py-3 text-right">
+                                    <button type="button" @click="sortBy(5, 'number')" class="group inline-flex items-center justify-end gap-1.5 font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors ml-auto">
+                                        <span>{{ __('warehouse.stock_table.col_total_val') }}</span>
+                                        <span class="transition-colors">
+                                            <svg x-show="sortCol !== 5" class="w-3.5 h-3.5 text-slate-300 dark:text-slate-600 group-hover:text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                                            <svg x-show="sortCol === 5 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+                                            <svg x-show="sortCol === 5 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                                        </span>
+                                    </button>
+                                </th>
+                                <!-- Col 6: Status -->
+                                <th class="px-4 py-3 text-center">
+                                    <button type="button" @click="sortBy(6, 'number')" class="group inline-flex items-center justify-center gap-1.5 font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors mx-auto">
+                                        <span>{{ __('warehouse.stock_table.col_status') }}</span>
+                                        <span class="transition-colors">
+                                            <svg x-show="sortCol !== 6" class="w-3.5 h-3.5 text-slate-300 dark:text-slate-600 group-hover:text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                                            <svg x-show="sortCol === 6 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+                                            <svg x-show="sortCol === 6 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                                        </span>
+                                    </button>
+                                </th>
                                 @if (\App\Support\Context::hasPermission('inventory.manage'))
                                     <th class="px-4 py-3 text-right">{{ __('warehouse.stock_table.col_actions') }}</th>
                                 @endif
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
+                        <tbody x-ref="tableBody" class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                             @forelse($stocks as $stock)
                                 @php
                                     $isLow =
@@ -427,7 +524,15 @@
                                         $stock->quantity <= $stock->product->min_stock;
                                     $valuation = (float) $stock->quantity * (float) $stock->last_cost;
                                 @endphp
-                                <tr x-show="!searchStock || '{{ strtolower($stock->product?->name . ' ' . $stock->product?->code . ' ' . ($stock->product?->category?->name ?? '')) }}'.includes(searchStock.toLowerCase())"
+                                <tr data-sort-row
+                                    data-sort-0="{{ strtolower($stock->product?->name ?? '') }}"
+                                    data-sort-1="{{ strtolower($stock->product?->category?->name ?? '') }}"
+                                    data-sort-2="{{ (float) $stock->quantity }}"
+                                    data-sort-3="{{ (float) ($stock->product?->min_stock ?? 0) }}"
+                                    data-sort-4="{{ (float) $stock->last_cost }}"
+                                    data-sort-5="{{ (float) $valuation }}"
+                                    data-sort-6="{{ $isLow ? 1 : ($stock->quantity <= 0 ? 0 : 2) }}"
+                                    x-show="!searchStock || '{{ strtolower($stock->product?->name . ' ' . $stock->product?->code . ' ' . ($stock->product?->category?->name ?? '')) }}'.includes(searchStock.toLowerCase())"
                                     class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors {{ $isLow ? 'bg-[#FF9500]/5' : '' }}">
                                     <td class="px-4 py-3.5">
                                         <div class="font-bold text-slate-900 dark:text-white">
@@ -628,22 +733,127 @@
                     </p>
                 </div>
                 {{-- Desktop GR Table --}}
-                <div class="hidden sm:block overflow-x-auto">
+                <div class="hidden sm:block overflow-x-auto"
+                     x-data="{
+                         sortCol: null,
+                         sortAsc: true,
+                         sortBy(colIndex, type = 'string') {
+                             if (this.sortCol === colIndex) {
+                                 this.sortAsc = !this.sortAsc;
+                             } else {
+                                 this.sortCol = colIndex;
+                                 this.sortAsc = true;
+                             }
+                             const tbody = this.$refs.tableBody;
+                             const rows = Array.from(tbody.querySelectorAll('tr[data-sort-row]'));
+                             rows.sort((a, b) => {
+                                 let valA = a.getAttribute(`data-sort-${colIndex}`) || '';
+                                 let valB = b.getAttribute(`data-sort-${colIndex}`) || '';
+                                 if (type === 'number') {
+                                     valA = parseFloat(valA) || 0;
+                                     valB = parseFloat(valB) || 0;
+                                     return this.sortAsc ? valA - valB : valB - valA;
+                                 }
+                                 return this.sortAsc
+                                     ? valA.localeCompare(valB, undefined, { numeric: true, sensitivity: 'base' })
+                                     : valB.localeCompare(valA, undefined, { numeric: true, sensitivity: 'base' });
+                             });
+                             rows.forEach(row => tbody.appendChild(row));
+                         }
+                     }">
                     <table class="w-full text-left text-xs">
                         <thead>
-                            <tr class="border-b border-black/[0.06] dark:border-white/[0.08] text-[11px] font-bold uppercase tracking-wide text-slate-400 dark:text-slate-500 bg-slate-50/50 dark:bg-[#2C2C2E]/50">
-                                <th class="px-4 py-3">{{ __('warehouse.receipts_table.col_gr_number') }}</th>
-                                <th class="px-4 py-3">{{ __('warehouse.receipts_table.col_date') }}</th>
-                                <th class="px-4 py-3">{{ __('warehouse.receipts_table.col_supplier') }}</th>
-                                <th class="px-4 py-3">{{ __('warehouse.receipts_table.col_po_ref') }}</th>
-                                <th class="px-4 py-3 text-center">{{ __('warehouse.receipts_table.col_items') }}</th>
-                                <th class="px-4 py-3">{{ __('warehouse.receipts_table.col_receiver') }}</th>
-                                <th class="px-4 py-3 text-center">{{ __('warehouse.receipts_table.col_status') }}</th>
+                            <tr class="border-b border-black/[0.06] dark:border-white/[0.08] text-[11px] font-bold uppercase tracking-wide text-slate-400 dark:text-slate-500 bg-slate-50/50 dark:bg-[#2C2C2E]/50 whitespace-nowrap">
+                                <!-- Col 0: No. GR -->
+                                <th class="px-4 py-3">
+                                    <button type="button" @click="sortBy(0, 'string')" class="group inline-flex items-center gap-1.5 font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+                                        <span>{{ __('warehouse.receipts_table.col_gr_number') }}</span>
+                                        <span class="transition-colors">
+                                            <svg x-show="sortCol !== 0" class="w-3.5 h-3.5 text-slate-300 dark:text-slate-600 group-hover:text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                                            <svg x-show="sortCol === 0 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+                                            <svg x-show="sortCol === 0 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                                        </span>
+                                    </button>
+                                </th>
+                                <!-- Col 1: Tanggal -->
+                                <th class="px-4 py-3">
+                                    <button type="button" @click="sortBy(1, 'number')" class="group inline-flex items-center gap-1.5 font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+                                        <span>{{ __('warehouse.receipts_table.col_date') }}</span>
+                                        <span class="transition-colors">
+                                            <svg x-show="sortCol !== 1" class="w-3.5 h-3.5 text-slate-300 dark:text-slate-600 group-hover:text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                                            <svg x-show="sortCol === 1 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+                                            <svg x-show="sortCol === 1 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                                        </span>
+                                    </button>
+                                </th>
+                                <!-- Col 2: Pemasok -->
+                                <th class="px-4 py-3">
+                                    <button type="button" @click="sortBy(2, 'string')" class="group inline-flex items-center gap-1.5 font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+                                        <span>{{ __('warehouse.receipts_table.col_supplier') }}</span>
+                                        <span class="transition-colors">
+                                            <svg x-show="sortCol !== 2" class="w-3.5 h-3.5 text-slate-300 dark:text-slate-600 group-hover:text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                                            <svg x-show="sortCol === 2 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+                                            <svg x-show="sortCol === 2 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                                        </span>
+                                    </button>
+                                </th>
+                                <!-- Col 3: Ref PO -->
+                                <th class="px-4 py-3">
+                                    <button type="button" @click="sortBy(3, 'string')" class="group inline-flex items-center gap-1.5 font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+                                        <span>{{ __('warehouse.receipts_table.col_po_ref') }}</span>
+                                        <span class="transition-colors">
+                                            <svg x-show="sortCol !== 3" class="w-3.5 h-3.5 text-slate-300 dark:text-slate-600 group-hover:text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                                            <svg x-show="sortCol === 3 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+                                            <svg x-show="sortCol === 3 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                                        </span>
+                                    </button>
+                                </th>
+                                <!-- Col 4: Items -->
+                                <th class="px-4 py-3 text-center">
+                                    <button type="button" @click="sortBy(4, 'number')" class="group inline-flex items-center justify-center gap-1.5 font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors mx-auto">
+                                        <span>{{ __('warehouse.receipts_table.col_items') }}</span>
+                                        <span class="transition-colors">
+                                            <svg x-show="sortCol !== 4" class="w-3.5 h-3.5 text-slate-300 dark:text-slate-600 group-hover:text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                                            <svg x-show="sortCol === 4 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+                                            <svg x-show="sortCol === 4 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                                        </span>
+                                    </button>
+                                </th>
+                                <!-- Col 5: Penerima -->
+                                <th class="px-4 py-3">
+                                    <button type="button" @click="sortBy(5, 'string')" class="group inline-flex items-center gap-1.5 font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+                                        <span>{{ __('warehouse.receipts_table.col_receiver') }}</span>
+                                        <span class="transition-colors">
+                                            <svg x-show="sortCol !== 5" class="w-3.5 h-3.5 text-slate-300 dark:text-slate-600 group-hover:text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                                            <svg x-show="sortCol === 5 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+                                            <svg x-show="sortCol === 5 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                                        </span>
+                                    </button>
+                                </th>
+                                <!-- Col 6: Status -->
+                                <th class="px-4 py-3 text-center">
+                                    <button type="button" @click="sortBy(6, 'string')" class="group inline-flex items-center justify-center gap-1.5 font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors mx-auto">
+                                        <span>{{ __('warehouse.receipts_table.col_status') }}</span>
+                                        <span class="transition-colors">
+                                            <svg x-show="sortCol !== 6" class="w-3.5 h-3.5 text-slate-300 dark:text-slate-600 group-hover:text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                                            <svg x-show="sortCol === 6 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+                                            <svg x-show="sortCol === 6 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                                        </span>
+                                    </button>
+                                </th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
+                        <tbody x-ref="tableBody" class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                             @forelse ($receipts as $gr)
-                                <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors">
+                                <tr data-sort-row
+                                    data-sort-0="{{ $gr->receipt_number }}"
+                                    data-sort-1="{{ $gr->receipt_date ? $gr->receipt_date->timestamp : 0 }}"
+                                    data-sort-2="{{ strtolower($gr->supplier?->name ?? '') }}"
+                                    data-sort-3="{{ strtolower($gr->purchaseOrder?->po_number ?? '') }}"
+                                    data-sort-4="{{ $gr->items->count() }}"
+                                    data-sort-5="{{ strtolower($gr->receiver?->name ?? '') }}"
+                                    data-sort-6="received"
+                                    class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors">
                                     <td class="px-4 py-3.5 font-mono tabular-nums font-bold text-slate-900 dark:text-white">
                                         #{{ $gr->receipt_number }}
                                     </td>
@@ -767,20 +977,117 @@
                     </a>
                 </div>
                 {{-- Desktop Movements Table --}}
-                <div class="hidden sm:block overflow-x-auto">
+                <div class="hidden sm:block overflow-x-auto"
+                     x-data="{
+                         sortCol: null,
+                         sortAsc: true,
+                         sortBy(colIndex, type = 'string') {
+                             if (this.sortCol === colIndex) {
+                                 this.sortAsc = !this.sortAsc;
+                             } else {
+                                 this.sortCol = colIndex;
+                                 this.sortAsc = true;
+                             }
+                             const tbody = this.$refs.tableBody;
+                             const rows = Array.from(tbody.querySelectorAll('tr[data-sort-row]'));
+                             rows.sort((a, b) => {
+                                 let valA = a.getAttribute(`data-sort-${colIndex}`) || '';
+                                 let valB = b.getAttribute(`data-sort-${colIndex}`) || '';
+                                 if (type === 'number') {
+                                     valA = parseFloat(valA) || 0;
+                                     valB = parseFloat(valB) || 0;
+                                     return this.sortAsc ? valA - valB : valB - valA;
+                                 }
+                                 return this.sortAsc
+                                     ? valA.localeCompare(valB, undefined, { numeric: true, sensitivity: 'base' })
+                                     : valB.localeCompare(valA, undefined, { numeric: true, sensitivity: 'base' });
+                             });
+                             rows.forEach(row => tbody.appendChild(row));
+                         }
+                     }">
                     <table class="w-full text-left text-xs">
                         <thead>
-                            <tr class="border-b border-black/[0.06] dark:border-white/[0.08] text-[11px] font-bold uppercase tracking-wide text-slate-400 dark:text-slate-500 bg-slate-50/50 dark:bg-[#2C2C2E]/50">
-                                <th class="px-4 py-3">{{ __('warehouse.movements_table.col_item') }}</th>
-                                <th class="px-4 py-3">{{ __('warehouse.movements_table.col_type') }}</th>
-                                <th class="px-4 py-3">{{ __('warehouse.movements_table.col_ref') }}</th>
-                                <th class="px-4 py-3 text-right">{{ __('warehouse.movements_table.col_delta') }}</th>
-                                <th class="px-4 py-3 text-right">{{ __('warehouse.movements_table.col_balance') }}</th>
-                                <th class="px-4 py-3">{{ __('warehouse.movements_table.col_operator') }}</th>
-                                <th class="px-4 py-3 text-right">{{ __('warehouse.movements_table.col_datetime') }}</th>
+                            <tr class="border-b border-black/[0.06] dark:border-white/[0.08] text-[11px] font-bold uppercase tracking-wide text-slate-400 dark:text-slate-500 bg-slate-50/50 dark:bg-[#2C2C2E]/50 whitespace-nowrap">
+                                <!-- Col 0: Item -->
+                                <th class="px-4 py-3">
+                                    <button type="button" @click="sortBy(0, 'string')" class="group inline-flex items-center gap-1.5 font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+                                        <span>{{ __('warehouse.movements_table.col_item') }}</span>
+                                        <span class="transition-colors">
+                                            <svg x-show="sortCol !== 0" class="w-3.5 h-3.5 text-slate-300 dark:text-slate-600 group-hover:text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                                            <svg x-show="sortCol === 0 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+                                            <svg x-show="sortCol === 0 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                                        </span>
+                                    </button>
+                                </th>
+                                <!-- Col 1: Tipe Mutasi -->
+                                <th class="px-4 py-3">
+                                    <button type="button" @click="sortBy(1, 'string')" class="group inline-flex items-center gap-1.5 font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+                                        <span>{{ __('warehouse.movements_table.col_type') }}</span>
+                                        <span class="transition-colors">
+                                            <svg x-show="sortCol !== 1" class="w-3.5 h-3.5 text-slate-300 dark:text-slate-600 group-hover:text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                                            <svg x-show="sortCol === 1 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+                                            <svg x-show="sortCol === 1 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                                        </span>
+                                    </button>
+                                </th>
+                                <!-- Col 2: Ref -->
+                                <th class="px-4 py-3">
+                                    <button type="button" @click="sortBy(2, 'string')" class="group inline-flex items-center gap-1.5 font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+                                        <span>{{ __('warehouse.movements_table.col_ref') }}</span>
+                                        <span class="transition-colors">
+                                            <svg x-show="sortCol !== 2" class="w-3.5 h-3.5 text-slate-300 dark:text-slate-600 group-hover:text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                                            <svg x-show="sortCol === 2 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+                                            <svg x-show="sortCol === 2 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                                        </span>
+                                    </button>
+                                </th>
+                                <!-- Col 3: Perubahan Qty -->
+                                <th class="px-4 py-3 text-right">
+                                    <button type="button" @click="sortBy(3, 'number')" class="group inline-flex items-center justify-end gap-1.5 font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors ml-auto">
+                                        <span>{{ __('warehouse.movements_table.col_delta') }}</span>
+                                        <span class="transition-colors">
+                                            <svg x-show="sortCol !== 3" class="w-3.5 h-3.5 text-slate-300 dark:text-slate-600 group-hover:text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                                            <svg x-show="sortCol === 3 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+                                            <svg x-show="sortCol === 3 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                                        </span>
+                                    </button>
+                                </th>
+                                <!-- Col 4: Saldo Akhir -->
+                                <th class="px-4 py-3 text-right">
+                                    <button type="button" @click="sortBy(4, 'number')" class="group inline-flex items-center justify-end gap-1.5 font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors ml-auto">
+                                        <span>{{ __('warehouse.movements_table.col_balance') }}</span>
+                                        <span class="transition-colors">
+                                            <svg x-show="sortCol !== 4" class="w-3.5 h-3.5 text-slate-300 dark:text-slate-600 group-hover:text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                                            <svg x-show="sortCol === 4 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+                                            <svg x-show="sortCol === 4 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                                        </span>
+                                    </button>
+                                </th>
+                                <!-- Col 5: Operator -->
+                                <th class="px-4 py-3">
+                                    <button type="button" @click="sortBy(5, 'string')" class="group inline-flex items-center gap-1.5 font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+                                        <span>{{ __('warehouse.movements_table.col_operator') }}</span>
+                                        <span class="transition-colors">
+                                            <svg x-show="sortCol !== 5" class="w-3.5 h-3.5 text-slate-300 dark:text-slate-600 group-hover:text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                                            <svg x-show="sortCol === 5 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+                                            <svg x-show="sortCol === 5 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                                        </span>
+                                    </button>
+                                </th>
+                                <!-- Col 6: Waktu -->
+                                <th class="px-4 py-3 text-right">
+                                    <button type="button" @click="sortBy(6, 'number')" class="group inline-flex items-center justify-end gap-1.5 font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors ml-auto">
+                                        <span>{{ __('warehouse.movements_table.col_datetime') }}</span>
+                                        <span class="transition-colors">
+                                            <svg x-show="sortCol !== 6" class="w-3.5 h-3.5 text-slate-300 dark:text-slate-600 group-hover:text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                                            <svg x-show="sortCol === 6 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+                                            <svg x-show="sortCol === 6 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                                        </span>
+                                    </button>
+                                </th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
+                        <tbody x-ref="tableBody" class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                             @forelse ($recentMovements as $mv)
                                 @php
                                     $mvLabels = [
@@ -795,7 +1102,15 @@
                                     ];
                                     $mvInfo = $mvLabels[$mv->movement_type] ?? ['label' => ucfirst(str_replace('_', ' ', $mv->movement_type)), 'pill' => 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'];
                                 @endphp
-                                <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors">
+                                <tr data-sort-row
+                                    data-sort-0="{{ strtolower($mv->product?->name ?? '') }}"
+                                    data-sort-1="{{ $mv->movement_type }}"
+                                    data-sort-2="{{ strtolower($mv->reference_number ?? '') }}"
+                                    data-sort-3="{{ (float)$mv->quantity_change }}"
+                                    data-sort-4="{{ (float)$mv->balance_after }}"
+                                    data-sort-5="{{ strtolower($mv->creator?->name ?? 'System') }}"
+                                    data-sort-6="{{ $mv->created_at->timestamp }}"
+                                    class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors">
                                     <td class="px-4 py-3.5">
                                         <div class="font-bold text-slate-900 dark:text-white">{{ $mv->product?->name ?? '-' }}</div>
                                         @if ($mv->product?->code)
@@ -1010,7 +1325,7 @@
         {{-- APPLE CONFIRMATION MODAL SHEET (MAKER-CHECKER ACTION) --}}
         {{-- ===================================================== --}}
         <div x-show="confirmModalOpen" x-cloak
-            class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-md p-4"
+            class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 dark:bg-black/75 backdrop-blur-md p-4"
             x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
             x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
             x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
@@ -1054,7 +1369,7 @@
         {{-- 8. APPLE BENTO XXL SHEET: EDIT GUDANG / LOKASI        --}}
         {{-- ===================================================== --}}
         <div x-show="showEditModal" x-cloak
-            class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-md p-3 sm:p-6"
+            class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 dark:bg-black/75 backdrop-blur-md p-3 sm:p-6"
             x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
             x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
             x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
@@ -1154,16 +1469,16 @@
                                             </label>
                                             <select name="type"
                                                 class="w-full h-10 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.12] rounded-[10px] px-3 text-[16px] sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
-                                                <option value="warehouse" {{ $location->type === 'warehouse' ? 'selected' : '' }}>{{ __('warehouse.types.warehouse') }}</option>
-                                                <option value="outlet" {{ $location->type === 'outlet' ? 'selected' : '' }}>{{ __('warehouse.types.outlet') }}</option>
+                                                <option value="warehouse" {{ $location->type === 'warehouse' ? 'selected' : '' }} class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.types.warehouse') }}</option>
+                                                <option value="outlet" {{ $location->type === 'outlet' ? 'selected' : '' }} class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.types.outlet') }}</option>
                                                 @if(str_starts_with($business->template_code ?? '', 'fnb_'))
-                                                    <option value="central_kitchen" {{ $location->type === 'central_kitchen' ? 'selected' : '' }}>{{ __('warehouse.types.central_kitchen') }}</option>
+                                                    <option value="central_kitchen" {{ $location->type === 'central_kitchen' ? 'selected' : '' }} class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.types.central_kitchen') }}</option>
                                                 @elseif(str_starts_with($business->template_code ?? '', 'mfg_'))
-                                                    <option value="central_kitchen" {{ $location->type === 'central_kitchen' ? 'selected' : '' }}>{{ __('warehouse.types.central_kitchen_mfg') }}</option>
+                                                    <option value="central_kitchen" {{ $location->type === 'central_kitchen' ? 'selected' : '' }} class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.types.central_kitchen_mfg') }}</option>
                                                 @elseif(($business->template_code ?? '') === 'service_contractor')
-                                                    <option value="central_kitchen" {{ $location->type === 'central_kitchen' ? 'selected' : '' }}>{{ __('warehouse.types.central_kitchen_contractor') }}</option>
+                                                    <option value="central_kitchen" {{ $location->type === 'central_kitchen' ? 'selected' : '' }} class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.types.central_kitchen_contractor') }}</option>
                                                 @elseif($location->type === 'central_kitchen')
-                                                    <option value="central_kitchen" selected>{{ __('warehouse.types.central_kitchen') }}</option>
+                                                    <option value="central_kitchen" selected class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.types.central_kitchen') }}</option>
                                                 @endif
                                             </select>
                                         </div>
@@ -1210,8 +1525,8 @@
                                         </label>
                                         <select name="is_active"
                                             class="w-full h-10 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.12] rounded-[10px] px-3 text-[16px] sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
-                                            <option value="1" {{ $location->is_active ? 'selected' : '' }}>{{ __('warehouse.badges.active') }}</option>
-                                            <option value="0" {{ !$location->is_active ? 'selected' : '' }}>{{ __('warehouse.badges.inactive') }}</option>
+                                            <option value="1" {{ $location->is_active ? 'selected' : '' }} class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.badges.active') }}</option>
+                                            <option value="0" {{ !$location->is_active ? 'selected' : '' }} class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.badges.inactive') }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -1258,9 +1573,9 @@
                                             <select name="timezone" x-model="customTimezone"
                                                 class="w-full h-10 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.12] rounded-[10px] px-3 text-[16px] sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                                                 @foreach ($timezones as $groupLabel => $zones)
-                                                    <optgroup label="{{ $groupLabel }}">
+                                                    <optgroup label="{{ $groupLabel }}" class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white font-semibold">
                                                         @foreach ($zones as $zoneId => $zoneName)
-                                                            <option value="{{ $zoneId }}">{{ $zoneName }}</option>
+                                                            <option value="{{ $zoneId }}" class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ $zoneName }}</option>
                                                         @endforeach
                                                     </optgroup>
                                                 @endforeach
@@ -1373,7 +1688,7 @@
         {{-- ===================================================== --}}
         @if (\App\Support\Context::hasPermission('inventory.manage'))
             <div x-show="showAdjustModal" x-cloak
-                class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-md p-3 sm:p-6"
+                class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 dark:bg-black/75 backdrop-blur-md p-3 sm:p-6"
                 x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
                 x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
                 x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
@@ -1446,12 +1761,12 @@
                                             </label>
                                             <select name="reason_code" x-model="reasonCode" required
                                                 class="w-full h-10 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.12] rounded-[10px] px-3.5 text-[16px] sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
-                                                <option value="opname_variance">{{ __('warehouse.adjust_modal.reason_variance') }}</option>
-                                                <option value="damaged">{{ __('warehouse.adjust_modal.reason_damaged') }}</option>
-                                                <option value="expired">{{ __('warehouse.adjust_modal.reason_expired') }}</option>
-                                                <option value="theft_loss">{{ __('warehouse.adjust_modal.reason_theft') }}</option>
-                                                <option value="initial_balance">{{ __('warehouse.adjust_modal.reason_initial') }}</option>
-                                                <option value="other">{{ __('warehouse.adjust_modal.reason_other') }}</option>
+                                                <option value="opname_variance" class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.adjust_modal.reason_variance') }}</option>
+                                                <option value="damaged" class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.adjust_modal.reason_damaged') }}</option>
+                                                <option value="expired" class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.adjust_modal.reason_expired') }}</option>
+                                                <option value="theft_loss" class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.adjust_modal.reason_theft') }}</option>
+                                                <option value="initial_balance" class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.adjust_modal.reason_initial') }}</option>
+                                                <option value="other" class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.adjust_modal.reason_other') }}</option>
                                             </select>
                                         </div>
 

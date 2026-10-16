@@ -151,85 +151,74 @@
 }">
 
     <!-- ===================================================== -->
-    <!-- 0. UNIFIED APPLE SEGMENTED CONTROL (Logistik & Gudang) -->
+    <!-- 1. STANDAR OWNER PANEL: 3-BARIS BENTO APPLE HIG HEADER-->
     <!-- ===================================================== -->
-    <div class="overflow-x-auto pb-1 scrollbar-none">
-        <div class="inline-flex p-1 rounded-[14px] bg-black/[0.05] dark:bg-white/[0.08] border border-black/[0.04] dark:border-white/[0.06] text-[13px] font-medium whitespace-nowrap">
-            <a href="{{ route('inventory.stocks') }}"
-               class="h-10 px-4 rounded-[10px] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center gap-2 transition-all">
-                <i data-lucide="boxes" class="w-4 h-4 text-black/40 dark:text-white/40"></i>
-                <span>Saldo Stok Real-Time</span>
-            </a>
-            <a href="{{ route('warehouse.index') }}"
-               class="h-10 px-4 rounded-[10px] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center gap-2 transition-all">
-                <i data-lucide="warehouse" class="w-4 h-4 text-black/40 dark:text-white/40"></i>
-                <span>Cabang &amp; Lokasi Gudang</span>
-            </a>
-            @if(\App\Support\Context::hasPermission('inventory.manage'))
-            <a href="{{ route('inventory.transfers.index') }}"
-               class="h-10 px-4 rounded-[10px] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center gap-2 transition-all">
-                <i data-lucide="arrow-left-right" class="w-4 h-4 text-black/40 dark:text-white/40"></i>
-                <span>Transfer Stok</span>
-            </a>
-            <a href="{{ route('inventory.opnames.index') }}"
-               class="h-10 px-4 rounded-[10px] bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm font-semibold flex items-center gap-2 transition-all">
-                <i data-lucide="clipboard-check" class="w-4 h-4 text-[#007AFF]"></i>
-                <span>Stock Opname Fisik</span>
-            </a>
-            <a href="{{ route('inventory.movements') }}"
-               class="h-10 px-4 rounded-[10px] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center gap-2 transition-all">
-                <i data-lucide="history" class="w-4 h-4 text-black/40 dark:text-white/40"></i>
-                <span>Kartu Mutasi Stok</span>
-            </a>
-            @endif
-        </div>
-    </div>
+    <header class="rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] p-5 sm:p-6 lg:p-7 shadow-[0_2px_12px_rgba(0,0,0,0.03)] dark:shadow-[0_2px_12px_rgba(0,0,0,0.2)]">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+            <div class="space-y-1.5 min-w-0">
+                <!-- Baris 1: Overline Typographic Hierarchy -->
+                <div class="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-black/45 dark:text-white/45">
+                    <span class="inline-flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]"></span>
+                        <span>Katalog &amp; Inventori</span>
+                    </span>
+                    <span class="text-black/20 dark:text-white/20">•</span>
+                    <span>Fisik &amp; Rekonsiliasi Saldo</span>
+                </div>
 
-    <!-- ===================================================== -->
-    <!-- 1. TOOLBAR / PAGE HEADER (macOS Sonoma Toolbar Style)  -->
-    <!-- ===================================================== -->
-    <header class="rounded-[20px] backdrop-blur-xl bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/[0.06] dark:border-white/[0.08] px-5 sm:px-7 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
-        <div>
-            <!-- Breadcrumb minimal -->
-            <nav class="flex items-center gap-1.5 text-[12px] text-black/50 dark:text-white/50 mb-1">
-                <a href="{{ route('dashboard') }}" class="hover:text-[#007AFF] transition-colors">Dashboard</a>
-                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-black/30 dark:text-white/30 shrink-0"></i>
-                <span class="text-black/70 dark:text-white/70 font-medium">Produk &amp; Logistik</span>
-                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-black/30 dark:text-white/30 shrink-0"></i>
-                <span class="text-black dark:text-white font-medium">Stock Opname</span>
-            </nav>
-            <h1 class="text-xl sm:text-2xl font-bold text-[#1C1C1E] dark:text-[#F2F2F7] tracking-tight leading-snug truncate">Stock Opname Fisik</h1>
-            <p class="text-[13px] text-black/50 dark:text-white/50 mt-0.5">Pencatatan hitung fisik bahan baku dan produk serta audit rekonsiliasi selisih</p>
-        </div>
+                <!-- Baris 2: H1 Title + Entity Status Badge -->
+                <div class="flex items-center gap-3 flex-wrap">
+                    <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-[#1C1C1E] dark:text-[#F2F2F7]">
+                        Stock Opname Fisik
+                    </h1>
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] border border-[#34C759]/20">
+                        <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]"></span>
+                        Audit Fisik
+                    </span>
+                </div>
 
-        <!-- Toolbar Actions -->
-        <div class="flex items-center gap-2.5 w-full sm:w-auto">
-            @if(\App\Support\Context::hasPermission('inventory.manage'))
-            <a :href="'{{ route('inventory.opnames.export-blank') }}?location_id=' + (selectedLocationId || '{{ $locations->first()?->id ?? '' }}')"
-               class="h-10 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black dark:text-white text-[13px] font-medium border border-black/[0.08] dark:border-white/[0.1] transition flex items-center justify-center gap-1.5 cursor-pointer"
-               title="Unduh formulir Excel kosong dengan daftar item persediaan saat ini">
-                <i data-lucide="download" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
-                <span>Unduh Lembar Opname (.xlsx)</span>
-            </a>
+                <!-- Baris 3: Subtitle Faktual -->
+                <p class="text-xs sm:text-[13px] text-black/55 dark:text-white/55 leading-relaxed max-w-3xl">
+                    Pencatatan hitung fisik persediaan bahan baku dan produk secara berkala serta audit rekonsiliasi selisih kuantitas ke buku stok sistem.
+                </p>
+            </div>
 
-            <button type="button" @click="showImportModal = true; importLocationId = selectedLocationId;"
-               class="h-10 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black dark:text-white text-[13px] font-medium border border-black/[0.08] dark:border-white/[0.1] transition flex items-center justify-center gap-1.5 cursor-pointer"
-               title="Unggah hasil hitungan fisik dari file Excel">
-                <i data-lucide="upload" class="w-4 h-4 text-[#007AFF]"></i>
-                <span>Import Hitungan Fisik</span>
-            </button>
+            <!-- Toolbar Actions -->
+            <div class="flex items-center gap-2.5 flex-wrap sm:flex-nowrap shrink-0 self-start lg:self-center">
+                @if(\App\Support\Context::hasPermission('inventory.manage'))
+                <a :href="'{{ route('inventory.opnames.export-blank') }}?location_id=' + (selectedLocationId || '{{ $locations->first()?->id ?? '' }}')"
+                   class="min-h-[44px] h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/80 dark:text-white/80 text-[13px] font-medium border border-black/[0.06] dark:border-white/[0.08] active:scale-[0.98] transition flex items-center justify-center gap-2 cursor-pointer"
+                   title="Unduh formulir Excel kosong dengan daftar item persediaan saat ini">
+                    <i data-lucide="download" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
+                    <span class="hidden sm:inline">Unduh Blanko (.xlsx)</span>
+                    <span class="sm:hidden">Blanko</span>
+                </a>
 
-            <button type="button" @click="showCreateModal = true" class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all flex items-center justify-center gap-2 shadow-sm shadow-[#007AFF]/25">
-                <i data-lucide="plus" class="w-4 h-4"></i>
-                <span>Mulai Opname Baru</span>
-            </button>
-            @endif
+                <button type="button" @click="showImportModal = true; importLocationId = selectedLocationId;"
+                   class="min-h-[44px] h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/80 dark:text-white/80 text-[13px] font-medium border border-black/[0.06] dark:border-white/[0.08] active:scale-[0.98] transition flex items-center justify-center gap-2 cursor-pointer"
+                   title="Unggah hasil hitungan fisik dari file Excel">
+                    <i data-lucide="upload" class="w-4 h-4 text-[#007AFF]"></i>
+                    <span>Import Excel</span>
+                </button>
+
+                <button type="button" @click="showCreateModal = true"
+                   class="min-h-[44px] h-11 px-4 rounded-[12px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-[0_1px_2px_rgba(0,122,255,0.25)] cursor-pointer">
+                    <i data-lucide="plus" class="w-4 h-4"></i>
+                    <span>Mulai Opname</span>
+                </button>
+                @endif
+            </div>
         </div>
     </header>
 
+    <!-- ===================================================== -->
+    <!-- 2. MODULE TABS (SSOT)                                 -->
+    <!-- ===================================================== -->
+    <x-module-tabs module="inventory" />
+
     <!-- Session Banners -->
     @if(session('success'))
-    <div class="rounded-[12px] bg-[#34C759]/10 border border-[#34C759]/20 px-4 py-3 text-[13px] text-[#248A3D] dark:text-[#30D158] flex items-center gap-2.5">
+    <div class="rounded-[14px] bg-[#34C759]/10 border border-[#34C759]/20 px-4 py-3 text-[13px] text-[#248A3D] dark:text-[#30D158] flex items-center gap-2.5">
         <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
@@ -238,7 +227,7 @@
     @endif
 
     @if($errors->any())
-    <div class="rounded-[12px] bg-[#FF3B30]/10 border border-[#FF3B30]/20 p-4 text-[13px] text-[#C41E17] dark:text-[#FF453A] space-y-1">
+    <div class="rounded-[14px] bg-[#FF3B30]/10 border border-[#FF3B30]/20 p-4 text-[13px] text-[#C41E17] dark:text-[#FF453A] space-y-1">
         <div class="flex items-center gap-2 font-semibold">
             <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
@@ -254,55 +243,146 @@
     @endif
 
     <!-- ===================================================== -->
-    <!-- 2. DENSE DATA TABLE (DESKTOP & TABLET)                 -->
+    <!-- 3. SORTABLE DATA TABLE (DESKTOP & TABLET)             -->
     <!-- ===================================================== -->
-    <div class="hidden sm:block rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 overflow-hidden">
+    <div class="hidden sm:block rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] overflow-hidden shadow-xs"
+         x-data="{
+             sortCol: null,
+             sortAsc: true,
+             sortBy(colIndex, type = 'string') {
+                 if (this.sortCol === colIndex) {
+                     this.sortAsc = !this.sortAsc;
+                 } else {
+                     this.sortCol = colIndex;
+                     this.sortAsc = true;
+                 }
+                 const tbody = this.$refs.tableBody;
+                 const rows = Array.from(tbody.querySelectorAll('tr[data-sort-row]'));
+                 rows.sort((a, b) => {
+                     let valA = a.getAttribute(`data-sort-${colIndex}`) || '';
+                     let valB = b.getAttribute(`data-sort-${colIndex}`) || '';
+                     if (type === 'number') {
+                         valA = parseFloat(valA) || 0;
+                         valB = parseFloat(valB) || 0;
+                         return this.sortAsc ? valA - valB : valB - valA;
+                     }
+                     return this.sortAsc
+                         ? valA.localeCompare(valB, undefined, { numeric: true, sensitivity: 'base' })
+                         : valB.localeCompare(valA, undefined, { numeric: true, sensitivity: 'base' });
+                 });
+                 rows.forEach(row => tbody.appendChild(row));
+             }
+         }">
         <div class="overflow-x-auto">
             <table class="w-full text-left text-[13px]">
                 <thead>
-                    <tr class="border-b border-black/5 dark:border-white/10 whitespace-nowrap">
-                        <th class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40">No. Opname</th>
-                        <th class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40">Tanggal &amp; Lokasi</th>
-                        <th class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40">Pelaksana</th>
-                        <th class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-center">Jumlah Item</th>
-                        <th class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-center">Status</th>
-                        <th class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right">Aksi</th>
+                    <tr class="border-b border-black/[0.06] dark:border-white/[0.08] bg-black/[0.015] dark:bg-white/[0.02] whitespace-nowrap">
+                        <!-- Col 0: No. Opname -->
+                        <th class="py-3 px-4">
+                            <button type="button" @click="sortBy(0, 'string')" class="group inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors">
+                                <span>No. Opname</span>
+                                <span class="transition-colors">
+                                    <svg x-show="sortCol !== 0" class="w-3.5 h-3.5 text-black/25 dark:text-white/25 group-hover:text-black/50 dark:group-hover:text-white/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                                    <svg x-show="sortCol === 0 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+                                    <svg x-show="sortCol === 0 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                                </span>
+                            </button>
+                        </th>
+
+                        <!-- Col 1: Tanggal & Lokasi -->
+                        <th class="py-3 px-4">
+                            <button type="button" @click="sortBy(1, 'number')" class="group inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors">
+                                <span>Tanggal &amp; Lokasi</span>
+                                <span class="transition-colors">
+                                    <svg x-show="sortCol !== 1" class="w-3.5 h-3.5 text-black/25 dark:text-white/25 group-hover:text-black/50 dark:group-hover:text-white/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                                    <svg x-show="sortCol === 1 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+                                    <svg x-show="sortCol === 1 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                                </span>
+                            </button>
+                        </th>
+
+                        <!-- Col 2: Pelaksana -->
+                        <th class="py-3 px-4">
+                            <button type="button" @click="sortBy(2, 'string')" class="group inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors">
+                                <span>Pelaksana</span>
+                                <span class="transition-colors">
+                                    <svg x-show="sortCol !== 2" class="w-3.5 h-3.5 text-black/25 dark:text-white/25 group-hover:text-black/50 dark:group-hover:text-white/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                                    <svg x-show="sortCol === 2 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+                                    <svg x-show="sortCol === 2 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                                </span>
+                            </button>
+                        </th>
+
+                        <!-- Col 3: Jumlah Item -->
+                        <th class="py-3 px-4 text-center">
+                            <button type="button" @click="sortBy(3, 'number')" class="group inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors">
+                                <span>Jumlah Item</span>
+                                <span class="transition-colors">
+                                    <svg x-show="sortCol !== 3" class="w-3.5 h-3.5 text-black/25 dark:text-white/25 group-hover:text-black/50 dark:group-hover:text-white/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                                    <svg x-show="sortCol === 3 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+                                    <svg x-show="sortCol === 3 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                                </span>
+                            </button>
+                        </th>
+
+                        <!-- Col 4: Status -->
+                        <th class="py-3 px-4 text-center">
+                            <button type="button" @click="sortBy(4, 'string')" class="group inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors">
+                                <span>Status</span>
+                                <span class="transition-colors">
+                                    <svg x-show="sortCol !== 4" class="w-3.5 h-3.5 text-black/25 dark:text-white/25 group-hover:text-black/50 dark:group-hover:text-white/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                                    <svg x-show="sortCol === 4 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+                                    <svg x-show="sortCol === 4 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                                </span>
+                            </button>
+                        </th>
+
+                        <!-- Col 5: Aksi -->
+                        <th class="py-3 px-4 text-[11px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50 text-right">
+                            Aksi
+                        </th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
+                <tbody x-ref="tableBody" class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                     @forelse($opnames as $op)
-                    <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
-                        <td class="py-3 px-4">
+                    <tr data-sort-row
+                        data-sort-0="{{ $op->opname_number }}"
+                        data-sort-1="{{ $op->opname_date->timestamp }}"
+                        data-sort-2="{{ strtolower($op->conductor->name ?? '') }}"
+                        data-sort-3="{{ $op->items->count() }}"
+                        data-sort-4="{{ $op->status }}"
+                        class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
+                        <td class="py-3.5 px-4">
                             <div class="font-semibold text-black dark:text-white tabular-nums">#{{ $op->opname_number }}</div>
                             <div class="text-[11px] text-black/45 dark:text-white/45 mt-0.5">{{ $op->notes ?? 'Stock taking rutin' }}</div>
                         </td>
-                        <td class="py-3 px-4">
-                            <div class="tabular-nums text-black dark:text-white">{{ $op->opname_date->format('d/m/Y') }}</div>
-                            <span class="inline-flex items-center px-1.5 py-0.5 rounded-[4px] text-[10px] font-medium bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 mt-0.5">
+                        <td class="py-3.5 px-4">
+                            <div class="tabular-nums font-medium text-black dark:text-white">{{ $op->opname_date->format('d/m/Y') }}</div>
+                            <span class="inline-flex items-center px-2 py-0.5 rounded-[6px] text-[10px] font-medium bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 mt-0.5">
                                 {{ $op->location->name ?? 'Outlet' }}
                             </span>
                         </td>
-                        <td class="py-3 px-4 text-black/70 dark:text-white/70">
+                        <td class="py-3.5 px-4 text-black/70 dark:text-white/70 font-medium">
                             {{ $op->conductor->name ?? 'Staff' }}
                         </td>
-                        <td class="py-3 px-4 text-center tabular-nums font-semibold text-black dark:text-white">
+                        <td class="py-3.5 px-4 text-center tabular-nums font-bold text-black dark:text-white">
                             {{ $op->items->count() }} Item
                         </td>
-                        <td class="py-3 px-4 text-center">
+                        <td class="py-3.5 px-4 text-center">
                             @if($op->status === 'reconciled')
-                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#34C759]/12 text-[#248A3D] dark:text-[#30D158]">
+                                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#34C759]/12 text-[#248A3D] dark:text-[#30D158]">
                                     <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]"></span> Direkonsiliasi
                                 </span>
                             @else
-                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#FF9500]/12 text-[#B25E00] dark:text-[#FF9F0A]">
+                                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#FF9500]/12 text-[#B25E00] dark:text-[#FF9F0A]">
                                     <span class="w-1.5 h-1.5 rounded-full bg-[#FF9500]"></span> Sedang Dihitung
                                 </span>
                             @endif
                         </td>
-                        <td class="py-3 px-4 text-right">
+                        <td class="py-3.5 px-4 text-right">
                             @if($op->status !== 'reconciled')
                                 @if(\App\Support\Context::hasPermission('inventory.manage'))
-                                <button type="button" @click="openReconcile('{{ $op->id }}', '{{ $op->opname_number }}')" class="h-7 px-2.5 rounded-[6px] text-[12px] font-semibold text-white bg-[#34C759] hover:bg-[#2FB350] active:scale-[0.97] transition-all">
+                                <button type="button" @click="openReconcile('{{ $op->id }}', '{{ $op->opname_number }}')" class="h-8 px-3 rounded-[8px] text-[12px] font-semibold text-white bg-[#34C759] hover:bg-[#2FB350] active:scale-[0.97] transition-all shadow-xs cursor-pointer">
                                     Rekonsiliasi
                                 </button>
                                 <form id="form-reconcile-{{ $op->id }}" action="{{ route('inventory.opnames.reconcile', $op->id) }}" method="POST" class="hidden">
@@ -310,13 +390,16 @@
                                 </form>
                                 @endif
                             @else
-                                <span class="text-black/40 dark:text-white/40 text-[12px]">Selesai</span>
+                                <span class="text-black/40 dark:text-white/40 text-[12px] font-medium">Selesai</span>
                             @endif
                         </td>
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="6" class="py-8 text-center text-black/40 dark:text-white/40">Belum ada sesi stock opname.</td>
+                        <td colspan="6" class="py-12 text-center text-black/40 dark:text-white/40">
+                            <i data-lucide="clipboard-check" class="w-8 h-8 mx-auto mb-2 opacity-40"></i>
+                            <div>Belum ada sesi stock opname.</div>
+                        </td>
                     </tr>
                     @endforelse
                 </tbody>
@@ -324,34 +407,32 @@
         </div>
 
         @if($opnames->hasPages())
-        <div class="px-4 py-3 border-t border-black/5 dark:border-white/10">
+        <div class="px-5 py-4 border-t border-black/[0.06] dark:border-white/[0.08] bg-black/[0.015] dark:bg-white/[0.02]">
             {{ $opnames->links() }}
         </div>
         @endif
-    </div>
-
     <!-- ===================================================== -->
-    <!-- 3. MOBILE GROUPED INSET LIST (Standar iOS List View)   -->
+    <!-- 4. MOBILE GROUPED INSET LIST (Standar iOS List View)   -->
     <!-- ===================================================== -->
-    <div class="sm:hidden rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 overflow-hidden divide-y divide-black/[0.04] dark:divide-white/[0.06]">
+    <div class="sm:hidden rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] overflow-hidden divide-y divide-black/[0.04] dark:divide-white/[0.06] shadow-xs">
         @forelse($opnames as $op)
-        <div class="p-3.5 flex items-center justify-between gap-3 active:bg-black/[0.02] dark:active:bg-white/[0.04] transition-colors">
+        <div class="p-4 flex items-center justify-between gap-3 active:bg-black/[0.02] dark:active:bg-white/[0.04] transition-colors">
             <div class="min-w-0 flex-1">
                 <div class="flex items-center gap-1.5">
                     <p class="text-[15px] font-semibold text-black dark:text-white tabular-nums">#{{ $op->opname_number }}</p>
-                    <span class="w-1.5 h-1.5 rounded-full {{ $op->status === 'reconciled' ? 'bg-[#34C759]' : 'bg-[#FF9500]' }} shrink-0"></span>
+                    <span class="w-2 h-2 rounded-full {{ $op->status === 'reconciled' ? 'bg-[#34C759]' : 'bg-[#FF9500]' }} shrink-0"></span>
                 </div>
-                <p class="text-[13px] text-black/45 dark:text-white/45 mt-0.5 tabular-nums">
+                <p class="text-[13px] text-black/55 dark:text-white/55 mt-0.5 tabular-nums">
                     {{ $op->opname_date->format('d/m/Y') }} · {{ $op->location->name ?? 'Outlet' }}
                 </p>
-                <p class="text-[11px] text-black/40 dark:text-white/40 mt-0.5">
+                <p class="text-[11px] text-black/40 dark:text-white/40 mt-1">
                     {{ $op->items->count() }} item dihitung · Pelaksana: {{ $op->conductor->name ?? 'Staff' }}
                 </p>
             </div>
             <div class="shrink-0">
                 @if($op->status !== 'reconciled')
                     @if(\App\Support\Context::hasPermission('inventory.manage'))
-                    <button type="button" @click="openReconcile('{{ $op->id }}', '{{ $op->opname_number }}')" class="h-8 px-3 rounded-[8px] text-[12px] font-semibold text-white bg-[#34C759] active:scale-[0.97] transition-all">
+                    <button type="button" @click="openReconcile('{{ $op->id }}', '{{ $op->opname_number }}')" class="min-h-[44px] px-3.5 rounded-[10px] text-[12px] font-semibold text-white bg-[#34C759] active:scale-[0.97] transition-all flex items-center justify-center shadow-xs">
                         Rekonsiliasi
                     </button>
                     <form id="form-reconcile-{{ $op->id }}" action="{{ route('inventory.opnames.reconcile', $op->id) }}" method="POST" class="hidden">
@@ -359,30 +440,33 @@
                     </form>
                     @endif
                 @else
-                    <span class="px-2 py-1 rounded-full text-[11px] font-medium bg-[#34C759]/12 text-[#248A3D] dark:text-[#30D158]">
+                    <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#34C759]/12 text-[#248A3D] dark:text-[#30D158]">
                         Selesai
                     </span>
                 @endif
             </div>
         </div>
         @empty
-        <div class="py-8 text-center text-black/40 dark:text-white/40 text-[13px]">Belum ada sesi stock opname.</div>
+        <div class="py-12 text-center text-black/40 dark:text-white/40 text-[13px]">
+            <i data-lucide="clipboard-check" class="w-8 h-8 mx-auto mb-2 opacity-40"></i>
+            <div>Belum ada sesi stock opname.</div>
+        </div>
         @endforelse
 
         @if($opnames->hasPages())
-        <div class="p-3 border-t border-black/5 dark:border-white/10">
+        <div class="p-4 border-t border-black/[0.06] dark:border-white/[0.08]">
             {{ $opnames->links() }}
         </div>
         @endif
     </div>
 
     <!-- ===================================================== -->
-    <!-- 4. APPLE SHEET: MULAI STOCK OPNAME BARU               -->
+    <!-- 5. APPLE SHEET: MULAI STOCK OPNAME BARU               -->
     <!-- ===================================================== -->
     @if(\App\Support\Context::hasPermission('inventory.manage'))
     <div x-show="showCreateModal"
         x-cloak
-        class="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/25 backdrop-blur-[2px] p-0 sm:p-4"
+        class="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 dark:bg-black/75 backdrop-blur-md p-0 sm:p-4"
         x-transition:enter="transition ease-out duration-200"
         x-transition:enter-start="opacity-0"
         x-transition:enter-end="opacity-100"
@@ -390,7 +474,7 @@
         x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0">
 
-        <div class="w-full sm:max-w-xl rounded-t-[20px] sm:rounded-[16px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] max-h-[90vh] overflow-y-auto"
+        <div class="w-full sm:max-w-xl rounded-t-[24px] sm:rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.3)] max-h-[90vh] overflow-y-auto"
             @click.away="showCreateModal = false"
             x-transition:enter="transition ease-out duration-200"
             x-transition:enter-start="translate-y-full sm:translate-y-0 sm:scale-95 sm:opacity-0"
@@ -402,12 +486,18 @@
             <!-- Mobile Grabber Handle -->
             <div class="sm:hidden w-10 h-1 rounded-full bg-black/20 dark:bg-white/20 mx-auto mb-2"></div>
 
-            <div class="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/10">
-                <h3 class="text-[17px] font-semibold text-black dark:text-white">Mulai Stock Opname Baru</h3>
-                <button type="button" @click="showCreateModal = false" class="text-black/40 hover:text-black dark:text-white/40 dark:hover:text-white transition-colors">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
+            <div class="flex items-center justify-between pb-3.5 border-b border-black/[0.06] dark:border-white/[0.08]">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-[12px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center shrink-0">
+                        <i data-lucide="clipboard-check" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-[17px] font-bold text-black dark:text-white">Mulai Stock Opname Baru</h3>
+                        <p class="text-[12px] text-black/50 dark:text-white/50">Formulir hitung fisik persediaan bahan dan produk</p>
+                    </div>
+                </div>
+                <button type="button" @click="showCreateModal = false" class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/40 hover:text-black dark:text-white/40 dark:hover:text-white transition-colors cursor-pointer">
+                    <i data-lucide="x" class="w-4 h-4"></i>
                 </button>
             </div>
 
@@ -415,69 +505,65 @@
                 @csrf
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">Lokasi Outlet / Gudang *</label>
-                        <select name="location_id" x-model="selectedLocationId" required class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Lokasi Outlet / Gudang *</label>
+                        <select name="location_id" x-model="selectedLocationId" required class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[10px] px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                             @foreach($locations as $loc)
-                                <option value="{{ $loc->id }}">{{ $loc->name }}</option>
+                                <option value="{{ $loc->id }}" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ $loc->name }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div>
-                        <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">Tanggal Opname *</label>
-                        <input type="date" name="opname_date" value="{{ date('Y-m-d') }}" required class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Tanggal Opname *</label>
+                        <input type="date" name="opname_date" value="{{ date('Y-m-d') }}" required class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[10px] px-3.5 text-[16px] sm:text-[13px] tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">Catatan</label>
-                    <input type="text" name="notes" placeholder="Misal: Opname fisik bulanan persediaan..." class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Catatan Dokumen</label>
+                    <input type="text" name="notes" placeholder="Misal: Opname fisik bulanan persediaan..." class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[10px] px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                 </div>
 
                 <!-- Items Row -->
-                <div class="space-y-2.5 pt-3 border-t border-black/5 dark:border-white/10">
+                <div class="space-y-3 pt-3 border-t border-black/[0.06] dark:border-white/[0.08]">
                     <div class="flex items-center justify-between">
-                        <label class="text-[12px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50">Item yang Dihitung Fisik:</label>
-                        <button type="button" @click="addItem()" class="h-7 px-2.5 rounded-[6px] text-[12px] font-medium text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.97] transition-all flex items-center gap-1">
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                            </svg>
+                        <label class="text-[11px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50">Item yang Dihitung Fisik:</label>
+                        <button type="button" @click="addItem()" class="min-h-[44px] sm:min-h-0 h-8 px-3 rounded-[8px] text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.97] transition-all flex items-center gap-1 cursor-pointer">
+                            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
                             <span>Tambah Item</span>
                         </button>
                     </div>
 
                     <template x-for="(item, idx) in items" :key="idx">
-                        <div class="grid grid-cols-[6rem_minmax(0,1fr)_6.5rem_auto] items-center gap-2">
-                            <select x-model="item.item_type" @change="changeItemType(item)" class="h-9 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2 text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                                <option value="material">Bahan</option>
-                                <option value="product">Produk</option>
+                        <div class="grid grid-cols-[5.5rem_minmax(0,1fr)_6.5rem_auto] items-center gap-2 p-2.5 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08]">
+                            <select x-model="item.item_type" @change="changeItemType(item)" class="h-10 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[8px] px-2 text-[12px] font-medium text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                <option value="material" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">Bahan</option>
+                                <option value="product" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">Produk</option>
                             </select>
-                            <select x-show="item.item_type === 'material'" :name="'items[' + idx + '][material_id]'" x-model="item.material_id" class="h-9 min-w-0 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2.5 text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                                <option value="">-- Pilih Bahan Baku --</option>
+                            <select x-show="item.item_type === 'material'" :name="'items[' + idx + '][material_id]'" x-model="item.material_id" class="h-10 min-w-0 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[8px] px-2.5 text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                <option value="" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">-- Pilih Bahan Baku --</option>
                                 @foreach($materials as $m)
-                                    <option value="{{ $m->id }}">{{ $m->name }} ({{ $m->unit->code ?? 'unit' }})</option>
+                                    <option value="{{ $m->id }}" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ $m->name }} ({{ $m->unit->code ?? 'unit' }})</option>
                                 @endforeach
                             </select>
-                            <select x-show="item.item_type === 'product'" :name="'items[' + idx + '][product_id]'" x-model="item.product_id" class="h-9 min-w-0 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2.5 text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                                <option value="">-- Pilih Produk --</option>
+                            <select x-show="item.item_type === 'product'" :name="'items[' + idx + '][product_id]'" x-model="item.product_id" class="h-10 min-w-0 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[8px] px-2.5 text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                <option value="" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">-- Pilih Produk --</option>
                                 @foreach($products as $product)
-                                    <option value="{{ $product->id }}">{{ $product->name }}{{ $product->code ? ' (' . $product->code . ')' : '' }}</option>
+                                    <option value="{{ $product->id }}" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ $product->name }}{{ $product->code ? ' (' . $product->code . ')' : '' }}</option>
                                 @endforeach
                             </select>
-                            <input type="number" step="any" :name="'items[' + idx + '][physical_quantity]'" x-model.number="item.physical_quantity" placeholder="Qty Fisik" class="h-9 w-24 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2 text-[13px] text-center tabular-nums font-semibold text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                            <button type="button" @click="removeItem(idx)" :disabled="items.length <= 1" class="p-1.5 text-black/30 hover:text-[#FF3B30] dark:text-white/30 dark:hover:text-[#FF453A] disabled:opacity-20 transition-colors">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                                </svg>
+                            <input type="number" step="any" :name="'items[' + idx + '][physical_quantity]'" x-model.number="item.physical_quantity" placeholder="Qty Fisik" class="h-10 w-24 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[8px] px-2 text-[13px] text-center tabular-nums font-bold text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                            <button type="button" @click="removeItem(idx)" :disabled="items.length <= 1" class="min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 p-2 text-black/30 hover:text-[#FF3B30] dark:text-white/30 dark:hover:text-[#FF453A] disabled:opacity-20 transition-colors cursor-pointer">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
                             </button>
                         </div>
                     </template>
                 </div>
 
-                <div class="flex items-center justify-end gap-2 pt-3 border-t border-black/5 dark:border-white/10">
-                    <button type="button" @click="showCreateModal = false" class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 active:scale-[0.97] transition-all">
+                <div class="flex items-center justify-end gap-2.5 pt-4 border-t border-black/[0.06] dark:border-white/[0.08]">
+                    <button type="button" @click="showCreateModal = false" class="min-h-[44px] h-10 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 active:scale-[0.98] transition cursor-pointer">
                         Batal
                     </button>
-                    <button type="submit" class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
+                    <button type="submit" class="min-h-[44px] h-10 px-5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all shadow-[0_1px_2px_rgba(0,122,255,0.25)] cursor-pointer">
                         Simpan Data Opname
                     </button>
                 </div>
@@ -487,12 +573,12 @@
     @endif
 
     <!-- ===================================================== -->
-    <!-- 5. APPLE ALERT DIALOG: REKONSILIASI OPNAME             -->
+    <!-- 6. APPLE ALERT DIALOG: REKONSILIASI OPNAME             -->
     <!-- ===================================================== -->
     @if(\App\Support\Context::hasPermission('inventory.manage'))
     <div x-show="reconcileModalOpen"
         x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center bg-black/25 backdrop-blur-[2px]"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 dark:bg-black/75 backdrop-blur-md p-4"
         x-transition:enter="transition ease-out duration-200"
         x-transition:enter-start="opacity-0"
         x-transition:enter-end="opacity-100"
@@ -500,7 +586,7 @@
         x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0">
 
-        <div class="w-[290px] rounded-[14px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-black/5 dark:border-white/10"
+        <div class="w-full max-w-[320px] rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.35)]"
             @click.away="closeReconcile()"
             x-transition:enter="transition ease-out duration-200"
             x-transition:enter-start="opacity-0 scale-95"
@@ -509,18 +595,21 @@
             x-transition:leave-start="opacity-100 scale-100"
             x-transition:leave-end="opacity-0 scale-95">
 
-            <div class="px-4 pt-5 pb-4">
-                <p class="text-[17px] font-semibold text-black dark:text-white">Rekonsiliasi Stok?</p>
-                <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
-                    Terapkan selisih fisik opname <span x-text="'#' + reconcileTarget.number" class="font-medium text-black dark:text-white tabular-nums"></span> ke saldo stok sistem.
+            <div class="px-5 pt-6 pb-5">
+                <div class="w-12 h-12 rounded-full bg-[#34C759]/15 text-[#34C759] flex items-center justify-center mx-auto mb-3">
+                    <i data-lucide="check-check" class="w-6 h-6"></i>
+                </div>
+                <p class="text-[17px] font-bold text-black dark:text-white">Rekonsiliasi Stok?</p>
+                <p class="text-[13px] text-black/60 dark:text-white/60 mt-1.5 leading-snug">
+                    Terapkan selisih hitungan fisik opname <span x-text="'#' + reconcileTarget.number" class="font-bold text-black dark:text-white tabular-nums"></span> langsung ke saldo stok sistem.
                 </p>
             </div>
 
-            <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
-                <button type="button" @click="closeReconcile()" class="py-3 text-black/70 dark:text-white/70 border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors">
+            <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[14px] font-medium">
+                <button type="button" @click="closeReconcile()" class="min-h-[48px] py-3 text-black/70 dark:text-white/70 border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
                     Batal
                 </button>
-                <button type="button" @click="submitReconcile()" class="py-3 text-[#34C759] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors">
+                <button type="button" @click="submitReconcile()" class="min-h-[48px] py-3 text-[#34C759] font-bold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
                     Terapkan
                 </button>
             </div>
@@ -532,7 +621,7 @@
     @if(\App\Support\Context::hasPermission('inventory.manage'))
     <div x-show="showImportModal"
         x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/40 backdrop-blur-md"
+        class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/50 dark:bg-black/75 backdrop-blur-md"
         x-transition:enter="transition ease-out duration-200"
         x-transition:enter-start="opacity-0"
         x-transition:enter-end="opacity-100"
@@ -540,7 +629,7 @@
         x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0">
 
-        <div class="w-full max-w-5xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.3)] flex flex-col max-h-[92vh] overflow-hidden"
+        <div class="w-full max-w-5xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.35)] flex flex-col max-h-[92vh] overflow-hidden"
             @click.away="if (!importExecuting) showImportModal = false"
             x-transition:enter="transition ease-out duration-200"
             x-transition:enter-start="opacity-0 scale-95"
@@ -550,7 +639,7 @@
             x-transition:leave-end="opacity-0 scale-95">
 
             <!-- Modal Header -->
-            <div class="px-6 py-4.5 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-[#F9F9FB] dark:bg-[#252528]">
+            <div class="px-6 py-4.5 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-[#F2F2F7] dark:bg-[#252528]">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0">
                         <i data-lucide="clipboard-check" class="w-5 h-5"></i>
@@ -562,7 +651,7 @@
                 </div>
 
                 <button type="button" @click="if (!importExecuting) showImportModal = false"
-                    class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center transition">
+                    class="w-9 h-9 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center transition cursor-pointer">
                     <i data-lucide="x" class="w-4 h-4"></i>
                 </button>
             </div>
@@ -573,16 +662,16 @@
                 <!-- Location & Notes selector -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08]">
                     <div>
-                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">Lokasi Gudang / Outlet *</label>
-                        <select x-model="importLocationId" :disabled="importPreview !== null || importLoading" class="w-full h-10 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[10px] px-3 text-[13px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50">
+                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Lokasi Gudang / Outlet *</label>
+                        <select x-model="importLocationId" :disabled="importPreview !== null || importLoading" class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[10px] px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50 transition">
                             @foreach($locations as $loc)
-                                <option value="{{ $loc->id }}">{{ $loc->name }}</option>
+                                <option value="{{ $loc->id }}" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ $loc->name }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div>
-                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">Catatan Dokumen Opname</label>
-                        <input type="text" x-model="importNotes" :disabled="importExecuting" placeholder="Misal: Opname fisik tutup buku bulanan..." class="w-full h-10 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[10px] px-3 text-[13px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50">
+                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Catatan Dokumen Opname</label>
+                        <input type="text" x-model="importNotes" :disabled="importExecuting" placeholder="Misal: Opname fisik tutup buku bulanan..." class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[10px] px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:ring-2 focus:ring-[#007AFF]/50 transition">
                     </div>
                 </div>
 
@@ -743,7 +832,7 @@
             </div>
 
             <!-- Modal Footer -->
-            <div class="px-6 py-4 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-[#F9F9FB] dark:bg-[#252528]">
+            <div class="px-6 py-4 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-[#F2F2F7] dark:bg-[#252528]">
                 <div>
                     <button type="button" x-show="importPreview" @click="resetImport()"
                         class="h-10 px-4 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold transition cursor-pointer flex items-center gap-1.5"

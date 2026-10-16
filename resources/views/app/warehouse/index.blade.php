@@ -840,21 +840,120 @@ function warehouseIndexHub() {
         </div>
 
         {{-- Movements Table (Desktop) --}}
-        <div class="hidden sm:block overflow-x-auto">
+        <div class="hidden sm:block overflow-x-auto"
+             x-data="{
+                 sortCol: null,
+                 sortAsc: true,
+                 sortBy(colIndex, type = 'string') {
+                     if (this.sortCol === colIndex) {
+                         this.sortAsc = !this.sortAsc;
+                     } else {
+                         this.sortCol = colIndex;
+                         this.sortAsc = true;
+                     }
+                     const tbody = this.$refs.tableBody;
+                     const rows = Array.from(tbody.querySelectorAll('tr[data-sort-row]'));
+                     rows.sort((a, b) => {
+                         let valA = a.getAttribute(`data-sort-${colIndex}`) || '';
+                         let valB = b.getAttribute(`data-sort-${colIndex}`) || '';
+                         if (type === 'number') {
+                             valA = parseFloat(valA) || 0;
+                             valB = parseFloat(valB) || 0;
+                             return this.sortAsc ? valA - valB : valB - valA;
+                         }
+                         return this.sortAsc
+                             ? valA.localeCompare(valB, undefined, { numeric: true, sensitivity: 'base' })
+                             : valB.localeCompare(valA, undefined, { numeric: true, sensitivity: 'base' });
+                     });
+                     rows.forEach(row => tbody.appendChild(row));
+                 }
+             }">
             <table class="w-full text-left text-xs">
                 <thead>
-                    <tr class="border-b border-black/[0.06] dark:border-white/[0.08] text-[11px] font-bold uppercase tracking-wide text-slate-400 dark:text-slate-500 bg-slate-50/50 dark:bg-[#2C2C2E]/50">
-                        <th class="px-4 py-3">{{ __('warehouse.movements_table.col_item') }}</th>
-                        <th class="px-4 py-3">{{ __('warehouse.fields.name') }}</th>
-                        <th class="px-4 py-3">{{ __('warehouse.movements_table.col_type') }}</th>
-                        <th class="px-4 py-3 text-right">{{ __('warehouse.movements_table.col_delta') }}</th>
-                        <th class="px-4 py-3 text-right">{{ __('warehouse.movements_table.col_balance') }}</th>
-                        <th class="px-4 py-3 text-right">{{ __('warehouse.movements_table.col_datetime') }}</th>
+                    <tr class="border-b border-black/[0.06] dark:border-white/[0.08] text-[11px] font-bold uppercase tracking-wide text-slate-400 dark:text-slate-500 bg-slate-50/50 dark:bg-[#2C2C2E]/50 whitespace-nowrap">
+                        <!-- Col 0: Item -->
+                        <th class="px-4 py-3">
+                            <button type="button" @click="sortBy(0, 'string')" class="group inline-flex items-center gap-1.5 font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+                                <span>{{ __('warehouse.movements_table.col_item') }}</span>
+                                <span class="transition-colors">
+                                    <svg x-show="sortCol !== 0" class="w-3.5 h-3.5 text-slate-300 dark:text-slate-600 group-hover:text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                                    <svg x-show="sortCol === 0 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+                                    <svg x-show="sortCol === 0 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                                </span>
+                            </button>
+                        </th>
+
+                        <!-- Col 1: Lokasi -->
+                        <th class="px-4 py-3">
+                            <button type="button" @click="sortBy(1, 'string')" class="group inline-flex items-center gap-1.5 font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+                                <span>{{ __('warehouse.fields.name') }}</span>
+                                <span class="transition-colors">
+                                    <svg x-show="sortCol !== 1" class="w-3.5 h-3.5 text-slate-300 dark:text-slate-600 group-hover:text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                                    <svg x-show="sortCol === 1 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+                                    <svg x-show="sortCol === 1 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                                </span>
+                            </button>
+                        </th>
+
+                        <!-- Col 2: Tipe Mutasi -->
+                        <th class="px-4 py-3">
+                            <button type="button" @click="sortBy(2, 'string')" class="group inline-flex items-center gap-1.5 font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+                                <span>{{ __('warehouse.movements_table.col_type') }}</span>
+                                <span class="transition-colors">
+                                    <svg x-show="sortCol !== 2" class="w-3.5 h-3.5 text-slate-300 dark:text-slate-600 group-hover:text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                                    <svg x-show="sortCol === 2 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+                                    <svg x-show="sortCol === 2 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                                </span>
+                            </button>
+                        </th>
+
+                        <!-- Col 3: Perubahan Qty -->
+                        <th class="px-4 py-3 text-right">
+                            <button type="button" @click="sortBy(3, 'number')" class="group inline-flex items-center gap-1.5 font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors ml-auto">
+                                <span>{{ __('warehouse.movements_table.col_delta') }}</span>
+                                <span class="transition-colors">
+                                    <svg x-show="sortCol !== 3" class="w-3.5 h-3.5 text-slate-300 dark:text-slate-600 group-hover:text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                                    <svg x-show="sortCol === 3 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+                                    <svg x-show="sortCol === 3 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                                </span>
+                            </button>
+                        </th>
+
+                        <!-- Col 4: Saldo Akhir -->
+                        <th class="px-4 py-3 text-right">
+                            <button type="button" @click="sortBy(4, 'number')" class="group inline-flex items-center gap-1.5 font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors ml-auto">
+                                <span>{{ __('warehouse.movements_table.col_balance') }}</span>
+                                <span class="transition-colors">
+                                    <svg x-show="sortCol !== 4" class="w-3.5 h-3.5 text-slate-300 dark:text-slate-600 group-hover:text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                                    <svg x-show="sortCol === 4 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+                                    <svg x-show="sortCol === 4 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                                </span>
+                            </button>
+                        </th>
+
+                        <!-- Col 5: Waktu -->
+                        <th class="px-4 py-3 text-right">
+                            <button type="button" @click="sortBy(5, 'number')" class="group inline-flex items-center gap-1.5 font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors ml-auto">
+                                <span>{{ __('warehouse.movements_table.col_datetime') }}</span>
+                                <span class="transition-colors">
+                                    <svg x-show="sortCol !== 5" class="w-3.5 h-3.5 text-slate-300 dark:text-slate-600 group-hover:text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                                    <svg x-show="sortCol === 5 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+                                    <svg x-show="sortCol === 5 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                                </span>
+                            </button>
+                        </th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
+                <tbody x-ref="tableBody" class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                     @foreach($recentMovements as $mv)
-                    <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors">
+                    <tr data-sort-row
+                        data-sort-0="{{ strtolower($mv->product?->name ?? '') }}"
+                        data-sort-1="{{ strtolower($mv->location?->name ?? '') }}"
+                        data-sort-2="{{ $mv->movement_type }}"
+                        data-sort-3="{{ (float)$mv->quantity_change }}"
+                        data-sort-4="{{ (float)$mv->balance_after }}"
+                        data-sort-5="{{ $mv->created_at->timestamp }}"
+                        class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors">
                         <td class="px-4 py-3.5">
                             <div class="font-bold text-slate-900 dark:text-white">{{ $mv->product?->name ?? '-' }}</div>
                             @if($mv->product?->code)
@@ -1014,10 +1113,10 @@ function warehouseIndexHub() {
                                     </label>
                                     <select name="parent_id" x-model="warehouseForm.parent_id"
                                             class="w-full h-11 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.12] rounded-[10px] px-3.5 text-[16px] sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
-                                        <option value="">{{ __('warehouse.fields.no_parent') }}</option>
+                                        <option value="" class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.fields.no_parent') }}</option>
                                         @if(isset($parentOutlets))
                                             @foreach($parentOutlets as $pOut)
-                                                <option value="{{ $pOut->id }}">{{ $pOut->name }} ({{ $pOut->code ?: __('warehouse.types.outlet') }})</option>
+                                                <option value="{{ $pOut->id }}" class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ $pOut->name }} ({{ $pOut->code ?: __('warehouse.types.outlet') }})</option>
                                             @endforeach
                                         @endif
                                     </select>
@@ -1317,16 +1416,16 @@ function warehouseIndexHub() {
                                             {{ __('warehouse.fields.type') }}
                                         </label>
                                         <select name="type" x-model="editData.type" class="w-full h-10 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.12] rounded-[10px] px-3 text-[16px] sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
-                                            <option value="warehouse">{{ __('warehouse.types.warehouse') }}</option>
-                                            <option value="outlet">{{ __('warehouse.types.outlet') }}</option>
+                                            <option value="warehouse" class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.types.warehouse') }}</option>
+                                            <option value="outlet" class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.types.outlet') }}</option>
                                             @if(str_starts_with($business->template_code ?? '', 'fnb_'))
-                                                <option value="central_kitchen">{{ __('warehouse.types.central_kitchen') }}</option>
+                                                <option value="central_kitchen" class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.types.central_kitchen') }}</option>
                                             @elseif(str_starts_with($business->template_code ?? '', 'mfg_'))
-                                                <option value="central_kitchen">{{ __('warehouse.types.central_kitchen_mfg') }}</option>
+                                                <option value="central_kitchen" class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.types.central_kitchen_mfg') }}</option>
                                             @elseif(($business->template_code ?? '') === 'service_contractor')
-                                                <option value="central_kitchen">{{ __('warehouse.types.central_kitchen_contractor') }}</option>
+                                                <option value="central_kitchen" class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.types.central_kitchen_contractor') }}</option>
                                             @elseif(($locations ?? collect())->contains('type', 'central_kitchen'))
-                                                <option value="central_kitchen">{{ __('warehouse.types.central_kitchen') }}</option>
+                                                <option value="central_kitchen" class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.types.central_kitchen') }}</option>
                                             @endif
                                         </select>
                                     </div>
@@ -1346,10 +1445,10 @@ function warehouseIndexHub() {
                                     </label>
                                     <select name="parent_id" x-model="editData.parent_id"
                                             class="w-full h-11 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.12] rounded-[10px] px-3.5 text-[16px] sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
-                                        <option value="">{{ __('warehouse.fields.no_parent') }}</option>
+                                        <option value="" class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.fields.no_parent') }}</option>
                                         @if(isset($parentOutlets))
                                             @foreach($parentOutlets as $pOut)
-                                                <option value="{{ $pOut->id }}" x-show="editData.id !== '{{ $pOut->id }}'">{{ $pOut->name }} ({{ $pOut->code ?: __('warehouse.types.outlet') }})</option>
+                                                <option value="{{ $pOut->id }}" x-show="editData.id !== '{{ $pOut->id }}'" class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ $pOut->name }} ({{ $pOut->code ?: __('warehouse.types.outlet') }})</option>
                                             @endforeach
                                         @endif
                                     </select>
@@ -1562,9 +1661,9 @@ function warehouseIndexHub() {
                                         {{ __('warehouse.fields.timezone_mode') }}
                                     </label>
                                     <select name="timezone_mode" x-model="editData.timezone_mode"
-                                            class="w-full h-10 bg-slate-50 dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[10px] px-3 text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
-                                        <option value="inherit">{{ __('warehouse.timezone_modes.inherit') }} ({{ $business->timezone ?? 'Asia/Jakarta' }})</option>
-                                        <option value="custom">{{ __('warehouse.timezone_modes.custom') }}</option>
+                                            class="w-full h-10 bg-slate-50 dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[10px] px-3 text-[16px] sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                        <option value="inherit" class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.timezone_modes.inherit') }} ({{ $business->timezone ?? 'Asia/Jakarta' }})</option>
+                                        <option value="custom" class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.timezone_modes.custom') }}</option>
                                     </select>
 
                                     <div x-show="editData.timezone_mode === 'custom'" x-cloak class="space-y-1.5 pt-1">
@@ -1572,9 +1671,9 @@ function warehouseIndexHub() {
                                             {{ __('warehouse.fields.timezone') }}
                                         </label>
                                         <select name="timezone" x-model="editData.timezone"
-                                                class="w-full h-10 bg-slate-50 dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[10px] px-3 text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                                class="w-full h-10 bg-slate-50 dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[10px] px-3 text-[16px] sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                                             @foreach(\App\Support\TimezoneHelper::commonIndonesianTimezones() as $tz)
-                                                <option value="{{ $tz['value'] }}">{{ $tz['label'] }} ({{ $tz['region'] }})</option>
+                                                <option value="{{ $tz['value'] }}" class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ $tz['label'] }} ({{ $tz['region'] }})</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -1586,9 +1685,9 @@ function warehouseIndexHub() {
                                         {{ __('warehouse.fields.operating_hours_mode') }}
                                     </label>
                                     <select name="operating_hours_mode" x-model="editData.operating_hours_mode"
-                                            class="w-full h-10 bg-slate-50 dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[10px] px-3 text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
-                                        <option value="inherit">{{ __('warehouse.operating_hours_modes.inherit') }}</option>
-                                        <option value="custom">{{ __('warehouse.operating_hours_modes.custom') }}</option>
+                                            class="w-full h-10 bg-slate-50 dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[10px] px-3 text-[16px] sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                        <option value="inherit" class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.operating_hours_modes.inherit') }}</option>
+                                        <option value="custom" class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.operating_hours_modes.custom') }}</option>
                                     </select>
                                     <p class="text-[11px] text-slate-500 dark:text-slate-400">
                                         {{ __('warehouse.operating_hours_modes.custom_hint') }}
@@ -1672,7 +1771,7 @@ function warehouseIndexHub() {
     {{-- ===================================================== --}}
     <div x-show="deleteModalOpen"
          x-cloak
-         class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4"
+         class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 dark:bg-black/75 backdrop-blur-md p-4"
          x-transition:enter="transition ease-out duration-200"
          x-transition:enter-start="opacity-0"
          x-transition:enter-end="opacity-100"
@@ -1680,7 +1779,7 @@ function warehouseIndexHub() {
          x-transition:leave-start="opacity-100"
          x-transition:leave-end="opacity-0">
 
-        <div class="w-full max-w-[340px] rounded-[20px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden text-center shadow-2xl border border-black/[0.08] dark:border-white/[0.12]"
+        <div class="w-full max-w-[340px] rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 overflow-hidden text-center shadow-[0_25px_60px_rgba(0,0,0,0.35)]"
              @click.away="closeDelete()"
              x-transition:enter="transition ease-out duration-200"
              x-transition:enter-start="opacity-0 scale-95"
@@ -1701,11 +1800,11 @@ function warehouseIndexHub() {
 
             <div class="grid grid-cols-2 border-t border-black/[0.08] dark:border-white/[0.12] text-xs font-semibold">
                 <button type="button" @click="closeDelete()"
-                        class="min-h-[44px] py-3.5 text-slate-600 dark:text-slate-300 border-r border-black/[0.08] dark:border-white/[0.12] active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer flex items-center justify-center">
+                        class="min-h-[48px] py-3.5 text-slate-600 dark:text-slate-300 border-r border-black/[0.08] dark:border-white/[0.12] active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer flex items-center justify-center">
                     {{ __('warehouse.actions.cancel') }}
                 </button>
                 <button type="button" @click="submitDelete()"
-                        class="min-h-[44px] py-3.5 text-[#FF3B30] font-bold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer flex items-center justify-center">
+                        class="min-h-[48px] py-3.5 text-[#FF3B30] font-bold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer flex items-center justify-center">
                     {{ __('warehouse.actions.delete') }}
                 </button>
             </div>
