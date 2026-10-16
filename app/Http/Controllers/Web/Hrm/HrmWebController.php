@@ -1492,12 +1492,21 @@ final class HrmWebController extends Controller
     /**
      * Download Employee Import Template.
      */
-    public function employeeTemplate(): StreamedResponse
+    public function employeeTemplate(): StreamedResponse|RedirectResponse
     {
         $business = Context::requireBusiness();
         abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola staf.');
 
-        return (new DataExchangeService())->generateEmployeeTemplate($business);
+        try {
+            return (new DataExchangeService())->generateEmployeeTemplate($business);
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error("Failed to generate employee template: {$e->getMessage()}", [
+                'business_id' => $business->id,
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return redirect()->back()->with('error', 'Gagal mengunduh template karyawan: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -1567,12 +1576,21 @@ final class HrmWebController extends Controller
     /**
      * Download Fingerprint Machine Attendance Template.
      */
-    public function attendanceTemplate(): StreamedResponse
+    public function attendanceTemplate(): StreamedResponse|RedirectResponse
     {
         $business = Context::requireBusiness();
         abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola staf.');
 
-        return (new DataExchangeService())->generateFingerprintTemplate($business);
+        try {
+            return (new DataExchangeService())->generateFingerprintTemplate($business);
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error("Failed to generate attendance template: {$e->getMessage()}", [
+                'business_id' => $business->id,
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return redirect()->back()->with('error', 'Gagal mengunduh template presensi: ' . $e->getMessage());
+        }
     }
 
     /**

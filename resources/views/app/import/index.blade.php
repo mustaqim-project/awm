@@ -597,7 +597,7 @@
             </a>
 
             {{-- Metric 6: Employees --}}
-            <a href="{{ url('/employees') }}"
+            <a href="{{ route('hrm.index') }}"
                 class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-3.5 hover:border-[#30B0C7]/40 dark:hover:border-[#40C8E0]/40 transition-all group block shadow-sm">
                 <div class="flex items-center justify-between mb-2">
                     <span class="w-8 h-8 rounded-[10px] bg-[#30B0C7]/10 text-[#30B0C7] flex items-center justify-center font-bold text-[13px]">
@@ -807,7 +807,7 @@
                                 <div class="text-[11px] text-black/50 dark:text-white/50 truncate">Lembar hitung fisik, selisih & penyesuaian</div>
                             </div>
                             <div class="flex items-center gap-1.5 shrink-0">
-                                <a href="{{ url('/inventory/opnames/export-blank') }}" title="Unduh Lembar Hitung Blanko"
+                                <a href="{{ route('inventory.opnames.export-blank') }}" title="Unduh Lembar Hitung Blanko"
                                     class="h-7 px-2.5 rounded-[8px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#B26A00] dark:text-[#FF9F0A] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Template</span>
@@ -848,7 +848,7 @@
                                 <div class="text-[11px] text-black/50 dark:text-white/50 truncate">Hierarki 5 Kategori Akuntansi</div>
                             </div>
                             <div class="flex items-center gap-1.5 shrink-0">
-                                <a href="{{ url('/finance/chart-of-accounts/template') }}" title="Unduh Template Excel COA"
+                                <a href="{{ route('finance.coa.template') }}" title="Unduh Template Excel COA"
                                     class="h-7 px-2.5 rounded-[8px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#B26A00] dark:text-[#FF9F0A] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Template</span>
@@ -868,7 +868,7 @@
                                 <div class="text-[11px] text-black/50 dark:text-white/50 truncate">Validasi seimbang Debet = Kredit</div>
                             </div>
                             <div class="flex items-center gap-1.5 shrink-0">
-                                <a href="{{ url('/finance/balance-sheet/opening-template') }}" title="Unduh Template Saldo Awal"
+                                <a href="{{ route('finance.balance-sheet.opening-template') }}" title="Unduh Template Saldo Awal"
                                     class="h-7 px-2.5 rounded-[8px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#B26A00] dark:text-[#FF9F0A] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Template</span>
@@ -888,7 +888,7 @@
                                 <div class="text-[11px] text-black/50 dark:text-white/50 truncate">Faktur belum lunas & jatuh tempo</div>
                             </div>
                             <div class="flex items-center gap-1.5 shrink-0">
-                                <a href="{{ url('/finance/receivables/template') }}" title="Unduh Template Piutang"
+                                <a href="{{ route('finance.receivables.template') }}" title="Unduh Template Piutang"
                                     class="h-7 px-2.5 rounded-[8px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#B26A00] dark:text-[#FF9F0A] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Template</span>
@@ -908,7 +908,7 @@
                                 <div class="text-[11px] text-black/50 dark:text-white/50 truncate">Tagihan pemasok & termin TOP</div>
                             </div>
                             <div class="flex items-center gap-1.5 shrink-0">
-                                <a href="{{ url('/finance/payables/template') }}" title="Unduh Template Hutang"
+                                <a href="{{ route('finance.payables.template') }}" title="Unduh Template Hutang"
                                     class="h-7 px-2.5 rounded-[8px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#B26A00] dark:text-[#FF9F0A] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Template</span>
@@ -947,12 +947,12 @@
                                 <div class="text-[11px] text-black/50 dark:text-white/50 truncate">NIK, Jabatan, Gaji Pokok, Tunjangan, Bank</div>
                             </div>
                             <div class="flex items-center gap-1.5 shrink-0">
-                                <a href="{{ url('/employees/template') }}" title="Unduh Template Excel Karyawan"
+                                <a href="{{ route('hrm.employees.template') }}" title="Unduh Template Excel Karyawan"
                                     class="h-7 px-2.5 rounded-[8px] bg-[#30B0C7]/10 hover:bg-[#30B0C7]/20 text-[#1C8A9E] dark:text-[#40C8E0] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Template</span>
                                 </a>
-                                <a href="{{ url('/employees') }}" title="Kelola Karyawan & Upload Data"
+                                <a href="{{ route('hrm.index') }}" title="Kelola Karyawan & Upload Data"
                                     class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
                                     <span>Upload</span>
@@ -970,12 +970,12 @@
                                 <div class="text-[11px] text-black/50 dark:text-white/50 truncate">Solution, ZKTeco, Fingerspot CSV/XLSX</div>
                             </div>
                             <div class="flex items-center gap-1.5 shrink-0">
-                                <a href="{{ url('/attendance/template') }}" title="Unduh Template Log Mesin"
+                                <a href="{{ route('hrm.attendance.template') }}" title="Unduh Template Log Mesin"
                                     class="h-7 px-2.5 rounded-[8px] bg-[#34C759]/10 hover:bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Template</span>
                                 </a>
-                                <a href="{{ url('/attendance') }}" title="Buka Presensi untuk Upload Log"
+                                <a href="{{ route('hrm.index') }}" title="Buka Presensi untuk Upload Log"
                                     class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
                                     <span>Upload</span>
@@ -1016,12 +1016,12 @@
                                 </div>
                             </div>
                             <div class="flex items-center justify-between pt-2 border-t border-black/5 dark:border-white/5">
-                                <a href="{{ url('/storefront/orders/export-dispatch') }}"
+                                <a href="{{ route('storefront.orders.export-dispatch') }}"
                                     class="h-8 px-3 rounded-[8px] bg-[#5856D6]/10 hover:bg-[#5856D6]/20 text-[#5856D6] font-semibold text-[11px] flex items-center gap-1.5 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Unduh Manifest Hari Ini</span>
                                 </a>
-                                <a href="{{ url('/storefront/orders') }}" class="text-[11px] text-black/60 dark:text-white/60 hover:underline">
+                                <a href="{{ route('storefront.orders.index') }}" class="text-[11px] text-black/60 dark:text-white/60 hover:underline">
                                     Buka Pesanan &rarr;
                                 </a>
                             </div>

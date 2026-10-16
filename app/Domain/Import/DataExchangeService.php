@@ -606,12 +606,12 @@ final class DataExchangeService
         $sheetRef->setTitle('DATA_REFERENSI');
 
         // Preload all Products & Materials of this business
-        $products = Product::where('business_id', $business->id)->get(['code', 'sku', 'name']);
-        $materials = Material::where('business_id', $business->id)->get(['code', 'name']);
+        $products = Product::where('business_id', $business->id)->get(['id', 'code', 'name']);
+        $materials = Material::where('business_id', $business->id)->get(['id', 'code', 'name']);
 
         $itemList = [];
         foreach ($products as $p) {
-            $sku = $p->code ?: ($p->sku ?: 'NO-SKU');
+            $sku = $p->code ?: 'NO-SKU';
             $itemList[] = "[PRODUK] {$p->name} ({$sku})";
         }
         foreach ($materials as $m) {
@@ -1300,12 +1300,15 @@ final class DataExchangeService
         if (! $location) {
             $location = Location::where('business_id', $business->id)->where('is_active', true)->first();
         }
+        if (! $location) {
+            $location = Location::where('business_id', $business->id)->first();
+        }
 
         $locName = $location ? $location->name : 'Semua Lokasi';
         $targetLocId = $location ? $location->id : null;
 
         $products = Product::goods()->where('business_id', $business->id)->where('is_active', true)->with('outputUnit')->get();
-        $materials = Material::where('business_id', $business->id)->where('is_active', true)->with('unit')->get();
+        $materials = Material::where('business_id', $business->id)->whereNull('discontinued_at')->with('unit')->get();
 
         $stocksQuery = InventoryStock::where('business_id', $business->id);
         if ($targetLocId) {
@@ -1355,7 +1358,7 @@ final class DataExchangeService
             $systemQty = $stockMap['product_' . $p->id] ?? 0.0;
             $sheet->setCellValue("A{$rowNum}", $counter++);
             $sheet->setCellValue("B{$rowNum}", 'Produk Jadi');
-            $sheet->setCellValue("C{$rowNum}", $p->code ?: $p->sku);
+            $sheet->setCellValue("C{$rowNum}", $p->code ?: '-');
             $sheet->setCellValue("D{$rowNum}", $p->name);
             $sheet->setCellValue("E{$rowNum}", $p->outputUnit?->name ?: 'pcs');
             $sheet->setCellValue("F{$rowNum}", $systemQty);

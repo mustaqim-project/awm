@@ -704,12 +704,22 @@ final class InventoryWebController extends Controller
     /**
      * Download Blank Stock Opname Sheet for physical counting.
      */
-    public function exportBlankOpname(Request $request): StreamedResponse
+    public function exportBlankOpname(Request $request): StreamedResponse|RedirectResponse
     {
         $business = Context::requireBusiness();
         $locationId = $request->query('location_id');
 
-        return (new DataExchangeService())->exportBlankOpnameSheet($business, $locationId);
+        try {
+            return (new DataExchangeService())->exportBlankOpnameSheet($business, $locationId);
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error("Failed to export blank opname sheet: {$e->getMessage()}", [
+                'business_id' => $business->id,
+                'location_id' => $locationId,
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return redirect()->back()->with('error', 'Gagal mengunduh lembar opname: ' . $e->getMessage());
+        }
     }
 
     /**

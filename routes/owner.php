@@ -418,6 +418,14 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         Route::put('/settings/members/{member}/role', [SettingWebController::class, 'updateMemberRole'])->middleware(['require.permission:users.manage'])->name('settings.members.role');
         Route::delete('/settings/members/{member}', [SettingWebController::class, 'destroyMember'])->middleware(['require.permission:users.manage'])->name('settings.members.destroy');
 
+        // Root aliases for HRM Employee & Attendance (direct access & legacy compatibility)
+        Route::get('/employees/template', [HrmWebController::class, 'employeeTemplate'])->middleware('require.permission:users.manage')->name('employees.template');
+        Route::get('/employees/export', [HrmWebController::class, 'exportEmployees'])->middleware('require.permission:users.manage')->name('employees.export');
+        Route::get('/employees', [HrmWebController::class, 'index'])->middleware('require.permission:users.view')->name('employees.index');
+        Route::get('/attendance/template', [HrmWebController::class, 'attendanceTemplate'])->middleware('require.permission:users.manage')->name('attendance.template');
+        Route::get('/attendance/export', [HrmWebController::class, 'exportAttendance'])->middleware('require.permission:users.manage')->name('attendance.export');
+        Route::get('/attendance', [HrmWebController::class, 'index'])->middleware('require.permission:users.view')->name('attendance.index');
+
         // Human Resource Management (HRM) & Monthly Payroll Engine
         Route::prefix('hrm')->name('hrm.')->group(function (): void {
             Route::get('/', [HrmWebController::class, 'index'])->name('index');

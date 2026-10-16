@@ -302,14 +302,23 @@ final class ImportWebController extends Controller
     /**
      * Download Excel or CSV template for Inventory / Initial Stock.
      */
-    public function downloadInventoryTemplate(Request $request): StreamedResponse
+    public function downloadInventoryTemplate(Request $request): StreamedResponse|RedirectResponse
     {
         $format = $request->query('format', 'xlsx') === 'csv' ? 'csv' : 'xlsx';
-        if ($format === 'xlsx') {
-            $business = Context::requireBusiness();
-            return app(\App\Domain\Import\DataExchangeService::class)->generateInventoryStockTemplate($business);
+        try {
+            if ($format === 'xlsx') {
+                $business = Context::requireBusiness();
+                return app(\App\Domain\Import\DataExchangeService::class)->generateInventoryStockTemplate($business);
+            }
+            return $this->importService->downloadInventoryTemplate($format);
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error("Failed to download inventory template: {$e->getMessage()}", [
+                'format' => $format,
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return redirect()->back()->with('error', 'Gagal mengunduh template inventori: ' . $e->getMessage());
         }
-        return $this->importService->downloadInventoryTemplate($format);
     }
 
     /**
