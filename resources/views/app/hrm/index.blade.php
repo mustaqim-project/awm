@@ -4901,26 +4901,42 @@
 
                 <!-- State 1: Upload Dropzone -->
                 <div x-show="!importEmployeePreview" class="space-y-4">
+                    <!-- Langkah 1: Unduh Template -->
+                    <div class="p-4 rounded-[16px] bg-[#007AFF]/[0.05] dark:bg-[#007AFF]/[0.1] border border-[#007AFF]/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div class="space-y-1">
+                            <div class="flex items-center gap-2 text-[#007AFF] font-bold text-[13px]">
+                                <span class="w-5 h-5 rounded-full bg-[#007AFF]/15 flex items-center justify-center text-[11px] font-bold">1</span>
+                                <span>Langkah 1: Unduh Format Template Karyawan</span>
+                            </div>
+                            <p class="text-[12px] text-black/60 dark:text-white/60">Gunakan format template resmi Cooca dengan kolom Nama, Email, No. WA, Role, Jabatan, Gaji Pokok, dan Penempatan Cabang.</p>
+                        </div>
+                        <a href="{{ route('hrm.employees.template') }}"
+                           class="h-9 px-4 rounded-[10px] bg-[#007AFF] hover:bg-[#0066D6] text-white text-[12px] font-semibold transition flex items-center justify-center gap-1.5 shadow-sm shrink-0 active:scale-[0.98]">
+                            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                            <span>Unduh Template (.xlsx)</span>
+                        </a>
+                    </div>
+
+                    <!-- Langkah 2: Upload Dropzone -->
+                    <div class="flex items-center justify-between pt-1">
+                        <div class="flex items-center gap-2 text-black/80 dark:text-white/80 font-bold text-[13px]">
+                            <span class="w-5 h-5 rounded-full bg-black/10 dark:bg-white/10 flex items-center justify-center text-[11px] font-bold">2</span>
+                            <span>Langkah 2: Unggah Berkas Excel Staf Karyawan</span>
+                        </div>
+                        <span class="text-[11px] text-black/40 dark:text-white/40">Maksimal 10 MB (.xlsx, .csv)</span>
+                    </div>
+
                     <label class="border-2 border-dashed border-black/15 dark:border-white/15 hover:border-[#007AFF] dark:hover:border-[#007AFF] rounded-[20px] p-8 sm:p-12 flex flex-col items-center justify-center text-center cursor-pointer transition bg-black/[0.01] hover:bg-[#007AFF]/[0.02] block">
                         <input type="file" accept=".xlsx,.xls,.csv" @change="handleImportEmployeeFileSelect($event)" class="hidden">
                         
-                        <div class="w-16 h-16 rounded-full bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center mb-4">
+                        <div class="w-16 h-16 rounded-full bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center mb-4 mx-auto">
                             <i data-lucide="file-spreadsheet" class="w-8 h-8" x-show="!importEmployeeLoading"></i>
                             <i data-lucide="loader" class="w-8 h-8 animate-spin" x-show="importEmployeeLoading"></i>
                         </div>
 
                         <div class="space-y-1">
                             <span class="text-base font-bold text-black dark:text-white block" x-text="importEmployeeLoading ? 'Menganalisis file Excel...' : 'Pilih atau Tarik File Excel Karyawan (.xlsx)'"></span>
-                            <span class="text-xs text-black/50 dark:text-white/50 block">Mendukung format data Excel (.xlsx) dengan kolom Nama, Email, No. WA, Role, Jabatan, Gaji Pokok, dan Lokasi</span>
-                        </div>
-
-                        <div class="mt-6 pt-5 border-t border-black/[0.06] dark:border-white/[0.08] w-full max-w-md flex items-center justify-center">
-                            <a href="{{ route('hrm.employees.template') }}"
-                               @click.stop
-                               class="px-3.5 py-2 rounded-[12px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-[#007AFF] text-[12.5px] font-semibold flex items-center gap-2 transition">
-                                <i data-lucide="download" class="w-4 h-4"></i>
-                                <span>Unduh Template Excel Karyawan</span>
-                            </a>
+                            <span class="text-xs text-black/50 dark:text-white/50 block">Mendukung format data Excel (.xlsx) resmi Cooca</span>
                         </div>
                     </label>
                 </div>
@@ -5107,26 +5123,42 @@
 
                 <!-- State 1: Upload Dropzone -->
                 <div x-show="!importAttendancePreview" class="space-y-4">
+                    <!-- Langkah 1: Unduh Template -->
+                    <div class="p-4 rounded-[16px] bg-[#34C759]/[0.08] dark:bg-[#34C759]/[0.12] border border-[#34C759]/25 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div class="space-y-1">
+                            <div class="flex items-center gap-2 text-[#248A3D] dark:text-[#30D158] font-bold text-[13px]">
+                                <span class="w-5 h-5 rounded-full bg-[#34C759]/15 flex items-center justify-center text-[11px] font-bold">1</span>
+                                <span>Langkah 1: Unduh Format Template Log Mesin</span>
+                            </div>
+                            <p class="text-[12px] text-black/60 dark:text-white/60">Gunakan format template standar log mesin (ZKTeco, Solution, Fingerspot) dengan kolom NIK/Email, Tanggal, Jam Masuk & Jam Keluar.</p>
+                        </div>
+                        <a href="{{ route('hrm.attendance.template') }}"
+                           class="h-9 px-4 rounded-[10px] bg-[#34C759] hover:bg-[#28A745] text-white text-[12px] font-semibold transition flex items-center justify-center gap-1.5 shadow-sm shrink-0 active:scale-[0.98]">
+                            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                            <span>Unduh Template (.xlsx)</span>
+                        </a>
+                    </div>
+
+                    <!-- Langkah 2: Upload Dropzone -->
+                    <div class="flex items-center justify-between pt-1">
+                        <div class="flex items-center gap-2 text-black/80 dark:text-white/80 font-bold text-[13px]">
+                            <span class="w-5 h-5 rounded-full bg-black/10 dark:bg-white/10 flex items-center justify-center text-[11px] font-bold">2</span>
+                            <span>Langkah 2: Unggah Berkas Log Mesin Presensi</span>
+                        </div>
+                        <span class="text-[11px] text-black/40 dark:text-white/40">Maksimal 10 MB (.xlsx, .csv)</span>
+                    </div>
+
                     <label class="border-2 border-dashed border-black/15 dark:border-white/15 hover:border-[#34C759] dark:hover:border-[#34C759] rounded-[20px] p-8 sm:p-12 flex flex-col items-center justify-center text-center cursor-pointer transition bg-black/[0.01] hover:bg-[#34C759]/[0.02] block">
                         <input type="file" accept=".xlsx,.xls,.csv" @change="handleImportAttendanceFileSelect($event)" class="hidden">
                         
-                        <div class="w-16 h-16 rounded-full bg-[#34C759]/10 text-[#34C759] flex items-center justify-center mb-4">
+                        <div class="w-16 h-16 rounded-full bg-[#34C759]/10 text-[#34C759] flex items-center justify-center mb-4 mx-auto">
                             <i data-lucide="file-spreadsheet" class="w-8 h-8" x-show="!importAttendanceLoading"></i>
                             <i data-lucide="loader" class="w-8 h-8 animate-spin" x-show="importAttendanceLoading"></i>
                         </div>
 
                         <div class="space-y-1">
                             <span class="text-base font-bold text-black dark:text-white block" x-text="importAttendanceLoading ? 'Menganalisis file presensi mesin...' : 'Pilih atau Tarik Berkas Log Presensi (.xlsx)'"></span>
-                            <span class="text-xs text-black/50 dark:text-white/50 block">Mendukung format kolom: Email / No. WA / Nama Karyawan, Tanggal (YYYY-MM-DD), Jam Masuk (HH:MM), Jam Keluar (HH:MM)</span>
-                        </div>
-
-                        <div class="mt-6 pt-5 border-t border-black/[0.06] dark:border-white/[0.08] w-full max-w-md flex items-center justify-center">
-                            <a href="{{ route('hrm.attendance.template') }}"
-                               @click.stop
-                               class="px-3.5 py-2 rounded-[12px] bg-[#34C759]/10 hover:bg-[#34C759]/20 text-[#34C759] text-[12.5px] font-semibold flex items-center gap-2 transition">
-                                <i data-lucide="download" class="w-4 h-4"></i>
-                                <span>Unduh Template Log Mesin Presensi</span>
-                            </a>
+                            <span class="text-xs text-black/50 dark:text-white/50 block">Mendukung format kolom NIK/Email/Nama, Tanggal, Jam Masuk, Jam Keluar</span>
                         </div>
                     </label>
                 </div>

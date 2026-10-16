@@ -1246,6 +1246,31 @@
 
                         <!-- State 1: Dropzone (No File Analyzed Yet) -->
                         <div x-show="!importPreview" class="space-y-4">
+                            <!-- Langkah 1: Unduh Template -->
+                            <div class="p-4 rounded-[16px] bg-[#007AFF]/[0.05] dark:bg-[#007AFF]/[0.1] border border-[#007AFF]/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                <div class="space-y-1">
+                                    <div class="flex items-center gap-2 text-[#007AFF] font-bold text-[13px]">
+                                        <span class="w-5 h-5 rounded-full bg-[#007AFF]/15 flex items-center justify-center text-[11px] font-bold">1</span>
+                                        <span>Langkah 1: Unduh Format Template Excel</span>
+                                    </div>
+                                    <p class="text-[12px] text-black/60 dark:text-white/60">Gunakan format template resmi Cooca yang dilengkapi validasi dropdown tier & limit piutang.</p>
+                                </div>
+                                <a href="{{ route('customers.template') }}"
+                                    class="h-9 px-4 rounded-[10px] bg-[#007AFF] hover:bg-[#0066D6] text-white text-[12px] font-semibold transition flex items-center justify-center gap-1.5 shadow-sm shrink-0 active:scale-[0.98]">
+                                    <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                                    <span>Unduh Template (.xlsx)</span>
+                                </a>
+                            </div>
+
+                            <!-- Langkah 2: Upload Dropzone -->
+                            <div class="flex items-center justify-between pt-1">
+                                <div class="flex items-center gap-2 text-black/80 dark:text-white/80 font-bold text-[13px]">
+                                    <span class="w-5 h-5 rounded-full bg-black/10 dark:bg-white/10 flex items-center justify-center text-[11px] font-bold">2</span>
+                                    <span>Langkah 2: Unggah Berkas Excel Pelanggan</span>
+                                </div>
+                                <span class="text-[11px] text-black/40 dark:text-white/40">Maksimal 10 MB (.xlsx, .csv)</span>
+                            </div>
+
                             <label class="relative block w-full border-2 border-dashed border-black/15 dark:border-white/15 hover:border-[#007AFF] dark:hover:border-[#007AFF] rounded-[20px] p-8 sm:p-12 text-center cursor-pointer transition bg-black/[0.01] dark:bg-white/[0.01] hover:bg-[#007AFF]/[0.02]">
                                 <input type="file" class="hidden" accept=".xlsx, .xls, .csv" @change="handleImportFileSelect($event)" :disabled="importLoading">
                                 

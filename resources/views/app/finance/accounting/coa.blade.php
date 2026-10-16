@@ -589,25 +589,42 @@
                     
                     <!-- State 1: Drop Zone -->
                     <div x-show="!importPreview" class="space-y-4">
-                        <label class="border-2 border-dashed border-black/15 dark:border-white/15 hover:border-[#007AFF] dark:hover:border-[#0A84FF] rounded-[20px] p-8 flex flex-col items-center justify-center text-center cursor-pointer transition bg-black/[0.01] dark:bg-white/[0.01]">
+                        <!-- Langkah 1: Unduh Template -->
+                        <div class="p-4 rounded-[16px] bg-[#FF9500]/[0.08] dark:bg-[#FF9500]/[0.12] border border-[#FF9500]/25 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                            <div class="space-y-1">
+                                <div class="flex items-center gap-2 text-[#B26A00] dark:text-[#FF9F0A] font-bold text-[13px]">
+                                    <span class="w-5 h-5 rounded-full bg-[#FF9500]/15 flex items-center justify-center text-[11px] font-bold">1</span>
+                                    <span>Langkah 1: Unduh Format Template Bagan Akun</span>
+                                </div>
+                                <p class="text-[12px] text-black/60 dark:text-white/60">Gunakan format template resmi Cooca standar SAK EMKM dengan 5 kategori akun akuntansi.</p>
+                            </div>
+                            <a href="{{ route('finance.coa.template') }}"
+                               class="h-9 px-4 rounded-[10px] bg-[#FF9500] hover:bg-[#E08500] text-white text-[12px] font-semibold transition flex items-center justify-center gap-1.5 shadow-sm shrink-0 active:scale-[0.98]">
+                                <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                                <span>Unduh Template (.xlsx)</span>
+                            </a>
+                        </div>
+
+                        <!-- Langkah 2: Upload Dropzone -->
+                        <div class="flex items-center justify-between pt-1">
+                            <div class="flex items-center gap-2 text-black/80 dark:text-white/80 font-bold text-[13px]">
+                                <span class="w-5 h-5 rounded-full bg-black/10 dark:bg-white/10 flex items-center justify-center text-[11px] font-bold">2</span>
+                                <span>Langkah 2: Unggah Berkas Excel Bagan Akun</span>
+                            </div>
+                            <span class="text-[11px] text-black/40 dark:text-white/40">Maksimal 10 MB (.xlsx, .csv)</span>
+                        </div>
+
+                        <label class="border-2 border-dashed border-black/15 dark:border-white/15 hover:border-[#FF9500] dark:hover:border-[#FF9F0A] rounded-[20px] p-8 flex flex-col items-center justify-center text-center cursor-pointer transition bg-black/[0.01] dark:bg-white/[0.01] hover:bg-[#FF9500]/[0.02]">
                             <input type="file" class="hidden" accept=".xlsx, .xls, .csv" @change="handleImportFileSelect($event)" :disabled="importLoading">
                             
                             <div class="space-y-3">
-                                <div class="w-14 h-14 mx-auto rounded-full bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center">
+                                <div class="w-14 h-14 mx-auto rounded-full bg-[#FF9500]/10 text-[#FF9500] flex items-center justify-center">
                                     <i data-lucide="upload-cloud" class="w-7 h-7" x-show="!importLoading"></i>
                                     <i data-lucide="loader" class="w-7 h-7 animate-spin" x-show="importLoading"></i>
                                 </div>
                                 <div class="space-y-1">
                                     <div class="text-[15px] font-bold text-black dark:text-white" x-text="importLoading ? 'Membaca dan Menganalisis Struktur Akun...' : 'Pilih Berkas Excel COA atau Tarik ke Sini'"></div>
                                     <div class="text-[12px] text-black/50 dark:text-white/50">Mendukung format .XLSX standar SAK EMKM Cooca</div>
-                                </div>
-                                <div class="inline-flex items-center gap-2 pt-2">
-                                    <a href="{{ route('finance.coa.template') }}"
-                                       @click.stop
-                                       class="px-3 py-1.5 rounded-[10px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-[#007AFF] text-[12px] font-semibold flex items-center gap-1.5 transition">
-                                        <i data-lucide="download" class="w-3.5 h-3.5"></i>
-                                        <span>Unduh Template Excel Bagan Akun</span>
-                                    </a>
                                 </div>
                             </div>
                         </label>

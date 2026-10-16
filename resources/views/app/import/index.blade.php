@@ -9,6 +9,15 @@
         activeTab: '{{ session('active_tab', $activeTab) }}',
         canImport: {{ $canImport ? 'true' : 'false' }},
 
+        scrollToWorkspace() {
+            this.$nextTick(() => {
+                const el = document.getElementById('in-hub-workspace');
+                if (el) {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        },
+
         // Material Import State
         materialFile: null,
         materialFileName: '',
@@ -636,80 +645,117 @@
                     <div class="space-y-2 text-[12px]">
                         {{-- Produk Jadi --}}
                         <div class="p-2.5 rounded-[10px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 flex items-center justify-between gap-2">
-                            <div>
-                                <div class="font-semibold text-black dark:text-white flex items-center gap-1.5">
+                            <div class="min-w-0 flex-1">
+                                <div class="font-semibold text-black dark:text-white flex items-center gap-1.5 truncate">
                                     <span>Produk Jadi</span>
                                     <span class="text-[10px] font-normal text-[#007AFF] bg-[#007AFF]/10 px-1.5 rounded">Dropdown BOM</span>
                                 </div>
-                                <div class="text-[11px] text-black/50 dark:text-white/50">Katalog SKU, Barcode, Kategori, Harga</div>
+                                <div class="text-[11px] text-black/50 dark:text-white/50 truncate">Katalog SKU, Barcode, Kategori, Harga</div>
                             </div>
-                            <div class="flex items-center gap-1 shrink-0">
+                            <div class="flex items-center gap-1.5 shrink-0">
                                 <a href="{{ route('import.products.template', ['format' => 'xlsx']) }}" title="Download Template Excel Hidup"
                                     class="h-7 px-2.5 rounded-[8px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-[#007AFF] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
-                                    <span>XLSX</span>
+                                    <span>Template</span>
                                 </a>
-                                <button type="button" @click="activeTab = 'products'"
-                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-medium text-[11px] transition-all">
-                                    Tab
+                                <button type="button" @click="activeTab = 'products'; scrollToWorkspace()"
+                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
+                                    <span>Upload</span>
                                 </button>
                             </div>
                         </div>
 
                         {{-- Bahan Baku --}}
                         <div class="p-2.5 rounded-[10px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 flex items-center justify-between gap-2">
-                            <div>
-                                <div class="font-semibold text-black dark:text-white flex items-center gap-1.5">
+                            <div class="min-w-0 flex-1">
+                                <div class="font-semibold text-black dark:text-white flex items-center gap-1.5 truncate">
                                     <span>Bahan Baku</span>
                                     <span class="text-[10px] font-normal text-[#34C759] bg-[#34C759]/10 px-1.5 rounded">Dropdown Vendor</span>
                                 </div>
-                                <div class="text-[11px] text-black/50 dark:text-white/50">Satuan dasar, HPP beli, kategori bahan</div>
+                                <div class="text-[11px] text-black/50 dark:text-white/50 truncate">Satuan dasar, HPP beli, kategori bahan</div>
                             </div>
-                            <div class="flex items-center gap-1 shrink-0">
+                            <div class="flex items-center gap-1.5 shrink-0">
                                 <a href="{{ route('import.materials.template', ['format' => 'xlsx']) }}" title="Download Template Excel Hidup"
                                     class="h-7 px-2.5 rounded-[8px] bg-[#34C759]/10 hover:bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
-                                    <span>XLSX</span>
+                                    <span>Template</span>
                                 </a>
-                                <button type="button" @click="activeTab = 'materials'"
-                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-medium text-[11px] transition-all">
-                                    Tab
+                                <button type="button" @click="activeTab = 'materials'; scrollToWorkspace()"
+                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
+                                    <span>Upload</span>
                                 </button>
                             </div>
                         </div>
 
                         {{-- Resep BOM --}}
                         <div class="p-2.5 rounded-[10px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 flex items-center justify-between gap-2">
-                            <div>
-                                <div class="font-semibold text-black dark:text-white flex items-center gap-1.5">
+                            <div class="min-w-0 flex-1">
+                                <div class="font-semibold text-black dark:text-white flex items-center gap-1.5 truncate">
                                     <span>Formula Resep BOM</span>
                                     <span class="text-[10px] font-normal text-[#5856D6] bg-[#5856D6]/10 px-1.5 rounded">Auto HPP</span>
                                 </div>
-                                <div class="text-[11px] text-black/50 dark:text-white/50">Relasi produk & bahan, takaran, waste %</div>
+                                <div class="text-[11px] text-black/50 dark:text-white/50 truncate">Relasi produk & bahan, takaran, waste %</div>
                             </div>
-                            <div class="flex items-center gap-1 shrink-0">
+                            <div class="flex items-center gap-1.5 shrink-0">
                                 <a href="{{ route('import.recipes.template', ['format' => 'xlsx']) }}" title="Download Template Excel Hidup"
                                     class="h-7 px-2.5 rounded-[8px] bg-[#5856D6]/10 hover:bg-[#5856D6]/20 text-[#5856D6] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
-                                    <span>XLSX</span>
+                                    <span>Template</span>
                                 </a>
-                                <button type="button" @click="activeTab = 'recipes'"
-                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-medium text-[11px] transition-all">
-                                    Tab
+                                <button type="button" @click="activeTab = 'recipes'; scrollToWorkspace()"
+                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
+                                    <span>Upload</span>
                                 </button>
                             </div>
                         </div>
 
-                        {{-- Pelanggan & Supplier Quick Links --}}
-                        <div class="grid grid-cols-2 gap-2 pt-1">
-                            <a href="{{ url('/customers/template') }}" class="p-2 rounded-[8px] bg-black/[0.03] dark:bg-white/[0.04] hover:bg-black/[0.06] text-black/70 dark:text-white/70 text-[11px] flex items-center justify-between">
-                                <span class="font-medium">Template Pelanggan</span>
-                                <svg class="w-3.5 h-3.5 text-[#007AFF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
-                            </a>
-                            <a href="{{ url('/suppliers/template') }}" class="p-2 rounded-[8px] bg-black/[0.03] dark:bg-white/[0.04] hover:bg-black/[0.06] text-black/70 dark:text-white/70 text-[11px] flex items-center justify-between">
-                                <span class="font-medium">Template Pemasok</span>
-                                <svg class="w-3.5 h-3.5 text-[#34C759]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
-                            </a>
+                        {{-- Pelanggan CRM --}}
+                        <div class="p-2.5 rounded-[10px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 flex items-center justify-between gap-2">
+                            <div class="min-w-0 flex-1">
+                                <div class="font-semibold text-black dark:text-white flex items-center gap-1.5 truncate">
+                                    <span>Pelanggan CRM</span>
+                                    <span class="text-[10px] font-normal text-[#007AFF] bg-[#007AFF]/10 px-1.5 rounded">Tier & TOP</span>
+                                </div>
+                                <div class="text-[11px] text-black/50 dark:text-white/50 truncate">Kontak, WhatsApp, limit kredit piutang</div>
+                            </div>
+                            <div class="flex items-center gap-1.5 shrink-0">
+                                <a href="{{ url('/customers/template') }}" title="Unduh Template Excel Pelanggan"
+                                    class="h-7 px-2.5 rounded-[8px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-[#007AFF] font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+                                    <span>Template</span>
+                                </a>
+                                <a href="{{ route('customers.index') }}" title="Buka Modul Pelanggan untuk Upload Data"
+                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
+                                    <span>Upload</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        {{-- Pemasok Vendor --}}
+                        <div class="p-2.5 rounded-[10px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 flex items-center justify-between gap-2">
+                            <div class="min-w-0 flex-1">
+                                <div class="font-semibold text-black dark:text-white flex items-center gap-1.5 truncate">
+                                    <span>Pemasok Vendor</span>
+                                    <span class="text-[10px] font-normal text-[#34C759] bg-[#34C759]/10 px-1.5 rounded">Rekening & TOP</span>
+                                </div>
+                                <div class="text-[11px] text-black/50 dark:text-white/50 truncate">Data vendor, bank transfer, tempo hutang</div>
+                            </div>
+                            <div class="flex items-center gap-1.5 shrink-0">
+                                <a href="{{ url('/suppliers/template') }}" title="Unduh Template Excel Pemasok"
+                                    class="h-7 px-2.5 rounded-[8px] bg-[#34C759]/10 hover:bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+                                    <span>Template</span>
+                                </a>
+                                <a href="{{ route('suppliers.index') }}" title="Buka Modul Pemasok untuk Upload Data"
+                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
+                                    <span>Upload</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -730,44 +776,46 @@
                     <div class="space-y-2 text-[12px]">
                         {{-- Saldo Stok Awal --}}
                         <div class="p-2.5 rounded-[10px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 flex items-center justify-between gap-2">
-                            <div>
-                                <div class="font-semibold text-black dark:text-white flex items-center gap-1.5">
+                            <div class="min-w-0 flex-1">
+                                <div class="font-semibold text-black dark:text-white flex items-center gap-1.5 truncate">
                                     <span>Saldo Stok Awal</span>
                                     <span class="text-[10px] font-normal text-[#AF52DE] bg-[#AF52DE]/10 px-1.5 rounded">Dual SKU</span>
                                 </div>
-                                <div class="text-[11px] text-black/50 dark:text-white/50">Mendukung Produk & Bahan dalam 1 file</div>
+                                <div class="text-[11px] text-black/50 dark:text-white/50 truncate">Mendukung Produk & Bahan dalam 1 file</div>
                             </div>
-                            <div class="flex items-center gap-1 shrink-0">
+                            <div class="flex items-center gap-1.5 shrink-0">
                                 <a href="{{ route('import.inventory.template', ['format' => 'xlsx']) }}" title="Download Template Excel Hidup"
                                     class="h-7 px-2.5 rounded-[8px] bg-[#AF52DE]/10 hover:bg-[#AF52DE]/20 text-[#8E32BC] dark:text-[#BF5AF2] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
-                                    <span>XLSX</span>
+                                    <span>Template</span>
                                 </a>
-                                <button type="button" @click="activeTab = 'inventory'"
-                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-medium text-[11px] transition-all">
-                                    Tab
+                                <button type="button" @click="activeTab = 'inventory'; scrollToWorkspace()"
+                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
+                                    <span>Upload</span>
                                 </button>
                             </div>
                         </div>
 
                         {{-- Stock Opname 2-Arah --}}
                         <div class="p-2.5 rounded-[10px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 flex items-center justify-between gap-2">
-                            <div>
-                                <div class="font-semibold text-black dark:text-white flex items-center gap-1.5">
+                            <div class="min-w-0 flex-1">
+                                <div class="font-semibold text-black dark:text-white flex items-center gap-1.5 truncate">
                                     <span>Stock Opname Fisik</span>
                                     <span class="text-[10px] font-normal text-[#FF9500] bg-[#FF9500]/10 px-1.5 rounded">2-Arah</span>
                                 </div>
-                                <div class="text-[11px] text-black/50 dark:text-white/50">Lembar hitung fisik, selisih & penyesuaian</div>
+                                <div class="text-[11px] text-black/50 dark:text-white/50 truncate">Lembar hitung fisik, selisih & penyesuaian</div>
                             </div>
-                            <div class="flex items-center gap-1 shrink-0">
+                            <div class="flex items-center gap-1.5 shrink-0">
                                 <a href="{{ url('/inventory/opnames/export-blank') }}" title="Unduh Lembar Hitung Blanko"
                                     class="h-7 px-2.5 rounded-[8px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#B26A00] dark:text-[#FF9F0A] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
-                                    <span>Lembar Hitung</span>
+                                    <span>Template</span>
                                 </a>
-                                <a href="{{ route('inventory.opnames.index') }}"
-                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-medium text-[11px] flex items-center transition-all">
-                                    Modul
+                                <a href="{{ route('inventory.opnames.index') }}" title="Buka Modul Opname untuk Upload Hasil Hitung"
+                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
+                                    <span>Upload</span>
                                 </a>
                             </div>
                         </div>
@@ -795,46 +843,82 @@
                     <div class="space-y-2 text-[12px]">
                         {{-- Bagan Akun COA --}}
                         <div class="p-2.5 rounded-[10px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 flex items-center justify-between gap-2">
-                            <div>
-                                <div class="font-semibold text-black dark:text-white">Bagan Akun (COA)</div>
-                                <div class="text-[11px] text-black/50 dark:text-white/50">Hierarki Akun 5 Kategori Akuntansi</div>
+                            <div class="min-w-0 flex-1">
+                                <div class="font-semibold text-black dark:text-white truncate">Bagan Akun (COA)</div>
+                                <div class="text-[11px] text-black/50 dark:text-white/50 truncate">Hierarki 5 Kategori Akuntansi</div>
                             </div>
-                            <div class="flex items-center gap-1 shrink-0">
-                                <a href="{{ url('/finance/chart-of-accounts/template') }}" title="Template COA"
+                            <div class="flex items-center gap-1.5 shrink-0">
+                                <a href="{{ url('/finance/chart-of-accounts/template') }}" title="Unduh Template Excel COA"
                                     class="h-7 px-2.5 rounded-[8px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#B26A00] dark:text-[#FF9F0A] font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Template</span>
                                 </a>
-                                <a href="{{ route('finance.coa.index') }}"
-                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-medium text-[11px] flex items-center transition-all">
-                                    Buka
+                                <a href="{{ route('finance.coa.index') }}" title="Buka COA untuk Upload Data"
+                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
+                                    <span>Upload</span>
                                 </a>
                             </div>
                         </div>
 
                         {{-- Saldo Awal Neraca --}}
                         <div class="p-2.5 rounded-[10px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 flex items-center justify-between gap-2">
-                            <div>
-                                <div class="font-semibold text-black dark:text-white">Saldo Awal Neraca</div>
-                                <div class="text-[11px] text-black/50 dark:text-white/50">Validasi otomatis Debet = Kredit seimbang</div>
+                            <div class="min-w-0 flex-1">
+                                <div class="font-semibold text-black dark:text-white truncate">Saldo Awal Neraca</div>
+                                <div class="text-[11px] text-black/50 dark:text-white/50 truncate">Validasi seimbang Debet = Kredit</div>
                             </div>
-                            <div class="flex items-center gap-1 shrink-0">
-                                <a href="{{ url('/finance/balance-sheet/opening-template') }}" title="Template Saldo Awal"
+                            <div class="flex items-center gap-1.5 shrink-0">
+                                <a href="{{ url('/finance/balance-sheet/opening-template') }}" title="Unduh Template Saldo Awal"
                                     class="h-7 px-2.5 rounded-[8px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#B26A00] dark:text-[#FF9F0A] font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Template</span>
+                                </a>
+                                <a href="{{ route('finance.balance-sheet') }}" title="Buka Neraca untuk Upload Saldo Awal"
+                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
+                                    <span>Upload</span>
                                 </a>
                             </div>
                         </div>
 
-                        {{-- AR & AP Links --}}
-                        <div class="grid grid-cols-2 gap-2 pt-1">
-                            <a href="{{ url('/finance/receivables/template') }}" class="p-2 rounded-[8px] bg-black/[0.03] dark:bg-white/[0.04] hover:bg-black/[0.06] text-black/70 dark:text-white/70 text-[11px] flex items-center justify-between">
-                                <span class="font-medium">Template Piutang (AR)</span>
-                                <svg class="w-3.5 h-3.5 text-[#FF9500]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
-                            </a>
-                            <a href="{{ url('/finance/payables/template') }}" class="p-2 rounded-[8px] bg-black/[0.03] dark:bg-white/[0.04] hover:bg-black/[0.06] text-black/70 dark:text-white/70 text-[11px] flex items-center justify-between">
-                                <span class="font-medium">Template Hutang (AP)</span>
-                                <svg class="w-3.5 h-3.5 text-[#FF9500]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
-                            </a>
+                        {{-- Piutang AR --}}
+                        <div class="p-2.5 rounded-[10px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 flex items-center justify-between gap-2">
+                            <div class="min-w-0 flex-1">
+                                <div class="font-semibold text-black dark:text-white truncate">Piutang Usaha (AR)</div>
+                                <div class="text-[11px] text-black/50 dark:text-white/50 truncate">Faktur belum lunas & jatuh tempo</div>
+                            </div>
+                            <div class="flex items-center gap-1.5 shrink-0">
+                                <a href="{{ url('/finance/receivables/template') }}" title="Unduh Template Piutang"
+                                    class="h-7 px-2.5 rounded-[8px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#B26A00] dark:text-[#FF9F0A] font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+                                    <span>Template</span>
+                                </a>
+                                <a href="{{ route('finance.receivables') }}" title="Buka Piutang untuk Upload Data"
+                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
+                                    <span>Upload</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        {{-- Hutang AP --}}
+                        <div class="p-2.5 rounded-[10px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 flex items-center justify-between gap-2">
+                            <div class="min-w-0 flex-1">
+                                <div class="font-semibold text-black dark:text-white truncate">Hutang Usaha (AP)</div>
+                                <div class="text-[11px] text-black/50 dark:text-white/50 truncate">Tagihan pemasok & termin TOP</div>
+                            </div>
+                            <div class="flex items-center gap-1.5 shrink-0">
+                                <a href="{{ url('/finance/payables/template') }}" title="Unduh Template Hutang"
+                                    class="h-7 px-2.5 rounded-[8px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#B26A00] dark:text-[#FF9F0A] font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+                                    <span>Template</span>
+                                </a>
+                                <a href="{{ route('finance.payables') }}" title="Buka Hutang untuk Upload Data"
+                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
+                                    <span>Upload</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -855,44 +939,46 @@
                     <div class="space-y-2 text-[12px]">
                         {{-- Master Karyawan --}}
                         <div class="p-2.5 rounded-[10px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 flex items-center justify-between gap-2">
-                            <div>
-                                <div class="font-semibold text-black dark:text-white flex items-center gap-1.5">
+                            <div class="min-w-0 flex-1">
+                                <div class="font-semibold text-black dark:text-white flex items-center gap-1.5 truncate">
                                     <span>Master Karyawan</span>
-                                    <span class="text-[10px] font-normal text-[#30B0C7] bg-[#30B0C7]/10 px-1.5 rounded">Gaji & Rekening</span>
+                                    <span class="text-[10px] font-normal text-[#30B0C7] bg-[#30B0C7]/10 px-1.5 rounded">Payroll</span>
                                 </div>
-                                <div class="text-[11px] text-black/50 dark:text-white/50">NIK, Jabatan, Gaji Pokok, Tunjangan, Bank</div>
+                                <div class="text-[11px] text-black/50 dark:text-white/50 truncate">NIK, Jabatan, Gaji Pokok, Tunjangan, Bank</div>
                             </div>
-                            <div class="flex items-center gap-1 shrink-0">
-                                <a href="{{ url('/employees/template') }}" title="Download Template Karyawan"
+                            <div class="flex items-center gap-1.5 shrink-0">
+                                <a href="{{ url('/employees/template') }}" title="Unduh Template Excel Karyawan"
                                     class="h-7 px-2.5 rounded-[8px] bg-[#30B0C7]/10 hover:bg-[#30B0C7]/20 text-[#1C8A9E] dark:text-[#40C8E0] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Template</span>
                                 </a>
-                                <a href="{{ url('/employees') }}"
-                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-medium text-[11px] flex items-center transition-all">
-                                    Kelola
+                                <a href="{{ url('/employees') }}" title="Kelola Karyawan & Upload Data"
+                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
+                                    <span>Upload</span>
                                 </a>
                             </div>
                         </div>
 
                         {{-- Mesin Fingerprint --}}
                         <div class="p-2.5 rounded-[10px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 flex items-center justify-between gap-2">
-                            <div>
-                                <div class="font-semibold text-black dark:text-white flex items-center gap-1.5">
+                            <div class="min-w-0 flex-1">
+                                <div class="font-semibold text-black dark:text-white flex items-center gap-1.5 truncate">
                                     <span>Mesin Fingerprint</span>
                                     <span class="text-[10px] font-normal text-[#34C759] bg-[#34C759]/10 px-1.5 rounded">Multi-Brand</span>
                                 </div>
-                                <div class="text-[11px] text-black/50 dark:text-white/50">Solution, ZKTeco, Fingerspot CSV/XLSX</div>
+                                <div class="text-[11px] text-black/50 dark:text-white/50 truncate">Solution, ZKTeco, Fingerspot CSV/XLSX</div>
                             </div>
-                            <div class="flex items-center gap-1 shrink-0">
-                                <a href="{{ url('/attendance/template') }}" title="Template Log Mesin"
+                            <div class="flex items-center gap-1.5 shrink-0">
+                                <a href="{{ url('/attendance/template') }}" title="Unduh Template Log Mesin"
                                     class="h-7 px-2.5 rounded-[8px] bg-[#34C759]/10 hover:bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Template</span>
                                 </a>
-                                <a href="{{ url('/attendance') }}"
-                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-medium text-[11px] flex items-center transition-all">
-                                    Log
+                                <a href="{{ url('/attendance') }}" title="Buka Presensi untuk Upload Log"
+                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
+                                    <span>Upload</span>
                                 </a>
                             </div>
                         </div>
@@ -971,7 +1057,7 @@
         {{-- ========================================================== --}}
         {{-- IN-HUB IMPORT WORKSPACE SECTION HEADER --}}
         {{-- ========================================================== --}}
-        <div class="pt-4 border-t border-black/5 dark:border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+        <div id="in-hub-workspace" class="pt-4 border-t border-black/5 dark:border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-2 scroll-mt-6">
             <div>
                 <h2 class="text-[16px] font-bold text-black dark:text-white tracking-tight flex items-center gap-2">
                     <span class="w-2.5 h-2.5 rounded-full bg-[#34C759]"></span>
@@ -1033,90 +1119,114 @@
         {{-- TAB 1: IMPORT BAHAN BAKU --}}
         {{-- ========================================================== --}}
         <div x-show="activeTab === 'materials'" class="space-y-5">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 items-stretch">
                 {{-- Step 1: Download Template --}}
-                <div class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 flex flex-col justify-between gap-4">
-                    <div class="space-y-2">
-                        <div class="flex items-center gap-2 text-[#34C759] font-semibold text-[12px]">
-                            <span class="w-5 h-5 rounded-full bg-[#34C759]/15 flex items-center justify-center text-[11px] font-bold">1</span>
-                            <span>Download Template Excel</span>
+                <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 flex flex-col justify-between shadow-sm">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between border-b border-black/5 dark:border-white/5 pb-3">
+                            <div class="flex items-center gap-2 text-[#34C759] font-bold text-[13px]">
+                                <span class="w-6 h-6 rounded-full bg-[#34C759]/15 flex items-center justify-center text-[11px] font-bold">1</span>
+                                <span>Langkah 1: Unduh Format Template</span>
+                            </div>
+                            <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158]">Living Dropdown</span>
                         </div>
-                        <h3 class="font-semibold text-black dark:text-white text-[15px]">Format Master Bahan</h3>
-                        <p class="text-[12px] text-black/55 dark:text-white/55 leading-relaxed">
-                            Format kolom mencakup Nama Bahan Baku, Kode / SKU, Kategori, Satuan Dasar, Harga Beli Standar, dan Pemasok.
-                        </p>
+                        <div>
+                            <h3 class="font-bold text-black dark:text-white text-[15px]">Format Master Bahan Baku</h3>
+                            <p class="text-[12px] text-black/60 dark:text-white/60 leading-relaxed mt-1">
+                                Unduh template resmi Cooca yang dilengkapi validasi dropdown master kategori dan pemasok aktif untuk impor tanpa kendala.
+                            </p>
+                        </div>
+                        <div class="p-3 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 space-y-1.5 text-[11px] text-black/60 dark:text-white/60">
+                            <div class="font-semibold text-black/80 dark:text-white/80 text-[11px] flex items-center gap-1.5">
+                                <svg class="w-3.5 h-3.5 text-[#34C759]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                <span>Struktur Kolom Tervalidasi:</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-1.5 pl-5">
+                                <div>• Nama Bahan (Wajib)</div>
+                                <div>• Kode / SKU Bahan</div>
+                                <div>• Kategori & Satuan</div>
+                                <div>• Harga Beli Standar</div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="space-y-2 pt-2 border-t border-black/5 dark:border-white/5">
-                        <a href="{{ route('import.materials.template', ['format' => 'xlsx']) }}"
-                            class="w-full h-9 rounded-[10px] bg-[#34C759]/10 hover:bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] border border-[#34C759]/20 text-[13px] font-semibold transition-all flex items-center justify-center gap-2 active:scale-[0.98]">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 01-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-7.5A1.125 1.125 0 0112 18.375m9.75-12.75c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125m19.5 0v1.5c0 .621-.504 1.125-1.125 1.125M2.25 5.625v1.5c0 .621.504 1.125 1.125 1.125m0 0h17.25m-17.25 0h7.5c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125H3.375a1.125 1.125 0 01-1.125-1.125v-1.5c0-.621.504-1.125 1.125-1.125z"/></svg>
-                            <span>Download Template Excel (.xlsx)</span>
-                        </a>
-                        <a href="{{ route('import.materials.template', ['format' => 'csv']) }}"
-                            class="w-full h-8 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/70 dark:text-white/70 text-[12px] font-medium transition-all flex items-center justify-center gap-1.5 active:scale-[0.98]">
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
-                            <span>Download CSV (.csv)</span>
-                        </a>
+                    <div class="pt-4 mt-4 border-t border-black/5 dark:border-white/5 space-y-2">
+                        <div class="text-[11px] text-black/50 dark:text-white/50 font-medium">Pilih format berkas template:</div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <a href="{{ route('import.materials.template', ['format' => 'xlsx']) }}"
+                                class="h-9 rounded-[10px] bg-[#34C759]/10 hover:bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] border border-[#34C759]/25 text-[12px] font-semibold transition-all flex items-center justify-center gap-1.5 active:scale-[0.98] shadow-sm">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+                                <span>Template Excel (.xlsx)</span>
+                            </a>
+                            <a href="{{ route('import.materials.template', ['format' => 'csv']) }}"
+                                class="h-9 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/75 dark:text-white/75 border border-black/5 dark:border-white/5 text-[12px] font-medium transition-all flex items-center justify-center gap-1.5 active:scale-[0.98]">
+                                <svg class="w-4 h-4 opacity-70" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+                                <span>Format CSV (.csv)</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
                 {{-- Step 2: Upload File Zone --}}
-                <div class="lg:col-span-2 rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 space-y-4">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-2 text-[#34C759] font-semibold text-[12px]">
-                            <span class="w-5 h-5 rounded-full bg-[#34C759]/15 flex items-center justify-center text-[11px] font-bold">2</span>
-                            <span>Upload File & Analisis Otomatis</span>
+                <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 flex flex-col justify-between shadow-sm">
+                    <div class="flex items-center justify-between border-b border-black/5 dark:border-white/5 pb-3">
+                        <div class="flex items-center gap-2 text-[#34C759] font-bold text-[13px]">
+                            <span class="w-6 h-6 rounded-full bg-[#34C759]/15 flex items-center justify-center text-[11px] font-bold">2</span>
+                            <span>Langkah 2: Unggah Data & Validasi</span>
                         </div>
-                        <span class="text-[11px] text-black/40 dark:text-white/40">Maks. 5 MB (.xlsx, .xls, .csv)</span>
+                        <span class="text-[11px] font-mono text-black/45 dark:text-white/45">Maks. 5 MB (.xlsx, .csv)</span>
                     </div>
 
-                    @if ($canImport)
-                        <div class="border-2 border-dashed border-black/15 dark:border-white/15 hover:border-[#34C759] dark:hover:border-[#30D158] rounded-[12px] p-6 text-center transition-all bg-black/[0.01] dark:bg-white/[0.01] relative group">
-                            <input type="file" accept=".xlsx,.xls,.csv" @change="handleMaterialFileSelect"
-                                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
-                            <div class="space-y-2 pointer-events-none">
-                                <div class="w-11 h-11 rounded-[12px] bg-[#34C759]/10 text-[#34C759] dark:text-[#30D158] mx-auto flex items-center justify-center group-hover:scale-105 transition-transform">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z"/></svg>
+                    <div class="flex-1 flex flex-col justify-center py-3">
+                        @if ($canImport)
+                            <div class="border-2 border-dashed border-black/15 dark:border-white/15 hover:border-[#34C759] dark:hover:border-[#30D158] rounded-[14px] p-6 text-center transition-all bg-black/[0.01] dark:bg-white/[0.01] relative group flex-1 flex flex-col items-center justify-center min-h-[170px]">
+                                <input type="file" accept=".xlsx,.xls,.csv" @change="handleMaterialFileSelect"
+                                    class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                                <div class="space-y-2 pointer-events-none">
+                                    <div class="w-12 h-12 rounded-[12px] bg-[#34C759]/10 text-[#34C759] dark:text-[#30D158] mx-auto flex items-center justify-center group-hover:scale-105 transition-transform">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z"/></svg>
+                                    </div>
+                                    <div class="text-[13px] text-black/80 dark:text-white/80">
+                                        <span class="font-bold text-[#007AFF]">Klik untuk memilih file</span> atau seret dokumen ke sini
+                                    </div>
+                                    <p class="text-[11px] text-black/45 dark:text-white/45">Mendukung berkas Excel (.xlsx, .xls) atau CSV UTF-8</p>
                                 </div>
-                                <div class="text-[13px] text-black/80 dark:text-white/80">
-                                    <span class="font-semibold text-[#007AFF]">Klik untuk memilih file</span> atau seret dokumen ke sini
+                            </div>
+                        @else
+                            <div class="border border-black/10 dark:border-white/10 rounded-[14px] p-6 text-center bg-black/[0.02] dark:bg-white/[0.02] space-y-3 flex-1 flex flex-col items-center justify-center min-h-[170px]">
+                                <div class="w-10 h-10 rounded-[10px] bg-black/[0.05] dark:bg-white/[0.08] text-black/40 dark:text-white/40 mx-auto flex items-center justify-center">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/></svg>
                                 </div>
-                                <p class="text-[11px] text-black/40 dark:text-white/40">Format: Excel (.xlsx, .xls) atau CSV</p>
+                                <div class="text-[12px] text-black/60 dark:text-white/60">
+                                    Upload bahan terkunci pada paket Free. Silakan upgrade ke Pro / Patungan.
+                                </div>
+                                <a href="{{ route('billing.limits') }}"
+                                    class="inline-flex items-center gap-1.5 h-8 px-3.5 rounded-[9px] bg-[#FF9500] text-white font-semibold text-[12px] hover:bg-[#E08500] transition-all">
+                                    <span>Buka Kunci Fitur Import</span>
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                                </a>
                             </div>
-                        </div>
-                    @else
-                        <div class="border border-black/10 dark:border-white/10 rounded-[12px] p-6 text-center bg-black/[0.02] dark:bg-white/[0.02] space-y-3">
-                            <div class="w-10 h-10 rounded-[10px] bg-black/[0.05] dark:bg-white/[0.08] text-black/40 dark:text-white/40 mx-auto flex items-center justify-center">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/></svg>
-                            </div>
-                            <div class="text-[12px] text-black/60 dark:text-white/60">
-                                Upload bahan terkunci pada paket Free. Silakan upgrade ke Pro / Patungan.
-                            </div>
-                            <a href="{{ route('billing.limits') }}"
-                                class="inline-flex items-center gap-1.5 h-8 px-3.5 rounded-[9px] bg-[#FF9500] text-white font-semibold text-[12px] hover:bg-[#E08500] transition-all">
-                                <span>Buka Kunci Fitur Import</span>
-                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
-                            </a>
-                        </div>
-                    @endif
-
-                    <div x-show="materialLoading"
-                        class="p-3 rounded-[10px] bg-[#34C759]/10 border border-[#34C759]/20 flex items-center gap-3">
-                        <div class="w-4 h-4 border-2 border-[#34C759] border-t-transparent rounded-full animate-spin shrink-0"></div>
-                        <div class="text-[12px] text-[#248A3D] dark:text-[#30D158] font-medium">Menganalisis file bahan baku & mengecek duplikat...</div>
+                        @endif
                     </div>
 
-                    <div x-show="materialFileName && !materialLoading"
-                        class="flex items-center justify-between text-[12px] px-3.5 py-2.5 rounded-[10px] bg-[#F2F2F7] dark:bg-[#2C2C2E] border border-black/5 dark:border-white/5">
-                        <div class="flex items-center gap-2 text-black/80 dark:text-white/80">
-                            <svg class="w-4 h-4 text-[#34C759]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            <span class="font-mono font-medium" x-text="materialFileName"></span>
+                    <div class="pt-2">
+                        <div x-show="materialLoading"
+                            class="p-3 rounded-[10px] bg-[#34C759]/10 border border-[#34C759]/20 flex items-center gap-3">
+                            <div class="w-4 h-4 border-2 border-[#34C759] border-t-transparent rounded-full animate-spin shrink-0"></div>
+                            <div class="text-[12px] text-[#248A3D] dark:text-[#30D158] font-medium">Menganalisis file bahan baku & mengecek duplikat...</div>
                         </div>
-                        <button type="button" @click="materialPreview = null; materialFile = null; materialFileName = ''"
-                            class="text-black/50 hover:text-[#FF3B30] dark:text-white/50 dark:hover:text-[#FF453A] text-[12px] font-medium transition-colors">
-                            Ganti File
-                        </button>
+
+                        <div x-show="materialFileName && !materialLoading"
+                            class="flex items-center justify-between text-[12px] px-3.5 py-2.5 rounded-[10px] bg-[#F2F2F7] dark:bg-[#2C2C2E] border border-black/5 dark:border-white/5">
+                            <div class="flex items-center gap-2 text-black/80 dark:text-white/80">
+                                <svg class="w-4 h-4 text-[#34C759]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                <span class="font-mono font-medium truncate max-w-[220px]" x-text="materialFileName"></span>
+                            </div>
+                            <button type="button" @click="materialPreview = null; materialFile = null; materialFileName = ''"
+                                class="text-black/50 hover:text-[#FF3B30] dark:text-white/50 dark:hover:text-[#FF453A] text-[12px] font-medium transition-colors shrink-0">
+                                Ganti File
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1277,90 +1387,114 @@
         {{-- TAB 2: IMPORT KATALOG PRODUK --}}
         {{-- ========================================================== --}}
         <div x-show="activeTab === 'products'" class="space-y-5">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 items-stretch">
                 {{-- Step 1: Download Template --}}
-                <div class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 flex flex-col justify-between gap-4">
-                    <div class="space-y-2">
-                        <div class="flex items-center gap-2 text-[#007AFF] font-semibold text-[12px]">
-                            <span class="w-5 h-5 rounded-full bg-[#007AFF]/15 flex items-center justify-center text-[11px] font-bold">1</span>
-                            <span>Download Template Produk</span>
+                <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 flex flex-col justify-between shadow-sm">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between border-b border-black/5 dark:border-white/5 pb-3">
+                            <div class="flex items-center gap-2 text-[#007AFF] font-bold text-[13px]">
+                                <span class="w-6 h-6 rounded-full bg-[#007AFF]/15 flex items-center justify-center text-[11px] font-bold">1</span>
+                                <span>Langkah 1: Unduh Format Template</span>
+                            </div>
+                            <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#007AFF]/10 text-[#007AFF]">BOM Linkable</span>
                         </div>
-                        <h3 class="font-semibold text-black dark:text-white text-[15px]">Format Spreadsheet Produk</h3>
-                        <p class="text-[12px] text-black/55 dark:text-white/55 leading-relaxed">
-                            Format kolom baku mencakup Nama Produk, SKU, Kategori, Satuan Output, Harga Jual, dan HPP Awal.
-                        </p>
+                        <div>
+                            <h3 class="font-bold text-black dark:text-white text-[15px]">Format Master Katalog Produk</h3>
+                            <p class="text-[12px] text-black/60 dark:text-white/60 leading-relaxed mt-1">
+                                Unduh template resmi Cooca dengan validasi kategori, opsi rumus BOM, satuan jual, dan harga dasar produk jadi.
+                            </p>
+                        </div>
+                        <div class="p-3 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 space-y-1.5 text-[11px] text-black/60 dark:text-white/60">
+                            <div class="font-semibold text-black/80 dark:text-white/80 text-[11px] flex items-center gap-1.5">
+                                <svg class="w-3.5 h-3.5 text-[#007AFF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                <span>Struktur Kolom Tervalidasi:</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-1.5 pl-5">
+                                <div>• Nama Produk (Wajib)</div>
+                                <div>• SKU / Kode Produk</div>
+                                <div>• Kategori & Satuan Jual</div>
+                                <div>• Harga Jual & HPP Awal</div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="space-y-2 pt-2 border-t border-black/5 dark:border-white/5">
-                        <a href="{{ route('import.products.template', ['format' => 'xlsx']) }}"
-                            class="w-full h-9 rounded-[10px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-[#007AFF] dark:text-[#0A84FF] border border-[#007AFF]/20 text-[13px] font-semibold transition-all flex items-center justify-center gap-2 active:scale-[0.98]">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 01-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-7.5A1.125 1.125 0 0112 18.375m9.75-12.75c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125m19.5 0v1.5c0 .621-.504 1.125-1.125 1.125M2.25 5.625v1.5c0 .621.504 1.125 1.125 1.125m0 0h17.25m-17.25 0h7.5c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125H3.375a1.125 1.125 0 01-1.125-1.125v-1.5c0-.621.504-1.125 1.125-1.125z"/></svg>
-                            <span>Download Template Excel (.xlsx)</span>
-                        </a>
-                        <a href="{{ route('import.products.template', ['format' => 'csv']) }}"
-                            class="w-full h-8 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/70 dark:text-white/70 text-[12px] font-medium transition-all flex items-center justify-center gap-1.5 active:scale-[0.98]">
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
-                            <span>Download CSV (.csv)</span>
-                        </a>
+                    <div class="pt-4 mt-4 border-t border-black/5 dark:border-white/5 space-y-2">
+                        <div class="text-[11px] text-black/50 dark:text-white/50 font-medium">Pilih format berkas template:</div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <a href="{{ route('import.products.template', ['format' => 'xlsx']) }}"
+                                class="h-9 rounded-[10px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-[#007AFF] dark:text-[#0A84FF] border border-[#007AFF]/25 text-[12px] font-semibold transition-all flex items-center justify-center gap-1.5 active:scale-[0.98] shadow-sm">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+                                <span>Template Excel (.xlsx)</span>
+                            </a>
+                            <a href="{{ route('import.products.template', ['format' => 'csv']) }}"
+                                class="h-9 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/75 dark:text-white/75 border border-black/5 dark:border-white/5 text-[12px] font-medium transition-all flex items-center justify-center gap-1.5 active:scale-[0.98]">
+                                <svg class="w-4 h-4 opacity-70" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+                                <span>Format CSV (.csv)</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
                 {{-- Step 2: Upload File Zone --}}
-                <div class="lg:col-span-2 rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 space-y-4">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-2 text-[#007AFF] font-semibold text-[12px]">
-                            <span class="w-5 h-5 rounded-full bg-[#007AFF]/15 flex items-center justify-center text-[11px] font-bold">2</span>
-                            <span>Upload File & Analisis Otomatis</span>
+                <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 flex flex-col justify-between shadow-sm">
+                    <div class="flex items-center justify-between border-b border-black/5 dark:border-white/5 pb-3">
+                        <div class="flex items-center gap-2 text-[#007AFF] font-bold text-[13px]">
+                            <span class="w-6 h-6 rounded-full bg-[#007AFF]/15 flex items-center justify-center text-[11px] font-bold">2</span>
+                            <span>Langkah 2: Unggah Data & Validasi</span>
                         </div>
-                        <span class="text-[11px] text-black/40 dark:text-white/40">Maks. 5 MB (.xlsx, .xls, .csv)</span>
+                        <span class="text-[11px] font-mono text-black/45 dark:text-white/45">Maks. 5 MB (.xlsx, .csv)</span>
                     </div>
 
-                    @if ($canImport)
-                        <div class="border-2 border-dashed border-black/15 dark:border-white/15 hover:border-[#007AFF] dark:hover:border-[#0A84FF] rounded-[12px] p-6 text-center transition-all bg-black/[0.01] dark:bg-white/[0.01] relative group">
-                            <input type="file" accept=".xlsx,.xls,.csv" @change="handleProductFileSelect"
-                                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
-                            <div class="space-y-2 pointer-events-none">
-                                <div class="w-11 h-11 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF] mx-auto flex items-center justify-center group-hover:scale-105 transition-transform">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z"/></svg>
+                    <div class="flex-1 flex flex-col justify-center py-3">
+                        @if ($canImport)
+                            <div class="border-2 border-dashed border-black/15 dark:border-white/15 hover:border-[#007AFF] dark:hover:border-[#0A84FF] rounded-[14px] p-6 text-center transition-all bg-black/[0.01] dark:bg-white/[0.01] relative group flex-1 flex flex-col items-center justify-center min-h-[170px]">
+                                <input type="file" accept=".xlsx,.xls,.csv" @change="handleProductFileSelect"
+                                    class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                                <div class="space-y-2 pointer-events-none">
+                                    <div class="w-12 h-12 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF] mx-auto flex items-center justify-center group-hover:scale-105 transition-transform">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z"/></svg>
+                                    </div>
+                                    <div class="text-[13px] text-black/80 dark:text-white/80">
+                                        <span class="font-bold text-[#007AFF]">Klik untuk memilih file</span> atau seret dokumen ke sini
+                                    </div>
+                                    <p class="text-[11px] text-black/45 dark:text-white/45">Mendukung Microsoft Excel (.xlsx, .xls) atau CSV UTF-8</p>
                                 </div>
-                                <div class="text-[13px] text-black/80 dark:text-white/80">
-                                    <span class="font-semibold text-[#007AFF]">Klik untuk memilih file produk</span> atau seret dokumen ke sini
+                            </div>
+                        @else
+                            <div class="border border-black/10 dark:border-white/10 rounded-[14px] p-6 text-center bg-black/[0.02] dark:bg-white/[0.02] space-y-3 flex-1 flex flex-col items-center justify-center min-h-[170px]">
+                                <div class="w-10 h-10 rounded-[10px] bg-black/[0.05] dark:bg-white/[0.08] text-black/40 dark:text-white/40 mx-auto flex items-center justify-center">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/></svg>
                                 </div>
-                                <p class="text-[11px] text-black/40 dark:text-white/40">Format: Microsoft Excel (.xlsx, .xls) atau CSV UTF-8</p>
+                                <div class="text-[12px] text-black/60 dark:text-white/60">
+                                    Upload produk terkunci pada paket Free. Silakan upgrade ke Pro / Patungan.
+                                </div>
+                                <a href="{{ route('billing.limits') }}"
+                                    class="inline-flex items-center gap-1.5 h-8 px-3.5 rounded-[9px] bg-[#FF9500] text-white font-semibold text-[12px] hover:bg-[#E08500] transition-all">
+                                    <span>Buka Kunci Fitur Import</span>
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                                </a>
                             </div>
-                        </div>
-                    @else
-                        <div class="border border-black/10 dark:border-white/10 rounded-[12px] p-6 text-center bg-black/[0.02] dark:bg-white/[0.02] space-y-3">
-                            <div class="w-10 h-10 rounded-[10px] bg-black/[0.05] dark:bg-white/[0.08] text-black/40 dark:text-white/40 mx-auto flex items-center justify-center">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/></svg>
-                            </div>
-                            <div class="text-[12px] text-black/60 dark:text-white/60">
-                                Upload produk terkunci pada paket Free. Silakan upgrade ke Pro / Patungan.
-                            </div>
-                            <a href="{{ route('billing.limits') }}"
-                                class="inline-flex items-center gap-1.5 h-8 px-3.5 rounded-[9px] bg-[#FF9500] text-white font-semibold text-[12px] hover:bg-[#E08500] transition-all">
-                                <span>Buka Kunci Fitur Import</span>
-                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
-                            </a>
-                        </div>
-                    @endif
-
-                    <div x-show="productLoading"
-                        class="p-3 rounded-[10px] bg-[#007AFF]/10 border border-[#007AFF]/20 flex items-center gap-3">
-                        <div class="w-4 h-4 border-2 border-[#007AFF] border-t-transparent rounded-full animate-spin shrink-0"></div>
-                        <div class="text-[12px] text-[#007AFF] dark:text-[#0A84FF] font-medium">Menganalisis file dan mengecek duplikat di database...</div>
+                        @endif
                     </div>
 
-                    <div x-show="productFileName && !productLoading"
-                        class="flex items-center justify-between text-[12px] px-3.5 py-2.5 rounded-[10px] bg-[#F2F2F7] dark:bg-[#2C2C2E] border border-black/5 dark:border-white/5">
-                        <div class="flex items-center gap-2 text-black/80 dark:text-white/80">
-                            <svg class="w-4 h-4 text-[#007AFF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            <span class="font-mono font-medium" x-text="productFileName"></span>
+                    <div class="pt-2">
+                        <div x-show="productLoading"
+                            class="p-3 rounded-[10px] bg-[#007AFF]/10 border border-[#007AFF]/20 flex items-center gap-3">
+                            <div class="w-4 h-4 border-2 border-[#007AFF] border-t-transparent rounded-full animate-spin shrink-0"></div>
+                            <div class="text-[12px] text-[#007AFF] dark:text-[#0A84FF] font-medium">Menganalisis file produk & memvalidasi duplikasi SKU...</div>
                         </div>
-                        <button type="button" @click="productPreview = null; productFile = null; productFileName = ''"
-                            class="text-black/50 hover:text-[#FF3B30] dark:text-white/50 dark:hover:text-[#FF453A] text-[12px] font-medium transition-colors">
-                            Ganti File
-                        </button>
+
+                        <div x-show="productFileName && !productLoading"
+                            class="flex items-center justify-between text-[12px] px-3.5 py-2.5 rounded-[10px] bg-[#F2F2F7] dark:bg-[#2C2C2E] border border-black/5 dark:border-white/5">
+                            <div class="flex items-center gap-2 text-black/80 dark:text-white/80">
+                                <svg class="w-4 h-4 text-[#007AFF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                <span class="font-mono font-medium truncate max-w-[220px]" x-text="productFileName"></span>
+                            </div>
+                            <button type="button" @click="productPreview = null; productFile = null; productFileName = ''"
+                                class="text-black/50 hover:text-[#FF3B30] dark:text-white/50 dark:hover:text-[#FF453A] text-[12px] font-medium transition-colors shrink-0">
+                                Ganti File
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1522,90 +1656,114 @@
         {{-- TAB 3: IMPORT RESEP / BOM --}}
         {{-- ========================================================== --}}
         <div x-show="activeTab === 'recipes'" class="space-y-5">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 items-stretch">
                 {{-- Step 1: Download Template --}}
-                <div class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 flex flex-col justify-between gap-4">
-                    <div class="space-y-2">
-                        <div class="flex items-center gap-2 text-[#5856D6] font-semibold text-[12px]">
-                            <span class="w-5 h-5 rounded-full bg-[#5856D6]/15 flex items-center justify-center text-[11px] font-bold">1</span>
-                            <span>Download Template Resep</span>
+                <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 flex flex-col justify-between shadow-sm">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between border-b border-black/5 dark:border-white/5 pb-3">
+                            <div class="flex items-center gap-2 text-[#5856D6] font-bold text-[13px]">
+                                <span class="w-6 h-6 rounded-full bg-[#5856D6]/15 flex items-center justify-center text-[11px] font-bold">1</span>
+                                <span>Langkah 1: Unduh Format Template</span>
+                            </div>
+                            <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#5856D6]/10 text-[#5856D6]">Auto HPP</span>
                         </div>
-                        <h3 class="font-semibold text-black dark:text-white text-[15px]">Format BOM Formula</h3>
-                        <p class="text-[12px] text-black/55 dark:text-white/55 leading-relaxed">
-                            Format template mencakup Produk Jadi, Bahan Baku, Jumlah Takaran, Satuan Bahan, dan Susut (Waste %).
-                        </p>
+                        <div>
+                            <h3 class="font-bold text-black dark:text-white text-[15px]">Format Formula Resep / BOM</h3>
+                            <p class="text-[12px] text-black/60 dark:text-white/60 leading-relaxed mt-1">
+                                Format relasi komposisi bahan ke produk jadi dengan persentase susut (waste) untuk kalkulasi otomatis HPP.
+                            </p>
+                        </div>
+                        <div class="p-3 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 space-y-1.5 text-[11px] text-black/60 dark:text-white/60">
+                            <div class="font-semibold text-black/80 dark:text-white/80 text-[11px] flex items-center gap-1.5">
+                                <svg class="w-3.5 h-3.5 text-[#5856D6]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                <span>Struktur Kolom Tervalidasi:</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-1.5 pl-5">
+                                <div>• Produk Jadi (Wajib)</div>
+                                <div>• Bahan Baku (Wajib)</div>
+                                <div>• Jumlah Takaran & Satuan</div>
+                                <div>• Persentase Waste (%)</div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="space-y-2 pt-2 border-t border-black/5 dark:border-white/5">
-                        <a href="{{ route('import.recipes.template', ['format' => 'xlsx']) }}"
-                            class="w-full h-9 rounded-[10px] bg-[#5856D6]/10 hover:bg-[#5856D6]/20 text-[#5856D6] dark:text-[#5E5CE6] border border-[#5856D6]/20 text-[13px] font-semibold transition-all flex items-center justify-center gap-2 active:scale-[0.98]">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 01-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-7.5A1.125 1.125 0 0112 18.375m9.75-12.75c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125m19.5 0v1.5c0 .621-.504 1.125-1.125 1.125M2.25 5.625v1.5c0 .621.504 1.125 1.125 1.125m0 0h17.25m-17.25 0h7.5c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125H3.375a1.125 1.125 0 01-1.125-1.125v-1.5c0-.621.504-1.125 1.125-1.125z"/></svg>
-                            <span>Download Template Resep (.xlsx)</span>
-                        </a>
-                        <a href="{{ route('import.recipes.template', ['format' => 'csv']) }}"
-                            class="w-full h-8 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/70 dark:text-white/70 text-[12px] font-medium transition-all flex items-center justify-center gap-1.5 active:scale-[0.98]">
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
-                            <span>Download CSV (.csv)</span>
-                        </a>
+                    <div class="pt-4 mt-4 border-t border-black/5 dark:border-white/5 space-y-2">
+                        <div class="text-[11px] text-black/50 dark:text-white/50 font-medium">Pilih format berkas template:</div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <a href="{{ route('import.recipes.template', ['format' => 'xlsx']) }}"
+                                class="h-9 rounded-[10px] bg-[#5856D6]/10 hover:bg-[#5856D6]/20 text-[#5856D6] dark:text-[#5E5CE6] border border-[#5856D6]/25 text-[12px] font-semibold transition-all flex items-center justify-center gap-1.5 active:scale-[0.98] shadow-sm">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+                                <span>Template Excel (.xlsx)</span>
+                            </a>
+                            <a href="{{ route('import.recipes.template', ['format' => 'csv']) }}"
+                                class="h-9 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/75 dark:text-white/75 border border-black/5 dark:border-white/5 text-[12px] font-medium transition-all flex items-center justify-center gap-1.5 active:scale-[0.98]">
+                                <svg class="w-4 h-4 opacity-70" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+                                <span>Format CSV (.csv)</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
                 {{-- Step 2: Upload File Zone --}}
-                <div class="lg:col-span-2 rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 space-y-4">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-2 text-[#5856D6] font-semibold text-[12px]">
-                            <span class="w-5 h-5 rounded-full bg-[#5856D6]/15 flex items-center justify-center text-[11px] font-bold">2</span>
-                            <span>Upload File Resep & Analisis</span>
+                <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 flex flex-col justify-between shadow-sm">
+                    <div class="flex items-center justify-between border-b border-black/5 dark:border-white/5 pb-3">
+                        <div class="flex items-center gap-2 text-[#5856D6] font-bold text-[13px]">
+                            <span class="w-6 h-6 rounded-full bg-[#5856D6]/15 flex items-center justify-center text-[11px] font-bold">2</span>
+                            <span>Langkah 2: Unggah Data & Validasi</span>
                         </div>
-                        <span class="text-[11px] text-black/40 dark:text-white/40">Maks. 5 MB (.xlsx, .xls, .csv)</span>
+                        <span class="text-[11px] font-mono text-black/45 dark:text-white/45">Maks. 5 MB (.xlsx, .csv)</span>
                     </div>
 
-                    @if ($canImport)
-                        <div class="border-2 border-dashed border-black/15 dark:border-white/15 hover:border-[#5856D6] dark:hover:border-[#5E5CE6] rounded-[12px] p-6 text-center transition-all bg-black/[0.01] dark:bg-white/[0.01] relative group">
-                            <input type="file" accept=".xlsx,.xls,.csv" @change="handleRecipeFileSelect"
-                                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
-                            <div class="space-y-2 pointer-events-none">
-                                <div class="w-11 h-11 rounded-[12px] bg-[#5856D6]/10 text-[#5856D6] dark:text-[#5E5CE6] mx-auto flex items-center justify-center group-hover:scale-105 transition-transform">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z"/></svg>
+                    <div class="flex-1 flex flex-col justify-center py-3">
+                        @if ($canImport)
+                            <div class="border-2 border-dashed border-black/15 dark:border-white/15 hover:border-[#5856D6] dark:hover:border-[#5E5CE6] rounded-[14px] p-6 text-center transition-all bg-black/[0.01] dark:bg-white/[0.01] relative group flex-1 flex flex-col items-center justify-center min-h-[170px]">
+                                <input type="file" accept=".xlsx,.xls,.csv" @change="handleRecipeFileSelect"
+                                    class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                                <div class="space-y-2 pointer-events-none">
+                                    <div class="w-12 h-12 rounded-[12px] bg-[#5856D6]/10 text-[#5856D6] dark:text-[#5E5CE6] mx-auto flex items-center justify-center group-hover:scale-105 transition-transform">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z"/></svg>
+                                    </div>
+                                    <div class="text-[13px] text-black/80 dark:text-white/80">
+                                        <span class="font-bold text-[#5856D6]">Klik untuk memilih file</span> atau seret dokumen ke sini
+                                    </div>
+                                    <p class="text-[11px] text-black/45 dark:text-white/45">Pastikan Produk Jadi dan Bahan Baku sudah terdaftar</p>
                                 </div>
-                                <div class="text-[13px] text-black/80 dark:text-white/80">
-                                    <span class="font-semibold text-[#5856D6]">Klik untuk memilih file resep</span> atau seret dokumen ke sini
+                            </div>
+                        @else
+                            <div class="border border-black/10 dark:border-white/10 rounded-[14px] p-6 text-center bg-black/[0.02] dark:bg-white/[0.02] space-y-3 flex-1 flex flex-col items-center justify-center min-h-[170px]">
+                                <div class="w-10 h-10 rounded-[10px] bg-black/[0.05] dark:bg-white/[0.08] text-black/40 dark:text-white/40 mx-auto flex items-center justify-center">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/></svg>
                                 </div>
-                                <p class="text-[11px] text-black/40 dark:text-white/40">Pastikan Produk Jadi dan Bahan Baku sudah terdaftar di sistem</p>
+                                <div class="text-[12px] text-black/60 dark:text-white/60">
+                                    Upload resep terkunci pada paket Free. Silakan upgrade ke Pro / Patungan.
+                                </div>
+                                <a href="{{ route('billing.limits') }}"
+                                    class="inline-flex items-center gap-1.5 h-8 px-3.5 rounded-[9px] bg-[#FF9500] text-white font-semibold text-[12px] hover:bg-[#E08500] transition-all">
+                                    <span>Buka Kunci Fitur Import</span>
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                                </a>
                             </div>
-                        </div>
-                    @else
-                        <div class="border border-black/10 dark:border-white/10 rounded-[12px] p-6 text-center bg-black/[0.02] dark:bg-white/[0.02] space-y-3">
-                            <div class="w-10 h-10 rounded-[10px] bg-black/[0.05] dark:bg-white/[0.08] text-black/40 dark:text-white/40 mx-auto flex items-center justify-center">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/></svg>
-                            </div>
-                            <div class="text-[12px] text-black/60 dark:text-white/60">
-                                Upload resep terkunci pada paket Free. Silakan upgrade ke Pro / Patungan.
-                            </div>
-                            <a href="{{ route('billing.limits') }}"
-                                class="inline-flex items-center gap-1.5 h-8 px-3.5 rounded-[9px] bg-[#FF9500] text-white font-semibold text-[12px] hover:bg-[#E08500] transition-all">
-                                <span>Buka Kunci Fitur Import</span>
-                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
-                            </a>
-                        </div>
-                    @endif
-
-                    <div x-show="recipeLoading"
-                        class="p-3 rounded-[10px] bg-[#5856D6]/10 border border-[#5856D6]/20 flex items-center gap-3">
-                        <div class="w-4 h-4 border-2 border-[#5856D6] border-t-transparent rounded-full animate-spin shrink-0"></div>
-                        <div class="text-[12px] text-[#5856D6] dark:text-[#5E5CE6] font-medium">Mencocokkan produk jadi & bahan baku di sistem...</div>
+                        @endif
                     </div>
 
-                    <div x-show="recipeFileName && !recipeLoading"
-                        class="flex items-center justify-between text-[12px] px-3.5 py-2.5 rounded-[10px] bg-[#F2F2F7] dark:bg-[#2C2C2E] border border-black/5 dark:border-white/5">
-                        <div class="flex items-center gap-2 text-black/80 dark:text-white/80">
-                            <svg class="w-4 h-4 text-[#5856D6]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            <span class="font-mono font-medium" x-text="recipeFileName"></span>
+                    <div class="pt-2">
+                        <div x-show="recipeLoading"
+                            class="p-3 rounded-[10px] bg-[#5856D6]/10 border border-[#5856D6]/20 flex items-center gap-3">
+                            <div class="w-4 h-4 border-2 border-[#5856D6] border-t-transparent rounded-full animate-spin shrink-0"></div>
+                            <div class="text-[12px] text-[#5856D6] dark:text-[#5E5CE6] font-medium">Mencocokkan produk jadi & bahan baku di sistem...</div>
                         </div>
-                        <button type="button" @click="recipePreview = null; recipeFile = null; recipeFileName = ''"
-                            class="text-black/50 hover:text-[#FF3B30] dark:text-white/50 dark:hover:text-[#FF453A] text-[12px] font-medium transition-colors">
-                            Ganti File
-                        </button>
+
+                        <div x-show="recipeFileName && !recipeLoading"
+                            class="flex items-center justify-between text-[12px] px-3.5 py-2.5 rounded-[10px] bg-[#F2F2F7] dark:bg-[#2C2C2E] border border-black/5 dark:border-white/5">
+                            <div class="flex items-center gap-2 text-black/80 dark:text-white/80">
+                                <svg class="w-4 h-4 text-[#5856D6]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                <span class="font-mono font-medium truncate max-w-[220px]" x-text="recipeFileName"></span>
+                            </div>
+                            <button type="button" @click="recipePreview = null; recipeFile = null; recipeFileName = ''"
+                                class="text-black/50 hover:text-[#FF3B30] dark:text-white/50 dark:hover:text-[#FF453A] text-[12px] font-medium transition-colors shrink-0">
+                                Ganti File
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
