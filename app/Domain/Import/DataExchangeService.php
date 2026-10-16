@@ -560,6 +560,39 @@ final class DataExchangeService
         $spreadsheet = new Spreadsheet();
 
         // -------------------------------------------------------------
+        // PRELOAD MASTER DATA (PRODUCTS, MATERIALS, LOCATIONS, UNITS)
+        // -------------------------------------------------------------
+        $products = Product::goods()
+            ->where('business_id', $business->id)
+            ->where('is_active', true)
+            ->with('outputUnit')
+            ->orderBy('name')
+            ->get();
+
+        $materials = Material::where('business_id', $business->id)
+            ->whereNull('discontinued_at')
+            ->with('unit')
+            ->orderBy('name')
+            ->get();
+
+        $locations = Location::where('business_id', $business->id)->where('is_active', true)->get();
+        if ($locations->isEmpty()) {
+            $locations = Location::where('business_id', $business->id)->get();
+        }
+        $defaultLocation = $locations->first();
+        $defaultLocName = $defaultLocation ? $defaultLocation->name : 'Gudang Utama';
+
+        $warehouses = $locations->pluck('name')->toArray();
+        if (empty($warehouses)) {
+            $warehouses = ['Gudang Utama', 'Outlet Pusat'];
+        }
+
+        $units = Unit::available()->pluck('name')->toArray();
+        if (empty($units)) {
+            $units = ['pcs', 'kg', 'gram', 'liter', 'ml', 'cup', 'box', 'pack'];
+        }
+
+        // -------------------------------------------------------------
         // SHEET 1: INPUT DATA
         // -------------------------------------------------------------
         $sheetInput = $spreadsheet->getActiveSheet();
@@ -583,31 +616,69 @@ final class DataExchangeService
         }
         $sheetInput->getRowDimension(1)->setRowHeight(32);
 
-        // Sample Row (Row 2)
-        $sampleRow = [
-            'A2' => 'Kopi Susu Gula Aren',
-            'B2' => 'KOP-AREN-01',
-            'C2' => 'Gudang Utama',
-            'D2' => 50,
-            'E2' => 'cup',
-            'F2' => 7500,
-            'G2' => 'Saldo awal cut-off go-live sistem',
-        ];
-        foreach ($sampleRow as $cell => $val) {
-            $sheetInput->setCellValue($cell, $val);
-            $this->applyGuideRowStyle($sheetInput, $cell);
+        $rowIdx = 2;
+        $hasItems = ($products->isNotEmpty() || $materials->isNotEmpty());
+
+        if ($hasItems) {
+            // Pre-fill registered Products (Produk Jadi)
+            foreach ($products as $p) {
+                $sheetInput->setCellValue("A{$rowIdx}", $p->name);
+                $sheetInput->setCellValue("B{$rowIdx}", $p->code ?: '');
+                $sheetInput->setCellValue("C{$rowIdx}", $defaultLocName);
+                $sheetInput->setCellValue("D{$rowIdx}", ''); // Ready for user's physical stock count
+                $sheetInput->setCellValue("E{$rowIdx}", $p->outputUnit?->name ?: 'pcs');
+                $sheetInput->setCellValue("F{$rowIdx}", (float) ($p->base_cost ?? 0));
+                $sheetInput->setCellValue("G{$rowIdx}", 'Saldo awal cut-off go-live sistem');
+
+                $this->applyDataRowStyle($sheetInput, "A{$rowIdx}:G{$rowIdx}", $rowIdx % 2 === 0);
+                $sheetInput->getStyle("D{$rowIdx}")->getNumberFormat()->setFormatCode('#,##0.00');
+                $sheetInput->getStyle("F{$rowIdx}")->getNumberFormat()->setFormatCode('#,##0');
+                $sheetInput->getRowDimension($rowIdx)->setRowHeight(22);
+                $rowIdx++;
+            }
+
+            // Pre-fill registered Materials (Bahan Baku)
+            foreach ($materials as $m) {
+                $sheetInput->setCellValue("A{$rowIdx}", $m->name);
+                $sheetInput->setCellValue("B{$rowIdx}", $m->code ?: '');
+                $sheetInput->setCellValue("C{$rowIdx}", $defaultLocName);
+                $sheetInput->setCellValue("D{$rowIdx}", ''); // Ready for user's physical stock count
+                $sheetInput->setCellValue("E{$rowIdx}", $m->unit?->name ?: 'unit');
+                $sheetInput->setCellValue("F{$rowIdx}", (float) ($m->base_cost ?? 0));
+                $sheetInput->setCellValue("G{$rowIdx}", 'Saldo awal cut-off go-live sistem');
+
+                $this->applyDataRowStyle($sheetInput, "A{$rowIdx}:G{$rowIdx}", $rowIdx % 2 === 0);
+                $sheetInput->getStyle("D{$rowIdx}")->getNumberFormat()->setFormatCode('#,##0.00');
+                $sheetInput->getStyle("F{$rowIdx}")->getNumberFormat()->setFormatCode('#,##0');
+                $sheetInput->getRowDimension($rowIdx)->setRowHeight(22);
+                $rowIdx++;
+            }
+        } else {
+            // Fallback sample row for fresh tenants without any products/materials yet
+            $sampleRow = [
+                'A2' => 'Kopi Susu Gula Aren (Contoh)',
+                'B2' => 'KOP-AREN-01',
+                'C2' => $defaultLocName,
+                'D2' => 50,
+                'E2' => 'cup',
+                'F2' => 7500,
+                'G2' => 'Saldo awal cut-off go-live sistem',
+            ];
+            foreach ($sampleRow as $cell => $val) {
+                $sheetInput->setCellValue($cell, $val);
+                $this->applyGuideRowStyle($sheetInput, $cell);
+            }
+            $sheetInput->getStyle('D2')->getNumberFormat()->setFormatCode('#,##0.00');
+            $sheetInput->getStyle('F2')->getNumberFormat()->setFormatCode('#,##0');
+            $sheetInput->getRowDimension(2)->setRowHeight(24);
+            $rowIdx = 3;
         }
-        $sheetInput->getRowDimension(2)->setRowHeight(24);
 
         // -------------------------------------------------------------
         // SHEET 2: DATA REFERENSI TERKAIT (LOOKUP MASTER)
         // -------------------------------------------------------------
         $sheetRef = $spreadsheet->createSheet();
         $sheetRef->setTitle('DATA_REFERENSI');
-
-        // Preload all Products & Materials of this business
-        $products = Product::where('business_id', $business->id)->get(['id', 'code', 'name']);
-        $materials = Material::where('business_id', $business->id)->get(['id', 'code', 'name']);
 
         $itemList = [];
         foreach ($products as $p) {
@@ -620,16 +691,6 @@ final class DataExchangeService
         }
         if (empty($itemList)) {
             $itemList = ['Contoh Produk Jadi', 'Contoh Bahan Baku'];
-        }
-
-        $warehouses = Location::where('business_id', $business->id)->pluck('name')->toArray();
-        if (empty($warehouses)) {
-            $warehouses = ['Gudang Utama', 'Outlet Pusat'];
-        }
-
-        $units = Unit::available()->pluck('name')->toArray();
-        if (empty($units)) {
-            $units = ['pcs', 'kg', 'gram', 'liter', 'ml', 'cup', 'box', 'pack'];
         }
 
         $refCols = [
@@ -652,16 +713,19 @@ final class DataExchangeService
             $spreadsheet->addNamedRange(new NamedRange($info['named'], $sheetRef, "\${$col}\$2:\${$col}\${$endRow}"));
         }
 
-        // Apply Dropdown Validations
-        $this->applyDropdownValidation($sheetInput, 'C3:C1000', '=RefGudangStok', 'Pilih Gudang / Lokasi');
-        $this->applyDropdownValidation($sheetInput, 'E3:E1000', '=RefSatuanStok', 'Pilih Satuan');
+        // Apply Dropdown Validations across all rows
+        $validationMaxRow = max(1000, $rowIdx + 100);
+        $this->applyDropdownValidation($sheetInput, "C2:C{$validationMaxRow}", '=RefGudangStok', 'Pilih Gudang / Lokasi');
+        $this->applyDropdownValidation($sheetInput, "E2:E{$validationMaxRow}", '=RefSatuanStok', 'Pilih Satuan');
 
         // -------------------------------------------------------------
         // SHEET 3: PANDUAN IMPORT
         // -------------------------------------------------------------
         $this->buildGuideSheet($spreadsheet, 'PANDUAN_IMPORT', [
+            ['Data Master Otomatis Terisi', 'Seluruh barang produk jadi dan bahan baku aktif yang sudah terdaftar di sistem otomatis dimasukkan ke lembar template ini.'],
+            ['Isi Jumlah Stok Fisik', 'Anda cukup mengisi kolom D (Jumlah Stok) sesuai stok fisik riil di gudang/outlet. Baris yang tidak diisi stoknya akan diabaikan secara aman.'],
+            ['Pilihan Gudang & Satuan', 'Gudang dan Satuan dapat diubah sesuai lokasi penyimpanan menggunakan menu pilihan dropdown yang tersedia.'],
             ['Dual-Resolution SKU', 'Template ini mendukung saldo awal untuk PRODUK JADI dan BAHAN BAKU sekaligus dalam satu lembar file Excel.'],
-            ['Pencarian Otomatis', 'Sistem otomatis mencocokkan Nama atau Kode/SKU ke Master Produk dan Master Bahan Baku yang aktif.'],
             ['Mutasi Saldo Awal', 'Setiap baris yang berhasil diimport akan otomatis dicatat ke riwayat mutasi stok (Stock Movement) dengan tipe INITIAL.'],
             ['Strategi Duplikat', 'Jika stok di lokasi tersebut sudah memiliki saldo, Anda dapat memilih strategi Lewati (Skip) atau Sesuaikan (Adjust).'],
         ]);

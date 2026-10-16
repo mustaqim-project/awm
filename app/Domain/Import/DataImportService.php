@@ -490,9 +490,17 @@ final class DataImportService
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->setTitle('Template Stok Awal');
         $business = \App\Support\Context::requireBusiness();
+        $products = Product::goods()
+            ->where('business_id', $business->id)
+            ->where('is_active', true)
+            ->with('outputUnit')
+            ->orderBy('name')
+            ->get();
+
         $materials = Material::withoutGlobalScopes()
             ->where('business_id', $business->id)
             ->whereNull('deleted_at')
+            ->whereNull('discontinued_at')
             ->with('unit')
             ->orderBy('name')
             ->get();
@@ -512,8 +520,8 @@ final class DataImportService
         $units = Unit::available()->orderBy('name')->get();
 
         $headers = [
-            'A1' => 'Nama Bahan Baku *',
-            'B1' => 'Kode / SKU Bahan',
+            'A1' => 'Nama Item / Produk / Bahan *',
+            'B1' => 'Kode / SKU Item',
             'C1' => 'Lokasi / Outlet / Gudang *',
             'D1' => 'Jumlah Stok *',
             'E1' => 'Satuan *',
@@ -549,15 +557,32 @@ final class DataImportService
         $sheet->getStyle('A1:G1')->applyFromArray($headerStyle);
         $sheet->getRowDimension(1)->setRowHeight(28);
 
-        $sampleData = $materials->map(fn (Material $material): array => [
-            $material->name,
-            $material->code,
-            '',
-            null,
-            $material->unit?->code,
-            $materialPrices->get($material->id)?->purchase_price,
-            '',
-        ])->all();
+        $defaultLoc = $locations->first();
+        $defaultLocName = $defaultLoc ? $defaultLoc->name : '';
+
+        $sampleData = [];
+        foreach ($products as $p) {
+            $sampleData[] = [
+                $p->name,
+                $p->code ?: '',
+                $defaultLocName,
+                null,
+                $p->outputUnit?->name ?: 'pcs',
+                (float) ($p->base_cost ?? 0),
+                'Saldo awal cut-off go-live sistem',
+            ];
+        }
+        foreach ($materials as $m) {
+            $sampleData[] = [
+                $m->name,
+                $m->code ?: '',
+                $defaultLocName,
+                null,
+                $m->unit?->name ?: 'unit',
+                (float) ($materialPrices->get($m->id)?->purchase_price ?? ($m->base_cost ?? 0)),
+                'Saldo awal cut-off go-live sistem',
+            ];
+        }
 
         $rowIdx = 2;
         foreach ($sampleData as $row) {
@@ -1678,7 +1703,12 @@ final class DataImportService
             $itemIdent = trim((string) ($row['name'] ?? $row['nama_item'] ?? $row['nama_bahan_baku'] ?? $row['nama_produk'] ?? $row['material_name_or_sku'] ?? $row['material'] ?? $row['item_name_or_sku'] ?? $row['product'] ?? ''));
             $sku = trim((string) ($row['sku'] ?? $row['kode_sku_bahan'] ?? $row['kode_sku'] ?? $row['code'] ?? ''));
             $locIdent = trim((string) ($row['lokasi_outlet_gudang'] ?? $row['location'] ?? $row['gudang'] ?? ''));
-            $quantity = (float) ($row['jumlah_stok'] ?? $row['quantity'] ?? $row['stok'] ?? $row['jumlah'] ?? 0);
+            $rawQty = $row['jumlah_stok'] ?? $row['quantity'] ?? $row['stok'] ?? $row['jumlah'] ?? null;
+            if ($rawQty === null || trim((string) $rawQty) === '') {
+                // If item in pre-filled template was left uncounted/blank, gracefully skip it
+                continue;
+            }
+            $quantity = (float) $rawQty;
             $unitStr = trim((string) ($row['satuan'] ?? $row['unit'] ?? ''));
             $unitCost = (float) ($row['biaya_pokok_hpp_per_unit'] ?? $row['unit_cost'] ?? $row['base_cost'] ?? $row['hpp'] ?? $row['harga_beli'] ?? 0);
             $notes = trim((string) ($row['catatan_alasan_saldo'] ?? $row['notes'] ?? $row['catatan'] ?? ''));

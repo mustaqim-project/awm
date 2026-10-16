@@ -151,4 +151,39 @@ final class TemplateRoutesTest extends TestCase
             ->get('/hrm/attendance/template');
         $res2->assertStatus(200);
     }
+
+    public function test_inventory_template_prefilled_with_products_and_materials(): void
+    {
+        $response = $this->actingAs($this->owner)
+            ->withSession(['current_business_id' => $this->business->id])
+            ->get('/import/inventory/template?format=xlsx');
+
+        $response->assertStatus(200);
+
+        $content = $response->streamedContent();
+        $tempPath = tempnam(sys_get_temp_dir(), 'test_prefilled_') . '.xlsx';
+        file_put_contents($tempPath, $content);
+
+        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($tempPath);
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Row 1: Headers
+        $this->assertEquals('Nama Item / Produk / Bahan *', $sheet->getCell('A1')->getValue());
+
+        // Row 2: Product 'Produk Tes Cooca'
+        $this->assertEquals('Produk Tes Cooca', $sheet->getCell('A2')->getValue());
+        $this->assertEquals('PRD-001', $sheet->getCell('B2')->getValue());
+        $this->assertEquals('Toko Cabang Utama', $sheet->getCell('C2')->getValue());
+        $this->assertEquals('pcs', $sheet->getCell('E2')->getValue());
+
+        // Row 3: Material 'Bahan Baku Tes'
+        $this->assertEquals('Bahan Baku Tes', $sheet->getCell('A3')->getValue());
+        $this->assertEquals('MAT-001', $sheet->getCell('B3')->getValue());
+        $this->assertEquals('Toko Cabang Utama', $sheet->getCell('C3')->getValue());
+        $this->assertEquals('pcs', $sheet->getCell('E3')->getValue());
+
+        if (file_exists($tempPath)) {
+            unlink($tempPath);
+        }
+    }
 }
