@@ -904,28 +904,18 @@
         <!-- ===================================================== -->
         <!-- 4. DENSE DATA TABLE (DESKTOP & TABLET)                 -->
         <!-- ===================================================== -->
-        <div
+        <div x-data="coocaTableSort()"
             class="hidden sm:block rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
             <div class="overflow-x-auto scrollbar-thin">
                 <table class="w-full text-left text-[13px] min-w-[1350px]">
                     <thead>
                         <tr
                             class="border-b border-black/[0.06] dark:border-white/[0.08] bg-black/[0.02] dark:bg-white/[0.02]">
-                            <th
-                                class="py-3 px-5 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 whitespace-nowrap min-w-[280px]">
-                                {{ __('products.th_product_name_barcode') }}</th>
-                            <th
-                                class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 whitespace-nowrap min-w-[170px]">
-                                {{ __('products.th_category') }}</th>
-                            <th
-                                class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 whitespace-nowrap min-w-[140px]">
-                                {{ __('products.th_output_unit') }}</th>
-                            <th
-                                class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 text-right whitespace-nowrap min-w-[130px]">
-                                {{ __('products.th_effective_cost') }}</th>
-                            <th
-                                class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 text-right whitespace-nowrap min-w-[140px]">
-                                {{ __('products.th_selling_price') }}</th>
+                            <x-table-sort-th :col="0" type="string" :title="__('products.th_product_name_barcode')" class="whitespace-nowrap min-w-[280px]" />
+                            <x-table-sort-th :col="1" type="string" :title="__('products.th_category')" class="whitespace-nowrap min-w-[170px]" />
+                            <x-table-sort-th :col="2" type="string" :title="__('products.th_output_unit')" class="whitespace-nowrap min-w-[140px]" />
+                            <x-table-sort-th :col="3" type="number" :title="__('products.th_effective_cost')" align="right" class="whitespace-nowrap min-w-[130px]" />
+                            <x-table-sort-th :col="4" type="number" :title="__('products.th_selling_price')" align="right" class="whitespace-nowrap min-w-[140px]" />
                             <th
                                 class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 text-center whitespace-nowrap min-w-[340px]">
                                 {{ __('products.th_channels_status') }}</th>
@@ -944,7 +934,7 @@
                                     : (float) $prod->base_cost;
                             @endphp
                             <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.025] transition-colors">
-                                <td class="py-3.5 px-5 font-medium text-black dark:text-white">
+                                <td data-sort-value="{{ strtolower($prod->name) }}" class="py-3.5 px-5 font-medium text-black dark:text-white">
                                     <div class="flex items-center gap-3">
                                         <div
                                             class="w-10 h-10 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/5 overflow-hidden flex items-center justify-center shrink-0">
@@ -971,14 +961,14 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="py-3.5 px-4 text-black/60 dark:text-white/60 whitespace-nowrap">
+                                <td data-sort-value="{{ strtolower($prod->category?->name ?? '') }}" class="py-3.5 px-4 text-black/60 dark:text-white/60 whitespace-nowrap">
                                     {{ $prod->category?->name ?? __('products.category_general') }}
                                 </td>
-                                <td class="py-3.5 px-4 text-black/70 dark:text-white/70 whitespace-nowrap">
+                                <td data-sort-value="{{ strtolower($prod->outputUnit?->name ?? '') }}" class="py-3.5 px-4 text-black/70 dark:text-white/70 whitespace-nowrap">
                                     {{ $prod->outputUnit?->name ?? 'pcs' }} <span
                                         class="text-[11px] text-black/40 dark:text-white/40">({{ $prod->outputUnit?->code }})</span>
                                 </td>
-                                <td class="py-3.5 px-4 text-right tabular-nums whitespace-nowrap">
+                                <td data-sort-value="{{ (float) $effectiveHpp }}" class="py-3.5 px-4 text-right tabular-nums whitespace-nowrap">
                                     @if ($effectiveHpp > 0)
                                         <div class="font-semibold text-black dark:text-white">
                                             {{ $business->currency_symbol }}
@@ -991,7 +981,7 @@
                                         <span class="text-black/40 dark:text-white/40 italic">{{ __('products.cost_not_calculated') }}</span>
                                     @endif
                                 </td>
-                                <td class="py-3.5 px-4 text-right tabular-nums whitespace-nowrap">
+                                <td data-sort-value="{{ (float) $prod->selling_price }}" class="py-3.5 px-4 text-right tabular-nums whitespace-nowrap">
                                     @if ($prod->selling_price > 0)
                                         <div class="font-bold text-[#34C759] dark:text-[#30D158]">
                                             {{ $business->currency_symbol }}

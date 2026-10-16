@@ -686,122 +686,196 @@
         </div>
 
         {{-- 4. MODAL QUICK PRODUCT PICKER (Kirim Info Produk Langsung ke Chat) --}}
-        <div x-show="openProductModal" style="display: none;"
-            class="fixed inset-0 z-50 overflow-y-auto bg-black/50 backdrop-blur-sm flex items-center justify-center p-4"
-            @keydown.escape.window="openProductModal = false">
-            <div class="relative w-full max-w-lg rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl p-5 space-y-4 max-h-[85vh] flex flex-col"
-                @click.away="openProductModal = false">
+        <template x-teleport="body">
+            <div x-show="openProductModal" 
+                x-cloak
+                class="fixed inset-0 z-[200] overflow-y-auto flex items-center justify-center p-4"
+                @keydown.escape.window="openProductModal = false"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="product-picker-modal-title">
                 
-                <div class="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/10">
-                    <div class="flex items-center gap-2.5">
-                        <div class="w-8 h-8 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center font-bold">
-                            <i data-lucide="shopping-bag" class="w-4 h-4"></i>
-                        </div>
-                        <div>
-                            <h4 class="text-[14px] font-bold text-black dark:text-white">{{ __('social_media.quick_products_title') }}</h4>
-                            <p class="text-[11px] text-black/50 dark:text-white/50">Pilih produk resmi toko untuk dikirim ke chat pelanggan</p>
-                        </div>
-                    </div>
-                    <button type="button" @click="openProductModal = false" class="text-black/40 hover:text-black dark:hover:text-white">
-                        <i data-lucide="x" class="w-4 h-4"></i>
-                    </button>
-                </div>
+                <!-- Backdrop -->
+                <div x-show="openProductModal"
+                    x-transition:enter="ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    @click="openProductModal = false"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
 
-                {{-- Product List Scroll --}}
-                <div class="flex-1 overflow-y-auto divide-y divide-black/5 dark:divide-white/5">
-                    @forelse($products as $prod)
-                        @php
-                            $prodPrice = (float) ($prod->selling_price ?? $prod->price ?? 0);
-                            $prodStock = $prod->stocks ? (float) $prod->stocks->sum('quantity') : (float) ($prod->stock_quantity ?? 0);
-                        @endphp
-                        <div class="py-2.5 flex items-center justify-between gap-3">
-                            <div class="min-w-0">
-                                <div class="text-[12.5px] font-bold text-black dark:text-white truncate">{{ $prod->name }}</div>
-                                <div class="text-[11px] text-[#007AFF] font-mono font-semibold">
-                                    Rp {{ number_format($prodPrice, 0, ',', '.') }}
-                                    <span class="text-black/45 dark:text-white/45 ml-1">• Sisa Stok: {{ $prodStock }}</span>
-                                </div>
+                <div x-show="openProductModal"
+                    x-transition:enter="ease-out duration-200"
+                    x-transition:enter-start="opacity-0 translate-y-4 sm:scale-95"
+                    x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave="ease-in duration-150"
+                    x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave-end="opacity-0 translate-y-4 sm:scale-95"
+                    class="relative w-full max-w-lg rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl p-5 space-y-4 max-h-[85vh] flex flex-col z-10"
+                    @click.outside="openProductModal = false">
+                    
+                    <div class="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/10">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center font-bold shrink-0">
+                                <i data-lucide="shopping-bag" class="w-5 h-5"></i>
                             </div>
-                            <button type="button" @click="insertProductToReply('{{ addslashes($prod->name) }}', '{{ number_format($prodPrice, 0, ',', '.') }}', '{{ $prodStock }}')"
-                                class="px-3 py-1 rounded-[8px] bg-[#007AFF]/10 hover:bg-[#007AFF] hover:text-white text-[#007AFF] text-[11px] font-bold transition-colors cursor-pointer shrink-0">
-                                {{ __('social_media.send_product_btn') }}
-                            </button>
+                            <div>
+                                <h4 id="product-picker-modal-title" class="text-[14px] font-bold text-black dark:text-white">{{ __('social_media.quick_products_title') }}</h4>
+                                <p class="text-[11px] text-black/50 dark:text-white/50">Pilih produk resmi toko untuk dikirim ke chat pelanggan</p>
+                            </div>
                         </div>
-                    @empty
-                        <div class="p-6 text-center text-[12px] text-black/50 dark:text-white/50">
-                            Belum ada katalog produk di toko Anda.
-                        </div>
-                    @endforelse
+                        <button type="button" @click="openProductModal = false" class="min-w-[44px] min-h-[44px] rounded-full flex items-center justify-center text-black/40 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition active:scale-95" aria-label="Tutup modal">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+
+                    {{-- Product List Scroll --}}
+                    <div class="flex-1 overflow-y-auto divide-y divide-black/5 dark:divide-white/5">
+                        @forelse($products as $prod)
+                            @php
+                                $prodPrice = (float) ($prod->selling_price ?? $prod->price ?? 0);
+                                $prodStock = $prod->stocks ? (float) $prod->stocks->sum('quantity') : (float) ($prod->stock_quantity ?? 0);
+                            @endphp
+                            <div class="py-2.5 flex items-center justify-between gap-3">
+                                <div class="min-w-0">
+                                    <div class="text-[12.5px] font-bold text-black dark:text-white truncate">{{ $prod->name }}</div>
+                                    <div class="text-[11px] text-[#007AFF] font-mono font-semibold">
+                                        Rp {{ number_format($prodPrice, 0, ',', '.') }}
+                                        <span class="text-black/45 dark:text-white/45 ml-1">• Sisa Stok: {{ $prodStock }}</span>
+                                    </div>
+                                </div>
+                                <button type="button" @click="insertProductToReply('{{ addslashes($prod->name) }}', '{{ number_format($prodPrice, 0, ',', '.') }}', '{{ $prodStock }}')"
+                                    class="min-h-[36px] px-3.5 py-1.5 rounded-[10px] bg-[#007AFF]/10 hover:bg-[#007AFF] hover:text-white text-[#007AFF] text-[11px] font-bold transition-colors cursor-pointer shrink-0 active:scale-95">
+                                    {{ __('social_media.send_product_btn') }}
+                                </button>
+                            </div>
+                        @empty
+                            <div class="p-6 text-center text-[12px] text-black/50 dark:text-white/50">
+                                Belum ada katalog produk di toko Anda.
+                            </div>
+                        @endforelse
+                    </div>
                 </div>
             </div>
-        </div>
+        </template>
 
         {{-- 5. MODAL QUICK REPLIES / TEMPLATE FAQ --}}
-        <div x-show="openQuickRepliesModal" style="display: none;"
-            class="fixed inset-0 z-50 overflow-y-auto bg-black/50 backdrop-blur-sm flex items-center justify-center p-4"
-            @keydown.escape.window="openQuickRepliesModal = false">
-            <div class="relative w-full max-w-md rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl p-5 space-y-4"
-                @click.away="openQuickRepliesModal = false">
+        <template x-teleport="body">
+            <div x-show="openQuickRepliesModal" 
+                x-cloak
+                class="fixed inset-0 z-[200] overflow-y-auto flex items-center justify-center p-4"
+                @keydown.escape.window="openQuickRepliesModal = false"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="quick-replies-modal-title">
                 
-                <div class="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/10">
-                    <div class="flex items-center gap-2.5">
-                        <div class="w-8 h-8 rounded-[10px] bg-[#AF52DE]/10 text-[#AF52DE] flex items-center justify-center font-bold">
-                            <i data-lucide="message-square-dashed" class="w-4 h-4"></i>
-                        </div>
-                        <h4 class="text-[14px] font-bold text-black dark:text-white">{{ __('social_media.quick_replies_title') }}</h4>
-                    </div>
-                    <button type="button" @click="openQuickRepliesModal = false" class="text-black/40 hover:text-black dark:hover:text-white">
-                        <i data-lucide="x" class="w-4 h-4"></i>
-                    </button>
-                </div>
+                <!-- Backdrop -->
+                <div x-show="openQuickRepliesModal"
+                    x-transition:enter="ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    @click="openQuickRepliesModal = false"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
 
-                <div class="space-y-2">
-                    <button type="button" @click="insertQuickReply('Halo Kak! Terima kasih sudah menghubungi kami. Ada yang bisa kami bantu hari ini? 😊')"
-                        class="w-full p-3 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] hover:bg-[#007AFF]/10 border border-black/5 text-left text-[12px] transition-colors cursor-pointer">
-                        <div class="font-bold text-black dark:text-white">Salam Pembuka Ramah</div>
-                        <p class="text-[11px] text-black/60 dark:text-white/60 mt-0.5">Halo Kak! Terima kasih sudah menghubungi kami...</p>
-                    </button>
-                    <button type="button" @click="insertQuickReply('Toko kami buka setiap hari pukul 08.00 - 21.00 WIB. Silakan mampir atau lakukan pemesanan langsung ya Kak! 🙏')"
-                        class="w-full p-3 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] hover:bg-[#007AFF]/10 border border-black/5 text-left text-[12px] transition-colors cursor-pointer">
-                        <div class="font-bold text-black dark:text-white">Jam Operasional Toko</div>
-                        <p class="text-[11px] text-black/60 dark:text-white/60 mt-0.5">Toko kami buka setiap hari pukul 08.00 - 21.00 WIB...</p>
-                    </button>
-                    <button type="button" @click="insertQuickReply('Pesanan Kakak sedang kami siapkan dan akan segera diproses pengirimannya. Terima kasih banyak sudah berbelanja di toko kami! ✨')"
-                        class="w-full p-3 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] hover:bg-[#007AFF]/10 border border-black/5 text-left text-[12px] transition-colors cursor-pointer">
-                        <div class="font-bold text-black dark:text-white">Konfirmasi Proses Pesanan</div>
-                        <p class="text-[11px] text-black/60 dark:text-white/60 mt-0.5">Pesanan Kakak sedang kami siapkan dan akan segera diproses...</p>
-                    </button>
+                <div x-show="openQuickRepliesModal"
+                    x-transition:enter="ease-out duration-200"
+                    x-transition:enter-start="opacity-0 translate-y-4 sm:scale-95"
+                    x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave="ease-in duration-150"
+                    x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave-end="opacity-0 translate-y-4 sm:scale-95"
+                    class="relative w-full max-w-md rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl p-5 space-y-4 z-10"
+                    @click.outside="openQuickRepliesModal = false">
+                    
+                    <div class="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/10">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-10 h-10 rounded-[12px] bg-[#AF52DE]/10 text-[#AF52DE] flex items-center justify-center font-bold shrink-0">
+                                <i data-lucide="message-square-dashed" class="w-5 h-5"></i>
+                            </div>
+                            <h4 id="quick-replies-modal-title" class="text-[14px] font-bold text-black dark:text-white">{{ __('social_media.quick_replies_title') }}</h4>
+                        </div>
+                        <button type="button" @click="openQuickRepliesModal = false" class="min-w-[44px] min-h-[44px] rounded-full flex items-center justify-center text-black/40 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition active:scale-95" aria-label="Tutup modal">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+
+                    <div class="space-y-2">
+                        <button type="button" @click="insertQuickReply('Halo Kak! Terima kasih sudah menghubungi kami. Ada yang bisa kami bantu hari ini? 😊')"
+                            class="w-full p-3 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] hover:bg-[#007AFF]/10 border border-black/5 text-left text-[12px] transition-colors cursor-pointer active:scale-98">
+                            <div class="font-bold text-black dark:text-white">Salam Pembuka Ramah</div>
+                            <p class="text-[11px] text-black/60 dark:text-white/60 mt-0.5">Halo Kak! Terima kasih sudah menghubungi kami...</p>
+                        </button>
+                        <button type="button" @click="insertQuickReply('Toko kami buka setiap hari pukul 08.00 - 21.00 WIB. Silakan mampir atau lakukan pemesanan langsung ya Kak! 🙏')"
+                            class="w-full p-3 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] hover:bg-[#007AFF]/10 border border-black/5 text-left text-[12px] transition-colors cursor-pointer active:scale-98">
+                            <div class="font-bold text-black dark:text-white">Jam Operasional Toko</div>
+                            <p class="text-[11px] text-black/60 dark:text-white/60 mt-0.5">Toko kami buka setiap hari pukul 08.00 - 21.00 WIB...</p>
+                        </button>
+                        <button type="button" @click="insertQuickReply('Pesanan Kakak sedang kami siapkan dan akan segera diproses pengirimannya. Terima kasih banyak sudah berbelanja di toko kami! ✨')"
+                            class="w-full p-3 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] hover:bg-[#007AFF]/10 border border-black/5 text-left text-[12px] transition-colors cursor-pointer active:scale-98">
+                            <div class="font-bold text-black dark:text-white">Konfirmasi Proses Pesanan</div>
+                            <p class="text-[11px] text-black/60 dark:text-white/60 mt-0.5">Pesanan Kakak sedang kami siapkan dan akan segera diproses...</p>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
+        </template>
 
         {{-- 5.1 MODAL ATURAN KONTROL OTORITAS AI INBOX (DO'S & DON'TS) --}}
-        <div x-show="openAiRulesModal" style="display: none;"
-            class="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-5"
-            @keydown.escape.window="openAiRulesModal = false">
-            <div class="relative w-full max-w-4xl rounded-[28px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl p-5 sm:p-7 space-y-4 max-h-[92vh] flex flex-col overflow-hidden"
-                @click.away="openAiRulesModal = false">
+        <template x-teleport="body">
+            <div x-show="openAiRulesModal" 
+                x-cloak
+                class="fixed inset-0 z-[200] overflow-y-auto flex items-center justify-center p-3 sm:p-5"
+                @keydown.escape.window="openAiRulesModal = false"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="ai-rules-modal-title">
                 
-                {{-- Modal Header --}}
-                <div class="flex items-start justify-between pb-3 border-b border-black/5 dark:border-white/10 shrink-0">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-[14px] bg-gradient-to-tr from-emerald-500 to-[#007AFF] text-white flex items-center justify-center font-black shadow-sm shrink-0">
-                            <i data-lucide="shield-check" class="w-5 h-5"></i>
-                        </div>
-                        <div>
-                            <div class="flex items-center gap-2 flex-wrap">
-                                <h3 class="text-[16px] font-extrabold text-black dark:text-white">Pusat Kendali Aturan AI (DO's &amp; DON'Ts)</h3>
-                                <span class="px-2 py-0.5 rounded-full text-[9.5px] font-bold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 font-mono">Strict Guardrails Active</span>
+                <!-- Backdrop -->
+                <div x-show="openAiRulesModal"
+                    x-transition:enter="ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    @click="openAiRulesModal = false"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
+
+                <div x-show="openAiRulesModal"
+                    x-transition:enter="ease-out duration-200"
+                    x-transition:enter-start="opacity-0 translate-y-4 sm:scale-95"
+                    x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave="ease-in duration-150"
+                    x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave-end="opacity-0 translate-y-4 sm:scale-95"
+                    class="relative w-full max-w-4xl rounded-[28px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl p-5 sm:p-7 space-y-4 max-h-[92vh] flex flex-col overflow-hidden z-10"
+                    @click.outside="openAiRulesModal = false">
+                    
+                    {{-- Modal Header --}}
+                    <div class="flex items-start justify-between pb-3 border-b border-black/5 dark:border-white/10 shrink-0">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-[14px] bg-gradient-to-tr from-emerald-500 to-[#007AFF] text-white flex items-center justify-center font-black shadow-sm shrink-0">
+                                <i data-lucide="shield-check" class="w-5 h-5"></i>
                             </div>
-                            <p class="text-[11.5px] text-black/55 dark:text-white/55 mt-0.5">
-                                Kendali keamanan agar asisten Cooca AI patuh pada instruksi Anda dan diblokir dari tindakan berisiko/penipuan.
-                            </p>
+                            <div>
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <h3 id="ai-rules-modal-title" class="text-[16px] font-extrabold text-black dark:text-white">Pusat Kendali Aturan AI (DO's &amp; DON'Ts)</h3>
+                                    <span class="px-2 py-0.5 rounded-full text-[9.5px] font-bold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 font-mono">Strict Guardrails Active</span>
+                                </div>
+                                <p class="text-[11.5px] text-black/55 dark:text-white/55 mt-0.5">
+                                    Kendali keamanan agar asisten Cooca AI patuh pada instruksi Anda dan diblokir dari tindakan berisiko/penipuan.
+                                </p>
+                            </div>
                         </div>
+                        <button type="button" @click="openAiRulesModal = false" class="min-w-[44px] min-h-[44px] rounded-full flex items-center justify-center text-black/40 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition active:scale-95" aria-label="Tutup modal">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
                     </div>
-                    <button type="button" @click="openAiRulesModal = false" class="p-1.5 rounded-[10px] text-black/40 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition">
-                        <i data-lucide="x" class="w-5 h-5"></i>
-                    </button>
-                </div>
 
                 {{-- Segmented Tabs (Apple macOS HIG Style) --}}
                 <div class="flex items-center gap-1.5 p-1 rounded-xl bg-black/[0.04] dark:bg-white/[0.05] border border-black/5 dark:border-white/5 shrink-0 text-xs font-semibold">
@@ -1111,12 +1185,13 @@
                         Perubahan aturan langsung tersimpan dan aktif secara instan.
                     </span>
                     <button type="button" @click="openAiRulesModal = false"
-                        class="min-h-[36px] px-5 rounded-[12px] bg-black text-white dark:bg-white dark:text-black font-bold text-[12px] hover:opacity-90 active:scale-95 transition cursor-pointer">
+                        class="min-h-[44px] px-5 rounded-[12px] bg-black text-white dark:bg-white dark:text-black font-bold text-[12px] hover:opacity-90 active:scale-95 transition cursor-pointer">
                         Selesai &amp; Tutup
                     </button>
                 </div>
             </div>
         </div>
+    </template>
 
         {{-- Hidden regression safety anchors for legacy test assertions --}}
         <div class="hidden" aria-hidden="true" style="display: none;">

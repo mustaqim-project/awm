@@ -23,41 +23,45 @@
         upgradeFee = $event.detail.upgradeFee || 'Rp 49.000/bln';
         isAddon = $event.detail.isAddon || false;
     "
-    @keydown.escape.window="showQuotaModal = false"
-    class="relative z-[9999]"
-    style="display: none;"
-    x-show="showQuotaModal">
+    @keydown.escape.window="showQuotaModal = false">
 
-    {{-- Backdrop Glassmorphism --}}
-    <div x-show="showQuotaModal"
-        x-transition:enter="transition ease-out duration-250"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-200"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0"
-        class="fixed inset-0 bg-black/45 dark:bg-black/65 backdrop-blur-md"
-        @click="showQuotaModal = false"
-        aria-hidden="true"></div>
-
-    {{-- Modal Sheet Window --}}
-    <div class="fixed inset-0 z-10 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+    <template x-teleport="body">
         <div x-show="showQuotaModal"
-            x-transition:enter="transition cubic-bezier(0.16, 1, 0.3, 1) duration-300"
-            x-transition:enter-start="opacity-0 scale-95 translate-y-4"
-            x-transition:enter-end="opacity-100 scale-100 translate-y-0"
-            x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100 scale-100 translate-y-0"
-            x-transition:leave-end="opacity-0 scale-95 translate-y-2"
-            class="w-full max-w-md bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-[0_24px_60px_rgba(0,0,0,0.22)] overflow-hidden p-6 sm:p-7 space-y-5 text-left"
-            @click.away="showQuotaModal = false">
+            x-cloak
+            class="fixed inset-0 z-[220] flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
+            role="dialog"
+            aria-modal="true"
+            @keydown.escape.window="showQuotaModal = false">
 
-            {{-- Header with Apple Squircle Icon --}}
-            <div class="flex items-start justify-between gap-4">
-                <div class="flex items-center gap-3.5">
-                    <div class="w-12 h-12 rounded-[16px] bg-gradient-to-br from-[#FF9500] to-[#FF3B30] text-white flex items-center justify-center shadow-md shadow-[#FF9500]/25 shrink-0">
-                        <i data-lucide="lock" class="w-6 h-6"></i>
-                    </div>
+            {{-- Backdrop Glassmorphism --}}
+            <div x-show="showQuotaModal"
+                x-transition:enter="transition ease-out duration-250"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"
+                @click="showQuotaModal = false"
+                aria-hidden="true"></div>
+
+            {{-- Modal Sheet Window --}}
+            <div class="relative z-10 w-full max-w-md bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-[0_24px_60px_rgba(0,0,0,0.22)] overflow-hidden p-6 sm:p-7 space-y-5 text-left"
+                x-show="showQuotaModal"
+                x-transition:enter="transition cubic-bezier(0.16, 1, 0.3, 1) duration-300"
+                x-transition:enter-start="opacity-0 scale-95 translate-y-4"
+                x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                x-transition:leave-end="opacity-0 scale-95 translate-y-2"
+                @click.away="showQuotaModal = false">
+
+                {{-- Header with Apple Squircle Icon --}}
+                <div class="flex items-start justify-between gap-4">
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-12 h-12 rounded-[16px] bg-gradient-to-br from-[#FF9500] to-[#FF3B30] text-white flex items-center justify-center shadow-md shadow-[#FF9500]/25 shrink-0">
+                            <i data-lucide="lock" class="w-6 h-6"></i>
+                        </div>
                     <div>
                         <span class="text-[11px] font-bold uppercase tracking-wider text-[#FF9500] dark:text-[#FF9F0A] block">
                             Paket Free Solo
@@ -117,4 +121,5 @@
             </div>
         </div>
     </div>
+    </template>
 </div>

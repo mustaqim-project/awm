@@ -595,399 +595,486 @@
     <!-- ===================================================== -->
     <!-- 5. MODAL: TAMBAH PRINTER (Apple Sheet Style XXL)      -->
     <!-- ===================================================== -->
-    <div x-show="showAddModal" x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-md p-4 overflow-y-auto"
-        @keydown.escape.window="showAddModal = false">
-        <div class="w-full max-w-5xl xl:max-w-6xl bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/15 p-6 sm:p-7 space-y-6 shadow-[0_25px_60px_rgba(0,0,0,0.35)] text-black dark:text-white max-h-[92vh] overflow-y-auto"
-            @click.outside="showAddModal = false">
+    <template x-teleport="body">
+        <div x-show="showAddModal"
+            x-cloak
+            class="fixed inset-0 z-[200] overflow-y-auto"
+            @keydown.escape.window="showAddModal = false"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="pos-add-printer-title">
 
-            <div class="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-4">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/15 text-[#007AFF] flex items-center justify-center font-bold">
-                        <i data-lucide="printer" class="w-5 h-5"></i>
+            <!-- Backdrop -->
+            <div x-show="showAddModal"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="showAddModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
+
+            <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="showAddModal = false">
+                <div class="relative w-full max-w-5xl xl:max-w-6xl bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/15 p-6 sm:p-7 space-y-6 shadow-[0_25px_60px_rgba(0,0,0,0.35)] text-black dark:text-white max-h-[92vh] overflow-y-auto my-8"
+                    x-show="showAddModal"
+                    x-transition:enter="ease-out duration-200"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="ease-in duration-150"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95"
+                    @click.stop>
+
+                    <div class="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/15 text-[#007AFF] flex items-center justify-center font-bold">
+                                <i data-lucide="printer" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 id="pos-add-printer-title" class="font-bold text-[19px] tracking-tight">{{ __('pos.add_printer_modal_title') }}</h3>
+                                <p class="text-[13px] text-black/50 dark:text-white/50">{{ __('pos.add_printer_modal_desc') }}</p>
+                            </div>
+                        </div>
+                        <button type="button" @click="showAddModal = false"
+                            class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer"
+                            aria-label="{{ __('common.close') }}">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
                     </div>
-                    <div>
-                        <h3 class="font-bold text-[19px] tracking-tight">{{ __('pos.add_printer_modal_title') }}</h3>
-                        <p class="text-[13px] text-black/50 dark:text-white/50">{{ __('pos.add_printer_modal_desc') }}</p>
-                    </div>
+
+                    <form method="POST" action="{{ route('pos.printers.store') }}" @submit="isSubmitting = true" class="space-y-6" x-data="{ connType: 'lan' }">
+                        @csrf
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                            <!-- Left Column: Primary Config (7 Cols) -->
+                            <div class="lg:col-span-7 space-y-4">
+                                <!-- Nama Printer -->
+                                <div>
+                                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('pos.printer_name') }} *</label>
+                                    <input type="text" name="name" required placeholder="Contoh: Kasir Utama, Printer Dapur, Barista"
+                                        class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                </div>
+
+                                <!-- Outlet / Lokasi -->
+                                <div>
+                                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('pos.table_location_label') }}</label>
+                                    <select name="location_id" class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                        <option value="">{{ __('pos.all_outlets_global') }}</option>
+                                        @foreach($locations as $loc)
+                                        <option value="{{ $loc->id }}">{{ $loc->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <!-- Tipe Koneksi & Lebar Kertas -->
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                                    <div>
+                                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('pos.connection_type') }} *</label>
+                                        <select name="connection_type" x-model="connType" required class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                            <option value="lan">Kabel LAN (Ethernet TCP/IP)</option>
+                                            <option value="wifi">Wi-Fi (Wireless TCP/IP)</option>
+                                            <option value="windows">Windows Shared Printer / Spooler</option>
+                                            <option value="usb">USB Direct / Device Path</option>
+                                            <option value="bluetooth">Bluetooth (via Local Agent / COM)</option>
+                                            <option value="serial">Serial COM Port</option>
+                                            <option value="agent">Local POS Agent (Bridge 9898)</option>
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('pos.paper_width') }} *</label>
+                                        <select name="paper_width" required class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                            <option value="80mm">80mm (Standar Kasir POS / 48 Kolom)</option>
+                                            <option value="58mm">58mm (Mobile Portable / 32 Kolom)</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Interface Address & Port -->
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+                                    <div class="sm:col-span-2">
+                                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
+                                            <span x-show="connType === 'lan' || connType === 'wifi'">Alamat IP LAN / Wi-Fi *</span>
+                                            <span x-show="connType === 'windows'">Nama Share Printer Windows *</span>
+                                            <span x-show="connType === 'usb' || connType === 'serial'">Path Port / Device *</span>
+                                            <span x-show="connType === 'bluetooth' || connType === 'agent'">Identifier Bluetooth / Agen *</span>
+                                        </label>
+                                        <input type="text" name="interface_address" required
+                                            :placeholder="connType === 'lan' || connType === 'wifi' ? '192.168.1.200' : (connType === 'windows' ? 'POS-80' : '/dev/usb/lp0')"
+                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] text-black dark:text-white font-mono focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Port (Raw Socket)</label>
+                                        <input type="number" name="port" value="9100" min="1" max="65535"
+                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] text-black dark:text-white font-mono focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                    </div>
+                                </div>
+
+                                <!-- Default Printer Toggle -->
+                                <div class="flex items-center gap-2.5 p-3 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5">
+                                    <input type="checkbox" name="is_default" value="1" id="add_is_default" class="w-4 h-4 rounded text-[#007AFF]">
+                                    <label for="add_is_default" class="text-[13px] font-medium text-black/80 dark:text-white/80 cursor-pointer">
+                                        Jadikan sebagai printer kasir utama (Default)
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Right Column: Capabilities & Security Info (5 Cols) -->
+                            <div class="lg:col-span-5 space-y-4">
+                                <!-- Capabilities -->
+                                <div class="p-4 rounded-[18px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/10 space-y-2.5">
+                                    <label class="block text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60">{{ __('pos.hardware_capabilities_title') }}</label>
+                                    <div class="grid grid-cols-2 gap-2 text-[12px]">
+                                        <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
+                                            <input type="checkbox" name="capabilities[]" value="cut" checked class="rounded text-[#007AFF]">
+                                            <span>{{ __('pos.capability_autocut') }}</span>
+                                        </label>
+                                        <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
+                                            <input type="checkbox" name="capabilities[]" value="cash_drawer" checked class="rounded text-[#007AFF]">
+                                            <span>{{ __('pos.capability_drawer') }}</span>
+                                        </label>
+                                        <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
+                                            <input type="checkbox" name="capabilities[]" value="qr_code" checked class="rounded text-[#007AFF]">
+                                            <span>{{ __('pos.capability_qrcode') }}</span>
+                                        </label>
+                                        <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
+                                            <input type="checkbox" name="capabilities[]" value="barcode" checked class="rounded text-[#007AFF]">
+                                            <span>{{ __('pos.capability_barcode') }}</span>
+                                        </label>
+                                        <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer col-span-2">
+                                            <input type="checkbox" name="capabilities[]" value="beep" class="rounded text-[#007AFF]">
+                                            <span>{{ __('pos.capability_buzzer') }}</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Assigned Usages -->
+                                <div class="p-4 rounded-[18px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/10 space-y-2.5">
+                                    <label class="block text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60">{{ __('pos.assigned_usages') }}</label>
+                                    <div class="grid grid-cols-2 gap-2 text-[12px]">
+                                        <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
+                                            <input type="checkbox" name="assigned_usages[]" value="cashier_receipt" checked class="rounded text-[#007AFF]">
+                                            <span>{{ __('pos.routing_cashier') }}</span>
+                                        </label>
+                                        <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
+                                            <input type="checkbox" name="assigned_usages[]" value="kitchen_order" class="rounded text-[#007AFF]">
+                                            <span>{{ __('pos.routing_kitchen') }}</span>
+                                        </label>
+                                        <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
+                                            <input type="checkbox" name="assigned_usages[]" value="bar_order" class="rounded text-[#007AFF]">
+                                            <span>{{ __('pos.routing_bar') }}</span>
+                                        </label>
+                                        <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
+                                            <input type="checkbox" name="assigned_usages[]" value="shift_report" checked class="rounded text-[#007AFF]">
+                                            <span>{{ __('pos.routing_shift') }}</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Security Whitelist Info -->
+                                <div class="p-3.5 rounded-[14px] bg-[#007AFF]/5 dark:bg-[#007AFF]/10 border border-[#007AFF]/15 text-[11px] text-black/70 dark:text-white/70 space-y-1">
+                                    <div class="font-bold text-[#007AFF] flex items-center gap-1.5">
+                                        <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+                                        <span>{{ __('pos.ssrf_guard_title') }}</span>
+                                    </div>
+                                    <p>{{ __('pos.ssrf_guard_desc') }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-end gap-3 pt-4 border-t border-black/10 dark:border-white/10">
+                            <button type="button" @click="showAddModal = false" class="min-h-[44px] px-5 rounded-[12px] text-[13px] font-medium bg-black/[0.05] dark:bg-white/[0.08] text-black/80 dark:text-white/80 hover:bg-black/[0.1] transition">{{ __('pos.cancel') }}</button>
+                            <button type="submit" :disabled="isSubmitting" class="min-h-[44px] px-6 rounded-[12px] text-[13px] font-semibold bg-[#007AFF] hover:bg-[#0071E3] text-white transition shadow-sm flex items-center gap-2">
+                                <template x-if="isSubmitting">
+                                    <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i>
+                                </template>
+                                <span x-text="isSubmitting ? {{ Js::from(__('pos.saving')) }} : {{ Js::from(__('pos.save_changes_btn')) }}"></span>
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <button type="button" @click="showAddModal = false" class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.08] flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
             </div>
-
-            <form method="POST" action="{{ route('pos.printers.store') }}" @submit="isSubmitting = true" class="space-y-6" x-data="{ connType: 'lan' }">
-                @csrf
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                    <!-- Left Column: Primary Config (7 Cols) -->
-                    <div class="lg:col-span-7 space-y-4">
-                        <!-- Nama Printer -->
-                        <div>
-                            <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('pos.printer_name') }} *</label>
-                            <input type="text" name="name" required placeholder="Contoh: Kasir Utama, Printer Dapur, Barista"
-                                class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                        </div>
-
-                        <!-- Outlet / Lokasi -->
-                        <div>
-                            <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('pos.table_location_label') }}</label>
-                            <select name="location_id" class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                                <option value="">{{ __('pos.all_outlets_global') }}</option>
-                                @foreach($locations as $loc)
-                                <option value="{{ $loc->id }}">{{ $loc->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <!-- Tipe Koneksi & Lebar Kertas -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                            <div>
-                                <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('pos.connection_type') }} *</label>
-                                <select name="connection_type" x-model="connType" required class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                                    <option value="lan">Kabel LAN (Ethernet TCP/IP)</option>
-                                    <option value="wifi">Wi-Fi (Wireless TCP/IP)</option>
-                                    <option value="windows">Windows Shared Printer / Spooler</option>
-                                    <option value="usb">USB Direct / Device Path</option>
-                                    <option value="bluetooth">Bluetooth (via Local Agent / COM)</option>
-                                    <option value="serial">Serial COM Port</option>
-                                    <option value="agent">Local POS Agent (Bridge 9898)</option>
-                                </select>
-                            </div>
-
-                            <div>
-                                <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('pos.paper_width') }} *</label>
-                                <select name="paper_width" required class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                                    <option value="80mm">80mm (Standar Kasir POS / 48 Kolom)</option>
-                                    <option value="58mm">58mm (Mobile Portable / 32 Kolom)</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <!-- Interface Address & Port -->
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
-                            <div class="sm:col-span-2">
-                                <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
-                                    <span x-show="connType === 'lan' || connType === 'wifi'">Alamat IP LAN / Wi-Fi *</span>
-                                    <span x-show="connType === 'windows'">Nama Share Printer Windows *</span>
-                                    <span x-show="connType === 'usb' || connType === 'serial'">Path Port / Device *</span>
-                                    <span x-show="connType === 'bluetooth' || connType === 'agent'">Identifier Bluetooth / Agen *</span>
-                                </label>
-                                <input type="text" name="interface_address" required
-                                    :placeholder="connType === 'lan' || connType === 'wifi' ? '192.168.1.200' : (connType === 'windows' ? 'POS-80' : '/dev/usb/lp0')"
-                                    class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] text-black dark:text-white font-mono focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                            </div>
-
-                            <div>
-                                <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Port (Raw Socket)</label>
-                                <input type="number" name="port" value="9100" min="1" max="65535"
-                                    class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] text-black dark:text-white font-mono focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                            </div>
-                        </div>
-
-                        <!-- Default Printer Toggle -->
-                        <div class="flex items-center gap-2.5 p-3 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5">
-                            <input type="checkbox" name="is_default" value="1" id="add_is_default" class="w-4 h-4 rounded text-[#007AFF]">
-                            <label for="add_is_default" class="text-[13px] font-medium text-black/80 dark:text-white/80 cursor-pointer">
-                                Jadikan sebagai printer kasir utama (Default)
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Right Column: Capabilities & Security Info (5 Cols) -->
-                    <div class="lg:col-span-5 space-y-4">
-                        <!-- Capabilities -->
-                        <div class="p-4 rounded-[18px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/10 space-y-2.5">
-                            <label class="block text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60">{{ __('pos.hardware_capabilities_title') }}</label>
-                            <div class="grid grid-cols-2 gap-2 text-[12px]">
-                                <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
-                                    <input type="checkbox" name="capabilities[]" value="cut" checked class="rounded text-[#007AFF]">
-                                    <span>{{ __('pos.capability_autocut') }}</span>
-                                </label>
-                                <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
-                                    <input type="checkbox" name="capabilities[]" value="cash_drawer" checked class="rounded text-[#007AFF]">
-                                    <span>{{ __('pos.capability_drawer') }}</span>
-                                </label>
-                                <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
-                                    <input type="checkbox" name="capabilities[]" value="qr_code" checked class="rounded text-[#007AFF]">
-                                    <span>{{ __('pos.capability_qrcode') }}</span>
-                                </label>
-                                <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
-                                    <input type="checkbox" name="capabilities[]" value="barcode" checked class="rounded text-[#007AFF]">
-                                    <span>{{ __('pos.capability_barcode') }}</span>
-                                </label>
-                                <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer col-span-2">
-                                    <input type="checkbox" name="capabilities[]" value="beep" class="rounded text-[#007AFF]">
-                                    <span>{{ __('pos.capability_buzzer') }}</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <!-- Assigned Usages -->
-                        <div class="p-4 rounded-[18px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/10 space-y-2.5">
-                            <label class="block text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60">{{ __('pos.assigned_usages') }}</label>
-                            <div class="grid grid-cols-2 gap-2 text-[12px]">
-                                <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
-                                    <input type="checkbox" name="assigned_usages[]" value="cashier_receipt" checked class="rounded text-[#007AFF]">
-                                    <span>{{ __('pos.routing_cashier') }}</span>
-                                </label>
-                                <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
-                                    <input type="checkbox" name="assigned_usages[]" value="kitchen_order" class="rounded text-[#007AFF]">
-                                    <span>{{ __('pos.routing_kitchen') }}</span>
-                                </label>
-                                <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
-                                    <input type="checkbox" name="assigned_usages[]" value="bar_order" class="rounded text-[#007AFF]">
-                                    <span>{{ __('pos.routing_bar') }}</span>
-                                </label>
-                                <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
-                                    <input type="checkbox" name="assigned_usages[]" value="shift_report" checked class="rounded text-[#007AFF]">
-                                    <span>{{ __('pos.routing_shift') }}</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <!-- Security Whitelist Info -->
-                        <div class="p-3.5 rounded-[14px] bg-[#007AFF]/5 dark:bg-[#007AFF]/10 border border-[#007AFF]/15 text-[11px] text-black/70 dark:text-white/70 space-y-1">
-                            <div class="font-bold text-[#007AFF] flex items-center gap-1.5">
-                                <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
-                                <span>{{ __('pos.ssrf_guard_title') }}</span>
-                            </div>
-                            <p>{{ __('pos.ssrf_guard_desc') }}</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flex items-center justify-end gap-3 pt-4 border-t border-black/10 dark:border-white/10">
-                    <button type="button" @click="showAddModal = false" class="min-h-[44px] px-5 rounded-[12px] text-[13px] font-medium bg-black/[0.05] dark:bg-white/[0.08] text-black/80 dark:text-white/80 hover:bg-black/[0.1] transition">{{ __('pos.cancel') }}</button>
-                    <button type="submit" :disabled="isSubmitting" class="min-h-[44px] px-6 rounded-[12px] text-[13px] font-semibold bg-[#007AFF] hover:bg-[#0071E3] text-white transition shadow-sm flex items-center gap-2">
-                        <template x-if="isSubmitting">
-                            <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i>
-                        </template>
-                        <span x-text="isSubmitting ? {{ Js::from(__('pos.saving')) }} : {{ Js::from(__('pos.save_changes_btn')) }}"></span>
-                    </button>
-                </div>
-            </form>
         </div>
-    </div>
+    </template>
 
     <!-- ===================================================== -->
     <!-- 6. MODAL: EDIT PRINTER (Apple Sheet Style XXL)         -->
     <!-- ===================================================== -->
-    <div x-show="showEditModal" x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-md p-4 overflow-y-auto"
-        @keydown.escape.window="showEditModal = false">
-        <div class="w-full max-w-5xl xl:max-w-6xl bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/15 p-6 sm:p-7 space-y-6 shadow-[0_25px_60px_rgba(0,0,0,0.35)] text-black dark:text-white max-h-[92vh] overflow-y-auto"
-            @click.outside="showEditModal = false">
+    <template x-teleport="body">
+        <div x-show="showEditModal"
+            x-cloak
+            class="fixed inset-0 z-[200] overflow-y-auto"
+            @keydown.escape.window="showEditModal = false"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="pos-edit-printer-title">
 
-            <div class="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-4">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/15 text-[#007AFF] flex items-center justify-center font-bold">
-                        <i data-lucide="edit-3" class="w-5 h-5"></i>
+            <!-- Backdrop -->
+            <div x-show="showEditModal"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="showEditModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
+
+            <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="showEditModal = false">
+                <div class="relative w-full max-w-5xl xl:max-w-6xl bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/15 p-6 sm:p-7 space-y-6 shadow-[0_25px_60px_rgba(0,0,0,0.35)] text-black dark:text-white max-h-[92vh] overflow-y-auto my-8"
+                    x-show="showEditModal"
+                    x-transition:enter="ease-out duration-200"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="ease-in duration-150"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95"
+                    @click.stop>
+
+                    <div class="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/15 text-[#007AFF] flex items-center justify-center font-bold">
+                                <i data-lucide="edit-3" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 id="pos-edit-printer-title" class="font-bold text-[19px] tracking-tight">{{ __('pos.edit_printer_modal_title') }}</h3>
+                                <p class="text-[13px] text-black/50 dark:text-white/50">{{ __('pos.edit_printer_modal_desc') }}</p>
+                            </div>
+                        </div>
+                        <button type="button" @click="showEditModal = false"
+                            class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer"
+                            aria-label="{{ __('common.close') }}">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
                     </div>
-                    <div>
-                        <h3 class="font-bold text-[19px] tracking-tight">{{ __('pos.edit_printer_modal_title') }}</h3>
-                        <p class="text-[13px] text-black/50 dark:text-white/50">{{ __('pos.edit_printer_modal_desc') }}</p>
-                    </div>
+
+                    <form method="POST" :action="`{{ url('/pos/printers') }}/${editPrinter.id}`" @submit="isSubmitting = true" class="space-y-6">
+                        @csrf
+                        @method('PUT')
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                            <!-- Left Column: Primary Config (7 Cols) -->
+                            <div class="lg:col-span-7 space-y-4">
+                                <!-- Nama Printer -->
+                                <div>
+                                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('pos.printer_name') }} *</label>
+                                    <input type="text" name="name" x-model="editPrinter.name" required
+                                        class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                </div>
+
+                                <!-- Outlet / Lokasi -->
+                                <div>
+                                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('pos.table_location_label') }}</label>
+                                    <select name="location_id" x-model="editPrinter.location_id" class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                        <option value="">{{ __('pos.all_outlets_global') }}</option>
+                                        @foreach($locations as $loc)
+                                        <option value="{{ $loc->id }}">{{ $loc->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <!-- Tipe Koneksi & Lebar Kertas -->
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                                    <div>
+                                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('pos.connection_type') }} *</label>
+                                        <select name="connection_type" x-model="editPrinter.connection_type" required class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                            <option value="lan">Kabel LAN (Ethernet TCP/IP)</option>
+                                            <option value="wifi">Wi-Fi (Wireless TCP/IP)</option>
+                                            <option value="windows">Windows Shared Printer / Spooler</option>
+                                            <option value="usb">USB Direct / Device Path</option>
+                                            <option value="bluetooth">Bluetooth (via Local Agent / COM)</option>
+                                            <option value="serial">Serial COM Port</option>
+                                            <option value="agent">Local POS Agent (Bridge 9898)</option>
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('pos.paper_width') }} *</label>
+                                        <select name="paper_width" x-model="editPrinter.paper_width" required class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                            <option value="80mm">80mm (Standar POS / 48 Kolom)</option>
+                                            <option value="58mm">Mobile Portable (58mm / 32 Kolom)</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Interface Address & Port -->
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+                                    <div class="sm:col-span-2">
+                                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('pos.interface_address') }} *</label>
+                                        <input type="text" name="interface_address" x-model="editPrinter.interface_address" required
+                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] text-black dark:text-white font-mono focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Port</label>
+                                        <input type="number" name="port" x-model="editPrinter.port" min="1" max="65535"
+                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] text-black dark:text-white font-mono focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                    </div>
+                                </div>
+
+                                <!-- Default Printer Toggle -->
+                                <div class="flex items-center gap-2.5 p-3 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5">
+                                    <input type="checkbox" name="is_default" value="1" id="edit_is_default" x-model="editPrinter.is_default" class="w-4 h-4 rounded text-[#007AFF]">
+                                    <label for="edit_is_default" class="text-[13px] font-medium text-black/80 dark:text-white/80 cursor-pointer">
+                                        Jadikan sebagai printer kasir utama (Default)
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Right Column: Capabilities & Usages (5 Cols) -->
+                            <div class="lg:col-span-5 space-y-4">
+                                <!-- Capabilities -->
+                                <div class="p-4 rounded-[18px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/10 space-y-2.5">
+                                    <label class="block text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60">{{ __('pos.hardware_capabilities_title') }}</label>
+                                    <div class="grid grid-cols-2 gap-2 text-[12px]">
+                                        <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
+                                            <input type="checkbox" name="capabilities[]" value="cut" :checked="editPrinter.capabilities.includes('cut')" class="rounded text-[#007AFF]">
+                                            <span>{{ __('pos.capability_autocut') }}</span>
+                                        </label>
+                                        <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
+                                            <input type="checkbox" name="capabilities[]" value="cash_drawer" :checked="editPrinter.capabilities.includes('cash_drawer')" class="rounded text-[#007AFF]">
+                                            <span>{{ __('pos.capability_drawer') }}</span>
+                                        </label>
+                                        <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
+                                            <input type="checkbox" name="capabilities[]" value="qr_code" :checked="editPrinter.capabilities.includes('qr_code')" class="rounded text-[#007AFF]">
+                                            <span>{{ __('pos.capability_qrcode') }}</span>
+                                        </label>
+                                        <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
+                                            <input type="checkbox" name="capabilities[]" value="barcode" :checked="editPrinter.capabilities.includes('barcode')" class="rounded text-[#007AFF]">
+                                            <span>{{ __('pos.capability_barcode') }}</span>
+                                        </label>
+                                        <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer col-span-2">
+                                            <input type="checkbox" name="capabilities[]" value="beep" :checked="editPrinter.capabilities.includes('beep')" class="rounded text-[#007AFF]">
+                                            <span>{{ __('pos.capability_buzzer') }}</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Assigned Usages -->
+                                <div class="p-4 rounded-[18px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/10 space-y-2.5">
+                                    <label class="block text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60">{{ __('pos.assigned_usages') }}</label>
+                                    <div class="grid grid-cols-2 gap-2 text-[12px]">
+                                        <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
+                                            <input type="checkbox" name="assigned_usages[]" value="cashier_receipt" :checked="editPrinter.assigned_usages.includes('cashier_receipt')" class="rounded text-[#007AFF]">
+                                            <span>{{ __('pos.routing_cashier') }}</span>
+                                        </label>
+                                        <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
+                                            <input type="checkbox" name="assigned_usages[]" value="kitchen_order" :checked="editPrinter.assigned_usages.includes('kitchen_order')" class="rounded text-[#007AFF]">
+                                            <span>{{ __('pos.routing_kitchen') }}</span>
+                                        </label>
+                                        <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
+                                            <input type="checkbox" name="assigned_usages[]" value="bar_order" :checked="editPrinter.assigned_usages.includes('bar_order')" class="rounded text-[#007AFF]">
+                                            <span>{{ __('pos.routing_bar') }}</span>
+                                        </label>
+                                        <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
+                                            <input type="checkbox" name="assigned_usages[]" value="shift_report" :checked="editPrinter.assigned_usages.includes('shift_report')" class="rounded text-[#007AFF]">
+                                            <span>{{ __('pos.routing_shift') }}</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-end gap-3 pt-4 border-t border-black/10 dark:border-white/10">
+                            <button type="button" @click="showEditModal = false" class="min-h-[44px] px-5 rounded-[12px] text-[13px] font-medium bg-black/[0.05] dark:bg-white/[0.08] text-black/80 dark:text-white/80 hover:bg-black/[0.1] transition">{{ __('pos.cancel') }}</button>
+                            <button type="submit" :disabled="isSubmitting" class="min-h-[44px] px-6 rounded-[12px] text-[13px] font-semibold bg-[#007AFF] hover:bg-[#0071E3] text-white transition shadow-sm flex items-center gap-2">
+                                <template x-if="isSubmitting">
+                                    <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i>
+                                </template>
+                                <span x-text="isSubmitting ? {{ Js::from(__('pos.saving')) }} : {{ Js::from(__('pos.save_changes_btn')) }}"></span>
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <button type="button" @click="showEditModal = false" class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.08] flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
             </div>
-
-            <form method="POST" :action="`{{ url('/pos/printers') }}/${editPrinter.id}`" @submit="isSubmitting = true" class="space-y-6">
-                @csrf
-                @method('PUT')
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                    <!-- Left Column: Primary Config (7 Cols) -->
-                    <div class="lg:col-span-7 space-y-4">
-                        <!-- Nama Printer -->
-                        <div>
-                            <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('pos.printer_name') }} *</label>
-                            <input type="text" name="name" x-model="editPrinter.name" required
-                                class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                        </div>
-
-                        <!-- Outlet / Lokasi -->
-                        <div>
-                            <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('pos.table_location_label') }}</label>
-                            <select name="location_id" x-model="editPrinter.location_id" class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                                <option value="">{{ __('pos.all_outlets_global') }}</option>
-                                @foreach($locations as $loc)
-                                <option value="{{ $loc->id }}">{{ $loc->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <!-- Tipe Koneksi & Lebar Kertas -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                            <div>
-                                <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('pos.connection_type') }} *</label>
-                                <select name="connection_type" x-model="editPrinter.connection_type" required class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                                    <option value="lan">Kabel LAN (Ethernet TCP/IP)</option>
-                                    <option value="wifi">Wi-Fi (Wireless TCP/IP)</option>
-                                    <option value="windows">Windows Shared Printer / Spooler</option>
-                                    <option value="usb">USB Direct / Device Path</option>
-                                    <option value="bluetooth">Bluetooth (via Local Agent / COM)</option>
-                                    <option value="serial">Serial COM Port</option>
-                                    <option value="agent">Local POS Agent (Bridge 9898)</option>
-                                </select>
-                            </div>
-
-                            <div>
-                                <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('pos.paper_width') }} *</label>
-                                <select name="paper_width" x-model="editPrinter.paper_width" required class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                                    <option value="80mm">80mm (Standar POS / 48 Kolom)</option>
-                                    <option value="58mm">58mm (Mobile Portable / 32 Kolom)</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <!-- Interface Address & Port -->
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
-                            <div class="sm:col-span-2">
-                                <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('pos.interface_address') }} *</label>
-                                <input type="text" name="interface_address" x-model="editPrinter.interface_address" required
-                                    class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] text-black dark:text-white font-mono focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                            </div>
-
-                            <div>
-                                <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Port</label>
-                                <input type="number" name="port" x-model="editPrinter.port" min="1" max="65535"
-                                    class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] text-black dark:text-white font-mono focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                            </div>
-                        </div>
-
-                        <!-- Default Printer Toggle -->
-                        <div class="flex items-center gap-2.5 p-3 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5">
-                            <input type="checkbox" name="is_default" value="1" id="edit_is_default" x-model="editPrinter.is_default" class="w-4 h-4 rounded text-[#007AFF]">
-                            <label for="edit_is_default" class="text-[13px] font-medium text-black/80 dark:text-white/80 cursor-pointer">
-                                Jadikan sebagai printer kasir utama (Default)
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Right Column: Capabilities & Usages (5 Cols) -->
-                    <div class="lg:col-span-5 space-y-4">
-                        <!-- Capabilities -->
-                        <div class="p-4 rounded-[18px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/10 space-y-2.5">
-                            <label class="block text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60">{{ __('pos.hardware_capabilities_title') }}</label>
-                            <div class="grid grid-cols-2 gap-2 text-[12px]">
-                                <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
-                                    <input type="checkbox" name="capabilities[]" value="cut" :checked="editPrinter.capabilities.includes('cut')" class="rounded text-[#007AFF]">
-                                    <span>{{ __('pos.capability_autocut') }}</span>
-                                </label>
-                                <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
-                                    <input type="checkbox" name="capabilities[]" value="cash_drawer" :checked="editPrinter.capabilities.includes('cash_drawer')" class="rounded text-[#007AFF]">
-                                    <span>{{ __('pos.capability_drawer') }}</span>
-                                </label>
-                                <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
-                                    <input type="checkbox" name="capabilities[]" value="qr_code" :checked="editPrinter.capabilities.includes('qr_code')" class="rounded text-[#007AFF]">
-                                    <span>{{ __('pos.capability_qrcode') }}</span>
-                                </label>
-                                <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
-                                    <input type="checkbox" name="capabilities[]" value="barcode" :checked="editPrinter.capabilities.includes('barcode')" class="rounded text-[#007AFF]">
-                                    <span>{{ __('pos.capability_barcode') }}</span>
-                                </label>
-                                <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer col-span-2">
-                                    <input type="checkbox" name="capabilities[]" value="beep" :checked="editPrinter.capabilities.includes('beep')" class="rounded text-[#007AFF]">
-                                    <span>{{ __('pos.capability_buzzer') }}</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <!-- Assigned Usages -->
-                        <div class="p-4 rounded-[18px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/10 space-y-2.5">
-                            <label class="block text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60">{{ __('pos.assigned_usages') }}</label>
-                            <div class="grid grid-cols-2 gap-2 text-[12px]">
-                                <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
-                                    <input type="checkbox" name="assigned_usages[]" value="cashier_receipt" :checked="editPrinter.assigned_usages.includes('cashier_receipt')" class="rounded text-[#007AFF]">
-                                    <span>{{ __('pos.routing_cashier') }}</span>
-                                </label>
-                                <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
-                                    <input type="checkbox" name="assigned_usages[]" value="kitchen_order" :checked="editPrinter.assigned_usages.includes('kitchen_order')" class="rounded text-[#007AFF]">
-                                    <span>{{ __('pos.routing_kitchen') }}</span>
-                                </label>
-                                <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
-                                    <input type="checkbox" name="assigned_usages[]" value="bar_order" :checked="editPrinter.assigned_usages.includes('bar_order')" class="rounded text-[#007AFF]">
-                                    <span>{{ __('pos.routing_bar') }}</span>
-                                </label>
-                                <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
-                                    <input type="checkbox" name="assigned_usages[]" value="shift_report" :checked="editPrinter.assigned_usages.includes('shift_report')" class="rounded text-[#007AFF]">
-                                    <span>{{ __('pos.routing_shift') }}</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flex items-center justify-end gap-3 pt-4 border-t border-black/10 dark:border-white/10">
-                    <button type="button" @click="showEditModal = false" class="min-h-[44px] px-5 rounded-[12px] text-[13px] font-medium bg-black/[0.05] dark:bg-white/[0.08] text-black/80 dark:text-white/80 hover:bg-black/[0.1] transition">{{ __('pos.cancel') }}</button>
-                    <button type="submit" :disabled="isSubmitting" class="min-h-[44px] px-6 rounded-[12px] text-[13px] font-semibold bg-[#007AFF] hover:bg-[#0071E3] text-white transition shadow-sm flex items-center gap-2">
-                        <template x-if="isSubmitting">
-                            <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i>
-                        </template>
-                        <span x-text="isSubmitting ? {{ Js::from(__('pos.saving')) }} : {{ Js::from(__('pos.save_changes_btn')) }}"></span>
-                    </button>
-                </div>
-            </form>
         </div>
-    </div>
+    </template>
 
     <!-- ===================================================== -->
     <!-- 7. MANUAL CASH DRAWER POP MODAL (Supervisor PIN XXL)  -->
     <!-- ===================================================== -->
-    <div x-show="showManualDrawerModal" x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-md p-4 overflow-y-auto"
-        @keydown.escape.window="showManualDrawerModal = false">
-        <div class="w-full max-w-2xl bg-white dark:bg-[#1C1C1E] rounded-[24px] p-6 sm:p-7 space-y-6 shadow-[0_25px_60px_rgba(0,0,0,0.35)] border border-black/10 dark:border-white/15 max-h-[92vh] overflow-y-auto"
-            @click.away="showManualDrawerModal = false">
-            <div class="flex items-center justify-between pb-4 border-b border-black/10 dark:border-white/10">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-[12px] bg-[#FF9500]/15 flex items-center justify-center text-[#FF9500]">
-                        <i data-lucide="shield-alert" class="w-5 h-5"></i>
+    <template x-teleport="body">
+        <div x-show="showManualDrawerModal" x-cloak
+            class="fixed inset-0 z-[220] overflow-y-auto"
+            @keydown.escape.window="showManualDrawerModal = false"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="pos-manual-drawer-title">
+
+            <!-- Backdrop -->
+            <div x-show="showManualDrawerModal"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="showManualDrawerModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
+
+            <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="showManualDrawerModal = false">
+                <div class="relative w-full max-w-2xl bg-white dark:bg-[#1C1C1E] rounded-[24px] p-6 sm:p-7 space-y-6 shadow-[0_25px_60px_rgba(0,0,0,0.35)] border border-black/10 dark:border-white/15 max-h-[92vh] overflow-y-auto my-8"
+                    x-show="showManualDrawerModal"
+                    x-transition:enter="ease-out duration-200"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="ease-in duration-150"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95"
+                    @click.stop>
+
+                    <div class="flex items-center justify-between pb-4 border-b border-black/10 dark:border-white/10">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-[12px] bg-[#FF9500]/15 flex items-center justify-center text-[#FF9500]">
+                                <i data-lucide="shield-alert" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 id="pos-manual-drawer-title" class="text-[19px] font-bold text-black dark:text-white tracking-tight">{{ __('pos.manual_drawer_modal_title') }}</h3>
+                                <p class="text-[13px] text-black/50 dark:text-white/50">{{ __('pos.manual_drawer_modal_subtitle') }}</p>
+                            </div>
+                        </div>
+                        <button type="button" @click="showManualDrawerModal = false"
+                            class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer"
+                            aria-label="{{ __('common.close') }}">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
                     </div>
-                    <div>
-                        <h3 class="text-[19px] font-bold text-black dark:text-white tracking-tight">{{ __('pos.manual_drawer_modal_title') }}</h3>
-                        <p class="text-[13px] text-black/50 dark:text-white/50">{{ __('pos.manual_drawer_modal_subtitle') }}</p>
+
+                    <div class="p-4 rounded-[16px] bg-[#FF9500]/10 border border-[#FF9500]/25 text-[#995B00] dark:text-[#FFB340] text-[12px] leading-relaxed flex items-start gap-3">
+                        <i data-lucide="info" class="w-4 h-4 shrink-0 mt-0.5"></i>
+                        <span>{{ __('pos.manual_drawer_warning_note') }}</span>
                     </div>
+
+                    <form @submit.prevent="submitManualDrawer" class="space-y-4">
+                        <div>
+                            <label class="block text-[13px] font-semibold text-black/80 dark:text-white/80 mb-1.5">{{ __('pos.supervisor_owner_pin_label') }} <span class="text-red-500">*</span></label>
+                            <input type="password" x-model="manualDrawer.supervisor_pin" required maxlength="8" placeholder="Masukkan 4-8 digit PIN otorisasi"
+                                class="w-full h-12 px-4 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[18px] text-black dark:text-white tracking-widest font-mono focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                        </div>
+
+                        <div>
+                            <label class="block text-[13px] font-semibold text-black/80 dark:text-white/80 mb-1.5">{{ __('pos.drawer_pop_reason_label') }} <span class="text-red-500">*</span></label>
+                            <textarea x-model="manualDrawer.reason" required rows="3" placeholder="Contoh: Penukaran uang kembalian pecahan kecil dengan kasir sebelah..."
+                                class="w-full p-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 resize-none transition"></textarea>
+                        </div>
+
+                        <div class="flex items-center justify-end gap-3 pt-4 border-t border-black/10 dark:border-white/10">
+                            <button type="button" @click="showManualDrawerModal = false" class="min-h-[44px] px-5 rounded-[12px] text-[13px] font-medium bg-black/[0.05] dark:bg-white/[0.08] text-black/80 dark:text-white/80 hover:bg-black/[0.1] transition">
+                                {{ __('pos.cancel') }}
+                            </button>
+                            <button type="submit" :disabled="isTesting" class="min-h-[44px] px-6 rounded-[12px] text-[13px] font-semibold bg-[#FF9500] hover:bg-[#E08500] text-white transition shadow-sm flex items-center justify-center gap-2">
+                                <template x-if="isTesting">
+                                    <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i>
+                                </template>
+                                <i x-show="!isTesting" data-lucide="unlock" class="w-4 h-4"></i>
+                                <span x-text="isTesting ? {{ Js::from(__('pos.sending_signal')) }} : {{ Js::from(__('pos.authorize_and_pop_drawer')) }}"></span>
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <button type="button" @click="showManualDrawerModal = false" class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.08] flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
             </div>
-
-            <div class="p-4 rounded-[16px] bg-[#FF9500]/10 border border-[#FF9500]/25 text-[#995B00] dark:text-[#FFB340] text-[12px] leading-relaxed flex items-start gap-3">
-                <i data-lucide="info" class="w-4 h-4 shrink-0 mt-0.5"></i>
-                <span>{{ __('pos.manual_drawer_warning_note') }}</span>
-            </div>
-
-            <form @submit.prevent="submitManualDrawer" class="space-y-4">
-                <div>
-                    <label class="block text-[13px] font-semibold text-black/80 dark:text-white/80 mb-1.5">{{ __('pos.supervisor_owner_pin_label') }} <span class="text-red-500">*</span></label>
-                    <input type="password" x-model="manualDrawer.supervisor_pin" required maxlength="8" placeholder="Masukkan 4-8 digit PIN otorisasi"
-                        class="w-full h-12 px-4 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[18px] text-black dark:text-white tracking-widest font-mono focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                </div>
-
-                <div>
-                    <label class="block text-[13px] font-semibold text-black/80 dark:text-white/80 mb-1.5">{{ __('pos.drawer_pop_reason_label') }} <span class="text-red-500">*</span></label>
-                    <textarea x-model="manualDrawer.reason" required rows="3" placeholder="Contoh: Penukaran uang kembalian pecahan kecil dengan kasir sebelah..."
-                        class="w-full p-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 resize-none transition"></textarea>
-                </div>
-
-                <div class="flex items-center justify-end gap-3 pt-4 border-t border-black/10 dark:border-white/10">
-                    <button type="button" @click="showManualDrawerModal = false" class="min-h-[44px] px-5 rounded-[12px] text-[13px] font-medium bg-black/[0.05] dark:bg-white/[0.08] text-black/80 dark:text-white/80 hover:bg-black/[0.1] transition">
-                        {{ __('pos.cancel') }}
-                    </button>
-                    <button type="submit" :disabled="isTesting" class="min-h-[44px] px-6 rounded-[12px] text-[13px] font-semibold bg-[#FF9500] hover:bg-[#E08500] text-white transition shadow-sm flex items-center justify-center gap-2">
-                        <template x-if="isTesting">
-                            <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i>
-                        </template>
-                        <i x-show="!isTesting" data-lucide="unlock" class="w-4 h-4"></i>
-                        <span x-text="isTesting ? {{ Js::from(__('pos.sending_signal')) }} : {{ Js::from(__('pos.authorize_and_pop_drawer')) }}"></span>
-                    </button>
-                </div>
-            </form>
         </div>
-    </div>
+    </template>
 
 </div>
 @endsection

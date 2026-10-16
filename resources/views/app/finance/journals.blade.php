@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'Jurnal Akuntansi Otomatis'])
+@extends('layouts.app', ['title' => __('finance.journals_page_title')])
 
 @section('content')
 <div class="max-w-[1360px] mx-auto space-y-5 pb-28 lg:pb-12">
@@ -7,20 +7,20 @@
     {{-- TOOLBAR / PAGE HEADER                                      --}}
     {{-- ========================================================== --}}
     <x-module-header
-        title="Jurnal Akuntansi Otomatis"
-        subtitle="Seluruh transaksi dijurnal berpasangan (double-entry) secara otomatis sesuai standar SAK EMKM">
+        :title="__('finance.journals_title')"
+        :subtitle="__('finance.journals_subtitle')">
         @if (\App\Support\Context::hasPermission('finance.cash_bank') || \App\Support\Context::hasPermission('accounting.view'))
             <a href="{{ route('finance.cash-bank.ledger') }}"
                 class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5">
                 <i data-lucide="book-open" class="w-4 h-4"></i>
-                <span>Buku Kas &amp; Ledger</span>
+                <span>{{ __('finance.cash_ledger_page_title') }}</span>
             </a>
         @endif
         @if (\App\Support\Context::hasPermission('expenses.view') || \App\Support\Context::hasPermission('expenses.manage'))
             <a href="{{ route('finance.expenses.index') }}"
                 class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5">
                 <i data-lucide="receipt" class="w-4 h-4 text-[#FF3B30]"></i>
-                <span>Beban Operasional</span>
+                <span>{{ __('finance.expenses_title') }}</span>
             </a>
         @endif
     </x-module-header>
@@ -36,9 +36,9 @@
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
         <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 flex items-center justify-between shadow-xs">
             <div>
-                <p class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wider">Total Debit Pembukuan</p>
+                <p class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wider">{{ __('finance.kpi_total_debit') }}</p>
                 <p class="text-[22px] font-bold tabular-nums text-[#34C759] dark:text-[#30D158] mt-1">Rp {{ number_format($totalDebit, 0, ',', '.') }}</p>
-                <p class="text-[11px] text-black/40 dark:text-white/40 mt-0.5">Saldo debit terverifikasi</p>
+                <p class="text-[11px] text-black/40 dark:text-white/40 mt-0.5">{{ __('finance.kpi_total_debit_desc') }}</p>
             </div>
             <div class="w-10 h-10 rounded-[12px] bg-[#34C759]/10 text-[#34C759] dark:text-[#30D158] flex items-center justify-center shrink-0">
                 <i data-lucide="arrow-down-left" class="w-5 h-5"></i>
@@ -47,9 +47,9 @@
 
         <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 flex items-center justify-between shadow-xs">
             <div>
-                <p class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wider">Total Kredit Pembukuan</p>
+                <p class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wider">{{ __('finance.kpi_total_credit') }}</p>
                 <p class="text-[22px] font-bold tabular-nums text-[#007AFF] dark:text-[#0A84FF] mt-1">Rp {{ number_format($totalCredit, 0, ',', '.') }}</p>
-                <p class="text-[11px] text-black/40 dark:text-white/40 mt-0.5">Saldo kredit terverifikasi</p>
+                <p class="text-[11px] text-black/40 dark:text-white/40 mt-0.5">{{ __('finance.kpi_total_credit_desc') }}</p>
             </div>
             <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF] flex items-center justify-center shrink-0">
                 <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
@@ -58,22 +58,22 @@
 
         <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 flex items-center justify-between shadow-xs">
             <div>
-                <p class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wider">Integritas Double-Entry</p>
+                <p class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wider">{{ __('finance.kpi_double_entry_integrity') }}</p>
                 <div class="mt-1.5 flex items-center gap-1.5">
                     @if ($isBalanced)
                         <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[12px] font-semibold bg-[#34C759]/12 text-[#248A3D] dark:text-[#30D158]">
                             <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
-                            Seimbang (Valid)
+                            {{ __('finance.status_balanced') }}
                         </span>
                     @else
                         <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[12px] font-semibold bg-[#FF3B30]/12 text-[#C41E17] dark:text-[#FF453A]">
                             <i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i>
-                            Selisih Pembukuan
+                            {{ __('finance.status_unbalanced') }}
                         </span>
                     @endif
                 </div>
                 <p class="text-[11px] text-black/40 dark:text-white/40 mt-1">
-                    {{ $isBalanced ? 'Tidak ada deviasi pembukuan' : 'Selisih Rp ' . number_format(abs($totalDebit - $totalCredit), 0, ',', '.') }}
+                    {{ $isBalanced ? __('finance.no_deviation') : __('finance.difference_amount', ['amount' => number_format(abs($totalDebit - $totalCredit), 0, ',', '.')]) }}
                 </p>
             </div>
             <div class="w-10 h-10 rounded-[12px] {{ $isBalanced ? 'bg-[#34C759]/10 text-[#34C759]' : 'bg-[#FF3B30]/10 text-[#FF3B30]' }} flex items-center justify-center shrink-0">
@@ -90,17 +90,17 @@
             <div class="relative flex-1 min-w-[200px]">
                 <i data-lucide="search" class="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40"></i>
                 <input type="text" name="search" value="{{ request('search') }}"
-                    placeholder="Cari nomor jurnal / keterangan..."
+                    placeholder="{{ __('finance.search_journal_placeholder') }}"
                     class="w-full h-11 sm:h-9 pl-8 pr-3 text-[16px] sm:text-[13px] bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
             </div>
             <select name="reference_type"
                 class="h-11 sm:h-9 px-3 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
-                <option value="">Semua Tipe Referensi</option>
-                <option value="pos_order" @selected(request('reference_type') === 'pos_order')>Penjualan POS</option>
-                <option value="expense" @selected(request('reference_type') === 'expense')>Beban Operasional</option>
-                <option value="cash_transfer" @selected(request('reference_type') === 'cash_transfer')>Transfer Kas/Bank</option>
-                <option value="supplier_invoice" @selected(request('reference_type') === 'supplier_invoice')>Tagihan Supplier</option>
-                <option value="supplier_payment" @selected(request('reference_type') === 'supplier_payment')>Pelunasan Tagihan</option>
+                <option value="">{{ __('finance.ref_type_all') }}</option>
+                <option value="pos_order" @selected(request('reference_type') === 'pos_order')>{{ __('finance.ref_pos_order') }}</option>
+                <option value="expense" @selected(request('reference_type') === 'expense')>{{ __('finance.ref_expense') }}</option>
+                <option value="cash_transfer" @selected(request('reference_type') === 'cash_transfer')>{{ __('finance.ref_cash_transfer') }}</option>
+                <option value="supplier_invoice" @selected(request('reference_type') === 'supplier_invoice')>{{ __('finance.ref_supplier_invoice') }}</option>
+                <option value="supplier_payment" @selected(request('reference_type') === 'supplier_payment')>{{ __('finance.ref_supplier_payment') }}</option>
             </select>
             <input type="date" name="start_date" value="{{ request('start_date') }}"
                 class="h-11 sm:h-9 px-2.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[16px] sm:text-[12px] text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
@@ -108,10 +108,10 @@
             <input type="date" name="end_date" value="{{ request('end_date') }}"
                 class="h-11 sm:h-9 px-2.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[16px] sm:text-[12px] text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
             <button type="submit"
-                class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] bg-[#007AFF] text-white text-[13px] font-semibold hover:bg-[#0071E3] transition-colors flex items-center justify-center">Filter</button>
+                class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] bg-[#007AFF] text-white text-[13px] font-semibold hover:bg-[#0071E3] transition-colors flex items-center justify-center">{{ __('common.filter') }}</button>
             @if (request('search') || request('reference_type') || request('start_date') || request('end_date'))
                 <a href="{{ route('finance.journals.index') }}"
-                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 hover:bg-black/10 dark:hover:bg-white/10 text-[13px] flex items-center justify-center transition-colors">Reset</a>
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 hover:bg-black/10 dark:hover:bg-white/10 text-[13px] flex items-center justify-center transition-colors">{{ __('common.reset') }}</a>
             @endif
         </form>
     </div>
@@ -142,11 +142,11 @@
                         <thead>
                             <tr class="border-b border-black/[0.04] dark:border-white/[0.06] bg-black/[0.01] dark:bg-white/[0.01]">
                                 <th class="px-4 sm:px-5 py-2.5 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40">
-                                    Kode &amp; Nama Akun (COA)</th>
+                                    {{ __('finance.col_account_code_name') }}</th>
                                 <th class="px-4 sm:px-5 py-2.5 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 text-right">
-                                    Debit (Rp)</th>
+                                    {{ __('finance.col_debit') }} (Rp)</th>
                                 <th class="px-4 sm:px-5 py-2.5 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 text-right">
-                                    Kredit (Rp)</th>
+                                    {{ __('finance.col_credit') }} (Rp)</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
@@ -194,10 +194,10 @@
                             </div>
                             <div class="text-right shrink-0">
                                 @if ($line->type === 'debit')
-                                    <span class="text-[10px] uppercase font-bold tracking-wider text-[#34C759] dark:text-[#30D158] block">Debit</span>
+                                    <span class="text-[10px] uppercase font-bold tracking-wider text-[#34C759] dark:text-[#30D158] block">{{ __('finance.col_debit') }}</span>
                                     <span class="text-[13px] font-bold tabular-nums text-black dark:text-white">Rp {{ number_format($line->amount, 0, ',', '.') }}</span>
                                 @else
-                                    <span class="text-[10px] uppercase font-bold tracking-wider text-[#007AFF] dark:text-[#0A84FF] block">Kredit</span>
+                                    <span class="text-[10px] uppercase font-bold tracking-wider text-[#007AFF] dark:text-[#0A84FF] block">{{ __('finance.col_credit') }}</span>
                                     <span class="text-[13px] font-bold tabular-nums text-[#007AFF] dark:text-[#0A84FF]">Rp {{ number_format($line->amount, 0, ',', '.') }}</span>
                                 @endif
                             </div>
@@ -212,8 +212,8 @@
                         <i data-lucide="book-open" class="w-6 h-6"></i>
                     </div>
                     <div>
-                        <p class="text-[15px] font-semibold text-black/60 dark:text-white/60">Belum ada entri jurnal akuntansi</p>
-                        <p class="text-[13px] text-black/40 dark:text-white/40 mt-0.5">Jurnal dibuat otomatis saat kasir checkout, transaksi kas, atau beban dicatat</p>
+                        <p class="text-[15px] font-semibold text-black/60 dark:text-white/60">{{ __('finance.empty_journals_title') }}</p>
+                        <p class="text-[13px] text-black/40 dark:text-white/40 mt-0.5">{{ __('finance.empty_journals_desc') }}</p>
                     </div>
                 </div>
             </div>
@@ -223,19 +223,19 @@
     @if ($entries->hasPages())
         <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 px-5 py-3.5 flex items-center justify-between text-[13px] text-black/60 dark:text-white/60 shadow-xs">
             <div>
-                Menampilkan <span class="font-medium text-black dark:text-white tabular-nums">{{ $entries->firstItem() }}–{{ $entries->lastItem() }}</span> dari <span class="font-medium text-black dark:text-white tabular-nums">{{ $entries->total() }}</span> entri
+                {{ __('common.showing') }} <span class="font-medium text-black dark:text-white tabular-nums">{{ $entries->firstItem() }}–{{ $entries->lastItem() }}</span> {{ __('common.of') }} <span class="font-medium text-black dark:text-white tabular-nums">{{ $entries->total() }}</span> {{ __('common.entries') }}
             </div>
             <div class="flex items-center gap-2">
                 @if ($entries->onFirstPage())
-                    <span class="h-8 px-3 rounded-[8px] text-[13px] font-medium text-black/30 dark:text-white/30 cursor-not-allowed flex items-center"><i data-lucide="chevron-left" class="w-3.5 h-3.5 mr-1"></i> Sebelumnya</span>
+                    <span class="h-8 px-3 rounded-[8px] text-[13px] font-medium text-black/30 dark:text-white/30 cursor-not-allowed flex items-center"><i data-lucide="chevron-left" class="w-3.5 h-3.5 mr-1"></i> {{ __('common.previous') }}</span>
                 @else
-                    <a href="{{ $entries->previousPageUrl() }}" class="h-8 px-3 rounded-[8px] text-[13px] font-medium text-[#007AFF] hover:bg-[#007AFF]/8 transition-colors flex items-center"><i data-lucide="chevron-left" class="w-3.5 h-3.5 mr-1"></i> Sebelumnya</a>
+                    <a href="{{ $entries->previousPageUrl() }}" class="h-8 px-3 rounded-[8px] text-[13px] font-medium text-[#007AFF] hover:bg-[#007AFF]/8 transition-colors flex items-center"><i data-lucide="chevron-left" class="w-3.5 h-3.5 mr-1"></i> {{ __('common.previous') }}</a>
                 @endif
                 <span class="h-8 px-2.5 rounded-[8px] bg-black/[0.06] dark:bg-white/[0.08] text-black dark:text-white font-medium flex items-center tabular-nums">{{ $entries->currentPage() }}</span>
                 @if ($entries->hasMorePages())
-                    <a href="{{ $entries->nextPageUrl() }}" class="h-8 px-3 rounded-[8px] text-[13px] font-medium text-[#007AFF] hover:bg-[#007AFF]/8 transition-colors flex items-center">Selanjutnya <i data-lucide="chevron-right" class="w-3.5 h-3.5 ml-1"></i></a>
+                    <a href="{{ $entries->nextPageUrl() }}" class="h-8 px-3 rounded-[8px] text-[13px] font-medium text-[#007AFF] hover:bg-[#007AFF]/8 transition-colors flex items-center">{{ __('common.next') }} <i data-lucide="chevron-right" class="w-3.5 h-3.5 ml-1"></i></a>
                 @else
-                    <span class="h-8 px-3 rounded-[8px] text-[13px] font-medium text-black/30 dark:text-white/30 cursor-not-allowed flex items-center">Selanjutnya <i data-lucide="chevron-right" class="w-3.5 h-3.5 ml-1"></i></span>
+                    <span class="h-8 px-3 rounded-[8px] text-[13px] font-medium text-black/30 dark:text-white/30 cursor-not-allowed flex items-center">{{ __('common.next') }} <i data-lucide="chevron-right" class="w-3.5 h-3.5 ml-1"></i></span>
                 @endif
             </div>
         </div>

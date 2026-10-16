@@ -693,102 +693,120 @@
     </div>
 
     <!-- Stock Drill-Down Modal Sheet -->
-    <div x-show="showAllStockModal" 
-         x-transition:enter="transition ease-out duration-200" 
-         x-transition:enter-start="opacity-0" 
-         x-transition:enter-end="opacity-100" 
-         x-transition:leave="transition ease-in duration-150" 
-         x-transition:leave-start="opacity-100" 
-         x-transition:leave-end="opacity-0" 
-         class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" 
-         style="display: none;" 
-         @keydown.escape.window="showAllStockModal = false">
-        
-        <div @click.away="showAllStockModal = false" class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-white/10 rounded-3xl w-full max-w-5xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
-            <!-- Modal Header -->
-            <div class="px-6 py-4 border-b border-slate-200 dark:border-white/10 flex items-center justify-between gap-4">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center">
-                        <i data-lucide="package" class="w-4 h-4"></i>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-slate-900 dark:text-white text-base">{{ __('ai.inventory.modal_title') }}</h4>
-                        <p class="text-xs text-slate-500 dark:text-zinc-400">{{ __('ai.inventory.modal_subtitle', ['count' => count($stockPrediction['products'])]) }}</p>
-                    </div>
-                </div>
-                <div class="flex items-center gap-2">
-                    <button type="button" @click="exportStockCsv()" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-white/10 transition flex items-center gap-1.5">
-                        <i data-lucide="download" class="w-3.5 h-3.5"></i>
-                        <span>{{ __('ai.inventory.export_csv') }}</span>
-                    </button>
-                    <button type="button" @click="showAllStockModal = false" class="w-8 h-8 rounded-full hover:bg-slate-100 dark:hover:bg-zinc-800 flex items-center justify-center text-slate-400 hover:text-slate-600 dark:hover:text-white transition">
-                        <i data-lucide="x" class="w-4 h-4"></i>
-                    </button>
-                </div>
-            </div>
+    <template x-teleport="body">
+        <div x-show="showAllStockModal" 
+             x-cloak
+             class="fixed inset-0 z-[200] overflow-y-auto flex items-center justify-center p-3 sm:p-4" 
+             @keydown.escape.window="showAllStockModal = false"
+             role="dialog"
+             aria-modal="true"
+             aria-labelledby="stock-drilldown-modal-title">
+            
+            <!-- Backdrop -->
+            <div x-show="showAllStockModal"
+                 x-transition:enter="ease-out duration-200"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="ease-in duration-150"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 @click="showAllStockModal = false"
+                 class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
 
-            <!-- Modal Search & Filters -->
-            <div class="px-6 py-3 bg-slate-50 dark:bg-zinc-800/40 border-b border-slate-200 dark:border-white/10 flex flex-col sm:flex-row gap-3 items-center justify-between">
-                <div class="relative w-full sm:w-72">
-                    <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-2.5"></i>
-                    <input type="text" x-model="stockSearch" placeholder="{{ __('ai.inventory.search_placeholder') }}" class="w-full pl-9 pr-3 py-1.5 rounded-xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-white/10 text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500">
+            <div x-show="showAllStockModal"
+                 x-transition:enter="ease-out duration-200"
+                 x-transition:enter-start="opacity-0 translate-y-4 sm:scale-95"
+                 x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                 x-transition:leave="ease-in duration-150"
+                 x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                 x-transition:leave-end="opacity-0 translate-y-4 sm:scale-95"
+                 @click.outside="showAllStockModal = false"
+                 class="relative bg-white dark:bg-zinc-900 border border-slate-200 dark:border-white/10 rounded-[24px] sm:rounded-3xl w-full max-w-5xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden z-10">
+                <!-- Modal Header -->
+                <div class="px-6 py-4 border-b border-slate-200 dark:border-white/10 flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center shrink-0">
+                            <i data-lucide="package" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h4 id="stock-drilldown-modal-title" class="font-bold text-slate-900 dark:text-white text-base">{{ __('ai.inventory.modal_title') }}</h4>
+                            <p class="text-xs text-slate-500 dark:text-zinc-400">{{ __('ai.inventory.modal_subtitle', ['count' => count($stockPrediction['products'])]) }}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button type="button" @click="exportStockCsv()" class="min-h-[44px] px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-white/10 transition flex items-center gap-1.5 active:scale-95">
+                            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                            <span>{{ __('ai.inventory.export_csv') }}</span>
+                        </button>
+                        <button type="button" @click="showAllStockModal = false" class="min-w-[44px] min-h-[44px] rounded-full hover:bg-slate-100 dark:hover:bg-zinc-800 flex items-center justify-center text-slate-400 hover:text-slate-600 dark:hover:text-white transition active:scale-95" aria-label="Tutup modal">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
+                    </div>
                 </div>
-                <div class="flex items-center gap-1.5 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0">
-                    <button type="button" @click="stockFilter = 'all'" :class="stockFilter === 'all' ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold' : 'bg-white dark:bg-zinc-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-white/10'" class="px-3 py-1 rounded-lg text-xs transition">
-                        {{ __('ai.inventory.filter_all', ['count' => count($stockPrediction['products'])]) }}
-                    </button>
-                    <button type="button" @click="stockFilter = 'critical'" :class="stockFilter === 'critical' ? 'bg-rose-500 text-white font-bold' : 'bg-white dark:bg-zinc-900 text-rose-500 border border-rose-500/20'" class="px-3 py-1 rounded-lg text-xs transition">
-                        {{ __('ai.inventory.filter_critical', ['count' => $stockPrediction['critical_count']]) }}
-                    </button>
-                    <button type="button" @click="stockFilter = 'warning'" :class="stockFilter === 'warning' ? 'bg-amber-500 text-white font-bold' : 'bg-white dark:bg-zinc-900 text-amber-500 border border-amber-500/20'" class="px-3 py-1 rounded-lg text-xs transition">
-                        {{ __('ai.inventory.filter_warning', ['count' => $stockPrediction['warning_count']]) }}
-                    </button>
-                    <button type="button" @click="stockFilter = 'safe'" :class="stockFilter === 'safe' ? 'bg-emerald-500 text-white font-bold' : 'bg-white dark:bg-zinc-900 text-emerald-500 border border-emerald-500/20'" class="px-3 py-1 rounded-lg text-xs transition">
-                        {{ __('ai.inventory.filter_safe') }}
-                    </button>
-                </div>
-            </div>
 
-            <!-- Modal Content (Scrollable List/Table) -->
-            <div class="overflow-y-auto flex-1 p-6">
-                <table class="w-full text-left text-xs text-slate-600 dark:text-slate-300">
-                    <thead class="bg-slate-50 dark:bg-zinc-800/50 text-slate-600 dark:text-zinc-400 uppercase text-[10px] font-extrabold tracking-wider border-b border-slate-200 dark:border-white/10 sticky top-0">
-                        <tr>
-                            <th class="py-2.5 px-3">{{ __('ai.inventory.product') }}</th>
-                            <th class="py-2.5 px-3 text-right">{{ __('ai.inventory.current_stock') }}</th>
-                            <th class="py-2.5 px-3 text-right">{{ __('ai.inventory.sales_velocity') }}</th>
-                            <th class="py-2.5 px-3 text-center">{{ __('ai.inventory.days_remaining') }}</th>
-                            <th class="py-2.5 px-3 text-center">{{ __('ai.inventory.status') }}</th>
-                            <th class="py-2.5 px-3 text-right">{{ __('ai.inventory.reorder_point') }}</th>
-                            <th class="py-2.5 px-3 text-right">{{ __('ai.inventory.suggested_reorder') }}</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-100 dark:divide-white/5 font-mono tabular-nums">
-                        <template x-for="p in getFilteredStock()" :key="p.product_code + p.product_name">
-                            <tr class="hover:bg-slate-50/80 dark:hover:bg-zinc-800/50 transition">
-                                <td class="py-2.5 px-3 font-sans">
-                                    <div class="font-bold text-slate-900 dark:text-white" x-text="p.product_name"></div>
-                                    <div class="text-[10px] text-slate-500 font-mono" x-text="p.product_code"></div>
-                                </td>
-                                <td class="py-2.5 px-3 text-right font-bold text-slate-900 dark:text-white" x-text="p.current_stock + ' ' + p.unit"></td>
-                                <td class="py-2.5 px-3 text-right text-slate-600 dark:text-slate-300" x-text="p.daily_velocity + ' / hari'"></td>
-                                <td class="py-2.5 px-3 text-center font-sans">
-                                    <span :class="p.runout_days !== '999+' && p.runout_days <= 2 ? 'text-rose-500 font-bold' : (p.runout_days !== '999+' ? 'text-amber-500 font-bold' : 'text-slate-500')" x-text="p.runout_days !== '999+' ? p.runout_days + ' Hari' : 'Aman'"></span>
-                                </td>
-                                <td class="py-2.5 px-3 text-center font-sans">
-                                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold" 
-                                          :class="p.urgency === 'critical' ? 'bg-rose-500/20 text-rose-500 border border-rose-500/30' : (p.urgency === 'warning' ? 'bg-amber-500/20 text-amber-500 border border-amber-500/30' : 'bg-emerald-500/20 text-emerald-500 border border-emerald-500/30')"
-                                          x-text="p.urgency === 'critical' ? 'Kritis' : (p.urgency === 'warning' ? 'Menipis' : 'Aman')"></span>
-                                </td>
-                                <td class="py-2.5 px-3 text-right text-slate-600 dark:text-slate-300" x-text="p.reorder_point + ' ' + p.unit"></td>
-                                <td class="py-2.5 px-3 text-right font-bold text-emerald-600 dark:text-emerald-400" x-text="'+' + p.suggested_reorder_qty + ' ' + p.unit"></td>
+                <!-- Modal Search & Filters -->
+                <div class="px-6 py-3 bg-slate-50 dark:bg-zinc-800/40 border-b border-slate-200 dark:border-white/10 flex flex-col sm:flex-row gap-3 items-center justify-between">
+                    <div class="relative w-full sm:w-72">
+                        <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-2.5"></i>
+                        <input type="text" x-model="stockSearch" placeholder="{{ __('ai.inventory.search_placeholder') }}" class="w-full pl-9 pr-3 py-1.5 rounded-xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-white/10 text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500">
+                    </div>
+                    <div class="flex items-center gap-1.5 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0">
+                        <button type="button" @click="stockFilter = 'all'" :class="stockFilter === 'all' ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold' : 'bg-white dark:bg-zinc-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-white/10'" class="px-3 py-1 rounded-lg text-xs transition">
+                            {{ __('ai.inventory.filter_all', ['count' => count($stockPrediction['products'])]) }}
+                        </button>
+                        <button type="button" @click="stockFilter = 'critical'" :class="stockFilter === 'critical' ? 'bg-rose-500 text-white font-bold' : 'bg-white dark:bg-zinc-900 text-rose-500 border border-rose-500/20'" class="px-3 py-1 rounded-lg text-xs transition">
+                            {{ __('ai.inventory.filter_critical', ['count' => $stockPrediction['critical_count']]) }}
+                        </button>
+                        <button type="button" @click="stockFilter = 'warning'" :class="stockFilter === 'warning' ? 'bg-amber-500 text-white font-bold' : 'bg-white dark:bg-zinc-900 text-amber-500 border border-amber-500/20'" class="px-3 py-1 rounded-lg text-xs transition">
+                            {{ __('ai.inventory.filter_warning', ['count' => $stockPrediction['warning_count']]) }}
+                        </button>
+                        <button type="button" @click="stockFilter = 'safe'" :class="stockFilter === 'safe' ? 'bg-emerald-500 text-white font-bold' : 'bg-white dark:bg-zinc-900 text-emerald-500 border border-emerald-500/20'" class="px-3 py-1 rounded-lg text-xs transition">
+                            {{ __('ai.inventory.filter_safe') }}
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Modal Content (Scrollable List/Table) -->
+                <div class="overflow-y-auto flex-1 p-6">
+                    <table class="w-full text-left text-xs text-slate-600 dark:text-slate-300">
+                        <thead class="bg-slate-50 dark:bg-zinc-800/50 text-slate-600 dark:text-zinc-400 uppercase text-[10px] font-extrabold tracking-wider border-b border-slate-200 dark:border-white/10 sticky top-0">
+                            <tr>
+                                <th class="py-2.5 px-3">{{ __('ai.inventory.product') }}</th>
+                                <th class="py-2.5 px-3 text-right">{{ __('ai.inventory.current_stock') }}</th>
+                                <th class="py-2.5 px-3 text-right">{{ __('ai.inventory.sales_velocity') }}</th>
+                                <th class="py-2.5 px-3 text-center">{{ __('ai.inventory.days_remaining') }}</th>
+                                <th class="py-2.5 px-3 text-center">{{ __('ai.inventory.status') }}</th>
+                                <th class="py-2.5 px-3 text-right">{{ __('ai.inventory.reorder_point') }}</th>
+                                <th class="py-2.5 px-3 text-right">{{ __('ai.inventory.suggested_reorder') }}</th>
                             </tr>
-                        </template>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 dark:divide-white/5 font-mono tabular-nums">
+                            <template x-for="p in getFilteredStock()" :key="p.product_code + p.product_name">
+                                <tr class="hover:bg-slate-50/80 dark:hover:bg-zinc-800/50 transition">
+                                    <td class="py-2.5 px-3 font-sans">
+                                        <div class="font-bold text-slate-900 dark:text-white" x-text="p.product_name"></div>
+                                        <div class="text-[10px] text-slate-500 font-mono" x-text="p.product_code"></div>
+                                    </td>
+                                    <td class="py-2.5 px-3 text-right font-bold text-slate-900 dark:text-white" x-text="p.current_stock + ' ' + p.unit"></td>
+                                    <td class="py-2.5 px-3 text-right text-slate-600 dark:text-slate-300" x-text="p.daily_velocity + ' / hari'"></td>
+                                    <td class="py-2.5 px-3 text-center font-sans">
+                                        <span :class="p.runout_days !== '999+' && p.runout_days <= 2 ? 'text-rose-500 font-bold' : (p.runout_days !== '999+' ? 'text-amber-500 font-bold' : 'text-slate-500')" x-text="p.runout_days !== '999+' ? p.runout_days + ' Hari' : 'Aman'"></span>
+                                    </td>
+                                    <td class="py-2.5 px-3 text-center font-sans">
+                                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold" 
+                                              :class="p.urgency === 'critical' ? 'bg-rose-500/20 text-rose-500 border border-rose-500/30' : (p.urgency === 'warning' ? 'bg-amber-500/20 text-amber-500 border border-amber-500/30' : 'bg-emerald-500/20 text-emerald-500 border border-emerald-500/30')"
+                                              x-text="p.urgency === 'critical' ? 'Kritis' : (p.urgency === 'warning' ? 'Menipis' : 'Aman')"></span>
+                                    </td>
+                                    <td class="py-2.5 px-3 text-right text-slate-600 dark:text-slate-300" x-text="p.reorder_point + ' ' + p.unit"></td>
+                                    <td class="py-2.5 px-3 text-right font-bold text-emerald-600 dark:text-emerald-400" x-text="'+' + p.suggested_reorder_qty + ' ' + p.unit"></td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
+    </template>
 </div>
 
 <!-- Alpine.js & Chart.js Application Engine -->

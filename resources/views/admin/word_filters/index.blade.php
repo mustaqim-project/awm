@@ -300,10 +300,12 @@
         <!-- ======================================================== -->
         <!-- MODAL 1: Tambah Kata Baru (Single) -->
         <!-- ======================================================== -->
-        <div x-show="createOpen" x-cloak
-            class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-            <div @click.away="createOpen = false"
-                class="bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/[0.08] dark:border-white/[0.1] shadow-2xl max-w-md w-full p-6 space-y-4">
+        <template x-teleport="body">
+            <div x-show="createOpen" x-cloak
+                class="fixed inset-0 z-[200] bg-black/60 dark:bg-black/75 backdrop-blur-md flex items-center justify-center p-4 transition-all"
+                role="dialog" aria-modal="true" @click.self="createOpen = false" @keydown.escape.window="createOpen = false">
+                <div @click.stop
+                    class="relative z-10 bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/[0.08] dark:border-white/[0.1] shadow-2xl max-w-md w-full p-6 space-y-4">
                 <div class="flex items-center justify-between pb-2 border-b border-black/[0.04] dark:border-white/[0.06]">
                     <div class="flex items-center gap-2.5">
                         <div class="w-8 h-8 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center">
@@ -363,16 +365,19 @@
                         </button>
                     </div>
                 </form>
+                </div>
             </div>
-        </div>
+        </template>
 
         <!-- ======================================================== -->
         <!-- MODAL 2: Tambah Massal (Bulk Import) -->
         <!-- ======================================================== -->
-        <div x-show="bulkOpen" x-cloak
-            class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-            <div @click.away="bulkOpen = false"
-                class="bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/[0.08] dark:border-white/[0.1] shadow-2xl max-w-lg w-full p-6 space-y-4">
+        <template x-teleport="body">
+            <div x-show="bulkOpen" x-cloak
+                class="fixed inset-0 z-[200] bg-black/60 dark:bg-black/75 backdrop-blur-md flex items-center justify-center p-4 transition-all"
+                role="dialog" aria-modal="true" @click.self="bulkOpen = false" @keydown.escape.window="bulkOpen = false">
+                <div @click.stop
+                    class="relative z-10 bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/[0.08] dark:border-white/[0.1] shadow-2xl max-w-lg w-full p-6 space-y-4">
                 <div class="flex items-center justify-between pb-2 border-b border-black/[0.04] dark:border-white/[0.06]">
                     <div class="flex items-center gap-2.5">
                         <div class="w-8 h-8 rounded-[10px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center">
@@ -437,16 +442,19 @@
                         </button>
                     </div>
                 </form>
+                </div>
             </div>
-        </div>
+        </template>
 
         <!-- ======================================================== -->
         <!-- MODAL 3: Edit Kata -->
         <!-- ======================================================== -->
-        <div x-show="editOpen" x-cloak
-            class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-            <div @click.away="editOpen = false"
-                class="bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/[0.08] dark:border-white/[0.1] shadow-2xl max-w-md w-full p-6 space-y-4">
+        <template x-teleport="body">
+            <div x-show="editOpen" x-cloak
+                class="fixed inset-0 z-[200] bg-black/60 dark:bg-black/75 backdrop-blur-md flex items-center justify-center p-4 transition-all"
+                role="dialog" aria-modal="true" @click.self="editOpen = false" @keydown.escape.window="editOpen = false">
+                <div @click.stop
+                    class="relative z-10 bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/[0.08] dark:border-white/[0.1] shadow-2xl max-w-md w-full p-6 space-y-4">
                 <div class="flex items-center justify-between pb-2 border-b border-black/[0.04] dark:border-white/[0.06]">
                     <div class="flex items-center gap-2.5">
                         <div class="w-8 h-8 rounded-[10px] bg-[#AF52DE]/10 text-[#AF52DE] flex items-center justify-center">
@@ -515,8 +523,9 @@
                         </button>
                     </div>
                 </form>
+                </div>
             </div>
-        </div>
+        </template>
 
     </div>
 @endsection

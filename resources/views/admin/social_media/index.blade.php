@@ -1389,15 +1389,21 @@
         </div>
 
         {{-- 9. MODAL BUAT POSTINGAN RESMI PLATFORM (APPLE HIG MODAL SHEET) --}}
-        <div x-show="openCreatePostModal" x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-            x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100"
-            x-transition:leave-end="opacity-0"
-            class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
-            style="display: none;">
+        <template x-teleport="body">
+            <div x-show="openCreatePostModal"
+                class="fixed inset-0 z-[200] overflow-y-auto"
+                x-cloak style="display: none;"
+                role="dialog" aria-modal="true"
+                @keydown.escape.window="openCreatePostModal = false">
+                <!-- Backdrop -->
+                <div class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    @click="openCreatePostModal = false"
+                    aria-hidden="true"></div>
 
-            <div @click.away="openCreatePostModal = false"
-                class="bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[24px] shadow-2xl max-w-xl w-full max-h-[90vh] overflow-y-auto p-6 space-y-5">
+                <!-- Centering Wrapper -->
+                <div class="relative z-10 min-h-full flex items-center justify-center p-4 pointer-events-none">
+                    <div class="bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[24px] shadow-2xl max-w-xl w-full max-h-[90vh] overflow-y-auto p-6 space-y-5 pointer-events-auto"
+                        @click.stop>
 
                 <div class="flex items-center justify-between pb-4 border-b border-black/[0.06] dark:border-white/[0.08]">
                     <div class="flex items-center gap-3">
@@ -1796,19 +1802,27 @@
                         </button>
                     </div>
                 </form>
+                    </div>
+                </div>
             </div>
-        </div>
+        </template>
 
         {{-- 10. MODAL BALAS KOMENTAR (APPLE HIG MODAL SHEET) --}}
-        <div x-show="replyModalOpen" x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-            x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100"
-            x-transition:leave-end="opacity-0"
-            class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
-            style="display: none;">
+        <template x-teleport="body">
+            <div x-show="replyModalOpen"
+                class="fixed inset-0 z-[200] overflow-y-auto"
+                x-cloak style="display: none;"
+                role="dialog" aria-modal="true"
+                @keydown.escape.window="replyModalOpen = false">
+                <!-- Backdrop -->
+                <div class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    @click="replyModalOpen = false"
+                    aria-hidden="true"></div>
 
-            <div @click.away="replyModalOpen = false"
-                class="bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[24px] shadow-2xl max-w-lg w-full p-6 space-y-4">
+                <!-- Centering Wrapper -->
+                <div class="relative z-10 min-h-full flex items-center justify-center p-4 pointer-events-none">
+                    <div class="bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[24px] shadow-2xl max-w-lg w-full p-6 space-y-4 pointer-events-auto"
+                        @click.stop>
 
                 <div class="flex items-center justify-between pb-3 border-b border-black/[0.06] dark:border-white/[0.08]">
                     <div class="flex items-center gap-2.5">
@@ -1859,8 +1873,10 @@
                         </button>
                     </div>
                 </form>
+                    </div>
+                </div>
             </div>
-        </div>
+        </template>
 
     </div>
 @endsection

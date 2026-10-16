@@ -6,8 +6,8 @@
                 <i data-lucide="package-check" class="w-4 h-4"></i>
             </div>
             <div>
-                <h3 class="text-[15px] font-bold text-black dark:text-white tracking-tight">Opsi Penyerahan Pesanan</h3>
-                <p class="text-[12px] text-black/50 dark:text-white/50">Tentukan bagaimana pelanggan menerima pesanan yang dibeli dari etalase toko</p>
+                <h3 class="text-[15px] font-bold text-black dark:text-white tracking-tight">{{ __('storefront.backoffice.tab_fulfillment.handover_options_title') }}</h3>
+                <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('storefront.backoffice.tab_fulfillment.handover_options_desc') }}</p>
             </div>
         </div>
 
@@ -17,10 +17,10 @@
                 <div class="space-y-1">
                     <div class="flex items-center gap-2">
                         <i data-lucide="store" class="w-4 h-4 text-[#007AFF]"></i>
-                        <span class="text-[14px] font-bold text-black dark:text-white">Ambil Sendiri (Pickup)</span>
+                        <span class="text-[14px] font-bold text-black dark:text-white">{{ __('storefront.backoffice.tab_fulfillment.pickup_title') }}</span>
                     </div>
                     <p class="text-[12px] text-black/55 dark:text-white/55 leading-relaxed">
-                        Pelanggan datang langsung ke lokasi toko/outlet fisik Anda untuk mengambil pesanan. Bebas biaya kirim.
+                        {{ __('storefront.backoffice.tab_fulfillment.pickup_desc') }}
                     </p>
                 </div>
                 <label class="relative inline-flex items-center cursor-pointer shrink-0 mt-0.5">
@@ -37,10 +37,10 @@
                 <div class="space-y-1">
                     <div class="flex items-center gap-2">
                         <i data-lucide="truck" class="w-4 h-4 text-[#FF9500]"></i>
-                        <span class="text-[14px] font-bold text-black dark:text-white">Pengantaran / Kurir Toko</span>
+                        <span class="text-[14px] font-bold text-black dark:text-white">{{ __('storefront.backoffice.tab_fulfillment.delivery_title') }}</span>
                     </div>
                     <p class="text-[12px] text-black/55 dark:text-white/55 leading-relaxed">
-                        Pesanan diantar oleh kurir internal toko atau pihak ketiga langsung ke alamat tujuan pelanggan.
+                        {{ __('storefront.backoffice.tab_fulfillment.delivery_desc') }}
                     </p>
                 </div>
                 <label class="relative inline-flex items-center cursor-pointer shrink-0 mt-0.5">
@@ -60,15 +60,15 @@
             <div class="space-y-1">
                 <div class="flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-[#007AFF]"></span>
-                    <h4 class="text-[14px] font-bold text-black dark:text-white">Aturan Tarif Ongkir &amp; Jangkauan Radius</h4>
+                    <h4 class="text-[14px] font-bold text-black dark:text-white">{{ __('storefront.backoffice.tab_fulfillment.shipping_rules_title') }}</h4>
                 </div>
                 <p class="text-[12px] text-black/55 dark:text-white/55 max-w-xl">
-                    Kelola skema ongkos kirim: tarif flat, ongkir berdasarkan jarak radius per kilometer (km), atau promo gratis ongkir dengan syarat minimum belanja.
+                    {{ __('storefront.backoffice.tab_fulfillment.shipping_rules_desc') }}
                 </p>
             </div>
             <a href="{{ route('storefront.shipping.index') }}"
                 class="h-9 px-4 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition self-start sm:self-auto shrink-0 active:scale-[0.98]">
-                <span>Kelola Aturan Ongkir</span>
+                <span>{{ __('storefront.backoffice.tab_fulfillment.manage_shipping_btn') }}</span>
                 <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
             </a>
         </div>

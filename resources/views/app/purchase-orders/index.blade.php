@@ -169,30 +169,30 @@
     <!-- ===================================================== -->
     <!-- 5. DENSE DATA TABLE (DESKTOP & TABLET)                 -->
     <!-- ===================================================== -->
-    <div class="hidden sm:block rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 overflow-hidden">
+    <div x-data="coocaTableSort()" class="hidden sm:block rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 overflow-hidden">
         <div class="overflow-x-auto">
             <table class="w-full text-left text-[13px]">
                 <thead>
                     <tr class="border-b border-black/5 dark:border-white/10">
-                        <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40">{{ __('purchasing.fields.po_number_date') }}</th>
-                        <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40">{{ __('purchasing.fields.po_type') }}</th>
-                        <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40">{{ __('purchasing.fields.related_party') }}</th>
-                        <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-center">{{ __('purchasing.fields.status') }}</th>
-                        <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-center">{{ __('purchasing.fields.items_count') }}</th>
-                        <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right">{{ __('purchasing.fields.total_amount') }}</th>
+                        <x-table-sort-th :col="0" type="string" :title="__('purchasing.fields.po_number_date')" />
+                        <x-table-sort-th :col="1" type="string" :title="__('purchasing.fields.po_type')" />
+                        <x-table-sort-th :col="2" type="string" :title="__('purchasing.fields.related_party')" />
+                        <x-table-sort-th :col="3" type="string" :title="__('purchasing.fields.status')" align="center" />
+                        <x-table-sort-th :col="4" type="number" :title="__('purchasing.fields.items_count')" align="center" />
+                        <x-table-sort-th :col="5" type="number" :title="__('purchasing.fields.total_amount')" align="right" />
                         <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right">{{ __('purchasing.fields.actions') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                     @forelse($purchaseOrders as $po)
                     <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
-                        <td class="px-4 py-3">
+                        <td data-sort-value="{{ strtolower($po->po_number) }}" class="px-4 py-3">
                             <a href="{{ route('purchase-orders.show', $po->id) }}" class="font-medium text-[#007AFF] hover:underline tabular-nums">
                                 {{ $po->po_number }}
                             </a>
                             <div class="text-[11px] text-black/45 dark:text-white/45 mt-0.5 tabular-nums">{{ $po->order_date?->translatedFormat('d M Y') }}</div>
                         </td>
-                        <td class="px-4 py-3">
+                        <td data-sort-value="{{ $po->po_type }}" class="px-4 py-3">
                             @if($po->po_type === 'customer')
                                 <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#34C759]/12 text-[#248A3D] dark:text-[#30D158]">
                                     {{ __('purchasing.types.customer_badge') }}
@@ -203,7 +203,7 @@
                                 </span>
                             @endif
                         </td>
-                        <td class="px-4 py-3">
+                        <td data-sort-value="{{ strtolower($po->customer ? $po->customer->name : ($po->supplier ? $po->supplier->name : '')) }}" class="px-4 py-3">
                             @if($po->customer)
                                 <div class="font-medium text-black dark:text-white">{{ $po->customer->name }}</div>
                                 @if($po->customer->company_name)
@@ -216,7 +216,7 @@
                                 <span class="text-black/30 dark:text-white/30">-</span>
                             @endif
                         </td>
-                        <td class="px-4 py-3 text-center">
+                        <td data-sort-value="{{ $po->status }}" class="px-4 py-3 text-center">
                             @php
                                 $statusBadges = [
                                     'draft' => 'bg-black/6 dark:bg-white/8 text-black/60 dark:text-white/60',
@@ -233,10 +233,10 @@
                                 {{ $statusLabel }}
                             </span>
                         </td>
-                        <td class="px-4 py-3 text-center tabular-nums text-black/70 dark:text-white/70">
+                        <td data-sort-value="{{ (int) $po->items->count() }}" class="px-4 py-3 text-center tabular-nums text-black/70 dark:text-white/70">
                             {{ $po->items->count() }}
                         </td>
-                        <td class="px-4 py-3 text-right font-semibold tabular-nums text-black dark:text-white">
+                        <td data-sort-value="{{ (float) $po->total_amount }}" class="px-4 py-3 text-right font-semibold tabular-nums text-black dark:text-white">
                             {{ $business->currency_symbol }} {{ number_format((float) $po->total_amount, 0, ',', '.') }}
                         </td>
                         <td class="px-4 py-3 text-right">
@@ -349,199 +349,225 @@
     <!-- ===================================================== -->
     <!-- 8. INSTANT STOCK-IN SHEET MODAL (Bahan & Kas Outflow) -->
     <!-- ===================================================== -->
-    <div x-show="instantModalOpen"
-        x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center bg-black/25 backdrop-blur-[2px] p-4"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0">
+    <template x-teleport="body">
+        <div x-show="instantModalOpen"
+            x-cloak
+            class="fixed inset-0 z-[200] overflow-y-auto"
+            @keydown.escape.window="instantModalOpen = false"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-instant-stockin-title">
 
-        <div class="w-full max-w-lg rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.25)] space-y-4"
-            @click.away="instantModalOpen = false"
-            x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="opacity-0 scale-95"
-            x-transition:enter-end="opacity-100 scale-100"
-            x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100 scale-100"
-            x-transition:leave-end="opacity-0 scale-95">
+            <!-- Backdrop -->
+            <div x-show="instantModalOpen"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
-            <div class="px-5 pt-5 pb-3 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
-                <div>
-                    <h3 class="text-[16px] font-semibold text-black dark:text-white">{{ __('purchasing.instant_stock_in.title') }}</h3>
-                    <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('purchasing.instant_stock_in.subtitle') }}</p>
+            <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="instantModalOpen = false">
+                <div class="relative w-full max-w-lg rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.25)] space-y-4"
+                    @click.away="instantModalOpen = false"
+                    x-show="instantModalOpen"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95">
+
+                    <div class="px-5 pt-5 pb-3 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
+                        <div>
+                            <h3 id="modal-instant-stockin-title" class="text-[16px] font-semibold text-black dark:text-white">{{ __('purchasing.instant_stock_in.title') }}</h3>
+                            <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('purchasing.instant_stock_in.subtitle') }}</p>
+                        </div>
+                        <button type="button" @click="instantModalOpen = false" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer" aria-label="{{ __('common.close') ?? 'Close' }}">
+                            <i data-lucide="x" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+
+                    <form action="{{ route('purchasing.instant-stock-in') }}" method="POST" @submit="if(isInstantSubmitting) { $event.preventDefault(); return; } isInstantSubmitting = true" class="p-5 pt-0 space-y-4 text-[13px]">
+                        @csrf
+                        
+                        <!-- Stock Type Switcher: Produk vs Bahan Baku -->
+                        <div class="flex items-center gap-1 p-1 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] text-[13px] font-medium">
+                            <button type="button" @click="stockInType = 'product'"
+                                    :class="stockInType === 'product' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' : 'text-black/55 dark:text-white/55'"
+                                    class="flex-1 py-1.5 rounded-[7px] text-center transition-all cursor-pointer">
+                                {{ __('purchasing.instant_stock_in.item_product') }}
+                            </button>
+                            <button type="button" @click="stockInType = 'material'"
+                                    :class="stockInType === 'material' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' : 'text-black/55 dark:text-white/55'"
+                                    class="flex-1 py-1.5 rounded-[7px] text-center transition-all cursor-pointer">
+                                {{ __('purchasing.instant_stock_in.item_material') }}
+                            </button>
+                        </div>
+
+                        <div>
+                            <label class="block font-medium text-black/70 dark:text-white/70 mb-1">
+                                {{ __('purchasing.instant_stock_in.destination_warehouse') }} <span class="text-[#FF3B30]">*</span>
+                            </label>
+                            <select name="location_id" required class="w-full h-11 sm:h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                @foreach($locations as $loc)
+                                <option value="{{ $loc->id }}">{{ $loc->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Product Selector -->
+                        <div x-show="stockInType === 'product'">
+                            <label class="block font-medium text-black/70 dark:text-white/70 mb-1">
+                                {{ __('purchasing.fields.item') }} <span class="text-[#FF3B30]">*</span>
+                            </label>
+                            <select name="product_id" :required="stockInType === 'product'" class="w-full h-11 sm:h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                <option value="">{{ __('purchasing.placeholders.choose_product') }}</option>
+                                @foreach($products as $p)
+                                <option value="{{ $p->id }}">{{ $p->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Material Selector -->
+                        <div x-show="stockInType === 'material'" style="display: none;">
+                            <label class="block font-medium text-black/70 dark:text-white/70 mb-1">
+                                {{ __('purchasing.instant_stock_in.item_material') }} <span class="text-[#FF3B30]">*</span>
+                            </label>
+                            <select name="material_id" :required="stockInType === 'material'" class="w-full h-11 sm:h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                <option value="">{{ __('purchasing.placeholders.choose_material') }}</option>
+                                @foreach($materials as $m)
+                                <option value="{{ $m->id }}">{{ $m->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block font-medium text-black/70 dark:text-white/70 mb-1">
+                                    {{ __('purchasing.instant_stock_in.quantity_in') }} <span class="text-[#FF3B30]">*</span>
+                                </label>
+                                <input type="number" name="quantity" min="0.0001" step="any" required placeholder="10"
+                                       class="w-full h-11 sm:h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] sm:text-[13px] tabular-nums font-semibold text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                            </div>
+                            <div>
+                                <label class="block font-medium text-black/70 dark:text-white/70 mb-1">
+                                    {{ __('purchasing.instant_stock_in.unit_cost') }} <span class="text-[#FF3B30]">*</span>
+                                </label>
+                                <input type="number" name="unit_cost" min="0" step="any" required placeholder="25000"
+                                       class="w-full h-11 sm:h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] sm:text-[13px] tabular-nums font-semibold text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                            </div>
+                        </div>
+
+                        <!-- Sumber Kas Pembayaran (Accounting Ledger Outflow) -->
+                        <div>
+                            <label class="block font-medium text-black/70 dark:text-white/70 mb-1">
+                                {{ __('purchasing.instant_stock_in.cash_account') }}
+                            </label>
+                            <select name="cash_account_id" class="w-full h-11 sm:h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                <option value="">{{ __('purchasing.instant_stock_in.no_cash_outflow') }}</option>
+                                @foreach($cashAccounts as $ca)
+                                <option value="{{ $ca->id }}">{{ $ca->name }} ({{ $ca->account_number ?? 'Tunai' }})</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block font-medium text-black/70 dark:text-white/70 mb-1">
+                                {{ __('purchasing.instant_stock_in.supplier_optional') }}
+                            </label>
+                            <select name="supplier_id" class="w-full h-11 sm:h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                <option value="">{{ __('purchasing.instant_stock_in.no_supplier_market') }}</option>
+                                @foreach($suppliers as $s)
+                                <option value="{{ $s->id }}">{{ $s->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block font-medium text-black/70 dark:text-white/70 mb-1">{{ __('purchasing.fields.notes') }}</label>
+                            <input type="text" name="notes" placeholder="{{ __('purchasing.instant_stock_in.notes_placeholder') }}"
+                                   class="w-full h-11 sm:h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                        </div>
+
+                        <div class="flex items-center justify-end gap-2.5 pt-3 border-t border-black/5 dark:border-white/10">
+                            <button type="button" @click="instantModalOpen = false" class="min-h-[44px] px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 active:scale-[0.97] transition-all cursor-pointer">
+                                {{ __('purchasing.actions.cancel') }}
+                            </button>
+                            <button type="submit" :disabled="isInstantSubmitting" class="min-h-[44px] px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 disabled:opacity-50 transition-all shadow-[0_1px_2px_rgba(0,122,255,0.25)] flex items-center gap-1.5 cursor-pointer">
+                                <template x-if="!isInstantSubmitting">
+                                    <i data-lucide="check" class="w-4 h-4"></i>
+                                </template>
+                                <template x-if="isInstantSubmitting">
+                                    <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                                    </svg>
+                                </template>
+                                <span x-text="isInstantSubmitting ? '{{ __('purchasing.actions.submitting') }}' : '{{ __('purchasing.instant_stock_in.submit') }}'"></span>
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <button type="button" @click="instantModalOpen = false" class="min-h-[44px] min-w-[44px] rounded-[8px] text-black/40 hover:text-black dark:text-white/40 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 flex items-center justify-center">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
             </div>
-
-            <form action="{{ route('purchasing.instant-stock-in') }}" method="POST" @submit="if(isInstantSubmitting) { $event.preventDefault(); return; } isInstantSubmitting = true" class="p-5 pt-0 space-y-4 text-[13px]">
-                @csrf
-                
-                <!-- Stock Type Switcher: Produk vs Bahan Baku -->
-                <div class="flex items-center gap-1 p-1 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] text-[13px] font-medium">
-                    <button type="button" @click="stockInType = 'product'"
-                            :class="stockInType === 'product' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' : 'text-black/55 dark:text-white/55'"
-                            class="flex-1 py-1.5 rounded-[7px] text-center transition-all">
-                        {{ __('purchasing.instant_stock_in.item_product') }}
-                    </button>
-                    <button type="button" @click="stockInType = 'material'"
-                            :class="stockInType === 'material' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' : 'text-black/55 dark:text-white/55'"
-                            class="flex-1 py-1.5 rounded-[7px] text-center transition-all">
-                        {{ __('purchasing.instant_stock_in.item_material') }}
-                    </button>
-                </div>
-
-                <div>
-                    <label class="block font-medium text-black/70 dark:text-white/70 mb-1">
-                        {{ __('purchasing.instant_stock_in.destination_warehouse') }} <span class="text-[#FF3B30]">*</span>
-                    </label>
-                    <select name="location_id" required class="w-full h-11 sm:h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                        @foreach($locations as $loc)
-                        <option value="{{ $loc->id }}">{{ $loc->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <!-- Product Selector -->
-                <div x-show="stockInType === 'product'">
-                    <label class="block font-medium text-black/70 dark:text-white/70 mb-1">
-                        {{ __('purchasing.fields.item') }} <span class="text-[#FF3B30]">*</span>
-                    </label>
-                    <select name="product_id" :required="stockInType === 'product'" class="w-full h-11 sm:h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                        <option value="">{{ __('purchasing.placeholders.choose_product') }}</option>
-                        @foreach($products as $p)
-                        <option value="{{ $p->id }}">{{ $p->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <!-- Material Selector -->
-                <div x-show="stockInType === 'material'" style="display: none;">
-                    <label class="block font-medium text-black/70 dark:text-white/70 mb-1">
-                        {{ __('purchasing.instant_stock_in.item_material') }} <span class="text-[#FF3B30]">*</span>
-                    </label>
-                    <select name="material_id" :required="stockInType === 'material'" class="w-full h-11 sm:h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                        <option value="">{{ __('purchasing.placeholders.choose_material') }}</option>
-                        @foreach($materials as $m)
-                        <option value="{{ $m->id }}">{{ $m->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block font-medium text-black/70 dark:text-white/70 mb-1">
-                            {{ __('purchasing.instant_stock_in.quantity_in') }} <span class="text-[#FF3B30]">*</span>
-                        </label>
-                        <input type="number" name="quantity" min="0.0001" step="any" required placeholder="10"
-                               class="w-full h-11 sm:h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] sm:text-[13px] tabular-nums font-semibold text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                    </div>
-                    <div>
-                        <label class="block font-medium text-black/70 dark:text-white/70 mb-1">
-                            {{ __('purchasing.instant_stock_in.unit_cost') }} <span class="text-[#FF3B30]">*</span>
-                        </label>
-                        <input type="number" name="unit_cost" min="0" step="any" required placeholder="25000"
-                               class="w-full h-11 sm:h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] sm:text-[13px] tabular-nums font-semibold text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                    </div>
-                </div>
-
-                <!-- Sumber Kas Pembayaran (Accounting Ledger Outflow) -->
-                <div>
-                    <label class="block font-medium text-black/70 dark:text-white/70 mb-1">
-                        {{ __('purchasing.instant_stock_in.cash_account') }}
-                    </label>
-                    <select name="cash_account_id" class="w-full h-11 sm:h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                        <option value="">{{ __('purchasing.instant_stock_in.no_cash_outflow') }}</option>
-                        @foreach($cashAccounts as $ca)
-                        <option value="{{ $ca->id }}">{{ $ca->name }} ({{ $ca->account_number ?? 'Tunai' }})</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div>
-                    <label class="block font-medium text-black/70 dark:text-white/70 mb-1">
-                        {{ __('purchasing.instant_stock_in.supplier_optional') }}
-                    </label>
-                    <select name="supplier_id" class="w-full h-11 sm:h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                        <option value="">{{ __('purchasing.instant_stock_in.no_supplier_market') }}</option>
-                        @foreach($suppliers as $s)
-                        <option value="{{ $s->id }}">{{ $s->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div>
-                    <label class="block font-medium text-black/70 dark:text-white/70 mb-1">{{ __('purchasing.fields.notes') }}</label>
-                    <input type="text" name="notes" placeholder="{{ __('purchasing.instant_stock_in.notes_placeholder') }}"
-                           class="w-full h-11 sm:h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                </div>
-
-                <div class="flex items-center justify-end gap-2.5 pt-3 border-t border-black/5 dark:border-white/10">
-                    <button type="button" @click="instantModalOpen = false" class="min-h-[44px] px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 active:scale-[0.97] transition-all">
-                        {{ __('purchasing.actions.cancel') }}
-                    </button>
-                    <button type="submit" :disabled="isInstantSubmitting" class="min-h-[44px] px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 disabled:opacity-50 transition-all shadow-[0_1px_2px_rgba(0,122,255,0.25)] flex items-center gap-1.5">
-                        <template x-if="!isInstantSubmitting">
-                            <i data-lucide="check" class="w-4 h-4"></i>
-                        </template>
-                        <template x-if="isInstantSubmitting">
-                            <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
-                            </svg>
-                        </template>
-                        <span x-text="isInstantSubmitting ? '{{ __('purchasing.actions.submitting') }}' : '{{ __('purchasing.instant_stock_in.submit') }}'"></span>
-                    </button>
-                </div>
-            </form>
         </div>
-    </div>
+    </template>
     @endif
 
     @if(\App\Support\Context::hasPermission('purchasing.manage'))
     <!-- ===================================================== -->
     <!-- 9. APPLE ALERT DIALOG (Hapus Draft PO)                 -->
     <!-- ===================================================== -->
-    <div x-show="deleteModalOpen"
-        x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center bg-black/25 backdrop-blur-[2px]"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0">
+    <template x-teleport="body">
+        <div x-show="deleteModalOpen"
+            x-cloak
+            class="fixed inset-0 z-[220] overflow-y-auto"
+            @keydown.escape.window="closeDelete()"
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby="po-delete-alert-title">
 
-        <div class="w-[290px] rounded-[14px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-black/5 dark:border-white/10"
-            @click.away="closeDelete()"
-            x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="opacity-0 scale-95"
-            x-transition:enter-end="opacity-100 scale-100"
-            x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100 scale-100"
-            x-transition:leave-end="opacity-0 scale-95">
+            <!-- Backdrop -->
+            <div x-show="deleteModalOpen"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
-            <div class="px-4 pt-5 pb-4">
-                <p class="text-[17px] font-semibold text-black dark:text-white">{{ __('purchasing.modals.delete_title') }}</p>
-                <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
-                    {{ __('purchasing.modals.delete_desc') }} <span x-text="deleteTarget.number" class="font-medium text-black dark:text-white tabular-nums"></span>.
-                </p>
-            </div>
+            <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="deleteModalOpen = false">
+                <div class="relative w-[290px] rounded-[14px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-black/5 dark:border-white/10"
+                    @click.away="closeDelete()"
+                    x-show="deleteModalOpen"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95">
 
-            <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
-                <button type="button" @click="closeDelete()" class="py-3 text-[#007AFF] border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors">
-                    {{ __('purchasing.actions.cancel') }}
-                </button>
-                <button type="button" @click="submitDelete()" class="py-3 text-[#FF3B30] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors">
-                    {{ __('purchasing.modals.delete_confirm') }}
-                </button>
+                    <div class="px-4 pt-5 pb-4">
+                        <p id="po-delete-alert-title" class="text-[17px] font-semibold text-black dark:text-white">{{ __('purchasing.modals.delete_title') }}</p>
+                        <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
+                            {{ __('purchasing.modals.delete_desc') }} <span x-text="deleteTarget.number" class="font-medium text-black dark:text-white tabular-nums"></span>.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
+                        <button type="button" @click="closeDelete()" class="min-h-[44px] py-3 text-[#007AFF] border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
+                            {{ __('purchasing.actions.cancel') }}
+                        </button>
+                        <button type="button" @click="submitDelete()" class="min-h-[44px] py-3 text-[#FF3B30] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
+                            {{ __('purchasing.modals.delete_confirm') }}
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </template>
     @endif
 </div>
 @endsection

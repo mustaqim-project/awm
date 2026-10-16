@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'Buku Kas & Ledger'])
+@extends('layouts.app', ['title' => __('finance.cash_ledger_page_title')])
 
 @section('content')
     <div class="max-w-[1360px] mx-auto space-y-5 pb-28 lg:pb-12">
@@ -7,13 +7,13 @@
         {{-- TOOLBAR / PAGE HEADER                                      --}}
         {{-- ========================================================== --}}
         <x-module-header
-            title="Buku Kas & Ledger Rekening"
-            subtitle="Riwayat kronologis mutasi debit dan kredit seluruh akun kas tunai dan rekening bank operasional">
+            title="{{ __('finance.cash_ledger_page_title') }}"
+            subtitle="{{ __('finance.cash_ledger_subtitle') }}">
             @if (\App\Support\Context::hasPermission('finance.cash_bank'))
                 <a href="{{ route('finance.cash-bank.index') }}"
                     class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-2">
                     <i data-lucide="wallet-cards" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
-                    <span>Kelola Rekening</span>
+                    <span>{{ __('finance.btn_manage_accounts') }}</span>
                 </a>
             @endif
         </x-module-header>
@@ -29,17 +29,17 @@
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
             <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between shadow-sm">
                 <div class="flex items-center justify-between">
-                    <span class="text-[11px] uppercase tracking-wider font-semibold text-black/45 dark:text-white/45">Akun Aktif</span>
+                    <span class="text-[11px] uppercase tracking-wider font-semibold text-black/45 dark:text-white/45">{{ __('finance.kpi_active_account') }}</span>
                     <div class="w-8 h-8 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center">
                         <i data-lucide="landmark" class="w-4 h-4"></i>
                     </div>
                 </div>
                 <div class="mt-2">
                     <p class="text-[15px] font-bold text-black dark:text-white truncate">
-                        {{ $account ? $account->name : 'Semua Rekening' }}
+                        {{ $account ? $account->name : __('finance.all_accounts') }}
                     </p>
                     <p class="text-[11px] text-black/45 dark:text-white/45 mt-0.5">
-                        {{ $account ? 'Filter khusus akun' : $accounts->count() . ' Rekening terdaftar' }}
+                        {{ $account ? __('finance.filter_account_specific') : $accounts->count() . ' ' . __('finance.accounts_registered') }}
                     </p>
                 </div>
             </div>
@@ -49,7 +49,7 @@
             @endphp
             <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between shadow-sm">
                 <div class="flex items-center justify-between">
-                    <span class="text-[11px] uppercase tracking-wider font-semibold text-black/45 dark:text-white/45">Saldo Terkini</span>
+                    <span class="text-[11px] uppercase tracking-wider font-semibold text-black/45 dark:text-white/45">{{ __('finance.kpi_current_balance') }}</span>
                     <div class="w-8 h-8 rounded-[10px] {{ $currentTotalBalance < 0 ? 'bg-[#FF3B30]/10 text-[#FF3B30] dark:text-[#FF453A]' : 'bg-[#34C759]/10 text-[#34C759] dark:text-[#30D158]' }} flex items-center justify-center">
                         <i data-lucide="wallet" class="w-4 h-4"></i>
                     </div>
@@ -58,18 +58,18 @@
                     <p class="text-[18px] sm:text-[20px] font-extrabold tabular-nums tracking-tight {{ $currentTotalBalance < 0 ? 'text-[#FF3B30] dark:text-[#FF453A]' : 'text-[#34C759] dark:text-[#30D158]' }}">
                         {{ $currentTotalBalance < 0 ? '-Rp ' . number_format(abs($currentTotalBalance), 0, ',', '.') : 'Rp ' . number_format($currentTotalBalance, 0, ',', '.') }}
                         @if ($currentTotalBalance < 0)
-                            <span class="text-[10px] font-semibold px-1.5 py-0.5 rounded-[4px] bg-[#FF3B30]/10 border border-[#FF3B30]/20 ml-1">Defisit</span>
+                            <span class="text-[10px] font-semibold px-1.5 py-0.5 rounded-[4px] bg-[#FF3B30]/10 border border-[#FF3B30]/20 ml-1">{{ __('finance.deficit') }}</span>
                         @endif
                     </p>
                     <p class="text-[11px] text-black/45 dark:text-white/45 mt-0.5">
-                        {{ $account ? 'Saldo akun terpilih' : 'Total likuiditas kas & bank' }}
+                        {{ $account ? __('finance.selected_account_balance') : __('finance.total_liquidity_desc') }}
                     </p>
                 </div>
             </div>
 
             <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between shadow-sm">
                 <div class="flex items-center justify-between">
-                    <span class="text-[11px] uppercase tracking-wider font-semibold text-black/45 dark:text-white/45">Total Baris Mutasi</span>
+                    <span class="text-[11px] uppercase tracking-wider font-semibold text-black/45 dark:text-white/45">{{ __('finance.kpi_total_ledger_rows') }}</span>
                     <div class="w-8 h-8 rounded-[10px] bg-[#5856D6]/10 text-[#5856D6] dark:text-[#5E5CE6] flex items-center justify-center">
                         <i data-lucide="receipt" class="w-4 h-4"></i>
                     </div>
@@ -78,13 +78,13 @@
                     <p class="text-[18px] sm:text-[20px] font-extrabold tabular-nums text-black dark:text-white tracking-tight">
                         {{ $transactions->total() }}
                     </p>
-                    <p class="text-[11px] text-black/45 dark:text-white/45 mt-0.5">Catatan mutasi terverifikasi</p>
+                    <p class="text-[11px] text-black/45 dark:text-white/45 mt-0.5">{{ __('finance.verified_mutation_records') }}</p>
                 </div>
             </div>
 
             <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between shadow-sm">
                 <div class="flex items-center justify-between">
-                    <span class="text-[11px] uppercase tracking-wider font-semibold text-black/45 dark:text-white/45">Integritas Ledger</span>
+                    <span class="text-[11px] uppercase tracking-wider font-semibold text-black/45 dark:text-white/45">{{ __('finance.kpi_ledger_integrity') }}</span>
                     <div class="w-8 h-8 rounded-[10px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center">
                         <i data-lucide="shield-check" class="w-4 h-4"></i>
                     </div>
@@ -92,9 +92,9 @@
                 <div class="mt-2">
                     <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#34C759]/12 text-[#248A3D] dark:text-[#30D158]">
                         <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
-                        Otomatis Sinkron
+                        {{ __('finance.auto_synced') }}
                     </span>
-                    <p class="text-[11px] text-black/45 dark:text-white/45 mt-1">Realtime running balance</p>
+                    <p class="text-[11px] text-black/45 dark:text-white/45 mt-1">{{ __('finance.realtime_running_balance') }}</p>
                 </div>
             </div>
         </div>
@@ -107,48 +107,48 @@
                 class="flex flex-wrap items-center gap-2.5">
                 <div class="flex items-center gap-2 text-black/70 dark:text-white/70">
                     <i data-lucide="filter" class="w-4 h-4 text-black/40 dark:text-white/40"></i>
-                    <span class="text-[13px] font-semibold">Filter:</span>
+                    <span class="text-[13px] font-semibold">{{ __('common.filter') }}:</span>
                 </div>
                 <select name="account_id"
                     class="h-11 sm:h-9 px-3 bg-[#F2F2F7] dark:bg-[#2C2C2E] border border-black/5 dark:border-white/10 rounded-[10px] text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition-all">
-                    <option value="">Semua Rekening</option>
+                    <option value="">{{ __('finance.all_accounts') }}</option>
                     @foreach ($accounts as $item)
                         <option value="{{ $item->id }}" @selected(request('account_id') === $item->id)>
-                            {{ $item->name }} ({{ $item->current_balance < 0 ? '-Rp ' . number_format(abs($item->current_balance), 0, ',', '.') . ' Defisit' : 'Rp ' . number_format($item->current_balance, 0, ',', '.') }})
+                            {{ $item->name }} ({{ $item->current_balance < 0 ? '-Rp ' . number_format(abs($item->current_balance), 0, ',', '.') . ' ' . __('finance.deficit') : 'Rp ' . number_format($item->current_balance, 0, ',', '.') }})
                         </option>
                     @endforeach
                 </select>
                 <select name="type"
                     class="h-11 sm:h-9 px-3 bg-[#F2F2F7] dark:bg-[#2C2C2E] border border-black/5 dark:border-white/10 rounded-[10px] text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition-all">
-                    <option value="">Semua Jenis Arus</option>
-                    <option value="in" @selected(request('type') === 'in')>Penerimaan (Masuk)</option>
-                    <option value="out" @selected(request('type') === 'out')>Pengeluaran (Keluar)</option>
-                    <option value="transfer" @selected(request('type') === 'transfer')>Mutasi Transfer</option>
+                    <option value="">{{ __('finance.all_flow_types') }}</option>
+                    <option value="in" @selected(request('type') === 'in')>{{ __('finance.flow_in') }}</option>
+                    <option value="out" @selected(request('type') === 'out')>{{ __('finance.flow_out') }}</option>
+                    <option value="transfer" @selected(request('type') === 'transfer')>{{ __('finance.flow_transfer') }}</option>
                 </select>
                 <select name="method"
                     class="h-11 sm:h-9 px-3 bg-[#F2F2F7] dark:bg-[#2C2C2E] border border-black/5 dark:border-white/10 rounded-[10px] text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition-all">
-                    <option value="">Semua Metode Bayar</option>
-                    <option value="cash" @selected(request('method') === 'cash')>Tunai / Cash POS</option>
-                    <option value="qris" @selected(request('method') === 'qris')>QRIS / E-Wallet</option>
-                    <option value="transfer" @selected(in_array(request('method'), ['transfer', 'bank_transfer']))>Transfer Bank</option>
-                    <option value="edc" @selected(in_array(request('method'), ['edc', 'edc_debit', 'edc_credit']))>Mesin EDC (Debit / Kredit)</option>
+                    <option value="">{{ __('finance.all_payment_methods') }}</option>
+                    <option value="cash" @selected(request('method') === 'cash')>{{ __('finance.method_cash_pos') }}</option>
+                    <option value="qris" @selected(request('method') === 'qris')>{{ __('finance.method_qris') }}</option>
+                    <option value="transfer" @selected(in_array(request('method'), ['transfer', 'bank_transfer']))>{{ __('finance.method_bank_transfer') }}</option>
+                    <option value="edc" @selected(in_array(request('method'), ['edc', 'edc_debit', 'edc_credit']))>{{ __('finance.method_edc') }}</option>
                 </select>
                 <input type="date" name="start_date" value="{{ request('start_date') }}"
                     class="h-11 sm:h-9 px-3 bg-[#F2F2F7] dark:bg-[#2C2C2E] border border-black/5 dark:border-white/10 rounded-[10px] text-[16px] sm:text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                 <span class="text-black/30 dark:text-white/30 text-[12px]">–</span>
                 <input type="date" name="end_date" value="{{ request('end_date') }}"
                     class="h-11 sm:h-9 px-3 bg-[#F2F2F7] dark:bg-[#2C2C2E] border border-black/5 dark:border-white/10 rounded-[10px] text-[16px] sm:text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
-                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari keterangan..."
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="{{ __('finance.search_ledger_desc_placeholder') }}"
                     class="h-11 sm:h-9 px-3.5 bg-[#F2F2F7] dark:bg-[#2C2C2E] border border-black/5 dark:border-white/10 rounded-[10px] text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                 <button type="submit"
                     class="h-11 sm:h-9 px-4 rounded-[10px] bg-[#007AFF] text-white text-[13px] font-semibold hover:bg-[#0071E3] transition-colors flex items-center gap-1.5 shadow-xs">
                     <i data-lucide="search" class="w-3.5 h-3.5"></i>
-                    <span>Terapkan</span>
+                    <span>{{ __('common.apply') }}</span>
                 </button>
                 @if (request('account_id') || request('type') || request('method') || request('start_date') || request('end_date') || request('search'))
                     <a href="{{ route('finance.cash-bank.ledger') }}"
                         class="h-11 sm:h-9 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 hover:bg-black/10 dark:hover:bg-white/10 text-[13px] font-medium flex items-center transition-colors">
-                        Reset
+                        {{ __('common.reset') }}
                     </a>
                 @endif
             </form>
@@ -160,14 +160,14 @@
         <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 overflow-hidden shadow-sm">
             <div class="px-5 py-4 border-b border-black/5 dark:border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div class="flex items-center gap-2">
-                    <h2 class="text-[15px] font-bold text-black dark:text-white">Buku Mutasi Kas &amp; Ledger</h2>
+                    <h2 class="text-[15px] font-bold text-black dark:text-white">{{ __('finance.cash_ledger_page_title') }}</h2>
                     <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-black/[0.05] dark:bg-white/[0.08] text-black/60 dark:text-white/60 tabular-nums">
-                        {{ $transactions->total() }} Baris
+                        {{ $transactions->total() }} {{ __('finance.lines') }}
                     </span>
                 </div>
                 @if ($account)
                     <span class="text-[12px] font-medium text-black/50 dark:text-white/50">
-                        Menampilkan mutasi akun: <strong class="text-black dark:text-white">{{ $account->name }}</strong>
+                        {{ __('finance.showing_account_mutations') }}: <strong class="text-black dark:text-white">{{ $account->name }}</strong>
                     </span>
                 @endif
             </div>
@@ -176,12 +176,12 @@
                 <table class="w-full text-left text-[13px] min-w-[620px]">
                     <thead>
                         <tr class="bg-black/[0.02] dark:bg-white/[0.02] border-b border-black/5 dark:border-white/5 text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">
-                            <th class="py-3 px-4 whitespace-nowrap">Tanggal</th>
-                            <th class="py-3 px-4 whitespace-nowrap">Rekening</th>
-                            <th class="py-3 px-4 whitespace-nowrap">Arus</th>
-                            <th class="py-3 px-4 whitespace-nowrap">Keterangan / Referensi</th>
-                            <th class="py-3 px-4 text-right whitespace-nowrap">Debit / Kredit</th>
-                            <th class="py-3 px-4 text-right whitespace-nowrap">Saldo Berjalan</th>
+                            <th class="py-3 px-4 whitespace-nowrap">{{ __('finance.col_date') }}</th>
+                            <th class="py-3 px-4 whitespace-nowrap">{{ __('finance.col_account') }}</th>
+                            <th class="py-3 px-4 whitespace-nowrap">{{ __('finance.col_flow') }}</th>
+                            <th class="py-3 px-4 whitespace-nowrap">{{ __('finance.col_desc_ref') }}</th>
+                            <th class="py-3 px-4 text-right whitespace-nowrap">{{ __('finance.col_debit_credit') }}</th>
+                            <th class="py-3 px-4 text-right whitespace-nowrap">{{ __('finance.col_running_balance') }}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-black/5 dark:divide-white/5">
@@ -201,22 +201,22 @@
                                     @if ($isOut && $isTrf)
                                         <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#FF3B30]/10 text-[#FF3B30] dark:text-[#FF453A] border border-[#FF3B30]/20">
                                             <span class="w-1.5 h-1.5 rounded-full bg-[#FF3B30] dark:bg-[#FF453A]"></span>
-                                            <span>Transfer Keluar</span>
+                                            <span>{{ __('finance.transfer_out') }}</span>
                                         </span>
                                     @elseif(!$isOut && $isTrf)
                                         <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF] border border-[#007AFF]/20">
                                             <span class="w-1.5 h-1.5 rounded-full bg-[#007AFF] dark:bg-[#0A84FF]"></span>
-                                            <span>Transfer Masuk</span>
+                                            <span>{{ __('finance.transfer_in') }}</span>
                                         </span>
                                     @elseif($isOut)
                                         <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#FF3B30]/10 text-[#FF3B30] dark:text-[#FF453A] border border-[#FF3B30]/20">
                                             <span class="w-1.5 h-1.5 rounded-full bg-[#FF3B30] dark:bg-[#FF453A]"></span>
-                                            <span>Keluar</span>
+                                            <span>{{ __('finance.flow_out_badge') }}</span>
                                         </span>
                                     @else
                                         <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] border border-[#34C759]/20">
                                             <span class="w-1.5 h-1.5 rounded-full bg-[#34C759] dark:bg-[#30D158]"></span>
-                                            <span>Masuk</span>
+                                            <span>{{ __('finance.flow_in_badge') }}</span>
                                         </span>
                                     @endif
                                 </td>
@@ -236,8 +236,8 @@
                                     <div class="w-12 h-12 rounded-[14px] bg-black/[0.04] dark:bg-white/[0.04] text-black/40 dark:text-white/40 mx-auto flex items-center justify-center mb-3">
                                         <i data-lucide="book-open" class="w-6 h-6"></i>
                                     </div>
-                                    <p class="text-[15px] font-bold text-black dark:text-white">Belum Ada Riwayat Mutasi</p>
-                                    <p class="text-[13px] text-black/50 dark:text-white/50 mt-1">Belum ada catatan mutasi kas atau bank untuk filter yang dipilih.</p>
+                                    <p class="text-[15px] font-bold text-black dark:text-white">{{ __('finance.empty_ledger_title') }}</p>
+                                    <p class="text-[13px] text-black/50 dark:text-white/50 mt-1">{{ __('finance.empty_ledger_desc') }}</p>
                                 </td>
                             </tr>
                         @endforelse
@@ -259,19 +259,19 @@
                                     <span class="font-bold text-[14px] text-black dark:text-white">{{ $transaction->cashAccount->name }}</span>
                                     @if ($isOut && $isTrf)
                                         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#FF3B30]/10 text-[#FF3B30] dark:text-[#FF453A]">
-                                            Transfer Keluar
+                                            {{ __('finance.transfer_out') }}
                                         </span>
                                     @elseif(!$isOut && $isTrf)
                                         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF]">
-                                            Transfer Masuk
+                                            {{ __('finance.transfer_in') }}
                                         </span>
                                     @elseif($isOut)
                                         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#FF3B30]/10 text-[#FF3B30] dark:text-[#FF453A]">
-                                            Keluar
+                                            {{ __('finance.flow_out_badge') }}
                                         </span>
                                     @else
                                         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158]">
-                                            Masuk
+                                            {{ __('finance.flow_in_badge') }}
                                         </span>
                                     @endif
                                 </div>
@@ -284,7 +284,7 @@
                                     {{ $isOut ? '-' : '+' }} Rp {{ number_format($transaction->amount, 0, ',', '.') }}
                                 </div>
                                 <div class="text-[11px] tabular-nums mt-0.5 {{ $transaction->balance_after < 0 ? 'text-[#FF3B30] dark:text-[#FF453A] font-semibold' : 'text-black/45 dark:text-white/45' }}">
-                                    Saldo: {{ $transaction->balance_after < 0 ? '-Rp ' . number_format(abs($transaction->balance_after), 0, ',', '.') : 'Rp ' . number_format($transaction->balance_after, 0, ',', '.') }}
+                                    {{ __('finance.balance_prefix') }}: {{ $transaction->balance_after < 0 ? '-Rp ' . number_format(abs($transaction->balance_after), 0, ',', '.') : 'Rp ' . number_format($transaction->balance_after, 0, ',', '.') }}
                                 </div>
                             </div>
                         </div>
@@ -297,7 +297,7 @@
                     </div>
                 @empty
                     <div class="py-12 text-center text-black/45 dark:text-white/45 text-[13px]">
-                        Belum ada catatan mutasi kas atau bank.
+                        {{ __('finance.empty_ledger_desc_short') }}
                     </div>
                 @endforelse
             </div>

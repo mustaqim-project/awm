@@ -457,72 +457,110 @@
         <!-- ===================================================== -->
         <!-- APPLE ALERT DIALOG: SETUJUI RETUR                     -->
         <!-- ===================================================== -->
-        <div x-show="approveModalOpen" x-cloak
-            class="fixed inset-0 z-50 flex items-center justify-center bg-black/25 backdrop-blur-[2px]"
-            x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+        <template x-teleport="body">
+            <div x-show="approveModalOpen" x-cloak
+                class="fixed inset-0 z-[220] overflow-y-auto"
+                @keydown.escape.window="approveModalOpen = false"
+                role="alertdialog"
+                aria-modal="true"
+                aria-labelledby="sales-return-approve-dialog-title">
 
-            <div class="w-[290px] rounded-[14px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-black/5 dark:border-white/10"
-                @click.away="approveModalOpen = false" x-transition:enter="transition ease-out duration-200"
-                x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
-                x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100"
-                x-transition:leave-end="opacity-0 scale-95">
+                <!-- Backdrop -->
+                <div x-show="approveModalOpen"
+                    x-transition:enter="ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
-                <div class="px-4 pt-5 pb-4">
-                    <p class="text-[17px] font-semibold text-black dark:text-white">Setujui Retur?</p>
-                    <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
-                        Status dokumen akan disetujui untuk pemeriksaan fisik barang yang dikembalikan.
-                    </p>
-                </div>
+                <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="approveModalOpen = false">
+                    <div class="relative w-[290px] rounded-[14px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-black/5 dark:border-white/10"
+                        @click.away="approveModalOpen = false"
+                        x-show="approveModalOpen"
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0 scale-95"
+                        x-transition:enter-end="opacity-100 scale-100"
+                        x-transition:leave="transition ease-in duration-150"
+                        x-transition:leave-start="opacity-100 scale-100"
+                        x-transition:leave-end="opacity-0 scale-95">
 
-                <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
-                    <button type="button" @click="approveModalOpen = false"
-                        class="py-3 text-black/60 dark:text-white/60 border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors">
-                        Batal
-                    </button>
-                    <button type="button" @click="submitApprove()"
-                        class="py-3 text-[#007AFF] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors">
-                        Setujui
-                    </button>
+                        <div class="px-4 pt-5 pb-4">
+                            <p id="sales-return-approve-dialog-title" class="text-[17px] font-semibold text-black dark:text-white">Setujui Retur?</p>
+                            <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
+                                Status dokumen akan disetujui untuk pemeriksaan fisik barang yang dikembalikan.
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
+                            <button type="button" @click="approveModalOpen = false"
+                                class="min-h-[44px] py-3 text-black/60 dark:text-white/60 border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
+                                Batal
+                            </button>
+                            <button type="button" @click="submitApprove()"
+                                class="min-h-[44px] py-3 text-[#007AFF] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
+                                Setujui
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </template>
 
         <!-- ===================================================== -->
         <!-- APPLE ALERT DIALOG: SELESAIKAN & RESTOCK              -->
         <!-- ===================================================== -->
-        <div x-show="completeModalOpen" x-cloak
-            class="fixed inset-0 z-50 flex items-center justify-center bg-black/25 backdrop-blur-[2px]"
-            x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+        <template x-teleport="body">
+            <div x-show="completeModalOpen" x-cloak
+                class="fixed inset-0 z-[220] overflow-y-auto"
+                @keydown.escape.window="completeModalOpen = false"
+                role="alertdialog"
+                aria-modal="true"
+                aria-labelledby="sales-return-complete-dialog-title">
 
-            <div class="w-[290px] rounded-[14px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-black/5 dark:border-white/10"
-                @click.away="completeModalOpen = false" x-transition:enter="transition ease-out duration-200"
-                x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
-                x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100"
-                x-transition:leave-end="opacity-0 scale-95">
+                <!-- Backdrop -->
+                <div x-show="completeModalOpen"
+                    x-transition:enter="ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
-                <div class="px-4 pt-5 pb-4">
-                    <p class="text-[17px] font-semibold text-black dark:text-white">Selesaikan &amp; Restock?</p>
-                    <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
-                        Sistem akan mengembalikan kuantitas barang ke stok gudang dan mencatat penyesuaian kompensasi.
-                    </p>
-                </div>
+                <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="completeModalOpen = false">
+                    <div class="relative w-[290px] rounded-[14px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-black/5 dark:border-white/10"
+                        @click.away="completeModalOpen = false"
+                        x-show="completeModalOpen"
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0 scale-95"
+                        x-transition:enter-end="opacity-100 scale-100"
+                        x-transition:leave="transition ease-in duration-150"
+                        x-transition:leave-start="opacity-100 scale-100"
+                        x-transition:leave-end="opacity-0 scale-95">
 
-                <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
-                    <button type="button" @click="completeModalOpen = false"
-                        class="py-3 text-black/60 dark:text-white/60 border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors">
-                        Batal
-                    </button>
-                    <button type="button" @click="submitComplete()"
-                        class="py-3 text-[#34C759] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors">
-                        Selesaikan
-                    </button>
+                        <div class="px-4 pt-5 pb-4">
+                            <p id="sales-return-complete-dialog-title" class="text-[17px] font-semibold text-black dark:text-white">Selesaikan &amp; Restock?</p>
+                            <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
+                                Sistem akan mengembalikan kuantitas barang ke stok gudang dan mencatat penyesuaian kompensasi.
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
+                            <button type="button" @click="completeModalOpen = false"
+                                class="min-h-[44px] py-3 text-black/60 dark:text-white/60 border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
+                                Batal
+                            </button>
+                            <button type="button" @click="submitComplete()"
+                                class="min-h-[44px] py-3 text-[#34C759] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
+                                Selesaikan
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </template>
 
     </div>
 @endsection

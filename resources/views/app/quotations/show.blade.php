@@ -209,41 +209,54 @@
     <!-- ===================================================== -->
     <!-- 3. APPLE ALERT DIALOG (Convert Confirmation)          -->
     <!-- ===================================================== -->
-    <div x-show="convertModalOpen"
-        x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center bg-black/25 backdrop-blur-[2px]"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0">
+    <template x-teleport="body">
+        <div x-show="convertModalOpen"
+            x-cloak
+            class="fixed inset-0 z-[220] overflow-y-auto"
+            @keydown.escape.window="closeConvert()"
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby="quotation-convert-dialog-title">
 
-        <div class="w-[300px] rounded-[14px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-black/5 dark:border-white/10"
-            @click.away="closeConvert()"
-            x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="opacity-0 scale-95"
-            x-transition:enter-end="opacity-100 scale-100"
-            x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100 scale-100"
-            x-transition:leave-end="opacity-0 scale-95">
+            <!-- Backdrop -->
+            <div x-show="convertModalOpen"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
-            <div class="px-5 pt-5 pb-4">
-                <p class="text-[17px] font-semibold text-black dark:text-white">Ubah ke Sales Order?</p>
-                <p class="text-[13px] text-black/60 dark:text-white/60 mt-1.5 leading-snug">
-                    Surat penawaran ini akan dikonversi menjadi Pesanan Penjualan resmi dan siap diproses di modul penjualan.
-                </p>
-            </div>
+            <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="convertModalOpen = false">
+                <div class="relative w-[300px] rounded-[14px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-black/5 dark:border-white/10"
+                    @click.away="closeConvert()"
+                    x-show="convertModalOpen"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95">
 
-            <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
-                <button type="button" @click="closeConvert()" class="py-3 text-black/70 dark:text-white/70 border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors">
-                    Batal
-                </button>
-                <button type="button" @click="submitConvert()" class="py-3 text-[#007AFF] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors">
-                    Konversi
-                </button>
+                    <div class="px-5 pt-5 pb-4">
+                        <p id="quotation-convert-dialog-title" class="text-[17px] font-semibold text-black dark:text-white">Ubah ke Sales Order?</p>
+                        <p class="text-[13px] text-black/60 dark:text-white/60 mt-1.5 leading-snug">
+                            Surat penawaran ini akan dikonversi menjadi Pesanan Penjualan resmi dan siap diproses di modul penjualan.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
+                        <button type="button" @click="closeConvert()" class="min-h-[44px] py-3 text-black/70 dark:text-white/70 border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
+                            Batal
+                        </button>
+                        <button type="button" @click="submitConvert()" class="min-h-[44px] py-3 text-[#007AFF] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
+                            Konversi
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </template>
 </div>
 @endsection

@@ -158,25 +158,25 @@
     <!-- ===================================================== -->
     <!-- 4. DENSE DATA TABLE (DESKTOP & TABLET)                 -->
     <!-- ===================================================== -->
-    <div class="hidden sm:block rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 overflow-hidden">
+    <div x-data="coocaTableSort()" class="hidden sm:block rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 overflow-hidden">
         <div class="overflow-x-auto">
             <table class="w-full text-left text-[13px]">
                 <thead>
                     <tr class="border-b border-black/5 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02]">
-                        <th class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 whitespace-nowrap">Nomor Faktur &amp; Tanggal</th>
-                        <th class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 whitespace-nowrap">Pelanggan / Klien</th>
-                        <th class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 whitespace-nowrap">Jatuh Tempo</th>
-                        <th class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-center whitespace-nowrap">Status</th>
-                        <th class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right whitespace-nowrap">Total Tagihan</th>
-                        <th class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right whitespace-nowrap">Sisa Piutang</th>
-                        <th class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right whitespace-nowrap">Laba Kotor</th>
+                        <x-table-sort-th :col="0" type="string" title="Nomor Faktur & Tanggal" class="whitespace-nowrap" />
+                        <x-table-sort-th :col="1" type="string" title="Pelanggan / Klien" class="whitespace-nowrap" />
+                        <x-table-sort-th :col="2" type="date" title="Jatuh Tempo" class="whitespace-nowrap" />
+                        <x-table-sort-th :col="3" type="string" title="Status" align="center" class="whitespace-nowrap" />
+                        <x-table-sort-th :col="4" type="number" title="Total Tagihan" align="right" class="whitespace-nowrap" />
+                        <x-table-sort-th :col="5" type="number" title="Sisa Piutang" align="right" class="whitespace-nowrap" />
+                        <x-table-sort-th :col="6" type="number" title="Laba Kotor" align="right" class="whitespace-nowrap" />
                         <th class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right whitespace-nowrap">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                     @forelse($invoices as $inv)
                     <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
-                        <td class="py-3 px-4">
+                        <td data-sort-value="{{ strtolower($inv->invoice_number) }}" class="py-3 px-4">
                             <a href="{{ route('invoices.show', $inv->id) }}" class="font-semibold text-black dark:text-white hover:text-[#007AFF] transition-colors tabular-nums">
                                 {{ $inv->invoice_number }}
                             </a>
@@ -187,13 +187,13 @@
                                 <div class="text-[10px] text-black/40 dark:text-white/40 tabular-nums">PO: {{ $inv->purchaseOrder->po_number }}</div>
                             @endif
                         </td>
-                        <td class="py-3 px-4">
+                        <td data-sort-value="{{ strtolower($inv->customer?->name ?? '') }}" class="py-3 px-4">
                             <div class="font-medium text-black dark:text-white">{{ $inv->customer?->name ?? 'Pelanggan' }}</div>
                             @if($inv->customer?->company_name)
                                 <div class="text-[11px] text-black/45 dark:text-white/45">{{ $inv->customer->company_name }}</div>
                             @endif
                         </td>
-                        <td class="py-3 px-4 tabular-nums text-black/70 dark:text-white/70">
+                        <td data-sort-value="{{ $inv->due_date?->format('Y-m-d') ?? '' }}" class="py-3 px-4 tabular-nums text-black/70 dark:text-white/70">
                             <div>{{ $inv->due_date?->translatedFormat('d M Y') }}</div>
                             @if($inv->balance_due > 0 && $inv->due_date && $inv->due_date->isPast())
                                 <span class="inline-flex items-center text-[10px] font-semibold text-[#FF3B30] dark:text-[#FF453A]">
@@ -201,7 +201,7 @@
                                 </span>
                             @endif
                         </td>
-                        <td class="py-3 px-4 text-center">
+                        <td data-sort-value="{{ $inv->status }}" class="py-3 px-4 text-center">
                             @php
                                 $statusStyles = [
                                     'draft' => ['bg' => 'bg-black/6 dark:bg-white/8', 'text' => 'text-black/55 dark:text-white/55', 'dot' => 'bg-black/40 dark:bg-white/40', 'label' => 'Draft'],
@@ -219,13 +219,13 @@
                                 <span>{{ $style['label'] }}</span>
                             </span>
                         </td>
-                        <td class="py-3 px-4 text-right tabular-nums font-semibold text-black dark:text-white">
+                        <td data-sort-value="{{ (float) $inv->total_amount }}" class="py-3 px-4 text-right tabular-nums font-semibold text-black dark:text-white">
                             {{ $business->currency_symbol }} {{ number_format((float) $inv->total_amount, 0, ',', '.') }}
                         </td>
-                        <td class="py-3 px-4 text-right tabular-nums font-semibold {{ $inv->balance_due > 0 ? 'text-[#FF9500] dark:text-[#FF9F0A]' : 'text-[#34C759] dark:text-[#30D158]' }}">
+                        <td data-sort-value="{{ (float) $inv->balance_due }}" class="py-3 px-4 text-right tabular-nums font-semibold {{ $inv->balance_due > 0 ? 'text-[#FF9500] dark:text-[#FF9F0A]' : 'text-[#34C759] dark:text-[#30D158]' }}">
                             {{ $business->currency_symbol }} {{ number_format((float) $inv->balance_due, 0, ',', '.') }}
                         </td>
-                        <td class="py-3 px-4 text-right tabular-nums text-[#34C759] dark:text-[#30D158] font-medium">
+                        <td data-sort-value="{{ (float) $inv->total_gross_profit }}" class="py-3 px-4 text-right tabular-nums text-[#34C759] dark:text-[#30D158] font-medium">
                             {{ $business->currency_symbol }} {{ number_format((float) $inv->total_gross_profit, 0, ',', '.') }}
                         </td>
                         <td class="py-3 px-4 text-right">
@@ -350,44 +350,57 @@
     <!-- ===================================================== -->
     <!-- 6. APPLE ALERT DIALOG (Native Centered Modal)          -->
     <!-- ===================================================== -->
-    <div x-show="deleteModalOpen"
-         x-cloak
-         class="fixed inset-0 z-50 flex items-center justify-center bg-black/25 backdrop-blur-[2px]"
-         x-transition:enter="transition ease-out duration-200"
-         x-transition:enter-start="opacity-0"
-         x-transition:enter-end="opacity-100"
-         x-transition:leave="transition ease-in duration-150"
-         x-transition:leave-start="opacity-100"
-         x-transition:leave-end="opacity-0">
+    <template x-teleport="body">
+        <div x-show="deleteModalOpen"
+             x-cloak
+             class="fixed inset-0 z-[220] overflow-y-auto"
+             @keydown.escape.window="closeDelete()"
+             role="alertdialog"
+             aria-modal="true"
+             aria-labelledby="invoice-delete-dialog-title">
 
-        <div class="w-[290px] rounded-[14px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-black/5 dark:border-white/10"
-             @click.away="closeDelete()"
-             x-transition:enter="transition ease-out duration-200"
-             x-transition:enter-start="opacity-0 scale-95"
-             x-transition:enter-end="opacity-100 scale-100"
-             x-transition:leave="transition ease-in duration-150"
-             x-transition:leave-start="opacity-100 scale-100"
-             x-transition:leave-end="opacity-0 scale-95">
+            <!-- Backdrop -->
+            <div x-show="deleteModalOpen"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
-            <div class="px-4 pt-5 pb-4">
-                <p class="text-[17px] font-semibold text-black dark:text-white">Hapus Faktur?</p>
-                <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
-                    Faktur <span x-text="deleteTarget.name" class="font-medium text-black dark:text-white"></span> akan dihapus permanen dari sistem.
-                </p>
-            </div>
+            <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="deleteModalOpen = false">
+                <div class="relative w-[290px] rounded-[14px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-black/5 dark:border-white/10"
+                     @click.away="closeDelete()"
+                     x-show="deleteModalOpen"
+                     x-transition:enter="transition ease-out duration-200"
+                     x-transition:enter-start="opacity-0 scale-95"
+                     x-transition:enter-end="opacity-100 scale-100"
+                     x-transition:leave="transition ease-in duration-150"
+                     x-transition:leave-start="opacity-100 scale-100"
+                     x-transition:leave-end="opacity-0 scale-95">
 
-            <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
-                <button type="button" @click="closeDelete()"
-                        class="py-3 text-[#007AFF] border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors">
-                    Batal
-                </button>
-                <button type="button" @click="submitDelete()"
-                        class="py-3 text-[#FF3B30] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors">
-                    Hapus
-                </button>
+                    <div class="px-4 pt-5 pb-4">
+                        <p id="invoice-delete-dialog-title" class="text-[17px] font-semibold text-black dark:text-white">Hapus Faktur?</p>
+                        <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
+                            Faktur <span x-text="deleteTarget.name" class="font-medium text-black dark:text-white"></span> akan dihapus permanen dari sistem.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
+                        <button type="button" @click="closeDelete()"
+                                class="min-h-[44px] py-3 text-[#007AFF] border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
+                            Batal
+                        </button>
+                        <button type="button" @click="submitDelete()"
+                                class="min-h-[44px] py-3 text-[#FF3B30] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
+                            Hapus
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </template>
 
     <!-- Hidden Invoices Delete Form -->
     <form id="form-delete-invoice" method="POST" action="" class="hidden">

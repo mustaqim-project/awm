@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'Buku Besar Umum (General Ledger)'])
+@extends('layouts.app', ['title' => __('finance.general_ledger_page_title')])
 
 @section('content')
     <div class="max-w-[1360px] mx-auto space-y-5 pb-28 lg:pb-12">
@@ -7,17 +7,17 @@
         {{-- TOOLBAR / PAGE HEADER                                      --}}
         {{-- ========================================================== --}}
         <x-module-header
-            title="Buku Besar Umum (General Ledger)"
-            subtitle="Rincian mutasi transaksi historis per akun dan tautan dokumen sumber asli">
+            title="{{ __('finance.general_ledger_page_title') }}"
+            subtitle="{{ __('finance.general_ledger_subtitle') }}">
             <a href="{{ route('finance.coa.index') }}"
                 class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center gap-1.5">
                 <i data-lucide="list-tree" class="w-4 h-4"></i>
-                <span>Daftar Akun (COA)</span>
+                <span>{{ __('finance.btn_chart_of_accounts') }}</span>
             </a>
             <button type="button" onclick="window.print()"
                 class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center gap-1.5">
                 <i data-lucide="printer" class="w-4 h-4"></i>
-                <span>Cetak</span>
+                <span>{{ __('common.print') }}</span>
             </button>
         </x-module-header>
 
@@ -50,7 +50,7 @@
                 
                 <button type="submit"
                     class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] bg-[#007AFF] text-white text-[13px] font-semibold hover:bg-[#0071E3] transition-colors flex items-center justify-center">
-                    Tampilkan
+                    {{ __('finance.btn_display') }}
                 </button>
             </form>
         </div>
@@ -61,34 +61,34 @@
         @if($ledger['selected_account'])
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
                 <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4.5 shadow-xs">
-                    <p class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wider">Akun Terpilih</p>
+                    <p class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wider">{{ __('finance.kpi_selected_account') }}</p>
                     <p class="text-[15px] font-bold text-black dark:text-white mt-1 truncate">{{ $ledger['selected_account']->name }}</p>
                     <p class="text-[11px] font-mono font-bold text-[#007AFF] mt-0.5">{{ $ledger['selected_account']->code }} ({{ strtoupper($ledger['selected_account']->normal_balance) }})</p>
                 </div>
 
                 <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4.5 shadow-xs">
-                    <p class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wider">Saldo Awal</p>
+                    <p class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wider">{{ __('finance.kpi_beginning_balance') }}</p>
                     <p class="text-[18px] sm:text-[20px] font-bold tabular-nums text-black dark:text-white mt-1">
                         Rp {{ number_format($ledger['beginning_balance'], 0, ',', '.') }}
                     </p>
-                    <p class="text-[11px] text-black/40 dark:text-white/40 mt-0.5">Sebelum {{ $startDate->translatedFormat('d M Y') }}</p>
+                    <p class="text-[11px] text-black/40 dark:text-white/40 mt-0.5">{{ __('finance.before_date', ['date' => $startDate->translatedFormat('d M Y')]) }}</p>
                 </div>
 
                 <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4.5 shadow-xs">
-                    <p class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wider">Mutasi Periode</p>
+                    <p class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wider">{{ __('finance.kpi_period_mutation') }}</p>
                     <div class="mt-1 flex items-center justify-between text-[13px] tabular-nums">
                         <span class="text-[#34C759] dark:text-[#30D158] font-bold">+{{ number_format($ledger['total_debit'], 0, ',', '.') }}</span>
                         <span class="text-[#FF3B30] font-bold">-{{ number_format($ledger['total_credit'], 0, ',', '.') }}</span>
                     </div>
-                    <p class="text-[11px] text-black/40 dark:text-white/40 mt-0.5">Debit vs Kredit</p>
+                    <p class="text-[11px] text-black/40 dark:text-white/40 mt-0.5">{{ __('finance.debit_vs_credit') }}</p>
                 </div>
 
                 <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4.5 shadow-xs">
-                    <p class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wider">Saldo Penutupan</p>
+                    <p class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wider">{{ __('finance.kpi_ending_balance') }}</p>
                     <p class="text-[18px] sm:text-[20px] font-bold tabular-nums text-[#007AFF] dark:text-[#0A84FF] mt-1">
                         Rp {{ number_format($ledger['ending_balance'], 0, ',', '.') }}
                     </p>
-                    <p class="text-[11px] text-black/40 dark:text-white/40 mt-0.5">Per {{ $endDate->translatedFormat('d M Y') }}</p>
+                    <p class="text-[11px] text-black/40 dark:text-white/40 mt-0.5">{{ __('finance.as_of_date', ['date' => $endDate->translatedFormat('d M Y')]) }}</p>
                 </div>
             </div>
         @endif
@@ -101,13 +101,13 @@
                 <table class="w-full text-left text-[13px]">
                     <thead>
                         <tr class="border-b border-black/[0.06] dark:border-white/[0.08] bg-black/[0.02] dark:bg-white/[0.02]">
-                            <th class="px-4 sm:px-5 py-3 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40">Tanggal</th>
-                            <th class="px-4 sm:px-5 py-3 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40">No. Jurnal</th>
-                            <th class="px-4 sm:px-5 py-3 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40">Referensi &amp; Dokumen</th>
-                            <th class="px-4 sm:px-5 py-3 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40">Deskripsi / Catatan</th>
-                            <th class="px-4 sm:px-5 py-3 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 text-right">Debit (Rp)</th>
-                            <th class="px-4 sm:px-5 py-3 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 text-right">Kredit (Rp)</th>
-                            <th class="px-4 sm:px-5 py-3 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 text-right">Saldo Berjalan</th>
+                            <th class="px-4 sm:px-5 py-3 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40">{{ __('finance.col_date') }}</th>
+                            <th class="px-4 sm:px-5 py-3 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40">{{ __('finance.col_journal_no') }}</th>
+                            <th class="px-4 sm:px-5 py-3 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40">{{ __('finance.col_ref_doc') }}</th>
+                            <th class="px-4 sm:px-5 py-3 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40">{{ __('finance.col_desc_notes') }}</th>
+                            <th class="px-4 sm:px-5 py-3 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 text-right">{{ __('finance.col_debit') }} (Rp)</th>
+                            <th class="px-4 sm:px-5 py-3 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 text-right">{{ __('finance.col_credit') }} (Rp)</th>
+                            <th class="px-4 sm:px-5 py-3 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 text-right">{{ __('finance.col_running_balance') }}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
@@ -117,10 +117,10 @@
                             <td class="px-4 sm:px-5 py-2.5">–</td>
                             <td class="px-4 sm:px-5 py-2.5">
                                 <span class="inline-flex items-center px-2 py-0.5 rounded-[5px] text-[10px] font-semibold bg-black/[0.04] dark:bg-white/[0.06]">
-                                    SALDO AWAL
+                                    {{ __('finance.beginning_balance_badge') }}
                                 </span>
                             </td>
-                            <td class="px-4 sm:px-5 py-2.5">Saldo awal akun sebelum periode pencarian</td>
+                            <td class="px-4 sm:px-5 py-2.5">{{ __('finance.beginning_balance_desc') }}</td>
                             <td class="px-4 sm:px-5 py-2.5 text-right tabular-nums">–</td>
                             <td class="px-4 sm:px-5 py-2.5 text-right tabular-nums">–</td>
                             <td class="px-4 sm:px-5 py-2.5 text-right tabular-nums font-semibold text-black dark:text-white">
@@ -144,8 +144,8 @@
                                         @if($line['source_url'])
                                             <a href="{{ $line['source_url'] }}" target="_blank"
                                                 class="inline-flex items-center gap-1 text-[11px] font-medium text-[#007AFF] hover:underline"
-                                                title="Buka Dokumen Asli">
-                                                <span>Lihat</span>
+                                                title="{{ __('finance.open_original_doc') }}">
+                                                <span>{{ __('common.view') }}</span>
                                                 <i data-lucide="external-link" class="w-3 h-3"></i>
                                             </a>
                                         @endif
@@ -178,14 +178,14 @@
                         @empty
                             <tr>
                                 <td colspan="7" class="px-4 py-8 text-center text-black/40 dark:text-white/40">
-                                    Tidak ada mutasi jurnal tambahan pada rentang tanggal ini.
+                                    {{ __('finance.empty_gl_range_desc') }}
                                 </td>
                             </tr>
                         @endforelse
                     </tbody>
                     <tfoot>
                         <tr class="border-t-2 border-black/[0.1] dark:border-white/[0.1] bg-black/[0.03] dark:bg-white/[0.03] font-bold text-[13px]">
-                            <td colspan="4" class="px-4 sm:px-5 py-3 text-black dark:text-white">TOTAL PERIODE INI</td>
+                            <td colspan="4" class="px-4 sm:px-5 py-3 text-black dark:text-white">{{ __('finance.total_this_period') }}</td>
                             <td class="px-4 sm:px-5 py-3 text-right tabular-nums text-black dark:text-white">
                                 Rp {{ number_format($ledger['total_debit'], 0, ',', '.') }}
                             </td>

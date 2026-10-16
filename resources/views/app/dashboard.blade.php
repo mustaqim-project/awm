@@ -635,16 +635,16 @@
                         </div>
 
                         <div class="table-body-scroll custom-scrollbar">
-                            <div data-panel-body="products">
+                            <div data-panel-body="products" x-data="coocaTableSort()">
                                 @if (count($analytics['top_products']) > 0)
                                     <table class="dash-tbl w-full text-left text-[13px]">
                                         <thead>
                                             <tr class="border-b border-black/5 dark:border-white/10">
                                                 <th class="w-8">#</th>
-                                                <th>{{ __('dashboard.col_best_product') }}</th>
-                                                <th class="text-right">{{ __('dashboard.col_sold') }}</th>
-                                                <th class="text-right">{{ __('dashboard.col_revenue') }}</th>
-                                                <th class="w-16">{{ __('dashboard.col_portion') }}</th>
+                                                <x-table-sort-th :col="1" type="string" :title="__('dashboard.col_best_product')" />
+                                                <x-table-sort-th :col="2" type="number" :title="__('dashboard.col_sold')" align="right" />
+                                                <x-table-sort-th :col="3" type="number" :title="__('dashboard.col_revenue')" align="right" />
+                                                <x-table-sort-th :col="4" type="number" :title="__('dashboard.col_portion')" align="center" class="w-16" />
                                             </tr>
                                         </thead>
                                         <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06] tabular-nums">
@@ -654,19 +654,19 @@
                                                 <tr
                                                     class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
                                                     <td class="dash-rank">{{ $rank }}</td>
-                                                    <td class="font-medium text-black dark:text-white truncate max-w-[150px]"
+                                                    <td data-sort-value="{{ strtolower($p['name']) }}" class="font-medium text-black dark:text-white truncate max-w-[150px]"
                                                         title="{{ $p['name'] }}">
                                                         {{ $p['name'] }}
                                                         @if (!empty($p['code']))
                                                             <span class="dash-code">{{ $p['code'] }}</span>
                                                         @endif
                                                     </td>
-                                                    <td class="text-right text-black/60 dark:text-white/60 font-semibold">
+                                                    <td data-sort-value="{{ (float) $p['qty'] }}" class="text-right text-black/60 dark:text-white/60 font-semibold">
                                                         {{ number_format($p['qty'], 0, ',', '.') }}</td>
-                                                    <td
+                                                    <td data-sort-value="{{ (float) $p['revenue'] }}"
                                                         class="text-right text-[#34C759] dark:text-[#30D158] font-semibold">
                                                         Rp {{ number_format($p['revenue'], 0, ',', '.') }}</td>
-                                                    <td>
+                                                    <td data-sort-value="{{ (float) $p['pct'] }}">
                                                         <div class="pbar" title="{{ $p['pct'] }}%"><i
                                                                 style="width: {{ $p['pct'] }}%"></i></div>
                                                     </td>
@@ -706,15 +706,15 @@
                         </div>
 
                         <div class="table-body-scroll custom-scrollbar">
-                            <div data-panel-body="materials">
+                            <div data-panel-body="materials" x-data="coocaTableSort()">
                                 @if (count($analytics['top_materials']) > 0)
                                     <table class="dash-tbl w-full text-left text-[13px]">
                                         <thead>
                                             <tr class="border-b border-black/5 dark:border-white/10">
                                                 <th class="w-8">#</th>
-                                                <th>{{ __('dashboard.col_material_name') }}</th>
-                                                <th class="text-right">{{ __('dashboard.col_usage') }}</th>
-                                                <th class="w-16">{{ __('dashboard.col_portion') }}</th>
+                                                <x-table-sort-th :col="1" type="string" :title="__('dashboard.col_material_name')" />
+                                                <x-table-sort-th :col="2" type="number" :title="__('dashboard.col_usage')" align="right" />
+                                                <x-table-sort-th :col="3" type="number" :title="__('dashboard.col_portion')" align="center" class="w-16" />
                                             </tr>
                                         </thead>
                                         <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06] tabular-nums">
@@ -724,15 +724,15 @@
                                                 <tr
                                                     class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
                                                     <td class="dash-rank">{{ $rank }}</td>
-                                                    <td class="font-medium text-black dark:text-white truncate max-w-[160px]"
+                                                    <td data-sort-value="{{ strtolower($m['name']) }}" class="font-medium text-black dark:text-white truncate max-w-[160px]"
                                                         title="{{ $m['name'] }}">
                                                         {{ $m['name'] }}
                                                     </td>
-                                                    <td class="text-right text-black/70 dark:text-white/70 font-semibold">
+                                                    <td data-sort-value="{{ (float) $m['qty'] }}" class="text-right text-black/70 dark:text-white/70 font-semibold">
                                                         {{ number_format($m['qty'], 2, ',', '.') }} <span
                                                             class="dash-unit">{{ $m['unit'] }}</span>
                                                     </td>
-                                                    <td>
+                                                    <td data-sort-value="{{ (float) $m['pct'] }}">
                                                         <div class="pbar" title="{{ $m['pct'] }}%"><i
                                                                 style="width: {{ $m['pct'] }}%"></i></div>
                                                     </td>
@@ -771,15 +771,15 @@
                         </div>
 
                         <div class="table-body-scroll custom-scrollbar">
-                            <div data-panel-body="low_stock">
+                            <div data-panel-body="low_stock" x-data="coocaTableSort()">
                                 @if (count($analytics['low_stock']) > 0)
                                     <table class="dash-tbl w-full text-left text-[13px]">
                                         <thead>
                                             <tr class="border-b border-black/5 dark:border-white/10">
                                                 <th class="w-8">#</th>
-                                                <th>{{ __('dashboard.col_item') }}</th>
-                                                <th class="text-right">{{ __('dashboard.col_remaining') }}</th>
-                                                <th>{{ __('dashboard.col_status') }}</th>
+                                                <x-table-sort-th :col="1" type="string" :title="__('dashboard.col_item')" />
+                                                <x-table-sort-th :col="2" type="number" :title="__('dashboard.col_remaining')" align="right" />
+                                                <x-table-sort-th :col="3" type="string" :title="__('dashboard.col_status')" />
                                             </tr>
                                         </thead>
                                         <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06] tabular-nums">
@@ -789,18 +789,18 @@
                                                 <tr
                                                     class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
                                                     <td class="dash-rank">{{ $rank }}</td>
-                                                    <td class="font-medium text-black dark:text-white truncate max-w-[150px]"
+                                                    <td data-sort-value="{{ strtolower($it['name']) }}" class="font-medium text-black dark:text-white truncate max-w-[150px]"
                                                         title="{{ $it['name'] }} ({{ $it['kind'] }})">
                                                         {{ $it['name'] }}
                                                         <span
-                                                            class="text-[11px] text-black/40 dark:text-white/40 ml-1">({{ $it['kind'] }})</span>
+                                                             class="text-[11px] text-black/40 dark:text-white/40 ml-1">({{ $it['kind'] }})</span>
                                                     </td>
-                                                    <td
+                                                    <td data-sort-value="{{ (float) $it['remaining'] }}"
                                                         class="text-right {{ $it['critical'] ? 'text-[#FF3B30] dark:text-[#FF453A] font-semibold' : ($it['is_low'] ? 'text-[#FF9500] dark:text-[#FF9F0A] font-semibold' : 'text-black/70 dark:text-white/70 font-medium') }}">
                                                         {{ number_format($it['remaining'], 2, ',', '.') }} <span
                                                             class="dash-unit">{{ $it['unit'] }}</span>
                                                     </td>
-                                                    <td>
+                                                    <td data-sort-value="{{ $it['critical'] ? '1_critical' : ($it['is_low'] ? '2_low' : '3_safe') }}">
                                                         @if ($it['critical'])
                                                             <span
                                                                 class="badge badge-critical inline-flex items-center gap-1.5"><span
@@ -1046,16 +1046,16 @@
                         @endif
                     </div>
                 @else
-                    <div class="rounded-[12px] border border-black/5 dark:border-white/5 overflow-hidden">
+                    <div class="rounded-[12px] border border-black/5 dark:border-white/5 overflow-hidden" x-data="coocaTableSort()">
                         <div class="overflow-x-auto custom-scrollbar">
                             <table class="w-full text-left text-[13px] min-w-[420px]">
                                 <thead
                                     class="border-b border-black/5 dark:border-white/10 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 whitespace-nowrap">
                                     <tr>
-                                        <th class="px-4 py-2.5">{{ __('dashboard.col_product') }}</th>
-                                        <th class="px-4 py-2.5 text-right">{{ __('dashboard.col_base_cogs') }}</th>
-                                        <th class="px-4 py-2.5 text-right">{{ __('dashboard.col_selling_price') }}</th>
-                                        <th class="px-4 py-2.5 text-right">{{ __('dashboard.col_margin_pct') }}</th>
+                                        <x-table-sort-th :col="0" type="string" :title="__('dashboard.col_product')" />
+                                        <x-table-sort-th :col="1" type="number" :title="__('dashboard.col_base_cogs')" align="right" />
+                                        <x-table-sort-th :col="2" type="number" :title="__('dashboard.col_selling_price')" align="right" />
+                                        <x-table-sort-th :col="3" type="number" :title="__('dashboard.col_margin_pct')" align="right" />
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
@@ -1072,7 +1072,7 @@
                                                     : null;
                                         @endphp
                                         <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
-                                            <td class="px-4 py-2.5 font-medium text-black dark:text-white">
+                                            <td data-sort-value="{{ strtolower($prod->name) }}" class="px-4 py-2.5 font-medium text-black dark:text-white">
                                                 @if (\App\Support\Context::hasPermission('costing.view_margin') || \App\Support\Context::hasPermission('products.view'))
                                                     <a href="{{ route('products.bom', $prod->slug) }}"
                                                         class="hover:text-[#007AFF] transition-colors">
@@ -1085,15 +1085,15 @@
                                                     {{ $prod->category?->name ?? 'pcs' }}
                                                 </div>
                                             </td>
-                                            <td
+                                            <td data-sort-value="{{ (float) $prod->base_cost }}"
                                                 class="px-4 py-2.5 text-right tabular-nums text-black/60 dark:text-white/60">
                                                 Rp {{ number_format((float) $prod->base_cost, 0, ',', '.') }}
                                             </td>
-                                            <td
+                                            <td data-sort-value="{{ (float) $prod->selling_price }}"
                                                 class="px-4 py-2.5 text-right tabular-nums font-semibold text-black dark:text-white">
                                                 Rp {{ number_format((float) $prod->selling_price, 0, ',', '.') }}
                                             </td>
-                                            <td class="px-4 py-2.5 text-right whitespace-nowrap">
+                                            <td data-sort-value="{{ (float) ($margin ?? -1) }}" class="px-4 py-2.5 text-right whitespace-nowrap">
                                                 @if ($margin !== null)
                                                     @if ($margin >= 40)
                                                         <span

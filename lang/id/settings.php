@@ -190,6 +190,7 @@ return [
     'receipt_footer_note_hint' => 'Contoh: Barang yang sudah dibeli tidak dapat ditukar atau dikembalikan.',
     'wa_manual_section_title' => '2. Format Teks Pesan WhatsApp Manual (Kasir / wa.me)',
     'wa_manual_section_desc' => 'Sesuaikan pesan sapaan personal saat kasir mengirim manual melalui tautan WhatsApp Web kasir.',
+    'wa_manual_template_badge' => 'Template Manual',
     'delivery_info' => 'Informasi Pengiriman Struk WA',
     'delivery_info_desc' => 'Template resmi WABA mengirim teks ringkasan transaksi dan tombol "Buka Struk Digital". Pelanggan dapat melihat rincian belanja, barcode QR, dan mengunduh gambar struk dari tautan tersebut.',
     'wa_template_format' => 'Format Teks Pesan WhatsApp Manual',

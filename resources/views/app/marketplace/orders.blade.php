@@ -217,79 +217,97 @@
     <!-- ===================================================== -->
     <!-- 4. MODAL TARIK PESANAN MANUAL (BENTO HIG)             -->
     <!-- ===================================================== -->
-    <div x-show="pullModal" x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0">
+    <template x-teleport="body">
+        <div x-show="pullModal" x-cloak
+            class="fixed inset-0 z-[200] overflow-y-auto flex items-center justify-center p-4"
+            @keydown.escape.window="pullModal = false"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="pull-orders-modal-title">
 
-        <div @click.away="pullModal = false"
-            class="w-full max-w-lg rounded-[28px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-6 sm:p-7 space-y-5 shadow-2xl">
-            
-            <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-4">
-                <div class="flex items-center gap-3.5">
-                    <div class="w-11 h-11 rounded-[14px] bg-[#007AFF]/15 text-[#007AFF] flex items-center justify-center shrink-0">
-                        <i data-lucide="download-cloud" class="w-5 h-5"></i>
+            <!-- Backdrop -->
+            <div x-show="pullModal"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="pullModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
+
+            <div x-show="pullModal"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0 translate-y-4 sm:scale-95"
+                x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave-end="opacity-0 translate-y-4 sm:scale-95"
+                class="relative w-full max-w-lg rounded-[28px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-6 sm:p-7 space-y-5 shadow-2xl z-10"
+                @click.outside="pullModal = false">
+                
+                <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-4">
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-11 h-11 rounded-[14px] bg-[#007AFF]/15 text-[#007AFF] flex items-center justify-center shrink-0">
+                            <i data-lucide="download-cloud" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 id="pull-orders-modal-title" class="text-[16px] font-bold text-black dark:text-white">Tarik Pesanan Marketplace</h3>
+                            <p class="text-[12px] text-black/50 dark:text-white/50">Sinkronkan transaksi terkini secara manual via API resmi.</p>
+                        </div>
                     </div>
+                    <button type="button" @click="pullModal = false" class="min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-all cursor-pointer active:scale-95" aria-label="Tutup modal">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <form method="POST" action="{{ route('marketplace-hub.orders.pull') }}" @submit="submitting = true" class="space-y-4">
+                    @csrf
                     <div>
-                        <h3 class="text-[16px] font-bold text-black dark:text-white">Tarik Pesanan Marketplace</h3>
-                        <p class="text-[12px] text-black/50 dark:text-white/50">Sinkronkan transaksi terkini secara manual via API resmi.</p>
+                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-2">Pilih Saluran Toko</label>
+                        <div class="grid grid-cols-3 gap-2 p-1.5 rounded-[16px] bg-black/[0.04] dark:bg-white/[0.06]">
+                            <button type="button" @click="selectedPullChannel = 'shopee'"
+                                :class="selectedPullChannel === 'shopee' ? 'bg-white dark:bg-[#2C2C2E] shadow-sm font-bold text-[#EE4D2D]' : 'text-black/60 dark:text-white/60 font-medium'"
+                                class="min-h-[44px] py-2.5 text-[12px] rounded-[11px] transition-all flex items-center justify-center gap-1.5 cursor-pointer active:scale-95">
+                                <span>Shopee</span>
+                            </button>
+                            <button type="button" @click="selectedPullChannel = 'tiktok_shop'"
+                                :class="selectedPullChannel === 'tiktok_shop' ? 'bg-white dark:bg-[#2C2C2E] shadow-sm font-bold text-black dark:text-white' : 'text-black/60 dark:text-white/60 font-medium'"
+                                class="min-h-[44px] py-2.5 text-[12px] rounded-[11px] transition-all flex items-center justify-center gap-1.5 cursor-pointer active:scale-95">
+                                <span>TikTok Shop</span>
+                            </button>
+                            <button type="button" @click="selectedPullChannel = 'tokopedia'"
+                                :class="selectedPullChannel === 'tokopedia' ? 'bg-white dark:bg-[#2C2C2E] shadow-sm font-bold text-[#00AA5B]' : 'text-black/60 dark:text-white/60 font-medium'"
+                                class="min-h-[44px] py-2.5 text-[12px] rounded-[11px] transition-all flex items-center justify-center gap-1.5 cursor-pointer active:scale-95">
+                                <span>Tokopedia</span>
+                            </button>
+                        </div>
+                        <input type="hidden" name="channel" :value="selectedPullChannel">
                     </div>
-                </div>
-                <button type="button" @click="pullModal = false" class="w-8 h-8 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-all cursor-pointer">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
+
+                    <div class="p-3.5 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] text-[12px] text-black/60 dark:text-white/60 flex items-center gap-2.5">
+                        <i data-lucide="info" class="w-4 h-4 text-[#007AFF] shrink-0"></i>
+                        <span>Pesanan berstatus terbayar akan otomatis mengurangi stok produk COOCA secara real-time.</span>
+                    </div>
+
+                    <div class="flex items-center justify-end gap-2.5 pt-2">
+                        <button type="button" @click="pullModal = false" :disabled="submitting"
+                            class="min-h-[44px] px-4 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] transition-all cursor-pointer active:scale-95">
+                            Batal
+                        </button>
+                        <button type="submit" :disabled="submitting"
+                            class="min-h-[44px] px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer">
+                            <svg x-show="submitting" class="animate-spin w-4 h-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            <span x-text="submitting ? 'Menarik Pesanan...' : 'Mulai Tarik Pesanan'"></span>
+                        </button>
+                    </div>
+                </form>
             </div>
-
-            <form method="POST" action="{{ route('marketplace-hub.orders.pull') }}" @submit="submitting = true" class="space-y-4">
-                @csrf
-                <div>
-                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-2">Pilih Saluran Toko</label>
-                    <div class="grid grid-cols-3 gap-2 p-1.5 rounded-[16px] bg-black/[0.04] dark:bg-white/[0.06]">
-                        <button type="button" @click="selectedPullChannel = 'shopee'"
-                            :class="selectedPullChannel === 'shopee' ? 'bg-white dark:bg-[#2C2C2E] shadow-sm font-bold text-[#EE4D2D]' : 'text-black/60 dark:text-white/60 font-medium'"
-                            class="py-2.5 text-[12px] rounded-[11px] transition-all flex items-center justify-center gap-1.5 cursor-pointer">
-                            <span>Shopee</span>
-                        </button>
-                        <button type="button" @click="selectedPullChannel = 'tiktok_shop'"
-                            :class="selectedPullChannel === 'tiktok_shop' ? 'bg-white dark:bg-[#2C2C2E] shadow-sm font-bold text-black dark:text-white' : 'text-black/60 dark:text-white/60 font-medium'"
-                            class="py-2.5 text-[12px] rounded-[11px] transition-all flex items-center justify-center gap-1.5 cursor-pointer">
-                            <span>TikTok Shop</span>
-                        </button>
-                        <button type="button" @click="selectedPullChannel = 'tokopedia'"
-                            :class="selectedPullChannel === 'tokopedia' ? 'bg-white dark:bg-[#2C2C2E] shadow-sm font-bold text-[#00AA5B]' : 'text-black/60 dark:text-white/60 font-medium'"
-                            class="py-2.5 text-[12px] rounded-[11px] transition-all flex items-center justify-center gap-1.5 cursor-pointer">
-                            <span>Tokopedia</span>
-                        </button>
-                    </div>
-                    <input type="hidden" name="channel" :value="selectedPullChannel">
-                </div>
-
-                <div class="p-3.5 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] text-[12px] text-black/60 dark:text-white/60 flex items-center gap-2.5">
-                    <i data-lucide="info" class="w-4 h-4 text-[#007AFF] shrink-0"></i>
-                    <span>Pesanan berstatus terbayar akan otomatis mengurangi stok produk COOCA secara real-time.</span>
-                </div>
-
-                <div class="flex items-center justify-end gap-2.5 pt-2">
-                    <button type="button" @click="pullModal = false" :disabled="submitting"
-                        class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] transition-all cursor-pointer">
-                        Batal
-                    </button>
-                    <button type="submit" :disabled="submitting"
-                        class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer">
-                        <svg x-show="submitting" class="animate-spin w-4 h-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        <span x-text="submitting ? 'Menarik Pesanan...' : 'Mulai Tarik Pesanan'"></span>
-                    </button>
-                </div>
-            </form>
         </div>
-    </div>
+    </template>
 
 </div>
 @endsection

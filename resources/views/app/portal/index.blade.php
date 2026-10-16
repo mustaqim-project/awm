@@ -1113,32 +1113,57 @@
     {{-- ======================================================== --}}
     {{-- MODAL 1: 1-DIRECTION FRONTAL FACE BIOMETRIC + LIVE MAP   --}}
     {{-- ======================================================== --}}
-    <div x-show="showFaceAttendanceModal" x-transition.opacity class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-lg" style="display: none;">
-        <div @click.outside="closeAttendanceModal()" class="w-full sm:max-w-lg bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[28px] border-t sm:border border-black/10 dark:border-white/10 shadow-[0_32px_64px_rgba(0,0,0,0.4)] overflow-hidden flex flex-col max-h-[92dvh] sm:max-h-[90vh]">
-            
-            <!-- Mobile Sheet Drag Handle Indicator -->
-            <div class="sm:hidden w-12 h-1.5 bg-black/20 dark:bg-white/20 rounded-full mx-auto mt-2.5 mb-0.5 shrink-0"></div>
+    <template x-teleport="body">
+        <div x-show="showFaceAttendanceModal" x-cloak class="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 overflow-y-auto">
+            <!-- Backdrop -->
+            <div class="fixed inset-0 bg-black/75 dark:bg-black/85 backdrop-blur-lg transition-opacity"
+                x-show="showFaceAttendanceModal"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="closeAttendanceModal()"
+                aria-hidden="true"></div>
 
-            <!-- Modal Header -->
-            <div class="p-4 sm:p-5 border-b border-black/5 dark:border-white/10 flex items-center justify-between shrink-0">
-                <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-[12px] flex items-center justify-center shrink-0"
-                        :class="attendanceStep === 'map' ? 'bg-[#007AFF]/10 text-[#007AFF]' : 'bg-[#34C759]/10 text-[#34C759]'">
-                        <i :data-lucide="attendanceStep === 'map' ? 'map-pin' : 'scan-face'" class="w-5 h-5"></i>
-                    </div>
-                    <div>
-                        <h4 class="text-[15px] font-bold text-black dark:text-white" x-text="attendanceStep === 'map' ? '{{ __('portal.face_modal_title_map') }}' : '{{ __('portal.face_modal_title') }}'"></h4>
-                        <div class="flex items-center gap-2 text-[11.5px] font-semibold text-black/55 dark:text-white/55">
-                            <span x-text="attendanceActionType === 'in' ? '{{ __('portal.clock_in_title') }}' : '{{ __('portal.clock_out_title') }}'"></span>
-                            <span>&bull;</span>
-                            <span x-text="attendanceStep === 'map' ? '{{ __('portal.face_step_map_sub') }}' : '{{ __('portal.face_step_camera_sub') }}'"></span>
+            <div @click.away="closeAttendanceModal()"
+                @keydown.escape.window="closeAttendanceModal()"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="modal-face-attendance-title"
+                x-show="showFaceAttendanceModal"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                class="relative z-10 w-full sm:max-w-lg bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[28px] border-t sm:border border-black/10 dark:border-white/10 shadow-[0_32px_64px_rgba(0,0,0,0.4)] overflow-hidden flex flex-col max-h-[92dvh] sm:max-h-[90vh] my-auto">
+                
+                <!-- Mobile Sheet Drag Handle Indicator -->
+                <div class="sm:hidden w-12 h-1.5 bg-black/20 dark:bg-white/20 rounded-full mx-auto mt-2.5 mb-0.5 shrink-0"></div>
+
+                <!-- Modal Header -->
+                <div class="p-4 sm:p-5 border-b border-black/5 dark:border-white/10 flex items-center justify-between shrink-0">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-[12px] flex items-center justify-center shrink-0"
+                            :class="attendanceStep === 'map' ? 'bg-[#007AFF]/10 text-[#007AFF]' : 'bg-[#34C759]/10 text-[#34C759]'">
+                            <i :data-lucide="attendanceStep === 'map' ? 'map-pin' : 'scan-face'" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h4 id="modal-face-attendance-title" class="text-[15px] font-bold text-black dark:text-white" x-text="attendanceStep === 'map' ? '{{ __('portal.face_modal_title_map') }}' : '{{ __('portal.face_modal_title') }}'"></h4>
+                            <div class="flex items-center gap-2 text-[11.5px] font-semibold text-black/55 dark:text-white/55">
+                                <span x-text="attendanceActionType === 'in' ? '{{ __('portal.clock_in_title') }}' : '{{ __('portal.clock_out_title') }}'"></span>
+                                <span>&bull;</span>
+                                <span x-text="attendanceStep === 'map' ? '{{ __('portal.face_step_map_sub') }}' : '{{ __('portal.face_step_camera_sub') }}'"></span>
+                            </div>
                         </div>
                     </div>
+                    <button type="button" @click="closeAttendanceModal()" aria-label="{{ __('common.close') }}" class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 active:scale-95 transition cursor-pointer">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
                 </div>
-                <button type="button" @click="closeAttendanceModal()" aria-label="{{ __('common.close') }}" class="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 active:scale-95 transition cursor-pointer">
-                    <i data-lucide="x" class="w-4.5 h-4.5"></i>
-                </button>
-            </div>
 
             <!-- Modal Content Body (Scrollable) -->
             <div class="p-4 sm:p-5 space-y-4 overflow-y-auto flex-1 overscroll-contain">
@@ -1339,29 +1364,54 @@
 
         </div>
     </div>
-
+</template>
 
     {{-- ======================================================== --}}
     {{-- MODAL 2: REGISTRASI BIOMETRIK WAJAH KARYAWAN             --}}
     {{-- ======================================================== --}}
-    <div x-show="showFaceRegisterModal" x-transition.opacity class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md" style="display: none;">
-        <div @click.outside="stopFaceRegCamera(); showFaceRegisterModal = false" class="w-full max-w-lg bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-[0_28px_56px_rgba(0,0,0,0.3)] overflow-hidden flex flex-col max-h-[90vh]">
-            <div class="p-5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-[12px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center shrink-0">
-                        <i data-lucide="scan-face" class="w-5 h-5"></i>
+    <template x-teleport="body">
+        <div x-show="showFaceRegisterModal" x-cloak class="fixed inset-0 z-[200] flex items-center justify-center p-4 overflow-y-auto">
+            <!-- Backdrop -->
+            <div class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                x-show="showFaceRegisterModal"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="stopFaceRegCamera(); showFaceRegisterModal = false"
+                aria-hidden="true"></div>
+
+            <div @click.away="stopFaceRegCamera(); showFaceRegisterModal = false"
+                @keydown.escape.window="stopFaceRegCamera(); showFaceRegisterModal = false"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="modal-face-reg-title"
+                x-show="showFaceRegisterModal"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0 scale-95"
+                x-transition:enter-end="opacity-100 scale-100"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100 scale-100"
+                x-transition:leave-end="opacity-0 scale-95"
+                class="relative z-10 w-full max-w-lg bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-[0_28px_56px_rgba(0,0,0,0.3)] overflow-hidden flex flex-col max-h-[90vh] my-auto">
+                <div class="p-5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-[12px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center shrink-0">
+                            <i data-lucide="scan-face" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 id="modal-face-reg-title" class="text-[16px] font-bold text-black dark:text-white">{{ __('portal.modal_face_reg_title') }}</h3>
+                            <p class="text-[12px] text-black/60 dark:text-white/60">
+                                {{ __('portal.staff_label', ['name' => $user->name]) }}
+                            </p>
+                        </div>
                     </div>
-                    <div>
-                        <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('portal.modal_face_reg_title') }}</h3>
-                        <p class="text-[12px] text-black/60 dark:text-white/60">
-                            {{ __('portal.staff_label', ['name' => $user->name]) }}
-                        </p>
-                    </div>
+                    <button type="button" @click="stopFaceRegCamera(); showFaceRegisterModal = false" aria-label="{{ __('common.close') }}" class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 active:scale-95 transition cursor-pointer">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
                 </div>
-                <button type="button" @click="stopFaceRegCamera(); showFaceRegisterModal = false" aria-label="{{ __('common.close') }}" class="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 active:scale-95 transition cursor-pointer">
-                    <i data-lucide="x" class="w-4.5 h-4.5"></i>
-                </button>
-            </div>
 
             <div class="p-5 space-y-4 overflow-y-auto">
                 <!-- Mode Switcher -->
@@ -1433,12 +1483,12 @@
                 <!-- Submit Button -->
                 <div class="pt-3 flex justify-end gap-2 border-t border-black/5 dark:border-white/10">
                     <button type="button" @click="stopFaceRegCamera(); showFaceRegisterModal = false"
-                        class="h-11 sm:h-10 px-4.5 rounded-[11px] text-[14px] sm:text-[13px] font-semibold text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition cursor-pointer">
+                        class="min-h-[44px] h-11 sm:h-10 px-4.5 rounded-[11px] text-[14px] sm:text-[13px] font-semibold text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition cursor-pointer">
                         {{ __('portal.action_cancel') }}
                     </button>
                     <button type="button" @click="submitFaceRegistration()" :disabled="!faceRegPhotoData || isSubmittingFaceReg"
                         :class="faceRegPhotoData && !isSubmittingFaceReg ? 'bg-[#34C759] hover:bg-[#2FB34F] text-white cursor-pointer shadow-[0_2px_8px_rgba(52,199,89,0.3)]' : 'bg-black/10 dark:bg-white/10 text-black/40 dark:text-white/40 cursor-not-allowed'"
-                        class="h-11 sm:h-10 px-5 rounded-[11px] text-[14px] sm:text-[13px] font-bold transition active:scale-[0.98] flex items-center gap-2">
+                        class="min-h-[44px] h-11 sm:h-10 px-5 rounded-[11px] text-[14px] sm:text-[13px] font-bold transition active:scale-[0.98] flex items-center gap-2">
                         <template x-if="isSubmittingFaceReg">
                             <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i>
                         </template>
@@ -1448,236 +1498,287 @@
             </div>
         </div>
     </div>
+</template>
 
     {{-- ======================================================== --}}
     {{-- MODAL 3: PENGAJUAN KOREKSI ABSENSI                       --}}
     {{-- ======================================================== --}}
-    <div x-show="showCorrectionModal" x-transition.opacity
-        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs"
-        style="display: none;">
-        <div class="w-full max-w-lg rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-6 sm:p-7 shadow-2xl space-y-4 text-left"
-            @click.away="showCorrectionModal = false">
-            <div class="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/10">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-9 h-9 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center">
-                        <i data-lucide="file-edit" class="w-5 h-5"></i>
+    <template x-teleport="body">
+        <div x-show="showCorrectionModal" x-cloak
+            class="fixed inset-0 z-[200] flex items-center justify-center p-4 overflow-y-auto">
+
+            <!-- Backdrop -->
+            <div class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                x-show="showCorrectionModal"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="showCorrectionModal = false"
+                aria-hidden="true"></div>
+
+            <div class="relative z-10 w-full max-w-lg rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-6 sm:p-7 shadow-2xl space-y-4 text-left my-auto"
+                @click.away="showCorrectionModal = false"
+                @keydown.escape.window="showCorrectionModal = false"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="modal-correction-title"
+                x-show="showCorrectionModal"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0 scale-95"
+                x-transition:enter-end="opacity-100 scale-100"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100 scale-100"
+                x-transition:leave-end="opacity-0 scale-95">
+                <div class="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/10">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-9 h-9 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center">
+                            <i data-lucide="file-edit" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 id="modal-correction-title" class="text-base font-bold text-black dark:text-white">{{ __('portal.modal_correction_title') }}</h3>
+                            <p class="text-xs text-black/50 dark:text-white/50">{{ __('portal.modal_correction_subtitle') }}</p>
+                        </div>
                     </div>
-                    <div>
-                        <h3 class="text-base font-bold text-black dark:text-white">{{ __('portal.modal_correction_title') }}</h3>
-                        <p class="text-xs text-black/50 dark:text-white/50">{{ __('portal.modal_correction_subtitle') }}</p>
-                    </div>
+                    <button type="button" @click="showCorrectionModal = false" aria-label="{{ __('common.close') }}" class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 active:scale-95 transition cursor-pointer">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
                 </div>
-                <button type="button" @click="showCorrectionModal = false" aria-label="{{ __('common.close') }}" class="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 active:scale-95 transition cursor-pointer">
-                    <i data-lucide="x" class="w-4.5 h-4.5"></i>
-                </button>
+
+                <form action="{{ route('portal.corrections.store') }}" method="POST" enctype="multipart/form-data"
+                    @submit="if(isSubmitting) { $event.preventDefault(); return false; } isSubmitting = true;"
+                    class="space-y-4">
+                    @csrf
+                    <div>
+                        <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('portal.modal_correction_field_date') }} *</label>
+                        <input type="date" name="target_date" required max="{{ now()->toDateString() }}"
+                            class="w-full h-11 sm:h-10 px-3 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white">
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('portal.modal_correction_field_type') }} *</label>
+                            <select name="correction_type" required
+                                class="w-full h-11 sm:h-10 px-3 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white">
+                                <option value="both">{{ __('portal.corr_type_both') }}</option>
+                                <option value="clock_in">{{ __('portal.corr_type_in') }}</option>
+                                <option value="clock_out">{{ __('portal.corr_type_out') }}</option>
+                                <option value="permit">{{ __('portal.corr_type_permit') }}</option>
+                                <option value="leave">{{ __('portal.corr_type_leave') }}</option>
+                                <option value="sick">{{ __('portal.corr_type_sick') }}</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('portal.modal_correction_field_status') }}</label>
+                            <select name="proposed_status"
+                                class="w-full h-11 sm:h-10 px-3 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white">
+                                <option value="present">{{ __('portal.metric_on_time') }}</option>
+                                <option value="late">{{ __('portal.metric_late') }}</option>
+                                <option value="permit">{{ __('portal.corr_type_permit') }}</option>
+                                <option value="leave">{{ __('portal.corr_type_leave') }}</option>
+                                <option value="sick">{{ __('portal.sick') }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('portal.modal_correction_field_clock_in') }}</label>
+                            <input type="time" name="proposed_clock_in"
+                                class="w-full h-11 sm:h-10 px-3 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('portal.modal_correction_field_clock_out') }}</label>
+                            <input type="time" name="proposed_clock_out"
+                                class="w-full h-11 sm:h-10 px-3 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('portal.modal_correction_field_reason') }} *</label>
+                        <textarea name="reason" rows="3" required placeholder="{{ __('portal.correction_reason_placeholder') }}"
+                            class="w-full p-3 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('portal.modal_correction_field_attachment') }}</label>
+                        <input type="file" name="attachment" accept=".jpg,.jpeg,.png,.pdf"
+                            class="w-full text-[16px] sm:text-xs text-black/60 dark:text-white/60 file:mr-3 file:py-2.5 file:px-3.5 file:rounded-[8px] file:border-0 file:text-[13px] sm:file:text-xs file:font-semibold file:bg-[#007AFF]/10 file:text-[#007AFF]">
+                    </div>
+
+                    <div class="pt-2 flex items-center justify-end gap-2.5">
+                        <button type="button" @click="showCorrectionModal = false"
+                            class="min-h-[44px] px-4 rounded-[10px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-[13px] sm:text-xs font-semibold text-black dark:text-white transition cursor-pointer">
+                            {{ __('portal.action_cancel') }}
+                        </button>
+                        <button type="submit" :disabled="isSubmitting"
+                            :class="isSubmitting ? 'opacity-60 cursor-not-allowed' : ''"
+                            class="min-h-[44px] px-5 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] text-[13px] sm:text-xs font-semibold text-white shadow-xs flex items-center justify-center gap-2 transition cursor-pointer">
+                            <template x-if="!isSubmitting">
+                                <span>{{ __('portal.modal_correction_btn_submit') }}</span>
+                            </template>
+                            <template x-if="isSubmitting">
+                                <div class="flex items-center gap-2">
+                                    <svg class="animate-spin w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    <span>{{ __('portal.sending_state') }}</span>
+                                </div>
+                            </template>
+                        </button>
+                    </div>
+                </form>
             </div>
-
-            <form action="{{ route('portal.corrections.store') }}" method="POST" enctype="multipart/form-data"
-                @submit="if(isSubmitting) { $event.preventDefault(); return false; } isSubmitting = true;"
-                class="space-y-4">
-                @csrf
-                <div>
-                    <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('portal.modal_correction_field_date') }} *</label>
-                    <input type="date" name="target_date" required max="{{ now()->toDateString() }}"
-                        class="w-full h-11 sm:h-10 px-3 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white">
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('portal.modal_correction_field_type') }} *</label>
-                        <select name="correction_type" required
-                            class="w-full h-11 sm:h-10 px-3 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white">
-                            <option value="both">{{ __('portal.corr_type_both') }}</option>
-                            <option value="clock_in">{{ __('portal.corr_type_in') }}</option>
-                            <option value="clock_out">{{ __('portal.corr_type_out') }}</option>
-                            <option value="permit">{{ __('portal.corr_type_permit') }}</option>
-                            <option value="leave">{{ __('portal.corr_type_leave') }}</option>
-                            <option value="sick">{{ __('portal.corr_type_sick') }}</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('portal.modal_correction_field_status') }}</label>
-                        <select name="proposed_status"
-                            class="w-full h-11 sm:h-10 px-3 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white">
-                            <option value="present">{{ __('portal.metric_on_time') }}</option>
-                            <option value="late">{{ __('portal.metric_late') }}</option>
-                            <option value="permit">{{ __('portal.corr_type_permit') }}</option>
-                            <option value="leave">{{ __('portal.corr_type_leave') }}</option>
-                            <option value="sick">{{ __('portal.sick') }}</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('portal.modal_correction_field_clock_in') }}</label>
-                        <input type="time" name="proposed_clock_in"
-                            class="w-full h-11 sm:h-10 px-3 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('portal.modal_correction_field_clock_out') }}</label>
-                        <input type="time" name="proposed_clock_out"
-                            class="w-full h-11 sm:h-10 px-3 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white">
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('portal.modal_correction_field_reason') }} *</label>
-                    <textarea name="reason" rows="3" required placeholder="{{ __('portal.correction_reason_placeholder') }}"
-                        class="w-full p-3 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white"></textarea>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('portal.modal_correction_field_attachment') }}</label>
-                    <input type="file" name="attachment" accept=".jpg,.jpeg,.png,.pdf"
-                        class="w-full text-[16px] sm:text-xs text-black/60 dark:text-white/60 file:mr-3 file:py-2.5 file:px-3.5 file:rounded-[8px] file:border-0 file:text-[13px] sm:file:text-xs file:font-semibold file:bg-[#007AFF]/10 file:text-[#007AFF]">
-                </div>
-
-                <div class="pt-2 flex items-center justify-end gap-2">
-                    <button type="button" @click="showCorrectionModal = false"
-                        class="h-11 sm:h-10 px-4 rounded-[10px] bg-black/[0.05] dark:bg-white/[0.08] text-[13px] sm:text-xs font-semibold text-black dark:text-white cursor-pointer">
-                        {{ __('portal.action_cancel') }}
-                    </button>
-                    <button type="submit" :disabled="isSubmitting"
-                        :class="isSubmitting ? 'opacity-60 cursor-not-allowed' : ''"
-                        class="h-11 sm:h-10 px-5 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] text-[13px] sm:text-xs font-semibold text-white shadow-xs flex items-center justify-center gap-2 cursor-pointer">
-                        <template x-if="!isSubmitting">
-                            <span>{{ __('portal.modal_correction_btn_submit') }}</span>
-                        </template>
-                        <template x-if="isSubmitting">
-                            <div class="flex items-center gap-2">
-                                <svg class="animate-spin w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24">
-                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                </svg>
-                                <span>{{ __('portal.sending_state') }}</span>
-                            </div>
-                        </template>
-                    </button>
-                </div>
-            </form>
         </div>
-    </div>
+    </template>
 
     {{-- ======================================================== --}}
     {{-- MODAL 4: FEEDBACK STATUS ABSENSI & JADWAL KERJA (HIG)    --}}
     {{-- ======================================================== --}}
-    <div x-show="showFeedbackModal && clockFeedback" x-transition.opacity
-        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
-        style="display: none;">
-        <div class="w-full max-w-md rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-6 sm:p-7 shadow-2xl space-y-5 text-left relative overflow-hidden"
-            @click.away="showFeedbackModal = false">
-            
-            {{-- Top Accent Bar --}}
-            <div class="absolute top-0 inset-x-0 h-1.5"
-                :class="{
-                    'bg-[#FF3B30]': clockFeedback?.status === 'late',
-                    'bg-[#34C759]': clockFeedback?.status === 'on_time',
-                    'bg-[#007AFF]': clockFeedback?.status === 'early',
-                    'bg-slate-400': clockFeedback?.status === 'free'
-                }"></div>
+    <template x-teleport="body">
+        <div x-show="showFeedbackModal && clockFeedback" x-cloak
+            class="fixed inset-0 z-[200] flex items-center justify-center p-4 overflow-y-auto">
 
-            {{-- Header --}}
-            <div class="flex items-center justify-between pt-1">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-[14px] flex items-center justify-center"
-                        :class="{
-                            'bg-[#FF3B30]/10 text-[#FF3B30]': clockFeedback?.status === 'late',
-                            'bg-[#34C759]/10 text-[#34C759]': clockFeedback?.status === 'on_time',
-                            'bg-[#007AFF]/10 text-[#007AFF]': clockFeedback?.status === 'early',
-                            'bg-slate-400/10 text-slate-500': clockFeedback?.status === 'free'
-                        }">
-                        <template x-if="clockFeedback?.status === 'late'">
-                            <i data-lucide="alert-triangle" class="w-5 h-5"></i>
-                        </template>
-                        <template x-if="clockFeedback?.status !== 'late'">
-                            <i data-lucide="check-circle-2" class="w-5 h-5"></i>
-                        </template>
+            <!-- Backdrop -->
+            <div class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                x-show="showFeedbackModal && clockFeedback"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="showFeedbackModal = false"
+                aria-hidden="true"></div>
+
+            <div class="relative z-10 w-full max-w-md rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-6 sm:p-7 shadow-2xl space-y-5 text-left overflow-hidden my-auto"
+                @click.away="showFeedbackModal = false"
+                @keydown.escape.window="showFeedbackModal = false"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="modal-clock-feedback-title"
+                x-show="showFeedbackModal && clockFeedback"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0 scale-95"
+                x-transition:enter-end="opacity-100 scale-100"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100 scale-100"
+                x-transition:leave-end="opacity-0 scale-95">
+                
+                {{-- Top Accent Bar --}}
+                <div class="absolute top-0 inset-x-0 h-1.5"
+                    :class="{
+                        'bg-[#FF3B30]': clockFeedback?.status === 'late',
+                        'bg-[#34C759]': clockFeedback?.status === 'on_time',
+                        'bg-[#007AFF]': clockFeedback?.status === 'early',
+                        'bg-slate-400': clockFeedback?.status === 'free'
+                    }"></div>
+
+                {{-- Header --}}
+                <div class="flex items-center justify-between pt-1">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-[14px] flex items-center justify-center"
+                            :class="{
+                                'bg-[#FF3B30]/10 text-[#FF3B30]': clockFeedback?.status === 'late',
+                                'bg-[#34C759]/10 text-[#34C759]': clockFeedback?.status === 'on_time',
+                                'bg-[#007AFF]/10 text-[#007AFF]': clockFeedback?.status === 'early',
+                                'bg-slate-400/10 text-slate-500': clockFeedback?.status === 'free'
+                            }">
+                            <template x-if="clockFeedback?.status === 'late'">
+                                <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+                            </template>
+                            <template x-if="clockFeedback?.status !== 'late'">
+                                <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+                            </template>
+                        </div>
+                        <div>
+                            <h3 id="modal-clock-feedback-title" class="text-base font-bold text-black dark:text-white">
+                                Presensi Berhasil Dicatat
+                            </h3>
+                            <p class="text-[11px] font-medium text-black/55 dark:text-white/55">
+                                Status kepatuhan terhadap jadwal kerja
+                            </p>
+                        </div>
+                    </div>
+                    <button type="button" @click="showFeedbackModal = false"
+                        aria-label="{{ __('common.close') }}"
+                        class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full flex items-center justify-center hover:bg-black/5 dark:hover:bg-white/10 transition cursor-pointer text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
+                </div>
+
+                {{-- Main Clock In Info Card --}}
+                <div class="p-4 rounded-[18px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 text-center space-y-2">
+                    <div class="text-[11px] font-bold uppercase tracking-wider text-black/40 dark:text-white/40">
+                        Waktu Tercatat
+                    </div>
+                    <div class="text-4xl font-extrabold tracking-tight text-black dark:text-white font-mono tabular-nums">
+                        <span x-text="clockFeedback?.clock_in_time || clockFeedback?.clock_out_time || '--:--'"></span>
+                        <span class="text-sm font-bold text-[#007AFF]" x-text="clockFeedback?.tz_abbr || 'WIB'"></span>
                     </div>
                     <div>
-                        <h3 class="text-base font-bold text-black dark:text-white">
-                            Presensi Berhasil Dicatat
-                        </h3>
-                        <p class="text-[11px] font-medium text-black/55 dark:text-white/55">
-                            Status kepatuhan terhadap jadwal kerja
-                        </p>
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-extrabold tracking-wide uppercase"
+                            :class="{
+                                'bg-[#FF3B30]/15 text-[#FF3B30] border border-[#FF3B30]/30': clockFeedback?.status === 'late',
+                                'bg-[#34C759]/15 text-[#34C759] border border-[#34C759]/30': clockFeedback?.status === 'on_time',
+                                'bg-[#007AFF]/15 text-[#007AFF] border border-[#007AFF]/30': clockFeedback?.status === 'early',
+                                'bg-slate-400/15 text-slate-500 border border-slate-400/30': clockFeedback?.status === 'free'
+                            }"
+                            x-text="clockFeedback?.status_label || 'Tepat Waktu'">
+                        </span>
                     </div>
                 </div>
-                <button type="button" @click="showFeedbackModal = false"
-                    aria-label="{{ __('common.close') }}"
-                    class="p-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition cursor-pointer text-black/40 dark:text-white/40">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
-            </div>
 
-            {{-- Main Clock In Info Card --}}
-            <div class="p-4 rounded-[18px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 text-center space-y-2">
-                <div class="text-[11px] font-bold uppercase tracking-wider text-black/40 dark:text-white/40">
-                    Waktu Tercatat
+                {{-- Schedule Details List --}}
+                <div class="space-y-2 text-xs">
+                    <div class="flex items-center justify-between py-2 border-b border-black/5 dark:border-white/5">
+                        <span class="font-medium text-black/60 dark:text-white/60">Shift Kerja</span>
+                        <span class="font-bold text-black dark:text-white" x-text="clockFeedback?.shift_name || '-'"></span>
+                    </div>
+                    <div class="flex items-center justify-between py-2 border-b border-black/5 dark:border-white/5">
+                        <span class="font-medium text-black/60 dark:text-white/60">Jadwal Masuk</span>
+                        <span class="font-bold text-black dark:text-white font-mono tabular-nums"
+                            x-text="clockFeedback?.scheduled_start ? (clockFeedback.scheduled_start + ' ' + (clockFeedback?.tz_abbr || 'WIB')) : 'Bebas / Tanpa Jadwal'"></span>
+                    </div>
+                    <template x-if="clockFeedback?.late_minutes > 0">
+                        <div class="flex items-center justify-between py-2 border-b border-black/5 dark:border-white/5 text-[#FF3B30]">
+                            <span class="font-bold">Keterlambatan</span>
+                            <span class="font-extrabold font-mono tabular-nums" x-text="clockFeedback.late_minutes + ' menit'"></span>
+                        </div>
+                    </template>
+                    <template x-if="clockFeedback?.early_in_minutes > 0">
+                        <div class="flex items-center justify-between py-2 border-b border-black/5 dark:border-white/5 text-[#007AFF]">
+                            <span class="font-bold">Lebih Awal</span>
+                            <span class="font-extrabold font-mono tabular-nums" x-text="clockFeedback.early_in_minutes + ' menit'"></span>
+                        </div>
+                    </template>
+                    <template x-if="clockFeedback?.early_out_minutes > 0">
+                        <div class="flex items-center justify-between py-2 border-b border-black/5 dark:border-white/5 text-[#FF9500]">
+                            <span class="font-bold">Pulang Lebih Awal</span>
+                            <span class="font-extrabold font-mono tabular-nums" x-text="clockFeedback.early_out_minutes + ' menit'"></span>
+                        </div>
+                    </template>
+                    <template x-if="clockFeedback?.grace_period_minutes > 0">
+                        <div class="flex items-center justify-between py-1 text-[11px] text-black/50 dark:text-white/50">
+                            <span>Toleransi Keterlambatan</span>
+                            <span class="font-medium font-mono" x-text="clockFeedback.grace_period_minutes + ' menit'"></span>
+                        </div>
+                    </template>
                 </div>
-                <div class="text-4xl font-extrabold tracking-tight text-black dark:text-white font-mono tabular-nums">
-                    <span x-text="clockFeedback?.clock_in_time || clockFeedback?.clock_out_time || '--:--'"></span>
-                    <span class="text-sm font-bold text-[#007AFF]" x-text="clockFeedback?.tz_abbr || 'WIB'"></span>
-                </div>
-                <div>
-                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-extrabold tracking-wide uppercase"
-                        :class="{
-                            'bg-[#FF3B30]/15 text-[#FF3B30] border border-[#FF3B30]/30': clockFeedback?.status === 'late',
-                            'bg-[#34C759]/15 text-[#34C759] border border-[#34C759]/30': clockFeedback?.status === 'on_time',
-                            'bg-[#007AFF]/15 text-[#007AFF] border border-[#007AFF]/30': clockFeedback?.status === 'early',
-                            'bg-slate-400/15 text-slate-500 border border-slate-400/30': clockFeedback?.status === 'free'
-                        }"
-                        x-text="clockFeedback?.status_label || 'Tepat Waktu'">
-                    </span>
-                </div>
-            </div>
 
-            {{-- Schedule Details List --}}
-            <div class="space-y-2 text-xs">
-                <div class="flex items-center justify-between py-2 border-b border-black/5 dark:border-white/5">
-                    <span class="font-medium text-black/60 dark:text-white/60">Shift Kerja</span>
-                    <span class="font-bold text-black dark:text-white" x-text="clockFeedback?.shift_name || '-'"></span>
+                {{-- Action Button --}}
+                <div class="pt-2">
+                    <button type="button" @click="showFeedbackModal = false"
+                        class="w-full min-h-[44px] h-11 rounded-[12px] bg-black dark:bg-white text-white dark:text-black font-bold text-xs tracking-wide transition active:scale-[0.98] cursor-pointer shadow-sm">
+                        Mengerti & Lanjutkan
+                    </button>
                 </div>
-                <div class="flex items-center justify-between py-2 border-b border-black/5 dark:border-white/5">
-                    <span class="font-medium text-black/60 dark:text-white/60">Jadwal Masuk</span>
-                    <span class="font-bold text-black dark:text-white font-mono tabular-nums"
-                        x-text="clockFeedback?.scheduled_start ? (clockFeedback.scheduled_start + ' ' + (clockFeedback?.tz_abbr || 'WIB')) : 'Bebas / Tanpa Jadwal'"></span>
-                </div>
-                <template x-if="clockFeedback?.late_minutes > 0">
-                    <div class="flex items-center justify-between py-2 border-b border-black/5 dark:border-white/5 text-[#FF3B30]">
-                        <span class="font-bold">Keterlambatan</span>
-                        <span class="font-extrabold font-mono tabular-nums" x-text="clockFeedback.late_minutes + ' menit'"></span>
-                    </div>
-                </template>
-                <template x-if="clockFeedback?.early_in_minutes > 0">
-                    <div class="flex items-center justify-between py-2 border-b border-black/5 dark:border-white/5 text-[#007AFF]">
-                        <span class="font-bold">Lebih Awal</span>
-                        <span class="font-extrabold font-mono tabular-nums" x-text="clockFeedback.early_in_minutes + ' menit'"></span>
-                    </div>
-                </template>
-                <template x-if="clockFeedback?.early_out_minutes > 0">
-                    <div class="flex items-center justify-between py-2 border-b border-black/5 dark:border-white/5 text-[#FF9500]">
-                        <span class="font-bold">Pulang Lebih Awal</span>
-                        <span class="font-extrabold font-mono tabular-nums" x-text="clockFeedback.early_out_minutes + ' menit'"></span>
-                    </div>
-                </template>
-                <template x-if="clockFeedback?.grace_period_minutes > 0">
-                    <div class="flex items-center justify-between py-1 text-[11px] text-black/50 dark:text-white/50">
-                        <span>Toleransi Keterlambatan</span>
-                        <span class="font-medium font-mono" x-text="clockFeedback.grace_period_minutes + ' menit'"></span>
-                    </div>
-                </template>
-            </div>
-
-            {{-- Action Button --}}
-            <div class="pt-2">
-                <button type="button" @click="showFeedbackModal = false"
-                    class="w-full h-11 rounded-[12px] bg-black dark:bg-white text-white dark:text-black font-bold text-xs tracking-wide transition active:scale-[0.98] cursor-pointer shadow-sm">
-                    Mengerti & Lanjutkan
-                </button>
             </div>
         </div>
-    </div>
+    </template>
 
 </div>
 

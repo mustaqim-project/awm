@@ -234,7 +234,7 @@
     @if ($activeBiz)
         <div class="sidebar-tenant-wrapper px-3 py-2 border-b border-black/5 dark:border-white/10 shrink-0">
             <div class="relative group"
-                :title="sidebarCollapsed ? '{{ $activeBiz->name }} (Klik untuk Ganti Bisnis)' : ''">
+                :title="sidebarCollapsed ? @js($activeBiz->name . ' (Klik untuk Ganti Bisnis)') : ''">
                 <a href="{{ route('businesses.select') }}" id="tour-switch-business"
                     aria-label="Ganti Bisnis: {{ $activeBiz->name }}"
                     class="sidebar-tenant-card group/card p-2 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 flex items-center justify-between transition-all hover:border-[#007AFF]/40 hover:bg-[#007AFF]/[0.04] dark:hover:bg-white/[0.06] cursor-pointer">
@@ -330,7 +330,7 @@
                     <button type="button" id="tour-group-pos" data-tour-group="pos"
                         @click="posOpen = !posOpen" role="button"
                         :aria-expanded="posOpen ? 'true' : 'false'"
-                        :title="sidebarCollapsed ? (($activeBiz && $activeBiz->isFoodIndustry()) ? '{{ __('navigation.pos_resto') }}' : '{{ __('navigation.pos_terminal') }}') : ''"
+                        :title="sidebarCollapsed ? @js(($activeBiz && $activeBiz->isFoodIndustry()) ? __('navigation.pos_resto') : __('navigation.pos_terminal')) : ''"
                         class="sidebar-item w-full flex items-center justify-between px-2.5 py-1.5 rounded-[8px] text-left text-[13px] font-medium transition-all active:scale-[0.98] {{ $isPosRoute ? 'bg-black/[0.05] dark:bg-white/[0.06] text-black dark:text-white font-semibold' : 'text-black/75 dark:text-white/75 hover:bg-black/[0.04] dark:hover:bg-white/[0.05] hover:text-black dark:hover:text-white' }}">
                         <div class="sidebar-item-inner flex items-center gap-2.5 min-w-0">
                             <i data-lucide="calculator"
@@ -564,7 +564,7 @@
                     @mouseleave="activeFlyout = null">
                     <a href="{{ route('storefront.reservations.index') }}" id="tour-nav-storefront-reservations"
                         {{ request()->routeIs('storefront.reservations.*') ? 'aria-current="page"' : '' }}
-                        :title="sidebarCollapsed ? '{{ ($activeBiz && $activeBiz->isWorkshop()) ? __('navigation.booking_service') : ($activeBiz?->hasDineInFeature() ? __('navigation.reservations_resto') : __('navigation.reservations')) }}' : ''"
+                        :title="sidebarCollapsed ? @js(($activeBiz && $activeBiz->isWorkshop()) ? __('navigation.booking_service') : ($activeBiz?->hasDineInFeature() ? __('navigation.reservations_resto') : __('navigation.reservations'))) : ''"
                         class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-semibold transition-all active:scale-[0.98] {{ request()->routeIs('storefront.reservations.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-[#007AFF]/8 dark:hover:bg-[#007AFF]/15 hover:text-[#007AFF] dark:hover:text-[#0A84FF]' }}">
                         <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('storefront.reservations.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/12 text-[#007AFF] dark:bg-[#0A84FF]/20 dark:text-[#0A84FF]' }} flex items-center justify-center shrink-0">
                             <i data-lucide="calendar" class="w-3.5 h-3.5"></i>

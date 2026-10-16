@@ -312,6 +312,11 @@ Setiap kali antarmuka memuat **formulir (Form Create, Edit, Input Transaksi, For
 - **Skala Input & Anti-Auto-Zoom**: Seluruh `<input>`, `<select>`, dan `<textarea>` berukuran font minimal **16px** (`text-[16px] sm:text-[14px]`) untuk mencegah auto-zoom iOS Safari.
 - **Sticky Bottom Action Bar**: Tombol submit/aksi utama berukuran penuh `w-full` dengan tinggi **48px–52px** dan padding bawah aman (*Safe Area Padding*) `pb-[max(1.25rem,env(safe-area-inset-bottom))]` / `pb-8`.
 
+### D. Mandat Mutlak Body Teleportation (`<template x-teleport="body">`) & Zero Topbar Gap
+- **Penyebab Celah Putih**: Jika modal diletakkan langsung di dalam child Blade view (`@section('content')` -> `<main id="main-content">`), modal terperangkap dalam *CSS Stacking Context / Containing Block* terisolasi milik parent wrapper (`transition-[padding]`) dan header sticky (`<header class="app-topbar sticky top-0 z-[35]">` dengan `backdrop-filter: blur(20px)`). Akibatnya, `fixed inset-0` modal terpotong di bawah header dan menyisakan bilah putih (celah 64px) di bagian atas layar.
+- **Solusi Wajib**: Seluruh elemen modal pop-up form, sheet, dan dialog konfirmasi WAJIB dibungkus dengan `<template x-teleport="body">` sehingga di-mount langsung di root `document.body`.
+- **Konteks Z-Index**: Kontainer overlay modal wajib menggunakan `fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md` (sub-modal `z-[210]`, alert confirm `z-[220]`, dan card dialog `relative z-10`), sehingga backdrop menutupi 100% layar dari batas atas ($y=0$) hingga dasar layar tanpa ada celah sedikit pun.
+
 ---
 
 ## 15. Inline Quick-Add `[ + ]`

@@ -1041,17 +1041,17 @@
     <div x-show="activeTab === 'employees'" class="space-y-4" x-transition.opacity>
         <div class="rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 overflow-hidden shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
             <!-- Desktop Table View (>= 768px) -->
-            <div class="hidden md:block overflow-x-auto">
+            <div x-data="coocaTableSort()" class="hidden md:block overflow-x-auto">
                 <table class="w-full text-left text-[13px] border-collapse min-w-[1050px]">
                     <thead>
                         <tr class="border-b border-black/5 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.03] text-[11px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60">
-                            <th class="py-3.5 px-4 sm:px-5">{{ __('hrm.th_employee_identity') }}</th>
-                            <th class="py-3.5 px-3">{{ __('hrm.th_job_role') }}</th>
-                            <th class="py-3.5 px-3">{{ __('hrm.th_employment_type') }}</th>
-                            <th class="py-3.5 px-3">{{ __('hrm.th_wage_structure') }}</th>
-                            <th class="py-3.5 px-3">{{ __('hrm.th_bpjs_social') }}</th>
-                            <th class="py-3.5 px-3">{{ __('hrm.th_biometric_face') }}</th>
-                            <th class="py-3.5 px-3">{{ __('hrm.th_bank_account') }}</th>
+                            <x-table-sort-th :col="0" type="string" :title="__('hrm.th_employee_identity')" class="sm:px-5" />
+                            <x-table-sort-th :col="1" type="string" :title="__('hrm.th_job_role')" />
+                            <x-table-sort-th :col="2" type="string" :title="__('hrm.th_employment_type')" />
+                            <x-table-sort-th :col="3" type="number" :title="__('hrm.th_wage_structure')" />
+                            <x-table-sort-th :col="4" type="string" :title="__('hrm.th_bpjs_social')" />
+                            <x-table-sort-th :col="5" type="string" :title="__('hrm.th_biometric_face')" />
+                            <x-table-sort-th :col="6" type="string" :title="__('hrm.th_bank_account')" />
                             <th class="py-3.5 px-4 text-right">{{ __('hrm.th_actions') }}</th>
                         </tr>
                     </thead>
@@ -1061,10 +1061,11 @@
                                 $u = $m->user;
                                 $isOwner = ($m->role === 'owner');
                                 $hasFace = $m->hasFaceRegistered();
+                                $salaryVal = (float)($m->employment_type === 'daily_worker' ? $m->daily_rate : $m->base_salary);
                             @endphp
                             <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors">
                                 <!-- Karyawan -->
-                                <td class="py-3.5 px-4 sm:px-5">
+                                <td data-sort-value="{{ strtolower($u->name ?? 'User') }}" class="py-3.5 px-4 sm:px-5">
                                     <div class="flex items-center gap-3">
                                         <div class="w-10 h-10 rounded-full {{ $hasFace ? 'bg-[#34C759]/15 text-[#34C759]' : 'bg-[#007AFF]/12 text-[#007AFF]' }} font-bold text-xs flex items-center justify-center shrink-0">
                                             {{ substr($u->name ?? 'K', 0, 2) }}
@@ -1095,13 +1096,13 @@
                                 </td>
 
                                 <!-- Jabatan & Peran -->
-                                <td class="py-3.5 px-3">
+                                <td data-sort-value="{{ strtolower($m->job_title ?: ucfirst($m->role)) }}" class="py-3.5 px-3">
                                     <div class="font-semibold text-black dark:text-white">{{ $m->job_title ?: ucfirst($m->role) }}</div>
                                     <div class="text-[11.5px] text-black/50 dark:text-white/50">{{ $m->customRole?->name ?? ucfirst($m->role) }}</div>
                                 </td>
 
                                 <!-- Tipe Kerja -->
-                                <td class="py-3.5 px-3">
+                                <td data-sort-value="{{ $m->employment_type }}" class="py-3.5 px-3">
                                     @if($m->employment_type === 'daily_worker')
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#FF9500]/15 text-[#FF9500]">
                                             {{ __('hrm.daily_worker_badge') }}
@@ -1123,7 +1124,7 @@
                                 </td>
 
                                 <!-- Struktur Upah -->
-                                <td class="py-3.5 px-3">
+                                <td data-sort-value="{{ $salaryVal }}" class="py-3.5 px-3">
                                     @if($m->employment_type === 'daily_worker')
                                         <div class="font-bold text-black dark:text-white tabular-nums">
                                             Rp {{ number_format((float)$m->daily_rate, 0, ',', '.') }} <span class="text-[10.5px] font-normal text-black/50 dark:text-white/50">{{ __('hrm.per_day_suffix') }}</span>
@@ -1141,7 +1142,7 @@
                                 </td>
 
                                 <!-- BPJS & Tanggungan -->
-                                <td class="py-3.5 px-3">
+                                <td data-sort-value="{{ $m->tax_ptkp_status ?: 'TK/0' }}" class="py-3.5 px-3">
                                     <div class="space-y-1">
                                         <div class="flex flex-wrap gap-1 items-center">
                                             <span class="px-2 py-0.5 rounded text-[10.5px] font-bold bg-black/5 dark:bg-white/10 text-black/80 dark:text-white/80">
@@ -1167,7 +1168,7 @@
                                 </td>
 
                                 <!-- Status Biometrik Wajah -->
-                                <td class="py-3.5 px-3">
+                                <td data-sort-value="{{ $hasFace ? '1_enrolled' : '0_unenrolled' }}" class="py-3.5 px-3">
                                     @if($hasFace)
                                         <button type="button"
                                             @click="openFaceRegister({{ Js::from($m) }}, '{{ route('hrm.employees.face-register', $m->id) }}')"
@@ -1188,7 +1189,7 @@
                                 </td>
 
                                 <!-- Rekening Bank -->
-                                <td class="py-3.5 px-3">
+                                <td data-sort-value="{{ strtolower($m->bank_name ?: ($m->bank_account_number ? 'bank' : 'tunai')) }}" class="py-3.5 px-3">
                                     @if($m->bank_account_number)
                                         <div class="font-semibold text-black dark:text-white">{{ $m->bank_name ?: 'Bank' }}</div>
                                         <div class="text-[11.5px] text-black/60 dark:text-white/60 tabular-nums font-mono">{{ $m->bank_account_number }}</div>
@@ -2959,24 +2960,48 @@
     <!-- ======================================================== -->
     <!-- MODAL 1: DAFTARKAN BIOMETRIK WAJAH KARYAWAN              -->
     <!-- ======================================================== -->
-    <div x-show="showFaceRegisterModal" x-transition.opacity class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md" style="display: none;">
-        <div @click.outside="stopFaceRegCamera(); showFaceRegisterModal = false" class="w-full max-w-lg bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-[0_28px_56px_rgba(0,0,0,0.3)] overflow-hidden flex flex-col max-h-[90vh]">
-            <div class="p-5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-[12px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center shrink-0">
-                        <i data-lucide="scan-face" class="w-5 h-5"></i>
+    <template x-teleport="body">
+        <div x-show="showFaceRegisterModal" 
+            x-cloak
+            @keydown.escape.window="stopFaceRegCamera(); showFaceRegisterModal = false"
+            class="fixed inset-0 z-[200] overflow-y-auto">
+            <!-- Backdrop -->
+            <div x-show="showFaceRegisterModal"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="stopFaceRegCamera(); showFaceRegisterModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
+
+            <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="showFaceRegisterModal = false">
+                <div x-show="showFaceRegisterModal"
+                    x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95"
+                    @click.stop
+                    class="relative w-full max-w-lg bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-[0_28px_56px_rgba(0,0,0,0.3)] overflow-hidden flex flex-col max-h-[90vh]">
+                    <div class="p-5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-[12px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center shrink-0">
+                                <i data-lucide="scan-face" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('hrm.face_registration_title') }}</h3>
+                                <p class="text-[12px] text-black/60 dark:text-white/60">
+                                    {{ __('hrm.staff_prefix') }} <strong class="text-black dark:text-white" x-text="selectedFaceEmployee?.user?.name"></strong>
+                                </p>
+                            </div>
+                        </div>
+                        <button type="button" @click="stopFaceRegCamera(); showFaceRegisterModal = false" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer" aria-label="{{ __('common.close') }}">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
                     </div>
-                    <div>
-                        <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('hrm.face_registration_title') }}</h3>
-                        <p class="text-[12px] text-black/60 dark:text-white/60">
-                            {{ __('hrm.staff_prefix') }} <strong class="text-black dark:text-white" x-text="selectedFaceEmployee?.user?.name"></strong>
-                        </p>
-                    </div>
-                </div>
-                <button type="button" @click="stopFaceRegCamera(); showFaceRegisterModal = false" class="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer" aria-label="{{ __('common.close') }}">
-                    <i data-lucide="x" class="w-4.5 h-4.5"></i>
-                </button>
-            </div>
 
             <form method="POST" :action="faceRegisterAction" enctype="multipart/form-data"
                 @submit="if(isSubmittingForm) { $event.preventDefault(); return false; } isSubmittingForm = true;"
@@ -3071,36 +3096,61 @@
                             </div>
                         </template>
                     </button>
-                </div>
             </form>
+                </div>
+            </div>
         </div>
-    </div>
+    </template>
 
     <!-- ======================================================== -->
     <!-- ======================================================== -->
     <!-- MODAL 2: 1-DIRECTION FRONTAL BIOMETRIC FACE ATTENDANCE   -->
     <!-- ======================================================== -->
-    <div x-show="showFaceAttendanceModal" x-transition.opacity class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-lg" style="display: none;">
-        <div @click.outside="stopAttendanceCamera(); showFaceAttendanceModal = false" class="w-full sm:max-w-lg bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[26px] border-t sm:border border-black/10 dark:border-white/10 shadow-[0_32px_64px_rgba(0,0,0,0.4)] overflow-hidden flex flex-col max-h-[92dvh] sm:max-h-[90vh]">
-            
-            <!-- Mobile Sheet Drag Indicator -->
-            <div class="sm:hidden w-12 h-1.5 bg-black/20 dark:bg-white/20 rounded-full mx-auto mt-2.5 mb-0.5 shrink-0"></div>
+    <template x-teleport="body">
+        <div x-show="showFaceAttendanceModal" 
+            x-cloak
+            @keydown.escape.window="stopAttendanceCamera(); showFaceAttendanceModal = false"
+            class="fixed inset-0 z-[200] overflow-y-auto">
+            <!-- Backdrop -->
+            <div x-show="showFaceAttendanceModal"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="stopAttendanceCamera(); showFaceAttendanceModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
 
-            <!-- Header -->
-            <div class="p-4 sm:p-5 border-b border-black/5 dark:border-white/10 flex items-center justify-between shrink-0">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-[10px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center">
-                        <i data-lucide="scan-face" class="w-4.5 h-4.5"></i>
+            <div class="relative z-10 min-h-full flex items-end sm:items-center justify-center p-0 sm:p-4" @click.self="showFaceAttendanceModal = false">
+                <div x-show="showFaceAttendanceModal"
+                    x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    @click.stop
+                    class="relative w-full sm:max-w-lg bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[26px] border-t sm:border border-black/10 dark:border-white/10 shadow-[0_32px_64px_rgba(0,0,0,0.4)] overflow-hidden flex flex-col max-h-[92dvh] sm:max-h-[90vh]">
+                    
+                    <!-- Mobile Sheet Drag Indicator -->
+                    <div class="sm:hidden w-12 h-1.5 bg-black/20 dark:bg-white/20 rounded-full mx-auto mt-2.5 mb-0.5 shrink-0"></div>
+
+                    <!-- Header -->
+                    <div class="p-4 sm:p-5 border-b border-black/5 dark:border-white/10 flex items-center justify-between shrink-0">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-[10px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center">
+                                <i data-lucide="scan-face" class="w-4.5 h-4.5"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-[14px] font-bold text-black dark:text-white">{{ __('hrm.face_attendance_title') ?? 'Presensi Wajah 1-Arah' }}</h4>
+                                <span class="text-[11px] font-semibold text-black/50 dark:text-white/50" x-text="attendanceActionType === 'in' ? '{{ __('portal.clock_in_title') }}' : '{{ __('portal.clock_out_title') }}'"></span>
+                            </div>
+                        </div>
+                        <button type="button" @click="stopAttendanceCamera(); showFaceAttendanceModal = false" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer" aria-label="{{ __('common.close') }}">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
                     </div>
-                    <div>
-                        <h4 class="text-[14px] font-bold text-black dark:text-white">{{ __('hrm.face_attendance_title') ?? 'Presensi Wajah 1-Arah' }}</h4>
-                        <span class="text-[11px] font-semibold text-black/50 dark:text-white/50" x-text="attendanceActionType === 'in' ? '{{ __('portal.clock_in_title') }}' : '{{ __('portal.clock_out_title') }}'"></span>
-                    </div>
-                </div>
-                <button type="button" @click="stopAttendanceCamera(); showFaceAttendanceModal = false" class="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer" aria-label="{{ __('common.close') }}">
-                    <i data-lucide="x" class="w-4.5 h-4.5"></i>
-                </button>
-            </div>
 
             <!-- Body Camera & 1-Direction Frontal Flow -->
             <div class="p-4 sm:p-5 space-y-4 overflow-y-auto flex-1">
@@ -3173,31 +3223,56 @@
                         <span>{{ __('portal.map_submitting') }}</span>
                     </div>
                     <p class="text-[10.5px] text-black/50 dark:text-white/50">{{ __('portal.face_privacy_notice') }}</p>
+            </div>
                 </div>
             </div>
         </div>
-    </div>
+    </template>
 
     <!-- ======================================================== -->
     <!-- ======================================================== -->
     <!-- MODAL 3: TAMBAH LOKASI KANTOR & GEOFENCE                 -->
     <!-- ======================================================== -->
-    <div x-show="showAddLocationModal" x-transition.opacity class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" style="display: none;">
-        <div @click.outside="showAddLocationModal = false" class="w-full max-w-lg bg-white dark:bg-[#1C1C1E] rounded-[22px] border border-black/10 dark:border-white/10 shadow-[0_24px_48px_rgba(0,0,0,0.25)] overflow-hidden flex flex-col max-h-[88vh]">
-            <div class="p-5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-[12px] bg-[#FF2D55]/10 text-[#FF2D55] flex items-center justify-center shrink-0">
-                        <i data-lucide="map-pin" class="w-5 h-5"></i>
+    <template x-teleport="body">
+        <div x-show="showAddLocationModal" 
+            x-cloak
+            @keydown.escape.window="showAddLocationModal = false"
+            class="fixed inset-0 z-[200] overflow-y-auto">
+            <!-- Backdrop -->
+            <div x-show="showAddLocationModal"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="showAddLocationModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
+
+            <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="showAddLocationModal = false">
+                <div x-show="showAddLocationModal"
+                    x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95"
+                    @click.stop
+                    class="relative w-full max-w-lg bg-white dark:bg-[#1C1C1E] rounded-[22px] border border-black/10 dark:border-white/10 shadow-[0_24px_48px_rgba(0,0,0,0.25)] overflow-hidden flex flex-col max-h-[88vh]">
+                    <div class="p-5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-[12px] bg-[#FF2D55]/10 text-[#FF2D55] flex items-center justify-center shrink-0">
+                                <i data-lucide="map-pin" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('hrm.modal_add_location_title') }}</h3>
+                                <p class="text-[12px] text-black/60 dark:text-white/60">{{ __('hrm.modal_add_location_subtitle') }}</p>
+                            </div>
+                        </div>
+                        <button type="button" @click="showAddLocationModal = false" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer" aria-label="{{ __('common.close') }}">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
                     </div>
-                    <div>
-                        <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('hrm.modal_add_location_title') }}</h3>
-                        <p class="text-[12px] text-black/60 dark:text-white/60">{{ __('hrm.modal_add_location_subtitle') }}</p>
-                    </div>
-                </div>
-                <button type="button" @click="showAddLocationModal = false" class="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer" aria-label="{{ __('common.close') }}">
-                    <i data-lucide="x" class="w-4.5 h-4.5"></i>
-                </button>
-            </div>
 
             <form method="POST" action="{{ route('hrm.locations.store') }}"
                 @submit="if(isSubmittingForm) { $event.preventDefault(); return false; } isSubmittingForm = true;"
@@ -3290,28 +3365,54 @@
                     </button>
                 </div>
             </form>
+                </div>
+            </div>
         </div>
-    </div>
+    </template>
 
     <!-- ======================================================== -->
     <!-- MODAL 4: EDIT LOKASI KANTOR                              -->
     <!-- ======================================================== -->
-    <div x-show="showEditLocationModal" x-transition.opacity class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" style="display: none;">
-        <div @click.outside="showEditLocationModal = false" class="w-full max-w-lg bg-white dark:bg-[#1C1C1E] rounded-[22px] border border-black/10 dark:border-white/10 shadow-[0_24px_48px_rgba(0,0,0,0.25)] overflow-hidden flex flex-col max-h-[88vh]">
-            <div class="p-5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0">
-                        <i data-lucide="edit-3" class="w-5 h-5"></i>
+    <template x-teleport="body">
+        <div x-show="showEditLocationModal" 
+            x-cloak
+            @keydown.escape.window="showEditLocationModal = false"
+            class="fixed inset-0 z-[200] overflow-y-auto">
+            <!-- Backdrop -->
+            <div x-show="showEditLocationModal"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="showEditLocationModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
+
+            <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="showEditLocationModal = false">
+                <div x-show="showEditLocationModal"
+                    x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95"
+                    @click.stop
+                    class="relative w-full max-w-lg bg-white dark:bg-[#1C1C1E] rounded-[22px] border border-black/10 dark:border-white/10 shadow-[0_24px_48px_rgba(0,0,0,0.25)] overflow-hidden flex flex-col max-h-[88vh]">
+                    <div class="p-5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0">
+                                <i data-lucide="edit-3" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('hrm.modal_edit_location_title') }}</h3>
+                                <p class="text-[12px] text-black/60 dark:text-white/60">{{ __('hrm.modal_edit_location_subtitle') }}</p>
+                            </div>
+                        </div>
+                        <button type="button" @click="showEditLocationModal = false" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer" aria-label="{{ __('common.close') }}">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
                     </div>
-                    <div>
-                        <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('hrm.modal_edit_location_title') }}</h3>
-                        <p class="text-[12px] text-black/60 dark:text-white/60">{{ __('hrm.modal_edit_location_subtitle') }}</p>
-                    </div>
-                </div>
-                <button type="button" @click="showEditLocationModal = false" class="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer" aria-label="{{ __('common.close') }}">
-                    <i data-lucide="x" class="w-4.5 h-4.5"></i>
-                </button>
-            </div>
 
             <form method="POST" :action="locationEditAction"
                 @submit="if(isSubmittingForm) { $event.preventDefault(); return false; } isSubmittingForm = true;"
@@ -3405,33 +3506,59 @@
                     </button>
                 </div>
             </form>
+                </div>
+            </div>
         </div>
-    </div>
+    </template>
 
     <!-- ======================================================== -->
     <!-- ======================================================== -->
     <!-- MODAL 5: TAMBAH KARYAWAN BARU LENGKAP (XXL CANVAS 2-KOLOM)-->
     <!-- ======================================================== -->
-    <div x-show="showAddEmployeeModal" x-transition.opacity class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md" style="display: none;">
-        <div @click.outside="showAddEmployeeModal = false" class="w-full max-w-5xl bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-[0_32px_64px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col max-h-[90vh]">
-            <!-- Modal Header -->
-            <div class="px-6 py-4.5 border-b border-black/5 dark:border-white/10 flex items-center justify-between bg-black/[0.01] dark:bg-white/[0.01]">
-                <div class="flex items-center gap-3.5">
-                    <div class="w-11 h-11 rounded-[14px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0 shadow-xs">
-                        <i data-lucide="user-plus" class="w-5.5 h-5.5"></i>
-                    </div>
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <h3 class="text-[17px] font-bold text-black dark:text-white tracking-tight">{{ __('hrm.modal_add_emp_title') }}</h3>
-                            <span class="px-2 py-0.5 rounded-full bg-[#007AFF]/10 text-[#007AFF] text-[10.5px] font-bold uppercase tracking-wider">Canvas XXL</span>
+    <template x-teleport="body">
+        <div x-show="showAddEmployeeModal" 
+            x-cloak
+            @keydown.escape.window="showAddEmployeeModal = false"
+            class="fixed inset-0 z-[200] overflow-y-auto">
+            <!-- Backdrop -->
+            <div x-show="showAddEmployeeModal"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="showAddEmployeeModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
+
+            <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="showAddEmployeeModal = false">
+                <div x-show="showAddEmployeeModal"
+                    x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95"
+                    @click.stop
+                    class="relative w-full max-w-5xl bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-[0_32px_64px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col max-h-[90vh]">
+                    <!-- Modal Header -->
+                    <div class="px-6 py-4.5 border-b border-black/5 dark:border-white/10 flex items-center justify-between bg-black/[0.01] dark:bg-white/[0.01]">
+                        <div class="flex items-center gap-3.5">
+                            <div class="w-11 h-11 rounded-[14px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0 shadow-xs">
+                                <i data-lucide="user-plus" class="w-5.5 h-5.5"></i>
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <h3 class="text-[17px] font-bold text-black dark:text-white tracking-tight">{{ __('hrm.modal_add_emp_title') }}</h3>
+                                    <span class="px-2 py-0.5 rounded-full bg-[#007AFF]/10 text-[#007AFF] text-[10.5px] font-bold uppercase tracking-wider">Canvas XXL</span>
+                                </div>
+                                <p class="text-[12.5px] text-black/60 dark:text-white/60">{{ __('hrm.modal_add_emp_subtitle') }}</p>
+                            </div>
                         </div>
-                        <p class="text-[12.5px] text-black/60 dark:text-white/60">{{ __('hrm.modal_add_emp_subtitle') }}</p>
+                        <button type="button" @click="showAddEmployeeModal = false" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer" aria-label="{{ __('common.close') }}">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
                     </div>
-                </div>
-                <button type="button" @click="showAddEmployeeModal = false" class="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer" aria-label="{{ __('common.close') }}">
-                    <i data-lucide="x" class="w-4.5 h-4.5"></i>
-                </button>
-            </div>
 
             <!-- Modal Form with 2-Column XXL Ergonomic Grid -->
             <form method="POST" action="{{ route('hrm.employees.store') }}" enctype="multipart/form-data"
@@ -3707,34 +3834,59 @@
                             </template>
                         </button>
                     </div>
-                </div>
             </form>
+                </div>
+            </div>
         </div>
-    </div>
+    </template>
 
     <!-- ======================================================== -->
     <!-- MODAL 6: EDIT PROFIL HRM KARYAWAN (XXL CANVAS 2-KOLOM)   -->
     <!-- ======================================================== -->
-    <div x-show="showEditEmployeeModal" x-transition.opacity class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md" style="display: none;">
-        <div @click.outside="showEditEmployeeModal = false" class="w-full max-w-5xl bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-[0_32px_64px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col max-h-[90vh]">
-            <!-- Modal Header -->
-            <div class="px-6 py-4.5 border-b border-black/5 dark:border-white/10 flex items-center justify-between bg-black/[0.01] dark:bg-white/[0.01]">
-                <div class="flex items-center gap-3.5">
-                    <div class="w-11 h-11 rounded-[14px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0 shadow-xs">
-                        <i data-lucide="edit-3" class="w-5.5 h-5.5"></i>
-                    </div>
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <h3 class="text-[17px] font-bold text-black dark:text-white tracking-tight">{{ __('hrm.modal_edit_emp_title') }}</h3>
-                            <span class="px-2 py-0.5 rounded-full bg-[#007AFF]/10 text-[#007AFF] text-[10.5px] font-bold uppercase tracking-wider">Canvas XXL</span>
+    <template x-teleport="body">
+        <div x-show="showEditEmployeeModal" 
+            x-cloak
+            @keydown.escape.window="showEditEmployeeModal = false"
+            class="fixed inset-0 z-[200] overflow-y-auto">
+            <!-- Backdrop -->
+            <div x-show="showEditEmployeeModal"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="showEditEmployeeModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
+
+            <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="showEditEmployeeModal = false">
+                <div x-show="showEditEmployeeModal"
+                    x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95"
+                    @click.stop
+                    class="relative w-full max-w-5xl bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-[0_32px_64px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col max-h-[90vh]">
+                    <!-- Modal Header -->
+                    <div class="px-6 py-4.5 border-b border-black/5 dark:border-white/10 flex items-center justify-between bg-black/[0.01] dark:bg-white/[0.01]">
+                        <div class="flex items-center gap-3.5">
+                            <div class="w-11 h-11 rounded-[14px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0 shadow-xs">
+                                <i data-lucide="edit-3" class="w-5.5 h-5.5"></i>
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <h3 class="text-[17px] font-bold text-black dark:text-white tracking-tight">{{ __('hrm.modal_edit_emp_title') }}</h3>
+                                    <span class="px-2 py-0.5 rounded-full bg-[#007AFF]/10 text-[#007AFF] text-[10.5px] font-bold uppercase tracking-wider">Canvas XXL</span>
+                                </div>
+                                <p class="text-[12.5px] text-black/60 dark:text-white/60">{{ __('hrm.modal_edit_emp_subtitle') }}</p>
+                            </div>
                         </div>
-                        <p class="text-[12.5px] text-black/60 dark:text-white/60">{{ __('hrm.modal_edit_emp_subtitle') }}</p>
+                        <button type="button" @click="showEditEmployeeModal = false" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer" aria-label="{{ __('common.close') }}">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
                     </div>
-                </div>
-                <button type="button" @click="showEditEmployeeModal = false" class="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer" aria-label="{{ __('common.close') }}">
-                    <i data-lucide="x" class="w-4.5 h-4.5"></i>
-                </button>
-            </div>
 
             <!-- Modal Form with 2-Column XXL Ergonomic Grid -->
             <form method="POST" :action="editFormAction" enctype="multipart/form-data"
@@ -4004,30 +4156,55 @@
                             </template>
                         </button>
                     </div>
-                </div>
             </form>
+                </div>
+            </div>
         </div>
-    </div>
+    </template>
 
     <!-- ======================================================== -->
     <!-- MODAL 7: CATAT KASBON BARU                               -->
     <!-- ======================================================== -->
-    <div x-show="showAddLoanModal" x-transition.opacity class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" style="display: none;">
-        <div @click.outside="showAddLoanModal = false" class="w-full max-w-lg bg-white dark:bg-[#1C1C1E] rounded-[22px] border border-black/10 dark:border-white/10 shadow-[0_24px_48px_rgba(0,0,0,0.25)] overflow-hidden flex flex-col max-h-[88vh]">
-            <div class="p-5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-[12px] bg-[#FF9500]/10 text-[#FF9500] flex items-center justify-center shrink-0">
-                        <i data-lucide="credit-card" class="w-5 h-5"></i>
+    <template x-teleport="body">
+        <div x-show="showAddLoanModal" 
+            x-cloak
+            @keydown.escape.window="showAddLoanModal = false"
+            class="fixed inset-0 z-[200] overflow-y-auto">
+            <!-- Backdrop -->
+            <div x-show="showAddLoanModal"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="showAddLoanModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
+
+            <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="showAddLoanModal = false">
+                <div x-show="showAddLoanModal"
+                    x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95"
+                    @click.stop
+                    class="relative w-full max-w-lg bg-white dark:bg-[#1C1C1E] rounded-[22px] border border-black/10 dark:border-white/10 shadow-[0_24px_48px_rgba(0,0,0,0.25)] overflow-hidden flex flex-col max-h-[88vh]">
+                    <div class="p-5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-[12px] bg-[#FF9500]/10 text-[#FF9500] flex items-center justify-center shrink-0">
+                                <i data-lucide="credit-card" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('hrm.modal_add_loan_title') }}</h3>
+                                <p class="text-[12px] text-black/60 dark:text-white/60">{{ __('hrm.modal_add_loan_subtitle') }}</p>
+                            </div>
+                        </div>
+                        <button type="button" @click="showAddLoanModal = false" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer" aria-label="{{ __('common.close') }}">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
                     </div>
-                    <div>
-                        <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('hrm.modal_add_loan_title') }}</h3>
-                        <p class="text-[12px] text-black/60 dark:text-white/60">{{ __('hrm.modal_add_loan_subtitle') }}</p>
-                    </div>
-                </div>
-                <button type="button" @click="showAddLoanModal = false" class="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer" aria-label="{{ __('common.close') }}">
-                    <i data-lucide="x" class="w-4.5 h-4.5"></i>
-                </button>
-            </div>
 
             <form method="POST" action="{{ route('hrm.loans.store') }}"
                 @submit="if(isSubmittingForm) { $event.preventDefault(); return false; } isSubmittingForm = true;"
@@ -4091,28 +4268,54 @@
                     </button>
                 </div>
             </form>
+                </div>
+            </div>
         </div>
-    </div>
+    </template>
 
     <!-- ======================================================== -->
     <!-- MODAL 8: AJUKAN TIKET PERBAIKAN ABSENSI                  -->
     <!-- ======================================================== -->
-    <div x-show="showAddCorrectionModal" x-transition.opacity class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" style="display: none;">
-        <div @click.outside="showAddCorrectionModal = false" class="w-full max-w-xl bg-white dark:bg-[#1C1C1E] rounded-[22px] border border-black/10 dark:border-white/10 shadow-[0_24px_48px_rgba(0,0,0,0.25)] overflow-hidden flex flex-col max-h-[88vh]">
-            <div class="p-5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-[12px] bg-[#FF9500]/10 text-[#FF9500] flex items-center justify-center shrink-0">
-                        <i data-lucide="file-check-2" class="w-5 h-5"></i>
+    <template x-teleport="body">
+        <div x-show="showAddCorrectionModal" 
+            x-cloak
+            @keydown.escape.window="showAddCorrectionModal = false"
+            class="fixed inset-0 z-[200] overflow-y-auto">
+            <!-- Backdrop -->
+            <div x-show="showAddCorrectionModal"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="showAddCorrectionModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
+
+            <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="showAddCorrectionModal = false">
+                <div x-show="showAddCorrectionModal"
+                    x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95"
+                    @click.stop
+                    class="relative w-full max-w-xl bg-white dark:bg-[#1C1C1E] rounded-[22px] border border-black/10 dark:border-white/10 shadow-[0_24px_48px_rgba(0,0,0,0.25)] overflow-hidden flex flex-col max-h-[88vh]">
+                    <div class="p-5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-[12px] bg-[#FF9500]/10 text-[#FF9500] flex items-center justify-center shrink-0">
+                                <i data-lucide="file-check-2" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('hrm.modal_add_correction_title') }}</h3>
+                                <p class="text-[12px] text-black/60 dark:text-white/60">{{ __('hrm.modal_add_correction_subtitle') }}</p>
+                            </div>
+                        </div>
+                        <button type="button" @click="showAddCorrectionModal = false" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer" aria-label="{{ __('common.close') }}">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
                     </div>
-                    <div>
-                        <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('hrm.modal_add_correction_title') }}</h3>
-                        <p class="text-[12px] text-black/60 dark:text-white/60">{{ __('hrm.modal_add_correction_subtitle') }}</p>
-                    </div>
-                </div>
-                <button type="button" @click="showAddCorrectionModal = false" class="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer" aria-label="{{ __('common.close') }}">
-                    <i data-lucide="x" class="w-4.5 h-4.5"></i>
-                </button>
-            </div>
 
             <form method="POST" action="{{ route('hrm.attendance.corrections.store') }}" enctype="multipart/form-data"
                 @submit="if(isSubmittingForm) { $event.preventDefault(); return false; } isSubmittingForm = true;"
@@ -4194,38 +4397,64 @@
                     </button>
                 </div>
             </form>
+                </div>
+            </div>
         </div>
-    </div>
+    </template>
 
     <!-- ======================================================== -->
     <!-- MODAL 9: REVIEW PERSUTUJUAN TIKET KOREKSI (VISUAL DIFF)  -->
     <!-- ======================================================== -->
-    <div x-show="showReviewCorrectionModal" x-transition.opacity class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" style="display: none;">
-        <div @click.outside="showReviewCorrectionModal = false" class="w-full max-w-2xl bg-white dark:bg-[#1C1C1E] rounded-[22px] border border-black/10 dark:border-white/10 shadow-[0_28px_56px_rgba(0,0,0,0.25)] overflow-hidden flex flex-col max-h-[88vh]">
-            <div class="p-5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
-                <div>
-                    <div class="flex items-center gap-2 mb-1">
-                        <span class="text-[16px] font-bold text-black dark:text-white">{{ __('hrm.modal_review_correction_title') }}</span>
-                        <span class="font-mono text-[14px] font-bold text-[#007AFF] px-2.5 py-0.5 rounded-[7px] bg-[#007AFF]/10" x-text="selectedCorrection?.correction_number"></span>
-                        <template x-if="selectedCorrection?.status === 'pending'">
-                            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#FF9500]/15 text-[#FF9500]">{{ __('hrm.badge_pending_review') }}</span>
-                        </template>
-                        <template x-if="selectedCorrection?.status === 'approved'">
-                            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#34C759]/15 text-[#34C759]">{{ __('hrm.badge_approved') }}</span>
-                        </template>
-                        <template x-if="selectedCorrection?.status === 'rejected'">
-                            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#FF3B30]/15 text-[#FF3B30]">{{ __('hrm.badge_rejected') }}</span>
-                        </template>
+    <template x-teleport="body">
+        <div x-show="showReviewCorrectionModal" 
+            x-cloak
+            @keydown.escape.window="showReviewCorrectionModal = false"
+            class="fixed inset-0 z-[200] overflow-y-auto">
+            <!-- Backdrop -->
+            <div x-show="showReviewCorrectionModal"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="showReviewCorrectionModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
+
+            <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="showReviewCorrectionModal = false">
+                <div x-show="showReviewCorrectionModal"
+                    x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95"
+                    @click.stop
+                    class="relative w-full max-w-2xl bg-white dark:bg-[#1C1C1E] rounded-[22px] border border-black/10 dark:border-white/10 shadow-[0_28px_56px_rgba(0,0,0,0.25)] overflow-hidden flex flex-col max-h-[88vh]">
+                    <div class="p-5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
+                        <div>
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="text-[16px] font-bold text-black dark:text-white">{{ __('hrm.modal_review_correction_title') }}</span>
+                                <span class="font-mono text-[14px] font-bold text-[#007AFF] px-2.5 py-0.5 rounded-[7px] bg-[#007AFF]/10" x-text="selectedCorrection?.correction_number"></span>
+                                <template x-if="selectedCorrection?.status === 'pending'">
+                                    <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#FF9500]/15 text-[#FF9500]">{{ __('hrm.badge_pending_review') }}</span>
+                                </template>
+                                <template x-if="selectedCorrection?.status === 'approved'">
+                                    <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#34C759]/15 text-[#34C759]">{{ __('hrm.badge_approved') }}</span>
+                                </template>
+                                <template x-if="selectedCorrection?.status === 'rejected'">
+                                    <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#FF3B30]/15 text-[#FF3B30]">{{ __('hrm.badge_rejected') }}</span>
+                                </template>
+                            </div>
+                            <p class="text-[12px] text-black/60 dark:text-white/60 font-medium">
+                                {{ __('hrm.submitter_prefix') }} <strong class="text-black dark:text-white" x-text="selectedCorrection?.user?.name || '{{ __('hrm.default_employee_name') }}'"></strong>
+                                &bull; {{ __('hrm.target_prefix') }} <span class="tabular-nums font-semibold" x-text="selectedCorrection?.target_date ? selectedCorrection.target_date.substring(0, 10) : '-'"></span>
+                            </p>
+                        </div>
+                        <button type="button" @click="showReviewCorrectionModal = false" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer" aria-label="{{ __('common.close') }}">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
                     </div>
-                    <p class="text-[12px] text-black/60 dark:text-white/60 font-medium">
-                        {{ __('hrm.submitter_prefix') }} <strong class="text-black dark:text-white" x-text="selectedCorrection?.user?.name || '{{ __('hrm.default_employee_name') }}'"></strong>
-                        &bull; {{ __('hrm.target_prefix') }} <span class="tabular-nums font-semibold" x-text="selectedCorrection?.target_date ? selectedCorrection.target_date.substring(0, 10) : '-'"></span>
-                    </p>
-                </div>
-                <button type="button" @click="showReviewCorrectionModal = false" class="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer" aria-label="{{ __('common.close') }}">
-                    <i data-lucide="x" class="w-4.5 h-4.5"></i>
-                </button>
-            </div>
 
             <div class="p-5 overflow-y-auto space-y-5 text-[13px]">
                 <!-- Visual Diff Comparison -->
@@ -4347,28 +4576,54 @@
                     </div>
                 </template>
             </div>
+                </div>
+            </div>
         </div>
-    </div>
+    </template>
 
     <!-- ======================================================== -->
     <!-- MODAL SHIFT 1: TAMBAH SHIFT KERJA (APPLE HIG)            -->
     <!-- ======================================================== -->
-    <div x-show="showAddShiftModal" x-transition.opacity class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md" style="display: none;">
-        <div @click.outside="showAddShiftModal = false" class="w-full max-w-2xl bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-[0_32px_64px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col max-h-[90vh]">
-            <div class="px-6 py-4.5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-[12px] bg-[#30B0C7]/15 text-[#30B0C7] flex items-center justify-center shrink-0">
-                        <i data-lucide="clock" class="w-5 h-5"></i>
+    <template x-teleport="body">
+        <div x-show="showAddShiftModal" 
+            x-cloak
+            @keydown.escape.window="showAddShiftModal = false"
+            class="fixed inset-0 z-[200] overflow-y-auto">
+            <!-- Backdrop -->
+            <div x-show="showAddShiftModal"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="showAddShiftModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
+
+            <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="showAddShiftModal = false">
+                <div x-show="showAddShiftModal"
+                    x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95"
+                    @click.stop
+                    class="relative w-full max-w-2xl bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-[0_32px_64px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col max-h-[90vh]">
+                    <div class="px-6 py-4.5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-[12px] bg-[#30B0C7]/15 text-[#30B0C7] flex items-center justify-center shrink-0">
+                                <i data-lucide="clock" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-[16px] font-bold text-black dark:text-white">Tambah Shift Kerja Baru</h3>
+                                <p class="text-[12px] text-black/60 dark:text-white/60">Konfigurasi jam mulai, jam selesai, toleransi & shift malam</p>
+                            </div>
+                        </div>
+                        <button type="button" @click="showAddShiftModal = false" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition cursor-pointer" aria-label="{{ __('common.close') }}">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
                     </div>
-                    <div>
-                        <h3 class="text-[16px] font-bold text-black dark:text-white">Tambah Shift Kerja Baru</h3>
-                        <p class="text-[12px] text-black/60 dark:text-white/60">Konfigurasi jam mulai, jam selesai, toleransi & shift malam</p>
-                    </div>
-                </div>
-                <button type="button" @click="showAddShiftModal = false" class="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition cursor-pointer" aria-label="{{ __('common.close') }}">
-                    <i data-lucide="x" class="w-4.5 h-4.5"></i>
-                </button>
-            </div>
 
             <form method="POST" action="{{ route('hrm.shifts.store') }}"
                 @submit="if(isSubmittingForm) { $event.preventDefault(); return false; } isSubmittingForm = true;"
@@ -4464,28 +4719,54 @@
                     </button>
                 </div>
             </form>
+                </div>
+            </div>
         </div>
-    </div>
+    </template>
 
     <!-- ======================================================== -->
     <!-- MODAL SHIFT 2: EDIT SHIFT KERJA (APPLE HIG)              -->
     <!-- ======================================================== -->
-    <div x-show="showEditShiftModal" x-transition.opacity class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md" style="display: none;">
-        <div @click.outside="showEditShiftModal = false" class="w-full max-w-2xl bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-[0_32px_64px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col max-h-[90vh]">
-            <div class="px-6 py-4.5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/15 text-[#007AFF] flex items-center justify-center shrink-0">
-                        <i data-lucide="edit-3" class="w-5 h-5"></i>
+    <template x-teleport="body">
+        <div x-show="showEditShiftModal" 
+            x-cloak
+            @keydown.escape.window="showEditShiftModal = false"
+            class="fixed inset-0 z-[200] overflow-y-auto">
+            <!-- Backdrop -->
+            <div x-show="showEditShiftModal"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="showEditShiftModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
+
+            <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="showEditShiftModal = false">
+                <div x-show="showEditShiftModal"
+                    x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95"
+                    @click.stop
+                    class="relative w-full max-w-2xl bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-[0_32px_64px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col max-h-[90vh]">
+                    <div class="px-6 py-4.5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/15 text-[#007AFF] flex items-center justify-center shrink-0">
+                                <i data-lucide="edit-3" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-[16px] font-bold text-black dark:text-white">Edit Shift Kerja</h3>
+                                <p class="text-[12px] text-black/60 dark:text-white/60">Perbarui parameter jam kerja atau toleransi</p>
+                            </div>
+                        </div>
+                        <button type="button" @click="showEditShiftModal = false" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition cursor-pointer" aria-label="{{ __('common.close') }}">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
                     </div>
-                    <div>
-                        <h3 class="text-[16px] font-bold text-black dark:text-white">Edit Shift Kerja</h3>
-                        <p class="text-[12px] text-black/60 dark:text-white/60">Perbarui parameter jam kerja atau toleransi</p>
-                    </div>
-                </div>
-                <button type="button" @click="showEditShiftModal = false" class="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition cursor-pointer" aria-label="{{ __('common.close') }}">
-                    <i data-lucide="x" class="w-4.5 h-4.5"></i>
-                </button>
-            </div>
 
             <form method="POST" :action="editShiftFormAction"
                 @submit="if(isSubmittingForm) { $event.preventDefault(); return false; } isSubmittingForm = true;"
@@ -4582,28 +4863,54 @@
                     </button>
                 </div>
             </form>
+                </div>
+            </div>
         </div>
-    </div>
+    </template>
 
     <!-- ======================================================== -->
     <!-- MODAL ROSTER 1: TAMBAH JADWAL / ROSTER (APPLE HIG)       -->
     <!-- ======================================================== -->
-    <div x-show="showAddScheduleModal" x-transition.opacity class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md" style="display: none;">
-        <div @click.outside="showAddScheduleModal = false" class="w-full max-w-2xl bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-[0_32px_64px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col max-h-[90vh]">
-            <div class="px-6 py-4.5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-[12px] bg-[#5856D6]/15 text-[#5856D6] flex items-center justify-center shrink-0">
-                        <i data-lucide="calendar" class="w-5 h-5"></i>
+    <template x-teleport="body">
+        <div x-show="showAddScheduleModal" 
+            x-cloak
+            @keydown.escape.window="showAddScheduleModal = false"
+            class="fixed inset-0 z-[200] overflow-y-auto">
+            <!-- Backdrop -->
+            <div x-show="showAddScheduleModal"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="showAddScheduleModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
+
+            <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="showAddScheduleModal = false">
+                <div x-show="showAddScheduleModal"
+                    x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95"
+                    @click.stop
+                    class="relative w-full max-w-2xl bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-[0_32px_64px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col max-h-[90vh]">
+                    <div class="px-6 py-4.5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-[12px] bg-[#5856D6]/15 text-[#5856D6] flex items-center justify-center shrink-0">
+                                <i data-lucide="calendar" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-[16px] font-bold text-black dark:text-white">Atur Jadwal Kerja Karyawan</h3>
+                                <p class="text-[12px] text-black/60 dark:text-white/60">Pola mingguan atau jadwal pada tanggal tertentu</p>
+                            </div>
+                        </div>
+                        <button type="button" @click="showAddScheduleModal = false" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition cursor-pointer" aria-label="{{ __('common.close') }}">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
                     </div>
-                    <div>
-                        <h3 class="text-[16px] font-bold text-black dark:text-white">Atur Jadwal Kerja Karyawan</h3>
-                        <p class="text-[12px] text-black/60 dark:text-white/60">Pola mingguan atau jadwal pada tanggal tertentu</p>
-                    </div>
-                </div>
-                <button type="button" @click="showAddScheduleModal = false" class="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition cursor-pointer" aria-label="{{ __('common.close') }}">
-                    <i data-lucide="x" class="w-4.5 h-4.5"></i>
-                </button>
-            </div>
 
             <form method="POST" action="{{ route('hrm.schedules.store') }}"
                 @submit="if(isSubmittingForm) { $event.preventDefault(); return false; } isSubmittingForm = true;"
@@ -4721,28 +5028,54 @@
                     </button>
                 </div>
             </form>
+                </div>
+            </div>
         </div>
-    </div>
+    </template>
 
     <!-- ======================================================== -->
     <!-- MODAL ROSTER 2: EDIT JADWAL / ROSTER (APPLE HIG)         -->
     <!-- ======================================================== -->
-    <div x-show="showEditScheduleModal" x-transition.opacity class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md" style="display: none;">
-        <div @click.outside="showEditScheduleModal = false" class="w-full max-w-2xl bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-[0_32px_64px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col max-h-[90vh]">
-            <div class="px-6 py-4.5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-[12px] bg-[#5856D6]/15 text-[#5856D6] flex items-center justify-center shrink-0">
-                        <i data-lucide="edit-3" class="w-5 h-5"></i>
+    <template x-teleport="body">
+        <div x-show="showEditScheduleModal" 
+            x-cloak
+            @keydown.escape.window="showEditScheduleModal = false"
+            class="fixed inset-0 z-[200] overflow-y-auto">
+            <!-- Backdrop -->
+            <div x-show="showEditScheduleModal"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="showEditScheduleModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
+
+            <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="showEditScheduleModal = false">
+                <div x-show="showEditScheduleModal"
+                    x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95"
+                    @click.stop
+                    class="relative w-full max-w-2xl bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-[0_32px_64px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col max-h-[90vh]">
+                    <div class="px-6 py-4.5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-[12px] bg-[#5856D6]/15 text-[#5856D6] flex items-center justify-center shrink-0">
+                                <i data-lucide="edit-3" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-[16px] font-bold text-black dark:text-white">Edit Jadwal Kerja</h3>
+                                <p class="text-[12px] text-black/60 dark:text-white/60">Perbarui penugasan shift atau hari kerja karyawan</p>
+                            </div>
+                        </div>
+                        <button type="button" @click="showEditScheduleModal = false" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition cursor-pointer" aria-label="{{ __('common.close') }}">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
                     </div>
-                    <div>
-                        <h3 class="text-[16px] font-bold text-black dark:text-white">Edit Jadwal Kerja</h3>
-                        <p class="text-[12px] text-black/60 dark:text-white/60">Perbarui penugasan shift atau hari kerja karyawan</p>
-                    </div>
-                </div>
-                <button type="button" @click="showEditScheduleModal = false" class="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition cursor-pointer" aria-label="{{ __('common.close') }}">
-                    <i data-lucide="x" class="w-4.5 h-4.5"></i>
-                </button>
-            </div>
 
             <form method="POST" :action="editScheduleFormAction"
                 @submit="if(isSubmittingForm) { $event.preventDefault(); return false; } isSubmittingForm = true;"
@@ -4859,42 +5192,58 @@
                     </button>
                 </div>
             </form>
+                </div>
+            </div>
         </div>
-    </div>
+    </template>
 
 
     <!-- ======================================================== -->
     <!-- MODAL IMPORT KARYAWAN MASSAL (BENTO XXL PRE-COMMIT)       -->
     <!-- ======================================================== -->
-    <div x-show="showImportEmployeeModal" 
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0"
-        class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-md" 
-        style="display: none;">
+    <template x-teleport="body">
+        <div x-show="showImportEmployeeModal" 
+            x-cloak
+            @keydown.escape.window="if (!importEmployeeExecuting) showImportEmployeeModal = false"
+            class="fixed inset-0 z-[200] overflow-y-auto">
+            <!-- Backdrop -->
+            <div x-show="showImportEmployeeModal"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="if (!importEmployeeExecuting) showImportEmployeeModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
 
-        <div @click.outside="if (!importEmployeeExecuting) showImportEmployeeModal = false"
-            class="w-full max-w-5xl bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-[0_32px_64px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col max-h-[92vh]">
+            <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-4" @click.self="showImportEmployeeModal = false">
+                <div x-show="showImportEmployeeModal"
+                    x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95"
+                    @click.stop
+                    class="relative w-full max-w-5xl bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-[0_32px_64px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col max-h-[92vh]">
 
-            <!-- Modal Header -->
-            <div class="px-6 py-4 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-white dark:bg-[#1C1C1E]">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0">
-                        <i data-lucide="users" class="w-5 h-5"></i>
+                    <!-- Modal Header -->
+                    <div class="px-6 py-4 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-white dark:bg-[#1C1C1E]">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0">
+                                <i data-lucide="users" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-base sm:text-lg font-bold text-black dark:text-white">Impor Data Karyawan Massal</h3>
+                                <p class="text-xs text-black/55 dark:text-white/55">Upload berkas Excel master staf untuk membuat akun, struktur gaji, dan penempatan cabang secara instan</p>
+                            </div>
+                        </div>
+                        <button type="button" @click="if (!importEmployeeExecuting) showImportEmployeeModal = false"
+                            class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition cursor-pointer" aria-label="{{ __('common.close') }}">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
                     </div>
-                    <div>
-                        <h3 class="text-base sm:text-lg font-bold text-black dark:text-white">Impor Data Karyawan Massal</h3>
-                        <p class="text-xs text-black/55 dark:text-white/55">Upload berkas Excel master staf untuk membuat akun, struktur gaji, dan penempatan cabang secara instan</p>
-                    </div>
-                </div>
-                <button type="button" @click="if (!importEmployeeExecuting) showImportEmployeeModal = false"
-                    class="w-8 h-8 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition cursor-pointer">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
-            </div>
 
             <!-- Modal Body -->
             <div class="p-6 overflow-y-auto space-y-6 flex-1">
@@ -5080,43 +5429,57 @@
                         <span x-text="importEmployeeExecuting ? 'Sedang Memproses...' : ('Komit Impor (' + (importEmployeeDuplicateStrategy === 'skip' ? importEmployeePreview.valid_count : (importEmployeePreview.valid_count + importEmployeePreview.duplicate_count)) + ' Karyawan)')"></span>
                     </button>
                 </div>
+                </div>
             </div>
-
         </div>
-    </div>
+    </template>
 
     <!-- ======================================================== -->
     <!-- MODAL IMPORT PRESENSI MESIN (BENTO XXL PRE-COMMIT)        -->
     <!-- ======================================================== -->
-    <div x-show="showImportAttendanceModal" 
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0"
-        class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-md" 
-        style="display: none;">
+    <template x-teleport="body">
+        <div x-show="showImportAttendanceModal" 
+            x-cloak
+            @keydown.escape.window="if (!importAttendanceExecuting) showImportAttendanceModal = false"
+            class="fixed inset-0 z-[200] overflow-y-auto">
+            <!-- Backdrop -->
+            <div x-show="showImportAttendanceModal"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="if (!importAttendanceExecuting) showImportAttendanceModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
 
-        <div @click.outside="if (!importAttendanceExecuting) showImportAttendanceModal = false"
-            class="w-full max-w-5xl bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-[0_32px_64px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col max-h-[92vh]">
+            <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-4" @click.self="showImportAttendanceModal = false">
+                <div x-show="showImportAttendanceModal"
+                    x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95"
+                    @click.stop
+                    class="relative w-full max-w-5xl bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-[0_32px_64px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col max-h-[92vh]">
 
-            <!-- Modal Header -->
-            <div class="px-6 py-4 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-white dark:bg-[#1C1C1E]">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-[12px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center shrink-0">
-                        <i data-lucide="fingerprint" class="w-5 h-5"></i>
+                    <!-- Modal Header -->
+                    <div class="px-6 py-4 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-white dark:bg-[#1C1C1E]">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-[12px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center shrink-0">
+                                <i data-lucide="fingerprint" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-base sm:text-lg font-bold text-black dark:text-white">Impor Log Mesin Presensi Biometrik</h3>
+                                <p class="text-xs text-black/55 dark:text-white/55">Upload log presensi dari ZKTeco, Solution, Fingerspot, atau mesin absensi sidik jari lainnya</p>
+                            </div>
+                        </div>
+                        <button type="button" @click="if (!importAttendanceExecuting) showImportAttendanceModal = false"
+                            class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition cursor-pointer" aria-label="{{ __('common.close') }}">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
                     </div>
-                    <div>
-                        <h3 class="text-base sm:text-lg font-bold text-black dark:text-white">Impor Log Mesin Presensi Biometrik</h3>
-                        <p class="text-xs text-black/55 dark:text-white/55">Upload log presensi dari ZKTeco, Solution, Fingerspot, atau mesin absensi sidik jari lainnya</p>
-                    </div>
-                </div>
-                <button type="button" @click="if (!importAttendanceExecuting) showImportAttendanceModal = false"
-                    class="w-8 h-8 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition cursor-pointer">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
-            </div>
 
             <!-- Modal Body -->
             <div class="p-6 overflow-y-auto space-y-6 flex-1">
@@ -5309,10 +5672,10 @@
                         <span x-text="importAttendanceExecuting ? 'Sedang Memproses...' : ('Komit Impor (' + (importAttendanceDuplicateStrategy === 'skip' ? importAttendancePreview.valid_count : (importAttendancePreview.valid_count + importAttendancePreview.duplicate_count)) + ' Presensi)')"></span>
                     </button>
                 </div>
+                </div>
             </div>
-
         </div>
-    </div>
+    </template>
 
 </div>
 @endsection

@@ -56,7 +56,8 @@ Setiap pop-up modal formulir (Create, Edit, Show, Setting, Detail) **DILARANG KE
    - **Desktop (≥ 1024px, 1280px, 1440px, 1920px)**: `w-full max-w-[96vw] lg:max-w-5xl xl:max-w-6xl 2xl:max-w-[1350px] max-h-[92vh] sm:rounded-[24px] flex flex-col overflow-hidden` dengan grid 12-kolom Bento 2-kolom (7:5 atau 6:6).
    - **Tablet (640px – 1023px)**: `max-w-[94vw] max-h-[90vh] rounded-[20px]`.
    - **Mobile (< 640px)**: `fixed inset-x-0 bottom-0 max-h-[96vh] w-full rounded-t-[28px] rounded-b-none flex flex-col overflow-hidden` + handle pill + scroll safe-area `pb-28`.
-2. **Arsitektur Backdrop Zero-Gap Edge-to-Edge ($y=0$ Full Viewport Coverage)**:
+2. **Arsitektur Backdrop Zero-Gap Edge-to-Edge ($y=0$ Full Viewport Coverage) & Body Teleportation**:
+   - **Wajib Alpine.js Body Teleportation (`<template x-teleport="body">`)**: Seluruh modal wajib dibungkus tag `<template x-teleport="body">` agar di-mount langsung di root `document.body`. Jika modal dibiarkan di dalam child view `<main>`, modal terjebak di dalam *CSS Stacking Context / Containing Block* terisolasi milik parent wrapper, sehingga `fixed inset-0` terpotong di bawah `<header class="app-topbar sticky top-0 z-[35]">` dan menyisakan bilah putih (white gap) 64px di atas layar.
    - **Dilarang menaruh background gelap langsung pada wrapper flex** (`class="fixed inset-0 flex ... bg-black/40"`), karena memicu kebocoran bilah header/topbar di belakang modal.
    - **Wajib gunakan elemen backdrop mandiri**: `<div class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md" @click="..."></div>`.
    - **Kontainer luar wajib `z-[200]`** (atau CSS global `z-index: 99999 !important`), sub-modal `z-[210]`, alert confirm `z-[220]`, dan card dialog `relative z-10`.

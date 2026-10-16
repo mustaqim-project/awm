@@ -384,305 +384,357 @@
     <!-- 3. APPLE SHEET: CATAT PEMBAYARAN MODAL                -->
     <!-- ===================================================== -->
     @if(\App\Support\Context::hasPermission('invoices.record_payment'))
-    <div x-show="showPaymentModal"
-        x-cloak
-        class="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/25 backdrop-blur-[2px] p-0 sm:p-4"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0">
+    <template x-teleport="body">
+        <div x-show="showPaymentModal"
+            x-cloak
+            class="fixed inset-0 z-[200] overflow-y-auto"
+            @keydown.escape.window="showPaymentModal = false"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="invoice-payment-modal-title">
 
-        <div class="w-full sm:max-w-md rounded-t-[20px] sm:rounded-[16px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)]"
-            @click.away="showPaymentModal = false"
-            x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="translate-y-full sm:translate-y-0 sm:scale-95 sm:opacity-0"
-            x-transition:enter-end="translate-y-0 sm:scale-100 sm:opacity-100"
-            x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="translate-y-0 sm:scale-100 sm:opacity-100"
-            x-transition:leave-end="translate-y-full sm:translate-y-0 sm:scale-95 sm:opacity-0">
+            <!-- Backdrop -->
+            <div x-show="showPaymentModal"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
-            <!-- Mobile Grabber Handle -->
-            <div class="sm:hidden w-10 h-1 rounded-full bg-black/20 dark:bg-white/20 mx-auto mb-2"></div>
+            <div class="relative z-10 min-h-full flex items-end sm:items-center justify-center p-0 sm:p-4" @click.self="showPaymentModal = false">
+                <div class="relative w-full sm:max-w-md rounded-t-[20px] sm:rounded-[16px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)]"
+                    @click.away="showPaymentModal = false"
+                    x-show="showPaymentModal"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="translate-y-full sm:translate-y-0 sm:scale-95 sm:opacity-0"
+                    x-transition:enter-end="translate-y-0 sm:scale-100 sm:opacity-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="translate-y-0 sm:scale-100 sm:opacity-100"
+                    x-transition:leave-end="translate-y-full sm:translate-y-0 sm:scale-95 sm:opacity-0">
 
-            <div class="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/10">
-                <h3 class="text-[17px] font-semibold text-black dark:text-white">Catat Penerimaan Pembayaran</h3>
-                <button type="button" @click="showPaymentModal = false" class="text-black/40 hover:text-black dark:text-white/40 dark:hover:text-white transition-colors">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
+                    <!-- Mobile Grabber Handle -->
+                    <div class="sm:hidden w-10 h-1 rounded-full bg-black/20 dark:bg-white/20 mx-auto mb-2"></div>
+
+                    <div class="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/10">
+                        <h3 id="invoice-payment-modal-title" class="text-[17px] font-semibold text-black dark:text-white">Catat Penerimaan Pembayaran</h3>
+                        <button type="button" @click="showPaymentModal = false" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer" aria-label="{{ __('common.close') ?? 'Close' }}">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <form method="POST" action="{{ route('invoices.payments.store', $invoice->id) }}" class="space-y-4 text-[13px]">
+                        @csrf
+
+                        <!-- Balance Due Tile -->
+                        <div class="p-3.5 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] flex justify-between items-center">
+                            <span class="text-black/60 dark:text-white/60">Sisa Tagihan:</span>
+                            <span class="font-bold tabular-nums text-[#FF9500] dark:text-[#FF9F0A] text-[15px]">
+                                {{ $business->currency_symbol }} {{ number_format((float)$invoice->balance_due, 0, ',', '.') }}
+                            </span>
+                        </div>
+
+                        <div>
+                            <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">Nominal Pembayaran Diterima *</label>
+                            <div class="relative">
+                                <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40 font-medium">{{ $business->currency_symbol }}</span>
+                                <input type="number" step="any" min="1" max="{{ (float)$invoice->balance_due }}" name="amount" value="{{ (float)$invoice->balance_due }}" required
+                                    class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] pl-10 pr-3.5 text-[15px] font-bold tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">Tanggal Bayar *</label>
+                                <input type="date" name="payment_date" value="{{ date('Y-m-d') }}" required
+                                    class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                            </div>
+                            <div>
+                                <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">Metode Bayar *</label>
+                                <select name="payment_method" required class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                    <option value="bank_transfer">Transfer Bank</option>
+                                    <option value="cash">Tunai (Cash)</option>
+                                    <option value="qris">QRIS / E-Wallet</option>
+                                    <option value="credit_card">Kartu Kredit</option>
+                                    <option value="cheque">Cek / Giro</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">No. Referensi / Bukti Transfer</label>
+                            <input type="text" name="reference_number" placeholder="TRX-BCA-981203"
+                                class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                        </div>
+
+                        <div>
+                            <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">Catatan Pembayaran</label>
+                            <input type="text" name="notes" placeholder="Pelunasan termin 1..."
+                                class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                        </div>
+
+                        <div class="flex items-center justify-end gap-2 pt-3 border-t border-black/5 dark:border-white/10">
+                            <button type="button" @click="showPaymentModal = false" class="min-h-[44px] h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 active:scale-[0.97] transition-all cursor-pointer">
+                                Batal
+                            </button>
+                            <button type="submit" class="min-h-[44px] h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all shadow-[0_1px_2px_rgba(0,122,255,0.25)] cursor-pointer">
+                                Konfirmasi Bayar
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-
-            <form method="POST" action="{{ route('invoices.payments.store', $invoice->id) }}" class="space-y-4 text-[13px]">
-                @csrf
-
-                <!-- Balance Due Tile -->
-                <div class="p-3.5 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] flex justify-between items-center">
-                    <span class="text-black/60 dark:text-white/60">Sisa Tagihan:</span>
-                    <span class="font-bold tabular-nums text-[#FF9500] dark:text-[#FF9F0A] text-[15px]">
-                        {{ $business->currency_symbol }} {{ number_format((float)$invoice->balance_due, 0, ',', '.') }}
-                    </span>
-                </div>
-
-                <div>
-                    <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">Nominal Pembayaran Diterima *</label>
-                    <div class="relative">
-                        <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40 font-medium">{{ $business->currency_symbol }}</span>
-                        <input type="number" step="any" min="1" max="{{ (float)$invoice->balance_due }}" name="amount" value="{{ (float)$invoice->balance_due }}" required
-                            class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] pl-10 pr-3.5 text-[15px] font-bold tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">Tanggal Bayar *</label>
-                        <input type="date" name="payment_date" value="{{ date('Y-m-d') }}" required
-                            class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                    </div>
-                    <div>
-                        <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">Metode Bayar *</label>
-                        <select name="payment_method" required class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                            <option value="bank_transfer">Transfer Bank</option>
-                            <option value="cash">Tunai (Cash)</option>
-                            <option value="qris">QRIS / E-Wallet</option>
-                            <option value="credit_card">Kartu Kredit</option>
-                            <option value="cheque">Cek / Giro</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">No. Referensi / Bukti Transfer</label>
-                    <input type="text" name="reference_number" placeholder="TRX-BCA-981203"
-                        class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                </div>
-
-                <div>
-                    <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">Catatan Pembayaran</label>
-                    <input type="text" name="notes" placeholder="Pelunasan termin 1..."
-                        class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                </div>
-
-                <div class="flex items-center justify-end gap-2 pt-3 border-t border-black/5 dark:border-white/10">
-                    <button type="button" @click="showPaymentModal = false" class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 active:scale-[0.97] transition-all">
-                        Batal
-                    </button>
-                    <button type="submit" class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
-                        Konfirmasi Bayar
-                    </button>
-                </div>
-            </form>
         </div>
-    </div>
+    </template>
     @endif
 
     <!-- ===================================================== -->
     <!-- 4. APPLE ALERT DIALOG: KONFIRMASI RILIS FAKTUR         -->
     <!-- ===================================================== -->
     @if(\App\Support\Context::hasPermission('invoices.create') || \App\Support\Context::hasPermission('invoices.edit'))
-    <div x-show="confirmReleaseModalOpen"
-        x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center bg-black/25 backdrop-blur-[2px]"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0">
+    <template x-teleport="body">
+        <div x-show="confirmReleaseModalOpen"
+            x-cloak
+            class="fixed inset-0 z-[220] overflow-y-auto"
+            @keydown.escape.window="confirmReleaseModalOpen = false"
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby="invoice-release-dialog-title">
 
-        <div class="w-[290px] rounded-[14px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-black/5 dark:border-white/10"
-            @click.away="confirmReleaseModalOpen = false"
-            x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="opacity-0 scale-95"
-            x-transition:enter-end="opacity-100 scale-100"
-            x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100 scale-100"
-            x-transition:leave-end="opacity-0 scale-95">
+            <!-- Backdrop -->
+            <div x-show="confirmReleaseModalOpen"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
-            <div class="px-4 pt-5 pb-4">
-                <p class="text-[17px] font-semibold text-black dark:text-white">Konfirmasi Faktur?</p>
-                <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
-                    Faktur akan dirilis dan stok barang akan dipotong dari gudang yang dipilih.
-                </p>
-            </div>
+            <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="confirmReleaseModalOpen = false">
+                <div class="relative w-[290px] rounded-[14px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-black/5 dark:border-white/10"
+                    @click.away="confirmReleaseModalOpen = false"
+                    x-show="confirmReleaseModalOpen"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95">
 
-            <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
-                <button type="button" @click="confirmReleaseModalOpen = false" class="py-3 text-black/70 dark:text-white/70 border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors">
-                    Batal
-                </button>
-                <button type="button" @click="submitRelease()" class="py-3 text-[#34C759] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors">
-                    Konfirmasi
-                </button>
+                    <div class="px-4 pt-5 pb-4">
+                        <p id="invoice-release-dialog-title" class="text-[17px] font-semibold text-black dark:text-white">Konfirmasi Faktur?</p>
+                        <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
+                            Faktur akan dirilis dan stok barang akan dipotong dari gudang yang dipilih.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
+                        <button type="button" @click="confirmReleaseModalOpen = false" class="min-h-[44px] py-3 text-black/70 dark:text-white/70 border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
+                            Batal
+                        </button>
+                        <button type="button" @click="submitRelease()" class="min-h-[44px] py-3 text-[#34C759] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
+                            Konfirmasi
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </template>
     @endif
 
     <!-- ===================================================== -->
     <!-- 5. APPLE ALERT DIALOG: VOID / BATALKAN FAKTUR          -->
     <!-- ===================================================== -->
     @if(\App\Support\Context::hasPermission('invoices.delete') || \App\Support\Context::hasPermission('invoices.edit'))
-    <div x-show="confirmVoidModalOpen"
-        x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center bg-black/25 backdrop-blur-[2px]"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0">
+    <template x-teleport="body">
+        <div x-show="confirmVoidModalOpen"
+            x-cloak
+            class="fixed inset-0 z-[220] overflow-y-auto"
+            @keydown.escape.window="confirmVoidModalOpen = false"
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby="invoice-void-dialog-title">
 
-        <div class="w-[290px] rounded-[14px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-black/5 dark:border-white/10"
-            @click.away="confirmVoidModalOpen = false"
-            x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="opacity-0 scale-95"
-            x-transition:enter-end="opacity-100 scale-100"
-            x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100 scale-100"
-            x-transition:leave-end="opacity-0 scale-95">
+            <!-- Backdrop -->
+            <div x-show="confirmVoidModalOpen"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
-            <div class="px-4 pt-5 pb-4">
-                <p class="text-[17px] font-semibold text-black dark:text-white">Batalkan (Void) Faktur?</p>
-                <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
-                    Faktur ini akan dibatalkan permanen dan seluruh stok yang dipotong akan dikembalikan ke gudang.
-                </p>
-            </div>
+            <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="confirmVoidModalOpen = false">
+                <div class="relative w-[290px] rounded-[14px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-black/5 dark:border-white/10"
+                    @click.away="confirmVoidModalOpen = false"
+                    x-show="confirmVoidModalOpen"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95">
 
-            <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
-                <button type="button" @click="confirmVoidModalOpen = false" class="py-3 text-black/70 dark:text-white/70 border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors">
-                    Kembali
-                </button>
-                <button type="button" @click="submitVoid()" class="py-3 text-[#FF3B30] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors">
-                    Void Faktur
-                </button>
+                    <div class="px-4 pt-5 pb-4">
+                        <p id="invoice-void-dialog-title" class="text-[17px] font-semibold text-black dark:text-white">Batalkan (Void) Faktur?</p>
+                        <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
+                            Faktur ini akan dibatalkan permanen dan seluruh stok yang dipotong akan dikembalikan ke gudang.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
+                        <button type="button" @click="confirmVoidModalOpen = false" class="min-h-[44px] py-3 text-black/70 dark:text-white/70 border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
+                            Kembali
+                        </button>
+                        <button type="button" @click="submitVoid()" class="min-h-[44px] py-3 text-[#FF3B30] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
+                            Void Faktur
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </template>
     @endif
 
     <!-- ===================================================== -->
     <!-- 6. MODAL: KIRIM PENGINGAT TERMIN (WHATSAPP & EMAIL)   -->
     <!-- ===================================================== -->
-    <div x-show="showReminderModal"
-        x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 dark:bg-black/60 backdrop-blur-sm"
-        x-transition:enter="transition ease-out duration-250"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-200"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0">
+    <template x-teleport="body">
+        <div x-show="showReminderModal"
+            x-cloak
+            class="fixed inset-0 z-[200] overflow-y-auto"
+            @keydown.escape.window="showReminderModal = false"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="invoice-reminder-modal-title">
 
-        <div class="w-full max-w-lg rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-[0_24px_50px_rgba(0,0,0,0.25)] overflow-hidden text-left"
-            @click.away="showReminderModal = false"
-            x-transition:enter="transition cubic-bezier(0.16, 1, 0.3, 1) duration-300"
-            x-transition:enter-start="opacity-0 scale-95 translate-y-3"
-            x-transition:enter-end="opacity-100 scale-100 translate-y-0"
-            x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100 scale-100 translate-y-0"
-            x-transition:leave-end="opacity-0 scale-95 translate-y-2">
+            <!-- Backdrop -->
+            <div x-show="showReminderModal"
+                x-transition:enter="ease-out duration-250"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
-            <!-- Modal Header -->
-            <div class="px-6 pt-6 pb-4 border-b border-black/[0.06] dark:border-white/[0.08] flex items-start justify-between gap-4">
-                <div class="flex items-center gap-3.5">
-                    <div class="w-11 h-11 rounded-[14px] bg-gradient-to-br from-[#5856D6] to-[#007AFF] text-white flex items-center justify-center shadow-md shadow-[#5856D6]/20 shrink-0">
-                        <i data-lucide="bell-ring" class="w-5 h-5"></i>
+            <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="showReminderModal = false">
+                <div class="relative w-full max-w-lg rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-[0_24px_50px_rgba(0,0,0,0.25)] overflow-hidden text-left"
+                    @click.away="showReminderModal = false"
+                    x-show="showReminderModal"
+                    x-transition:enter="transition cubic-bezier(0.16, 1, 0.3, 1) duration-300"
+                    x-transition:enter-start="opacity-0 scale-95 translate-y-3"
+                    x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                    x-transition:leave-end="opacity-0 scale-95 translate-y-2">
+
+                    <!-- Modal Header -->
+                    <div class="px-6 pt-6 pb-4 border-b border-black/[0.06] dark:border-white/[0.08] flex items-start justify-between gap-4">
+                        <div class="flex items-center gap-3.5">
+                            <div class="w-11 h-11 rounded-[14px] bg-gradient-to-br from-[#5856D6] to-[#007AFF] text-white flex items-center justify-center shadow-md shadow-[#5856D6]/20 shrink-0">
+                                <i data-lucide="bell-ring" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 id="invoice-reminder-modal-title" class="text-[17px] font-bold text-black dark:text-white tracking-tight leading-snug">
+                                    Kirim Pengingat Tagihan
+                                </h3>
+                                <p class="text-[12.5px] text-black/60 dark:text-white/60">
+                                    Faktur #{{ $invoice->invoice_number }} · {{ $invoice->customer?->name }}
+                                </p>
+                            </div>
+                        </div>
+                        <button type="button" @click="showReminderModal = false"
+                            class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer" aria-label="{{ __('common.close') ?? 'Close' }}">
+                            <i data-lucide="x" class="w-4 h-4"></i>
+                        </button>
                     </div>
-                    <div>
-                        <h3 class="text-[17px] font-bold text-black dark:text-white tracking-tight leading-snug">
-                            Kirim Pengingat Tagihan
-                        </h3>
-                        <p class="text-[12.5px] text-black/60 dark:text-white/60">
-                            Faktur #{{ $invoice->invoice_number }} · {{ $invoice->customer?->name }}
-                        </p>
-                    </div>
+
+                    <form action="{{ route('invoices.remind', $invoice->id) }}" method="POST">
+                        @csrf
+                        <div class="p-6 space-y-4 max-h-[75vh] overflow-y-auto">
+                            <!-- Bento Info Tagihan -->
+                            <div class="p-4 rounded-[16px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 space-y-2">
+                                <div class="flex justify-between items-center text-[13px]">
+                                    <span class="text-black/60 dark:text-white/60">Sisa Tagihan Belum Lunas:</span>
+                                    <span class="font-bold text-[#FF3B30] font-mono text-[15px]">
+                                        Rp {{ number_format((float) $invoice->balance_due, 0, ',', '.') }}
+                                    </span>
+                                </div>
+                                <div class="flex justify-between items-center text-[12.5px]">
+                                    <span class="text-black/60 dark:text-white/60">Jatuh Tempo:</span>
+                                    <span class="font-semibold text-black dark:text-white">
+                                        {{ $invoice->due_date?->translatedFormat('d F Y') ?? '-' }}
+                                    </span>
+                                </div>
+                                <div class="pt-2 border-t border-black/5 dark:border-white/5 flex flex-wrap gap-y-1 justify-between text-[11.5px] text-black/50 dark:text-white/50">
+                                    <span>WhatsApp: <strong class="text-black/80 dark:text-white/80 font-mono">{{ $invoice->customer?->phone ?: 'Tidak ada' }}</strong></span>
+                                    <span>Email: <strong class="text-black/80 dark:text-white/80">{{ $invoice->customer?->email ?: 'Tidak ada' }}</strong></span>
+                                </div>
+                            </div>
+
+                            <!-- Saluran Notifikasi -->
+                            <div class="space-y-2">
+                                <label class="block text-[13px] font-semibold text-black dark:text-white">
+                                    Saluran Notifikasi
+                                </label>
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                                    <label class="flex items-center gap-2.5 p-3 rounded-[12px] border border-black/10 dark:border-white/10 hover:bg-black/[0.02] dark:hover:bg-white/[0.02] cursor-pointer text-[12.5px] font-medium transition"
+                                        :class="reminderChannel === 'both' ? 'border-[#007AFF] bg-[#007AFF]/5 dark:bg-[#007AFF]/10 text-[#007AFF]' : 'text-black/80 dark:text-white/80'">
+                                        <input type="radio" name="channel" value="both" x-model="reminderChannel" class="hidden">
+                                        <i data-lucide="send" class="w-4 h-4 shrink-0"></i>
+                                        <span>WA &amp; Email</span>
+                                    </label>
+
+                                    <label class="flex items-center gap-2.5 p-3 rounded-[12px] border border-black/10 dark:border-white/10 hover:bg-black/[0.02] dark:hover:bg-white/[0.02] cursor-pointer text-[12.5px] font-medium transition"
+                                        :class="reminderChannel === 'whatsapp' ? 'border-[#25D366] bg-[#25D366]/5 dark:bg-[#25D366]/10 text-[#25D366]' : 'text-black/80 dark:text-white/80'">
+                                        <input type="radio" name="channel" value="whatsapp" x-model="reminderChannel" class="hidden">
+                                        <i data-lucide="message-circle" class="w-4 h-4 shrink-0"></i>
+                                        <span>WhatsApp Saja</span>
+                                    </label>
+
+                                    <label class="flex items-center gap-2.5 p-3 rounded-[12px] border border-black/10 dark:border-white/10 hover:bg-black/[0.02] dark:hover:bg-white/[0.02] cursor-pointer text-[12.5px] font-medium transition"
+                                        :class="reminderChannel === 'email' ? 'border-[#007AFF] bg-[#007AFF]/5 dark:bg-[#007AFF]/10 text-[#007AFF]' : 'text-black/80 dark:text-white/80'">
+                                        <input type="radio" name="channel" value="email" x-model="reminderChannel" class="hidden">
+                                        <i data-lucide="mail" class="w-4 h-4 shrink-0"></i>
+                                        <span>Email Saja</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Catatan Tambahan -->
+                            <div class="space-y-1.5">
+                                <label class="block text-[13px] font-semibold text-black dark:text-white">
+                                    Catatan Tambahan (Opsional)
+                                </label>
+                                <textarea name="custom_notes" rows="2"
+                                    placeholder="Contoh: Mohon abaikan jika baru saja melakukan transfer."
+                                    class="w-full px-3.5 py-2.5 rounded-[12px] text-[13px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-1 focus:ring-[#007AFF] text-black dark:text-white placeholder-black/35 dark:placeholder-white/35 transition outline-none resize-none"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Modal Footer -->
+                        <div class="px-6 py-4 border-t border-black/[0.06] dark:border-white/[0.08] bg-black/[0.01] dark:bg-white/[0.02] flex items-center justify-end gap-2.5">
+                            <button type="button" @click="showReminderModal = false"
+                                class="min-h-[44px] px-4 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/[0.05] dark:hover:bg-white/[0.08] transition cursor-pointer">
+                                Batal
+                            </button>
+                            <button type="submit"
+                                class="min-h-[44px] px-5 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-semibold shadow-md shadow-[#007AFF]/25 active:scale-[0.97] transition flex items-center justify-center gap-2 cursor-pointer">
+                                <i data-lucide="send" class="w-4 h-4"></i>
+                                <span>Kirim Sekarang</span>
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <button type="button" @click="showReminderModal = false"
-                    class="p-1.5 rounded-full text-black/40 hover:text-black dark:text-white/40 dark:hover:text-white hover:bg-black/[0.05] dark:hover:bg-white/[0.08] transition">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
             </div>
-
-            <form action="{{ route('invoices.remind', $invoice->id) }}" method="POST">
-                @csrf
-                <div class="p-6 space-y-4 max-h-[75vh] overflow-y-auto">
-                    <!-- Bento Info Tagihan -->
-                    <div class="p-4 rounded-[16px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 space-y-2">
-                        <div class="flex justify-between items-center text-[13px]">
-                            <span class="text-black/60 dark:text-white/60">Sisa Tagihan Belum Lunas:</span>
-                            <span class="font-bold text-[#FF3B30] font-mono text-[15px]">
-                                Rp {{ number_format((float) $invoice->balance_due, 0, ',', '.') }}
-                            </span>
-                        </div>
-                        <div class="flex justify-between items-center text-[12.5px]">
-                            <span class="text-black/60 dark:text-white/60">Jatuh Tempo:</span>
-                            <span class="font-semibold text-black dark:text-white">
-                                {{ $invoice->due_date?->translatedFormat('d F Y') ?? '-' }}
-                            </span>
-                        </div>
-                        <div class="pt-2 border-t border-black/5 dark:border-white/5 flex flex-wrap gap-y-1 justify-between text-[11.5px] text-black/50 dark:text-white/50">
-                            <span>WhatsApp: <strong class="text-black/80 dark:text-white/80 font-mono">{{ $invoice->customer?->phone ?: 'Tidak ada' }}</strong></span>
-                            <span>Email: <strong class="text-black/80 dark:text-white/80">{{ $invoice->customer?->email ?: 'Tidak ada' }}</strong></span>
-                        </div>
-                    </div>
-
-                    <!-- Saluran Notifikasi -->
-                    <div class="space-y-2">
-                        <label class="block text-[13px] font-semibold text-black dark:text-white">
-                            Saluran Notifikasi
-                        </label>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                            <label class="flex items-center gap-2.5 p-3 rounded-[12px] border border-black/10 dark:border-white/10 hover:bg-black/[0.02] dark:hover:bg-white/[0.02] cursor-pointer text-[12.5px] font-medium transition"
-                                :class="reminderChannel === 'both' ? 'border-[#007AFF] bg-[#007AFF]/5 dark:bg-[#007AFF]/10 text-[#007AFF]' : 'text-black/80 dark:text-white/80'">
-                                <input type="radio" name="channel" value="both" x-model="reminderChannel" class="hidden">
-                                <i data-lucide="send" class="w-4 h-4 shrink-0"></i>
-                                <span>WA &amp; Email</span>
-                            </label>
-
-                            <label class="flex items-center gap-2.5 p-3 rounded-[12px] border border-black/10 dark:border-white/10 hover:bg-black/[0.02] dark:hover:bg-white/[0.02] cursor-pointer text-[12.5px] font-medium transition"
-                                :class="reminderChannel === 'whatsapp' ? 'border-[#25D366] bg-[#25D366]/5 dark:bg-[#25D366]/10 text-[#25D366]' : 'text-black/80 dark:text-white/80'">
-                                <input type="radio" name="channel" value="whatsapp" x-model="reminderChannel" class="hidden">
-                                <i data-lucide="message-circle" class="w-4 h-4 shrink-0"></i>
-                                <span>WhatsApp Saja</span>
-                            </label>
-
-                            <label class="flex items-center gap-2.5 p-3 rounded-[12px] border border-black/10 dark:border-white/10 hover:bg-black/[0.02] dark:hover:bg-white/[0.02] cursor-pointer text-[12.5px] font-medium transition"
-                                :class="reminderChannel === 'email' ? 'border-[#007AFF] bg-[#007AFF]/5 dark:bg-[#007AFF]/10 text-[#007AFF]' : 'text-black/80 dark:text-white/80'">
-                                <input type="radio" name="channel" value="email" x-model="reminderChannel" class="hidden">
-                                <i data-lucide="mail" class="w-4 h-4 shrink-0"></i>
-                                <span>Email Saja</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Catatan Tambahan -->
-                    <div class="space-y-1.5">
-                        <label class="block text-[13px] font-semibold text-black dark:text-white">
-                            Catatan Tambahan (Opsional)
-                        </label>
-                        <textarea name="custom_notes" rows="2"
-                            placeholder="Contoh: Mohon abaikan jika baru saja melakukan transfer."
-                            class="w-full px-3.5 py-2.5 rounded-[12px] text-[13px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-1 focus:ring-[#007AFF] text-black dark:text-white placeholder-black/35 dark:placeholder-white/35 transition outline-none resize-none"></textarea>
-                    </div>
-                </div>
-
-                <!-- Modal Footer -->
-                <div class="px-6 py-4 border-t border-black/[0.06] dark:border-white/[0.08] bg-black/[0.01] dark:bg-white/[0.02] flex items-center justify-end gap-2.5">
-                    <button type="button" @click="showReminderModal = false"
-                        class="min-h-[44px] px-4 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/[0.05] dark:hover:bg-white/[0.08] transition cursor-pointer">
-                        Batal
-                    </button>
-                    <button type="submit"
-                        class="min-h-[44px] px-5 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-semibold shadow-md shadow-[#007AFF]/25 active:scale-[0.97] transition flex items-center justify-center gap-2 cursor-pointer">
-                        <i data-lucide="send" class="w-4 h-4"></i>
-                        <span>Kirim Sekarang</span>
-                    </button>
-                </div>
-            </form>
         </div>
-    </div>
+    </template>
 
 </div>
 @endsection

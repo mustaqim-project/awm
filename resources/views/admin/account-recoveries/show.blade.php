@@ -442,125 +442,161 @@
         </div>
 
         <!-- ═══ MODAL APPROVE (Apple Inset Dialog) ═══ -->
-        <div x-show="showApproveModal"
-            class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md" x-cloak
-            style="display: none;">
-            <div class="w-full max-w-lg bg-white dark:bg-[#1C1C1E] rounded-[24px] sm:rounded-[28px] p-6 sm:p-7 border border-black/[0.08] dark:border-white/[0.12] shadow-2xl space-y-4"
-                @click.stop>
-                <div class="flex items-center gap-3 text-[#34C759]">
-                    <div class="w-10 h-10 rounded-[12px] bg-[#34C759]/15 flex items-center justify-center shrink-0">
-                        <i data-lucide="shield-check" class="w-5 h-5"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-base text-black dark:text-white">Konfirmasi Persetujuan Pemulihan</h3>
-                        <p class="text-[11px] text-black/50 dark:text-white/50">Sinkronisasi data kredensial login pemilik
-                            bisnis</p>
+        <template x-teleport="body">
+            <div x-show="showApproveModal"
+                class="fixed inset-0 z-[200] overflow-y-auto"
+                x-cloak style="display: none;"
+                role="dialog" aria-modal="true"
+                @keydown.escape.window="showApproveModal = false">
+                <!-- Backdrop -->
+                <div class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    @click="showApproveModal = false"
+                    aria-hidden="true"></div>
+
+                <!-- Centering Wrapper -->
+                <div class="relative z-10 min-h-full flex items-center justify-center p-4 pointer-events-none">
+                    <div class="w-full max-w-lg bg-white dark:bg-[#1C1C1E] rounded-[24px] sm:rounded-[28px] p-6 sm:p-7 border border-black/[0.08] dark:border-white/[0.12] shadow-2xl space-y-4 pointer-events-auto"
+                        @click.stop>
+                        <div class="flex items-center gap-3 text-[#34C759]">
+                            <div class="w-10 h-10 rounded-[12px] bg-[#34C759]/15 flex items-center justify-center shrink-0">
+                                <i data-lucide="shield-check" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-base text-black dark:text-white">Konfirmasi Persetujuan Pemulihan</h3>
+                                <p class="text-[11px] text-black/50 dark:text-white/50">Sinkronisasi data kredensial login pemilik
+                                    bisnis</p>
+                            </div>
+                        </div>
+
+                        <p class="text-xs text-black/70 dark:text-white/70 leading-relaxed">
+                            Tindakan ini akan <strong>memperbarui kontak email dan nomor WhatsApp akun</strong> menjadi kontak baru:
+                            <br><br>
+                            <span
+                                class="font-mono font-bold text-[#34C759] dark:text-[#30D158] block select-all">{{ $recovery->new_email }}</span>
+                            <span
+                                class="font-mono font-bold text-black dark:text-white block select-all tabular-nums">{{ $recovery->new_phone }}</span>
+                            <br>
+                            Email pengguna akan otomatis ditandai terverifikasi, dan notifikasi konfirmasi akan dikirimkan otomatis
+                            via WhatsApp.
+                        </p>
+
+                        <form method="POST" action="{{ route('admin.account-recoveries.approve', $recovery) }}"
+                            class="space-y-4">
+                            @csrf
+                            <div>
+                                <label for="admin_notes"
+                                    class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1.5">
+                                    Catatan Verifikasi Administrator (Opsional):
+                                </label>
+                                <input type="text" name="admin_notes" id="admin_notes"
+                                    value="Dokumen KTP dan legalitas usaha terverifikasi valid."
+                                    class="w-full px-3.5 py-2.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:border-[#34C759] focus:ring-1 focus:ring-[#34C759]">
+                            </div>
+
+                            <div class="flex items-center justify-end gap-2.5 pt-2">
+                                <button type="button" @click="showApproveModal = false"
+                                    class="min-h-[44px] px-4 py-2 rounded-[12px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+                                    Batal
+                                </button>
+                                <button type="submit"
+                                    class="min-h-[44px] px-5 py-2 rounded-[12px] bg-[#34C759] hover:bg-[#28A745] text-white text-xs font-bold shadow-sm transition-all active:scale-[0.98]">
+                                    Setujui &amp; Perbarui Akses Akun
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-
-                <p class="text-xs text-black/70 dark:text-white/70 leading-relaxed">
-                    Tindakan ini akan <strong>memperbarui kontak email dan nomor WhatsApp akun</strong> menjadi kontak baru:
-                    <br><br>
-                    <span
-                        class="font-mono font-bold text-[#34C759] dark:text-[#30D158] block select-all">{{ $recovery->new_email }}</span>
-                    <span
-                        class="font-mono font-bold text-black dark:text-white block select-all tabular-nums">{{ $recovery->new_phone }}</span>
-                    <br>
-                    Email pengguna akan otomatis ditandai terverifikasi, dan notifikasi konfirmasi akan dikirimkan otomatis
-                    via WhatsApp.
-                </p>
-
-                <form method="POST" action="{{ route('admin.account-recoveries.approve', $recovery) }}"
-                    class="space-y-4">
-                    @csrf
-                    <div>
-                        <label for="admin_notes"
-                            class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1.5">
-                            Catatan Verifikasi Administrator (Opsional):
-                        </label>
-                        <input type="text" name="admin_notes" id="admin_notes"
-                            value="Dokumen KTP dan legalitas usaha terverifikasi valid."
-                            class="w-full px-3.5 py-2.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:border-[#34C759] focus:ring-1 focus:ring-[#34C759]">
-                    </div>
-
-                    <div class="flex items-center justify-end gap-2.5 pt-2">
-                        <button type="button" @click="showApproveModal = false"
-                            class="min-h-[44px] px-4 py-2 rounded-[12px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
-                            Batal
-                        </button>
-                        <button type="submit"
-                            class="min-h-[44px] px-5 py-2 rounded-[12px] bg-[#34C759] hover:bg-[#28A745] text-white text-xs font-bold shadow-sm transition-all active:scale-[0.98]">
-                            Setujui &amp; Perbarui Akses Akun
-                        </button>
-                    </div>
-                </form>
             </div>
-        </div>
+        </template>
 
         <!-- ═══ MODAL REJECT (Apple Inset Dialog) ═══ -->
-        <div x-show="showRejectModal"
-            class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md" x-cloak
-            style="display: none;">
-            <div class="w-full max-w-lg bg-white dark:bg-[#1C1C1E] rounded-[24px] sm:rounded-[28px] p-6 sm:p-7 border border-black/[0.08] dark:border-white/[0.12] shadow-2xl space-y-4"
-                @click.stop>
-                <div class="flex items-center gap-3 text-[#FF3B30]">
-                    <div class="w-10 h-10 rounded-[12px] bg-[#FF3B30]/15 flex items-center justify-center shrink-0">
-                        <i data-lucide="alert-triangle" class="w-5 h-5"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-base text-black dark:text-white">Tolak Permohonan Pemulihan</h3>
-                        <p class="text-[11px] text-black/50 dark:text-white/50">Berikan keterangan alasan penolakan secara
-                            jelas</p>
+        <template x-teleport="body">
+            <div x-show="showRejectModal"
+                class="fixed inset-0 z-[220] overflow-y-auto"
+                x-cloak style="display: none;"
+                role="dialog" aria-modal="true"
+                @keydown.escape.window="showRejectModal = false">
+                <!-- Backdrop -->
+                <div class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    @click="showRejectModal = false"
+                    aria-hidden="true"></div>
+
+                <!-- Centering Wrapper -->
+                <div class="relative z-10 min-h-full flex items-center justify-center p-4 pointer-events-none">
+                    <div class="w-full max-w-lg bg-white dark:bg-[#1C1C1E] rounded-[24px] sm:rounded-[28px] p-6 sm:p-7 border border-black/[0.08] dark:border-white/[0.12] shadow-2xl space-y-4 pointer-events-auto"
+                        @click.stop>
+                        <div class="flex items-center gap-3 text-[#FF3B30]">
+                            <div class="w-10 h-10 rounded-[12px] bg-[#FF3B30]/15 flex items-center justify-center shrink-0">
+                                <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-base text-black dark:text-white">Tolak Permohonan Pemulihan</h3>
+                                <p class="text-[11px] text-black/50 dark:text-white/50">Berikan keterangan alasan penolakan secara
+                                    jelas</p>
+                            </div>
+                        </div>
+
+                        <p class="text-xs text-black/70 dark:text-white/70 leading-relaxed">
+                            Alasan penolakan ini akan dikirimkan otomatis kepada pemohon via WhatsApp dan ditampilkan pada halaman
+                            pelacakan tiket agar pemohon dapat memperbaiki berkasnya.
+                        </p>
+
+                        <form method="POST" action="{{ route('admin.account-recoveries.reject', $recovery) }}"
+                            class="space-y-4">
+                            @csrf
+                            <div>
+                                <label for="rejection_reason"
+                                    class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1.5">
+                                    Alasan Penolakan <span class="text-[#FF3B30]">*</span>:
+                                </label>
+                                <textarea name="rejection_reason" id="rejection_reason" rows="3" required
+                                    placeholder="Contoh: Foto KTP buram dan nama usaha tidak sesuai dengan bukti kepemilikan yang dilampirkan..."
+                                    class="w-full p-3 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:border-[#FF3B30] focus:ring-1 focus:ring-[#FF3B30]"></textarea>
+                            </div>
+
+                            <div class="flex items-center justify-end gap-2.5 pt-2">
+                                <button type="button" @click="showRejectModal = false"
+                                    class="min-h-[44px] px-4 py-2 rounded-[12px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+                                    Batal
+                                </button>
+                                <button type="submit"
+                                    class="min-h-[44px] px-5 py-2 rounded-[12px] bg-[#FF3B30] hover:bg-red-600 text-white text-xs font-bold shadow-sm transition-all active:scale-[0.98]">
+                                    Tolak Permohonan
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-
-                <p class="text-xs text-black/70 dark:text-white/70 leading-relaxed">
-                    Alasan penolakan ini akan dikirimkan otomatis kepada pemohon via WhatsApp dan ditampilkan pada halaman
-                    pelacakan tiket agar pemohon dapat memperbaiki berkasnya.
-                </p>
-
-                <form method="POST" action="{{ route('admin.account-recoveries.reject', $recovery) }}"
-                    class="space-y-4">
-                    @csrf
-                    <div>
-                        <label for="rejection_reason"
-                            class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1.5">
-                            Alasan Penolakan <span class="text-[#FF3B30]">*</span>:
-                        </label>
-                        <textarea name="rejection_reason" id="rejection_reason" rows="3" required
-                            placeholder="Contoh: Foto KTP buram dan nama usaha tidak sesuai dengan bukti kepemilikan yang dilampirkan..."
-                            class="w-full p-3 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:border-[#FF3B30] focus:ring-1 focus:ring-[#FF3B30]"></textarea>
-                    </div>
-
-                    <div class="flex items-center justify-end gap-2.5 pt-2">
-                        <button type="button" @click="showRejectModal = false"
-                            class="min-h-[44px] px-4 py-2 rounded-[12px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
-                            Batal
-                        </button>
-                        <button type="submit"
-                            class="min-h-[44px] px-5 py-2 rounded-[12px] bg-[#FF3B30] hover:bg-red-600 text-white text-xs font-bold shadow-sm transition-all active:scale-[0.98]">
-                            Tolak Permohonan
-                        </button>
-                    </div>
-                </form>
             </div>
-        </div>
+        </template>
 
         <!-- ═══ IMAGE LIGHTBOX MODAL ═══ -->
-        <div x-show="imageModalOpen" @click="imageModalOpen = false"
-            class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-lg" x-cloak
-            style="display: none;">
-            <div class="max-w-4xl max-h-[90vh] flex flex-col items-center gap-3 w-full" @click.stop>
-                <div class="flex items-center justify-between w-full text-white text-xs font-semibold px-2">
-                    <span x-text="modalTitle"></span>
-                    <button type="button" @click="imageModalOpen = false"
-                        class="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors text-white">
-                        <i data-lucide="x" class="w-5 h-5"></i>
-                    </button>
+        <template x-teleport="body">
+            <div x-show="imageModalOpen"
+                class="fixed inset-0 z-[210] overflow-y-auto"
+                x-cloak style="display: none;"
+                role="dialog" aria-modal="true"
+                @keydown.escape.window="imageModalOpen = false">
+                <!-- Backdrop -->
+                <div class="fixed inset-0 bg-black/85 backdrop-blur-lg transition-opacity"
+                    @click="imageModalOpen = false"
+                    aria-hidden="true"></div>
+
+                <!-- Centering Wrapper -->
+                <div class="relative z-10 min-h-full flex items-center justify-center p-4 pointer-events-none">
+                    <div class="max-w-4xl max-h-[90vh] flex flex-col items-center gap-3 w-full pointer-events-auto" @click.stop>
+                        <div class="flex items-center justify-between w-full text-white text-xs font-semibold px-2">
+                            <span x-text="modalTitle"></span>
+                            <button type="button" @click="imageModalOpen = false"
+                                class="p-2 min-h-[44px] min-w-[44px] rounded-full bg-white/10 hover:bg-white/20 transition-colors text-white flex items-center justify-center">
+                                <i data-lucide="x" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                        <img :src="modalImageUrl" alt="Dokumen Bukti"
+                            class="max-w-full max-h-[80vh] rounded-[16px] object-contain shadow-2xl border border-white/20">
+                    </div>
                 </div>
-                <img :src="modalImageUrl" alt="Dokumen Bukti"
-                    class="max-w-full max-h-[80vh] rounded-[16px] object-contain shadow-2xl border border-white/20">
             </div>
-        </div>
+        </template>
     </div>
 @endsection

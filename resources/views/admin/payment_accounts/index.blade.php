@@ -315,48 +315,51 @@
         </div>
 
         <!-- Apple HIG QRIS Preview Modal Sheet -->
-        <div x-show="qrisModalUrl" x-cloak
-            class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-md transition-all"
-            @click.self="qrisModalUrl = null"
-            @keydown.escape.window="qrisModalUrl = null">
-            <div
-                class="rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] p-6 max-w-sm w-full space-y-4 text-center shadow-[0_25px_60px_rgba(0,0,0,0.3)] animate-in fade-in zoom-in-95 duration-200">
-                <!-- Modal Header -->
-                <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-3">
-                    <div class="flex items-center gap-2 text-left">
-                        <div class="w-8 h-8 rounded-[10px] bg-[#34C759]/10 text-[#34C759] dark:text-[#30D158] flex items-center justify-center shrink-0">
-                            <i data-lucide="qr-code" class="w-4 h-4" stroke-width="2"></i>
+        <template x-teleport="body">
+            <div x-show="qrisModalUrl" x-cloak
+                class="fixed inset-0 z-[210] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-all"
+                role="dialog" aria-modal="true"
+                @click.self="qrisModalUrl = null"
+                @keydown.escape.window="qrisModalUrl = null">
+                <div @click.stop
+                    class="relative z-10 rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] p-6 max-w-sm w-full space-y-4 text-center shadow-[0_25px_60px_rgba(0,0,0,0.3)] animate-in fade-in zoom-in-95 duration-200">
+                    <!-- Modal Header -->
+                    <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-3">
+                        <div class="flex items-center gap-2 text-left">
+                            <div class="w-8 h-8 rounded-[10px] bg-[#34C759]/10 text-[#34C759] dark:text-[#30D158] flex items-center justify-center shrink-0">
+                                <i data-lucide="qr-code" class="w-4 h-4" stroke-width="2"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-[15px] font-bold text-black dark:text-white" x-text="qrisModalTitle"></h4>
+                                <p class="text-[11px] text-black/50 dark:text-white/50">Barcode QRIS Resmi</p>
+                            </div>
                         </div>
-                        <div>
-                            <h4 class="text-[15px] font-bold text-black dark:text-white" x-text="qrisModalTitle"></h4>
-                            <p class="text-[11px] text-black/50 dark:text-white/50">Barcode QRIS Resmi</p>
-                        </div>
+                        <button type="button" @click="qrisModalUrl = null"
+                            class="p-2 rounded-[10px] text-black/40 dark:text-white/40 hover:bg-black/[0.05] dark:hover:bg-white/[0.08] transition">
+                            <i data-lucide="x" class="w-4 h-4" stroke-width="2"></i>
+                        </button>
                     </div>
-                    <button type="button" @click="qrisModalUrl = null"
-                        class="p-2 rounded-[10px] text-black/40 dark:text-white/40 hover:bg-black/[0.05] dark:hover:bg-white/[0.08] transition">
-                        <i data-lucide="x" class="w-4 h-4" stroke-width="2"></i>
-                    </button>
-                </div>
 
-                <!-- QR Image Frame -->
-                <div class="p-3 bg-white rounded-[16px] border border-black/[0.06] flex items-center justify-center shadow-inner">
-                    <img :src="qrisModalUrl" alt="QRIS Code" class="max-h-72 object-contain rounded-[12px]">
-                </div>
+                    <!-- QR Image Frame -->
+                    <div class="p-3 bg-white rounded-[16px] border border-black/[0.06] flex items-center justify-center shadow-inner">
+                        <img :src="qrisModalUrl" alt="QRIS Code" class="max-h-72 object-contain rounded-[12px]">
+                    </div>
 
-                <!-- Modal Actions -->
-                <div class="flex items-center justify-between gap-2 pt-1">
-                    <a :href="qrisModalUrl" target="_blank"
-                        class="h-9 px-3 rounded-[10px] text-[12px] font-semibold text-[#007AFF] dark:text-[#0A84FF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 transition inline-flex items-center gap-1.5">
-                        <i data-lucide="external-link" class="w-3.5 h-3.5" stroke-width="2"></i>
-                        <span>Buka Penuh</span>
-                    </a>
-                    <button type="button" @click="qrisModalUrl = null"
-                        class="h-9 px-4 rounded-[10px] text-[12px] font-semibold text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition">
-                        Tutup
-                    </button>
+                    <!-- Modal Actions -->
+                    <div class="flex items-center justify-between gap-2 pt-1">
+                        <a :href="qrisModalUrl" target="_blank"
+                            class="h-9 px-3 rounded-[10px] text-[12px] font-semibold text-[#007AFF] dark:text-[#0A84FF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 transition inline-flex items-center gap-1.5">
+                            <i data-lucide="external-link" class="w-3.5 h-3.5" stroke-width="2"></i>
+                            <span>Buka Penuh</span>
+                        </a>
+                        <button type="button" @click="qrisModalUrl = null"
+                            class="h-9 px-4 rounded-[10px] text-[12px] font-semibold text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition">
+                            Tutup
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
+        </template>
 
     </div>
 @endsection

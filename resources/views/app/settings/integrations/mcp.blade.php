@@ -1879,33 +1879,51 @@ document.addEventListener('alpine:init', () => {
     </div>
 
     {{-- MODAL SHEET: Buat Token Baru (Bento Apple HIG) --}}
-    <div
-        x-show="openCreateModal"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0"
-        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
-        style="display: none;"
-        @keydown.escape.window="openCreateModal = false">
-
+    <template x-teleport="body">
         <div
-            @click.outside="openCreateModal = false"
-            class="w-full max-w-xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-neutral-200 dark:border-neutral-800 p-6 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto">
+            x-show="openCreateModal"
+            x-cloak
+            class="fixed inset-0 z-[200] flex items-center justify-center p-4 overflow-y-auto">
 
-            <div class="flex items-center justify-between pb-3 border-b border-neutral-100 dark:border-neutral-800">
-                <h3 class="text-base font-semibold text-neutral-900 dark:text-white">
-                    {{ __('mcp.modal_create_title') }}
-                </h3>
-                <button
-                    type="button"
-                    @click="openCreateModal = false"
-                    class="p-1 rounded-full text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
-            </div>
+            <!-- Backdrop -->
+            <div class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                x-show="openCreateModal"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="openCreateModal = false"
+                aria-hidden="true"></div>
+
+            <div
+                @click.away="openCreateModal = false"
+                @keydown.escape.window="openCreateModal = false"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="modal-create-token-title"
+                x-show="openCreateModal"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0 scale-95"
+                x-transition:enter-end="opacity-100 scale-100"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100 scale-100"
+                x-transition:leave-end="opacity-0 scale-95"
+                class="relative z-10 w-full max-w-xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-neutral-200 dark:border-neutral-800 p-6 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto my-auto">
+
+                <div class="flex items-center justify-between pb-3 border-b border-neutral-100 dark:border-neutral-800">
+                    <h3 id="modal-create-token-title" class="text-base font-semibold text-neutral-900 dark:text-white">
+                        {{ __('mcp.modal_create_title') }}
+                    </h3>
+                    <button
+                        type="button"
+                        @click="openCreateModal = false"
+                        class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800 flex items-center justify-center transition-colors cursor-pointer"
+                        aria-label="Tutup modal buat token">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
+                </div>
 
             <form action="{{ route('settings.integrations.mcp.tokens.store') }}" method="POST" class="space-y-4">
                 @csrf
@@ -2045,6 +2063,7 @@ document.addEventListener('alpine:init', () => {
             </form>
         </div>
     </div>
+</template>
 
     {{-- Toast Notification (Bento Apple HIG Floating Pill) --}}
     <div

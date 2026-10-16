@@ -65,26 +65,7 @@
             color-scheme: dark;
         }
 
-        /* Universal Fullscreen Modal Overlay Directive (Cooca Modal Canvas Architecture) */
-        .fixed.inset-0.z-50,
-        .fixed.inset-0.z-\[50\],
-        .fixed.inset-0.z-\[60\],
-        .fixed.inset-0.z-\[70\],
-        .fixed.inset-0.z-\[75\],
-        .fixed.inset-0.z-\[80\],
-        .fixed.inset-0.z-\[100\],
-        .fixed.inset-0.z-\[200\],
-        .fixed.inset-0.z-\[210\],
-        .fixed.inset-0.z-\[220\],
-        [x-cloak].fixed.inset-0,
-        div[x-show*="Modal"].fixed.inset-0,
-        div[x-show*="modal"].fixed.inset-0,
-        div[x-show*="Modal"] > .fixed.inset-0,
-        div[x-show*="modal"] > .fixed.inset-0,
-        div[x-show*="Sheet"].fixed.inset-0,
-        div[x-show*="sheet"].fixed.inset-0 {
-            z-index: 99999 !important;
-        }
+        /* Modal Stacking Architecture: All modals use <template x-teleport="body"> with designated z-index layers (z-[200], z-[210], z-[220]). */
 
         /* Universal Apple HIG Form Controls & Dropdown Styling (§Dark Mode Accessibility) */
         select {

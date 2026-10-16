@@ -174,28 +174,45 @@
     @endif
 
     <!-- FULL-SIZE REVIEW MODAL SHEET (WHY, WHAT, IMPACT, COST, DATA, AGENT, CHANGES) -->
-    <div x-show="showReviewModal" 
-         x-transition:enter="transition ease-out duration-200"
-         x-transition:enter-start="opacity-0"
-         x-transition:enter-end="opacity-100"
-         x-transition:leave="transition ease-in duration-150"
-         x-transition:leave-start="opacity-100"
-         x-transition:leave-end="opacity-0"
-         class="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6" 
-         style="display: none;">
-        
-        <div class="w-full max-w-[95vw] lg:max-w-5xl xl:max-w-6xl 2xl:max-w-[1350px] bg-white dark:bg-zinc-900 rounded-3xl border border-black/10 dark:border-white/10 shadow-2xl flex flex-col max-h-[90vh] overflow-hidden"
-             @click.away="closeReviewModal()">
+    <template x-teleport="body">
+        <div x-show="showReviewModal" 
+             x-cloak
+             class="fixed inset-0 z-[200] overflow-y-auto flex items-center justify-center p-3 sm:p-6" 
+             @keydown.escape.window="closeReviewModal()"
+             role="dialog"
+             aria-modal="true"
+             aria-labelledby="ai-action-review-title">
             
-            <div class="p-5 border-b border-black/10 dark:border-white/10 flex items-center justify-between">
-                <div>
-                    <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-black/50 dark:text-white/50">{{ __('ai.actions.review_title') }}</span>
-                    <h3 class="text-base font-bold text-black dark:text-white mt-0.5" x-text="selectedProposal?.title"></h3>
+            <!-- Backdrop -->
+            <div x-show="showReviewModal"
+                 x-transition:enter="ease-out duration-200"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="ease-in duration-150"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 @click="closeReviewModal()"
+                 class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
+
+            <div x-show="showReviewModal"
+                 x-transition:enter="ease-out duration-200"
+                 x-transition:enter-start="opacity-0 translate-y-4 sm:scale-95"
+                 x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                 x-transition:leave="ease-in duration-150"
+                 x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                 x-transition:leave-end="opacity-0 translate-y-4 sm:scale-95"
+                 @click.outside="closeReviewModal()"
+                 class="relative w-full max-w-[95vw] lg:max-w-5xl xl:max-w-6xl 2xl:max-w-[1350px] bg-white dark:bg-zinc-900 rounded-[24px] sm:rounded-3xl border border-black/10 dark:border-white/10 shadow-2xl flex flex-col max-h-[90vh] overflow-hidden z-10">
+                
+                <div class="p-5 border-b border-black/10 dark:border-white/10 flex items-center justify-between">
+                    <div>
+                        <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-black/50 dark:text-white/50">{{ __('ai.actions.review_title') }}</span>
+                        <h3 id="ai-action-review-title" class="text-base font-bold text-black dark:text-white mt-0.5" x-text="selectedProposal?.title"></h3>
+                    </div>
+                    <button type="button" @click="closeReviewModal()" class="min-w-[44px] min-h-[44px] rounded-full hover:bg-black/5 dark:hover:bg-white/5 flex items-center justify-center text-black/50 dark:text-white/50 transition active:scale-95" aria-label="{{ __('common.close') }}">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
                 </div>
-                <button @click="closeReviewModal()" class="p-2 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 text-black/50 dark:text-white/50">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
-            </div>
 
             <div class="p-6 overflow-y-auto space-y-5 text-xs sm:text-sm">
                 
@@ -483,7 +500,7 @@
 
             <!-- Footer Action Buttons -->
             <div class="p-4 border-t border-black/10 dark:border-white/10 flex items-center justify-between bg-black/[0.01] dark:bg-white/[0.01]">
-                <button type="button" @click="closeReviewModal()" class="px-3.5 py-2 rounded-xl bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 text-xs font-semibold text-black dark:text-white transition">
+                <button type="button" @click="closeReviewModal()" class="min-h-[44px] px-4 py-2 rounded-xl bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 text-xs font-semibold text-black dark:text-white transition active:scale-95">
                     {{ __('common.close') }}
                 </button>
 
@@ -520,6 +537,7 @@
 
         </div>
     </div>
+</template>
 
 </div>
 

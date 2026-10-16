@@ -163,127 +163,191 @@
     <!-- ======================================================= -->
     <!-- MODAL KONFIRMASI SETUJUI (APPLE HIG DIALOG / SHEET)     -->
     <!-- ======================================================= -->
-    <div
-        x-show="approveModalOpen"
-        x-cloak
-        class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/40 backdrop-blur-md animate-fade-in"
-        @keydown.escape.window="approveModalOpen = false">
-        
+    <template x-teleport="body">
         <div
-            @click.outside="approveModalOpen = false"
-            class="w-full sm:max-w-md bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] border border-black/[0.06] dark:border-white/[0.08] p-6 shadow-2xl space-y-4 max-h-[94vh] flex flex-col overflow-hidden">
-            
-            <!-- Mobile Grab Bar -->
-            <div class="w-10 h-1.5 bg-black/20 dark:bg-white/20 rounded-full mx-auto -mt-2 mb-2 sm:hidden shrink-0"></div>
+            x-show="approveModalOpen"
+            x-cloak
+            class="fixed inset-0 z-[200] overflow-y-auto"
+            @keydown.escape.window="approveModalOpen = false"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="approve-modal-title">
 
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-[12px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center shrink-0">
-                    <i data-lucide="check-circle-2" class="w-5 h-5"></i>
-                </div>
-                <div>
-                    <h3 class="text-base font-bold text-black dark:text-white">Setujui Dokumen</h3>
-                    <p class="text-xs text-black/55 dark:text-white/55" x-text="activeDocTitle"></p>
+            <!-- Backdrop -->
+            <div x-show="approveModalOpen"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="approveModalOpen = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
+
+            <div class="relative z-10 min-h-full flex items-end sm:items-center justify-center p-0 sm:p-4" @click.self="approveModalOpen = false">
+                <div
+                    @click.stop
+                    x-show="approveModalOpen"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    class="relative w-full sm:max-w-md bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] border border-black/[0.06] dark:border-white/[0.08] p-6 shadow-2xl space-y-4 max-h-[94vh] flex flex-col overflow-hidden my-auto">
+                    
+                    <!-- Mobile Grab Bar -->
+                    <div class="w-10 h-1.5 bg-black/20 dark:bg-white/20 rounded-full mx-auto -mt-2 mb-2 sm:hidden shrink-0"></div>
+
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-[12px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center shrink-0">
+                                <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 id="approve-modal-title" class="text-base font-bold text-black dark:text-white">Setujui Dokumen</h3>
+                                <p class="text-xs text-black/55 dark:text-white/55" x-text="activeDocTitle"></p>
+                            </div>
+                        </div>
+                        <button type="button" @click="approveModalOpen = false"
+                            class="w-10 h-10 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition cursor-pointer"
+                            aria-label="Tutup Dialog">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                    
+                    <form :action="'{{ url('/approvals') }}/' + activeTicketId + '/approve'" method="POST" class="space-y-4">
+                        @csrf
+                        <div class="p-3.5 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.04] text-xs">
+                            <div class="text-black/60 dark:text-white/60">Nominal Transaksi:</div>
+                            <div class="text-lg font-bold text-black dark:text-white mt-0.5 tabular-nums" x-text="activeDocAmount"></div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1.5">
+                                Catatan Persetujuan (Opsional)
+                            </label>
+                            <textarea
+                                name="notes"
+                                rows="2"
+                                placeholder="Contoh: Anggaran telah diperiksa dan disetujui."
+                                class="w-full px-3.5 py-2.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.08] text-[16px] sm:text-xs text-black dark:text-white outline-none resize-none focus:ring-2 focus:ring-[#34C759]/50"></textarea>
+                        </div>
+
+                        <div class="flex items-center justify-end gap-2.5 pt-2 border-t border-black/[0.06] dark:border-white/[0.08]">
+                            <button
+                                type="button"
+                                @click="approveModalOpen = false"
+                                class="min-h-[44px] px-4 py-2 rounded-[12px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 active:scale-[0.98]">
+                                Batal
+                            </button>
+                            <button
+                                type="submit"
+                                class="min-h-[44px] px-5 py-2 rounded-[12px] bg-[#34C759] hover:bg-[#2FB34F] text-white text-xs font-semibold shadow-sm active:scale-[0.98]">
+                                Konfirmasi Setujui
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
-            
-            <form :action="'{{ url('/approvals') }}/' + activeTicketId + '/approve'" method="POST" class="space-y-4">
-                @csrf
-                <div class="p-3.5 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.04] text-xs">
-                    <div class="text-black/60 dark:text-white/60">Nominal Transaksi:</div>
-                    <div class="text-lg font-bold text-black dark:text-white mt-0.5 tabular-nums" x-text="activeDocAmount"></div>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1.5">
-                        Catatan Persetujuan (Opsional)
-                    </label>
-                    <textarea
-                        name="notes"
-                        rows="2"
-                        placeholder="Contoh: Anggaran telah diperiksa dan disetujui."
-                        class="w-full px-3.5 py-2.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.08] text-[16px] sm:text-xs text-black dark:text-white outline-none resize-none focus:ring-2 focus:ring-[#34C759]/50"></textarea>
-                </div>
-
-                <div class="flex items-center justify-end gap-2.5 pt-2">
-                    <button
-                        type="button"
-                        @click="approveModalOpen = false"
-                        class="min-h-[44px] px-4 py-2 rounded-[12px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 active:scale-[0.98]">
-                        Batal
-                    </button>
-                    <button
-                        type="submit"
-                        class="min-h-[44px] px-5 py-2 rounded-[12px] bg-[#34C759] hover:bg-[#2FB34F] text-white text-xs font-semibold shadow-sm active:scale-[0.98]">
-                        Konfirmasi Setujui
-                    </button>
-                </div>
-            </form>
         </div>
-    </div>
+    </template>
 
     <!-- ======================================================= -->
     <!-- MODAL KONFIRMASI TOLAK (APPLE HIG DIALOG / SHEET)       -->
     <!-- ======================================================= -->
-    <div
-        x-show="rejectModalOpen"
-        x-cloak
-        class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/40 backdrop-blur-md animate-fade-in"
-        @keydown.escape.window="rejectModalOpen = false">
-        
+    <template x-teleport="body">
         <div
-            @click.outside="rejectModalOpen = false"
-            class="w-full sm:max-w-md bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] border border-black/[0.06] dark:border-white/[0.08] p-6 shadow-2xl space-y-4 max-h-[94vh] flex flex-col overflow-hidden">
-            
-            <!-- Mobile Grab Bar -->
-            <div class="w-10 h-1.5 bg-black/20 dark:bg-white/20 rounded-full mx-auto -mt-2 mb-2 sm:hidden shrink-0"></div>
+            x-show="rejectModalOpen"
+            x-cloak
+            class="fixed inset-0 z-[220] overflow-y-auto"
+            @keydown.escape.window="rejectModalOpen = false"
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby="reject-modal-title">
 
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-[12px] bg-[#FF3B30]/10 text-[#FF3B30] flex items-center justify-center shrink-0">
-                    <i data-lucide="alert-triangle" class="w-5 h-5"></i>
-                </div>
-                <div>
-                    <h3 class="text-base font-bold text-black dark:text-white">Tolak Dokumen</h3>
-                    <p class="text-xs text-black/55 dark:text-white/55" x-text="activeDocTitle"></p>
+            <!-- Backdrop -->
+            <div x-show="rejectModalOpen"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="rejectModalOpen = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
+
+            <div class="relative z-10 min-h-full flex items-end sm:items-center justify-center p-0 sm:p-4" @click.self="rejectModalOpen = false">
+                <div
+                    @click.stop
+                    x-show="rejectModalOpen"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    class="relative w-full sm:max-w-md bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] border border-black/[0.06] dark:border-white/[0.08] p-6 shadow-2xl space-y-4 max-h-[94vh] flex flex-col overflow-hidden my-auto">
+                    
+                    <!-- Mobile Grab Bar -->
+                    <div class="w-10 h-1.5 bg-black/20 dark:bg-white/20 rounded-full mx-auto -mt-2 mb-2 sm:hidden shrink-0"></div>
+
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-[12px] bg-[#FF3B30]/10 text-[#FF3B30] flex items-center justify-center shrink-0">
+                                <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 id="reject-modal-title" class="text-base font-bold text-black dark:text-white">Tolak Dokumen</h3>
+                                <p class="text-xs text-black/55 dark:text-white/55" x-text="activeDocTitle"></p>
+                            </div>
+                        </div>
+                        <button type="button" @click="rejectModalOpen = false"
+                            class="w-10 h-10 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition cursor-pointer"
+                            aria-label="Tutup Dialog">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                    
+                    <form :action="'{{ url('/approvals') }}/' + activeTicketId + '/reject'" method="POST" class="space-y-4">
+                        @csrf
+                        <div class="p-3.5 rounded-[14px] bg-[#FF3B30]/5 border border-[#FF3B30]/15 text-xs">
+                            <div class="text-[#FF3B30] font-semibold">Perhatian:</div>
+                            <div class="text-black/70 dark:text-white/70 mt-0.5">Penolakan dokumen akan menghentikan alur pencairan anggaran. Pembuat draf (Maker) akan menerima alasan penolakan ini.</div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1.5">
+                                Alasan Penolakan <span class="text-[#FF3B30]">*</span>
+                            </label>
+                            <textarea
+                                name="reason"
+                                rows="3"
+                                required
+                                x-model="rejectionReasonText"
+                                placeholder="Contoh: Harga melampaui batas anggaran atau kuota bulan ini sudah habis."
+                                class="w-full px-3.5 py-2.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.08] text-[16px] sm:text-xs text-black dark:text-white outline-none resize-none focus:ring-2 focus:ring-[#FF3B30]/50"></textarea>
+                        </div>
+
+                        <div class="flex items-center justify-end gap-2.5 pt-2 border-t border-black/[0.06] dark:border-white/[0.08]">
+                            <button
+                                type="button"
+                                @click="rejectModalOpen = false"
+                                class="min-h-[44px] px-4 py-2 rounded-[12px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 active:scale-[0.98]">
+                                Batal
+                            </button>
+                            <button
+                                type="submit"
+                                :disabled="!rejectionReasonText.trim()"
+                                class="min-h-[44px] px-5 py-2 rounded-[12px] bg-[#FF3B30] hover:bg-[#E0352B] disabled:opacity-50 text-white text-xs font-semibold shadow-sm active:scale-[0.98]">
+                                Tolak Dokumen
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
-            
-            <form :action="'{{ url('/approvals') }}/' + activeTicketId + '/reject'" method="POST" class="space-y-4">
-                @csrf
-                <div class="p-3.5 rounded-[14px] bg-[#FF3B30]/5 border border-[#FF3B30]/15 text-xs">
-                    <div class="text-[#FF3B30] font-semibold">Perhatian:</div>
-                    <div class="text-black/70 dark:text-white/70 mt-0.5">Penolakan dokumen akan menghentikan alur pencairan anggaran. Pembuat draf (Maker) akan menerima alasan penolakan ini.</div>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1.5">
-                        Alasan Penolakan <span class="text-[#FF3B30]">*</span>
-                    </label>
-                    <textarea
-                        name="reason"
-                        rows="3"
-                        required
-                        x-model="rejectionReasonText"
-                        placeholder="Contoh: Harga melampaui batas anggaran atau kuota bulan ini sudah habis."
-                        class="w-full px-3.5 py-2.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.08] text-[16px] sm:text-xs text-black dark:text-white outline-none resize-none focus:ring-2 focus:ring-[#FF3B30]/50"></textarea>
-                </div>
-
-                <div class="flex items-center justify-end gap-2.5 pt-2">
-                    <button
-                        type="button"
-                        @click="rejectModalOpen = false"
-                        class="min-h-[44px] px-4 py-2 rounded-[12px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 active:scale-[0.98]">
-                        Batal
-                    </button>
-                    <button
-                        type="submit"
-                        :disabled="!rejectionReasonText.trim()"
-                        class="min-h-[44px] px-5 py-2 rounded-[12px] bg-[#FF3B30] hover:bg-[#E0352B] disabled:opacity-50 text-white text-xs font-semibold shadow-sm active:scale-[0.98]">
-                        Tolak Dokumen
-                    </button>
-                </div>
-            </form>
         </div>
-    </div>
+    </template>
 
 </div>
 

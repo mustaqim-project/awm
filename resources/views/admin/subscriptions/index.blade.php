@@ -685,32 +685,41 @@
         @endif
 
         <!-- Image Preview Modal (Sheet) -->
-        <div x-show="imageModalOpen" x-cloak
-            class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/25 backdrop-blur-[2px]"
-            x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
-            <div class="sheet-material max-w-2xl w-full rounded-[20px] overflow-hidden border border-black/5 dark:border-white/10 p-4 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)]"
-                @click.away="imageModalOpen = false">
-                <div class="flex items-center justify-between border-b border-black/5 dark:border-white/10 pb-3">
-                    <div class="flex items-center gap-2"><i data-lucide="image"
-                            class="w-4 h-4 text-[#30B0C7] dark:text-[#40C8E0]" stroke-width="1.5"></i><span
-                            class="text-[13px] font-semibold text-black dark:text-white" x-text="modalTitle"></span></div>
-                    <div class="flex items-center gap-2">
-                        <a :href="modalImageUrl" target="_blank"
-                            class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium bg-black/[0.06] dark:bg-white/[0.08] text-black/80 dark:text-white/80 hover:bg-black/[0.09] dark:hover:bg-white/[0.12] transition flex items-center gap-1"><i
-                                data-lucide="external-link" class="w-3 h-3" stroke-width="1.5"></i><span>Buka Tab
-                                Baru</span></a>
-                        <button @click="imageModalOpen = false"
-                            class="p-1.5 rounded-[6px] bg-black/[0.06] dark:bg-white/[0.08] text-black/60 dark:text-white/60 hover:bg-black/[0.09] dark:hover:bg-white/[0.12] transition"><i
-                                data-lucide="x" class="w-4 h-4" stroke-width="1.5"></i></button>
+        <template x-teleport="body">
+            <div x-show="imageModalOpen" x-cloak
+                class="fixed inset-0 z-[210] overflow-y-auto"
+                role="dialog" aria-modal="true"
+                @keydown.escape.window="imageModalOpen = false">
+                <!-- Backdrop -->
+                <div class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    @click="imageModalOpen = false"
+                    aria-hidden="true"></div>
+
+                <!-- Centering Wrapper -->
+                <div class="relative z-10 min-h-full flex items-center justify-center p-4 pointer-events-none">
+                    <div class="sheet-material max-w-2xl w-full rounded-[20px] overflow-hidden border border-black/5 dark:border-white/10 p-4 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] pointer-events-auto bg-white dark:bg-[#1C1C1E]"
+                        @click.stop>
+                        <div class="flex items-center justify-between border-b border-black/5 dark:border-white/10 pb-3">
+                            <div class="flex items-center gap-2"><i data-lucide="image"
+                                    class="w-4 h-4 text-[#30B0C7] dark:text-[#40C8E0]" stroke-width="1.5"></i><span
+                                    class="text-[13px] font-semibold text-black dark:text-white" x-text="modalTitle"></span></div>
+                            <div class="flex items-center gap-2">
+                                <a :href="modalImageUrl" target="_blank"
+                                    class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium bg-black/[0.06] dark:bg-white/[0.08] text-black/80 dark:text-white/80 hover:bg-black/[0.09] dark:hover:bg-white/[0.12] transition flex items-center gap-1"><i
+                                        data-lucide="external-link" class="w-3 h-3" stroke-width="1.5"></i><span>Buka Tab
+                                        Baru</span></a>
+                                <button @click="imageModalOpen = false"
+                                    class="p-2 min-h-[44px] min-w-[44px] rounded-[8px] bg-black/[0.06] dark:bg-white/[0.08] text-black/60 dark:text-white/60 hover:bg-black/[0.09] dark:hover:bg-white/[0.12] transition flex items-center justify-center"><i
+                                        data-lucide="x" class="w-4 h-4" stroke-width="1.5"></i></button>
+                            </div>
+                        </div>
+                        <div
+                            class="max-h-[70vh] overflow-auto flex items-center justify-center bg-black/[0.03] dark:bg-white/[0.05] rounded-[10px] p-2">
+                            <img :src="modalImageUrl" alt="Struk Transfer" class="max-h-[65vh] object-contain rounded-[10px]">
+                        </div>
                     </div>
                 </div>
-                <div
-                    class="max-h-[70vh] overflow-auto flex items-center justify-center bg-black/[0.03] dark:bg-white/[0.05] rounded-[10px] p-2">
-                    <img :src="modalImageUrl" alt="Struk Transfer" class="max-h-[65vh] object-contain rounded-[10px]">
-                </div>
             </div>
-        </div>
+        </template>
     </div>
 @endsection

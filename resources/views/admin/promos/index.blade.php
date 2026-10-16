@@ -395,10 +395,11 @@
         @endif
 
         <!-- MODAL SHEET 1: TERBITKAN PROMO BARU -->
-        <div x-show="createOpen" x-cloak class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-            <div class="fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity" @click="createOpen = false"></div>
-            <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
-                <div class="relative transform overflow-hidden rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-2xl p-6 sm:p-7">
+        <template x-teleport="body">
+            <div x-show="createOpen" x-cloak class="fixed inset-0 z-[200] overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true" @keydown.escape.window="createOpen = false">
+                <div x-show="createOpen" class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md" @click="createOpen = false" aria-hidden="true"></div>
+                <div class="relative z-10 min-h-full flex items-center justify-center p-4 text-center sm:p-0 pointer-events-none" @click.self="createOpen = false">
+                    <div class="relative pointer-events-auto transform overflow-hidden rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-2xl p-6 sm:p-7">
                     <div class="flex items-center justify-between pb-4 border-b border-black/[0.06] dark:border-white/[0.08]">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/10 flex items-center justify-center text-[#007AFF] shrink-0">
@@ -516,12 +517,14 @@
                 </div>
             </div>
         </div>
+    </template>
 
         <!-- MODAL SHEET 2: EDIT KODE PROMO -->
-        <div x-show="editOpen" x-cloak class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-            <div class="fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity" @click="editOpen = false"></div>
-            <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
-                <div class="relative transform overflow-hidden rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-2xl p-6 sm:p-7">
+        <template x-teleport="body">
+            <div x-show="editOpen" x-cloak class="fixed inset-0 z-[200] overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true" @keydown.escape.window="editOpen = false">
+                <div x-show="editOpen" class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md" @click="editOpen = false" aria-hidden="true"></div>
+                <div class="relative z-10 min-h-full flex items-center justify-center p-4 text-center sm:p-0 pointer-events-none" @click.self="editOpen = false">
+                    <div class="relative pointer-events-auto transform overflow-hidden rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-2xl p-6 sm:p-7">
                     <div class="flex items-center justify-between pb-4 border-b border-black/[0.06] dark:border-white/[0.08]">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-[12px] bg-[#34C759]/10 flex items-center justify-center text-[#34C759] shrink-0">
@@ -640,6 +643,7 @@
                 </div>
             </div>
         </div>
+    </template>
 
     </div>
 @endsection

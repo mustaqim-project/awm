@@ -398,297 +398,347 @@
     <!-- MODAL: TAMBAH MEJA BARU (Bento Apple Modal Sheet XXL)     -->
     <!-- ========================================================= -->
     @if(\App\Support\Context::hasPermission('pos.tables'))
-    <div x-show="showAddModal" 
-        x-cloak
-        class="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40 backdrop-blur-sm p-0 sm:p-4 overflow-y-auto"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0">
-        <div class="w-full max-w-full sm:max-w-3xl lg:max-w-4xl xl:max-w-5xl bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] border border-black/5 dark:border-white/10 p-5 sm:p-7 shadow-2xl space-y-6 text-black dark:text-white max-h-[92vh] overflow-y-auto" 
-            @click.outside="if(!isSubmitting) showAddModal = false"
-            x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-            x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-            x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
-            
-            <div class="flex items-center justify-between pb-4 border-b border-black/[0.06] dark:border-white/[0.08]">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center font-bold">
-                        <i data-lucide="plus" class="w-5 h-5"></i>
+    <template x-teleport="body">
+        <div x-show="showAddModal" 
+            x-cloak
+            class="fixed inset-0 z-[200] overflow-y-auto"
+            @keydown.escape.window="if(!isSubmitting) showAddModal = false"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="pos-add-table-title">
+
+            <!-- Backdrop -->
+            <div x-show="showAddModal"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="if(!isSubmitting) showAddModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
+
+            <div class="relative z-10 min-h-full flex items-end sm:items-center justify-center p-0 sm:p-4" @click.self="if(!isSubmitting) showAddModal = false">
+                <div class="relative w-full max-w-full sm:max-w-3xl lg:max-w-4xl xl:max-w-5xl bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] border border-black/5 dark:border-white/10 p-5 sm:p-7 shadow-2xl space-y-6 text-black dark:text-white max-h-[92vh] overflow-y-auto my-auto" 
+                    x-show="showAddModal"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    @click.stop>
+                    
+                    <div class="flex items-center justify-between pb-4 border-b border-black/[0.06] dark:border-white/[0.08]">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center font-bold">
+                                <i data-lucide="plus" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 id="pos-add-table-title" class="font-bold text-[18px] tracking-tight">{{ __('pos.add_table_modal_title') }}</h3>
+                                <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">{{ __('pos.add_table_modal_desc') }}</p>
+                            </div>
+                        </div>
+                        <button type="button" @click="showAddModal = false" :disabled="isSubmitting"
+                            class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer"
+                            aria-label="{{ __('common.close') }}">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
                     </div>
-                    <div>
-                        <h3 class="font-bold text-[18px] tracking-tight">{{ __('pos.add_table_modal_title') }}</h3>
-                        <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">{{ __('pos.add_table_modal_desc') }}</p>
-                    </div>
+
+                    <form method="POST" action="{{ route('pos.tables.store') }}" @submit="isSubmitting = true" class="space-y-6">
+                        @csrf
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                            <!-- Kolom Kiri: Form Input -->
+                            <div class="lg:col-span-7 space-y-4">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.table_code_label') }} <span class="text-red-500">*</span></label>
+                                        <input type="text" name="table_number" required placeholder="Contoh: Meja 01, VIP-A" class="w-full min-h-[44px] h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[16px] sm:text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.table_capacity_label') }} <span class="text-red-500">*</span></label>
+                                        <input type="number" name="capacity" min="1" max="100" value="4" required class="w-full min-h-[44px] h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[16px] sm:text-[14px] font-semibold tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.table_name_label') }}</label>
+                                        <input type="text" name="name" placeholder="Contoh: Outdoor Lt. 2, Sofa VIP" class="w-full min-h-[44px] h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[16px] sm:text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.table_location_label') }}</label>
+                                        <select name="location_id" class="w-full min-h-[44px] h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                                            <option value="">{{ __('pos.all_locations_option') }}</option>
+                                            @foreach($locations as $loc)
+                                                <option value="{{ $loc->id }}">{{ $loc->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.table_notes_label') }}</label>
+                                    <textarea name="notes" rows="3" placeholder="{{ __('pos.table_notes_placeholder') }}" class="w-full p-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[16px] sm:text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Kolom Kanan: Bento Guidance & Standar QR -->
+                            <div class="lg:col-span-5 space-y-3.5">
+                                <div class="p-4 rounded-[16px] bg-[#007AFF]/[0.05] border border-[#007AFF]/15 space-y-3">
+                                    <div class="flex items-center gap-2 text-[#007AFF] font-bold text-[13px]">
+                                        <i data-lucide="qr-code" class="w-4 h-4"></i>
+                                        <span>{{ __('pos.qr_kds_integration_title') }}</span>
+                                    </div>
+                                    <ul class="text-[12px] text-black/70 dark:text-white/70 space-y-2 leading-relaxed">
+                                        <li class="flex items-start gap-2">
+                                            <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0 mt-0.5"></i>
+                                            <span><strong>Token QR Dinamis:</strong> {{ __('pos.qr_token_dynamic_desc') }}</span>
+                                        </li>
+                                        <li class="flex items-start gap-2">
+                                            <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0 mt-0.5"></i>
+                                            <span><strong>Auto-Routing Dapur (KDS):</strong> {{ __('pos.auto_routing_kds_desc') }}</span>
+                                        </li>
+                                        <li class="flex items-start gap-2">
+                                            <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0 mt-0.5"></i>
+                                            <span><strong>Kartu Akrilik Siap Cetak:</strong> {{ __('pos.acrylic_card_print_desc') }}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="p-4 rounded-[16px] bg-black/[0.03] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 space-y-1.5">
+                                    <div class="text-[11px] font-bold text-black/50 dark:text-white/50 uppercase tracking-wider">{{ __('pos.restaurant_seat_capacity_title') }}</div>
+                                    <p class="text-[12px] text-black/65 dark:text-white/65 leading-relaxed">
+                                        {{ __('pos.restaurant_seat_capacity_desc') }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end gap-2.5 pt-4 border-t border-black/[0.06] dark:border-white/[0.08]">
+                            <button type="button" @click="showAddModal = false" :disabled="isSubmitting" class="min-h-[44px] h-11 px-5 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+                                {{ __('pos.cancel') }}
+                            </button>
+                            <button type="submit" :disabled="isSubmitting" class="min-h-[44px] h-11 px-6 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] text-white text-[13px] font-semibold shadow-sm transition-all flex items-center justify-center gap-2 disabled:opacity-50">
+                                <template x-if="isSubmitting">
+                                    <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i>
+                                </template>
+                                <span x-text="isSubmitting ? {{ Js::from(__('pos.saving_btn')) }} : {{ Js::from(__('pos.save_table_btn')) }}"></span>
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <button type="button" @click="showAddModal = false" :disabled="isSubmitting" class="w-8 h-8 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
             </div>
-
-            <form method="POST" action="{{ route('pos.tables.store') }}" @submit="isSubmitting = true" class="space-y-6">
-                @csrf
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                    <!-- Kolom Kiri: Form Input -->
-                    <div class="lg:col-span-7 space-y-4">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.table_code_label') }} <span class="text-red-500">*</span></label>
-                                <input type="text" name="table_number" required placeholder="Contoh: Meja 01, VIP-A" class="w-full min-h-[44px] h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[16px] sm:text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
-                            </div>
-
-                            <div>
-                                <label class="block text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.table_capacity_label') }} <span class="text-red-500">*</span></label>
-                                <input type="number" name="capacity" min="1" max="100" value="4" required class="w-full min-h-[44px] h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[16px] sm:text-[14px] font-semibold tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.table_name_label') }}</label>
-                                <input type="text" name="name" placeholder="Contoh: Outdoor Lt. 2, Sofa VIP" class="w-full min-h-[44px] h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[16px] sm:text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
-                            </div>
-
-                            <div>
-                                <label class="block text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.table_location_label') }}</label>
-                                <select name="location_id" class="w-full min-h-[44px] h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
-                                    <option value="">{{ __('pos.all_locations_option') }}</option>
-                                    @foreach($locations as $loc)
-                                        <option value="{{ $loc->id }}">{{ $loc->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div>
-                            <label class="block text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.table_notes_label') }}</label>
-                            <textarea name="notes" rows="3" placeholder="{{ __('pos.table_notes_placeholder') }}" class="w-full p-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[16px] sm:text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50"></textarea>
-                        </div>
-                    </div>
-
-                    <!-- Kolom Kanan: Bento Guidance & Standar QR -->
-                    <div class="lg:col-span-5 space-y-3.5">
-                        <div class="p-4 rounded-[16px] bg-[#007AFF]/[0.05] border border-[#007AFF]/15 space-y-3">
-                            <div class="flex items-center gap-2 text-[#007AFF] font-bold text-[13px]">
-                                <i data-lucide="qr-code" class="w-4 h-4"></i>
-                                <span>{{ __('pos.qr_kds_integration_title') }}</span>
-                            </div>
-                            <ul class="text-[12px] text-black/70 dark:text-white/70 space-y-2 leading-relaxed">
-                                <li class="flex items-start gap-2">
-                                    <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0 mt-0.5"></i>
-                                    <span><strong>Token QR Dinamis:</strong> {{ __('pos.qr_token_dynamic_desc') }}</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0 mt-0.5"></i>
-                                    <span><strong>Auto-Routing Dapur (KDS):</strong> {{ __('pos.auto_routing_kds_desc') }}</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0 mt-0.5"></i>
-                                    <span><strong>Kartu Akrilik Siap Cetak:</strong> {{ __('pos.acrylic_card_print_desc') }}</span>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="p-4 rounded-[16px] bg-black/[0.03] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 space-y-1.5">
-                            <div class="text-[11px] font-bold text-black/50 dark:text-white/50 uppercase tracking-wider">{{ __('pos.restaurant_seat_capacity_title') }}</div>
-                            <p class="text-[12px] text-black/65 dark:text-white/65 leading-relaxed">
-                                {{ __('pos.restaurant_seat_capacity_desc') }}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flex justify-end gap-2.5 pt-4 border-t border-black/[0.06] dark:border-white/[0.08]">
-                    <button type="button" @click="showAddModal = false" :disabled="isSubmitting" class="min-h-[44px] h-11 px-5 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
-                        {{ __('pos.cancel') }}
-                    </button>
-                    <button type="submit" :disabled="isSubmitting" class="min-h-[44px] h-11 px-6 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] text-white text-[13px] font-semibold shadow-sm transition-all flex items-center justify-center gap-2 disabled:opacity-50">
-                        <template x-if="isSubmitting">
-                            <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i>
-                        </template>
-                        <span x-text="isSubmitting ? {{ Js::from(__('pos.saving_btn')) }} : {{ Js::from(__('pos.save_table_btn')) }}"></span>
-                    </button>
-                </div>
-            </form>
         </div>
-    </div>
+    </template>
     @endif
 
     <!-- ========================================================= -->
     <!-- MODAL: EDIT MEJA (Bento Apple Modal Sheet XXL)            -->
     <!-- ========================================================= -->
     @if(\App\Support\Context::hasPermission('pos.tables'))
-    <div x-show="showEditModal" 
-        x-cloak
-        class="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40 backdrop-blur-sm p-0 sm:p-4 overflow-y-auto"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0">
-        <div class="w-full max-w-full sm:max-w-3xl lg:max-w-4xl xl:max-w-5xl bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] border border-black/5 dark:border-white/10 p-5 sm:p-7 shadow-2xl space-y-6 text-black dark:text-white max-h-[92vh] overflow-y-auto" 
-            @click.outside="if(!isSubmitting) showEditModal = false"
-            x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-            x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-            x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
-            
-            <div class="flex items-center justify-between pb-4 border-b border-black/[0.06] dark:border-white/[0.08]">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center font-bold">
-                        <i data-lucide="edit-3" class="w-5 h-5"></i>
+    <template x-teleport="body">
+        <div x-show="showEditModal" 
+            x-cloak
+            class="fixed inset-0 z-[200] overflow-y-auto"
+            @keydown.escape.window="if(!isSubmitting) showEditModal = false"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="pos-edit-table-title">
+
+            <!-- Backdrop -->
+            <div x-show="showEditModal"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="if(!isSubmitting) showEditModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
+
+            <div class="relative z-10 min-h-full flex items-end sm:items-center justify-center p-0 sm:p-4" @click.self="if(!isSubmitting) showEditModal = false">
+                <div class="relative w-full max-w-full sm:max-w-3xl lg:max-w-4xl xl:max-w-5xl bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] border border-black/5 dark:border-white/10 p-5 sm:p-7 shadow-2xl space-y-6 text-black dark:text-white max-h-[92vh] overflow-y-auto my-auto" 
+                    x-show="showEditModal"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    @click.stop>
+                    
+                    <div class="flex items-center justify-between pb-4 border-b border-black/[0.06] dark:border-white/[0.08]">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center font-bold">
+                                <i data-lucide="edit-3" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 id="pos-edit-table-title" class="font-bold text-[18px] tracking-tight">{{ __('pos.edit_table_modal_title') }}</h3>
+                                <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">{{ __('pos.edit_table_modal_desc') }}</p>
+                            </div>
+                        </div>
+                        <button type="button" @click="showEditModal = false" :disabled="isSubmitting"
+                            class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer"
+                            aria-label="{{ __('common.close') }}">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
                     </div>
-                    <div>
-                        <h3 class="font-bold text-[18px] tracking-tight">{{ __('pos.edit_table_modal_title') }}</h3>
-                        <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">{{ __('pos.edit_table_modal_desc') }}</p>
-                    </div>
+
+                    <form method="POST" :action="'{{ url('pos/tables') }}/' + editForm.id" @submit="isSubmitting = true" class="space-y-6">
+                        @csrf
+                        @method('PUT')
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                            <!-- Kolom Kiri: Form Input -->
+                            <div class="lg:col-span-7 space-y-4">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.table_code_label') }} <span class="text-red-500">*</span></label>
+                                        <input type="text" name="table_number" x-model="editForm.table_number" required class="w-full min-h-[44px] h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.table_capacity_label') }} <span class="text-red-500">*</span></label>
+                                        <input type="number" name="capacity" x-model.number="editForm.capacity" min="1" max="100" required class="w-full min-h-[44px] h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[16px] sm:text-[14px] font-semibold tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.table_name_label') }}</label>
+                                        <input type="text" name="name" x-model="editForm.name" class="w-full min-h-[44px] h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.table_active_status') }}</label>
+                                        <select name="is_active" x-model="editForm.is_active" class="w-full min-h-[44px] h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                                            <option :value="true">{{ __('pos.table_active_option') }}</option>
+                                            <option :value="false">{{ __('pos.table_inactive_option') }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.table_notes_label') }}</label>
+                                    <textarea name="notes" x-model="editForm.notes" rows="3" class="w-full p-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Kolom Kanan: Bento Status & QR Shortcuts -->
+                            <div class="lg:col-span-5 space-y-3.5">
+                                <div class="p-4 rounded-[16px] bg-black/[0.03] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 space-y-2.5">
+                                    <div class="text-[11px] font-bold text-black/50 dark:text-white/50 uppercase tracking-wider">{{ __('pos.quick_table_actions') }}</div>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <a :href="'{{ url('pos/tables') }}/' + editForm.id + '/qr-card'" target="_blank" class="min-h-[36px] px-2 rounded-[8px] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 text-[#007AFF] text-[12px] font-semibold flex items-center justify-center gap-1.5 transition">
+                                            <i data-lucide="qr-code" class="w-3.5 h-3.5"></i>
+                                            <span>{{ __('pos.view_qr_card') }}</span>
+                                        </a>
+                                        <a :href="'{{ url('pos/tables') }}/' + editForm.id + '/qr-svg'" class="min-h-[36px] px-2 rounded-[8px] bg-[#34C759]/10 hover:bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158] text-[12px] font-semibold flex items-center justify-center gap-1.5 transition">
+                                            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                                            <span>{{ __('pos.download_svg') }}</span>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="p-4 rounded-[16px] bg-[#FF9500]/[0.05] border border-[#FF9500]/15 space-y-2">
+                                    <div class="flex items-center gap-2 text-[#FF9500] font-bold text-[12.5px]">
+                                        <i data-lucide="shield-alert" class="w-4 h-4"></i>
+                                        <span>{{ __('pos.history_data_preservation_title') }}</span>
+                                    </div>
+                                    <p class="text-[12px] text-black/65 dark:text-white/65 leading-relaxed">
+                                        {{ __('pos.history_data_preservation_desc') }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-center pt-4 border-t border-black/[0.06] dark:border-white/[0.08]">
+                            <button type="button" @click="deleteTable()" :disabled="isSubmitting" class="min-h-[44px] px-3.5 rounded-[12px] text-[13px] text-[#FF3B30] hover:bg-[#FF3B30]/10 font-semibold flex items-center gap-1.5 transition disabled:opacity-50">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                <span>{{ __('pos.delete_table_action') }}</span>
+                            </button>
+
+                            <div class="flex items-center gap-2.5">
+                                <button type="button" @click="showEditModal = false" :disabled="isSubmitting" class="min-h-[44px] h-11 px-5 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+                                    {{ __('pos.cancel') }}
+                                </button>
+                                <button type="submit" :disabled="isSubmitting" class="min-h-[44px] h-11 px-6 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] text-white text-[13px] font-semibold shadow-sm transition-all flex items-center justify-center gap-2 disabled:opacity-50">
+                                    <template x-if="isSubmitting">
+                                        <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i>
+                                    </template>
+                                    <span x-text="isSubmitting ? {{ Js::from(__('pos.saving_btn')) }} : {{ Js::from(__('pos.save_changes_btn')) }}"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <button type="button" @click="showEditModal = false" :disabled="isSubmitting" class="w-8 h-8 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
             </div>
-
-            <form method="POST" :action="'{{ url('pos/tables') }}/' + editForm.id" @submit="isSubmitting = true" class="space-y-6">
-                @csrf
-                @method('PUT')
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                    <!-- Kolom Kiri: Form Input -->
-                    <div class="lg:col-span-7 space-y-4">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.table_code_label') }} <span class="text-red-500">*</span></label>
-                                <input type="text" name="table_number" x-model="editForm.table_number" required class="w-full min-h-[44px] h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
-                            </div>
-
-                            <div>
-                                <label class="block text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.table_capacity_label') }} <span class="text-red-500">*</span></label>
-                                <input type="number" name="capacity" x-model.number="editForm.capacity" min="1" max="100" required class="w-full min-h-[44px] h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[16px] sm:text-[14px] font-semibold tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.table_name_label') }}</label>
-                                <input type="text" name="name" x-model="editForm.name" class="w-full min-h-[44px] h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
-                            </div>
-
-                            <div>
-                                <label class="block text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.table_active_status') }}</label>
-                                <select name="is_active" x-model="editForm.is_active" class="w-full min-h-[44px] h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
-                                    <option :value="true">{{ __('pos.table_active_option') }}</option>
-                                    <option :value="false">{{ __('pos.table_inactive_option') }}</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div>
-                            <label class="block text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.table_notes_label') }}</label>
-                            <textarea name="notes" x-model="editForm.notes" rows="3" class="w-full p-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50"></textarea>
-                        </div>
-                    </div>
-
-                    <!-- Kolom Kanan: Bento Status & QR Shortcuts -->
-                    <div class="lg:col-span-5 space-y-3.5">
-                        <div class="p-4 rounded-[16px] bg-black/[0.03] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 space-y-2.5">
-                            <div class="text-[11px] font-bold text-black/50 dark:text-white/50 uppercase tracking-wider">{{ __('pos.quick_table_actions') }}</div>
-                            <div class="grid grid-cols-2 gap-2">
-                                <a :href="'{{ url('pos/tables') }}/' + editForm.id + '/qr-card'" target="_blank" class="min-h-[36px] px-2 rounded-[8px] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 text-[#007AFF] text-[12px] font-semibold flex items-center justify-center gap-1.5 transition">
-                                    <i data-lucide="qr-code" class="w-3.5 h-3.5"></i>
-                                    <span>{{ __('pos.view_qr_card') }}</span>
-                                </a>
-                                <a :href="'{{ url('pos/tables') }}/' + editForm.id + '/qr-svg'" class="min-h-[36px] px-2 rounded-[8px] bg-[#34C759]/10 hover:bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158] text-[12px] font-semibold flex items-center justify-center gap-1.5 transition">
-                                    <i data-lucide="download" class="w-3.5 h-3.5"></i>
-                                    <span>{{ __('pos.download_svg') }}</span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="p-4 rounded-[16px] bg-[#FF9500]/[0.05] border border-[#FF9500]/15 space-y-2">
-                            <div class="flex items-center gap-2 text-[#FF9500] font-bold text-[12.5px]">
-                                <i data-lucide="shield-alert" class="w-4 h-4"></i>
-                                <span>{{ __('pos.history_data_preservation_title') }}</span>
-                            </div>
-                            <p class="text-[12px] text-black/65 dark:text-white/65 leading-relaxed">
-                                {{ __('pos.history_data_preservation_desc') }}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flex justify-between items-center pt-4 border-t border-black/[0.06] dark:border-white/[0.08]">
-                    <button type="button" @click="deleteTable()" :disabled="isSubmitting" class="min-h-[44px] px-3.5 rounded-[12px] text-[13px] text-[#FF3B30] hover:bg-[#FF3B30]/10 font-semibold flex items-center gap-1.5 transition disabled:opacity-50">
-                        <i data-lucide="trash-2" class="w-4 h-4"></i>
-                        <span>{{ __('pos.delete_table_action') }}</span>
-                    </button>
-
-                    <div class="flex items-center gap-2.5">
-                        <button type="button" @click="showEditModal = false" :disabled="isSubmitting" class="min-h-[44px] h-11 px-5 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
-                            {{ __('pos.cancel') }}
-                        </button>
-                        <button type="submit" :disabled="isSubmitting" class="min-h-[44px] h-11 px-6 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] text-white text-[13px] font-semibold shadow-sm transition-all flex items-center justify-center gap-2 disabled:opacity-50">
-                            <template x-if="isSubmitting">
-                                <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i>
-                            </template>
-                            <span x-text="isSubmitting ? {{ Js::from(__('pos.saving_btn')) }} : {{ Js::from(__('pos.save_changes_btn')) }}"></span>
-                        </button>
-                    </div>
-                </div>
-            </form>
         </div>
-    </div>
+    </template>
     @endif
 
     <!-- ========================================================= -->
     <!-- MODAL: REGENERATE QR CONFIRMATION                         -->
     <!-- ========================================================= -->
     @if(\App\Support\Context::hasPermission('pos.tables'))
-    <div x-show="showRegenModal" 
-        x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-[2px] p-4" 
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0">
-        <div class="w-full max-w-sm bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl rounded-[16px] border border-black/5 dark:border-white/10 p-6 shadow-[0_20px_50px_rgba(0,0,0,0.25)] text-center space-y-4 text-black dark:text-white" 
-            @click.outside="if(!isSubmitting) showRegenModal = false"
-            x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="opacity-0 scale-95"
-            x-transition:enter-end="opacity-100 scale-100"
-            x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100 scale-100"
-            x-transition:leave-end="opacity-0 scale-95">
-            <div class="w-12 h-12 rounded-full bg-[#FF9500]/15 text-[#FF9500] flex items-center justify-center mx-auto">
-                <i data-lucide="refresh-cw" class="w-6 h-6"></i>
-            </div>
-            <div>
-                <h3 class="font-bold text-[17px]">{{ __('pos.regenerate_qr_confirm_title') }}</h3>
-                <p class="text-[13px] text-black/60 dark:text-white/60 mt-1">
-                    {{ __('pos.regenerate_qr_confirm_desc', ['table' => '']) }}<strong x-text="regenTable ? regenTable.table_number : ''"></strong>.
-                </p>
-            </div>
+    <template x-teleport="body">
+        <div x-show="showRegenModal" 
+            x-cloak
+            class="fixed inset-0 z-[220] overflow-y-auto" 
+            @keydown.escape.window="if(!isSubmitting) showRegenModal = false"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="pos-regen-qr-title">
 
-            <form method="POST" :action="'{{ url('pos/tables') }}/' + (regenTable ? regenTable.id : '') + '/regenerate-qr'" @submit="isSubmitting = true" class="flex justify-center gap-2 pt-2">
-                @csrf
-                <button type="button" @click="showRegenModal = false" :disabled="isSubmitting" class="min-h-[44px] sm:min-h-0 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">{{ __('pos.cancel') }}</button>
-                <button type="submit" :disabled="isSubmitting" class="min-h-[44px] sm:min-h-0 sm:h-9 px-5 rounded-[10px] bg-[#FF9500] hover:bg-[#E08500] text-white text-[13px] font-semibold shadow-[0_1px_2px_rgba(255,149,0,0.25)] transition-all flex items-center gap-1.5 disabled:opacity-50">
-                    <template x-if="isSubmitting">
-                        <i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin"></i>
-                    </template>
-                    <span>{{ __('pos.yes_regenerate_qr') }}</span>
-                </button>
-            </form>
+            <!-- Backdrop -->
+            <div x-show="showRegenModal"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="if(!isSubmitting) showRegenModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
+
+            <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="if(!isSubmitting) showRegenModal = false">
+                <div class="relative w-full max-w-sm bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl rounded-[20px] border border-black/5 dark:border-white/10 p-6 shadow-[0_20px_50px_rgba(0,0,0,0.25)] text-center space-y-4 text-black dark:text-white my-auto" 
+                    x-show="showRegenModal"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95"
+                    @click.stop>
+
+                    <div class="w-12 h-12 rounded-full bg-[#FF9500]/15 text-[#FF9500] flex items-center justify-center mx-auto">
+                        <i data-lucide="refresh-cw" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h3 id="pos-regen-qr-title" class="font-bold text-[17px]">{{ __('pos.regenerate_qr_confirm_title') }}</h3>
+                        <p class="text-[13px] text-black/60 dark:text-white/60 mt-1">
+                            {{ __('pos.regenerate_qr_confirm_desc', ['table' => '']) }}<strong x-text="regenTable ? regenTable.table_number : ''"></strong>.
+                        </p>
+                    </div>
+
+                    <form method="POST" :action="'{{ url('pos/tables') }}/' + (regenTable ? regenTable.id : '') + '/regenerate-qr'" @submit="isSubmitting = true" class="flex justify-center gap-2 pt-2">
+                        @csrf
+                        <button type="button" @click="showRegenModal = false" :disabled="isSubmitting" class="min-h-[44px] sm:min-h-0 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">{{ __('pos.cancel') }}</button>
+                        <button type="submit" :disabled="isSubmitting" class="min-h-[44px] sm:min-h-0 sm:h-9 px-5 rounded-[10px] bg-[#FF9500] hover:bg-[#E08500] text-white text-[13px] font-semibold shadow-[0_1px_2px_rgba(255,149,0,0.25)] transition-all flex items-center gap-1.5 disabled:opacity-50">
+                            <template x-if="isSubmitting">
+                                <i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin"></i>
+                            </template>
+                            <span>{{ __('pos.yes_regenerate_qr') }}</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
-    </div>
+    </template>
     @endif
 </div>
 

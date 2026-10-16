@@ -134,26 +134,7 @@
             color-scheme: dark;
         }
 
-        /* Universal Fullscreen Modal Overlay Directive (Cooca Modal Canvas Architecture) */
-        .fixed.inset-0.z-50,
-        .fixed.inset-0.z-\[50\],
-        .fixed.inset-0.z-\[60\],
-        .fixed.inset-0.z-\[70\],
-        .fixed.inset-0.z-\[75\],
-        .fixed.inset-0.z-\[80\],
-        .fixed.inset-0.z-\[100\],
-        .fixed.inset-0.z-\[200\],
-        .fixed.inset-0.z-\[210\],
-        .fixed.inset-0.z-\[220\],
-        [x-cloak].fixed.inset-0,
-        div[x-show*="Modal"].fixed.inset-0,
-        div[x-show*="modal"].fixed.inset-0,
-        div[x-show*="Modal"] > .fixed.inset-0,
-        div[x-show*="modal"] > .fixed.inset-0,
-        div[x-show*="Sheet"].fixed.inset-0,
-        div[x-show*="sheet"].fixed.inset-0 {
-            z-index: 99999 !important;
-        }
+        /* Modal Stacking Architecture: All modals use <template x-teleport="body"> with designated z-index layers (z-[200], z-[210], z-[220]). */
 
         /* Universal Apple HIG Form Controls & Dropdown Styling (§Dark Mode Accessibility) */
         select {
@@ -753,21 +734,23 @@
     <div class="lg:pl-72 flex flex-col flex-1 min-h-screen min-w-0 w-full pt-[64px] sm:pt-[72px]">
 
         <!-- macOS Sonoma Spotlight Quick Navigator Modal -->
-        <div x-show="spotlightOpen" x-cloak class="relative z-50" aria-labelledby="spotlight-title" role="dialog"
-            aria-modal="true">
-            <div x-show="spotlightOpen" x-transition:enter="ease-out duration-200"
-                x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                x-transition:leave="ease-in duration-150" x-transition:leave-start="opacity-100"
-                x-transition:leave-end="opacity-0" @click="spotlightOpen = false"
-                class="fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity"></div>
+        <template x-teleport="body">
+            <div x-show="spotlightOpen" x-cloak class="fixed inset-0 z-[210] overflow-y-auto" aria-labelledby="spotlight-title" role="dialog"
+                aria-modal="true" @keydown.escape.window="spotlightOpen = false">
+                <div x-show="spotlightOpen" x-transition:enter="ease-out duration-200"
+                    x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                    x-transition:leave="ease-in duration-150" x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0" @click="spotlightOpen = false"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"
+                    aria-hidden="true"></div>
 
-            <div class="fixed inset-0 z-10 overflow-y-auto flex items-start justify-center p-4 pt-16 sm:pt-24">
-                <div x-show="spotlightOpen" x-transition:enter="ease-out duration-200 transform"
-                    x-transition:enter-start="scale-95 opacity-0" x-transition:enter-end="scale-100 opacity-100"
-                    x-transition:leave="ease-in duration-150 transform"
-                    x-transition:leave-start="scale-100 opacity-100" x-transition:leave-end="scale-95 opacity-0"
-                    @click.outside="spotlightOpen = false"
-                    class="w-full max-w-xl rounded-[22px] sheet-material border border-black/[0.08] dark:border-white/[0.12] shadow-2xl overflow-hidden divide-y divide-black/[0.06] dark:divide-white/[0.08]">
+                <div class="relative z-10 min-h-full flex items-start justify-center p-4 pt-16 sm:pt-24 pointer-events-none" @click.self="spotlightOpen = false">
+                    <div x-show="spotlightOpen" x-transition:enter="ease-out duration-200 transform"
+                        x-transition:enter-start="scale-95 opacity-0" x-transition:enter-end="scale-100 opacity-100"
+                        x-transition:leave="ease-in duration-150 transform"
+                        x-transition:leave-start="scale-100 opacity-100" x-transition:leave-end="scale-95 opacity-0"
+                        @click.outside="spotlightOpen = false"
+                        class="relative pointer-events-auto w-full max-w-xl rounded-[22px] sheet-material border border-black/[0.08] dark:border-white/[0.12] shadow-2xl overflow-hidden divide-y divide-black/[0.06] dark:divide-white/[0.08]">
 
                     <!-- Search Input Bar -->
                     <div class="p-3.5 flex items-center gap-3">
@@ -821,6 +804,7 @@
                 </div>
             </div>
         </div>
+    </template>
 
         <!-- Flash Messages & Content Body Canvas -->
         {{--

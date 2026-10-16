@@ -178,25 +178,25 @@
     <!-- ===================================================== -->
     <!-- 3. DENSE DATA TABLE (DESKTOP & TABLET)                 -->
     <!-- ===================================================== -->
-    <div class="hidden sm:block rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 overflow-hidden">
+    <div x-data="coocaTableSort()" class="hidden sm:block rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 overflow-hidden">
         <div class="overflow-x-auto">
             <table class="w-full text-left text-[13px]">
                 <thead>
                     <tr class="border-b border-black/5 dark:border-white/10">
-                        <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40">{{ __('pos.order_number_and_type') }}</th>
-                        <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40">{{ __('pos.time_and_cashier') }}</th>
-                        <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40">{{ __('pos.customer') }}</th>
-                        <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right">{{ __('pos.total_paid') }}</th>
-                        <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right">{{ __('pos.cogs_modal') }}</th>
-                        <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right">{{ __('pos.gross_profit') }}</th>
-                        <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-center">{{ __('pos.status') }}</th>
+                        <x-table-sort-th :col="0" type="string" :title="__('pos.order_number_and_type')" />
+                        <x-table-sort-th :col="1" type="date" :title="__('pos.time_and_cashier')" />
+                        <x-table-sort-th :col="2" type="string" :title="__('pos.customer')" />
+                        <x-table-sort-th :col="3" type="number" :title="__('pos.total_paid')" align="right" />
+                        <x-table-sort-th :col="4" type="number" :title="__('pos.cogs_modal')" align="right" />
+                        <x-table-sort-th :col="5" type="number" :title="__('pos.gross_profit')" align="right" />
+                        <x-table-sort-th :col="6" type="string" :title="__('pos.status')" align="center" />
                         <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right">{{ __('pos.actions') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                     @forelse($orders as $o)
                     <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
-                        <td class="px-4 py-3">
+                        <td data-sort-value="{{ strtolower($o->order_number) }}" class="px-4 py-3">
                             <div class="flex items-center gap-1.5 flex-wrap">
                                 <span class="font-semibold text-black dark:text-white tabular-nums">#{{ $o->order_number }}</span>
                                 @if($o->vehicle_license_plate)
@@ -224,11 +224,11 @@
                                 <span>• {{ $o->location->name ?? __('pos.outlet_label') }}</span>
                             </div>
                         </td>
-                        <td class="px-4 py-3">
+                        <td data-sort-value="{{ $o->created_at->format('Y-m-d H:i:s') }}" class="px-4 py-3">
                             <div class="tabular-nums text-black/80 dark:text-white/80">{{ $o->order_date->format('d/m/Y') }} {{ $o->created_at->format('H:i') }}</div>
                             <div class="text-[11px] text-black/45 dark:text-white/45">{{ $o->user->name ?? __('pos.cashier_label') }}</div>
                         </td>
-                        <td class="px-4 py-3">
+                        <td data-sort-value="{{ strtolower($o->customer ? $o->customer->name : ($o->customer_name_guest ?? '')) }}" class="px-4 py-3">
                             @if($o->customer)
                                 <div class="font-medium text-black dark:text-white">{{ $o->customer->name }}</div>
                                 <span class="inline-flex items-center px-1.5 py-0.2 rounded-full text-[10px] font-medium bg-[#FF9500]/12 text-[#B25E00] dark:text-[#FF9F0A] uppercase">{{ $o->customer->membership_tier ?? 'Bronze' }}</span>
@@ -236,16 +236,16 @@
                                 <div class="text-black/60 dark:text-white/60">{{ $o->customer_name_guest ?? __('pos.guest_customer') }}</div>
                             @endif
                         </td>
-                        <td class="px-4 py-3 text-right tabular-nums font-semibold text-black dark:text-white">
+                        <td data-sort-value="{{ (float) $o->total_amount }}" class="px-4 py-3 text-right tabular-nums font-semibold text-black dark:text-white">
                             Rp {{ number_format($o->total_amount, 0, ',', '.') }}
                         </td>
-                        <td class="px-4 py-3 text-right tabular-nums text-black/60 dark:text-white/60">
+                        <td data-sort-value="{{ (float) $o->total_hpp_cost }}" class="px-4 py-3 text-right tabular-nums text-black/60 dark:text-white/60">
                             Rp {{ number_format($o->total_hpp_cost, 0, ',', '.') }}
                         </td>
-                        <td class="px-4 py-3 text-right tabular-nums font-semibold text-[#34C759] dark:text-[#30D158]">
+                        <td data-sort-value="{{ (float) $o->total_gross_profit }}" class="px-4 py-3 text-right tabular-nums font-semibold text-[#34C759] dark:text-[#30D158]">
                             Rp {{ number_format($o->total_gross_profit, 0, ',', '.') }}
                         </td>
-                        <td class="px-4 py-3 text-center">
+                        <td data-sort-value="{{ $o->status }}" class="px-4 py-3 text-center">
                             @if($o->status === 'completed')
                                 <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#34C759]/12 text-[#248A3D] dark:text-[#30D158]">
                                     <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]"></span> {{ __('pos.completed') }}
@@ -420,25 +420,51 @@
     <!-- ===================================================== -->
     <!-- 5. MODAL: DETAIL ORDER (Apple Sheet Style)            -->
     <!-- ===================================================== -->
-    <div x-show="showDetailModal" x-cloak
-        class="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40 backdrop-blur-sm p-0 sm:p-4"
-        @keydown.escape.window="showDetailModal = false">
-        <div class="w-full sm:max-w-2xl bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] border border-black/5 dark:border-white/10 p-5 sm:p-6 space-y-4 max-h-[90vh] overflow-y-auto shadow-2xl"
-            @click.away="showDetailModal = false">
-            <div class="flex items-center justify-between pb-3 border-b border-black/[0.06] dark:border-white/[0.08]">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-9 h-9 rounded-xl bg-[#007AFF]/15 flex items-center justify-center text-[#007AFF]">
+    <template x-teleport="body">
+        <div x-show="showDetailModal" x-cloak
+            class="fixed inset-0 z-[200] overflow-y-auto"
+            @keydown.escape.window="showDetailModal = false"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="pos-order-detail-title">
+
+            <!-- Backdrop -->
+            <div x-show="showDetailModal"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="showDetailModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
+
+            <div class="relative z-10 min-h-full flex items-end sm:items-center justify-center p-0 sm:p-4" @click.self="showDetailModal = false">
+                <div class="relative w-full sm:max-w-2xl bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 max-h-[90vh] overflow-y-auto shadow-2xl"
+                    x-show="showDetailModal"
+                    x-transition:enter="ease-out duration-200"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="ease-in duration-150"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95"
+                    @click.stop>
+                    <div class="flex items-center justify-between pb-3 border-b border-black/[0.06] dark:border-white/[0.08]">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-10 h-10 rounded-xl bg-[#007AFF]/15 flex items-center justify-center text-[#007AFF]">
                         <i data-lucide="receipt" class="w-5 h-5"></i>
                     </div>
                     <div>
-                        <h3 class="text-[17px] font-bold text-black dark:text-white"
+                        <h3 id="pos-order-detail-title" class="text-[17px] font-bold text-black dark:text-white"
                             x-text="'Detail Transaksi #' + (selectedOrder ? selectedOrder.order_number : '')"></h3>
                         <div class="text-[12px] text-black/50 dark:text-white/50 mt-0.5"
                             x-text="selectedOrder ? (selectedOrder.order_date + ' • Status: ' + selectedOrder.status) : ''"></div>
                     </div>
                 </div>
-                <button type="button" @click="showDetailModal = false" class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.08] flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white">
-                    <i data-lucide="x" class="w-4 h-4"></i>
+                <button type="button" @click="showDetailModal = false"
+                    class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer"
+                    aria-label="{{ __('common.close') }}">
+                    <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
 
@@ -576,126 +602,180 @@
                 </form>
             </template>
 
-            <div class="flex justify-end pt-2">
-                <button type="button" @click="showDetailModal = false"
-                    class="min-h-[44px] h-11 px-5 rounded-[12px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] text-black/80 dark:text-white/80 font-medium text-[13px] transition">
-                    {{ __('pos.close_button') }}
-                </button>
+                    <div class="flex justify-end pt-2">
+                        <button type="button" @click="showDetailModal = false"
+                            class="min-h-[44px] h-11 px-5 rounded-[12px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] text-black/80 dark:text-white/80 font-medium text-[13px] transition cursor-pointer">
+                            {{ __('pos.close_button') }}
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </template>
 
     <!-- ===================================================== -->
     <!-- 6. MODAL: VOID ORDER (Apple Alert Dialog Style)       -->
     <!-- ===================================================== -->
     @if(\App\Support\Context::hasPermission('pos.supervisor_pin') || \App\Support\Context::hasPermission('pos.orders'))
-    <div x-show="showVoidModal" x-cloak
-        class="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40 backdrop-blur-sm p-0 sm:p-4"
-        @keydown.escape.window="showVoidModal = false">
-        <div class="w-full sm:max-w-md bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] border border-black/5 dark:border-white/10 p-6 space-y-4 shadow-2xl"
-            @click.away="showVoidModal = false">
-            <div class="flex items-center gap-2.5 text-[#FF3B30]">
-                <div class="w-9 h-9 rounded-xl bg-[#FF3B30]/15 flex items-center justify-center">
-                    <i data-lucide="alert-octagon" class="w-5 h-5"></i>
+    <template x-teleport="body">
+        <div x-show="showVoidModal" x-cloak
+            class="fixed inset-0 z-[220] overflow-y-auto"
+            @keydown.escape.window="showVoidModal = false"
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby="pos-void-dialog-title">
+
+            <!-- Backdrop -->
+            <div x-show="showVoidModal"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="showVoidModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
+
+            <div class="relative z-10 min-h-full flex items-end sm:items-center justify-center p-0 sm:p-4" @click.self="showVoidModal = false">
+                <div class="relative w-full sm:max-w-md bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] border border-black/10 dark:border-white/10 p-6 space-y-4 shadow-2xl"
+                    x-show="showVoidModal"
+                    x-transition:enter="ease-out duration-200"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="ease-in duration-150"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95"
+                    @click.stop>
+                    <div class="flex items-center gap-2.5 text-[#FF3B30]">
+                        <div class="w-9 h-9 rounded-xl bg-[#FF3B30]/15 flex items-center justify-center">
+                            <i data-lucide="alert-octagon" class="w-5 h-5"></i>
+                        </div>
+                        <h3 id="pos-void-dialog-title" class="text-[17px] font-bold">{{ __('pos.void_order') }}</h3>
+                    </div>
+                    <p class="text-[13px] text-black/60 dark:text-white/60 leading-relaxed">
+                        {{ __('pos.void_modal_explanation') }}
+                    </p>
+                    <form :action="'{{ url('/pos/orders') }}/' + selectedOrderId + '/void'" method="POST" @submit="isSubmitting = true" class="space-y-3.5 text-[13px]">
+                        @csrf
+                        <div>
+                            <label class="block text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 mb-1">{{ __('pos.reason') }} <span class="text-red-500">*</span></label>
+                            <input type="text" name="reason" required placeholder="{{ __('pos.void_reason_placeholder') }}"
+                                class="w-full min-h-[48px] sm:min-h-0 sm:h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#FF3B30]">
+                        </div>
+                        @if($business->pos_require_pin_for_void && !($canBypassSupervisor ?? false))
+                        <div>
+                            <label class="block text-[12px] font-bold uppercase tracking-wider text-[#FF3B30] mb-1 flex items-center justify-between">
+                                <span>{{ __('pos.supervisor_pin_title') }}</span>
+                                <span class="text-[11px] text-black/40 dark:text-white/40 font-normal">{{ __('pos.supervisor_pin_mandatory_label') }}</span>
+                            </label>
+                            <input type="password" name="pin" required inputmode="numeric" maxlength="8" placeholder="{{ __('pos.enter_supervisor_pin') }}"
+                                class="w-full min-h-[48px] sm:min-h-0 sm:h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 text-[16px] font-mono tracking-widest text-black dark:text-white placeholder:font-sans placeholder:tracking-normal placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#FF3B30]">
+                        </div>
+                        @endif
+                        <div class="flex justify-end gap-2.5 pt-3 border-t border-black/[0.06] dark:border-white/[0.08]">
+                            <button type="button" @click="showVoidModal = false" :disabled="isSubmitting"
+                                class="min-h-[44px] px-4 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition cursor-pointer">
+                                {{ __('pos.cancel') }}
+                            </button>
+                            <button type="submit" :disabled="isSubmitting"
+                                class="min-h-[44px] px-6 rounded-[12px] bg-[#FF3B30] hover:bg-[#E0352B] text-white font-semibold text-[13px] active:scale-[0.97] transition shadow-sm flex items-center gap-1.5 disabled:opacity-50 cursor-pointer">
+                                <template x-if="isSubmitting">
+                                    <i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin"></i>
+                                </template>
+                                <span x-text="isSubmitting ? '{{ __('pos.processing_action') }}' : '{{ __('pos.void_action') }}'"></span>
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <h3 class="text-[17px] font-bold">{{ __('pos.void_order') }}</h3>
             </div>
-            <p class="text-[13px] text-black/60 dark:text-white/60 leading-relaxed">
-                {{ __('pos.void_modal_explanation') }}
-            </p>
-            <form :action="'{{ url('/pos/orders') }}/' + selectedOrderId + '/void'" method="POST" @submit="isSubmitting = true" class="space-y-3.5 text-[13px]">
-                @csrf
-                <div>
-                    <label class="block text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 mb-1">{{ __('pos.reason') }} <span class="text-red-500">*</span></label>
-                    <input type="text" name="reason" required placeholder="{{ __('pos.void_reason_placeholder') }}"
-                        class="w-full min-h-[48px] sm:min-h-0 sm:h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#FF3B30]">
-                </div>
-                @if($business->pos_require_pin_for_void && !($canBypassSupervisor ?? false))
-                <div>
-                    <label class="block text-[12px] font-bold uppercase tracking-wider text-[#FF3B30] mb-1 flex items-center justify-between">
-                        <span>{{ __('pos.supervisor_pin_title') }}</span>
-                        <span class="text-[11px] text-black/40 dark:text-white/40 font-normal">{{ __('pos.supervisor_pin_mandatory_label') }}</span>
-                    </label>
-                    <input type="password" name="pin" required inputmode="numeric" maxlength="8" placeholder="{{ __('pos.enter_supervisor_pin') }}"
-                        class="w-full min-h-[48px] sm:min-h-0 sm:h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 text-[16px] font-mono tracking-widest text-black dark:text-white placeholder:font-sans placeholder:tracking-normal placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#FF3B30]">
-                </div>
-                @endif
-                <div class="flex justify-end gap-2.5 pt-3 border-t border-black/[0.06] dark:border-white/[0.08]">
-                    <button type="button" @click="showVoidModal = false" :disabled="isSubmitting"
-                        class="min-h-[48px] sm:min-h-0 sm:h-11 px-4 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition">
-                        {{ __('pos.cancel') }}
-                    </button>
-                    <button type="submit" :disabled="isSubmitting"
-                        class="min-h-[48px] sm:min-h-0 sm:h-11 px-6 rounded-[12px] bg-[#FF3B30] hover:bg-[#E0352B] text-white font-semibold text-[13px] active:scale-[0.97] transition shadow-sm flex items-center gap-1.5 disabled:opacity-50">
-                        <template x-if="isSubmitting">
-                            <i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin"></i>
-                        </template>
-                        <span x-text="isSubmitting ? '{{ __('pos.processing_action') }}' : '{{ __('pos.void_action') }}'"></span>
-                    </button>
-                </div>
-            </form>
         </div>
-    </div>
+    </template>
     @endif
 
     <!-- ===================================================== -->
     <!-- 7. MODAL: REFUND ORDER (Apple Alert Dialog Style)     -->
     <!-- ===================================================== -->
     @if(\App\Support\Context::hasPermission('sales.returns') || \App\Support\Context::hasPermission('pos.orders'))
-    <div x-show="showRefundModal" x-cloak
-        class="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40 backdrop-blur-sm p-0 sm:p-4"
-        @keydown.escape.window="showRefundModal = false">
-        <div class="w-full sm:max-w-md bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] border border-black/5 dark:border-white/10 p-6 space-y-4 shadow-2xl"
-            @click.away="showRefundModal = false">
-            <div class="flex items-center gap-2.5 text-[#FF9500]">
-                <div class="w-9 h-9 rounded-xl bg-[#FF9500]/15 flex items-center justify-center">
-                    <i data-lucide="rotate-ccw" class="w-5 h-5"></i>
+    <template x-teleport="body">
+        <div x-show="showRefundModal" x-cloak
+            class="fixed inset-0 z-[220] overflow-y-auto"
+            @keydown.escape.window="showRefundModal = false"
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby="pos-refund-dialog-title">
+
+            <!-- Backdrop -->
+            <div x-show="showRefundModal"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="showRefundModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
+
+            <div class="relative z-10 min-h-full flex items-end sm:items-center justify-center p-0 sm:p-4" @click.self="showRefundModal = false">
+                <div class="relative w-full sm:max-w-md bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] border border-black/10 dark:border-white/10 p-6 space-y-4 shadow-2xl"
+                    x-show="showRefundModal"
+                    x-transition:enter="ease-out duration-200"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="ease-in duration-150"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95"
+                    @click.stop>
+                    <div class="flex items-center gap-2.5 text-[#FF9500]">
+                        <div class="w-9 h-9 rounded-xl bg-[#FF9500]/15 flex items-center justify-center">
+                            <i data-lucide="rotate-ccw" class="w-5 h-5"></i>
+                        </div>
+                        <h3 id="pos-refund-dialog-title" class="text-[17px] font-bold">{{ __('pos.refund_order') }}</h3>
+                    </div>
+                    <p class="text-[13px] text-black/60 dark:text-white/60 leading-relaxed">
+                        {{ __('pos.refund_modal_explanation') }}
+                    </p>
+                    <form :action="'{{ url('/pos/orders') }}/' + selectedOrderId + '/refund'" method="POST" @submit="isSubmitting = true" class="space-y-3.5 text-[13px]">
+                        @csrf
+                        <div>
+                            <label class="block text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 mb-1">{{ __('pos.reason') }} <span class="text-red-500">*</span></label>
+                            <input type="text" name="reason" required placeholder="{{ __('pos.refund_reason_placeholder') }}"
+                                class="w-full min-h-[48px] sm:min-h-0 sm:h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#FF9500]">
+                        </div>
+                        @if($business->pos_require_pin_for_refund && !($canBypassSupervisor ?? false))
+                        <div>
+                            <label class="block text-[12px] font-bold uppercase tracking-wider text-[#FF9500] mb-1 flex items-center justify-between">
+                                <span>{{ __('pos.supervisor_pin_title') }}</span>
+                                <span class="text-[11px] text-black/40 dark:text-white/40 font-normal">{{ __('pos.supervisor_pin_mandatory_label') }}</span>
+                            </label>
+                            <input type="password" name="pin" required inputmode="numeric" maxlength="8" placeholder="{{ __('pos.enter_supervisor_pin') }}"
+                                class="w-full min-h-[48px] sm:min-h-0 sm:h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 text-[16px] font-mono tracking-widest text-black dark:text-white placeholder:font-sans placeholder:tracking-normal placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#FF9500]">
+                        </div>
+                        @endif
+                        <div class="flex items-center gap-2 pt-1">
+                            <input type="checkbox" name="restore_stock" value="1" checked id="restore_stock"
+                                class="w-4 h-4 rounded-[4px] border-black/20 text-[#007AFF] focus:ring-[#007AFF]">
+                            <label for="restore_stock" class="text-[13px] text-black/80 dark:text-white/80 cursor-pointer">
+                                {{ __('pos.restore_stock_label') }}
+                            </label>
+                        </div>
+                        <div class="flex justify-end gap-2.5 pt-3 border-t border-black/[0.06] dark:border-white/[0.08]">
+                            <button type="button" @click="showRefundModal = false" :disabled="isSubmitting"
+                                class="min-h-[44px] px-4 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition cursor-pointer">
+                                {{ __('pos.cancel') }}
+                            </button>
+                            <button type="submit" :disabled="isSubmitting"
+                                class="min-h-[44px] px-6 rounded-[12px] bg-[#FF9500] hover:bg-[#E08600] text-white font-semibold text-[13px] active:scale-[0.97] transition shadow-sm flex items-center gap-1.5 disabled:opacity-50 cursor-pointer">
+                                <template x-if="isSubmitting">
+                                    <i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin"></i>
+                                </template>
+                                <span x-text="isSubmitting ? '{{ __('pos.processing_action') }}' : '{{ __('pos.refund_action') }}'"></span>
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <h3 class="text-[17px] font-bold">{{ __('pos.refund_order') }}</h3>
             </div>
-            <p class="text-[13px] text-black/60 dark:text-white/60 leading-relaxed">
-                {{ __('pos.refund_modal_explanation') }}
-            </p>
-            <form :action="'{{ url('/pos/orders') }}/' + selectedOrderId + '/refund'" method="POST" @submit="isSubmitting = true" class="space-y-3.5 text-[13px]">
-                @csrf
-                <div>
-                    <label class="block text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 mb-1">{{ __('pos.reason') }} <span class="text-red-500">*</span></label>
-                    <input type="text" name="reason" required placeholder="{{ __('pos.refund_reason_placeholder') }}"
-                        class="w-full min-h-[48px] sm:min-h-0 sm:h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#FF9500]">
-                </div>
-                @if($business->pos_require_pin_for_refund && !($canBypassSupervisor ?? false))
-                <div>
-                    <label class="block text-[12px] font-bold uppercase tracking-wider text-[#FF9500] mb-1 flex items-center justify-between">
-                        <span>{{ __('pos.supervisor_pin_title') }}</span>
-                        <span class="text-[11px] text-black/40 dark:text-white/40 font-normal">{{ __('pos.supervisor_pin_mandatory_label') }}</span>
-                    </label>
-                    <input type="password" name="pin" required inputmode="numeric" maxlength="8" placeholder="{{ __('pos.enter_supervisor_pin') }}"
-                        class="w-full min-h-[48px] sm:min-h-0 sm:h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 text-[16px] font-mono tracking-widest text-black dark:text-white placeholder:font-sans placeholder:tracking-normal placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#FF9500]">
-                </div>
-                @endif
-                <div class="flex items-center gap-2 pt-1">
-                    <input type="checkbox" name="restore_stock" value="1" checked id="restore_stock"
-                        class="w-4 h-4 rounded-[4px] border-black/20 text-[#007AFF] focus:ring-[#007AFF]">
-                    <label for="restore_stock" class="text-[13px] text-black/80 dark:text-white/80 cursor-pointer">
-                        {{ __('pos.restore_stock_label') }}
-                    </label>
-                </div>
-                <div class="flex justify-end gap-2.5 pt-3 border-t border-black/[0.06] dark:border-white/[0.08]">
-                    <button type="button" @click="showRefundModal = false" :disabled="isSubmitting"
-                        class="min-h-[48px] sm:min-h-0 sm:h-11 px-4 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition">
-                        {{ __('pos.cancel') }}
-                    </button>
-                    <button type="submit" :disabled="isSubmitting"
-                        class="min-h-[48px] sm:min-h-0 sm:h-11 px-6 rounded-[12px] bg-[#FF9500] hover:bg-[#E08600] text-white font-semibold text-[13px] active:scale-[0.97] transition shadow-sm flex items-center gap-1.5 disabled:opacity-50">
-                        <template x-if="isSubmitting">
-                            <i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin"></i>
-                        </template>
-                        <span x-text="isSubmitting ? '{{ __('pos.processing_action') }}' : '{{ __('pos.refund_action') }}'"></span>
-                    </button>
-                </div>
-            </form>
         </div>
-    </div>
+    </template>
     @endif
 </div>
 @endsection

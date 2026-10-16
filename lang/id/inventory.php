@@ -6,6 +6,8 @@ return [
     'title' => 'Inventori & Stok',
     'header_title' => 'Manajemen Persediaan & Stok',
     'header_subtitle' => 'Kelola stok fisik produk, bahan baku, penyesuaian opname, dan histori mutasi kartu stok.',
+    'nav_katalog' => 'Katalog & Inventori',
+    'nav_stocks' => 'Multi-Gudang & Stok',
 
     'breadcrumbs' => [
         'dashboard' => 'Dashboard',

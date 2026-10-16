@@ -384,31 +384,19 @@
         <!-- ===================================================== -->
         <!-- 4. DENSE DATA TABLE (DESKTOP & TABLET)                 -->
         <!-- ===================================================== -->
-        <div
+        <div x-data="coocaTableSort()"
             class="hidden sm:block rounded-[20px] bg-white/80 dark:bg-[#1C1C1E]/80 backdrop-blur-xl border border-black/[0.06] dark:border-white/[0.08] overflow-hidden shadow-xs">
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-[13px]">
                     <thead>
                         <tr
                             class="border-b border-black/[0.06] dark:border-white/[0.08] bg-black/[0.02] dark:bg-white/[0.02]">
-                            <th
-                                class="py-3 px-4 text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D] whitespace-nowrap">
-                                Nama Bahan &amp; SKU</th>
-                            <th
-                                class="py-3 px-4 text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D] whitespace-nowrap">
-                                Kategori</th>
-                            <th
-                                class="py-3 px-4 text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D] whitespace-nowrap">
-                                Satuan Beli</th>
-                            <th
-                                class="py-3 px-4 text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D] text-right whitespace-nowrap">
-                                Harga Beli Terakhir</th>
-                            <th
-                                class="py-3 px-4 text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D] text-center whitespace-nowrap">
-                                Yield / Waste</th>
-                            <th
-                                class="py-3 px-4 text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D] text-right whitespace-nowrap">
-                                Biaya Efektif / Unit</th>
+                            <x-table-sort-th :col="0" type="string" title="Nama Bahan & SKU" class="whitespace-nowrap" />
+                            <x-table-sort-th :col="1" type="string" title="Kategori" class="whitespace-nowrap" />
+                            <x-table-sort-th :col="2" type="string" title="Satuan Beli" class="whitespace-nowrap" />
+                            <x-table-sort-th :col="3" type="number" title="Harga Beli Terakhir" align="right" class="whitespace-nowrap" />
+                            <x-table-sort-th :col="4" type="number" title="Yield / Waste" align="center" class="whitespace-nowrap" />
+                            <x-table-sort-th :col="5" type="number" title="Biaya Efektif / Unit" align="right" class="whitespace-nowrap" />
                             <th
                                 class="py-3 px-4 text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D] text-right whitespace-nowrap">
                                 Aksi</th>
@@ -420,26 +408,26 @@
                                 $latestPrice = $mat->prices->first();
                             @endphp
                             <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
-                                <td class="py-3.5 px-4 font-medium text-[#1C1C1E] dark:text-[#F2F2F7]">
+                                <td data-sort-value="{{ strtolower($mat->name) }}" class="py-3.5 px-4 font-medium text-[#1C1C1E] dark:text-[#F2F2F7]">
                                     <div class="font-semibold text-[13.5px]">{{ $mat->name }}</div>
                                     <div class="text-[11px] text-[#8E8E93] dark:text-[#98989D] tabular-nums mt-0.5">
                                         {{ $mat->sku ?? 'No SKU' }} · Supplier: <span
                                             class="font-medium text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80">{{ $mat->supplier?->name ?? '-' }}</span>
                                     </div>
                                 </td>
-                                <td class="py-3.5 px-4 text-[#3C3C43]/80 dark:text-[#EBEBF5]/80">
+                                <td data-sort-value="{{ strtolower($mat->category?->name ?? '') }}" class="py-3.5 px-4 text-[#3C3C43]/80 dark:text-[#EBEBF5]/80">
                                     {{ $mat->category?->name ?? 'Umum' }}
                                 </td>
-                                <td class="py-3.5 px-4 text-[#1C1C1E] dark:text-[#F2F2F7] tabular-nums font-medium">
+                                <td data-sort-value="{{ strtolower($mat->unit?->name ?? '') }}" class="py-3.5 px-4 text-[#1C1C1E] dark:text-[#F2F2F7] tabular-nums font-medium">
                                     {{ $mat->unit?->name ?? 'pcs' }} <span
                                         class="text-[11px] text-[#8E8E93] dark:text-[#98989D]">({{ $mat->unit?->code }})</span>
                                 </td>
-                                <td
+                                <td data-sort-value="{{ (float) ($latestPrice?->purchase_price ?? 0) }}"
                                     class="py-3.5 px-4 text-right tabular-nums font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">
                                     {{ $business->currency_symbol }}
                                     {{ number_format((float) ($latestPrice?->purchase_price ?? 0), 0, ',', '.') }}
                                 </td>
-                                <td class="py-3.5 px-4 text-center whitespace-nowrap">
+                                <td data-sort-value="{{ (float) $mat->yield_percentage }}" class="py-3.5 px-4 text-center whitespace-nowrap">
                                     <span
                                         class="inline-flex items-center px-2 py-0.5 rounded-[6px] text-[11px] font-semibold bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] tabular-nums">
                                         {{ $mat->yield_percentage }}% Yield
@@ -451,7 +439,7 @@
                                         </span>
                                     @endif
                                 </td>
-                                <td
+                                <td data-sort-value="{{ (float) ($latestPrice?->effective_cost ?? 0) }}"
                                     class="py-3.5 px-4 text-right tabular-nums font-bold text-[#34C759] dark:text-[#30D158]">
                                     {{ $business->currency_symbol }}
                                     {{ number_format((float) ($latestPrice?->effective_cost ?? 0), 0, ',', '.') }}
@@ -602,9 +590,10 @@
         <!-- 6. MODAL: TAMBAH BAHAN BAKU (FULL LAYOUT XXL BENTO)   -->
         <!-- ===================================================== -->
         @if (\App\Support\Context::hasPermission('materials.create'))
-            <div x-show="showAddModal" x-cloak
-                class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/40 backdrop-blur-sm"
-                @keydown.escape.window="showAddModal = false">
+            <template x-teleport="body">
+                <div x-show="showAddModal" x-cloak
+                    class="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md"
+                    @keydown.escape.window="showAddModal = false">
 
                 <!-- Modal Container: Apple Bottom Sheet on mobile, XXL Centered Bento Dialog on desktop -->
                 <div class="w-full inset-x-0 bottom-0 rounded-t-[28px] sm:rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] shadow-[0_24px_60px_rgba(0,0,0,0.3)] max-h-[94vh] sm:max-h-[90vh] flex flex-col overflow-hidden sm:max-w-[95vw] lg:max-w-5xl xl:max-w-6xl 2xl:max-w-[1250px] transition-all"
@@ -830,15 +819,17 @@
                     </form>
                 </div>
             </div>
-        @endif
+        </template>
+    @endif
 
         <!-- ===================================================== -->
         <!-- 7. MODAL: UPDATE HARGA BAHAN                          -->
         <!-- ===================================================== -->
         @if (\App\Support\Context::hasPermission('materials.edit'))
-            <div x-show="showPriceModal" x-cloak
-                class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/40 backdrop-blur-sm"
-                @keydown.escape.window="showPriceModal = false">
+            <template x-teleport="body">
+                <div x-show="showPriceModal" x-cloak
+                    class="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md"
+                    @keydown.escape.window="showPriceModal = false">
 
                 <div class="w-full inset-x-0 bottom-0 rounded-t-[28px] sm:rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] shadow-[0_24px_60px_rgba(0,0,0,0.3)] max-h-[90vh] flex flex-col overflow-hidden sm:max-w-xl transition-all"
                     @click.outside="showPriceModal = false">
@@ -930,15 +921,17 @@
                     </template>
                 </div>
             </div>
-        @endif
+        </template>
+    @endif
 
         <!-- ===================================================== -->
         <!-- 8. MODAL: EDIT SPESIFIKASI BAHAN                      -->
         <!-- ===================================================== -->
         @if (\App\Support\Context::hasPermission('materials.edit'))
-            <div x-show="showEditModal" x-cloak
-                class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/40 backdrop-blur-sm"
-                @keydown.escape.window="showEditModal = false">
+            <template x-teleport="body">
+                <div x-show="showEditModal" x-cloak
+                    class="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md"
+                    @keydown.escape.window="showEditModal = false">
 
                 <div class="w-full inset-x-0 bottom-0 rounded-t-[28px] sm:rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] shadow-[0_24px_60px_rgba(0,0,0,0.3)] max-h-[90vh] flex flex-col overflow-hidden sm:max-w-2xl transition-all"
                     @click.outside="showEditModal = false">
@@ -1047,15 +1040,17 @@
                     </form>
                 </div>
             </div>
-        @endif
+        </template>
+    @endif
 
         <!-- ===================================================== -->
         <!-- 9. SUB-MODALS AJAX QUICK-ADD (Zero Page Reload)       -->
         <!-- ===================================================== -->
         <!-- Quick Add Supplier Modal -->
-        <div x-show="showAddSupplierModal" x-cloak
-            class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
-            @keydown.escape.window="showAddSupplierModal = false">
+        <template x-teleport="body">
+            <div x-show="showAddSupplierModal" x-cloak
+                class="fixed inset-0 z-[210] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md"
+                @keydown.escape.window="showAddSupplierModal = false">
             <div class="w-full max-w-md rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] p-5 sm:p-6 space-y-4 shadow-2xl"
                 @click.outside="showAddSupplierModal = false">
                 <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-3">
@@ -1111,11 +1106,13 @@
                 </form>
             </div>
         </div>
+    </template>
 
         <!-- Quick Add Category Modal -->
-        <div x-show="showAddCategoryModal" x-cloak
-            class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
-            @keydown.escape.window="showAddCategoryModal = false">
+        <template x-teleport="body">
+            <div x-show="showAddCategoryModal" x-cloak
+                class="fixed inset-0 z-[210] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md"
+                @keydown.escape.window="showAddCategoryModal = false">
             <div class="w-full max-w-md rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] p-5 sm:p-6 space-y-4 shadow-2xl"
                 @click.outside="showAddCategoryModal = false">
                 <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-3">
@@ -1159,11 +1156,13 @@
                 </form>
             </div>
         </div>
+    </template>
 
         <!-- Quick Add Unit Modal -->
-        <div x-show="showAddUnitModal" x-cloak
-            class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
-            @keydown.escape.window="showAddUnitModal = false">
+        <template x-teleport="body">
+            <div x-show="showAddUnitModal" x-cloak
+                class="fixed inset-0 z-[210] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md"
+                @keydown.escape.window="showAddUnitModal = false">
             <div class="w-full max-w-md rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] p-5 sm:p-6 space-y-4 shadow-2xl"
                 @click.outside="showAddUnitModal = false">
                 <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-3">
@@ -1220,14 +1219,16 @@
                 </form>
             </div>
         </div>
+    </template>
 
         <!-- ===================================================== -->
         <!-- 10. APPLE ALERT DIALOG (Hapus Bahan Baku)              -->
         <!-- ===================================================== -->
         @if (\App\Support\Context::hasPermission('materials.delete'))
-            <div x-show="deleteModalOpen" x-cloak
-                class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
-                @keydown.escape.window="closeDelete()">
+            <template x-teleport="body">
+                <div x-show="deleteModalOpen" x-cloak
+                    class="fixed inset-0 z-[220] flex items-center justify-center p-4 bg-black/60 dark:bg-black/80 backdrop-blur-md"
+                    @keydown.escape.window="closeDelete()">
                 <div class="w-full max-w-sm rounded-[24px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden shadow-2xl border border-black/[0.08] dark:border-white/[0.1] text-center"
                     @click.outside="closeDelete()">
                     <div class="p-6">
@@ -1273,7 +1274,8 @@
                     </div>
                 </div>
             </div>
-        @endif
+        </template>
+    @endif
 
     </div>
 @endsection

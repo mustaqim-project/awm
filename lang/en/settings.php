@@ -190,6 +190,7 @@ return [
     'receipt_footer_note_hint' => 'Example: Items purchased cannot be returned or exchanged.',
     'wa_manual_section_title' => '2. Manual WhatsApp Text Format (Cashier / wa.me)',
     'wa_manual_section_desc' => 'Customize the personal greeting message when cashiers share receipts via manual WhatsApp Web link.',
+    'wa_manual_template_badge' => 'Manual Template',
     'delivery_info' => 'WA Receipt Delivery Information',
     'delivery_info_desc' => 'The official WABA template dispatches transaction summary text along with an "Open Digital Receipt" button. Customers can view item details, QR code, and download the full receipt from that link.',
     'wa_template_format' => 'Manual WhatsApp Text Format',

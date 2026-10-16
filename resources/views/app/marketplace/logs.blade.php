@@ -198,95 +198,114 @@
     <!-- ===================================================== -->
     <!-- 4. MODAL DETAIL PAYLOAD & AUDIT TRACE (BENTO XXL)     -->
     <!-- ===================================================== -->
-    <div x-show="detailModal" x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/40 backdrop-blur-sm"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0">
+    <template x-teleport="body">
+        <div x-show="detailModal" x-cloak
+            class="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
 
-        <div @click.away="detailModal = false"
-            class="w-full max-w-4xl rounded-[28px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-6 sm:p-8 space-y-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <!-- Backdrop -->
+            <div class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                x-show="detailModal"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="detailModal = false"
+                aria-hidden="true"></div>
 
-            <!-- Header -->
-            <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-4">
-                <div class="flex items-center gap-3.5">
-                    <div class="w-12 h-12 rounded-[16px] bg-[#007AFF]/15 text-[#007AFF] flex items-center justify-center shrink-0">
-                        <i data-lucide="file-code" class="w-6 h-6"></i>
-                    </div>
-                    <div>
-                        <div class="flex items-center gap-2 flex-wrap">
-                            <h3 class="text-[17px] font-bold text-black dark:text-white" x-text="selectedLog ? (selectedLog.action || selectedLog.entity_type) : 'Detail Log'"></h3>
-                            <span class="px-2 py-0.5 rounded-full text-[10.5px] font-bold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158] inline-flex items-center gap-1">
-                                <i data-lucide="shield-check" class="w-3 h-3"></i>
-                                <span>Zero Plaintext Masked</span>
-                            </span>
+            <div @click.away="detailModal = false"
+                @keydown.escape.window="detailModal = false"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="modal-detail-log-title"
+                x-show="detailModal"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0 scale-95"
+                x-transition:enter-end="opacity-100 scale-100"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100 scale-100"
+                x-transition:leave-end="opacity-0 scale-95"
+                class="relative z-10 w-full max-w-4xl rounded-[28px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-6 sm:p-8 space-y-6 shadow-2xl max-h-[90vh] overflow-y-auto my-auto">
+
+                <!-- Header -->
+                <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-4">
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-12 h-12 rounded-[16px] bg-[#007AFF]/15 text-[#007AFF] flex items-center justify-center shrink-0">
+                            <i data-lucide="file-code" class="w-6 h-6"></i>
                         </div>
-                        <p class="text-[12px] text-black/50 dark:text-white/50" x-text="selectedLog ? ((selectedLog.channel || 'SYSTEM').toUpperCase() + ' • ID #' + (selectedLog.id ? selectedLog.id.substring(0, 8) : '')) : ''"></p>
+                        <div>
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <h3 id="modal-detail-log-title" class="text-[17px] font-bold text-black dark:text-white" x-text="selectedLog ? (selectedLog.action || selectedLog.entity_type) : 'Detail Log'"></h3>
+                                <span class="px-2 py-0.5 rounded-full text-[10.5px] font-bold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158] inline-flex items-center gap-1">
+                                    <i data-lucide="shield-check" class="w-3 h-3"></i>
+                                    <span>Zero Plaintext Masked</span>
+                                </span>
+                            </div>
+                            <p class="text-[12px] text-black/50 dark:text-white/50" x-text="selectedLog ? ((selectedLog.channel || 'SYSTEM').toUpperCase() + ' • ID #' + (selectedLog.id ? selectedLog.id.substring(0, 8) : '')) : ''"></p>
+                        </div>
                     </div>
+                    <button type="button" @click="detailModal = false" class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-all cursor-pointer" aria-label="Tutup modal detail log">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
                 </div>
-                <button type="button" @click="detailModal = false" class="w-8 h-8 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-all cursor-pointer">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
-            </div>
 
-            <!-- Content -->
-            <template x-if="selectedLog">
-                <div class="space-y-5 text-[13px]">
-                    <!-- Bento Metadata Summary -->
-                    <div class="p-4 rounded-[18px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <div>
-                            <span class="text-[11px] font-semibold text-black/50 dark:text-white/50 block">Status Eksekusi</span>
-                            <span class="font-bold text-[13px] uppercase mt-0.5 inline-block" :class="selectedLog.status === 'success' ? 'text-[#34C759]' : 'text-[#FF3B30]'" x-text="selectedLog.status"></span>
-                        </div>
-                        <div>
-                            <span class="text-[11px] font-semibold text-black/50 dark:text-white/50 block">Entitas &amp; Ref ID</span>
-                            <span class="font-mono text-[12.5px] text-black dark:text-white font-medium mt-0.5 block truncate" x-text="selectedLog.entity_type + (selectedLog.entity_id ? ' (' + selectedLog.entity_id + ')' : '')"></span>
-                        </div>
-                        <div>
-                            <span class="text-[11px] font-semibold text-black/50 dark:text-white/50 block">Waktu Tercatat</span>
-                            <span class="text-[12.5px] text-black/80 dark:text-white/80 font-medium mt-0.5 block" x-text="selectedLog.created_at ? new Date(selectedLog.created_at).toLocaleString('id-ID') : '-'"></span>
-                        </div>
-                        <template x-if="selectedLog.error_message">
-                            <div class="sm:col-span-3 text-[#FF3B30] pt-2 border-t border-black/[0.04] dark:border-white/[0.06]">
-                                <span class="text-[11px] font-bold uppercase tracking-wider block">Pesan Kesalahan (Error Trace):</span>
-                                <p class="text-[12px] mt-1 font-mono p-2.5 rounded-[10px] bg-[#FF3B30]/10 border border-[#FF3B30]/20 leading-relaxed" x-text="selectedLog.error_message"></p>
+                <!-- Content -->
+                <template x-if="selectedLog">
+                    <div class="space-y-5 text-[13px]">
+                        <!-- Bento Metadata Summary -->
+                        <div class="p-4 rounded-[18px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <div>
+                                <span class="text-[11px] font-semibold text-black/50 dark:text-white/50 block">Status Eksekusi</span>
+                                <span class="font-bold text-[13px] uppercase mt-0.5 inline-block" :class="selectedLog.status === 'success' ? 'text-[#34C759]' : 'text-[#FF3B30]'" x-text="selectedLog.status"></span>
                             </div>
-                        </template>
-                    </div>
-
-                    <!-- JSON Payloads in 2 Columns or Stacked -->
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                        <div>
-                            <div class="flex items-center justify-between mb-1.5">
-                                <label class="text-[12px] font-bold text-black/70 dark:text-white/70">Request Payload (Masked)</label>
-                                <span class="text-[10px] font-mono text-black/40 dark:text-white/40">JSON Format</span>
+                            <div>
+                                <span class="text-[11px] font-semibold text-black/50 dark:text-white/50 block">Entitas &amp; Ref ID</span>
+                                <span class="font-mono text-[12.5px] text-black dark:text-white font-medium mt-0.5 block truncate" x-text="selectedLog.entity_type + (selectedLog.entity_id ? ' (' + selectedLog.entity_id + ')' : '')"></span>
                             </div>
-                            <pre class="p-3.5 rounded-[16px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.04] dark:border-white/[0.08] text-[11px] font-mono overflow-x-auto max-h-64 text-black dark:text-white leading-relaxed" x-text="maskSensitiveData(selectedLog.payload)"></pre>
+                            <div>
+                                <span class="text-[11px] font-semibold text-black/50 dark:text-white/50 block">Waktu Tercatat</span>
+                                <span class="text-[12.5px] text-black/80 dark:text-white/80 font-medium mt-0.5 block" x-text="selectedLog.created_at ? new Date(selectedLog.created_at).toLocaleString('id-ID') : '-'"></span>
+                            </div>
+                            <template x-if="selectedLog.error_message">
+                                <div class="sm:col-span-3 text-[#FF3B30] pt-2 border-t border-black/[0.04] dark:border-white/[0.06]">
+                                    <span class="text-[11px] font-bold uppercase tracking-wider block">Pesan Kesalahan (Error Trace):</span>
+                                    <p class="text-[12px] mt-1 font-mono p-2.5 rounded-[10px] bg-[#FF3B30]/10 border border-[#FF3B30]/20 leading-relaxed" x-text="selectedLog.error_message"></p>
+                                </div>
+                            </template>
                         </div>
 
-                        <div>
-                            <div class="flex items-center justify-between mb-1.5">
-                                <label class="text-[12px] font-bold text-black/70 dark:text-white/70">Response Data (Masked)</label>
-                                <span class="text-[10px] font-mono text-black/40 dark:text-white/40">JSON Format</span>
+                        <!-- JSON Payloads in 2 Columns or Stacked -->
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                            <div>
+                                <div class="flex items-center justify-between mb-1.5">
+                                    <label class="text-[12px] font-bold text-black/70 dark:text-white/70">Request Payload (Masked)</label>
+                                    <span class="text-[10px] font-mono text-black/40 dark:text-white/40">JSON Format</span>
+                                </div>
+                                <pre class="p-3.5 rounded-[16px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.04] dark:border-white/[0.08] text-[11px] font-mono overflow-x-auto max-h-64 text-black dark:text-white leading-relaxed" x-text="maskSensitiveData(selectedLog.payload)"></pre>
                             </div>
-                            <pre class="p-3.5 rounded-[16px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.04] dark:border-white/[0.08] text-[11px] font-mono overflow-x-auto max-h-64 text-black dark:text-white leading-relaxed" x-text="maskSensitiveData(selectedLog.response)"></pre>
+
+                            <div>
+                                <div class="flex items-center justify-between mb-1.5">
+                                    <label class="text-[12px] font-bold text-black/70 dark:text-white/70">Response Data (Masked)</label>
+                                    <span class="text-[10px] font-mono text-black/40 dark:text-white/40">JSON Format</span>
+                                </div>
+                                <pre class="p-3.5 rounded-[16px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.04] dark:border-white/[0.08] text-[11px] font-mono overflow-x-auto max-h-64 text-black dark:text-white leading-relaxed" x-text="maskSensitiveData(selectedLog.response)"></pre>
+                            </div>
                         </div>
                     </div>
+                </template>
+
+                <!-- Actions -->
+                <div class="flex items-center justify-end gap-2.5 pt-3 border-t border-black/[0.06] dark:border-white/[0.08]">
+                    <button type="button" @click="detailModal = false"
+                        class="min-h-[44px] px-5 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-all cursor-pointer">
+                        Tutup
+                    </button>
                 </div>
-            </template>
-
-            <!-- Actions -->
-            <div class="flex items-center justify-end gap-2.5 pt-3 border-t border-black/[0.06] dark:border-white/[0.08]">
-                <button type="button" @click="detailModal = false"
-                    class="h-10 px-5 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] transition-all cursor-pointer">
-                    Tutup
-                </button>
             </div>
         </div>
-    </div>
+    </template>
 
 </div>
 @endsection

@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'Integrasi Logistik & Pengiriman Biteship - Cooca'])
+@extends('layouts.app', ['title' => __('storefront.backoffice.shipping_calculator.page_title')])
 
 @section('content')
     <div class="space-y-6 max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-28 sm:pb-32 lg:pb-10"
@@ -171,7 +171,7 @@
         }">
 
         {{-- UNIFIED STOREFRONT HUB NAVIGATION --}}
-        @include('app.storefront.partials.navigation', ['title' => 'Pengiriman & Logistik Biteship'])
+        @include('app.storefront.partials.navigation', ['title' => __('storefront.backoffice.shipping_calculator.nav_title')])
 
         {{-- Feedback Notifications --}}
         @if (session('success'))
@@ -193,15 +193,14 @@
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
             <div>
                 <p class="text-[13px] text-black/60 dark:text-white/60 max-w-2xl">
-                    Koneksi resmi logistik <strong>Biteship.com</strong>. Tarif ongkir dihitung otomatis secara real-time
-                    langsung ke berbagai ekspedisi nasional dan instan (JNE, SiCepat, J&T, GoSend, GrabExpress).
+                    {{ __('storefront.backoffice.shipping_calculator.banner_desc') }}
                 </p>
             </div>
             <div class="flex items-center gap-2">
                 <span
                     class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-semibold">
                     <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    API Biteship Terhubung
+                    {{ __('storefront.backoffice.shipping_calculator.api_connected') }}
                 </span>
             </div>
         </div>
@@ -212,7 +211,7 @@
             <div
                 class="bg-white/80 dark:bg-[#1C1C1E]/80 backdrop-blur-xl border border-black/5 dark:border-white/10 rounded-[20px] p-5 shadow-xs">
                 <div class="flex items-center justify-between">
-                    <span class="text-xs font-medium text-black/50 dark:text-white/50">Layanan Antar (Delivery)</span>
+                    <span class="text-xs font-medium text-black/50 dark:text-white/50">{{ __('storefront.backoffice.shipping_calculator.delivery_mode_label') }}</span>
                     <span
                         class="p-2 rounded-xl {{ $storeSetting?->allow_delivery ?? true ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'bg-rose-500/10 text-rose-600 dark:text-rose-400' }}">
                         <i data-lucide="package" class="w-4 h-4"></i>
@@ -220,10 +219,10 @@
                 </div>
                 <div class="mt-3">
                     <div class="text-lg font-bold text-black dark:text-white">
-                        {{ $storeSetting?->allow_delivery ?? true ? 'Aktif & Menerima Pesanan' : 'Dinonaktifkan' }}
+                        {{ $storeSetting?->allow_delivery ?? true ? __('storefront.backoffice.shipping_calculator.delivery_active') : __('storefront.backoffice.shipping_calculator.delivery_disabled') }}
                     </div>
                     <p class="text-xs text-black/50 dark:text-white/50 mt-1">
-                        {{ $storeSetting?->allow_delivery ?? true ? 'Pelanggan dapat memilih opsi kurir pengiriman saat checkout.' : 'Toko hanya menerima opsi Ambil Sendiri (Pickup).' }}
+                        {{ $storeSetting?->allow_delivery ?? true ? __('storefront.backoffice.shipping_calculator.delivery_active_desc') : __('storefront.backoffice.shipping_calculator.delivery_disabled_desc') }}
                     </p>
                 </div>
             </div>
@@ -233,9 +232,9 @@
                 class="bg-white/80 dark:bg-[#1C1C1E]/80 backdrop-blur-xl border border-black/5 dark:border-white/10 rounded-[20px] p-5 shadow-xs">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-1.5">
-                        <span class="text-xs font-medium text-black/50 dark:text-white/50">Asal Penjemputan:</span>
+                        <span class="text-xs font-medium text-black/50 dark:text-white/50">{{ __('storefront.backoffice.shipping_calculator.origin_pickup_label') }}</span>
                         <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-[#007AFF]/10 text-[#007AFF]">
-                            {{ $activeLocation?->name ?? ($primaryLocation?->name ?? 'Cabang Utama') }}
+                            {{ $activeLocation?->name ?? ($primaryLocation?->name ?? __('storefront.backoffice.shipping_calculator.main_branch')) }}
                         </span>
                     </div>
                     <span
@@ -245,10 +244,10 @@
                 </div>
                 <div class="mt-3">
                     <div class="text-lg font-bold text-black dark:text-white">
-                        {{ !empty($defaultOriginPostalCode) ? 'Kode Pos ' . $defaultOriginPostalCode : 'Belum Dikonfigurasi' }}
+                        {{ !empty($defaultOriginPostalCode) ? __('storefront.backoffice.shipping_calculator.postal_code_prefix', ['code' => $defaultOriginPostalCode]) : __('storefront.backoffice.shipping_calculator.not_configured') }}
                     </div>
                     <p class="text-xs text-black/50 dark:text-white/50 mt-1 truncate">
-                        {{ $defaultOriginAddress ?? ($business->address ?? 'Wajib diisi agar tarif pengiriman dapat dihitung akurat.') }}
+                        {{ $defaultOriginAddress ?? ($business->address ?? __('storefront.backoffice.shipping_calculator.address_required_notice')) }}
                     </p>
                 </div>
             </div>
@@ -257,7 +256,7 @@
             <div
                 class="bg-white/80 dark:bg-[#1C1C1E]/80 backdrop-blur-xl border border-black/5 dark:border-white/10 rounded-[20px] p-5 shadow-xs">
                 <div class="flex items-center justify-between">
-                    <span class="text-xs font-medium text-black/50 dark:text-white/50">Ekspedisi Logistik Aktif</span>
+                    <span class="text-xs font-medium text-black/50 dark:text-white/50">{{ __('storefront.backoffice.shipping_calculator.active_couriers_label') }}</span>
                     <span class="p-2 rounded-xl bg-purple-500/10 text-purple-600 dark:text-purple-400">
                         <i data-lucide="truck" class="w-4 h-4"></i>
                     </span>
@@ -265,7 +264,7 @@
                 <div class="mt-3">
                     <div class="text-2xl font-bold text-black dark:text-white tabular-nums">
                         {{ count($enabledCouriers) }} <span class="text-sm font-normal text-black/40 dark:text-white/40">/
-                            {{ count($availableCouriers) }} kurir</span>
+                            {{ __('storefront.backoffice.shipping_calculator.couriers_ratio', ['active' => count($enabledCouriers), 'total' => count($availableCouriers)]) }}</span>
                     </div>
                     <p class="text-xs text-black/50 dark:text-white/50 mt-1">
                         JNE, SiCepat, J&T, AnterAja, GoSend, Grab
@@ -286,10 +285,10 @@
                     <div>
                         <div class="flex items-center gap-2 mb-1">
                             <i data-lucide="building" class="w-5 h-5 text-[#007AFF]"></i>
-                            <h2 class="text-base font-bold text-black dark:text-white">Alamat Asal Penjemputan Toko &amp; Cabang (Origin)</h2>
+                            <h2 class="text-base font-bold text-black dark:text-white">{{ __('storefront.backoffice.shipping_calculator.form_title') }}</h2>
                         </div>
                         <p class="text-xs text-black/60 dark:text-white/60">
-                            Terintegrasi otomatis dengan data registrasi toko dan lokasi cabang/outlet fisik tempat kurir ekspedisi mengambil paket pesanan online.
+                            {{ __('storefront.backoffice.shipping_calculator.form_subtitle') }}
                         </p>
                     </div>
 
@@ -301,23 +300,23 @@
                                     <i data-lucide="store" class="w-3.5 h-3.5"></i>
                                 </div>
                                 <div>
-                                    <span class="text-xs font-bold text-black dark:text-white block">Pilih Titik Cabang / Gudang Pemenuhan:</span>
-                                    <p class="text-[11px] text-black/50 dark:text-white/50">Pilih cabang toko tempat barang dikemas dan dikirim</p>
+                                    <span class="text-xs font-bold text-black dark:text-white block">{{ __('storefront.backoffice.shipping_calculator.choose_fulfillment_point') }}</span>
+                                    <p class="text-[11px] text-black/50 dark:text-white/50">{{ __('storefront.backoffice.shipping_calculator.choose_fulfillment_desc') }}</p>
                                 </div>
                             </div>
 
                             <div class="flex items-center gap-2 flex-wrap self-start sm:self-auto">
                                 <a href="{{ route('warehouse.index', ['add' => 'outlet']) }}"
                                     class="h-8 px-3 rounded-[10px] bg-[#34C759]/12 hover:bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] text-[11.5px] font-bold flex items-center gap-1.5 transition active:scale-[0.98]"
-                                    title="Daftarkan Cabang / Outlet Baru di Hub Gudang & Cabang">
+                                    title="{{ __('storefront.backoffice.shipping_calculator.add_branch_tooltip') }}">
                                     <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-                                    <span>Tambah Cabang</span>
+                                    <span>{{ __('storefront.backoffice.shipping_calculator.add_branch_btn') }}</span>
                                 </a>
 
                                 <button type="button" @click="resetToStoreRegistration()"
                                     class="h-8 px-3 rounded-[10px] bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 text-black dark:text-white text-[11.5px] font-semibold flex items-center gap-1.5 transition cursor-pointer active:scale-[0.98]">
                                     <i data-lucide="refresh-cw" class="w-3 h-3 text-[#007AFF]"></i>
-                                    <span>Gunakan Alamat Registrasi</span>
+                                    <span>{{ __('storefront.backoffice.shipping_calculator.use_reg_address_btn') }}</span>
                                 </button>
                             </div>
                         </div>
@@ -334,10 +333,10 @@
                                                 <span class="font-bold text-[12.5px]" x-text="loc.name"></span>
                                                 <span class="text-[9.5px] px-1.5 py-0.5 rounded font-bold uppercase"
                                                     :class="loc.is_primary ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400' : 'bg-black/5 dark:bg-white/10 text-black/60 dark:text-white/60'"
-                                                    x-text="loc.is_primary ? 'Cabang Utama' : loc.type_label"></span>
+                                                    x-text="loc.is_primary ? '{{ __('storefront.backoffice.shipping_calculator.main_branch') }}' : loc.type_label"></span>
                                             </div>
-                                            <p class="text-[11px] text-black/55 dark:text-white/55 truncate" x-text="loc.address || 'Alamat cabang belum lengkap'"></p>
-                                            <p class="text-[10.5px] text-black/40 dark:text-white/40 font-mono" x-show="loc.postal_code" x-text="'Kode Pos: ' + loc.postal_code"></p>
+                                            <p class="text-[11px] text-black/55 dark:text-white/55 truncate" x-text="loc.address || '{{ __('storefront.backoffice.shipping_calculator.branch_incomplete_address') }}'"></p>
+                                            <p class="text-[10.5px] text-black/40 dark:text-white/40 font-mono" x-show="loc.postal_code" x-text="'{{ __('storefront.backoffice.shipping_calculator.postal_code_badge', ['code' => '']) }}' + loc.postal_code"></p>
                                         </div>
 
                                         <div class="shrink-0 mt-0.5">
@@ -352,7 +351,7 @@
                         @else
                             <div class="p-3 rounded-[12px] bg-amber-500/10 text-amber-700 dark:text-amber-400 text-xs flex items-center gap-2">
                                 <i data-lucide="info" class="w-4 h-4 shrink-0"></i>
-                                <span>Alamat otomatis menggunakan data registrasi toko: <strong>{{ $business->name }}</strong> ({{ $business->address ?: 'Alamat belum diatur' }}).</span>
+                                <span>{{ __('storefront.backoffice.shipping_calculator.auto_reg_notice', ['name' => $business->name, 'address' => $business->address ?: __('storefront.backoffice.shipping_calculator.address_not_set')]) }}</span>
                             </div>
                         @endif
 
@@ -365,7 +364,7 @@
                             class="flex items-center justify-between p-3.5 rounded-[16px] bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-xs">
                             <div class="flex items-center gap-2.5 min-w-0">
                                 <i data-lucide="check-circle" class="w-4 h-4 text-emerald-500 shrink-0"></i>
-                                <span class="truncate">Tersinkronisasi resmi di <strong>Biteship Locations API</strong></span>
+                                <span class="truncate">{{ __('storefront.backoffice.shipping_calculator.biteship_synced_badge') }}</span>
                             </div>
                             <span
                                 class="font-mono text-[11px] px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 font-semibold">{{ $storeSetting->origin_location_id }}</span>
@@ -374,23 +373,21 @@
                         <div
                             class="flex items-center gap-2.5 p-3.5 rounded-[16px] bg-blue-500/10 border border-blue-500/20 text-blue-700 dark:text-blue-400 text-xs">
                             <i data-lucide="info" class="w-4 h-4 text-blue-500 shrink-0"></i>
-                            <span>Alamat penjemputan ini akan otomatis didaftarkan dan mendapatkan <strong>Biteship Location ID</strong> saat Anda menyimpan formulir.</span>
+                            <span>{{ __('storefront.backoffice.shipping_calculator.biteship_auto_register_hint') }}</span>
                         </div>
                     @endif
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">Nama PIC
-                                Pengirim Toko / Cabang <span class="text-rose-500">*</span></label>
+                            <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('storefront.backoffice.shipping_calculator.pic_name_label') }} <span class="text-rose-500">*</span></label>
                             <input type="text" name="origin_contact_name" required
                                 x-model="originContactName"
-                                placeholder="Contoh: Admin Pengiriman Cooca"
+                                placeholder="{{ __('storefront.backoffice.shipping_calculator.pic_name_placeholder') }}"
                                 class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-sm text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                         </div>
 
                         <div>
-                            <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">Nomor WhatsApp
-                                / Telepon Pengirim <span class="text-rose-500">*</span></label>
+                            <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('storefront.backoffice.shipping_calculator.pic_phone_label') }} <span class="text-rose-500">*</span></label>
                             <input type="tel" name="origin_contact_phone" required
                                 x-model="originContactPhone"
                                 placeholder="081234567890"
@@ -402,20 +399,20 @@
                     <div class="space-y-1.5">
                         <div class="flex items-center justify-between">
                             <label class="block text-xs font-semibold text-black/70 dark:text-white/70">
-                                Cari Area Administratif (Biteship Maps API)
+                                {{ __('storefront.backoffice.shipping_calculator.search_area_label') }}
                             </label>
-                            <span class="text-[11px] text-black/40 dark:text-white/40">Kecamatan, Kelurahan, Kota</span>
+                            <span class="text-[11px] text-black/40 dark:text-white/40">{{ __('storefront.backoffice.shipping_calculator.search_area_sub') }}</span>
                         </div>
                         <div class="relative">
                             <div class="relative flex items-center">
                                 <i data-lucide="search"
                                     class="w-4 h-4 text-black/40 dark:text-white/40 absolute left-3.5 pointer-events-none"></i>
                                 <input type="text" x-model="areaQuery" @input.debounce.300ms="searchArea()"
-                                    placeholder="Ketik untuk mencari area: misal Cilandak, Kebayoran, Sukajadi, Wonokromo..."
+                                    placeholder="{{ __('storefront.backoffice.shipping_calculator.search_area_placeholder') }}"
                                     class="w-full h-11 pl-9 pr-24 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-sm text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                                 <button type="button" @click="searchArea()" :disabled="isSearchingArea"
                                     class="absolute right-1.5 px-3 py-1.5 rounded-[8px] bg-black/10 dark:bg-white/10 hover:bg-black/15 text-xs font-medium text-black dark:text-white cursor-pointer transition-colors">
-                                    <span x-text="isSearchingArea ? 'Mencari...' : 'Cari Area'"></span>
+                                    <span x-text="isSearchingArea ? '{{ __('storefront.backoffice.shipping_calculator.btn_searching_area') }}' : '{{ __('storefront.backoffice.shipping_calculator.btn_search_area') }}'"></span>
                                 </button>
                             </div>
 
@@ -442,45 +439,42 @@
                         <div x-show="selectedAreaLabel"
                             class="flex items-center gap-2 text-xs text-black/60 dark:text-white/60 pt-0.5">
                             <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500"></i>
-                            <span>Area Terpilih: <strong class="text-black dark:text-white"
+                            <span>{{ __('storefront.backoffice.shipping_calculator.selected_area_prefix') }} <strong class="text-black dark:text-white"
                                     x-text="selectedAreaLabel"></strong></span>
                         </div>
                         <input type="hidden" name="origin_area_id" :value="originAreaId">
                     </div>
 
                     <div>
-                        <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">Alamat Lengkap
-                            Toko / Cabang Pengiriman <span class="text-rose-500">*</span></label>
+                        <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('storefront.backoffice.shipping_calculator.full_address_label') }} <span class="text-rose-500">*</span></label>
                         <textarea name="origin_address" rows="3" required
                             x-model="originAddress"
-                            placeholder="Jalan, Nomor Bangunan, RT/RW, Kelurahan, Kecamatan, Kota"
+                            placeholder="{{ __('storefront.backoffice.shipping_calculator.full_address_placeholder') }}"
                             class="w-full p-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-sm text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] leading-relaxed"></textarea>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div>
-                            <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">Kode Pos Lokasi
+                            <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('storefront.backoffice.shipping_calculator.origin_postal_label') }}
                                 <span class="text-rose-500">*</span></label>
                             <input type="text" name="origin_postal_code" required maxlength="10"
-                                x-model="originPostalCode" placeholder="Contoh: 12440"
+                                x-model="originPostalCode" placeholder="{{ __('storefront.backoffice.shipping_calculator.origin_postal_placeholder') }}"
                                 class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-sm text-black dark:text-white font-mono focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                         </div>
 
                         <div>
-                            <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">Latitude
-                                GPS</label>
+                            <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('storefront.backoffice.shipping_calculator.origin_lat_label') }}</label>
                             <input type="text" name="origin_latitude" x-model="originLat" placeholder="-6.2253114"
                                 class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-sm text-black dark:text-white font-mono focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                         </div>
 
                         <div>
                             <div class="flex items-center justify-between mb-1">
-                                <label class="block text-xs font-semibold text-black/70 dark:text-white/70">Longitude
-                                    GPS</label>
+                                <label class="block text-xs font-semibold text-black/70 dark:text-white/70">{{ __('storefront.backoffice.shipping_calculator.origin_lng_label') }}</label>
                                 <button type="button" @click="detectLocation()" :disabled="detectingGps"
                                     class="text-[11px] font-semibold text-[#007AFF] hover:underline flex items-center gap-1 cursor-pointer">
                                     <i data-lucide="navigation" class="w-3 h-3"></i>
-                                    <span x-text="detectingGps ? 'Mendeteksi...' : 'GPS Otomatis'"></span>
+                                    <span x-text="detectingGps ? '{{ __('storefront.backoffice.shipping_calculator.detecting_gps') }}' : '{{ __('storefront.backoffice.shipping_calculator.detect_gps_btn') }}'"></span>
                                 </button>
                             </div>
                             <input type="text" name="origin_longitude" x-model="originLng" placeholder="106.7993735"
@@ -494,11 +488,10 @@
                     <div>
                         <div class="flex items-center gap-2 mb-1">
                             <i data-lucide="truck" class="w-5 h-5 text-[#007AFF]"></i>
-                            <h2 class="text-base font-bold text-black dark:text-white">Pilihan Kurir Ekspedisi yang
-                                Diaktifkan</h2>
+                            <h2 class="text-base font-bold text-black dark:text-white">{{ __('storefront.backoffice.shipping_calculator.courier_selection_title') }}</h2>
                         </div>
                         <p class="text-xs text-black/60 dark:text-white/60 mb-4">
-                            Centang jasa pengiriman yang ingin Anda sediakan untuk pembeli di halaman etalase online.
+                            {{ __('storefront.backoffice.shipping_calculator.courier_selection_desc') }}
                         </p>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
@@ -532,7 +525,7 @@
                         <button type="submit"
                             class="min-h-[44px] px-6 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-bold tracking-wide transition-all shadow-sm flex items-center gap-2 cursor-pointer active:scale-[0.98]">
                             <i data-lucide="check" class="w-4 h-4"></i>
-                            <span>Simpan Konfigurasi Biteship</span>
+                            <span>{{ __('storefront.backoffice.shipping_calculator.save_biteship_btn') }}</span>
                         </button>
                     </div>
                 </form>
@@ -544,30 +537,27 @@
                     class="bg-white/80 dark:bg-[#1C1C1E]/80 backdrop-blur-xl border border-black/5 dark:border-white/10 rounded-[24px] p-5 shadow-xs space-y-4">
                     <div class="flex items-center gap-2">
                         <i data-lucide="calculator" class="w-5 h-5 text-[#007AFF]"></i>
-                        <h3 class="text-sm font-bold text-black dark:text-white">Simulator Ongkir Live</h3>
+                        <h3 class="text-sm font-bold text-black dark:text-white">{{ __('storefront.backoffice.shipping_calculator.simulator_title') }}</h3>
                     </div>
                     <p class="text-xs text-black/60 dark:text-white/60">
-                        Uji coba perhitungan ongkos kirim langsung dari alamat toko Anda ke kode pos tujuan pembeli.
+                        {{ __('storefront.backoffice.shipping_calculator.simulator_desc') }}
                     </p>
 
                     <div class="space-y-3 pt-1">
                         <div>
-                            <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">Kode Pos
-                                Tujuan Uji Coba</label>
-                            <input type="text" x-model="testPostalCode" placeholder="Contoh: 12310 (Jakarta Selatan)"
+                            <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('storefront.backoffice.shipping_calculator.test_dest_postal_label') }}</label>
+                            <input type="text" x-model="testPostalCode" placeholder="{{ __('storefront.backoffice.shipping_calculator.test_dest_postal_placeholder') }}"
                                 class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                         </div>
 
                         <div class="grid grid-cols-2 gap-2">
                             <div>
-                                <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">Berat
-                                    (Gram)</label>
+                                <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('storefront.backoffice.shipping_calculator.test_weight_label') }}</label>
                                 <input type="number" x-model="testWeight" min="10" step="50"
                                     class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white tabular-nums focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                             </div>
                             <div>
-                                <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">Nilai
-                                    Barang</label>
+                                <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('storefront.backoffice.shipping_calculator.test_item_value_label') }}</label>
                                 <input type="number" x-model="testValue" min="1000" step="10000"
                                     class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white tabular-nums focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                             </div>
@@ -576,11 +566,11 @@
                         <button type="button" @click="runRateTest()" :disabled="isTestingRate"
                             class="w-full min-h-[44px] rounded-[12px] bg-black dark:bg-white text-white dark:text-black hover:bg-black/80 dark:hover:bg-white/90 text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-[0.98] disabled:opacity-50">
                             <i data-lucide="search" class="w-3.5 h-3.5" x-show="!isTestingRate"></i>
-                            <span x-show="!isTestingRate">Hitung Tarif Kurir</span>
+                            <span x-show="!isTestingRate">{{ __('storefront.backoffice.shipping_calculator.calculate_rate_btn') }}</span>
                             <span x-show="isTestingRate" class="flex items-center gap-1.5">
                                 <span
                                     class="w-3.5 h-3.5 border-2 border-current border-t-transparent rounded-full animate-spin"></span>
-                                Menghubungi Biteship...
+                                {{ __('storefront.backoffice.shipping_calculator.connecting_biteship') }}
                             </span>
                         </button>
                     </div>
@@ -598,8 +588,8 @@
                     <div x-show="testResult && testResult.length > 0" x-cloak class="space-y-2 pt-2">
                         <div
                             class="flex items-center justify-between text-[11px] font-semibold text-black/50 dark:text-white/50">
-                            <span>Layanan Kurir</span>
-                            <span>Tarif Resmi</span>
+                            <span>{{ __('storefront.backoffice.shipping_calculator.sim_col_courier') }}</span>
+                            <span>{{ __('storefront.backoffice.shipping_calculator.sim_col_rate') }}</span>
                         </div>
                         <div class="space-y-1.5 max-h-72 overflow-y-auto pr-1">
                             <template x-for="item in testResult" :key="item.id">
@@ -625,11 +615,10 @@
                     class="bg-blue-500/5 dark:bg-blue-500/10 border border-blue-500/15 rounded-[20px] p-4 text-xs text-blue-900 dark:text-blue-200 space-y-2">
                     <div class="flex items-center gap-2 font-bold">
                         <i data-lucide="info" class="w-4 h-4 text-[#007AFF]"></i>
-                        <span>Penenang Jiwa Operasional</span>
+                        <span>{{ __('storefront.backoffice.shipping_calculator.peace_of_mind_title') }}</span>
                     </div>
                     <p class="leading-relaxed text-[11.5px] text-blue-900/80 dark:text-blue-200/80">
-                        Tenang: Seluruh perhitungan ongkir etalase dilakukan secara otomatis dan transparan. Anda tidak
-                        perlu lagi repot menghitung jarak atau menetapkan tarif manual antar kota.
+                        {{ __('storefront.backoffice.shipping_calculator.peace_of_mind_desc') }}
                     </p>
                 </div>
             </div>

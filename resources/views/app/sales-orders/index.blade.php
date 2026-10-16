@@ -1,7 +1,7 @@
 @extends('layouts.app', [
-    'title' => 'Pesanan Penjualan (Sales Orders) - Cooca',
-    'headerTitle' => 'Pesanan Penjualan (Sales Orders)',
-    'headerSubtitle' => 'Kelola pesanan pelanggan terkonfirmasi, alokasi stok pengiriman, dan terbitkan faktur penagihan (Invoice).',
+    'title' => __('sales.sales_orders.page_title'),
+    'headerTitle' => __('sales.sales_orders.header_title'),
+    'headerSubtitle' => __('sales.sales_orders.header_subtitle'),
 ])
 
 @section('content')
@@ -18,13 +18,13 @@
 
         <x-module-header
             module="sales"
-            title="Pesanan Penjualan (SO)"
-            subtitle="Pipeline pesanan pelanggan terkonfirmasi, alokasi stok gudang, dan penerbitan faktur.">
+            :title="__('sales.sales_orders.module_title')"
+            :subtitle="__('sales.sales_orders.module_subtitle')">
             @if (\App\Support\Context::hasPermission('sales.pipeline'))
                 <a href="{{ route('sales.orders.create') }}"
                     class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all flex items-center justify-center gap-2 shadow-sm shadow-[#007AFF]/25 w-full sm:w-auto">
                     <i data-lucide="plus" class="w-4 h-4"></i>
-                    <span>Buat Sales Order</span>
+                    <span>{{ __('sales.sales_orders.btn_create') }}</span>
                 </a>
             @endif
         </x-module-header>
@@ -38,44 +38,44 @@
             <!-- Tile 1: Total Orders (Neutral) -->
             <div
                 class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between">
-                <span class="text-[12px] font-medium text-black/50 dark:text-white/50">Total Sales Order</span>
+                <span class="text-[12px] font-medium text-black/50 dark:text-white/50">{{ __('sales.sales_orders.kpi_total_orders') }}</span>
                 <div class="mt-2 flex items-baseline justify-between">
                     <span
                         class="text-[24px] font-bold tabular-nums text-black dark:text-white">{{ number_format($totalCount, 0, ',', '.') }}</span>
-                    <span class="text-[11px] font-medium text-black/40 dark:text-white/40">Tercatat</span>
+                    <span class="text-[11px] font-medium text-black/40 dark:text-white/40">{{ __('sales.sales_orders.kpi_recorded') }}</span>
                 </div>
             </div>
 
             <!-- Tile 2: Terkonfirmasi (System Blue) -->
             <div
                 class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between">
-                <span class="text-[12px] font-medium text-black/50 dark:text-white/50">Terkonfirmasi</span>
+                <span class="text-[12px] font-medium text-black/50 dark:text-white/50">{{ __('sales.sales_orders.kpi_confirmed') }}</span>
                 <div class="mt-2 flex items-baseline justify-between">
                     <span
                         class="text-[24px] font-bold tabular-nums text-[#007AFF] dark:text-[#0A84FF]">{{ $confirmedOrders->count() }}</span>
-                    <span class="text-[11px] font-medium text-[#007AFF] dark:text-[#0A84FF]">Siap proses</span>
+                    <span class="text-[11px] font-medium text-[#007AFF] dark:text-[#0A84FF">{{ __('sales.sales_orders.kpi_ready_process') }}</span>
                 </div>
             </div>
 
             <!-- Tile 3: Sebagian Terpenuhi (System Orange) -->
             <div
                 class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between">
-                <span class="text-[12px] font-medium text-black/50 dark:text-white/50">Sebagian Terpenuhi</span>
+                <span class="text-[12px] font-medium text-black/50 dark:text-white/50">{{ __('sales.sales_orders.kpi_partially_fulfilled') }}</span>
                 <div class="mt-2 flex items-baseline justify-between">
                     <span
                         class="text-[24px] font-bold tabular-nums text-[#FF9500] dark:text-[#FF9F0A]">{{ $partialOrders->count() }}</span>
-                    <span class="text-[11px] font-medium text-[#FF9500] dark:text-[#FF9F0A]">Parsial</span>
+                    <span class="text-[11px] font-medium text-[#FF9500] dark:text-[#FF9F0A">{{ __('sales.sales_orders.kpi_partial') }}</span>
                 </div>
             </div>
 
             <!-- Tile 4: Selesai / Fulfilled (System Green) -->
             <div
                 class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between">
-                <span class="text-[12px] font-medium text-black/50 dark:text-white/50">Selesai (Fulfilled)</span>
+                <span class="text-[12px] font-medium text-black/50 dark:text-white/50">{{ __('sales.sales_orders.kpi_fulfilled') }}</span>
                 <div class="mt-2 flex items-baseline justify-between">
                     <span
                         class="text-[24px] font-bold tabular-nums text-[#34C759] dark:text-[#30D158]">{{ $fulfilledOrders->count() }}</span>
-                    <span class="text-[11px] font-medium text-[#34C759] dark:text-[#30D158]">Tuntas</span>
+                    <span class="text-[11px] font-medium text-[#34C759] dark:text-[#30D158">{{ __('sales.sales_orders.kpi_completed') }}</span>
                 </div>
             </div>
         </div>
@@ -96,7 +96,7 @@
                         d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                 </svg>
                 <input type="text" name="search" value="{{ $currentSearch }}"
-                    placeholder="Cari nomor SO atau nama pelanggan..."
+                    placeholder="{{ __('sales.sales_orders.search_placeholder') }}"
                     class="w-full h-9 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] pl-9 pr-3 text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
             </form>
 
@@ -105,19 +105,19 @@
                 class="inline-flex p-0.5 rounded-[9px] bg-black/[0.06] dark:bg-white/[0.08] text-[13px] font-medium self-start sm:self-auto overflow-x-auto max-w-full">
                 <a href="{{ route('sales.orders.index', ['search' => $currentSearch]) }}"
                     class="px-3 py-1 rounded-[7px] transition-all whitespace-nowrap {{ empty($currentStatus) ? 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' : 'text-black/55 dark:text-white/55' }}">
-                    Semua ({{ $totalCount }})
+                    {{ __('sales.sales_orders.filter_all', ['count' => $totalCount]) }}
                 </a>
                 <a href="{{ route('sales.orders.index', ['status' => 'confirmed', 'search' => $currentSearch]) }}"
                     class="px-3 py-1 rounded-[7px] transition-all whitespace-nowrap {{ $currentStatus === 'confirmed' ? 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' : 'text-black/55 dark:text-white/55' }}">
-                    Terkonfirmasi ({{ $confirmedOrders->count() }})
+                    {{ __('sales.sales_orders.filter_confirmed', ['count' => $confirmedOrders->count()]) }}
                 </a>
                 <a href="{{ route('sales.orders.index', ['status' => 'partially_fulfilled', 'search' => $currentSearch]) }}"
                     class="px-3 py-1 rounded-[7px] transition-all whitespace-nowrap {{ $currentStatus === 'partially_fulfilled' ? 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' : 'text-black/55 dark:text-white/55' }}">
-                    Sebagian ({{ $partialOrders->count() }})
+                    {{ __('sales.sales_orders.filter_partially_fulfilled', ['count' => $partialOrders->count()]) }}
                 </a>
                 <a href="{{ route('sales.orders.index', ['status' => 'fulfilled', 'search' => $currentSearch]) }}"
                     class="px-3 py-1 rounded-[7px] transition-all whitespace-nowrap {{ $currentStatus === 'fulfilled' ? 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' : 'text-black/55 dark:text-white/55' }}">
-                    Selesai ({{ $fulfilledOrders->count() }})
+                    {{ __('sales.sales_orders.filter_fulfilled', ['count' => $fulfilledOrders->count()]) }}
                 </a>
             </div>
         </div>
@@ -132,14 +132,14 @@
                     <thead>
                         <tr
                             class="border-b border-black/5 dark:border-white/10 text-black/40 dark:text-white/40 text-[11px] font-semibold uppercase tracking-wide">
-                            <th class="py-2.5 px-4">No. Sales Order</th>
-                            <th class="py-2.5 px-4">Pelanggan</th>
-                            <th class="py-2.5 px-4">Tanggal Pesanan</th>
-                            <th class="py-2.5 px-4">Estimasi Kirim</th>
-                            <th class="py-2.5 px-4 text-right">Pajak</th>
-                            <th class="py-2.5 px-4 text-right">Nilai Pesanan</th>
-                            <th class="py-2.5 px-4 text-center">Status Pemenuhan</th>
-                            <th class="py-2.5 px-4 text-right">Aksi</th>
+                            <th class="py-2.5 px-4">{{ __('sales.sales_orders.col_so_number') }}</th>
+                            <th class="py-2.5 px-4">{{ __('sales.sales_orders.col_customer') }}</th>
+                            <th class="py-2.5 px-4">{{ __('sales.sales_orders.col_order_date') }}</th>
+                            <th class="py-2.5 px-4">{{ __('sales.sales_orders.col_expected_delivery') }}</th>
+                            <th class="py-2.5 px-4 text-right">{{ __('sales.sales_orders.col_tax') }}</th>
+                            <th class="py-2.5 px-4 text-right">{{ __('sales.sales_orders.col_total_amount') }}</th>
+                            <th class="py-2.5 px-4 text-center">{{ __('sales.sales_orders.col_fulfillment_status') }}</th>
+                            <th class="py-2.5 px-4 text-right">{{ __('sales.sales_orders.col_actions') }}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
@@ -181,24 +181,24 @@
                                     @if ($so->status === 'fulfilled')
                                         <span
                                             class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#34C759]/12 text-[#248A3D] dark:text-[#30D158]">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]"></span> Selesai
+                                            <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]"></span> {{ __('sales.sales_orders.status_fulfilled') }}
                                         </span>
                                     @elseif($so->status === 'partially_fulfilled')
                                         <span
                                             class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#FF9500]/12 text-[#B25E00] dark:text-[#FF9F0A]">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-[#FF9500]"></span> Sebagian
+                                            <span class="w-1.5 h-1.5 rounded-full bg-[#FF9500]"></span> {{ __('sales.sales_orders.status_partially_fulfilled') }}
                                         </span>
                                     @else
                                         <span
                                             class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#007AFF]/12 text-[#007AFF] dark:text-[#0A84FF]">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-[#007AFF]"></span> Terkonfirmasi
+                                            <span class="w-1.5 h-1.5 rounded-full bg-[#007AFF]"></span> {{ __('sales.sales_orders.status_confirmed') }}
                                         </span>
                                     @endif
                                 </td>
                                 <td class="py-3 px-4 text-right whitespace-nowrap">
                                     <a href="{{ route('sales.orders.show', $so) }}"
                                         class="h-7 px-2.5 rounded-[6px] text-[12px] font-medium text-[#007AFF] hover:bg-[#007AFF]/8 transition-colors inline-flex items-center gap-1">
-                                        <span>Detail</span>
+                                        <span>{{ __('sales.sales_orders.btn_detail') }}</span>
                                         <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
                                     </a>
                                 </td>
@@ -212,13 +212,11 @@
                                             <path stroke-linecap="round" stroke-linejoin="round"
                                                 d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
                                         </svg>
-                                        <h4 class="text-[15px] font-medium text-black dark:text-white">Belum Ada Pesanan
-                                            Penjualan</h4>
-                                        <p class="text-[13px] text-black/50 dark:text-white/50 max-w-sm">Mulai buat sales
-                                            order baru untuk mengunci alokasi stok dan menerbitkan faktur tagihan resmi.</p>
+                                        <h4 class="text-[15px] font-medium text-black dark:text-white">{{ __('sales.sales_orders.empty_title') }}</h4>
+                                        <p class="text-[13px] text-black/50 dark:text-white/50 max-w-sm">{{ __('sales.sales_orders.empty_desc') }}</p>
                                         <a href="{{ route('sales.orders.create') }}"
                                             class="mt-2 h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] transition flex items-center gap-1.5">
-                                            <span>Buat Pesanan Pertama</span>
+                                            <span>{{ __('sales.sales_orders.btn_create_first') }}</span>
                                         </a>
                                     </div>
                                 </td>
@@ -256,13 +254,13 @@
                         </p>
                     </div>
                     <div class="flex items-center gap-1 shrink-0 text-black/30 dark:text-white/30">
-                        <span class="text-[12px] font-medium text-[#007AFF]">Detail</span>
+                        <span class="text-[12px] font-medium text-[#007AFF]">{{ __('sales.sales_orders.btn_detail') }}</span>
                         <i data-lucide="chevron-right" class="w-4 h-4 text-black/30 dark:text-white/30"></i>
                     </div>
                 </a>
             @empty
                 <div class="p-8 text-center text-black/40 dark:text-white/40 text-[13px]">
-                    Belum ada pesanan penjualan terdaftar.
+                    {{ __('sales.sales_orders.empty_mobile') }}
                 </div>
             @endforelse
         </div>
@@ -274,11 +272,11 @@
             <div
                 class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 px-4 py-3 flex items-center justify-between text-[13px] text-black/60 dark:text-white/60">
                 <div>
-                    Menampilkan <span
+                    {{ __('sales.sales_orders.pagination_showing') }} <span
                         class="font-medium text-black dark:text-white tabular-nums">{{ $salesOrders->firstItem() ?? 0 }}–{{ $salesOrders->lastItem() ?? 0 }}</span>
-                    dari <span
+                    {{ __('sales.sales_orders.pagination_of') }} <span
                         class="font-medium text-black dark:text-white tabular-nums">{{ $salesOrders->total() }}</span>
-                    pesanan
+                    {{ __('sales.sales_orders.pagination_orders') }}
                 </div>
                 <div>
                     {{ $salesOrders->links() }}

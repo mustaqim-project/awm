@@ -2028,207 +2028,284 @@
         <!-- ============================================================ -->
         <!-- MODAL: LIVE PREVIEW DRAWER (Apple Sheet Style)               -->
         <!-- ============================================================ -->
-        <div x-show="showPreview" x-transition.opacity
-            class="fixed inset-0 z-[60] bg-black/30 backdrop-blur-sm p-3 sm:p-6 flex items-center justify-center"
-            style="display: none;" x-cloak>
-            <div
-                class="h-full max-w-6xl w-full mx-auto bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl rounded-[16px] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.25)] flex flex-col border border-black/5 dark:border-white/10">
-                <div
-                    class="shrink-0 px-4 sm:px-6 py-3 border-b border-black/5 dark:border-white/10 flex items-center justify-between gap-3">
-                    <div class="flex items-center gap-2">
-                        <span class="w-2.5 h-2.5 rounded-full bg-[#34C759]"></span>
-                        <span class="text-[14px] font-semibold text-black dark:text-white">Pratinjau Langsung (Live
-                            Preview)</span>
-                        <span
-                            class="text-[11px] text-black/45 dark:text-white/45 font-mono hidden sm:inline">{{ $publicUrl }}</span>
+        <template x-teleport="body">
+            <div x-show="showPreview" x-cloak
+                class="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 overflow-hidden">
+                <!-- Backdrop -->
+                <div class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    x-show="showPreview"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    @click="showPreview = false"
+                    aria-hidden="true"></div>
+
+                <div @click.away="showPreview = false"
+                    @keydown.escape.window="showPreview = false"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="modal-live-preview-title"
+                    x-show="showPreview"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95"
+                    class="relative z-10 h-full max-w-6xl w-full mx-auto bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl rounded-[20px] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.25)] flex flex-col border border-black/5 dark:border-white/10 my-auto">
+                    <div
+                        class="shrink-0 px-4 sm:px-6 py-3 border-b border-black/5 dark:border-white/10 flex items-center justify-between gap-3">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-[#34C759]"></span>
+                            <span id="modal-live-preview-title" class="text-[14px] font-semibold text-black dark:text-white">Pratinjau Langsung (Live Preview)</span>
+                            <span
+                                class="text-[11px] text-black/45 dark:text-white/45 font-mono hidden sm:inline">{{ $publicUrl }}</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <a :href="previewUrl" target="_blank"
+                                class="min-h-[44px] px-3 rounded-[10px] text-[12px] font-medium text-[#007AFF] hover:bg-[#007AFF]/10 flex items-center gap-1 transition-all">
+                                <span>Buka Tab Baru</span>
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                                </svg>
+                            </a>
+                            <button type="button" @click="showPreview = false"
+                                class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full text-black/50 dark:text-white/50 hover:bg-black/5 dark:hover:bg-white/10 flex items-center justify-center transition cursor-pointer"
+                                aria-label="Tutup preview"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>
+                        </div>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <a :href="previewUrl" target="_blank"
-                            class="text-[12px] font-medium text-[#007AFF] hover:underline flex items-center gap-1">
-                            <span>Buka Tab Baru</span>
-                            <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-                            </svg>
-                        </a>
-                        <button type="button" @click="showPreview = false"
-                            class="w-7 h-7 rounded-[6px] text-black/50 dark:text-white/50 hover:bg-black/5 dark:hover:bg-white/5 flex items-center justify-center transition"
-                            title="Tutup preview"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>
-                    </div>
+                    <iframe :src="previewUrl" title="Preview halaman publik bisnis"
+                        class="w-full h-full border-0 bg-white"></iframe>
                 </div>
-                <iframe :src="previewUrl" title="Preview halaman publik bisnis"
-                    class="w-full h-full border-0 bg-white"></iframe>
             </div>
-        </div>
+        </template>
 
         <!-- ============================================================ -->
         <!-- MODAL: 25+ INDUSTRY PRESETS SELECTOR (Apple Sheet Style)     -->
         <!-- ============================================================ -->
-        <div x-show="showPresetModal" x-transition.opacity
-            class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/40 backdrop-blur-sm"
-            style="display:none;" x-cloak
-            x-data="{ presetCategory: 'all' }">
-            <div @click.away="showPresetModal = false"
-                class="bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/10 dark:border-white/10 rounded-[20px] max-w-5xl w-full max-h-[90vh] flex flex-col shadow-[0_25px_60px_rgba(0,0,0,0.3)] overflow-hidden">
+        <template x-teleport="body">
+            <div x-show="showPresetModal"
+                x-cloak
+                x-data="{ presetCategory: 'all' }"
+                class="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
 
-                <!-- Modal Header -->
-                <div class="p-4 sm:p-5 border-b border-black/5 dark:border-white/10 flex items-start justify-between gap-3">
-                    <div>
-                        <div class="text-[11px] font-semibold text-black/40 dark:text-white/40 uppercase tracking-wider mb-1">
-                            Arsitektur Konten Multisektor
-                        </div>
-                        <h3 class="text-[17px] sm:text-[18px] font-bold text-black dark:text-white tracking-tight">
-                            Preset 25 Sektor Industri Bisnis Indonesia
-                        </h3>
-                        <p class="text-[12.5px] text-black/55 dark:text-white/55 mt-0.5">
-                            Pilih sektor bisnis Anda untuk menyelaraskan headline, narasi profil, 4 pilar nilai, katalog layanan, FAQ, dan ulasan secara otomatis.
-                        </p>
-                    </div>
-                    <button type="button" @click="showPresetModal = false"
-                        class="w-8 h-8 rounded-full text-black/50 dark:text-white/50 hover:bg-black/5 dark:hover:bg-white/5 flex items-center justify-center transition shrink-0">
-                        <i data-lucide="x" class="w-4 h-4"></i>
-                    </button>
-                </div>
+                <!-- Backdrop -->
+                <div class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    x-show="showPresetModal"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    @click="showPresetModal = false"
+                    aria-hidden="true"></div>
 
-                <!-- Category Segmented Tabs -->
-                <div class="px-4 sm:px-5 py-2.5 bg-black/[0.02] dark:bg-white/[0.02] border-b border-black/5 dark:border-white/5 overflow-x-auto no-scrollbar">
-                    <div class="inline-flex p-1 bg-black/[0.04] dark:bg-white/[0.06] rounded-[12px] gap-1 text-[12px] font-medium">
-                        <button type="button" @click="presetCategory = 'all'"
-                            :class="presetCategory === 'all' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
-                            class="px-3 py-1.5 rounded-[9px] transition-all">
-                            Semua (25)
-                        </button>
-                        <button type="button" @click="presetCategory = 'fnb'"
-                            :class="presetCategory === 'fnb' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
-                            class="px-3 py-1.5 rounded-[9px] transition-all">
-                            Kuliner &amp; F&amp;B
-                        </button>
-                        <button type="button" @click="presetCategory = 'manufacturing'"
-                            :class="presetCategory === 'manufacturing' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
-                            class="px-3 py-1.5 rounded-[9px] transition-all">
-                            Manufaktur &amp; Bengkel
-                        </button>
-                        <button type="button" @click="presetCategory = 'retail'"
-                            :class="presetCategory === 'retail' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
-                            class="px-3 py-1.5 rounded-[9px] transition-all">
-                            Retail &amp; Apotek
-                        </button>
-                        <button type="button" @click="presetCategory = 'service'"
-                            :class="presetCategory === 'service' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
-                            class="px-3 py-1.5 rounded-[9px] transition-all">
-                            Jasa &amp; Layanan
-                        </button>
-                        <button type="button" @click="presetCategory = 'trading'"
-                            :class="presetCategory === 'trading' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
-                            class="px-3 py-1.5 rounded-[9px] transition-all">
-                            Distribusi &amp; Agro
-                        </button>
-                    </div>
-                </div>
+                <div @click.away="showPresetModal = false"
+                    @keydown.escape.window="showPresetModal = false"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="modal-presets-title"
+                    x-show="showPresetModal"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95"
+                    class="relative z-10 bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/10 dark:border-white/10 rounded-[24px] max-w-5xl w-full max-h-[90vh] flex flex-col shadow-[0_25px_60px_rgba(0,0,0,0.3)] overflow-hidden my-auto">
 
-                <!-- Modal Body: 25 Industry Cards -->
-                <div class="p-4 sm:p-5 overflow-y-auto space-y-3">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                        @foreach ($industries as $ind)
-                            <div x-show="presetCategory === 'all' || presetCategory === '{{ $ind['category'] ?? 'retail' }}'"
-                                x-transition:enter="transition ease-out duration-150"
-                                x-transition:enter-start="opacity-0 scale-95"
-                                x-transition:enter-end="opacity-100 scale-100"
-                                class="p-4 rounded-[16px] border border-black/5 dark:border-white/5 bg-white/60 dark:bg-white/[0.02] hover:border-[#007AFF]/40 hover:shadow-sm transition-all flex flex-col justify-between group">
-                                <div>
-                                    <div class="flex items-center justify-between mb-2.5">
-                                        <div class="w-9 h-9 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] flex items-center justify-center text-black/70 dark:text-white/80 group-hover:text-[#007AFF] transition-colors">
-                                            <i data-lucide="{{ $ind['icon'] ?? 'store' }}" class="w-4 h-4"></i>
-                                        </div>
-                                        <div class="flex items-center gap-1.5">
-                                            <span class="text-[10px] font-medium uppercase tracking-wider text-black/40 dark:text-white/40">
-                                                {{ match($ind['category'] ?? '') {
-                                                    'fnb' => 'F&B',
-                                                    'manufacturing' => 'MFG',
-                                                    'retail' => 'Retail',
-                                                    'service' => 'Jasa',
-                                                    'trading' => 'Agro',
-                                                    default => 'Bisnis'
-                                                } }}
-                                            </span>
-                                            <span class="w-3 h-3 rounded-full border border-black/10 dark:border-white/10"
-                                                style="background-color: {{ $ind['theme_color'] ?? '#007AFF' }}"></span>
-                                        </div>
-                                    </div>
-                                    <h4 class="text-[13.5px] font-bold text-black dark:text-white leading-snug mb-1">
-                                        {{ $ind['name'] }}
-                                    </h4>
-                                    <p class="text-[11.5px] text-black/55 dark:text-white/55 leading-relaxed line-clamp-2">
-                                        {{ $ind['description'] }}
-                                    </p>
-                                </div>
-                                <div class="mt-3.5 pt-2.5 border-t border-black/5 dark:border-white/5">
-                                    <button type="button"
-                                        @click="applyPreset('{{ $ind['id'] }}', $event.currentTarget)"
-                                        class="w-full h-8 rounded-[9px] bg-[#007AFF]/10 hover:bg-[#007AFF] text-[#007AFF] hover:text-white text-[11.5px] font-semibold active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 cursor-pointer">
-                                        <i data-lucide="check" class="w-3.5 h-3.5"></i>
-                                        <span>Terapkan Template</span>
-                                    </button>
-                                </div>
+                    <!-- Modal Header -->
+                    <div class="p-4 sm:p-5 border-b border-black/5 dark:border-white/10 flex items-start justify-between gap-3">
+                        <div>
+                            <div class="text-[11px] font-semibold text-black/40 dark:text-white/40 uppercase tracking-wider mb-1">
+                                Arsitektur Konten Multisektor
                             </div>
-                        @endforeach
+                            <h3 id="modal-presets-title" class="text-[17px] sm:text-[18px] font-bold text-black dark:text-white tracking-tight">
+                                Preset 25 Sektor Industri Bisnis Indonesia
+                            </h3>
+                            <p class="text-[12.5px] text-black/55 dark:text-white/55 mt-0.5">
+                                Pilih sektor bisnis Anda untuk menyelaraskan headline, narasi profil, 4 pilar nilai, katalog layanan, FAQ, dan ulasan secara otomatis.
+                            </p>
+                        </div>
+                        <button type="button" @click="showPresetModal = false"
+                            class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full text-black/50 dark:text-white/50 hover:bg-black/5 dark:hover:bg-white/10 flex items-center justify-center transition shrink-0 cursor-pointer"
+                            aria-label="Tutup pemilih preset">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
                     </div>
-                </div>
 
-                <!-- Modal Footer -->
-                <div class="px-5 py-3 border-t border-black/5 dark:border-white/10 flex flex-col sm:flex-row justify-between items-center gap-2 text-[12px] text-black/50 dark:text-white/50 bg-black/[0.01] dark:bg-white/[0.01]">
-                    <p>Menerapkan template otomatis menyesuaikan headline, 4 pilar nilai, katalog layanan, FAQ, dan ulasan.</p>
-                    <button type="button" @click="showPresetModal = false"
-                        class="h-8 px-4 rounded-[8px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] text-black/80 dark:text-white/80 font-medium transition">
-                        Tutup
-                    </button>
+                    <!-- Category Segmented Tabs -->
+                    <div class="px-4 sm:px-5 py-2.5 bg-black/[0.02] dark:bg-white/[0.02] border-b border-black/5 dark:border-white/5 overflow-x-auto no-scrollbar">
+                        <div class="inline-flex p-1 bg-black/[0.04] dark:bg-white/[0.06] rounded-[12px] gap-1 text-[12px] font-medium">
+                            <button type="button" @click="presetCategory = 'all'"
+                                :class="presetCategory === 'all' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
+                                class="px-3 py-1.5 rounded-[9px] transition-all">
+                                Semua (25)
+                            </button>
+                            <button type="button" @click="presetCategory = 'fnb'"
+                                :class="presetCategory === 'fnb' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
+                                class="px-3 py-1.5 rounded-[9px] transition-all">
+                                Kuliner &amp; F&amp;B
+                            </button>
+                            <button type="button" @click="presetCategory = 'manufacturing'"
+                                :class="presetCategory === 'manufacturing' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
+                                class="px-3 py-1.5 rounded-[9px] transition-all">
+                                Manufaktur &amp; Bengkel
+                            </button>
+                            <button type="button" @click="presetCategory = 'retail'"
+                                :class="presetCategory === 'retail' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
+                                class="px-3 py-1.5 rounded-[9px] transition-all">
+                                Retail &amp; Apotek
+                            </button>
+                            <button type="button" @click="presetCategory = 'service'"
+                                :class="presetCategory === 'service' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
+                                class="px-3 py-1.5 rounded-[9px] transition-all">
+                                Jasa &amp; Layanan
+                            </button>
+                            <button type="button" @click="presetCategory = 'trading'"
+                                :class="presetCategory === 'trading' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
+                                class="px-3 py-1.5 rounded-[9px] transition-all">
+                                Distribusi &amp; Agro
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Modal Body: 25 Industry Cards -->
+                    <div class="p-4 sm:p-5 overflow-y-auto space-y-3">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                            @foreach ($industries as $ind)
+                                <div x-show="presetCategory === 'all' || presetCategory === '{{ $ind['category'] ?? 'retail' }}'"
+                                    x-transition:enter="transition ease-out duration-150"
+                                    x-transition:enter-start="opacity-0 scale-95"
+                                    x-transition:enter-end="opacity-100 scale-100"
+                                    class="p-4 rounded-[16px] border border-black/5 dark:border-white/5 bg-white/60 dark:bg-white/[0.02] hover:border-[#007AFF]/40 hover:shadow-sm transition-all flex flex-col justify-between group">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2.5">
+                                            <div class="w-9 h-9 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] flex items-center justify-center text-black/70 dark:text-white/80 group-hover:text-[#007AFF] transition-colors">
+                                                <i data-lucide="{{ $ind['icon'] ?? 'store' }}" class="w-4 h-4"></i>
+                                            </div>
+                                            <div class="flex items-center gap-1.5">
+                                                <span class="text-[10px] font-medium uppercase tracking-wider text-black/40 dark:text-white/40">
+                                                    {{ match($ind['category'] ?? '') {
+                                                        'fnb' => 'F&B',
+                                                        'manufacturing' => 'MFG',
+                                                        'retail' => 'Retail',
+                                                        'service' => 'Jasa',
+                                                        'trading' => 'Agro',
+                                                        default => 'Bisnis'
+                                                    } }}
+                                                </span>
+                                                <span class="w-3 h-3 rounded-full border border-black/10 dark:border-white/10"
+                                                    style="background-color: {{ $ind['theme_color'] ?? '#007AFF' }}"></span>
+                                            </div>
+                                        </div>
+                                        <h4 class="text-[13.5px] font-bold text-black dark:text-white leading-snug mb-1">
+                                            {{ $ind['name'] }}
+                                        </h4>
+                                        <p class="text-[11.5px] text-black/55 dark:text-white/55 leading-relaxed line-clamp-2">
+                                            {{ $ind['description'] }}
+                                        </p>
+                                    </div>
+                                    <div class="mt-3.5 pt-2.5 border-t border-black/5 dark:border-white/5">
+                                        <button type="button"
+                                            @click="applyPreset('{{ $ind['id'] }}', $event.currentTarget)"
+                                            class="w-full min-h-[44px] h-11 rounded-[12px] bg-[#007AFF]/10 hover:bg-[#007AFF] text-[#007AFF] hover:text-white text-[12px] font-semibold active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+                                            <i data-lucide="check" class="w-4 h-4"></i>
+                                            <span>Terapkan Template</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <div class="px-5 py-3.5 border-t border-black/5 dark:border-white/10 flex flex-col sm:flex-row justify-between items-center gap-2 text-[12px] text-black/50 dark:text-white/50 bg-black/[0.01] dark:bg-white/[0.01]">
+                        <p>Menerapkan template otomatis menyesuaikan headline, 4 pilar nilai, katalog layanan, FAQ, dan ulasan.</p>
+                        <button type="button" @click="showPresetModal = false"
+                            class="min-h-[44px] px-5 rounded-[12px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] text-black/80 dark:text-white/80 font-medium transition cursor-pointer">
+                            Tutup
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
+        </template>
 
         <!-- ============================================================ -->
         <!-- MODAL: ADD PHOTO BY URL (Apple Alert/Sheet Style)            -->
         <!-- ============================================================ -->
-        <div x-show="showAddUrlModal" x-cloak
-            class="fixed inset-0 z-50 bg-black/30 backdrop-blur-sm flex items-center justify-center p-4">
-            <div class="w-full max-w-md bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl border border-black/5 dark:border-white/10 rounded-[14px] p-5 shadow-[0_20px_50px_rgba(0,0,0,0.25)] space-y-4"
-                @click.outside="showAddUrlModal = false">
-                <div class="flex items-center justify-between border-b border-black/5 dark:border-white/5 pb-3">
-                    <h3 class="font-semibold text-[15px] text-black dark:text-white">
-                        Tambah Foto Galeri via URL
-                    </h3>
-                    <button type="button" @click="showAddUrlModal = false"
-                        class="text-black/40 hover:text-black dark:text-white/40 dark:hover:text-white"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>
-                </div>
-                <div class="space-y-3">
-                    <div>
-                        <label
-                            class="block text-[11px] font-semibold text-black/50 dark:text-white/50 mb-1.5 uppercase tracking-wider">
-                            URL Gambar <span class="text-[#FF3B30]">*</span>
-                        </label>
-                        <input type="text" x-model="newUrlInput"
-                            placeholder="https://example.com/foto.jpg atau /storage/..."
-                            class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+        <template x-teleport="body">
+            <div x-show="showAddUrlModal" x-cloak
+                class="fixed inset-0 z-[200] flex items-center justify-center p-4 overflow-y-auto">
+
+                <!-- Backdrop -->
+                <div class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    x-show="showAddUrlModal"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    @click="showAddUrlModal = false"
+                    aria-hidden="true"></div>
+
+                <div class="relative z-10 w-full max-w-md bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl border border-black/5 dark:border-white/10 rounded-[20px] p-5 shadow-[0_20px_50px_rgba(0,0,0,0.25)] space-y-4 my-auto"
+                    @click.away="showAddUrlModal = false"
+                    @keydown.escape.window="showAddUrlModal = false"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="modal-add-url-title"
+                    x-show="showAddUrlModal"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95">
+                    <div class="flex items-center justify-between border-b border-black/5 dark:border-white/5 pb-3">
+                        <h3 id="modal-add-url-title" class="font-semibold text-[15px] text-black dark:text-white">
+                            Tambah Foto Galeri via URL
+                        </h3>
+                        <button type="button" @click="showAddUrlModal = false"
+                            class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full text-black/40 hover:text-black dark:text-white/40 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 flex items-center justify-center transition cursor-pointer"
+                            aria-label="Tutup modal tambah URL"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>
                     </div>
-                    <div>
-                        <label
-                            class="block text-[11px] font-semibold text-black/50 dark:text-white/50 mb-1.5 uppercase tracking-wider">
-                            Caption Foto (Opsional)
-                        </label>
-                        <input type="text" x-model="newCaptionInput"
-                            placeholder="Contoh: Suasana Ruang Tunggu dan Kasir"
-                            class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                    <div class="space-y-3">
+                        <div>
+                            <label
+                                class="block text-[11px] font-semibold text-black/50 dark:text-white/50 mb-1.5 uppercase tracking-wider">
+                                URL Gambar <span class="text-[#FF3B30]">*</span>
+                            </label>
+                            <input type="text" x-model="newUrlInput"
+                                placeholder="https://example.com/foto.jpg atau /storage/..."
+                                class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                        </div>
+                        <div>
+                            <label
+                                class="block text-[11px] font-semibold text-black/50 dark:text-white/50 mb-1.5 uppercase tracking-wider">
+                                Caption Foto (Opsional)
+                            </label>
+                            <input type="text" x-model="newCaptionInput"
+                                placeholder="Contoh: Suasana Ruang Tunggu dan Kasir"
+                                class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                        </div>
                     </div>
-                </div>
-                <div class="flex items-center justify-end gap-2 pt-2 border-t border-black/5 dark:border-white/5">
-                    <button type="button" @click="showAddUrlModal = false"
-                        class="h-8 px-3.5 rounded-[8px] text-[12px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition">Batal</button>
-                    <button type="button" @click="addGalleryByUrl()" :disabled="!newUrlInput.trim()"
-                        class="h-8 px-4 rounded-[8px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[12px] font-semibold disabled:opacity-50 transition cursor-pointer">Tambahkan</button>
+                    <div class="flex items-center justify-end gap-2.5 pt-3 border-t border-black/5 dark:border-white/5">
+                        <button type="button" @click="showAddUrlModal = false"
+                            class="min-h-[44px] px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/10 transition cursor-pointer">Batal</button>
+                        <button type="button" @click="addGalleryByUrl()" :disabled="!newUrlInput.trim()"
+                            class="min-h-[44px] px-5 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-semibold disabled:opacity-50 transition cursor-pointer">Tambahkan</button>
+                    </div>
                 </div>
             </div>
-        </div>
+        </template>
 
     </div>
 

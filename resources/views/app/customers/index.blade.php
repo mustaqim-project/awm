@@ -414,16 +414,16 @@
 
             @if ($customers->count() > 0)
                 <!-- Desktop Table View (lg: screens and above) -->
-                <div class="hidden lg:block overflow-x-auto">
+                <div x-data="coocaTableSort()" class="hidden lg:block overflow-x-auto">
                     <table class="w-full text-left text-[13px]">
                         <thead>
                             <tr class="border-b border-black/[0.06] dark:border-white/[0.08] bg-black/[0.02] dark:bg-white/[0.02] text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">
-                                <th class="py-3.5 px-4 sm:px-6">{{ $isWorkshop ? __('customers.table_customer_vehicle') : ($canB2b ? __('customers.table_customer_client') : __('customers.table_customer')) }}</th>
-                                <th class="py-3.5 px-4">{{ __('customers.table_contact') }}</th>
+                                <x-table-sort-th :col="0" type="string" :title="$isWorkshop ? __('customers.table_customer_vehicle') : ($canB2b ? __('customers.table_customer_client') : __('customers.table_customer'))" class="py-3.5 px-4 sm:px-6" />
+                                <x-table-sort-th :col="1" type="string" :title="__('customers.table_contact')" class="py-3.5 px-4" />
                                 @if ($canB2b)
-                                    <th class="py-3.5 px-4 text-center">{{ __('customers.table_terms') }}</th>
+                                    <x-table-sort-th :col="2" type="number" :title="__('customers.table_terms')" align="center" class="py-3.5 px-4" />
                                 @endif
-                                <th class="py-3.5 px-4 text-center">{{ __('customers.table_transactions') }}</th>
+                                <x-table-sort-th :col="$canB2b ? 3 : 2" type="number" :title="__('customers.table_transactions')" align="center" class="py-3.5 px-4" />
                                 <th class="py-3.5 px-4 text-right pr-6">{{ __('customers.table_quick_actions') }}</th>
                             </tr>
                         </thead>
@@ -431,7 +431,7 @@
                             @foreach ($customers as $c)
                                 <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors">
                                     <!-- Customer Identity -->
-                                    <td class="py-4 px-4 sm:px-6">
+                                    <td data-sort-value="{{ strtolower($c->name) }}" class="py-4 px-4 sm:px-6">
                                         <div class="flex items-center gap-3">
                                             <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] font-bold flex items-center justify-center shrink-0 border border-[#007AFF]/20 text-[14px]">
                                                 {{ strtoupper(substr($c->name, 0, 2)) }}
@@ -467,7 +467,7 @@
                                     </td>
 
                                     <!-- Contact Info & Quick WA -->
-                                    <td class="py-4 px-4">
+                                    <td data-sort-value="{{ strtolower($c->phone ?? '') }}" class="py-4 px-4">
                                         <div class="space-y-1">
                                             @if ($c->phone)
                                                 @php
@@ -496,7 +496,7 @@
 
                                     <!-- Payment Terms (B2B Only) -->
                                     @if ($canB2b)
-                                        <td class="py-4 px-4 text-center">
+                                        <td data-sort-value="{{ (int) $c->payment_terms_days }}" class="py-4 px-4 text-center">
                                             <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-semibold bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70 tabular-nums">
                                                 {{ $c->payment_terms_days > 0 ? __('customers.net_days', ['days' => $c->payment_terms_days]) : __('customers.cash_terms') }}
                                             </span>
@@ -504,7 +504,7 @@
                                     @endif
 
                                     <!-- Transactions Count -->
-                                    <td class="py-4 px-4 text-center">
+                                    <td data-sort-value="{{ (int) $c->invoices_count }}" class="py-4 px-4 text-center">
                                         <div class="inline-flex flex-col text-[11px] font-mono">
                                             <span class="font-bold text-[#007AFF]">{{ __('customers.invoices_count', ['count' => $c->invoices_count]) }}</span>
                                             <span class="text-black/40 dark:text-white/40">{{ __('customers.po_count', ['count' => $c->purchase_orders_count]) }}</span>
@@ -725,45 +725,53 @@
 
         <!-- MODAL 1: TAMBAH PELANGGAN (CANVAS XXL & MOBILE BOTTOM SHEET)              -->
         @if (\App\Support\Context::hasPermission('customers.create'))
-            <div x-show="showAddModal" x-cloak
-                class="fixed inset-0 z-50 flex items-end lg:items-center justify-center p-0 lg:p-6 bg-black/50 backdrop-blur-md transition-all"
-                x-transition:enter="transition ease-out duration-300"
-                x-transition:enter-start="opacity-0"
-                x-transition:enter-end="opacity-100"
-                x-transition:leave="transition ease-in duration-200"
-                x-transition:leave-start="opacity-100"
-                x-transition:leave-end="opacity-0"
-                @keydown.escape.window="showAddModal = false">
-                
-                <div class="w-full bg-white dark:bg-[#1C1C1E] border-t lg:border border-black/[0.08] dark:border-white/[0.1] shadow-2xl relative overflow-y-auto
-                            rounded-t-[28px] lg:rounded-[28px] max-h-[92vh] lg:max-h-[88vh]
-                            p-5 sm:p-6 lg:p-8 lg:max-w-5xl space-y-6"
-                    x-transition:enter="transition ease-out duration-300"
-                    x-transition:enter-start="translate-y-full lg:translate-y-0 lg:scale-95 lg:opacity-0"
-                    x-transition:enter-end="translate-y-0 lg:scale-100 lg:opacity-100"
-                    x-transition:leave="transition ease-in duration-200"
-                    x-transition:leave-start="translate-y-0 lg:scale-100 lg:opacity-100"
-                    x-transition:leave-end="translate-y-full lg:translate-y-0 lg:scale-95 lg:opacity-0"
-                    @click.away="showAddModal = false">
-                    
-                    <!-- Mobile Drag / Bottom Sheet Pill Indicator -->
-                    <div class="w-12 h-1.5 bg-black/20 dark:bg-white/20 rounded-full mx-auto mb-2 lg:hidden"></div>
+            <template x-teleport="body">
+                <div x-show="showAddModal" 
+                    x-cloak
+                    @keydown.escape.window="showAddModal = false"
+                    class="fixed inset-0 z-[200] overflow-y-auto">
+                    <!-- Backdrop -->
+                    <div x-show="showAddModal"
+                        x-transition:enter="ease-out duration-300"
+                        x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100"
+                        x-transition:leave="ease-in duration-200"
+                        x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0"
+                        @click="showAddModal = false"
+                        class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
 
-                    <!-- Modal Header -->
-                    <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-4">
-                        <div class="flex items-center gap-3">
-                            <div class="w-11 h-11 rounded-[14px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center">
-                                <i data-lucide="user-plus" class="w-5 h-5"></i>
+                    <div class="relative z-10 min-h-full flex items-end lg:items-center justify-center p-0 lg:p-6" @click.self="showAddModal = false">
+                        <div x-show="showAddModal"
+                            x-transition:enter="ease-out duration-300"
+                            x-transition:enter-start="translate-y-full lg:translate-y-0 lg:scale-95 lg:opacity-0"
+                            x-transition:enter-end="translate-y-0 lg:scale-100 lg:opacity-100"
+                            x-transition:leave="ease-in duration-200"
+                            x-transition:leave-start="translate-y-0 lg:scale-100 lg:opacity-100"
+                            x-transition:leave-end="translate-y-full lg:translate-y-0 lg:scale-95 lg:opacity-0"
+                            @click.stop
+                            class="relative w-full bg-white dark:bg-[#1C1C1E] border-t lg:border border-black/[0.08] dark:border-white/[0.1] shadow-2xl overflow-y-auto
+                                        rounded-t-[28px] lg:rounded-[28px] max-h-[92vh] lg:max-h-[88vh]
+                                        p-5 sm:p-6 lg:p-8 lg:max-w-5xl space-y-6">
+                            
+                            <!-- Mobile Drag / Bottom Sheet Pill Indicator -->
+                            <div class="w-12 h-1.5 bg-black/20 dark:bg-white/20 rounded-full mx-auto mb-2 lg:hidden"></div>
+
+                            <!-- Modal Header -->
+                            <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-11 h-11 rounded-[14px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center">
+                                        <i data-lucide="user-plus" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-bold text-black dark:text-white">{{ __('customers.add_customer_title') }}</h3>
+                                        <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('customers.add_customer_subtitle') }}</p>
+                                    </div>
+                                </div>
+                                <button type="button" @click="showAddModal = false" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer" aria-label="{{ __('common.close') }}">
+                                    <i data-lucide="x" class="w-5 h-5"></i>
+                                </button>
                             </div>
-                            <div>
-                                <h3 class="text-lg font-bold text-black dark:text-white">{{ __('customers.add_customer_title') }}</h3>
-                                <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('customers.add_customer_subtitle') }}</p>
-                            </div>
-                        </div>
-                        <button type="button" @click="showAddModal = false" class="text-black/40 hover:text-black dark:hover:text-white p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition cursor-pointer">
-                            <i data-lucide="x" class="w-5 h-5"></i>
-                        </button>
-                    </div>
 
                     <form method="POST" action="{{ route('customers.store') }}" class="space-y-6">
                         @csrf
@@ -901,50 +909,60 @@
                                 <span>{{ __('customers.save_customer') }}</span>
                             </button>
                         </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
+        </template>
         @endif
 
         <!-- MODAL 2: EDIT PELANGGAN (CANVAS XXL & MOBILE BOTTOM SHEET)                -->
-        <div x-show="showEditModal" x-cloak
-            class="fixed inset-0 z-50 flex items-end lg:items-center justify-center p-0 lg:p-6 bg-black/50 backdrop-blur-md transition-all"
-            x-transition:enter="transition ease-out duration-300"
-            x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100"
-            x-transition:leave="transition ease-in duration-200"
-            x-transition:leave-start="opacity-100"
-            x-transition:leave-end="opacity-0"
-            @keydown.escape.window="showEditModal = false">
-            
-            <div class="w-full bg-white dark:bg-[#1C1C1E] border-t lg:border border-black/[0.08] dark:border-white/[0.1] shadow-2xl relative overflow-y-auto
-                        rounded-t-[28px] lg:rounded-[28px] max-h-[92vh] lg:max-h-[88vh]
-                        p-5 sm:p-6 lg:p-8 lg:max-w-5xl space-y-6"
-                x-transition:enter="transition ease-out duration-300"
-                x-transition:enter-start="translate-y-full lg:translate-y-0 lg:scale-95 lg:opacity-0"
-                x-transition:enter-end="translate-y-0 lg:scale-100 lg:opacity-100"
-                x-transition:leave="transition ease-in duration-200"
-                x-transition:leave-start="translate-y-0 lg:scale-100 lg:opacity-100"
-                x-transition:leave-end="translate-y-full lg:translate-y-0 lg:scale-95 lg:opacity-0"
-                @click.away="showEditModal = false">
-                
-                <!-- Mobile Drag Pill Handle -->
-                <div class="w-12 h-1.5 bg-black/20 dark:bg-white/20 rounded-full mx-auto mb-2 lg:hidden"></div>
+        <template x-teleport="body">
+            <div x-show="showEditModal" 
+                x-cloak
+                @keydown.escape.window="showEditModal = false"
+                class="fixed inset-0 z-[200] overflow-y-auto">
+                <!-- Backdrop -->
+                <div x-show="showEditModal"
+                    x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    @click="showEditModal = false"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
 
-                <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-4">
-                    <div class="flex items-center gap-3">
-                        <div class="w-11 h-11 rounded-[14px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center">
-                            <i data-lucide="edit-3" class="w-5 h-5"></i>
+                <div class="relative z-10 min-h-full flex items-end lg:items-center justify-center p-0 lg:p-6" @click.self="showEditModal = false">
+                    <div x-show="showEditModal"
+                        x-transition:enter="ease-out duration-300"
+                        x-transition:enter-start="translate-y-full lg:translate-y-0 lg:scale-95 lg:opacity-0"
+                        x-transition:enter-end="translate-y-0 lg:scale-100 lg:opacity-100"
+                        x-transition:leave="ease-in duration-200"
+                        x-transition:leave-start="translate-y-0 lg:scale-100 lg:opacity-100"
+                        x-transition:leave-end="translate-y-full lg:translate-y-0 lg:scale-95 lg:opacity-0"
+                        @click.stop
+                        class="relative w-full bg-white dark:bg-[#1C1C1E] border-t lg:border border-black/[0.08] dark:border-white/[0.1] shadow-2xl overflow-y-auto
+                                    rounded-t-[28px] lg:rounded-[28px] max-h-[92vh] lg:max-h-[88vh]
+                                    p-5 sm:p-6 lg:p-8 lg:max-w-5xl space-y-6">
+                        
+                        <!-- Mobile Drag Pill Handle -->
+                        <div class="w-12 h-1.5 bg-black/20 dark:bg-white/20 rounded-full mx-auto mb-2 lg:hidden"></div>
+
+                        <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-11 h-11 rounded-[14px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center">
+                                    <i data-lucide="edit-3" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-black dark:text-white">{{ __('customers.edit_customer') }}</h3>
+                                    <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('customers.edit_customer_desc') }}</p>
+                                </div>
+                            </div>
+                            <button type="button" @click="showEditModal = false" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer" aria-label="{{ __('common.close') }}">
+                                <i data-lucide="x" class="w-5 h-5"></i>
+                            </button>
                         </div>
-                        <div>
-                            <h3 class="text-lg font-bold text-black dark:text-white">{{ __('customers.edit_customer') }}</h3>
-                            <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('customers.edit_customer_desc') }}</p>
-                        </div>
-                    </div>
-                    <button type="button" @click="showEditModal = false" class="text-black/40 hover:text-black dark:hover:text-white p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition cursor-pointer">
-                        <i data-lucide="x" class="w-5 h-5"></i>
-                    </button>
-                </div>
 
                 <form method="POST" :action="'/customers/' + (editCustomer.slug || editCustomer.id)" class="space-y-6">
                     @csrf
@@ -1051,55 +1069,65 @@
                         </button>
                     </div>
                 </form>
+                    </div>
+                </div>
             </div>
-        </div>
+        </template>
 
         <!-- MODAL 3: DETAIL PROFIL PELANGGAN (CANVAS XXL & MOBILE BOTTOM SHEET)        -->
-        <div x-show="showDetailModal" x-cloak
-            class="fixed inset-0 z-50 flex items-end lg:items-center justify-center p-0 lg:p-6 bg-black/50 backdrop-blur-md transition-all"
-            x-transition:enter="transition ease-out duration-300"
-            x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100"
-            x-transition:leave="transition ease-in duration-200"
-            x-transition:leave-start="opacity-100"
-            x-transition:leave-end="opacity-0"
-            @keydown.escape.window="showDetailModal = false">
-            
-            <div class="w-full bg-white dark:bg-[#1C1C1E] border-t lg:border border-black/[0.08] dark:border-white/[0.1] shadow-2xl relative overflow-y-auto
-                        rounded-t-[28px] lg:rounded-[28px] max-h-[92vh] lg:max-h-[88vh]
-                        p-5 sm:p-6 lg:p-8 lg:max-w-3xl space-y-6"
-                x-transition:enter="transition ease-out duration-300"
-                x-transition:enter-start="translate-y-full lg:translate-y-0 lg:scale-95 lg:opacity-0"
-                x-transition:enter-end="translate-y-0 lg:scale-100 lg:opacity-100"
-                x-transition:leave="transition ease-in duration-200"
-                x-transition:leave-start="translate-y-0 lg:scale-100 lg:opacity-100"
-                x-transition:leave-end="translate-y-full lg:translate-y-0 lg:scale-95 lg:opacity-0"
-                @click.away="showDetailModal = false">
-                
-                <!-- Mobile Drag Pill Handle -->
-                <div class="w-12 h-1.5 bg-black/20 dark:bg-white/20 rounded-full mx-auto mb-2 lg:hidden"></div>
+        <template x-teleport="body">
+            <div x-show="showDetailModal" 
+                x-cloak
+                @keydown.escape.window="showDetailModal = false"
+                class="fixed inset-0 z-[200] overflow-y-auto">
+                <!-- Backdrop -->
+                <div x-show="showDetailModal"
+                    x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    @click="showDetailModal = false"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
 
-                <template x-if="selectedCustomer">
-                    <div class="space-y-6">
-                        <!-- Header Profil -->
-                        <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-4">
-                            <div class="flex items-center gap-3.5">
-                                <div class="w-14 h-14 rounded-[18px] bg-[#007AFF]/10 text-[#007AFF] font-bold text-xl flex items-center justify-center border border-[#007AFF]/20">
-                                    <span x-text="(selectedCustomer.name || 'PL').substring(0,2).toUpperCase()"></span>
+                <div class="relative z-10 min-h-full flex items-end lg:items-center justify-center p-0 lg:p-6" @click.self="showDetailModal = false">
+                    <div x-show="showDetailModal"
+                        x-transition:enter="ease-out duration-300"
+                        x-transition:enter-start="translate-y-full lg:translate-y-0 lg:scale-95 lg:opacity-0"
+                        x-transition:enter-end="translate-y-0 lg:scale-100 lg:opacity-100"
+                        x-transition:leave="ease-in duration-200"
+                        x-transition:leave-start="translate-y-0 lg:scale-100 lg:opacity-100"
+                        x-transition:leave-end="translate-y-full lg:translate-y-0 lg:scale-95 lg:opacity-0"
+                        @click.stop
+                        class="relative w-full bg-white dark:bg-[#1C1C1E] border-t lg:border border-black/[0.08] dark:border-white/[0.1] shadow-2xl overflow-y-auto
+                                    rounded-t-[28px] lg:rounded-[28px] max-h-[92vh] lg:max-h-[88vh]
+                                    p-5 sm:p-6 lg:p-8 lg:max-w-3xl space-y-6">
+                        
+                        <!-- Mobile Drag Pill Handle -->
+                        <div class="w-12 h-1.5 bg-black/20 dark:bg-white/20 rounded-full mx-auto mb-2 lg:hidden"></div>
+
+                        <template x-if="selectedCustomer">
+                            <div class="space-y-6">
+                                <!-- Header Profil -->
+                                <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-4">
+                                    <div class="flex items-center gap-3.5">
+                                        <div class="w-14 h-14 rounded-[18px] bg-[#007AFF]/10 text-[#007AFF] font-bold text-xl flex items-center justify-center border border-[#007AFF]/20">
+                                            <span x-text="(selectedCustomer.name || 'PL').substring(0,2).toUpperCase()"></span>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl font-bold text-black dark:text-white" x-text="selectedCustomer.name"></h3>
+                                            @if ($canB2b)
+                                                <p class="text-[13px] text-black/50 dark:text-white/50" x-text="selectedCustomer.company_name || '{{ __('customers.individual_customer') }}'"></p>
+                                            @else
+                                                <p class="text-[13px] text-black/50 dark:text-white/50">{{ __('customers.registered_customer') }}</p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <button type="button" @click="showDetailModal = false" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer" aria-label="{{ __('common.close') }}">
+                                        <i data-lucide="x" class="w-5 h-5"></i>
+                                    </button>
                                 </div>
-                                <div>
-                                    <h3 class="text-xl font-bold text-black dark:text-white" x-text="selectedCustomer.name"></h3>
-                                    @if ($canB2b)
-                                        <p class="text-[13px] text-black/50 dark:text-white/50" x-text="selectedCustomer.company_name || '{{ __('customers.individual_customer') }}'"></p>
-                                    @else
-                                        <p class="text-[13px] text-black/50 dark:text-white/50">{{ __('customers.registered_customer') }}</p>
-                                    @endif
-                                </div>
-                            </div>
-                            <button type="button" @click="showDetailModal = false" class="text-black/40 hover:text-black dark:hover:text-white p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition cursor-pointer">
-                                <i data-lucide="x" class="w-5 h-5"></i>
-                            </button>
-                        </div>
 
                         <!-- Data Kendaraan Bengkel (Jika Ada) -->
                         @if ($isWorkshop)
@@ -1185,61 +1213,71 @@
                 </template>
             </div>
         </div>
+    </div>
+</template>
 
         <!-- ========================================================================= -->
         <!-- MODAL 4: INTERACTIVE PRE-COMMIT IMPORT EXCEL (APPLE HIG BENTO XXL)        -->
         <!-- ========================================================================= -->
         @if (\App\Support\Context::hasPermission('customers.create'))
-            <div x-show="showImportModal" x-cloak
-                class="fixed inset-0 z-50 flex items-end lg:items-center justify-center p-0 lg:p-6 bg-black/60 backdrop-blur-md transition-all"
-                x-transition:enter="transition ease-out duration-300"
-                x-transition:enter-start="opacity-0"
-                x-transition:enter-end="opacity-100"
-                x-transition:leave="transition ease-in duration-200"
-                x-transition:leave-start="opacity-100"
-                x-transition:leave-end="opacity-0"
-                @keydown.escape.window="if (!importExecuting) showImportModal = false">
+            <template x-teleport="body">
+                <div x-show="showImportModal" 
+                    x-cloak
+                    @keydown.escape.window="if (!importExecuting) showImportModal = false"
+                    class="fixed inset-0 z-[200] overflow-y-auto">
+                    <!-- Backdrop -->
+                    <div x-show="showImportModal"
+                        x-transition:enter="ease-out duration-300"
+                        x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100"
+                        x-transition:leave="ease-in duration-200"
+                        x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0"
+                        @click="if (!importExecuting) showImportModal = false"
+                        class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
 
-                <div class="w-full bg-white dark:bg-[#1C1C1E] border-t lg:border border-black/[0.08] dark:border-white/[0.1] shadow-2xl relative overflow-hidden flex flex-col
-                            rounded-t-[28px] lg:rounded-[28px] max-h-[94vh] lg:max-h-[90vh] lg:max-w-6xl"
-                    x-transition:enter="transition ease-out duration-300"
-                    x-transition:enter-start="translate-y-full lg:translate-y-0 lg:scale-95 lg:opacity-0"
-                    x-transition:enter-end="translate-y-0 lg:scale-100 lg:opacity-100"
-                    x-transition:leave="transition ease-in duration-200"
-                    x-transition:leave-start="translate-y-0 lg:scale-100 lg:opacity-100"
-                    x-transition:leave-end="translate-y-full lg:translate-y-0 lg:scale-95 lg:opacity-0"
-                    @click.away="if (!importExecuting) showImportModal = false">
+                    <div class="relative z-10 min-h-full flex items-end lg:items-center justify-center p-0 lg:p-6" @click.self="if (!importExecuting) showImportModal = false">
+                        <div x-show="showImportModal"
+                            x-transition:enter="ease-out duration-300"
+                            x-transition:enter-start="translate-y-full lg:translate-y-0 lg:scale-95 lg:opacity-0"
+                            x-transition:enter-end="translate-y-0 lg:scale-100 lg:opacity-100"
+                            x-transition:leave="ease-in duration-200"
+                            x-transition:leave-start="translate-y-0 lg:scale-100 lg:opacity-100"
+                            x-transition:leave-end="translate-y-full lg:translate-y-0 lg:scale-95 lg:opacity-0"
+                            @click.stop
+                            class="relative w-full bg-white dark:bg-[#1C1C1E] border-t lg:border border-black/[0.08] dark:border-white/[0.1] shadow-2xl overflow-hidden flex flex-col
+                                        rounded-t-[28px] lg:rounded-[28px] max-h-[94vh] lg:max-h-[90vh] lg:max-w-6xl">
 
-                    <!-- Drag Handle Mobile -->
-                    <div class="w-12 h-1.5 bg-black/20 dark:bg-white/20 rounded-full mx-auto my-2.5 lg:hidden shrink-0"></div>
+                            <!-- Drag Handle Mobile -->
+                            <div class="w-12 h-1.5 bg-black/20 dark:bg-white/20 rounded-full mx-auto my-2.5 lg:hidden shrink-0"></div>
 
-                    <!-- Modal Top Bar -->
-                    <div class="px-6 py-4 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-[#F9F9FB] dark:bg-[#252528]">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0">
-                                <i data-lucide="file-spreadsheet" class="w-5 h-5"></i>
+                            <!-- Modal Top Bar -->
+                            <div class="px-6 py-4 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-[#F9F9FB] dark:bg-[#252528]">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0">
+                                        <i data-lucide="file-spreadsheet" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-base sm:text-lg font-bold text-black dark:text-white flex items-center gap-2">
+                                            <span>Import Pelanggan via Excel</span>
+                                            <span class="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-[#007AFF]/10 text-[#007AFF]">Interactive Preview</span>
+                                        </h3>
+                                        <p class="text-[12px] text-black/50 dark:text-white/50">Validasi otomatis anti-duplikat sebelum data masuk ke sistem buku besar CRM</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-2">
+                                    <a href="{{ route('customers.template') }}"
+                                        class="h-9 px-3.5 rounded-[10px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] hover:bg-black/[0.04] dark:hover:bg-white/[0.06] text-black dark:text-white text-[12px] font-medium transition flex items-center gap-1.5 shadow-sm">
+                                        <i data-lucide="download" class="w-3.5 h-3.5 text-emerald-600"></i>
+                                        <span>Unduh Template Excel</span>
+                                    </a>
+                                    <button type="button" @click="if (!importExecuting) showImportModal = false"
+                                        class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer" aria-label="{{ __('common.close') }}">
+                                        <i data-lucide="x" class="w-5 h-5"></i>
+                                    </button>
+                                </div>
                             </div>
-                            <div>
-                                <h3 class="text-base sm:text-lg font-bold text-black dark:text-white flex items-center gap-2">
-                                    <span>Import Pelanggan via Excel</span>
-                                    <span class="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-[#007AFF]/10 text-[#007AFF]">Interactive Preview</span>
-                                </h3>
-                                <p class="text-[12px] text-black/50 dark:text-white/50">Validasi otomatis anti-duplikat sebelum data masuk ke sistem buku besar CRM</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-2">
-                            <a href="{{ route('customers.template') }}"
-                                class="h-9 px-3.5 rounded-[10px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] hover:bg-black/[0.04] dark:hover:bg-white/[0.06] text-black dark:text-white text-[12px] font-medium transition flex items-center gap-1.5 shadow-sm">
-                                <i data-lucide="download" class="w-3.5 h-3.5 text-emerald-600"></i>
-                                <span>Unduh Template Excel</span>
-                            </a>
-                            <button type="button" @click="if (!importExecuting) showImportModal = false"
-                                class="w-8 h-8 rounded-full bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-black/50 dark:text-white/50 flex items-center justify-center transition">
-                                <i data-lucide="x" class="w-4 h-4"></i>
-                            </button>
-                        </div>
-                    </div>
 
                     <!-- Modal Body / Content -->
                     <div class="flex-1 overflow-y-auto p-5 sm:p-6 space-y-5">
@@ -1453,10 +1491,10 @@
                                 <span x-text="importExecuting ? 'Sedang Memproses...' : ('Komit Import (' + (importDuplicateStrategy === 'skip' ? importPreview.valid_count : (importPreview.valid_count + importPreview.duplicate_count)) + ' Pelanggan)')"></span>
                             </button>
                         </div>
+                        </div>
                     </div>
-
                 </div>
-            </div>
+            </template>
         @endif
 
     </div>

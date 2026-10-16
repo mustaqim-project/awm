@@ -203,7 +203,7 @@
     <!-- ===================================================== -->
     <!-- 3. DENSE DATA TABLE (DESKTOP & TABLET)                 -->
     <!-- ===================================================== -->
-    <div class="hidden sm:block rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 overflow-hidden">
+    <div x-data="coocaTableSort()" class="hidden sm:block rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 overflow-hidden">
         <div class="px-4 py-3 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
             <h3 class="text-[13px] font-semibold text-black dark:text-white">{{ __('pos.shift_history_title') }}</h3>
             <span class="text-[12px] text-black/45 dark:text-white/45">{{ __('pos.shift_history_subtitle') }}</span>
@@ -213,20 +213,20 @@
             <table class="w-full text-left text-[13px]">
                 <thead>
                     <tr class="border-b border-black/5 dark:border-white/10">
-                        <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40">{{ __('pos.cashier_name') }} / {{ __('pos.register_name') }}</th>
-                        <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40">{{ __('pos.opening_time') }} / {{ __('pos.closing_time') }}</th>
-                        <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right">{{ __('pos.opening_cash') }}</th>
-                        <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right">{{ __('pos.cash_sales') }}</th>
-                        <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right">{{ __('pos.closing_cash_actual') }}</th>
-                        <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right">{{ __('pos.cash_difference') }}</th>
-                        <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-center">{{ __('pos.status') }}</th>
+                        <x-table-sort-th :col="0" type="string" :title="__('pos.cashier_name') . ' / ' . __('pos.register_name')" />
+                        <x-table-sort-th :col="1" type="date" :title="__('pos.opening_time') . ' / ' . __('pos.closing_time')" />
+                        <x-table-sort-th :col="2" type="number" :title="__('pos.opening_cash')" align="right" />
+                        <x-table-sort-th :col="3" type="number" :title="__('pos.cash_sales')" align="right" />
+                        <x-table-sort-th :col="4" type="number" :title="__('pos.closing_cash_actual')" align="right" />
+                        <x-table-sort-th :col="5" type="number" :title="__('pos.cash_difference')" align="right" />
+                        <x-table-sort-th :col="6" type="string" :title="__('pos.status')" align="center" />
                         <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-center">{{ __('pos.actions') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                     @forelse($shifts as $shift)
                     <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
-                        <td class="px-4 py-3">
+                        <td data-sort-value="{{ strtolower($shift->user->name ?? 'Kasir') }}" class="px-4 py-3">
                             <div class="font-medium text-black dark:text-white">{{ $shift->user->name ?? 'Kasir' }}</div>
                             <div class="text-[11px] text-black/45 dark:text-white/45 flex items-center gap-1.5 mt-0.5">
                                 <span>{{ $shift->location->name ?? 'Outlet Utama' }}</span>
@@ -236,19 +236,19 @@
                                 @endif
                             </div>
                         </td>
-                        <td class="px-4 py-3">
+                        <td data-sort-value="{{ $shift->opened_at->timestamp }}" class="px-4 py-3">
                             <div class="text-black/80 dark:text-white/80 tabular-nums">{{ $shift->opened_at->format('d/m/Y H:i') }}</div>
                             <div class="text-[11px] text-black/45 dark:text-white/45 tabular-nums">
                                 {{ $shift->closed_at ? $shift->closed_at->format('d/m/Y H:i') : 'Masih Terbuka' }}
                             </div>
                         </td>
-                        <td class="px-4 py-3 text-right tabular-nums font-medium text-black/70 dark:text-white/70">
+                        <td data-sort-value="{{ (float) $shift->opening_cash }}" class="px-4 py-3 text-right tabular-nums font-medium text-black/70 dark:text-white/70">
                             Rp {{ number_format((float) $shift->opening_cash, 0, ',', '.') }}
                         </td>
-                        <td class="px-4 py-3 text-right tabular-nums font-semibold text-[#34C759] dark:text-[#30D158]">
+                        <td data-sort-value="{{ (float) $shift->total_cash_sales }}" class="px-4 py-3 text-right tabular-nums font-semibold text-[#34C759] dark:text-[#30D158]">
                             Rp {{ number_format((float) $shift->total_cash_sales, 0, ',', '.') }}
                         </td>
-                        <td class="px-4 py-3 text-right tabular-nums">
+                        <td data-sort-value="{{ (float) ($shift->closing_cash_actual ?? 0) }}" class="px-4 py-3 text-right tabular-nums">
                             @if($shift->status === 'closed')
                                 <div class="font-semibold text-black dark:text-white">Rp {{ number_format((float) ($shift->closing_cash_actual ?? 0), 0, ',', '.') }}</div>
                                 <div class="text-[11px] text-black/40 dark:text-white/40">Harapan: Rp {{ number_format((float) ($shift->closing_cash_expected ?? 0), 0, ',', '.') }}</div>
@@ -256,7 +256,7 @@
                                 <span class="text-black/30 dark:text-white/30">-</span>
                             @endif
                         </td>
-                        <td class="px-4 py-3 text-right tabular-nums font-semibold">
+                        <td data-sort-value="{{ (float) ($shift->cash_difference ?? 0) }}" class="px-4 py-3 text-right tabular-nums font-semibold">
                             @if($shift->status === 'closed')
                                 @php $diff = (float) ($shift->cash_difference ?? 0); @endphp
                                 <span class="{{ $diff == 0 ? 'text-[#34C759] dark:text-[#30D158]' : ($diff > 0 ? 'text-[#007AFF]' : 'text-[#FF3B30]') }}">
@@ -266,7 +266,7 @@
                                 <span class="text-black/30 dark:text-white/30">-</span>
                             @endif
                         </td>
-                        <td class="px-4 py-3 text-center">
+                        <td data-sort-value="{{ $shift->status }}" class="px-4 py-3 text-center">
                             @if($shift->status === 'open')
                                 <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#34C759]/12 text-[#248A3D] dark:text-[#30D158]">
                                     <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]"></span> Terbuka
@@ -381,39 +381,53 @@
     <!-- 5. MODAL BUKA SHIFT DENGAN PECAHAN UANG (Apple Sheet) -->
     <!-- ===================================================== -->
     @if(\App\Support\Context::hasPermission('pos.terminal') || \App\Support\Context::hasPermission('pos.orders'))
-    <div x-show="showOpenModal"
-        x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-md p-4 overflow-y-auto"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0">
+    <template x-teleport="body">
+        <div x-show="showOpenModal"
+            x-cloak
+            class="fixed inset-0 z-[200] overflow-y-auto"
+            @keydown.escape.window="showOpenModal = false"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="pos-open-shift-title">
 
-        <div class="w-full max-w-5xl xl:max-w-6xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/15 shadow-[0_25px_60px_rgba(0,0,0,0.35)] p-6 sm:p-7 space-y-6 my-8 max-h-[92vh] overflow-y-auto"
-            @click.away="showOpenModal = false"
-            x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="opacity-0 scale-95"
-            x-transition:enter-end="opacity-100 scale-100"
-            x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100 scale-100"
-            x-transition:leave-end="opacity-0 scale-95">
+            <!-- Backdrop -->
+            <div x-show="showOpenModal"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="showOpenModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
-            <div class="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-4">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/15 text-[#007AFF] flex items-center justify-center font-bold">
-                        <i data-lucide="plus-circle" class="w-5 h-5"></i>
+            <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="showOpenModal = false">
+                <div class="relative w-full max-w-5xl xl:max-w-6xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/15 shadow-[0_25px_60px_rgba(0,0,0,0.35)] p-6 sm:p-7 space-y-6 my-8 max-h-[92vh] overflow-y-auto"
+                    x-show="showOpenModal"
+                    x-transition:enter="ease-out duration-200"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="ease-in duration-150"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95"
+                    @click.stop>
+
+                    <div class="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/15 text-[#007AFF] flex items-center justify-center font-bold">
+                                <i data-lucide="plus-circle" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 id="pos-open-shift-title" class="text-[19px] font-bold text-black dark:text-white tracking-tight">{{ __('pos.open_shift_modal_title') }}</h3>
+                                <p class="text-[13px] text-black/50 dark:text-white/50">{{ __('pos.open_shift_modal_desc') }}</p>
+                            </div>
+                        </div>
+                        <button type="button" @click="showOpenModal = false"
+                            class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer"
+                            aria-label="{{ __('common.close') }}">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
                     </div>
-                    <div>
-                        <h3 class="text-[19px] font-bold text-black dark:text-white tracking-tight">{{ __('pos.open_shift_modal_title') }}</h3>
-                        <p class="text-[13px] text-black/50 dark:text-white/50">{{ __('pos.open_shift_modal_desc') }}</p>
-                    </div>
-                </div>
-                <button type="button" @click="showOpenModal = false" class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/50 dark:text-white/50 hover:bg-black/10 hover:text-black dark:hover:text-white flex items-center justify-center transition-colors">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
-            </div>
 
             <form action="{{ route('pos.shifts.open') }}" method="POST" @submit="isSubmitting = true" class="space-y-6">
                 @csrf
@@ -552,47 +566,63 @@
                     </button>
                 </div>
             </form>
+                </div>
+            </div>
         </div>
-    </div>
+    </template>
     @endif
 
     <!-- ===================================================== -->
     <!-- 6. MODAL TUTUP SHIFT & BLIND CASH COUNT (Apple Sheet) -->
     <!-- ===================================================== -->
     @if(\App\Support\Context::hasPermission('pos.orders') || \App\Support\Context::hasPermission('pos.supervisor_pin'))
-    <div x-show="showCloseModal"
-        x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-md p-4 overflow-y-auto"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0">
+    <template x-teleport="body">
+        <div x-show="showCloseModal"
+            x-cloak
+            class="fixed inset-0 z-[200] overflow-y-auto"
+            @keydown.escape.window="showCloseModal = false"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="pos-close-shift-title">
 
-        <div class="w-full max-w-5xl xl:max-w-6xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/15 shadow-[0_25px_60px_rgba(0,0,0,0.35)] p-6 sm:p-7 space-y-6 my-8 max-h-[92vh] overflow-y-auto"
-            @click.away="showCloseModal = false"
-            x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="opacity-0 scale-95"
-            x-transition:enter-end="opacity-100 scale-100"
-            x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100 scale-100"
-            x-transition:leave-end="opacity-0 scale-95">
+            <!-- Backdrop -->
+            <div x-show="showCloseModal"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="showCloseModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
-            <div class="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-4">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-[12px] bg-[#FF3B30]/15 text-[#FF3B30] flex items-center justify-center font-bold">
-                        <i data-lucide="lock" class="w-5 h-5"></i>
+            <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="showCloseModal = false">
+                <div class="relative w-full max-w-5xl xl:max-w-6xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/15 shadow-[0_25px_60px_rgba(0,0,0,0.35)] p-6 sm:p-7 space-y-6 my-8 max-h-[92vh] overflow-y-auto"
+                    x-show="showCloseModal"
+                    x-transition:enter="ease-out duration-200"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="ease-in duration-150"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95"
+                    @click.stop>
+
+                    <div class="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-[12px] bg-[#FF3B30]/15 text-[#FF3B30] flex items-center justify-center font-bold">
+                                <i data-lucide="lock" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 id="pos-close-shift-title" class="text-[19px] font-bold text-black dark:text-white tracking-tight">{{ __('pos.close_shift_modal_title') }}</h3>
+                                <p class="text-[13px] text-black/50 dark:text-white/50">{{ __('pos.close_shift_modal_desc') }}</p>
+                            </div>
+                        </div>
+                        <button type="button" @click="showCloseModal = false"
+                            class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer"
+                            aria-label="{{ __('common.close') }}">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
                     </div>
-                    <div>
-                        <h3 class="text-[19px] font-bold text-black dark:text-white tracking-tight">{{ __('pos.close_shift_modal_title') }}</h3>
-                        <p class="text-[13px] text-black/50 dark:text-white/50">{{ __('pos.close_shift_modal_desc') }}</p>
-                    </div>
-                </div>
-                <button type="button" @click="showCloseModal = false" class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/50 dark:text-white/50 hover:bg-black/10 hover:text-black dark:hover:text-white flex items-center justify-center transition-colors">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
-            </div>
 
             @php
                 $isSupervisor = \App\Support\Context::isOwner() || \App\Support\Context::isAdminOrOwner() || \App\Support\Context::hasPermission('pos.supervisor_pin');
@@ -723,217 +753,251 @@
                     </button>
                 </div>
             </form>
+                </div>
+            </div>
         </div>
-    </div>
+    </template>
     @endif
 
     <!-- ===================================================== -->
     <!-- 7. MODAL MUTASI KAS (Apple Sheet Presentation)        -->
     <!-- ===================================================== -->
     @if(\App\Support\Context::hasPermission('finance.cash_bank') || \App\Support\Context::hasPermission('pos.orders'))
-    <div x-show="showMovementModal"
-        x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-md p-4 overflow-y-auto"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0">
+    <template x-teleport="body">
+        <div x-show="showMovementModal"
+            x-cloak
+            class="fixed inset-0 z-[200] overflow-y-auto"
+            @keydown.escape.window="showMovementModal = false"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="pos-cash-movement-title">
 
-        <div class="w-full max-w-3xl lg:max-w-4xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/15 shadow-[0_25px_60px_rgba(0,0,0,0.35)] p-6 sm:p-7 space-y-6 my-8 max-h-[92vh] overflow-y-auto"
-            @click.away="showMovementModal = false"
-            x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="opacity-0 scale-95"
-            x-transition:enter-end="opacity-100 scale-100"
-            x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100 scale-100"
-            x-transition:leave-end="opacity-0 scale-95">
+            <!-- Backdrop -->
+            <div x-show="showMovementModal"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="showMovementModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
-            <div class="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-4">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/15 text-[#007AFF] flex items-center justify-center font-bold">
-                        <i data-lucide="arrow-left-right" class="w-5 h-5"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-[19px] font-bold text-black dark:text-white tracking-tight">{{ __('pos.cash_movement_modal_title') }}</h3>
-                        <p class="text-[13px] text-black/50 dark:text-white/50">{{ __('pos.cash_movement_modal_desc') }}</p>
-                    </div>
-                </div>
-                <button type="button" @click="showMovementModal = false" class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/50 dark:text-white/50 hover:bg-black/10 hover:text-black dark:hover:text-white flex items-center justify-center transition-colors">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
-            </div>
+            <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="showMovementModal = false">
+                <div class="relative w-full max-w-3xl lg:max-w-4xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/15 shadow-[0_25px_60px_rgba(0,0,0,0.35)] p-6 sm:p-7 space-y-6 my-8 max-h-[92vh] overflow-y-auto"
+                    x-show="showMovementModal"
+                    x-transition:enter="ease-out duration-200"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="ease-in duration-150"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95"
+                    @click.stop>
 
-            <form :action="'{{ url('/pos/shifts') }}/' + selectedShiftId + '/cash-movement'" method="POST" @submit="isSubmitting = true"
-                x-data="{ movementType: 'cash_in', category: 'capital_injection', otherDescription: '' }"
-                class="space-y-6">
-                @csrf
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                    <div class="lg:col-span-7 space-y-4">
-                        <div>
-                            <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('pos.movement_type') }}</label>
-                            <select name="type" x-model="movementType" @change="category = (movementType === 'cash_out' ? 'operational' : 'capital_injection')"
-                                class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                                <option value="cash_in">{{ __('pos.movement_cash_in_desc') }}</option>
-                                <option value="cash_out">{{ __('pos.movement_cash_out_desc') }}</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
-                                <span x-text="movementType === 'cash_out' ? '{{ __('pos.expense_category_label') }}' : '{{ __('pos.inflow_category_label') }}'"></span>
-                            </label>
-                            <template x-if="movementType === 'cash_out'">
-                                <select name="category" x-model="category"
-                                    class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                                    <option value="operational">{{ __('finance.categories.operational') }}</option>
-                                    <option value="consumption">{{ __('finance.categories.consumption') }}</option>
-                                    <option value="supplies">{{ __('finance.categories.supplies') }}</option>
-                                    <option value="logistics">{{ __('finance.categories.logistics') }}</option>
-                                    <option value="utilities">{{ __('finance.categories.utilities') }}</option>
-                                    <option value="maintenance">{{ __('finance.categories.maintenance') }}</option>
-                                    <option value="bank_admin">{{ __('finance.categories.bank_admin') }}</option>
-                                    <option value="other">{{ __('finance.categories.other') }}</option>
-                                </select>
-                            </template>
-                            <template x-if="movementType === 'cash_in'">
-                                <select name="category" x-model="category"
-                                    class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                                    <option value="capital_injection">{{ __('finance.inflow_categories.capital_injection') }}</option>
-                                    <option value="sales_revenue">{{ __('finance.inflow_categories.sales_revenue') }}</option>
-                                    <option value="cash_refund">{{ __('finance.inflow_categories.cash_refund') }}</option>
-                                    <option value="receivable_payment">{{ __('finance.inflow_categories.receivable_payment') }}</option>
-                                    <option value="other">{{ __('finance.inflow_categories.other') }}</option>
-                                </select>
-                            </template>
-                        </div>
-
-                        {{-- Alert Callout Khusus Kategori Lainnya (Wajib Diisi) --}}
-                        <div x-show="category === 'other'" x-transition
-                            class="p-3.5 rounded-[14px] bg-[#FF9500]/10 border border-[#FF9500]/30 space-y-1.5">
-                            <label class="block text-[12px] font-bold text-[#FF9500] dark:text-[#FF9F0A] flex items-center gap-1.5">
-                                <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i>
-                                <span>{{ __('pos.other_desc_label') }}</span>
-                            </label>
-                            <input type="text" name="other_description" x-model="otherDescription" :required="category === 'other'"
-                                placeholder="{{ __('pos.other_desc_placeholder') }}"
-                                class="w-full h-10 bg-white dark:bg-[#1C1C1E] border border-[#FF9500]/30 rounded-[10px] px-3 text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#FF9500]">
-                            <p class="text-[11px] text-[#FF9500]/80">{{ __('pos.other_desc_hint') }}</p>
-                        </div>
-
-                        <div>
-                            <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('pos.movement_amount') }}</label>
-                            <input type="number" name="amount" min="1" required placeholder="0" class="w-full h-12 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[12px] px-4 text-[18px] font-bold tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                        </div>
-                        <div>
-                            <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('pos.movement_reason_optional') }}</label>
-                            <input type="text" name="reason" placeholder="{{ __('pos.movement_reason_placeholder') }}" class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                        </div>
-                    </div>
-
-                    <div class="lg:col-span-5 space-y-4">
-                        <div class="p-4 rounded-[18px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/10 space-y-2">
-                            <div class="flex items-center gap-2 text-[#007AFF] font-bold text-[13px]">
-                                <i data-lucide="file-text" class="w-4 h-4"></i>
-                                <span>{{ __('pos.movement_sop_title') }}</span>
+                    <div class="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/15 text-[#007AFF] flex items-center justify-center font-bold">
+                                <i data-lucide="arrow-left-right" class="w-5 h-5"></i>
                             </div>
-                            <p class="text-[12px] text-black/70 dark:text-white/70 leading-relaxed">
-                                {{ __('pos.movement_sop_desc') }}
-                            </p>
+                            <div>
+                                <h3 id="pos-cash-movement-title" class="text-[19px] font-bold text-black dark:text-white tracking-tight">{{ __('pos.cash_movement_modal_title') }}</h3>
+                                <p class="text-[13px] text-black/50 dark:text-white/50">{{ __('pos.cash_movement_modal_desc') }}</p>
+                            </div>
                         </div>
+                        <button type="button" @click="showMovementModal = false"
+                            class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer"
+                            aria-label="{{ __('common.close') }}">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
                     </div>
-                </div>
 
-                <div class="flex items-center justify-end gap-3 pt-4 border-t border-black/10 dark:border-white/10">
-                    <button type="button" @click="showMovementModal = false" class="min-h-[44px] px-5 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/[0.06] dark:hover:bg-white/[0.08] transition-colors">
-                        {{ __('pos.cancel') }}
-                    </button>
-                    <button type="submit" :disabled="isSubmitting" class="min-h-[44px] px-6 rounded-[12px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all shadow-[0_2px_8px_rgba(0,122,255,0.35)] flex items-center gap-2">
-                        <template x-if="isSubmitting">
-                            <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i>
-                        </template>
-                        <span x-text="isSubmitting ? '{{ __('pos.saving_cash_movement') }}' : '{{ __('pos.save_cash_movement') }}'"></span>
-                    </button>
+                    <form :action="'{{ url('/pos/shifts') }}/' + selectedShiftId + '/cash-movement'" method="POST" @submit="isSubmitting = true"
+                        x-data="{ movementType: 'cash_in', category: 'capital_injection', otherDescription: '' }"
+                        class="space-y-6">
+                        @csrf
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                            <div class="lg:col-span-7 space-y-4">
+                                <div>
+                                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('pos.movement_type') }}</label>
+                                    <select name="type" x-model="movementType" @change="category = (movementType === 'cash_out' ? 'operational' : 'capital_injection')"
+                                        class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                        <option value="cash_in">{{ __('pos.movement_cash_in_desc') }}</option>
+                                        <option value="cash_out">{{ __('pos.movement_cash_out_desc') }}</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
+                                        <span x-text="movementType === 'cash_out' ? '{{ __('pos.expense_category_label') }}' : '{{ __('pos.inflow_category_label') }}'"></span>
+                                    </label>
+                                    <template x-if="movementType === 'cash_out'">
+                                        <select name="category" x-model="category"
+                                            class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                            <option value="operational">{{ __('finance.categories.operational') }}</option>
+                                            <option value="consumption">{{ __('finance.categories.consumption') }}</option>
+                                            <option value="supplies">{{ __('finance.categories.supplies') }}</option>
+                                            <option value="logistics">{{ __('finance.categories.logistics') }}</option>
+                                            <option value="utilities">{{ __('finance.categories.utilities') }}</option>
+                                            <option value="maintenance">{{ __('finance.categories.maintenance') }}</option>
+                                            <option value="bank_admin">{{ __('finance.categories.bank_admin') }}</option>
+                                            <option value="other">{{ __('finance.categories.other') }}</option>
+                                        </select>
+                                    </template>
+                                    <template x-if="movementType === 'cash_in'">
+                                        <select name="category" x-model="category"
+                                            class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                            <option value="capital_injection">{{ __('finance.inflow_categories.capital_injection') }}</option>
+                                            <option value="sales_revenue">{{ __('finance.inflow_categories.sales_revenue') }}</option>
+                                            <option value="cash_refund">{{ __('finance.inflow_categories.cash_refund') }}</option>
+                                            <option value="receivable_payment">{{ __('finance.inflow_categories.receivable_payment') }}</option>
+                                            <option value="other">{{ __('finance.inflow_categories.other') }}</option>
+                                        </select>
+                                    </template>
+                                </div>
+
+                                {{-- Alert Callout Khusus Kategori Lainnya (Wajib Diisi) --}}
+                                <div x-show="category === 'other'" x-transition
+                                    class="p-3.5 rounded-[14px] bg-[#FF9500]/10 border border-[#FF9500]/30 space-y-1.5">
+                                    <label class="block text-[12px] font-bold text-[#FF9500] dark:text-[#FF9F0A] flex items-center gap-1.5">
+                                        <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i>
+                                        <span>{{ __('pos.other_desc_label') }}</span>
+                                    </label>
+                                    <input type="text" name="other_description" x-model="otherDescription" :required="category === 'other'"
+                                        placeholder="{{ __('pos.other_desc_placeholder') }}"
+                                        class="w-full h-10 bg-white dark:bg-[#1C1C1E] border border-[#FF9500]/30 rounded-[10px] px-3 text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#FF9500]">
+                                    <p class="text-[11px] text-[#FF9500]/80">{{ __('pos.other_desc_hint') }}</p>
+                                </div>
+
+                                <div>
+                                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('pos.movement_amount') }}</label>
+                                    <input type="number" name="amount" min="1" required placeholder="0" class="w-full h-12 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[12px] px-4 text-[18px] font-bold tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                </div>
+                                <div>
+                                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('pos.movement_reason_optional') }}</label>
+                                    <input type="text" name="reason" placeholder="{{ __('pos.movement_reason_placeholder') }}" class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                </div>
+                            </div>
+
+                            <div class="lg:col-span-5 space-y-4">
+                                <div class="p-4 rounded-[18px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/10 space-y-2">
+                                    <div class="flex items-center gap-2 text-[#007AFF] font-bold text-[13px]">
+                                        <i data-lucide="file-text" class="w-4 h-4"></i>
+                                        <span>{{ __('pos.movement_sop_title') }}</span>
+                                    </div>
+                                    <p class="text-[12px] text-black/70 dark:text-white/70 leading-relaxed">
+                                        {{ __('pos.movement_sop_desc') }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-end gap-3 pt-4 border-t border-black/10 dark:border-white/10">
+                            <button type="button" @click="showMovementModal = false" class="min-h-[44px] px-5 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/[0.06] dark:hover:bg-white/[0.08] transition-colors">
+                                {{ __('pos.cancel') }}
+                            </button>
+                            <button type="submit" :disabled="isSubmitting" class="min-h-[44px] px-6 rounded-[12px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all shadow-[0_2px_8px_rgba(0,122,255,0.35)] flex items-center gap-2">
+                                <template x-if="isSubmitting">
+                                    <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i>
+                                </template>
+                                <span x-text="isSubmitting ? '{{ __('pos.saving_cash_movement') }}' : '{{ __('pos.save_cash_movement') }}'"></span>
+                            </button>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
-    </div>
+    </template>
     @endif
 
     <!-- ===================================================== -->
     <!-- 8. MODAL DETAIL SHIFT (Apple Sheet Presentation)      -->
     <!-- ===================================================== -->
-    <div x-show="showDetailModal"
-        x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-md p-4 overflow-y-auto"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0">
+    <template x-teleport="body">
+        <div x-show="showDetailModal"
+            x-cloak
+            class="fixed inset-0 z-[200] overflow-y-auto"
+            @keydown.escape.window="showDetailModal = false"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="pos-detail-shift-title">
 
-        <div class="w-full max-w-4xl lg:max-w-5xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/15 shadow-[0_25px_60px_rgba(0,0,0,0.35)] p-6 sm:p-7 space-y-6 my-8 max-h-[92vh] overflow-y-auto"
-            @click.away="showDetailModal = false"
-            x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="opacity-0 scale-95"
-            x-transition:enter-end="opacity-100 scale-100"
-            x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100 scale-100"
-            x-transition:leave-end="opacity-0 scale-95">
+            <!-- Backdrop -->
+            <div x-show="showDetailModal"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="showDetailModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
-            <div class="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-4">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/15 text-[#007AFF] flex items-center justify-center font-bold">
-                        <i data-lucide="file-check" class="w-5 h-5"></i>
+            <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="showDetailModal = false">
+                <div class="relative w-full max-w-4xl lg:max-w-5xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/15 shadow-[0_25px_60px_rgba(0,0,0,0.35)] p-6 sm:p-7 space-y-6 my-8 max-h-[92vh] overflow-y-auto"
+                    x-show="showDetailModal"
+                    x-transition:enter="ease-out duration-200"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="ease-in duration-150"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95"
+                    @click.stop>
+
+                    <div class="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/15 text-[#007AFF] flex items-center justify-center font-bold">
+                                <i data-lucide="file-check" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 id="pos-detail-shift-title" class="text-[19px] font-bold text-black dark:text-white tracking-tight">{{ __('pos.shift_reconcile_details_title') }}</h3>
+                                <p class="text-[13px] text-black/50 dark:text-white/50">{{ __('pos.shift_reconcile_details_desc') }}</p>
+                            </div>
+                        </div>
+                        <button type="button" @click="showDetailModal = false"
+                            class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer"
+                            aria-label="{{ __('common.close') }}">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
                     </div>
-                    <div>
-                        <h3 class="text-[19px] font-bold text-black dark:text-white tracking-tight">{{ __('pos.shift_reconcile_details_title') }}</h3>
-                        <p class="text-[13px] text-black/50 dark:text-white/50">{{ __('pos.shift_reconcile_details_desc') }}</p>
+
+                    <template x-if="selectedShiftData">
+                        <div class="space-y-6">
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
+                                <div class="p-4 rounded-[16px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5">
+                                    <span class="text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 block">{{ __('pos.opening_cash') }}</span>
+                                    <span class="text-[18px] font-bold tabular-nums text-black dark:text-white mt-1 block" x-text="'Rp ' + Number(selectedShiftData.opening_cash || 0).toLocaleString('id-ID')"></span>
+                                </div>
+                                <div class="p-4 rounded-[16px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5">
+                                    <span class="text-[11px] font-semibold uppercase tracking-wider text-[#34C759] block">{{ __('pos.cash_sales') }}</span>
+                                    <span class="text-[18px] font-bold tabular-nums text-[#34C759] dark:text-[#30D158] mt-1 block" x-text="'Rp ' + Number(selectedShiftData.total_cash_sales || 0).toLocaleString('id-ID')"></span>
+                                </div>
+                                <div class="p-4 rounded-[16px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5">
+                                    <span class="text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 block">{{ __('pos.cash_movement') }}</span>
+                                    <span class="text-[14px] font-semibold tabular-nums text-black dark:text-white mt-1 block" x-text="'+Rp ' + Number(selectedShiftData.total_cash_in || 0).toLocaleString('id-ID') + ' / -Rp ' + Number(selectedShiftData.total_cash_out || 0).toLocaleString('id-ID')"></span>
+                                </div>
+                                <div class="p-4 rounded-[16px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5">
+                                    <span class="text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 block">{{ __('pos.cash_difference') }}</span>
+                                    <span class="text-[18px] font-bold tabular-nums mt-1 block"
+                                          :class="Number(selectedShiftData.cash_difference || 0) === 0 ? 'text-[#34C759]' : (Number(selectedShiftData.cash_difference || 0) > 0 ? 'text-[#007AFF]' : 'text-[#FF3B30]')"
+                                          x-text="(Number(selectedShiftData.cash_difference || 0) >= 0 ? '+' : '') + 'Rp ' + Number(selectedShiftData.cash_difference || 0).toLocaleString('id-ID')"></span>
+                                </div>
+                            </div>
+
+                            <div class="p-4 rounded-[18px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 space-y-2">
+                                <h4 class="font-bold text-[13px] text-black dark:text-white">{{ __('pos.cashier_closing_notes') }}</h4>
+                                <p class="text-[13px] text-black/70 dark:text-white/70 italic" x-text="selectedShiftData.cashier_notes || selectedShiftData.notes || '{{ __('pos.no_notes') }}'"></p>
+                            </div>
+                        </div>
+                    </template>
+
+                    <div class="flex items-center justify-end gap-3 pt-4 border-t border-black/10 dark:border-white/10">
+                        <button type="button" @click="showDetailModal = false" class="min-h-[44px] px-6 rounded-[12px] text-[13px] font-semibold text-black dark:text-white bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.1] transition-colors">
+                            {{ __('pos.close_button') }}
+                        </button>
                     </div>
                 </div>
-                <button type="button" @click="showDetailModal = false" class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/50 dark:text-white/50 hover:bg-black/10 hover:text-black dark:hover:text-white flex items-center justify-center transition-colors">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
-            </div>
-
-            <template x-if="selectedShiftData">
-                <div class="space-y-6">
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
-                        <div class="p-4 rounded-[16px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5">
-                            <span class="text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 block">{{ __('pos.opening_cash') }}</span>
-                            <span class="text-[18px] font-bold tabular-nums text-black dark:text-white mt-1 block" x-text="'Rp ' + Number(selectedShiftData.opening_cash || 0).toLocaleString('id-ID')"></span>
-                        </div>
-                        <div class="p-4 rounded-[16px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5">
-                            <span class="text-[11px] font-semibold uppercase tracking-wider text-[#34C759] block">{{ __('pos.cash_sales') }}</span>
-                            <span class="text-[18px] font-bold tabular-nums text-[#34C759] dark:text-[#30D158] mt-1 block" x-text="'Rp ' + Number(selectedShiftData.total_cash_sales || 0).toLocaleString('id-ID')"></span>
-                        </div>
-                        <div class="p-4 rounded-[16px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5">
-                            <span class="text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 block">{{ __('pos.cash_movement') }}</span>
-                            <span class="text-[14px] font-semibold tabular-nums text-black dark:text-white mt-1 block" x-text="'+Rp ' + Number(selectedShiftData.total_cash_in || 0).toLocaleString('id-ID') + ' / -Rp ' + Number(selectedShiftData.total_cash_out || 0).toLocaleString('id-ID')"></span>
-                        </div>
-                        <div class="p-4 rounded-[16px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5">
-                            <span class="text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 block">{{ __('pos.cash_difference') }}</span>
-                            <span class="text-[18px] font-bold tabular-nums mt-1 block"
-                                  :class="Number(selectedShiftData.cash_difference || 0) === 0 ? 'text-[#34C759]' : (Number(selectedShiftData.cash_difference || 0) > 0 ? 'text-[#007AFF]' : 'text-[#FF3B30]')"
-                                  x-text="(Number(selectedShiftData.cash_difference || 0) >= 0 ? '+' : '') + 'Rp ' + Number(selectedShiftData.cash_difference || 0).toLocaleString('id-ID')"></span>
-                        </div>
-                    </div>
-
-                    <div class="p-4 rounded-[18px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 space-y-2">
-                        <h4 class="font-bold text-[13px] text-black dark:text-white">{{ __('pos.cashier_closing_notes') }}</h4>
-                        <p class="text-[13px] text-black/70 dark:text-white/70 italic" x-text="selectedShiftData.cashier_notes || selectedShiftData.notes || '{{ __('pos.no_notes') }}'"></p>
-                    </div>
-                </div>
-            </template>
-
-            <div class="flex items-center justify-end gap-3 pt-4 border-t border-black/10 dark:border-white/10">
-                <button type="button" @click="showDetailModal = false" class="min-h-[44px] px-6 rounded-[12px] text-[13px] font-semibold text-black dark:text-white bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.1] transition-colors">
-                    {{ __('pos.close_button') }}
-                </button>
             </div>
         </div>
-    </div>
+    </template>
 </div>
 
 <script>

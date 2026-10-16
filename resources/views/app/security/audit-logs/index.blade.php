@@ -456,45 +456,62 @@
     </div>
 
     <!-- Apple HIG Bento Visual Diff Viewer Modal -->
-    <div x-show="showModal"
-         x-cloak
-         @keydown.escape.window="showModal = false"
-         class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+    <template x-teleport="body">
+        <div x-show="showModal"
+             x-cloak
+             class="fixed inset-0 z-[200] flex items-center justify-center p-4 overflow-y-auto">
 
-        <div @click.away="showModal = false"
-             x-show="showModal"
-             x-transition:enter="transition ease-out duration-200"
-             x-transition:enter-start="opacity-0 scale-95"
-             x-transition:enter-end="opacity-100 scale-100"
-             x-transition:leave="transition ease-in duration-150"
-             x-transition:leave-start="opacity-100 scale-100"
-             x-transition:leave-end="opacity-0 scale-95"
-             class="w-full max-w-[850px] max-h-[90vh] flex flex-col rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden">
+            <!-- Backdrop -->
+            <div class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                x-show="showModal"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="showModal = false"
+                aria-hidden="true"></div>
 
-            <!-- Modal Header -->
-            <div class="p-5 sm:p-6 border-b border-black/5 dark:border-white/10 flex items-center justify-between gap-4">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-[13px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0">
-                        <i data-lucide="git-compare" class="w-5 h-5"></i>
+            <div @click.away="showModal = false"
+                 @keydown.escape.window="showModal = false"
+                 role="dialog"
+                 aria-modal="true"
+                 aria-labelledby="modal-visual-diff-title"
+                 x-show="showModal"
+                 x-transition:enter="transition ease-out duration-200"
+                 x-transition:enter-start="opacity-0 scale-95"
+                 x-transition:enter-end="opacity-100 scale-100"
+                 x-transition:leave="transition ease-in duration-150"
+                 x-transition:leave-start="opacity-100 scale-100"
+                 x-transition:leave-end="opacity-0 scale-95"
+                 class="relative z-10 w-full max-w-[850px] max-h-[90vh] flex flex-col rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden my-auto">
+
+                <!-- Modal Header -->
+                <div class="p-5 sm:p-6 border-b border-black/5 dark:border-white/10 flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-[13px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0">
+                            <i data-lucide="git-compare" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 id="modal-visual-diff-title" class="text-base sm:text-lg font-bold text-black dark:text-white tracking-tight flex items-center gap-2">
+                                <span>Visual Diff Viewer (Komparasi Data)</span>
+                                <template x-if="activeLog && activeLog.risk_level === 'high'">
+                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-500/15 text-red-600 dark:text-red-400 uppercase">
+                                        Risiko Tinggi
+                                    </span>
+                                </template>
+                            </h3>
+                            <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5" x-text="activeLog ? activeLog.module_label + ' • ' + activeLog.created_at_formatted : 'Memuat data...'"></p>
+                        </div>
                     </div>
-                    <div>
-                        <h3 class="text-base sm:text-lg font-bold text-black dark:text-white tracking-tight flex items-center gap-2">
-                            <span>Visual Diff Viewer (Komparasi Data)</span>
-                            <template x-if="activeLog && activeLog.risk_level === 'high'">
-                                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-500/15 text-red-600 dark:text-red-400 uppercase">
-                                    Risiko Tinggi
-                                </span>
-                            </template>
-                        </h3>
-                        <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5" x-text="activeLog ? activeLog.module_label + ' • ' + activeLog.created_at_formatted : 'Memuat data...'"></p>
-                    </div>
+
+                    <button type="button" @click="showModal = false"
+                            class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 flex items-center justify-center text-black/60 dark:text-white/60 transition-all cursor-pointer"
+                            aria-label="Tutup visual diff">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
                 </div>
-
-                <button type="button" @click="showModal = false"
-                        class="w-8 h-8 rounded-full bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 flex items-center justify-center text-black/60 dark:text-white/60 transition-all">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
-            </div>
 
             <!-- Modal Content (Scrollable) -->
             <div class="p-5 sm:p-6 overflow-y-auto space-y-5 flex-1">
@@ -579,12 +596,13 @@
             <!-- Modal Footer -->
             <div class="p-4 border-t border-black/5 dark:border-white/10 flex justify-end">
                 <button type="button" @click="showModal = false"
-                        class="min-h-[40px] px-5 rounded-[12px] bg-black dark:bg-white text-white dark:text-black font-semibold text-[13px] hover:opacity-90 active:scale-95 transition-all">
+                        class="min-h-[44px] px-5 rounded-[12px] bg-black dark:bg-white text-white dark:text-black font-semibold text-[13px] hover:opacity-90 active:scale-95 transition-all cursor-pointer">
                     Tutup
                 </button>
             </div>
         </div>
     </div>
+</template>
 
 </div>
 

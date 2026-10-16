@@ -1753,56 +1753,61 @@
     <!-- ============================================================== -->
     <!-- 4. AVATAR CUSTOMIZER MODAL SHEET (APPLE HIG / BENTO DESIGN)    -->
     <!-- ============================================================== -->
-    <div
-        x-show="showAvatarModal"
-        x-cloak
-        class="fixed inset-0 z-[150] flex items-center justify-center p-3 sm:p-6 overflow-y-auto"
-        role="dialog"
-        aria-modal="true"
-    >
+    <template x-teleport="body">
         <div
             x-show="showAvatarModal"
-            x-transition:enter="transition ease-out duration-300"
-            x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100"
-            x-transition:leave="transition ease-in duration-200"
-            x-transition:leave-start="opacity-100"
-            x-transition:leave-end="opacity-0"
-            @click="closeAvatarModal()"
-            class="fixed inset-0 bg-black/60 backdrop-blur-md transition-opacity"
-        ></div>
-
-        <div
-            x-show="showAvatarModal"
-            x-transition:enter="transition ease-out duration-300"
-            x-transition:enter-start="opacity-0 scale-95 translate-y-4"
-            x-transition:enter-end="opacity-100 scale-100 translate-y-0"
-            x-transition:leave="transition ease-in duration-200"
-            x-transition:leave-start="opacity-100 scale-100 translate-y-0"
-            x-transition:leave-end="opacity-0 scale-95 translate-y-4"
-            class="relative w-full max-w-4xl bg-white/95 dark:bg-zinc-900/95 backdrop-blur-2xl rounded-3xl border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden z-10 flex flex-col max-h-[90vh]"
+            x-cloak
+            class="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 overflow-y-auto"
+            @keydown.escape.window="closeAvatarModal()"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="ai-avatar-customizer-title"
         >
-            <div class="px-6 py-4 border-b border-black/5 dark:border-white/10 flex items-center justify-between bg-black/[0.02] dark:bg-white/[0.02]">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#AF52DE] to-indigo-500 flex items-center justify-center text-white shadow-md shadow-purple-500/20">
-                        <i data-lucide="palette" class="w-5 h-5"></i>
-                    </div>
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <h3 class="text-base font-bold text-black dark:text-white tracking-tight">Kustomisasi Avatar AI Agent</h3>
-                            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">Real-Time 3D Sync</span>
+            <div
+                x-show="showAvatarModal"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="closeAvatarModal()"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+            ></div>
+
+            <div
+                x-show="showAvatarModal"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 scale-95 translate-y-4"
+                x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                x-transition:leave="transition ease-in duration-200"
+                x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                x-transition:leave-end="opacity-0 scale-95 translate-y-4"
+                @click.outside="closeAvatarModal()"
+                class="relative w-full max-w-4xl bg-white/95 dark:bg-zinc-900/95 backdrop-blur-2xl rounded-[24px] sm:rounded-3xl border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden z-10 flex flex-col max-h-[90vh]"
+            >
+                <div class="px-6 py-4 border-b border-black/5 dark:border-white/10 flex items-center justify-between bg-black/[0.02] dark:bg-white/[0.02]">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#AF52DE] to-indigo-500 flex items-center justify-center text-white shadow-md shadow-purple-500/20">
+                            <i data-lucide="palette" class="w-5 h-5"></i>
                         </div>
-                        <p class="text-xs text-black/50 dark:text-white/50">Sesuaikan karakter, arketipe 3D, warna outfit, rambut, dan aksesoris staf AI.</p>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h3 id="ai-avatar-customizer-title" class="text-base font-bold text-black dark:text-white tracking-tight">Kustomisasi Avatar AI Agent</h3>
+                                <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">Real-Time 3D Sync</span>
+                            </div>
+                            <p class="text-xs text-black/50 dark:text-white/50">Sesuaikan karakter, arketipe 3D, warna outfit, rambut, dan aksesoris staf AI.</p>
+                        </div>
                     </div>
+                    <button
+                        type="button"
+                        @click="closeAvatarModal()"
+                        class="min-w-[44px] min-h-[44px] rounded-full flex items-center justify-center text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition cursor-pointer active:scale-95"
+                        aria-label="Tutup modal"
+                    >
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
                 </div>
-                <button
-                    type="button"
-                    @click="closeAvatarModal()"
-                    class="w-8 h-8 rounded-full flex items-center justify-center text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition cursor-pointer"
-                >
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
-            </div>
 
             <!-- Agent Horizontal Switcher Ribbon -->
             <div class="px-6 py-2.5 border-b border-black/5 dark:border-white/10 bg-black/[0.01] dark:bg-white/[0.01] overflow-x-auto flex items-center gap-2 no-scrollbar">
@@ -1935,7 +1940,7 @@
                 <button
                     type="button"
                     @click="closeAvatarModal()"
-                    class="px-4 py-2 rounded-xl text-xs font-semibold text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition cursor-pointer"
+                    class="min-h-[44px] px-4 py-2 rounded-xl text-xs font-semibold text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition cursor-pointer active:scale-95"
                 >
                     Batal
                 </button>
@@ -1943,7 +1948,7 @@
                     type="button"
                     @click="saveAvatar()"
                     :disabled="isSavingAvatar"
-                    class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-bold shadow-lg shadow-purple-500/25 transition flex items-center gap-2 cursor-pointer disabled:opacity-50"
+                    class="min-h-[44px] px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-bold shadow-lg shadow-purple-500/25 transition flex items-center gap-2 cursor-pointer disabled:opacity-50 active:scale-95"
                 >
                     <i data-lucide="check" class="w-4 h-4" x-show="!isSavingAvatar"></i>
                     <i data-lucide="loader-2" class="w-4 h-4 animate-spin" x-show="isSavingAvatar"></i>
@@ -1952,51 +1957,71 @@
             </div>
         </div>
     </div>
+</template>
 
     <!-- ============================================================== -->
     <!-- MODAL SHEET: ORGANISASI & PEMBAGIAN TUGAS (12 AGENTS + C-SUITE) -->
     <!-- ============================================================== -->
-    <div
-        x-show="showOrgChartModal"
-        x-transition:enter="transition ease-out duration-300"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-200"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0"
-        class="fixed inset-0 z-[150] flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-md overflow-y-auto"
-        style="display: none;"
-    >
+    <template x-teleport="body">
         <div
-            @click.away="closeOrgChartModal()"
-            class="relative w-full max-w-6xl max-h-[90vh] flex flex-col rounded-3xl bg-zinc-950/95 border border-white/20 text-white shadow-2xl overflow-hidden"
+            x-show="showOrgChartModal"
+            x-cloak
+            class="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 overflow-y-auto"
+            @keydown.escape.window="closeOrgChartModal()"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="ai-orgchart-modal-title"
         >
-            <!-- Modal Header -->
-            <div class="px-6 py-5 border-b border-white/10 flex items-center justify-between bg-white/[0.02]">
-                <div class="flex items-center gap-3.5">
-                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-cyan-500 via-blue-600 to-indigo-600 flex items-center justify-center font-bold text-white shadow-lg shadow-cyan-500/25 ring-2 ring-white/20">
-                        <i data-lucide="users" class="w-6 h-6"></i>
-                    </div>
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <h3 class="font-bold text-base sm:text-lg text-white">Struktur Organisasi &amp; Pembagian Tugas AI</h3>
-                            <span class="px-2.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-[10px] font-mono font-bold uppercase tracking-wider">
-                                12 Spesialis + 6 Pimpinan
-                            </span>
+            <div
+                x-show="showOrgChartModal"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="closeOrgChartModal()"
+                class="fixed inset-0 bg-black/80 dark:bg-black/85 backdrop-blur-md"
+            ></div>
+
+            <div
+                x-show="showOrgChartModal"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 scale-95 translate-y-4"
+                x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                x-transition:leave="transition ease-in duration-200"
+                x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                x-transition:leave-end="opacity-0 scale-95 translate-y-4"
+                @click.outside="closeOrgChartModal()"
+                class="relative w-full max-w-6xl max-h-[90vh] flex flex-col rounded-[24px] sm:rounded-3xl bg-zinc-950/95 border border-white/20 text-white shadow-2xl overflow-hidden z-10"
+            >
+                <!-- Modal Header -->
+                <div class="px-6 py-5 border-b border-white/10 flex items-center justify-between bg-white/[0.02]">
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-cyan-500 via-blue-600 to-indigo-600 flex items-center justify-center font-bold text-white shadow-lg shadow-cyan-500/25 ring-2 ring-white/20 shrink-0">
+                            <i data-lucide="users" class="w-6 h-6"></i>
                         </div>
-                        <p class="text-xs text-slate-400 mt-0.5">
-                            Roster komprehensif, pembagian tanggung jawab, pimpinan, dan lokasi ruangan di Virtual Office
-                        </p>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h3 id="ai-orgchart-modal-title" class="font-bold text-base sm:text-lg text-white">Struktur Organisasi &amp; Pembagian Tugas AI</h3>
+                                <span class="px-2.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-[10px] font-mono font-bold uppercase tracking-wider">
+                                    12 Spesialis + 6 Pimpinan
+                                </span>
+                            </div>
+                            <p class="text-xs text-slate-400 mt-0.5">
+                                Roster komprehensif, pembagian tanggung jawab, pimpinan, dan lokasi ruangan di Virtual Office
+                            </p>
+                        </div>
                     </div>
+                    <button
+                        type="button"
+                        @click="closeOrgChartModal()"
+                        class="min-w-[44px] min-h-[44px] rounded-full text-slate-400 hover:text-white hover:bg-white/10 flex items-center justify-center transition cursor-pointer active:scale-95"
+                        aria-label="Tutup modal"
+                    >
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
                 </div>
-                <button
-                    type="button"
-                    @click="closeOrgChartModal()"
-                    class="p-2 rounded-full text-slate-400 hover:text-white hover:bg-white/10 transition cursor-pointer"
-                >
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
-            </div>
 
             <!-- Controls: Filter & Search Bar -->
             <div class="p-4 sm:px-6 border-b border-white/10 bg-black/40 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
@@ -2168,13 +2193,14 @@
                 <button
                     type="button"
                     @click="closeOrgChartModal()"
-                    class="px-5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold transition cursor-pointer"
+                    class="min-h-[44px] px-5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold transition cursor-pointer active:scale-95"
                 >
                     Tutup
                 </button>
             </div>
         </div>
     </div>
+</template>
 </div>
 
 <script>

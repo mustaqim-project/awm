@@ -994,45 +994,45 @@
             </div>
         </div>
 
-        <div class="overflow-x-auto">
+        <div x-data="coocaTableSort()" class="overflow-x-auto">
             <table class="w-full text-left text-sm">
                 <thead>
                     <tr class="bg-black/[0.02] dark:bg-white/[0.02] border-b border-black/10 dark:border-white/10 text-[11px] font-bold text-black/50 dark:text-white/50 uppercase tracking-wider">
-                        <th class="py-3 px-4">{{ __('tax.fiscal_table.col_period') }}</th>
-                        <th class="py-3 px-4 text-right">{{ __('tax.fiscal_table.col_revenue') }}</th>
-                        <th class="py-3 px-4 text-right">{{ __('tax.fiscal_table.col_cogs') }}</th>
-                        <th class="py-3 px-4 text-right">{{ __('tax.fiscal_table.col_expenses') }}</th>
-                        <th class="py-3 px-4 text-right">{{ __('tax.fiscal_table.col_net_income') }}</th>
-                        <th class="py-3 px-4 text-right">{{ __('tax.fiscal_table.col_tax_net_income') }}</th>
-                        <th class="py-3 px-4 text-right">{{ __('tax.fiscal_table.col_tax_umkm') }}</th>
-                        <th class="py-3 px-4 text-center">{{ __('tax.fiscal_table.col_recommendation') }}</th>
+                        <x-table-sort-th :col="0" type="string" :title="__('tax.fiscal_table.col_period')" />
+                        <x-table-sort-th :col="1" type="number" :title="__('tax.fiscal_table.col_revenue')" align="right" />
+                        <x-table-sort-th :col="2" type="number" :title="__('tax.fiscal_table.col_cogs')" align="right" />
+                        <x-table-sort-th :col="3" type="number" :title="__('tax.fiscal_table.col_expenses')" align="right" />
+                        <x-table-sort-th :col="4" type="number" :title="__('tax.fiscal_table.col_net_income')" align="right" />
+                        <x-table-sort-th :col="5" type="number" :title="__('tax.fiscal_table.col_tax_net_income')" align="right" />
+                        <x-table-sort-th :col="6" type="number" :title="__('tax.fiscal_table.col_tax_umkm')" align="right" />
+                        <x-table-sort-th :col="7" type="string" :title="__('tax.fiscal_table.col_recommendation')" align="center" />
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-black/5 dark:divide-white/5 text-xs font-medium">
                     @foreach($netIncomeSummary['monthly_breakdown'] as $m => $item)
                         <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors">
-                            <td class="py-3 px-4 font-bold text-black dark:text-white">
+                            <td data-sort-value="{{ $m }}" class="py-3 px-4 font-bold text-black dark:text-white">
                                 {{ $item['month_name'] }}
                             </td>
-                            <td class="py-3 px-4 text-right text-black/80 dark:text-white/80 font-mono">
+                            <td data-sort-value="{{ (float) $item['revenue'] }}" class="py-3 px-4 text-right text-black/80 dark:text-white/80 font-mono">
                                 {{ number_format($item['revenue'], 0, ',', '.') }}
                             </td>
-                            <td class="py-3 px-4 text-right text-black/60 dark:text-white/60 font-mono">
+                            <td data-sort-value="{{ (float) $item['cogs'] }}" class="py-3 px-4 text-right text-black/60 dark:text-white/60 font-mono">
                                 {{ number_format($item['cogs'], 0, ',', '.') }}
                             </td>
-                            <td class="py-3 px-4 text-right text-black/60 dark:text-white/60 font-mono">
+                            <td data-sort-value="{{ (float) $item['expenses'] }}" class="py-3 px-4 text-right text-black/60 dark:text-white/60 font-mono">
                                 {{ number_format($item['expenses'], 0, ',', '.') }}
                             </td>
-                            <td class="py-3 px-4 text-right font-bold font-mono {{ $item['net_income'] < 0 ? 'text-[#FF3B30]' : 'text-black dark:text-white' }}">
+                            <td data-sort-value="{{ (float) $item['net_income'] }}" class="py-3 px-4 text-right font-bold font-mono {{ $item['net_income'] < 0 ? 'text-[#FF3B30]' : 'text-black dark:text-white' }}">
                                 {{ number_format($item['net_income'], 0, ',', '.') }}
                             </td>
-                            <td class="py-3 px-4 text-right font-bold font-mono text-[#007AFF]">
+                            <td data-sort-value="{{ (float) $item['tax_amount'] }}" class="py-3 px-4 text-right font-bold font-mono text-[#007AFF]">
                                 {{ number_format($item['tax_amount'], 0, ',', '.') }}
                             </td>
-                            <td class="py-3 px-4 text-right font-semibold font-mono text-black/80 dark:text-white/80">
+                            <td data-sort-value="{{ (float) $item['umkm_final_amount'] }}" class="py-3 px-4 text-right font-semibold font-mono text-black/80 dark:text-white/80">
                                 {{ number_format($item['umkm_final_amount'], 0, ',', '.') }}
                             </td>
-                            <td class="py-3 px-4 text-center">
+                            <td data-sort-value="{{ $item['recommendation'] }}" class="py-3 px-4 text-center">
                                 @if($item['recommendation'] === 'net_income')
                                     <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-500/10 text-[#007AFF] dark:bg-blue-500/20">
                                         {{ __('tax.fiscal_table.rec_net_income') }}
@@ -1071,189 +1071,328 @@
     </div>
 
     {{-- MODAL SHEET 1: DETAIL 5 LAPISAN TARIF PROGRESIF PASAL 17 --}}
-    <div x-show="showBracketModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md" x-cloak>
-        <div class="bg-white dark:bg-[#1C1C1E] rounded-3xl max-w-xl w-full p-6 border border-black/10 dark:border-white/10 shadow-2xl relative" @click.outside="showBracketModal = false">
-            <div class="flex items-center justify-between pb-4 border-b border-black/10 dark:border-white/10">
-                <div class="flex items-center gap-2">
-                    <span class="w-8 h-8 rounded-2xl bg-blue-500/10 dark:bg-blue-500/20 text-[#007AFF] flex items-center justify-center">
-                        <i data-lucide="layers" class="w-4 h-4"></i>
-                    </span>
-                    <div>
-                        <h3 class="text-base font-bold text-black dark:text-white">{{ __('tax.brackets_modal.title') }}</h3>
-                        <p class="text-xs text-black/50 dark:text-white/50">{{ __('tax.brackets_modal.legal_ref') }}</p>
+    <template x-teleport="body">
+        <div x-show="showBracketModal"
+            x-cloak
+            class="fixed inset-0 z-[200] overflow-y-auto"
+            @keydown.escape.window="showBracketModal = false"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-bracket-title">
+
+            {{-- Backdrop --}}
+            <div x-show="showBracketModal"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                @click="showBracketModal = false"></div>
+
+            {{-- Dialog Container --}}
+            <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="showBracketModal = false">
+                <div class="relative bg-white dark:bg-[#1C1C1E] rounded-3xl max-w-xl w-full p-6 border border-black/10 dark:border-white/10 shadow-2xl"
+                    @click.stop
+                    x-show="showBracketModal"
+                    x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+
+                    <div class="flex items-center justify-between pb-4 border-b border-black/10 dark:border-white/10">
+                        <div class="flex items-center gap-2">
+                            <span class="w-8 h-8 rounded-2xl bg-blue-500/10 dark:bg-blue-500/20 text-[#007AFF] flex items-center justify-center">
+                                <i data-lucide="layers" class="w-4 h-4"></i>
+                            </span>
+                            <div>
+                                <h3 id="modal-bracket-title" class="text-base font-bold text-black dark:text-white">{{ __('tax.brackets_modal.title') }}</h3>
+                                <p class="text-xs text-black/50 dark:text-white/50">{{ __('tax.brackets_modal.legal_ref') }}</p>
+                            </div>
+                        </div>
+                        <button type="button" @click="showBracketModal = false"
+                            class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/[0.04] dark:bg-white/[0.06] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white flex items-center justify-center transition cursor-pointer"
+                            aria-label="Tutup modal">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+
+                    <div class="mt-4 space-y-3">
+                        <template x-for="(b, idx) in (netIncomeResult?.tax_details?.brackets || [])" :key="idx">
+                            <div class="p-3.5 rounded-2xl bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 flex items-center justify-between">
+                                <div>
+                                    <div class="text-xs font-bold text-black dark:text-white" x-text="b.bracket"></div>
+                                    <div class="text-[11px] text-black/50 dark:text-white/50 mt-0.5" x-text="'{{ addslashes(__('tax.brackets_modal.pkp_applied')) }}'.replace(':amount', formatRupiah(b.amount)).replace(':rate', b.rate_percent)"></div>
+                                </div>
+                                <div class="text-right font-black text-sm text-[#007AFF]" x-text="formatRupiah(b.tax)"></div>
+                            </div>
+                        </template>
+                    </div>
+
+                    <div class="mt-5 pt-4 border-t border-black/10 dark:border-white/10 flex items-center justify-between">
+                        <span class="text-xs font-semibold text-black/50 dark:text-white/50">{{ __('tax.brackets_modal.total_tax') }}</span>
+                        <span class="text-lg font-black text-black dark:text-white" x-text="formatRupiah(netIncomeResult?.tax_amount)"></span>
                     </div>
                 </div>
-                <button type="button" @click="showBracketModal = false" class="w-8 h-8 rounded-full bg-black/[0.04] dark:bg-white/[0.06] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white flex items-center justify-center">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
-            </div>
-
-            <div class="mt-4 space-y-3">
-                <template x-for="(b, idx) in (netIncomeResult?.tax_details?.brackets || [])" :key="idx">
-                    <div class="p-3.5 rounded-2xl bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 flex items-center justify-between">
-                        <div>
-                            <div class="text-xs font-bold text-black dark:text-white" x-text="b.bracket"></div>
-                            <div class="text-[11px] text-black/50 dark:text-white/50 mt-0.5" x-text="'{{ addslashes(__('tax.brackets_modal.pkp_applied')) }}'.replace(':amount', formatRupiah(b.amount)).replace(':rate', b.rate_percent)"></div>
-                        </div>
-                        <div class="text-right font-black text-sm text-[#007AFF]" x-text="formatRupiah(b.tax)"></div>
-                    </div>
-                </template>
-            </div>
-
-            <div class="mt-5 pt-4 border-t border-black/10 dark:border-white/10 flex items-center justify-between">
-                <span class="text-xs font-semibold text-black/50 dark:text-white/50">{{ __('tax.brackets_modal.total_tax') }}</span>
-                <span class="text-lg font-black text-black dark:text-white" x-text="formatRupiah(netIncomeResult?.tax_amount)"></span>
             </div>
         </div>
-    </div>
+    </template>
 
     {{-- MODAL SHEET 2: RINCIAN KOMPREHENSIF BPJS --}}
-    <div x-show="showBpjsModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md" x-cloak>
-        <div class="bg-white dark:bg-[#1C1C1E] rounded-3xl max-w-lg w-full p-6 border border-black/10 dark:border-white/10 shadow-2xl relative" @click.outside="showBpjsModal = false">
-            <div class="flex items-center justify-between pb-4 border-b border-black/10 dark:border-white/10">
-                <div class="flex items-center gap-2">
-                    <span class="w-8 h-8 rounded-2xl bg-amber-500/10 dark:bg-amber-500/20 text-[#FF9500] flex items-center justify-center">
-                        <i data-lucide="shield" class="w-4 h-4"></i>
-                    </span>
-                    <div>
-                        <h3 class="text-base font-bold text-black dark:text-white">{{ __('tax.bpjs_modal.title') }}</h3>
-                        <p class="text-xs text-black/50 dark:text-white/50">{{ __('tax.bpjs_modal.subtitle') }}</p>
+    <template x-teleport="body">
+        <div x-show="showBpjsModal"
+            x-cloak
+            class="fixed inset-0 z-[200] overflow-y-auto"
+            @keydown.escape.window="showBpjsModal = false"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-bpjs-title">
+
+            {{-- Backdrop --}}
+            <div x-show="showBpjsModal"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                @click="showBpjsModal = false"></div>
+
+            {{-- Dialog Container --}}
+            <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="showBpjsModal = false">
+                <div class="relative bg-white dark:bg-[#1C1C1E] rounded-3xl max-w-lg w-full p-6 border border-black/10 dark:border-white/10 shadow-2xl"
+                    @click.stop
+                    x-show="showBpjsModal"
+                    x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+
+                    <div class="flex items-center justify-between pb-4 border-b border-black/10 dark:border-white/10">
+                        <div class="flex items-center gap-2">
+                            <span class="w-8 h-8 rounded-2xl bg-amber-500/10 dark:bg-amber-500/20 text-[#FF9500] flex items-center justify-center">
+                                <i data-lucide="shield" class="w-4 h-4"></i>
+                            </span>
+                            <div>
+                                <h3 id="modal-bpjs-title" class="text-base font-bold text-black dark:text-white">{{ __('tax.bpjs_modal.title') }}</h3>
+                                <p class="text-xs text-black/50 dark:text-white/50">{{ __('tax.bpjs_modal.subtitle') }}</p>
+                            </div>
+                        </div>
+                        <button type="button" @click="showBpjsModal = false"
+                            class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/[0.04] dark:bg-white/[0.06] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white flex items-center justify-center transition cursor-pointer"
+                            aria-label="Tutup modal">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+
+                    <div class="mt-4 space-y-2.5 text-xs">
+                        <div class="p-3 rounded-2xl bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10">
+                            <div class="font-bold text-black dark:text-white mb-1">{{ __('tax.bpjs_modal.item1_title') }}</div>
+                            <ul class="space-y-1 text-black/70 dark:text-white/70">
+                                <li>{{ __('tax.bpjs_modal.jkk_detail') }}</li>
+                                <li>{{ __('tax.bpjs_modal.jkm_detail') }}</li>
+                                <li>{{ __('tax.bpjs_modal.jht_detail') }}</li>
+                                <li>{{ __('tax.bpjs_modal.jp_detail') }}</li>
+                            </ul>
+                        </div>
+
+                        <div class="p-3 rounded-2xl bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10">
+                            <div class="font-bold text-black dark:text-white mb-1">{{ __('tax.bpjs_modal.item2_title') }}</div>
+                            <ul class="space-y-1 text-black/70 dark:text-white/70">
+                                <li>{{ __('tax.bpjs_modal.kes_company') }}</li>
+                                <li>{{ __('tax.bpjs_modal.kes_employee') }}</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="mt-5 pt-4 border-t border-black/10 dark:border-white/10">
+                        <button type="button" @click="showBpjsModal = false"
+                            class="w-full min-h-[44px] py-2.5 rounded-xl bg-black dark:bg-white text-white dark:text-black hover:bg-black/80 dark:hover:bg-white/90 text-xs font-semibold transition cursor-pointer flex items-center justify-center">
+                            {{ __('tax.actions.close') }}
+                        </button>
                     </div>
                 </div>
-                <button type="button" @click="showBpjsModal = false" class="w-8 h-8 rounded-full bg-black/[0.04] dark:bg-white/[0.06] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white flex items-center justify-center">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
-            </div>
-
-            <div class="mt-4 space-y-2.5 text-xs">
-                <div class="p-3 rounded-2xl bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10">
-                    <div class="font-bold text-black dark:text-white mb-1">{{ __('tax.bpjs_modal.item1_title') }}</div>
-                    <ul class="space-y-1 text-black/70 dark:text-white/70">
-                        <li>{{ __('tax.bpjs_modal.jkk_detail') }}</li>
-                        <li>{{ __('tax.bpjs_modal.jkm_detail') }}</li>
-                        <li>{{ __('tax.bpjs_modal.jht_detail') }}</li>
-                        <li>{{ __('tax.bpjs_modal.jp_detail') }}</li>
-                    </ul>
-                </div>
-
-                <div class="p-3 rounded-2xl bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10">
-                    <div class="font-bold text-black dark:text-white mb-1">{{ __('tax.bpjs_modal.item2_title') }}</div>
-                    <ul class="space-y-1 text-black/70 dark:text-white/70">
-                        <li>{{ __('tax.bpjs_modal.kes_company') }}</li>
-                        <li>{{ __('tax.bpjs_modal.kes_employee') }}</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="mt-5 pt-4 border-t border-black/10 dark:border-white/10">
-                <button type="button" @click="showBpjsModal = false" class="w-full py-2.5 rounded-xl bg-black dark:bg-white text-white dark:text-black hover:bg-black/80 dark:hover:bg-white/90 text-xs font-semibold">
-                    {{ __('tax.actions.close') }}
-                </button>
             </div>
         </div>
-    </div>
+    </template>
 
     {{-- MODAL SHEET 3: PANDUAN NORMA PENCATATAN (NPPN PASAL 14) --}}
-    <div x-show="showNormaModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md" x-cloak>
-        <div class="bg-white dark:bg-[#1C1C1E] rounded-3xl max-w-lg w-full p-6 border border-black/10 dark:border-white/10 shadow-2xl relative" @click.outside="showNormaModal = false">
-            <div class="flex items-center justify-between pb-4 border-b border-black/10 dark:border-white/10">
-                <div class="flex items-center gap-2">
-                    <span class="w-8 h-8 rounded-2xl bg-blue-500/10 dark:bg-blue-500/20 text-[#007AFF] flex items-center justify-center">
-                        <i data-lucide="book-open" class="w-4 h-4"></i>
-                    </span>
-                    <div>
-                        <h3 class="text-base font-bold text-black dark:text-white">{{ __('tax.norma_modal.title') }}</h3>
-                        <p class="text-xs text-black/50 dark:text-white/50">{{ __('tax.norma_modal.legal_ref') }}</p>
+    <template x-teleport="body">
+        <div x-show="showNormaModal"
+            x-cloak
+            class="fixed inset-0 z-[200] overflow-y-auto"
+            @keydown.escape.window="showNormaModal = false"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-norma-title">
+
+            {{-- Backdrop --}}
+            <div x-show="showNormaModal"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                @click="showNormaModal = false"></div>
+
+            {{-- Dialog Container --}}
+            <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="showNormaModal = false">
+                <div class="relative bg-white dark:bg-[#1C1C1E] rounded-3xl max-w-lg w-full p-6 border border-black/10 dark:border-white/10 shadow-2xl"
+                    @click.stop
+                    x-show="showNormaModal"
+                    x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+
+                    <div class="flex items-center justify-between pb-4 border-b border-black/10 dark:border-white/10">
+                        <div class="flex items-center gap-2">
+                            <span class="w-8 h-8 rounded-2xl bg-blue-500/10 dark:bg-blue-500/20 text-[#007AFF] flex items-center justify-center">
+                                <i data-lucide="book-open" class="w-4 h-4"></i>
+                            </span>
+                            <div>
+                                <h3 id="modal-norma-title" class="text-base font-bold text-black dark:text-white">{{ __('tax.norma_modal.title') }}</h3>
+                                <p class="text-xs text-black/50 dark:text-white/50">{{ __('tax.norma_modal.legal_ref') }}</p>
+                            </div>
+                        </div>
+                        <button type="button" @click="showNormaModal = false"
+                            class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/[0.04] dark:bg-white/[0.06] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white flex items-center justify-center transition cursor-pointer"
+                            aria-label="Tutup modal">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+
+                    <div class="mt-4 space-y-3 text-xs leading-relaxed text-black/70 dark:text-white/70">
+                        <p>
+                            {!! __('tax.norma_modal.intro') !!}
+                        </p>
+                        <div class="p-3.5 rounded-2xl bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 space-y-1">
+                            <div class="font-bold text-black dark:text-white">{{ __('tax.norma_modal.examples_title') }}</div>
+                            <div>{{ __('tax.norma_modal.ex_retail') }}</div>
+                            <div>{{ __('tax.norma_modal.ex_workshop') }}</div>
+                            <div>{{ __('tax.norma_modal.ex_restaurant') }}</div>
+                        </div>
+                    </div>
+
+                    <div class="mt-5 pt-4 border-t border-black/10 dark:border-white/10">
+                        <button type="button" @click="showNormaModal = false"
+                            class="w-full min-h-[44px] py-2.5 rounded-xl bg-black dark:bg-white text-white dark:text-black hover:bg-black/80 dark:hover:bg-white/90 text-xs font-semibold transition cursor-pointer flex items-center justify-center">
+                            {{ __('tax.actions.close') }}
+                        </button>
                     </div>
                 </div>
-                <button type="button" @click="showNormaModal = false" class="w-8 h-8 rounded-full bg-black/[0.04] dark:bg-white/[0.06] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white flex items-center justify-center">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
-            </div>
-
-            <div class="mt-4 space-y-3 text-xs leading-relaxed text-black/70 dark:text-white/70">
-                <p>
-                    {!! __('tax.norma_modal.intro') !!}
-                </p>
-                <div class="p-3.5 rounded-2xl bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 space-y-1">
-                    <div class="font-bold text-black dark:text-white">{{ __('tax.norma_modal.examples_title') }}</div>
-                    <div>{{ __('tax.norma_modal.ex_retail') }}</div>
-                    <div>{{ __('tax.norma_modal.ex_workshop') }}</div>
-                    <div>{{ __('tax.norma_modal.ex_restaurant') }}</div>
-                </div>
-            </div>
-
-            <div class="mt-5 pt-4 border-t border-black/10 dark:border-white/10">
-                <button type="button" @click="showNormaModal = false" class="w-full py-2.5 rounded-xl bg-black dark:bg-white text-white dark:text-black hover:bg-black/80 dark:hover:bg-white/90 text-xs font-semibold">
-                    {{ __('tax.actions.close') }}
-                </button>
             </div>
         </div>
-    </div>
+    </template>
 
     {{-- MODAL SHEET 4: PUSAT EKSPOR E-BUPOT & REKAP CSV --}}
-    <div x-show="showExportModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md" x-cloak>
-        <div class="bg-white dark:bg-[#1C1C1E] rounded-3xl max-w-lg w-full p-6 border border-black/10 dark:border-white/10 shadow-2xl relative" @click.outside="showExportModal = false">
-            <div class="flex items-center justify-between pb-4 border-b border-black/10 dark:border-white/10">
-                <div class="flex items-center gap-2">
-                    <span class="w-8 h-8 rounded-2xl bg-black/[0.04] dark:bg-white/[0.06] text-black dark:text-white flex items-center justify-center">
-                        <i data-lucide="download-cloud" class="w-4 h-4"></i>
-                    </span>
-                    <div>
-                        <h3 class="text-base font-bold text-black dark:text-white">{{ __('tax.export_modal.title') }}</h3>
-                        <p class="text-xs text-black/50 dark:text-white/50">{{ __('tax.export_modal.subtitle') }}</p>
+    <template x-teleport="body">
+        <div x-show="showExportModal"
+            x-cloak
+            class="fixed inset-0 z-[200] overflow-y-auto"
+            @keydown.escape.window="showExportModal = false"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-export-title">
+
+            {{-- Backdrop --}}
+            <div x-show="showExportModal"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                @click="showExportModal = false"></div>
+
+            {{-- Dialog Container --}}
+            <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="showExportModal = false">
+                <div class="relative bg-white dark:bg-[#1C1C1E] rounded-3xl max-w-lg w-full p-6 border border-black/10 dark:border-white/10 shadow-2xl"
+                    @click.stop
+                    x-show="showExportModal"
+                    x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+
+                    <div class="flex items-center justify-between pb-4 border-b border-black/10 dark:border-white/10">
+                        <div class="flex items-center gap-2">
+                            <span class="w-8 h-8 rounded-2xl bg-black/[0.04] dark:bg-white/[0.06] text-black dark:text-white flex items-center justify-center">
+                                <i data-lucide="download-cloud" class="w-4 h-4"></i>
+                            </span>
+                            <div>
+                                <h3 id="modal-export-title" class="text-base font-bold text-black dark:text-white">{{ __('tax.export_modal.title') }}</h3>
+                                <p class="text-xs text-black/50 dark:text-white/50">{{ __('tax.export_modal.subtitle') }}</p>
+                            </div>
+                        </div>
+                        <button type="button" @click="showExportModal = false"
+                            class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/[0.04] dark:bg-white/[0.06] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white flex items-center justify-center transition cursor-pointer"
+                            aria-label="Tutup modal">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+
+                    <div class="mt-4 space-y-3">
+                        {{-- Export Option 1: e-Bupot 21/26 --}}
+                        <div class="p-4 rounded-2xl bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 flex items-center justify-between">
+                            <div>
+                                <div class="text-xs font-bold text-black dark:text-white">{{ __('tax.export_modal.item_ebupot_title') }}</div>
+                                <div class="text-[11px] text-black/50 dark:text-white/50 mt-0.5">{{ __('tax.export_modal.item_ebupot_desc') }}</div>
+                            </div>
+                            <a href="{{ route('tax.export.ebupot', ['year' => $currentYear, 'month' => (int) date('n')]) }}" class="min-h-[44px] px-3.5 rounded-xl bg-[#007AFF] hover:bg-[#007AFF]/90 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-sm">
+                                <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                                <span>{{ __('tax.export_modal.download_btn') }}</span>
+                            </a>
+                        </div>
+
+                        {{-- Export Option 2: Rekap PPh Final UMKM --}}
+                        <div class="p-4 rounded-2xl bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 flex items-center justify-between">
+                            <div>
+                                <div class="text-xs font-bold text-black dark:text-white">{{ __('tax.export_modal.item_umkm_title') }}</div>
+                                <div class="text-[11px] text-black/50 dark:text-white/50 mt-0.5">{{ __('tax.export_modal.item_umkm_desc') }}</div>
+                            </div>
+                            <a href="{{ route('tax.export.pph_final', ['year' => $currentYear, 'taxpayer_type' => $taxpayerType]) }}" class="min-h-[44px] px-3.5 rounded-xl bg-[#34C759] hover:bg-[#34C759]/90 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-sm">
+                                <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                                <span>{{ __('tax.export_modal.download_btn') }}</span>
+                            </a>
+                        </div>
+
+                        {{-- Export Option 3: Rekap PPh Laba Bersih Tahunan --}}
+                        <div class="p-4 rounded-2xl bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 flex items-center justify-between">
+                            <div>
+                                <div class="text-xs font-bold text-black dark:text-white">{{ __('tax.export_modal.item_net_income_title') }}</div>
+                                <div class="text-[11px] text-black/50 dark:text-white/50 mt-0.5">{{ __('tax.export_modal.item_net_income_desc') }}</div>
+                            </div>
+                            <a href="{{ route('tax.export.net_income', ['year' => $currentYear, 'taxpayer_type' => $taxpayerType, 'ptkp_status' => $ptkpStatus]) }}" class="min-h-[44px] px-3.5 rounded-xl bg-[#5856D6] hover:bg-[#5856D6]/90 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-sm">
+                                <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                                <span>{{ __('tax.export_modal.download_btn') }}</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="mt-5 pt-4 border-t border-black/10 dark:border-white/10">
+                        <button type="button" @click="showExportModal = false"
+                            class="w-full min-h-[44px] py-2.5 rounded-xl bg-black/[0.05] hover:bg-black/10 dark:bg-white/[0.06] dark:hover:bg-white/10 text-black dark:text-white text-xs font-semibold transition cursor-pointer flex items-center justify-center">
+                            {{ __('tax.actions.close') }}
+                        </button>
                     </div>
                 </div>
-                <button type="button" @click="showExportModal = false" class="w-8 h-8 rounded-full bg-black/[0.04] dark:bg-white/[0.06] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white flex items-center justify-center">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
-            </div>
-
-            <div class="mt-4 space-y-3">
-                {{-- Export Option 1: e-Bupot 21/26 --}}
-                <div class="p-4 rounded-2xl bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 flex items-center justify-between">
-                    <div>
-                        <div class="text-xs font-bold text-black dark:text-white">{{ __('tax.export_modal.item_ebupot_title') }}</div>
-                        <div class="text-[11px] text-black/50 dark:text-white/50 mt-0.5">{{ __('tax.export_modal.item_ebupot_desc') }}</div>
-                    </div>
-                    <a href="{{ route('tax.export.ebupot', ['year' => $currentYear, 'month' => (int) date('n')]) }}" class="h-9 px-3 rounded-xl bg-[#007AFF] hover:bg-[#007AFF]/90 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-sm">
-                        <i data-lucide="download" class="w-3.5 h-3.5"></i>
-                        <span>{{ __('tax.export_modal.download_btn') }}</span>
-                    </a>
-                </div>
-
-                {{-- Export Option 2: Rekap PPh Final UMKM --}}
-                <div class="p-4 rounded-2xl bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 flex items-center justify-between">
-                    <div>
-                        <div class="text-xs font-bold text-black dark:text-white">{{ __('tax.export_modal.item_umkm_title') }}</div>
-                        <div class="text-[11px] text-black/50 dark:text-white/50 mt-0.5">{{ __('tax.export_modal.item_umkm_desc') }}</div>
-                    </div>
-                    <a href="{{ route('tax.export.pph_final', ['year' => $currentYear, 'taxpayer_type' => $taxpayerType]) }}" class="h-9 px-3 rounded-xl bg-[#34C759] hover:bg-[#34C759]/90 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-sm">
-                        <i data-lucide="download" class="w-3.5 h-3.5"></i>
-                        <span>{{ __('tax.export_modal.download_btn') }}</span>
-                    </a>
-                </div>
-
-                {{-- Export Option 3: Rekap PPh Laba Bersih Tahunan --}}
-                <div class="p-4 rounded-2xl bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 flex items-center justify-between">
-                    <div>
-                        <div class="text-xs font-bold text-black dark:text-white">{{ __('tax.export_modal.item_net_income_title') }}</div>
-                        <div class="text-[11px] text-black/50 dark:text-white/50 mt-0.5">{{ __('tax.export_modal.item_net_income_desc') }}</div>
-                    </div>
-                    <a href="{{ route('tax.export.net_income', ['year' => $currentYear, 'taxpayer_type' => $taxpayerType, 'ptkp_status' => $ptkpStatus]) }}" class="h-9 px-3 rounded-xl bg-[#5856D6] hover:bg-[#5856D6]/90 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-sm">
-                        <i data-lucide="download" class="w-3.5 h-3.5"></i>
-                        <span>{{ __('tax.export_modal.download_btn') }}</span>
-                    </a>
-                </div>
-            </div>
-
-            <div class="mt-5 pt-4 border-t border-black/10 dark:border-white/10">
-                <button type="button" @click="showExportModal = false" class="w-full py-2.5 rounded-xl bg-black/[0.05] hover:bg-black/10 dark:bg-white/[0.06] dark:hover:bg-white/10 text-black dark:text-white text-xs font-semibold">
-                    {{ __('tax.actions.close') }}
-                </button>
             </div>
         </div>
-    </div>
+    </template>
 
 </div>
 @endsection

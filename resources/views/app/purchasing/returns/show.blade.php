@@ -182,36 +182,61 @@
     <!-- ===================================================== -->
     <!-- 5. SUPERVISOR PIN CONFIRMATION MODAL                  -->
     <!-- ===================================================== -->
-    <div x-show="showPinModal" x-cloak
-         class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs transition-opacity"
-         @keydown.escape.window="showPinModal = false">
-        <div class="bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[16px] max-w-sm w-full p-5 space-y-4 shadow-xl"
-             @click.away="showPinModal = false">
-            <div>
-                <h3 class="text-[16px] font-bold text-black dark:text-white">Otorisasi Supervisor</h3>
-                <p class="text-[12px] text-black/50 dark:text-white/50 mt-1">
-                    {{ __('purchasing.returns.supervisor_pin_prompt') }}
-                </p>
-            </div>
+    <template x-teleport="body">
+        <div x-show="showPinModal" x-cloak
+             class="fixed inset-0 z-[220] overflow-y-auto"
+             @keydown.escape.window="showPinModal = false"
+             role="dialog"
+             aria-modal="true"
+             aria-labelledby="purchasing-pin-modal-title">
 
-            <div>
-                <input type="password" maxlength="8" placeholder="••••••" x-model="pinValue"
-                       @keydown.enter.prevent="if(pinAction === 'approve') document.getElementById('form-approve').submit(); else document.getElementById('form-complete').submit();"
-                       class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-center text-[20px] tracking-widest font-mono text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
-            </div>
+            <!-- Backdrop -->
+            <div x-show="showPinModal"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
-            <div class="flex items-center justify-end gap-2 pt-2">
-                <button type="button" @click="showPinModal = false"
-                        class="min-h-[44px] h-10 px-4 rounded-[10px] text-[13px] font-medium text-black/60 dark:text-white/60 hover:bg-black/5">
-                    Batal
-                </button>
-                <button type="button"
-                        @click="if(pinAction === 'approve') document.getElementById('form-approve').submit(); else document.getElementById('form-complete').submit();"
-                        class="min-h-[44px] h-10 px-5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition">
-                    Konfirmasi
-                </button>
+            <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="showPinModal = false">
+                <div class="relative bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[16px] max-w-sm w-full p-5 space-y-4 shadow-xl"
+                     @click.away="showPinModal = false"
+                     x-show="showPinModal"
+                     x-transition:enter="transition ease-out duration-200"
+                     x-transition:enter-start="opacity-0 scale-95"
+                     x-transition:enter-end="opacity-100 scale-100"
+                     x-transition:leave="transition ease-in duration-150"
+                     x-transition:leave-start="opacity-100 scale-100"
+                     x-transition:leave-end="opacity-0 scale-95">
+                    <div>
+                        <h3 id="purchasing-pin-modal-title" class="text-[16px] font-bold text-black dark:text-white">Otorisasi Supervisor</h3>
+                        <p class="text-[12px] text-black/50 dark:text-white/50 mt-1">
+                            {{ __('purchasing.returns.supervisor_pin_prompt') }}
+                        </p>
+                    </div>
+
+                    <div>
+                        <input type="password" maxlength="8" placeholder="••••••" x-model="pinValue"
+                               @keydown.enter.prevent="if(pinAction === 'approve') document.getElementById('form-approve').submit(); else document.getElementById('form-complete').submit();"
+                               class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-center text-[20px] tracking-widest font-mono text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
+                    </div>
+
+                    <div class="flex items-center justify-end gap-2 pt-2">
+                        <button type="button" @click="showPinModal = false"
+                                class="min-h-[44px] h-10 px-4 rounded-[10px] text-[13px] font-medium text-black/60 dark:text-white/60 hover:bg-black/5 cursor-pointer">
+                            Batal
+                        </button>
+                        <button type="button"
+                                @click="if(pinAction === 'approve') document.getElementById('form-approve').submit(); else document.getElementById('form-complete').submit();"
+                                class="min-h-[44px] h-10 px-5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition cursor-pointer">
+                            Konfirmasi
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </template>
 </div>
 @endsection

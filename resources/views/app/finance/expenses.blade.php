@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'Beban Operasional Toko'])
+@extends('layouts.app', ['title' => __('finance.expenses_page_title')])
 
 @section('content')
     <div class="max-w-[1360px] mx-auto space-y-5 pb-28 lg:pb-12" x-data="{ showCreateModal: false }">
@@ -7,20 +7,20 @@
         {{-- TOOLBAR / PAGE HEADER                                      --}}
         {{-- ========================================================== --}}
         <x-module-header
-            title="Beban & Biaya Operasional"
-            subtitle="Catat pengeluaran dan biaya operasional toko dengan penjurnalan otomatis double-entry">
+            :title="__('finance.expenses_title')"
+            :subtitle="__('finance.expenses_subtitle')">
             @if (\App\Support\Context::hasPermission('accounting.view') || \App\Support\Context::hasPermission('expenses.manage'))
                 <a href="{{ route('finance.journals.index') }}"
                     class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-2">
                     <i data-lucide="file-spreadsheet" class="w-4 h-4 text-[#5856D6]"></i>
-                    <span>Buku Jurnal</span>
+                    <span>{{ __('finance.btn_journal_book') }}</span>
                 </a>
             @endif
             @if (\App\Support\Context::hasPermission('expenses.manage'))
                 <button @click="showCreateModal = true"
                     class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#FF3B30] hover:bg-[#E0352B] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-2 shadow-[0_2px_8px_rgba(255,59,48,0.3)]">
                     <i data-lucide="plus" class="w-4 h-4"></i>
-                    <span>Catat Biaya Baru</span>
+                    <span>{{ __('finance.btn_record_new_expense') }}</span>
                 </button>
             @endif
         </x-module-header>
@@ -58,7 +58,7 @@
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
             <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between shadow-sm">
                 <div class="flex items-center justify-between">
-                    <span class="text-[11px] uppercase tracking-wider font-semibold text-black/45 dark:text-white/45">Beban Bulan Ini</span>
+                    <span class="text-[11px] uppercase tracking-wider font-semibold text-black/45 dark:text-white/45">{{ __('finance.kpi_expenses_this_month') }}</span>
                     <div class="w-8 h-8 rounded-[10px] bg-[#FF3B30]/10 text-[#FF3B30] flex items-center justify-center">
                         <i data-lucide="trending-down" class="w-4 h-4"></i>
                     </div>
@@ -67,13 +67,13 @@
                     <p class="text-[18px] sm:text-[22px] font-extrabold tabular-nums text-[#FF3B30] dark:text-[#FF453A] tracking-tight">
                         Rp {{ number_format($totalExpensesThisMonth, 0, ',', '.') }}
                     </p>
-                    <p class="text-[11px] text-black/45 dark:text-white/45 mt-0.5">Total pengeluaran operasional</p>
+                    <p class="text-[11px] text-black/45 dark:text-white/45 mt-0.5">{{ __('finance.kpi_expenses_this_month_desc') }}</p>
                 </div>
             </div>
 
             <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between shadow-sm">
                 <div class="flex items-center justify-between">
-                    <span class="text-[11px] uppercase tracking-wider font-semibold text-black/45 dark:text-white/45">Jumlah Transaksi</span>
+                    <span class="text-[11px] uppercase tracking-wider font-semibold text-black/45 dark:text-white/45">{{ __('finance.kpi_transaction_count') }}</span>
                     <div class="w-8 h-8 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center">
                         <i data-lucide="receipt" class="w-4 h-4"></i>
                     </div>
@@ -82,13 +82,13 @@
                     <p class="text-[18px] sm:text-[22px] font-extrabold tabular-nums text-black dark:text-white tracking-tight">
                         {{ $expenses->total() }}
                     </p>
-                    <p class="text-[11px] text-black/45 dark:text-white/45 mt-0.5">Nota biaya tercatat</p>
+                    <p class="text-[11px] text-black/45 dark:text-white/45 mt-0.5">{{ __('finance.kpi_transaction_count_desc') }}</p>
                 </div>
             </div>
 
             <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between shadow-sm">
                 <div class="flex items-center justify-between">
-                    <span class="text-[11px] uppercase tracking-wider font-semibold text-black/45 dark:text-white/45">Rata-Rata Biaya</span>
+                    <span class="text-[11px] uppercase tracking-wider font-semibold text-black/45 dark:text-white/45">{{ __('finance.kpi_average_expense') }}</span>
                     <div class="w-8 h-8 rounded-[10px] bg-[#FF9500]/10 text-[#FF9500] flex items-center justify-center">
                         <i data-lucide="calculator" class="w-4 h-4"></i>
                     </div>
@@ -97,13 +97,13 @@
                     <p class="text-[18px] sm:text-[22px] font-extrabold tabular-nums text-black dark:text-white tracking-tight">
                         Rp {{ number_format($expenses->total() > 0 ? $totalExpensesThisMonth / max(1, $expenses->total()) : 0, 0, ',', '.') }}
                     </p>
-                    <p class="text-[11px] text-black/45 dark:text-white/45 mt-0.5">Rata-rata per catatan</p>
+                    <p class="text-[11px] text-black/45 dark:text-white/45 mt-0.5">{{ __('finance.kpi_average_expense_desc') }}</p>
                 </div>
             </div>
 
             <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between shadow-sm">
                 <div class="flex items-center justify-between">
-                    <span class="text-[11px] uppercase tracking-wider font-semibold text-black/45 dark:text-white/45">Penjurnalan</span>
+                    <span class="text-[11px] uppercase tracking-wider font-semibold text-black/45 dark:text-white/45">{{ __('finance.kpi_journaling') }}</span>
                     <div class="w-8 h-8 rounded-[10px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center">
                         <i data-lucide="shield-check" class="w-4 h-4"></i>
                     </div>
@@ -113,7 +113,7 @@
                         <i data-lucide="check" class="w-3.5 h-3.5"></i>
                         Double-Entry
                     </span>
-                    <p class="text-[11px] text-black/45 dark:text-white/45 mt-1">Otomatis mutasi kas &amp; akun beban</p>
+                    <p class="text-[11px] text-black/45 dark:text-white/45 mt-1">{{ __('finance.kpi_journaling_desc') }}</p>
                 </div>
             </div>
         </div>
@@ -126,29 +126,15 @@
                 <div class="relative flex-1 min-w-[220px]">
                     <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40"></i>
                     <input type="text" name="search" value="{{ request('search') }}"
-                        placeholder="Cari nomor bukti / deskripsi / kategori..."
+                        placeholder="{{ __('finance.search_expense_placeholder') }}"
                         class="w-full h-11 sm:h-9 pl-9 pr-3.5 text-[16px] sm:text-[13px] bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                 </div>
                 <select name="category"
                     class="h-11 sm:h-9 px-3 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
-                    <option value="">Semua Kategori</option>
+                    <option value="">{{ __('common.all_categories') }}</option>
                     @php
-                        $standardCategories = [
-                            'operational' => 'Operasional Toko & Kantor',
-                            'utilities' => 'Listrik, Air & Gas',
-                            'internet_phone' => 'Internet & Komunikasi',
-                            'supplies' => 'Kemasan & Plastik',
-                            'salaries' => 'Gaji & Upah Karyawan',
-                            'consumption' => 'Konsumsi & Makan Staf',
-                            'logistics' => 'Transportasi & Logistik',
-                            'rent' => 'Sewa Tempat & Gedung',
-                            'maintenance' => 'Perawatan & Servis Alat',
-                            'marketing' => 'Pemasaran & Iklan',
-                            'taxes_legal' => 'Pajak & Retribusi',
-                            'bank_admin' => 'Biaya Admin Bank & MDR',
-                            'cash_advance' => 'Kasbon Karyawan',
-                            'other' => 'Lain-lain / Others',
-                        ];
+                        $standardCategories = __('finance.categories');
+                        if (!is_array($standardCategories)) $standardCategories = [];
                     @endphp
                     @foreach ($standardCategories as $catKey => $catLabel)
                         <option value="{{ $catKey }}" @selected(request('category') === $catKey)>{{ $catLabel }}</option>
@@ -162,12 +148,12 @@
                 <button type="submit"
                     class="h-11 sm:h-9 px-4 rounded-[10px] bg-[#007AFF] text-white text-[13px] font-semibold hover:bg-[#0071E3] transition-colors flex items-center gap-1.5 shadow-xs">
                     <i data-lucide="filter" class="w-3.5 h-3.5"></i>
-                    <span>Filter</span>
+                    <span>{{ __('common.filter') }}</span>
                 </button>
                 @if (request('search') || request('category') || request('start_date') || request('end_date'))
                     <a href="{{ route('finance.expenses.index') }}"
                         class="h-11 sm:h-9 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 hover:bg-black/10 dark:hover:bg-white/10 text-[13px] font-medium flex items-center transition-colors">
-                        Reset
+                        {{ __('common.reset') }}
                     </a>
                 @endif
             </form>
@@ -176,32 +162,22 @@
         {{-- ========================================================== --}}
         {{-- EXPENSES TABLE (DESKTOP & TABLET)                          --}}
         {{-- ========================================================== --}}
-        <div class="hidden sm:block rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 overflow-hidden shadow-sm">
+        <div x-data="coocaTableSort()" class="hidden sm:block rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 overflow-hidden shadow-sm">
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-[13px] min-w-[600px]">
                     <thead>
                         <tr class="border-b border-black/[0.06] dark:border-white/[0.08] bg-black/[0.02] dark:bg-white/[0.02]">
-                            <th class="px-4 py-3 text-[11px] font-semibold uppercase tracking-wide text-black/45 dark:text-white/45">
-                                No. Bukti / Tanggal
-                            </th>
-                            <th class="px-4 py-3 text-[11px] font-semibold uppercase tracking-wide text-black/45 dark:text-white/45">
-                                Kategori &amp; Keterangan
-                            </th>
-                            <th class="px-4 py-3 text-[11px] font-semibold uppercase tracking-wide text-black/45 dark:text-white/45">
-                                Outlet / Lokasi
-                            </th>
-                            <th class="px-4 py-3 text-[11px] font-semibold uppercase tracking-wide text-black/45 dark:text-white/45">
-                                Metode Bayar
-                            </th>
-                            <th class="px-4 py-3 text-[11px] font-semibold uppercase tracking-wide text-black/45 dark:text-white/45 text-right">
-                                Nominal Biaya
-                            </th>
+                            <x-table-sort-th :col="0" type="date" :title="__('finance.col_proof_date')" />
+                            <x-table-sort-th :col="1" type="string" :title="__('finance.col_category_description')" />
+                            <x-table-sort-th :col="2" type="string" :title="__('finance.col_outlet_location')" />
+                            <x-table-sort-th :col="3" type="string" :title="__('finance.col_payment_method')" />
+                            <x-table-sort-th :col="4" type="number" :title="__('finance.col_expense_amount')" align="right" />
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                         @forelse($expenses as $ex)
                             <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
-                                <td class="px-4 py-3.5">
+                                <td data-sort-value="{{ $ex->expense_date->format('Y-m-d') }}" class="px-4 py-3.5">
                                     <div class="font-bold tabular-nums text-black dark:text-white">
                                         #{{ $ex->expense_number }}
                                     </div>
@@ -209,28 +185,10 @@
                                         {{ $ex->expense_date->format('d M Y') }}
                                     </div>
                                 </td>
-                                <td class="px-4 py-3.5">
+                                <td data-sort-value="{{ strtolower($ex->category . ' ' . $ex->description) }}" class="px-4 py-3.5">
                                     @php
-                                        $catMap = [
-                                            'operational' => 'Operasional Toko',
-                                            'utilities' => 'Listrik, Air & Gas',
-                                            'internet_phone' => 'Internet & Pulsa',
-                                            'supplies' => 'Kemasan & Plastik',
-                                            'salaries' => 'Gaji & Upah',
-                                            'consumption' => 'Konsumsi Staf',
-                                            'logistics' => 'Transport & Bensin',
-                                            'rent' => 'Sewa Gedung/Ruko',
-                                            'maintenance' => 'Perawatan & Servis',
-                                            'marketing' => 'Pemasaran & Iklan',
-                                            'taxes_legal' => 'Pajak & Retribusi',
-                                            'bank_admin' => 'Admin Bank & MDR',
-                                            'cash_advance' => 'Kasbon Karyawan',
-                                            'owner_draw' => 'Prive Pemilik',
-                                            'other' => 'Lain-lain / Others',
-                                        ];
-                                    @endphp
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#FF9500]/12 text-[#B25E00] dark:text-[#FF9F0A]">
-                                        {{ $catMap[$ex->category] ?? $ex->category }}
+                                        {{ __('finance.categories.' . $ex->category) !== 'finance.categories.' . $ex->category ? __('finance.categories.' . $ex->category) : $ex->category }}
                                     </span>
                                     <div class="text-[13px] font-medium text-black/80 dark:text-white/80 mt-1">
                                         {{ $ex->description }}
@@ -240,18 +198,18 @@
                                             <a href="{{ $ex->proof_url }}" target="_blank"
                                                 class="inline-flex items-center gap-1 text-[11px] text-[#007AFF] font-semibold hover:underline">
                                                 <i data-lucide="paperclip" class="w-3.5 h-3.5"></i>
-                                                <span>Bukti Nota</span>
+                                                <span>{{ __('finance.receipt_preview') }}</span>
                                             </a>
                                         </div>
                                     @endif
                                 </td>
-                                <td class="px-4 py-3.5 text-black/60 dark:text-white/60">
-                                    {{ $ex->location->name ?? 'Outlet Utama' }}
+                                <td data-sort-value="{{ strtolower($ex->location->name ?? '') }}" class="px-4 py-3.5 text-black/60 dark:text-white/60">
+                                    {{ $ex->location->name ?? __('finance.main_outlet_label') }}
                                 </td>
-                                <td class="px-4 py-3.5 text-[12px] text-black/60 dark:text-white/60 capitalize">
+                                <td data-sort-value="{{ strtolower($ex->payment_method) }}" class="px-4 py-3.5 text-[12px] text-black/60 dark:text-white/60 capitalize">
                                     {{ str_replace('_', ' ', $ex->payment_method) }}
                                 </td>
-                                <td class="px-4 py-3.5 text-right tabular-nums font-bold text-[#FF3B30] dark:text-[#FF453A] text-[14px]">
+                                <td data-sort-value="{{ (float) $ex->amount }}" class="px-4 py-3.5 text-right tabular-nums font-bold text-[#FF3B30] dark:text-[#FF453A] text-[14px]">
                                     Rp {{ number_format($ex->amount, 0, ',', '.') }}
                                 </td>
                             </tr>
@@ -263,14 +221,14 @@
                                             <i data-lucide="receipt" class="w-6 h-6"></i>
                                         </div>
                                         <div>
-                                            <p class="text-[15px] font-bold text-black/70 dark:text-white/70">Belum Ada Pencatatan Biaya</p>
-                                            <p class="text-[13px] text-black/40 dark:text-white/40 mt-0.5">Catat pengeluaran operasional pertama Anda dengan mudah</p>
+                                            <p class="text-[15px] font-bold text-black/70 dark:text-white/70">{{ __('finance.empty_expenses_title') }}</p>
+                                            <p class="text-[13px] text-black/40 dark:text-white/40 mt-0.5">{{ __('finance.empty_expenses_desc') }}</p>
                                         </div>
                                         @if (\App\Support\Context::hasPermission('expenses.manage'))
                                             <button @click="showCreateModal = true"
                                                 class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#FF3B30] hover:bg-[#E0352B] active:scale-[0.98] transition-all flex items-center gap-1.5 shadow-xs">
                                                 <i data-lucide="plus" class="w-4 h-4"></i>
-                                                <span>Catat Biaya Baru</span>
+                                                <span>{{ __('finance.btn_record_new_expense') }}</span>
                                             </button>
                                         @endif
                                     </div>
@@ -284,22 +242,22 @@
             @if ($expenses->hasPages())
                 <div class="px-5 py-3.5 border-t border-black/5 dark:border-white/10 flex items-center justify-between text-[13px] text-black/60 dark:text-white/60">
                     <div>
-                        Menampilkan <span class="font-bold text-black dark:text-white tabular-nums">{{ $expenses->firstItem() }}–{{ $expenses->lastItem() }}</span>
-                        dari <span class="font-bold text-black dark:text-white tabular-nums">{{ $expenses->total() }}</span> catatan
+                        {{ __('common.showing') }} <span class="font-bold text-black dark:text-white tabular-nums">{{ $expenses->firstItem() }}–{{ $expenses->lastItem() }}</span>
+                        {{ __('common.of') }} <span class="font-bold text-black dark:text-white tabular-nums">{{ $expenses->total() }}</span> {{ __('common.records') }}
                     </div>
                     <div class="flex items-center gap-2">
                         @if ($expenses->onFirstPage())
-                            <span class="h-8 px-3 rounded-[8px] text-[13px] font-medium text-black/30 dark:text-white/30 cursor-not-allowed flex items-center"><i data-lucide="chevron-left" class="w-3.5 h-3.5 mr-1"></i> Sebelumnya</span>
+                            <span class="h-8 px-3 rounded-[8px] text-[13px] font-medium text-black/30 dark:text-white/30 cursor-not-allowed flex items-center"><i data-lucide="chevron-left" class="w-3.5 h-3.5 mr-1"></i> {{ __('common.previous') }}</span>
                         @else
                             <a href="{{ $expenses->previousPageUrl() }}"
-                                class="h-8 px-3 rounded-[8px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 flex items-center transition"><i data-lucide="chevron-left" class="w-3.5 h-3.5 mr-1"></i> Sebelumnya</a>
+                                class="h-8 px-3 rounded-[8px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 flex items-center transition"><i data-lucide="chevron-left" class="w-3.5 h-3.5 mr-1"></i> {{ __('common.previous') }}</a>
                         @endif
 
                         @if ($expenses->hasMorePages())
                             <a href="{{ $expenses->nextPageUrl() }}"
-                                class="h-8 px-3 rounded-[8px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 flex items-center transition">Selanjutnya <i data-lucide="chevron-right" class="w-3.5 h-3.5 ml-1"></i></a>
+                                class="h-8 px-3 rounded-[8px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 flex items-center transition">{{ __('common.next') }} <i data-lucide="chevron-right" class="w-3.5 h-3.5 ml-1"></i></a>
                         @else
-                            <span class="h-8 px-3 rounded-[8px] text-[13px] font-medium text-black/30 dark:text-white/30 cursor-not-allowed flex items-center">Selanjutnya <i data-lucide="chevron-right" class="w-3.5 h-3.5 ml-1"></i></span>
+                            <span class="h-8 px-3 rounded-[8px] text-[13px] font-medium text-black/30 dark:text-white/30 cursor-not-allowed flex items-center">{{ __('common.next') }} <i data-lucide="chevron-right" class="w-3.5 h-3.5 ml-1"></i></span>
                         @endif
                     </div>
                 </div>
@@ -311,36 +269,17 @@
         {{-- ========================================================== --}}
         <div class="sm:hidden rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 overflow-hidden divide-y divide-black/[0.04] dark:divide-white/[0.06] shadow-sm">
             @forelse($expenses as $ex)
-                                    @php
-                                        $catMap = [
-                                            'operational' => 'Operasional Toko',
-                                            'utilities' => 'Listrik, Air & Gas',
-                                            'internet_phone' => 'Internet & Pulsa',
-                                            'supplies' => 'Kemasan & Plastik',
-                                            'salaries' => 'Gaji & Upah',
-                                            'consumption' => 'Konsumsi Staf',
-                                            'logistics' => 'Transport & Bensin',
-                                            'rent' => 'Sewa Gedung/Ruko',
-                                            'maintenance' => 'Perawatan & Servis',
-                                            'marketing' => 'Pemasaran & Iklan',
-                                            'taxes_legal' => 'Pajak & Retribusi',
-                                            'bank_admin' => 'Admin Bank & MDR',
-                                            'cash_advance' => 'Kasbon Karyawan',
-                                            'owner_draw' => 'Prive Pemilik',
-                                            'other' => 'Lain-lain / Others',
-                                        ];
-                                    @endphp
                 <div class="p-4 space-y-2.5 active:bg-black/[0.02] dark:active:bg-white/[0.03] transition-colors">
                     <div class="flex items-start justify-between gap-2">
                         <div>
                             <div class="flex items-center gap-2">
                                 <span class="font-bold text-[14px] tabular-nums text-black dark:text-white">#{{ $ex->expense_number }}</span>
                                 <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#FF9500]/12 text-[#B25E00] dark:text-[#FF9F0A]">
-                                    {{ $catMap[$ex->category] ?? $ex->category }}
+                                    {{ __('finance.categories.' . $ex->category) !== 'finance.categories.' . $ex->category ? __('finance.categories.' . $ex->category) : $ex->category }}
                                 </span>
                             </div>
                             <div class="text-[12px] text-black/45 dark:text-white/45 mt-0.5">
-                                {{ $ex->expense_date->format('d M Y') }} · {{ $ex->location->name ?? 'Outlet Utama' }}
+                                {{ $ex->expense_date->format('d M Y') }} · {{ $ex->location->name ?? __('finance.main_outlet_label') }}
                             </div>
                         </div>
                         <div class="text-right tabular-nums font-extrabold text-[15px] text-[#FF3B30] dark:text-[#FF453A] shrink-0">
@@ -360,19 +299,19 @@
                             <a href="{{ $ex->proof_url }}" target="_blank"
                                 class="text-[#007AFF] font-semibold hover:underline inline-flex items-center gap-1">
                                 <i data-lucide="paperclip" class="w-3 h-3"></i>
-                                <span>Bukti Nota</span>
+                                <span>{{ __('finance.receipt_preview') }}</span>
                             </a>
                         @endif
                     </div>
                 </div>
             @empty
                 <div class="py-12 text-center text-black/45 dark:text-white/45 text-[13px]">
-                    <p>Belum ada pencatatan biaya.</p>
+                    <p>{{ __('finance.empty_expenses_title') }}</p>
                     @if (\App\Support\Context::hasPermission('expenses.manage'))
                         <button type="button" @click="showCreateModal = true"
                             class="mt-2 text-[#FF3B30] font-semibold text-[13px] hover:underline inline-flex items-center gap-1">
                             <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-                            <span>Catat Biaya Baru</span>
+                            <span>{{ __('finance.btn_record_new_expense') }}</span>
                         </button>
                     @endif
                 </div>
@@ -388,12 +327,13 @@
         {{-- ========================================================== --}}
         {{-- MODAL - CATAT BIAYA (BENTO APPLE HIG v2.0 XXL CANVAS)      --}}
         {{-- ========================================================== --}}
-        <div x-show="showCreateModal" x-cloak
-            class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/40 backdrop-blur-md"
-            x-transition:enter="transition ease-out duration-250" x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200"
-            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
-            @keydown.escape.window="showCreateModal = false">
+        <template x-teleport="body">
+            <div x-show="showCreateModal" x-cloak
+                class="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md"
+                x-transition:enter="transition ease-out duration-250" x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200"
+                x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                @keydown.escape.window="showCreateModal = false">
 
             <div class="w-full max-w-[95vw] lg:max-w-5xl 2xl:max-w-[1250px] mx-auto rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-[0_25px_70px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col max-h-[92vh]"
                 @click.away="showCreateModal = false"
@@ -428,23 +368,8 @@
                         }
                     },
                     get categoryLabel() {
-                        const map = {
-                            'operational': 'Operasional Toko & Kantor',
-                            'utilities': 'Listrik, Air & Gas',
-                            'internet_phone': 'Internet & Komunikasi',
-                            'supplies': 'Kemasan & Plastik',
-                            'salaries': 'Gaji & Upah Staf',
-                            'consumption': 'Konsumsi & Makan Staf',
-                            'logistics': 'Transportasi & Bensin',
-                            'rent': 'Sewa Tempat & Gedung',
-                            'maintenance': 'Perawatan & Servis Alat',
-                            'marketing': 'Pemasaran & Iklan',
-                            'taxes_legal': 'Pajak & Retribusi',
-                            'bank_admin': 'Biaya Admin Bank & MDR',
-                            'cash_advance': 'Kasbon Karyawan',
-                            'other': 'Lain-lain / Others'
-                        };
-                        return map[this.category] || 'Beban Operasional';
+                        const map = @json(__('finance.categories'));
+                        return (map && map[this.category]) ? map[this.category] : '{{ __('finance.categories.operational') }}';
                     }
                 }">
 
@@ -455,19 +380,19 @@
                             <i data-lucide="receipt" class="w-5 h-5"></i>
                         </div>
                         <div>
-                            <h3 class="text-[18px] sm:text-[20px] font-bold text-black dark:text-white tracking-tight">Catat Beban Operasional</h3>
-                            <p class="text-[12.5px] text-black/50 dark:text-white/50">Formulir pengeluaran toko terintegrasi jurnal akuntansi double-entry & saldo kas otomatis</p>
+                            <h3 class="text-[18px] sm:text-[20px] font-bold text-black dark:text-white tracking-tight">{{ __('finance.modal_record_expense_title') }}</h3>
+                            <p class="text-[12.5px] text-black/50 dark:text-white/50">{{ __('finance.modal_record_expense_desc') }}</p>
                         </div>
                     </div>
                     <button type="button" @click="showCreateModal = false"
-                        class="w-9 h-9 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 flex items-center justify-center transition-all cursor-pointer">
+                        class="w-9 h-9 min-w-[44px] min-h-[44px] rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 flex items-center justify-center transition-all cursor-pointer">
                         <i data-lucide="x" class="w-4 h-4"></i>
                     </button>
                 </div>
 
                 {{-- Form Body --}}
                 <form action="{{ route('finance.expenses.store') }}" method="POST" enctype="multipart/form-data"
-                    @submit="if(category === 'other' && !otherDescription.trim()){ alert('Silakan isi rincian keterangan wajib untuk kategori Lainnya.'); isSubmitting = false; $event.preventDefault(); return false; } isSubmitting = true"
+                    @submit="if(category === 'other' && !otherDescription.trim()){ alert('{{ __('finance.category_other_required') }}'); isSubmitting = false; $event.preventDefault(); return false; } isSubmitting = true"
                     class="flex-1 overflow-y-auto p-5 sm:p-8 space-y-6">
                     @csrf
 
@@ -479,8 +404,8 @@
                             {{-- Bento Card: Kategori Biaya Visual (14 Kategori Komprehensif) --}}
                             <div class="p-5 rounded-[20px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] space-y-3.5">
                                 <div class="flex items-center justify-between">
-                                    <label class="block text-[13px] font-bold text-black/80 dark:text-white/80">Kategori Biaya Operasional *</label>
-                                    <span class="text-[11.5px] text-black/40 dark:text-white/40" x-text="categoryLabel">Pilih jenis pengeluaran</span>
+                                    <label class="block text-[13px] font-bold text-black/80 dark:text-white/80">{{ __('finance.expense_category_label') }}</label>
+                                    <span class="text-[11.5px] text-black/40 dark:text-white/40" x-text="categoryLabel">{{ __('finance.choose_expense_type') }}</span>
                                 </div>
                                 <input type="hidden" name="category" :value="category">
                                 <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 max-h-[300px] overflow-y-auto pr-1">
@@ -641,9 +566,9 @@
 
                             {{-- Form Keterangan Standar (Muncul Saat Bukan 'other') --}}
                             <div class="space-y-1.5" x-show="category !== 'other'">
-                                <label class="block text-[13px] font-semibold text-black/75 dark:text-white/75">Keterangan / Rincian Beban</label>
+                                <label class="block text-[13px] font-semibold text-black/75 dark:text-white/75">{{ __('finance.expense_notes_label') }}</label>
                                 <input type="text" name="description" x-model="description"
-                                    placeholder="Misal: Pembelian kemasan takeaway & kantong plastik 500 pcs..."
+                                    placeholder="{{ __('finance.expense_notes_placeholder') }}"
                                     class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 text-[16px] sm:text-[14px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                             </div>
 
@@ -652,14 +577,14 @@
                                 <div class="flex items-center gap-2">
                                     <i data-lucide="alert-circle" class="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0"></i>
                                     <label class="block text-[13px] font-bold text-amber-800 dark:text-amber-300">
-                                        Rincian Keterangan Wajib (Kategori Lainnya) <span class="text-[#FF3B30]">*</span>
+                                        {{ __('finance.required_other_notes_label') }}
                                     </label>
                                 </div>
                                 <input type="text" name="other_description" x-model="otherDescription" :required="category === 'other'"
-                                    placeholder="Wajib diisi: rincikan peruntukan biaya pengeluaran ini secara jelas..."
+                                    placeholder="{{ __('finance.required_other_notes_placeholder') }}"
                                     class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-amber-500/40 rounded-[12px] px-3.5 text-[16px] sm:text-[14px] font-medium text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-amber-500">
                                 <p class="text-[11px] text-amber-700/80 dark:text-amber-300/80 leading-relaxed">
-                                    Karena Anda memilih kategori Lain-lain, sistem mewajibkan rincian keterangan ini untuk transparansi dan audit pembukuan.
+                                    {{ __('finance.required_other_notes_help') }}
                                 </p>
                             </div>
 
@@ -670,23 +595,23 @@
                             
                             {{-- Bento Card: Sumber Kas & Akun COA --}}
                             <div class="p-5 rounded-[20px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] space-y-4">
-                                <h4 class="text-[13px] font-bold text-black/80 dark:text-white/80">Sumber Kas & Pembayaran</h4>
+                                <h4 class="text-[13px] font-bold text-black/80 dark:text-white/80">{{ __('finance.cash_source_payment') }}</h4>
                                 
                                 <div class="space-y-1.5">
-                                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">Metode Bayar *</label>
+                                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('finance.payment_method') }} *</label>
                                     <select name="payment_method" x-model="payment_method" required
                                         class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
-                                        <option value="cash">Kas Tunai Kasir</option>
-                                        <option value="petty_cash">Kas Kecil (Petty Cash)</option>
-                                        <option value="bank_transfer">Transfer Rekening Bank</option>
+                                        <option value="cash">{{ __('finance.cash_drawer') }}</option>
+                                        <option value="petty_cash">{{ __('finance.petty_cash') }}</option>
+                                        <option value="bank_transfer">{{ __('finance.bank_transfer') }}</option>
                                     </select>
                                 </div>
 
                                 <div class="space-y-1.5">
-                                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">Rekening Kas / Bank</label>
+                                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('finance.recipient_account') }}</label>
                                     <select name="cash_account_id" x-model="cash_account_id"
                                         class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
-                                        <option value="">Otomatis Sesuai Metode</option>
+                                        <option value="">{{ __('finance.auto_by_method') }}</option>
                                         @foreach ($cashAccounts as $ca)
                                             <option value="{{ $ca->id }}">
                                                 {{ $ca->name }} (Saldo: {{ $ca->current_balance < 0 ? '-Rp ' . number_format(abs($ca->current_balance), 0, ',', '.') . ' [Defisit/Minus]' : 'Rp ' . number_format($ca->current_balance, 0, ',', '.') }})
@@ -699,10 +624,10 @@
                                 </div>
 
                                 <div class="space-y-1.5">
-                                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">Akun Beban Buku Besar (COA)</label>
+                                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('finance.general_ledger_expense_account') }}</label>
                                     <select name="account_id" x-model="account_id"
                                         class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
-                                        <option value="">Otomatis (Standar Akuntansi)</option>
+                                        <option value="">{{ __('finance.auto_accounting_standard') }}</option>
                                         @foreach ($accounts as $coa)
                                             <option value="{{ $coa->id }}">{{ $coa->code }} – {{ $coa->name }}</option>
                                         @endforeach
@@ -713,8 +638,8 @@
                             {{-- Bento Card: Unggah Bukti Nota / Kwitansi --}}
                             <div class="p-5 rounded-[20px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] space-y-3">
                                 <div class="flex items-center justify-between">
-                                    <label class="block text-[13px] font-bold text-black/80 dark:text-white/80">Bukti Nota / Struk Fisik</label>
-                                    <span class="text-[11px] text-black/40 dark:text-white/40">Opsional (Maks 5MB)</span>
+                                    <label class="block text-[13px] font-bold text-black/80 dark:text-white/80">{{ __('finance.physical_receipt_proof') }}</label>
+                                    <span class="text-[11px] text-black/40 dark:text-white/40">{{ __('finance.optional_max_5mb') }}</span>
                                 </div>
                                 
                                 <div class="relative border-2 border-dashed border-black/15 dark:border-white/15 rounded-[16px] p-4 text-center hover:border-[#007AFF] dark:hover:border-[#007AFF] transition bg-white/50 dark:bg-[#2C2C2E]/50">
@@ -727,7 +652,7 @@
                                             <div class="w-10 h-10 rounded-full bg-black/5 dark:bg-white/5 mx-auto flex items-center justify-center text-black/50 dark:text-white/50">
                                                 <i data-lucide="upload-cloud" class="w-5 h-5"></i>
                                             </div>
-                                            <p class="text-[12.5px] font-medium text-black/75 dark:text-white/75">Tarik foto struk atau <span class="text-[#007AFF] font-bold">pilih berkas</span></p>
+                                            <p class="text-[12.5px] font-medium text-black/75 dark:text-white/75">{{ __('finance.drag_receipt_or_browse') }}</p>
                                             <p class="text-[11px] text-black/40 dark:text-white/40">JPG, PNG, WEBP, atau PDF</p>
                                         </div>
                                     </template>
@@ -736,7 +661,7 @@
                                         <div class="relative rounded-[12px] overflow-hidden max-h-[140px] flex items-center justify-center bg-black/5 dark:bg-white/5">
                                             <img :src="receiptPreview" class="max-h-[140px] object-contain rounded-[10px]">
                                             <div class="absolute bottom-1 right-1 px-2 py-0.5 rounded-[6px] bg-black/60 backdrop-blur-sm text-white text-[10px] font-semibold">
-                                                Pratinjau Nota
+                                                {{ __('finance.receipt_preview') }}
                                             </div>
                                         </div>
                                     </template>
@@ -748,7 +673,7 @@
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center gap-2 text-[12px] font-bold text-[#007AFF]">
                                         <i data-lucide="book-open-check" class="w-4 h-4"></i>
-                                        <span>Pratinjau Jurnal Otomatis</span>
+                                        <span>{{ __('finance.journal_preview_title') }}</span>
                                     </div>
                                     <span class="text-[10.5px] font-semibold text-[#007AFF]/80 uppercase tracking-wider">Double-Entry</span>
                                 </div>
@@ -773,7 +698,7 @@
                         <button type="button" @click="showCreateModal = false"
                             :disabled="isSubmitting"
                             class="w-full sm:w-auto min-h-[48px] px-6 rounded-[14px] text-[14px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 active:opacity-70 transition-all cursor-pointer">
-                            Batal
+                            {{ __('common.cancel') }}
                         </button>
                         <button type="submit"
                             :disabled="isSubmitting"
@@ -785,13 +710,14 @@
                                 </svg>
                             </template>
                             <i data-lucide="check" class="w-4 h-4" x-show="!isSubmitting"></i>
-                            <span x-text="isSubmitting ? 'Menyimpan Pengeluaran...' : 'Simpan Pengeluaran'">Simpan Pengeluaran</span>
+                            <span x-text="isSubmitting ? '{{ __('finance.saving_expense') }}' : '{{ __('finance.save_expense') }}'">{{ __('finance.save_expense') }}</span>
                         </button>
                     </div>
 
                 </form>
             </div>
         </div>
+    </template>
 
     </div>
 @endsection

@@ -280,11 +280,13 @@
     {{-- ========================================================== --}}
     {{-- MODAL 1: UPLOAD BUKTI BAYAR & APPROVE SETTLEMENT           --}}
     {{-- ========================================================== --}}
-    <div x-show="showUploadModal" x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
-        @keydown.escape.window="showUploadModal = false">
-        <div class="w-full max-w-lg rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden"
-            @click.outside="showUploadModal = false">
+    <template x-teleport="body">
+        <div x-show="showUploadModal" x-cloak
+            class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-all"
+            role="dialog" aria-modal="true"
+            @click.self="showUploadModal = false"
+            @keydown.escape.window="showUploadModal = false">
+            <div @click.stop class="relative z-10 w-full max-w-lg rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden">
             
             <div class="px-6 py-4 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between">
                 <div class="flex items-center gap-2">
@@ -366,17 +368,20 @@
                     </button>
                 </div>
             </form>
+            </div>
         </div>
-    </div>
+    </template>
 
     {{-- ========================================================== --}}
     {{-- MODAL 2: LIHAT BUKTI TRANSFER (FULL PREVIEW)               --}}
     {{-- ========================================================== --}}
-    <div x-show="showViewProofModal" x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md"
-        @keydown.escape.window="showViewProofModal = false">
-        <div class="w-full max-w-xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden"
-            @click.outside="showViewProofModal = false">
+    <template x-teleport="body">
+        <div x-show="showViewProofModal" x-cloak
+            class="fixed inset-0 z-[210] flex items-center justify-center p-4 bg-black/75 dark:bg-black/85 backdrop-blur-md transition-all"
+            role="dialog" aria-modal="true"
+            @click.self="showViewProofModal = false"
+            @keydown.escape.window="showViewProofModal = false">
+            <div @click.stop class="relative z-10 w-full max-w-xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden">
             
             <div class="px-6 py-4 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between">
                 <div>
@@ -420,17 +425,20 @@
                     </div>
                 </div>
             </div>
+            </div>
         </div>
-    </div>
+    </template>
 
     {{-- ========================================================== --}}
     {{-- MODAL 3: TOLAK PENGAJUAN SETTLEMENT                        --}}
     {{-- ========================================================== --}}
-    <div x-show="showRejectModal" x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
-        @keydown.escape.window="showRejectModal = false">
-        <div class="w-full max-w-md rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl p-6 space-y-4"
-            @click.outside="showRejectModal = false">
+    <template x-teleport="body">
+        <div x-show="showRejectModal" x-cloak
+            class="fixed inset-0 z-[220] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-all"
+            role="dialog" aria-modal="true"
+            @click.self="showRejectModal = false"
+            @keydown.escape.window="showRejectModal = false">
+            <div @click.stop class="relative z-10 w-full max-w-md rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl p-6 space-y-4">
             
             <div class="flex items-center gap-2.5 text-[#FF3B30]">
                 <div class="w-9 h-9 rounded-full bg-[#FF3B30]/10 flex items-center justify-center">
@@ -461,8 +469,9 @@
                     </button>
                 </div>
             </form>
+            </div>
         </div>
-    </div>
+    </template>
 
 </div>
 

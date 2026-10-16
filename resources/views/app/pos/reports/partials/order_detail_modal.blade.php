@@ -1,26 +1,29 @@
 {{-- SLIDE-OVER QUICK-VIEW DETAIL TRANSAKSI POS (BENTO APPLE HIG - 20 INDUSTRI & OJOL DELIVERY) --}}
 <div x-data="posOrderDetailModal()"
      @open-pos-order-detail.window="openModal($event.detail.orderId)"
-     @keydown.escape.window="closeModal()"
-     class="relative z-50"
-     aria-labelledby="slide-over-title"
-     role="dialog"
-     aria-modal="true"
-     x-cloak>
+     @keydown.escape.window="closeModal()">
 
-    {{-- Backdrop Blur Overlay --}}
-    <div x-show="isOpen"
-         x-transition:enter="ease-out duration-300"
-         x-transition:enter-start="opacity-0"
-         x-transition:enter-end="opacity-100"
-         x-transition:leave="ease-in duration-200"
-         x-transition:leave-start="opacity-100"
-         x-transition:leave-end="opacity-0"
-         @click="closeModal()"
-         class="fixed inset-0 bg-slate-900/60 dark:bg-black/80 backdrop-blur-xs transition-opacity"></div>
+    <template x-teleport="body">
+        <div x-show="isOpen"
+             class="fixed inset-0 z-[200]"
+             aria-labelledby="slide-over-title"
+             role="dialog"
+             aria-modal="true"
+             x-cloak>
 
-    {{-- Slide-Over Panel Container --}}
-    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+            {{-- Backdrop Blur Overlay --}}
+            <div x-show="isOpen"
+                 x-transition:enter="ease-out duration-300"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="ease-in duration-200"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 @click="closeModal()"
+                 class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
+
+            {{-- Slide-Over Panel Container --}}
+            <div class="fixed inset-0 z-10 overflow-hidden pointer-events-none">
         <div class="absolute inset-0 overflow-hidden">
             <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-6 sm:pl-10">
                 <div x-show="isOpen"
@@ -75,7 +78,7 @@
 
                         <button type="button"
                                 @click="closeModal()"
-                                class="w-9 h-9 rounded-full bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/20 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center transition-all cursor-pointer"
+                                class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/20 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center transition-all cursor-pointer"
                                 title="Tutup Modal (ESC)">
                             <i data-lucide="x" class="w-5 h-5"></i>
                         </button>
@@ -466,6 +469,8 @@
             </div>
         </div>
     </div>
+        </div>
+    </template>
 </div>
 
 <script>

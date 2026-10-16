@@ -204,59 +204,62 @@
         </div>
 
         <!-- Grant Token Modal (Sheet) -->
-        <div x-show="grantModalOpen" x-cloak
-            class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/25 backdrop-blur-[2px]">
-            <div @click.away="grantModalOpen = false"
-                class="sheet-material rounded-[20px] w-full max-w-md p-6 space-y-5 shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-black/5 dark:border-white/10">
-                <div class="flex items-center justify-between border-b border-black/5 dark:border-white/10 pb-3">
-                    <div class="flex items-center gap-2 text-[15px] font-semibold text-black dark:text-white">
-                        <i data-lucide="sparkles" class="w-5 h-5 text-[#AF52DE] dark:text-[#BF5AF2]"
-                            stroke-width="1.5"></i>
-                        <span>Top-Up / Grant Token AI</span>
-                    </div>
-                    <button type="button" @click="grantModalOpen = false"
-                        class="p-1.5 rounded-[6px] text-black/40 dark:text-white/40 hover:bg-black/5 dark:hover:bg-white/10"><i
-                            data-lucide="x" class="w-4 h-4" stroke-width="1.5"></i></button>
-                </div>
-                <form :action="'{{ url('admin/ai-tokens') }}/' + selectedBizId + '/grant'" method="POST"
-                    class="space-y-4">
-                    @csrf
-                    <div>
-                        <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">Pilih Bisnis /
-                            Tenant</label>
-                        <select x-model="selectedBizId" required
-                            class="w-full h-10 px-3 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
-                            <option value="">-- Pilih Bisnis --</option>
-                            @foreach ($allBusinesses as $biz)
-                                <option value="{{ $biz->id }}">{{ $biz->name }} ({{ $biz->slug }})</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">Jumlah
-                            Token</label>
-                        <input type="number" name="tokens" x-model="tokenAmount" min="100000" step="100000"
-                            required
-                            class="w-full h-10 px-3 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[13px] tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
-                        <p class="text-[11px] text-black/45 dark:text-white/45 mt-1">Default allowance Core: 10.000.000
-                            token</p>
-                    </div>
-                    <div>
-                        <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">Alasan /
-                            Catatan (Opsional)</label>
-                        <input type="text" name="reason" x-model="reasonText"
-                            placeholder="Contoh: Pembelian Add-on Top-up Manual"
-                            class="w-full h-10 px-3 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
-                    </div>
-                    <div class="pt-2 flex gap-3">
+        <template x-teleport="body">
+            <div x-show="grantModalOpen" x-cloak
+                class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-all"
+                role="dialog" aria-modal="true" @click.self="grantModalOpen = false" @keydown.escape.window="grantModalOpen = false">
+                <div @click.stop
+                    class="relative z-10 sheet-material rounded-[20px] w-full max-w-md p-6 space-y-5 shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-black/5 dark:border-white/10">
+                    <div class="flex items-center justify-between border-b border-black/5 dark:border-white/10 pb-3">
+                        <div class="flex items-center gap-2 text-[15px] font-semibold text-black dark:text-white">
+                            <i data-lucide="sparkles" class="w-5 h-5 text-[#AF52DE] dark:text-[#BF5AF2]"
+                                stroke-width="1.5"></i>
+                            <span>Top-Up / Grant Token AI</span>
+                        </div>
                         <button type="button" @click="grantModalOpen = false"
-                            class="flex-1 h-10 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] transition">Batal</button>
-                        <button type="submit" :disabled="!selectedBizId"
-                            class="flex-1 h-10 rounded-[10px] text-[13px] font-semibold text-white bg-[#AF52DE] hover:bg-[#9A45C6] disabled:opacity-50 transition-all">Kirim
-                            Token</button>
+                            class="p-1.5 rounded-[6px] text-black/40 dark:text-white/40 hover:bg-black/5 dark:hover:bg-white/10"><i
+                                data-lucide="x" class="w-4 h-4" stroke-width="1.5"></i></button>
                     </div>
-                </form>
+                    <form :action="'{{ url('admin/ai-tokens') }}/' + selectedBizId + '/grant'" method="POST"
+                        class="space-y-4">
+                        @csrf
+                        <div>
+                            <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">Pilih Bisnis /
+                                Tenant</label>
+                            <select x-model="selectedBizId" required
+                                class="w-full h-10 px-3 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                                <option value="">-- Pilih Bisnis --</option>
+                                @foreach ($allBusinesses as $biz)
+                                    <option value="{{ $biz->id }}">{{ $biz->name }} ({{ $biz->slug }})</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">Jumlah
+                                Token</label>
+                            <input type="number" name="tokens" x-model="tokenAmount" min="100000" step="100000"
+                                required
+                                class="w-full h-10 px-3 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[13px] tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                            <p class="text-[11px] text-black/45 dark:text-white/45 mt-1">Default allowance Core: 10.000.000
+                                token</p>
+                        </div>
+                        <div>
+                            <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">Alasan /
+                                Catatan (Opsional)</label>
+                            <input type="text" name="reason" x-model="reasonText"
+                                placeholder="Contoh: Pembelian Add-on Top-up Manual"
+                                class="w-full h-10 px-3 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                        </div>
+                        <div class="pt-2 flex gap-3">
+                            <button type="button" @click="grantModalOpen = false"
+                                class="flex-1 h-10 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] transition">Batal</button>
+                            <button type="submit" :disabled="!selectedBizId"
+                                class="flex-1 h-10 rounded-[10px] text-[13px] font-semibold text-white bg-[#AF52DE] hover:bg-[#9A45C6] disabled:opacity-50 transition-all">Kirim
+                                Token</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
+        </template>
     </div>
 @endsection

@@ -113,7 +113,8 @@
             class="rounded-[16px] backdrop-blur-md bg-white/75 dark:bg-[#1C1C1E]/75 border border-black/5 dark:border-white/10 px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
             <div>
                 <!-- Breadcrumb minimal -->
-                <nav class="flex items-center gap-1.5 text-[12px] text-black/50 dark:text-white/50 mb-1" aria-label="Breadcrumb">
+                <nav class="flex items-center gap-1.5 text-[12px] text-black/50 dark:text-white/50 mb-1"
+                    aria-label="Breadcrumb">
                     <a href="{{ route('dashboard') }}" class="hover:text-[#007AFF] transition-colors">Dashboard</a>
                     <i data-lucide="chevron-right" class="w-3.5 h-3.5 opacity-40"></i>
                     <span class="text-black/70 dark:text-white/70 font-medium">Biaya Produksi</span>
@@ -126,8 +127,10 @@
                         <i data-lucide="cog" class="w-5 h-5"></i>
                     </div>
                     <div>
-                        <h1 class="text-[20px] font-semibold text-black dark:text-white tracking-tight">Tenaga Kerja &amp; Mesin</h1>
-                        <p class="text-[13px] text-black/50 dark:text-white/50">Konversi tarif upah ke tarif per jam efektif dan kalkulasi biaya mesin per jam operasi</p>
+                        <h1 class="text-[20px] font-semibold text-black dark:text-white tracking-tight">Tenaga Kerja &amp;
+                            Mesin</h1>
+                        <p class="text-[13px] text-black/50 dark:text-white/50">Konversi tarif upah ke tarif per jam efektif
+                            dan kalkulasi biaya mesin per jam operasi</p>
                     </div>
                 </div>
             </div>
@@ -152,28 +155,41 @@
         {{-- SUB-NAVIGATION TABS (Apple Segmented Control)         --}}
         {{-- ===================================================== --}}
         <div class="overflow-x-auto pb-1 scrollbar-none">
-            <div class="inline-flex p-1 rounded-[14px] bg-black/[0.05] dark:bg-white/[0.07] border border-black/5 dark:border-white/10 text-[13px] font-medium whitespace-nowrap">
+            <div
+                class="inline-flex p-1 rounded-[14px] bg-black/[0.05] dark:bg-white/[0.07] border border-black/5 dark:border-white/10 text-[13px] font-medium whitespace-nowrap">
                 <a href="{{ route('calculator.index') }}"
                     class="px-3.5 py-1.5 rounded-[10px] {{ request()->routeIs('calculator*') ? 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)] font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }} flex items-center gap-2 transition-all">
-                    <i data-lucide="calculator" class="w-4 h-4 {{ request()->routeIs('calculator*') ? 'text-[#007AFF]' : 'text-black/40 dark:text-white/40' }}"></i>
+                    <i data-lucide="calculator"
+                        class="w-4 h-4 {{ request()->routeIs('calculator*') ? 'text-[#007AFF]' : 'text-black/40 dark:text-white/40' }}"></i>
                     <span>Kalkulator HPP &amp; Harga</span>
                 </a>
 
-                @if((\App\Support\Context::hasPermission('labor_machines.view') || \App\Support\Context::hasPermission('costing.manage')) && (request()->routeIs('labor-machines.*') || (\App\Support\Context::business()?->isModuleEnabled(\App\Domain\Template\ModuleRegistry::MODULE_LABOR_MACHINES) ?? true)))
-                <a href="{{ route('labor-machines.index') }}"
-                    class="px-3.5 py-1.5 rounded-[10px] {{ request()->routeIs('labor-machines.*') ? 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)] font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }} flex items-center gap-2 transition-all">
-                    <i data-lucide="cog" class="w-4 h-4 {{ request()->routeIs('labor-machines.*') ? 'text-[#FF9500]' : 'text-black/40 dark:text-white/40' }}"></i>
-                    <span>Upah Kerja &amp; Mesin</span>
-                    <span class="px-1.5 py-0.2 rounded-full text-[11px] tabular-nums font-semibold {{ request()->routeIs('labor-machines.*') ? 'bg-[#FF9500]/12 text-[#FF9500]' : 'bg-black/10 dark:bg-white/10 text-black/60 dark:text-white/60' }}">{{ $totalLaborCount + $totalMachineCount }}</span>
-                </a>
+                @if (
+                    (\App\Support\Context::hasPermission('labor_machines.view') ||
+                        \App\Support\Context::hasPermission('costing.manage')) &&
+                        (request()->routeIs('labor-machines.*') ||
+                            (\App\Support\Context::business()?->isModuleEnabled(
+                                \App\Domain\Template\ModuleRegistry::MODULE_LABOR_MACHINES) ?? true)))
+                    <a href="{{ route('labor-machines.index') }}"
+                        class="px-3.5 py-1.5 rounded-[10px] {{ request()->routeIs('labor-machines.*') ? 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)] font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }} flex items-center gap-2 transition-all">
+                        <i data-lucide="cog"
+                            class="w-4 h-4 {{ request()->routeIs('labor-machines.*') ? 'text-[#FF9500]' : 'text-black/40 dark:text-white/40' }}"></i>
+                        <span>Upah Kerja &amp; Mesin</span>
+                        <span
+                            class="px-1.5 py-0.2 rounded-full text-[11px] tabular-nums font-semibold {{ request()->routeIs('labor-machines.*') ? 'bg-[#FF9500]/12 text-[#FF9500]' : 'bg-black/10 dark:bg-white/10 text-black/60 dark:text-white/60' }}">{{ $totalLaborCount + $totalMachineCount }}</span>
+                    </a>
                 @endif
 
-                @if(\App\Support\Context::hasPermission('costing.view_margin') || \App\Support\Context::hasPermission('reports.costing') || \App\Support\Context::hasPermission('costing.manage'))
-                <a href="{{ route('profitability.index') }}"
-                    class="px-3.5 py-1.5 rounded-[10px] {{ request()->routeIs('profitability.*') ? 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)] font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }} flex items-center gap-2 transition-all">
-                    <i data-lucide="trending-up" class="w-4 h-4 {{ request()->routeIs('profitability.*') ? 'text-[#34C759]' : 'text-black/40 dark:text-white/40' }}"></i>
-                    <span>Analisis BEP &amp; Margin</span>
-                </a>
+                @if (
+                    \App\Support\Context::hasPermission('costing.view_margin') ||
+                        \App\Support\Context::hasPermission('reports.costing') ||
+                        \App\Support\Context::hasPermission('costing.manage'))
+                    <a href="{{ route('profitability.index') }}"
+                        class="px-3.5 py-1.5 rounded-[10px] {{ request()->routeIs('profitability.*') ? 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)] font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }} flex items-center gap-2 transition-all">
+                        <i data-lucide="trending-up"
+                            class="w-4 h-4 {{ request()->routeIs('profitability.*') ? 'text-[#34C759]' : 'text-black/40 dark:text-white/40' }}"></i>
+                        <span>Analisis BEP &amp; Margin</span>
+                    </a>
                 @endif
             </div>
         </div>
@@ -314,7 +330,8 @@
                         </svg>
                     </div>
                     <div>
-                        <h2 class="text-[16px] font-semibold text-black dark:text-white tracking-tight">Tarif Tenaga Kerja Langsung (Direct Labor)</h2>
+                        <h2 class="text-[16px] font-semibold text-black dark:text-white tracking-tight">Tarif Tenaga Kerja
+                            Langsung (Direct Labor)</h2>
                         <p class="text-[12px] text-black/50 dark:text-white/50">Dikonversi otomatis ke jam produktif
                             (Productive Hours Utilization %)</p>
                     </div>
@@ -670,7 +687,8 @@
                                 </p>
                             </div>
                             <p class="text-[13px] text-[#007AFF] dark:text-[#0A84FF] font-semibold tabular-nums mt-0.5">
-                                {{ $business->currency_symbol }} {{ number_format((float) $totalHourly, 0, ',', '.') }}/jam
+                                {{ $business->currency_symbol }}
+                                {{ number_format((float) $totalHourly, 0, ',', '.') }}/jam
                                 <span class="text-[11px] font-normal text-black/45 dark:text-white/45">
                                     · {{ number_format((float) $m->useful_life_hours, 0, ',', '.') }} jam
                                 </span>
@@ -713,464 +731,557 @@
         <!-- ===================================================== -->
         <!-- 6. MODAL: TAMBAH TARIF UPAH (Apple Sheet)             -->
         <!-- ===================================================== -->
-        <div x-show="showLaborModal" style="display: none"
-            class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/25 backdrop-blur-[2px]"
-            x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+        <template x-teleport="body">
+            <div x-show="showLaborModal" x-cloak class="fixed inset-0 z-[200] overflow-y-auto"
+                @keydown.escape.window="showLaborModal = false" role="dialog" aria-modal="true"
+                aria-labelledby="modal-labor-title">
 
-            <div @click.outside="showLaborModal = false"
-                class="w-full sm:max-w-md rounded-t-[20px] sm:rounded-[16px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] max-h-[90vh] overflow-y-auto"
-                x-transition:enter="transition ease-out duration-200"
-                x-transition:enter-start="opacity-0 translate-y-4 sm:scale-95"
-                x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-                x-transition:leave="transition ease-in duration-150"
-                x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-                x-transition:leave-end="opacity-0 translate-y-4 sm:scale-95">
+                {{-- Backdrop --}}
+                <div x-show="showLaborModal" x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                    x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    @click="showLaborModal = false"></div>
 
-                <div class="sm:hidden w-10 h-1 rounded-full bg-black/20 dark:bg-white/20 mx-auto mb-2"></div>
+                {{-- Dialog Container --}}
+                <div class="relative z-10 min-h-full flex items-end sm:items-center justify-center p-0 sm:p-4" @click.self="showLaborModal = false">
+                    <div @click.stop x-show="showLaborModal" x-transition:enter="ease-out duration-300"
+                        x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                        x-transition:leave="ease-in duration-200"
+                        x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                        x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        class="relative w-full sm:max-w-md rounded-t-[20px] sm:rounded-[16px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] max-h-[90vh] overflow-y-auto">
 
-                <div class="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-3">
-                    <h3 class="text-[17px] font-semibold text-black dark:text-white">Tambah Tarif Tenaga Kerja</h3>
-                    <button type="button" @click="showLaborModal = false"
-                        class="w-7 h-7 rounded-[6px] text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white flex items-center justify-center transition">✕</button>
+                        <div class="sm:hidden w-10 h-1 rounded-full bg-black/20 dark:bg-white/20 mx-auto mb-2"></div>
+
+                        <div class="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-3">
+                            <h3 id="modal-labor-title" class="text-[17px] font-semibold text-black dark:text-white">Tambah
+                                Tarif Tenaga Kerja</h3>
+                            <button type="button" @click="showLaborModal = false" aria-label="{{ __('common.close') }}"
+                                class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/5 dark:bg-white/10 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center transition cursor-pointer">
+                                <i data-lucide="x" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+
+                        <form method="POST" action="{{ route('labor-rates.store') }}" class="space-y-3.5 text-[13px]">
+                            @csrf
+
+                            <div>
+                                <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Nama Peran / Posisi
+                                    <span class="text-[#FF3B30]">*</span></label>
+                                <input type="text" name="name" required
+                                    placeholder="Contoh: Koki Masak / Barista / Operator"
+                                    class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:ring-2 focus:ring-[#007AFF]/50">
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Basis Tarif
+                                        <span class="text-[#FF3B30]">*</span></label>
+                                    <select name="basis" required
+                                        class="w-full h-10 px-3 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50">
+                                        <option value="hourly">Per Jam (Hourly)</option>
+                                        <option value="daily">Per Hari (Daily)</option>
+                                        <option value="monthly">Bulanan (Monthly)</option>
+                                        <option value="per_unit">Per Unit (Potong)</option>
+                                        <option value="per_task">Per Tugas (Task)</option>
+                                        <option value="per_project">Per Proyek</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Nominal Upah
+                                        (Rp) <span class="text-[#FF3B30]">*</span></label>
+                                    <input type="number" name="rate_amount" required min="1" step="1000"
+                                        placeholder="3500000"
+                                        class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/50">
+                                </div>
+                            </div>
+
+                            <!-- Parameters Box -->
+                            <div
+                                class="rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 p-3 space-y-2">
+                                <span
+                                    class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wide">Parameter
+                                    Efektivitas Kerja</span>
+                                <div class="grid grid-cols-3 gap-2">
+                                    <div>
+                                        <label
+                                            class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Hari/Bulan</label>
+                                        <input type="number" name="working_days_per_month" value="22"
+                                            min="1" max="31"
+                                            class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Jam/Hari</label>
+                                        <input type="number" name="working_hours_per_day" value="8" min="1"
+                                            max="24"
+                                            class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Utilisasi
+                                            %</label>
+                                        <input type="number" name="utilization_percentage" value="80"
+                                            min="10" max="100"
+                                            class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-2 pt-1">
+                                <input type="checkbox" name="is_subcontractor" id="subcontractor-new" value="1"
+                                    class="rounded-[4px] border-black/20 text-[#007AFF] focus:ring-[#007AFF]">
+                                <label for="subcontractor-new"
+                                    class="text-[13px] text-black/70 dark:text-white/70">Pekerja
+                                    Subkontraktor / Jasa Luar</label>
+                            </div>
+
+                            <div
+                                class="flex items-center justify-end gap-2 pt-3 border-t border-black/10 dark:border-white/10">
+                                <button type="button" @click="showLaborModal = false"
+                                    class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] active:scale-[0.97] transition">
+                                    Batal
+                                </button>
+                                <button type="submit"
+                                    class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
+                                    Simpan Tarif
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-
-                <form method="POST" action="{{ route('labor-rates.store') }}" class="space-y-3.5 text-[13px]">
-                    @csrf
-
-                    <div>
-                        <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Nama Peran / Posisi <span
-                                class="text-[#FF3B30]">*</span></label>
-                        <input type="text" name="name" required
-                            placeholder="Contoh: Koki Masak / Barista / Operator"
-                            class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:ring-2 focus:ring-[#007AFF]/50">
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-3">
-                        <div>
-                            <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Basis Tarif <span
-                                    class="text-[#FF3B30]">*</span></label>
-                            <select name="basis" required
-                                class="w-full h-10 px-3 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50">
-                                <option value="hourly">Per Jam (Hourly)</option>
-                                <option value="daily">Per Hari (Daily)</option>
-                                <option value="monthly">Bulanan (Monthly)</option>
-                                <option value="per_unit">Per Unit (Potong)</option>
-                                <option value="per_task">Per Tugas (Task)</option>
-                                <option value="per_project">Per Proyek</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Nominal Upah (Rp) <span
-                                    class="text-[#FF3B30]">*</span></label>
-                            <input type="number" name="rate_amount" required min="1" step="1000"
-                                placeholder="3500000"
-                                class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/50">
-                        </div>
-                    </div>
-
-                    <!-- Parameters Box -->
-                    <div
-                        class="rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 p-3 space-y-2">
-                        <span
-                            class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wide">Parameter
-                            Efektivitas Kerja</span>
-                        <div class="grid grid-cols-3 gap-2">
-                            <div>
-                                <label class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Hari/Bulan</label>
-                                <input type="number" name="working_days_per_month" value="22" min="1"
-                                    max="31"
-                                    class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
-                            </div>
-                            <div>
-                                <label class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Jam/Hari</label>
-                                <input type="number" name="working_hours_per_day" value="8" min="1"
-                                    max="24"
-                                    class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
-                            </div>
-                            <div>
-                                <label class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Utilisasi %</label>
-                                <input type="number" name="utilization_percentage" value="80" min="10"
-                                    max="100"
-                                    class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center gap-2 pt-1">
-                        <input type="checkbox" name="is_subcontractor" id="subcontractor-new" value="1"
-                            class="rounded-[4px] border-black/20 text-[#007AFF] focus:ring-[#007AFF]">
-                        <label for="subcontractor-new" class="text-[13px] text-black/70 dark:text-white/70">Pekerja
-                            Subkontraktor / Jasa Luar</label>
-                    </div>
-
-                    <div class="flex items-center justify-end gap-2 pt-3 border-t border-black/10 dark:border-white/10">
-                        <button type="button" @click="showLaborModal = false"
-                            class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] active:scale-[0.97] transition">
-                            Batal
-                        </button>
-                        <button type="submit"
-                            class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
-                            Simpan Tarif
-                        </button>
-                    </div>
-                </form>
             </div>
-        </div>
+        </template>
 
         <!-- ===================================================== -->
         <!-- 7. MODAL: EDIT TARIF UPAH (Apple Sheet)               -->
         <!-- ===================================================== -->
-        <div x-show="showEditLaborModal" style="display: none"
-            class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/25 backdrop-blur-[2px]"
-            x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+        <template x-teleport="body">
+            <div x-show="showEditLaborModal" x-cloak class="fixed inset-0 z-[200] overflow-y-auto"
+                @keydown.escape.window="showEditLaborModal = false" role="dialog" aria-modal="true"
+                aria-labelledby="modal-edit-labor-title">
 
-            <div @click.outside="showEditLaborModal = false"
-                class="w-full sm:max-w-md rounded-t-[20px] sm:rounded-[16px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] max-h-[90vh] overflow-y-auto"
-                x-transition:enter="transition ease-out duration-200"
-                x-transition:enter-start="opacity-0 translate-y-4 sm:scale-95"
-                x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-                x-transition:leave="transition ease-in duration-150"
-                x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-                x-transition:leave-end="opacity-0 translate-y-4 sm:scale-95">
+                {{-- Backdrop --}}
+                <div x-show="showEditLaborModal" x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                    x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    @click="showEditLaborModal = false"></div>
 
-                <div class="sm:hidden w-10 h-1 rounded-full bg-black/20 dark:bg-white/20 mx-auto mb-2"></div>
+                {{-- Dialog Container --}}
+                <div class="relative z-10 min-h-full flex items-end sm:items-center justify-center p-0 sm:p-4" @click.self="showEditLaborModal = false">
+                    <div @click.stop x-show="showEditLaborModal" x-transition:enter="ease-out duration-300"
+                        x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                        x-transition:leave="ease-in duration-200"
+                        x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                        x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        class="relative w-full sm:max-w-md rounded-t-[20px] sm:rounded-[16px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] max-h-[90vh] overflow-y-auto">
 
-                <div class="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-3">
-                    <h3 class="text-[17px] font-semibold text-black dark:text-white">Edit Tarif Tenaga Kerja</h3>
-                    <button type="button" @click="showEditLaborModal = false"
-                        class="w-7 h-7 rounded-[6px] text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white flex items-center justify-center transition">✕</button>
+                        <div class="sm:hidden w-10 h-1 rounded-full bg-black/20 dark:bg-white/20 mx-auto mb-2"></div>
+
+                        <div class="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-3">
+                            <h3 id="modal-edit-labor-title" class="text-[17px] font-semibold text-black dark:text-white">
+                                Edit Tarif Tenaga Kerja</h3>
+                            <button type="button" @click="showEditLaborModal = false"
+                                aria-label="{{ __('common.close') }}"
+                                class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/5 dark:bg-white/10 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center transition cursor-pointer">
+                                <i data-lucide="x" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+
+                        <form :action="'/labor-rates/' + editLabor.id" method="POST" class="space-y-3.5 text-[13px]">
+                            @csrf
+                            @method('PUT')
+
+                            <div>
+                                <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Nama Peran / Posisi
+                                    <span class="text-[#FF3B30]">*</span></label>
+                                <input type="text" name="name" x-model="editLabor.name" required
+                                    placeholder="Nama posisi"
+                                    class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50">
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Basis Tarif
+                                        <span class="text-[#FF3B30]">*</span></label>
+                                    <select name="basis" x-model="editLabor.basis" required
+                                        class="w-full h-10 px-3 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50">
+                                        <option value="hourly">Per Jam (Hourly)</option>
+                                        <option value="daily">Per Hari (Daily)</option>
+                                        <option value="monthly">Bulanan (Monthly)</option>
+                                        <option value="per_unit">Per Unit (Potong)</option>
+                                        <option value="per_task">Per Tugas (Task)</option>
+                                        <option value="per_project">Per Proyek</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Nominal Upah
+                                        (Rp) <span class="text-[#FF3B30]">*</span></label>
+                                    <input type="number" name="rate_amount" x-model="editLabor.rate_amount" required
+                                        min="1" step="1000"
+                                        class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/50">
+                                </div>
+                            </div>
+
+                            <!-- Parameters Box -->
+                            <div
+                                class="rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 p-3 space-y-2">
+                                <span
+                                    class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wide">Parameter
+                                    Efektivitas Kerja</span>
+                                <div class="grid grid-cols-3 gap-2">
+                                    <div>
+                                        <label
+                                            class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Hari/Bulan</label>
+                                        <input type="number" name="working_days_per_month"
+                                            x-model="editLabor.working_days_per_month" min="1" max="31"
+                                            class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Jam/Hari</label>
+                                        <input type="number" name="working_hours_per_day"
+                                            x-model="editLabor.working_hours_per_day" min="1" max="24"
+                                            class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Utilisasi
+                                            %</label>
+                                        <input type="number" name="utilization_percentage"
+                                            x-model="editLabor.utilization_percentage" min="10" max="100"
+                                            class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-2 pt-1">
+                                <input type="checkbox" name="is_subcontractor" id="subcontractor-edit" value="1"
+                                    x-model="editLabor.is_subcontractor"
+                                    class="rounded-[4px] border-black/20 text-[#007AFF] focus:ring-[#007AFF]">
+                                <label for="subcontractor-edit"
+                                    class="text-[13px] text-black/70 dark:text-white/70">Pekerja
+                                    Subkontraktor / Jasa Luar</label>
+                            </div>
+
+                            <div
+                                class="flex items-center justify-end gap-2 pt-3 border-t border-black/10 dark:border-white/10">
+                                <button type="button" @click="showEditLaborModal = false"
+                                    class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] active:scale-[0.97] transition">
+                                    Batal
+                                </button>
+                                <button type="submit"
+                                    class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
+                                    Simpan Perubahan
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-
-                <form :action="'/labor-rates/' + editLabor.id" method="POST" class="space-y-3.5 text-[13px]">
-                    @csrf
-                    @method('PUT')
-
-                    <div>
-                        <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Nama Peran / Posisi <span
-                                class="text-[#FF3B30]">*</span></label>
-                        <input type="text" name="name" x-model="editLabor.name" required placeholder="Nama posisi"
-                            class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50">
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-3">
-                        <div>
-                            <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Basis Tarif <span
-                                    class="text-[#FF3B30]">*</span></label>
-                            <select name="basis" x-model="editLabor.basis" required
-                                class="w-full h-10 px-3 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50">
-                                <option value="hourly">Per Jam (Hourly)</option>
-                                <option value="daily">Per Hari (Daily)</option>
-                                <option value="monthly">Bulanan (Monthly)</option>
-                                <option value="per_unit">Per Unit (Potong)</option>
-                                <option value="per_task">Per Tugas (Task)</option>
-                                <option value="per_project">Per Proyek</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Nominal Upah (Rp) <span
-                                    class="text-[#FF3B30]">*</span></label>
-                            <input type="number" name="rate_amount" x-model="editLabor.rate_amount" required
-                                min="1" step="1000"
-                                class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/50">
-                        </div>
-                    </div>
-
-                    <!-- Parameters Box -->
-                    <div
-                        class="rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 p-3 space-y-2">
-                        <span
-                            class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wide">Parameter
-                            Efektivitas Kerja</span>
-                        <div class="grid grid-cols-3 gap-2">
-                            <div>
-                                <label class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Hari/Bulan</label>
-                                <input type="number" name="working_days_per_month"
-                                    x-model="editLabor.working_days_per_month" min="1" max="31"
-                                    class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
-                            </div>
-                            <div>
-                                <label class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Jam/Hari</label>
-                                <input type="number" name="working_hours_per_day"
-                                    x-model="editLabor.working_hours_per_day" min="1" max="24"
-                                    class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
-                            </div>
-                            <div>
-                                <label class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Utilisasi %</label>
-                                <input type="number" name="utilization_percentage"
-                                    x-model="editLabor.utilization_percentage" min="10" max="100"
-                                    class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center gap-2 pt-1">
-                        <input type="checkbox" name="is_subcontractor" id="subcontractor-edit" value="1"
-                            x-model="editLabor.is_subcontractor"
-                            class="rounded-[4px] border-black/20 text-[#007AFF] focus:ring-[#007AFF]">
-                        <label for="subcontractor-edit" class="text-[13px] text-black/70 dark:text-white/70">Pekerja
-                            Subkontraktor / Jasa Luar</label>
-                    </div>
-
-                    <div class="flex items-center justify-end gap-2 pt-3 border-t border-black/10 dark:border-white/10">
-                        <button type="button" @click="showEditLaborModal = false"
-                            class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] active:scale-[0.97] transition">
-                            Batal
-                        </button>
-                        <button type="submit"
-                            class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
-                            Simpan Perubahan
-                        </button>
-                    </div>
-                </form>
             </div>
-        </div>
+        </template>
 
         <!-- ===================================================== -->
         <!-- 8. MODAL: TAMBAH MESIN (Apple Sheet)                  -->
         <!-- ===================================================== -->
-        <div x-show="showMachineModal" style="display: none"
-            class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/25 backdrop-blur-[2px]"
-            x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+        <template x-teleport="body">
+            <div x-show="showMachineModal" x-cloak class="fixed inset-0 z-[200] overflow-y-auto"
+                @keydown.escape.window="showMachineModal = false" role="dialog" aria-modal="true"
+                aria-labelledby="modal-machine-title">
 
-            <div @click.outside="showMachineModal = false"
-                class="w-full sm:max-w-md rounded-t-[20px] sm:rounded-[16px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] max-h-[90vh] overflow-y-auto"
-                x-transition:enter="transition ease-out duration-200"
-                x-transition:enter-start="opacity-0 translate-y-4 sm:scale-95"
-                x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-                x-transition:leave="transition ease-in duration-150"
-                x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-                x-transition:leave-end="opacity-0 translate-y-4 sm:scale-95">
+                {{-- Backdrop --}}
+                <div x-show="showMachineModal" x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                    x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    @click="showMachineModal = false"></div>
 
-                <div class="sm:hidden w-10 h-1 rounded-full bg-black/20 dark:bg-white/20 mx-auto mb-2"></div>
+                {{-- Dialog Container --}}
+                <div class="relative z-10 min-h-full flex items-end sm:items-center justify-center p-0 sm:p-4" @click.self="showMachineModal = false">
+                    <div @click.stop x-show="showMachineModal" x-transition:enter="ease-out duration-300"
+                        x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                        x-transition:leave="ease-in duration-200"
+                        x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                        x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        class="relative w-full sm:max-w-md rounded-t-[20px] sm:rounded-[16px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] max-h-[90vh] overflow-y-auto">
 
-                <div class="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-3">
-                    <h3 class="text-[17px] font-semibold text-black dark:text-white">Tambah Mesin &amp; Peralatan</h3>
-                    <button type="button" @click="showMachineModal = false"
-                        class="w-7 h-7 rounded-[6px] text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white flex items-center justify-center transition">✕</button>
+                        <div class="sm:hidden w-10 h-1 rounded-full bg-black/20 dark:bg-white/20 mx-auto mb-2"></div>
+
+                        <div class="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-3">
+                            <h3 id="modal-machine-title" class="text-[17px] font-semibold text-black dark:text-white">
+                                Tambah Mesin &amp; Peralatan</h3>
+                            <button type="button" @click="showMachineModal = false"
+                                aria-label="{{ __('common.close') }}"
+                                class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/5 dark:bg-white/10 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center transition cursor-pointer">
+                                <i data-lucide="x" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+
+                        <form method="POST" action="{{ route('machines.store') }}" class="space-y-3.5 text-[13px]">
+                            @csrf
+
+                            <div>
+                                <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Nama Mesin /
+                                    Peralatan <span class="text-[#FF3B30]">*</span></label>
+                                <input type="text" name="name" required
+                                    placeholder="Contoh: Mesin Espresso 2 Group / Oven Deck"
+                                    class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:ring-2 focus:ring-[#007AFF]/50">
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Harga Beli (Rp)
+                                        <span class="text-[#FF3B30]">*</span></label>
+                                    <input type="number" name="purchase_price" required min="1" step="10000"
+                                        placeholder="45000000"
+                                        class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/50">
+                                </div>
+                                <div>
+                                    <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Nilai Residu
+                                        (Sisa)</label>
+                                    <input type="number" name="salvage_value" min="0" step="10000"
+                                        placeholder="0" value="0"
+                                        class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/50">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Estimasi Umur
+                                    Manfaat (Jam)
+                                    <span class="text-[#FF3B30]">*</span></label>
+                                <input type="number" name="useful_life_hours" required min="100"
+                                    placeholder="10000" value="10000"
+                                    class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/50">
+                            </div>
+
+                            <!-- Electric & Maintenance Parameters -->
+                            <div
+                                class="rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 p-3 space-y-2">
+                                <span
+                                    class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wide">Konsumsi
+                                    Daya &amp; Pemeliharaan</span>
+                                <div class="grid grid-cols-3 gap-2">
+                                    <div>
+                                        <label class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Daya
+                                            (kW)</label>
+                                        <input type="number" name="power_kw" value="1.5" step="0.1"
+                                            min="0"
+                                            class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Listrik/kWh</label>
+                                        <input type="number" name="electricity_cost_per_kwh" value="1500"
+                                            min="0"
+                                            class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Rawat/Jam</label>
+                                        <input type="number" name="maintenance_cost_per_hour" value="0"
+                                            min="0" step="500"
+                                            class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div
+                                class="flex items-center justify-end gap-2 pt-3 border-t border-black/10 dark:border-white/10">
+                                <button type="button" @click="showMachineModal = false"
+                                    class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] active:scale-[0.97] transition">
+                                    Batal
+                                </button>
+                                <button type="submit"
+                                    class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
+                                    Simpan Mesin
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-
-                <form method="POST" action="{{ route('machines.store') }}" class="space-y-3.5 text-[13px]">
-                    @csrf
-
-                    <div>
-                        <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Nama Mesin / Peralatan <span
-                                class="text-[#FF3B30]">*</span></label>
-                        <input type="text" name="name" required
-                            placeholder="Contoh: Mesin Espresso 2 Group / Oven Deck"
-                            class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:ring-2 focus:ring-[#007AFF]/50">
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-3">
-                        <div>
-                            <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Harga Beli (Rp) <span
-                                    class="text-[#FF3B30]">*</span></label>
-                            <input type="number" name="purchase_price" required min="1" step="10000"
-                                placeholder="45000000"
-                                class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/50">
-                        </div>
-                        <div>
-                            <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Nilai Residu
-                                (Sisa)</label>
-                            <input type="number" name="salvage_value" min="0" step="10000" placeholder="0"
-                                value="0"
-                                class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/50">
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Estimasi Umur Manfaat (Jam)
-                            <span class="text-[#FF3B30]">*</span></label>
-                        <input type="number" name="useful_life_hours" required min="100" placeholder="10000"
-                            value="10000"
-                            class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/50">
-                    </div>
-
-                    <!-- Electric & Maintenance Parameters -->
-                    <div
-                        class="rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 p-3 space-y-2">
-                        <span
-                            class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wide">Konsumsi
-                            Daya &amp; Pemeliharaan</span>
-                        <div class="grid grid-cols-3 gap-2">
-                            <div>
-                                <label class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Daya (kW)</label>
-                                <input type="number" name="power_kw" value="1.5" step="0.1" min="0"
-                                    class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
-                            </div>
-                            <div>
-                                <label class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Listrik/kWh</label>
-                                <input type="number" name="electricity_cost_per_kwh" value="1500" min="0"
-                                    class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
-                            </div>
-                            <div>
-                                <label class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Rawat/Jam</label>
-                                <input type="number" name="maintenance_cost_per_hour" value="0" min="0"
-                                    step="500"
-                                    class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center justify-end gap-2 pt-3 border-t border-black/10 dark:border-white/10">
-                        <button type="button" @click="showMachineModal = false"
-                            class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] active:scale-[0.97] transition">
-                            Batal
-                        </button>
-                        <button type="submit"
-                            class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
-                            Simpan Mesin
-                        </button>
-                    </div>
-                </form>
             </div>
-        </div>
+        </template>
 
         <!-- ===================================================== -->
         <!-- 9. MODAL: EDIT MESIN (Apple Sheet)                    -->
         <!-- ===================================================== -->
-        <div x-show="showEditMachineModal" style="display: none"
-            class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/25 backdrop-blur-[2px]"
-            x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+        <template x-teleport="body">
+            <div x-show="showEditMachineModal" x-cloak class="fixed inset-0 z-[200] overflow-y-auto"
+                @keydown.escape.window="showEditMachineModal = false" role="dialog" aria-modal="true"
+                aria-labelledby="modal-edit-machine-title">
 
-            <div @click.outside="showEditMachineModal = false"
-                class="w-full sm:max-w-md rounded-t-[20px] sm:rounded-[16px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] max-h-[90vh] overflow-y-auto"
-                x-transition:enter="transition ease-out duration-200"
-                x-transition:enter-start="opacity-0 translate-y-4 sm:scale-95"
-                x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-                x-transition:leave="transition ease-in duration-150"
-                x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-                x-transition:leave-end="opacity-0 translate-y-4 sm:scale-95">
+                {{-- Backdrop --}}
+                <div x-show="showEditMachineModal" x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                    x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    @click="showEditMachineModal = false"></div>
 
-                <div class="sm:hidden w-10 h-1 rounded-full bg-black/20 dark:bg-white/20 mx-auto mb-2"></div>
+                {{-- Dialog Container --}}
+                <div class="relative z-10 min-h-full flex items-end sm:items-center justify-center p-0 sm:p-4" @click.self="showEditMachineModal = false">
+                    <div @click.stop x-show="showEditMachineModal" x-transition:enter="ease-out duration-300"
+                        x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                        x-transition:leave="ease-in duration-200"
+                        x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                        x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        class="relative w-full sm:max-w-md rounded-t-[20px] sm:rounded-[16px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] max-h-[90vh] overflow-y-auto">
 
-                <div class="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-3">
-                    <h3 class="text-[17px] font-semibold text-black dark:text-white">Edit Mesin &amp; Peralatan</h3>
-                    <button type="button" @click="showEditMachineModal = false"
-                        class="w-7 h-7 rounded-[6px] text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white flex items-center justify-center transition">✕</button>
+                        <div class="sm:hidden w-10 h-1 rounded-full bg-black/20 dark:bg-white/20 mx-auto mb-2"></div>
+
+                        <div class="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-3">
+                            <h3 id="modal-edit-machine-title"
+                                class="text-[17px] font-semibold text-black dark:text-white">Edit Mesin &amp; Peralatan
+                            </h3>
+                            <button type="button" @click="showEditMachineModal = false"
+                                aria-label="{{ __('common.close') }}"
+                                class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/5 dark:bg-white/10 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center transition cursor-pointer">
+                                <i data-lucide="x" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+
+                        <form :action="'/machines/' + editMachine.id" method="POST" class="space-y-3.5 text-[13px]">
+                            @csrf
+                            @method('PUT')
+
+                            <div>
+                                <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Nama Mesin /
+                                    Peralatan <span class="text-[#FF3B30]">*</span></label>
+                                <input type="text" name="name" x-model="editMachine.name" required
+                                    placeholder="Nama mesin"
+                                    class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50">
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Harga Beli (Rp)
+                                        <span class="text-[#FF3B30]">*</span></label>
+                                    <input type="number" name="purchase_price" x-model="editMachine.purchase_price"
+                                        required min="1" step="10000"
+                                        class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/50">
+                                </div>
+                                <div>
+                                    <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Nilai Residu
+                                        (Sisa)</label>
+                                    <input type="number" name="salvage_value" x-model="editMachine.salvage_value"
+                                        min="0" step="10000"
+                                        class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/50">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Estimasi Umur
+                                    Manfaat (Jam)
+                                    <span class="text-[#FF3B30]">*</span></label>
+                                <input type="number" name="useful_life_hours" x-model="editMachine.useful_life_hours"
+                                    required min="100"
+                                    class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/50">
+                            </div>
+
+                            <!-- Electric & Maintenance Parameters -->
+                            <div
+                                class="rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 p-3 space-y-2">
+                                <span
+                                    class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wide">Konsumsi
+                                    Daya &amp; Pemeliharaan</span>
+                                <div class="grid grid-cols-3 gap-2">
+                                    <div>
+                                        <label class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Daya
+                                            (kW)</label>
+                                        <input type="number" name="power_kw" x-model="editMachine.power_kw"
+                                            step="0.1" min="0"
+                                            class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Listrik/kWh</label>
+                                        <input type="number" name="electricity_cost_per_kwh"
+                                            x-model="editMachine.electricity_cost_per_kwh" min="0"
+                                            class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Rawat/Jam</label>
+                                        <input type="number" name="maintenance_cost_per_hour"
+                                            x-model="editMachine.maintenance_cost_per_hour" min="0" step="500"
+                                            class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div
+                                class="flex items-center justify-end gap-2 pt-3 border-t border-black/10 dark:border-white/10">
+                                <button type="button" @click="showEditMachineModal = false"
+                                    class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] active:scale-[0.97] transition">
+                                    Batal
+                                </button>
+                                <button type="submit"
+                                    class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
+                                    Simpan Perubahan
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-
-                <form :action="'/machines/' + editMachine.id" method="POST" class="space-y-3.5 text-[13px]">
-                    @csrf
-                    @method('PUT')
-
-                    <div>
-                        <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Nama Mesin / Peralatan <span
-                                class="text-[#FF3B30]">*</span></label>
-                        <input type="text" name="name" x-model="editMachine.name" required
-                            placeholder="Nama mesin"
-                            class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50">
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-3">
-                        <div>
-                            <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Harga Beli (Rp) <span
-                                    class="text-[#FF3B30]">*</span></label>
-                            <input type="number" name="purchase_price" x-model="editMachine.purchase_price" required
-                                min="1" step="10000"
-                                class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/50">
-                        </div>
-                        <div>
-                            <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Nilai Residu
-                                (Sisa)</label>
-                            <input type="number" name="salvage_value" x-model="editMachine.salvage_value"
-                                min="0" step="10000"
-                                class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/50">
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Estimasi Umur Manfaat (Jam)
-                            <span class="text-[#FF3B30]">*</span></label>
-                        <input type="number" name="useful_life_hours" x-model="editMachine.useful_life_hours" required
-                            min="100"
-                            class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/50">
-                    </div>
-
-                    <!-- Electric & Maintenance Parameters -->
-                    <div
-                        class="rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 p-3 space-y-2">
-                        <span
-                            class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wide">Konsumsi
-                            Daya &amp; Pemeliharaan</span>
-                        <div class="grid grid-cols-3 gap-2">
-                            <div>
-                                <label class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Daya (kW)</label>
-                                <input type="number" name="power_kw" x-model="editMachine.power_kw" step="0.1"
-                                    min="0"
-                                    class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
-                            </div>
-                            <div>
-                                <label class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Listrik/kWh</label>
-                                <input type="number" name="electricity_cost_per_kwh"
-                                    x-model="editMachine.electricity_cost_per_kwh" min="0"
-                                    class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
-                            </div>
-                            <div>
-                                <label class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Rawat/Jam</label>
-                                <input type="number" name="maintenance_cost_per_hour"
-                                    x-model="editMachine.maintenance_cost_per_hour" min="0" step="500"
-                                    class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center justify-end gap-2 pt-3 border-t border-black/10 dark:border-white/10">
-                        <button type="button" @click="showEditMachineModal = false"
-                            class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] active:scale-[0.97] transition">
-                            Batal
-                        </button>
-                        <button type="submit"
-                            class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
-                            Simpan Perubahan
-                        </button>
-                    </div>
-                </form>
             </div>
-        </div>
+        </template>
 
         <!-- ===================================================== -->
         <!-- 10. APPLE ALERT DIALOG (Native Centered Modal)        -->
         <!-- ===================================================== -->
-        <div x-show="deleteModalOpen" x-cloak
-            class="fixed inset-0 z-50 flex items-center justify-center bg-black/25 backdrop-blur-[2px]"
-            x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+        <template x-teleport="body">
+            <div x-show="deleteModalOpen" x-cloak class="fixed inset-0 z-[220] overflow-y-auto"
+                @keydown.escape.window="closeDelete()" role="alertdialog" aria-modal="true"
+                aria-labelledby="modal-delete-labor-machine-title">
 
-            <div class="w-[290px] rounded-[14px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-black/5 dark:border-white/10"
-                @click.away="closeDelete()" x-transition:enter="transition ease-out duration-200"
-                x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
-                x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100"
-                x-transition:leave-end="opacity-0 scale-95">
+                {{-- Backdrop --}}
+                <div x-show="deleteModalOpen" x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                    x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    @click="closeDelete()"></div>
 
-                <div class="px-4 pt-5 pb-4">
-                    <p class="text-[17px] font-semibold text-black dark:text-white">Hapus Data?</p>
-                    <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
-                        <span x-text="deleteTarget.name" class="font-medium text-black dark:text-white"></span> akan
-                        dihapus dari sistem biaya. Tindakan ini tidak dapat dipulihkan.
-                    </p>
-                </div>
+                {{-- Dialog Container --}}
+                <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="closeDelete()">
+                    <div class="relative w-[300px] rounded-[18px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.35)] border border-black/5 dark:border-white/10"
+                        @click.stop x-show="deleteModalOpen" x-transition:enter="ease-out duration-300"
+                        x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+                        x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100 scale-100"
+                        x-transition:leave-end="opacity-0 scale-95">
 
-                <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
-                    <button type="button" @click="closeDelete()"
-                        class="py-3 text-[#007AFF] border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors">
-                        Batal
-                    </button>
-                    <button type="button" @click="submitDelete()"
-                        class="py-3 text-[#FF3B30] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors">
-                        Hapus
-                    </button>
+                        <div class="px-5 pt-6 pb-5">
+                            <p id="modal-delete-labor-machine-title"
+                                class="text-[17px] font-semibold text-black dark:text-white">Hapus Data?</p>
+                            <p class="text-[13px] text-black/60 dark:text-white/60 mt-1.5 leading-snug">
+                                <span x-text="deleteTarget.name" class="font-medium text-black dark:text-white"></span>
+                                akan
+                                dihapus dari sistem biaya. Tindakan ini tidak dapat dipulihkan.
+                            </p>
+                        </div>
+
+                        <div
+                            class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
+                            <button type="button" @click="closeDelete()"
+                                class="min-h-[44px] py-3 text-[#007AFF] border-r border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 active:bg-black/10 dark:active:bg-white/10 transition-colors flex items-center justify-center cursor-pointer">
+                                Batal
+                            </button>
+                            <button type="button" @click="submitDelete()"
+                                class="min-h-[44px] py-3 text-[#FF3B30] font-semibold hover:bg-black/5 dark:hover:bg-white/5 active:bg-black/10 dark:active:bg-white/10 transition-colors flex items-center justify-center cursor-pointer">
+                                Hapus
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </template>
 
         <!-- Hidden Labor/Machine Delete Form -->
         <form id="form-delete-labor-machine" method="POST" action="" class="hidden">

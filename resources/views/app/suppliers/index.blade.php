@@ -369,17 +369,17 @@
         {{-- ===================================================== --}}
         {{-- 5. SUPPLIERS DATA TABLE (DESKTOP)                     --}}
         {{-- ===================================================== --}}
-        <div class="hidden sm:block rounded-[18px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] overflow-hidden shadow-xs">
+        <div x-data="coocaTableSort()" class="hidden sm:block rounded-[18px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] overflow-hidden shadow-xs">
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-xs">
                     <thead>
                         <tr class="border-b border-black/[0.06] dark:border-white/[0.08] text-[11px] font-bold uppercase tracking-wide text-slate-400 dark:text-slate-500 bg-slate-50/50 dark:bg-[#2C2C2E]/50">
-                            <th class="px-4 py-3">{{ __('purchasing.supplier.table.supplier_name') }}</th>
-                            <th class="px-4 py-3">{{ __('purchasing.supplier.table.contact_pic') }}</th>
-                            <th class="px-4 py-3">{{ __('purchasing.supplier.table.phone_wa') }}</th>
-                            <th class="px-4 py-3">{{ __('purchasing.supplier.table.bank_account') }}</th>
-                            <th class="px-4 py-3">{{ __('purchasing.supplier.table.email_address') }}</th>
-                            <th class="px-4 py-3 text-center">{{ __('purchasing.supplier.table.raw_materials') }}</th>
+                            <x-table-sort-th :col="0" type="string" :title="__('purchasing.supplier.table.supplier_name')" />
+                            <x-table-sort-th :col="1" type="string" :title="__('purchasing.supplier.table.contact_pic')" />
+                            <x-table-sort-th :col="2" type="string" :title="__('purchasing.supplier.table.phone_wa')" />
+                            <x-table-sort-th :col="3" type="string" :title="__('purchasing.supplier.table.bank_account')" />
+                            <x-table-sort-th :col="4" type="string" :title="__('purchasing.supplier.table.email_address')" />
+                            <x-table-sort-th :col="5" type="number" :title="__('purchasing.supplier.table.raw_materials')" align="center" />
                             <th class="px-4 py-3 text-right">{{ __('purchasing.supplier.table.action') }}</th>
                         </tr>
                     </thead>
@@ -387,7 +387,7 @@
                         @forelse($suppliers as $supplier)
                             <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors">
                                 {{-- Nama & Catatan --}}
-                                <td class="px-4 py-3.5">
+                                <td data-sort-value="{{ strtolower($supplier->name) }}" class="px-4 py-3.5">
                                     <div class="font-bold text-slate-900 dark:text-white">
                                         {{ $supplier->name }}
                                     </div>
@@ -400,12 +400,12 @@
                                 </td>
 
                                 {{-- PIC --}}
-                                <td class="px-4 py-3.5 text-slate-700 dark:text-slate-300 font-medium">
+                                <td data-sort-value="{{ strtolower($supplier->contact_person ?? '') }}" class="px-4 py-3.5 text-slate-700 dark:text-slate-300 font-medium">
                                     {{ $supplier->contact_person ?: '-' }}
                                 </td>
 
                                 {{-- Phone / WA --}}
-                                <td class="px-4 py-3.5 font-mono tabular-nums">
+                                <td data-sort-value="{{ strtolower($supplier->phone ?? '') }}" class="px-4 py-3.5 font-mono tabular-nums">
                                     @if ($supplier->phone)
                                         @php
                                             $waNumber = preg_replace('/[^0-9]/', '', $supplier->phone);
@@ -432,7 +432,7 @@
                                 </td>
 
                                 {{-- Rekening Bank --}}
-                                <td class="px-4 py-3.5">
+                                <td data-sort-value="{{ strtolower(($supplier->bank_name ?? '') . ' ' . ($supplier->bank_account_number ?? '')) }}" class="px-4 py-3.5">
                                     @if ($supplier->bank_name || $supplier->bank_account_number)
                                         <div class="font-medium text-slate-800 dark:text-slate-200">
                                             <span class="font-bold text-slate-900 dark:text-white">{{ $supplier->bank_name ?? __('purchasing.supplier.fields.bank_name') }}</span>:
@@ -449,7 +449,7 @@
                                 </td>
 
                                 {{-- Email & Alamat --}}
-                                <td class="px-4 py-3.5">
+                                <td data-sort-value="{{ strtolower($supplier->email ?? '') }}" class="px-4 py-3.5">
                                     @if ($supplier->email)
                                         <div class="text-[11px]">
                                             <a href="mailto:{{ $supplier->email }}" class="text-[#007AFF] hover:underline font-medium">{{ $supplier->email }}</a>
@@ -466,7 +466,7 @@
                                 </td>
 
                                 {{-- Bahan Baku Count Badge --}}
-                                <td class="px-4 py-3.5 text-center">
+                                <td data-sort-value="{{ (int) $supplier->materials_count }}" class="px-4 py-3.5 text-center">
                                     <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold tabular-nums {{ $supplier->materials_count > 0 ? 'bg-[#007AFF]/12 text-[#007AFF]' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400' }}">
                                         {{ __('purchasing.supplier.badges.items_count', ['count' => $supplier->materials_count]) }}
                                     </span>
@@ -650,36 +650,53 @@
         {{-- ===================================================== --}}
         {{-- 6. APPLE BENTO XXL SHEET: TAMBAH PEMASOK              --}}
         {{-- ===================================================== --}}
-        <div x-show="showAddModal" x-cloak
-            class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-md p-3 sm:p-6"
-            x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+        <template x-teleport="body">
+            <div x-show="showAddModal" x-cloak
+                class="fixed inset-0 z-[200] overflow-y-auto"
+                @keydown.escape.window="showAddModal = false"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="modal-add-supplier-title">
 
-            <div class="w-full max-w-[94vw] md:max-w-2xl lg:max-w-3xl xl:max-w-4xl max-h-[88vh] rounded-[22px] bg-white/98 dark:bg-[#1C1C1E]/98 backdrop-blur-2xl border border-black/[0.08] dark:border-white/[0.12] shadow-[0_25px_60px_rgba(0,0,0,0.35)] flex flex-col overflow-hidden"
-                @click.outside="showAddModal = false" x-transition:enter="transition ease-out duration-200"
-                x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
-                x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100"
-                x-transition:leave-end="opacity-0 scale-95">
+                <!-- Backdrop -->
+                <div x-show="showAddModal"
+                    x-transition:enter="ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
-                {{-- Modal Header --}}
-                <div class="px-5 py-4 sm:px-6 sm:py-4.5 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between gap-3 shrink-0 bg-slate-50/50 dark:bg-white/[0.02]">
-                    <div class="flex items-center gap-3.5">
-                        <div class="w-11 h-11 rounded-[14px] bg-[#007AFF]/12 text-[#007AFF] flex items-center justify-center shrink-0 border border-[#007AFF]/20">
-                            <i data-lucide="truck" class="w-5 h-5"></i>
+                <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="showAddModal = false">
+                    <div class="relative w-full max-w-[94vw] md:max-w-2xl lg:max-w-3xl xl:max-w-4xl max-h-[88vh] rounded-[22px] bg-white/98 dark:bg-[#1C1C1E]/98 backdrop-blur-2xl border border-black/[0.08] dark:border-white/[0.12] shadow-[0_25px_60px_rgba(0,0,0,0.35)] flex flex-col overflow-hidden"
+                        @click.outside="showAddModal = false"
+                        x-show="showAddModal"
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0 scale-95"
+                        x-transition:enter-end="opacity-100 scale-100"
+                        x-transition:leave="transition ease-in duration-150"
+                        x-transition:leave-start="opacity-100 scale-100"
+                        x-transition:leave-end="opacity-0 scale-95">
+
+                        {{-- Modal Header --}}
+                        <div class="px-5 py-4 sm:px-6 sm:py-4.5 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between gap-3 shrink-0 bg-slate-50/50 dark:bg-white/[0.02]">
+                            <div class="flex items-center gap-3.5">
+                                <div class="w-11 h-11 rounded-[14px] bg-[#007AFF]/12 text-[#007AFF] flex items-center justify-center shrink-0 border border-[#007AFF]/20">
+                                    <i data-lucide="truck" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <h3 id="modal-add-supplier-title" class="text-base sm:text-lg font-bold text-slate-900 dark:text-white tracking-tight">
+                                        {{ __('purchasing.supplier.create_title') }}
+                                    </h3>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400">{{ __('purchasing.supplier.create_subtitle') }}</p>
+                                </div>
+                            </div>
+                            <button type="button" @click="showAddModal = false"
+                                class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition cursor-pointer" aria-label="{{ __('common.close') ?? 'Close' }}">
+                                <i data-lucide="x" class="w-4 h-4"></i>
+                            </button>
                         </div>
-                        <div>
-                            <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white tracking-tight">
-                                {{ __('purchasing.supplier.create_title') }}
-                            </h3>
-                            <p class="text-xs text-slate-500 dark:text-slate-400">{{ __('purchasing.supplier.create_subtitle') }}</p>
-                        </div>
-                    </div>
-                    <button type="button" @click="showAddModal = false"
-                        class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition cursor-pointer">
-                        <i data-lucide="x" class="w-4 h-4"></i>
-                    </button>
-                </div>
 
                 {{-- Modal Form --}}
                 <form method="POST" action="{{ route('suppliers.store') }}" x-data="{ submitting: false }" @submit="submitting = true" class="flex flex-col flex-1 overflow-hidden">
@@ -806,41 +823,60 @@
                 </form>
             </div>
         </div>
+        </div>
+        </template>
 
         {{-- ===================================================== --}}
         {{-- 7. APPLE BENTO XXL SHEET: EDIT PEMASOK                --}}
         {{-- ===================================================== --}}
-        <div x-show="showEditModal" x-cloak
-            class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-md p-3 sm:p-6"
-            x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+        <template x-teleport="body">
+            <div x-show="showEditModal" x-cloak
+                class="fixed inset-0 z-[200] overflow-y-auto"
+                @keydown.escape.window="showEditModal = false"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="modal-edit-supplier-title">
 
-            <div class="w-full max-w-[94vw] md:max-w-2xl lg:max-w-3xl xl:max-w-4xl max-h-[88vh] rounded-[22px] bg-white/98 dark:bg-[#1C1C1E]/98 backdrop-blur-2xl border border-black/[0.08] dark:border-white/[0.12] shadow-[0_25px_60px_rgba(0,0,0,0.35)] flex flex-col overflow-hidden"
-                @click.outside="showEditModal = false" x-transition:enter="transition ease-out duration-200"
-                x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
-                x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100"
-                x-transition:leave-end="opacity-0 scale-95">
+                <!-- Backdrop -->
+                <div x-show="showEditModal"
+                    x-transition:enter="ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
-                {{-- Modal Header --}}
-                <div class="px-5 py-4 sm:px-6 sm:py-4.5 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between gap-3 shrink-0 bg-slate-50/50 dark:bg-white/[0.02]">
-                    <div class="flex items-center gap-3.5">
-                        <div class="w-11 h-11 rounded-[14px] bg-[#007AFF]/12 text-[#007AFF] flex items-center justify-center shrink-0 border border-[#007AFF]/20">
-                            <i data-lucide="pencil" class="w-5 h-5"></i>
+                <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="showEditModal = false">
+                    <div class="relative w-full max-w-[94vw] md:max-w-2xl lg:max-w-3xl xl:max-w-4xl max-h-[88vh] rounded-[22px] bg-white/98 dark:bg-[#1C1C1E]/98 backdrop-blur-2xl border border-black/[0.08] dark:border-white/[0.12] shadow-[0_25px_60px_rgba(0,0,0,0.35)] flex flex-col overflow-hidden"
+                        @click.outside="showEditModal = false"
+                        x-show="showEditModal"
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0 scale-95"
+                        x-transition:enter-end="opacity-100 scale-100"
+                        x-transition:leave="transition ease-in duration-150"
+                        x-transition:leave-start="opacity-100 scale-100"
+                        x-transition:leave-end="opacity-0 scale-95">
+
+                        {{-- Modal Header --}}
+                        <div class="px-5 py-4 sm:px-6 sm:py-4.5 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between gap-3 shrink-0 bg-slate-50/50 dark:bg-white/[0.02]">
+                            <div class="flex items-center gap-3.5">
+                                <div class="w-11 h-11 rounded-[14px] bg-[#007AFF]/12 text-[#007AFF] flex items-center justify-center shrink-0 border border-[#007AFF]/20">
+                                    <i data-lucide="pencil" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <h3 id="modal-edit-supplier-title" class="text-base sm:text-lg font-bold text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
+                                        <span>{{ __('purchasing.supplier.actions.edit_supplier') }}:</span>
+                                        <span class="text-[#007AFF]" x-text="editSupplier.name"></span>
+                                    </h3>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400" x-text="'{{ __('purchasing.supplier.modals.edit_updating', ['name' => '']) }}' + editSupplier.name"></p>
+                                </div>
+                            </div>
+                            <button type="button" @click="showEditModal = false"
+                                class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition cursor-pointer" aria-label="{{ __('common.close') ?? 'Close' }}">
+                                <i data-lucide="x" class="w-4 h-4"></i>
+                            </button>
                         </div>
-                        <div>
-                            <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
-                                <span>{{ __('purchasing.supplier.actions.edit_supplier') }}:</span>
-                                <span class="text-[#007AFF]" x-text="editSupplier.name"></span>
-                            </h3>
-                            <p class="text-xs text-slate-500 dark:text-slate-400" x-text="'{{ __('purchasing.supplier.modals.edit_updating', ['name' => '']) }}' + editSupplier.name"></p>
-                        </div>
-                    </div>
-                    <button type="button" @click="showEditModal = false"
-                        class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition cursor-pointer">
-                        <i data-lucide="x" class="w-4 h-4"></i>
-                    </button>
-                </div>
 
                 {{-- Modal Form --}}
                 <form :action="'{{ url('/suppliers') }}/' + editSupplier.id" method="POST" x-data="{ submitting: false }" @submit="submitting = true" class="flex flex-col flex-1 overflow-hidden">
@@ -967,99 +1003,130 @@
                 </form>
             </div>
         </div>
+        </div>
+        </template>
 
         {{-- ===================================================== --}}
         {{-- 8. APPLE ALERT DIALOG (Centered Confirmation)         --}}
         {{-- ===================================================== --}}
-        <div x-show="deleteModalOpen" x-cloak
-            class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4"
-            x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+        <template x-teleport="body">
+            <div x-show="deleteModalOpen" x-cloak
+                class="fixed inset-0 z-[220] overflow-y-auto"
+                @keydown.escape.window="closeDelete()"
+                role="alertdialog"
+                aria-modal="true"
+                aria-labelledby="delete-supplier-alert-title">
 
-            <div class="w-full max-w-[340px] rounded-[20px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden text-center shadow-2xl border border-black/[0.08] dark:border-white/[0.12]"
-                @click.away="closeDelete()" x-transition:enter="transition ease-out duration-200"
-                x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
-                x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100"
-                x-transition:leave-end="opacity-0 scale-95">
+                <!-- Backdrop -->
+                <div x-show="deleteModalOpen"
+                    x-transition:enter="ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
-                <div class="px-5 pt-6 pb-4">
-                    <div class="w-12 h-12 rounded-full bg-[#FF3B30]/10 text-[#FF3B30] flex items-center justify-center mx-auto mb-3 border border-[#FF3B30]/20">
-                        <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+                <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="deleteModalOpen = false">
+                    <div class="relative w-full max-w-[340px] rounded-[20px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden text-center shadow-2xl border border-black/[0.08] dark:border-white/[0.12]"
+                        @click.away="closeDelete()"
+                        x-show="deleteModalOpen"
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0 scale-95"
+                        x-transition:enter-end="opacity-100 scale-100"
+                        x-transition:leave="transition ease-in duration-150"
+                        x-transition:leave-start="opacity-100 scale-100"
+                        x-transition:leave-end="opacity-0 scale-95">
+
+                        <div class="px-5 pt-6 pb-4">
+                            <div class="w-12 h-12 rounded-full bg-[#FF3B30]/10 text-[#FF3B30] flex items-center justify-center mx-auto mb-3 border border-[#FF3B30]/20">
+                                <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+                            </div>
+                            <p id="delete-supplier-alert-title" class="text-base font-bold text-slate-900 dark:text-white">{{ __('purchasing.supplier.modals.delete_title') }}</p>
+                            <p class="text-xs text-slate-600 dark:text-slate-400 mt-1.5 leading-relaxed">
+                                <span x-text="deleteTarget.name" class="font-semibold text-slate-900 dark:text-white"></span> {{ __('purchasing.supplier.modals.delete_reassurance') }}
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-2 border-t border-black/[0.08] dark:border-white/[0.12] text-sm font-semibold">
+                            <button type="button" @click="closeDelete()"
+                                class="min-h-[44px] py-3.5 text-[#007AFF] border-r border-black/[0.08] dark:border-white/[0.12] active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer flex items-center justify-center">
+                                {{ __('common.cancel') }}
+                            </button>
+                            <button type="button" @click="submitDelete()"
+                                class="min-h-[44px] py-3.5 text-[#FF3B30] font-bold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer flex items-center justify-center">
+                                {{ __('common.delete') }}
+                            </button>
+                        </div>
                     </div>
-                    <p class="text-base font-bold text-slate-900 dark:text-white">{{ __('purchasing.supplier.modals.delete_title') }}</p>
-                    <p class="text-xs text-slate-600 dark:text-slate-400 mt-1.5 leading-relaxed">
-                        <span x-text="deleteTarget.name" class="font-semibold text-slate-900 dark:text-white"></span> {{ __('purchasing.supplier.modals.delete_reassurance') }}
-                    </p>
-                </div>
-
-                <div class="grid grid-cols-2 border-t border-black/[0.08] dark:border-white/[0.12] text-sm font-semibold">
-                    <button type="button" @click="closeDelete()"
-                        class="min-h-[44px] py-3.5 text-[#007AFF] border-r border-black/[0.08] dark:border-white/[0.12] active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer flex items-center justify-center">
-                        {{ __('common.cancel') }}
-                    </button>
-                    <button type="button" @click="submitDelete()"
-                        class="min-h-[44px] py-3.5 text-[#FF3B30] font-bold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer flex items-center justify-center">
-                        {{ __('common.delete') }}
-                    </button>
                 </div>
             </div>
-        </div>
+        </template>
 
         {{-- ===================================================== --}}
         {{-- 9. INTERACTIVE PRE-COMMIT IMPORT SUPPLIER MODAL (APPLE HIG) --}}
         {{-- ===================================================== --}}
         @if (\App\Support\Context::hasPermission('master_data.suppliers.manage') || \App\Support\Context::isAdminOrOwner())
-            <div x-show="showImportModal" x-cloak
-                class="fixed inset-0 z-50 flex items-end lg:items-center justify-center p-0 lg:p-6 bg-black/60 backdrop-blur-md transition-all"
-                x-transition:enter="transition ease-out duration-300"
-                x-transition:enter-start="opacity-0"
-                x-transition:enter-end="opacity-100"
-                x-transition:leave="transition ease-in duration-200"
-                x-transition:leave-start="opacity-100"
-                x-transition:leave-end="opacity-0"
-                @keydown.escape.window="if (!importExecuting) showImportModal = false">
+            <template x-teleport="body">
+                <div x-show="showImportModal" x-cloak
+                    class="fixed inset-0 z-[200] overflow-y-auto"
+                    @keydown.escape.window="if (!importExecuting) showImportModal = false"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="import-supplier-modal-title">
 
-                <div class="w-full bg-white dark:bg-[#1C1C1E] border-t lg:border border-black/[0.08] dark:border-white/[0.1] shadow-2xl relative overflow-hidden flex flex-col
-                            rounded-t-[28px] lg:rounded-[28px] max-h-[94vh] lg:max-h-[90vh] lg:max-w-6xl"
-                    x-transition:enter="transition ease-out duration-300"
-                    x-transition:enter-start="translate-y-full lg:translate-y-0 lg:scale-95 lg:opacity-0"
-                    x-transition:enter-end="translate-y-0 lg:scale-100 lg:opacity-100"
-                    x-transition:leave="transition ease-in duration-200"
-                    x-transition:leave-start="translate-y-0 lg:scale-100 lg:opacity-100"
-                    x-transition:leave-end="translate-y-full lg:translate-y-0 lg:scale-95 lg:opacity-0"
-                    @click.away="if (!importExecuting) showImportModal = false">
+                    <!-- Backdrop -->
+                    <div x-show="showImportModal"
+                        x-transition:enter="ease-out duration-300"
+                        x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100"
+                        x-transition:leave="ease-in duration-200"
+                        x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0"
+                        class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
-                    <!-- Mobile Drag Handle -->
-                    <div class="w-12 h-1.5 bg-black/20 dark:bg-white/20 rounded-full mx-auto my-2.5 lg:hidden shrink-0"></div>
+                    <div class="relative z-10 min-h-full flex items-end lg:items-center justify-center p-0 lg:p-6" @click.self="showImportModal = false">
+                        <div class="relative w-full bg-white dark:bg-[#1C1C1E] border-t lg:border border-black/[0.08] dark:border-white/[0.1] shadow-2xl relative overflow-hidden flex flex-col
+                                    rounded-t-[28px] lg:rounded-[28px] max-h-[94vh] lg:max-h-[90vh] lg:max-w-6xl"
+                            x-show="showImportModal"
+                            x-transition:enter="transition ease-out duration-300"
+                            x-transition:enter-start="translate-y-full lg:translate-y-0 lg:scale-95 lg:opacity-0"
+                            x-transition:enter-end="translate-y-0 lg:scale-100 lg:opacity-100"
+                            x-transition:leave="transition ease-in duration-200"
+                            x-transition:leave-start="translate-y-0 lg:scale-100 lg:opacity-100"
+                            x-transition:leave-end="translate-y-full lg:translate-y-0 lg:scale-95 lg:opacity-0"
+                            @click.away="if (!importExecuting) showImportModal = false">
 
-                    <!-- Modal Top Bar -->
-                    <div class="px-6 py-4 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-[#F9F9FB] dark:bg-[#252528]">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0">
-                                <i data-lucide="truck" class="w-5 h-5"></i>
+                            <!-- Mobile Drag Handle -->
+                            <div class="w-12 h-1.5 bg-black/20 dark:bg-white/20 rounded-full mx-auto my-2.5 lg:hidden shrink-0"></div>
+
+                            <!-- Modal Top Bar -->
+                            <div class="px-6 py-4 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-[#F9F9FB] dark:bg-[#252528]">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0">
+                                        <i data-lucide="truck" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <h3 id="import-supplier-modal-title" class="text-base sm:text-lg font-bold text-black dark:text-white flex items-center gap-2">
+                                            <span>Import Pemasok via Excel</span>
+                                            <span class="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-[#007AFF]/10 text-[#007AFF]">Interactive Preview</span>
+                                        </h3>
+                                        <p class="text-[12px] text-black/50 dark:text-white/50">Validasi otomatis anti-duplikat sebelum data masuk ke sistem direktori pengadaan</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-2">
+                                    <a href="{{ route('suppliers.template') }}"
+                                        class="h-9 px-3.5 rounded-[10px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] hover:bg-black/[0.04] dark:hover:bg-white/[0.06] text-black dark:text-white text-[12px] font-medium transition flex items-center gap-1.5 shadow-sm">
+                                        <i data-lucide="download" class="w-3.5 h-3.5 text-emerald-600"></i>
+                                        <span>Unduh Template Excel</span>
+                                    </a>
+                                    <button type="button" @click="if (!importExecuting) showImportModal = false"
+                                        class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center transition cursor-pointer" aria-label="{{ __('common.close') ?? 'Close' }}">
+                                        <i data-lucide="x" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
                             </div>
-                            <div>
-                                <h3 class="text-base sm:text-lg font-bold text-black dark:text-white flex items-center gap-2">
-                                    <span>Import Pemasok via Excel</span>
-                                    <span class="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-[#007AFF]/10 text-[#007AFF]">Interactive Preview</span>
-                                </h3>
-                                <p class="text-[12px] text-black/50 dark:text-white/50">Validasi otomatis anti-duplikat sebelum data masuk ke sistem direktori pengadaan</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-2">
-                            <a href="{{ route('suppliers.template') }}"
-                                class="h-9 px-3.5 rounded-[10px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] hover:bg-black/[0.04] dark:hover:bg-white/[0.06] text-black dark:text-white text-[12px] font-medium transition flex items-center gap-1.5 shadow-sm">
-                                <i data-lucide="download" class="w-3.5 h-3.5 text-emerald-600"></i>
-                                <span>Unduh Template Excel</span>
-                            </a>
-                            <button type="button" @click="if (!importExecuting) showImportModal = false"
-                                class="w-8 h-8 rounded-full bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-black/50 dark:text-white/50 flex items-center justify-center transition">
-                                <i data-lucide="x" class="w-4 h-4"></i>
-                            </button>
-                        </div>
-                    </div>
 
                     <!-- Modal Body / Content -->
                     <div class="flex-1 overflow-y-auto p-5 sm:p-6 space-y-5">
@@ -1274,9 +1341,10 @@
                             </button>
                         </div>
                     </div>
-
+                    </div>
                 </div>
             </div>
+        </template>
         @endif
 
     </div>

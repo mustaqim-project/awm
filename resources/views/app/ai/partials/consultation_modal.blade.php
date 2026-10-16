@@ -1,17 +1,33 @@
 {{-- Interactive AI Chat Modal (Pusat Chat AI Virtual Office — Identik Gambar 1) --}}
-<div x-show="showConsultationModal" 
-     x-transition:enter="transition ease-out duration-200"
-     x-transition:enter-start="opacity-0 scale-95"
-     x-transition:enter-end="opacity-100 scale-100"
-     x-transition:leave="transition ease-in duration-150"
-     x-transition:leave-start="opacity-100 scale-100"
-     x-transition:leave-end="opacity-0 scale-95"
-     class="fixed inset-0 z-[150] flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-sm"
-     style="display: none;"
-     @keydown.escape.window="closeConsultationModal()">
+<template x-teleport="body">
+    <div x-show="showConsultationModal" 
+         x-cloak
+         class="fixed inset-0 z-[200] overflow-y-auto flex items-center justify-center p-3 sm:p-4"
+         @keydown.escape.window="closeConsultationModal()"
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="ai-chat-modal-title">
 
-    <div class="w-full max-w-xl sm:max-w-2xl rounded-3xl bg-[#0B0F19] border border-white/10 text-white shadow-2xl overflow-hidden flex flex-col h-[650px] max-h-[92vh]"
-         @click.outside="closeConsultationModal()">
+        <!-- Backdrop -->
+        <div x-show="showConsultationModal"
+             x-transition:enter="ease-out duration-200"
+             x-transition:enter-start="opacity-0"
+             x-transition:enter-end="opacity-100"
+             x-transition:leave="ease-in duration-150"
+             x-transition:leave-start="opacity-100"
+             x-transition:leave-end="opacity-0"
+             @click="closeConsultationModal()"
+             class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
+
+        <div x-show="showConsultationModal"
+             x-transition:enter="ease-out duration-200"
+             x-transition:enter-start="opacity-0 translate-y-4 sm:scale-95"
+             x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+             x-transition:leave="ease-in duration-150"
+             x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+             x-transition:leave-end="opacity-0 translate-y-4 sm:scale-95"
+             class="relative w-full max-w-xl sm:max-w-2xl rounded-[24px] sm:rounded-3xl bg-[#0B0F19] border border-white/10 text-white shadow-2xl overflow-hidden flex flex-col h-[650px] max-h-[92vh] z-10"
+             @click.outside="closeConsultationModal()">
         
         <!-- Header (Identik Gambar 1) -->
         <div class="px-5 py-3.5 border-b border-white/10 flex items-center justify-between bg-[#0B0F19] shrink-0">
@@ -23,7 +39,7 @@
                 <!-- Title & Agent Selector Dropdown -->
                 <div class="space-y-0.5">
                     <div class="flex items-center gap-2">
-                        <h3 class="text-sm font-bold text-white tracking-tight">{{ __('ai.chat.title') }}</h3>
+                        <h3 id="ai-chat-modal-title" class="text-sm font-bold text-white tracking-tight">{{ __('ai.chat.title') }}</h3>
                         <span class="w-2 h-2 rounded-full bg-emerald-400 inline-block shadow-sm shadow-emerald-400/50"></span>
                     </div>
                     <div class="flex items-center gap-1.5 text-xs text-white/70">
@@ -65,13 +81,15 @@
                 <button type="button" 
                         @click="clearCurrentAgentChat()" 
                         title="{{ __('ai.chat.new_chat') }}" 
-                        class="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-white/50 hover:text-white transition cursor-pointer">
-                    <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+                        class="min-w-[44px] min-h-[44px] rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-white/50 hover:text-white transition cursor-pointer active:scale-95"
+                        aria-label="{{ __('ai.chat.new_chat') }}">
+                    <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
                 </button>
                 <button type="button" 
                         @click="closeConsultationModal()" 
                         title="{{ __('ai.chat.close') }}"
-                        class="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-white/60 hover:text-white transition cursor-pointer">
+                        class="min-w-[44px] min-h-[44px] rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-white/60 hover:text-white transition cursor-pointer active:scale-95"
+                        aria-label="{{ __('ai.chat.close') }}">
                     <i data-lucide="x" class="w-4 h-4"></i>
                 </button>
             </div>
@@ -172,4 +190,4 @@
         </div>
 
     </div>
-</div>
+</template>

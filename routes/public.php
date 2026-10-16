@@ -266,6 +266,42 @@ Route::post('/webhooks/marketplace/{provider}', [\App\Http\Controllers\Web\Marke
     ->middleware('throttle:120,1')
     ->name('webhooks.marketplace');
 
+// 15. Public COOCA Mobile Android APK Download
+Route::get('/download/apk', function () {
+    $candidates = [
+        public_path('downloads/cooca.apk'),
+        public_path('cooca.apk'),
+        public_path('apk/cooca_my_own.apk'),
+        public_path('apk/app-release.apk'),
+    ];
+
+    foreach ($candidates as $apkPath) {
+        if (file_exists($apkPath)) {
+            return response()->download($apkPath, 'COOCA-POS-v1.0.0.apk', [
+                'Content-Type' => 'application/vnd.android.package-archive',
+            ]);
+        }
+    }
+
+    if (file_exists(public_path('apk/index.html'))) {
+        return redirect('/apk/index.html');
+    }
+
+    abort(404, 'File installer APK belum tersedia.');
+})->name('public.download.apk');
+
+Route::get('/download-apk', function () {
+    return redirect()->route('public.download.apk');
+});
+
+Route::get('/apk', function () {
+    if (file_exists(public_path('apk/index.html'))) {
+        return response()->file(public_path('apk/index.html'));
+    }
+    return redirect()->route('public.download.apk');
+})->name('public.apk.index');
+
+
 // 15. Public business landing pages using business name as direct URL slug (Must be last)
 Route::get('/{slug}', [PublicStorefrontController::class, 'home'])
     ->where('slug', '^(?!(pos|admin|api|dashboard|auth|login|register|profile|calculator|settings|billing|customer|public|storage|up|settlements|payments|community)$)[a-z0-9]+(?:-[a-z0-9]+)*$')

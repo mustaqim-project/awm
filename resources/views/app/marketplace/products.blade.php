@@ -763,38 +763,55 @@
     <!-- ===================================================== -->
     <!-- 4. MODAL PEMETAAN & ATUR HARGA PER CHANNEL (BENTO XXL)-->
     <!-- ===================================================== -->
-    <div x-show="mappingModal" x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/40 backdrop-blur-sm"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0">
+    <template x-teleport="body">
+        <div x-show="mappingModal" x-cloak
+            class="fixed inset-0 z-[200] overflow-y-auto flex items-center justify-center p-3 sm:p-4"
+            @keydown.escape.window="mappingModal = false"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="marketplace-mapping-modal-title">
 
-        <div @click.away="mappingModal = false"
-            class="w-full max-w-5xl xl:max-w-6xl rounded-[28px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-6 sm:p-8 space-y-6 shadow-2xl max-h-[92vh] overflow-y-auto">
+            <!-- Backdrop -->
+            <div x-show="mappingModal"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="mappingModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
 
-            <!-- Modal Header -->
-            <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-5">
-                <div class="flex items-center gap-3.5">
-                    <div class="w-12 h-12 rounded-[16px] bg-[#007AFF]/15 text-[#007AFF] flex items-center justify-center shrink-0">
-                        <i data-lucide="layers" class="w-6 h-6"></i>
-                    </div>
-                    <div>
-                        <div class="flex items-center gap-2 flex-wrap">
-                            <h3 class="text-[18px] font-bold text-black dark:text-white tracking-tight">Atur Multi-Harga &amp; Alokasi Stok</h3>
-                            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/20">
-                                Bento XXL v2.0
-                            </span>
+            <div x-show="mappingModal"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0 translate-y-4 sm:scale-95"
+                x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave-end="opacity-0 translate-y-4 sm:scale-95"
+                class="relative w-full max-w-5xl xl:max-w-6xl rounded-[28px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-6 sm:p-8 space-y-6 shadow-2xl max-h-[92vh] overflow-y-auto z-10"
+                @click.outside="mappingModal = false">
+
+                <!-- Modal Header -->
+                <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-5">
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-12 h-12 rounded-[16px] bg-[#007AFF]/15 text-[#007AFF] flex items-center justify-center shrink-0">
+                            <i data-lucide="layers" class="w-6 h-6"></i>
                         </div>
-                        <p class="text-[12.5px] text-black/50 dark:text-white/50" x-text="selectedProduct ? (selectedProduct.name + ' • SKU: ' + (selectedProduct.code || '-')) : ''"></p>
+                        <div>
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <h3 id="marketplace-mapping-modal-title" class="text-[18px] font-bold text-black dark:text-white tracking-tight">Atur Multi-Harga &amp; Alokasi Stok</h3>
+                                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/20">
+                                    Bento XXL v2.0
+                                </span>
+                            </div>
+                            <p class="text-[12.5px] text-black/50 dark:text-white/50" x-text="selectedProduct ? (selectedProduct.name + ' • SKU: ' + (selectedProduct.code || '-')) : ''"></p>
+                        </div>
                     </div>
+                    <button type="button" @click="mappingModal = false" class="min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 transition-all cursor-pointer active:scale-95" aria-label="Tutup modal">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
                 </div>
-                <button type="button" @click="mappingModal = false" class="w-8 h-8 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 transition-all cursor-pointer">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
-            </div>
 
             <!-- Form -->
             <form method="POST" action="{{ route('marketplace-hub.products.map') }}" @submit="handleFormSubmit($event)" class="space-y-6">
@@ -1443,6 +1460,7 @@
             </form>
         </div>
     </div>
+</template>
 
 </div>
 @endsection

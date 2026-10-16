@@ -233,23 +233,33 @@
 
             @if ($customers->count() > 0)
                 <!-- Desktop Table View (lg: screens and above) -->
-                <div class="hidden lg:block overflow-x-auto">
+                <div x-data="coocaTableSort()" class="hidden lg:block overflow-x-auto">
                     <table class="w-full text-left text-[13px]">
                         <thead>
                             <tr class="border-b border-black/[0.06] dark:border-white/[0.08] bg-black/[0.02] dark:bg-white/[0.02] text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">
-                                <th class="py-3.5 px-4 sm:px-6">{{ __('crm.table_member') }}</th>
-                                <th class="py-3.5 px-4">{{ __('crm.table_tier_segment') }}</th>
-                                <th class="py-3.5 px-4 text-center">{{ __('crm.table_points_balance') }}</th>
-                                <th class="py-3.5 px-4 text-right">{{ __('crm.table_total_spent') }}</th>
-                                <th class="py-3.5 px-4 text-right">{{ __('crm.table_credit_debt') }}</th>
+                                <x-table-sort-th :col="0" type="string" :title="__('crm.table_member')" class="py-3.5 px-4 sm:px-6" />
+                                <x-table-sort-th :col="1" type="string" :title="__('crm.table_tier_segment')" class="py-3.5 px-4" />
+                                <x-table-sort-th :col="2" type="number" :title="__('crm.table_points_balance')" align="center" class="py-3.5 px-4" />
+                                <x-table-sort-th :col="3" type="number" :title="__('crm.table_total_spent')" align="right" class="py-3.5 px-4" />
+                                <x-table-sort-th :col="4" type="number" :title="__('crm.table_credit_debt')" align="right" class="py-3.5 px-4" />
                                 <th class="py-3.5 px-4 text-right pr-6">{{ __('crm.table_action') }}</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-black/[0.05] dark:divide-white/[0.06]">
                             @foreach ($customers as $m)
+                                @php
+                                    $tierRaw = strtolower((string) ($m->membership_tier ?: 'bronze'));
+                                    $tierMap = [
+                                        'platinum' => ['label' => 'Platinum', 'class' => 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20'],
+                                        'gold'     => ['label' => 'Gold',     'class' => 'bg-[#FF9500]/10 text-[#FF9500] border-[#FF9500]/20'],
+                                        'silver'   => ['label' => 'Silver',   'class' => 'bg-slate-500/10 text-slate-600 dark:text-slate-300 border-slate-500/20'],
+                                        'bronze'   => ['label' => 'Bronze',   'class' => 'bg-amber-600/10 text-amber-700 dark:text-amber-400 border-amber-600/20'],
+                                    ];
+                                    $tConfig = $tierMap[$tierRaw] ?? ['label' => ucfirst($tierRaw), 'class' => 'bg-black/5 text-black/60 border-black/10'];
+                                @endphp
                                 <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors">
                                     <!-- Member Name -->
-                                    <td class="py-4 px-4 sm:px-6">
+                                    <td data-sort-value="{{ strtolower($m->name) }}" class="py-4 px-4 sm:px-6">
                                         <div class="flex items-center gap-3">
                                             <div class="w-10 h-10 rounded-[12px] bg-[#FF9500]/10 text-[#FF9500] font-bold flex items-center justify-center shrink-0 border border-[#FF9500]/20 text-[14px]">
                                                 {{ strtoupper(substr($m->name, 0, 2)) }}
@@ -286,18 +296,8 @@
                                     </td>
 
                                     <!-- Tier & Segment Badges -->
-                                    <td class="py-4 px-4">
+                                    <td data-sort-value="{{ strtolower($tierRaw . ' ' . ($m->segment ?? '')) }}" class="py-4 px-4">
                                         <div class="flex flex-wrap items-center gap-1.5">
-                                            @php
-                                                $tierRaw = strtolower((string) ($m->membership_tier ?: 'bronze'));
-                                                $tierMap = [
-                                                    'platinum' => ['label' => 'Platinum', 'class' => 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20'],
-                                                    'gold'     => ['label' => 'Gold',     'class' => 'bg-[#FF9500]/10 text-[#FF9500] border-[#FF9500]/20'],
-                                                    'silver'   => ['label' => 'Silver',   'class' => 'bg-slate-500/10 text-slate-600 dark:text-slate-300 border-slate-500/20'],
-                                                    'bronze'   => ['label' => 'Bronze',   'class' => 'bg-amber-600/10 text-amber-700 dark:text-amber-400 border-amber-600/20'],
-                                                ];
-                                                $tConfig = $tierMap[$tierRaw] ?? ['label' => ucfirst($tierRaw), 'class' => 'bg-black/5 text-black/60 border-black/10'];
-                                            @endphp
                                             <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold border {{ $tConfig['class'] }}">
                                                 <i data-lucide="award" class="w-3 h-3"></i>
                                                 <span>{{ $tConfig['label'] }}</span>
@@ -312,7 +312,7 @@
                                     </td>
 
                                     <!-- Points Balance & Action -->
-                                    <td class="py-4 px-4 text-center">
+                                    <td data-sort-value="{{ (float) $m->points_balance }}" class="py-4 px-4 text-center">
                                         <div class="space-y-1">
                                             <div class="text-[15px] font-bold text-[#FF9500] tabular-nums font-mono">
                                                 {{ number_format($m->points_balance, 0, ',', '.') }}
@@ -326,7 +326,7 @@
                                     </td>
 
                                     <!-- Total Spent -->
-                                    <td class="py-4 px-4 text-right font-mono tabular-nums">
+                                    <td data-sort-value="{{ (float) $m->total_spent }}" class="py-4 px-4 text-right font-mono tabular-nums">
                                         <div class="font-semibold text-black dark:text-white">
                                             Rp {{ number_format($m->total_spent, 0, ',', '.') }}
                                         </div>
@@ -334,7 +334,7 @@
                                     </td>
 
                                     <!-- Credit Debt Balance -->
-                                    <td class="py-4 px-4 text-right">
+                                    <td data-sort-value="{{ (float) $m->current_credit_balance }}" class="py-4 px-4 text-right">
                                         @if ($m->current_credit_balance > 0)
                                             <div class="space-y-1">
                                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#FF3B30]/10 text-[#FF3B30] border border-[#FF3B30]/20 font-mono tabular-nums">
@@ -558,46 +558,54 @@
         <!-- MODAL: CATAT PELUNASAN KASBON PIUTANG TEMPO (MOBILE BOTTOM SHEET & DESKTOP) -->
         <!-- ========================================================================= -->
         @if (\App\Support\Context::hasPermission('crm.manage'))
-            <div x-show="showCreditModal" x-cloak
-                class="fixed inset-0 z-50 flex items-end lg:items-center justify-center p-0 lg:p-6 bg-black/50 backdrop-blur-md transition-all"
-                x-transition:enter="transition ease-out duration-300"
-                x-transition:enter-start="opacity-0"
-                x-transition:enter-end="opacity-100"
-                x-transition:leave="transition ease-in duration-200"
-                x-transition:leave-start="opacity-100"
-                x-transition:leave-end="opacity-0"
-                @keydown.escape.window="showCreditModal = false">
-                
-                <div class="w-full bg-white dark:bg-[#1C1C1E] border-t lg:border border-black/[0.08] dark:border-white/[0.1] shadow-2xl relative overflow-y-auto
-                            rounded-t-[28px] lg:rounded-[28px] max-h-[92vh] lg:max-h-[88vh]
-                            p-5 sm:p-6 lg:p-8 lg:max-w-xl space-y-6"
-                    x-transition:enter="transition ease-out duration-300"
-                    x-transition:enter-start="translate-y-full lg:translate-y-0 lg:scale-95 lg:opacity-0"
-                    x-transition:enter-end="translate-y-0 lg:scale-100 lg:opacity-100"
-                    x-transition:leave="transition ease-in duration-200"
-                    x-transition:leave-start="translate-y-0 lg:scale-100 lg:opacity-100"
-                    x-transition:leave-end="translate-y-full lg:translate-y-0 lg:scale-95 lg:opacity-0"
-                    @click.away="showCreditModal = false">
-                    
-                    <!-- Mobile Drag / Bottom Sheet Pill Indicator -->
-                    <div class="w-12 h-1.5 bg-black/20 dark:bg-white/20 rounded-full mx-auto mb-2 lg:hidden"></div>
+            <template x-teleport="body">
+                <div x-show="showCreditModal" 
+                    x-cloak
+                    @keydown.escape.window="showCreditModal = false"
+                    class="fixed inset-0 z-[200] overflow-y-auto">
+                    <!-- Backdrop -->
+                    <div x-show="showCreditModal"
+                        x-transition:enter="ease-out duration-300"
+                        x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100"
+                        x-transition:leave="ease-in duration-200"
+                        x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0"
+                        @click="showCreditModal = false"
+                        class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
 
-                    <!-- Modal Header -->
-                    <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-4">
-                        <div class="flex items-center gap-3">
-                            <div class="w-11 h-11 rounded-[14px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center">
-                                <i data-lucide="banknote" class="w-5 h-5"></i>
+                    <div class="relative z-10 min-h-full flex items-end lg:items-center justify-center p-0 lg:p-6" @click.self="showCreditModal = false">
+                        <div x-show="showCreditModal"
+                            x-transition:enter="ease-out duration-300"
+                            x-transition:enter-start="translate-y-full lg:translate-y-0 lg:scale-95 lg:opacity-0"
+                            x-transition:enter-end="translate-y-0 lg:scale-100 lg:opacity-100"
+                            x-transition:leave="ease-in duration-200"
+                            x-transition:leave-start="translate-y-0 lg:scale-100 lg:opacity-100"
+                            x-transition:leave-end="translate-y-full lg:translate-y-0 lg:scale-95 lg:opacity-0"
+                            @click.stop
+                            class="relative w-full bg-white dark:bg-[#1C1C1E] border-t lg:border border-black/[0.08] dark:border-white/[0.1] shadow-2xl overflow-y-auto
+                                        rounded-t-[28px] lg:rounded-[28px] max-h-[92vh] lg:max-h-[88vh]
+                                        p-5 sm:p-6 lg:p-8 lg:max-w-xl space-y-6">
+                            
+                            <!-- Mobile Drag / Bottom Sheet Pill Indicator -->
+                            <div class="w-12 h-1.5 bg-black/20 dark:bg-white/20 rounded-full mx-auto mb-2 lg:hidden"></div>
+
+                            <!-- Modal Header -->
+                            <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-11 h-11 rounded-[14px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center">
+                                        <i data-lucide="banknote" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-bold text-black dark:text-white">{{ __('crm.credit_repayment_title') }}</h3>
+                                        <p class="text-[12px] text-black/50 dark:text-white/50" x-text="selectedCustomer ? selectedCustomer.name : ''"></p>
+                                    </div>
+                                </div>
+                                <button type="button" @click="showCreditModal = false"
+                                    class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer" aria-label="{{ __('common.close') }}">
+                                    <i data-lucide="x" class="w-5 h-5"></i>
+                                </button>
                             </div>
-                            <div>
-                                <h3 class="text-lg font-bold text-black dark:text-white">{{ __('crm.credit_repayment_title') }}</h3>
-                                <p class="text-[12px] text-black/50 dark:text-white/50" x-text="selectedCustomer ? selectedCustomer.name : ''"></p>
-                            </div>
-                        </div>
-                        <button type="button" @click="showCreditModal = false"
-                            class="text-black/40 hover:text-black dark:hover:text-white p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition cursor-pointer">
-                            <i data-lucide="x" class="w-5 h-5"></i>
-                        </button>
-                    </div>
 
                     <!-- Microcopy Keamanan Data -->
                     <div class="p-3.5 rounded-[16px] bg-[#007AFF]/5 border border-[#007AFF]/15 text-[12px] text-[#007AFF] flex items-start gap-2.5">
@@ -652,53 +660,63 @@
                             </button>
                         </div>
                     </form>
+                    </div>
                 </div>
             </div>
+        </template>
         @endif
 
         <!-- ========================================================================= -->
         <!-- MODAL: RIWAYAT PEROLEHAN & PENUKARAN POIN (BOTTOM SHEET & DESKTOP MODAL)  -->
         <!-- ========================================================================= -->
-        <div x-show="showPointsModal" x-cloak
-            class="fixed inset-0 z-50 flex items-end lg:items-center justify-center p-0 lg:p-6 bg-black/50 backdrop-blur-md transition-all"
-            x-transition:enter="transition ease-out duration-300"
-            x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100"
-            x-transition:leave="transition ease-in duration-200"
-            x-transition:leave-start="opacity-100"
-            x-transition:leave-end="opacity-0"
-            @keydown.escape.window="showPointsModal = false">
-            
-            <div class="w-full bg-white dark:bg-[#1C1C1E] border-t lg:border border-black/[0.08] dark:border-white/[0.1] shadow-2xl relative overflow-y-auto
-                        rounded-t-[28px] lg:rounded-[28px] max-h-[92vh] lg:max-h-[88vh]
-                        p-5 sm:p-6 lg:p-8 lg:max-w-2xl space-y-6"
-                x-transition:enter="transition ease-out duration-300"
-                x-transition:enter-start="translate-y-full lg:translate-y-0 lg:scale-95 lg:opacity-0"
-                x-transition:enter-end="translate-y-0 lg:scale-100 lg:opacity-100"
-                x-transition:leave="transition ease-in duration-200"
-                x-transition:leave-start="translate-y-0 lg:scale-100 lg:opacity-100"
-                x-transition:leave-end="translate-y-full lg:translate-y-0 lg:scale-95 lg:opacity-0"
-                @click.away="showPointsModal = false">
-                
-                <!-- Mobile Drag / Bottom Sheet Pill Indicator -->
-                <div class="w-12 h-1.5 bg-black/20 dark:bg-white/20 rounded-full mx-auto mb-2 lg:hidden"></div>
+        <template x-teleport="body">
+            <div x-show="showPointsModal" 
+                x-cloak
+                @keydown.escape.window="showPointsModal = false"
+                class="fixed inset-0 z-[200] overflow-y-auto">
+                <!-- Backdrop -->
+                <div x-show="showPointsModal"
+                    x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    @click="showPointsModal = false"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
 
-                <!-- Modal Header -->
-                <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-4">
-                    <div class="flex items-center gap-3">
-                        <div class="w-11 h-11 rounded-[14px] bg-[#FF9500]/10 text-[#FF9500] flex items-center justify-center">
-                            <i data-lucide="history" class="w-5 h-5"></i>
+                <div class="relative z-10 min-h-full flex items-end lg:items-center justify-center p-0 lg:p-6" @click.self="showPointsModal = false">
+                    <div x-show="showPointsModal"
+                        x-transition:enter="ease-out duration-300"
+                        x-transition:enter-start="translate-y-full lg:translate-y-0 lg:scale-95 lg:opacity-0"
+                        x-transition:enter-end="translate-y-0 lg:scale-100 lg:opacity-100"
+                        x-transition:leave="ease-in duration-200"
+                        x-transition:leave-start="translate-y-0 lg:scale-100 lg:opacity-100"
+                        x-transition:leave-end="translate-y-full lg:translate-y-0 lg:scale-95 lg:opacity-0"
+                        @click.stop
+                        class="relative w-full bg-white dark:bg-[#1C1C1E] border-t lg:border border-black/[0.08] dark:border-white/[0.1] shadow-2xl overflow-y-auto
+                                    rounded-t-[28px] lg:rounded-[28px] max-h-[92vh] lg:max-h-[88vh]
+                                    p-5 sm:p-6 lg:p-8 lg:max-w-2xl space-y-6">
+                        
+                        <!-- Mobile Drag / Bottom Sheet Pill Indicator -->
+                        <div class="w-12 h-1.5 bg-black/20 dark:bg-white/20 rounded-full mx-auto mb-2 lg:hidden"></div>
+
+                        <!-- Modal Header -->
+                        <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-11 h-11 rounded-[14px] bg-[#FF9500]/10 text-[#FF9500] flex items-center justify-center">
+                                    <i data-lucide="history" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-black dark:text-white">{{ __('crm.points_history_title') }}</h3>
+                                    <p class="text-[12px] text-black/50 dark:text-white/50" x-text="selectedCustomer ? selectedCustomer.name : ''"></p>
+                                </div>
+                            </div>
+                            <button type="button" @click="showPointsModal = false"
+                                class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer" aria-label="{{ __('common.close') }}">
+                                <i data-lucide="x" class="w-5 h-5"></i>
+                            </button>
                         </div>
-                        <div>
-                            <h3 class="text-lg font-bold text-black dark:text-white">{{ __('crm.points_history_title') }}</h3>
-                            <p class="text-[12px] text-black/50 dark:text-white/50" x-text="selectedCustomer ? selectedCustomer.name : ''"></p>
-                        </div>
-                    </div>
-                    <button type="button" @click="showPointsModal = false"
-                        class="text-black/40 hover:text-black dark:hover:text-white p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition cursor-pointer">
-                        <i data-lucide="x" class="w-5 h-5"></i>
-                    </button>
-                </div>
 
                 <!-- Points List Container -->
                 <div class="max-h-[380px] overflow-y-auto space-y-2 pr-1">
@@ -737,8 +755,10 @@
                         {{ __('common.close') }}
                     </button>
                 </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </template>
 
     </div>
 @endsection

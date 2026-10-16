@@ -36,6 +36,7 @@ return [
     'connected_accounts' => 'Store Social Media Accounts',
     'connected_accounts_sub' => 'Facebook Page, Instagram Business, Threads, TikTok & LinkedIn',
     'connected_count' => ':count Accounts Connected',
+    'status_connected' => 'Connected',
     'not_connected' => 'Not Connected',
     'active_assets' => 'Active Connected Assets:',
     'auto_refresh_active' => 'Auto-Refresh Active',

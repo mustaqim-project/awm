@@ -18,6 +18,7 @@ return [
     'tab_logs'                         => 'Log Pesan',
     'open_pos'                         => 'Buka Terminal Kasir POS',
     'cancel_btn'                       => 'Batal',
+    'context_tags_title'               => 'Tag Variabel Kontekstual:',
 
     // Meta Cloud API Official
     'meta_official_title'              => 'Meta WhatsApp Cloud API Resmi',

@@ -39,6 +39,24 @@
             services: @json(__('services')),
             settings: @json(__('settings')),
             storefront: @json(__('storefront')),
+            sales: @json(__('sales')),
+            audit: @json(__('audit')),
+            auth: @json(__('auth')),
+            billing: @json(__('billing')),
+            calculator: @json(__('calculator')),
+            dashboard: @json(__('dashboard')),
+            exceptions: @json(__('exceptions')),
+            feedback: @json(__('feedback')),
+            marketplace: @json(__('marketplace')),
+            mcp: @json(__('mcp')),
+            notifications: @json(__('notifications')),
+            printer: @json(__('printer')),
+            products: @json(__('products')),
+            simulator: @json(__('simulator')),
+            social_media: @json(__('social_media')),
+            tax: @json(__('tax')),
+            warehouse: @json(__('warehouse')),
+            whatsapp: @json(__('whatsapp')),
         };
 
         // Universal Client-Side i18n Helper
@@ -61,10 +79,12 @@
             return result;
         };
 
-        // Currency Formatter with Tabular Numbers
+        // Currency Formatter with Tabular Numbers (Adaptive Locale)
         window.formatCurrency = function(amount, currency = 'IDR') {
             const num = Number(amount) || 0;
-            return 'Rp ' + num.toLocaleString('id-ID', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+            const loc = (window.COOCA_LOCALE === 'en') ? 'en-US' : 'id-ID';
+            const formatted = num.toLocaleString(loc, { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+            return (currency === 'IDR' ? 'Rp ' : (currency + ' ')) + formatted;
         };
 
         // Global Reactive Event Bus (CoocaBus)
@@ -213,6 +233,128 @@
                 }
             };
         })();
+
+        // Universal Client-Side Table Sorting Helper (Alpine.js DOM In-Place, Zero-Reload)
+        function coocaTableSort(defaultCol = null, defaultAsc = true) {
+            return {
+                sortCol: defaultCol,
+                sortAsc: defaultAsc,
+                sortBy(colIndex, type = 'string', event = null) {
+                    if (this.sortCol === colIndex) {
+                        this.sortAsc = !this.sortAsc;
+                    } else {
+                        this.sortCol = colIndex;
+                        this.sortAsc = true;
+                    }
+
+                    const el = (event && (event.currentTarget || event.target)) || this.$el;
+                    const table = (el && el.closest ? el.closest('table') : null) 
+                        || (this.$root && (this.$root.tagName === 'TABLE' ? this.$root : this.$root.querySelector('table')))
+                        || (this.$el && (this.$el.tagName === 'TABLE' ? this.$el : this.$el.querySelector('table')));
+                    if (!table) return;
+                    const tbody = table.querySelector('tbody');
+                    if (!tbody) return;
+
+                    const rows = Array.from(tbody.children).filter(r => 
+                        r.tagName === 'TR' && 
+                        !r.hasAttribute('data-empty-row') && 
+                        !r.classList.contains('no-sort') &&
+                        !r.classList.contains('panel-empty')
+                    );
+                    if (rows.length <= 1) return;
+
+                    const multiplier = this.sortAsc ? 1 : -1;
+
+                    const parseSortNumber = (val) => {
+                        if (typeof val === 'number') return val;
+                        let s = String(val).trim();
+                        if (!s) return 0;
+                        s = s.replace(/[^0-9.,-]/g, '');
+                        if (!s || s === '-') return 0;
+                        if (s.indexOf('.') !== -1 && s.indexOf(',') !== -1) {
+                            s = s.replace(/\./g, '').replace(',', '.');
+                        } else if (s.indexOf('.') !== -1 && s.indexOf(',') === -1) {
+                            const dotCount = (s.match(/\./g) || []).length;
+                            if (dotCount > 1 || /\.\d{3}$/.test(s)) {
+                                s = s.replace(/\./g, '');
+                            }
+                        } else if (s.indexOf(',') !== -1 && s.indexOf('.') === -1) {
+                            if (/,\d{3}$/.test(s)) {
+                                s = s.replace(/,/g, '');
+                            } else {
+                                s = s.replace(',', '.');
+                            }
+                        }
+                        const num = parseFloat(s);
+                        return isNaN(num) ? 0 : num;
+                    };
+
+                    const parseSortDate = (val) => {
+                        if (!val) return 0;
+                        if (typeof val === 'number') return val;
+                        let s = String(val).trim();
+                        if (!s) return 0;
+                        if (/^\d{10,13}$/.test(s)) return parseInt(s, 10);
+                        const months = {
+                            'jan': 'Jan', 'feb': 'Feb', 'mar': 'Mar', 'apr': 'Apr',
+                            'mei': 'May', 'jun': 'Jun', 'jul': 'Jul', 'agu': 'Aug',
+                            'agt': 'Aug', 'sep': 'Sep', 'okt': 'Oct', 'nov': 'Nov', 'des': 'Dec'
+                        };
+                        for (const [id, en] of Object.entries(months)) {
+                            s = s.replace(new RegExp(id, 'gi'), en);
+                        }
+                        const dmy = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/);
+                        if (dmy) {
+                            return new Date(dmy[3], parseInt(dmy[2], 10) - 1, dmy[1]).getTime() || 0;
+                        }
+                        const parsed = new Date(s).getTime();
+                        return isNaN(parsed) ? 0 : parsed;
+                    };
+
+                    const getCellVal = (row, idx) => {
+                        const cells = Array.from(row.children).filter(c => c.tagName === 'TD' || c.tagName === 'TH');
+                        const cell = cells[idx];
+                        if (!cell) return '';
+                        const attr = cell.getAttribute('data-sort-value');
+                        if (attr !== null && attr !== undefined) return attr.trim();
+                        const innerSort = cell.querySelector('[data-sort-value]');
+                        if (innerSort) return innerSort.getAttribute('data-sort-value').trim();
+                        return cell.innerText ? cell.innerText.trim() : (cell.textContent || '').trim();
+                    };
+
+                    rows.sort((a, b) => {
+                        const valA = getCellVal(a, colIndex);
+                        const valB = getCellVal(b, colIndex);
+
+                        if (type === 'number') {
+                            const numA = parseSortNumber(valA);
+                            const numB = parseSortNumber(valB);
+                            return (numA - numB) * multiplier;
+                        } else if (type === 'date') {
+                            const dateA = parseSortDate(valA);
+                            const dateB = parseSortDate(valB);
+                            return (dateA - dateB) * multiplier;
+                        } else {
+                            return String(valA).localeCompare(String(valB), undefined, { numeric: true, sensitivity: 'base' }) * multiplier;
+                        }
+                    });
+
+                    rows.forEach((row, rIdx) => {
+                        tbody.appendChild(row);
+                        const rankEl = row.querySelector('.dash-rank');
+                        if (rankEl) rankEl.textContent = rIdx + 1;
+                    });
+                }
+            };
+        }
+
+        window.coocaTableSort = coocaTableSort;
+
+        document.addEventListener('alpine:init', () => {
+            if (window.Alpine) {
+                window.Alpine.data('coocaTableSort', coocaTableSort);
+            }
+        });
     </script>
 
     <meta charset="UTF-8">
@@ -750,25 +892,12 @@
             border-bottom: 1px solid var(--nav-border);
         }
 
-        /* Universal Fullscreen Modal Overlay Directive (Cooca Modal Canvas Architecture) */
-        /* Ensures all modal backdrops sit on the topmost viewport layer (z-index 99999), covering sticky topbars (z-30) and sidebars (z-50) completely without visual leaks or top gaps. */
-        .fixed.inset-0.z-50,
-        .fixed.inset-0.z-\[50\],
-        .fixed.inset-0.z-\[60\],
-        .fixed.inset-0.z-\[70\],
-        .fixed.inset-0.z-\[75\],
-        .fixed.inset-0.z-\[80\],
-        .fixed.inset-0.z-\[100\],
-        .fixed.inset-0.z-\[200\],
-        .fixed.inset-0.z-\[210\],
-        .fixed.inset-0.z-\[220\],
-        [x-cloak].fixed.inset-0,
-        div[x-show*="Modal"].fixed.inset-0,
-        div[x-show*="modal"].fixed.inset-0,
-        div[x-show*="Sheet"].fixed.inset-0,
-        div[x-show*="sheet"].fixed.inset-0 {
-            z-index: 99999 !important;
-        }
+        /* Modal Stacking Architecture:
+           All modals use <template x-teleport="body"> with designated z-index layers:
+           - Standard Modals / Form Sheets: z-[200]
+           - Sub-Modals / Dropdowns / Pickers: z-[210]
+           - Alert Dialogs / Destructive Confirmations: z-[220]
+           Teleportation to <body> natively guarantees overlays sit above sticky topbars (z-[35]) and sidebars (z-50) without artificial z-index: 99999 overrides. */
 
         .glass-card {
             background: var(--surface);
@@ -1181,7 +1310,7 @@
                         <div class="flex items-center gap-2 font-semibold text-[13px]">
                             <i data-lucide="alert-circle"
                                 class="w-4 h-4 text-[#FF3B30] dark:text-[#FF453A] shrink-0"></i>
-                            <span>Terdapat kesalahan input:</span>
+                            <span>{{ __('validation.errors_heading') }}</span>
                         </div>
                         <ul class="list-disc list-inside text-[12px] space-y-0.5 pl-2 opacity-90">
                             @foreach ($errors->all() as $err)

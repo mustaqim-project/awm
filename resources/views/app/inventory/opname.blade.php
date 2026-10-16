@@ -246,129 +246,41 @@
     <!-- 3. SORTABLE DATA TABLE (DESKTOP & TABLET)             -->
     <!-- ===================================================== -->
     <div class="hidden sm:block rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] overflow-hidden shadow-xs"
-         x-data="{
-             sortCol: null,
-             sortAsc: true,
-             sortBy(colIndex, type = 'string') {
-                 if (this.sortCol === colIndex) {
-                     this.sortAsc = !this.sortAsc;
-                 } else {
-                     this.sortCol = colIndex;
-                     this.sortAsc = true;
-                 }
-                 const tbody = this.$refs.tableBody;
-                 const rows = Array.from(tbody.querySelectorAll('tr[data-sort-row]'));
-                 rows.sort((a, b) => {
-                     let valA = a.getAttribute(`data-sort-${colIndex}`) || '';
-                     let valB = b.getAttribute(`data-sort-${colIndex}`) || '';
-                     if (type === 'number') {
-                         valA = parseFloat(valA) || 0;
-                         valB = parseFloat(valB) || 0;
-                         return this.sortAsc ? valA - valB : valB - valA;
-                     }
-                     return this.sortAsc
-                         ? valA.localeCompare(valB, undefined, { numeric: true, sensitivity: 'base' })
-                         : valB.localeCompare(valA, undefined, { numeric: true, sensitivity: 'base' });
-                 });
-                 rows.forEach(row => tbody.appendChild(row));
-             }
-         }">
+         x-data="coocaTableSort()">
         <div class="overflow-x-auto">
             <table class="w-full text-left text-[13px]">
                 <thead>
                     <tr class="border-b border-black/[0.06] dark:border-white/[0.08] bg-black/[0.015] dark:bg-white/[0.02] whitespace-nowrap">
-                        <!-- Col 0: No. Opname -->
-                        <th class="py-3 px-4">
-                            <button type="button" @click="sortBy(0, 'string')" class="group inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors">
-                                <span>No. Opname</span>
-                                <span class="transition-colors">
-                                    <svg x-show="sortCol !== 0" class="w-3.5 h-3.5 text-black/25 dark:text-white/25 group-hover:text-black/50 dark:group-hover:text-white/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
-                                    <svg x-show="sortCol === 0 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
-                                    <svg x-show="sortCol === 0 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
-                                </span>
-                            </button>
-                        </th>
-
-                        <!-- Col 1: Tanggal & Lokasi -->
-                        <th class="py-3 px-4">
-                            <button type="button" @click="sortBy(1, 'number')" class="group inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors">
-                                <span>Tanggal &amp; Lokasi</span>
-                                <span class="transition-colors">
-                                    <svg x-show="sortCol !== 1" class="w-3.5 h-3.5 text-black/25 dark:text-white/25 group-hover:text-black/50 dark:group-hover:text-white/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
-                                    <svg x-show="sortCol === 1 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
-                                    <svg x-show="sortCol === 1 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
-                                </span>
-                            </button>
-                        </th>
-
-                        <!-- Col 2: Pelaksana -->
-                        <th class="py-3 px-4">
-                            <button type="button" @click="sortBy(2, 'string')" class="group inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors">
-                                <span>Pelaksana</span>
-                                <span class="transition-colors">
-                                    <svg x-show="sortCol !== 2" class="w-3.5 h-3.5 text-black/25 dark:text-white/25 group-hover:text-black/50 dark:group-hover:text-white/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
-                                    <svg x-show="sortCol === 2 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
-                                    <svg x-show="sortCol === 2 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
-                                </span>
-                            </button>
-                        </th>
-
-                        <!-- Col 3: Jumlah Item -->
-                        <th class="py-3 px-4 text-center">
-                            <button type="button" @click="sortBy(3, 'number')" class="group inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors">
-                                <span>Jumlah Item</span>
-                                <span class="transition-colors">
-                                    <svg x-show="sortCol !== 3" class="w-3.5 h-3.5 text-black/25 dark:text-white/25 group-hover:text-black/50 dark:group-hover:text-white/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
-                                    <svg x-show="sortCol === 3 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
-                                    <svg x-show="sortCol === 3 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
-                                </span>
-                            </button>
-                        </th>
-
-                        <!-- Col 4: Status -->
-                        <th class="py-3 px-4 text-center">
-                            <button type="button" @click="sortBy(4, 'string')" class="group inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors">
-                                <span>Status</span>
-                                <span class="transition-colors">
-                                    <svg x-show="sortCol !== 4" class="w-3.5 h-3.5 text-black/25 dark:text-white/25 group-hover:text-black/50 dark:group-hover:text-white/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
-                                    <svg x-show="sortCol === 4 && sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
-                                    <svg x-show="sortCol === 4 && !sortAsc" class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
-                                </span>
-                            </button>
-                        </th>
-
-                        <!-- Col 5: Aksi -->
+                        <x-table-sort-th :col="0" type="string" title="No. Opname" />
+                        <x-table-sort-th :col="1" type="date" title="Tanggal & Lokasi" />
+                        <x-table-sort-th :col="2" type="string" title="Pelaksana" />
+                        <x-table-sort-th :col="3" type="number" title="Jumlah Item" align="center" />
+                        <x-table-sort-th :col="4" type="string" title="Status" align="center" />
                         <th class="py-3 px-4 text-[11px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50 text-right">
                             Aksi
                         </th>
                     </tr>
                 </thead>
-                <tbody x-ref="tableBody" class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
+                <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                     @forelse($opnames as $op)
-                    <tr data-sort-row
-                        data-sort-0="{{ $op->opname_number }}"
-                        data-sort-1="{{ $op->opname_date->timestamp }}"
-                        data-sort-2="{{ strtolower($op->conductor->name ?? '') }}"
-                        data-sort-3="{{ $op->items->count() }}"
-                        data-sort-4="{{ $op->status }}"
-                        class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
-                        <td class="py-3.5 px-4">
+                    <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
+                        <td data-sort-value="{{ $op->opname_number }}" class="py-3.5 px-4">
                             <div class="font-semibold text-black dark:text-white tabular-nums">#{{ $op->opname_number }}</div>
                             <div class="text-[11px] text-black/45 dark:text-white/45 mt-0.5">{{ $op->notes ?? 'Stock taking rutin' }}</div>
                         </td>
-                        <td class="py-3.5 px-4">
+                        <td data-sort-value="{{ $op->opname_date->format('Y-m-d') }}" class="py-3.5 px-4">
                             <div class="tabular-nums font-medium text-black dark:text-white">{{ $op->opname_date->format('d/m/Y') }}</div>
                             <span class="inline-flex items-center px-2 py-0.5 rounded-[6px] text-[10px] font-medium bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 mt-0.5">
                                 {{ $op->location->name ?? 'Outlet' }}
                             </span>
                         </td>
-                        <td class="py-3.5 px-4 text-black/70 dark:text-white/70 font-medium">
+                        <td data-sort-value="{{ strtolower($op->conductor->name ?? '') }}" class="py-3.5 px-4 text-black/70 dark:text-white/70 font-medium">
                             {{ $op->conductor->name ?? 'Staff' }}
                         </td>
-                        <td class="py-3.5 px-4 text-center tabular-nums font-bold text-black dark:text-white">
+                        <td data-sort-value="{{ (int) $op->items->count() }}" class="py-3.5 px-4 text-center tabular-nums font-bold text-black dark:text-white">
                             {{ $op->items->count() }} Item
                         </td>
-                        <td class="py-3.5 px-4 text-center">
+                        <td data-sort-value="{{ $op->status }}" class="py-3.5 px-4 text-center">
                             @if($op->status === 'reconciled')
                                 <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#34C759]/12 text-[#248A3D] dark:text-[#30D158]">
                                     <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]"></span> Direkonsiliasi
@@ -464,197 +376,222 @@
     <!-- 5. APPLE SHEET: MULAI STOCK OPNAME BARU               -->
     <!-- ===================================================== -->
     @if(\App\Support\Context::hasPermission('inventory.manage'))
-    <div x-show="showCreateModal"
-        x-cloak
-        class="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 dark:bg-black/75 backdrop-blur-md p-0 sm:p-4"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0">
+    <template x-teleport="body">
+        <div x-show="showCreateModal"
+            x-cloak
+            class="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4"
+            role="dialog"
+            aria-modal="true">
 
-        <div class="w-full sm:max-w-xl rounded-t-[24px] sm:rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.3)] max-h-[90vh] overflow-y-auto"
-            @click.away="showCreateModal = false"
-            x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="translate-y-full sm:translate-y-0 sm:scale-95 sm:opacity-0"
-            x-transition:enter-end="translate-y-0 sm:scale-100 sm:opacity-100"
-            x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="translate-y-0 sm:scale-100 sm:opacity-100"
-            x-transition:leave-end="translate-y-full sm:translate-y-0 sm:scale-95 sm:opacity-0">
+            {{-- Backdrop Blur Overlay --}}
+            <div x-show="showCreateModal"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="showCreateModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
 
-            <!-- Mobile Grabber Handle -->
-            <div class="sm:hidden w-10 h-1 rounded-full bg-black/20 dark:bg-white/20 mx-auto mb-2"></div>
+            <div class="relative z-10 w-full sm:max-w-xl rounded-t-[24px] sm:rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.3)] max-h-[90vh] overflow-y-auto"
+                @click.away="showCreateModal = false"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="translate-y-full sm:translate-y-0 sm:scale-95 sm:opacity-0"
+                x-transition:enter-end="translate-y-0 sm:scale-100 sm:opacity-100"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="translate-y-0 sm:scale-100 sm:opacity-100"
+                x-transition:leave-end="translate-y-full sm:translate-y-0 sm:scale-95 sm:opacity-0">
 
-            <div class="flex items-center justify-between pb-3.5 border-b border-black/[0.06] dark:border-white/[0.08]">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-[12px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center shrink-0">
-                        <i data-lucide="clipboard-check" class="w-5 h-5"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-[17px] font-bold text-black dark:text-white">Mulai Stock Opname Baru</h3>
-                        <p class="text-[12px] text-black/50 dark:text-white/50">Formulir hitung fisik persediaan bahan dan produk</p>
-                    </div>
-                </div>
-                <button type="button" @click="showCreateModal = false" class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/40 hover:text-black dark:text-white/40 dark:hover:text-white transition-colors cursor-pointer">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
-            </div>
+                <!-- Mobile Grabber Handle -->
+                <div class="sm:hidden w-10 h-1 rounded-full bg-black/20 dark:bg-white/20 mx-auto mb-2"></div>
 
-            <form action="{{ route('inventory.opnames.store') }}" method="POST" class="space-y-4 text-[13px]">
-                @csrf
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Lokasi Outlet / Gudang *</label>
-                        <select name="location_id" x-model="selectedLocationId" required class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[10px] px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                            @foreach($locations as $loc)
-                                <option value="{{ $loc->id }}" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ $loc->name }}</option>
-                            @endforeach
-                        </select>
+                <div class="flex items-center justify-between pb-3.5 border-b border-black/[0.06] dark:border-white/[0.08]">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-[12px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center shrink-0">
+                            <i data-lucide="clipboard-check" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-[17px] font-bold text-black dark:text-white">Mulai Stock Opname Baru</h3>
+                            <p class="text-[12px] text-black/50 dark:text-white/50">Formulir hitung fisik persediaan bahan dan produk</p>
+                        </div>
                     </div>
-                    <div>
-                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Tanggal Opname *</label>
-                        <input type="date" name="opname_date" value="{{ date('Y-m-d') }}" required class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[10px] px-3.5 text-[16px] sm:text-[13px] tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                    </div>
+                    <button type="button" @click="showCreateModal = false" class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/40 hover:text-black dark:text-white/40 dark:hover:text-white transition-colors cursor-pointer">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
                 </div>
 
-                <div>
-                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Catatan Dokumen</label>
-                    <input type="text" name="notes" placeholder="Misal: Opname fisik bulanan persediaan..." class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[10px] px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                </div>
-
-                <!-- Items Row -->
-                <div class="space-y-3 pt-3 border-t border-black/[0.06] dark:border-white/[0.08]">
-                    <div class="flex items-center justify-between">
-                        <label class="text-[11px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50">Item yang Dihitung Fisik:</label>
-                        <button type="button" @click="addItem()" class="min-h-[44px] sm:min-h-0 h-8 px-3 rounded-[8px] text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.97] transition-all flex items-center gap-1 cursor-pointer">
-                            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-                            <span>Tambah Item</span>
-                        </button>
-                    </div>
-
-                    <template x-for="(item, idx) in items" :key="idx">
-                        <div class="grid grid-cols-[5.5rem_minmax(0,1fr)_6.5rem_auto] items-center gap-2 p-2.5 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08]">
-                            <select x-model="item.item_type" @change="changeItemType(item)" class="h-10 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[8px] px-2 text-[12px] font-medium text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                                <option value="material" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">Bahan</option>
-                                <option value="product" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">Produk</option>
-                            </select>
-                            <select x-show="item.item_type === 'material'" :name="'items[' + idx + '][material_id]'" x-model="item.material_id" class="h-10 min-w-0 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[8px] px-2.5 text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                                <option value="" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">-- Pilih Bahan Baku --</option>
-                                @foreach($materials as $m)
-                                    <option value="{{ $m->id }}" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ $m->name }} ({{ $m->unit->code ?? 'unit' }})</option>
+                <form action="{{ route('inventory.opnames.store') }}" method="POST" class="space-y-4 text-[13px]">
+                    @csrf
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Lokasi Outlet / Gudang *</label>
+                            <select name="location_id" x-model="selectedLocationId" required class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[10px] px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                @foreach($locations as $loc)
+                                    <option value="{{ $loc->id }}" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ $loc->name }}</option>
                                 @endforeach
                             </select>
-                            <select x-show="item.item_type === 'product'" :name="'items[' + idx + '][product_id]'" x-model="item.product_id" class="h-10 min-w-0 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[8px] px-2.5 text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                                <option value="" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">-- Pilih Produk --</option>
-                                @foreach($products as $product)
-                                    <option value="{{ $product->id }}" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ $product->name }}{{ $product->code ? ' (' . $product->code . ')' : '' }}</option>
-                                @endforeach
-                            </select>
-                            <input type="number" step="any" :name="'items[' + idx + '][physical_quantity]'" x-model.number="item.physical_quantity" placeholder="Qty Fisik" class="h-10 w-24 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[8px] px-2 text-[13px] text-center tabular-nums font-bold text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                            <button type="button" @click="removeItem(idx)" :disabled="items.length <= 1" class="min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 p-2 text-black/30 hover:text-[#FF3B30] dark:text-white/30 dark:hover:text-[#FF453A] disabled:opacity-20 transition-colors cursor-pointer">
-                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Tanggal Opname *</label>
+                            <input type="date" name="opname_date" value="{{ date('Y-m-d') }}" required class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[10px] px-3.5 text-[16px] sm:text-[13px] tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Catatan Dokumen</label>
+                        <input type="text" name="notes" placeholder="Misal: Opname fisik bulanan persediaan..." class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[10px] px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                    </div>
+
+                    <!-- Items Row -->
+                    <div class="space-y-3 pt-3 border-t border-black/[0.06] dark:border-white/[0.08]">
+                        <div class="flex items-center justify-between">
+                            <label class="text-[11px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50">Item yang Dihitung Fisik:</label>
+                            <button type="button" @click="addItem()" class="min-h-[44px] sm:min-h-0 h-8 px-3 rounded-[8px] text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.97] transition-all flex items-center gap-1 cursor-pointer">
+                                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                                <span>Tambah Item</span>
                             </button>
                         </div>
-                    </template>
-                </div>
 
-                <div class="flex items-center justify-end gap-2.5 pt-4 border-t border-black/[0.06] dark:border-white/[0.08]">
-                    <button type="button" @click="showCreateModal = false" class="min-h-[44px] h-10 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 active:scale-[0.98] transition cursor-pointer">
-                        Batal
-                    </button>
-                    <button type="submit" class="min-h-[44px] h-10 px-5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all shadow-[0_1px_2px_rgba(0,122,255,0.25)] cursor-pointer">
-                        Simpan Data Opname
-                    </button>
-                </div>
-            </form>
+                        <template x-for="(item, idx) in items" :key="idx">
+                            <div class="grid grid-cols-[5.5rem_minmax(0,1fr)_6.5rem_auto] items-center gap-2 p-2.5 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08]">
+                                <select x-model="item.item_type" @change="changeItemType(item)" class="h-10 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[8px] px-2 text-[12px] font-medium text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                    <option value="material" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">Bahan</option>
+                                    <option value="product" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">Produk</option>
+                                </select>
+                                <select x-show="item.item_type === 'material'" :name="'items[' + idx + '][material_id]'" x-model="item.material_id" class="h-10 min-w-0 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[8px] px-2.5 text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                    <option value="" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">-- Pilih Bahan Baku --</option>
+                                    @foreach($materials as $m)
+                                        <option value="{{ $m->id }}" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ $m->name }} ({{ $m->unit->code ?? 'unit' }})</option>
+                                    @endforeach
+                                </select>
+                                <select x-show="item.item_type === 'product'" :name="'items[' + idx + '][product_id]'" x-model="item.product_id" class="h-10 min-w-0 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[8px] px-2.5 text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                    <option value="" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">-- Pilih Produk --</option>
+                                    @foreach($products as $product)
+                                        <option value="{{ $product->id }}" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ $product->name }}{{ $product->code ? ' (' . $product->code . ')' : '' }}</option>
+                                    @endforeach
+                                </select>
+                                <input type="number" step="any" :name="'items[' + idx + '][physical_quantity]'" x-model.number="item.physical_quantity" placeholder="Qty Fisik" class="h-10 w-24 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[8px] px-2 text-[13px] text-center tabular-nums font-bold text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                <button type="button" @click="removeItem(idx)" :disabled="items.length <= 1" class="min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 p-2 text-black/30 hover:text-[#FF3B30] dark:text-white/30 dark:hover:text-[#FF453A] disabled:opacity-20 transition-colors cursor-pointer">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </template>
+                    </div>
+
+                    <div class="flex items-center justify-end gap-2.5 pt-4 border-t border-black/[0.06] dark:border-white/[0.08]">
+                        <button type="button" @click="showCreateModal = false" class="min-h-[44px] h-10 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 active:scale-[0.98] transition cursor-pointer">
+                            Batal
+                        </button>
+                        <button type="submit" class="min-h-[44px] h-10 px-5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all shadow-[0_1px_2px_rgba(0,122,255,0.25)] cursor-pointer">
+                            Simpan Data Opname
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
+    </template>
     @endif
 
     <!-- ===================================================== -->
     <!-- 6. APPLE ALERT DIALOG: REKONSILIASI OPNAME             -->
     <!-- ===================================================== -->
     @if(\App\Support\Context::hasPermission('inventory.manage'))
-    <div x-show="reconcileModalOpen"
-        x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 dark:bg-black/75 backdrop-blur-md p-4"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0">
+    <template x-teleport="body">
+        <div x-show="reconcileModalOpen"
+            x-cloak
+            class="fixed inset-0 z-[220] flex items-center justify-center p-4"
+            role="dialog"
+            aria-modal="true">
 
-        <div class="w-full max-w-[320px] rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.35)]"
-            @click.away="closeReconcile()"
-            x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="opacity-0 scale-95"
-            x-transition:enter-end="opacity-100 scale-100"
-            x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100 scale-100"
-            x-transition:leave-end="opacity-0 scale-95">
+            {{-- Backdrop Blur Overlay --}}
+            <div x-show="reconcileModalOpen"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="closeReconcile()"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
 
-            <div class="px-5 pt-6 pb-5">
-                <div class="w-12 h-12 rounded-full bg-[#34C759]/15 text-[#34C759] flex items-center justify-center mx-auto mb-3">
-                    <i data-lucide="check-check" class="w-6 h-6"></i>
+            <div class="relative z-10 w-full max-w-[320px] rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.35)]"
+                @click.away="closeReconcile()"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0 scale-95"
+                x-transition:enter-end="opacity-100 scale-100"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100 scale-100"
+                x-transition:leave-end="opacity-0 scale-95">
+
+                <div class="px-5 pt-6 pb-5">
+                    <div class="w-12 h-12 rounded-full bg-[#34C759]/15 text-[#34C759] flex items-center justify-center mx-auto mb-3">
+                        <i data-lucide="check-check" class="w-6 h-6"></i>
+                    </div>
+                    <p class="text-[17px] font-bold text-black dark:text-white">Rekonsiliasi Stok?</p>
+                    <p class="text-[13px] text-black/60 dark:text-white/60 mt-1.5 leading-snug">
+                        Terapkan selisih hitungan fisik opname <span x-text="'#' + reconcileTarget.number" class="font-bold text-black dark:text-white tabular-nums"></span> langsung ke saldo stok sistem.
+                    </p>
                 </div>
-                <p class="text-[17px] font-bold text-black dark:text-white">Rekonsiliasi Stok?</p>
-                <p class="text-[13px] text-black/60 dark:text-white/60 mt-1.5 leading-snug">
-                    Terapkan selisih hitungan fisik opname <span x-text="'#' + reconcileTarget.number" class="font-bold text-black dark:text-white tabular-nums"></span> langsung ke saldo stok sistem.
-                </p>
-            </div>
 
-            <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[14px] font-medium">
-                <button type="button" @click="closeReconcile()" class="min-h-[48px] py-3 text-black/70 dark:text-white/70 border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
-                    Batal
-                </button>
-                <button type="button" @click="submitReconcile()" class="min-h-[48px] py-3 text-[#34C759] font-bold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
-                    Terapkan
-                </button>
+                <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[14px] font-medium">
+                    <button type="button" @click="closeReconcile()" class="min-h-[48px] py-3 text-black/70 dark:text-white/70 border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
+                        Batal
+                    </button>
+                    <button type="button" @click="submitReconcile()" class="min-h-[48px] py-3 text-[#34C759] font-bold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
+                        Terapkan
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
+    </template>
     <!-- ===================================================== -->
     <!-- 5. APPLE BENTO XXL PRE-COMMIT PREVIEW MODAL: OPNAME   -->
     <!-- ===================================================== -->
-    @if(\App\Support\Context::hasPermission('inventory.manage'))
-    <div x-show="showImportModal"
-        x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/50 dark:bg-black/75 backdrop-blur-md"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0">
+    <template x-teleport="body">
+        <div x-show="showImportModal"
+            x-cloak
+            class="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6"
+            role="dialog"
+            aria-modal="true">
 
-        <div class="w-full max-w-5xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.35)] flex flex-col max-h-[92vh] overflow-hidden"
-            @click.away="if (!importExecuting) showImportModal = false"
-            x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="opacity-0 scale-95"
-            x-transition:enter-end="opacity-100 scale-100"
-            x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100 scale-100"
-            x-transition:leave-end="opacity-0 scale-95">
+            {{-- Backdrop Blur Overlay --}}
+            <div x-show="showImportModal"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="if (!importExecuting) showImportModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
 
-            <!-- Modal Header -->
-            <div class="px-6 py-4.5 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-[#F2F2F7] dark:bg-[#252528]">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0">
-                        <i data-lucide="clipboard-check" class="w-5 h-5"></i>
+            <div class="relative z-10 w-full max-w-5xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.35)] flex flex-col max-h-[92vh] overflow-hidden"
+                @click.away="if (!importExecuting) showImportModal = false"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0 scale-95"
+                x-transition:enter-end="opacity-100 scale-100"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100 scale-100"
+                x-transition:leave-end="opacity-0 scale-95">
+
+                <!-- Modal Header -->
+                <div class="px-6 py-4.5 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-[#F2F2F7] dark:bg-[#252528]">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0">
+                            <i data-lucide="clipboard-check" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-[17px] font-bold text-black dark:text-white">Import &amp; Analisis Hitungan Fisik Opname</h3>
+                            <p class="text-[12px] text-black/50 dark:text-white/50">Unggah berkas Excel opname fisik untuk audit real-time sebelum dikomit ke buku stok</p>
+                        </div>
                     </div>
-                    <div>
-                        <h3 class="text-[17px] font-bold text-black dark:text-white">Import &amp; Analisis Hitungan Fisik Opname</h3>
-                        <p class="text-[12px] text-black/50 dark:text-white/50">Unggah berkas Excel opname fisik untuk audit real-time sebelum dikomit ke buku stok</p>
-                    </div>
+
+                    <button type="button" @click="if (!importExecuting) showImportModal = false"
+                        class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center transition cursor-pointer">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
                 </div>
-
-                <button type="button" @click="if (!importExecuting) showImportModal = false"
-                    class="w-9 h-9 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center transition cursor-pointer">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
-            </div>
 
             <!-- Modal Body -->
             <div class="p-6 overflow-y-auto space-y-5 flex-1">
@@ -861,6 +798,7 @@
 
         </div>
     </div>
+    </template>
     @endif
 
 </div>

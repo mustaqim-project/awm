@@ -30,10 +30,10 @@
             </div>
             <div class="min-w-0">
                 <h1 class="text-xl sm:text-2xl font-bold text-black dark:text-white tracking-tight truncate">
-                    {{ $title ?? 'Website & Toko Online' }}
+                    {{ $title ?? __('storefront.backoffice.nav.title_default') }}
                 </h1>
                 <p class="text-[12px] sm:text-[12.5px] text-black/55 dark:text-white/55 truncate">
-                    Etalase Publik:
+                    {{ __('storefront.backoffice.nav.public_storefront_label') }}:
                     <a href="{{ $publicStoreUrl }}" target="_blank" rel="noopener"
                         class="text-[#007AFF] hover:underline font-medium inline-flex items-center gap-1">
                         <span>{{ $publicStoreUrl }}</span>
@@ -47,7 +47,7 @@
             <a href="{{ $publicStoreUrl }}" target="_blank" rel="noopener"
                 class="h-9 sm:h-10 px-3.5 sm:px-4 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[12.5px] sm:text-[13px] font-semibold transition-all active:scale-[0.98] flex items-center gap-1.5 shadow-sm">
                 <i data-lucide="eye" class="w-4 h-4"></i>
-                <span>Lihat Website Publik</span>
+                <span>{{ __('storefront.backoffice.nav.view_public_store') }}</span>
             </a>
         </div>
     </div>
@@ -59,7 +59,7 @@
             <a href="{{ route('landing-page.edit') }}"
                 class="px-3.5 py-1.5 rounded-[10px] text-[13px] font-medium transition-all duration-150 flex items-center gap-2 {{ request()->routeIs('landing-page.edit') ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white font-semibold shadow-xs' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/[0.02] dark:hover:bg-white/[0.03]' }}">
                 <i data-lucide="globe" class="w-4 h-4 {{ request()->routeIs('landing-page.edit') ? 'text-[#007AFF]' : 'opacity-70' }}"></i>
-                <span>Website &amp; Profil</span>
+                <span>{{ __('storefront.backoffice.nav.website_profile') }}</span>
             </a>
 
             {{-- Tab 1.5: Pop Up Promo --}}
@@ -67,7 +67,7 @@
                 <a href="{{ route('landing-page.popup.edit') }}"
                     class="px-3.5 py-1.5 rounded-[10px] text-[13px] font-medium transition-all duration-150 flex items-center gap-2 {{ request()->routeIs('landing-page.popup.*') ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white font-semibold shadow-xs' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/[0.02] dark:hover:bg-white/[0.03]' }}">
                     <i data-lucide="megaphone" class="w-4 h-4 {{ request()->routeIs('landing-page.popup.*') ? 'text-[#FF2D55]' : 'opacity-70' }}"></i>
-                    <span>Pop Up Promo</span>
+                    <span>{{ __('storefront.backoffice.nav.popup_promo') }}</span>
                 </a>
             @endif
 
@@ -76,7 +76,7 @@
                 <a href="{{ route('storefront.orders.index') }}"
                     class="px-3.5 py-1.5 rounded-[10px] text-[13px] font-medium transition-all duration-150 flex items-center gap-2 {{ request()->routeIs('storefront.orders.*') ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white font-semibold shadow-xs' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/[0.02] dark:hover:bg-white/[0.03]' }}">
                     <i data-lucide="shopping-bag" class="w-4 h-4 {{ request()->routeIs('storefront.orders.*') ? 'text-[#007AFF]' : 'opacity-70' }}"></i>
-                    <span>Pesanan Masuk</span>
+                    <span>{{ __('storefront.backoffice.nav.orders') }}</span>
                 </a>
             @endif
 
@@ -85,7 +85,7 @@
                 <a href="{{ route('storefront.reservations.index') }}"
                     class="px-3.5 py-1.5 rounded-[10px] text-[13px] font-medium transition-all duration-150 flex items-center gap-2 {{ request()->routeIs('storefront.reservations.*') ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white font-semibold shadow-xs' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/[0.02] dark:hover:bg-white/[0.03]' }}">
                     <i data-lucide="calendar" class="w-4 h-4 {{ request()->routeIs('storefront.reservations.*') ? 'text-[#007AFF]' : 'opacity-70' }}"></i>
-                    <span>Reservasi &amp; Booking</span>
+                    <span>{{ __('storefront.backoffice.nav.reservations') }}</span>
                 </a>
             @endif
 
@@ -94,7 +94,7 @@
                 <a href="{{ route('storefront.shipping.index') }}"
                     class="px-3.5 py-1.5 rounded-[10px] text-[13px] font-medium transition-all duration-150 flex items-center gap-2 {{ request()->routeIs('storefront.shipping.*') ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white font-semibold shadow-xs' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/[0.02] dark:hover:bg-white/[0.03]' }}">
                     <i data-lucide="truck" class="w-4 h-4 {{ request()->routeIs('storefront.shipping.*') ? 'text-[#007AFF]' : 'opacity-70' }}"></i>
-                    <span>Pengiriman</span>
+                    <span>{{ __('storefront.backoffice.nav.shipping') }}</span>
                 </a>
             @endif
 
@@ -103,7 +103,7 @@
                 <a href="{{ route('storefront.settings.index') }}"
                     class="px-3.5 py-1.5 rounded-[10px] text-[13px] font-medium transition-all duration-150 flex items-center gap-2 {{ request()->routeIs('storefront.settings.*') ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white font-semibold shadow-xs' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/[0.02] dark:hover:bg-white/[0.03]' }}">
                     <i data-lucide="settings" class="w-4 h-4 {{ request()->routeIs('storefront.settings.*') ? 'text-[#007AFF]' : 'opacity-70' }}"></i>
-                    <span>Pengaturan Etalase</span>
+                    <span>{{ __('storefront.backoffice.nav.settings') }}</span>
                 </a>
             @endif
         </div>

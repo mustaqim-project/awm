@@ -602,10 +602,12 @@
         </div>
 
         <!-- Edit Package Modal (Apple Inset Dialog / Sheet) -->
-        <div x-show="editOpen" x-cloak
-            class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-md transition-all">
-            <div @click.away="closeEdit()"
-                class="rounded-[24px] sm:rounded-[28px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/15 p-6 sm:p-7 w-full max-w-lg space-y-4 max-h-[90vh] overflow-y-auto shadow-2xl">
+        <template x-teleport="body">
+            <div x-show="editOpen" x-cloak
+                class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-all"
+                role="dialog" aria-modal="true" @keydown.escape.window="closeEdit()" @click.self="closeEdit()">
+                <div @click.stop
+                    class="relative z-10 rounded-[24px] sm:rounded-[28px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/15 p-6 sm:p-7 w-full max-w-lg space-y-4 max-h-[90vh] overflow-y-auto shadow-2xl">
 
                 <div
                     class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-3.5">
@@ -712,5 +714,6 @@
                 </form>
             </div>
         </div>
-    </div>
+    </template>
+</div>
 @endsection

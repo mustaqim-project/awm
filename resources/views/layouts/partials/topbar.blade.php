@@ -473,7 +473,7 @@
             <button type="button" @click="profileOpen = !profileOpen" :aria-expanded="profileOpen ? 'true' : 'false'"
                 aria-haspopup="menu" aria-controls="profile-menu"
                 class="flex items-center gap-2 p-1 pl-1 pr-2 sm:pr-2.5 rounded-full hover:bg-black/[0.04] dark:hover:bg-white/[0.05] transition-all active:scale-[0.97] cursor-pointer"
-                :title="'{{ __('navigation.user_profile') }}: ' + '{{ $currentUser->name ?? 'User' }}'">
+                title="{{ __('navigation.user_profile') }}: {{ $currentUser->name ?? 'User' }}">
                 <!-- Squircle Avatar -->
                 <div
                     class="w-8 h-8 rounded-full bg-[#007AFF]/12 border border-[#007AFF]/25 flex items-center justify-center font-bold text-xs text-[#007AFF] shrink-0 shadow-2xs">
@@ -545,6 +545,22 @@
                             <span>{{ __('navigation.restart_tour') }}</span>
                         </button>
                     </form>
+                </div>
+
+                <div class="border-t border-black/5 dark:border-white/10 my-1"></div>
+
+                <!-- Language Switcher (Bento Apple HIG Segmented Control) -->
+                <div class="px-2.5 py-1.5 flex items-center justify-between text-[12px] text-black/75 dark:text-white/75">
+                    <span class="flex items-center gap-2">
+                        <i data-lucide="globe" class="w-3.5 h-3.5 text-[#007AFF] shrink-0"></i>
+                        <span>{{ __('common.switch_language') ?? 'Bahasa' }}</span>
+                    </span>
+                    <div class="flex items-center gap-1 bg-black/5 dark:bg-white/10 p-0.5 rounded-[8px] text-[11px] font-semibold">
+                        <a href="{{ route('locale.switch', ['locale' => 'id']) }}"
+                            class="px-2 py-0.5 rounded-[6px] transition-all {{ app()->getLocale() === 'id' ? 'bg-white dark:bg-[#1C1C1E] text-[#007AFF] shadow-sm font-bold' : 'text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white' }}">ID</a>
+                        <a href="{{ route('locale.switch', ['locale' => 'en']) }}"
+                            class="px-2 py-0.5 rounded-[6px] transition-all {{ app()->getLocale() === 'en' ? 'bg-white dark:bg-[#1C1C1E] text-[#007AFF] shadow-sm font-bold' : 'text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white' }}">EN</a>
+                    </div>
                 </div>
 
                 <div class="border-t border-black/5 dark:border-white/10 my-1"></div>

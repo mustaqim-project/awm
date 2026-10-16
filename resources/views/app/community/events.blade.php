@@ -415,29 +415,53 @@
     </div>
 
     <!-- 5. Apple HIG Modal: Tiket Digital & Check-in Tools -->
-    <div x-show="selectedTicket" x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs transition-opacity"
-        @keydown.escape.window="selectedTicket = null">
-        <div class="bg-white dark:bg-slate-900 w-full max-w-md rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
-            @click.outside="selectedTicket = null"
-            x-data="{ ticketMode: 'qr' }">
-            
-            <!-- Modal Header -->
-            <div class="p-4 sm:p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
-                <div class="flex items-center gap-2.5">
-                    <span class="w-8 h-8 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0">
-                        <i data-lucide="ticket" class="w-4 h-4"></i>
-                    </span>
-                    <div>
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-tight">Tiket Digital Peserta</h3>
-                        <p class="text-[11px] text-slate-500 dark:text-slate-400 font-mono" x-text="selectedTicket?.ticket_code"></p>
+    <template x-teleport="body">
+        <div x-show="selectedTicket" x-cloak
+            class="fixed inset-0 z-[200] flex items-center justify-center p-4 overflow-y-auto">
+            <!-- Backdrop -->
+            <div class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                x-show="selectedTicket"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="selectedTicket = null"
+                aria-hidden="true"></div>
+
+            <div class="relative z-10 bg-white dark:bg-slate-900 w-full max-w-md rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden flex flex-col max-h-[90vh] my-auto"
+                @click.away="selectedTicket = null"
+                @keydown.escape.window="selectedTicket = null"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="modal-ticket-events-title"
+                x-show="selectedTicket"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0 scale-95"
+                x-transition:enter-end="opacity-100 scale-100"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100 scale-100"
+                x-transition:leave-end="opacity-0 scale-95"
+                x-data="{ ticketMode: 'qr' }">
+                
+                <!-- Modal Header -->
+                <div class="p-4 sm:p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-8 h-8 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0">
+                            <i data-lucide="ticket" class="w-4 h-4"></i>
+                        </span>
+                        <div>
+                            <h3 id="modal-ticket-events-title" class="text-sm font-bold text-slate-900 dark:text-white leading-tight">Tiket Digital Peserta</h3>
+                            <p class="text-[11px] text-slate-500 dark:text-slate-400 font-mono" x-text="selectedTicket?.ticket_code"></p>
+                        </div>
                     </div>
+                    <button type="button" @click="selectedTicket = null"
+                        class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-center transition cursor-pointer"
+                        aria-label="Tutup tiket">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
                 </div>
-                <button type="button" @click="selectedTicket = null"
-                    class="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
-            </div>
 
             <!-- Modal Body (Scrollable, Clean Spacing, Zero Overlap) -->
             <div class="p-5 sm:p-6 space-y-4 overflow-y-auto">
@@ -607,11 +631,12 @@
             <!-- Modal Footer -->
             <div class="p-4 bg-slate-50 dark:bg-slate-950 border-t border-slate-100 dark:border-slate-800 text-right">
                 <button type="button" @click="selectedTicket = null"
-                    class="px-5 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 transition cursor-pointer">
+                    class="min-h-[44px] px-5 py-2.5 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 transition cursor-pointer">
                     Tutup
                 </button>
             </div>
         </div>
     </div>
+</template>
 </div>
 @endsection

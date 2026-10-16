@@ -424,229 +424,184 @@
             @if ($recoveries->hasPages())
                 <div class="p-4 border-t border-black/[0.06] dark:border-white/[0.08]">
                     {{ $recoveries->links() }}
-                </div>
-            @endif
-        </div>
+                </div>        <!-- ═══ MODAL-FIRST XXL INSPECTION DESK (Apple HIG Sheet) ═══ -->
+        <template x-teleport="body">
+            <div x-show="inspectionModalOpen"
+                class="fixed inset-0 z-[200] overflow-y-auto"
+                x-cloak style="display: none;"
+                role="dialog" aria-modal="true"
+                @keydown.escape.window="closeInspection()">
+                <!-- Backdrop -->
+                <div class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    @click="closeInspection()"
+                    aria-hidden="true"></div>
 
-        <!-- ═══ MODAL-FIRST XXL INSPECTION DESK (Apple HIG Sheet) ═══ -->
-        <div x-show="inspectionModalOpen"
-            class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 md:p-6 bg-black/60 backdrop-blur-md"
-            x-cloak style="display: none;">
-            <div class="w-full max-w-full sm:max-w-5xl xl:max-w-6xl max-h-[94vh] sm:max-h-[90vh] bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] border border-black/[0.08] dark:border-white/[0.12] shadow-2xl flex flex-col overflow-hidden"
-                @click.stop>
+                <!-- Centering / Positioning wrapper -->
+                <div class="relative z-10 min-h-full flex items-end sm:items-center justify-center p-0 sm:p-4 md:p-6 pointer-events-none">
+                    <div class="w-full max-w-full sm:max-w-5xl xl:max-w-6xl max-h-[94vh] sm:max-h-[90vh] bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] border border-black/[0.08] dark:border-white/[0.12] shadow-2xl flex flex-col overflow-hidden pointer-events-auto"
+                        @click.stop>
 
-                <!-- Mobile Grab Handle -->
-                <div class="w-10 h-1 rounded-full bg-black/20 dark:bg-white/20 mx-auto mt-2.5 sm:hidden shrink-0"></div>
+                        <!-- Mobile Grab Handle -->
+                        <div class="w-10 h-1 rounded-full bg-black/20 dark:bg-white/20 mx-auto mt-2.5 sm:hidden shrink-0"></div>
 
-                <!-- Modal Header (Sticky) -->
-                <div
-                    class="sticky top-0 z-20 backdrop-blur-xl bg-white/95 dark:bg-[#1C1C1E]/95 border-b border-black/[0.06] dark:border-white/[0.08] px-5 sm:px-6 py-4 flex items-center justify-between gap-4 shrink-0">
-                    <div class="flex items-center gap-3 min-w-0">
+                        <!-- Modal Header (Sticky) -->
                         <div
-                            class="w-10 h-10 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0">
-                            <i data-lucide="shield-check" class="w-5 h-5"></i>
-                        </div>
-                        <div class="min-w-0">
-                            <div class="flex items-center gap-2">
-                                <span class="font-mono font-bold text-sm sm:text-base text-[#007AFF] dark:text-[#0A84FF]"
-                                    x-text="selectedRecovery?.ticket_number"></span>
-                                <!-- Status Pill inside Header -->
-                                <template x-if="selectedRecovery?.status === 'pending'">
-                                    <span
-                                        class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#FF9500]/12 text-[#FF9500] dark:text-[#FF9F0A]">Menunggu
-                                        Review</span>
-                                </template>
-                                <template x-if="selectedRecovery?.status === 'approved'">
-                                    <span
-                                        class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#34C759]/12 text-[#34C759] dark:text-[#30D158]">Disetujui</span>
-                                </template>
-                                <template x-if="selectedRecovery?.status === 'rejected'">
-                                    <span
-                                        class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#FF3B30]/12 text-[#FF3B30] dark:text-[#FF453A]">Ditolak</span>
-                                </template>
-                            </div>
-                            <h3 class="text-xs text-black/50 dark:text-white/50 truncate mt-0.5">
-                                Permohonan oleh <strong class="text-black dark:text-white"
-                                    x-text="selectedRecovery?.applicant_name"></strong> &bull; <span
-                                    x-text="selectedRecovery?.business_name"></span>
-                            </h3>
-                        </div>
-                    </div>
-
-                    <!-- Right Actions: Dedicated Show Link + Circle Close Button -->
-                    <div class="flex items-center gap-2 shrink-0">
-                        <a :href="selectedRecovery?.show_url"
-                            class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-xs font-semibold text-black/70 dark:text-white/70 transition-colors">
-                            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-                            <span>Buka Halaman Penuh</span>
-                        </a>
-                        <button type="button" @click="closeInspection()"
-                            class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.1] hover:bg-black/[0.1] dark:hover:bg-white/[0.15] text-black/60 dark:text-white/60 flex items-center justify-center transition-all active:scale-95">
-                            <i data-lucide="x" class="w-4 h-4"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Modal Body (Scrollable XXL Bento) -->
-                <div class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 sidebar-scroll">
-
-                    <!-- 1. BENTO KOMPARASI KONTAK LAMA VS BARU -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-                        <!-- Data Terdaftar Lama -->
-                        <div
-                            class="p-4 rounded-[18px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] space-y-2.5">
-                            <div
-                                class="flex items-center gap-1.5 text-black/45 dark:text-white/45 font-semibold text-[11px] uppercase tracking-wider">
-                                <i data-lucide="lock" class="w-3.5 h-3.5"></i>
-                                <span>Data Terdaftar Saat Ini (Lama)</span>
-                            </div>
-                            <div>
-                                <span class="text-[11px] text-black/40 dark:text-white/40 block">Email Akun:</span>
-                                <span
-                                    class="font-mono text-xs sm:text-sm text-black/80 dark:text-white/80 select-all break-all"
-                                    x-text="selectedRecovery?.old_email"></span>
-                            </div>
-                            <div>
-                                <span class="text-[11px] text-black/40 dark:text-white/40 block">WhatsApp Terdaftar:</span>
-                                <span
-                                    class="font-mono text-xs sm:text-sm text-black/80 dark:text-white/80 select-all tabular-nums"
-                                    x-text="selectedRecovery?.old_phone"></span>
-                            </div>
-                        </div>
-
-                        <!-- Kontak Baru Yang Diajukan -->
-                        <div
-                            class="p-4 rounded-[18px] bg-[#34C759]/10 dark:bg-[#30D158]/10 border border-[#34C759]/20 space-y-2.5">
-                            <div
-                                class="flex items-center gap-1.5 text-[#34C759] dark:text-[#30D158] font-semibold text-[11px] uppercase tracking-wider">
-                                <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-                                <span>Kontak Baru Yang Diajukan</span>
-                            </div>
-                            <div>
-                                <span class="text-[11px] text-black/40 dark:text-white/40 block">Alamat Email Baru:</span>
-                                <span
-                                    class="font-mono font-semibold text-xs sm:text-sm text-[#34C759] dark:text-[#30D158] select-all break-all"
-                                    x-text="selectedRecovery?.new_email"></span>
-                            </div>
-                            <div>
-                                <span class="text-[11px] text-black/40 dark:text-white/40 block">Nomor WhatsApp
-                                    Baru:</span>
-                                <span
-                                    class="font-mono font-bold text-xs sm:text-sm text-black dark:text-white select-all tabular-nums"
-                                    x-text="selectedRecovery?.new_phone"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Info Usaha & Catatan Pemohon -->
-                    <div
-                        class="p-4 rounded-[18px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] space-y-3 text-xs">
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                            <div>
-                                <span class="text-[11px] text-black/40 dark:text-white/40 block">Jenis Kendala:</span>
-                                <span class="font-semibold text-black dark:text-white"
-                                    x-text="selectedRecovery?.issue_type_label"></span>
-                            </div>
-                            <div>
-                                <span class="text-[11px] text-black/40 dark:text-white/40 block">Waktu Pengajuan:</span>
-                                <span class="font-medium text-black/70 dark:text-white/70 tabular-nums"
-                                    x-text="selectedRecovery?.created_at_human"></span>
-                            </div>
-                            <div>
-                                <span class="text-[11px] text-black/40 dark:text-white/40 block">Alamat IP:</span>
-                                <span class="font-mono font-medium text-black/70 dark:text-white/70"
-                                    x-text="selectedRecovery?.ip_address"></span>
-                            </div>
-                        </div>
-                        <template x-if="selectedRecovery?.reason_description">
-                            <div class="pt-2 border-t border-black/[0.06] dark:border-white/[0.08]">
-                                <span
-                                    class="text-[10px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wider block mb-1">Pernyataan
-                                    Pemohon Mengenai Kendala:</span>
-                                <p class="text-xs text-black/75 dark:text-white/75 italic leading-relaxed"
-                                    x-text="'&ldquo;' + selectedRecovery?.reason_description + '&rdquo;'"></p>
-                            </div>
-                        </template>
-                    </div>
-
-                    <!-- 2. MEJA UJI BUKTI OTENTIK (DOCUMENT TILES) -->
-                    <div class="space-y-3">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-2">
-                                <i data-lucide="file-check" class="w-4 h-4 text-[#5856D6]"></i>
-                                <h4 class="text-xs sm:text-sm font-bold text-black dark:text-white">Meja Uji Bukti Otentik
-                                    Kepemilikan Akun</h4>
-                            </div>
-                            <span class="text-[11px] text-black/40 dark:text-white/40">Klik dokumen untuk perbesar</span>
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
-                            <!-- Dokumen 1: KTP Asli -->
-                            <div
-                                class="p-3.5 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] space-y-2">
-                                <div class="flex items-center justify-between text-xs">
-                                    <span class="font-semibold text-black dark:text-white flex items-center gap-1.5">
-                                        <i data-lucide="credit-card" class="w-3.5 h-3.5 text-[#007AFF]"></i>
-                                        <span>1. Foto KTP Asli</span>
-                                    </span>
-                                    <span class="text-[10px] font-bold text-[#007AFF] uppercase">Wajib</span>
+                            class="sticky top-0 z-20 backdrop-blur-xl bg-white/95 dark:bg-[#1C1C1E]/95 border-b border-black/[0.06] dark:border-white/[0.08] px-5 sm:px-6 py-4 flex items-center justify-between gap-4 shrink-0">
+                            <div class="flex items-center gap-3 min-w-0">
+                                <div
+                                    class="w-10 h-10 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0">
+                                    <i data-lucide="shield-check" class="w-5 h-5"></i>
                                 </div>
-                                <template x-if="selectedRecovery?.identity_url">
-                                    <div class="space-y-1.5">
-                                        <div class="relative group rounded-[12px] overflow-hidden border border-black/10 dark:border-white/10 bg-black/5 cursor-pointer aspect-video"
-                                            @click="openLightbox(selectedRecovery.identity_url, 'Foto KTP: ' + selectedRecovery.applicant_name)">
-                                            <img :src="selectedRecovery.identity_url" alt="KTP Pemohon"
-                                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200">
-                                            <div
-                                                class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-medium gap-1.5 backdrop-blur-[2px]">
-                                                <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
-                                                <span>Perbesar</span>
-                                            </div>
-                                        </div>
-                                        <a :href="selectedRecovery.identity_url" target="_blank"
-                                            class="text-[11px] font-medium text-[#007AFF] dark:text-[#0A84FF] hover:underline inline-flex items-center gap-1">
-                                            <i data-lucide="external-link" class="w-3 h-3"></i>
-                                            <span>Buka Resolusi Penuh</span>
-                                        </a>
+                                <div class="min-w-0">
+                                    <div class="flex items-center gap-2">
+                                        <span class="font-mono font-bold text-sm sm:text-base text-[#007AFF] dark:text-[#0A84FF]"
+                                            x-text="selectedRecovery?.ticket_number"></span>
+                                        <!-- Status Pill inside Header -->
+                                        <template x-if="selectedRecovery?.status === 'pending'">
+                                            <span
+                                                class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#FF9500]/12 text-[#FF9500] dark:text-[#FF9F0A]">Menunggu
+                                                Review</span>
+                                        </template>
+                                        <template x-if="selectedRecovery?.status === 'approved'">
+                                            <span
+                                                class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#34C759]/12 text-[#34C759] dark:text-[#30D158]">Disetujui</span>
+                                        </template>
+                                        <template x-if="selectedRecovery?.status === 'rejected'">
+                                            <span
+                                                class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#FF3B30]/12 text-[#FF3B30] dark:text-[#FF453A]">Ditolak</span>
+                                        </template>
+                                    </div>
+                                    <h3 class="text-xs text-black/50 dark:text-white/50 truncate mt-0.5">
+                                        Permohonan oleh <strong class="text-black dark:text-white"
+                                            x-text="selectedRecovery?.applicant_name"></strong> &bull; <span
+                                            x-text="selectedRecovery?.business_name"></span>
+                                    </h3>
+                                </div>
+                            </div>
+
+                            <!-- Right Actions: Dedicated Show Link + Circle Close Button -->
+                            <div class="flex items-center gap-2 shrink-0">
+                                <a :href="selectedRecovery?.show_url"
+                                    class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-xs font-semibold text-black/70 dark:text-white/70 transition-colors">
+                                    <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                                    <span>Buka Halaman Penuh</span>
+                                </a>
+                                <button type="button" @click="closeInspection()"
+                                    class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.1] hover:bg-black/[0.1] dark:hover:bg-white/[0.15] text-black/60 dark:text-white/60 flex items-center justify-center transition-all active:scale-95">
+                                    <i data-lucide="x" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Modal Body (Scrollable XXL Bento) -->
+                        <div class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 sidebar-scroll">
+
+                            <!-- 1. BENTO KOMPARASI KONTAK LAMA VS BARU -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                                <!-- Data Terdaftar Lama -->
+                                <div
+                                    class="p-4 rounded-[18px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] space-y-2.5">
+                                    <div
+                                        class="flex items-center gap-1.5 text-black/45 dark:text-white/45 font-semibold text-[11px] uppercase tracking-wider">
+                                        <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+                                        <span>Data Terdaftar Saat Ini (Lama)</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-[11px] text-black/40 dark:text-white/40 block">Email Akun:</span>
+                                        <span
+                                            class="font-mono text-xs sm:text-sm text-black/80 dark:text-white/80 select-all break-all"
+                                            x-text="selectedRecovery?.old_email"></span>
+                                    </div>
+                                    <div>
+                                        <span class="text-[11px] text-black/40 dark:text-white/40 block">WhatsApp Terdaftar:</span>
+                                        <span
+                                            class="font-mono text-xs sm:text-sm text-black/80 dark:text-white/80 select-all tabular-nums"
+                                            x-text="selectedRecovery?.old_phone"></span>
+                                    </div>
+                                </div>
+
+                                <!-- Kontak Baru Yang Diajukan -->
+                                <div
+                                    class="p-4 rounded-[18px] bg-[#34C759]/10 dark:bg-[#30D158]/10 border border-[#34C759]/20 space-y-2.5">
+                                    <div
+                                        class="flex items-center gap-1.5 text-[#34C759] dark:text-[#30D158] font-semibold text-[11px] uppercase tracking-wider">
+                                        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                                        <span>Kontak Baru Yang Diajukan</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-[11px] text-black/40 dark:text-white/40 block">Alamat Email Baru:</span>
+                                        <span
+                                            class="font-mono font-semibold text-xs sm:text-sm text-[#34C759] dark:text-[#30D158] select-all break-all"
+                                            x-text="selectedRecovery?.new_email"></span>
+                                    </div>
+                                    <div>
+                                        <span class="text-[11px] text-black/40 dark:text-white/40 block">Nomor WhatsApp
+                                            Baru:</span>
+                                        <span
+                                            class="font-mono font-bold text-xs sm:text-sm text-black dark:text-white select-all tabular-nums"
+                                            x-text="selectedRecovery?.new_phone"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Info Usaha & Catatan Pemohon -->
+                            <div
+                                class="p-4 rounded-[18px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] space-y-3 text-xs">
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                    <div>
+                                        <span class="text-[11px] text-black/40 dark:text-white/40 block">Jenis Kendala:</span>
+                                        <span class="font-semibold text-black dark:text-white"
+                                            x-text="selectedRecovery?.issue_type_label"></span>
+                                    </div>
+                                    <div>
+                                        <span class="text-[11px] text-black/40 dark:text-white/40 block">Waktu Pengajuan:</span>
+                                        <span class="font-medium text-black/70 dark:text-white/70 tabular-nums"
+                                            x-text="selectedRecovery?.created_at_human"></span>
+                                    </div>
+                                    <div>
+                                        <span class="text-[11px] text-black/40 dark:text-white/40 block">Alamat IP:</span>
+                                        <span class="font-mono font-medium text-black/70 dark:text-white/70"
+                                            x-text="selectedRecovery?.ip_address"></span>
+                                    </div>
+                                </div>
+                                <template x-if="selectedRecovery?.reason_description">
+                                    <div class="pt-2 border-t border-black/[0.06] dark:border-white/[0.08]">
+                                        <span
+                                            class="text-[10px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wider block mb-1">Pernyataan
+                                            Pemohon Mengenai Kendala:</span>
+                                        <p class="text-xs text-black/75 dark:text-white/75 italic leading-relaxed"
+                                            x-text="'&ldquo;' + selectedRecovery?.reason_description + '&rdquo;'"></p>
                                     </div>
                                 </template>
-                                <template x-if="!selectedRecovery?.identity_url">
-                                    <div class="py-7 text-center text-xs text-black/40 dark:text-white/40">Tidak
-                                        dilampirkan</div>
-                                </template>
                             </div>
 
-                            <!-- Dokumen 2: Bukti Legalitas Usaha -->
-                            <div
-                                class="p-3.5 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] space-y-2">
-                                <div class="flex items-center justify-between text-xs">
-                                    <span class="font-semibold text-black dark:text-white flex items-center gap-1.5">
-                                        <i data-lucide="building-2" class="w-3.5 h-3.5 text-[#5856D6]"></i>
-                                        <span>2. Dokumen Usaha</span>
-                                    </span>
-                                    <span class="text-[10px] font-bold text-[#5856D6] uppercase">Wajib</span>
+                            <!-- 2. MEJA UJI BUKTI OTENTIK (DOCUMENT TILES) -->
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <i data-lucide="file-check" class="w-4 h-4 text-[#5856D6]"></i>
+                                        <h4 class="text-xs sm:text-sm font-bold text-black dark:text-white">Meja Uji Bukti Otentik
+                                            Kepemilikan Akun</h4>
+                                    </div>
+                                    <span class="text-[11px] text-black/40 dark:text-white/40">Klik dokumen untuk perbesar</span>
                                 </div>
-                                <template x-if="selectedRecovery?.business_url">
-                                    <div class="space-y-1.5">
-                                        <!-- Jika format PDF -->
-                                        <template x-if="selectedRecovery?.is_business_pdf">
-                                            <div
-                                                class="p-4 rounded-[12px] bg-[#5856D6]/10 border border-[#5856D6]/20 flex flex-col items-center justify-center text-center aspect-video space-y-1.5">
-                                                <i data-lucide="file-text" class="w-7 h-7 text-[#5856D6]"></i>
-                                                <span class="text-[11px] font-semibold text-black dark:text-white">Dokumen
-                                                    PDF Usaha</span>
-                                                <a :href="selectedRecovery.business_url" target="_blank"
-                                                    class="text-[10px] font-bold text-[#5856D6] hover:underline inline-flex items-center gap-1">
-                                                    <span>Buka PDF di Tab Baru &rarr;</span>
-                                                </a>
-                                            </div>
-                                        </template>
-                                        <!-- Jika format Gambar -->
-                                        <template x-if="!selectedRecovery?.is_business_pdf">
-                                            <div>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+                                    <!-- Dokumen 1: KTP Asli -->
+                                    <div
+                                        class="p-3.5 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] space-y-2">
+                                        <div class="flex items-center justify-between text-xs">
+                                            <span class="font-semibold text-black dark:text-white flex items-center gap-1.5">
+                                                <i data-lucide="credit-card" class="w-3.5 h-3.5 text-[#007AFF]"></i>
+                                                <span>1. Foto KTP Asli</span>
+                                            </span>
+                                            <span class="text-[10px] font-bold text-[#007AFF] uppercase">Wajib</span>
+                                        </div>
+                                        <template x-if="selectedRecovery?.identity_url">
+                                            <div class="space-y-1.5">
                                                 <div class="relative group rounded-[12px] overflow-hidden border border-black/10 dark:border-white/10 bg-black/5 cursor-pointer aspect-video"
-                                                    @click="openLightbox(selectedRecovery.business_url, 'Bukti Usaha: ' + selectedRecovery.business_name)">
-                                                    <img :src="selectedRecovery.business_url" alt="Bukti Usaha"
+                                                    @click="openLightbox(selectedRecovery.identity_url, 'Foto KTP: ' + selectedRecovery.applicant_name)">
+                                                    <img :src="selectedRecovery.identity_url" alt="KTP Pemohon"
                                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200">
                                                     <div
                                                         class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-medium gap-1.5 backdrop-blur-[2px]">
@@ -654,204 +609,272 @@
                                                         <span>Perbesar</span>
                                                     </div>
                                                 </div>
-                                                <a :href="selectedRecovery.business_url" target="_blank"
-                                                    class="text-[11px] font-medium text-[#007AFF] dark:text-[#0A84FF] hover:underline inline-flex items-center gap-1 mt-1">
+                                                <a :href="selectedRecovery.identity_url" target="_blank"
+                                                    class="text-[11px] font-medium text-[#007AFF] dark:text-[#0A84FF] hover:underline inline-flex items-center gap-1">
                                                     <i data-lucide="external-link" class="w-3 h-3"></i>
                                                     <span>Buka Resolusi Penuh</span>
                                                 </a>
                                             </div>
                                         </template>
+                                        <template x-if="!selectedRecovery?.identity_url">
+                                            <div class="py-7 text-center text-xs text-black/40 dark:text-white/40">Tidak
+                                                dilampirkan</div>
+                                        </template>
                                     </div>
-                                </template>
-                                <template x-if="!selectedRecovery?.business_url">
-                                    <div class="py-7 text-center text-xs text-black/40 dark:text-white/40">Tidak
-                                        dilampirkan</div>
-                                </template>
+
+                                    <!-- Dokumen 2: Bukti Legalitas Usaha -->
+                                    <div
+                                        class="p-3.5 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] space-y-2">
+                                        <div class="flex items-center justify-between text-xs">
+                                            <span class="font-semibold text-black dark:text-white flex items-center gap-1.5">
+                                                <i data-lucide="building-2" class="w-3.5 h-3.5 text-[#5856D6]"></i>
+                                                <span>2. Dokumen Usaha</span>
+                                            </span>
+                                            <span class="text-[10px] font-bold text-[#5856D6] uppercase">Wajib</span>
+                                        </div>
+                                        <template x-if="selectedRecovery?.business_url">
+                                            <div class="space-y-1.5">
+                                                <!-- Jika format PDF -->
+                                                <template x-if="selectedRecovery?.is_business_pdf">
+                                                    <div
+                                                        class="p-4 rounded-[12px] bg-[#5856D6]/10 border border-[#5856D6]/20 flex flex-col items-center justify-center text-center aspect-video space-y-1.5">
+                                                        <i data-lucide="file-text" class="w-7 h-7 text-[#5856D6]"></i>
+                                                        <span class="text-[11px] font-semibold text-black dark:text-white">Dokumen
+                                                            PDF Usaha</span>
+                                                        <a :href="selectedRecovery.business_url" target="_blank"
+                                                            class="text-[10px] font-bold text-[#5856D6] hover:underline inline-flex items-center gap-1">
+                                                            <span>Buka PDF di Tab Baru &rarr;</span>
+                                                        </a>
+                                                    </div>
+                                                </template>
+                                                <!-- Jika format Gambar -->
+                                                <template x-if="!selectedRecovery?.is_business_pdf">
+                                                    <div>
+                                                        <div class="relative group rounded-[12px] overflow-hidden border border-black/10 dark:border-white/10 bg-black/5 cursor-pointer aspect-video"
+                                                            @click="openLightbox(selectedRecovery.business_url, 'Bukti Usaha: ' + selectedRecovery.business_name)">
+                                                            <img :src="selectedRecovery.business_url" alt="Bukti Usaha"
+                                                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200">
+                                                            <div
+                                                                class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-medium gap-1.5 backdrop-blur-[2px]">
+                                                                <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
+                                                                <span>Perbesar</span>
+                                                            </div>
+                                                        </div>
+                                                        <a :href="selectedRecovery.business_url" target="_blank"
+                                                            class="text-[11px] font-medium text-[#007AFF] dark:text-[#0A84FF] hover:underline inline-flex items-center gap-1 mt-1">
+                                                            <i data-lucide="external-link" class="w-3 h-3"></i>
+                                                            <span>Buka Resolusi Penuh</span>
+                                                        </a>
+                                                    </div>
+                                                </template>
+                                            </div>
+                                        </template>
+                                        <template x-if="!selectedRecovery?.business_url">
+                                            <div class="py-7 text-center text-xs text-black/40 dark:text-white/40">Tidak
+                                                dilampirkan</div>
+                                        </template>
+                                    </div>
+
+                                    <!-- Dokumen 3: Selfie dengan KTP -->
+                                    <div
+                                        class="p-3.5 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] space-y-2">
+                                        <div class="flex items-center justify-between text-xs">
+                                            <span class="font-semibold text-black dark:text-white flex items-center gap-1.5">
+                                                <i data-lucide="camera" class="w-3.5 h-3.5 text-[#FF9500]"></i>
+                                                <span>3. Selfie dengan KTP</span>
+                                            </span>
+                                            <span
+                                                class="text-[10px] font-medium text-black/40 dark:text-white/40 uppercase">Pendukung</span>
+                                        </div>
+                                        <template x-if="selectedRecovery?.selfie_url">
+                                            <div class="space-y-1.5">
+                                                <div class="relative group rounded-[12px] overflow-hidden border border-black/10 dark:border-white/10 bg-black/5 cursor-pointer aspect-video"
+                                                    @click="openLightbox(selectedRecovery.selfie_url, 'Selfie Pemohon: ' + selectedRecovery.applicant_name)">
+                                                    <img :src="selectedRecovery.selfie_url" alt="Selfie Pemohon"
+                                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200">
+                                                    <div
+                                                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-medium gap-1.5 backdrop-blur-[2px]">
+                                                        <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
+                                                        <span>Perbesar</span>
+                                                    </div>
+                                                </div>
+                                                <a :href="selectedRecovery.selfie_url" target="_blank"
+                                                    class="text-[11px] font-medium text-[#007AFF] dark:text-[#0A84FF] hover:underline inline-flex items-center gap-1">
+                                                    <i data-lucide="external-link" class="w-3 h-3"></i>
+                                                    <span>Buka Resolusi Penuh</span>
+                                                </a>
+                                            </div>
+                                        </template>
+                                        <template x-if="!selectedRecovery?.selfie_url">
+                                            <div class="py-7 text-center text-xs text-black/40 dark:text-white/40">Tidak
+                                                dilampirkan</div>
+                                        </template>
+                                    </div>
+                                </div>
                             </div>
 
-                            <!-- Dokumen 3: Selfie dengan KTP -->
-                            <div
-                                class="p-3.5 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] space-y-2">
-                                <div class="flex items-center justify-between text-xs">
-                                    <span class="font-semibold text-black dark:text-white flex items-center gap-1.5">
-                                        <i data-lucide="camera" class="w-3.5 h-3.5 text-[#FF9500]"></i>
-                                        <span>3. Selfie dengan KTP</span>
-                                    </span>
-                                    <span
-                                        class="text-[10px] font-medium text-black/40 dark:text-white/40 uppercase">Pendukung</span>
-                                </div>
-                                <template x-if="selectedRecovery?.selfie_url">
-                                    <div class="space-y-1.5">
-                                        <div class="relative group rounded-[12px] overflow-hidden border border-black/10 dark:border-white/10 bg-black/5 cursor-pointer aspect-video"
-                                            @click="openLightbox(selectedRecovery.selfie_url, 'Selfie Pemohon: ' + selectedRecovery.applicant_name)">
-                                            <img :src="selectedRecovery.selfie_url" alt="Selfie Pemohon"
-                                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200">
-                                            <div
-                                                class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-medium gap-1.5 backdrop-blur-[2px]">
-                                                <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
-                                                <span>Perbesar</span>
+                            <!-- 3. TINDAKAN ADMINISTRATOR (FORM APPROVE / REJECT LANGSUNG) -->
+                            <div class="pt-2">
+                                <!-- Kasus Status PENDING: Meja Eksekusi -->
+                                <template x-if="selectedRecovery?.status === 'pending'">
+                                    <div
+                                        class="rounded-[20px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] p-4 sm:p-5 space-y-4">
+                                        <div class="flex items-center gap-2">
+                                            <i data-lucide="shield-alert" class="w-4 h-4 text-[#007AFF]"></i>
+                                            <h4 class="text-xs sm:text-sm font-bold text-black dark:text-white">Tindakan
+                                                Administrator Langsung</h4>
+                                        </div>
+
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <!-- Panel Setujui Permohonan -->
+                                            <div class="p-4 rounded-[16px] bg-[#34C759]/10 border border-[#34C759]/25 space-y-3">
+                                                <div
+                                                    class="flex items-center gap-2 font-bold text-xs text-[#34C759] dark:text-[#30D158]">
+                                                    <i data-lucide="check-circle" class="w-4 h-4"></i>
+                                                    <span>Setujui &amp; Sinkronkan Kontak Akun</span>
+                                                </div>
+                                                <p class="text-[11px] text-black/70 dark:text-white/70 leading-relaxed">
+                                                    Email login akan diganti ke <strong class="text-black dark:text-white"
+                                                        x-text="selectedRecovery?.new_email"></strong> dan WhatsApp ke <strong
+                                                        class="text-black dark:text-white"
+                                                        x-text="selectedRecovery?.new_phone"></strong>.
+                                                </p>
+                                                <form :action="selectedRecovery?.approve_url" method="POST" class="space-y-3">
+                                                    @csrf
+                                                    <div>
+                                                        <label
+                                                            class="block text-[11px] font-semibold text-black/70 dark:text-white/70 mb-1">Catatan
+                                                            Verifikasi (Opsional):</label>
+                                                        <input type="text" name="admin_notes"
+                                                            value="Dokumen KTP dan bukti usaha terverifikasi valid."
+                                                            class="w-full px-3 py-2 rounded-[10px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:border-[#34C759]">
+                                                    </div>
+                                                    <button type="submit"
+                                                        class="w-full min-h-[44px] py-2.5 px-4 rounded-[12px] bg-[#34C759] hover:bg-[#28A745] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all active:scale-[0.98]">
+                                                        <i data-lucide="check" class="w-4 h-4"></i>
+                                                        <span>Setujui &amp; Perbarui Akses Akun</span>
+                                                    </button>
+                                                </form>
+                                            </div>
+
+                                            <!-- Panel Tolak Permohonan -->
+                                            <div class="p-4 rounded-[16px] bg-[#FF3B30]/10 border border-[#FF3B30]/25 space-y-3">
+                                                <div
+                                                    class="flex items-center gap-2 font-bold text-xs text-[#FF3B30] dark:text-[#FF453A]">
+                                                    <i data-lucide="x-circle" class="w-4 h-4"></i>
+                                                    <span>Tolak Permohonan Pemulihan</span>
+                                                </div>
+                                                <p class="text-[11px] text-black/70 dark:text-white/70 leading-relaxed">
+                                                    Alasan penolakan akan dikirimkan otomatis ke nomor WhatsApp pemohon.
+                                                </p>
+                                                <form :action="selectedRecovery?.reject_url" method="POST" class="space-y-3">
+                                                    @csrf
+                                                    <div>
+                                                        <label
+                                                            class="block text-[11px] font-semibold text-black/70 dark:text-white/70 mb-1">Alasan
+                                                            Penolakan <span class="text-[#FF3B30]">*</span>:</label>
+                                                        <textarea name="rejection_reason" rows="2" required placeholder="Contoh: Foto KTP buram..."
+                                                            class="w-full px-3 py-2 rounded-[10px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:border-[#FF3B30]"></textarea>
+                                                    </div>
+                                                    <button type="submit"
+                                                        class="w-full min-h-[44px] py-2.5 px-4 rounded-[12px] bg-[#FF3B30] hover:bg-red-600 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all active:scale-[0.98]">
+                                                        <i data-lucide="x" class="w-4 h-4"></i>
+                                                        <span>Tolak Permohonan</span>
+                                                    </button>
+                                                </form>
                                             </div>
                                         </div>
-                                        <a :href="selectedRecovery.selfie_url" target="_blank"
-                                            class="text-[11px] font-medium text-[#007AFF] dark:text-[#0A84FF] hover:underline inline-flex items-center gap-1">
-                                            <i data-lucide="external-link" class="w-3 h-3"></i>
-                                            <span>Buka Resolusi Penuh</span>
-                                        </a>
                                     </div>
                                 </template>
-                                <template x-if="!selectedRecovery?.selfie_url">
-                                    <div class="py-7 text-center text-xs text-black/40 dark:text-white/40">Tidak
-                                        dilampirkan</div>
+
+                                <!-- Kasus Status APPROVED -->
+                                <template x-if="selectedRecovery?.status === 'approved'">
+                                    <div class="p-4 rounded-[18px] bg-[#34C759]/10 border border-[#34C759]/25 text-xs space-y-2">
+                                        <div class="flex items-center gap-2 font-bold text-sm text-[#34C759] dark:text-[#30D158]">
+                                            <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                                            <span>Permohonan Telah Disetujui</span>
+                                        </div>
+                                        <p class="text-xs text-black/70 dark:text-white/70 leading-relaxed">
+                                            Disetujui oleh: <strong class="text-black dark:text-white"
+                                                x-text="selectedRecovery?.approver_name || 'Administrator'"></strong><br>
+                                            Waktu: <span class="tabular-nums" x-text="selectedRecovery?.approved_at_human"></span>
+                                        </p>
+                                        <template x-if="selectedRecovery?.admin_notes">
+                                            <div class="pt-2 border-t border-[#34C759]/20 text-xs text-black/75 dark:text-white/75 italic"
+                                                x-text="'&ldquo;' + selectedRecovery.admin_notes + '&rdquo;'"></div>
+                                        </template>
+                                    </div>
+                                </template>
+
+                                <!-- Kasus Status REJECTED -->
+                                <template x-if="selectedRecovery?.status === 'rejected'">
+                                    <div class="p-4 rounded-[18px] bg-[#FF3B30]/10 border border-[#FF3B30]/25 text-xs space-y-2">
+                                        <div class="flex items-center gap-2 font-bold text-sm text-[#FF3B30] dark:text-[#FF453A]">
+                                            <i data-lucide="x-circle" class="w-4 h-4"></i>
+                                            <span>Permohonan Telah Ditolak</span>
+                                        </div>
+                                        <p class="text-xs text-black/70 dark:text-white/70 leading-relaxed">
+                                            Ditolak oleh: <strong class="text-black dark:text-white"
+                                                x-text="selectedRecovery?.rejector_name || 'Administrator'"></strong><br>
+                                            Waktu: <span class="tabular-nums" x-text="selectedRecovery?.rejected_at_human"></span>
+                                        </p>
+                                        <div class="pt-2 border-t border-[#FF3B30]/20 text-xs text-black/75 dark:text-white/75">
+                                            <strong class="block text-black dark:text-white mb-0.5">Alasan Penolakan:</strong>
+                                            <span x-text="'&ldquo;' + selectedRecovery?.rejection_reason + '&rdquo;'"></span>
+                                        </div>
+                                    </div>
                                 </template>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- 3. TINDAKAN ADMINISTRATOR (FORM APPROVE / REJECT LANGSUNG) -->
-                    <div class="pt-2">
-                        <!-- Kasus Status PENDING: Meja Eksekusi -->
-                        <template x-if="selectedRecovery?.status === 'pending'">
-                            <div
-                                class="rounded-[20px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] p-4 sm:p-5 space-y-4">
-                                <div class="flex items-center gap-2">
-                                    <i data-lucide="shield-alert" class="w-4 h-4 text-[#007AFF]"></i>
-                                    <h4 class="text-xs sm:text-sm font-bold text-black dark:text-white">Tindakan
-                                        Administrator Langsung</h4>
-                                </div>
-
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <!-- Panel Setujui Permohonan -->
-                                    <div class="p-4 rounded-[16px] bg-[#34C759]/10 border border-[#34C759]/25 space-y-3">
-                                        <div
-                                            class="flex items-center gap-2 font-bold text-xs text-[#34C759] dark:text-[#30D158]">
-                                            <i data-lucide="check-circle" class="w-4 h-4"></i>
-                                            <span>Setujui &amp; Sinkronkan Kontak Akun</span>
-                                        </div>
-                                        <p class="text-[11px] text-black/70 dark:text-white/70 leading-relaxed">
-                                            Email login akan diganti ke <strong class="text-black dark:text-white"
-                                                x-text="selectedRecovery?.new_email"></strong> dan WhatsApp ke <strong
-                                                class="text-black dark:text-white"
-                                                x-text="selectedRecovery?.new_phone"></strong>.
-                                        </p>
-                                        <form :action="selectedRecovery?.approve_url" method="POST" class="space-y-3">
-                                            @csrf
-                                            <div>
-                                                <label
-                                                    class="block text-[11px] font-semibold text-black/70 dark:text-white/70 mb-1">Catatan
-                                                    Verifikasi (Opsional):</label>
-                                                <input type="text" name="admin_notes"
-                                                    value="Dokumen KTP dan bukti usaha terverifikasi valid."
-                                                    class="w-full px-3 py-2 rounded-[10px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:border-[#34C759]">
-                                            </div>
-                                            <button type="submit"
-                                                class="w-full min-h-[44px] py-2.5 px-4 rounded-[12px] bg-[#34C759] hover:bg-[#28A745] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all active:scale-[0.98]">
-                                                <i data-lucide="check" class="w-4 h-4"></i>
-                                                <span>Setujui &amp; Perbarui Akses Akun</span>
-                                            </button>
-                                        </form>
-                                    </div>
-
-                                    <!-- Panel Tolak Permohonan -->
-                                    <div class="p-4 rounded-[16px] bg-[#FF3B30]/10 border border-[#FF3B30]/25 space-y-3">
-                                        <div
-                                            class="flex items-center gap-2 font-bold text-xs text-[#FF3B30] dark:text-[#FF453A]">
-                                            <i data-lucide="x-circle" class="w-4 h-4"></i>
-                                            <span>Tolak Permohonan Pemulihan</span>
-                                        </div>
-                                        <p class="text-[11px] text-black/70 dark:text-white/70 leading-relaxed">
-                                            Alasan penolakan akan dikirimkan otomatis ke nomor WhatsApp pemohon.
-                                        </p>
-                                        <form :action="selectedRecovery?.reject_url" method="POST" class="space-y-3">
-                                            @csrf
-                                            <div>
-                                                <label
-                                                    class="block text-[11px] font-semibold text-black/70 dark:text-white/70 mb-1">Alasan
-                                                    Penolakan <span class="text-[#FF3B30]">*</span>:</label>
-                                                <textarea name="rejection_reason" rows="2" required placeholder="Contoh: Foto KTP buram..."
-                                                    class="w-full px-3 py-2 rounded-[10px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:border-[#FF3B30]"></textarea>
-                                            </div>
-                                            <button type="submit"
-                                                class="w-full min-h-[44px] py-2.5 px-4 rounded-[12px] bg-[#FF3B30] hover:bg-red-600 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all active:scale-[0.98]">
-                                                <i data-lucide="x" class="w-4 h-4"></i>
-                                                <span>Tolak Permohonan</span>
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
+                        <!-- Modal Footer (Sticky Bottom) -->
+                        <div
+                            class="sticky bottom-0 z-20 backdrop-blur-xl bg-white/95 dark:bg-[#1C1C1E]/95 border-t border-black/[0.06] dark:border-white/[0.08] px-5 sm:px-6 py-3.5 flex items-center justify-between gap-3 shrink-0">
+                            <a :href="selectedRecovery?.show_url"
+                                class="sm:hidden text-xs font-semibold text-[#007AFF] hover:underline inline-flex items-center gap-1">
+                                <span>Buka Halaman Penuh &rarr;</span>
+                            </a>
+                            <div class="ml-auto">
+                                <button type="button" @click="closeInspection()"
+                                    class="min-h-[44px] px-5 py-2 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-xs font-semibold text-black dark:text-white transition-colors">
+                                    Tutup
+                                </button>
                             </div>
-                        </template>
-
-                        <!-- Kasus Status APPROVED -->
-                        <template x-if="selectedRecovery?.status === 'approved'">
-                            <div class="p-4 rounded-[18px] bg-[#34C759]/10 border border-[#34C759]/25 text-xs space-y-2">
-                                <div class="flex items-center gap-2 font-bold text-sm text-[#34C759] dark:text-[#30D158]">
-                                    <i data-lucide="check-circle-2" class="w-4 h-4"></i>
-                                    <span>Permohonan Telah Disetujui</span>
-                                </div>
-                                <p class="text-xs text-black/70 dark:text-white/70 leading-relaxed">
-                                    Disetujui oleh: <strong class="text-black dark:text-white"
-                                        x-text="selectedRecovery?.approver_name || 'Administrator'"></strong><br>
-                                    Waktu: <span class="tabular-nums" x-text="selectedRecovery?.approved_at_human"></span>
-                                </p>
-                                <template x-if="selectedRecovery?.admin_notes">
-                                    <div class="pt-2 border-t border-[#34C759]/20 text-xs text-black/75 dark:text-white/75 italic"
-                                        x-text="'&ldquo;' + selectedRecovery.admin_notes + '&rdquo;'"></div>
-                                </template>
-                            </div>
-                        </template>
-
-                        <!-- Kasus Status REJECTED -->
-                        <template x-if="selectedRecovery?.status === 'rejected'">
-                            <div class="p-4 rounded-[18px] bg-[#FF3B30]/10 border border-[#FF3B30]/25 text-xs space-y-2">
-                                <div class="flex items-center gap-2 font-bold text-sm text-[#FF3B30] dark:text-[#FF453A]">
-                                    <i data-lucide="x-circle" class="w-4 h-4"></i>
-                                    <span>Permohonan Telah Ditolak</span>
-                                </div>
-                                <p class="text-xs text-black/70 dark:text-white/70 leading-relaxed">
-                                    Ditolak oleh: <strong class="text-black dark:text-white"
-                                        x-text="selectedRecovery?.rejector_name || 'Administrator'"></strong><br>
-                                    Waktu: <span class="tabular-nums" x-text="selectedRecovery?.rejected_at_human"></span>
-                                </p>
-                                <div class="pt-2 border-t border-[#FF3B30]/20 text-xs text-black/75 dark:text-white/75">
-                                    <strong class="block text-black dark:text-white mb-0.5">Alasan Penolakan:</strong>
-                                    <span x-text="'&ldquo;' + selectedRecovery?.rejection_reason + '&rdquo;'"></span>
-                                </div>
-                            </div>
-                        </template>
-                    </div>
-                </div>
-
-                <!-- Modal Footer (Sticky Bottom) -->
-                <div
-                    class="sticky bottom-0 z-20 backdrop-blur-xl bg-white/95 dark:bg-[#1C1C1E]/95 border-t border-black/[0.06] dark:border-white/[0.08] px-5 sm:px-6 py-3.5 flex items-center justify-between gap-3 shrink-0">
-                    <a :href="selectedRecovery?.show_url"
-                        class="sm:hidden text-xs font-semibold text-[#007AFF] hover:underline inline-flex items-center gap-1">
-                        <span>Buka Halaman Penuh &rarr;</span>
-                    </a>
-                    <div class="ml-auto">
-                        <button type="button" @click="closeInspection()"
-                            class="min-h-[44px] px-5 py-2 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-xs font-semibold text-black dark:text-white transition-colors">
-                            Tutup
-                        </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </template>
 
         <!-- ═══ IMAGE LIGHTBOX MODAL ═══ -->
-        <div x-show="imageModalOpen" @click="imageModalOpen = false"
-            class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-lg" x-cloak
-            style="display: none;">
-            <div class="max-w-4xl max-h-[90vh] flex flex-col items-center gap-3 w-full" @click.stop>
-                <div class="flex items-center justify-between w-full text-white text-xs font-semibold px-2">
-                    <span x-text="lightboxTitle"></span>
-                    <button type="button" @click="imageModalOpen = false"
-                        class="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors text-white">
-                        <i data-lucide="x" class="w-5 h-5"></i>
-                    </button>
+        <template x-teleport="body">
+            <div x-show="imageModalOpen"
+                class="fixed inset-0 z-[210] overflow-y-auto"
+                x-cloak style="display: none;"
+                role="dialog" aria-modal="true"
+                @keydown.escape.window="imageModalOpen = false">
+                <!-- Backdrop -->
+                <div class="fixed inset-0 bg-black/85 backdrop-blur-lg transition-opacity"
+                    @click="imageModalOpen = false"
+                    aria-hidden="true"></div>
+
+                <!-- Centering Wrapper -->
+                <div class="relative z-10 min-h-full flex items-center justify-center p-4 pointer-events-none">
+                    <div class="max-w-4xl max-h-[90vh] flex flex-col items-center gap-3 w-full pointer-events-auto" @click.stop>
+                        <div class="flex items-center justify-between w-full text-white text-xs font-semibold px-2">
+                            <span x-text="lightboxTitle"></span>
+                            <button type="button" @click="imageModalOpen = false"
+                                class="p-2 min-h-[44px] min-w-[44px] rounded-full bg-white/10 hover:bg-white/20 transition-colors text-white flex items-center justify-center">
+                                <i data-lucide="x" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                        <img :src="lightboxImageUrl" alt="Dokumen Bukti"
+                            class="max-w-full max-h-[80vh] rounded-[16px] object-contain shadow-2xl border border-white/20">
+                    </div>
                 </div>
-                <img :src="lightboxImageUrl" alt="Dokumen Bukti"
-                    class="max-w-full max-h-[80vh] rounded-[16px] object-contain shadow-2xl border border-white/20">
+            </div>
+        </template>
+    </div>rder-white/20">
             </div>
         </div>
     </div>

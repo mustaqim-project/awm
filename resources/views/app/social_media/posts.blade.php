@@ -412,32 +412,47 @@
         @endif
 
         {{-- 5. UNIFIED COMPOSER MODAL SHEET (Apple HIG Bento Design XXL) --}}
-        <div x-show="openComposerModal" style="display: none;" x-cloak
-            x-transition:enter="transition ease-out duration-250"
-            x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100"
-            x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100"
-            x-transition:leave-end="opacity-0"
-            class="fixed inset-0 z-50 overflow-y-auto bg-black/50 backdrop-blur-sm flex items-center justify-center p-3 sm:p-5"
-            @keydown.escape.window="openComposerModal = false"
-            role="dialog"
-            aria-modal="true">
-            <div class="relative w-full max-w-5xl xl:max-w-6xl 2xl:max-w-[1550px] rounded-[26px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl p-6 sm:p-8 space-y-6 my-4 max-h-[94vh] overflow-y-auto"
-                @click.away="openComposerModal = false">
+        <template x-teleport="body">
+            <div x-show="openComposerModal" style="display: none;" x-cloak
+                class="fixed inset-0 z-[200] overflow-y-auto flex items-center justify-center p-3 sm:p-5"
+                @keydown.escape.window="openComposerModal = false"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="composer-modal-title">
 
-                {{-- Modal Header --}}
-                <div class="flex items-center justify-between pb-3.5 border-b border-black/5 dark:border-white/10">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-[14px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center font-bold">
-                            <i data-lucide="feather" class="w-5 h-5"></i>
+                <!-- Backdrop -->
+                <div x-show="openComposerModal"
+                    x-transition:enter="ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    @click="openComposerModal = false"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
+
+                <div x-show="openComposerModal"
+                    x-transition:enter="ease-out duration-200"
+                    x-transition:enter-start="opacity-0 translate-y-4 sm:scale-95"
+                    x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave="ease-in duration-150"
+                    x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave-end="opacity-0 translate-y-4 sm:scale-95"
+                    class="relative w-full max-w-5xl xl:max-w-6xl 2xl:max-w-[1550px] rounded-[26px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl p-6 sm:p-8 space-y-6 my-4 max-h-[94vh] overflow-y-auto z-10"
+                    @click.outside="openComposerModal = false">
+
+                    {{-- Modal Header --}}
+                    <div class="flex items-center justify-between pb-3.5 border-b border-black/5 dark:border-white/10">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-[14px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center font-bold shrink-0">
+                                <i data-lucide="feather" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 id="composer-modal-title" class="text-[17px] font-bold text-black dark:text-white">{{ __('social_media.composer_title') }}</h3>
+                                <p class="text-[12.5px] text-black/55 dark:text-white/55">{{ __('social_media.composer_subtitle') }}</p>
+                            </div>
                         </div>
-                        <div>
-                            <h3 class="text-[17px] font-bold text-black dark:text-white">{{ __('social_media.composer_title') }}</h3>
-                            <p class="text-[12.5px] text-black/55 dark:text-white/55">{{ __('social_media.composer_subtitle') }}</p>
-                        </div>
-                    </div>
-                    <button type="button" @click="openComposerModal = false" class="w-9 h-9 sm:w-8 sm:h-8 flex items-center justify-center rounded-full text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer">
+                        <button type="button" @click="openComposerModal = false" class="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer active:scale-95" aria-label="Tutup modal">
                         <i data-lucide="x" class="w-5 h-5"></i>
                     </button>
                 </div>
@@ -1393,20 +1408,37 @@
                 </form>
             </div>
         </div>
+    </template>
 
-        {{-- 6. POST PREVIEW & MANAGEMENT MODAL (Apple HIG Bento Bottom Sheet) --}}
-        <div x-show="postManagerOpen" style="display:none;"
-             x-transition:enter="transition ease-out duration-200"
-             x-transition:enter-start="opacity-0"
-             x-transition:enter-end="opacity-100"
-             x-transition:leave="transition ease-in duration-150"
-             x-transition:leave-start="opacity-100"
-             x-transition:leave-end="opacity-0"
-             class="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-5"
-             @keydown.escape.window="postManagerOpen = false">
+    {{-- 6. POST PREVIEW & MANAGEMENT MODAL (Apple HIG Bento Bottom Sheet) --}}
+    <template x-teleport="body">
+        <div x-show="postManagerOpen" style="display:none;" x-cloak
+             class="fixed inset-0 z-[200] overflow-y-auto flex items-end sm:items-center justify-center p-0 sm:p-5"
+             @keydown.escape.window="postManagerOpen = false"
+             role="dialog"
+             aria-modal="true"
+             aria-labelledby="post-manager-modal-title">
 
-            <div class="relative w-full sm:max-w-2xl rounded-t-[28px] sm:rounded-[26px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl flex flex-col max-h-[92vh]"
-                 @click.away="postManagerOpen = false">
+            <!-- Backdrop -->
+            <div x-show="postManagerOpen"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="postManagerOpen = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
+
+            <div x-show="postManagerOpen"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0 translate-y-4 sm:scale-95"
+                x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave-end="opacity-0 translate-y-4 sm:scale-95"
+                class="relative w-full sm:max-w-2xl rounded-t-[28px] sm:rounded-[26px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl flex flex-col max-h-[92vh] z-10"
+                @click.outside="postManagerOpen = false">
 
                 {{-- Drag handle (mobile) --}}
                 <div class="flex justify-center pt-3 pb-1 sm:hidden">
@@ -1416,11 +1448,11 @@
                 {{-- Modal Header --}}
                 <div class="flex items-center justify-between px-6 py-4 border-b border-black/5 dark:border-white/10">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-[14px] bg-[#5856D6]/10 text-[#5856D6] flex items-center justify-center">
+                        <div class="w-10 h-10 rounded-[14px] bg-[#5856D6]/10 text-[#5856D6] flex items-center justify-center shrink-0">
                             <i data-lucide="calendar-clock" class="w-5 h-5"></i>
                         </div>
                         <div>
-                            <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('social_media.preview_manage_title') }}</h3>
+                            <h3 id="post-manager-modal-title" class="text-[16px] font-bold text-black dark:text-white">{{ __('social_media.preview_manage_title') }}</h3>
                             <div class="flex items-center gap-2 mt-0.5">
                                 <span class="text-[12px] text-black/50 dark:text-white/50" x-text="@js(__('social_media.account_prefix')) + ': ' + (pmPost.account_name || '-')"></span>
                                 <span class="text-black/30 dark:text-white/30">•</span>
@@ -1428,7 +1460,7 @@
                             </div>
                         </div>
                     </div>
-                    <button type="button" @click="postManagerOpen = false" class="w-9 h-9 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-black/40 dark:text-white/40 hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer">
+                    <button type="button" @click="postManagerOpen = false" class="min-w-[44px] min-h-[44px] rounded-full flex items-center justify-center text-black/40 dark:text-white/40 hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer active:scale-95" aria-label="Tutup modal">
                         <i data-lucide="x" class="w-4 h-4"></i>
                     </button>
                 </div>
@@ -1570,6 +1602,7 @@
                 </div>
             </div>
         </div>
+    </template>
 
     </div>
 

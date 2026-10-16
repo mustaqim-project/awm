@@ -176,150 +176,18 @@
     <!-- ===================================================== -->
     <!-- 5. SORTABLE DENSE DATA TABLE (DESKTOP & TABLET)       -->
     <!-- ===================================================== -->
-    <div x-data="{
-        sortCol: null,
-        sortAsc: true,
-        sortBy(colIndex, type = 'string') {
-            const table = $el.querySelector('table');
-            if (!table) return;
-            const tbody = table.querySelector('tbody');
-            if (!tbody) return;
-            const rows = Array.from(tbody.querySelectorAll('tr:not([data-empty-row])'));
-            if (rows.length <= 1) return;
-
-            if (this.sortCol === colIndex) {
-                this.sortAsc = !this.sortAsc;
-            } else {
-                this.sortCol = colIndex;
-                this.sortAsc = true;
-            }
-
-            const multiplier = this.sortAsc ? 1 : -1;
-
-            rows.sort((a, b) => {
-                const cellA = a.querySelectorAll('td')[colIndex];
-                const cellB = b.querySelectorAll('td')[colIndex];
-                if (!cellA || !cellB) return 0;
-
-                const valA = cellA.getAttribute('data-sort-value') !== null 
-                    ? cellA.getAttribute('data-sort-value') 
-                    : cellA.innerText.trim();
-                const valB = cellB.getAttribute('data-sort-value') !== null 
-                    ? cellB.getAttribute('data-sort-value') 
-                    : cellB.innerText.trim();
-
-                if (type === 'number') {
-                    const numA = parseFloat(String(valA).replace(/[^0-9.-]+/g, '')) || 0;
-                    const numB = parseFloat(String(valB).replace(/[^0-9.-]+/g, '')) || 0;
-                    return (numA - numB) * multiplier;
-                } else if (type === 'date') {
-                    const dateA = new Date(valA).getTime() || 0;
-                    const dateB = new Date(valB).getTime() || 0;
-                    return (dateA - dateB) * multiplier;
-                } else {
-                    return String(valA).localeCompare(String(valB), undefined, { numeric: true, sensitivity: 'base' }) * multiplier;
-                }
-            });
-
-            rows.forEach(row => tbody.appendChild(row));
-        }
-    }" class="hidden sm:block rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] overflow-hidden shadow-xs">
+    <div x-data="coocaTableSort()" class="hidden sm:block rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] overflow-hidden shadow-xs">
         <div class="overflow-x-auto">
             <table class="w-full text-left text-[13px]">
                 <thead>
                     <tr class="border-b border-black/[0.06] dark:border-white/[0.08] whitespace-nowrap bg-black/[0.015] dark:bg-white/[0.015]">
-                        {{-- Col 0: Produk & SKU --}}
-                        <th @click="sortBy(0, 'string')" class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 cursor-pointer select-none group hover:text-black dark:hover:text-white transition-colors">
-                            <div class="inline-flex items-center gap-1.5">
-                                <span>Produk &amp; SKU</span>
-                                <span class="inline-flex items-center text-black/30 dark:text-white/30"
-                                      :class="sortCol === 0 ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'group-hover:text-black/60 dark:group-hover:text-white/60'">
-                                    <svg x-show="sortCol === 0 && sortAsc" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" /></svg>
-                                    <svg x-show="sortCol === 0 && !sortAsc" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
-                                    <svg x-show="sortCol !== 0" class="w-3 h-3 opacity-40 group-hover:opacity-100" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" /></svg>
-                                </span>
-                            </div>
-                        </th>
-
-                        {{-- Col 1: Lokasi / Outlet --}}
-                        <th @click="sortBy(1, 'string')" class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 cursor-pointer select-none group hover:text-black dark:hover:text-white transition-colors">
-                            <div class="inline-flex items-center gap-1.5">
-                                <span>Lokasi / Outlet</span>
-                                <span class="inline-flex items-center text-black/30 dark:text-white/30"
-                                      :class="sortCol === 1 ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'group-hover:text-black/60 dark:group-hover:text-white/60'">
-                                    <svg x-show="sortCol === 1 && sortAsc" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" /></svg>
-                                    <svg x-show="sortCol === 1 && !sortAsc" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
-                                    <svg x-show="sortCol !== 1" class="w-3 h-3 opacity-40 group-hover:opacity-100" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" /></svg>
-                                </span>
-                            </div>
-                        </th>
-
-                        {{-- Col 2: Stok Fisik --}}
-                        <th @click="sortBy(2, 'number')" class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 text-right cursor-pointer select-none group hover:text-black dark:hover:text-white transition-colors">
-                            <div class="inline-flex items-center justify-end gap-1.5 w-full">
-                                <span>Stok Fisik</span>
-                                <span class="inline-flex items-center text-black/30 dark:text-white/30"
-                                      :class="sortCol === 2 ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'group-hover:text-black/60 dark:group-hover:text-white/60'">
-                                    <svg x-show="sortCol === 2 && sortAsc" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" /></svg>
-                                    <svg x-show="sortCol === 2 && !sortAsc" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
-                                    <svg x-show="sortCol !== 2" class="w-3 h-3 opacity-40 group-hover:opacity-100" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" /></svg>
-                                </span>
-                            </div>
-                        </th>
-
-                        {{-- Col 3: Stok Min. --}}
-                        <th @click="sortBy(3, 'number')" class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 text-right cursor-pointer select-none group hover:text-black dark:hover:text-white transition-colors">
-                            <div class="inline-flex items-center justify-end gap-1.5 w-full">
-                                <span>Stok Min.</span>
-                                <span class="inline-flex items-center text-black/30 dark:text-white/30"
-                                      :class="sortCol === 3 ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'group-hover:text-black/60 dark:group-hover:text-white/60'">
-                                    <svg x-show="sortCol === 3 && sortAsc" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" /></svg>
-                                    <svg x-show="sortCol === 3 && !sortAsc" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
-                                    <svg x-show="sortCol !== 3" class="w-3 h-3 opacity-40 group-hover:opacity-100" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" /></svg>
-                                </span>
-                            </div>
-                        </th>
-
-                        {{-- Col 4: HPP / Unit --}}
-                        <th @click="sortBy(4, 'number')" class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 text-right cursor-pointer select-none group hover:text-black dark:hover:text-white transition-colors">
-                            <div class="inline-flex items-center justify-end gap-1.5 w-full">
-                                <span>HPP / Unit</span>
-                                <span class="inline-flex items-center text-black/30 dark:text-white/30"
-                                      :class="sortCol === 4 ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'group-hover:text-black/60 dark:group-hover:text-white/60'">
-                                    <svg x-show="sortCol === 4 && sortAsc" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" /></svg>
-                                    <svg x-show="sortCol === 4 && !sortAsc" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
-                                    <svg x-show="sortCol !== 4" class="w-3 h-3 opacity-40 group-hover:opacity-100" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" /></svg>
-                                </span>
-                            </div>
-                        </th>
-
-                        {{-- Col 5: Total Nilai --}}
-                        <th @click="sortBy(5, 'number')" class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 text-right cursor-pointer select-none group hover:text-black dark:hover:text-white transition-colors">
-                            <div class="inline-flex items-center justify-end gap-1.5 w-full">
-                                <span>Total Nilai</span>
-                                <span class="inline-flex items-center text-black/30 dark:text-white/30"
-                                      :class="sortCol === 5 ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'group-hover:text-black/60 dark:group-hover:text-white/60'">
-                                    <svg x-show="sortCol === 5 && sortAsc" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" /></svg>
-                                    <svg x-show="sortCol === 5 && !sortAsc" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
-                                    <svg x-show="sortCol !== 5" class="w-3 h-3 opacity-40 group-hover:opacity-100" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" /></svg>
-                                </span>
-                            </div>
-                        </th>
-
-                        {{-- Col 6: Status --}}
-                        <th @click="sortBy(6, 'number')" class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 text-center cursor-pointer select-none group hover:text-black dark:hover:text-white transition-colors">
-                            <div class="inline-flex items-center justify-center gap-1.5">
-                                <span>Status</span>
-                                <span class="inline-flex items-center text-black/30 dark:text-white/30"
-                                      :class="sortCol === 6 ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'group-hover:text-black/60 dark:group-hover:text-white/60'">
-                                    <svg x-show="sortCol === 6 && sortAsc" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" /></svg>
-                                    <svg x-show="sortCol === 6 && !sortAsc" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
-                                    <svg x-show="sortCol !== 6" class="w-3 h-3 opacity-40 group-hover:opacity-100" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" /></svg>
-                                </span>
-                            </div>
-                        </th>
-
-                        {{-- Col 7: Aksi --}}
+                        <x-table-sort-th :col="0" type="string" title="Produk & SKU" />
+                        <x-table-sort-th :col="1" type="string" title="Lokasi / Outlet" />
+                        <x-table-sort-th :col="2" type="number" title="Stok Fisik" align="right" />
+                        <x-table-sort-th :col="3" type="number" title="Stok Min." align="right" />
+                        <x-table-sort-th :col="4" type="number" title="HPP / Unit" align="right" />
+                        <x-table-sort-th :col="5" type="number" title="Total Nilai" align="right" />
+                        <x-table-sort-th :col="6" type="number" title="Status" align="center" />
                         <th class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 text-right">Aksi</th>
                     </tr>
                 </thead>
@@ -447,126 +315,135 @@
     <!-- 7. APPLE MODAL SHEET: PENYESUAIAN STOK CEPAT          -->
     <!-- ===================================================== -->
     @if(\App\Support\Context::hasPermission('inventory.manage'))
-    <div x-show="showAdjustModal"
-        x-cloak
-        class="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 dark:bg-black/75 backdrop-blur-md p-0 sm:p-4"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0">
+    <template x-teleport="body">
+        <div x-show="showAdjustModal"
+            x-cloak
+            class="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4"
+            role="dialog"
+            aria-modal="true">
 
-        <div class="w-full sm:max-w-lg rounded-t-[26px] sm:rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto"
-            @click.away="showAdjustModal = false"
-            x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="translate-y-full sm:translate-y-0 sm:scale-95 sm:opacity-0"
-            x-transition:enter-end="translate-y-0 sm:scale-100 sm:opacity-100"
-            x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="translate-y-0 sm:scale-100 sm:opacity-100"
-            x-transition:leave-end="translate-y-full sm:translate-y-0 sm:scale-95 sm:opacity-0">
+            {{-- Backdrop Blur Overlay --}}
+            <div x-show="showAdjustModal"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="showAdjustModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
 
-            <!-- Mobile Grabber Handle -->
-            <div class="sm:hidden w-12 h-1.5 rounded-full bg-black/20 dark:bg-white/20 mx-auto mb-2"></div>
+            <div class="relative z-10 w-full sm:max-w-lg rounded-t-[26px] sm:rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto"
+                @click.away="showAdjustModal = false"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="translate-y-full sm:translate-y-0 sm:scale-95 sm:opacity-0"
+                x-transition:enter-end="translate-y-0 sm:scale-100 sm:opacity-100"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="translate-y-0 sm:scale-100 sm:opacity-100"
+                x-transition:leave-end="translate-y-full sm:translate-y-0 sm:scale-95 sm:opacity-0">
 
-            <div class="flex items-center justify-between pb-3.5 border-b border-black/[0.06] dark:border-white/[0.08]">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-lg bg-[#007AFF]/12 text-[#007AFF] flex items-center justify-center shrink-0">
-                        <i data-lucide="sliders" class="w-4 h-4"></i>
+                <!-- Mobile Grabber Handle -->
+                <div class="sm:hidden w-12 h-1.5 rounded-full bg-black/20 dark:bg-white/20 mx-auto mb-2"></div>
+
+                <div class="flex items-center justify-between pb-3.5 border-b border-black/[0.06] dark:border-white/[0.08]">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-8 h-8 rounded-lg bg-[#007AFF]/12 text-[#007AFF] flex items-center justify-center shrink-0">
+                            <i data-lucide="sliders" class="w-4 h-4"></i>
+                        </div>
+                        <h3 class="text-[17px] font-bold text-black dark:text-white">Penyesuaian Stok Cepat</h3>
                     </div>
-                    <h3 class="text-[17px] font-bold text-black dark:text-white">Penyesuaian Stok Cepat</h3>
+                    <button type="button" @click="showAdjustModal = false" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 text-black/50 hover:text-black dark:text-white/50 dark:hover:text-white transition flex items-center justify-center cursor-pointer">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
                 </div>
-                <button type="button" @click="showAdjustModal = false" class="w-8 h-8 rounded-full bg-black/5 dark:bg-white/10 text-black/50 hover:text-black dark:text-white/50 dark:hover:text-white transition flex items-center justify-center cursor-pointer">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
-            </div>
 
-            <form action="{{ route('inventory.stocks.adjust') }}" method="POST" class="space-y-4 text-[13px]">
-                @csrf
-                <input type="hidden" name="location_id" :value="selectedStock ? selectedStock.location_id : ''">
-                <input type="hidden" name="product_id" :value="selectedStock ? selectedStock.product_id : ''">
+                <form action="{{ route('inventory.stocks.adjust') }}" method="POST" class="space-y-4 text-[13px]">
+                    @csrf
+                    <input type="hidden" name="location_id" :value="selectedStock ? selectedStock.location_id : ''">
+                    <input type="hidden" name="product_id" :value="selectedStock ? selectedStock.product_id : ''">
 
-                <div class="p-3.5 rounded-xl bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.08]">
-                    <div class="font-bold text-black dark:text-white text-[14px]" x-text="selectedStock ? selectedStock.product.name : ''"></div>
-                    <div class="text-[12px] text-black/50 dark:text-white/50 mt-0.5 flex items-center gap-1.5">
-                        <span x-text="selectedStock ? selectedStock.location.name : ''"></span>
-                        <span class="text-black/30 dark:text-white/30">•</span>
-                        <span>Stok Saat Ini: <strong class="text-black dark:text-white font-mono tabular-nums" x-text="selectedStock ? selectedStock.quantity : 0"></strong></span>
+                    <div class="p-3.5 rounded-xl bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.08]">
+                        <div class="font-bold text-black dark:text-white text-[14px]" x-text="selectedStock ? selectedStock.product.name : ''"></div>
+                        <div class="text-[12px] text-black/50 dark:text-white/50 mt-0.5 flex items-center gap-1.5">
+                            <span x-text="selectedStock ? selectedStock.location.name : ''"></span>
+                            <span class="text-black/30 dark:text-white/30">•</span>
+                            <span>Stok Saat Ini: <strong class="text-black dark:text-white font-mono tabular-nums" x-text="selectedStock ? selectedStock.quantity : 0"></strong></span>
+                        </div>
                     </div>
-                </div>
 
-                <div>
-                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Jumlah Stok Fisik Baru *</label>
-                    <input type="number" step="any" name="new_quantity" x-model.number="newQuantity" required
-                        class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-xl px-3.5 text-[16px] font-bold tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                </div>
-
-                <div>
-                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Biaya Pokok (HPP) per Unit (Rp)</label>
-                    <input type="number" name="unit_cost" x-model.number="unitCost"
-                        class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-xl px-3.5 text-[16px] sm:text-[14px] tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                </div>
-
-                <div>
-                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
-                        Kode Berita Acara (Alasan Penyesuaian) *
-                    </label>
-                    <select name="reason_code" x-model="reasonCode" required
-                        class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-xl px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                        <option value="opname_variance" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">Selisih Hitung Rutin (Stock Opname)</option>
-                        <option value="damaged" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">Barang Rusak / Cacat Fisik / Basi</option>
-                        <option value="expired" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">Melewati Tanggal Kadaluarsa</option>
-                        <option value="theft_loss" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">Kehilangan / Dugaan Pencurian</option>
-                        <option value="initial_balance" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">Input Saldo Awal Gudang</option>
-                        <option value="other" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">Lainnya (Wajib tulis alasan min. 10 karakter)</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
-                        Keterangan / Catatan Penjelasan <span x-show="reasonCode === 'other'" class="text-[#FF3B30]">*</span>
-                    </label>
-                    <input type="text" name="notes" x-model="notes"
-                        :placeholder="reasonCode === 'other' ? 'Wajib tulis alasan detail (minimal 10 karakter)...' : 'Misal: Koreksi saldo awal, barang rusak...'"
-                        :required="reasonCode === 'other'"
-                        class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-xl px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                    <p x-show="reasonCode === 'other'" class="text-[11px] text-amber-600 dark:text-amber-400 mt-1">
-                        * Alasan "Lainnya" mewajibkan catatan penjelasan minimal 10 karakter untuk audit trail.
-                    </p>
-                </div>
-
-                {{-- Supervisor PIN Verification Prompt on High-Value / Volume Shrinkage --}}
-                <div x-show="(Number(newQuantity) - Number(selectedStock?.quantity || 0)) < 0 && (Math.abs(Number(newQuantity) - Number(selectedStock?.quantity || 0)) > 10 || Math.abs((Number(newQuantity) - Number(selectedStock?.quantity || 0)) * Number(unitCost || 0)) > 100000)"
-                    x-transition
-                    class="p-4 rounded-xl bg-red-500/10 dark:bg-red-500/15 border border-red-500/25 dark:border-red-500/35 space-y-2.5">
-                    <div class="flex items-center gap-2 text-red-600 dark:text-red-400 font-bold text-[12px]">
-                        <i data-lucide="shield-alert" class="w-4 h-4 shrink-0 text-red-500"></i>
-                        <span>Otorisasi Supervisor Diperlukan</span>
-                    </div>
-                    <p class="text-[11px] text-red-700 dark:text-red-300 leading-relaxed">
-                        Pengurangan stok melebihi batas toleransi (&gt; 10 unit atau nilai &gt; Rp 100.000). Masukkan PIN Supervisor untuk memverifikasi berita acara ini.
-                    </p>
                     <div>
-                        <label class="block text-[11px] font-semibold text-black/70 dark:text-white/70 mb-1">
-                            PIN Supervisor <span class="text-[#FF3B30]">*</span>
-                        </label>
-                        <input type="password" name="supervisor_pin" maxlength="10" placeholder="Masukkan PIN Supervisor"
-                            :required="(Number(newQuantity) - Number(selectedStock?.quantity || 0)) < 0 && (Math.abs(Number(newQuantity) - Number(selectedStock?.quantity || 0)) > 10 || Math.abs((Number(newQuantity) - Number(selectedStock?.quantity || 0)) * Number(unitCost || 0)) > 100000)"
-                            class="w-full h-10 bg-white dark:bg-[#2C2C2E] border border-red-300 dark:border-red-500/40 rounded-lg px-3 text-[14px] font-mono tracking-widest text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-red-500 transition">
+                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Jumlah Stok Fisik Baru *</label>
+                        <input type="number" step="any" name="new_quantity" x-model.number="newQuantity" required
+                            class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-xl px-3.5 text-[16px] font-bold tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                     </div>
-                </div>
 
-                <div class="flex items-center justify-end gap-2.5 pt-3.5 border-t border-black/[0.06] dark:border-white/[0.08]">
-                    <button type="button" @click="showAdjustModal = false" class="min-h-[44px] sm:min-h-0 h-10 px-4 rounded-xl text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 active:scale-[0.98] transition-all cursor-pointer">
-                        Batal
-                    </button>
-                    <button type="submit" class="min-h-[44px] sm:min-h-0 h-10 px-5 rounded-xl text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0062CC] active:scale-[0.98] transition-all shadow-sm shadow-[#007AFF]/25 cursor-pointer">
-                        Simpan Perubahan
-                    </button>
-                </div>
-            </form>
+                    <div>
+                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Biaya Pokok (HPP) per Unit (Rp)</label>
+                        <input type="number" name="unit_cost" x-model.number="unitCost"
+                            class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-xl px-3.5 text-[16px] sm:text-[14px] tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                    </div>
+
+                    <div>
+                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
+                            Kode Berita Acara (Alasan Penyesuaian) *
+                        </label>
+                        <select name="reason_code" x-model="reasonCode" required
+                            class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-xl px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                            <option value="opname_variance" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">Selisih Hitung Rutin (Stock Opname)</option>
+                            <option value="damaged" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">Barang Rusak / Cacat Fisik / Basi</option>
+                            <option value="expired" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">Melewati Tanggal Kadaluarsa</option>
+                            <option value="theft_loss" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">Kehilangan / Dugaan Pencurian</option>
+                            <option value="initial_balance" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">Input Saldo Awal Gudang</option>
+                            <option value="other" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">Lainnya (Wajib tulis alasan min. 10 karakter)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
+                            Keterangan / Catatan Penjelasan <span x-show="reasonCode === 'other'" class="text-[#FF3B30]">*</span>
+                        </label>
+                        <input type="text" name="notes" x-model="notes"
+                            :placeholder="reasonCode === 'other' ? 'Wajib tulis alasan detail (minimal 10 karakter)...' : 'Misal: Koreksi saldo awal, barang rusak...'"
+                            :required="reasonCode === 'other'"
+                            class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-xl px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                        <p x-show="reasonCode === 'other'" class="text-[11px] text-amber-600 dark:text-amber-400 mt-1">
+                            * Alasan "Lainnya" mewajibkan catatan penjelasan minimal 10 karakter untuk audit trail.
+                        </p>
+                    </div>
+
+                    {{-- Supervisor PIN Verification Prompt on High-Value / Volume Shrinkage --}}
+                    <div x-show="(Number(newQuantity) - Number(selectedStock?.quantity || 0)) < 0 && (Math.abs(Number(newQuantity) - Number(selectedStock?.quantity || 0)) > 10 || Math.abs((Number(newQuantity) - Number(selectedStock?.quantity || 0)) * Number(unitCost || 0)) > 100000)"
+                        x-transition
+                        class="p-4 rounded-xl bg-red-500/10 dark:bg-red-500/15 border border-red-500/25 dark:border-red-500/35 space-y-2.5">
+                        <div class="flex items-center gap-2 text-red-600 dark:text-red-400 font-bold text-[12px]">
+                            <i data-lucide="shield-alert" class="w-4 h-4 shrink-0 text-red-500"></i>
+                            <span>Otorisasi Supervisor Diperlukan</span>
+                        </div>
+                        <p class="text-[11px] text-red-700 dark:text-red-300 leading-relaxed">
+                            Pengurangan stok melebihi batas toleransi (&gt; 10 unit atau nilai &gt; Rp 100.000). Masukkan PIN Supervisor untuk memverifikasi berita acara ini.
+                        </p>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-black/70 dark:text-white/70 mb-1">
+                                PIN Supervisor <span class="text-[#FF3B30]">*</span>
+                            </label>
+                            <input type="password" name="supervisor_pin" maxlength="10" placeholder="Masukkan PIN Supervisor"
+                                :required="(Number(newQuantity) - Number(selectedStock?.quantity || 0)) < 0 && (Math.abs(Number(newQuantity) - Number(selectedStock?.quantity || 0)) > 10 || Math.abs((Number(newQuantity) - Number(selectedStock?.quantity || 0)) * Number(unitCost || 0)) > 100000)"
+                                class="w-full h-10 bg-white dark:bg-[#2C2C2E] border border-red-300 dark:border-red-500/40 rounded-lg px-3 text-[14px] font-mono tracking-widest text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-red-500 transition">
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-end gap-2.5 pt-3.5 border-t border-black/[0.06] dark:border-white/[0.08]">
+                        <button type="button" @click="showAdjustModal = false" class="min-h-[44px] sm:min-h-0 h-10 px-4 rounded-xl text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 active:scale-[0.98] transition-all cursor-pointer">
+                            Batal
+                        </button>
+                        <button type="submit" class="min-h-[44px] sm:min-h-0 h-10 px-5 rounded-xl text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0062CC] active:scale-[0.98] transition-all shadow-sm shadow-[#007AFF]/25 cursor-pointer">
+                            Simpan Perubahan
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
+    </template>
     @endif
 </div>
 @endsection

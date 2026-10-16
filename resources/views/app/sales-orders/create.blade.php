@@ -1,7 +1,7 @@
 @extends('layouts.app', [
-    'title' => 'Buat Pesanan Penjualan (SO) - Cooca',
-    'headerTitle' => 'Buat Pesanan Penjualan',
-    'headerSubtitle' => 'Buat pesanan penjualan terkonfirmasi baru - langsung atau dari konversi penawaran harga (Quotation).',
+    'title' => __('sales.sales_orders.create_page_title'),
+    'headerTitle' => __('sales.sales_orders.create_header_title'),
+    'headerSubtitle' => __('sales.sales_orders.create_header_subtitle'),
 ])
 
 @section('content')
@@ -15,28 +15,25 @@
             <div>
                 <nav class="flex items-center gap-1.5 text-[12px] text-black/50 dark:text-white/50 mb-1"
                     aria-label="Breadcrumb">
-                    <a href="{{ route('dashboard') }}" class="hover:text-[#007AFF] transition-colors">Dashboard</a>
+                    <a href="{{ route('dashboard') }}" class="hover:text-[#007AFF] transition-colors">{{ __('sales.sales_orders.breadcrumb_dashboard') }}</a>
                     <i data-lucide="chevron-right" class="w-3.5 h-3.5 opacity-40"></i>
-                    <a href="{{ route('sales.orders.index') }}" class="hover:text-[#007AFF] transition-colors">Sales
-                        Orders</a>
+                    <a href="{{ route('sales.orders.index') }}" class="hover:text-[#007AFF] transition-colors">{{ __('sales.sales_orders.breadcrumb_sales_orders') }}</a>
                     <i data-lucide="chevron-right" class="w-3.5 h-3.5 opacity-40"></i>
-                    <span class="text-black dark:text-white font-medium">Buat Baru</span>
+                    <span class="text-black dark:text-white font-medium">{{ __('sales.sales_orders.breadcrumb_create') }}</span>
                 </nav>
-                <h1 class="text-[20px] font-semibold text-black dark:text-white tracking-tight">Formulir Pesanan Penjualan
-                </h1>
-                <p class="text-[13px] text-black/50 dark:text-white/50">Dokumen kesepakatan pemesanan barang pelanggan dan
-                    jadwal pengiriman.</p>
+                <h1 class="text-[20px] font-semibold text-black dark:text-white tracking-tight">{{ __('sales.sales_orders.form_title') }}</h1>
+                <p class="text-[13px] text-black/50 dark:text-white/50">{{ __('sales.sales_orders.form_subtitle') }}</p>
             </div>
 
             <div class="flex items-center gap-2">
                 <a href="{{ route('sales.orders.index') }}"
                     class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition flex items-center gap-1.5">
-                    <span>Batal</span>
+                    <span>{{ __('sales.sales_orders.btn_cancel') }}</span>
                 </a>
                 <button type="button" @click="promptSubmitOrder()"
                     class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
                     <i data-lucide="check" class="w-4 h-4"></i>
-                    <span>Konfirmasi Pesanan</span>
+                    <span>{{ __('sales.sales_orders.btn_confirm_order') }}</span>
                 </button>
             </div>
         </header>
@@ -47,7 +44,7 @@
                 class="rounded-[14px] bg-[#FF3B30]/12 border border-[#FF3B30]/20 p-4 text-[13px] text-[#C41E17] dark:text-[#FF453A] space-y-1">
                 <div class="flex items-center gap-2 font-semibold">
                     <span class="w-2 h-2 rounded-full bg-[#FF3B30]"></span>
-                    <span>Harap periksa isian formulir berikut:</span>
+                    <span>{{ __('sales.sales_orders.validation_errors_title') }}</span>
                 </div>
                 <ul class="list-disc list-inside space-y-0.5 pl-4 text-[12px]">
                     @foreach ($errors->all() as $error)
@@ -64,21 +61,19 @@
             <div
                 class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 sm:p-6 space-y-4">
                 <div class="border-b border-black/5 dark:border-white/5 pb-3">
-                    <h2 class="text-[17px] font-semibold text-black dark:text-white">1. Referensi Penawaran Harga
-                        (Quotation)</h2>
-                    <p class="text-[13px] text-black/50 dark:text-white/50 mt-0.5">Pilih penawaran yang telah disetujui
-                        pelanggan untuk mengisi item dan rincian secara otomatis.</p>
+                    <h2 class="text-[17px] font-semibold text-black dark:text-white">{{ __('sales.sales_orders.step1_title') }}</h2>
+                    <p class="text-[13px] text-black/50 dark:text-white/50 mt-0.5">{{ __('sales.sales_orders.step1_desc') }}</p>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">
-                            Dokumen Quotation Terkait <span
-                                class="text-black/40 dark:text-white/40 font-normal">(opsional)</span>
+                            {{ __('sales.sales_orders.quotation_ref_label') }} <span
+                                class="text-black/40 dark:text-white/40 font-normal">{{ __('sales.sales_orders.optional_label') }}</span>
                         </label>
                         <select name="quotation_id" x-model="selectedQuotationId" @change="onQuotationChange()"
                             class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition cursor-pointer">
-                            <option value="">- Tanpa Quotation (Pesanan Langsung) -</option>
+                            <option value="">{{ __('sales.sales_orders.quotation_direct_order') }}</option>
                             @foreach ($quotations as $q)
                                 <option value="{{ $q->id }}">{{ $q->quotation_number }} - {{ $q->customer->name }}
                                     (Rp {{ number_format($q->total_amount, 0, ',', '.') }})
@@ -91,14 +86,12 @@
                         <div
                             class="w-full p-3.5 rounded-[10px] bg-[#007AFF]/8 border border-[#007AFF]/15 text-[12px] space-y-1">
                             <div class="flex items-center justify-between">
-                                <span class="text-[11px] font-semibold text-[#007AFF] uppercase tracking-wider">Quotation
-                                    Terpilih</span>
+                                <span class="text-[11px] font-semibold text-[#007AFF] uppercase tracking-wider">{{ __('sales.sales_orders.quotation_selected_badge') }}</span>
                                 <span class="w-2 h-2 rounded-full bg-[#007AFF]"></span>
                             </div>
                             <p class="text-black dark:text-white font-semibold tabular-nums"
                                 x-text="getSelectedQuotationLabel()"></p>
-                            <p class="text-black/50 dark:text-white/50">Data pelanggan, diskon, dan item produk otomatis
-                                dimuat ke formulir.</p>
+                            <p class="text-black/50 dark:text-white/50">{{ __('sales.sales_orders.quotation_auto_loaded') }}</p>
                         </div>
                     </div>
                 </div>
@@ -108,21 +101,19 @@
             <div
                 class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 sm:p-6 space-y-4">
                 <div class="border-b border-black/5 dark:border-white/5 pb-3">
-                    <h2 class="text-[17px] font-semibold text-black dark:text-white">2. Informasi Pelanggan &amp; Pengiriman
-                    </h2>
-                    <p class="text-[13px] text-black/50 dark:text-white/50 mt-0.5">Tentukan pembeli, nomor dokumen, tanggal
-                        pemesanan, dan alamat tujuan barang.</p>
+                    <h2 class="text-[17px] font-semibold text-black dark:text-white">{{ __('sales.sales_orders.step2_title') }}</h2>
+                    <p class="text-[13px] text-black/50 dark:text-white/50 mt-0.5">{{ __('sales.sales_orders.step2_desc') }}</p>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <!-- Pelanggan -->
                     <div class="col-span-1 sm:col-span-2">
                         <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">
-                            Pelanggan <span class="text-[#FF3B30]">*</span>
+                            {{ __('sales.sales_orders.customer_label') }} <span class="text-[#FF3B30]">*</span>
                         </label>
                         <select name="customer_id" x-model="customerId" required
                             class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition cursor-pointer @error('customer_id') ring-2 ring-[#FF3B30] @enderror">
-                            <option value="">- Pilih Pelanggan -</option>
+                            <option value="">{{ __('sales.sales_orders.customer_select_placeholder') }}</option>
                             @foreach ($customers as $c)
                                 <option value="{{ $c->id }}">
                                     {{ $c->name }}{{ $c->company ? ' (' . $c->company . ')' : '' }}</option>
@@ -133,7 +124,7 @@
                     <!-- No SO -->
                     <div>
                         <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">
-                            No. Sales Order
+                            {{ __('sales.sales_orders.so_number_label') }}
                         </label>
                         <input type="text" name="so_number" value="{{ old('so_number', $nextNumber) }}"
                             class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] font-semibold tabular-nums text-[#007AFF] focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
@@ -142,7 +133,7 @@
                     <!-- Tanggal Pesanan -->
                     <div>
                         <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">
-                            Tanggal Pesanan <span class="text-[#FF3B30]">*</span>
+                            {{ __('sales.sales_orders.order_date_label') }} <span class="text-[#FF3B30]">*</span>
                         </label>
                         <input type="date" name="order_date" value="{{ old('order_date', date('Y-m-d')) }}" required
                             class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
@@ -151,7 +142,7 @@
                     <!-- Estimasi Kirim -->
                     <div>
                         <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">
-                            Estimasi Kirim
+                            {{ __('sales.sales_orders.expected_delivery_label') }}
                         </label>
                         <input type="date" name="expected_delivery_date"
                             value="{{ old('expected_delivery_date', date('Y-m-d', strtotime('+3 days'))) }}"
@@ -161,10 +152,10 @@
                     <!-- Alamat Pengiriman -->
                     <div class="col-span-1 sm:col-span-2 lg:col-span-3">
                         <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">
-                            Alamat Pengiriman <span class="text-black/40 dark:text-white/40 font-normal">(opsional)</span>
+                            {{ __('sales.sales_orders.shipping_address_label') }} <span class="text-black/40 dark:text-white/40 font-normal">{{ __('sales.sales_orders.optional_label') }}</span>
                         </label>
                         <input type="text" name="shipping_address" value="{{ old('shipping_address') }}"
-                            placeholder="Contoh: Jl. Sudirman No. 45, Kompleks Pergudangan Blok A..."
+                            placeholder="{{ __('sales.sales_orders.shipping_address_placeholder') }}"
                             class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                     </div>
                 </div>
@@ -176,10 +167,8 @@
                 <div
                     class="flex flex-wrap items-center justify-between gap-3 border-b border-black/5 dark:border-white/5 pb-3">
                     <div>
-                        <h2 class="text-[17px] font-semibold text-black dark:text-white">3. Rincian Item Pesanan (Line
-                            Items)</h2>
-                        <p class="text-[13px] text-black/50 dark:text-white/50 mt-0.5">Pilih produk, tentukan kuantitas,
-                            harga satuan kesepakatan, dan diskon per item.</p>
+                        <h2 class="text-[17px] font-semibold text-black dark:text-white">{{ __('sales.sales_orders.step3_title') }}</h2>
+                        <p class="text-[13px] text-black/50 dark:text-white/50 mt-0.5">{{ __('sales.sales_orders.step3_desc') }}</p>
                     </div>
 
                     <button type="button" @click="addItem()"
@@ -188,7 +177,7 @@
                             viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                         </svg>
-                        <span>Tambah Baris</span>
+                        <span>{{ __('sales.sales_orders.btn_add_item') }}</span>
                     </button>
                 </div>
 
@@ -198,11 +187,11 @@
                         <thead>
                             <tr
                                 class="border-b border-black/5 dark:border-white/10 text-black/40 dark:text-white/40 text-[11px] font-semibold uppercase tracking-wide">
-                                <th class="py-2.5 px-3">Produk / Item</th>
-                                <th class="py-2.5 px-3 text-right w-36 whitespace-nowrap">Harga Satuan (Rp)</th>
-                                <th class="py-2.5 px-3 text-right w-24 whitespace-nowrap">Kuantitas</th>
-                                <th class="py-2.5 px-3 text-right w-32 whitespace-nowrap">Diskon (Rp)</th>
-                                <th class="py-2.5 px-3 text-right w-36 whitespace-nowrap">Subtotal (Rp)</th>
+                                <th class="py-2.5 px-3">{{ __('sales.sales_orders.col_item_product') }}</th>
+                                <th class="py-2.5 px-3 text-right w-36 whitespace-nowrap">{{ __('sales.sales_orders.col_item_unit_price') }}</th>
+                                <th class="py-2.5 px-3 text-right w-24 whitespace-nowrap">{{ __('sales.sales_orders.col_item_qty') }}</th>
+                                <th class="py-2.5 px-3 text-right w-32 whitespace-nowrap">{{ __('sales.sales_orders.col_item_discount') }}</th>
+                                <th class="py-2.5 px-3 text-right w-36 whitespace-nowrap">{{ __('sales.sales_orders.col_item_subtotal') }}</th>
                                 <th class="py-2.5 px-3 text-center w-10"></th>
                             </tr>
                         </thead>
@@ -214,9 +203,9 @@
                                         <select :name="'items[' + idx + '][product_id]'" x-model="item.product_id"
                                             @change="productSelected(idx, $event)"
                                             class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2.5 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition cursor-pointer font-medium">
-                                            <option value="">- Pilih Produk Fisik atau Layanan -</option>
+                                            <option value="">{{ __('sales.sales_orders.select_product_placeholder') }}</option>
                                             @if (isset($goodsProducts) && $goodsProducts->isNotEmpty())
-                                                <optgroup label="Produk / Barang Fisik">
+                                                <optgroup label="{{ __('sales.sales_orders.optgroup_goods') }}">
                                                     @foreach ($goodsProducts as $p)
                                                         <option value="{{ $p->id }}"
                                                             data-price="{{ $p->selling_price }}"
@@ -228,12 +217,12 @@
                                                 </optgroup>
                                             @endif
                                             @if (isset($serviceProducts) && $serviceProducts->isNotEmpty())
-                                                <optgroup label="Jasa & Layanan (Bebas Stok)">
+                                                <optgroup label="{{ __('sales.sales_orders.optgroup_services') }}">
                                                     @foreach ($serviceProducts as $p)
                                                         <option value="{{ $p->id }}"
                                                             data-price="{{ $p->selling_price }}"
                                                             data-name="{{ $p->name }}" data-type="service">
-                                                            [Jasa] {{ $p->name }} (Rp
+                                                            [{{ __('sales.sales_orders.badge_service_item') }}] {{ $p->name }} (Rp
                                                             {{ number_format($p->selling_price, 0, ',', '.') }})
                                                         </option>
                                                     @endforeach
@@ -245,7 +234,7 @@
                                                         data-price="{{ $p->selling_price }}"
                                                         data-name="{{ $p->name }}"
                                                         data-type="{{ $p->type ?? 'goods' }}">
-                                                        {{ $p->isService() ? '[Jasa] ' : '' }}{{ $p->name }} (Rp
+                                                        {{ $p->isService() ? '[' . __('sales.sales_orders.badge_service_item') . '] ' : '' }}{{ $p->name }} (Rp
                                                         {{ number_format($p->selling_price, 0, ',', '.') }})
                                                     </option>
                                                 @endforeach
@@ -255,13 +244,13 @@
                                             <template x-if="item.is_service">
                                                 <span
                                                     class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10.5px] font-semibold bg-purple-500/15 text-purple-700 dark:text-purple-300">
-                                                    Jasa / Layanan (Bebas Stok)
+                                                    {{ __('sales.sales_orders.badge_service_item') }}
                                                 </span>
                                             </template>
                                             <template x-if="item.product_id && !item.is_service">
                                                 <span
                                                     class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10.5px] font-medium text-black/50 dark:text-white/50">
-                                                    Produk Fisik
+                                                    {{ __('sales.sales_orders.badge_goods_item') }}
                                                 </span>
                                             </template>
                                         </div>
@@ -302,7 +291,7 @@
                                     <td class="py-2 px-3 text-center">
                                         <button type="button" @click="removeItem(idx)" :disabled="items.length <= 1"
                                             class="h-7 w-7 rounded-[6px] text-black/30 dark:text-white/30 hover:text-[#FF3B30] hover:bg-[#FF3B30]/10 disabled:opacity-20 transition flex items-center justify-center cursor-pointer"
-                                            title="Hapus baris">
+                                            title="{{ __('sales.sales_orders.btn_remove_item_tooltip') }}">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
                                                 viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -321,10 +310,9 @@
                     class="pt-4 border-t border-black/5 dark:border-white/5 flex flex-col sm:flex-row justify-between items-start gap-6">
                     <!-- Notes -->
                     <div class="w-full sm:w-1/2 space-y-1.5">
-                        <label class="block text-[13px] font-medium text-black/70 dark:text-white/70">Catatan Pesanan &amp;
-                            Pengiriman</label>
+                        <label class="block text-[13px] font-medium text-black/70 dark:text-white/70">{{ __('sales.sales_orders.notes_label') }}</label>
                         <textarea name="notes" rows="3"
-                            placeholder="Instruksi pengiriman, nama kontak penerima ekspedisi, atau catatan khusus pelanggan..."
+                            placeholder="{{ __('sales.sales_orders.notes_placeholder') }}"
                             class="w-full bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] p-3 text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition resize-none">{{ old('notes') }}</textarea>
                     </div>
 
@@ -332,20 +320,20 @@
                     <div
                         class="w-full sm:w-80 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 p-4 space-y-3 text-[13px]">
                         <div class="flex justify-between text-black/60 dark:text-white/60">
-                            <span>Subtotal Item:</span>
+                            <span>{{ __('sales.sales_orders.subtotal_items_label') }}:</span>
                             <span class="font-semibold tabular-nums text-black dark:text-white"
                                 x-text="'Rp ' + subtotal.toLocaleString('id-ID')"></span>
                         </div>
 
                         <div class="flex justify-between items-center gap-2 text-black/60 dark:text-white/60">
-                            <span>Diskon Pesanan (Rp):</span>
+                            <span>{{ __('sales.sales_orders.order_discount_label') }}:</span>
                             <input type="number" name="discount_amount" x-model.number="discountAmount"
                                 @input="calculateTotals()" min="0"
                                 class="w-28 h-8 text-right tabular-nums bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[6px] px-2 text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF3B30]/50">
                         </div>
 
                         <div class="flex justify-between items-center gap-2 text-black/60 dark:text-white/60">
-                            <span>Pajak PPN (%):</span>
+                            <span>{{ __('sales.sales_orders.tax_vat_label') }}:</span>
                             <input type="number" name="tax_percentage" x-model.number="taxPercentage"
                                 @input="calculateTotals()" min="0" max="100" step="0.01"
                                 class="w-28 h-8 text-right tabular-nums bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[6px] px-2 text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#34C759]/50">
@@ -353,7 +341,7 @@
                         <input type="hidden" name="tax_amount" :value="taxAmount">
 
                         <div class="pt-2 border-t border-black/5 dark:border-white/10 flex justify-between items-baseline">
-                            <span class="font-semibold text-black dark:text-white">Total Nilai Pesanan:</span>
+                            <span class="font-semibold text-black dark:text-white">{{ __('sales.sales_orders.total_order_value_label') }}:</span>
                             <span class="text-[18px] font-bold tabular-nums text-[#007AFF]"
                                 x-text="'Rp ' + grandTotal.toLocaleString('id-ID')"></span>
                         </div>
@@ -365,11 +353,11 @@
             <div class="flex items-center justify-end gap-2 pt-2">
                 <a href="{{ route('sales.orders.index') }}"
                     class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition">
-                    Batal
+                    {{ __('sales.sales_orders.dialog_btn_cancel') }}
                 </a>
                 <button type="button" @click="promptSubmitOrder()"
                     class="h-9 px-5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
-                    Konfirmasi &amp; Buat Pesanan
+                    {{ __('sales.sales_orders.btn_submit_create') }}
                 </button>
             </div>
         </form>
@@ -377,37 +365,60 @@
         <!-- ===================================================== -->
         <!-- APPLE ALERT DIALOG: KONFIRMASI PEMBUATAN SO           -->
         <!-- ===================================================== -->
-        <div x-show="confirmModalOpen" x-cloak
-            class="fixed inset-0 z-50 flex items-center justify-center bg-black/25 backdrop-blur-[2px]"
-            x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+        <template x-teleport="body">
+            <div x-show="confirmModalOpen" x-cloak
+                class="fixed inset-0 z-[220] overflow-y-auto"
+                @keydown.escape.window="confirmModalOpen = false"
+                role="alertdialog"
+                aria-modal="true"
+                aria-labelledby="so-create-confirm-dialog-title">
 
-            <div class="w-[290px] rounded-[14px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-black/5 dark:border-white/10"
-                @click.away="confirmModalOpen = false" x-transition:enter="transition ease-out duration-200"
-                x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
-                x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100"
-                x-transition:leave-end="opacity-0 scale-95">
+                <!-- Backdrop -->
+                <div x-show="confirmModalOpen"
+                    x-transition:enter="ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
-                <div class="px-4 pt-5 pb-4">
-                    <p class="text-[17px] font-semibold text-black dark:text-white">Buat Sales Order?</p>
-                    <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
-                        Konfirmasi penerbitan pesanan penjualan ini? Data pesanan akan langsung tercatat di sistem.
-                    </p>
-                </div>
+                <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="confirmModalOpen = false">
+                    <div class="relative w-[290px] rounded-[14px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-black/5 dark:border-white/10"
+                        @click.away="confirmModalOpen = false"
+                        x-show="confirmModalOpen"
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0 scale-95"
+                        x-transition:enter-end="opacity-100 scale-100"
+                        x-transition:leave="transition ease-in duration-150"
+                        x-transition:leave-start="opacity-100 scale-100"
+                        x-transition:leave-end="opacity-0 scale-95">
 
-                <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
-                    <button type="button" @click="confirmModalOpen = false"
-                        class="py-3 text-black/60 dark:text-white/60 border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors">
-                        Batal
-                    </button>
-                    <button type="button" @click="submitOrder()"
-                        class="py-3 text-[#007AFF] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors">
-                        Konfirmasi
-                    </button>
+                        <div class="px-4 pt-5 pb-4">
+                            <p id="so-create-confirm-dialog-title" class="text-[17px] font-semibold text-black dark:text-white">{{ __('sales.sales_orders.dialog_confirm_title') }}</p>
+                            <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
+                                {{ __('sales.sales_orders.dialog_confirm_prompt') }}
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
+                            <button type="button" @click="confirmModalOpen = false"
+                                class="min-h-[44px] py-3 text-black/60 dark:text-white/60 border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
+                                {{ __('sales.sales_orders.dialog_btn_cancel') }}
+                            </button>
+                            <button type="button" @click="submitOrder()"
+                                class="min-h-[44px] py-3 text-[#007AFF] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
+                                {{ __('sales.sales_orders.dialog_btn_confirm') }}
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </template>
+                    </div>
+                </div>
+            </div>
+        </template>
 
     </div>
 
@@ -473,7 +484,7 @@
 
                 promptSubmitOrder() {
                     if (!this.customerId) {
-                        alert('Harap pilih pelanggan terlebih dahulu.');
+                        alert('{{ __('sales.sales_orders.alert_select_customer') }}');
                         return;
                     }
                     this.confirmModalOpen = true;

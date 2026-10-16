@@ -428,112 +428,173 @@
     </div>
 
     <!-- MODAL PEMBAYARAN GAJI (MARK AS PAID) - BENTO APPLE HIG -->
-    <div x-show="showPayModal" x-transition.opacity class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" style="display: none;">
-        <div @click.outside="showPayModal = false" class="w-full max-w-lg bg-white dark:bg-[#1C1C1E] rounded-[22px] border border-black/10 dark:border-white/10 shadow-[0_24px_48px_rgba(0,0,0,0.25)] overflow-hidden flex flex-col max-h-[88vh]">
-            <div class="p-5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-[12px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center shrink-0">
-                        <i data-lucide="credit-card" class="w-5 h-5"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('hrm.confirm_payment_title') }}</h3>
-                        <p class="text-[12px] text-black/60 dark:text-white/60">{{ __('hrm.confirm_payment_sub') }}</p>
-                    </div>
-                </div>
-                <button type="button" @click="showPayModal = false"
-                    aria-label="{{ __('common.close') }}"
-                    class="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 active:scale-95 transition cursor-pointer">
-                    <i data-lucide="x" class="w-4.5 h-4.5"></i>
-                </button>
-            </div>
+    <template x-teleport="body">
+        <div x-show="showPayModal"
+            x-cloak
+            class="fixed inset-0 z-[200] overflow-y-auto"
+            @keydown.escape.window="if(!isPaying) showPayModal = false"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-pay-title">
 
-            <form method="POST" action="{{ route('hrm.payrolls.pay', $payroll->id) }}"
-                @submit="if(isPaying) { $event.preventDefault(); return false; } isPaying = true;"
-                class="p-5 space-y-4 overflow-y-auto">
-                @csrf
-                <div class="p-4 rounded-[16px] bg-[#34C759]/10 border border-[#34C759]/20 text-center space-y-1">
-                    <span class="text-[11px] font-bold uppercase tracking-wider text-[#34C759] block">{{ __('hrm.total_transferred_funds') }}</span>
-                    <div class="text-[26px] font-black text-[#34C759] tabular-nums tracking-tight">
-                        Rp {{ number_format((float)$payroll->total_take_home_pay, 0, ',', '.') }}
-                    </div>
-                </div>
+            {{-- Backdrop --}}
+            <div x-show="showPayModal"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                @click="if(!isPaying) showPayModal = false"></div>
 
-                <div>
-                    <label class="block text-[12px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1.5">
-                        {{ __('hrm.payment_method_label') }} <span class="text-[#FF3B30]">*</span>
-                    </label>
-                    <select name="payment_method" x-model="paymentMethod" required
-                        class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[16px] sm:text-[13px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50">
-                        <option value="bank_transfer">{{ __('hrm.method_bank_transfer') }}</option>
-                        <option value="cash">{{ __('hrm.method_cash') }}</option>
-                        <option value="multi">{{ __('hrm.method_multi') }}</option>
-                    </select>
-                </div>
+            {{-- Dialog Container --}}
+            <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="if(!isPaying) showPayModal = false">
+                <div class="relative w-full max-w-lg bg-white dark:bg-[#1C1C1E] rounded-[22px] border border-black/10 dark:border-white/10 shadow-[0_24px_48px_rgba(0,0,0,0.25)] overflow-hidden flex flex-col max-h-[88vh]"
+                    @click.stop
+                    x-show="showPayModal"
+                    x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
 
-                <div>
-                    <label class="block text-[12px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1.5">
-                        {{ __('hrm.payment_notes_label') }}
-                    </label>
-                    <textarea name="notes" rows="2" placeholder="{{ __('hrm.payment_notes_placeholder') }}"
-                        class="w-full p-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[16px] sm:text-[13px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50"></textarea>
-                </div>
-
-                <div class="pt-3 flex justify-end gap-2 border-t border-black/5 dark:border-white/10">
-                    <button type="button" @click="showPayModal = false"
-                        class="h-11 sm:h-10 px-4.5 rounded-[11px] text-[14px] sm:text-[13px] font-semibold text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition cursor-pointer">
-                        {{ __('common.cancel') }}
-                    </button>
-                    <button type="submit" :disabled="isPaying"
-                        :class="isPaying ? 'opacity-60 cursor-not-allowed' : ''"
-                        class="h-11 sm:h-10 px-5 rounded-[11px] text-[14px] sm:text-[13px] font-bold text-white bg-[#34C759] hover:bg-[#2FB34F] shadow-[0_4px_14px_rgba(52,199,89,0.3)] transition active:scale-[0.98] cursor-pointer flex items-center justify-center gap-2">
-                        <template x-if="!isPaying">
-                            <span>{{ __('hrm.confirm_paid_button') }}</span>
-                        </template>
-                        <template x-if="isPaying">
-                            <div class="flex items-center gap-2">
-                                <svg class="animate-spin w-4 h-4 text-white" fill="none" viewBox="0 0 24 24">
-                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                </svg>
-                                <span>{{ __('hrm.processing_payment') }}</span>
+                    <div class="p-5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-[12px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center shrink-0">
+                                <i data-lucide="credit-card" class="w-5 h-5"></i>
                             </div>
-                        </template>
-                    </button>
+                            <div>
+                                <h3 id="modal-pay-title" class="text-[16px] font-bold text-black dark:text-white">{{ __('hrm.confirm_payment_title') }}</h3>
+                                <p class="text-[12px] text-black/60 dark:text-white/60">{{ __('hrm.confirm_payment_sub') }}</p>
+                            </div>
+                        </div>
+                        <button type="button" @click="showPayModal = false"
+                            aria-label="{{ __('common.close') }}"
+                            class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 active:scale-95 transition cursor-pointer">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+
+                    <form method="POST" action="{{ route('hrm.payrolls.pay', $payroll->id) }}"
+                        @submit="if(isPaying) { $event.preventDefault(); return false; } isPaying = true;"
+                        class="p-5 space-y-4 overflow-y-auto">
+                        @csrf
+                        <div class="p-4 rounded-[16px] bg-[#34C759]/10 border border-[#34C759]/20 text-center space-y-1">
+                            <span class="text-[11px] font-bold uppercase tracking-wider text-[#34C759] block">{{ __('hrm.total_transferred_funds') }}</span>
+                            <div class="text-[26px] font-black text-[#34C759] tabular-nums tracking-tight">
+                                Rp {{ number_format((float)$payroll->total_take_home_pay, 0, ',', '.') }}
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-[12px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1.5">
+                                {{ __('hrm.payment_method_label') }} <span class="text-[#FF3B30]">*</span>
+                            </label>
+                            <select name="payment_method" x-model="paymentMethod" required
+                                class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[16px] sm:text-[13px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50">
+                                <option value="bank_transfer">{{ __('hrm.method_bank_transfer') }}</option>
+                                <option value="cash">{{ __('hrm.method_cash') }}</option>
+                                <option value="multi">{{ __('hrm.method_multi') }}</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-[12px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1.5">
+                                {{ __('hrm.payment_notes_label') }}
+                            </label>
+                            <textarea name="notes" rows="2" placeholder="{{ __('hrm.payment_notes_placeholder') }}"
+                                class="w-full p-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[16px] sm:text-[13px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50"></textarea>
+                        </div>
+
+                        <div class="pt-3 flex justify-end gap-2 border-t border-black/5 dark:border-white/10">
+                            <button type="button" @click="showPayModal = false"
+                                class="min-h-[44px] h-11 sm:h-10 px-4.5 rounded-[11px] text-[14px] sm:text-[13px] font-semibold text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition cursor-pointer flex items-center justify-center">
+                                {{ __('common.cancel') }}
+                            </button>
+                            <button type="submit" :disabled="isPaying"
+                                :class="isPaying ? 'opacity-60 cursor-not-allowed' : ''"
+                                class="min-h-[44px] h-11 sm:h-10 px-5 rounded-[11px] text-[14px] sm:text-[13px] font-bold text-white bg-[#34C759] hover:bg-[#2FB34F] shadow-[0_4px_14px_rgba(52,199,89,0.3)] transition active:scale-[0.98] cursor-pointer flex items-center justify-center gap-2">
+                                <template x-if="!isPaying">
+                                    <span>{{ __('hrm.confirm_paid_button') }}</span>
+                                </template>
+                                <template x-if="isPaying">
+                                    <div class="flex items-center gap-2">
+                                        <svg class="animate-spin w-4 h-4 text-white" fill="none" viewBox="0 0 24 24">
+                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                        <span>{{ __('hrm.processing_payment') }}</span>
+                                    </div>
+                                </template>
+                            </button>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
-    </div>
+    </template>
 
     <!-- MODAL INTERAKTIF: WEB DRILL-DOWN KALKULASI GAJI & BEBAN PERUSAHAAN (APPLE HIG BENTO MODAL) -->
-    <div x-show="showDrillDownModal" x-transition.opacity class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/60 backdrop-blur-md" style="display: none;">
-        <div @click.outside="showDrillDownModal = false" class="w-full max-w-4xl bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-[0_24px_64px_rgba(0,0,0,0.3)] overflow-hidden flex flex-col max-h-[90vh]">
-            
-            <!-- Modal Header -->
-            <div class="p-5 sm:p-6 border-b border-black/5 dark:border-white/10 flex items-center justify-between bg-black/[0.015] dark:bg-white/[0.02]">
-                <div class="flex items-center gap-3.5">
-                    <div class="w-11 h-11 rounded-[14px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0 shadow-xs">
-                        <i data-lucide="calculator" class="w-5 h-5"></i>
-                    </div>
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <h3 class="text-[17px] font-bold text-black dark:text-white" x-text="selectedItem?.employee_name || '{{ __('hrm.drilldown_modal_title') }}'"></h3>
-                            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold"
-                                :class="selectedItem?.employment_type === 'daily_worker' ? 'bg-[#FF9500]/15 text-[#FF9500]' : 'bg-[#007AFF]/15 text-[#007AFF]'"
-                                x-text="selectedItem?.employment_type === 'daily_worker' ? (window.__('hrm.daily_worker_badge') || '{{ __('hrm.staff_daily') }}') : (window.__('hrm.permanent_contract_badge') || '{{ __('hrm.permanent_contract_badge') }}')">
-                            </span>
+    <template x-teleport="body">
+        <div x-show="showDrillDownModal"
+            x-cloak
+            class="fixed inset-0 z-[200] overflow-y-auto"
+            @keydown.escape.window="showDrillDownModal = false"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-drilldown-title">
+
+            {{-- Backdrop --}}
+            <div x-show="showDrillDownModal"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                @click="showDrillDownModal = false"></div>
+
+            {{-- Dialog Container --}}
+            <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-5" @click.self="showDrillDownModal = false">
+                <div class="relative w-full max-w-4xl bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-[0_24px_64px_rgba(0,0,0,0.3)] overflow-hidden flex flex-col max-h-[90vh]"
+                    @click.stop
+                    x-show="showDrillDownModal"
+                    x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                    x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+                    
+                    <!-- Modal Header -->
+                    <div class="p-5 sm:p-6 border-b border-black/5 dark:border-white/10 flex items-center justify-between bg-black/[0.015] dark:bg-white/[0.02]">
+                        <div class="flex items-center gap-3.5">
+                            <div class="w-11 h-11 rounded-[14px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0 shadow-xs">
+                                <i data-lucide="calculator" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <h3 id="modal-drilldown-title" class="text-[17px] font-bold text-black dark:text-white" x-text="selectedItem?.employee_name || '{{ __('hrm.drilldown_modal_title') }}'"></h3>
+                                    <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold"
+                                        :class="selectedItem?.employment_type === 'daily_worker' ? 'bg-[#FF9500]/15 text-[#FF9500]' : 'bg-[#007AFF]/15 text-[#007AFF]'"
+                                        x-text="selectedItem?.employment_type === 'daily_worker' ? (window.__('hrm.daily_worker_badge') || '{{ __('hrm.staff_daily') }}') : (window.__('hrm.permanent_contract_badge') || '{{ __('hrm.permanent_contract_badge') }}')">
+                                    </span>
+                                </div>
+                                <p class="text-[12.5px] text-black/60 dark:text-white/60">
+                                    <span x-text="selectedItem?.job_title || '{{ __('hrm.staff_label') }}'"></span>
+                                    <span x-show="selectedItem?.tenure_months"> &bull; {{ __('hrm.drilldown_tenure_months', ['months' => '']) }}<span x-text="selectedItem?.tenure_months"></span> bln</span>
+                                </p>
+                            </div>
                         </div>
-                        <p class="text-[12.5px] text-black/60 dark:text-white/60">
-                            <span x-text="selectedItem?.job_title || '{{ __('hrm.staff_label') }}'"></span>
-                            <span x-show="selectedItem?.tenure_months"> &bull; {{ __('hrm.drilldown_tenure_months', ['months' => '']) }}<span x-text="selectedItem?.tenure_months"></span> bln</span>
-                        </p>
+                        <button type="button" @click="showDrillDownModal = false"
+                            aria-label="{{ __('common.close') }}"
+                            class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 active:scale-95 transition cursor-pointer">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
                     </div>
-                </div>
-                <button type="button" @click="showDrillDownModal = false"
-                    aria-label="{{ __('common.close') }}"
-                    class="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 active:scale-95 transition cursor-pointer">
-                    <i data-lucide="x" class="w-4.5 h-4.5"></i>
-                </button>
-            </div>
 
             <!-- Modal Body (Scrollable Bento Container) -->
             <div class="p-5 sm:p-6 overflow-y-auto space-y-5">
@@ -752,19 +813,21 @@
             <!-- Modal Footer -->
             <div class="p-4 sm:p-5 border-t border-black/5 dark:border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-black/[0.015] dark:bg-white/[0.02]">
                 <a :href="'/hrm/payslips/' + selectedItem?.id"
-                    class="h-10 px-4 rounded-[11px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[12.5px] font-bold flex items-center justify-center gap-1.5 transition active:scale-[0.98] shadow-xs cursor-pointer">
+                    class="min-h-[44px] h-11 sm:h-10 px-4 rounded-[11px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[12.5px] font-bold flex items-center justify-center gap-1.5 transition active:scale-[0.98] shadow-xs cursor-pointer">
                     <i data-lucide="receipt" class="w-4 h-4"></i>
                     <span>{{ __('hrm.open_full_official_payslip') }}</span>
                 </a>
 
                 <button type="button" @click="showDrillDownModal = false"
-                    class="h-10 px-5 rounded-[11px] bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 text-black/70 dark:text-white/70 text-[12.5px] font-semibold transition cursor-pointer">
+                    class="min-h-[44px] h-11 sm:h-10 px-5 rounded-[11px] bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 text-black/70 dark:text-white/70 text-[12.5px] font-semibold transition cursor-pointer flex items-center justify-center">
                     {{ __('hrm.close_details') }}
                 </button>
             </div>
 
+                </div>
+            </div>
         </div>
-    </div>
+    </template>
 
 </div>
 @endsection

@@ -172,5 +172,7 @@ Saat menjalankan audit UI layout, tab, dan navigasi:
 4. **Audit Information Architecture Sidebar (Pembersihan Polusi Menu Settings)**:
    - Cari menu konfigurasi teknis yang berceceran di sidebar root.
    - Pindahkan seluruh konfigurasi ke dalam modul terpadu `/settings` dengan navigasi tab bento.
-5. **Interactive Confirmation Gate**:
+5. **Audit Modal Teleportation & Zero Topbar Gap**:
+   - Pastikan seluruh modal form/sheet di ketiga panel dibungkus dengan `<template x-teleport="body">` dan layer `z-[200]` agar tidak terpotong di bawah sticky topbar header (`app-topbar sticky top-0 z-[35]`), menjamin backdrop menutup 100% viewport ($y=0$).
+6. **Interactive Confirmation Gate**:
    - Sajikan laporan temuan inkonsistensi UI, peta migrasi menu sidebar, dan rencana perbaikan terstruktur sebelum mengubah file Blade.

@@ -294,6 +294,29 @@ Dilarang keras menggunakan modal sempit (`max-w-md`/`max-w-lg`) untuk form input
 3. **Mobile (<640px)**: `fixed inset-x-0 bottom-0 max-h-[96vh] w-full rounded-t-[28px] rounded-b-none flex flex-col` (Adaptive Bottom Sheet, safe-area `pb-28`).
 4. **Anti-Whitespace Atas**: Dilarang menduplikasi subtitle modal di dalam sub-card form sebagai `H4 uppercase`. Gunakan label seksi 1 baris yang padat dan pastikan kolom kiri/kanan rata atas (*flush top-aligned*).
 5. **Kompatibilitas Light/Dark**: `bg-white dark:bg-[#1C1C1E]` modal shell, `bg-[#F2F2F7]/50 dark:bg-white/[0.02]` header bar, `bg-black/[0.02] dark:bg-white/[0.02]` sub-cards, `bg-white dark:bg-[#2C2C2E]` inputs, border `border-black/[0.08] dark:border-white/[0.1]`, teks `text-[#1C1C1E] dark:text-[#F2F2F7]`.
+6. **Wajib Alpine.js Body Teleportation (`<template x-teleport="body">`) & Zero Topbar Gap**:
+   - **Masalah & Penyebab**: Jika modal dirender langsung di dalam child Blade view (`@section('content')` -> `<main id="main-content">`), modal terperangkap di dalam *CSS Stacking Context / Containing Block* terisolasi akibat transisi wrapper (`transition-[padding]`) dan `backdrop-filter` sticky topbar (`z-[35]`). Akibatnya, `position: fixed` terpotong di bawah header navigasi, menyisakan bilah putih (white gap) 64px di bagian atas layar yang tidak tertutup backdrop gelap.
+   - **Aturan Mutlak**: Seluruh pop-up modal, bottom sheet, dan dialog konfirmasi hapus **WAJIB dibungkus dengan `<template x-teleport="body">`**.
+   - **Layering Z-Index Global**: Backdrop luar wajib memakai `fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md` (sub-modal `z-[210]`, alert konfirmasi `z-[220]`, dan kartu modal `relative z-10`).
+   - **Sintaks Baku**:
+     ```html
+     <template x-teleport="body">
+         <div x-show="openModal" x-cloak
+              class="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md"
+              x-transition:enter="transition ease-out duration-200"
+              x-transition:enter-start="opacity-0"
+              x-transition:enter-end="opacity-100"
+              x-transition:leave="transition ease-in duration-150"
+              x-transition:leave-start="opacity-100"
+              x-transition:leave-end="opacity-0"
+              @keydown.escape.window="openModal = false">
+             <div class="w-full max-w-full sm:max-w-2xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-[1350px] max-h-[92vh] rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl flex flex-col overflow-hidden"
+                  @click.outside="openModal = false">
+                 <!-- Konten Modal -->
+             </div>
+         </div>
+     </template>
+     ```
 
 ---
 
@@ -306,6 +329,7 @@ Periksa tiap poin, lalu catat yang gagal.
 - [ ] **Anti Infinite Card Bloat (Mobile)**: Apakah deretan metrik (KPI) atau alur langkah menggunakan **Horizontal Snap Slider** / **Compact Stepper** daripada menumpuk 4–5 kartu Bento vertikal yang membuat halaman molor panjang?
 - [ ] **Grouped Inset List (Mobile)**: Apakah opsi formulir/pengaturan disatukan ke dalam 1 kartu dengan pembatas `divide-y`, bukan dipisah jadi 5 kartu berat yang boros ruang?
 - [ ] **Modal Form Full-Size Lintas Device**: Apakah semua pop-up modal form menggunakan ukuran maksimal (**XXL 2-kolom di Desktop**, **Adaptive Bottom Sheet di Mobile**), bebas dari duplikasi subtitle header, dan 100% kompatibel Light Mode & Dark Mode?
+- [ ] **Modal Body Teleportation (`x-teleport="body"`) & Zero Topbar Gap**: Apakah SELURUH modal form, bottom sheet, dan alert confirmation dibungkus dalam `<template x-teleport="body">` dengan `z-[200]` sehingga backdrop gelap menutup 100% layar secara penuh ($y=0$) tanpa celah/space putih pada topbar?
 - [ ] Adakah informasi duplikat, dekoratif, atau yang jarang dipakai tetapi tampil permanen?
 - [ ] Adakah lebih dari 1 elemen yang berebut menjadi paling menonjol?
 - [ ] Adakah teks penjelas yang bisa dipersingkat atau dihapus?

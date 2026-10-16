@@ -6,6 +6,8 @@ return [
     'title' => 'Inventory & Stock',
     'header_title' => 'Inventory & Stock Management',
     'header_subtitle' => 'Manage physical stock balances, raw materials, stock opname adjustments, and stock card movement history.',
+    'nav_katalog' => 'Catalog & Inventory',
+    'nav_stocks' => 'Multi-Warehouse & Stock',
 
     'breadcrumbs' => [
         'dashboard' => 'Dashboard',

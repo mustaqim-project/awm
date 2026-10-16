@@ -377,94 +377,97 @@
     </div>
 
     <!-- MODAL SHEET: Konfirmasi Bersihkan Log (Pop-Up First Apple HIG) -->
-    <div x-show="showClearModal" x-cloak class="relative z-50" aria-labelledby="clear-modal-title" role="dialog" aria-modal="true">
-        <div x-show="showClearModal"
-            x-transition:enter="ease-out duration-300"
-            x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100"
-            x-transition:leave="ease-in duration-200"
-            x-transition:leave-start="opacity-100"
-            x-transition:leave-end="opacity-0"
-            @click="showClearModal = false"
-            class="fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity"></div>
-
-        <div class="fixed inset-0 z-10 overflow-y-auto flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <template x-teleport="body">
+        <div x-show="showClearModal" x-cloak class="fixed inset-0 z-[220] overflow-y-auto" aria-labelledby="clear-modal-title" role="dialog" aria-modal="true" @keydown.escape.window="showClearModal = false">
             <div x-show="showClearModal"
-                x-transition:enter="ease-out duration-300 transform"
-                x-transition:enter-start="translate-y-full sm:scale-95 opacity-0"
-                x-transition:enter-end="translate-y-0 sm:scale-100 opacity-100"
-                x-transition:leave="ease-in duration-200 transform"
-                x-transition:leave-start="translate-y-0 sm:scale-100 opacity-100"
-                x-transition:leave-end="translate-y-full sm:scale-95 opacity-0"
-                @click.outside="showClearModal = false"
-                class="w-full max-w-md rounded-t-[28px] sm:rounded-[24px] sheet-material p-6 border-t sm:border border-black/[0.08] dark:border-white/[0.12] shadow-2xl space-y-5">
-                
-                <!-- Mobile Grabber Handle -->
-                <div class="w-12 h-1.5 rounded-full bg-black/20 dark:bg-white/20 mx-auto -mt-2 mb-3 sm:hidden"></div>
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="showClearModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"
+                aria-hidden="true"></div>
 
-                <!-- Header -->
-                <div class="flex items-start justify-between pb-3 border-b border-black/[0.04] dark:border-white/[0.06]">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-[12px] bg-[#FF3B30]/15 text-[#FF3B30] dark:text-[#FF453A] flex items-center justify-center font-bold">
-                            <i data-lucide="trash-2" class="w-5 h-5" stroke-width="2"></i>
-                        </div>
-                        <div>
-                            <h3 id="clear-modal-title" class="text-[17px] font-extrabold text-black dark:text-white">Kosongkan Berkas Log?</h3>
-                            <p class="text-[12px] text-black/50 dark:text-white/50">Tindakan ini tidak dapat dibatalkan</p>
-                        </div>
-                    </div>
-                    <button type="button" @click="showClearModal = false"
-                        class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white flex items-center justify-center active:scale-95 transition-all">
-                        <i data-lucide="x" class="w-4 h-4" stroke-width="2"></i>
-                    </button>
-                </div>
+            <div class="relative z-10 min-h-full flex items-end sm:items-center justify-center p-0 sm:p-4 pointer-events-none" @click.self="showClearModal = false">
+                <div x-show="showClearModal"
+                    x-transition:enter="ease-out duration-300 transform"
+                    x-transition:enter-start="translate-y-full sm:scale-95 opacity-0"
+                    x-transition:enter-end="translate-y-0 sm:scale-100 opacity-100"
+                    x-transition:leave="ease-in duration-200 transform"
+                    x-transition:leave-start="translate-y-0 sm:scale-100 opacity-100"
+                    x-transition:leave-end="translate-y-full sm:scale-95 opacity-0"
+                    @click.outside="showClearModal = false"
+                    class="relative pointer-events-auto w-full max-w-md rounded-t-[28px] sm:rounded-[24px] sheet-material p-6 border-t sm:border border-black/[0.08] dark:border-white/[0.12] shadow-2xl space-y-5">
+                    
+                    <!-- Mobile Grabber Handle -->
+                    <div class="w-12 h-1.5 rounded-full bg-black/20 dark:bg-white/20 mx-auto -mt-2 mb-3 sm:hidden"></div>
 
-                <!-- Content & Warning -->
-                <div class="space-y-3 text-[13px]">
-                    <div class="p-3.5 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.04] space-y-2">
-                        <div class="flex justify-between items-center text-[12px]">
-                            <span class="text-black/50 dark:text-white/50">Berkas Target</span>
-                            <span class="font-mono font-bold text-black dark:text-white">{{ $selectedFile }}</span>
+                    <!-- Header -->
+                    <div class="flex items-start justify-between pb-3 border-b border-black/[0.04] dark:border-white/[0.06]">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-[12px] bg-[#FF3B30]/15 text-[#FF3B30] dark:text-[#FF453A] flex items-center justify-center font-bold">
+                                <i data-lucide="trash-2" class="w-5 h-5" stroke-width="2"></i>
+                            </div>
+                            <div>
+                                <h3 id="clear-modal-title" class="text-[17px] font-extrabold text-black dark:text-white">Kosongkan Berkas Log?</h3>
+                                <p class="text-[12px] text-black/50 dark:text-white/50">Tindakan ini tidak dapat dibatalkan</p>
+                            </div>
                         </div>
-                        <div class="flex justify-between items-center text-[12px]">
-                            <span class="text-black/50 dark:text-white/50">Ukuran Saat Ini</span>
-                            <span class="font-bold text-black dark:text-white tabular-nums">{{ $fileSize > 1024 ? round($fileSize / 1024, 2) . ' MB' : $fileSize . ' KB' }}</span>
-                        </div>
-                    </div>
-
-                    <div class="p-3 rounded-[12px] bg-[#FF9500]/10 text-[#C97800] dark:text-[#FF9F0A] text-[11px] flex items-center gap-2">
-                        <i data-lucide="alert-triangle" class="w-4 h-4 shrink-0" stroke-width="2"></i>
-                        <span>💡 Disarankan mengunduh salinan berkas log terlebih dahulu sebelum mengosongkan.</span>
-                    </div>
-                </div>
-
-                <!-- Modal Actions -->
-                <div class="pt-2 flex flex-col gap-2.5">
-                    <form method="POST" action="{{ route('admin.error-logs.clear') }}">
-                        @csrf
-                        @method('DELETE')
-                        <input type="hidden" name="file" value="{{ $selectedFile }}">
-                        <button type="submit"
-                            class="w-full h-12 rounded-[14px] bg-[#FF3B30] hover:bg-[#E02D23] active:scale-[0.98] text-white font-bold text-[13px] flex items-center justify-center gap-2 shadow-md shadow-[#FF3B30]/25 transition-all cursor-pointer">
-                            <i data-lucide="trash-2" class="w-4.5 h-4.5" stroke-width="2"></i>
-                            <span>Ya, Kosongkan Berkas Sekarang</span>
+                        <button type="button" @click="showClearModal = false"
+                            class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white flex items-center justify-center active:scale-95 transition-all">
+                            <i data-lucide="x" class="w-4 h-4" stroke-width="2"></i>
                         </button>
-                    </form>
+                    </div>
 
-                    <a href="{{ route('admin.error-logs.download', ['file' => $selectedFile]) }}"
-                        class="w-full h-11 rounded-[14px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 active:scale-[0.98] text-[#007AFF] dark:text-[#0A84FF] font-bold text-[13px] flex items-center justify-center gap-2 transition-all">
-                        <i data-lucide="download" class="w-4 h-4" stroke-width="2"></i>
-                        <span>Unduh Salinan Cadangan</span>
-                    </a>
+                    <!-- Content & Warning -->
+                    <div class="space-y-3 text-[13px]">
+                        <div class="p-3.5 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.04] space-y-2">
+                            <div class="flex justify-between items-center text-[12px]">
+                                <span class="text-black/50 dark:text-white/50">Berkas Target</span>
+                                <span class="font-mono font-bold text-black dark:text-white">{{ $selectedFile }}</span>
+                            </div>
+                            <div class="flex justify-between items-center text-[12px]">
+                                <span class="text-black/50 dark:text-white/50">Ukuran Saat Ini</span>
+                                <span class="font-bold text-black dark:text-white tabular-nums">{{ $fileSize > 1024 ? round($fileSize / 1024, 2) . ' MB' : $fileSize . ' KB' }}</span>
+                            </div>
+                        </div>
 
-                    <button type="button" @click="showClearModal = false"
-                        class="w-full h-11 rounded-[14px] bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70 font-semibold text-[13px] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all cursor-pointer">
-                        Batal
-                    </button>
+                        <div class="p-3 rounded-[12px] bg-[#FF9500]/10 text-[#C97800] dark:text-[#FF9F0A] text-[11px] flex items-center gap-2">
+                            <i data-lucide="alert-triangle" class="w-4 h-4 shrink-0" stroke-width="2"></i>
+                            <span>💡 Disarankan mengunduh salinan berkas log terlebih dahulu sebelum mengosongkan.</span>
+                        </div>
+                    </div>
+
+                    <!-- Modal Actions -->
+                    <div class="pt-2 flex flex-col gap-2.5">
+                        <form method="POST" action="{{ route('admin.error-logs.clear') }}">
+                            @csrf
+                            @method('DELETE')
+                            <input type="hidden" name="file" value="{{ $selectedFile }}">
+                            <button type="submit"
+                                class="w-full h-12 rounded-[14px] bg-[#FF3B30] hover:bg-[#E02D23] active:scale-[0.98] text-white font-bold text-[13px] flex items-center justify-center gap-2 shadow-md shadow-[#FF3B30]/25 transition-all cursor-pointer">
+                                <i data-lucide="trash-2" class="w-4.5 h-4.5" stroke-width="2"></i>
+                                <span>Ya, Kosongkan Berkas Sekarang</span>
+                            </button>
+                        </form>
+
+                        <a href="{{ route('admin.error-logs.download', ['file' => $selectedFile]) }}"
+                            class="w-full h-11 rounded-[14px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 active:scale-[0.98] text-[#007AFF] dark:text-[#0A84FF] font-bold text-[13px] flex items-center justify-center gap-2 transition-all">
+                            <i data-lucide="download" class="w-4 h-4" stroke-width="2"></i>
+                            <span>Unduh Salinan Cadangan</span>
+                        </a>
+
+                        <button type="button" @click="showClearModal = false"
+                            class="w-full h-11 rounded-[14px] bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70 font-semibold text-[13px] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all cursor-pointer">
+                            Batal
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </template>
 
 </div>
 @endsection

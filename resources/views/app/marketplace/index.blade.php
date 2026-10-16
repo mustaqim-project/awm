@@ -385,64 +385,82 @@
     <!-- ===================================================== -->
     <!-- 4. MODAL KONFIRMASI PUTUS KONEKSI (BENTO HIG)         -->
     <!-- ===================================================== -->
-    <div x-show="disconnectModal" x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0">
+    <template x-teleport="body">
+        <div x-show="disconnectModal" x-cloak
+            class="fixed inset-0 z-[220] overflow-y-auto flex items-center justify-center p-4"
+            @keydown.escape.window="disconnectModal = false"
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby="disconnect-modal-title">
 
-        <div @click.away="disconnectModal = false"
-            class="w-full max-w-lg rounded-[28px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-6 sm:p-7 space-y-5 shadow-2xl">
-            
-            <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-4">
-                <div class="flex items-center gap-3.5">
-                    <div class="w-11 h-11 rounded-[14px] bg-[#FF3B30]/15 text-[#FF3B30] flex items-center justify-center shrink-0">
-                        <i data-lucide="unlink" class="w-5 h-5"></i>
+            <!-- Backdrop -->
+            <div x-show="disconnectModal"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="disconnectModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
+
+            <div x-show="disconnectModal"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0 translate-y-4 sm:scale-95"
+                x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave-end="opacity-0 translate-y-4 sm:scale-95"
+                class="relative w-full max-w-lg rounded-[28px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-6 sm:p-7 space-y-5 shadow-2xl z-10"
+                @click.outside="disconnectModal = false">
+                
+                <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-4">
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-11 h-11 rounded-[14px] bg-[#FF3B30]/15 text-[#FF3B30] flex items-center justify-center shrink-0">
+                            <i data-lucide="unlink" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 id="disconnect-modal-title" class="text-[16px] font-bold text-black dark:text-white">Putuskan Hubungan Akun?</h3>
+                            <p class="text-[12px] text-black/50 dark:text-white/50" x-text="'Koneksi ke ' + selectedChannelName + ' akan dinonaktifkan.'"></p>
+                        </div>
                     </div>
-                    <div>
-                        <h3 class="text-[16px] font-bold text-black dark:text-white">Putuskan Hubungan Akun?</h3>
-                        <p class="text-[12px] text-black/50 dark:text-white/50" x-text="'Koneksi ke ' + selectedChannelName + ' akan dinonaktifkan.'"></p>
-                    </div>
-                </div>
-                <button type="button" @click="disconnectModal = false" class="w-8 h-8 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-all cursor-pointer">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
-            </div>
-
-            <div class="p-4 rounded-[18px] bg-[#FF3B30]/10 border border-[#FF3B30]/20 space-y-2">
-                <div class="flex items-center gap-2 text-[#FF3B30] text-[12.5px] font-bold">
-                    <i data-lucide="alert-triangle" class="w-4 h-4"></i>
-                    <span>Dampak Operasional Pemutusan:</span>
-                </div>
-                <ul class="text-[12px] text-black/70 dark:text-white/70 space-y-1 list-disc list-inside">
-                    <li>Sinkronisasi harga dan stok fisik dari COOCA akan berhenti seketika.</li>
-                    <li>Pesanan baru di marketplace tidak lagi otomatis ditarik ke kasir.</li>
-                    <li>Histori transaksi dan pemetaan produk Anda tetap aman tersimpan.</li>
-                </ul>
-            </div>
-
-            <div class="flex items-center justify-end gap-2.5 pt-2">
-                <button type="button" @click="disconnectModal = false" :disabled="submitting"
-                    class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] transition-all cursor-pointer">
-                    Batal
-                </button>
-                <form :action="'{{ url('marketplace-hub/disconnect') }}/' + selectedChannel" method="POST" @submit="submitting = true">
-                    @csrf
-                    <button type="submit" :disabled="submitting"
-                        class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#FF3B30] hover:bg-[#E0352B] active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer">
-                        <svg x-show="submitting" class="animate-spin w-4 h-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        <span x-text="submitting ? 'Memproses...' : 'Ya, Putuskan Koneksi'"></span>
+                    <button type="button" @click="disconnectModal = false" class="min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-all cursor-pointer active:scale-95" aria-label="Tutup modal">
+                        <i data-lucide="x" class="w-4 h-4"></i>
                     </button>
-                </form>
+                </div>
+
+                <div class="p-4 rounded-[18px] bg-[#FF3B30]/10 border border-[#FF3B30]/20 space-y-2">
+                    <div class="flex items-center gap-2 text-[#FF3B30] text-[12.5px] font-bold">
+                        <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+                        <span>Dampak Operasional Pemutusan:</span>
+                    </div>
+                    <ul class="text-[12px] text-black/70 dark:text-white/70 space-y-1 list-disc list-inside">
+                        <li>Sinkronisasi harga dan stok fisik dari COOCA akan berhenti seketika.</li>
+                        <li>Pesanan baru di marketplace tidak lagi otomatis ditarik ke kasir.</li>
+                        <li>Histori transaksi dan pemetaan produk Anda tetap aman tersimpan.</li>
+                    </ul>
+                </div>
+
+                <div class="flex items-center justify-end gap-2.5 pt-2">
+                    <button type="button" @click="disconnectModal = false" :disabled="submitting"
+                        class="min-h-[44px] px-4 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] transition-all cursor-pointer active:scale-95">
+                        Batal
+                    </button>
+                    <form :action="'{{ url('marketplace-hub/disconnect') }}/' + selectedChannel" method="POST" @submit="submitting = true">
+                        @csrf
+                        <button type="submit" :disabled="submitting"
+                            class="min-h-[44px] px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#FF3B30] hover:bg-[#E0352B] active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer">
+                            <svg x-show="submitting" class="animate-spin w-4 h-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            <span x-text="submitting ? 'Memproses...' : 'Ya, Putuskan Koneksi'"></span>
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
+    </template>
 
 </div>
 @endsection

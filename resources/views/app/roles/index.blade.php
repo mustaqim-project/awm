@@ -687,307 +687,389 @@
                 \App\Support\Context::hasPermission('roles.edit') ||
                 \App\Support\Context::hasPermission('roles.manage'))
             <!-- ===================================================== -->
-            <!-- MODAL 1: CREATE / EDIT CUSTOM ROLE (macOS Sheet)       -->
+            <!-- MODAL 1: CREATE / EDIT CUSTOM ROLE (Bento Apple Sheet) -->
             <!-- ===================================================== -->
-            <div x-show="showCreateModal" x-cloak
-                class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/25 backdrop-blur-[2px]"
-                x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
-                x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
-                x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+            <template x-teleport="body">
+                <div x-show="showCreateModal" x-cloak
+                    class="fixed inset-0 z-[200] overflow-y-auto"
+                    @keydown.escape.window="showCreateModal = false"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="roles-create-title">
 
-                <div class="bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl w-full max-w-2xl max-h-[90vh] rounded-[18px] border border-black/10 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.25)] overflow-hidden flex flex-col"
-                    @click.away="showCreateModal = false" x-transition:enter="transition ease-out duration-200"
-                    x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
-                    x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100"
-                    x-transition:leave-end="opacity-0 scale-95">
+                    <!-- Backdrop -->
+                    <div x-show="showCreateModal"
+                        x-transition:enter="ease-out duration-200"
+                        x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100"
+                        x-transition:leave="ease-in duration-150"
+                        x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0"
+                        @click="showCreateModal = false"
+                        class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
-                    <!-- Sheet Header -->
-                    <div class="px-6 py-4 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
-                        <div>
-                            <h3 class="text-[17px] font-semibold text-black dark:text-white"
-                                x-text="editingRole ? (editingPreset ? 'Edit Permission: ' + editingRole.name : 'Edit Role: ' + editingRole.name) : 'Buat Role Custom Baru'">
-                            </h3>
-                            <p class="text-[12px] text-black/50 dark:text-white/50"
-                                x-text="editingPreset ? 'Hak akses preset role dapat diubah. Nama role sistem tidak dapat dimodifikasi.' : 'Tentukan kombinasi hak akses yang diizinkan untuk peran ini.'">
-                            </p>
-                        </div>
-                        <button type="button" @click="showCreateModal = false"
-                            class="w-8 h-8 rounded-[8px] hover:bg-black/5 dark:hover:bg-white/5 flex items-center justify-center text-black/50 dark:text-white/50 transition">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
-                    </div>
+                    <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="showCreateModal = false">
+                        <div class="relative w-full max-w-2xl max-h-[92vh] rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl flex flex-col overflow-hidden my-auto"
+                            @click.stop
+                            x-show="showCreateModal"
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 scale-95"
+                            x-transition:enter-end="opacity-100 scale-100"
+                            x-transition:leave="transition ease-in duration-150"
+                            x-transition:leave-start="opacity-100 scale-100"
+                            x-transition:leave-end="opacity-0 scale-95">
 
-                    <!-- Form -->
-                    <form :action="editingRole ? editFormAction : '{{ route('roles.store') }}'" method="POST"
-                        class="flex flex-col flex-1 overflow-hidden">
-                        @csrf
-                        <template x-if="editingRole">
-                            <input type="hidden" name="_method" value="PUT">
-                        </template>
-
-                        <div class="p-6 space-y-5 overflow-y-auto flex-1">
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <!-- Sheet Header -->
+                            <div class="px-6 py-4 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
                                 <div>
-                                    <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">
-                                        Nama Role
-                                        <span class="text-[#FF3B30]" x-show="!editingPreset">*</span>
-                                    </label>
-                                    <input type="text" name="name" :required="!editingPreset"
-                                        :value="editingRole ? editingRole.name : ''" :disabled="editingPreset"
-                                        :class="editingPreset ? 'opacity-50 cursor-not-allowed' : ''"
-                                        placeholder="Contoh: Kasir Shift Pagi"
-                                        class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                                    <p class="text-[11px] text-[#FF9500] mt-1 flex items-center gap-1"
-                                        x-show="editingPreset">
-                                        <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor"
-                                            stroke-width="2" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
-                                        </svg>
-                                        Nama role sistem terlindungi
+                                    <h3 id="roles-create-title" class="text-[17px] font-semibold text-black dark:text-white"
+                                        x-text="editingRole ? (editingPreset ? 'Edit Permission: ' + editingRole.name : 'Edit Role: ' + editingRole.name) : 'Buat Role Custom Baru'">
+                                    </h3>
+                                    <p class="text-[12px] text-black/50 dark:text-white/50"
+                                        x-text="editingPreset ? 'Hak akses preset role dapat diubah. Nama role sistem tidak dapat dimodifikasi.' : 'Tentukan kombinasi hak akses yang diizinkan untuk peran ini.'">
                                     </p>
                                 </div>
-                                <div>
-                                    <label
-                                        class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">Deskripsi
-                                        Peran</label>
-                                    <input type="text" name="description"
-                                        :value="editingRole ? editingRole.description : ''" :disabled="editingPreset"
-                                        :class="editingPreset ? 'opacity-50 cursor-not-allowed' : ''"
-                                        placeholder="Ringkasan tanggung jawab..."
-                                        class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                                </div>
+                                <button type="button" @click="showCreateModal = false"
+                                    class="w-10 h-10 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition cursor-pointer"
+                                    aria-label="Tutup Dialog">
+                                    <i data-lucide="x" class="w-5 h-5"></i>
+                                </button>
                             </div>
 
-                            <!-- Permissions Selection -->
-                            <div class="space-y-3 pt-2">
-                                <div class="flex items-center justify-between">
-                                    <label class="text-[13px] font-semibold text-black dark:text-white">Pilih Hak Akses
-                                        (Permissions) <span class="text-[#FF3B30]">*</span></label>
-                                    <span class="text-[12px] font-semibold text-[#007AFF] tabular-nums"
-                                        x-text="selectedPermissions.length + ' hak akses dipilih'"></span>
-                                </div>
+                            <!-- Form -->
+                            <form :action="editingRole ? editFormAction : '{{ route('roles.store') }}'" method="POST"
+                                class="flex flex-col flex-1 overflow-hidden">
+                                @csrf
+                                <template x-if="editingRole">
+                                    <input type="hidden" name="_method" value="PUT">
+                                </template>
 
-                                @if (($hiddenPermissionsCount ?? 0) > 0)
-                                    <div
-                                        class="rounded-[10px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 p-2.5 text-[11px] text-black/60 dark:text-white/60 flex items-center justify-between gap-2">
-                                        <span>Modul yang dinonaktifkan untuk bisnis ini disembunyikan dari daftar
-                                            izin.</span>
-                                        <a href="{{ route('settings.index', ['tab' => 'modules']) }}" target="_blank"
-                                            class="text-[#007AFF] hover:underline font-medium shrink-0">Buka Pengaturan
-                                            Modul &rarr;</a>
-                                    </div>
-                                @endif
-
-                                <div class="space-y-3 max-h-96 overflow-y-auto pr-1">
-                                    @foreach ($permissions as $category => $categoryPermissions)
-                                        @php
-                                            $categorySlugs = $categoryPermissions->pluck('slug')->toArray();
-                                        @endphp
-                                        <div
-                                            class="rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 p-3.5 space-y-2.5">
-                                            <div class="flex items-center justify-between">
-                                                <span
-                                                    class="text-[12px] font-semibold uppercase tracking-wide text-black/70 dark:text-white/70">
-                                                    {{ $category ?: 'Lainnya' }}
-                                                </span>
-                                                <button type="button"
-                                                    @click="toggleCategory({{ Js::from($categorySlugs) }}, !isCategoryAllSelected({{ Js::from($categorySlugs) }}))"
-                                                    class="text-[11px] text-[#007AFF] hover:underline font-semibold">
-                                                    <span
-                                                        x-text="isCategoryAllSelected({{ Js::from($categorySlugs) }}) ? 'Batal Semua' : 'Pilih Semua'"></span>
-                                                </button>
-                                            </div>
-
-                                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                                @foreach ($categoryPermissions as $permission)
-                                                    <label
-                                                        class="flex items-start gap-2.5 p-2 rounded-[8px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 hover:border-[#007AFF]/30 cursor-pointer transition select-none">
-                                                        <input type="checkbox" name="permissions[]"
-                                                            value="{{ $permission->slug }}" x-model="selectedPermissions"
-                                                            class="mt-0.5 rounded-[4px] border-black/20 text-[#007AFF] focus:ring-[#007AFF]">
-                                                        <div class="min-w-0">
-                                                            <span
-                                                                class="font-medium text-black dark:text-white text-[12px] block">{{ $permission->name }}</span>
-                                                            <span
-                                                                class="text-[10px] font-mono text-black/40 dark:text-white/40 block truncate">{{ $permission->slug }}</span>
-                                                        </div>
-                                                    </label>
-                                                @endforeach
-                                            </div>
+                                <div class="p-6 space-y-5 overflow-y-auto flex-1">
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">
+                                                Nama Role
+                                                <span class="text-[#FF3B30]" x-show="!editingPreset">*</span>
+                                            </label>
+                                            <input type="text" name="name" :required="!editingPreset"
+                                                :value="editingRole ? editingRole.name : ''" :disabled="editingPreset"
+                                                :class="editingPreset ? 'opacity-50 cursor-not-allowed' : ''"
+                                                placeholder="Contoh: Kasir Shift Pagi"
+                                                class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                            <p class="text-[11px] text-[#FF9500] mt-1 flex items-center gap-1"
+                                                x-show="editingPreset">
+                                                <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor"
+                                                    stroke-width="2" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                                                </svg>
+                                                Nama role sistem terlindungi
+                                            </p>
                                         </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
+                                        <div>
+                                            <label
+                                                class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">Deskripsi
+                                                Peran</label>
+                                            <input type="text" name="description"
+                                                :value="editingRole ? editingRole.description : ''" :disabled="editingPreset"
+                                                :class="editingPreset ? 'opacity-50 cursor-not-allowed' : ''"
+                                                placeholder="Ringkasan tanggung jawab..."
+                                                class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                        </div>
+                                    </div>
 
-                        <!-- Footer -->
-                        <div
-                            class="px-6 py-3.5 border-t border-black/5 dark:border-white/10 flex items-center justify-end gap-2">
-                            <button type="button" @click="showCreateModal = false"
-                                class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition">
-                                Batal
-                            </button>
-                            <button type="submit"
-                                class="h-9 px-5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
-                                <span
-                                    x-text="editingPreset ? 'Simpan Permission' : (editingRole ? 'Simpan Perubahan' : 'Buat Role Custom')"></span>
-                            </button>
+                                    <!-- Permissions Selection -->
+                                    <div class="space-y-3 pt-2">
+                                        <div class="flex items-center justify-between">
+                                            <label class="text-[13px] font-semibold text-black dark:text-white">Pilih Hak Akses
+                                                (Permissions) <span class="text-[#FF3B30]">*</span></label>
+                                            <span class="text-[12px] font-semibold text-[#007AFF] tabular-nums"
+                                                x-text="selectedPermissions.length + ' hak akses dipilih'"></span>
+                                        </div>
+
+                                        @if (($hiddenPermissionsCount ?? 0) > 0)
+                                            <div
+                                                class="rounded-[10px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 p-2.5 text-[11px] text-black/60 dark:text-white/60 flex items-center justify-between gap-2">
+                                                <span>Modul yang dinonaktifkan untuk bisnis ini disembunyikan dari daftar
+                                                    izin.</span>
+                                                <a href="{{ route('settings.index', ['tab' => 'modules']) }}" target="_blank"
+                                                    class="text-[#007AFF] hover:underline font-medium shrink-0">Buka Pengaturan
+                                                    Modul &rarr;</a>
+                                            </div>
+                                        @endif
+
+                                        <div class="space-y-3 max-h-96 overflow-y-auto pr-1">
+                                            @foreach ($permissions as $category => $categoryPermissions)
+                                                @php
+                                                    $categorySlugs = $categoryPermissions->pluck('slug')->toArray();
+                                                @endphp
+                                                <div
+                                                    class="rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 p-3.5 space-y-2.5">
+                                                    <div class="flex items-center justify-between">
+                                                        <span
+                                                            class="text-[12px] font-semibold uppercase tracking-wide text-black/70 dark:text-white/70">
+                                                            {{ $category ?: 'Lainnya' }}
+                                                        </span>
+                                                        <button type="button"
+                                                            @click="toggleCategory({{ Js::from($categorySlugs) }}, !isCategoryAllSelected({{ Js::from($categorySlugs) }}))"
+                                                            class="text-[11px] text-[#007AFF] hover:underline font-semibold">
+                                                            <span
+                                                                x-text="isCategoryAllSelected({{ Js::from($categorySlugs) }}) ? 'Batal Semua' : 'Pilih Semua'"></span>
+                                                        </button>
+                                                    </div>
+
+                                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                                        @foreach ($categoryPermissions as $permission)
+                                                            <label
+                                                                class="flex items-start gap-2.5 p-2 rounded-[8px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 hover:border-[#007AFF]/30 cursor-pointer transition select-none">
+                                                                <input type="checkbox" name="permissions[]"
+                                                                    value="{{ $permission->slug }}" x-model="selectedPermissions"
+                                                                    class="mt-0.5 rounded-[4px] border-black/20 text-[#007AFF] focus:ring-[#007AFF]">
+                                                                <div class="min-w-0">
+                                                                    <span
+                                                                        class="font-medium text-black dark:text-white text-[12px] block">{{ $permission->name }}</span>
+                                                                    <span
+                                                                        class="text-[10px] font-mono text-black/40 dark:text-white/40 block truncate">{{ $permission->slug }}</span>
+                                                                </div>
+                                                            </label>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Footer -->
+                                <div
+                                    class="px-6 py-3.5 border-t border-black/5 dark:border-white/10 flex items-center justify-end gap-2.5">
+                                    <button type="button" @click="showCreateModal = false"
+                                        class="min-h-[44px] px-4 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition">
+                                        Batal
+                                    </button>
+                                    <button type="submit"
+                                        class="min-h-[44px] px-5 rounded-[12px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
+                                        <span
+                                            x-text="editingPreset ? 'Simpan Permission' : (editingRole ? 'Simpan Perubahan' : 'Buat Role Custom')"></span>
+                                    </button>
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 </div>
-            </div>
+            </template>
         @endif
 
         @if (\App\Support\Context::hasPermission('users.edit') || \App\Support\Context::hasPermission('users.manage'))
             <!-- ===================================================== -->
-            <!-- MODAL 2: CHANGE MEMBER ROLE (macOS Sheet)              -->
+            <!-- MODAL 2: CHANGE MEMBER ROLE (Bento Apple Sheet)        -->
             <!-- ===================================================== -->
-            <div x-show="showMemberRoleModal" x-cloak
-                class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/25 backdrop-blur-[2px]"
-                x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
-                x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
-                x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+            <template x-teleport="body">
+                <div x-show="showMemberRoleModal" x-cloak
+                    class="fixed inset-0 z-[200] overflow-y-auto"
+                    @keydown.escape.window="showMemberRoleModal = false"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="change-member-role-title">
 
-                <div class="bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl w-full max-w-md rounded-[18px] border border-black/10 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.25)] overflow-hidden flex flex-col"
-                    @click.away="showMemberRoleModal = false" x-transition:enter="transition ease-out duration-200"
-                    x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
-                    x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100"
-                    x-transition:leave-end="opacity-0 scale-95">
+                    <!-- Backdrop -->
+                    <div x-show="showMemberRoleModal"
+                        x-transition:enter="ease-out duration-200"
+                        x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100"
+                        x-transition:leave="ease-in duration-150"
+                        x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0"
+                        @click="showMemberRoleModal = false"
+                        class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
-                    <div class="px-5 py-4 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
-                        <div>
-                            <h3 class="text-[17px] font-semibold text-black dark:text-white">Ubah Role Karyawan</h3>
-                            <p class="text-[12px] text-black/50 dark:text-white/50"
-                                x-text="editingMember ? (editingMember.user ? editingMember.user.name : 'Anggota') : ''">
-                            </p>
+                    <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="showMemberRoleModal = false">
+                        <div class="relative w-full max-w-md bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden flex flex-col my-auto"
+                            @click.stop
+                            x-show="showMemberRoleModal"
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 scale-95"
+                            x-transition:enter-end="opacity-100 scale-100"
+                            x-transition:leave="transition ease-in duration-150"
+                            x-transition:leave-start="opacity-100 scale-100"
+                            x-transition:leave-end="opacity-0 scale-95">
+
+                            <div class="px-5 py-4 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
+                                <div>
+                                    <h3 id="change-member-role-title" class="text-[17px] font-semibold text-black dark:text-white">Ubah Role Karyawan</h3>
+                                    <p class="text-[12px] text-black/50 dark:text-white/50"
+                                        x-text="editingMember ? (editingMember.user ? editingMember.user.name : 'Anggota') : ''">
+                                    </p>
+                                </div>
+                                <button type="button" @click="showMemberRoleModal = false"
+                                    class="w-10 h-10 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition cursor-pointer"
+                                    aria-label="Tutup Dialog">
+                                    <i data-lucide="x" class="w-5 h-5"></i>
+                                </button>
+                            </div>
+
+                            <form :action="memberRoleAction" method="POST" class="p-5 space-y-4">
+                                @csrf
+                                <input type="hidden" name="_method" value="PUT">
+
+                                <div>
+                                    <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">Pilih Role
+                                        / Jabatan Baru <span class="text-[#FF3B30]">*</span></label>
+                                    <select name="role_id" required x-model="memberSelectedRoleId"
+                                        class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition cursor-pointer">
+                                        @foreach ($roles as $roleOption)
+                                            <option value="{{ $roleOption->id }}">
+                                                {{ $roleOption->name }}{{ $roleOption->business_id ? ' (Custom)' : ' (Preset)' }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div
+                                    class="rounded-[10px] bg-[#007AFF]/8 border border-[#007AFF]/15 p-3 text-[12px] text-[#007AFF] leading-relaxed">
+                                    Perubahan wewenang akan langsung aktif saat karyawan mengakses menu atau memproses transaksi di
+                                    Cooca.
+                                </div>
+
+                                <div class="pt-2 border-t border-black/5 dark:border-white/10 flex items-center justify-end gap-2.5">
+                                    <button type="button" @click="showMemberRoleModal = false"
+                                        class="min-h-[44px] px-4 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition">
+                                        Batal
+                                    </button>
+                                    <button type="submit"
+                                        class="min-h-[44px] px-5 rounded-[12px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
+                                        Simpan Perubahan
+                                    </button>
+                                </div>
+                            </form>
                         </div>
-                        <button type="button" @click="showMemberRoleModal = false"
-                            class="w-8 h-8 rounded-[8px] hover:bg-black/5 dark:hover:bg-white/5 flex items-center justify-center text-black/50 dark:text-white/50 transition">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
                     </div>
-
-                    <form :action="memberRoleAction" method="POST" class="p-5 space-y-4">
-                        @csrf
-                        <input type="hidden" name="_method" value="PUT">
-
-                        <div>
-                            <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">Pilih Role
-                                / Jabatan Baru <span class="text-[#FF3B30]">*</span></label>
-                            <select name="role_id" required x-model="memberSelectedRoleId"
-                                class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition cursor-pointer">
-                                @foreach ($roles as $roleOption)
-                                    <option value="{{ $roleOption->id }}">
-                                        {{ $roleOption->name }}{{ $roleOption->business_id ? ' (Custom)' : ' (Preset)' }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div
-                            class="rounded-[10px] bg-[#007AFF]/8 border border-[#007AFF]/15 p-3 text-[12px] text-[#007AFF] leading-relaxed">
-                            Perubahan wewenang akan langsung aktif saat karyawan mengakses menu atau memproses transaksi di
-                            Cooca.
-                        </div>
-
-                        <div class="pt-2 border-t border-black/5 dark:border-white/10 flex items-center justify-end gap-2">
-                            <button type="button" @click="showMemberRoleModal = false"
-                                class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition">
-                                Batal
-                            </button>
-                            <button type="submit"
-                                class="h-9 px-5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
-                                Simpan Perubahan
-                            </button>
-                        </div>
-                    </form>
                 </div>
-            </div>
+            </template>
         @endif
 
         @if (\App\Support\Context::hasPermission('roles.delete') || \App\Support\Context::hasPermission('roles.manage'))
             <!-- ===================================================== -->
             <!-- APPLE ALERT DIALOG: HAPUS ROLE                        -->
             <!-- ===================================================== -->
-            <div x-show="deleteRoleModalOpen" x-cloak
-                class="fixed inset-0 z-50 flex items-center justify-center bg-black/25 backdrop-blur-[2px]"
-                x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
-                x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
-                x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+            <template x-teleport="body">
+                <div x-show="deleteRoleModalOpen" x-cloak
+                    class="fixed inset-0 z-[220] overflow-y-auto"
+                    @keydown.escape.window="closeDeleteRole()"
+                    role="alertdialog"
+                    aria-modal="true"
+                    aria-labelledby="delete-role-title">
 
-                <div class="w-[290px] rounded-[14px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-black/5 dark:border-white/10"
-                    @click.away="closeDeleteRole()" x-transition:enter="transition ease-out duration-200"
-                    x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
-                    x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100"
-                    x-transition:leave-end="opacity-0 scale-95">
+                    <!-- Backdrop -->
+                    <div x-show="deleteRoleModalOpen"
+                        x-transition:enter="ease-out duration-200"
+                        x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100"
+                        x-transition:leave="ease-in duration-150"
+                        x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0"
+                        @click="closeDeleteRole()"
+                        class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
-                    <div class="px-4 pt-5 pb-4">
-                        <p class="text-[17px] font-semibold text-black dark:text-white">Hapus Role?</p>
-                        <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
-                            Role <span x-text="deleteRoleTarget.name"
-                                class="font-medium text-black dark:text-white"></span> akan dihapus. Pastikan anggota
-                            dengan role ini telah dialihkan.
-                        </p>
-                    </div>
+                    <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="closeDeleteRole()">
+                        <div class="relative w-[300px] rounded-[20px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl overflow-hidden text-center shadow-2xl border border-black/10 dark:border-white/10 my-auto"
+                            @click.stop
+                            x-show="deleteRoleModalOpen"
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 scale-95"
+                            x-transition:enter-end="opacity-100 scale-100"
+                            x-transition:leave="transition ease-in duration-150"
+                            x-transition:leave-start="opacity-100 scale-100"
+                            x-transition:leave-end="opacity-0 scale-95">
 
-                    <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
-                        <button type="button" @click="closeDeleteRole()"
-                            class="py-3 text-[#007AFF] border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors">
-                            Batal
-                        </button>
-                        <button type="button" @click="submitDeleteRole()"
-                            class="py-3 text-[#FF3B30] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors">
-                            Hapus
-                        </button>
+                            <div class="px-5 pt-6 pb-4">
+                                <div class="w-12 h-12 rounded-full bg-[#FF3B30]/12 text-[#FF3B30] flex items-center justify-center mx-auto mb-3">
+                                    <i data-lucide="trash-2" class="w-6 h-6"></i>
+                                </div>
+                                <p id="delete-role-title" class="text-[17px] font-semibold text-black dark:text-white">Hapus Role?</p>
+                                <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
+                                    Role <span x-text="deleteRoleTarget.name"
+                                        class="font-medium text-black dark:text-white"></span> akan dihapus. Pastikan anggota
+                                    dengan role ini telah dialihkan.
+                                </p>
+                            </div>
+
+                            <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
+                                <button type="button" @click="closeDeleteRole()"
+                                    class="min-h-[44px] py-3 text-[#007AFF] border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
+                                    Batal
+                                </button>
+                                <button type="button" @click="submitDeleteRole()"
+                                    class="min-h-[44px] py-3 text-[#FF3B30] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
+                                    Hapus
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </template>
         @endif
 
         @if (\App\Support\Context::hasPermission('users.delete') || \App\Support\Context::hasPermission('users.manage'))
             <!-- ===================================================== -->
             <!-- APPLE ALERT DIALOG: KELUARKAN ANGGOTA                 -->
             <!-- ===================================================== -->
-            <div x-show="deleteMemberModalOpen" x-cloak
-                class="fixed inset-0 z-50 flex items-center justify-center bg-black/25 backdrop-blur-[2px]"
-                x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
-                x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
-                x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+            <template x-teleport="body">
+                <div x-show="deleteMemberModalOpen" x-cloak
+                    class="fixed inset-0 z-[220] overflow-y-auto"
+                    @keydown.escape.window="closeDeleteMember()"
+                    role="alertdialog"
+                    aria-modal="true"
+                    aria-labelledby="delete-member-title">
 
-                <div class="w-[290px] rounded-[14px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-black/5 dark:border-white/10"
-                    @click.away="closeDeleteMember()" x-transition:enter="transition ease-out duration-200"
-                    x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
-                    x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100"
-                    x-transition:leave-end="opacity-0 scale-95">
+                    <!-- Backdrop -->
+                    <div x-show="deleteMemberModalOpen"
+                        x-transition:enter="ease-out duration-200"
+                        x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100"
+                        x-transition:leave="ease-in duration-150"
+                        x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0"
+                        @click="closeDeleteMember()"
+                        class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
-                    <div class="px-4 pt-5 pb-4">
-                        <p class="text-[17px] font-semibold text-black dark:text-white">Keluarkan Anggota?</p>
-                        <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
-                            Akses <span x-text="deleteMemberTarget.name"
-                                class="font-medium text-black dark:text-white"></span> ke workspace bisnis ini akan
-                            langsung dicabut.
-                        </p>
-                    </div>
+                    <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="closeDeleteMember()">
+                        <div class="relative w-[300px] rounded-[20px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl overflow-hidden text-center shadow-2xl border border-black/10 dark:border-white/10 my-auto"
+                            @click.stop
+                            x-show="deleteMemberModalOpen"
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 scale-95"
+                            x-transition:enter-end="opacity-100 scale-100"
+                            x-transition:leave="transition ease-in duration-150"
+                            x-transition:leave-start="opacity-100 scale-100"
+                            x-transition:leave-end="opacity-0 scale-95">
 
-                    <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
-                        <button type="button" @click="closeDeleteMember()"
-                            class="py-3 text-[#007AFF] border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors">
-                            Batal
-                        </button>
-                        <button type="button" @click="submitDeleteMember()"
-                            class="py-3 text-[#FF3B30] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors">
-                            Keluarkan
-                        </button>
+                            <div class="px-5 pt-6 pb-4">
+                                <div class="w-12 h-12 rounded-full bg-[#FF3B30]/12 text-[#FF3B30] flex items-center justify-center mx-auto mb-3">
+                                    <i data-lucide="user-x" class="w-6 h-6"></i>
+                                </div>
+                                <p id="delete-member-title" class="text-[17px] font-semibold text-black dark:text-white">Keluarkan Anggota?</p>
+                                <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
+                                    Akses <span x-text="deleteMemberTarget.name"
+                                        class="font-medium text-black dark:text-white"></span> ke workspace bisnis ini akan
+                                    langsung dicabut.
+                                </p>
+                            </div>
+
+                            <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
+                                <button type="button" @click="closeDeleteMember()"
+                                    class="min-h-[44px] py-3 text-[#007AFF] border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
+                                    Batal
+                                </button>
+                                <button type="button" @click="submitDeleteMember()"
+                                    class="min-h-[44px] py-3 text-[#FF3B30] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
+                                    Keluarkan
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </template>
         @endif
 
     </div>

@@ -1324,13 +1324,15 @@
         {{-- ===================================================== --}}
         {{-- APPLE CONFIRMATION MODAL SHEET (MAKER-CHECKER ACTION) --}}
         {{-- ===================================================== --}}
-        <div x-show="confirmModalOpen" x-cloak
-            class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 dark:bg-black/75 backdrop-blur-md p-4"
-            x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+        <template x-teleport="body">
+            <div x-show="confirmModalOpen" x-cloak
+                class="fixed inset-0 z-[220] flex items-center justify-center bg-black/60 dark:bg-black/80 backdrop-blur-md p-4"
+                x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                @keydown.escape.window="confirmModalOpen = false">
 
-            <div class="w-full max-w-md rounded-[22px] bg-white/98 dark:bg-[#1C1C1E]/98 backdrop-blur-2xl border border-black/[0.08] dark:border-white/[0.12] shadow-[0_25px_60px_rgba(0,0,0,0.35)] p-6 space-y-4 overflow-hidden text-center"
+                <div class="w-full max-w-md rounded-[22px] bg-white/98 dark:bg-[#1C1C1E]/98 backdrop-blur-2xl border border-black/[0.08] dark:border-white/[0.12] shadow-[0_25px_60px_rgba(0,0,0,0.35)] p-6 space-y-4 overflow-hidden text-center"
                 @click.outside="confirmModalOpen = false"
                 x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95"
                 x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150"
@@ -1363,18 +1365,20 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </template>
 
         {{-- ===================================================== --}}
         {{-- 8. APPLE BENTO XXL SHEET: EDIT INFORMASI LOKASI       --}}
         {{-- ===================================================== --}}
-        <div x-show="showEditModal" x-cloak
-            class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 dark:bg-black/75 backdrop-blur-md p-3 sm:p-6"
-            x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+        <template x-teleport="body">
+            <div x-show="showEditModal" x-cloak
+                class="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 dark:bg-black/75 backdrop-blur-md p-3 sm:p-6"
+                x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                @keydown.escape.window="showEditModal = false">
 
-            <div class="w-full max-w-[94vw] md:max-w-2xl lg:max-w-4xl xl:max-w-5xl max-h-[90vh] rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl flex flex-col overflow-hidden"
+                <div class="w-full max-w-[94vw] md:max-w-2xl lg:max-w-4xl xl:max-w-5xl max-h-[90vh] rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl flex flex-col overflow-hidden"
                 @click.outside="showEditModal = false" x-transition:enter="transition ease-out duration-200"
                 x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
                 x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100"
@@ -1399,7 +1403,7 @@
                         </div>
                     </div>
                     <button type="button" @click="showEditModal = false"
-                        class="min-w-[40px] min-h-[40px] w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition cursor-pointer">
+                        class="min-w-[44px] min-h-[44px] w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition cursor-pointer">
                         <i data-lucide="x" class="w-4 h-4"></i>
                     </button>
                 </div>
@@ -1678,18 +1682,21 @@
                 </form>
             </div>
         </div>
+    </template>
 
         {{-- ===================================================== --}}
         {{-- 9. APPLE BENTO XXL SHEET: PENYESUAIAN STOK (ADJUST)   --}}
         {{-- ===================================================== --}}
         @if (\App\Support\Context::hasPermission('inventory.manage'))
-            <div x-show="showAdjustModal" x-cloak
-                class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 dark:bg-black/75 backdrop-blur-md p-3 sm:p-6"
-                x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
-                x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
-                x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+            <template x-teleport="body">
+                <div x-show="showAdjustModal" x-cloak
+                    class="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 dark:bg-black/75 backdrop-blur-md p-3 sm:p-6"
+                    x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                    @keydown.escape.window="showAdjustModal = false">
 
-                <div class="w-full max-w-[94vw] md:max-w-2xl lg:max-w-3xl xl:max-w-4xl max-h-[90vh] rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl flex flex-col overflow-hidden"
+                    <div class="w-full max-w-[94vw] md:max-w-2xl lg:max-w-3xl xl:max-w-4xl max-h-[90vh] rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl flex flex-col overflow-hidden"
                     @click.outside="showAdjustModal = false" x-transition:enter="transition ease-out duration-200"
                     x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
                     x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100"
@@ -1712,7 +1719,7 @@
                             </div>
                         </div>
                         <button type="button" @click="showAdjustModal = false"
-                            class="min-w-[40px] min-h-[40px] w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition cursor-pointer">
+                            class="min-w-[44px] min-h-[44px] w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition cursor-pointer">
                             <i data-lucide="x" class="w-4 h-4"></i>
                         </button>
                     </div>
@@ -1881,7 +1888,8 @@
                     </form>
                 </div>
             </div>
-        @endif
+        </template>
+    @endif
 
     </div>
 @endsection

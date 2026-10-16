@@ -18,6 +18,7 @@ return [
     'tab_logs'                         => 'Message Logs',
     'open_pos'                         => 'Open POS Cashier Terminal',
     'cancel_btn'                       => 'Cancel',
+    'context_tags_title'               => 'Contextual Variable Tags:',
 
     // Meta Cloud API Official
     'meta_official_title'              => 'Official Meta WhatsApp Cloud API',

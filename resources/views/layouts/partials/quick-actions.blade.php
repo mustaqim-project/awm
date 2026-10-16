@@ -281,9 +281,9 @@
     }
 }">
 
-    <!-- Floating Toasts Container (Apple Centered Top Banner with Tap & Swipe-Up Dismiss - High Stacking z-[100000]) -->
+    <!-- Floating Toasts Container (Apple Centered Top Banner with Tap & Swipe-Up Dismiss - Layer z-[250]) -->
     <div id="alpine-toast-container"
-        class="fixed top-4 left-1/2 -translate-x-1/2 z-[100000] flex flex-col items-center gap-2 pointer-events-none w-full max-w-sm px-4">
+        class="fixed top-4 left-1/2 -translate-x-1/2 z-[250] flex flex-col items-center gap-2 pointer-events-none w-full max-w-sm px-4">
         <template x-for="t in toastList" :key="t.id">
             <div x-data="{ touchStartY: 0 }"
                 @touchstart="touchStartY = $event.touches[0].clientY"

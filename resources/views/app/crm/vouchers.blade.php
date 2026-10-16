@@ -245,99 +245,122 @@
         <!-- MODAL: BUAT VOUCHER DISKON PROMOSI BARU                                   -->
         <!-- ========================================================================= -->
         @if (\App\Support\Context::hasPermission('crm.manage'))
-            <div x-show="showVoucherModal" x-cloak
-                class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm transition"
-                @keydown.escape.window="showVoucherModal = false">
-                <div class="w-full max-w-lg rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] shadow-2xl overflow-hidden p-6 space-y-5"
-                    @click.away="showVoucherModal = false">
-                    
-                    <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-3">
-                        <div class="flex items-center gap-2.5">
-                            <div class="w-9 h-9 rounded-[10px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center">
-                                <i data-lucide="ticket" class="w-5 h-5"></i>
+            <template x-teleport="body">
+                <div x-show="showVoucherModal" 
+                    x-cloak
+                    @keydown.escape.window="showVoucherModal = false"
+                    class="fixed inset-0 z-[200] overflow-y-auto">
+                    <!-- Backdrop -->
+                    <div x-show="showVoucherModal"
+                        x-transition:enter="ease-out duration-300"
+                        x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100"
+                        x-transition:leave="ease-in duration-200"
+                        x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0"
+                        @click="showVoucherModal = false"
+                        class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
+
+                    <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="showVoucherModal = false">
+                        <div x-show="showVoucherModal"
+                            x-transition:enter="ease-out duration-300"
+                            x-transition:enter-start="opacity-0 scale-95"
+                            x-transition:enter-end="opacity-100 scale-100"
+                            x-transition:leave="ease-in duration-200"
+                            x-transition:leave-start="opacity-100 scale-100"
+                            x-transition:leave-end="opacity-0 scale-95"
+                            @click.stop
+                            class="relative w-full max-w-lg rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] shadow-2xl overflow-hidden p-6 space-y-5">
+                            
+                            <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-3">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-9 h-9 rounded-[10px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center">
+                                        <i data-lucide="ticket" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-[15px] text-black dark:text-white">{{ __('crm.create_voucher_title') }}</h3>
+                                        <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('crm.create_voucher_subtitle') }}</p>
+                                    </div>
+                                </div>
+                                <button type="button" @click="showVoucherModal = false"
+                                    class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer" aria-label="{{ __('common.close') }}">
+                                    <i data-lucide="x" class="w-5 h-5"></i>
+                                </button>
                             </div>
-                            <div>
-                                <h3 class="font-bold text-[15px] text-black dark:text-white">{{ __('crm.create_voucher_title') }}</h3>
-                                <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('crm.create_voucher_subtitle') }}</p>
-                            </div>
+
+                            <form method="POST" action="{{ route('crm.vouchers.store') }}"
+                                x-data="{ submitting: false }" @submit="submitting = true" class="space-y-4 pt-2">
+                                @csrf
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <div class="space-y-1">
+                                        <label class="block text-[12px] font-bold text-black dark:text-white">{{ __('crm.voucher_code') }} <span class="text-[#FF3B30]">*</span></label>
+                                        <input type="text" name="code" required placeholder="Contoh: HEMAT10K"
+                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] font-mono font-bold text-[16px] sm:text-[14px] uppercase text-black dark:text-white focus:outline-hidden focus:border-[#007AFF]">
+                                    </div>
+
+                                    <div class="space-y-1">
+                                        <label class="block text-[12px] font-bold text-black dark:text-white">{{ __('crm.voucher_name') }} <span class="text-[#FF3B30]">*</span></label>
+                                        <input type="text" name="name" required placeholder="Contoh: Diskon Pembukaan"
+                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-hidden focus:border-[#007AFF]">
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <div class="space-y-1">
+                                        <label class="block text-[12px] font-bold text-black dark:text-white">{{ __('crm.discount_type') }} <span class="text-[#FF3B30]">*</span></label>
+                                        <select name="discount_type" required
+                                            class="w-full h-11 px-3 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-[13px] text-black dark:text-white focus:outline-hidden">
+                                            <option value="percentage">{{ __('crm.type_percentage') }}</option>
+                                            <option value="fixed">{{ __('crm.type_fixed') }}</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="space-y-1">
+                                        <label class="block text-[12px] font-bold text-black dark:text-white">{{ __('crm.discount_value') }} <span class="text-[#FF3B30]">*</span></label>
+                                        <input type="number" name="discount_value" required min="0" step="any" placeholder="Contoh: 10 atau 15000"
+                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] font-mono font-bold text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-hidden">
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <div class="space-y-1">
+                                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('crm.min_order_amount') }}</label>
+                                        <input type="number" name="min_order_amount" min="0" placeholder="0"
+                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] font-mono text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-hidden">
+                                    </div>
+
+                                    <div class="space-y-1">
+                                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('crm.max_discount_amount') }}</label>
+                                        <input type="number" name="max_discount_amount" min="0" placeholder="Contoh: 25000"
+                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] font-mono text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-hidden">
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <div class="space-y-1">
+                                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('crm.usage_limit') }}</label>
+                                        <input type="number" name="usage_limit" min="1" placeholder="{{ __('crm.usage_limit_placeholder') }}"
+                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-hidden">
+                                    </div>
+
+                                    <div class="space-y-1">
+                                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('crm.valid_until') }}</label>
+                                        <input type="date" name="valid_until"
+                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-[13px] text-black dark:text-white focus:outline-hidden">
+                                    </div>
+                                </div>
+
+                                <div class="pt-2">
+                                    <button type="submit" :disabled="submitting"
+                                        class="w-full h-12 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] disabled:opacity-50 text-white font-bold text-[14px] shadow-[0_2px_8px_rgba(0,122,255,0.3)] transition cursor-pointer flex items-center justify-center gap-2">
+                                        <span x-text="submitting ? '{{ __('crm.processing') }}' : '{{ __('crm.publish_voucher') }}'"></span>
+                                    </button>
+                                </div>
+                            </form>
                         </div>
-                        <button type="button" @click="showVoucherModal = false"
-                            class="p-1 rounded-[8px] text-black/40 hover:text-black dark:hover:text-white transition cursor-pointer">
-                            <i data-lucide="x" class="w-5 h-5"></i>
-                        </button>
                     </div>
-
-                    <form method="POST" action="{{ route('crm.vouchers.store') }}"
-                        x-data="{ submitting: false }" @submit="submitting = true" class="space-y-4 pt-2">
-                        @csrf
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <div class="space-y-1">
-                                <label class="block text-[12px] font-bold text-black dark:text-white">{{ __('crm.voucher_code') }} <span class="text-[#FF3B30]">*</span></label>
-                                <input type="text" name="code" required placeholder="Contoh: HEMAT10K"
-                                    class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] font-mono font-bold text-[16px] sm:text-[14px] uppercase text-black dark:text-white focus:outline-hidden focus:border-[#007AFF]">
-                            </div>
-
-                            <div class="space-y-1">
-                                <label class="block text-[12px] font-bold text-black dark:text-white">{{ __('crm.voucher_name') }} <span class="text-[#FF3B30]">*</span></label>
-                                <input type="text" name="name" required placeholder="Contoh: Diskon Pembukaan"
-                                    class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-hidden focus:border-[#007AFF]">
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <div class="space-y-1">
-                                <label class="block text-[12px] font-bold text-black dark:text-white">{{ __('crm.discount_type') }} <span class="text-[#FF3B30]">*</span></label>
-                                <select name="discount_type" required
-                                    class="w-full h-11 px-3 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-[13px] text-black dark:text-white focus:outline-hidden">
-                                    <option value="percentage">{{ __('crm.type_percentage') }}</option>
-                                    <option value="fixed">{{ __('crm.type_fixed') }}</option>
-                                </select>
-                            </div>
-
-                            <div class="space-y-1">
-                                <label class="block text-[12px] font-bold text-black dark:text-white">{{ __('crm.discount_value') }} <span class="text-[#FF3B30]">*</span></label>
-                                <input type="number" name="discount_value" required min="0" step="any" placeholder="Contoh: 10 atau 15000"
-                                    class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] font-mono font-bold text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-hidden">
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <div class="space-y-1">
-                                <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('crm.min_order_amount') }}</label>
-                                <input type="number" name="min_order_amount" min="0" placeholder="0"
-                                    class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] font-mono text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-hidden">
-                            </div>
-
-                            <div class="space-y-1">
-                                <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('crm.max_discount_amount') }}</label>
-                                <input type="number" name="max_discount_amount" min="0" placeholder="Contoh: 25000"
-                                    class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] font-mono text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-hidden">
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <div class="space-y-1">
-                                <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('crm.usage_limit') }}</label>
-                                <input type="number" name="usage_limit" min="1" placeholder="{{ __('crm.usage_limit_placeholder') }}"
-                                    class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-hidden">
-                            </div>
-
-                            <div class="space-y-1">
-                                <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('crm.valid_until') }}</label>
-                                <input type="date" name="valid_until"
-                                    class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-[13px] text-black dark:text-white focus:outline-hidden">
-                            </div>
-                        </div>
-
-                        <div class="pt-2">
-                            <button type="submit" :disabled="submitting"
-                                class="w-full h-12 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] disabled:opacity-50 text-white font-bold text-[14px] shadow-[0_2px_8px_rgba(0,122,255,0.3)] transition cursor-pointer flex items-center justify-center gap-2">
-                                <span x-text="submitting ? '{{ __('crm.processing') }}' : '{{ __('crm.publish_voucher') }}'"></span>
-                            </button>
-                        </div>
-                    </form>
                 </div>
-            </div>
+            </template>
         @endif
 
     </div>

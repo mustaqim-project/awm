@@ -1794,17 +1794,20 @@
             {{-- ----------------------------------------------------------------- --}}
             {{-- MODAL SHEET: BUAT TEMPLATE BARU (BENTO APPLE HIG)                 --}}
             {{-- ----------------------------------------------------------------- --}}
-            <div x-show="showCreateTemplateModal" x-cloak
-                class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-md"
-                x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
-                x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
-                x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+            <template x-teleport="body">
+                <div x-show="showCreateTemplateModal" x-cloak
+                    class="fixed inset-0 z-[200] overflow-y-auto"
+                    role="dialog" aria-modal="true"
+                    @keydown.escape.window="closeCreateTemplateModal()">
+                    <!-- Backdrop -->
+                    <div class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                        @click="closeCreateTemplateModal()"
+                        aria-hidden="true"></div>
 
-                <div @click.away="closeCreateTemplateModal()"
-                    class="w-full max-w-4xl max-h-[90vh] flex flex-col rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden"
-                    x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95"
-                    x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150"
-                    x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95">
+                    <!-- Centering Wrapper -->
+                    <div class="relative z-10 min-h-full flex items-center justify-center p-4 sm:p-6 pointer-events-none">
+                        <div class="w-full max-w-4xl max-h-[90vh] flex flex-col rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden pointer-events-auto"
+                            @click.stop>
 
                     {{-- Modal Header --}}
                     <div
@@ -1989,8 +1992,10 @@
                         </button>
                     </div>
 
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </template>
 
             {{-- ----------------------------------------------------------------- --}}
             {{-- SUBSEKSI 2: TEMPLATE PESAN PENGINGAT OTOMATIS                     --}}

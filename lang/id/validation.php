@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 return [
+    'errors_heading' => 'Terdapat kesalahan pengisian data:',
     'accepted' => ':attribute harus diterima.',
     'active_url' => ':attribute bukan URL yang valid.',
     'after' => ':attribute harus berupa tanggal setelah :date.',

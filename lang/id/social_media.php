@@ -36,6 +36,7 @@ return [
     'connected_accounts' => 'Akun Media Sosial Toko',
     'connected_accounts_sub' => 'Facebook Page, Instagram Bisnis, Threads, TikTok & LinkedIn',
     'connected_count' => ':count Akun Terhubung',
+    'status_connected' => 'Terhubung',
     'not_connected' => 'Belum Terhubung',
     'active_assets' => 'Aset Aktif Terhubung:',
     'auto_refresh_active' => 'Auto-Refresh Aktif',

@@ -256,25 +256,17 @@
         <!-- ===================================================== -->
         <!-- 4. DENSE DATA TABLE (DESKTOP & TABLET)                 -->
         <!-- ===================================================== -->
-        <div
+        <div x-data="coocaTableSort()"
             class="hidden sm:block rounded-[20px] bg-white/80 dark:bg-[#1C1C1E]/80 backdrop-blur-xl border border-black/[0.06] dark:border-white/[0.08] overflow-hidden shadow-xs">
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-[13px]">
                     <thead>
                         <tr
                             class="border-b border-black/[0.06] dark:border-white/[0.08] bg-black/[0.02] dark:bg-white/[0.02]">
-                            <th
-                                class="py-3 px-4 text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D] whitespace-nowrap">
-                                Layanan &amp; Kode</th>
-                            <th
-                                class="py-3 px-4 text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D] whitespace-nowrap">
-                                Kategori</th>
-                            <th
-                                class="py-3 px-4 text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D] whitespace-nowrap">
-                                Satuan Output</th>
-                            <th
-                                class="py-3 px-4 text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D] text-right whitespace-nowrap">
-                                {{ __('services.table.col_price') }}</th>
+                            <x-table-sort-th :col="0" type="string" title="Layanan & Kode" class="whitespace-nowrap" />
+                            <x-table-sort-th :col="1" type="string" title="Kategori" class="whitespace-nowrap" />
+                            <x-table-sort-th :col="2" type="string" title="Satuan Output" class="whitespace-nowrap" />
+                            <x-table-sort-th :col="3" type="number" :title="__('services.table.col_price')" align="right" class="whitespace-nowrap" />
                             <th
                                 class="py-3 px-4 text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D] text-center whitespace-nowrap">
                                 {{ __('services.table.col_channels') }}</th>
@@ -286,7 +278,7 @@
                     <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                         @forelse($services as $item)
                             <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
-                                <td class="py-3.5 px-4 font-medium text-[#1C1C1E] dark:text-[#F2F2F7]">
+                                <td data-sort-value="{{ strtolower($item->name) }}" class="py-3.5 px-4 font-medium text-[#1C1C1E] dark:text-[#F2F2F7]">
                                     <div class="font-semibold text-[13.5px]">{{ $item->name }}</div>
                                     <div class="text-[11px] text-[#8E8E93] dark:text-[#98989D] tabular-nums mt-0.5">
                                         {{ $item->code ?? __('services.table.no_code') }}
@@ -296,13 +288,13 @@
                                         @endif
                                     </div>
                                 </td>
-                                <td class="py-3.5 px-4 text-[#3C3C43]/80 dark:text-[#EBEBF5]/80">
+                                <td data-sort-value="{{ strtolower($item->category?->name ?? '') }}" class="py-3.5 px-4 text-[#3C3C43]/80 dark:text-[#EBEBF5]/80">
                                     {{ $item->category?->name ?? __('services.table.uncategorized') }}
                                 </td>
-                                <td class="py-3.5 px-4 text-[#1C1C1E] dark:text-[#F2F2F7] font-medium">
+                                <td data-sort-value="{{ strtolower($item->outputUnit?->name ?? '') }}" class="py-3.5 px-4 text-[#1C1C1E] dark:text-[#F2F2F7] font-medium">
                                     {{ $item->outputUnit?->name ?? __('services.table.unit_fallback') }}
                                 </td>
-                                <td class="py-3.5 px-4 text-right whitespace-nowrap">
+                                <td data-sort-value="{{ (float) $item->selling_price }}" class="py-3.5 px-4 text-right whitespace-nowrap">
                                     <div class="font-bold text-[14px] text-[#007AFF] tabular-nums">
                                         Rp {{ number_format((float) $item->selling_price, 0, ',', '.') }}
                                     </div>
@@ -448,8 +440,9 @@
         <!-- ===================================================== -->
         <!-- 6. MODAL: TAMBAH LAYANAN (FULL LAYOUT XXL BENTO)      -->
         <!-- ===================================================== -->
-        <div x-show="showAddModal" x-cloak
-            class="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 overflow-y-auto"
+        <template x-teleport="body">
+            <div x-show="showAddModal" x-cloak
+                class="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 overflow-y-auto"
             x-transition:enter="transition ease-out duration-200"
             x-transition:enter-start="opacity-0"
             x-transition:enter-end="opacity-100"
@@ -669,12 +662,14 @@
                 </form>
             </div>
         </div>
+    </template>
 
         <!-- ===================================================== -->
         <!-- 7. MODAL: EDIT LAYANAN (FULL LAYOUT XXL BENTO)        -->
         <!-- ===================================================== -->
-        <div x-show="showEditModal" x-cloak
-            class="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 overflow-y-auto"
+        <template x-teleport="body">
+            <div x-show="showEditModal" x-cloak
+                class="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 overflow-y-auto"
             x-transition:enter="transition ease-out duration-200"
             x-transition:enter-start="opacity-0"
             x-transition:enter-end="opacity-100"
@@ -903,12 +898,14 @@
                 </form>
             </div>
         </div>
+    </template>
 
         <!-- ===================================================== -->
         <!-- 8. SUB-MODAL QUICK-ADD CATEGORY (Zero Page Reload)    -->
         <!-- ===================================================== -->
-        <div x-show="showAddCategoryModal" x-cloak
-            class="fixed inset-0 z-[210] flex items-center justify-center p-4 overflow-y-auto"
+        <template x-teleport="body">
+            <div x-show="showAddCategoryModal" x-cloak
+                class="fixed inset-0 z-[210] flex items-center justify-center p-4 overflow-y-auto"
             x-transition:enter="transition ease-out duration-200"
             x-transition:enter-start="opacity-0"
             x-transition:enter-end="opacity-100"
@@ -959,12 +956,14 @@
                 </form>
             </div>
         </div>
+    </template>
 
         <!-- ===================================================== -->
         <!-- 9. APPLE ALERT DIALOG (Hapus Layanan)                 -->
         <!-- ===================================================== -->
-        <div x-show="deleteModalOpen" x-cloak
-            class="fixed inset-0 z-[220] flex items-center justify-center p-4 overflow-y-auto"
+        <template x-teleport="body">
+            <div x-show="deleteModalOpen" x-cloak
+                class="fixed inset-0 z-[220] flex items-center justify-center p-4 overflow-y-auto"
             x-transition:enter="transition ease-out duration-200"
             x-transition:enter-start="opacity-0"
             x-transition:enter-end="opacity-100"
@@ -1019,6 +1018,7 @@
                 </div>
             </div>
         </div>
+    </template>
 
     </div>
 @endsection

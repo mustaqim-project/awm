@@ -577,62 +577,87 @@
         <!-- ============================================================ -->
         <!-- 3. MOBILE FULL-SCREEN PREVIEW MODAL (Apple Sheet Style)      -->
         <!-- ============================================================ -->
-        <div x-show="mobilePreviewOpen" 
-             x-cloak 
-             x-transition.opacity
-             class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm lg:hidden"
-             style="display: none;">
-            <div @click.away="mobilePreviewOpen = false" 
-                 class="w-full max-w-sm rounded-[24px] bg-white dark:bg-[#1E1E20] border border-black/10 dark:border-white/15 shadow-2xl overflow-hidden relative flex flex-col">
+        <template x-teleport="body">
+            <div x-show="mobilePreviewOpen" 
+                 x-cloak 
+                 class="fixed inset-0 z-[200] flex items-center justify-center p-4 overflow-y-auto lg:hidden">
                 
-                {{-- Close Button --}}
-                <button type="button" 
-                        @click="mobilePreviewOpen = false" 
-                        class="absolute top-3 right-3 z-20 w-8 h-8 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center backdrop-blur-md transition active:scale-90 cursor-pointer">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
+                <!-- Backdrop -->
+                <div class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    x-show="mobilePreviewOpen"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    @click="mobilePreviewOpen = false"
+                    aria-hidden="true"></div>
 
-                {{-- Image Banner inside Modal --}}
-                <template x-if="imageUrl">
-                    <div class="relative w-full aspect-[16/9] bg-neutral-100 dark:bg-neutral-800 overflow-hidden">
-                        <img :src="imageUrl" alt="Banner" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
-                    </div>
-                </template>
+                <div @click.away="mobilePreviewOpen = false"
+                     @keydown.escape.window="mobilePreviewOpen = false"
+                     role="dialog"
+                     aria-modal="true"
+                     aria-labelledby="modal-preview-popup-title"
+                     x-show="mobilePreviewOpen"
+                     x-transition:enter="transition ease-out duration-200"
+                     x-transition:enter-start="opacity-0 scale-95"
+                     x-transition:enter-end="opacity-100 scale-100"
+                     x-transition:leave="transition ease-in duration-150"
+                     x-transition:leave-start="opacity-100 scale-100"
+                     x-transition:leave-end="opacity-0 scale-95"
+                     class="relative z-10 w-full max-w-sm rounded-[24px] bg-white dark:bg-[#1E1E20] border border-black/10 dark:border-white/15 shadow-2xl overflow-hidden flex flex-col my-auto">
+                    
+                    {{-- Close Button --}}
+                    <button type="button" 
+                            @click="mobilePreviewOpen = false" 
+                            class="absolute top-3 right-3 z-20 min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center backdrop-blur-md transition active:scale-90 cursor-pointer"
+                            aria-label="Tutup pratinjau">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
 
-                {{-- Pop-up Body Content --}}
-                <div class="p-5 text-center space-y-3">
-                    {{-- Badge --}}
-                    <div x-show="badge" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10.5px] font-extrabold uppercase tracking-wider bg-[#FF2D55]/15 text-[#FF2D55] dark:text-[#FF375F]">
-                        <span class="w-1.5 h-1.5 rounded-full bg-current"></span>
-                        <span x-text="badge"></span>
-                    </div>
+                    {{-- Image Banner inside Modal --}}
+                    <template x-if="imageUrl">
+                        <div class="relative w-full aspect-[16/9] bg-neutral-100 dark:bg-neutral-800 overflow-hidden">
+                            <img :src="imageUrl" alt="Banner" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+                        </div>
+                    </template>
 
-                    {{-- Title --}}
-                    <h4 class="font-bold text-base text-neutral-900 dark:text-white leading-tight" 
-                        x-text="title || 'Judul Promo Toko Online'"></h4>
+                    {{-- Pop-up Body Content --}}
+                    <div class="p-5 text-center space-y-3">
+                        {{-- Badge --}}
+                        <div x-show="badge" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10.5px] font-extrabold uppercase tracking-wider bg-[#FF2D55]/15 text-[#FF2D55] dark:text-[#FF375F]">
+                            <span class="w-1.5 h-1.5 rounded-full bg-current"></span>
+                            <span x-text="badge"></span>
+                        </div>
 
-                    {{-- Content / Description --}}
-                    <p class="text-xs text-neutral-600 dark:text-neutral-300 leading-relaxed max-h-28 overflow-y-auto" 
-                       x-text="content || 'Dapatkan potongan harga istimewa khusus hari ini untuk produk terlaris kami!'"></p>
+                        {{-- Title --}}
+                        <h4 id="modal-preview-popup-title" class="font-bold text-base text-neutral-900 dark:text-white leading-tight" 
+                            x-text="title || 'Judul Promo Toko Online'"></h4>
 
-                    {{-- Action Buttons --}}
-                    <div class="pt-2 space-y-2">
-                        <button type="button" 
-                                class="w-full min-h-[44px] py-2.5 px-4 rounded-[12px] bg-[#007AFF] text-white text-sm font-bold shadow-xs hover:bg-[#0071E3] transition active:scale-95 flex items-center justify-center gap-2 cursor-pointer">
-                            <span x-text="ctaText || 'Lihat Penawaran'"></span>
-                            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-                        </button>
+                        {{-- Content / Description --}}
+                        <p class="text-xs text-neutral-600 dark:text-neutral-300 leading-relaxed max-h-28 overflow-y-auto" 
+                           x-text="content || 'Dapatkan potongan harga istimewa khusus hari ini untuk produk terlaris kami!'"></p>
 
-                        <button type="button" 
-                                @click="mobilePreviewOpen = false" 
-                                class="text-xs text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 font-medium py-1 block w-full text-center cursor-pointer">
-                            Tutup Pratinjau
-                        </button>
+                        {{-- Action Buttons --}}
+                        <div class="pt-2 space-y-2">
+                            <button type="button" 
+                                    class="w-full min-h-[44px] py-2.5 px-4 rounded-[12px] bg-[#007AFF] text-white text-sm font-bold shadow-xs hover:bg-[#0071E3] transition active:scale-95 flex items-center justify-center gap-2 cursor-pointer">
+                                <span x-text="ctaText || 'Lihat Penawaran'"></span>
+                                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                            </button>
+
+                            <button type="button" 
+                                    @click="mobilePreviewOpen = false" 
+                                    class="min-h-[44px] text-xs text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 font-medium py-1 flex items-center justify-center w-full text-center cursor-pointer">
+                                Tutup Pratinjau
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </template>
 
         <!-- ============================================================ -->
         <!-- 4. STICKY MOBILE BOTTOM BAR (Thumb-zone Quick Action)        -->

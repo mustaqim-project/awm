@@ -861,229 +861,237 @@
     </div>
 
     <!-- MODAL 1: Detail Bisnis Pop-Up / Modal Sheet (Mandat Pop-Up First) -->
-    <div x-show="showBusinessModal" x-cloak class="relative z-50" aria-labelledby="business-modal-title" role="dialog" aria-modal="true">
-        <div x-show="showBusinessModal"
-            x-transition:enter="ease-out duration-300"
-            x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100"
-            x-transition:leave="ease-in duration-200"
-            x-transition:leave-start="opacity-100"
-            x-transition:leave-end="opacity-0"
-            @click="showBusinessModal = false"
-            class="fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity"></div>
-
-        <div class="fixed inset-0 z-10 overflow-y-auto flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <template x-teleport="body">
+        <div x-show="showBusinessModal" x-cloak class="fixed inset-0 z-[200] overflow-y-auto" aria-labelledby="business-modal-title" role="dialog" aria-modal="true" @keydown.escape.window="showBusinessModal = false">
             <div x-show="showBusinessModal"
-                x-transition:enter="ease-out duration-300 transform"
-                x-transition:enter-start="translate-y-full sm:scale-95 opacity-0"
-                x-transition:enter-end="translate-y-0 sm:scale-100 opacity-100"
-                x-transition:leave="ease-in duration-200 transform"
-                x-transition:leave-start="translate-y-0 sm:scale-100 opacity-100"
-                x-transition:leave-end="translate-y-full sm:scale-95 opacity-0"
-                @click.outside="showBusinessModal = false"
-                class="w-full max-w-lg rounded-t-[28px] sm:rounded-[24px] sheet-material p-4 sm:p-6 border-t sm:border border-black/[0.08] dark:border-white/[0.12] shadow-2xl space-y-4 max-h-[90vh] sm:max-h-[85vh] overflow-y-auto">
-                
-                <!-- Mobile Grabber -->
-                <div class="w-10 h-1.5 rounded-full bg-gray-300 dark:bg-gray-600 mx-auto -mt-1 mb-2 sm:hidden"></div>
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="showBusinessModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"
+                aria-hidden="true"></div>
 
-                <!-- Modal Header -->
-                <div class="flex items-start justify-between pb-3 border-b border-black/[0.04] dark:border-white/[0.06]">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF] flex items-center justify-center font-bold">
-                            <i data-lucide="building-2" class="w-5 h-5" stroke-width="2"></i>
-                        </div>
-                        <div>
-                            <h3 id="business-modal-title" class="text-[17px] font-bold text-black dark:text-white" x-text="selectedBusiness?.name"></h3>
-                            <p class="text-[12px] text-black/50 dark:text-white/50" x-text="'Slug: ' + (selectedBusiness?.slug || '-') + (selectedBusiness?.owner?.name ? ' • Pemilik: ' + selectedBusiness.owner.name : '')"></p>
-                        </div>
-                    </div>
-                    <button type="button" @click="showBusinessModal = false"
-                        class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white flex items-center justify-center active:scale-95 transition-all cursor-pointer"
-                        aria-label="Tutup">
-                        <i data-lucide="x" class="w-4 h-4" stroke-width="2"></i>
-                    </button>
-                </div>
+            <div class="relative z-10 min-h-full flex items-end sm:items-center justify-center p-0 sm:p-4 pointer-events-none" @click.self="showBusinessModal = false">
+                <div x-show="showBusinessModal"
+                    x-transition:enter="ease-out duration-300 transform"
+                    x-transition:enter-start="translate-y-full sm:scale-95 opacity-0"
+                    x-transition:enter-end="translate-y-0 sm:scale-100 opacity-100"
+                    x-transition:leave="ease-in duration-200 transform"
+                    x-transition:leave-start="translate-y-0 sm:scale-100 opacity-100"
+                    x-transition:leave-end="translate-y-full sm:scale-95 opacity-0"
+                    @click.outside="showBusinessModal = false"
+                    class="relative pointer-events-auto w-full max-w-lg rounded-t-[28px] sm:rounded-[24px] sheet-material p-4 sm:p-6 border-t sm:border border-black/[0.08] dark:border-white/[0.12] shadow-2xl space-y-4 max-h-[90vh] sm:max-h-[85vh] overflow-y-auto">
+                    
+                    <!-- Mobile Grabber -->
+                    <div class="w-10 h-1.5 rounded-full bg-gray-300 dark:bg-gray-600 mx-auto -mt-1 mb-2 sm:hidden"></div>
 
-                <!-- Modal Content Bento Inset -->
-                <div class="space-y-3 text-[13px]">
-                    <div class="grid grid-cols-2 gap-2.5">
-                        <div class="p-3 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.04]">
-                            <div class="text-[11px] text-black/45 dark:text-white/45">Status Langganan</div>
-                            <div class="font-bold text-black dark:text-white mt-0.5">
-                                <span x-show="selectedBusiness?.subscription?.plan_code?.includes('core')" class="text-[#248A3D] dark:text-[#30D158]">Core Plan Aktif</span>
-                                <span x-show="!selectedBusiness?.subscription?.plan_code?.includes('core')" class="text-black/60 dark:text-white/60">Free Plan</span>
+                    <!-- Modal Header -->
+                    <div class="flex items-start justify-between pb-3 border-b border-black/[0.04] dark:border-white/[0.06]">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF] flex items-center justify-center font-bold">
+                                <i data-lucide="building-2" class="w-5 h-5" stroke-width="2"></i>
+                            </div>
+                            <div>
+                                <h3 id="business-modal-title" class="text-[17px] font-bold text-black dark:text-white" x-text="selectedBusiness?.name"></h3>
+                                <p class="text-[12px] text-black/50 dark:text-white/50" x-text="'Slug: ' + (selectedBusiness?.slug || '-') + (selectedBusiness?.owner?.name ? ' • Pemilik: ' + selectedBusiness.owner.name : '')"></p>
                             </div>
                         </div>
-                        <div class="p-3 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.04]">
-                            <div class="text-[11px] text-black/45 dark:text-white/45">Tim &amp; Staf</div>
-                            <div class="font-bold text-black dark:text-white mt-0.5" x-text="(selectedBusiness?.users?.length || 0) + ' Akun Terdaftar'"></div>
+                        <button type="button" @click="showBusinessModal = false"
+                            class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white flex items-center justify-center active:scale-95 transition-all cursor-pointer"
+                            aria-label="Tutup">
+                            <i data-lucide="x" class="w-4 h-4" stroke-width="2"></i>
+                        </button>
+                    </div>
+
+                    <!-- Modal Content Bento Inset -->
+                    <div class="space-y-3 text-[13px]">
+                        <div class="grid grid-cols-2 gap-2.5">
+                            <div class="p-3 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.04]">
+                                <div class="text-[11px] text-black/45 dark:text-white/45">Status Langganan</div>
+                                <div class="font-bold text-black dark:text-white mt-0.5">
+                                    <span x-show="selectedBusiness?.subscription?.plan_code?.includes('core')" class="text-[#248A3D] dark:text-[#30D158]">Core Plan Aktif</span>
+                                    <span x-show="!selectedBusiness?.subscription?.plan_code?.includes('core')" class="text-black/60 dark:text-white/60">Free Plan</span>
+                                </div>
+                            </div>
+                            <div class="p-3 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.04]">
+                                <div class="text-[11px] text-black/45 dark:text-white/45">Tim &amp; Staf</div>
+                                <div class="font-bold text-black dark:text-white mt-0.5" x-text="(selectedBusiness?.users?.length || 0) + ' Akun Terdaftar'"></div>
+                            </div>
+                        </div>
+
+                        <div class="p-3.5 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.04] space-y-2">
+                            <div class="flex justify-between items-center text-[12px]">
+                                <span class="text-black/50 dark:text-white/50">Tanggal Bergabung</span>
+                                <span class="font-medium text-black dark:text-white tabular-nums" x-text="selectedBusiness?.created_at ? new Date(selectedBusiness.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }) : '-'"></span>
+                            </div>
+                            <div class="flex justify-between items-center text-[12px]">
+                                <span class="text-black/50 dark:text-white/50">Mata Uang Default</span>
+                                <span class="font-bold text-black dark:text-white" x-text="selectedBusiness?.currency || 'IDR'"></span>
+                            </div>
+                            <div class="flex justify-between items-center text-[12px]">
+                                <span class="text-black/50 dark:text-white/50">ID Workspace</span>
+                                <span class="font-mono text-[11px] text-black/60 dark:text-white/60 truncate max-w-[200px]" x-text="selectedBusiness?.id"></span>
+                            </div>
+                        </div>
+
+                        <!-- Microcopy Reassurance -->
+                        <div class="p-3 rounded-[12px] bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] text-[11px] flex items-center gap-2">
+                            <i data-lucide="shield-check" class="w-4 h-4 shrink-0" stroke-width="2"></i>
+                            <span>💡 Isolasi multi-tenant terverifikasi: seluruh data keuangan &amp; POS tenant ini tersimpan aman.</span>
                         </div>
                     </div>
 
-                    <div class="p-3.5 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.04] space-y-2">
-                        <div class="flex justify-between items-center text-[12px]">
-                            <span class="text-black/50 dark:text-white/50">Tanggal Bergabung</span>
-                            <span class="font-medium text-black dark:text-white tabular-nums" x-text="selectedBusiness?.created_at ? new Date(selectedBusiness.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }) : '-'"></span>
-                        </div>
-                        <div class="flex justify-between items-center text-[12px]">
-                            <span class="text-black/50 dark:text-white/50">Mata Uang Default</span>
-                            <span class="font-bold text-black dark:text-white" x-text="selectedBusiness?.currency || 'IDR'"></span>
-                        </div>
-                        <div class="flex justify-between items-center text-[12px]">
-                            <span class="text-black/50 dark:text-white/50">ID Workspace</span>
-                            <span class="font-mono text-[11px] text-black/60 dark:text-white/60 truncate max-w-[200px]" x-text="selectedBusiness?.id"></span>
-                        </div>
+                    <!-- Modal Actions (Min 48px height on mobile) -->
+                    <div class="pt-2 flex flex-col sm:flex-row items-center gap-2.5">
+                        <a :href="'/admin/businesses/' + selectedBusiness?.id"
+                            class="w-full sm:flex-1 h-12 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white font-bold text-[13px] flex items-center justify-center gap-2 shadow-md shadow-[#007AFF]/25 transition-all">
+                            <i data-lucide="building-2" class="w-4 h-4" stroke-width="2"></i>
+                            <span>Buka Halaman Lengkap Tenant</span>
+                        </a>
+                        <button type="button" @click="showBusinessModal = false"
+                            class="w-full sm:w-auto h-12 px-5 rounded-[14px] bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70 font-semibold text-[13px] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all cursor-pointer">
+                            Tutup
+                        </button>
                     </div>
-
-                    <!-- Microcopy Reassurance -->
-                    <div class="p-3 rounded-[12px] bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] text-[11px] flex items-center gap-2">
-                        <i data-lucide="shield-check" class="w-4 h-4 shrink-0" stroke-width="2"></i>
-                        <span>💡 Isolasi multi-tenant terverifikasi: seluruh data keuangan &amp; POS tenant ini tersimpan aman.</span>
-                    </div>
-                </div>
-
-                <!-- Modal Actions (Min 48px height on mobile) -->
-                <div class="pt-2 flex flex-col sm:flex-row items-center gap-2.5">
-                    <a :href="'/admin/businesses/' + selectedBusiness?.id"
-                        class="w-full sm:flex-1 h-12 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white font-bold text-[13px] flex items-center justify-center gap-2 shadow-md shadow-[#007AFF]/25 transition-all">
-                        <i data-lucide="building-2" class="w-4 h-4" stroke-width="2"></i>
-                        <span>Buka Halaman Lengkap Tenant</span>
-                    </a>
-                    <button type="button" @click="showBusinessModal = false"
-                        class="w-full sm:w-auto h-12 px-5 rounded-[14px] bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70 font-semibold text-[13px] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all cursor-pointer">
-                        Tutup
-                    </button>
                 </div>
             </div>
         </div>
-    </div>
+    </template>
 
     <!-- MODAL 2: Detail Pengguna Pop-Up / Modal Sheet (Mandat Pop-Up First) -->
-    <div x-show="showUserModal" x-cloak class="relative z-50" aria-labelledby="user-modal-title" role="dialog" aria-modal="true">
-        <div x-show="showUserModal"
-            x-transition:enter="ease-out duration-300"
-            x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100"
-            x-transition:leave="ease-in duration-200"
-            x-transition:leave-start="opacity-100"
-            x-transition:leave-end="opacity-0"
-            @click="showUserModal = false"
-            class="fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity"></div>
-
-        <div class="fixed inset-0 z-10 overflow-y-auto flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <template x-teleport="body">
+        <div x-show="showUserModal" x-cloak class="fixed inset-0 z-[200] overflow-y-auto" aria-labelledby="user-modal-title" role="dialog" aria-modal="true" @keydown.escape.window="showUserModal = false">
             <div x-show="showUserModal"
-                x-transition:enter="ease-out duration-300 transform"
-                x-transition:enter-start="translate-y-full sm:scale-95 opacity-0"
-                x-transition:enter-end="translate-y-0 sm:scale-100 opacity-100"
-                x-transition:leave="ease-in duration-200 transform"
-                x-transition:leave-start="translate-y-0 sm:scale-100 opacity-100"
-                x-transition:leave-end="translate-y-full sm:scale-95 opacity-0"
-                @click.outside="showUserModal = false"
-                class="w-full max-w-md rounded-t-[28px] sm:rounded-[24px] sheet-material p-4 sm:p-6 border-t sm:border border-black/[0.08] dark:border-white/[0.12] shadow-2xl space-y-4 max-h-[90vh] sm:max-h-[85vh] overflow-y-auto">
-                
-                <!-- Mobile Grabber -->
-                <div class="w-10 h-1.5 rounded-full bg-gray-300 dark:bg-gray-600 mx-auto -mt-1 mb-2 sm:hidden"></div>
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="showUserModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"
+                aria-hidden="true"></div>
 
-                <!-- Modal Header -->
-                <div class="flex items-start justify-between pb-3 border-b border-black/[0.04] dark:border-white/[0.06]">
-                    <div class="flex items-center gap-3">
-                        <div class="w-11 h-11 rounded-full bg-gradient-to-br from-[#007AFF] to-[#5856D6] text-white flex items-center justify-center font-extrabold text-sm shadow-md shadow-[#007AFF]/25 shrink-0">
-                            <span x-text="selectedUser?.name ? selectedUser.name.substring(0, 2).toUpperCase() : 'U'"></span>
-                        </div>
-                        <div class="min-w-0">
-                            <h3 id="user-modal-title" class="text-[17px] font-bold text-black dark:text-white truncate" x-text="selectedUser?.name"></h3>
-                            <p class="text-[12px] text-black/50 dark:text-white/50 truncate" x-text="selectedUser?.email"></p>
-                        </div>
-                    </div>
-                    <button type="button" @click="showUserModal = false"
-                        class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white flex items-center justify-center active:scale-95 transition-all cursor-pointer"
-                        aria-label="Tutup">
-                        <i data-lucide="x" class="w-4 h-4" stroke-width="2"></i>
-                    </button>
-                </div>
+            <div class="relative z-10 min-h-full flex items-end sm:items-center justify-center p-0 sm:p-4 pointer-events-none" @click.self="showUserModal = false">
+                <div x-show="showUserModal"
+                    x-transition:enter="ease-out duration-300 transform"
+                    x-transition:enter-start="translate-y-full sm:scale-95 opacity-0"
+                    x-transition:enter-end="translate-y-0 sm:scale-100 opacity-100"
+                    x-transition:leave="ease-in duration-200 transform"
+                    x-transition:leave-start="translate-y-0 sm:scale-100 opacity-100"
+                    x-transition:leave-end="translate-y-full sm:scale-95 opacity-0"
+                    @click.outside="showUserModal = false"
+                    class="relative pointer-events-auto w-full max-w-md rounded-t-[28px] sm:rounded-[24px] sheet-material p-4 sm:p-6 border-t sm:border border-black/[0.08] dark:border-white/[0.12] shadow-2xl space-y-4 max-h-[90vh] sm:max-h-[85vh] overflow-y-auto">
+                    
+                    <!-- Mobile Grabber -->
+                    <div class="w-10 h-1.5 rounded-full bg-gray-300 dark:bg-gray-600 mx-auto -mt-1 mb-2 sm:hidden"></div>
 
-                <!-- User Details Inset -->
-                <div class="space-y-3 text-[13px]">
-                    <div class="p-3.5 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.04] space-y-2.5">
-                        <div class="flex justify-between items-center">
-                            <span class="text-black/50 dark:text-white/50">Workspace Aktif</span>
-                            <span class="font-bold text-black dark:text-white truncate max-w-[200px]" x-text="selectedUser?.active_business?.name || selectedUser?.activeBusiness?.name || 'Belum ada workspace'"></span>
+                    <!-- Modal Header -->
+                    <div class="flex items-start justify-between pb-3 border-b border-black/[0.04] dark:border-white/[0.06]">
+                        <div class="flex items-center gap-3">
+                            <div class="w-11 h-11 rounded-full bg-gradient-to-br from-[#007AFF] to-[#5856D6] text-white flex items-center justify-center font-extrabold text-sm shadow-md shadow-[#007AFF]/25 shrink-0">
+                                <span x-text="selectedUser?.name ? selectedUser.name.substring(0, 2).toUpperCase() : 'U'"></span>
+                            </div>
+                            <div class="min-w-0">
+                                <h3 id="user-modal-title" class="text-[17px] font-bold text-black dark:text-white truncate" x-text="selectedUser?.name"></h3>
+                                <p class="text-[12px] text-black/50 dark:text-white/50 truncate" x-text="selectedUser?.email"></p>
+                            </div>
                         </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-black/50 dark:text-white/50">Terdaftar Sejak</span>
-                            <span class="font-medium text-black dark:text-white tabular-nums" x-text="selectedUser?.created_at ? new Date(selectedUser.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }) : '-'"></span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-black/50 dark:text-white/50">Status Email</span>
-                            <span x-show="selectedUser?.email_verified_at" class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]">
-                                Terverifikasi
-                            </span>
-                            <span x-show="!selectedUser?.email_verified_at" class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#FF9500]/15 text-[#C97800] dark:text-[#FF9F0A]">
-                                Belum Verifikasi
-                            </span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-black/50 dark:text-white/50">Metode Login</span>
-                            <span x-show="selectedUser?.google_id" class="inline-flex items-center gap-1.5 text-[12px] font-medium text-[#C41E17] dark:text-[#FF453A]">
-                                <i data-lucide="chrome" class="w-3.5 h-3.5 shrink-0" stroke-width="2"></i>
-                                <span>Google SSO</span>
-                            </span>
-                            <span x-show="!selectedUser?.google_id" class="inline-flex items-center gap-1.5 text-[12px] font-medium text-black/60 dark:text-white/60">
-                                <i data-lucide="mail" class="w-3.5 h-3.5 shrink-0 text-black/40 dark:text-white/40" stroke-width="2"></i>
-                                <span>Email &amp; Password</span>
-                            </span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-black/50 dark:text-white/50">Nomor Telepon</span>
-                            <span class="font-medium text-black dark:text-white tabular-nums" x-text="selectedUser?.phone || '-'"></span>
-                        </div>
+                        <button type="button" @click="showUserModal = false"
+                            class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white flex items-center justify-center active:scale-95 transition-all cursor-pointer"
+                            aria-label="Tutup">
+                            <i data-lucide="x" class="w-4 h-4" stroke-width="2"></i>
+                        </button>
                     </div>
 
-                    <!-- Microcopy Reassurance -->
-                    <div class="p-3 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF] text-[11px] flex items-center gap-2">
-                        <i data-lucide="shield-check" class="w-4 h-4 shrink-0" stroke-width="2"></i>
-                        <span>💡 Akun pengguna terhubung dengan RBAC platform Cooca dan memiliki izin sesuai hak akses tenant.</span>
-                    </div>
-                </div>
+                    <!-- User Details Inset -->
+                    <div class="space-y-3 text-[13px]">
+                        <div class="p-3.5 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.04] space-y-2.5">
+                            <div class="flex justify-between items-center">
+                                <span class="text-black/50 dark:text-white/50">Workspace Aktif</span>
+                                <span class="font-bold text-black dark:text-white truncate max-w-[200px]" x-text="selectedUser?.active_business?.name || selectedUser?.activeBusiness?.name || 'Belum ada workspace'"></span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-black/50 dark:text-white/50">Terdaftar Sejak</span>
+                                <span class="font-medium text-black dark:text-white tabular-nums" x-text="selectedUser?.created_at ? new Date(selectedUser.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }) : '-'"></span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-black/50 dark:text-white/50">Status Email</span>
+                                <span x-show="selectedUser?.email_verified_at" class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]">
+                                    Terverifikasi
+                                </span>
+                                <span x-show="!selectedUser?.email_verified_at" class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#FF9500]/15 text-[#C97800] dark:text-[#FF9F0A]">
+                                    Belum Verifikasi
+                                </span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-black/50 dark:text-white/50">Metode Login</span>
+                                <span x-show="selectedUser?.google_id" class="inline-flex items-center gap-1.5 text-[12px] font-medium text-[#C41E17] dark:text-[#FF453A]">
+                                    <i data-lucide="chrome" class="w-3.5 h-3.5 shrink-0" stroke-width="2"></i>
+                                    <span>Google SSO</span>
+                                </span>
+                                <span x-show="!selectedUser?.google_id" class="inline-flex items-center gap-1.5 text-[12px] font-medium text-black/60 dark:text-white/60">
+                                    <i data-lucide="mail" class="w-3.5 h-3.5 shrink-0 text-black/40 dark:text-white/40" stroke-width="2"></i>
+                                    <span>Email &amp; Password</span>
+                                </span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-black/50 dark:text-white/50">Nomor Telepon</span>
+                                <span class="font-medium text-black dark:text-white tabular-nums" x-text="selectedUser?.phone || '-'"></span>
+                            </div>
+                        </div>
 
-                <!-- Modal Actions (Min 48px height on mobile) -->
-                <div class="pt-2 flex flex-col sm:flex-row items-center gap-2.5">
-                    <a href="{{ route('admin.users.index') }}"
-                        class="w-full sm:flex-1 h-12 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white font-bold text-[13px] flex items-center justify-center gap-2 shadow-md shadow-[#007AFF]/25 transition-all">
-                        <i data-lucide="users" class="w-4 h-4" stroke-width="2"></i>
-                        <span>Kelola Pengguna di Basis Data</span>
-                    </a>
-                    <button type="button" @click="showUserModal = false"
-                        class="w-full sm:w-auto h-12 px-5 rounded-[14px] bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70 font-semibold text-[13px] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all cursor-pointer">
-                        Tutup
-                    </button>
+                        <!-- Microcopy Reassurance -->
+                        <div class="p-3 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF] text-[11px] flex items-center gap-2">
+                            <i data-lucide="shield-check" class="w-4 h-4 shrink-0" stroke-width="2"></i>
+                            <span>💡 Akun pengguna terhubung dengan RBAC platform Cooca dan memiliki izin sesuai hak akses tenant.</span>
+                        </div>
+                    </div>
+
+                    <!-- Modal Actions (Min 48px height on mobile) -->
+                    <div class="pt-2 flex flex-col sm:flex-row items-center gap-2.5">
+                        <a href="{{ route('admin.users.index') }}"
+                            class="w-full sm:flex-1 h-12 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white font-bold text-[13px] flex items-center justify-center gap-2 shadow-md shadow-[#007AFF]/25 transition-all">
+                            <i data-lucide="users" class="w-4 h-4" stroke-width="2"></i>
+                            <span>Kelola Pengguna di Basis Data</span>
+                        </a>
+                        <button type="button" @click="showUserModal = false"
+                            class="w-full sm:w-auto h-12 px-5 rounded-[14px] bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70 font-semibold text-[13px] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all cursor-pointer">
+                            Tutup
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </template>
 
     <!-- MODAL 3: Quick Approval & Billing Verification Modal Sheet (Mandat Pop-Up First) -->
-    <div x-show="showApprovalModal" x-cloak class="relative z-50" aria-labelledby="approval-modal-title" role="dialog" aria-modal="true">
-        <div x-show="showApprovalModal"
-            x-transition:enter="ease-out duration-300"
-            x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100"
-            x-transition:leave="ease-in duration-200"
-            x-transition:leave-start="opacity-100"
-            x-transition:leave-end="opacity-0"
-            @click="showApprovalModal = false"
-            class="fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity"></div>
-
-        <div class="fixed inset-0 z-10 overflow-y-auto flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <template x-teleport="body">
+        <div x-show="showApprovalModal" x-cloak class="fixed inset-0 z-[200] overflow-y-auto" aria-labelledby="approval-modal-title" role="dialog" aria-modal="true" @keydown.escape.window="showApprovalModal = false">
             <div x-show="showApprovalModal"
-                x-transition:enter="ease-out duration-300 transform"
-                x-transition:enter-start="translate-y-full sm:scale-95 opacity-0"
-                x-transition:enter-end="translate-y-0 sm:scale-100 opacity-100"
-                x-transition:leave="ease-in duration-200 transform"
-                x-transition:leave-start="translate-y-0 sm:scale-100 opacity-100"
-                x-transition:leave-end="translate-y-full sm:scale-95 opacity-0"
-                @click.outside="showApprovalModal = false"
-                class="w-full max-w-xl rounded-t-[28px] sm:rounded-[24px] sheet-material p-4 sm:p-6 border-t sm:border border-black/[0.08] dark:border-white/[0.12] shadow-2xl space-y-4 max-h-[90vh] sm:max-h-[85vh] overflow-y-auto">
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="showApprovalModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"
+                aria-hidden="true"></div>
+
+            <div class="relative z-10 min-h-full flex items-end sm:items-center justify-center p-0 sm:p-4 pointer-events-none" @click.self="showApprovalModal = false">
+                <div x-show="showApprovalModal"
+                    x-transition:enter="ease-out duration-300 transform"
+                    x-transition:enter-start="translate-y-full sm:scale-95 opacity-0"
+                    x-transition:enter-end="translate-y-0 sm:scale-100 opacity-100"
+                    x-transition:leave="ease-in duration-200 transform"
+                    x-transition:leave-start="translate-y-0 sm:scale-100 opacity-100"
+                    x-transition:leave-end="translate-y-full sm:scale-95 opacity-0"
+                    @click.outside="showApprovalModal = false"
+                    class="relative pointer-events-auto w-full max-w-xl rounded-t-[28px] sm:rounded-[24px] sheet-material p-4 sm:p-6 border-t sm:border border-black/[0.08] dark:border-white/[0.12] shadow-2xl space-y-4 max-h-[90vh] sm:max-h-[85vh] overflow-y-auto">
                 
                 <!-- Mobile Grabber -->
                 <div class="w-10 h-1.5 rounded-full bg-gray-300 dark:bg-gray-600 mx-auto -mt-1 mb-2 sm:hidden"></div>
@@ -1257,29 +1265,32 @@
             </div>
         </div>
     </div>
+    </template>
 
     <!-- MODAL 4: Payment Proof Image Lightbox Modal Sheet (Mandat Pop-Up First) -->
-    <div x-show="proofModalOpen" x-cloak class="relative z-[60]" aria-labelledby="proof-lightbox-title" role="dialog" aria-modal="true">
-        <div x-show="proofModalOpen"
-            x-transition:enter="ease-out duration-300"
-            x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100"
-            x-transition:leave="ease-in duration-200"
-            x-transition:leave-start="opacity-100"
-            x-transition:leave-end="opacity-0"
-            @click="proofModalOpen = false"
-            class="fixed inset-0 bg-black/60 backdrop-blur-md transition-opacity"></div>
-
-        <div class="fixed inset-0 z-10 overflow-y-auto flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <template x-teleport="body">
+        <div x-show="proofModalOpen" x-cloak class="fixed inset-0 z-[210] overflow-y-auto" aria-labelledby="proof-lightbox-title" role="dialog" aria-modal="true" @keydown.escape.window="proofModalOpen = false">
             <div x-show="proofModalOpen"
-                x-transition:enter="ease-out duration-300 transform"
-                x-transition:enter-start="translate-y-full sm:scale-95 opacity-0"
-                x-transition:enter-end="translate-y-0 sm:scale-100 opacity-100"
-                x-transition:leave="ease-in duration-200 transform"
-                x-transition:leave-start="translate-y-0 sm:scale-100 opacity-100"
-                x-transition:leave-end="translate-y-full sm:scale-95 opacity-0"
-                @click.outside="proofModalOpen = false"
-                class="w-full max-w-2xl rounded-t-[28px] sm:rounded-[24px] sheet-material p-4 sm:p-6 border-t sm:border border-black/[0.08] dark:border-white/[0.12] shadow-2xl space-y-4 max-h-[90vh] sm:max-h-[85vh] overflow-y-auto">
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="proofModalOpen = false"
+                class="fixed inset-0 bg-black/75 dark:bg-black/85 backdrop-blur-md"
+                aria-hidden="true"></div>
+
+            <div class="relative z-10 min-h-full flex items-end sm:items-center justify-center p-0 sm:p-4 pointer-events-none" @click.self="proofModalOpen = false">
+                <div x-show="proofModalOpen"
+                    x-transition:enter="ease-out duration-300 transform"
+                    x-transition:enter-start="translate-y-full sm:scale-95 opacity-0"
+                    x-transition:enter-end="translate-y-0 sm:scale-100 opacity-100"
+                    x-transition:leave="ease-in duration-200 transform"
+                    x-transition:leave-start="translate-y-0 sm:scale-100 opacity-100"
+                    x-transition:leave-end="translate-y-full sm:scale-95 opacity-0"
+                    @click.outside="proofModalOpen = false"
+                    class="relative pointer-events-auto w-full max-w-2xl rounded-t-[28px] sm:rounded-[24px] sheet-material p-4 sm:p-6 border-t sm:border border-black/[0.08] dark:border-white/[0.12] shadow-2xl space-y-4 max-h-[90vh] sm:max-h-[85vh] overflow-y-auto">
                 
                 <!-- iOS Grabber Handle for Mobile -->
                 <div class="w-10 h-1.5 rounded-full bg-gray-300 dark:bg-gray-600 mx-auto -mt-1 mb-2.5 sm:hidden"></div>
@@ -1322,6 +1333,7 @@
             </div>
         </div>
     </div>
+    </template>
 
 </div>
 @endsection

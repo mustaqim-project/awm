@@ -95,137 +95,17 @@
     <!-- ===================================================== -->
     <!-- 3. SORTABLE DENSE DATA TABLE (DESKTOP & TABLET)       -->
     <!-- ===================================================== -->
-    <div x-data="{
-        sortCol: null,
-        sortAsc: true,
-        sortBy(colIndex, type = 'string') {
-            const table = $el.querySelector('table');
-            if (!table) return;
-            const tbody = table.querySelector('tbody');
-            if (!tbody) return;
-            const rows = Array.from(tbody.querySelectorAll('tr:not([data-empty-row])'));
-            if (rows.length <= 1) return;
-
-            if (this.sortCol === colIndex) {
-                this.sortAsc = !this.sortAsc;
-            } else {
-                this.sortCol = colIndex;
-                this.sortAsc = true;
-            }
-
-            const multiplier = this.sortAsc ? 1 : -1;
-
-            rows.sort((a, b) => {
-                const cellA = a.querySelectorAll('td')[colIndex];
-                const cellB = b.querySelectorAll('td')[colIndex];
-                if (!cellA || !cellB) return 0;
-
-                const valA = cellA.getAttribute('data-sort-value') !== null 
-                    ? cellA.getAttribute('data-sort-value') 
-                    : cellA.innerText.trim();
-                const valB = cellB.getAttribute('data-sort-value') !== null 
-                    ? cellB.getAttribute('data-sort-value') 
-                    : cellB.innerText.trim();
-
-                if (type === 'number') {
-                    const numA = parseFloat(String(valA).replace(/[^0-9.-]+/g, '')) || 0;
-                    const numB = parseFloat(String(valB).replace(/[^0-9.-]+/g, '')) || 0;
-                    return (numA - numB) * multiplier;
-                } else if (type === 'date') {
-                    const dateA = new Date(valA).getTime() || 0;
-                    const dateB = new Date(valB).getTime() || 0;
-                    return (dateA - dateB) * multiplier;
-                } else {
-                    return String(valA).localeCompare(String(valB), undefined, { numeric: true, sensitivity: 'base' }) * multiplier;
-                }
-            });
-
-            rows.forEach(row => tbody.appendChild(row));
-        }
-    }" class="hidden sm:block rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] overflow-hidden shadow-xs">
+    <div x-data="coocaTableSort()" class="hidden sm:block rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] overflow-hidden shadow-xs">
         <div class="overflow-x-auto">
             <table class="w-full text-left text-[13px]">
                 <thead>
                     <tr class="border-b border-black/[0.06] dark:border-white/[0.08] whitespace-nowrap bg-black/[0.015] dark:bg-white/[0.015]">
-                        {{-- Col 0: No. Transfer --}}
-                        <th @click="sortBy(0, 'string')" class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 cursor-pointer select-none group hover:text-black dark:hover:text-white transition-colors">
-                            <div class="inline-flex items-center gap-1.5">
-                                <span>No. Transfer</span>
-                                <span class="inline-flex items-center text-black/30 dark:text-white/30"
-                                      :class="sortCol === 0 ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'group-hover:text-black/60 dark:group-hover:text-white/60'">
-                                    <svg x-show="sortCol === 0 && sortAsc" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" /></svg>
-                                    <svg x-show="sortCol === 0 && !sortAsc" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
-                                    <svg x-show="sortCol !== 0" class="w-3 h-3 opacity-40 group-hover:opacity-100" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" /></svg>
-                                </span>
-                            </div>
-                        </th>
-
-                        {{-- Col 1: Tanggal --}}
-                        <th @click="sortBy(1, 'date')" class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 cursor-pointer select-none group hover:text-black dark:hover:text-white transition-colors">
-                            <div class="inline-flex items-center gap-1.5">
-                                <span>Tanggal</span>
-                                <span class="inline-flex items-center text-black/30 dark:text-white/30"
-                                      :class="sortCol === 1 ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'group-hover:text-black/60 dark:group-hover:text-white/60'">
-                                    <svg x-show="sortCol === 1 && sortAsc" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" /></svg>
-                                    <svg x-show="sortCol === 1 && !sortAsc" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
-                                    <svg x-show="sortCol !== 1" class="w-3 h-3 opacity-40 group-hover:opacity-100" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" /></svg>
-                                </span>
-                            </div>
-                        </th>
-
-                        {{-- Col 2: Rute --}}
-                        <th @click="sortBy(2, 'string')" class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 cursor-pointer select-none group hover:text-black dark:hover:text-white transition-colors">
-                            <div class="inline-flex items-center gap-1.5">
-                                <span>Rute (Asal → Tujuan)</span>
-                                <span class="inline-flex items-center text-black/30 dark:text-white/30"
-                                      :class="sortCol === 2 ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'group-hover:text-black/60 dark:group-hover:text-white/60'">
-                                    <svg x-show="sortCol === 2 && sortAsc" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" /></svg>
-                                    <svg x-show="sortCol === 2 && !sortAsc" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
-                                    <svg x-show="sortCol !== 2" class="w-3 h-3 opacity-40 group-hover:opacity-100" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" /></svg>
-                                </span>
-                            </div>
-                        </th>
-
-                        {{-- Col 3: Petugas Pengirim / Penerima --}}
-                        <th @click="sortBy(3, 'string')" class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 cursor-pointer select-none group hover:text-black dark:hover:text-white transition-colors">
-                            <div class="inline-flex items-center gap-1.5">
-                                <span>Pengirim / Penerima</span>
-                                <span class="inline-flex items-center text-black/30 dark:text-white/30"
-                                      :class="sortCol === 3 ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'group-hover:text-black/60 dark:group-hover:text-white/60'">
-                                    <svg x-show="sortCol === 3 && sortAsc" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" /></svg>
-                                    <svg x-show="sortCol === 3 && !sortAsc" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
-                                    <svg x-show="sortCol !== 3" class="w-3 h-3 opacity-40 group-hover:opacity-100" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" /></svg>
-                                </span>
-                            </div>
-                        </th>
-
-                        {{-- Col 4: Item --}}
-                        <th @click="sortBy(4, 'number')" class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 text-center cursor-pointer select-none group hover:text-black dark:hover:text-white transition-colors">
-                            <div class="inline-flex items-center justify-center gap-1.5">
-                                <span>Item</span>
-                                <span class="inline-flex items-center text-black/30 dark:text-white/30"
-                                      :class="sortCol === 4 ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'group-hover:text-black/60 dark:group-hover:text-white/60'">
-                                    <svg x-show="sortCol === 4 && sortAsc" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" /></svg>
-                                    <svg x-show="sortCol === 4 && !sortAsc" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
-                                    <svg x-show="sortCol !== 4" class="w-3 h-3 opacity-40 group-hover:opacity-100" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" /></svg>
-                                </span>
-                            </div>
-                        </th>
-
-                        {{-- Col 5: Status --}}
-                        <th @click="sortBy(5, 'string')" class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 text-center cursor-pointer select-none group hover:text-black dark:hover:text-white transition-colors">
-                            <div class="inline-flex items-center justify-center gap-1.5">
-                                <span>Status</span>
-                                <span class="inline-flex items-center text-black/30 dark:text-white/30"
-                                      :class="sortCol === 5 ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'group-hover:text-black/60 dark:group-hover:text-white/60'">
-                                    <svg x-show="sortCol === 5 && sortAsc" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" /></svg>
-                                    <svg x-show="sortCol === 5 && !sortAsc" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
-                                    <svg x-show="sortCol !== 5" class="w-3 h-3 opacity-40 group-hover:opacity-100" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" /></svg>
-                                </span>
-                            </div>
-                        </th>
-
-                        {{-- Col 6: Aksi --}}
+                        <x-table-sort-th :col="0" type="string" title="No. Transfer" />
+                        <x-table-sort-th :col="1" type="date" title="Tanggal" />
+                        <x-table-sort-th :col="2" type="string" title="Rute (Asal → Tujuan)" />
+                        <x-table-sort-th :col="3" type="string" title="Pengirim / Penerima" />
+                        <x-table-sort-th :col="4" type="number" title="Item" align="center" />
+                        <x-table-sort-th :col="5" type="string" title="Status" align="center" />
                         <th class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 text-right">Aksi</th>
                     </tr>
                 </thead>
@@ -350,153 +230,171 @@
     <!-- 5. APPLE MODAL SHEET: KIRIM TRANSFER STOK BARU        -->
     <!-- ===================================================== -->
     @if(\App\Support\Context::hasPermission('inventory.manage'))
-    <div x-show="showCreateModal"
-        x-cloak
-        class="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 dark:bg-black/75 backdrop-blur-md p-0 sm:p-4"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0">
+    <template x-teleport="body">
+        <div x-show="showCreateModal"
+            x-cloak
+            class="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4"
+            role="dialog"
+            aria-modal="true">
 
-        <div class="w-full sm:max-w-xl rounded-t-[26px] sm:rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto"
-            @click.away="showCreateModal = false"
-            x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="translate-y-full sm:translate-y-0 sm:scale-95 sm:opacity-0"
-            x-transition:enter-end="translate-y-0 sm:scale-100 sm:opacity-100"
-            x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="translate-y-0 sm:scale-100 sm:opacity-100"
-            x-transition:leave-end="translate-y-full sm:translate-y-0 sm:scale-95 sm:opacity-0">
+            {{-- Backdrop Blur Overlay --}}
+            <div x-show="showCreateModal"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="showCreateModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
 
-            <!-- Mobile Grabber Handle -->
-            <div class="sm:hidden w-12 h-1.5 rounded-full bg-black/20 dark:bg-white/20 mx-auto mb-2"></div>
+            <div class="relative z-10 w-full sm:max-w-xl rounded-t-[26px] sm:rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto"
+                @click.away="showCreateModal = false"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="translate-y-full sm:translate-y-0 sm:scale-95 sm:opacity-0"
+                x-transition:enter-end="translate-y-0 sm:scale-100 sm:opacity-100"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="translate-y-0 sm:scale-100 sm:opacity-100"
+                x-transition:leave-end="translate-y-full sm:translate-y-0 sm:scale-95 sm:opacity-0">
 
-            <div class="flex items-center justify-between pb-3.5 border-b border-black/[0.06] dark:border-white/[0.08]">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-lg bg-[#007AFF]/12 text-[#007AFF] flex items-center justify-center shrink-0">
-                        <i data-lucide="arrow-left-right" class="w-4 h-4"></i>
+                <!-- Mobile Grabber Handle -->
+                <div class="sm:hidden w-12 h-1.5 rounded-full bg-black/20 dark:bg-white/20 mx-auto mb-2"></div>
+
+                <div class="flex items-center justify-between pb-3.5 border-b border-black/[0.06] dark:border-white/[0.08]">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-8 h-8 rounded-lg bg-[#007AFF]/12 text-[#007AFF] flex items-center justify-center shrink-0">
+                            <i data-lucide="arrow-left-right" class="w-4 h-4"></i>
+                        </div>
+                        <h3 class="text-[17px] font-bold text-black dark:text-white">Kirim Transfer Stok Baru</h3>
                     </div>
-                    <h3 class="text-[17px] font-bold text-black dark:text-white">Kirim Transfer Stok Baru</h3>
-                </div>
-                <button type="button" @click="showCreateModal = false" class="w-8 h-8 rounded-full bg-black/5 dark:bg-white/10 text-black/50 hover:text-black dark:text-white/50 dark:hover:text-white transition flex items-center justify-center cursor-pointer">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
-            </div>
-
-            <form action="{{ route('inventory.transfers.store') }}" method="POST" class="space-y-4 text-[13px]">
-                @csrf
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                    <div>
-                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Lokasi Asal (Pengirim) *</label>
-                        <select name="source_location_id" required class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-xl px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                            @foreach($locations as $loc)
-                                <option value="{{ $loc->id }}" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ $loc->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Lokasi Tujuan (Penerima) *</label>
-                        <select name="destination_location_id" required class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-xl px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                            @foreach($locations as $loc)
-                                <option value="{{ $loc->id }}" {{ $loop->last ? 'selected' : '' }} class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ $loc->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                    <button type="button" @click="showCreateModal = false" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 text-black/50 hover:text-black dark:text-white/50 dark:hover:text-white transition flex items-center justify-center cursor-pointer">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                    <div>
-                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Tanggal Transfer *</label>
-                        <input type="date" name="transfer_date" value="{{ date('Y-m-d') }}" required class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-xl px-3.5 text-[16px] sm:text-[13px] tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                    </div>
-                    <div>
-                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Catatan / No. Surat Jalan</label>
-                        <input type="text" name="notes" placeholder="Misal: Surat Jalan #SJ-01..." class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-xl px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                    </div>
-                </div>
-
-                <!-- Items Row -->
-                <div class="space-y-3 pt-3 border-t border-black/[0.06] dark:border-white/[0.08]">
-                    <div class="flex items-center justify-between">
-                        <label class="text-[12px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50">Produk yang Ditransfer:</label>
-                        <button type="button" @click="addItem()" class="min-h-[44px] sm:min-h-0 h-8 px-3 rounded-lg text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.98] transition-all flex items-center gap-1 cursor-pointer">
-                            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-                            <span>Tambah Produk</span>
-                        </button>
-                    </div>
-
-                    <template x-for="(item, idx) in items" :key="idx">
-                        <div class="flex items-center gap-2">
-                            <select :name="'items[' + idx + '][product_id]'" x-model="item.product_id" required class="flex-1 h-11 sm:h-10 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-xl px-3 text-[16px] sm:text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                                @foreach($products as $p)
-                                    <option value="{{ $p->id }}" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ $p->name }}</option>
+                <form action="{{ route('inventory.transfers.store') }}" method="POST" class="space-y-4 text-[13px]">
+                    @csrf
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                        <div>
+                            <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Lokasi Asal (Pengirim) *</label>
+                            <select name="source_location_id" required class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-xl px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                @foreach($locations as $loc)
+                                    <option value="{{ $loc->id }}" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ $loc->name }}</option>
                                 @endforeach
                             </select>
-                            <input type="number" step="any" min="0.0001" :name="'items[' + idx + '][quantity]'" x-model.number="item.quantity" required placeholder="Qty" class="h-11 sm:h-10 w-28 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-xl px-2.5 text-[16px] sm:text-[13px] text-center tabular-nums font-bold text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                            <button type="button" @click="removeItem(idx)" :disabled="items.length <= 1" class="min-w-[40px] min-h-[40px] flex items-center justify-center text-black/30 hover:text-[#FF3B30] dark:text-white/30 dark:hover:text-[#FF453A] disabled:opacity-20 transition-colors cursor-pointer">
-                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Lokasi Tujuan (Penerima) *</label>
+                            <select name="destination_location_id" required class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-xl px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                @foreach($locations as $loc)
+                                    <option value="{{ $loc->id }}" {{ $loop->last ? 'selected' : '' }} class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ $loc->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                        <div>
+                            <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Tanggal Transfer *</label>
+                            <input type="date" name="transfer_date" value="{{ date('Y-m-d') }}" required class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-xl px-3.5 text-[16px] sm:text-[13px] tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                        </div>
+                        <div>
+                            <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Catatan / No. Surat Jalan</label>
+                            <input type="text" name="notes" placeholder="Misal: Surat Jalan #SJ-01..." class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-xl px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                        </div>
+                    </div>
+
+                    <!-- Items Row -->
+                    <div class="space-y-3 pt-3 border-t border-black/[0.06] dark:border-white/[0.08]">
+                        <div class="flex items-center justify-between">
+                            <label class="text-[12px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50">Produk yang Ditransfer:</label>
+                            <button type="button" @click="addItem()" class="min-h-[44px] sm:min-h-0 h-8 px-3 rounded-lg text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.98] transition-all flex items-center gap-1 cursor-pointer">
+                                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                                <span>Tambah Produk</span>
                             </button>
                         </div>
-                    </template>
-                </div>
 
-                <div class="flex items-center justify-end gap-2.5 pt-3.5 border-t border-black/[0.06] dark:border-white/[0.08]">
-                    <button type="button" @click="showCreateModal = false" class="min-h-[44px] sm:min-h-0 h-10 px-4 rounded-xl text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 active:scale-[0.98] transition-all cursor-pointer">
-                        Batal
-                    </button>
-                    <button type="submit" class="min-h-[44px] sm:min-h-0 h-10 px-5 rounded-xl text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0062CC] active:scale-[0.98] transition-all shadow-sm shadow-[#007AFF]/25 cursor-pointer">
-                        Kirim Transfer
-                    </button>
-                </div>
-            </form>
+                        <template x-for="(item, idx) in items" :key="idx">
+                            <div class="flex items-center gap-2">
+                                <select :name="'items[' + idx + '][product_id]'" x-model="item.product_id" required class="flex-1 h-11 sm:h-10 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-xl px-3 text-[16px] sm:text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                    @foreach($products as $p)
+                                        <option value="{{ $p->id }}" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ $p->name }}</option>
+                                    @endforeach
+                                </select>
+                                <input type="number" step="any" min="0.0001" :name="'items[' + idx + '][quantity]'" x-model.number="item.quantity" required placeholder="Qty" class="h-11 sm:h-10 w-28 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-xl px-2.5 text-[16px] sm:text-[13px] text-center tabular-nums font-bold text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                <button type="button" @click="removeItem(idx)" :disabled="items.length <= 1" class="min-w-[40px] min-h-[40px] flex items-center justify-center text-black/30 hover:text-[#FF3B30] dark:text-white/30 dark:hover:text-[#FF453A] disabled:opacity-20 transition-colors cursor-pointer">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </template>
+                    </div>
+
+                    <div class="flex items-center justify-end gap-2.5 pt-3.5 border-t border-black/[0.06] dark:border-white/[0.08]">
+                        <button type="button" @click="showCreateModal = false" class="min-h-[44px] sm:min-h-0 h-10 px-4 rounded-xl text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 active:scale-[0.98] transition-all cursor-pointer">
+                            Batal
+                        </button>
+                        <button type="submit" class="min-h-[44px] sm:min-h-0 h-10 px-5 rounded-xl text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0062CC] active:scale-[0.98] transition-all shadow-sm shadow-[#007AFF]/25 cursor-pointer">
+                            Kirim Transfer
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
+    </template>
     @endif
 
     <!-- ===================================================== -->
     <!-- 6. APPLE ALERT DIALOG: KONFIRMASI TERIMA TRANSFER     -->
     <!-- ===================================================== -->
     @if(\App\Support\Context::hasPermission('inventory.manage'))
-    <div x-show="receiveModalOpen"
-        x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 dark:bg-black/75 backdrop-blur-md p-4"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0">
+    <template x-teleport="body">
+        <div x-show="receiveModalOpen"
+            x-cloak
+            class="fixed inset-0 z-[220] flex items-center justify-center p-4"
+            role="dialog"
+            aria-modal="true">
 
-        <div class="w-full max-w-[340px] rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 overflow-hidden text-center shadow-2xl"
-            @click.away="closeReceive()"
-            x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="opacity-0 scale-95"
-            x-transition:enter-end="opacity-100 scale-100"
-            x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100 scale-100"
-            x-transition:leave-end="opacity-0 scale-95">
+            {{-- Backdrop Blur Overlay --}}
+            <div x-show="receiveModalOpen"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="closeReceive()"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
 
-            <div class="px-6 pt-6 pb-5">
-                <div class="w-12 h-12 rounded-full bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center mx-auto mb-3">
-                    <i data-lucide="package-check" class="w-6 h-6"></i>
+            <div class="relative z-10 w-full max-w-[340px] rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 overflow-hidden text-center shadow-2xl"
+                @click.away="closeReceive()"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0 scale-95"
+                x-transition:enter-end="opacity-100 scale-100"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100 scale-100"
+                x-transition:leave-end="opacity-0 scale-95">
+
+                <div class="px-6 pt-6 pb-5">
+                    <div class="w-12 h-12 rounded-full bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center mx-auto mb-3">
+                        <i data-lucide="package-check" class="w-6 h-6"></i>
+                    </div>
+                    <p class="text-[17px] font-bold text-black dark:text-white">Konfirmasi Terima?</p>
+                    <p class="text-[13px] text-black/60 dark:text-white/60 mt-1.5 leading-relaxed">
+                        Pastikan barang transfer <span x-text="'#' + receiveTarget.number" class="font-bold text-black dark:text-white tabular-nums"></span> sudah sampai dan dihitung fisik dengan benar di lokasi tujuan.
+                    </p>
                 </div>
-                <p class="text-[17px] font-bold text-black dark:text-white">Konfirmasi Terima?</p>
-                <p class="text-[13px] text-black/60 dark:text-white/60 mt-1.5 leading-relaxed">
-                    Pastikan barang transfer <span x-text="'#' + receiveTarget.number" class="font-bold text-black dark:text-white tabular-nums"></span> sudah sampai dan dihitung fisik dengan benar di lokasi tujuan.
-                </p>
-            </div>
 
-            <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[14px] font-semibold">
-                <button type="button" @click="closeReceive()" class="min-h-[48px] py-3 text-black/70 dark:text-white/70 border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer flex items-center justify-center">
-                    Batal
-                </button>
-                <button type="button" @click="submitReceive()" class="min-h-[48px] py-3 text-[#007AFF] dark:text-[#0A84FF] font-bold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer flex items-center justify-center">
-                    Konfirmasi
-                </button>
+                <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[14px] font-semibold">
+                    <button type="button" @click="closeReceive()" class="min-h-[48px] py-3 text-black/70 dark:text-white/70 border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer flex items-center justify-center">
+                        Batal
+                    </button>
+                    <button type="button" @click="submitReceive()" class="min-h-[48px] py-3 text-[#007AFF] dark:text-[#0A84FF] font-bold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer flex items-center justify-center">
+                        Konfirmasi
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
+    </template>
     @endif
 
 </div>

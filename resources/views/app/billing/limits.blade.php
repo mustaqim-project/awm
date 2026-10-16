@@ -2256,22 +2256,35 @@
         </section>
 
         <!-- 9. BENTO MODAL: Storage File Manager (Kelola Semua Berkas) -->
-        <div x-show="openFileManager" x-cloak
-            class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5"
-            role="dialog" aria-modal="true" aria-labelledby="file-manager-title">
-            <!-- Backdrop -->
-            <div x-show="openFileManager" x-transition:enter="ease-out duration-300"
-                x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100"
-                x-transition:leave-end="opacity-0" @click="openFileManager = false"
-                class="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity"></div>
+        <template x-teleport="body">
+            <div x-show="openFileManager" x-cloak
+                class="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
+                <!-- Backdrop -->
+                <div x-show="openFileManager"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    @click="openFileManager = false"
+                    aria-hidden="true"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
-            <!-- Modal Content (Squircle Bento Card) -->
-            <div x-show="openFileManager" x-transition:enter="ease-out duration-300"
-                x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
-                x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100 scale-100"
-                x-transition:leave-end="opacity-0 scale-95"
-                class="relative w-full max-w-[95vw] lg:max-w-5xl xl:max-w-6xl 2xl:max-w-[1350px] max-h-[90vh] bg-white dark:bg-slate-900 rounded-[24px] border border-black/[0.08] dark:border-white/[0.12] shadow-2xl flex flex-col overflow-hidden z-10">
+                <!-- Modal Content (Squircle Bento Card) -->
+                <div x-show="openFileManager"
+                    @click.away="openFileManager = false"
+                    @keydown.escape.window="openFileManager = false"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="file-manager-title"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95"
+                    class="relative z-10 w-full max-w-[95vw] lg:max-w-5xl xl:max-w-6xl 2xl:max-w-[1350px] max-h-[90vh] bg-white dark:bg-slate-900 rounded-[24px] border border-black/[0.08] dark:border-white/[0.12] shadow-2xl flex flex-col overflow-hidden my-auto">
 
                 <!-- Modal Header -->
                 <div class="px-5 py-4 sm:px-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between gap-4">
@@ -2414,44 +2427,70 @@
                 </div>
 
                 <!-- 2-Step Bento Confirmation Modal Sheet -->
-                <div x-show="confirmDeleteModal" x-cloak
-                    class="fixed inset-0 z-60 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-                    <div @click.away="if (!deletingFile) confirmDeleteModal = false"
-                        class="bg-white dark:bg-slate-900 rounded-[24px] border border-black/[0.08] dark:border-white/[0.1] shadow-2xl max-w-md w-full p-6 space-y-4">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-[12px] bg-rose-100 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center justify-center shrink-0">
-                                <i data-lucide="alert-triangle" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-sm text-slate-900 dark:text-white">{{ __('billing.modal_confirm_delete_title') }}</h3>
-                                <p class="text-[11px] text-slate-500 dark:text-slate-400">{{ __('billing.modal_confirm_delete_desc') }}</p>
-                            </div>
-                        </div>
-                        <template x-if="targetFile">
-                            <div class="p-3.5 rounded-[14px] bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60 space-y-1.5 text-xs">
-                                <div class="font-semibold text-slate-900 dark:text-white truncate" x-text="targetFile.file_name"></div>
-                                <div class="flex items-center justify-between text-[11px] text-slate-500 font-mono">
-                                    <span x-text="targetFile.category_label"></span>
-                                    <span class="font-bold text-slate-700 dark:text-slate-300 tabular-nums" x-text="targetFile.formatted_size"></span>
+                <template x-teleport="body">
+                    <div x-show="confirmDeleteModal" x-cloak
+                        class="fixed inset-0 z-[220] flex items-center justify-center p-4 overflow-y-auto">
+                        <!-- Backdrop -->
+                        <div class="fixed inset-0 bg-black/70 dark:bg-black/80 backdrop-blur-md transition-opacity"
+                            x-show="confirmDeleteModal"
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0"
+                            x-transition:enter-end="opacity-100"
+                            x-transition:leave="transition ease-in duration-150"
+                            x-transition:leave-start="opacity-100"
+                            x-transition:leave-end="opacity-0"
+                            @click="if (!deletingFile) confirmDeleteModal = false"
+                            aria-hidden="true"></div>
+
+                        <div @click.away="if (!deletingFile) confirmDeleteModal = false"
+                            @keydown.escape.window="if (!deletingFile) confirmDeleteModal = false"
+                            role="alertdialog"
+                            aria-modal="true"
+                            aria-labelledby="modal-confirm-delete-title"
+                            x-show="confirmDeleteModal"
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 scale-95"
+                            x-transition:enter-end="opacity-100 scale-100"
+                            x-transition:leave="transition ease-in duration-150"
+                            x-transition:leave-start="opacity-100 scale-100"
+                            x-transition:leave-end="opacity-0 scale-95"
+                            class="relative z-10 bg-white dark:bg-slate-900 rounded-[24px] border border-black/[0.08] dark:border-white/[0.1] shadow-2xl max-w-md w-full p-6 space-y-4 my-auto">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-[12px] bg-rose-100 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center justify-center shrink-0">
+                                    <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <h3 id="modal-confirm-delete-title" class="font-bold text-sm text-slate-900 dark:text-white">{{ __('billing.modal_confirm_delete_title') }}</h3>
+                                    <p class="text-[11px] text-slate-500 dark:text-slate-400">{{ __('billing.modal_confirm_delete_desc') }}</p>
                                 </div>
                             </div>
-                        </template>
-                        <div class="flex items-center justify-end gap-2.5 pt-2">
-                            <button type="button" :disabled="deletingFile" @click="confirmDeleteModal = false; targetFile = null"
-                                class="min-h-[44px] px-4 py-2.5 rounded-[12px] text-xs font-semibold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition cursor-pointer">
-                                {{ __('billing.modal_cancel') }}
-                            </button>
-                            <button type="button" :disabled="deletingFile" @click="executeDelete()"
-                                class="min-h-[44px] px-4 py-2.5 rounded-[12px] text-xs font-bold text-white bg-rose-600 hover:bg-rose-500 transition cursor-pointer flex items-center gap-1.5 disabled:opacity-60 shadow-xs">
-                                <span x-show="deletingFile" class="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                                <span x-text="deletingFile ? '{{ __('billing.modal_deleting') }}' : '{{ __('billing.modal_delete_permanently') }}'"></span>
-                            </button>
+                            <template x-if="targetFile">
+                                <div class="p-3.5 rounded-[14px] bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60 space-y-1.5 text-xs">
+                                    <div class="font-semibold text-slate-900 dark:text-white truncate" x-text="targetFile.file_name"></div>
+                                    <div class="flex items-center justify-between text-[11px] text-slate-500 font-mono">
+                                        <span x-text="targetFile.category_label"></span>
+                                        <span class="font-bold text-slate-700 dark:text-slate-300 tabular-nums" x-text="targetFile.formatted_size"></span>
+                                    </div>
+                                </div>
+                            </template>
+                            <div class="flex items-center justify-end gap-2.5 pt-2">
+                                <button type="button" :disabled="deletingFile" @click="confirmDeleteModal = false; targetFile = null"
+                                    class="min-h-[44px] px-4 py-2.5 rounded-[12px] text-xs font-semibold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition cursor-pointer">
+                                    {{ __('billing.modal_cancel') }}
+                                </button>
+                                <button type="button" :disabled="deletingFile" @click="executeDelete()"
+                                    class="min-h-[44px] px-4 py-2.5 rounded-[12px] text-xs font-bold text-white bg-rose-600 hover:bg-rose-500 transition cursor-pointer flex items-center gap-1.5 disabled:opacity-60 shadow-xs">
+                                    <span x-show="deletingFile" class="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                                    <span x-text="deletingFile ? '{{ __('billing.modal_deleting') }}' : '{{ __('billing.modal_delete_permanently') }}'"></span>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </template>
 
             </div>
         </div>
+    </template>
 
         <!-- Non-disruptive Toast Notification -->
         <div x-show="toastMessage" x-cloak

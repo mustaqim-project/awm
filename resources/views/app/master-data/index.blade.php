@@ -715,12 +715,14 @@
         <!-- ===================================================== -->
         @if (in_array($type, ['material-categories', 'product-categories', 'units'], true) &&
                 \App\Support\Context::hasPermission($managePermission))
-            <div x-show="showAddModal" x-cloak
-                class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/25 backdrop-blur-[2px]"
-                @click.self="showAddModal = false"
-                x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
-                x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
-                x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+            <template x-teleport="body">
+                <div x-show="showAddModal" x-cloak
+                    class="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md"
+                    @click.self="showAddModal = false"
+                    @keydown.escape.window="showAddModal = false"
+                    x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
 
                 <div @click.outside="showAddModal = false"
                     class="w-full sm:max-w-lg rounded-t-[20px] sm:rounded-[16px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] max-h-[90vh] overflow-y-auto"
@@ -912,19 +914,22 @@
                     </form>
                 </div>
             </div>
-        @endif
+        </template>
+    @endif
 
         <!-- ===================================================== -->
         <!-- 7. MODAL: EDIT DATA (Apple Sheet)                     -->
         <!-- ===================================================== -->
         @if (in_array($type, ['material-categories', 'product-categories', 'units'], true) &&
                 \App\Support\Context::hasPermission($managePermission))
-            <div x-show="showEditModal" x-cloak
-                class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/25 backdrop-blur-[2px]"
-                @click.self="showEditModal = false"
-                x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
-                x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
-                x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+            <template x-teleport="body">
+                <div x-show="showEditModal" x-cloak
+                    class="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md"
+                    @click.self="showEditModal = false"
+                    @keydown.escape.window="showEditModal = false"
+                    x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
 
                 <div @click.outside="showEditModal = false"
                     class="w-full sm:max-w-lg rounded-t-[20px] sm:rounded-[16px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] max-h-[90vh] overflow-y-auto"
@@ -1130,16 +1135,19 @@
                     </form>
                 </div>
             </div>
-        @endif
+        </template>
+    @endif
 
         <!-- ===================================================== -->
         <!-- 8. APPLE ALERT DIALOG (Native Centered Modal)          -->
         <!-- ===================================================== -->
-        <div x-show="deleteModalOpen" x-cloak
-            class="fixed inset-0 z-50 flex items-center justify-center bg-black/25 backdrop-blur-[2px]"
-            x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+        <template x-teleport="body">
+            <div x-show="deleteModalOpen" x-cloak
+                class="fixed inset-0 z-[220] flex items-center justify-center bg-black/60 dark:bg-black/80 backdrop-blur-md"
+                @keydown.escape.window="closeDelete()"
+                x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
 
             <div class="w-[290px] rounded-[14px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-black/5 dark:border-white/10"
                 @click.away="closeDelete()" x-transition:enter="transition ease-out duration-200"
@@ -1166,7 +1174,7 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </template>
 
         <!-- Hidden Master Delete Form -->
         <form id="form-delete-master" method="POST" action="" class="hidden">

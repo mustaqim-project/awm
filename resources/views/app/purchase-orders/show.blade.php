@@ -343,80 +343,93 @@
     <!-- 3. SUPERVISOR PIN CANCELLATION MODAL                  -->
     <!-- ===================================================== -->
     @if(\App\Support\Context::hasPermission('purchasing.manage') && $canCancel)
-    <div x-show="cancelModalOpen"
-        x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center bg-black/25 backdrop-blur-[2px] p-4"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0">
+    <template x-teleport="body">
+        <div x-show="cancelModalOpen"
+            x-cloak
+            class="fixed inset-0 z-[200] overflow-y-auto"
+            @keydown.escape.window="cancelModalOpen = false"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="cancel-po-modal-title">
 
-        <div class="w-full max-w-md rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.25)] space-y-4"
-            @click.away="cancelModalOpen = false"
-            x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="opacity-0 scale-95"
-            x-transition:enter-end="opacity-100 scale-100"
-            x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100 scale-100"
-            x-transition:leave-end="opacity-0 scale-95">
+            <!-- Backdrop -->
+            <div x-show="cancelModalOpen"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
-            <div class="px-5 pt-5 pb-3 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
-                <div class="flex items-center gap-2 text-[#FF3B30]">
-                    <i data-lucide="alert-triangle" class="w-5 h-5"></i>
-                    <h3 class="text-[16px] font-semibold text-black dark:text-white">{{ __('purchasing.actions.cancel_po') }}</h3>
+            <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="cancelModalOpen = false">
+                <div class="relative w-full max-w-md rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.25)] space-y-4"
+                    @click.away="cancelModalOpen = false"
+                    x-show="cancelModalOpen"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95">
+
+                    <div class="px-5 pt-5 pb-3 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
+                        <div class="flex items-center gap-2 text-[#FF3B30]">
+                            <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+                            <h3 id="cancel-po-modal-title" class="text-[16px] font-semibold text-black dark:text-white">{{ __('purchasing.actions.cancel_po') }}</h3>
+                        </div>
+                        <button type="button" @click="cancelModalOpen = false" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer" aria-label="{{ __('common.close') ?? 'Close' }}">
+                            <i data-lucide="x" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+
+                    <form action="{{ route('purchase-orders.cancel', $purchaseOrder->id) }}" method="POST" @submit="if(isCancelling) { $event.preventDefault(); return; } isCancelling = true" class="p-5 pt-0 space-y-4 text-[13px]">
+                        @csrf
+                        
+                        <p class="text-[13px] text-black/70 dark:text-white/70 leading-relaxed">
+                            {{ __('purchasing.modals.cancel_warning', ['number' => $purchaseOrder->po_number]) }}
+                        </p>
+
+                        @if($purchaseOrder->status === 'confirmed' && !empty($business->pos_supervisor_pin))
+                        <div>
+                            <label class="block font-medium text-black/70 dark:text-white/70 mb-1">
+                                {{ __('purchasing.fields.supervisor_pin') }} <span class="text-[#FF3B30]">*</span>
+                            </label>
+                            <input type="password" name="supervisor_pin" required placeholder="{{ __('purchasing.placeholders.supervisor_pin') }}"
+                                   class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] text-center tracking-widest font-semibold text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF3B30]/50 transition">
+                        </div>
+                        @endif
+
+                        <div>
+                            <label class="block font-medium text-black/70 dark:text-white/70 mb-1">
+                                {{ __('purchasing.fields.cancel_reason') }} <span class="text-[#FF3B30]">*</span>
+                            </label>
+                            <textarea name="cancel_reason" rows="2" required placeholder="{{ __('purchasing.placeholders.cancel_reason') }}"
+                                      class="w-full bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] p-2.5 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF3B30]/50 transition"></textarea>
+                        </div>
+
+                        <div class="flex items-center justify-end gap-2.5 pt-3 border-t border-black/5 dark:border-white/10">
+                            <button type="button" @click="cancelModalOpen = false" class="min-h-[44px] px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 active:scale-[0.97] transition-all cursor-pointer">
+                                {{ __('purchasing.actions.cancel') }}
+                            </button>
+                            <button type="submit" :disabled="isCancelling" class="min-h-[44px] px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#FF3B30] hover:bg-[#D70015] active:scale-[0.97] active:opacity-80 disabled:opacity-50 transition-all shadow-[0_1px_2px_rgba(255,59,48,0.25)] flex items-center gap-1.5 cursor-pointer">
+                                <template x-if="!isCancelling">
+                                    <i data-lucide="x-circle" class="w-4 h-4"></i>
+                                </template>
+                                <template x-if="isCancelling">
+                                    <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                                    </svg>
+                                </template>
+                                <span x-text="isCancelling ? '{{ __('purchasing.actions.submitting') }}' : '{{ __('purchasing.actions.cancel_po') }}'"></span>
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <button type="button" @click="cancelModalOpen = false" class="min-h-[44px] min-w-[44px] rounded-[8px] text-black/40 hover:text-black dark:text-white/40 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 flex items-center justify-center">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
             </div>
-
-            <form action="{{ route('purchase-orders.cancel', $purchaseOrder->id) }}" method="POST" @submit="if(isCancelling) { $event.preventDefault(); return; } isCancelling = true" class="p-5 pt-0 space-y-4 text-[13px]">
-                @csrf
-                
-                <p class="text-[13px] text-black/70 dark:text-white/70 leading-relaxed">
-                    {{ __('purchasing.modals.cancel_warning', ['number' => $purchaseOrder->po_number]) }}
-                </p>
-
-                @if($purchaseOrder->status === 'confirmed' && !empty($business->pos_supervisor_pin))
-                <div>
-                    <label class="block font-medium text-black/70 dark:text-white/70 mb-1">
-                        {{ __('purchasing.fields.supervisor_pin') }} <span class="text-[#FF3B30]">*</span>
-                    </label>
-                    <input type="password" name="supervisor_pin" required placeholder="{{ __('purchasing.placeholders.supervisor_pin') }}"
-                           class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] text-center tracking-widest font-semibold text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF3B30]/50 transition">
-                </div>
-                @endif
-
-                <div>
-                    <label class="block font-medium text-black/70 dark:text-white/70 mb-1">
-                        {{ __('purchasing.fields.cancel_reason') }} <span class="text-[#FF3B30]">*</span>
-                    </label>
-                    <textarea name="cancel_reason" rows="2" required placeholder="{{ __('purchasing.placeholders.cancel_reason') }}"
-                              class="w-full bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] p-2.5 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF3B30]/50 transition"></textarea>
-                </div>
-
-                <div class="flex items-center justify-end gap-2.5 pt-3 border-t border-black/5 dark:border-white/10">
-                    <button type="button" @click="cancelModalOpen = false" class="min-h-[44px] px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 active:scale-[0.97] transition-all">
-                        {{ __('purchasing.actions.cancel') }}
-                    </button>
-                    <button type="submit" :disabled="isCancelling" class="min-h-[44px] px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#FF3B30] hover:bg-[#D70015] active:scale-[0.97] active:opacity-80 disabled:opacity-50 transition-all shadow-[0_1px_2px_rgba(255,59,48,0.25)] flex items-center gap-1.5">
-                        <template x-if="!isCancelling">
-                            <i data-lucide="x-circle" class="w-4 h-4"></i>
-                        </template>
-                        <template x-if="isCancelling">
-                            <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
-                            </svg>
-                        </template>
-                        <span x-text="isCancelling ? '{{ __('purchasing.actions.submitting') }}' : '{{ __('purchasing.actions.cancel_po') }}'"></span>
-                    </button>
-                </div>
-            </form>
         </div>
-    </div>
+    </template>
     @endif
 
 </div>
