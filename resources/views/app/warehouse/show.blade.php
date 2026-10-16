@@ -1366,7 +1366,7 @@
         </div>
 
         {{-- ===================================================== --}}
-        {{-- 8. APPLE BENTO XXL SHEET: EDIT GUDANG / LOKASI        --}}
+        {{-- 8. APPLE BENTO XXL SHEET: EDIT INFORMASI LOKASI       --}}
         {{-- ===================================================== --}}
         <div x-show="showEditModal" x-cloak
             class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 dark:bg-black/75 backdrop-blur-md p-3 sm:p-6"
@@ -1374,22 +1374,22 @@
             x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
             x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
 
-            <div class="w-full max-w-[94vw] md:max-w-2xl lg:max-w-3xl xl:max-w-4xl max-h-[88vh] rounded-[22px] bg-white/98 dark:bg-[#1C1C1E]/98 backdrop-blur-2xl border border-black/[0.08] dark:border-white/[0.12] shadow-[0_25px_60px_rgba(0,0,0,0.35)] flex flex-col overflow-hidden"
+            <div class="w-full max-w-[94vw] md:max-w-2xl lg:max-w-4xl xl:max-w-5xl max-h-[90vh] rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl flex flex-col overflow-hidden"
                 @click.outside="showEditModal = false" x-transition:enter="transition ease-out duration-200"
                 x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
                 x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100"
                 x-transition:leave-end="opacity-0 scale-95">
 
                 {{-- Modal Header --}}
-                <div class="px-5 py-4 sm:px-6 sm:py-4.5 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between gap-3 shrink-0 bg-slate-50/50 dark:bg-white/[0.02]">
+                <div class="px-5 py-4 sm:px-6 sm:py-4.5 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between gap-3 shrink-0 bg-slate-50/70 dark:bg-[#252528]">
                     <div class="flex items-center gap-3.5">
-                        <div class="w-11 h-11 rounded-[14px] bg-[#007AFF]/12 text-[#007AFF] flex items-center justify-center shrink-0 border border-[#007AFF]/20">
+                        <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0 border border-[#007AFF]/20">
                             <i data-lucide="pencil-line" class="w-5 h-5"></i>
                         </div>
                         <div>
                             <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
                                 <span>{{ __('warehouse.actions.edit_location_title', ['name' => $location->name]) }}</span>
-                                <span class="text-[11px] font-semibold text-[#007AFF] bg-[#007AFF]/12 px-2.5 py-0.5 rounded-full">
+                                <span class="text-[11px] font-semibold text-[#007AFF] bg-[#007AFF]/10 px-2.5 py-0.5 rounded-full">
                                     {{ __('warehouse.actions.edit_location') }}
                                 </span>
                             </h3>
@@ -1399,7 +1399,7 @@
                         </div>
                     </div>
                     <button type="button" @click="showEditModal = false"
-                        class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition cursor-pointer">
+                        class="min-w-[40px] min-h-[40px] w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition cursor-pointer">
                         <i data-lucide="x" class="w-4 h-4"></i>
                     </button>
                 </div>
@@ -1441,25 +1441,23 @@
                     @method('PUT')
                     <input type="hidden" name="operating_hours_json" :value="JSON.stringify(operatingHours)">
                     
-                    <div class="p-5 sm:p-6 overflow-y-auto space-y-4 flex-1 text-xs">
+                    <div class="p-5 sm:p-6 overflow-y-auto space-y-4 flex-1 text-xs pb-10">
                         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
                             
                             {{-- Kolom Kiri (6 Kolom) --}}
                             <div class="lg:col-span-6 space-y-4">
-                                <div class="rounded-[18px] bg-slate-50/80 dark:bg-[#2C2C2E]/60 border border-black/[0.06] dark:border-white/[0.08] p-5 space-y-4">
-                                    <div class="flex items-center gap-2">
+                                <div class="rounded-[18px] bg-slate-50 dark:bg-[#2C2C2E] border border-black/[0.06] dark:border-white/[0.08] p-5 space-y-4">
+                                    <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">
                                         <i data-lucide="info" class="w-4 h-4 text-[#007AFF]"></i>
-                                        <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                                            {{ __('warehouse.sections.general_info') }}
-                                        </span>
+                                        <span>{{ __('warehouse.sections.general_info') }}</span>
                                     </div>
 
                                     <div>
                                         <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-                                            {{ __('warehouse.fields.name') }}
+                                            {{ __('warehouse.fields.name') }} <span class="text-[#FF3B30]">*</span>
                                         </label>
                                         <input type="text" name="name" value="{{ $location->name }}" required
-                                            class="w-full h-11 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.12] rounded-[10px] px-3.5 text-[16px] sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
+                                            class="w-full h-11 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/15 rounded-[10px] px-3.5 text-[16px] sm:text-xs text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
                                     </div>
 
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -1468,17 +1466,17 @@
                                                 {{ __('warehouse.fields.type') }}
                                             </label>
                                             <select name="type"
-                                                class="w-full h-10 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.12] rounded-[10px] px-3 text-[16px] sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
-                                                <option value="warehouse" {{ $location->type === 'warehouse' ? 'selected' : '' }} class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.types.warehouse') }}</option>
-                                                <option value="outlet" {{ $location->type === 'outlet' ? 'selected' : '' }} class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.types.outlet') }}</option>
+                                                class="w-full h-10 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/15 rounded-[10px] px-3 text-[16px] sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
+                                                <option value="warehouse" {{ $location->type === 'warehouse' ? 'selected' : '' }} class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ __('warehouse.types.warehouse') }}</option>
+                                                <option value="outlet" {{ $location->type === 'outlet' ? 'selected' : '' }} class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ __('warehouse.types.outlet') }}</option>
                                                 @if(str_starts_with($business->template_code ?? '', 'fnb_'))
-                                                    <option value="central_kitchen" {{ $location->type === 'central_kitchen' ? 'selected' : '' }} class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.types.central_kitchen') }}</option>
+                                                    <option value="central_kitchen" {{ $location->type === 'central_kitchen' ? 'selected' : '' }} class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ __('warehouse.types.central_kitchen') }}</option>
                                                 @elseif(str_starts_with($business->template_code ?? '', 'mfg_'))
-                                                    <option value="central_kitchen" {{ $location->type === 'central_kitchen' ? 'selected' : '' }} class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.types.central_kitchen_mfg') }}</option>
+                                                    <option value="central_kitchen" {{ $location->type === 'central_kitchen' ? 'selected' : '' }} class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ __('warehouse.types.central_kitchen_mfg') }}</option>
                                                 @elseif(($business->template_code ?? '') === 'service_contractor')
-                                                    <option value="central_kitchen" {{ $location->type === 'central_kitchen' ? 'selected' : '' }} class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.types.central_kitchen_contractor') }}</option>
+                                                    <option value="central_kitchen" {{ $location->type === 'central_kitchen' ? 'selected' : '' }} class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ __('warehouse.types.central_kitchen_contractor') }}</option>
                                                 @elseif($location->type === 'central_kitchen')
-                                                    <option value="central_kitchen" selected class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.types.central_kitchen') }}</option>
+                                                    <option value="central_kitchen" selected class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ __('warehouse.types.central_kitchen') }}</option>
                                                 @endif
                                             </select>
                                         </div>
@@ -1487,7 +1485,7 @@
                                                 {{ __('warehouse.fields.code') }}
                                             </label>
                                             <input type="text" name="code" value="{{ $location->code }}"
-                                                class="w-full h-10 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.12] rounded-[10px] px-3.5 text-[16px] sm:text-xs text-slate-900 dark:text-white font-mono focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
+                                                class="w-full h-10 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/15 rounded-[10px] px-3.5 text-[16px] sm:text-xs text-slate-900 dark:text-white font-mono placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
                                         </div>
                                     </div>
 
@@ -1496,19 +1494,17 @@
                                             {{ __('warehouse.fields.phone') }}
                                         </label>
                                         <input type="text" name="phone" value="{{ $location->phone }}"
-                                            class="w-full h-10 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.12] rounded-[10px] px-3.5 text-[16px] sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
+                                            class="w-full h-10 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/15 rounded-[10px] px-3.5 text-[16px] sm:text-xs text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
                                     </div>
                                 </div>
                             </div>
 
                             {{-- Kolom Kanan (6 Kolom) --}}
                             <div class="lg:col-span-6 space-y-4">
-                                <div class="rounded-[18px] bg-slate-50/80 dark:bg-[#2C2C2E]/60 border border-black/[0.06] dark:border-white/[0.08] p-5 space-y-4">
-                                    <div class="flex items-center gap-2">
+                                <div class="rounded-[18px] bg-slate-50 dark:bg-[#2C2C2E] border border-black/[0.06] dark:border-white/[0.08] p-5 space-y-4">
+                                    <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">
                                         <i data-lucide="map-pin" class="w-4 h-4 text-[#007AFF]"></i>
-                                        <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                                            {{ __('warehouse.sections.address_logistics') }}
-                                        </span>
+                                        <span>{{ __('warehouse.sections.address_logistics') }}</span>
                                     </div>
 
                                     <div>
@@ -1516,7 +1512,7 @@
                                             {{ __('warehouse.fields.address') }}
                                         </label>
                                         <textarea name="address" rows="3"
-                                            class="w-full bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.12] rounded-[10px] p-3 text-[16px] sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition resize-none">{{ $location->address }}</textarea>
+                                            class="w-full bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/15 rounded-[10px] p-3 text-[16px] sm:text-xs text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition resize-none">{{ $location->address }}</textarea>
                                     </div>
 
                                     <div>
@@ -1524,9 +1520,9 @@
                                             {{ __('warehouse.fields.is_active') }}
                                         </label>
                                         <select name="is_active"
-                                            class="w-full h-10 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.12] rounded-[10px] px-3 text-[16px] sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
-                                            <option value="1" {{ $location->is_active ? 'selected' : '' }} class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.badges.active') }}</option>
-                                            <option value="0" {{ !$location->is_active ? 'selected' : '' }} class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.badges.inactive') }}</option>
+                                            class="w-full h-10 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/15 rounded-[10px] px-3 text-[16px] sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
+                                            <option value="1" {{ $location->is_active ? 'selected' : '' }} class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ __('warehouse.badges.active') }}</option>
+                                            <option value="0" {{ !$location->is_active ? 'selected' : '' }} class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ __('warehouse.badges.inactive') }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -1534,33 +1530,33 @@
 
                             {{-- Kolom Penuh: Zona Waktu & Jam Operasional Cabang --}}
                             <div class="lg:col-span-12 space-y-4">
-                                <div class="rounded-[18px] bg-slate-50/80 dark:bg-[#2C2C2E]/60 border border-black/[0.06] dark:border-white/[0.08] p-5 space-y-5">
+                                <div class="rounded-[18px] bg-slate-50 dark:bg-[#2C2C2E] border border-black/[0.06] dark:border-white/[0.08] p-5 space-y-5">
                                     <div class="flex items-center gap-2 border-b border-black/[0.06] dark:border-white/[0.08] pb-3">
                                         <i data-lucide="clock" class="w-4 h-4 text-[#FF9500]"></i>
                                         <span class="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-                                            Zona Waktu &amp; Jam Operasional Cabang
+                                            {{ __('warehouse.sections.timezone_and_hours') }}
                                         </span>
                                     </div>
 
                                     {{-- Timezone Inheritance or Custom --}}
                                     <div class="space-y-2.5">
                                         <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300">
-                                            Pengaturan Zona Waktu Cabang
+                                            {{ __('warehouse.fields.timezone_mode') }}
                                         </label>
                                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                             <label class="flex items-start gap-3 p-3 rounded-[12px] border cursor-pointer transition-all"
-                                                :class="tzMode === 'inherit' ? 'bg-[#007AFF]/10 border-[#007AFF]/30 text-slate-900 dark:text-white' : 'bg-white dark:bg-[#1C1C1E] border-black/[0.08] dark:border-white/[0.12] text-slate-600 dark:text-slate-400'">
+                                                :class="tzMode === 'inherit' ? 'bg-[#007AFF]/10 border-[#007AFF]/30 text-slate-900 dark:text-white' : 'bg-white dark:bg-[#1C1C1E] border-black/10 dark:border-white/15 text-slate-600 dark:text-slate-400'">
                                                 <input type="radio" name="timezone_mode" value="inherit" x-model="tzMode" class="mt-0.5">
                                                 <div>
-                                                    <div class="font-semibold text-xs text-slate-900 dark:text-white">Ikuti Usaha Pusat</div>
+                                                    <div class="font-semibold text-xs text-slate-900 dark:text-white">{{ __('warehouse.timezone_modes.inherit') }}</div>
                                                     <div class="text-[11px] opacity-75">Zona waktu otomatis mengikuti acuan pusat ({{ $business->timezone ?? 'Asia/Jakarta' }})</div>
                                                 </div>
                                             </label>
                                             <label class="flex items-start gap-3 p-3 rounded-[12px] border cursor-pointer transition-all"
-                                                :class="tzMode === 'custom' ? 'bg-[#007AFF]/10 border-[#007AFF]/30 text-slate-900 dark:text-white' : 'bg-white dark:bg-[#1C1C1E] border-black/[0.08] dark:border-white/[0.12] text-slate-600 dark:text-slate-400'">
+                                                :class="tzMode === 'custom' ? 'bg-[#007AFF]/10 border-[#007AFF]/30 text-slate-900 dark:text-white' : 'bg-white dark:bg-[#1C1C1E] border-black/10 dark:border-white/15 text-slate-600 dark:text-slate-400'">
                                                 <input type="radio" name="timezone_mode" value="custom" x-model="tzMode" class="mt-0.5">
                                                 <div>
-                                                    <div class="font-semibold text-xs text-slate-900 dark:text-white">Zona Waktu Khusus</div>
+                                                    <div class="font-semibold text-xs text-slate-900 dark:text-white">{{ __('warehouse.timezone_modes.custom') }}</div>
                                                     <div class="text-[11px] opacity-75">Atur zona waktu berbeda untuk cabang di luar pulau (WITA, WIT, dll.)</div>
                                                 </div>
                                             </label>
@@ -1568,14 +1564,14 @@
 
                                         <div x-show="tzMode === 'custom'" class="pt-2">
                                             <label class="block text-[11px] font-medium text-slate-600 dark:text-slate-400 mb-1">
-                                                Pilih Zona Waktu Cabang Ini
+                                                {{ __('warehouse.fields.timezone') }}
                                             </label>
                                             <select name="timezone" x-model="customTimezone"
-                                                class="w-full h-10 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.12] rounded-[10px] px-3 text-[16px] sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                                class="w-full h-10 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/15 rounded-[10px] px-3 text-[16px] sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                                                 @foreach ($timezones as $groupLabel => $zones)
-                                                    <optgroup label="{{ $groupLabel }}" class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white font-semibold">
+                                                    <optgroup label="{{ $groupLabel }}" class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white font-semibold">
                                                         @foreach ($zones as $zoneId => $zoneName)
-                                                            <option value="{{ $zoneId }}" class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ $zoneName }}</option>
+                                                            <option value="{{ $zoneId }}" class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ $zoneName }}</option>
                                                         @endforeach
                                                     </optgroup>
                                                 @endforeach
@@ -1586,22 +1582,22 @@
                                     {{-- Operating Hours Inheritance or Custom --}}
                                     <div class="space-y-2.5 pt-3 border-t border-black/[0.06] dark:border-white/[0.08]">
                                         <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300">
-                                            Pengaturan Jadwal Jam Kerja Cabang
+                                            {{ __('warehouse.fields.operating_hours_mode') }}
                                         </label>
                                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                             <label class="flex items-start gap-3 p-3 rounded-[12px] border cursor-pointer transition-all"
-                                                :class="ohMode === 'inherit' ? 'bg-[#007AFF]/10 border-[#007AFF]/30 text-slate-900 dark:text-white' : 'bg-white dark:bg-[#1C1C1E] border-black/[0.08] dark:border-white/[0.12] text-slate-600 dark:text-slate-400'">
+                                                :class="ohMode === 'inherit' ? 'bg-[#007AFF]/10 border-[#007AFF]/30 text-slate-900 dark:text-white' : 'bg-white dark:bg-[#1C1C1E] border-black/10 dark:border-white/15 text-slate-600 dark:text-slate-400'">
                                                 <input type="radio" name="operating_hours_mode" value="inherit" x-model="ohMode" class="mt-0.5">
                                                 <div>
-                                                    <div class="font-semibold text-xs text-slate-900 dark:text-white">Ikuti Jam Usaha Pusat</div>
+                                                    <div class="font-semibold text-xs text-slate-900 dark:text-white">{{ __('warehouse.operating_hours_modes.inherit') }}</div>
                                                     <div class="text-[11px] opacity-75">Jadwal buka-tutup cabang ini otomatis sinkron dengan jam operasional bisnis pusat</div>
                                                 </div>
                                             </label>
                                             <label class="flex items-start gap-3 p-3 rounded-[12px] border cursor-pointer transition-all"
-                                                :class="ohMode === 'custom' ? 'bg-[#007AFF]/10 border-[#007AFF]/30 text-slate-900 dark:text-white' : 'bg-white dark:bg-[#1C1C1E] border-black/[0.08] dark:border-white/[0.12] text-slate-600 dark:text-slate-400'">
+                                                :class="ohMode === 'custom' ? 'bg-[#007AFF]/10 border-[#007AFF]/30 text-slate-900 dark:text-white' : 'bg-white dark:bg-[#1C1C1E] border-black/10 dark:border-white/15 text-slate-600 dark:text-slate-400'">
                                                 <input type="radio" name="operating_hours_mode" value="custom" x-model="ohMode" class="mt-0.5">
                                                 <div>
-                                                    <div class="font-semibold text-xs text-slate-900 dark:text-white">Jadwal Khusus Cabang</div>
+                                                    <div class="font-semibold text-xs text-slate-900 dark:text-white">{{ __('warehouse.operating_hours_modes.custom') }}</div>
                                                     <div class="text-[11px] opacity-75">Cabang memiliki jam operasional sendiri yang berbeda dari pusat</div>
                                                 </div>
                                             </label>
@@ -1610,20 +1606,20 @@
                                         {{-- Weekly custom scheduler --}}
                                         <div x-show="ohMode === 'custom'" class="pt-3 space-y-2.5">
                                             <template x-for="(dayData, dayKey) in operatingHours" :key="dayKey">
-                                                <div class="p-3 rounded-[12px] border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-[#1C1C1E] space-y-2">
+                                                <div class="p-3 rounded-[12px] border border-black/10 dark:border-white/15 bg-white dark:bg-[#1C1C1E] space-y-2">
                                                     <div class="flex items-center justify-between">
                                                         <div class="flex items-center gap-2.5">
                                                             <input type="checkbox" x-model="dayData.is_open" class="rounded border-slate-300 text-[#007AFF] focus:ring-[#007AFF]">
                                                             <span class="font-semibold text-xs text-slate-900 dark:text-white" x-text="dayData.day_name"></span>
                                                             <span class="text-[10px] px-1.5 py-0.2 rounded font-medium"
                                                                 :class="dayData.is_open ? 'bg-[#34C759]/10 text-[#34C759]' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'"
-                                                                x-text="dayData.is_open ? 'Buka' : 'Tutup'"></span>
+                                                                x-text="dayData.is_open ? '{{ __('warehouse.hours.open') }}' : '{{ __('warehouse.hours.closed') }}'"></span>
                                                         </div>
                                                         <template x-if="dayData.is_open">
                                                             <button type="button" @click="addPeriod(dayKey)"
                                                                 class="text-[11px] font-semibold text-[#007AFF] hover:underline flex items-center gap-1 cursor-pointer">
                                                                 <i data-lucide="plus" class="w-3 h-3"></i>
-                                                                <span>Tambah Sesi</span>
+                                                                <span>{{ __('warehouse.hours.add_period') }}</span>
                                                             </button>
                                                         </template>
                                                     </div>
@@ -1632,12 +1628,12 @@
                                                         <div class="space-y-1.5 pl-6">
                                                             <template x-for="(period, pIdx) in dayData.periods" :key="pIdx">
                                                                 <div class="flex items-center gap-2">
-                                                                    <input type="time" x-model="period.start" class="h-8 px-2 bg-slate-50 dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[6px] text-xs">
+                                                                    <input type="time" x-model="period.start" class="h-8 px-2 bg-slate-50 dark:bg-[#2C2C2E] border border-black/10 dark:border-white/15 rounded-[6px] text-xs font-mono text-slate-900 dark:text-white">
                                                                     <span class="text-slate-400">-</span>
-                                                                    <input type="time" x-model="period.end" class="h-8 px-2 bg-slate-50 dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[6px] text-xs">
+                                                                    <input type="time" x-model="period.end" class="h-8 px-2 bg-slate-50 dark:bg-[#2C2C2E] border border-black/10 dark:border-white/15 rounded-[6px] text-xs font-mono text-slate-900 dark:text-white">
                                                                     
                                                                     <template x-if="isOvernight(period)">
-                                                                        <span class="px-1.5 py-0.5 rounded text-[9px] font-semibold bg-[#AF52DE]/10 text-[#AF52DE]">Overnight</span>
+                                                                        <span class="px-1.5 py-0.5 rounded text-[9px] font-semibold bg-[#AF52DE]/10 text-[#AF52DE]">{{ __('warehouse.hours.overnight') }}</span>
                                                                     </template>
 
                                                                     <template x-if="dayData.periods.length > 1">
@@ -1646,7 +1642,7 @@
                                                                         </button>
                                                                     </template>
                                                                 </div>
-                                                            </template>
+                              								</template>
                                                         </div>
                                                     </template>
                                                 </div>
@@ -1660,9 +1656,9 @@
                     </div>
 
                     {{-- Modal Footer --}}
-                    <div class="px-5 py-3.5 sm:px-6 sm:py-4 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-end gap-3 shrink-0 bg-slate-50/50 dark:bg-white/[0.02]">
+                    <div class="px-5 py-4 sm:px-6 sm:py-4.5 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-end gap-3 shrink-0 bg-slate-50/80 dark:bg-[#252528]">
                         <button type="button" @click="showEditModal = false"
-                            class="min-h-[44px] h-11 px-5 rounded-[12px] text-xs font-semibold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer">
+                            class="min-h-[44px] h-11 px-5 rounded-[12px] text-xs font-semibold text-slate-700 dark:text-slate-300 bg-slate-200/70 dark:bg-[#3A3A3C] hover:bg-slate-300 dark:hover:bg-[#48484A] transition-colors cursor-pointer">
                             {{ __('warehouse.actions.cancel') }}
                         </button>
                         <button type="submit" :disabled="submitting"
@@ -1693,22 +1689,22 @@
                 x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
                 x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
 
-                <div class="w-full max-w-[94vw] md:max-w-2xl lg:max-w-3xl xl:max-w-4xl max-h-[88vh] rounded-[22px] bg-white/98 dark:bg-[#1C1C1E]/98 backdrop-blur-2xl border border-black/[0.08] dark:border-white/[0.12] shadow-[0_25px_60px_rgba(0,0,0,0.35)] flex flex-col overflow-hidden"
+                <div class="w-full max-w-[94vw] md:max-w-2xl lg:max-w-3xl xl:max-w-4xl max-h-[90vh] rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl flex flex-col overflow-hidden"
                     @click.outside="showAdjustModal = false" x-transition:enter="transition ease-out duration-200"
                     x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
                     x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100"
                     x-transition:leave-end="opacity-0 scale-95">
 
                     {{-- Modal Header --}}
-                    <div class="px-5 py-4 sm:px-6 sm:py-4.5 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between gap-3 shrink-0 bg-slate-50/50 dark:bg-white/[0.02]">
+                    <div class="px-5 py-4 sm:px-6 sm:py-4.5 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between gap-3 shrink-0 bg-slate-50/70 dark:bg-[#252528]">
                         <div class="flex items-center gap-3.5">
-                            <div class="w-11 h-11 rounded-[14px] bg-[#007AFF]/12 text-[#007AFF] flex items-center justify-center shrink-0 border border-[#007AFF]/20">
+                            <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0 border border-[#007AFF]/20">
                                 <i data-lucide="sliders" class="w-5 h-5"></i>
                             </div>
                             <div>
                                 <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
                                     <span>{{ __('warehouse.adjust_modal.title') }}</span>
-                                    <span class="text-[11px] font-semibold text-[#007AFF] bg-[#007AFF]/12 px-2.5 py-0.5 rounded-full" x-text="selectedStock ? selectedStock.product_name : ''"></span>
+                                    <span class="text-[11px] font-semibold text-[#007AFF] bg-[#007AFF]/10 px-2.5 py-0.5 rounded-full" x-text="selectedStock ? selectedStock.product_name : ''"></span>
                                 </h3>
                                 <p class="text-xs text-slate-500 dark:text-slate-400">
                                     {{ __('warehouse.adjust_modal.subtitle') }}
@@ -1716,7 +1712,7 @@
                             </div>
                         </div>
                         <button type="button" @click="showAdjustModal = false"
-                            class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition cursor-pointer">
+                            class="min-w-[40px] min-h-[40px] w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition cursor-pointer">
                             <i data-lucide="x" class="w-4 h-4"></i>
                         </button>
                     </div>
@@ -1726,25 +1722,23 @@
                         <input type="hidden" name="product_id" x-bind:value="selectedStock?.product_id">
                         <input type="hidden" name="location_id" value="{{ $location->id }}">
 
-                        <div class="p-5 sm:p-6 overflow-y-auto space-y-4 flex-1 text-xs">
+                        <div class="p-5 sm:p-6 overflow-y-auto space-y-4 flex-1 text-xs pb-10">
                             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
                                 
                                 {{-- Kolom Kiri: Input Parameter Penyesuaian (6 Kolom) --}}
                                 <div class="lg:col-span-6 space-y-4">
-                                    <div class="rounded-[18px] bg-slate-50/80 dark:bg-[#2C2C2E]/60 border border-black/[0.06] dark:border-white/[0.08] p-5 space-y-4">
-                                        <div class="flex items-center gap-2">
+                                    <div class="rounded-[18px] bg-slate-50 dark:bg-[#2C2C2E] border border-black/[0.06] dark:border-white/[0.08] p-5 space-y-4">
+                                        <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">
                                             <i data-lucide="package" class="w-4 h-4 text-[#007AFF]"></i>
-                                            <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                                                {{ __('warehouse.adjust_modal.section_input') }}
-                                            </span>
+                                            <span>{{ __('warehouse.adjust_modal.section_input') }}</span>
                                         </div>
 
                                         <div>
                                             <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                                                {{ __('warehouse.adjust_modal.field_new_qty') }}
+                                                {{ __('warehouse.adjust_modal.field_new_qty') }} <span class="text-[#FF3B30]">*</span>
                                             </label>
                                             <input type="number" name="new_quantity" step="any" x-model="newQuantity" min="0" required
-                                                class="w-full h-11 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.12] rounded-[10px] px-3.5 text-[16px] sm:text-xs text-slate-900 dark:text-white font-mono tabular-nums font-bold text-sm focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
+                                                class="w-full h-11 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/15 rounded-[10px] px-3.5 text-[16px] sm:text-xs text-slate-900 dark:text-white font-mono tabular-nums font-bold text-sm focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
                                         </div>
 
                                         <div>
@@ -1752,21 +1746,21 @@
                                                 {{ __('warehouse.adjust_modal.field_cost') }}
                                             </label>
                                             <input type="number" name="unit_cost" step="any" x-model="unitCost" min="0"
-                                                class="w-full h-10 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.12] rounded-[10px] px-3.5 text-[16px] sm:text-xs text-slate-900 dark:text-white font-mono tabular-nums focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
+                                                class="w-full h-10 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/15 rounded-[10px] px-3.5 text-[16px] sm:text-xs text-slate-900 dark:text-white font-mono tabular-nums focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
                                         </div>
 
                                         <div>
                                             <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                                                {{ __('warehouse.adjust_modal.field_reason') }}
+                                                {{ __('warehouse.adjust_modal.field_reason') }} <span class="text-[#FF3B30]">*</span>
                                             </label>
                                             <select name="reason_code" x-model="reasonCode" required
-                                                class="w-full h-10 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.12] rounded-[10px] px-3.5 text-[16px] sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
-                                                <option value="opname_variance" class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.adjust_modal.reason_variance') }}</option>
-                                                <option value="damaged" class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.adjust_modal.reason_damaged') }}</option>
-                                                <option value="expired" class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.adjust_modal.reason_expired') }}</option>
-                                                <option value="theft_loss" class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.adjust_modal.reason_theft') }}</option>
-                                                <option value="initial_balance" class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.adjust_modal.reason_initial') }}</option>
-                                                <option value="other" class="bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white">{{ __('warehouse.adjust_modal.reason_other') }}</option>
+                                                class="w-full h-10 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/15 rounded-[10px] px-3.5 text-[16px] sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
+                                                <option value="opname_variance" class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ __('warehouse.adjust_modal.reason_variance') }}</option>
+                                                <option value="damaged" class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ __('warehouse.adjust_modal.reason_damaged') }}</option>
+                                                <option value="expired" class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ __('warehouse.adjust_modal.reason_expired') }}</option>
+                                                <option value="theft_loss" class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ __('warehouse.adjust_modal.reason_theft') }}</option>
+                                                <option value="initial_balance" class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ __('warehouse.adjust_modal.reason_initial') }}</option>
+                                                <option value="other" class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ __('warehouse.adjust_modal.reason_other') }}</option>
                                             </select>
                                         </div>
 
@@ -1777,7 +1771,7 @@
                                             <input type="text" name="notes" x-model="notes"
                                                 :placeholder="reasonCode === 'other' ? '{{ __('warehouse.adjust_modal.placeholder_other') }}' : '{{ __('warehouse.adjust_modal.placeholder_example') }}'"
                                                 :required="reasonCode === 'other'"
-                                                class="w-full h-10 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.12] rounded-[10px] px-3.5 text-[16px] sm:text-xs text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
+                                                class="w-full h-10 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/15 rounded-[10px] px-3.5 text-[16px] sm:text-xs text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
                                             <p x-show="reasonCode === 'other'" class="text-[10px] text-amber-600 dark:text-amber-400 mt-1">
                                                 {{ __('warehouse.adjust_modal.notes_other_warning') }}
                                             </p>
@@ -1809,15 +1803,13 @@
                                 {{-- Kolom Kanan: Bento Live Comparison & Impact Calculation (6 Kolom) --}}
                                 <div class="lg:col-span-6 space-y-4">
                                     <div class="rounded-[18px] bg-slate-50 dark:bg-[#2C2C2E] border border-black/[0.06] dark:border-white/[0.08] p-5 space-y-4">
-                                        <div class="flex items-center gap-2">
+                                        <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">
                                             <i data-lucide="calculator" class="w-4 h-4 text-[#007AFF]"></i>
-                                            <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                                                {{ __('warehouse.adjust_modal.section_impact') }}
-                                            </span>
+                                            <span>{{ __('warehouse.adjust_modal.section_impact') }}</span>
                                         </div>
 
                                         <div class="grid grid-cols-2 gap-3">
-                                            <div class="p-3 rounded-[12px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08]">
+                                            <div class="p-3 rounded-[12px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/15">
                                                 <span class="text-[10px] uppercase font-bold text-slate-400 block mb-0.5">
                                                     {{ __('warehouse.adjust_modal.current_system_stock') }}
                                                 </span>
@@ -1825,7 +1817,7 @@
                                                     <span x-text="Number(selectedStock?.quantity || 0).toLocaleString('id-ID')"></span>
                                                 </span>
                                             </div>
-                                            <div class="p-3 rounded-[12px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08]">
+                                            <div class="p-3 rounded-[12px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/15">
                                                 <span class="text-[10px] uppercase font-bold text-slate-400 block mb-0.5">
                                                     {{ __('warehouse.adjust_modal.new_physical_qty') }}
                                                 </span>
@@ -1867,9 +1859,9 @@
                         </div>
 
                         {{-- Modal Footer --}}
-                        <div class="px-5 py-3.5 sm:px-6 sm:py-4 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-end gap-3 shrink-0 bg-slate-50/50 dark:bg-white/[0.02]">
+                        <div class="px-5 py-4 sm:px-6 sm:py-4.5 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-end gap-3 shrink-0 bg-slate-50/80 dark:bg-[#252528]">
                             <button type="button" @click="showAdjustModal = false"
-                                class="min-h-[44px] h-11 px-5 rounded-[12px] text-xs font-semibold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer">
+                                class="min-h-[44px] h-11 px-5 rounded-[12px] text-xs font-semibold text-slate-700 dark:text-slate-300 bg-slate-200/70 dark:bg-[#3A3A3C] hover:bg-slate-300 dark:hover:bg-[#48484A] transition-colors cursor-pointer">
                                 {{ __('warehouse.actions.cancel') }}
                             </button>
                             <button type="submit" :disabled="submitting"
