@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             CommerceSeeder::class,
             TwentyIndustriesShowcaseSeeder::class,
             CafeKopiSenjaFullSeeder::class,
+            CoffeeShopThreeConditionsSeeder::class,
             DapurSedapRasaSeeder::class,
             PostSeeder::class,
             ServicesAndAutomotiveClusterSeeder::class,
