@@ -86,6 +86,7 @@ return [
     'materials_recipes' => 'Raw Materials & Recipes',
     'inventory_warehouse' => 'Warehouse & Inventory',
     'stocks_warehouse' => 'Stocks & Multi-Warehouse',
+    'warehouse_locations' => 'Warehouse Locations',
     'stock_transfers' => 'Warehouse Stock Transfers',
     'stock_opnames' => 'Physical Stock Opname',
     'stock_movements' => 'Stock Movement Card',

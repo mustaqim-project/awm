@@ -717,20 +717,37 @@
                 class="sidebar-separator w-8 mx-auto my-1 border-t border-black/5 dark:border-white/10">
             </div>
 
-            {{-- 2.1 Stok & Multi-Gudang --}}
+            {{-- 2.1 Stok Persediaan (Stock Inventory) --}}
             @if ($activeBiz?->isModuleEnabled(\App\Domain\Template\ModuleRegistry::MODULE_INVENTORY_WAREHOUSE) ?? true)
                 @if (\App\Support\Context::hasPermission('inventory.view'))
                     <div class="relative group"
                         @mouseenter="if(sidebarCollapsed) activeFlyout = 'stocks'"
                         @mouseleave="activeFlyout = null">
                         <a href="{{ route('inventory.stocks') }}" id="tour-nav-inventory-stocks"
-                            {{ request()->routeIs('inventory.stocks') || request()->routeIs('warehouse.*') ? 'aria-current="page"' : '' }}
+                            {{ request()->routeIs('inventory.stocks') ? 'aria-current="page"' : '' }}
                             :title="sidebarCollapsed ? '{{ __('navigation.stocks_warehouse') }}' : ''"
-                            class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-semibold transition-all active:scale-[0.98] {{ request()->routeIs('inventory.stocks') || request()->routeIs('warehouse.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                            <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('inventory.stocks') || request()->routeIs('warehouse.*') ? 'bg-white/20 text-white' : 'bg-[#FF9500]/15 text-[#FF9500] dark:bg-[#FF9F0A]/20 dark:text-[#FF9F0A]' }} flex items-center justify-center shrink-0">
+                            class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-semibold transition-all active:scale-[0.98] {{ request()->routeIs('inventory.stocks') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
+                            <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('inventory.stocks') ? 'bg-white/20 text-white' : 'bg-[#FF9500]/15 text-[#FF9500] dark:bg-[#FF9F0A]/20 dark:text-[#FF9F0A]' }} flex items-center justify-center shrink-0">
                                 <i data-lucide="boxes" class="w-3.5 h-3.5"></i>
                             </span>
                             <span class="truncate tracking-tight font-semibold" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.stocks_warehouse') }}</span>
+                        </a>
+                    </div>
+                @endif
+
+                {{-- 2.2 Lokasi Gudang (Warehouse Management Hub) --}}
+                @if (\App\Support\Context::hasPermission('warehouse.view') || \App\Support\Context::isOwner())
+                    <div class="relative group"
+                        @mouseenter="if(sidebarCollapsed) activeFlyout = 'warehouses'"
+                        @mouseleave="activeFlyout = null">
+                        <a href="{{ route('warehouse.index') }}" id="tour-nav-warehouses"
+                            {{ request()->routeIs('warehouse.*') ? 'aria-current="page"' : '' }}
+                            :title="sidebarCollapsed ? '{{ __('navigation.warehouse_locations') }}' : ''"
+                            class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('warehouse.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
+                            <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('warehouse.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/12 text-[#007AFF] dark:bg-[#0A84FF]/20 dark:text-[#0A84FF]' }} flex items-center justify-center shrink-0">
+                                <i data-lucide="warehouse" class="w-3.5 h-3.5"></i>
+                            </span>
+                            <span class="truncate tracking-tight font-medium" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.warehouse_locations') }}</span>
                         </a>
                     </div>
                 @endif

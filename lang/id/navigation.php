@@ -86,6 +86,7 @@ return [
     'materials_recipes' => 'Bahan Baku & Resep',
     'inventory_warehouse' => 'Gudang & Stok Persediaan',
     'stocks_warehouse' => 'Stok & Multi-Gudang',
+    'warehouse_locations' => 'Lokasi Gudang',
     'stock_transfers' => 'Transfer Stok Gudang',
     'stock_opnames' => 'Stock Opname Fisik',
     'stock_movements' => 'Kartu Mutasi Stok',

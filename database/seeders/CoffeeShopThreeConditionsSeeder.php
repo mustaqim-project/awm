@@ -63,6 +63,8 @@ final class CoffeeShopThreeConditionsSeeder extends Seeder
                 'pos_enable_tax' => false,
                 'pos_enable_service_charge' => false,
                 'allow_negative_stock' => false,
+                'template_code' => 'fnb_cafe',
+                'disabled_modules' => ['b2b_sales', 'labor_machines'],
             ];
 
             if (! $business) {

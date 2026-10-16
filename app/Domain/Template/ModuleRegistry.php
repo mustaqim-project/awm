@@ -256,7 +256,6 @@ final class ModuleRegistry
             'fnb_cafe' => [
                 self::MODULE_B2B_SALES,
                 self::MODULE_LABOR_MACHINES,
-                self::MODULE_INVENTORY_WAREHOUSE,
             ],
 
             // ─── 2. F&B NON DINE-IN ──────────────────────────────────────────
