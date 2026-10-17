@@ -8,6 +8,7 @@ use App\Domain\Inventory\StockService;
 use App\Http\Controllers\Controller;
 use App\Models\InventoryStock;
 use App\Models\Location;
+use App\Models\Product;
 use App\Models\StockMovement;
 use App\Support\Context;
 use Illuminate\Http\JsonResponse;
@@ -31,6 +32,11 @@ final class InventoryController extends Controller
             ->where('is_active', true)
             ->get(['id', 'name', 'type', 'is_primary']);
 
+        $selectedLocationId = $request->get('location_id');
+        $targetLocation = $selectedLocationId
+            ? $locations->firstWhere('id', $selectedLocationId)
+            : ($locations->firstWhere('is_primary', true) ?? $locations->first());
+
         $query = InventoryStock::where('inventory_stocks.business_id', $business->id)
             ->whereHas('product', fn ($q) => $q->goods())
             ->with(['product.outputUnit', 'product.category', 'location']);
@@ -39,46 +45,32 @@ final class InventoryController extends Controller
             $query->where('inventory_stocks.location_id', $request->get('location_id'));
         }
 
-        if ($request->boolean('low_stock_only')) {
-            $query->whereHas('product', function ($q) {
-                $q->whereRaw('inventory_stocks.quantity <= products.min_stock');
-            });
-        }
+        $existingStocks = $query->get();
+        $coveredProductIds = $existingStocks->pluck('product_id')->filter()->unique()->toArray();
 
-        if ($request->filled('search')) {
-            $search = (string) $request->get('search');
-            $query->whereHas('product', function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                    ->orWhere('code', 'like', "%{$search}%");
-            });
-        }
+        // Include any active goods products that do not have an inventory_stocks record yet for target location
+        $missingGoodsQuery = Product::goods()
+            ->where('business_id', $business->id)
+            ->where('is_active', true)
+            ->whereNotIn('id', $coveredProductIds)
+            ->with(['outputUnit', 'category']);
 
-        $perPage = (int) $request->get('per_page', 25);
-        $stocks = $query->paginate($perPage);
+        $missingGoods = $missingGoodsQuery->get();
 
-        // Low stock count & total valuation (SSOT matching web)
-        $lowStockCount = InventoryStock::where('business_id', $business->id)
-            ->whereHas('product', function ($q) {
-                $q->whereRaw('inventory_stocks.quantity <= products.min_stock');
-            })
-            ->count();
-
-        $totalValuation = (float) (InventoryStock::where('inventory_stocks.business_id', $business->id)
-            ->leftJoin('products', 'products.id', '=', 'inventory_stocks.product_id')
-            ->selectRaw('SUM(inventory_stocks.quantity * COALESCE(NULLIF(inventory_stocks.last_cost, 0), products.base_cost, 0)) as total_val')
-            ->value('total_val') ?? 0.0);
-
-        // Map stock items with computed valuation & status
-        $stockItems = collect($stocks->items())->map(function (InventoryStock $st) {
-            $unitCost = (float) ($st->last_cost > 0 ? $st->last_cost : ($st->product->base_cost ?? 0));
-            $qty = (float) $st->quantity;
-            $minStock = (float) ($st->product->min_stock ?? 0);
+        $stockItems = $existingStocks->map(function (InventoryStock $st) {
+            $unitCost = (float) ($st->last_cost > 0 ? $st->last_cost : ($st->product?->base_cost ?? 0));
+            $physicalQty = (float) $st->quantity;
+            $effStock = $st->product?->calculateEffectiveStock($st->location_id);
+            $qty = $effStock !== null ? (float) $effStock : $physicalQty;
+            $minStock = (float) ($st->product?->min_stock ?? 0);
 
             return [
                 'id' => $st->id,
                 'product_id' => $st->product_id,
                 'location_id' => $st->location_id,
                 'quantity' => $qty,
+                'physical_quantity' => $physicalQty,
+                'effective_stock' => $effStock,
                 'last_cost' => (float) $st->last_cost,
                 'unit_cost' => $unitCost,
                 'total_valuation' => $qty * $unitCost,
@@ -106,21 +98,88 @@ final class InventoryController extends Controller
             ];
         });
 
+        $missingItems = $missingGoods->map(function (Product $prod) use ($targetLocation) {
+            $unitCost = (float) $prod->base_cost;
+            $effStock = $prod->calculateEffectiveStock($targetLocation?->id);
+            $qty = (float) ($effStock ?? 0);
+            $minStock = (float) ($prod->min_stock ?? 0);
+
+            return [
+                'id' => 'virt_' . $prod->id . '_' . ($targetLocation?->id ?? 'default'),
+                'product_id' => $prod->id,
+                'location_id' => $targetLocation?->id,
+                'quantity' => $qty,
+                'physical_quantity' => 0.0,
+                'effective_stock' => $effStock,
+                'last_cost' => $unitCost,
+                'unit_cost' => $unitCost,
+                'total_valuation' => $qty * $unitCost,
+                'is_low_stock' => $qty <= $minStock,
+                'is_out_of_stock' => $qty <= 0,
+                'product' => [
+                    'id' => $prod->id,
+                    'name' => $prod->name,
+                    'code' => $prod->code,
+                    'selling_price' => (float) $prod->selling_price,
+                    'base_cost' => (float) $prod->base_cost,
+                    'min_stock' => $minStock,
+                    'category_name' => $prod->category?->name ?? 'Umum',
+                    'unit_code' => $prod->outputUnit?->code ?? 'pcs',
+                    'image_url' => ($prod->image_url && !str_starts_with($prod->image_url, 'http://') && !str_starts_with($prod->image_url, 'https://'))
+                        ? url($prod->image_url)
+                        : $prod->image_url,
+                ],
+                'location' => $targetLocation ? [
+                    'id' => $targetLocation->id,
+                    'name' => $targetLocation->name,
+                    'type' => $targetLocation->type ?? 'Outlet',
+                    'is_primary' => (bool) $targetLocation->is_primary,
+                ] : null,
+            ];
+        });
+
+        $allItems = $stockItems->concat($missingItems);
+
+        // Apply filters: search and low_stock_only
+        if ($request->filled('search')) {
+            $search = strtolower((string) $request->get('search'));
+            $allItems = $allItems->filter(function ($item) use ($search) {
+                $name = strtolower($item['product']['name'] ?? '');
+                $code = strtolower($item['product']['code'] ?? '');
+                $cat = strtolower($item['product']['category_name'] ?? '');
+                return str_contains($name, $search) || str_contains($code, $search) || str_contains($cat, $search);
+            });
+        }
+
+        if ($request->boolean('low_stock_only')) {
+            $allItems = $allItems->filter(fn ($item) => $item['is_low_stock']);
+        }
+
+        $lowStockCount = $allItems->where('is_low_stock', true)->count();
+        $totalValuation = (float) $allItems->sum('total_valuation');
+
+        $perPage = (int) $request->get('per_page', 50);
+        $page = (int) $request->get('page', 1);
+        $total = $allItems->count();
+        $lastPage = max(1, (int) ceil($total / $perPage));
+        $pagedItems = $allItems->forPage($page, $perPage)->values();
+
         return response()->json([
             'success' => true,
-            'data' => $stockItems,
-            'stocks' => $stockItems,
+            'data' => $pagedItems,
+            'stocks' => $pagedItems,
             'locations' => $locations,
             'meta' => [
                 'low_stock_count' => $lowStockCount,
                 'total_valuation' => $totalValuation,
                 'locations_count' => $locations->count(),
+                'selected_location_id' => $targetLocation?->id,
             ],
             'pagination' => [
-                'current_page' => $stocks->currentPage(),
-                'last_page' => $stocks->lastPage(),
-                'per_page' => $stocks->perPage(),
-                'total' => $stocks->total(),
+                'current_page' => $page,
+                'last_page' => $lastPage,
+                'per_page' => $perPage,
+                'total' => $total,
             ],
         ], Response::HTTP_OK);
     }

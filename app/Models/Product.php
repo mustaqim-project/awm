@@ -674,16 +674,22 @@ class Product extends Model
 
         $locIds = $locationId ? Location::resolveLocationIds($locationId) : null;
 
-        // If Direct Material
+        // 1. Direct Physical Finished Goods Stock for this product
+        $physicalStock = (float) $this->stocks()
+            ->when($locIds, fn ($q) => $q->whereIn('location_id', $locIds))
+            ->sum('quantity');
+
+        // 2. If Direct Material (e.g. Pharmacy / Retail repackaging)
         if ($this->direct_material_id) {
             $query = InventoryStock::where('material_id', $this->direct_material_id);
             if ($locIds) {
                 $query->whereIn('location_id', $locIds);
             }
-            return (float) $query->sum('quantity');
+            $materialStock = (float) $query->sum('quantity');
+            return max(0.0, $physicalStock + $materialStock);
         }
 
-        // If Recipe/BOM: compute minimum producible batches
+        // 3. If Recipe/BOM: compute minimum producible batches from raw materials
         $deductions = $this->getMaterialDeductions(1.0);
         if (!empty($deductions)) {
             $minBatches = null;
@@ -702,15 +708,12 @@ class Product extends Model
                     $minBatches = max(0.0, (float) $batches);
                 }
             }
-            return $minBatches ?? 0.0;
+            $producible = $minBatches ?? 0.0;
+            return max(0.0, $physicalStock + $producible);
         }
 
-        // Fallback for legacy product stock records
-        $query = $this->stocks();
-        if ($locIds) {
-            $query->whereIn('location_id', $locIds);
-        }
-        return (float) $query->sum('quantity');
+        // 4. Standard physical goods stock
+        return max(0.0, $physicalStock);
     }
 
     /**
