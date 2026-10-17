@@ -211,10 +211,14 @@ final class AuthWebController extends Controller
             ]);
         }
 
-        // Jika akun email atau nomor HP ini ternyata sudah berhasil didaftarkan, arahkan ke login
-        if (User::where('email', $pending['email'] ?? '')->orWhere('phone', $pending['phone'])->exists()) {
+        // Jika akun dengan email pendaftaran ini sudah berhasil dibuat, arahkan ke login
+        if (! empty($pending['email']) && User::where('email', $pending['email'])->exists()) {
             $request->session()->forget('pending_registration');
-            return redirect()->route('login')->with('info', 'Pendaftaran akun telah selesai. Silakan masuk dengan kata sandi Anda.');
+            $message = ! empty($pending['google_id'])
+                ? 'Akun Anda telah terdaftar. Silakan masuk menggunakan Google.'
+                : 'Pendaftaran akun telah selesai. Silakan masuk dengan kata sandi Anda.';
+
+            return redirect()->route('login')->with('info', $message);
         }
 
         return view('auth.register-otp', [
@@ -246,6 +250,10 @@ final class AuthWebController extends Controller
         $phone = $this->normalizePhone((string) $validated['phone']);
         if ($phone === null) {
             return back()->withErrors(['phone' => 'Nomor WhatsApp tidak valid. Gunakan format 081234567890 atau 628123456789.'])->withInput();
+        }
+
+        if (User::isPhoneRegistered($phone)) {
+            return back()->withErrors(['phone' => 'Nomor WhatsApp ini sudah terdaftar pada akun lain. Silakan gunakan nomor WhatsApp lain atau masuk ke akun Anda.'])->withInput();
         }
 
         $businessScale = ($validated['business_scale'] ?? Business::SCALE_UMKM) === Business::SCALE_CORPORATE
@@ -492,6 +500,9 @@ final class AuthWebController extends Controller
         }
         if ($phone === $pending['phone']) {
             return back()->withErrors(['phone' => 'Nomor sama dengan nomor sebelumnya. Gunakan nomor lain.'])->withInput();
+        }
+        if (User::isPhoneRegistered($phone)) {
+            return back()->withErrors(['phone' => 'Nomor WhatsApp ini sudah terdaftar pada akun lain. Gunakan nomor lain.'])->withInput();
         }
 
         $otp = (string) random_int(100000, 999999);

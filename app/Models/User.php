@@ -109,6 +109,42 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * Check whether a phone number is already registered by any user.
+     * Robustly matches international (62...), local (08...), and formatted strings.
+     */
+    public static function isPhoneRegistered(?string $phone): bool
+    {
+        if (empty($phone)) {
+            return false;
+        }
+
+        $cleaned = preg_replace('/\D+/', '', $phone) ?? '';
+        if (empty($cleaned)) {
+            return false;
+        }
+
+        if (str_starts_with($cleaned, '8')) {
+            $international = '62' . $cleaned;
+            $local = '0' . $cleaned;
+        } elseif (str_starts_with($cleaned, '0')) {
+            $international = '62' . substr($cleaned, 1);
+            $local = $cleaned;
+        } elseif (str_starts_with($cleaned, '62')) {
+            $international = $cleaned;
+            $local = '0' . substr($cleaned, 2);
+        } else {
+            $international = $cleaned;
+            $local = $cleaned;
+        }
+
+        return self::where('phone', $international)
+            ->orWhere('phone', $local)
+            ->orWhere('phone', $cleaned)
+            ->orWhereRaw("REPLACE(REPLACE(REPLACE(phone, '-', ''), ' ', ''), '+', '') IN (?, ?)", [$international, $local])
+            ->exists();
+    }
+
+    /**
      * Determine if the user has verified their email address.
      * 1. Karyawan / user tambahan pada bisnis TIDAK PERLU verifikasi email.
      * 2. Pengguna yang register dengan Google TIDAK PERLU verifikasi email.

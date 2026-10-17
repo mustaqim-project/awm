@@ -148,6 +148,10 @@ final class GoogleAuthController extends Controller
             return back()->withErrors(['phone' => 'Nomor WhatsApp tidak valid. Gunakan format 081234567890 atau 628123456789.'])->withInput();
         }
 
+        if (User::isPhoneRegistered($phone)) {
+            return back()->withErrors(['phone' => 'Nomor WhatsApp ini sudah terdaftar pada akun lain. Silakan gunakan nomor WhatsApp lain atau masuk ke akun Anda.'])->withInput();
+        }
+
         $businessScale = ($validated['business_scale'] ?? \App\Models\Business::SCALE_UMKM) === \App\Models\Business::SCALE_CORPORATE
             ? \App\Models\Business::SCALE_CORPORATE
             : \App\Models\Business::SCALE_UMKM;
@@ -166,12 +170,7 @@ final class GoogleAuthController extends Controller
         }
 
         $otp = (string) random_int(100000, 999999);
-        $result = $adminWa->sendOtp($phone, $otp);
-        if (! ($result['success'] ?? false)) {
-            return back()->withErrors(['phone' => 'OTP gagal dikirim. Coba lagi.'])->withInput();
-        }
-
-        $request->session()->put('pending_registration', [
+        $pending = [
             ...$pendingGoogle,
             'phone' => $phone,
             'business_name' => $validated['business_name'],
@@ -184,7 +183,19 @@ final class GoogleAuthController extends Controller
             'expires_at' => now()->addMinutes(10)->timestamp,
             'attempts' => 0,
             'last_sent_at' => now()->timestamp,
-        ]);
+        ];
+
+        $result = $adminWa->sendOtp($phone, $otp);
+        if (! ($result['success'] ?? false)) {
+            $pending['otp_hash'] = null;
+            $pending['delivery_error'] = 'OTP gagal dikirim ke WhatsApp. Coba kirim ulang OTP.';
+            $request->session()->put('pending_registration', $pending);
+            $request->session()->forget('pending_google_registration');
+
+            return redirect()->route('register.verify')->with('status', 'Data pendaftaran diterima, namun OTP belum terkirim. Silakan tekan "Kirim ulang OTP".');
+        }
+
+        $request->session()->put('pending_registration', $pending);
         $request->session()->forget('pending_google_registration');
 
         return redirect()->route('register.verify')->with('status', 'Kode OTP telah dikirim ke WhatsApp pemilik bisnis.');
@@ -222,7 +233,9 @@ final class GoogleAuthController extends Controller
     private function normalizePhone(string $phone): ?string
     {
         $phone = preg_replace('/\D+/', '', $phone) ?? '';
-        if (str_starts_with($phone, '0')) {
+        if (str_starts_with($phone, '8')) {
+            $phone = '62' . $phone;
+        } elseif (str_starts_with($phone, '0')) {
             $phone = '62' . substr($phone, 1);
         }
 
