@@ -13,6 +13,7 @@ use App\Models\BusinessMembership;
 use App\Models\BusinessTypeTemplate;
 use App\Models\User;
 use App\Support\Context;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -523,6 +524,87 @@ final class AuthWebController extends Controller
         }
 
         return back()->with('status', 'Nomor WhatsApp diperbarui. OTP baru telah dikirim ke nomor tersebut.');
+    }
+
+    /**
+     * Realtime availability check for business name and phone number during registration.
+     */
+    public function checkAvailability(Request $request): JsonResponse
+    {
+        $response = [
+            'business_name' => null,
+            'phone' => null,
+        ];
+
+        if ($request->has('business_name')) {
+            $name = trim((string) $request->input('business_name', ''));
+            if ($name === '') {
+                $response['business_name'] = [
+                    'valid' => false,
+                    'available' => false,
+                    'status' => 'empty',
+                    'message' => 'Nama usaha wajib diisi.',
+                ];
+            } elseif (mb_strlen($name) < 3) {
+                $response['business_name'] = [
+                    'valid' => false,
+                    'available' => false,
+                    'status' => 'invalid',
+                    'message' => 'Nama usaha minimal 3 karakter.',
+                ];
+            } elseif (Business::where('name', $name)->exists()) {
+                $response['business_name'] = [
+                    'valid' => true,
+                    'available' => false,
+                    'status' => 'unavailable',
+                    'message' => 'Nama usaha sudah digunakan. Silakan gunakan nama lain.',
+                ];
+            } else {
+                $response['business_name'] = [
+                    'valid' => true,
+                    'available' => true,
+                    'status' => 'available',
+                    'message' => 'Nama usaha tersedia.',
+                ];
+            }
+        }
+
+        if ($request->has('phone')) {
+            $rawPhone = trim((string) $request->input('phone', ''));
+            $phone = $this->normalizePhone($rawPhone);
+
+            if ($rawPhone === '') {
+                $response['phone'] = [
+                    'valid' => false,
+                    'available' => false,
+                    'status' => 'empty',
+                    'message' => 'Nomor WhatsApp wajib diisi.',
+                ];
+            } elseif ($phone === null) {
+                $response['phone'] = [
+                    'valid' => false,
+                    'available' => false,
+                    'status' => 'invalid',
+                    'message' => 'Format nomor WhatsApp tidak valid (contoh: 081234567890).',
+                ];
+            } elseif (User::isPhoneRegistered($phone)) {
+                $response['phone'] = [
+                    'valid' => true,
+                    'available' => false,
+                    'status' => 'unavailable',
+                    'message' => 'Nomor WhatsApp ini sudah terdaftar pada akun lain. Silakan gunakan nomor lain atau masuk ke akun Anda.',
+                ];
+            } else {
+                $response['phone'] = [
+                    'valid' => true,
+                    'available' => true,
+                    'status' => 'available',
+                    'message' => 'Nomor WhatsApp valid dan siap menerima OTP.',
+                ];
+            }
+        }
+
+        return response()->json($response);
     }
 
     private function normalizePhone(string $phone): ?string

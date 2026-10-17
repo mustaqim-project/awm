@@ -41,6 +41,11 @@ Route::middleware('guest:web')->group(function (): void {
     Route::get('/register/google', [GoogleAuthController::class, 'showGoogleRegistration'])->name('register.google');
     Route::post('/register/google', [GoogleAuthController::class, 'beginGoogleRegistration'])->middleware('throttle:5,1')->name('register.google.submit');
 
+    // Realtime Registration Availability Check (Business Name & Phone)
+    Route::match(['get', 'post'], '/register/check-availability', [AuthWebController::class, 'checkAvailability'])
+        ->middleware('throttle:120,1')
+        ->name('register.check-availability');
+
     // Password Reset Flow
     Route::get('/forgot-password', [PasswordResetWebController::class, 'create'])->name('password.request');
     Route::post('/forgot-password', [PasswordResetWebController::class, 'store'])->middleware('throttle:3,1')->name('password.email');
