@@ -392,9 +392,5 @@ final class SalesReturnWebController extends Controller
 
         return $pdf->stream($filename);
     }
-
-    public function print(SalesReturn $return): \Illuminate\Http\Response
-    {
-        return $this->pdf($return);
-    }
 }
+

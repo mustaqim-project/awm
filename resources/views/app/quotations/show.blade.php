@@ -72,11 +72,19 @@
             </a>
             @endif
 
-            <!-- Print / Cetak -->
-            <button onclick="window.print()" type="button" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5">
+            <!-- Edit Penawaran -->
+            @if(\App\Support\Context::hasPermission('sales.pipeline') || \App\Support\Context::hasPermission('sales.view'))
+            <a href="{{ route('sales.quotations.edit', $quotation) }}" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5">
+                <i data-lucide="edit-3" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
+                <span>Edit Penawaran</span>
+            </a>
+            @endif
+
+            <!-- Print / Cetak Real PDF -->
+            <a href="{{ route('sales.quotations.pdf', $quotation) }}" target="_blank" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5">
                 <i data-lucide="printer" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
-                <span>{{ __('sales.quotations.btn_print') }}</span>
-            </button>
+                <span>{{ __('sales.quotations.btn_print') }} (PDF)</span>
+            </a>
 
             <!-- WhatsApp Share -->
             @php

@@ -67,12 +67,21 @@
                     </form>
                 @endif
 
-                <!-- Print Button -->
-                <button type="button" onclick="window.print()"
-                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] transition flex items-center gap-1.5">
+                <!-- Edit Button -->
+                @if (\App\Support\Context::hasPermission('sales.pipeline') || \App\Support\Context::hasPermission('sales.view'))
+                    <a href="{{ route('sales.orders.edit', $salesOrder) }}"
+                        class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] transition flex items-center gap-1.5">
+                        <i data-lucide="edit-3" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
+                        <span>Edit Pesanan</span>
+                    </a>
+                @endif
+
+                <!-- Real Server-Rendered DomPDF Print & Download -->
+                <a href="{{ route('sales.orders.pdf', $salesOrder) }}" target="_blank"
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] transition flex items-center gap-1.5">
                     <i data-lucide="printer" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
-                    <span>{{ __('sales.sales_orders.btn_print') }}</span>
-                </button>
+                    <span>{{ __('sales.sales_orders.btn_print') }} (PDF)</span>
+                </a>
 
                 <!-- Back Link -->
                 <a href="{{ route('sales.orders.index') }}"

@@ -152,9 +152,26 @@
                             @endif
                         </td>
                         <td class="px-4 py-3 text-right">
-                            <a href="{{ route('sales.quotations.show', $q) }}" class="h-7 px-2.5 rounded-[6px] text-[12px] font-medium text-[#007AFF] hover:bg-[#007AFF]/8 transition-colors inline-flex items-center">
-                                {{ __('sales.quotations.btn_detail') }}
-                            </a>
+                            <div class="flex items-center justify-end gap-1">
+                                <a href="{{ route('sales.quotations.pdf', $q) }}" target="_blank"
+                                    class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition-colors inline-flex items-center gap-1"
+                                    title="Unduh PDF">
+                                    <i data-lucide="printer" class="w-3.5 h-3.5 text-black/50 dark:text-white/50"></i>
+                                    <span>PDF</span>
+                                </a>
+                                @if (\App\Support\Context::hasPermission('sales.pipeline') || \App\Support\Context::hasPermission('sales.view'))
+                                <a href="{{ route('sales.quotations.edit', $q) }}"
+                                    class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition-colors inline-flex items-center gap-1"
+                                    title="Edit Penawaran">
+                                    <i data-lucide="edit-3" class="w-3.5 h-3.5 text-black/50 dark:text-white/50"></i>
+                                    <span>Edit</span>
+                                </a>
+                                @endif
+                                <a href="{{ route('sales.quotations.show', $q) }}" class="h-7 px-2.5 rounded-[6px] text-[12px] font-medium text-[#007AFF] hover:bg-[#007AFF]/8 transition-colors inline-flex items-center gap-1">
+                                    <span>{{ __('sales.quotations.btn_detail') }}</span>
+                                    <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                                </a>
+                            </div>
                         </td>
                     </tr>
                     @empty

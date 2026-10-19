@@ -131,7 +131,7 @@
                     </svg>
                     <span>{{ __('sales.invoices.print_btn_printer') }}</span>
                 </button>
-                <button id="btnDownloadPdf" onclick="downloadPDF()"
+                <a id="btnDownloadPdf" href="{{ route('invoices.pdf', $invoice->id) }}" target="_blank"
                     class="h-9 px-4 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-semibold shadow-[0_1px_2px_rgba(0,122,255,0.25)] flex items-center gap-1.5 active:scale-[0.97] transition-all cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -140,7 +140,7 @@
                         <line x1="12" y1="15" x2="12" y2="3" />
                     </svg>
                     <span>{{ __('sales.invoices.print_btn_download_direct') }}</span>
-                </button>
+                </a>
             </div>
         </div>
         <div
@@ -471,16 +471,14 @@
                 });
             } else {
                 element.style.padding = prevPadding;
-                window.print();
-            }
+        function downloadPDF() {
+            window.location.href = "{{ route('invoices.pdf', $invoice->id) }}";
         }
 
         window.addEventListener('load', () => {
             const params = new URLSearchParams(window.location.search);
             if (params.get('download') === '1' || params.get('pdf') === '1') {
-                setTimeout(() => {
-                    downloadPDF();
-                }, 500);
+                window.location.href = "{{ route('invoices.pdf', $invoice->id) }}";
             } else if (params.get('print') === '1') {
                 setTimeout(() => {
                     window.print();
