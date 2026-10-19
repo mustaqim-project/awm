@@ -277,7 +277,9 @@ final class InvoiceWebController extends Controller
     public function print(Invoice $invoice): View
     {
         $business = Context::requireBusiness();
-        $invoice->load(['customer', 'purchaseOrder', 'items.unit', 'payments']);
+        abort_unless($invoice->business_id === $business->id, 403);
+
+        $invoice->load(['customer', 'purchaseOrder', 'items.product', 'items.unit', 'payments.creator', 'salesOrder']);
 
         return view('app.invoices.print', compact('business', 'invoice'));
     }
@@ -290,7 +292,7 @@ final class InvoiceWebController extends Controller
         $business = Context::requireBusiness();
         abort_unless($invoice->business_id === $business->id, 403);
 
-        $invoice->load(['customer', 'purchaseOrder', 'items.unit', 'items.product', 'payments']);
+        $invoice->load(['customer', 'purchaseOrder', 'items.product', 'items.unit', 'payments.creator', 'salesOrder']);
 
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.invoice_pdf', [
             'business' => $business,
@@ -495,33 +497,6 @@ final class InvoiceWebController extends Controller
         $errorMsg = $result['error'] ?: 'Gagal mengirim pengingat ke saluran terpilih.';
         return back()->with('error', $errorMsg)->with('wa_url', $result['wa_url'] ?? null);
     }
-
-    /**
-     * Generate and stream PDF for this invoice.
-     */
-    public function pdf(Invoice $invoice): \Illuminate\Http\Response
-    {
-        $business = Context::requireBusiness();
-        abort_unless($invoice->business_id === $business->id, 403);
-
-        $invoice->load(['customer', 'purchaseOrder', 'items.product', 'items.unit', 'payments.creator', 'salesOrder']);
-
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.invoice_pdf', [
-            'business' => $business,
-            'invoice' => $invoice,
-        ])->setPaper('a4', 'portrait');
-
-        $filename = 'Faktur-' . \Illuminate\Support\Str::slug($invoice->invoice_number) . '.pdf';
-
-        return $pdf->stream($filename);
-    }
-
-    /**
-     * Print preview or direct print for this invoice.
-     */
-    public function print(Invoice $invoice): \Illuminate\Http\Response
-    {
-        return $this->pdf($invoice);
-    }
 }
+
 
