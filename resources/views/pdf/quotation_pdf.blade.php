@@ -16,7 +16,7 @@
         body {
             font-size: 10px;
             color: #111827;
-            line-height: 1.45;
+            line-height: 1.5;
             background: #ffffff;
             margin: 0;
             padding: 0;
@@ -57,7 +57,7 @@
             font-size: 9px;
             color: #334155;
             margin-top: 3px;
-            line-height: 1.35;
+            line-height: 1.4;
         }
         .kop-divider {
             margin-top: 8px;
@@ -71,18 +71,18 @@
             border-top: 0.75px solid #0f172a;
         }
 
-        /* 2. Metadata Surat Resmi & Tanggal */
+        /* 2. Metadata Surat & Tanggal */
         .meta-section-table {
             width: 100%;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
         .letter-ref-table td {
             font-size: 10px;
-            padding: 1.5px 0;
+            padding: 2px 0;
             vertical-align: top;
         }
         .ref-label {
-            width: 65px;
+            width: 85px;
             color: #475569;
         }
         .ref-sep {
@@ -100,22 +100,22 @@
             color: #0f172a;
         }
 
-        /* 3. Kepada Yth. & Pembuka */
+        /* 3. Kepada Yth. & Detail Pelanggan */
         .recipient-box {
-            margin-top: 8px;
-            margin-bottom: 12px;
-            line-height: 1.4;
+            margin-top: 4px;
+            margin-bottom: 14px;
+            line-height: 1.45;
         }
         .recipient-greeting {
             font-size: 10px;
             color: #334155;
         }
         .recipient-name {
-            font-size: 10.5px;
+            font-size: 11px;
             font-weight: bold;
             color: #0f172a;
         }
-        .recipient-company {
+        .recipient-attn {
             font-size: 10px;
             font-weight: 600;
             color: #334155;
@@ -123,19 +123,27 @@
         .recipient-address {
             font-size: 9.5px;
             color: #475569;
+            margin-top: 1px;
         }
+        .recipient-phone {
+            font-size: 9px;
+            color: #475569;
+            margin-top: 1px;
+        }
+
+        /* 4. Pembuka Surat */
         .letter-opening {
             font-size: 10px;
             color: #1e293b;
-            margin-bottom: 10px;
-            line-height: 1.45;
+            margin-bottom: 12px;
+            line-height: 1.5;
             text-align: justify;
         }
 
-        /* 4. Tabel Rincian Resmi */
+        /* 5. Tabel Rincian Resmi */
         .official-table {
             width: 100%;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
             border: 1px solid #334155;
         }
         .official-table th {
@@ -145,11 +153,11 @@
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 0.3px;
-            padding: 6px 7px;
+            padding: 8px 8px;
             border: 1px solid #334155;
         }
         .official-table td {
-            padding: 6px 7px;
+            padding: 8px 8px;
             border: 1px solid #cbd5e1;
             font-size: 9.5px;
             color: #1e293b;
@@ -158,58 +166,55 @@
         .item-name {
             font-weight: bold;
             color: #0f172a;
+            font-size: 10px;
         }
         .item-meta {
             font-size: 8.5px;
-            color: #64748b;
-            margin-top: 1px;
-        }
-        .item-notes {
-            font-size: 8.5px;
             color: #475569;
             margin-top: 2px;
-            font-style: italic;
         }
 
-        /* 5. Summary Section */
+        /* 6. Ringkasan & Terbilang */
         .summary-section-table {
             width: 100%;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
+            page-break-inside: avoid;
         }
         .terbilang-box {
-            background-color: #f8fafc;
             border-left: 3px solid #0f172a;
-            padding: 6px 9px;
-            margin-bottom: 8px;
+            background: #f8fafc;
+            padding: 7px 10px;
             font-size: 9.5px;
             color: #1e293b;
             line-height: 1.4;
+            margin-bottom: 10px;
         }
         .terbilang-label {
             font-size: 8.5px;
-            font-weight: bold;
-            color: #475569;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #475569;
+            font-weight: bold;
         }
         .terms-box {
             font-size: 9px;
             color: #334155;
-            line-height: 1.4;
+            line-height: 1.45;
         }
         .terms-box ol {
-            margin: 2px 0 0 16px;
+            margin: 4px 0 0 16px;
             padding: 0;
         }
         .terms-box li {
-            margin-bottom: 2px;
+            margin-bottom: 3px;
         }
 
         .totals-table td {
-            padding: 2.5px 0;
+            padding: 4px 0;
             font-size: 10px;
         }
         .total-lbl {
-            width: 48%;
+            width: 52%;
             color: #475569;
         }
         .total-sep {
@@ -218,31 +223,31 @@
             text-align: center;
         }
         .total-val {
-            width: 46%;
+            width: 42%;
             text-align: right;
             font-weight: 600;
             color: #0f172a;
         }
         .grand-total-row td {
             border-top: 1.5px solid #0f172a;
-            border-bottom: 1.5px solid #0f172a;
-            padding: 5px 0;
+            border-bottom: 2.5px double #0f172a;
+            padding: 6px 0;
             font-size: 11px;
             font-weight: bold;
             color: #0f172a;
         }
 
+        /* 7. Penutup & Tanda Tangan */
         .letter-closing {
             font-size: 10px;
             color: #1e293b;
-            margin-top: 10px;
+            line-height: 1.5;
             margin-bottom: 16px;
-            line-height: 1.45;
+            text-align: justify;
         }
-
-        /* 6. Tanda Tangan */
         .signature-table {
             width: 100%;
+            margin-top: 10px;
             page-break-inside: avoid;
         }
         .sig-box {
@@ -261,7 +266,7 @@
             margin-top: 1px;
         }
         .sig-space {
-            height: 55px;
+            height: 65px;
         }
         .sig-name {
             font-size: 10px;
@@ -276,8 +281,8 @@
         }
 
         .official-footer {
-            margin-top: 18px;
-            padding-top: 6px;
+            margin-top: 22px;
+            padding-top: 8px;
             border-top: 0.5px solid #cbd5e1;
             font-size: 8px;
             color: #64748b;
@@ -288,6 +293,12 @@
 <body>
 
     <!-- KOP SURAT RESMI -->
+    @php
+        $businessContacts = array_filter([
+            !empty($business->phone) ? 'Telp / WhatsApp: ' . $business->phone : null,
+            !empty($business->email) ? 'Email: ' . $business->email : null,
+        ]);
+    @endphp
     <table class="kop-table">
         <tr>
             @if(!empty($business->pdf_logo))
@@ -298,10 +309,9 @@
             <td class="kop-text-cell">
                 <div class="kop-title">{{ $business->name }}</div>
                 <div class="kop-meta">
-                    @if($business->address){{ $business->address }}<br>@endif
-                    @if($business->phone)Telp / WhatsApp: {{ $business->phone }} &bull; @endif
-                    @if($business->email)Email: {{ $business->email }}@endif
-                    @if($business->tax_identification_number)<br>NPWP: {{ $business->tax_identification_number }}@endif
+                    @if(!empty($business->address)){{ $business->address }}<br>@endif
+                    @if(count($businessContacts) > 0){!! implode(' &bull; ', $businessContacts) !!}@endif
+                    @if(!empty($business->tax_identification_number))<br>NPWP: {{ $business->tax_identification_number }}@endif
                 </div>
             </td>
         </tr>
@@ -348,17 +358,30 @@
     </table>
 
     <!-- TUJUAN SURAT (KEPADA YTH.) -->
+    @php
+        $custName = trim((string) ($quotation->customer?->name ?? ''));
+        $custCompany = trim((string) ($quotation->customer?->company_name ?? ($quotation->customer?->company ?? '')));
+        $hasDiffCompany = $custCompany !== '' && strcasecmp($custName, $custCompany) !== 0;
+        $custAddress = trim((string) ($quotation->customer?->address ?? ($quotation->customer?->billing_address ?? '')));
+        $custPhone = trim((string) ($quotation->customer?->phone ?? ''));
+    @endphp
     <div class="recipient-box">
         <div class="recipient-greeting">Kepada Yth.</div>
-        <div class="recipient-name">{{ $quotation->customer?->name ?? 'Pimpinan Perusahaan / Pelanggan' }}</div>
-        @if($quotation->customer?->company_name || $quotation->customer?->company)
-            <div class="recipient-company">{{ $quotation->customer->company_name ?? $quotation->customer->company }}</div>
+        @if($custCompany && !$custName)
+            <div class="recipient-name">{{ $custCompany }}</div>
+        @elseif($custName && !$custCompany)
+            <div class="recipient-name">{{ $custName }}</div>
+        @elseif($custName && $custCompany && !$hasDiffCompany)
+            <div class="recipient-name">{{ $custCompany }}</div>
+        @else
+            <div class="recipient-name">{{ $custCompany }}</div>
+            <div class="recipient-attn">u.p. {{ $custName }}</div>
         @endif
-        @if($quotation->customer?->address)
-            <div class="recipient-address">{{ $quotation->customer->address }}</div>
+        @if($custAddress)
+            <div class="recipient-address">{{ $custAddress }}</div>
         @endif
-        @if($quotation->customer?->phone)
-            <div style="font-size: 9px; color: #475569;">Telp: {{ $quotation->customer->phone }}</div>
+        @if($custPhone)
+            <div class="recipient-phone">Telp / Kontak: {{ $custPhone }}</div>
         @endif
     </div>
 
@@ -368,16 +391,16 @@
         Sehubungan dengan kebutuhan pengadaan produk dan layanan pada perusahaan Bapak/Ibu, bersama ini kami sampaikan rincian penawaran harga resmi dengan perincian sebagai berikut:
     </div>
 
-    <!-- TABEL RINCIAN ITEM -->
+    <!-- TABEL RINCIAN ITEM PENAWARAN -->
     <table class="official-table">
         <thead>
             <tr>
                 <th style="width: 5%; text-align: center;">No.</th>
                 <th style="width: 45%;">Nama Barang / Layanan</th>
-                <th style="width: 9%; text-align: center;">Satuan</th>
-                <th style="width: 9%; text-align: right;">Jumlah</th>
-                <th style="width: 16%; text-align: right;">Harga Satuan (Rp)</th>
-                <th style="width: 16%; text-align: right;">Total Harga (Rp)</th>
+                <th style="width: 10%; text-align: center;">Satuan</th>
+                <th style="width: 10%; text-align: center;">Jumlah</th>
+                <th style="width: 15%; text-align: right;">Harga Satuan (Rp)</th>
+                <th style="width: 15%; text-align: right;">Total Harga (Rp)</th>
             </tr>
         </thead>
         <tbody>
@@ -385,18 +408,18 @@
             <tr>
                 <td style="text-align: center; color: #475569;">{{ $idx + 1 }}.</td>
                 <td>
-                    <div class="item-name">{{ $item->product_name }}</div>
-                    @if($item->product?->code || $item->product?->sku)
-                        <div class="item-meta">Kode: {{ $item->product->code ?? $item->product->sku }}</div>
+                    <div class="item-name">{{ $item->item_name ?? ($item->product_name ?? $item->product?->name) }}</div>
+                    @if($item->sku ?? ($item->product?->code ?? $item->product?->sku))
+                        <div class="item-meta">Kode: {{ $item->sku ?? ($item->product?->code ?? $item->product?->sku) }}</div>
                     @endif
-                    @if($item->notes)
-                        <div class="item-notes">{{ $item->notes }}</div>
+                    @if($item->description)
+                        <div class="item-meta">{{ $item->description }}</div>
                     @endif
                 </td>
                 <td style="text-align: center;">
                     {{ $item->product?->outputUnit?->code ?? ($item->product?->unit ?? 'Pcs') }}
                 </td>
-                <td style="text-align: right; font-weight: bold;">
+                <td style="text-align: center; font-weight: bold; color: #0f172a;">
                     {{ (float) $item->quantity == (int) $item->quantity ? number_format((float) $item->quantity, 0, ',', '.') : rtrim(rtrim(number_format((float) $item->quantity, 2, ',', '.'), '0'), ',') }}
                 </td>
                 <td style="text-align: right;">
@@ -408,7 +431,7 @@
             </tr>
             @empty
             <tr>
-                <td colspan="6" style="text-align: center; padding: 16px; color: #64748b;">Tidak ada rincian item penawaran.</td>
+                <td colspan="6" style="text-align: center; padding: 18px; color: #64748b;">Tidak ada rincian item penawaran.</td>
             </tr>
             @endforelse
         </tbody>
@@ -484,10 +507,10 @@
         <tr>
             <td class="sig-box">
                 <div class="sig-title">Menyetujui / Diterima oleh,</div>
-                <div class="sig-company">{{ $quotation->customer?->company_name ?? ($quotation->customer?->name ?? 'Pihak Pemesan') }}</div>
+                <div class="sig-company">{{ $custCompany ?: ($custName ?: 'Pihak Pemesan') }}</div>
                 <div class="sig-space"></div>
-                <div class="sig-name">( {{ $quotation->customer?->name ?? '..................................................' }} )</div>
-                <div class="sig-caption">Tanda Tangan &amp; Cap Perusahaan</div>
+                <div class="sig-name">( {{ ($custName && $hasDiffCompany) ? $custName : '..................................................' }} )</div>
+                <div class="sig-caption">{{ ($custName && $hasDiffCompany) ? 'Tanda Tangan & Cap Perusahaan' : 'Nama Terang & Cap Perusahaan' }}</div>
             </td>
             <td style="width: 10%;"></td>
             <td class="sig-box">
