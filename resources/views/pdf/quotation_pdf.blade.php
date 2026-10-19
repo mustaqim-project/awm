@@ -7,13 +7,11 @@
     <style>
         @page {
             size: a4 portrait;
-            margin: 24mm 24mm 22mm 24mm;
+            margin: 20mm;
         }
         * {
             box-sizing: border-box;
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            margin: 0;
-            padding: 0;
         }
         body {
             font-size: 10.5px;
