@@ -52,11 +52,18 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 
 #### 2. What Was Done
 - **Harmonisasi Template PDF DomPDF (`resources/views/pdf/`):**
-  - **Pelebaran Margin Halaman (@page margin):** Menambah margin halaman pada seluruh 4 template dari `12mm 14mm 12mm 14mm` menjadi `20mm 22mm 20mm 22mm` (atas 20mm, kanan 22mm, bawah 20mm, kiri 22mm). Hal ini memberi ruang nafas yang elegan, memastikan dokumen tidak mepet ke tepi kertas saat dicetak fisik (bebas risiko terpotong batas cetak printer maupun binder lubang kertas).
+  - **Pelebaran Margin Halaman Bebas Mepet:** Menambah margin `@page` pada seluruh 4 template menjadi `24mm 24mm 22mm 24mm` (atas 2.4 cm, kanan 2.4 cm, bawah 2.2 cm, kiri 2.4 cm). Menghilangkan kesan mepet pinggir, memberikan frame putih bersih yang presisi pada kertas A4 tanpa overflow ke halaman berikutnya.
+  - **Nama Bisnis Mengikuti Casing Database (Tanpa Force Uppercase):** Menghapus CSS `text-transform: uppercase` pada `.brand-name` di seluruh 4 berkas. Nama perusahaan kini tampil alami sesuai inputan database (misal: "Cooca Indonesia", bukan dipaksa huruf kapital semua "COOCA INDONESIA").
+  - **Standarisasi Judul Dokumen Sesuai KBBI & PUEBI (Title Case, Tanpa Singkatan):**
+    - Faktur: `Faktur Penjualan` (bukan kapital semua `FAKTUR PENJUALAN`).
+    - Pesanan Penjualan: `Pesanan Penjualan` (bukan `PESANAN PENJUALAN (SO)`, singkatan dieliminasi).
+    - Penawaran: `Surat Penawaran` (bukan `SURAT PENAWARAN HARGA`, ringkas & baku sesuai KBBI).
+    - Retur: `Retur Penjualan` (bukan `NOTA RETUR PENJUALAN` atau `BUKTI RETUR PENJUALAN`).
+    - Menghapus CSS `text-transform: uppercase` pada `.doc-title` di keempat template.
   - **`invoice_pdf.blade.php`**: Dirombak ke standar korporat formal bergaris ganda atas/bawah `#0f172a`, kop surat profesional dengan logo Base64 dan NPWP, metadata pelanggan 2-kolom, tabel item 6-kolom (No, Deskripsi, Satuan, Kuantitas, Harga Satuan, Subtotal), rincian rekening pembayaran bergaris kiri tebal `#0f172a`, ringkasan total formal, dan blok tanda tangan ganda.
   - **`sales_order_pdf.blade.php`**: Diselaraskan 100% mengikuti format Faktur Penjualan (identik dalam ukuran font, warna `#0f172a`, padding tabel, perlakuan diskon/pajak/ongkir, kotak catatan & syarat ketentuan, dan tanda tangan).
-  - **`quotation_pdf.blade.php`**: Diselaraskan 100% mengikuti format Faktur Penjualan (judul SURAT PENAWARAN HARGA, masa berlaku, syarat pembayaran/termin, kotak catatan penawaran, dan tanda tangan persetujuan klien).
-  - **`sales_return_pdf.blade.php`**: Diselaraskan 100% mengikuti format Faktur Penjualan (judul BUKTI RETUR PENJUALAN, nomor faktur/POS rujukan, rincian barang retur beserta alasan & kondisi, metode kompensasi, dan tanda tangan penerimaan gudang/manajer).
+  - **`quotation_pdf.blade.php`**: Diselaraskan 100% mengikuti format Faktur Penjualan (judul Surat Penawaran, masa berlaku, syarat pembayaran/termin, kotak catatan penawaran, dan tanda tangan persetujuan klien).
+  - **`sales_return_pdf.blade.php`**: Diselaraskan 100% mengikuti format Faktur Penjualan (judul Retur Penjualan, nomor faktur/POS rujukan, rincian barang retur beserta alasan & kondisi, metode kompensasi, dan tanda tangan penerimaan gudang/manajer).
 - **Penyesuaian Automated Feature Tests:**
   - `tests/Feature/Commerce/InvoiceTest.php`: Memperbarui assertion pada endpoint `/print` untuk memverifikasi streaming PDF (`application/pdf` dan `%PDF`), serta endpoint `/export-excel?format=csv` untuk pengujian format CSV.
   - `tests/Feature/InvoiceDraftEditAndPartiesTest.php`: Memperbarui pengujian invoice non-editable untuk memastikan faktur berstatus `paid` dengan pembayaran tercatat terkunci dari perubahan.

@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>PESANAN PENJUALAN #{{ $salesOrder->so_number }} - {{ $business->name }}</title>
+    <title>Pesanan Penjualan #{{ $salesOrder->so_number }} - {{ $business->name }}</title>
     <style>
         @page {
             size: a4 portrait;
-            margin: 20mm 22mm 20mm 22mm;
+            margin: 24mm 24mm 22mm 24mm;
         }
         * {
             box-sizing: border-box;
@@ -45,9 +45,8 @@
             font-size: 14px;
             font-weight: 800;
             color: #020617;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            line-height: 1.2;
+            letter-spacing: 0.2px;
+            line-height: 1.25;
         }
         .brand-meta {
             font-size: 9.5px;
@@ -60,8 +59,7 @@
             font-weight: 800;
             color: #020617;
             text-align: right;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
+            letter-spacing: 0.3px;
             margin: 0;
         }
         .doc-number {
@@ -311,7 +309,7 @@
                 </div>
             </td>
             <td style="width: 44%; vertical-align: top; text-align: right;">
-                <div class="doc-title">PESANAN PENJUALAN (SO)</div>
+                <div class="doc-title">Pesanan Penjualan</div>
                 <div class="doc-number">No: {{ $salesOrder->so_number }}</div>
                 @if($salesOrder->quotation)
                     <div class="doc-ref">Ref. Penawaran: {{ $salesOrder->quotation->quotation_number }}</div>
