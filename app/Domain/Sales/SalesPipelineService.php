@@ -100,6 +100,9 @@ final class SalesPipelineService
                 'tax_amount' => $taxAmount,
                 'total_amount' => $totalAmount,
                 'status' => $data['status'] ?? Quotation::STATUS_SENT,
+                'sender_name' => $data['sender_name'] ?? null,
+                'recipient_name' => $data['recipient_name'] ?? null,
+                'created_by' => $data['created_by'] ?? auth()->id(),
                 'notes' => $data['notes'] ?? null,
                 'terms_and_conditions' => $data['terms_and_conditions'] ?? null,
             ]);
@@ -171,6 +174,8 @@ final class SalesPipelineService
                 'tax_amount' => $taxAmount,
                 'total_amount' => $totalAmount,
                 'status' => $data['status'] ?? $quotation->status,
+                'sender_name' => array_key_exists('sender_name', $data) ? $data['sender_name'] : $quotation->sender_name,
+                'recipient_name' => array_key_exists('recipient_name', $data) ? $data['recipient_name'] : $quotation->recipient_name,
                 'notes' => $data['notes'] ?? $quotation->notes,
                 'terms_and_conditions' => $data['terms_and_conditions'] ?? $quotation->terms_and_conditions,
             ]);
@@ -224,6 +229,9 @@ final class SalesPipelineService
                 'tax_amount' => $quotation->tax_amount,
                 'total_amount' => $quotation->total_amount,
                 'status' => SalesOrder::STATUS_CONFIRMED,
+                'sender_name' => $quotation->sender_name,
+                'recipient_name' => $quotation->recipient_name,
+                'created_by' => auth()->id() ?? $quotation->created_by,
                 'notes' => "Dikonversi dari Penawaran: {$quotation->quotation_number}",
             ]);
 
@@ -285,6 +293,9 @@ final class SalesPipelineService
                 'total_amount' => $totalAmount,
                 'status' => $data['status'] ?? SalesOrder::STATUS_CONFIRMED,
                 'shipping_address' => $data['shipping_address'] ?? null,
+                'sender_name' => $data['sender_name'] ?? null,
+                'recipient_name' => $data['recipient_name'] ?? null,
+                'created_by' => $data['created_by'] ?? auth()->id(),
                 'notes' => $data['notes'] ?? null,
             ]);
 
@@ -357,6 +368,8 @@ final class SalesPipelineService
                 'tax_amount' => $taxAmount,
                 'total_amount' => $totalAmount,
                 'status' => $data['status'] ?? $salesOrder->status,
+                'sender_name' => array_key_exists('sender_name', $data) ? $data['sender_name'] : $salesOrder->sender_name,
+                'recipient_name' => array_key_exists('recipient_name', $data) ? $data['recipient_name'] : $salesOrder->recipient_name,
                 'notes' => $data['notes'] ?? $salesOrder->notes,
             ]);
 
@@ -479,6 +492,9 @@ final class SalesPipelineService
                 'total_hpp_cost' => $totalHpp,
                 'total_gross_profit' => $grossProfit,
                 'payment_terms' => 'Net 14',
+                'sender_name' => $salesOrder->sender_name,
+                'recipient_name' => $salesOrder->recipient_name,
+                'created_by' => auth()->id() ?? $salesOrder->created_by,
                 'notes' => "Diterbitkan dari Pesanan Penjualan: {$salesOrder->so_number}",
             ]);
 

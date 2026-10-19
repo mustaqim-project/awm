@@ -395,7 +395,8 @@
 
     <!-- TUJUAN PENAGIHAN (KEPADA YTH.) -->
     @php
-        $custName = trim((string) ($invoice->recipient_name ?: ($invoice->customer?->name ?? '')));
+        $recipientExplicit = trim((string) ($invoice->recipient_name ?? ''));
+        $custName = $recipientExplicit ?: trim((string) ($invoice->customer?->name ?? ''));
         $custCompany = trim((string) ($invoice->customer?->company_name ?? ($invoice->customer?->company ?? '')));
         $hasDiffCompany = $custCompany !== '' && strcasecmp($custName, $custCompany) !== 0;
         $custAddress = trim((string) ($invoice->customer?->billing_address ?? ($invoice->customer?->address ?? '')));
@@ -552,21 +553,27 @@
     </table>
 
     <!-- TANDA TANGAN RESMI -->
+    @php
+        $senderSignatory = trim((string) ($invoice->sender_name ?? ''));
+        if (!$senderSignatory) {
+            $senderSignatory = trim((string) ($invoice->creator?->name ?? ($business->owner?->name ?? '')));
+        }
+    @endphp
     <table class="signature-table">
         <tr>
             <td class="sig-box">
                 <div class="sig-title">Penerima / Pembeli,</div>
                 <div class="sig-company">{{ $custCompany ?: ($custName ?: 'Pihak Pembeli') }}</div>
                 <div class="sig-space"></div>
-                <div class="sig-name">( {{ ($custName && $hasDiffCompany) ? $custName : '..................................................' }} )</div>
-                <div class="sig-caption">{{ ($custName && $hasDiffCompany) ? 'Tanda Tangan & Cap Perusahaan' : 'Nama Terang & Cap Perusahaan' }}</div>
+                <div class="sig-name">( {{ ($custName && $hasDiffCompany) ? $custName : ($recipientExplicit ?: '..................................................') }} )</div>
+                <div class="sig-caption">{{ ($custName && $hasDiffCompany) || $recipientExplicit ? 'Tanda Tangan & Cap Perusahaan' : 'Nama Terang & Cap Perusahaan' }}</div>
             </td>
             <td style="width: 10%;"></td>
             <td class="sig-box">
                 <div class="sig-title">Hormat kami,</div>
                 <div class="sig-company">{{ $business->name }}</div>
                 <div class="sig-space"></div>
-                <div class="sig-name">( {{ $invoice->sender_name ?: '..................................................' }} )</div>
+                <div class="sig-name">( {{ $senderSignatory ?: '..................................................' }} )</div>
                 <div class="sig-caption">Bagian Keuangan &amp; Administrasi</div>
             </td>
         </tr>

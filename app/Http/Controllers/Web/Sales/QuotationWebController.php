@@ -63,6 +63,8 @@ final class QuotationWebController extends Controller
         $validated = $request->validate([
             'customer_id' => ['required', 'exists:customers,id'],
             'quotation_number' => ['nullable', 'string', 'max:64'],
+            'sender_name' => ['nullable', 'string', 'max:150'],
+            'recipient_name' => ['nullable', 'string', 'max:150'],
             'date' => ['required', 'date'],
             'expiry_date' => ['nullable', 'date', 'after_or_equal:date'],
             'discount_amount' => ['nullable', 'numeric', 'min:0'],
@@ -130,6 +132,8 @@ final class QuotationWebController extends Controller
         $validated = $request->validate([
             'customer_id' => ['required', 'exists:customers,id'],
             'quotation_number' => ['nullable', 'string', 'max:64'],
+            'sender_name' => ['nullable', 'string', 'max:150'],
+            'recipient_name' => ['nullable', 'string', 'max:150'],
             'date' => ['required', 'date'],
             'expiry_date' => ['nullable', 'date', 'after_or_equal:date'],
             'discount_amount' => ['nullable', 'numeric', 'min:0'],

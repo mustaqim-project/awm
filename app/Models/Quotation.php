@@ -26,6 +26,8 @@ final class Quotation extends Model
         'business_id',
         'customer_id',
         'quotation_number',
+        'sender_name',
+        'recipient_name',
         'date',
         'expiry_date',
         'subtotal',
@@ -35,6 +37,7 @@ final class Quotation extends Model
         'status',
         'notes',
         'terms_and_conditions',
+        'created_by',
     ];
 
     protected $casts = [
@@ -49,6 +52,11 @@ final class Quotation extends Model
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function creator(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by');
     }
 
     public function items(): HasMany

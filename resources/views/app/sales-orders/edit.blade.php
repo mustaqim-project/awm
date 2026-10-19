@@ -140,12 +140,30 @@
                     </select>
                 </div>
 
-                <div class="sm:col-span-2 lg:col-span-3">
+                <div class="sm:col-span-2 lg:col-span-4">
                     <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">
                         {{ __('sales.sales_orders.shipping_address_label') }}
                     </label>
                     <textarea name="shipping_address" rows="2" placeholder="{{ __('sales.sales_orders.shipping_address_placeholder') }}"
                               class="w-full bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] p-3 text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">{{ old('shipping_address', $salesOrder->shipping_address) }}</textarea>
+                </div>
+
+                <div class="sm:col-span-1 lg:col-span-2">
+                    <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">
+                        Nama Penandatangan <span class="text-black/40 dark:text-white/40 font-normal">(Default)</span>
+                    </label>
+                    <input type="text" name="sender_name" value="{{ old('sender_name', $salesOrder->sender_name ?? (auth()->user()?->name ?: $business->name)) }}"
+                           placeholder="{{ auth()->user()?->name ?: $business->name }}"
+                           class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                </div>
+
+                <div class="sm:col-span-1 lg:col-span-2">
+                    <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">
+                        Nama Penerima <span class="text-black/40 dark:text-white/40 font-normal">(u.p. PIC Pelanggan)</span>
+                    </label>
+                    <input type="text" name="recipient_name" value="{{ old('recipient_name', $salesOrder->recipient_name) }}"
+                           placeholder="u.p. Nama PIC Pelanggan"
+                           class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                 </div>
             </div>
         </div>

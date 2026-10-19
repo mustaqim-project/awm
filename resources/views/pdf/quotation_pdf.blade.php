@@ -389,7 +389,8 @@
 
     <!-- TUJUAN SURAT (KEPADA YTH.) -->
     @php
-        $custName = trim((string) ($quotation->customer?->name ?? ''));
+        $recipientExplicit = trim((string) ($quotation->recipient_name ?? ''));
+        $custName = $recipientExplicit ?: trim((string) ($quotation->customer?->name ?? ''));
         $custCompany = trim((string) ($quotation->customer?->company_name ?? ($quotation->customer?->company ?? '')));
         $hasDiffCompany = $custCompany !== '' && strcasecmp($custName, $custCompany) !== 0;
         $custAddress = trim((string) ($quotation->customer?->address ?? ($quotation->customer?->billing_address ?? '')));
@@ -533,21 +534,27 @@
     </div>
 
     <!-- TANDA TANGAN RESMI -->
+    @php
+        $senderSignatory = trim((string) ($quotation->sender_name ?? ''));
+        if (!$senderSignatory) {
+            $senderSignatory = trim((string) ($quotation->creator?->name ?? ($business->owner?->name ?? '')));
+        }
+    @endphp
     <table class="signature-table">
         <tr>
             <td class="sig-box">
                 <div class="sig-title">Menyetujui / Diterima oleh,</div>
                 <div class="sig-company">{{ $custCompany ?: ($custName ?: 'Pihak Pemesan') }}</div>
                 <div class="sig-space"></div>
-                <div class="sig-name">( {{ ($custName && $hasDiffCompany) ? $custName : '..................................................' }} )</div>
-                <div class="sig-caption">{{ ($custName && $hasDiffCompany) ? 'Tanda Tangan & Cap Perusahaan' : 'Nama Terang & Cap Perusahaan' }}</div>
+                <div class="sig-name">( {{ ($custName && $hasDiffCompany) ? $custName : ($recipientExplicit ?: '..................................................') }} )</div>
+                <div class="sig-caption">{{ ($custName && $hasDiffCompany) || $recipientExplicit ? 'Tanda Tangan & Cap Perusahaan' : 'Nama Terang & Cap Perusahaan' }}</div>
             </td>
             <td style="width: 10%;"></td>
             <td class="sig-box">
                 <div class="sig-title">Hormat kami,</div>
                 <div class="sig-company">{{ $business->name }}</div>
                 <div class="sig-space"></div>
-                <div class="sig-name">( .................................................. )</div>
+                <div class="sig-name">( {{ $senderSignatory ?: '..................................................' }} )</div>
                 <div class="sig-caption">Bagian Penjualan &amp; Kemitraan</div>
             </td>
         </tr>

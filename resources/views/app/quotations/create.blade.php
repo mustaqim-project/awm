@@ -69,6 +69,20 @@
                     <input type="date" name="expiry_date" value="{{ date('Y-m-d', strtotime('+14 days')) }}"
                            class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                 </div>
+
+                <div class="sm:col-span-2">
+                    <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1">Nama Penandatangan <span class="text-black/40 dark:text-white/40 font-normal">(Default)</span></label>
+                    <input type="text" name="sender_name" value="{{ old('sender_name', auth()->user()?->name ?: $business->name) }}"
+                           placeholder="{{ auth()->user()?->name ?: $business->name }}"
+                           class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                </div>
+
+                <div class="sm:col-span-2">
+                    <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1">Nama Penerima <span class="text-black/40 dark:text-white/40 font-normal">(u.p. PIC Pelanggan)</span></label>
+                    <input type="text" name="recipient_name" value="{{ old('recipient_name') }}"
+                           placeholder="u.p. Nama PIC Pelanggan"
+                           class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                </div>
             </div>
         </div>
 

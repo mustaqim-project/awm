@@ -259,4 +259,91 @@ final class PdfLetterTemplatesTest extends TestCase
         $response = $this->actingAs($otherUser)->get(route('invoices.pdf', $invoice));
         $response->assertStatus(403);
     }
+
+    public function test_sales_order_and_quotation_support_custom_and_default_signatory(): void
+    {
+        // 1. Sales order with explicit sender_name and recipient_name
+        $soCustom = SalesOrder::create([
+            'business_id'      => $this->business->id,
+            'customer_id'      => $this->customer->id,
+            'so_number'        => 'SO-CUSTOM-01',
+            'order_date'       => now()->toDateString(),
+            'status'           => SalesOrder::STATUS_CONFIRMED,
+            'subtotal'         => 500000,
+            'total_amount'     => 500000,
+            'sender_name'      => 'Ahmad Logistik',
+            'recipient_name'   => 'Ibu Siti Purchasing',
+            'created_by'       => $this->user->id,
+        ]);
+
+        $renderedSoHtml = view('pdf.sales_order_pdf', [
+            'salesOrder' => $soCustom,
+            'business'   => $this->business,
+        ])->render();
+
+        $this->assertStringContainsString('Ahmad Logistik', $renderedSoHtml);
+        $this->assertStringContainsString('Ibu Siti Purchasing', $renderedSoHtml);
+
+        // 2. Sales order with null sender_name falls back to creator's name
+        $soDefault = SalesOrder::create([
+            'business_id'      => $this->business->id,
+            'customer_id'      => $this->customer->id,
+            'so_number'        => 'SO-DEFAULT-02',
+            'order_date'       => now()->toDateString(),
+            'status'           => SalesOrder::STATUS_CONFIRMED,
+            'subtotal'         => 500000,
+            'total_amount'     => 500000,
+            'sender_name'      => null,
+            'created_by'       => $this->user->id,
+        ]);
+
+        $renderedSoDefaultHtml = view('pdf.sales_order_pdf', [
+            'salesOrder' => $soDefault,
+            'business'   => $this->business,
+        ])->render();
+
+        $this->assertStringContainsString($this->user->name, $renderedSoDefaultHtml);
+
+        // 3. Quotation with explicit sender_name and recipient_name
+        $quoCustom = Quotation::create([
+            'business_id'      => $this->business->id,
+            'customer_id'      => $this->customer->id,
+            'quotation_number' => 'QUO-CUSTOM-01',
+            'date'             => now()->toDateString(),
+            'status'           => Quotation::STATUS_DRAFT,
+            'subtotal'         => 500000,
+            'total_amount'     => 500000,
+            'sender_name'      => 'Bambang Sales Manager',
+            'recipient_name'   => 'Bapak Hendra Direksi',
+            'created_by'       => $this->user->id,
+        ]);
+
+        $renderedQuoHtml = view('pdf.quotation_pdf', [
+            'quotation' => $quoCustom,
+            'business'  => $this->business,
+        ])->render();
+
+        $this->assertStringContainsString('Bambang Sales Manager', $renderedQuoHtml);
+        $this->assertStringContainsString('Bapak Hendra Direksi', $renderedQuoHtml);
+
+        // 4. Quotation with null sender_name falls back to creator's name
+        $quoDefault = Quotation::create([
+            'business_id'      => $this->business->id,
+            'customer_id'      => $this->customer->id,
+            'quotation_number' => 'QUO-DEFAULT-02',
+            'date'             => now()->toDateString(),
+            'status'           => Quotation::STATUS_DRAFT,
+            'subtotal'         => 500000,
+            'total_amount'     => 500000,
+            'sender_name'      => null,
+            'created_by'       => $this->user->id,
+        ]);
+
+        $renderedQuoDefaultHtml = view('pdf.quotation_pdf', [
+            'quotation' => $quoDefault,
+            'business'  => $this->business,
+        ])->render();
+
+        $this->assertStringContainsString($this->user->name, $renderedQuoDefaultHtml);
+    }
 }

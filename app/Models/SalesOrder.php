@@ -25,6 +25,8 @@ final class SalesOrder extends Model
         'customer_id',
         'quotation_id',
         'so_number',
+        'sender_name',
+        'recipient_name',
         'order_date',
         'expected_delivery_date',
         'subtotal',
@@ -35,6 +37,7 @@ final class SalesOrder extends Model
         'status',
         'shipping_address',
         'notes',
+        'created_by',
     ];
 
     protected $casts = [
@@ -55,6 +58,11 @@ final class SalesOrder extends Model
     public function quotation(): BelongsTo
     {
         return $this->belongsTo(Quotation::class);
+    }
+
+    public function creator(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by');
     }
 
     public function items(): HasMany

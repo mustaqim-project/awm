@@ -11,7 +11,7 @@
     paymentTerms: 'Net 30',
     invoiceDate: '{{ date('Y-m-d') }}',
     dueDate: '{{ date('Y-m-d', strtotime('+30 days')) }}',
-    senderName: '{{ addslashes($business->name) }}',
+    senderName: '{{ addslashes(old('sender_name', auth()->user()?->name ?: $business->name)) }}',
     recipientName: '{{ addslashes($selectedPo?->customer?->name ?? '') }}',
     
     items: [

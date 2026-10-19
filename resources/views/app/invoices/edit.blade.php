@@ -10,8 +10,8 @@
     paymentTerms: '{{ addslashes($invoice->payment_terms ?? 'Net 30') }}',
     invoiceDate: '{{ $invoice->invoice_date?->format('Y-m-d') ?? date('Y-m-d') }}',
     dueDate: '{{ $invoice->due_date?->format('Y-m-d') ?? date('Y-m-d', strtotime('+30 days')) }}',
-    senderName: '{{ addslashes($invoice->sender_name ?? $business->name) }}',
-    recipientName: '{{ addslashes($invoice->recipient_name ?? ($invoice->customer?->name ?? '')) }}',
+    senderName: '{{ addslashes(old('sender_name', $invoice->sender_name ?: ($invoice->creator?->name ?: $business->name))) }}',
+    recipientName: '{{ addslashes(old('recipient_name', $invoice->recipient_name ?: ($invoice->customer?->name ?? ''))) }}',
     
     items: [
         @forelse($invoice->items as $it)
