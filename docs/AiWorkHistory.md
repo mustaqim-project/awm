@@ -33,6 +33,48 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-10-19-364] Harmonisasi Total Desain PDF Dokumen Penjualan (Faktur, SO, Penawaran, Retur) ke Standar Corporate Formal (Slate-950, Presisi Layout, Tipografi Identik, 100% Server-Side DomPDF)
+
+- **Date:** 2026-10-19
+- **Status:** COMPLETED
+- **Module:** Sales & Commerce (Invoices, Sales Orders, Quotations, Sales Returns)
+- **Feature:** Harmonisasi Desain PDF Dokumen Komersial (Tipografi, Palet Warna `#0f172a`, Hirarki Metadata 2-Kolom, Tabel Formal Bergaris, Kotak Instruksi/Catatan, dan Tanda Tangan Simetris)
+- **Work Type:** UI/UX | PDF Generation | Design System Harmonization | Automated Testing
+
+#### 1. Business Context & Objective
+- **Konteks:** Menindaklanjuti umpan balik pengguna terkait tampilan cetak PDF: *"font color, susunan layouts dll belum sesuai sama sekali semuanya dengan pdf pada invoice"*. Tampilan PDF sebelumnya masih menggunakan aksen warna/badge kartu modern yang tidak seragam dengan standar dokumen cetak korporat formal Faktur Penjualan.
+- **Target:**
+  1. Merombak keempat template DomPDF (`invoice_pdf.blade.php`, `sales_order_pdf.blade.php`, `quotation_pdf.blade.php`, `sales_return_pdf.blade.php`) agar 100% identik dalam tata letak, palet warna, tipografi, dan hierarki visual.
+  2. Mengganti aksen warna cerah dengan palet formal hitam/slate gelap (`#020617`, `#0f172a`, `#334155`, `#64748b`).
+  3. Memastikan logo bisnis dirender konsisten via `$business->pdf_logo` dengan fallback nama bisnis tipografi formal.
+  4. Menyelaraskan struktur metadata 2-kolom (pihak penerima vs rincian dokumen), tabel rincian bergaris horizontal presisi dengan nomor baris dan format mata uang `Rp`, kotak instruksi/catatan bergaris kiri `#0f172a`, ringkasan subtotal/diskon/pajak/ongkir/total, dan blok tanda tangan formal (Penerima vs Hormat Kami).
+  5. Menyelaraskan test suite otomatis agar memvalidasi header biner `application/pdf` dan magic byte `%PDF` tanpa kegagalan.
+
+#### 2. What Was Done
+- **Harmonisasi Template PDF DomPDF (`resources/views/pdf/`):**
+  - **`invoice_pdf.blade.php`**: Dirombak ke standar korporat formal bergaris ganda atas/bawah `#0f172a`, kop surat profesional dengan logo Base64 dan NPWP, metadata pelanggan 2-kolom, tabel item 6-kolom (No, Deskripsi, Satuan, Kuantitas, Harga Satuan, Subtotal), rincian rekening pembayaran bergaris kiri tebal `#0f172a`, ringkasan total formal, dan blok tanda tangan ganda.
+  - **`sales_order_pdf.blade.php`**: Diselaraskan 100% mengikuti format Faktur Penjualan (identik dalam ukuran font, warna `#0f172a`, padding tabel, perlakuan diskon/pajak/ongkir, kotak catatan & syarat ketentuan, dan tanda tangan).
+  - **`quotation_pdf.blade.php`**: Diselaraskan 100% mengikuti format Faktur Penjualan (judul SURAT PENAWARAN HARGA, masa berlaku, syarat pembayaran/termin, kotak catatan penawaran, dan tanda tangan persetujuan klien).
+  - **`sales_return_pdf.blade.php`**: Diselaraskan 100% mengikuti format Faktur Penjualan (judul BUKTI RETUR PENJUALAN, nomor faktur/POS rujukan, rincian barang retur beserta alasan & kondisi, metode kompensasi, dan tanda tangan penerimaan gudang/manajer).
+- **Penyesuaian Automated Feature Tests:**
+  - `tests/Feature/Commerce/InvoiceTest.php`: Memperbarui assertion pada endpoint `/print` untuk memverifikasi streaming PDF (`application/pdf` dan `%PDF`), serta endpoint `/export-excel?format=csv` untuk pengujian format CSV.
+  - `tests/Feature/InvoiceDraftEditAndPartiesTest.php`: Memperbarui pengujian invoice non-editable untuk memastikan faktur berstatus `paid` dengan pembayaran tercatat terkunci dari perubahan.
+
+#### 3. Technical Changes
+- **Files Affected:**
+  - `resources/views/pdf/invoice_pdf.blade.php`
+  - `resources/views/pdf/sales_order_pdf.blade.php`
+  - `resources/views/pdf/quotation_pdf.blade.php`
+  - `resources/views/pdf/sales_return_pdf.blade.php`
+  - `tests/Feature/Commerce/InvoiceTest.php`
+  - `tests/Feature/InvoiceDraftEditAndPartiesTest.php`
+
+#### 4. Verification & Testing
+- **DomPDF Render Verification:** Menguji rendering biner keempat template melalui DomPDF engine, seluruhnya menghasilkan stream PDF valid tanpa error CSS/PHP.
+- **Automated Tests:**
+  - `php artisan test tests/Feature/Commerce/InvoiceTest.php tests/Feature/InvoiceDraftEditAndPartiesTest.php` -> 8 passed, 45 assertions.
+  - `php artisan test tests/Feature/SalesPipelineFeatureTest.php tests/Feature/SalesReturnPrintPdfTest.php tests/Feature/SalesAndPurchaseReturnIntegrationTest.php` -> 9 passed, 28 assertions.
+
 ### [WORK-2026-10-19-363] Standarisasi PDF & Logo Cetak (SO, Penawaran, Retur, Faktur), Eliminasi Client-Side Capture, Penyempurnaan Form Edit & Perbaikan Relasi SalesReturn
 
 - **Date:** 2026-10-19

@@ -173,9 +173,9 @@ final class InvoiceTest extends TestCase
             ->withSession(['active_business_id' => $this->business->id])
             ->get("/invoices/{$invoice->id}/print");
 
-        $response->assertOk()
-            ->assertSee('FAKTUR PENJUALAN')
-            ->assertSee('INV-202608-0099');
+        $response->assertOk();
+        $this->assertStringContainsString('application/pdf', (string) $response->headers->get('Content-Type'));
+        $this->assertStringStartsWith('%PDF', (string) $response->getContent());
     }
 
     public function test_can_export_invoices_to_csv(): void
@@ -195,7 +195,7 @@ final class InvoiceTest extends TestCase
 
         $response = $this->actingAs($this->user)
             ->withSession(['active_business_id' => $this->business->id])
-            ->get('/invoices/export-excel');
+            ->get('/invoices/export-excel?format=csv');
 
         $response->assertOk();
         $this->assertStringContainsString('text/csv', (string) $response->headers->get('Content-Type'));

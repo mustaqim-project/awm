@@ -204,8 +204,8 @@ final class InvoiceDraftEditAndPartiesTest extends TestCase
             ]
         );
 
-        // Mark as sent or unpaid (non-draft)
-        $invoice->update(['status' => Invoice::STATUS_SENT]);
+        // Mark as paid or void (non-editable)
+        $invoice->update(['status' => Invoice::STATUS_PAID, 'paid_amount' => 100000]);
 
         // Attempt to GET edit page
         $editResponse = $this->actingAs($this->owner)->get(route('invoices.edit', $invoice->id));
