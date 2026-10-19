@@ -49,5 +49,8 @@ if [ -f "$SCRIPT_DIR/bootstrap/cache/routes-v7.php" ]; then
     rm -f "$SCRIPT_DIR/bootstrap/cache/routes-v7.php"
 fi
 
+# Auto-apply pending database migrations if any
+"$PHP_BIN" artisan migrate --force >> "$SCRIPT_DIR/storage/logs/migrations.log" 2>&1
+
 # Execute Laravel Schedule Run
 "$PHP_BIN" artisan schedule:run >> "$SCRIPT_DIR/storage/logs/scheduler.log" 2>&1
