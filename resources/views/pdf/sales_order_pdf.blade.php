@@ -146,6 +146,9 @@
             margin-bottom: 14px;
             border: 1px solid #334155;
         }
+        .official-table tr {
+            page-break-inside: avoid;
+        }
         .official-table th {
             background-color: #f8fafc;
             color: #0f172a;
@@ -280,17 +283,44 @@
             margin-top: 2px;
         }
 
-        .official-footer {
-            margin-top: 22px;
-            padding-top: 8px;
+        /* 8. Running Footer Resmi */
+        .doc-footer {
+            position: fixed;
+            bottom: -12mm;
+            left: 0;
+            right: 0;
+            height: 8mm;
             border-top: 0.5px solid #cbd5e1;
+            padding-top: 3px;
             font-size: 8px;
             color: #64748b;
-            text-align: center;
+        }
+        .doc-footer-table {
+            width: 100%;
+        }
+        .doc-footer-table td {
+            padding: 0;
+            font-size: 8px;
+            color: #64748b;
+        }
+        .doc-footer-page:after {
+            content: "Halaman " counter(page);
         }
     </style>
 </head>
 <body>
+
+    <!-- RUNNING FOOTER RESMI (Semua Halaman) -->
+    <div class="doc-footer">
+        <table class="doc-footer-table">
+            <tr>
+                <td style="text-align: left;">
+                    Dokumen Resmi &bull; {{ $business->name }}
+                </td>
+                <td style="text-align: right;" class="doc-footer-page"></td>
+            </tr>
+        </table>
+    </div>
 
     <!-- KOP SURAT RESMI -->
     @php
@@ -348,7 +378,7 @@
             </td>
             <td style="width: 42%; vertical-align: top; text-align: right;">
                 <div class="letter-date-box">
-                    {{ $business->city ? $business->city . ', ' : '' }}{{ $salesOrder->order_date ? \Carbon\Carbon::parse($salesOrder->order_date)->locale('id')->translatedFormat('d F Y') : date('d F Y') }}
+                    {{ !empty($business->city) ? $business->city . ', ' : '' }}{{ $salesOrder->order_date ? \Carbon\Carbon::parse($salesOrder->order_date)->locale('id')->translatedFormat('d F Y') : date('d F Y') }}
                 </div>
                 @if($salesOrder->expected_delivery_date)
                 <div style="font-size: 9px; color: #475569; margin-top: 3px;">
@@ -414,8 +444,8 @@
                     @if($item->sku ?? ($item->product?->code ?? $item->product?->sku))
                         <div class="item-meta">Kode: {{ $item->sku ?? ($item->product?->code ?? $item->product?->sku) }}</div>
                     @endif
-                    @if($item->notes ?? $item->description)
-                        <div class="item-meta">{{ $item->notes ?? $item->description }}</div>
+                    @if(!empty($item->notes) || !empty($item->description))
+                        <div class="item-meta">{{ !empty($item->notes) ? $item->notes : $item->description }}</div>
                     @endif
                 </td>
                 <td style="text-align: center;">
@@ -520,11 +550,6 @@
             </td>
         </tr>
     </table>
-
-    <!-- FOOTER RESMI -->
-    <div class="official-footer">
-        Dokumen ini diterbitkan secara resmi oleh {{ $business->name }}.
-    </div>
 
 </body>
 </html>

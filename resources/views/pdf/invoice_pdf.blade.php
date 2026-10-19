@@ -137,6 +137,9 @@
             margin-bottom: 14px;
             border: 1px solid #334155;
         }
+        .official-table tr {
+            page-break-inside: avoid;
+        }
         .official-table th {
             background-color: #f8fafc;
             color: #0f172a;
@@ -275,17 +278,44 @@
             margin-top: 2px;
         }
 
-        .official-footer {
-            margin-top: 22px;
-            padding-top: 8px;
+        /* 7. Running Footer Resmi */
+        .doc-footer {
+            position: fixed;
+            bottom: -12mm;
+            left: 0;
+            right: 0;
+            height: 8mm;
             border-top: 0.5px solid #cbd5e1;
+            padding-top: 3px;
             font-size: 8px;
             color: #64748b;
-            text-align: center;
+        }
+        .doc-footer-table {
+            width: 100%;
+        }
+        .doc-footer-table td {
+            padding: 0;
+            font-size: 8px;
+            color: #64748b;
+        }
+        .doc-footer-page:after {
+            content: "Halaman " counter(page);
         }
     </style>
 </head>
 <body>
+
+    <!-- RUNNING FOOTER RESMI (Semua Halaman) -->
+    <div class="doc-footer">
+        <table class="doc-footer-table">
+            <tr>
+                <td style="text-align: left;">
+                    Dokumen Resmi &bull; {{ $business->name }}
+                </td>
+                <td style="text-align: right;" class="doc-footer-page"></td>
+            </tr>
+        </table>
+    </div>
 
     <!-- KOP SURAT RESMI -->
     @php
@@ -415,7 +445,7 @@
                     @if($item->sku ?? ($item->product?->sku ?? $item->product?->code))
                         <div class="item-meta">Kode: {{ $item->sku ?? ($item->product?->sku ?? $item->product?->code) }}</div>
                     @endif
-                    @if($item->description)
+                    @if(!empty($item->description))
                         <div class="item-meta">{{ $item->description }}</div>
                     @endif
                 </td>
@@ -541,11 +571,6 @@
             </td>
         </tr>
     </table>
-
-    <!-- FOOTER RESMI -->
-    <div class="official-footer">
-        Faktur ini sah dan diakui sebagai bukti penagihan resmi dari {{ $business->name }}.
-    </div>
 
 </body>
 </html>
