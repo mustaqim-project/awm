@@ -27,13 +27,13 @@
         }
         .header-table {
             margin-bottom: 16px;
-            border-bottom: 2px solid #007aff;
+            border-bottom: 2px solid #ef4444;
             padding-bottom: 12px;
         }
         .brand-logo {
             font-size: 22px;
             font-weight: 800;
-            color: #007aff;
+            color: #ef4444;
             letter-spacing: -0.5px;
             margin: 0;
         }
@@ -55,7 +55,7 @@
         .doc-number {
             font-size: 12px;
             font-weight: 700;
-            color: #007aff;
+            color: #ef4444;
             text-align: right;
             margin-top: 2px;
         }
@@ -134,8 +134,8 @@
             margin-bottom: 18px;
         }
         .summary-box {
-            background-color: #f8fafc;
-            border: 1px solid #e2e8f0;
+            background-color: #fef2f2;
+            border: 1px solid #fecaca;
             border-radius: 6px;
             padding: 10px 14px;
         }
@@ -144,12 +144,12 @@
             font-size: 11px;
         }
         .summary-total {
-            border-top: 2px solid #007aff;
+            border-top: 2px solid #ef4444;
             margin-top: 6px;
             padding-top: 6px;
             font-size: 13px;
             font-weight: 800;
-            color: #007aff;
+            color: #b91c1c;
         }
 
         .reason-box {
@@ -195,17 +195,11 @@
     <table class="header-table">
         <tr>
             <td style="width: 55%; vertical-align: top;">
-                @if($business->logo_url)
-                    <div style="margin-bottom: 5px;">
-                        <img src="{{ $business->logo_url }}" alt="{{ $business->name }}" style="max-height: 42px; max-width: 140px; object-fit: contain;">
-                    </div>
-                @endif
                 <h1 class="brand-logo">{{ $business->name }}</h1>
                 <div class="brand-sub">
                     @if($business->address) {{ $business->address }}<br> @endif
-                    @if($business->phone) Telp / WA: {{ $business->phone }} @endif
-                    @if($business->email) &bull; Email: {{ $business->email }} @endif
-                    @if($business->tax_identification_number) <br>NPWP: {{ $business->tax_identification_number }} @endif
+                    @if($business->phone) Telp / WA: {{ $business->phone }} &bull; @endif
+                    @if($business->email) Email: {{ $business->email }} @endif
                 </div>
             </td>
             <td style="width: 45%; vertical-align: top; text-align: right;">
@@ -225,13 +219,10 @@
         <tr>
             <!-- Kepada Pelanggan -->
             <td class="meta-card" style="width: 52%;">
-                <div class="meta-title">Pelanggan / Pihak Pengembali</div>
+                <div class="meta-title">Pelanggan</div>
                 <div class="customer-name">{{ $return->customer?->name ?? 'Pelanggan Umum' }}</div>
                 @if($return->customer?->company)
                     <div style="font-weight: 600; color: #475569;">{{ $return->customer->company }}</div>
-                @endif
-                @if($return->customer?->address)
-                    <div style="color: #64748b; margin-top: 2px;">{{ $return->customer->address }}</div>
                 @endif
                 @if($return->customer?->phone)
                     <div style="color: #64748b; margin-top: 2px;">Telp: {{ $return->customer->phone }}</div>
@@ -266,10 +257,6 @@
                             @else {{ ucfirst($return->refund_method ?? 'Kredit') }} @endif
                         </td>
                     </tr>
-                    <tr>
-                        <td style="color: #64748b; padding: 2px 0;">Mata Uang:</td>
-                        <td style="font-weight: 700; text-align: right;">IDR (Rupiah)</td>
-                    </tr>
                 </table>
             </td>
         </tr>
@@ -291,21 +278,14 @@
             <tr>
                 <td class="text-center" style="color: #64748b;">{{ $idx + 1 }}</td>
                 <td>
-                    <div style="font-weight: 700; color: #0f172a;">{{ $item->item_name ?? $item->product_name ?? $item->product?->name }}</div>
-                    @if($item->sku ?? $item->product?->code ?? $item->product?->sku)
-                        <div style="font-size: 9.5px; color: #64748b;">SKU: {{ $item->sku ?? $item->product?->code ?? $item->product?->sku }}</div>
-                    @endif
-                    @if(!empty($item->notes))
-                        <div style="font-size: 9.5px; color: #64748b; font-style: italic; margin-top: 2px;">Catatan: {{ $item->notes }}</div>
+                    <div style="font-weight: 700; color: #0f172a;">{{ $item->product_name ?? $item->product?->name }}</div>
+                    @if($item->product?->code || $item->product?->sku)
+                        <div style="font-size: 9.5px; color: #64748b;">SKU: {{ $item->product->code ?? $item->product->sku }}</div>
                     @endif
                 </td>
                 <td class="text-right">Rp {{ number_format($item->unit_price, 0, ',', '.') }}</td>
-                <td class="text-center" style="font-weight: 600; color: #007aff;">
-                    {{ number_format($item->quantity, 0, ',', '.') }} {{ $item->unit ?? $item->product?->unit?->symbol ?? $item->product?->unit?->code ?? 'Unit' }}
-                </td>
-                <td class="text-right" style="font-weight: 700; color: #0f172a;">
-                    Rp {{ number_format($item->subtotal ?? ($item->quantity * $item->unit_price), 0, ',', '.') }}
-                </td>
+                <td class="text-center" style="font-weight: 600; color: #b91c1c;">{{ $item->quantity + 0 }}</td>
+                <td class="text-right" style="font-weight: 700; color: #b91c1c;">Rp {{ number_format($item->subtotal ?? ($item->quantity * $item->unit_price), 0, ',', '.') }}</td>
             </tr>
             @empty
             <tr>
@@ -364,7 +344,7 @@
     </table>
 
     <div class="footer">
-        Dokumen ini dicetak otomatis oleh Sistem COOCA ERP &bull; Sah tanpa tanda tangan basah &bull; Dicetak pada: {{ date('d/m/Y H:i') }} WIB
+        Bukti Retur Resmi COOCA ERP &bull; Dicetak: {{ date('d/m/Y H:i') }} WIB
     </div>
 
 </body>

@@ -150,15 +150,6 @@ final class SalesOrderWebController extends Controller
         $goodsProducts   = Product::where('business_id', $business->id)->forSalesOrder()->goods()->orderBy('name')->get();
         $serviceProducts = Product::where('business_id', $business->id)->forSalesOrder()->services()->orderBy('name')->get();
 
-        // Ensure any product from existing items is included in the list
-        $existingProductIds = $salesOrder->items->pluck('product_id')->filter()->unique();
-        if ($existingProductIds->isNotEmpty()) {
-            $missingProducts = Product::where('business_id', $business->id)->whereIn('id', $existingProductIds)->get();
-            $products = $products->merge($missingProducts)->unique('id')->values();
-            $goodsProducts = $goodsProducts->merge($missingProducts->filter(fn($p) => !$p->isService()))->unique('id')->values();
-            $serviceProducts = $serviceProducts->merge($missingProducts->filter(fn($p) => $p->isService()))->unique('id')->values();
-        }
-
         $quotations = Quotation::with('customer', 'items')
             ->where('business_id', $business->id)
             ->where(function ($q) use ($salesOrder) {
@@ -214,7 +205,7 @@ final class SalesOrderWebController extends Controller
             ->with('success', "Pesanan Penjualan {$updated->so_number} berhasil diperbarui.");
     }
 
-    public function pdf(Request $request, SalesOrder $salesOrder): \Illuminate\Http\Response
+    public function pdf(SalesOrder $salesOrder): \Illuminate\Http\Response
     {
         $business = Context::requireBusiness();
         abort_unless($salesOrder->business_id === $business->id, 403);
@@ -228,15 +219,6 @@ final class SalesOrderWebController extends Controller
 
         $filename = 'Pesanan-' . \Illuminate\Support\Str::slug($salesOrder->so_number) . '.pdf';
 
-        if ($request->query('download') === '1') {
-            return $pdf->download($filename);
-        }
-
         return $pdf->stream($filename);
-    }
-
-    public function print(Request $request, SalesOrder $salesOrder): \Illuminate\Http\Response
-    {
-        return $this->pdf($request, $salesOrder);
     }
 }

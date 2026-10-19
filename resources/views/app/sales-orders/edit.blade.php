@@ -161,16 +161,15 @@
                 </button>
             </div>
 
-            <div class="overflow-x-auto rounded-[10px] border border-black/5 dark:border-white/10">
-                <table class="w-full text-left text-[13px] min-w-[750px]">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-[13px]">
                     <thead>
-                        <tr class="border-b border-black/5 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02]">
-                            <th class="px-3 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40">{{ __('sales.sales_orders.col_product') }}</th>
-                            <th class="px-3 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right w-36">{{ __('sales.sales_orders.col_unit_price') }}</th>
-                            <th class="px-3 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right w-24">{{ __('sales.sales_orders.col_quantity') }}</th>
-                            <th class="px-3 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right w-28">{{ __('sales.sales_orders.col_item_discount') ?? 'Diskon' }}</th>
-                            <th class="px-3 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right w-36">{{ __('sales.sales_orders.col_subtotal') }}</th>
-                            <th class="px-3 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-center w-10"></th>
+                        <tr class="border-b border-black/5 dark:border-white/10">
+                            <th class="px-3 py-2 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40">{{ __('sales.sales_orders.col_product') }}</th>
+                            <th class="px-3 py-2 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right w-36">{{ __('sales.sales_orders.col_unit_price') }}</th>
+                            <th class="px-3 py-2 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right w-28">{{ __('sales.sales_orders.col_quantity') }}</th>
+                            <th class="px-3 py-2 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right w-36">{{ __('sales.sales_orders.col_subtotal') }}</th>
+                            <th class="px-3 py-2 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-center w-12"></th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
@@ -198,31 +197,19 @@
                                                 @endforeach
                                             </optgroup>
                                         @endif
-                                        @if(!isset($goodsProducts) || ($goodsProducts->isEmpty() && (!isset($serviceProducts) || $serviceProducts->isEmpty())))
-                                            @foreach($products as $p)
-                                            <option value="{{ $p->id }}" data-price="{{ $p->selling_price }}" data-name="{{ $p->name }}" data-type="{{ $p->type ?? 'goods' }}">
-                                                {{ $p->isService() ? '[Jasa] ' : '' }}{{ $p->name }} (Rp {{ number_format($p->selling_price, 0, ',', '.') }})
-                                            </option>
-                                            @endforeach
-                                        @endif
                                     </select>
-                                    <input type="text" :name="'items['+idx+'][product_name]'" x-model="item.product_name" required placeholder="Nama item / deskripsi produk..."
-                                           class="w-full h-7 bg-transparent border-b border-black/10 dark:border-white/10 px-1 text-[12px] text-black dark:text-white mt-1.5 placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:border-[#007AFF] transition">
+                                    <input type="hidden" :name="'items['+idx+'][product_name]'" x-model="item.product_name">
                                 </td>
-                                <td class="px-3 py-2.5 text-right align-top">
-                                    <input type="number" :name="'items['+idx+'][unit_price]'" x-model.number="item.unit_price" @input="calculateTotals()" min="0" step="any"
+                                <td class="px-3 py-2.5 text-right">
+                                    <input type="number" :name="'items['+idx+'][unit_price]'" x-model.number="item.unit_price" @input="calculateTotals()" min="0" step="100"
                                            class="w-full h-9 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2.5 text-[13px] text-right font-medium tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                                 </td>
-                                <td class="px-3 py-2.5 text-right align-top">
+                                <td class="px-3 py-2.5 text-right">
                                     <input type="number" :name="'items['+idx+'][quantity]'" x-model.number="item.quantity" @input="calculateTotals()" min="0.01" step="any"
-                                           class="w-full h-9 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2.5 text-[13px] text-right font-semibold tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                           class="w-full h-9 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2.5 text-[13px] text-right font-medium tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                                 </td>
-                                <td class="px-3 py-2.5 text-right align-top">
-                                    <input type="number" :name="'items['+idx+'][discount_amount]'" x-model.number="item.discount_amount" @input="calculateTotals()" min="0" step="any"
-                                           class="w-full h-9 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2 text-[13px] text-right font-medium tabular-nums text-[#FF3B30] focus:outline-none focus:ring-2 focus:ring-[#FF3B30]/50 transition">
-                                </td>
-                                <td class="px-3 py-2.5 text-right align-top font-semibold tabular-nums text-black dark:text-white" x-text="'Rp ' + Math.max(0, ((item.quantity || 0) * (item.unit_price || 0)) - (item.discount_amount || 0)).toLocaleString('id-ID')"></td>
-                                <td class="px-3 py-2.5 text-center align-top">
+                                <td class="px-3 py-2.5 text-right font-semibold tabular-nums text-black dark:text-white" x-text="'Rp ' + (item.quantity * item.unit_price).toLocaleString('id-ID')"></td>
+                                <td class="px-3 py-2.5 text-center">
                                     <button type="button" @click="removeItem(idx)" :disabled="items.length <= 1" class="w-7 h-7 rounded-[6px] text-black/40 hover:text-[#FF3B30] hover:bg-[#FF3B30]/10 disabled:opacity-20 transition-all inline-flex items-center justify-center">
                                         <i data-lucide="trash-2" class="w-4 h-4"></i>
                                     </button>
@@ -248,30 +235,19 @@
                     </div>
                     <div class="flex justify-between items-center gap-2 text-black/60 dark:text-white/60">
                         <span>{{ __('sales.sales_orders.discount_label') }}</span>
-                        <input type="number" name="discount_amount" x-model.number="discountAmount" @input="calculateTotals()" min="0" step="any"
+                        <input type="number" name="discount_amount" x-model.number="discountAmount" @input="calculateTotals()" min="0"
                                class="w-32 h-8 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2.5 text-[13px] text-right font-medium tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                     </div>
                     <div class="flex justify-between items-center gap-2 text-black/60 dark:text-white/60">
                         <span>{{ __('sales.sales_orders.tax_vat_label') }}</span>
-                        <input type="number" name="tax_amount" x-model.number="taxAmount" @input="calculateTotals()" min="0" step="any"
+                        <input type="number" name="tax_amount" x-model.number="taxAmount" @input="calculateTotals()" min="0"
                                class="w-32 h-8 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2.5 text-[13px] text-right font-medium tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                     </div>
                     <div class="pt-2 border-t border-black/5 dark:border-white/10 flex justify-between text-[15px] font-bold text-black dark:text-white">
                         <span>{{ __('sales.sales_orders.total_so_label') }}</span>
-                        <span class="text-[#007AFF] dark:text-[#0A84FF] tabular-nums text-[18px]" x-text="'Rp ' + grandTotal.toLocaleString('id-ID')"></span>
+                        <span class="text-[#007AFF] dark:text-[#0A84FF] tabular-nums" x-text="'Rp ' + grandTotal.toLocaleString('id-ID')"></span>
                     </div>
                 </div>
-            </div>
-
-            <!-- Bottom Actions Bar -->
-            <div class="pt-4 border-t border-black/5 dark:border-white/10 flex items-center justify-end gap-2">
-                <a href="{{ route('sales.orders.show', $salesOrder) }}" class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition flex items-center">
-                    {{ __('sales.sales_orders.btn_cancel') }}
-                </a>
-                <button type="submit" class="h-9 px-6 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
-                    <i data-lucide="check" class="w-4 h-4"></i>
-                    <span>Simpan Perubahan</span>
-                </button>
             </div>
         </div>
     </form>
@@ -282,12 +258,9 @@
         return {
             items: @json($salesOrder->items->map(fn($it) => [
                 'product_id' => (string) ($it->product_id ?? ''),
-                'product_name' => $it->product_name ?? ($it->product?->name ?? ''),
+                'product_name' => $it->product_name,
                 'unit_price' => (float) $it->unit_price,
                 'quantity' => (float) $it->quantity,
-                'discount_amount' => (float) ($it->discount_amount ?? 0),
-                'fulfilled_quantity' => (float) ($it->fulfilled_quantity ?? 0),
-                'notes' => $it->notes ?? '',
                 'is_service' => $it->product?->isService() ?? false,
             ])),
             subtotal: {{ (float) $salesOrder->subtotal }},
@@ -303,7 +276,7 @@
             },
 
             addItem() {
-                this.items.push({ product_id: '', product_name: '', unit_price: 0, quantity: 1, discount_amount: 0, is_service: false });
+                this.items.push({ product_id: '', product_name: '', unit_price: 0, quantity: 1, is_service: false });
             },
 
             removeItem(idx) {
@@ -320,16 +293,17 @@
                     this.items[idx].unit_price = parseFloat(opt.dataset.price || 0);
                     this.items[idx].product_name = opt.dataset.name || '';
                     this.items[idx].is_service = opt.dataset.type === 'service';
+                } else {
+                    this.items[idx].unit_price = 0;
+                    this.items[idx].product_name = '';
+                    this.items[idx].is_service = false;
                 }
                 this.calculateTotals();
             },
 
             calculateTotals() {
-                this.subtotal = this.items.reduce((sum, it) => {
-                    const lineSubtotal = Math.max(0, ((parseFloat(it.quantity) || 0) * (parseFloat(it.unit_price) || 0)) - (parseFloat(it.discount_amount) || 0));
-                    return sum + lineSubtotal;
-                }, 0);
-                this.grandTotal = Math.max(0, (this.subtotal - (parseFloat(this.discountAmount) || 0)) + (parseFloat(this.taxAmount) || 0));
+                this.subtotal = this.items.reduce((sum, it) => sum + ((it.quantity || 0) * (it.unit_price || 0)), 0);
+                this.grandTotal = Math.max(0, (this.subtotal - (this.discountAmount || 0)) + (this.taxAmount || 0));
             }
         };
     }

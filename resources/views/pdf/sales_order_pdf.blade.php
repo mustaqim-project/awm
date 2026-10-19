@@ -186,17 +186,11 @@
     <table class="header-table">
         <tr>
             <td style="width: 55%; vertical-align: top;">
-                @if($business->logo_url)
-                    <div style="margin-bottom: 5px;">
-                        <img src="{{ $business->logo_url }}" alt="{{ $business->name }}" style="max-height: 42px; max-width: 140px; object-fit: contain;">
-                    </div>
-                @endif
                 <h1 class="brand-logo">{{ $business->name }}</h1>
                 <div class="brand-sub">
                     @if($business->address) {{ $business->address }}<br> @endif
-                    @if($business->phone) Telp / WA: {{ $business->phone }} @endif
-                    @if($business->email) &bull; Email: {{ $business->email }} @endif
-                    @if($business->tax_identification_number) <br>NPWP: {{ $business->tax_identification_number }} @endif
+                    @if($business->phone) Telp / WA: {{ $business->phone }} &bull; @endif
+                    @if($business->email) Email: {{ $business->email }} @endif
                 </div>
             </td>
             <td style="width: 45%; vertical-align: top; text-align: right;">
@@ -276,27 +270,14 @@
             <tr>
                 <td class="text-center" style="color: #64748b;">{{ $idx + 1 }}</td>
                 <td>
-                    <div style="font-weight: 700; color: #0f172a;">{{ $item->product_name ?? $item->product?->name }}</div>
+                    <div style="font-weight: 700; color: #0f172a;">{{ $item->product_name }}</div>
                     @if($item->product?->code || $item->product?->sku)
                         <div style="font-size: 9.5px; color: #64748b;">SKU: {{ $item->product->code ?? $item->product->sku }}</div>
                     @endif
-                    @if($item->notes)
-                        <div style="font-size: 9.5px; color: #64748b; margin-top: 1px;">Catatan: {{ $item->notes }}</div>
-                    @endif
                 </td>
-                <td class="text-right">
-                    Rp {{ number_format($item->unit_price, 0, ',', '.') }}
-                    @if((float) $item->discount_amount > 0)
-                        <div style="font-size: 9.5px; color: #16a34a;">Disc: -Rp {{ number_format($item->discount_amount, 0, ',', '.') }}</div>
-                    @endif
-                </td>
-                <td class="text-center" style="font-weight: 600;">
-                    {{ (float) $item->quantity == (int) $item->quantity ? number_format((float) $item->quantity, 0, ',', '.') : rtrim(rtrim(number_format((float) $item->quantity, 2, ',', '.'), '0'), ',') }}
-                    @if($item->product?->outputUnit?->code)
-                        <span style="font-size: 9.5px; color: #64748b; display: block;">{{ $item->product->outputUnit->code }}</span>
-                    @endif
-                </td>
-                <td class="text-right" style="font-weight: 700;">Rp {{ number_format($item->subtotal ?? max(0, ($item->quantity * $item->unit_price) - ($item->discount_amount ?? 0)), 0, ',', '.') }}</td>
+                <td class="text-right">Rp {{ number_format($item->unit_price, 0, ',', '.') }}</td>
+                <td class="text-center" style="font-weight: 600;">{{ $item->quantity + 0 }}</td>
+                <td class="text-right" style="font-weight: 700;">Rp {{ number_format($item->total_price ?? ($item->quantity * $item->unit_price), 0, ',', '.') }}</td>
             </tr>
             @empty
             <tr>

@@ -62,12 +62,6 @@
                 <!-- State-driven action triggers -->
                 @if (\App\Support\Context::hasPermission('sales.returns') || \App\Support\Context::hasPermission('sales.pipeline'))
                     @if ($return->status === 'draft')
-                        <a href="{{ route('sales.returns.edit', $return) }}"
-                            class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-[#FF9500] dark:text-[#FF9F0A] bg-[#FF9500]/10 dark:bg-[#FF9500]/20 hover:bg-[#FF9500]/15 dark:hover:bg-[#FF9500]/30 active:scale-[0.97] transition-all flex items-center gap-1.5">
-                            <i data-lucide="edit-3" class="w-4 h-4"></i>
-                            <span>Edit Retur</span>
-                        </a>
-
                         <button type="button" @click="promptApprove()"
                             class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
                             <i data-lucide="check" class="w-4 h-4"></i>
@@ -92,19 +86,12 @@
                     @endif
                 @endif
 
-                <!-- Dedicated Print & PDF Routes -->
-                <a href="{{ route('sales.returns.pdf', $return) }}" target="_blank"
-                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] transition flex items-center gap-1.5"
-                    title="Buka / Cetak PDF">
-                    <i data-lucide="printer" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
-                    <span>Cetak PDF</span>
-                </a>
-
-                <a href="{{ route('sales.returns.pdf', $return) }}?download=1" target="_blank"
-                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] transition flex items-center gap-1.5"
-                    title="Unduh PDF">
-                    <i data-lucide="download" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
-                    <span>Unduh PDF</span>
+                <!-- Dedicated Print & PDF Route -->
+                <a href="{{ route('sales.returns.print', $return) }}" target="_blank"
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] shadow-[0_1px_2px_rgba(0,122,255,0.25)] transition flex items-center gap-1.5"
+                    title="{{ __('sales.returns.btn_print_pdf_tooltip') }}">
+                    <i data-lucide="printer" class="w-4 h-4 text-white"></i>
+                    <span>{{ __('sales.returns.btn_print_pdf') }}</span>
                 </a>
 
                 <!-- Back Link -->
