@@ -21,7 +21,7 @@
             sku: '{{ addslashes($it->sku ?? '') }}',
             description: '{{ addslashes($it->description ?? '') }}',
             quantity: {{ (float) $it->quantity }},
-            unit_id: '{{ $it->unit_id }}',
+            unit_id: '{{ $it->unit_id ?: ($it->product?->output_unit_id ?: $units->first()?->id) }}',
             unit_price: {{ (float) $it->unit_price }},
             unit_hpp: {{ (float) $it->unit_hpp }}
         },

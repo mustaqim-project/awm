@@ -152,9 +152,19 @@
                             @endif
                         </td>
                         <td class="px-4 py-3 text-right">
-                            <a href="{{ route('sales.quotations.show', $q) }}" class="h-7 px-2.5 rounded-[6px] text-[12px] font-medium text-[#007AFF] hover:bg-[#007AFF]/8 transition-colors inline-flex items-center">
-                                {{ __('sales.quotations.btn_detail') }}
-                            </a>
+                            <div class="inline-flex items-center justify-end gap-1">
+                                <a href="{{ route('sales.quotations.show', $q) }}" class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#007AFF] hover:bg-[#007AFF]/8 transition-colors inline-flex items-center">
+                                    {{ __('sales.quotations.btn_detail') }}
+                                </a>
+                                @if($q->status !== 'converted')
+                                <a href="{{ route('sales.quotations.edit', $q) }}" class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-amber-600 dark:text-amber-400 hover:bg-amber-500/10 transition-colors inline-flex items-center">
+                                    Edit
+                                </a>
+                                @endif
+                                <a href="{{ route('sales.quotations.pdf', $q) }}" target="_blank" class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 transition-colors inline-flex items-center" title="Buka PDF">
+                                    PDF
+                                </a>
+                            </div>
                         </td>
                     </tr>
                     @empty

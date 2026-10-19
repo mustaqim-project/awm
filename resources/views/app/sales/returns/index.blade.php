@@ -193,12 +193,24 @@
                                     @endif
                                 </td>
                                 <td class="py-3 px-4 text-right whitespace-nowrap">
-                                     <a href="{{ route('sales.returns.show', $return) }}"
-                                         class="h-7 px-2.5 rounded-[6px] text-[12px] font-medium text-[#007AFF] hover:bg-[#007AFF]/8 transition-colors inline-flex items-center gap-1">
-                                         <span>{{ __('sales.returns.btn_detail') }}</span>
-                                         <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-                                     </a>
-                                 </td>
+                                    <div class="inline-flex items-center justify-end gap-1">
+                                        <a href="{{ route('sales.returns.show', $return) }}"
+                                            class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#007AFF] hover:bg-[#007AFF]/8 transition-colors inline-flex items-center">
+                                            {{ __('sales.returns.btn_detail') }}
+                                        </a>
+                                        @if ($return->status === 'draft')
+                                            <a href="{{ route('sales.returns.edit', $return) }}"
+                                                class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-amber-600 dark:text-amber-400 hover:bg-amber-500/10 transition-colors inline-flex items-center">
+                                                Edit
+                                            </a>
+                                        @endif
+                                        <a href="{{ route('sales.returns.pdf', $return) }}" target="_blank"
+                                            class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 transition-colors inline-flex items-center"
+                                            title="Buka PDF">
+                                            PDF
+                                        </a>
+                                    </div>
+                                </td>
                             </tr>
                         @empty
                             <tr>

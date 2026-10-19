@@ -119,6 +119,15 @@ final class QuotationWebController extends Controller
         $goodsProducts   = Product::where('business_id', $business->id)->where('is_active', true)->goods()->orderBy('name')->get();
         $serviceProducts = Product::where('business_id', $business->id)->where('is_active', true)->services()->orderBy('name')->get();
 
+        // Ensure any product from existing items is included in the list
+        $existingProductIds = $quotation->items->pluck('product_id')->filter()->unique();
+        if ($existingProductIds->isNotEmpty()) {
+            $missingProducts = Product::where('business_id', $business->id)->whereIn('id', $existingProductIds)->get();
+            $products = $products->merge($missingProducts)->unique('id')->values();
+            $goodsProducts = $goodsProducts->merge($missingProducts->filter(fn($p) => !$p->isService()))->unique('id')->values();
+            $serviceProducts = $serviceProducts->merge($missingProducts->filter(fn($p) => $p->isService()))->unique('id')->values();
+        }
+
         return view('app.quotations.edit', compact('business', 'quotation', 'customers', 'products', 'goodsProducts', 'serviceProducts'));
     }
 
@@ -152,7 +161,7 @@ final class QuotationWebController extends Controller
             ->with('success', "Surat Penawaran {$updated->quotation_number} berhasil diperbarui.");
     }
 
-    public function pdf(Quotation $quotation): \Illuminate\Http\Response
+    public function pdf(Request $request, Quotation $quotation): \Illuminate\Http\Response
     {
         $business = Context::requireBusiness();
         abort_unless($quotation->business_id === $business->id, 403);
@@ -166,6 +175,15 @@ final class QuotationWebController extends Controller
 
         $filename = 'Penawaran-' . \Illuminate\Support\Str::slug($quotation->quotation_number) . '.pdf';
 
+        if ($request->query('download') === '1') {
+            return $pdf->download($filename);
+        }
+
         return $pdf->stream($filename);
+    }
+
+    public function print(Request $request, Quotation $quotation): \Illuminate\Http\Response
+    {
+        return $this->pdf($request, $quotation);
     }
 }

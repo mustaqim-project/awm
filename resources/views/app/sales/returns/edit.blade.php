@@ -127,12 +127,11 @@
                                     <input type="checkbox" :name="'items[' + idx + '][selected]'" value="1"
                                            x-model="item.selected" @change="onToggleItem(item)"
                                            class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/50 cursor-pointer">
-                                    <template x-if="sourceType === 'invoice'">
+                                    @if ($sourceType === 'invoice')
                                         <input type="hidden" :name="'items[' + idx + '][invoice_item_id]'" :value="item.item_id">
-                                    </template>
-                                    <template x-if="sourceType === 'pos_order'">
+                                    @else
                                         <input type="hidden" :name="'items[' + idx + '][pos_order_item_id]'" :value="item.item_id">
-                                    </template>
+                                    @endif
                                 </td>
 
                                 <!-- Nama Produk -->

@@ -53,6 +53,15 @@
             </div>
 
             <div class="flex flex-wrap items-center gap-2">
+                <!-- Edit Sales Order -->
+                @if (\App\Support\Context::hasPermission('sales.pipeline') && $salesOrder->status !== 'cancelled')
+                    <a href="{{ route('sales.orders.edit', $salesOrder) }}"
+                        class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.97] transition flex items-center gap-1.5">
+                        <i data-lucide="edit-3" class="w-4 h-4"></i>
+                        <span>Edit Pesanan</span>
+                    </a>
+                @endif
+
                 <!-- 1-Click Generate Invoice Button -->
                 @if ($salesOrder->status !== 'fulfilled' && \App\Support\Context::hasPermission('invoices.create'))
                     <button type="button" @click="promptInvoice()"
@@ -67,12 +76,21 @@
                     </form>
                 @endif
 
-                <!-- Print Button -->
-                <button type="button" onclick="window.print()"
-                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] transition flex items-center gap-1.5">
+                <!-- Cetak File PDF Resmi -->
+                <a href="{{ route('sales.orders.pdf', $salesOrder) }}" target="_blank"
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] transition flex items-center gap-1.5"
+                    title="Buka atau Cetak Dokumen PDF Resmi">
                     <i data-lucide="printer" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
-                    <span>{{ __('sales.sales_orders.btn_print') }}</span>
-                </button>
+                    <span>{{ __('sales.sales_orders.btn_print') }} PDF</span>
+                </a>
+
+                <!-- Unduh File PDF -->
+                <a href="{{ route('sales.orders.pdf', $salesOrder) }}?download=1" target="_blank"
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition flex items-center gap-1"
+                    title="Unduh Berkas PDF Pesanan Penjualan">
+                    <i data-lucide="download" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
+                    <span class="hidden md:inline">Unduh PDF</span>
+                </a>
 
                 <!-- Back Link -->
                 <a href="{{ route('sales.orders.index') }}"

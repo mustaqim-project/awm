@@ -40,6 +40,10 @@
                 <i data-lucide="arrow-left" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
                 <span>Kembali</span>
             </a>
+            <button type="submit" form="quotation-edit-form" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
+                <i data-lucide="check" class="w-4 h-4"></i>
+                <span>Simpan Perubahan</span>
+            </button>
         </div>
     </header>
 
@@ -61,7 +65,7 @@
     <!-- ===================================================== -->
     <!-- 2. FORM BODY                                          -->
     <!-- ===================================================== -->
-    <form action="{{ route('sales.quotations.update', $quotation) }}" method="POST" class="space-y-6">
+    <form id="quotation-edit-form" action="{{ route('sales.quotations.update', $quotation) }}" method="POST" class="space-y-6">
         @csrf
         @method('PUT')
 
@@ -130,15 +134,16 @@
                 </button>
             </div>
 
-            <div class="overflow-x-auto">
-                <table class="w-full text-left text-[13px]">
+            <div class="overflow-x-auto rounded-[10px] border border-black/5 dark:border-white/10">
+                <table class="w-full text-left text-[13px] min-w-[750px]">
                     <thead>
-                        <tr class="border-b border-black/5 dark:border-white/10">
-                            <th class="px-3 py-2 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40">{{ __('sales.quotations.col_item_product') }}</th>
-                            <th class="px-3 py-2 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right w-36">{{ __('sales.quotations.col_item_price') }}</th>
-                            <th class="px-3 py-2 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right w-28">{{ __('sales.quotations.col_item_qty') }}</th>
-                            <th class="px-3 py-2 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right w-36">{{ __('sales.quotations.col_item_total') }}</th>
-                            <th class="px-3 py-2 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-center w-12"></th>
+                        <tr class="border-b border-black/5 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02]">
+                            <th class="px-3 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40">{{ __('sales.quotations.col_item_product') }}</th>
+                            <th class="px-3 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right w-36">{{ __('sales.quotations.col_item_price') }}</th>
+                            <th class="px-3 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right w-24">{{ __('sales.quotations.col_item_qty') }}</th>
+                            <th class="px-3 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right w-28">{{ __('sales.quotations.discount_label') ?? 'Diskon' }}</th>
+                            <th class="px-3 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right w-36">{{ __('sales.quotations.col_item_total') }}</th>
+                            <th class="px-3 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-center w-10"></th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
@@ -168,12 +173,14 @@
                                         @endif
                                         @if(!isset($goodsProducts) || ($goodsProducts->isEmpty() && (!isset($serviceProducts) || $serviceProducts->isEmpty())))
                                             @foreach($products as $p)
-                                            <option value="{{ $p->id }}" data-price="{{ $p->selling_price }}" data-name="{{ $p->name }}" data-type="{{ $p->type ?? 'goods' }}">
+                                             <option value="{{ $p->id }}" data-price="{{ $p->selling_price }}" data-name="{{ $p->name }}" data-type="{{ $p->type ?? 'goods' }}">
                                                 {{ $p->isService() ? '[' . __('sales.quotations.badge_service') . '] ' : '' }}{{ $p->name }} (Rp {{ number_format($p->selling_price, 0, ',', '.') }})
                                             </option>
                                             @endforeach
                                         @endif
                                     </select>
+                                    <input type="text" :name="'items['+idx+'][product_name]'" x-model="item.product_name" required placeholder="Nama item / deskripsi penawaran..."
+                                           class="w-full h-7 bg-transparent border-b border-black/10 dark:border-white/10 px-1 text-[12px] text-black dark:text-white mt-1.5 placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:border-[#007AFF] transition">
                                     <div class="mt-1 flex items-center gap-1.5">
                                         <template x-if="item.is_service">
                                             <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10.5px] font-semibold bg-purple-500/15 text-purple-700 dark:text-purple-300">
@@ -186,18 +193,21 @@
                                             </span>
                                         </template>
                                     </div>
-                                    <input type="hidden" :name="'items['+idx+'][product_name]'" x-model="item.product_name">
                                 </td>
-                                <td class="px-3 py-2.5 text-right">
-                                    <input type="number" :name="'items['+idx+'][unit_price]'" x-model.number="item.unit_price" @input="calculateTotals()" min="0" step="100"
+                                <td class="px-3 py-2.5 text-right align-top">
+                                    <input type="number" :name="'items['+idx+'][unit_price]'" x-model.number="item.unit_price" @input="calculateTotals()" min="0" step="any"
                                            class="w-full h-9 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2.5 text-[13px] text-right font-medium tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                                 </td>
-                                <td class="px-3 py-2.5 text-right">
+                                <td class="px-3 py-2.5 text-right align-top">
                                     <input type="number" :name="'items['+idx+'][quantity]'" x-model.number="item.quantity" @input="calculateTotals()" min="0.01" step="any"
-                                           class="w-full h-9 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2.5 text-[13px] text-right font-medium tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                           class="w-full h-9 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2.5 text-[13px] text-right font-semibold tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                                 </td>
-                                <td class="px-3 py-2.5 text-right font-semibold tabular-nums text-black dark:text-white" x-text="'Rp ' + (item.quantity * item.unit_price).toLocaleString('id-ID')"></td>
-                                <td class="px-3 py-2.5 text-center">
+                                <td class="px-3 py-2.5 text-right align-top">
+                                    <input type="number" :name="'items['+idx+'][discount_amount]'" x-model.number="item.discount_amount" @input="calculateTotals()" min="0" step="any"
+                                           class="w-full h-9 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2 text-[13px] text-right font-medium tabular-nums text-[#FF3B30] focus:outline-none focus:ring-2 focus:ring-[#FF3B30]/50 transition">
+                                </td>
+                                <td class="px-3 py-2.5 text-right align-top font-semibold tabular-nums text-black dark:text-white" x-text="'Rp ' + Math.max(0, ((item.quantity || 0) * (item.unit_price || 0)) - (item.discount_amount || 0)).toLocaleString('id-ID')"></td>
+                                <td class="px-3 py-2.5 text-center align-top">
                                     <button type="button" @click="removeItem(idx)" :disabled="items.length <= 1" class="w-7 h-7 rounded-[6px] text-black/40 hover:text-[#FF3B30] hover:bg-[#FF3B30]/10 disabled:opacity-20 transition-all inline-flex items-center justify-center">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
@@ -232,12 +242,12 @@
                     </div>
                     <div class="flex justify-between items-center gap-2 text-black/60 dark:text-white/60">
                         <span>{{ __('sales.quotations.discount_label') }}</span>
-                        <input type="number" name="discount_amount" x-model.number="discountAmount" @input="calculateTotals()" min="0"
+                        <input type="number" name="discount_amount" x-model.number="discountAmount" @input="calculateTotals()" min="0" step="any"
                                class="w-32 h-8 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2.5 text-[13px] text-right font-medium tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                     </div>
                     <div class="flex justify-between items-center gap-2 text-black/60 dark:text-white/60">
                         <span>{{ __('sales.quotations.tax_vat_label') }}</span>
-                        <input type="number" name="tax_amount" x-model.number="taxAmount" @input="calculateTotals()" min="0"
+                        <input type="number" name="tax_amount" x-model.number="taxAmount" @input="calculateTotals()" min="0" step="any"
                                class="w-32 h-8 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2.5 text-[13px] text-right font-medium tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                     </div>
                     <div class="pt-2 border-t border-black/5 dark:border-white/10 flex justify-between text-[15px] font-bold text-black dark:text-white">
@@ -269,6 +279,7 @@
                 'product_name' => $it->product_name,
                 'unit_price' => (float) $it->unit_price,
                 'quantity' => (float) $it->quantity,
+                'discount_amount' => (float) ($it->discount_amount ?? 0),
                 'is_service' => $it->product?->isService() ?? false,
             ])),
             subtotal: {{ (float) $quotation->subtotal }},
@@ -284,7 +295,7 @@
             },
 
             addItem() {
-                this.items.push({ product_id: '', product_name: '', unit_price: 0, quantity: 1, is_service: false });
+                this.items.push({ product_id: '', product_name: '', unit_price: 0, quantity: 1, discount_amount: 0, is_service: false });
             },
 
             removeItem(idx) {
@@ -310,7 +321,7 @@
             },
 
             calculateTotals() {
-                this.subtotal = this.items.reduce((sum, it) => sum + ((it.quantity || 0) * (it.unit_price || 0)), 0);
+                this.subtotal = this.items.reduce((sum, it) => sum + Math.max(0, ((it.quantity || 0) * (it.unit_price || 0)) - (it.discount_amount || 0)), 0);
                 this.grandTotal = Math.max(0, (this.subtotal - (this.discountAmount || 0)) + (this.taxAmount || 0));
             }
         };

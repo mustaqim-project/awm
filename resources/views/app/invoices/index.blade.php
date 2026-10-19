@@ -235,13 +235,13 @@
                                 <a href="{{ route('invoices.show', $inv->id) }}" class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#007AFF] hover:bg-[#007AFF]/8 transition-colors flex items-center" title="{{ __('sales.invoices.btn_detail') }}">
                                     {{ __('sales.invoices.btn_detail') }}
                                 </a>
-                                @if($inv->status === 'draft' && (\App\Support\Context::hasPermission('invoices.edit') || \App\Support\Context::hasPermission('invoices.create')))
+                                @if(!in_array($inv->status, ['paid', 'void']) && (float) $inv->paid_amount == 0 && (\App\Support\Context::hasPermission('invoices.edit') || \App\Support\Context::hasPermission('invoices.create')))
                                     <a href="{{ route('invoices.edit', $inv->id) }}" class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#FF9500] hover:bg-[#FF9500]/10 transition-colors flex items-center" title="{{ __('sales.invoices.btn_edit_invoice') }}">
                                         {{ __('sales.invoices.breadcrumb_edit') }}
                                     </a>
                                 @endif
-                                <a href="{{ route('invoices.print', $inv->id) }}" target="_blank" class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition-colors flex items-center" title="{{ __('sales.invoices.btn_print') }}">
-                                    {{ __('sales.invoices.print_heading') }}
+                                <a href="{{ route('invoices.pdf', $inv->id) }}" target="_blank" class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition-colors flex items-center" title="Buka PDF">
+                                    PDF
                                 </a>
                                 @if($inv->status === 'draft' || $inv->status === 'void')
                                     <button type="button" @click="openDelete('{{ route('invoices.destroy', $inv->id) }}', '{{ addslashes($inv->invoice_number) }}')" class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#FF3B30] hover:bg-[#FF3B30]/8 transition-colors flex items-center" title="{{ __('sales.invoices.btn_delete') }}">

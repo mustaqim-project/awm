@@ -212,16 +212,6 @@ final class SalesReturnWebController extends Controller
         ]);
     }
 
-    public function print(SalesReturn $return): View
-    {
-        $business = Context::requireBusiness();
-        abort_unless($return->business_id === $business->id, 403);
-
-        return view('app.sales.returns.print', [
-            'business' => $business,
-            'return'   => $return->load(['invoice.customer', 'posOrder.customer', 'customer', 'items.product', 'location']),
-        ]);
-    }
 
     public function approve(SalesReturn $return): RedirectResponse
     {
@@ -376,7 +366,7 @@ final class SalesReturnWebController extends Controller
             ->with('success', "Draft retur penjualan {$updated->return_number} berhasil diperbarui.");
     }
 
-    public function pdf(SalesReturn $return): \Illuminate\Http\Response
+    public function pdf(Request $request, SalesReturn $return): \Illuminate\Http\Response
     {
         $business = Context::requireBusiness();
         abort_unless($return->business_id === $business->id, 403);
@@ -390,11 +380,15 @@ final class SalesReturnWebController extends Controller
 
         $filename = 'Nota-Retur-' . \Illuminate\Support\Str::slug($return->return_number) . '.pdf';
 
+        if ($request->query('download') === '1') {
+            return $pdf->download($filename);
+        }
+
         return $pdf->stream($filename);
     }
 
-    public function print(SalesReturn $return): \Illuminate\Http\Response
+    public function print(Request $request, SalesReturn $return): \Illuminate\Http\Response
     {
-        return $this->pdf($return);
+        return $this->pdf($request, $return);
     }
 }

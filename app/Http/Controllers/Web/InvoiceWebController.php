@@ -171,10 +171,23 @@ final class InvoiceWebController extends Controller
 
         $invoice->load(['customer', 'purchaseOrder', 'items.product', 'items.unit']);
 
-        $customers = Customer::where('is_active', true)->orderBy('name')->get();
-        $products = Product::where('is_active', true)->with('outputUnit')->orderBy('name')->get();
+        $customers = Customer::where('business_id', $business->id)->where('is_active', true)->orderBy('name')->get();
+        if ($invoice->customer_id && !$customers->contains('id', $invoice->customer_id)) {
+            $existingCustomer = Customer::where('business_id', $business->id)->find($invoice->customer_id);
+            if ($existingCustomer) {
+                $customers->push($existingCustomer);
+            }
+        }
+
+        $products = Product::where('business_id', $business->id)->where('is_active', true)->with('outputUnit')->orderBy('name')->get();
+        $existingProductIds = $invoice->items->pluck('product_id')->filter()->unique();
+        if ($existingProductIds->isNotEmpty()) {
+            $missingProducts = Product::where('business_id', $business->id)->whereIn('id', $existingProductIds)->with('outputUnit')->get();
+            $products = $products->merge($missingProducts)->unique('id')->values();
+        }
+
         $units = Unit::all();
-        $locations = \App\Models\Location::where('is_active', true)->orderBy('name')->get();
+        $locations = \App\Models\Location::where('business_id', $business->id)->where('is_active', true)->orderBy('name')->get();
 
         return view('app.invoices.edit', compact(
             'business',
@@ -272,25 +285,22 @@ final class InvoiceWebController extends Controller
     }
 
     /**
-     * Render professional commercial tax invoice print-ready layout (A4).
+     * Render professional commercial tax invoice PDF (A4) or download.
      */
-    public function print(Invoice $invoice): View
+    public function print(Request $request, Invoice $invoice): \Illuminate\Http\Response
     {
-        $business = Context::requireBusiness();
-        $invoice->load(['customer', 'purchaseOrder', 'items.unit', 'payments']);
-
-        return view('app.invoices.print', compact('business', 'invoice'));
+        return $this->pdf($request, $invoice);
     }
 
     /**
      * Download or stream formal business correspondence PDF for Invoice (A4).
      */
-    public function pdf(Invoice $invoice): \Illuminate\Http\Response
+    public function pdf(Request $request, Invoice $invoice): \Illuminate\Http\Response
     {
         $business = Context::requireBusiness();
         abort_unless($invoice->business_id === $business->id, 403);
 
-        $invoice->load(['customer', 'purchaseOrder', 'items.unit', 'items.product', 'payments']);
+        $invoice->load(['customer', 'purchaseOrder', 'items.unit', 'items.product', 'payments.creator', 'salesOrder']);
 
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.invoice_pdf', [
             'business' => $business,
@@ -298,6 +308,10 @@ final class InvoiceWebController extends Controller
         ])->setPaper('a4', 'portrait');
 
         $filename = 'Faktur-' . \Illuminate\Support\Str::slug($invoice->invoice_number) . '.pdf';
+
+        if ($request->query('download') === '1') {
+            return $pdf->download($filename);
+        }
 
         return $pdf->stream($filename);
     }
@@ -496,32 +510,5 @@ final class InvoiceWebController extends Controller
         return back()->with('error', $errorMsg)->with('wa_url', $result['wa_url'] ?? null);
     }
 
-    /**
-     * Generate and stream PDF for this invoice.
-     */
-    public function pdf(Invoice $invoice): \Illuminate\Http\Response
-    {
-        $business = Context::requireBusiness();
-        abort_unless($invoice->business_id === $business->id, 403);
-
-        $invoice->load(['customer', 'purchaseOrder', 'items.product', 'items.unit', 'payments.creator', 'salesOrder']);
-
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.invoice_pdf', [
-            'business' => $business,
-            'invoice' => $invoice,
-        ])->setPaper('a4', 'portrait');
-
-        $filename = 'Faktur-' . \Illuminate\Support\Str::slug($invoice->invoice_number) . '.pdf';
-
-        return $pdf->stream($filename);
-    }
-
-    /**
-     * Print preview or direct print for this invoice.
-     */
-    public function print(Invoice $invoice): \Illuminate\Http\Response
-    {
-        return $this->pdf($invoice);
-    }
 }
 
