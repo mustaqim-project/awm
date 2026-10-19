@@ -134,7 +134,7 @@
                         <option value="">Tanpa Penawaran (Direct)</option>
                         @foreach ($quotations as $q)
                             <option value="{{ $q->id }}" {{ old('quotation_id', $salesOrder->quotation_id) == $q->id ? 'selected' : '' }}>
-                                {{ $q->quotation_number }} - {{ $q->customer->name }}
+                                {{ $q->quotation_number }} - {{ $q->customer?->name ?? 'Tanpa Pelanggan' }}
                             </option>
                         @endforeach
                     </select>
@@ -282,14 +282,19 @@
 
 <script>
     function salesOrderEditForm() {
+        @php
+            $soInitialItems = $salesOrder->items->map(function ($it) {
+                return [
+                    'product_id' => (string) ($it->product_id ?? ''),
+                    'product_name' => $it->product_name,
+                    'unit_price' => (float) $it->unit_price,
+                    'quantity' => (float) $it->quantity,
+                    'is_service' => $it->product?->isService() ?? false,
+                ];
+            })->values();
+        @endphp
         return {
-            items: @json($salesOrder->items->map(fn($it) => [
-                'product_id' => (string) ($it->product_id ?? ''),
-                'product_name' => $it->product_name,
-                'unit_price' => (float) $it->unit_price,
-                'quantity' => (float) $it->quantity,
-                'is_service' => $it->product?->isService() ?? false,
-            ])),
+            items: @json($soInitialItems),
             subtotal: {{ (float) $salesOrder->subtotal }},
             discountAmount: {{ (float) ($salesOrder->discount_amount ?? 0) }},
             taxAmount: {{ (float) ($salesOrder->tax_amount ?? 0) }},

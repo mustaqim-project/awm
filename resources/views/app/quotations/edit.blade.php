@@ -280,14 +280,19 @@
 
 <script>
     function quotationEditForm() {
+        @php
+            $quoInitialItems = $quotation->items->map(function ($it) {
+                return [
+                    'product_id' => (string) ($it->product_id ?? ''),
+                    'product_name' => $it->product_name,
+                    'unit_price' => (float) $it->unit_price,
+                    'quantity' => (float) $it->quantity,
+                    'is_service' => $it->product?->isService() ?? false,
+                ];
+            })->values();
+        @endphp
         return {
-            items: @json($quotation->items->map(fn($it) => [
-                'product_id' => (string) ($it->product_id ?? ''),
-                'product_name' => $it->product_name,
-                'unit_price' => (float) $it->unit_price,
-                'quantity' => (float) $it->quantity,
-                'is_service' => $it->product?->isService() ?? false,
-            ])),
+            items: @json($quoInitialItems),
             subtotal: {{ (float) $quotation->subtotal }},
             discountAmount: {{ (float) ($quotation->discount_amount ?? 0) }},
             taxAmount: {{ (float) ($quotation->tax_amount ?? 0) }},
