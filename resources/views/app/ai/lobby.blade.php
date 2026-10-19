@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'COOCA AI Digital Company'])
+@extends('layouts.app', ['title' => __('ai.lobby.page_title')])
 
 @section('content')
 <div class="space-y-6 w-full" x-data="aiOfficeBase()">
@@ -28,11 +28,11 @@
     <div class="space-y-4">
         <div class="flex items-center justify-between">
             <div>
-                <h2 class="text-base font-bold text-black dark:text-white tracking-tight">Tiga Kantor Digital Terintegrasi</h2>
-                <p class="text-xs text-black/50 dark:text-white/50">Tiga lingkungan kerja terpisah yang saling terhubung dalam satu sistem organisasi COOCA AI terpadu.</p>
+                <h2 class="text-base font-bold text-black dark:text-white tracking-tight">{{ __('ai.lobby.three_offices_title') }}</h2>
+                <p class="text-xs text-black/50 dark:text-white/50">{{ __('ai.lobby.three_offices_subtitle') }}</p>
             </div>
             <div class="text-right hidden sm:block">
-                <span class="text-xs text-black/40 dark:text-white/40">Status Mesin:</span>
+                <span class="text-xs text-black/40 dark:text-white/40">{{ __('ai.lobby.engine_status') }}</span>
                 <span class="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400 uppercase ml-1">
                     {{ $resolvedProvider['provider']->getProviderName() }}
                 </span>
@@ -55,13 +55,13 @@
 
                     <div>
                         <div class="text-[11px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Office 01</div>
-                        <h3 class="text-lg font-bold text-black dark:text-white tracking-tight mt-0.5">Executive Office</h3>
-                        <p class="text-xs text-black/60 dark:text-white/60 mt-1 line-clamp-2">Pusat komando strategi bisnis, visibilitas keuangan, pemantauan KPI, risiko dan rekomendasi tingkat eksekutif.</p>
+                        <h3 class="text-lg font-bold text-black dark:text-white tracking-tight mt-0.5">{{ __('ai.lobby.office_01_name') }}</h3>
+                        <p class="text-xs text-black/60 dark:text-white/60 mt-1 line-clamp-2">{{ __('ai.lobby.office_01_desc') }}</p>
                     </div>
 
                     <!-- Executive Squad Hierarchy Overview -->
                     <div class="p-3 rounded-2xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 space-y-2">
-                        <div class="text-[11px] font-semibold text-black/40 dark:text-white/40 uppercase tracking-wider">Pimpinan & Tim:</div>
+                        <div class="text-[11px] font-semibold text-black/40 dark:text-white/40 uppercase tracking-wider">{{ __('ai.lobby.leaders_and_team') }}</div>
                         <div class="flex flex-wrap items-center gap-1.5 text-xs text-black/80 dark:text-white/80">
                             <span class="px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-700 dark:text-amber-300 font-semibold text-[11px]">AI CEO</span>
                             <span class="text-black/30 dark:text-white/30">&bull;</span>
@@ -74,15 +74,15 @@
                     <!-- Live Backend Metrics -->
                     <div class="grid grid-cols-3 gap-2 pt-1 border-t border-black/5 dark:border-white/5 text-center">
                         <div class="p-2 rounded-xl bg-black/[0.01] dark:bg-white/[0.01]">
-                            <div class="text-[10px] text-black/50 dark:text-white/50 uppercase">Agen Aktif</div>
+                            <div class="text-[10px] text-black/50 dark:text-white/50 uppercase">{{ __('ai.lobby.active_agents') }}</div>
                             <div class="text-sm font-bold text-black dark:text-white tabular-nums mt-0.5">{{ $officesStats['executive']['active_agents_count'] }} / {{ $officesStats['executive']['total_agents'] }}</div>
                         </div>
                         <div class="p-2 rounded-xl bg-black/[0.01] dark:bg-white/[0.01]">
-                            <div class="text-[10px] text-black/50 dark:text-white/50 uppercase">Tugas Berjalan</div>
+                            <div class="text-[10px] text-black/50 dark:text-white/50 uppercase">{{ __('ai.lobby.running_tasks') }}</div>
                             <div class="text-sm font-bold text-black dark:text-white tabular-nums mt-0.5">{{ $officesStats['executive']['active_tasks_count'] }}</div>
                         </div>
                         <div class="p-2 rounded-xl bg-black/[0.01] dark:bg-white/[0.01]">
-                            <div class="text-[10px] text-black/50 dark:text-white/50 uppercase">Keputusan</div>
+                            <div class="text-[10px] text-black/50 dark:text-white/50 uppercase">{{ __('ai.lobby.decisions') }}</div>
                             <div class="text-sm font-bold text-amber-600 dark:text-amber-400 tabular-nums mt-0.5">{{ $officesStats['executive']['pending_approvals_count'] }}</div>
                         </div>
                     </div>
@@ -90,7 +90,7 @@
 
                 <div class="pt-5">
                     <a href="{{ route('cooca-ai.office.executive') }}" class="w-full py-2.5 px-4 rounded-2xl bg-black hover:bg-black/90 dark:bg-white dark:hover:bg-white/90 text-white dark:text-black font-semibold text-xs transition shadow-sm flex items-center justify-center gap-2">
-                        <span>Masuk Executive Office</span>
+                        <span>{{ __('ai.lobby.enter_executive_office') }}</span>
                         <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                     </a>
                 </div>
@@ -110,13 +110,13 @@
 
                     <div>
                         <div class="text-[11px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Office 02</div>
-                        <h3 class="text-lg font-bold text-black dark:text-white tracking-tight mt-0.5">Operations Office</h3>
-                        <p class="text-xs text-black/60 dark:text-white/60 mt-1 line-clamp-2">Pusat kendali operasional harian: ketersediaan inventori, pengadaan bahan baku, dan omnichannel marketplace.</p>
+                        <h3 class="text-lg font-bold text-black dark:text-white tracking-tight mt-0.5">{{ __('ai.lobby.office_02_name') }}</h3>
+                        <p class="text-xs text-black/60 dark:text-white/60 mt-1 line-clamp-2">{{ __('ai.lobby.office_02_desc') }}</p>
                     </div>
 
                     <!-- Operations Squad Hierarchy Overview -->
                     <div class="p-3 rounded-2xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 space-y-2">
-                        <div class="text-[11px] font-semibold text-black/40 dark:text-white/40 uppercase tracking-wider">Pimpinan & Tim:</div>
+                        <div class="text-[11px] font-semibold text-black/40 dark:text-white/40 uppercase tracking-wider">{{ __('ai.lobby.leaders_and_team') }}</div>
                         <div class="flex flex-wrap items-center gap-1.5 text-xs text-black/80 dark:text-white/80">
                             <span class="px-2 py-0.5 rounded-md bg-blue-500/10 text-blue-700 dark:text-blue-300 font-semibold text-[11px]">AI COO</span>
                             <span class="text-black/30 dark:text-white/30">&bull;</span>
@@ -127,15 +127,15 @@
                     <!-- Live Backend Metrics -->
                     <div class="grid grid-cols-3 gap-2 pt-1 border-t border-black/5 dark:border-white/5 text-center">
                         <div class="p-2 rounded-xl bg-black/[0.01] dark:bg-white/[0.01]">
-                            <div class="text-[10px] text-black/50 dark:text-white/50 uppercase">Agen Aktif</div>
+                            <div class="text-[10px] text-black/50 dark:text-white/50 uppercase">{{ __('ai.lobby.active_agents') }}</div>
                             <div class="text-sm font-bold text-black dark:text-white tabular-nums mt-0.5">{{ $officesStats['operations']['active_agents_count'] }} / {{ $officesStats['operations']['total_agents'] }}</div>
                         </div>
                         <div class="p-2 rounded-xl bg-black/[0.01] dark:bg-white/[0.01]">
-                            <div class="text-[10px] text-black/50 dark:text-white/50 uppercase">Tugas Operasional</div>
+                            <div class="text-[10px] text-black/50 dark:text-white/50 uppercase">{{ __('ai.lobby.operational_tasks') }}</div>
                             <div class="text-sm font-bold text-black dark:text-white tabular-nums mt-0.5">{{ $officesStats['operations']['active_tasks_count'] }}</div>
                         </div>
                         <div class="p-2 rounded-xl bg-black/[0.01] dark:bg-white/[0.01]">
-                            <div class="text-[10px] text-black/50 dark:text-white/50 uppercase">Usulan PO/Stok</div>
+                            <div class="text-[10px] text-black/50 dark:text-white/50 uppercase">{{ __('ai.lobby.po_stock_proposals') }}</div>
                             <div class="text-sm font-bold text-blue-600 dark:text-blue-400 tabular-nums mt-0.5">{{ $officesStats['operations']['pending_approvals_count'] }}</div>
                         </div>
                     </div>
@@ -143,7 +143,7 @@
 
                 <div class="pt-5">
                     <a href="{{ route('cooca-ai.office.operations') }}" class="w-full py-2.5 px-4 rounded-2xl bg-black hover:bg-black/90 dark:bg-white dark:hover:bg-white/90 text-white dark:text-black font-semibold text-xs transition shadow-sm flex items-center justify-center gap-2">
-                        <span>Masuk Operations Office</span>
+                        <span>{{ __('ai.lobby.enter_operations_office') }}</span>
                         <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                     </a>
                 </div>
@@ -163,13 +163,13 @@
 
                     <div>
                         <div class="text-[11px] font-bold text-purple-600 dark:text-purple-400 uppercase tracking-wider">Office 03</div>
-                        <h3 class="text-lg font-bold text-black dark:text-white tracking-tight mt-0.5">Growth Office</h3>
-                        <p class="text-xs text-black/60 dark:text-white/60 mt-1 line-clamp-2">Pusat pertumbuhan komersial: kampanye pemasaran, produksi naskah konten, media sosial dan retensi pelanggan.</p>
+                        <h3 class="text-lg font-bold text-black dark:text-white tracking-tight mt-0.5">{{ __('ai.lobby.office_03_name') }}</h3>
+                        <p class="text-xs text-black/60 dark:text-white/60 mt-1 line-clamp-2">{{ __('ai.lobby.office_03_desc') }}</p>
                     </div>
 
                     <!-- Growth Squad Hierarchy Overview -->
                     <div class="p-3 rounded-2xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 space-y-2">
-                        <div class="text-[11px] font-semibold text-black/40 dark:text-white/40 uppercase tracking-wider">Pimpinan & Tim:</div>
+                        <div class="text-[11px] font-semibold text-black/40 dark:text-white/40 uppercase tracking-wider">{{ __('ai.lobby.leaders_and_team') }}</div>
                         <div class="flex flex-wrap items-center gap-1.5 text-xs text-black/80 dark:text-white/80">
                             <span class="px-2 py-0.5 rounded-md bg-purple-500/10 text-purple-700 dark:text-purple-300 font-semibold text-[11px]">AI CMO</span>
                             <span class="text-black/30 dark:text-white/30">&bull;</span>
@@ -182,15 +182,15 @@
                     <!-- Live Backend Metrics -->
                     <div class="grid grid-cols-3 gap-2 pt-1 border-t border-black/5 dark:border-white/5 text-center">
                         <div class="p-2 rounded-xl bg-black/[0.01] dark:bg-white/[0.01]">
-                            <div class="text-[10px] text-black/50 dark:text-white/50 uppercase">Agen Aktif</div>
+                            <div class="text-[10px] text-black/50 dark:text-white/50 uppercase">{{ __('ai.lobby.active_agents') }}</div>
                             <div class="text-sm font-bold text-black dark:text-white tabular-nums mt-0.5">{{ $officesStats['growth']['active_agents_count'] }} / {{ $officesStats['growth']['total_agents'] }}</div>
                         </div>
                         <div class="p-2 rounded-xl bg-black/[0.01] dark:bg-white/[0.01]">
-                            <div class="text-[10px] text-black/50 dark:text-white/50 uppercase">Tugas Kampanye</div>
+                            <div class="text-[10px] text-black/50 dark:text-white/50 uppercase">{{ __('ai.lobby.campaign_tasks') }}</div>
                             <div class="text-sm font-bold text-black dark:text-white tabular-nums mt-0.5">{{ $officesStats['growth']['active_tasks_count'] }}</div>
                         </div>
                         <div class="p-2 rounded-xl bg-black/[0.01] dark:bg-white/[0.01]">
-                            <div class="text-[10px] text-black/50 dark:text-white/50 uppercase">Usulan Promo</div>
+                            <div class="text-[10px] text-black/50 dark:text-white/50 uppercase">{{ __('ai.lobby.promo_proposals') }}</div>
                             <div class="text-sm font-bold text-purple-600 dark:text-purple-400 tabular-nums mt-0.5">{{ $officesStats['growth']['pending_approvals_count'] }}</div>
                         </div>
                     </div>
@@ -198,7 +198,7 @@
 
                 <div class="pt-5">
                     <a href="{{ route('cooca-ai.office.growth') }}" class="w-full py-2.5 px-4 rounded-2xl bg-black hover:bg-black/90 dark:bg-white dark:hover:bg-white/90 text-white dark:text-black font-semibold text-xs transition shadow-sm flex items-center justify-center gap-2">
-                        <span>Masuk Growth Office</span>
+                        <span>{{ __('ai.lobby.enter_growth_office') }}</span>
                         <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                     </a>
                 </div>
@@ -213,13 +213,13 @@
             <div>
                 <h3 class="text-sm font-bold text-black dark:text-white flex items-center gap-2">
                     <i data-lucide="git-merge" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
-                    <span>Kolaborasi Lintas Kantor (Cross-Office Workflow)</span>
+                    <span>{{ __('ai.lobby.cross_office_title') }}</span>
                 </h3>
-                <p class="text-xs text-black/50 dark:text-white/50 mt-0.5">Tiga kantor saling bertukar data secara berjenjang untuk merumuskan usulan aksi bisnis terpadu.</p>
+                <p class="text-xs text-black/50 dark:text-white/50 mt-0.5">{{ __('ai.lobby.cross_office_desc') }}</p>
             </div>
             <div class="hidden sm:flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400 font-medium">
                 <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span>Alur Otomatis Aktif</span>
+                <span>{{ __('ai.lobby.auto_flow_active') }}</span>
             </div>
         </div>
 
@@ -230,8 +230,8 @@
                 <div class="flex items-center gap-2.5">
                     <div class="w-8 h-8 rounded-xl bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center font-bold shrink-0">1</div>
                     <div>
-                        <div class="font-bold text-black dark:text-white">Growth / Sales</div>
-                        <div class="text-[11px] text-black/50 dark:text-white/50">Mendeteksi fluktuasi</div>
+                        <div class="font-bold text-black dark:text-white">{{ __('ai.lobby.step_1_title') }}</div>
+                        <div class="text-[11px] text-black/50 dark:text-white/50">{{ __('ai.lobby.step_1_desc') }}</div>
                     </div>
                 </div>
 
@@ -240,8 +240,8 @@
                 <div class="flex items-center gap-2.5">
                     <div class="w-8 h-8 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center font-bold shrink-0">2</div>
                     <div>
-                        <div class="font-bold text-black dark:text-white">Executive / CEO</div>
-                        <div class="text-[11px] text-black/50 dark:text-white/50">Diagnosa & prioritas</div>
+                        <div class="font-bold text-black dark:text-white">{{ __('ai.lobby.step_2_title') }}</div>
+                        <div class="text-[11px] text-black/50 dark:text-white/50">{{ __('ai.lobby.step_2_desc') }}</div>
                     </div>
                 </div>
 
@@ -250,8 +250,8 @@
                 <div class="flex items-center gap-2.5">
                     <div class="w-8 h-8 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold shrink-0">3</div>
                     <div>
-                        <div class="font-bold text-black dark:text-white">Operations / COO</div>
-                        <div class="text-[11px] text-black/50 dark:text-white/50">Validasi stok & logistik</div>
+                        <div class="font-bold text-black dark:text-white">{{ __('ai.lobby.step_3_title') }}</div>
+                        <div class="text-[11px] text-black/50 dark:text-white/50">{{ __('ai.lobby.step_3_desc') }}</div>
                     </div>
                 </div>
 
@@ -260,8 +260,8 @@
                 <div class="flex items-center gap-2.5">
                     <div class="w-8 h-8 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold shrink-0">4</div>
                     <div>
-                        <div class="font-bold text-black dark:text-white">Action Proposal</div>
-                        <div class="text-[11px] text-black/50 dark:text-white/50">Keputusan Pemilik</div>
+                        <div class="font-bold text-black dark:text-white">{{ __('ai.lobby.step_4_title') }}</div>
+                        <div class="text-[11px] text-black/50 dark:text-white/50">{{ __('ai.lobby.step_4_desc') }}</div>
                     </div>
                 </div>
 
@@ -270,7 +270,7 @@
 
         <!-- Real Task Timeline Feed -->
         <div class="space-y-2.5 pt-1">
-            <div class="text-xs font-semibold text-black/40 dark:text-white/40 uppercase tracking-wider">Aktivitas Koordinasi Nyata:</div>
+            <div class="text-xs font-semibold text-black/40 dark:text-white/40 uppercase tracking-wider">{{ __('ai.lobby.real_coordination_title') }}</div>
             
             @forelse($recentTasks as $task)
                 <div class="p-3.5 rounded-2xl bg-black/[0.01] dark:bg-white/[0.01] border border-black/5 dark:border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -297,11 +297,11 @@
 
                     <div class="shrink-0 flex items-center gap-2">
                         @if($task->isCompleted())
-                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">Selesai</span>
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">{{ __('ai.lobby.task_status_completed') }}</span>
                         @elseif($task->isRunning())
-                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-500/10 text-blue-600 dark:text-blue-400 animate-pulse">Bekerja</span>
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-500/10 text-blue-600 dark:text-blue-400 animate-pulse">{{ __('ai.lobby.task_status_working') }}</span>
                         @elseif($task->isWaitingApproval())
-                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400">Menunggu Approval</span>
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400">{{ __('ai.lobby.task_status_waiting') }}</span>
                         @else
                             <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-zinc-500/10 text-zinc-600 dark:text-zinc-400">{{ $task->status }}</span>
                         @endif
@@ -309,7 +309,7 @@
                 </div>
             @empty
                 <div class="p-6 rounded-2xl bg-black/[0.01] dark:bg-white/[0.01] border border-black/5 dark:border-white/5 text-center text-xs text-black/50 dark:text-white/50">
-                    Belum ada riwayat koordinasi tugas. Klik "Simulasi Kolaborasi Harian" atau "Konsultasi AI" untuk memulai.
+                    {{ __('ai.lobby.no_coordination_history') }}
                 </div>
             @endforelse
         </div>
@@ -324,14 +324,14 @@
             </div>
             <div>
                 <div class="flex items-center gap-2">
-                    <h3 class="text-sm font-bold text-black dark:text-white">Ada {{ $pendingCount }} Usulan Aksi Menunggu Keputusan Anda</h3>
+                    <h3 class="text-sm font-bold text-black dark:text-white">{{ __('ai.lobby.pending_banner_title', ['count' => $pendingCount]) }}</h3>
                     <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/15 text-amber-700 dark:text-amber-300">Maker-Checker</span>
                 </div>
-                <p class="text-xs text-black/60 dark:text-white/60 mt-1">Tim AI telah menyusun rekomendasi bisnis. Sebagai pemilik usaha, eksekusi baru berjalan setelah persetujuan Anda di Action Center.</p>
+                <p class="text-xs text-black/60 dark:text-white/60 mt-1">{{ __('ai.lobby.pending_banner_desc') }}</p>
             </div>
         </div>
         <a href="{{ route('cooca-ai.actions', ['status' => 'pending']) }}" class="px-5 py-3 rounded-2xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs shadow-md transition flex items-center justify-center gap-2 shrink-0">
-            <span>Tinjau di Action Center ({{ $pendingCount }})</span>
+            <span>{{ __('ai.lobby.btn_review_action_center', ['count' => $pendingCount]) }}</span>
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
         </a>
     </div>

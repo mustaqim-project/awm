@@ -429,19 +429,19 @@
                                 <div class="p-3 rounded-2xl bg-emerald-500/[0.08] border border-emerald-500/20 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs">
                                     <template x-if="selectedProposal.result.audit_ref">
                                         <div class="flex items-center gap-1.5">
-                                            <span class="text-[10px] uppercase font-bold text-emerald-700/70 dark:text-emerald-400/70">Ref Audit:</span>
+                                            <span class="text-[10px] uppercase font-bold text-emerald-700/70 dark:text-emerald-400/70">{{ __('ai.actions.audit_ref_label') }}</span>
                                             <span class="font-mono font-bold text-emerald-900 dark:text-emerald-200" x-text="selectedProposal.result.audit_ref"></span>
                                         </div>
                                     </template>
                                     <template x-if="selectedProposal.result.audited_by">
                                         <div class="flex items-center gap-1.5">
-                                            <span class="text-[10px] uppercase font-bold text-emerald-700/70 dark:text-emerald-400/70">Oleh:</span>
+                                            <span class="text-[10px] uppercase font-bold text-emerald-700/70 dark:text-emerald-400/70">{{ __('ai.actions.by_label') }}</span>
                                             <span class="font-semibold text-emerald-900 dark:text-emerald-200" x-text="selectedProposal.result.audited_by"></span>
                                         </div>
                                     </template>
                                     <template x-if="selectedProposal.result.audited_at">
                                         <div class="flex items-center gap-1.5">
-                                            <span class="text-[10px] uppercase font-bold text-emerald-700/70 dark:text-emerald-400/70">Waktu:</span>
+                                            <span class="text-[10px] uppercase font-bold text-emerald-700/70 dark:text-emerald-400/70">{{ __('ai.actions.time_label') }}</span>
                                             <span class="font-mono text-emerald-800 dark:text-emerald-300" x-text="formatValue('audited_at', selectedProposal.result.audited_at)"></span>
                                         </div>
                                     </template>
@@ -453,7 +453,7 @@
                                 <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.04] p-4 space-y-2.5">
                                     <div class="text-[11px] font-bold text-emerald-800 dark:text-emerald-300 uppercase tracking-wider flex items-center gap-1.5">
                                         <i data-lucide="compass" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>
-                                        <span>Rencana Aksi &amp; Langkah Taktis (Action Plan):</span>
+                                        <span>{{ __('ai.actions.action_plan_title') }}</span>
                                     </div>
                                     <ul class="space-y-2 pt-0.5">
                                         <template x-for="(plan, idx) in getActionPlan(selectedProposal.result)" :key="idx">
@@ -490,7 +490,7 @@
                     <div class="p-3.5 rounded-xl bg-rose-500/[0.08] border border-rose-500/20 text-xs text-rose-700 dark:text-rose-300 flex items-start gap-2">
                         <i data-lucide="alert-triangle" class="w-4 h-4 text-rose-500 shrink-0 mt-0.5"></i>
                         <div>
-                            <div class="font-bold">Catatan Kendala Eksekusi:</div>
+                            <div class="font-bold">{{ __('ai.actions.execution_error_title') }}</div>
                             <div class="mt-0.5 font-mono text-[11px]" x-text="selectedProposal.error"></div>
                         </div>
                     </div>

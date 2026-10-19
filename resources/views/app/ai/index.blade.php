@@ -66,31 +66,31 @@
                 <!-- Quick Query Suggestions Chips (min 44px tap target) -->
                 <div class="flex flex-wrap items-center gap-2 sm:gap-2.5 pt-1">
                     <span class="text-[11px] text-slate-500 dark:text-slate-400 font-semibold w-full sm:w-auto">{{ __('ai.pos.quick_questions') }}</span>
-                    <button @click="quickAsk('Berapa penjualan hari ini?')" class="min-h-[44px] px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs transition border border-slate-200 dark:border-slate-700/60 inline-flex items-center gap-2">
+                    <button @click="quickAsk(@js(__('ai.pos.quick_prompts.sales_today')))" class="min-h-[44px] px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs transition border border-slate-200 dark:border-slate-700/60 inline-flex items-center gap-2">
                         <i data-lucide="trending-up" class="w-4 h-4 text-emerald-500"></i>
                         <span>{{ __('ai.pos.quick_queries.sales_today') }}</span>
                     </button>
-                    <button @click="quickAsk('Produk apa yang stoknya mau habis?')" class="min-h-[44px] px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs transition border border-slate-200 dark:border-slate-700/60 inline-flex items-center gap-2">
+                    <button @click="quickAsk(@js(__('ai.pos.quick_prompts.low_stock')))" class="min-h-[44px] px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs transition border border-slate-200 dark:border-slate-700/60 inline-flex items-center gap-2">
                         <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-500"></i>
                         <span>{{ __('ai.pos.quick_queries.low_stock') }}</span>
                     </button>
-                    <button @click="quickAsk('Apakah ada transaksi mencurigakan atau fraud?')" class="min-h-[44px] px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs transition border border-slate-200 dark:border-slate-700/60 inline-flex items-center gap-2">
+                    <button @click="quickAsk(@js(__('ai.pos.quick_prompts.cashier_anomaly')))" class="min-h-[44px] px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs transition border border-slate-200 dark:border-slate-700/60 inline-flex items-center gap-2">
                         <i data-lucide="shield-alert" class="w-4 h-4 text-rose-500"></i>
                         <span>{{ __('ai.pos.quick_queries.cashier_anomaly') }}</span>
                     </button>
-                    <button @click="quickAsk('Prediksi penjualan minggu depan')" class="min-h-[44px] px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs transition border border-slate-200 dark:border-slate-700/60 inline-flex items-center gap-2">
+                    <button @click="quickAsk(@js(__('ai.pos.quick_prompts.sales_prediction')))" class="min-h-[44px] px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs transition border border-slate-200 dark:border-slate-700/60 inline-flex items-center gap-2">
                         <i data-lucide="sparkles" class="w-4 h-4 text-cyan-500"></i>
                         <span>{{ __('ai.pos.quick_queries.sales_prediction') }}</span>
                     </button>
-                    <button @click="quickAsk('Siapa kasir dengan performa terbaik?')" class="min-h-[44px] px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs transition border border-slate-200 dark:border-slate-700/60 inline-flex items-center gap-2">
+                    <button @click="quickAsk(@js(__('ai.pos.quick_prompts.cashier_performance')))" class="min-h-[44px] px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs transition border border-slate-200 dark:border-slate-700/60 inline-flex items-center gap-2">
                         <i data-lucide="user" class="w-4 h-4 text-sky-500"></i>
                         <span>{{ __('ai.pos.quick_queries.cashier_performance') }}</span>
                     </button>
-                    <button @click="quickAsk('Buatkan draf invoice')" class="min-h-[44px] px-3.5 py-2 rounded-xl bg-purple-50 hover:bg-purple-100 dark:bg-purple-950/40 dark:hover:bg-purple-900/50 text-purple-700 dark:text-purple-300 text-xs font-bold transition border border-purple-200 dark:border-purple-500/40 inline-flex items-center gap-2">
+                    <button @click="quickAsk(@js(__('ai.pos.quick_prompts.draft_invoice')))" class="min-h-[44px] px-3.5 py-2 rounded-xl bg-purple-50 hover:bg-purple-100 dark:bg-purple-950/40 dark:hover:bg-purple-900/50 text-purple-700 dark:text-purple-300 text-xs font-bold transition border border-purple-200 dark:border-purple-500/40 inline-flex items-center gap-2">
                         <i data-lucide="zap" class="w-4 h-4 text-purple-500"></i>
                         <span>{{ __('ai.pos.quick_queries.draft_invoice') }}</span>
                     </button>
-                    <button @click="quickAsk('Buatkan draf penawaran')" class="min-h-[44px] px-3.5 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/40 dark:hover:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 text-xs font-bold transition border border-emerald-200 dark:border-emerald-500/40 inline-flex items-center gap-2">
+                    <button @click="quickAsk(@js(__('ai.pos.quick_prompts.draft_quotation')))" class="min-h-[44px] px-3.5 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/40 dark:hover:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 text-xs font-bold transition border border-emerald-200 dark:border-emerald-500/40 inline-flex items-center gap-2">
                         <i data-lucide="clipboard-list" class="w-4 h-4 text-emerald-500"></i>
                         <span>{{ __('ai.pos.quick_queries.draft_quotation') }}</span>
                     </button>

@@ -9,12 +9,12 @@
         <div class="lg:col-span-2 rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 shadow-xs flex flex-col justify-between">
             <div class="flex items-center justify-between mb-4">
                 <div>
-                    <h3 class="text-[15px] font-bold text-black dark:text-white">Tren Penjualan & Laba Harian</h3>
-                    <p class="text-[12px] text-black/50 dark:text-white/50">Grafik omzet bersih dan perolehan laba kotor harian</p>
+                    <h3 class="text-[15px] font-bold text-black dark:text-white">{{ __('pos.reports_overview_trend_title') }}</h3>
+                    <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('pos.reports_overview_trend_subtitle') }}</p>
                 </div>
                 <div class="flex items-center gap-4 text-[11px] font-medium">
-                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#007AFF]"></span> Penjualan</span>
-                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#34C759]"></span> Laba Kotor</span>
+                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#007AFF]"></span> {{ __('pos.reports_overview_sales_legend') }}</span>
+                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#34C759]"></span> {{ __('pos.reports_overview_profit_legend') }}</span>
                 </div>
             </div>
 
@@ -26,8 +26,8 @@
         {{-- Goods vs Services Revenue Split (Span 1) --}}
         <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 shadow-xs flex flex-col justify-between">
             <div>
-                <h3 class="text-[15px] font-bold text-black dark:text-white">Distribusi Barang vs Jasa</h3>
-                <p class="text-[12px] text-black/50 dark:text-white/50">Komposisi pendapatan dari produk fisik dan layanan jasa</p>
+                <h3 class="text-[15px] font-bold text-black dark:text-white">{{ __('pos.reports_overview_distribution_title') }}</h3>
+                <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('pos.reports_overview_distribution_subtitle') }}</p>
             </div>
 
             <div class="space-y-4 my-auto py-4">
@@ -36,7 +36,7 @@
                     <div class="flex items-center justify-between text-[13px]">
                         <span class="font-medium text-black dark:text-white flex items-center gap-2">
                             <i data-lucide="package" class="w-4 h-4 text-[#007AFF]"></i>
-                            <span>Produk Fisik (Barang)</span>
+                            <span>{{ __('pos.reports_overview_goods_title') }}</span>
                         </span>
                         <span class="font-bold tabular-nums text-black dark:text-white">Rp {{ number_format($kpi->goodsRevenue, 0, ',', '.') }}</span>
                     </div>
@@ -47,8 +47,8 @@
                         <div class="h-full bg-[#007AFF] rounded-full" style="width: {{ $goodsPct }}%"></div>
                     </div>
                     <div class="flex justify-between text-[11px] text-black/40 dark:text-white/40">
-                        <span>{{ number_format($kpi->goodsQuantity, 1) }} qty terjual</span>
-                        <span>{{ $goodsPct }}% porsi omzet</span>
+                        <span>{{ __('pos.reports_overview_goods_sold', ['count' => number_format($kpi->goodsQuantity, 1)]) }}</span>
+                        <span>{{ __('pos.reports_overview_share_revenue', ['percent' => $goodsPct]) }}</span>
                     </div>
                 </div>
 
@@ -57,7 +57,7 @@
                     <div class="flex items-center justify-between text-[13px]">
                         <span class="font-medium text-black dark:text-white flex items-center gap-2">
                             <i data-lucide="wrench" class="w-4 h-4 text-[#AF52DE]"></i>
-                            <span>Jasa / Layanan Teknis</span>
+                            <span>{{ __('pos.reports_overview_services_title') }}</span>
                         </span>
                         <span class="font-bold tabular-nums text-black dark:text-white">Rp {{ number_format($kpi->servicesRevenue, 0, ',', '.') }}</span>
                     </div>
@@ -68,14 +68,14 @@
                         <div class="h-full bg-[#AF52DE] rounded-full" style="width: {{ $servicesPct }}%"></div>
                     </div>
                     <div class="flex justify-between text-[11px] text-black/40 dark:text-white/40">
-                        <span>{{ number_format($kpi->servicesQuantity, 1) }} order jasa</span>
-                        <span>{{ $servicesPct }}% porsi omzet</span>
+                        <span>{{ __('pos.reports_overview_services_order', ['count' => number_format($kpi->servicesQuantity, 1)]) }}</span>
+                        <span>{{ __('pos.reports_overview_share_revenue', ['percent' => $servicesPct]) }}</span>
                     </div>
                 </div>
             </div>
 
             <div class="pt-3 border-t border-black/5 dark:border-white/5 flex items-center justify-between text-[12px]">
-                <span class="text-black/50 dark:text-white/50">ASP (Harga Jual Rata-rata)</span>
+                <span class="text-black/50 dark:text-white/50">{{ __('pos.reports_overview_asp') }}</span>
                 <span class="font-bold text-black dark:text-white tabular-nums">Rp {{ number_format($kpi->averageSellingPrice, 0, ',', '.') }}</span>
             </div>
         </div>
@@ -86,9 +86,9 @@
         {{-- Top 5 Products --}}
         <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 shadow-xs">
             <div class="flex items-center justify-between mb-4">
-                <h3 class="text-[15px] font-bold text-black dark:text-white">5 Produk Terlaris</h3>
+                <h3 class="text-[15px] font-bold text-black dark:text-white">{{ __('pos.reports_overview_top5_title') }}</h3>
                 <a href="{{ route('pos.reports.index', array_merge(request()->query(), ['tab' => 'products'])) }}" class="text-[12px] font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
-                    <span>Lihat Semua</span>
+                    <span>{{ __('pos.reports_overview_view_all') }}</span>
                     <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                 </a>
             </div>
@@ -102,7 +102,7 @@
                             </span>
                             <div class="min-w-0">
                                 <div class="text-[13px] font-semibold text-black dark:text-white truncate">{{ $prod->name }}</div>
-                                <div class="text-[11px] text-black/40 dark:text-white/40 truncate">{{ $prod->category ?? 'Produk' }} • {{ number_format($prod->qty, 1) }} terjual</div>
+                                <div class="text-[11px] text-black/40 dark:text-white/40 truncate">{{ $prod->category ?? __('pos.reports_overview_fallback_product') }} • {{ number_format($prod->qty, 1) }} {{ __('pos.reports_overview_sold') }}</div>
                             </div>
                         </div>
                         <div class="text-right shrink-0">
@@ -111,7 +111,7 @@
                         </div>
                     </div>
                 @empty
-                    <div class="py-8 text-center text-[13px] text-black/40 dark:text-white/40">Belum ada transaksi pada periode ini</div>
+                    <div class="py-8 text-center text-[13px] text-black/40 dark:text-white/40">{{ __('pos.reports_overview_no_transactions') }}</div>
                 @endforelse
             </div>
         </div>
@@ -119,32 +119,44 @@
         {{-- Payment Methods Fast View --}}
         <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 shadow-xs">
             <div class="flex items-center justify-between mb-4">
-                <h3 class="text-[15px] font-bold text-black dark:text-white">Metode Pembayaran</h3>
+                <h3 class="text-[15px] font-bold text-black dark:text-white">{{ __('pos.reports_overview_payment_title') }}</h3>
                 <a href="{{ route('pos.reports.index', array_merge(request()->query(), ['tab' => 'payments'])) }}" class="text-[12px] font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
-                    <span>Rincian Lengkap</span>
+                    <span>{{ __('pos.reports_overview_view_details') }}</span>
                     <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                 </a>
             </div>
 
             <div class="divide-y divide-black/5 dark:divide-white/5">
                 @forelse ($paymentMethods as $pm)
+                    @php
+                        $mRaw = strtolower((string) ($pm->raw_method ?? $pm->payment_method ?? ''));
+                        $meta = match ($mRaw) {
+                            'cash' => ['icon' => 'banknote', 'bg' => 'bg-[#34C759]/10 text-[#34C759]'],
+                            'qris', 'qris_dynamic' => ['icon' => 'qr-code', 'bg' => 'bg-[#007AFF]/10 text-[#007AFF]'],
+                            'edc_debit', 'edc_credit' => ['icon' => 'credit-card', 'bg' => 'bg-[#5856D6]/10 text-[#5856D6]'],
+                            'transfer' => ['icon' => 'building-2', 'bg' => 'bg-[#FF9500]/10 text-[#FF9500]'],
+                            'customer_credit' => ['icon' => 'user-check', 'bg' => 'bg-[#32ADE6]/10 text-[#32ADE6]'],
+                            'loyalty_points' => ['icon' => 'award', 'bg' => 'bg-[#FFCC00]/15 text-[#D4A000]'],
+                            default => ['icon' => 'credit-card', 'bg' => 'bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60'],
+                        };
+                    @endphp
                     <div class="py-3 flex items-center justify-between">
                         <div class="flex items-center gap-3">
-                            <span class="p-2 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06]">
-                                <i data-lucide="credit-card" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
+                            <span class="p-2 rounded-[10px] {{ $meta['bg'] }}">
+                                <i data-lucide="{{ $meta['icon'] }}" class="w-4 h-4"></i>
                             </span>
                             <div>
-                                <div class="text-[13px] font-semibold text-black dark:text-white">{{ $pm->method }}</div>
-                                <div class="text-[11px] text-black/40 dark:text-white/40">{{ number_format($pm->count, 0, ',', '.') }} transaksi</div>
+                                <div class="text-[13px] font-semibold text-black dark:text-white">{{ $pm->method ?? $pm->method_label }}</div>
+                                <div class="text-[11px] text-black/40 dark:text-white/40">{{ number_format($pm->count ?? $pm->tx_count ?? 0, 0, ',', '.') }} {{ __('pos.reports_overview_transactions_unit') }}</div>
                             </div>
                         </div>
                         <div class="text-right">
-                            <div class="text-[13px] font-bold tabular-nums text-black dark:text-white">Rp {{ number_format($pm->amount, 0, ',', '.') }}</div>
-                            <div class="text-[11px] text-black/40 dark:text-white/40 tabular-nums">{{ number_format($pm->share, 1) }}% porsi</div>
+                            <div class="text-[13px] font-bold tabular-nums text-black dark:text-white">Rp {{ number_format($pm->amount ?? $pm->total_amount ?? 0, 0, ',', '.') }}</div>
+                            <div class="text-[11px] text-black/40 dark:text-white/40 tabular-nums">{{ number_format($pm->share ?? $pm->contribution_percent ?? 0, 1) }}% {{ __('pos.reports_overview_share_unit') }}</div>
                         </div>
                     </div>
                 @empty
-                    <div class="py-8 text-center text-[13px] text-black/40 dark:text-white/40">Belum ada data pembayaran</div>
+                    <div class="py-8 text-center text-[13px] text-black/40 dark:text-white/40">{{ __('pos.reports_overview_no_payments') }}</div>
                 @endforelse
             </div>
         </div>
@@ -168,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 labels: labels,
                 datasets: [
                     {
-                        label: 'Penjualan Bersih',
+                        label: @json(__('pos.kpi_net_sales')),
                         data: sales,
                         borderColor: '#007AFF',
                         backgroundColor: 'rgba(0, 122, 255, 0.08)',
@@ -179,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         pointHoverRadius: 5,
                     },
                     {
-                        label: 'Laba Kotor',
+                        label: @json(__('pos.reports_overview_profit_legend')),
                         data: profit,
                         borderColor: '#34C759',
                         backgroundColor: 'rgba(52, 199, 89, 0.05)',

@@ -9,17 +9,17 @@
                 </span>
                 <div>
                     <h3 class="text-[16px] font-bold text-black dark:text-white">
-                        Status Rekonsiliasi 3-Arah: {{ $reconciliation->isBalanced ? 'SEIMBANG & TERTIB (Balanced)' : 'TERDAPAT ANOMALI / SELISIH KAS' }}
+                        {{ __('pos.reports_shifts_recon_status') }}: {{ $reconciliation->isBalanced ? __('pos.reports_shifts_recon_balanced') : __('pos.reports_shifts_recon_anomaly') }}
                     </h3>
                     <p class="text-[12px] text-black/60 dark:text-white/60">
-                        {{ $reconciliation->isBalanced ? 'Seluruh nota pesanan, penerimaan pembayaran kasir, dan fisik register kas sesuai 100% tanpa selisih.' : 'Terdapat perbedaan antara catatan pesanan, pembayaran, atau fisik kas register yang perlu diverifikasi.' }}
+                        {{ $reconciliation->isBalanced ? __('pos.reports_shifts_recon_balanced_desc') : __('pos.reports_shifts_recon_anomaly_desc') }}
                     </p>
                 </div>
             </div>
 
             <div class="flex items-center gap-4 text-[13px]">
                 <div class="text-right">
-                    <div class="text-[11px] text-black/50 dark:text-white/50">Selisih Kas Fisik</div>
+                    <div class="text-[11px] text-black/50 dark:text-white/50">{{ __('pos.reports_shifts_cash_diff') }}</div>
                     <div class="font-bold tabular-nums {{ abs($reconciliation->shiftCashDiscrepancy) < 0.01 ? 'text-[#34C759]' : 'text-[#FF3B30]' }}">
                         Rp {{ number_format($reconciliation->shiftCashDiscrepancy, 0, ',', '.') }}
                     </div>
@@ -30,7 +30,7 @@
         {{-- Anomaly List if Any --}}
         @if ($reconciliation->anomalies->isNotEmpty())
             <div class="mt-4 pt-4 border-t border-black/10 dark:border-white/10 space-y-2">
-                <h4 class="text-[12px] font-bold text-black/70 dark:text-white/70 uppercase tracking-wider">Daftar Temuan Anomali:</h4>
+                <h4 class="text-[12px] font-bold text-black/70 dark:text-white/70 uppercase tracking-wider">{{ __('pos.reports_shifts_anomalies_title') }}</h4>
                 <div class="space-y-1.5">
                     @foreach ($reconciliation->anomalies as $anomaly)
                         <div class="p-2.5 rounded-[10px] bg-white/70 dark:bg-black/40 border border-black/5 dark:border-white/5 flex items-start gap-2 text-[12px]">
@@ -38,7 +38,7 @@
                             <div class="flex-1 min-w-0">
                                 <span class="font-bold text-black dark:text-white">{{ $anomaly['type'] }}:</span>
                                 <span class="text-black/80 dark:text-white/80">{{ $anomaly['description'] }}</span>
-                                <div class="text-[11px] text-black/40 dark:text-white/40 mt-0.5">Rekomendasi: {{ $anomaly['action'] }}</div>
+                                <div class="text-[11px] text-black/40 dark:text-white/40 mt-0.5">{{ __('pos.reports_shifts_recommendation') }} {{ $anomaly['action'] }}</div>
                             </div>
                         </div>
                     @endforeach
@@ -51,11 +51,11 @@
     <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 shadow-xs overflow-hidden">
         <div class="p-5 border-b border-black/5 dark:border-white/5 flex flex-wrap items-center justify-between gap-4">
             <div>
-                <h3 class="text-[15px] font-bold text-black dark:text-white">Rekapitulasi Shift Kasir & Fisik Kas</h3>
-                <p class="text-[12px] text-black/50 dark:text-white/50">Daftar sesi shift kasir dengan perbandingan saldo awal, penjualan tunai, dan saldo akhir aktual</p>
+                <h3 class="text-[15px] font-bold text-black dark:text-white">{{ __('pos.reports_shifts_title') }}</h3>
+                <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('pos.reports_shifts_subtitle') }}</p>
             </div>
             <div class="text-[12px] font-medium text-black/60 dark:text-white/60">
-                Total: <span class="font-bold text-black dark:text-white">{{ $shiftReconciliation->count() }}</span> shift
+                {{ __('pos.reports_total_prefix') }}: <span class="font-bold text-black dark:text-white">{{ $shiftReconciliation->count() }}</span> {{ __('pos.reports_shifts_unit') }}
             </div>
         </div>
 
@@ -63,15 +63,15 @@
             <table class="w-full text-left text-[13px] border-collapse">
                 <thead>
                     <tr class="border-b border-black/5 dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.02] text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">
-                        <th class="py-3 px-4">Kasir & Register</th>
-                        <th class="py-3 px-4">Jam Buka - Tutup</th>
-                        <th class="py-3 px-4 text-right">Modal Awal</th>
-                        <th class="py-3 px-4 text-right">Penjualan Tunai</th>
-                        <th class="py-3 px-4 text-right">Kas Masuk/Keluar</th>
-                        <th class="py-3 px-4 text-right">Kas Seharusnya</th>
-                        <th class="py-3 px-4 text-right">Fisik Aktual</th>
-                        <th class="py-3 px-4 text-right">Selisih (Variance)</th>
-                        <th class="py-3 px-4 text-center">Status</th>
+                        <th class="py-3 px-4">{{ __('pos.reports_col_cashier_reg') }}</th>
+                        <th class="py-3 px-4">{{ __('pos.reports_col_open_close_time') }}</th>
+                        <th class="py-3 px-4 text-right">{{ __('pos.reports_col_start_cash') }}</th>
+                        <th class="py-3 px-4 text-right">{{ __('pos.reports_col_cash_sales') }}</th>
+                        <th class="py-3 px-4 text-right">{{ __('pos.reports_col_cash_in_out') }}</th>
+                        <th class="py-3 px-4 text-right">{{ __('pos.reports_col_expected_cash') }}</th>
+                        <th class="py-3 px-4 text-right">{{ __('pos.reports_col_actual_cash') }}</th>
+                        <th class="py-3 px-4 text-right">{{ __('pos.reports_col_cash_variance') }}</th>
+                        <th class="py-3 px-4 text-center">{{ __('pos.reports_col_status') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-black/5 dark:divide-white/5">
@@ -117,7 +117,7 @@
                     @empty
                         <tr>
                             <td colspan="9" class="py-12 text-center text-black/40 dark:text-white/40 text-[13px]">
-                                Tidak ada data shift kasir tercatat pada filter aktif
+                                {{ __('pos.reports_shifts_empty') }}
                             </td>
                         </tr>
                     @endforelse

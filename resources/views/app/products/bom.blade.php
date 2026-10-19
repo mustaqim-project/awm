@@ -32,7 +32,7 @@
         :title="__('products.bom_header_title')"
         :subtitle="__('products.bom_header_subtitle', ['name' => $product->name])"
         :breadcrumbs="[
-            ['label' => 'Dashboard', 'url' => route('dashboard')],
+            ['label' => __('products.breadcrumb_dashboard'), 'url' => route('dashboard')],
             ['label' => __('products.page_title'), 'url' => route('products.index')],
             ['label' => $product->name, 'url' => route('products.index', ['edit' => $product->id])],
             ['label' => __('products.breadcrumb_bom'), 'url' => null],
@@ -47,7 +47,7 @@
             @if (\App\Support\Context::hasPermission('products.edit'))
                 <a href="{{ route('import.index', ['tab' => 'recipes']) }}"
                     class="h-10 px-3.5 rounded-[12px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] border border-black/[0.06] dark:border-white/[0.08] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 min-w-[44px]"
-                    title="Import formula resep dari file Excel / CSV">
+                    title="{{ __('products.import_recipe_title') }}">
                     <i data-lucide="upload" class="w-4 h-4 text-black/60 dark:text-white/60 shrink-0"></i>
                     <span>{{ __('products.btn_import_recipe') }}</span>
                 </a>
@@ -239,7 +239,7 @@
                             {{ $mat?->name ?? 'Sub-BOM' }}
                         </h4>
                         <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5 tabular-nums">
-                            Takaran: <strong class="text-black dark:text-white">{{ $item->quantity }} {{ $item->unit?->code ?? $mat?->unit?->code }}</strong>
+                            {{ __('products.label_portion') }}: <strong class="text-black dark:text-white">{{ $item->quantity }} {{ $item->unit?->code ?? $mat?->unit?->code }}</strong>
                         </p>
                     </div>
 
@@ -254,9 +254,9 @@
 
                 <div class="flex items-center justify-between pt-2 border-t border-black/[0.04] dark:border-white/[0.06] text-[12.5px]">
                     <div class="text-black/50 dark:text-white/50">
-                        Harga: {{ $business->currency_symbol }} {{ number_format((float) $price, 0, ',', '.') }}
+                        {{ __('products.price_label') }}: {{ $business->currency_symbol }} {{ number_format((float) $price, 0, ',', '.') }}
                         @if ($item->waste_percentage > 0)
-                            <span class="text-[#FF3B30] font-semibold ml-1">(+{{ $item->waste_percentage }}% susut)</span>
+                            <span class="text-[#FF3B30] font-semibold ml-1">(+{{ $item->waste_percentage }}% {{ __('products.waste_label') }})</span>
                         @endif
                     </div>
                     <div class="font-bold text-[#34C759] dark:text-[#30D158] tabular-nums text-[13.5px]">
@@ -266,7 +266,7 @@
 
                 @if ($item->notes)
                     <p class="text-[11px] text-black/40 dark:text-white/40 italic pt-1 border-t border-black/[0.03] dark:border-white/[0.05]">
-                        Catatan: {{ $item->notes }}
+                        {{ __('products.notes_label') }}: {{ $item->notes }}
                     </p>
                 @endif
             </div>

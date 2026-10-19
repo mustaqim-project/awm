@@ -1,9 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
 return [
-    // Page Title & Header
     'page_title' => 'Business & Template Settings',
     'header_title' => 'Business & Industry Template Settings',
     'header_subtitle' => 'Configure official business identity, logo, invoice payment instructions, COGS rounding strategy, and industry presets.',
@@ -12,23 +9,17 @@ return [
     'breadcrumb_settings' => 'Settings',
     'breadcrumb_profile' => 'Profile & Templates',
     'overline' => 'Business & Template Settings',
-
-    // Navigation Tabs
     'tab_general' => 'Profile & Rounding',
     'tab_operations' => 'Operations & Hours',
     'tab_wa_receipt' => 'WA Receipt Template',
     'tab_templates' => 'Industry Presets',
     'tab_modules' => 'Manage Modules',
-
-    // Governance & Security Fast Links
     'link_audit_logs_title' => 'Audit Trail & Anti-Fraud',
     'link_audit_logs_desc' => 'Forensic mutation logs & data diffs',
     'link_approval_rules_title' => 'Approval Rules (MAR)',
     'link_approval_rules_desc' => 'Document approval limit matrix',
     'link_roles_title' => 'Access Control & Roles',
     'link_roles_desc' => 'Staff & cashier permissions',
-
-    // Section 1: Company Profile & Logo
     'company_identity' => 'Company Identity & Letterhead',
     'company_identity_desc' => 'This information appears on official invoice letterheads, cashier receipts, and customer billing.',
     'official_letterhead' => 'Official Letterhead',
@@ -42,8 +33,6 @@ return [
     'phone' => 'Official Phone / WhatsApp',
     'email' => 'Operational & Billing Email',
     'address' => 'Office / Workshop Address (Letterhead)',
-
-    // Aliases for Profile
     'section_identity_title' => 'Company Identity & Letterhead',
     'section_identity_subtitle' => 'This information appears on official invoice letterheads, cashier receipts, and customer billing.',
     'badge_official_header' => 'Official Letterhead',
@@ -58,8 +47,6 @@ return [
     'biz_email_label' => 'Operational & Billing Email',
     'biz_address_label' => 'Office / Workshop Address (Letterhead)',
     'biz_address_placeholder' => 'Jl. Sudirman No. 45, Cyber Tower Lt. 5, Jakarta...',
-
-    // Section 2: POS & Tax Configuration
     'pos_config' => 'POS Configuration',
     'pos_config_desc' => 'Configure sales tax collection and visual catalog cards for the POS cashier terminal.',
     'sales_tax' => 'Sales Tax (VAT / PB1)',
@@ -72,8 +59,6 @@ return [
     'pos_tax_desc' => 'Enable automatic sales tax collection on POS cashier transactions',
     'pos_images_label' => 'Product Photos on POS Menu',
     'pos_images_desc' => 'Display product photo thumbnails on cashier catalog cards',
-
-    // Section 3: Official Bank Account
     'bank_instructions' => 'Invoice Transfer Instructions (Bank Account)',
     'bank_instructions_desc' => 'These bank details automatically appear at the bottom of official sales invoices for customer wire transfers.',
     'bank_name' => 'Bank Name',
@@ -85,8 +70,6 @@ return [
     'bank_name_placeholder' => 'BCA / Mandiri / BNI / BRI',
     'bank_account_number_label' => 'Bank Account Number',
     'bank_account_holder_label' => 'Account Holder Name',
-
-    // Section 4: Currency & Rounding Strategy
     'currency_rounding' => 'Currency & Price Rounding Strategy',
     'currency_rounding_desc' => 'Rounding strategy applied to final unit cost and product selling price. Internal calculations maintain pure floating-point precision.',
     'currency_code' => 'Currency Code',
@@ -98,8 +81,6 @@ return [
     'currency_code_label' => 'Currency Code',
     'currency_symbol_label' => 'Currency Symbol',
     'rounding_strategy_label' => 'Final Output Rounding Rule',
-
-    // Section 5: POS Security & Supervisor PIN
     'pos_security' => 'POS Security & Supervisor Authorization',
     'pos_security_desc' => 'Control cashier authorization for high-risk actions such as high discounts, order voids, and product refunds.',
     'pos_supervisor_pin' => 'Cashier Supervisor PIN (4–8 Digits)',
@@ -124,8 +105,6 @@ return [
     'max_discount_hint' => 'Discounts above this percentage require Supervisor PIN authorization. Leave empty for unlimited.',
     'require_pin_void_label' => 'Require PIN for Void (Cancellation)',
     'require_pin_refund_label' => 'Require PIN for Returns (Refund)',
-
-    // Save Buttons
     'save_business_profile' => 'Save Profile & Settings',
     'save_operations' => 'Save Operating Hours & Timezone',
     'save_wa_template' => 'Save WA Template',
@@ -135,8 +114,6 @@ return [
     'save_modules_settings' => 'Save Module Configuration',
     'reset_default_template' => 'Reset to Default Template',
     'reset_wa_template' => 'Reset Default Template',
-
-    // Tab 2: Operations & Operating Hours
     'timezone_title' => 'Operational Timezone & Business Calendar',
     'timezone_desc' => 'Standard time reference for sales invoices, daily cashier reporting, and automated schedules.',
     'base_timezone' => 'Main Business Timezone (Base Timezone)',
@@ -170,8 +147,6 @@ return [
     'change_schedule' => 'Edit Schedule',
     'view_details' => 'View Details',
     'no_branches_yet' => 'No branches or warehouses registered yet.',
-
-    // Tab 3: WA Receipt CMS & WABA Architecture
     'wa_receipt_title' => 'WhatsApp Digital Receipt Customization',
     'wa_receipt_desc' => 'Configure digital receipt delivery to customer WhatsApp via Meta WhatsApp Business API (WABA) and cashier WhatsApp Web.',
     'waba_engine_badge' => 'Meta WhatsApp Business API (WABA)',
@@ -217,11 +192,17 @@ return [
     'pos_module_disabled_title' => 'POS Cashier Module Not Activated',
     'pos_module_disabled_desc' => 'This digital WhatsApp receipt configuration is designed for retail or restaurant POS cashiers. Activate the POS module in Manage Modules tab if your business requires a point-of-sale register.',
     'open_modules_tab' => 'Open Module Settings',
-    'default_wa_template' => "🧾 *PURCHASE RECEIPT*\n*{business_name}*\n\nHello *{customer_name}*! 🙏\nThank you very much for shopping at *{business_name}*.\n\nHere is your digital transaction receipt link: {receipt_link}\n\nHave a great day! ✨",
+    'default_wa_template' => '🧾 *PURCHASE RECEIPT*
+*{business_name}*
+
+Hello *{customer_name}*! 🙏
+Thank you very much for shopping at *{business_name}*.
+
+Here is your digital transaction receipt link: {receipt_link}
+
+Have a great day! ✨',
     'default_cashier_name' => 'Cashier',
     'default_footer_note' => 'Please keep this receipt as valid proof of payment.',
-
-    // Tab 4: Industry Templates
     'templates_title' => 'Ready-to-Use Industry Presets',
     'templates_desc' => 'Apply category structures and default cost components instantly without locking your customization freedom.',
     'apply_template_title' => 'Apply Industry Template?',
@@ -237,8 +218,6 @@ return [
     'apply' => 'Apply',
     'confirm_apply' => 'Apply Now',
     'cancel' => 'Cancel',
-
-    // Tab 5: Modules Management
     'manage_modules_title' => 'Manage Modules & Sidebar Navigation',
     'manage_modules_desc' => 'Tailor system complexity to your business workflow. Deactivated modules are automatically hidden from the sidebar menu and staff permissions without deleting saved records.',
     'owner_control_title' => 'Exclusive Business Owner Authority',
@@ -251,8 +230,6 @@ return [
     'module_autosave_error' => 'Save Failed',
     'module_autosave_notice' => 'Every module toggle change is automatically saved and applied in real time to the sidebar and business workflow.',
     'module_save_failed_msg' => 'Failed to update module status. Please try again.',
-
-    // Module Clusters
     'cluster_pos_title' => '1. POS Cashier & Restaurant Operations',
     'cluster_pos_desc' => 'Express cashier, dine-in tables, and kitchen display screen.',
     'cluster_b2b_title' => '2. B2B Sales, Quotations & Invoicing',
@@ -265,15 +242,11 @@ return [
     'cluster_storefront_desc' => 'Storefront catalog, custom orders, delivery calendar slots, and merchant shipping.',
     'cluster_accounting_title' => '6. Full Corporate Accounting & Finance',
     'cluster_accounting_desc' => 'Chart of accounts (COA), double-entry journals, general ledger, balance sheet, and bank reconciliation.',
-
-    // Notifications & Flash Alerts
     'update_success_general' => 'Business profile and settings updated successfully.',
     'update_success_operations' => 'Operational timezone and operating hours updated successfully.',
     'update_success_wa' => 'WhatsApp receipt template updated successfully.',
     'update_success_modules' => 'Business feature modules updated successfully.',
-    'apply_template_success' => "Template ':name' applied successfully (:count cost components added). Feature modules aligned automatically.",
-
-    // Tab Branches & Management
+    'apply_template_success' => 'Template \':name\' applied successfully (:count cost components added). Feature modules aligned automatically.',
     'tab_branches' => 'Branches & Outlets',
     'branch_management_title' => 'Branch & Outlet Management',
     'branch_management_desc' => 'Manage all physical branches, POS outlets, employee geofence locations, and delivery origins. One branch can contain multiple logistics warehouses.',
@@ -305,4 +278,105 @@ return [
     'branch_cannot_delete_has_warehouses' => 'This branch still has :count active warehouses. Please reassign or remove them first.',
     'no_branches_found' => 'No branches registered yet.',
     'no_branches_found_desc' => 'Click the Add New Branch button above to set up your first branch or physical outlet.',
+    'mcp_nav_title' => 'AI Integration (MCP)',
+    'mcp_nav_sub' => 'Claude, ChatGPT, Gemini, Cursor',
+    'opt_round_nearest' => 'ROUND - Nearest Standard Rounding',
+    'opt_ceil_up' => 'CEIL - Round Up (Ceiling)',
+    'opt_floor_down' => 'FLOOR - Round Down (Floor)',
+    'opt_auto_send_kds' => 'Auto Send to KDS',
+    'badge_paperless' => 'Paperless',
+    'lbl_multi_warehouse_arch' => '1 Branch Multi-Warehouse Architecture:',
+    'btn_open_warehouse_hub' => 'Open Warehouse Hub',
+    'lbl_attendance_geofence' => 'Attendance Geofence:',
+    'lbl_active_timezone' => 'Timezone:',
+    'ph_wa_manual_custom' => 'Write manual WhatsApp text format here...',
+    'lbl_format_bold' => 'Bold',
+    'lbl_format_italic' => 'Italic',
+    'lbl_format_strike' => 'Strikethrough',
+    'lbl_status_online' => 'online',
+    'receipt_mock_hello' => 'Hello :name! Thank you for shopping at :store.',
+    'receipt_mock_tx_details' => 'Transaction Details:',
+    'receipt_mock_safe_notice' => 'Your digital transaction receipt is stored securely in our system.',
+    'receipt_mock_subtotal' => 'Subtotal',
+    'receipt_mock_rounding' => 'Rounding',
+    'receipt_mock_total_paid' => 'TOTAL PAID',
+    'lbl_sidebar_impact' => 'Sidebar:',
+    'lbl_selected_template' => 'Selected Template:',
+    'lbl_industry_category' => 'Industry Category:',
+    'template_safety_notice' => 'Your existing transaction data, inventory balances, and invoices remain safe and will not be deleted or overwritten.',
+    'modal_branch_create_sub' => 'Configure outlet identity, branch GPS map coordinates, and courier shipping coverage.',
+    'modal_branch_edit_sub' => 'Update branch information, GPS map coordinates, and store shipping coverage.',
+    'alert_fix_errors' => 'Please correct the following errors:',
+    'sec_branch_operational_data' => 'Store Operational Data',
+    'ph_branch_name_sample' => 'Example: Senopati Branch',
+    'ph_branch_code_sample' => 'e.g. SNP-01',
+    'sec_village_subdistrict' => 'Village / Subdistrict Level',
+    'ph_postal_or_subdistrict' => 'Enter Postal Code (e.g. 12190) or Village / Subdistrict Name (e.g. Senayan / Senopati)...',
+    'lbl_can_edit_manually' => 'Can be edited manually',
+    'ph_province_sample' => 'Example: DKI Jakarta',
+    'ph_city_sample' => 'Example: South Jakarta',
+    'ph_district_sample' => 'Example: Kebayoran Baru',
+    'ph_subdistrict_sample' => 'Example: Senayan',
+    'ph_postal_code_sample' => 'Example: 12190',
+    'ph_address_sample' => 'Example: Jl. Senopati No. 45, Ruko Block B-2',
+    'lbl_radius_label' => 'Radius:',
+    'unit_meter' => 'Meters',
+    'geofence_attendance_tolerance_desc' => 'Attendance tolerance radius for staff portal clock-in using mobile GPS.',
+    'lbl_set_primary_branch' => 'Set as Primary Branch',
+    'desc_primary_branch' => 'Used as default pickup point for online couriers and business profile location base.',
+    'lbl_online_shipping_origin' => 'Online Courier Shipping Origin',
+    'desc_online_shipping_origin' => 'Online store orders can be shipped from this branch via Biteship.',
+    'lbl_allow_self_pickup' => 'Allow Store Pickup (Self Pickup)',
+    'desc_allow_self_pickup' => 'Customers can choose to pick up items directly at this branch.',
+    'err_gps_not_supported' => 'GPS features are not supported by your browser.',
+    'err_gps_failed_prefix' => 'Failed to acquire GPS location: ',
+    'lbl_searching_gps' => 'Searching GPS...',
+    'lbl_use_my_gps' => 'Use My GPS',
+    'desc_gps_map_hint' => 'You can click or drag the blue pin on the map to adjust your store branch exact location. The blue circle indicates the staff attendance tolerance zone.',
+    'sec_branch_identity_contact' => 'Branch Identity & Contact',
+    'sec_branch_location_title' => 'Branch Location & Indonesian Region',
+    'lbl_quick_search_area' => 'Quick Area Search (Biteship Autocomplete & Indonesian Administration)',
+    'desc_autocomplete_hint' => 'Type at least 3 characters to autofill all regional fields below and move the GPS map pin, or fill manually.',
+    'sec_administrative_area' => 'Branch Administrative Region Data',
+    'lbl_province' => 'Province',
+    'lbl_city' => 'City / Regency',
+    'lbl_district' => 'District',
+    'lbl_village' => 'Subdistrict / Village',
+    'lbl_postal_code' => 'Postal Code',
+    'lbl_street_address_detail' => 'Street Address Details / Building No. / Landmark',
+    'lbl_gps_map_pin' => 'GPS Map Coordinates (Drag Pin to Store Branch Location)',
+    'sec_branch_operational_online' => 'Operational & Online Store Settings',
+    'sec_fulfillment_attendance' => 'Fulfillment & Attendance',
+    'opt_round_50' => 'ROUND_50 - Nearest Multiple of 50',
+    'opt_round_100' => 'ROUND_100 - Nearest Multiple of 100 (SME Standard)',
+    'opt_round_500' => 'ROUND_500 - Nearest Multiple of 500',
+    'opt_round_1000' => 'ROUND_1000 - Nearest Multiple of 1,000',
+    'desc_auto_send_kds' => 'Orders from terminal are forwarded directly to Kitchen & Bar Display (KDS) without needing paper slips.',
+    'desc_multi_warehouse_arch' => 'Each physical branch can have multiple storage warehouses (e.g. Front Store, Back Storage, Cold Storage). Stock management and goods movement are managed in the',
+    'lbl_warehouse_and_logistics' => 'Warehouses & Logistics',
+    'lbl_format_text' => 'text',
+    'lbl_format_mono' => 'Monospace',
+    'lbl_receipt_no' => 'Receipt No.',
+    'lbl_receipt_time' => 'Time',
+    'receipt_mock_paid_badge' => 'PAID • Dynamic QRIS',
+    'lbl_branch_active_toggle' => 'Active Branch Status (Can Serve POS Cashier & Employee Attendance)',
+    'err_gps_permission_denied' => 'Location access permission denied.',
+    'btn_saving' => 'Saving...',
+    'btn_save_branch' => 'Save Branch',
+    'btn_save_changes' => 'Save Changes',
+    'delete_branch_warning_prefix' => 'Branch',
+    'delete_branch_warning_suffix' => 'will be deleted from the system. If it has transaction/stock history, it will be automatically deactivated.',
+    'badge_pos_security' => 'POS Security',
+    'lbl_connected_warehouses_count' => ':count Connected Warehouses',
+    'waba_type_message' => 'Type a message',
+    'receipt_mock_cashier_1' => 'Cashier 1',
+    'receipt_mock_qr_verification' => 'COOCA VERIFICATION QR',
+    'receipt_mock_valid_proof' => 'Valid & Verified Transaction Proof',
+    'lbl_preset' => 'Preset',
+    'receipt_mock_fallback_store' => 'My Store',
+    'receipt_mock_fallback_address' => 'Business Operational Center',
+    'receipt_mock_item_1' => '2x Sweet Memories Coffee',
+    'receipt_mock_item_2' => '1x Toasted Butter Croissant',
+    'receipt_mock_item_3' => '1x Cold Bottled Tea',
+    'receipt_mock_tax' => 'PB1 / Restaurant Tax (10%)',
 ];

@@ -1,7 +1,7 @@
 @extends('layouts.app', [
-    'title' => 'Chat Omnichannel Marketplace - ' . $business->name,
-    'headerTitle' => 'Chat Pelanggan Marketplace',
-    'headerSubtitle' => 'Pusat obrolan pelanggan terpadu dari TikTok Shop, Tokopedia, dan Shopee',
+    'title' => __('marketplace.chat_page_title') . ' - ' . $business->name,
+    'headerTitle' => __('marketplace.chat_header_title'),
+    'headerSubtitle' => __('marketplace.chat_page_subtitle'),
 ])
 
 @section('content')
@@ -14,13 +14,13 @@
     <!-- MODULE HEADER & PERSISTENT MARKETPLACE TABS -->
     <x-module-header
         module="marketplace"
-        title="Chat Omnichannel Marketplace"
-        subtitle="Kelola dan balas chat buyer TikTok Shop, Tokopedia, dan Shopee langsung dari Cooca secara cepat tanpa membuka banyak Seller Center.">
+        :title="__('marketplace.chat_page_title')"
+        :subtitle="__('marketplace.chat_module_subtitle')">
         <x-slot:actions>
             <a href="{{ route('marketplace-hub.index') }}"
                 class="min-h-[44px] sm:min-h-0 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] flex items-center justify-center gap-1.5 cursor-pointer">
                 <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                <span>Kembali ke Hub</span>
+                <span>{{ __('marketplace.back_to_hub') }}</span>
             </a>
         </x-slot:actions>
     </x-module-header>
@@ -36,7 +36,7 @@
             <div class="p-3.5 border-b border-black/[0.06] dark:border-white/[0.08] space-y-2.5">
                 <div class="relative">
                     <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40"></i>
-                    <input type="text" x-model="searchQuery" placeholder="Cari nama buyer / ID percakapan..."
+                    <input type="text" x-model="searchQuery" placeholder="{{ __('marketplace.chat_search_placeholder') }}"
                         class="w-full h-9 pl-9 pr-3 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.05] border border-black/5 dark:border-white/5 text-[12.5px] text-black dark:text-white placeholder:text-black/40 focus:outline-hidden focus:ring-2 focus:ring-[#007AFF]/30">
                 </div>
 
@@ -44,7 +44,7 @@
                 <div class="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5">
                     <button type="button" @click="channelFilter = 'all'"
                         :class="channelFilter === 'all' ? 'bg-[#007AFF] text-white shadow-xs' : 'bg-black/[0.04] dark:bg-white/[0.05] text-black/60 dark:text-white/60 hover:text-black'"
-                        class="h-7 px-2.5 rounded-[8px] text-[11px] font-semibold transition-all shrink-0">Semua</button>
+                        class="h-7 px-2.5 rounded-[8px] text-[11px] font-semibold transition-all shrink-0">{{ __('marketplace.all') }}</button>
                     <button type="button" @click="channelFilter = 'tiktok_shop'"
                         :class="channelFilter === 'tiktok_shop' ? 'bg-[#000000] text-white shadow-xs' : 'bg-black/[0.04] dark:bg-white/[0.05] text-black/60 dark:text-white/60 hover:text-black'"
                         class="h-7 px-2.5 rounded-[8px] text-[11px] font-semibold transition-all shrink-0 flex items-center gap-1">
@@ -82,7 +82,7 @@
                             <span class="text-[10.5px] text-black/40 dark:text-white/40 shrink-0 whitespace-nowrap" x-text="formatTime(conv.last_message_at)"></span>
                         </div>
                         <div class="flex items-center justify-between gap-2">
-                            <p class="text-[12px] text-black/60 dark:text-white/60 truncate" x-text="conv.last_message_content || 'Belum ada pesan'"></p>
+                            <p class="text-[12px] text-black/60 dark:text-white/60 truncate" x-text="conv.last_message_content || '{{ __('marketplace.chat_no_messages_yet') }}'"></p>
                             <template x-if="conv.unread_count > 0">
                                 <span class="w-5 h-5 rounded-full bg-[#007AFF] text-white text-[10px] font-bold flex items-center justify-center shrink-0"
                                     x-text="conv.unread_count"></span>
@@ -94,7 +94,7 @@
                 <template x-if="filteredConversations.length === 0">
                     <div class="p-8 text-center text-black/40 dark:text-white/40">
                         <i data-lucide="message-square-off" class="w-8 h-8 mx-auto mb-2 opacity-40"></i>
-                        <p class="text-[12.5px] font-medium">Belum ada percakapan masuk</p>
+                        <p class="text-[12.5px] font-medium">{{ __('marketplace.chat_no_threads') }}</p>
                     </div>
                 </template>
             </div>
@@ -131,7 +131,7 @@
                             <button type="button" @click="refreshMessages()" :disabled="loadingMessages"
                                 class="h-8 px-3 rounded-[8px] text-[11.5px] font-semibold text-black/70 dark:text-white/70 bg-black/[0.04] dark:bg-white/[0.05] hover:bg-black/[0.08] flex items-center gap-1.5 transition">
                                 <i data-lucide="refresh-cw" class="w-3.5 h-3.5" :class="{ 'animate-spin': loadingMessages }"></i>
-                                <span>Segarkan</span>
+                                <span>{{ __('marketplace.chat_refresh') }}</span>
                             </button>
                         </div>
                     </div>
@@ -157,7 +157,7 @@
 
                         <template x-if="messages.length === 0 && !loadingMessages">
                             <div class="h-full flex items-center justify-center text-center text-black/40 dark:text-white/40 py-12">
-                                <p class="text-[13px]">Belum ada riwayat pesan dalam percakapan ini.</p>
+                                <p class="text-[13px]">{{ __('marketplace.chat_no_history') }}</p>
                             </div>
                         </template>
                     </div>
@@ -165,14 +165,14 @@
                     <!-- Message Composer Bar -->
                     <div class="p-3.5 px-5 border-t border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-[#1C1C1E]">
                         <form @submit.prevent="sendMessage()" class="flex items-center gap-2">
-                            <input type="text" x-model="newMessage" placeholder="Ketik pesan balasan untuk buyer (Tekan Enter untuk kirim)..."
+                            <input type="text" x-model="newMessage" placeholder="{{ __('marketplace.chat_reply_placeholder') }}"
                                 :disabled="sendingMessage"
                                 class="flex-1 h-11 px-4 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-[13px] text-black dark:text-white placeholder:text-black/40 focus:outline-hidden focus:ring-2 focus:ring-[#007AFF]/30">
                             <button type="submit" :disabled="sendingMessage || !newMessage.trim()"
                                 class="h-11 px-5 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-95 text-white font-bold text-[13px] shadow-sm flex items-center gap-1.5 transition-all disabled:opacity-40 disabled:cursor-not-allowed">
                                 <i data-lucide="send" class="w-4 h-4" x-show="!sendingMessage"></i>
                                 <i data-lucide="loader-2" class="w-4 h-4 animate-spin" x-show="sendingMessage"></i>
-                                <span>Kirim</span>
+                                <span>{{ __('marketplace.chat_btn_send') }}</span>
                             </button>
                         </form>
                     </div>
@@ -184,8 +184,8 @@
                     <div class="w-16 h-16 rounded-full bg-black/[0.03] dark:bg-white/[0.05] flex items-center justify-center mb-3">
                         <i data-lucide="messages-square" class="w-8 h-8 opacity-40"></i>
                     </div>
-                    <h3 class="font-bold text-[15px] text-black dark:text-white mb-1">Pilih Percakapan</h3>
-                    <p class="text-[12.5px] max-w-sm">Pilih salah satu buyer dari daftar di sebelah kiri untuk melihat histori percakapan dan membalas pesan.</p>
+                    <h3 class="font-bold text-[15px] text-black dark:text-white mb-1">{{ __('marketplace.chat_select_prompt_title') }}</h3>
+                    <p class="text-[12.5px] max-w-sm">{{ __('marketplace.chat_select_prompt_desc') }}</p>
                 </div>
             </template>
         </div>

@@ -1,4 +1,4 @@
-@extends('layouts.public_marketing', ['title' => 'Lengkapi Pendaftaran Google - COOCA', 'noindex' => true])
+@extends('layouts.public_marketing', ['title' => __('auth.google_register.meta_title'), 'noindex' => true])
 
 @section('content')
     <div class="min-h-[calc(100vh-12rem)] py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8">
@@ -9,11 +9,11 @@
             <div class="text-center space-y-3">
                 @include('auth.partials.brand-logo', ['class' => ''])
                 <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                    Lengkapi Pendaftaran Bisnis
+                    {{ __('auth.google_register.heading') }}
                 </h1>
                 
                 <div class="flex flex-wrap items-center justify-center gap-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
-                    <span>Akun Google terhubung:</span>
+                    <span>{{ __('auth.google_register.account_connected') }}</span>
                     <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white dark:bg-white/10 border border-slate-200/80 dark:border-white/10 text-slate-900 dark:text-white font-medium shadow-xs">
                         @if (!empty($pending['avatar']))
                             <img src="{{ $pending['avatar'] }}" alt="{{ $pending['name'] ?? 'User' }}" class="w-5 h-5 rounded-full object-cover">
@@ -25,7 +25,7 @@
                         <span class="font-semibold text-xs sm:text-[13px]">{{ $pending['email'] }}</span>
                         <span class="inline-flex items-center text-[10px] font-semibold text-[#248A3D] dark:text-[#30D158] bg-[#34C759]/15 px-1.5 py-0.5 rounded-full">
                             <i data-lucide="check" class="w-3 h-3 mr-0.5"></i>
-                            Terverifikasi
+                            {{ __('auth.google_register.verified_badge') }}
                         </span>
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                 <div class="p-4 rounded-2xl bg-[#FF3B30]/10 border border-[#FF3B30]/25 text-[#FF3B30] dark:text-[#FF453A] text-xs sm:text-sm shadow-xs">
                     <div class="font-semibold mb-1.5 flex items-center gap-2">
                         <i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i>
-                        <span>Mohon periksa kembali formulir berikut:</span>
+                        <span>{{ __('auth.register.validation_alert_title') }}</span>
                     </div>
                     <ul class="list-disc list-inside space-y-1 text-xs opacity-90 pl-1">
                         @foreach ($errors->all() as $error)
@@ -56,8 +56,8 @@
                             <i data-lucide="store" class="w-5 h-5"></i>
                         </div>
                         <div>
-                            <h2 class="text-base font-bold text-slate-900 dark:text-white leading-tight">Profil Usaha Baru</h2>
-                            <p class="text-xs text-slate-500 dark:text-slate-400">Atur nama toko dan WhatsApp penerima OTP</p>
+                            <h2 class="text-base font-bold text-slate-900 dark:text-white leading-tight">{{ __('auth.google_register.card_title') }}</h2>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">{{ __('auth.google_register.card_subtitle') }}</p>
                         </div>
                     </div>
 
@@ -65,11 +65,11 @@
                     <div>
                         <div class="flex items-center justify-between mb-1.5">
                             <label for="business_name" class="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200">
-                                Nama Usaha / Perusahaan <span class="text-[#FF3B30]">*</span>
+                                {{ __('auth.register.business_name_label') }} <span class="text-[#FF3B30]">*</span>
                             </label>
                             <span x-show="businessStatus === 'checking'" class="text-[11px] font-medium text-[#007AFF] dark:text-[#0A84FF] inline-flex items-center gap-1">
                                 <svg class="w-3 h-3 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path></svg>
-                                Memeriksa...
+                                {{ __('auth.google_register.checking') }}
                             </span>
                         </div>
                         <div class="relative">
@@ -87,7 +87,7 @@
                                     'border-[#007AFF] focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15': businessStatus === 'checking',
                                     'border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15': businessStatus === 'idle'
                                 }"
-                                placeholder="Contoh: Kedai Kopi Sukses / CV Berkah">
+                                placeholder="{{ __('auth.register.business_name_placeholder') }}">
 
                             <!-- Status Icon (Kanan Input) -->
                             <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none">
@@ -136,11 +136,11 @@
                     <div>
                         <div class="flex items-center justify-between mb-1.5">
                             <label for="phone" class="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200">
-                                Nomor WhatsApp Pemilik <span class="text-[#FF3B30]">*</span>
+                                {{ __('auth.register.phone_label') }} <span class="text-[#FF3B30]">*</span>
                             </label>
                             <span x-show="phoneStatus === 'checking'" class="text-[11px] font-medium text-[#007AFF] dark:text-[#0A84FF] inline-flex items-center gap-1">
                                 <svg class="w-3 h-3 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path></svg>
-                                Memeriksa...
+                                {{ __('auth.google_register.checking') }}
                             </span>
                         </div>
                         <div class="relative">
@@ -158,7 +158,7 @@
                                     'border-[#007AFF] focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15': phoneStatus === 'checking',
                                     'border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15': phoneStatus === 'idle'
                                 }"
-                                placeholder="081234567890">
+                                placeholder="{{ __('auth.register.phone_placeholder') }}">
 
                             <!-- Status Icon (Kanan Input) -->
                             <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none">
@@ -202,7 +202,7 @@
                             <span x-text="phoneMessage"></span>
                         </div>
                         <p x-show="!phoneMessage" class="mt-1.5 text-[11px] text-slate-500 dark:text-slate-400 leading-snug">
-                            Kode OTP aktivasi akun akan dikirim ke WhatsApp ini.
+                            {{ __('auth.register.phone_hint') }}
                         </p>
                     </div>
 
@@ -210,13 +210,13 @@
                     <div>
                         <div class="flex items-center justify-between mb-1.5">
                             <label for="template_code" class="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200">
-                                Kategori / Bidang Usaha
+                                {{ __('auth.register.category_label') }}
                             </label>
-                            <span class="text-[11px] text-slate-500 dark:text-slate-400">Opsional</span>
+                            <span class="text-[11px] text-slate-500 dark:text-slate-400">{{ __('auth.register.category_optional') }}</span>
                         </div>
                         <select name="template_code" id="template_code" x-model="selectedTemplate"
                             class="w-full px-3.5 py-2.5 sm:py-3 bg-slate-50 dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-xl text-[16px] sm:text-sm font-medium text-slate-900 dark:text-white transition-all outline-none cursor-pointer">
-                            <option value="">-- Bisnis Umum (Semua Modul Standar) --</option>
+                            <option value="">{{ __('auth.register.category_default') }}</option>
                             @foreach ($templates as $tmpl)
                                 <option value="{{ $tmpl->code }}" {{ old('template_code') == $tmpl->code ? 'selected' : '' }}>
                                     {{ $tmpl->name }} ({{ strtoupper($tmpl->industry_category) }})
@@ -228,7 +228,7 @@
                     <!-- Skala & Model Operasional Bisnis (Grid Kiri Kanan Baik Mobile Maupun Desktop) -->
                     <div class="space-y-2 pt-1">
                         <label class="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200">
-                            Skala &amp; Model Operasional Bisnis <span class="text-[#FF3B30]">*</span>
+                            {{ __('auth.register.scale_label') }} <span class="text-[#FF3B30]">*</span>
                         </label>
 
                         <div class="grid grid-cols-2 gap-2.5 sm:gap-3.5">
@@ -241,11 +241,11 @@
                                         <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#34C759]/12 text-[#34C759] dark:text-[#30D158] flex items-center justify-center shrink-0">
                                             <i data-lucide="store" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                                         </div>
-                                        <span x-show="businessScale === 'umkm'" class="text-[9.5px] sm:text-[10px] font-bold text-[#007AFF] dark:text-[#0A84FF] bg-[#007AFF]/10 dark:bg-[#0A84FF]/15 px-2 py-0.5 rounded-full">Pilihan</span>
+                                        <span x-show="businessScale === 'umkm'" class="text-[9.5px] sm:text-[10px] font-bold text-[#007AFF] dark:text-[#0A84FF] bg-[#007AFF]/10 dark:bg-[#0A84FF]/15 px-2 py-0.5 rounded-full">{{ __('auth.register.scale_badge_choice') }}</span>
                                     </div>
-                                    <h4 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white leading-tight">UMKM &amp; Toko Mandiri</h4>
+                                    <h4 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white leading-tight">{{ __('auth.register.scale_umkm_title') }}</h4>
                                     <p class="text-[10.5px] sm:text-[11.5px] text-slate-500 dark:text-slate-400 mt-1 leading-snug">
-                                        Warung, kafe, butik, bengkel, 1–3 cabang.
+                                        {{ __('auth.register.scale_umkm_desc') }}
                                     </p>
                                 </div>
                             </label>
@@ -259,11 +259,11 @@
                                         <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#007AFF]/12 text-[#007AFF] dark:text-[#0A84FF] flex items-center justify-center shrink-0">
                                             <i data-lucide="building-2" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                                         </div>
-                                        <span x-show="businessScale === 'corporate'" class="text-[9.5px] sm:text-[10px] font-bold text-[#007AFF] dark:text-[#0A84FF] bg-[#007AFF]/10 dark:bg-[#0A84FF]/15 px-2 py-0.5 rounded-full">Pilihan</span>
+                                        <span x-show="businessScale === 'corporate'" class="text-[9.5px] sm:text-[10px] font-bold text-[#007AFF] dark:text-[#0A84FF] bg-[#007AFF]/10 dark:bg-[#0A84FF]/15 px-2 py-0.5 rounded-full">{{ __('auth.register.scale_badge_choice') }}</span>
                                     </div>
-                                    <h4 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white leading-tight">Korporasi &amp; Multi-Cabang</h4>
+                                    <h4 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white leading-tight">{{ __('auth.register.scale_corporate_title') }}</h4>
                                     <p class="text-[10.5px] sm:text-[11.5px] text-slate-500 dark:text-slate-400 mt-1 leading-snug">
-                                        Distributor, waralaba, &amp; multi-gudang.
+                                        {{ __('auth.register.scale_corporate_desc') }}
                                     </p>
                                 </div>
                             </label>
@@ -277,12 +277,12 @@
                             :class="isSubmitDisabled() ? 'opacity-50 cursor-not-allowed filter grayscale-[25%]' : 'hover:from-[#1cd0ff] hover:to-[#006fe6] cursor-pointer shadow-[0_2px_12px_rgba(0,194,255,0.3)] hover:shadow-[0_4px_20px_rgba(0,194,255,0.5)] active:scale-[0.99]'"
                             class="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-gradient-to-r from-[#00C2FF] via-[#00A3FF] to-[#007AFF] text-white font-bold text-sm sm:text-[15px] min-h-[50px] transition-all focus:outline-none focus:ring-4 focus:ring-[#007AFF]/25">
                             <span x-show="!submitting" class="inline-flex items-center gap-2">
-                                <span>Lanjutkan &amp; Kirim OTP WhatsApp</span>
+                                <span>{{ __('auth.google_register.submit_btn') }}</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </span>
                             <span x-show="submitting" class="inline-flex items-center gap-2">
                                 <svg class="w-4 h-4 animate-spin text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path></svg>
-                                <span>Memverifikasi data &amp; Mengirim OTP...</span>
+                                <span>{{ __('auth.google_register.submitting_btn') }}</span>
                             </span>
                         </button>
                     </div>
@@ -290,7 +290,7 @@
                     <!-- Cancel Link -->
                     <div class="text-center pt-2 border-t border-black/[0.04] dark:border-white/[0.06] text-xs sm:text-sm text-slate-500 dark:text-slate-400">
                         <a href="{{ route('login') }}" class="font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline transition-colors focus:outline-none focus:ring-2 focus:ring-[#007AFF]/20 rounded">
-                            Batalkan dan kembali ke halaman masuk
+                            {{ __('auth.google_register.cancel_link') }}
                         </a>
                     </div>
                 </form>
@@ -300,10 +300,10 @@
             <div class="text-center space-y-1 text-slate-500 dark:text-slate-400 text-xs">
                 <div class="inline-flex items-center gap-1.5 font-medium text-[#34C759]">
                     <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
-                    <span>Data usaha Anda terisolasi privat &amp; terenkripsi aman</span>
+                    <span>{{ __('auth.register.trust_privacy') }}</span>
                 </div>
                 <p class="text-[11px] text-slate-400 dark:text-slate-500">
-                    Dengan mendaftar, Anda menyetujui Ketentuan Layanan &amp; Kebijakan Privasi COOCA.
+                    {{ __('auth.register.terms_notice') }}
                 </p>
             </div>
 
@@ -316,7 +316,7 @@
         function googleRegisterForm() {
             return {
                 checkUrl: '{{ route('register.check-availability') }}',
-                businessName: @json(old('business_name', 'Usaha ' . ($pending['name'] ?? 'Saya'))),
+                businessName: @json(old('business_name', __('auth.google_register.default_business_name', ['name' => $pending['name'] ?? __('auth.google_register.default_owner_name')]))),
                 phone: @json(old('phone', '')),
                 businessScale: @json(old('business_scale', 'umkm')),
                 selectedTemplate: @json(old('template_code', '')),
@@ -345,17 +345,17 @@
                     const val = this.businessName.trim();
                     if (val === '') {
                         this.businessStatus = 'invalid';
-                        this.businessMessage = 'Nama usaha wajib diisi.';
+                        this.businessMessage = @json(__('auth.google_register.js_business_required'));
                         return;
                     }
                     if (val.length < 3) {
                         this.businessStatus = 'invalid';
-                        this.businessMessage = 'Nama usaha minimal 3 karakter.';
+                        this.businessMessage = @json(__('auth.google_register.js_business_min'));
                         return;
                     }
 
                     this.businessStatus = 'checking';
-                    this.businessMessage = 'Memeriksa ketersediaan nama usaha...';
+                    this.businessMessage = @json(__('auth.google_register.js_business_checking'));
 
                     this._bizTimer = setTimeout(() => {
                         this.checkBusinessName();
@@ -387,18 +387,18 @@
                     const val = this.phone.trim();
                     if (val === '') {
                         this.phoneStatus = 'invalid';
-                        this.phoneMessage = 'Nomor WhatsApp wajib diisi.';
+                        this.phoneMessage = @json(__('auth.google_register.js_phone_required'));
                         return;
                     }
                     const digits = val.replace(/\D/g, '');
                     if (digits.length < 9) {
                         this.phoneStatus = 'invalid';
-                        this.phoneMessage = 'Nomor WhatsApp terlalu pendek (minimal 10 digit).';
+                        this.phoneMessage = @json(__('auth.google_register.js_phone_too_short'));
                         return;
                     }
 
                     this.phoneStatus = 'checking';
-                    this.phoneMessage = 'Memeriksa nomor WhatsApp...';
+                    this.phoneMessage = @json(__('auth.google_register.js_phone_checking'));
 
                     this._phoneTimer = setTimeout(() => {
                         this.checkPhone();

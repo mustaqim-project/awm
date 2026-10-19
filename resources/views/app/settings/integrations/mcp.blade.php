@@ -181,15 +181,15 @@ response = requests.post(
     headers={"Authorization": f"Bearer {COOCA_TOKEN}"},
     json={"period": "this_month"}
 )
-print("Ringkasan Laba Rugi Toko:", response.json())
+print("{{ addslashes(__('mcp.py_sample_print_pnl')) }}", response.json())
 
-# 2. Panggil Tool: Cek Saldo Kas & Rekening Bank Toko
+{{ addslashes(__('mcp.py_sample_comment_bank')) }}
 bank_resp = requests.post(
     f"{COOCA_API_BASE}/tools/finance_get_cash_and_bank_balances/execute",
     headers={"Authorization": f"Bearer {COOCA_TOKEN}"},
     json={}
 )
-print("Likuiditas Kas & Bank Toko:", bank_resp.json())`;
+print("{{ addslashes(__('mcp.py_sample_print_bank')) }}", bank_resp.json())`;
         },
 
         getGeminiCurl() {
@@ -245,9 +245,9 @@ document.addEventListener('alpine:init', () => {
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
             <div class="flex items-center gap-2 text-xs text-neutral-500 dark:text-neutral-400 mb-1">
-                <a href="{{ route('settings.index') }}" class="hover:text-neutral-800 dark:hover:text-neutral-200 transition-colors">Pengaturan</a>
+                <a href="{{ route('settings.index') }}" class="hover:text-neutral-800 dark:hover:text-neutral-200 transition-colors">{{ __('mcp.breadcrumb_settings') }}</a>
                 <i data-lucide="chevron-right" class="w-3 h-3"></i>
-                <span class="text-neutral-900 dark:text-neutral-100 font-medium">Integrasi AI (MCP)</span>
+                <span class="text-neutral-900 dark:text-neutral-100 font-medium">{{ __('mcp.page_title') }}</span>
             </div>
             <h1 class="text-2xl sm:text-3xl font-semibold tracking-tight text-neutral-900 dark:text-white">
                 {{ __('mcp.page_title') }}
@@ -310,7 +310,7 @@ document.addEventListener('alpine:init', () => {
             <div>
                 <div class="flex items-center justify-between pb-4 border-b border-neutral-100 dark:border-neutral-800/80">
                     <span class="text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
-                        Status Master
+                        {{ __('mcp.lbl_master_status') }}
                     </span>
                     @if($isMcpActive)
                         <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
@@ -354,7 +354,7 @@ document.addEventListener('alpine:init', () => {
 
             <div class="mt-6 pt-4 border-t border-neutral-100 dark:border-neutral-800 flex items-center justify-between">
                 <span class="text-xs text-neutral-500 dark:text-neutral-400">
-                    Saklar Induk MCP
+                    {{ __('mcp.lbl_mcp_master_switch') }}
                 </span>
                 <form action="{{ route('settings.integrations.mcp.toggle') }}" method="POST">
                     @csrf
@@ -380,7 +380,7 @@ document.addEventListener('alpine:init', () => {
                     </p>
                 </div>
                 <span class="text-xs text-neutral-500 dark:text-neutral-400 tabular-nums">
-                    {{ count($tokens) }} Kunci Terdaftar
+                    {{ __('mcp.lbl_keys_registered', ['count' => count($tokens)]) }}
                 </span>
             </div>
 
@@ -397,7 +397,7 @@ document.addEventListener('alpine:init', () => {
                             </span>
                             @if(! $token->is_active)
                                 <span class="px-2 py-0.5 rounded-[6px] text-[11px] bg-rose-500/10 text-rose-500">
-                                    Nonaktif
+                                    {{ __('mcp.status_inactive') }}
                                 </span>
                             @endif
                         </div>
@@ -406,20 +406,20 @@ document.addEventListener('alpine:init', () => {
                                 cooca_mcp_live_••••••{{ substr($token->token_hash, -6) }}
                             </span>
                             <span>•</span>
-                            <span>{{ count($token->abilities ?? []) }} Izin</span>
+                            <span>{{ __('mcp.lbl_permissions_count', ['count' => count($token->abilities ?? [])]) }}</span>
                             <span>•</span>
-                            <span>Digunakan: {{ $token->last_used_at ? $token->last_used_at->diffForHumans() : 'Belum pernah' }}</span>
+                            <span>{{ __('mcp.lbl_used_prefix') }}: {{ $token->last_used_at ? $token->last_used_at->diffForHumans() : __('mcp.lbl_never_used') }}</span>
                         </div>
                     </div>
 
                     <div class="flex items-center gap-2">
-                        <form action="{{ route('settings.integrations.mcp.tokens.revoke', $token) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin mencabut kunci akses ini?')">
+                        <form action="{{ route('settings.integrations.mcp.tokens.revoke', $token) }}" method="POST" onsubmit="return confirm('{{ addslashes(__('mcp.confirm_revoke_token')) }}')">
                             @csrf
                             @method('DELETE')
                             <button
                                 type="submit"
                                 class="p-2 rounded-[10px] text-neutral-400 hover:text-rose-600 hover:bg-rose-500/10 transition-colors"
-                                title="Cabut Token">
+                                title="{{ __('mcp.title_revoke_token') }}">
                                 <i data-lucide="trash-2" class="w-4 h-4"></i>
                             </button>
                         </form>
@@ -439,7 +439,7 @@ document.addEventListener('alpine:init', () => {
                 <div>
                     <div class="flex items-center gap-2">
                         <span class="px-2.5 py-0.5 rounded-[8px] bg-blue-500/10 text-blue-600 dark:text-blue-400 font-mono text-[11px] font-semibold uppercase tracking-wider">
-                            Interactive Tutorial Hub
+                            {{ __('mcp.lbl_interactive_tutorial_hub') }}
                         </span>
                         <h3 class="text-lg font-semibold text-neutral-900 dark:text-white">
                             {{ __('mcp.setup_hub_title') }}
@@ -454,7 +454,7 @@ document.addEventListener('alpine:init', () => {
                 <div class="flex flex-col sm:flex-row sm:items-center gap-3 bg-neutral-50 dark:bg-neutral-900/90 p-3 rounded-[18px] border border-neutral-200/80 dark:border-neutral-800">
                     <div class="flex items-center gap-2">
                         <span class="text-[11px] font-medium text-neutral-500 dark:text-neutral-400 whitespace-nowrap">
-                            Token Aktif:
+                            {{ __('mcp.lbl_active_token_colon') }}
                         </span>
                         <input
                             type="text"
@@ -466,8 +466,8 @@ document.addEventListener('alpine:init', () => {
                                 type="button"
                                 @click="customToken = '{{ session('plain_token') }}'"
                                 class="px-2 py-1.5 rounded-[8px] bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-[11px] font-medium whitespace-nowrap transition-colors"
-                                title="Gunakan token baru">
-                                Pakai Token Baru
+                                title="{{ addslashes(__('mcp.btn_use_new_token_title')) }}">
+                                {{ __('mcp.btn_use_new_token') }}
                             </button>
                         @endif
                     </div>
@@ -475,7 +475,7 @@ document.addEventListener('alpine:init', () => {
                     <div class="hidden sm:block h-4 w-px bg-neutral-200 dark:bg-neutral-800"></div>
 
                     <div class="flex items-center gap-1">
-                        <span class="text-[11px] font-medium text-neutral-500 dark:text-neutral-400 mr-1">OS:</span>
+                        <span class="text-[11px] font-medium text-neutral-500 dark:text-neutral-400 mr-1">{{ __('mcp.lbl_os') }}</span>
                         <button
                             type="button"
                             @click="activeOs = 'windows'"
@@ -509,7 +509,7 @@ document.addEventListener('alpine:init', () => {
                     :class="activeProviderTab === 'claude' ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500 hover:text-neutral-900 dark:hover:text-white'"
                     class="px-3.5 py-2 rounded-[12px] transition-all whitespace-nowrap flex items-center gap-2">
                     <i data-lucide="bot" class="w-4 h-4 text-amber-500"></i>
-                    <span>Claude (Web, Apps & Desktop)</span>
+                    <span>{{ __('mcp.tab_claude') }}</span>
                 </button>
                 <button
                     type="button"
@@ -517,7 +517,7 @@ document.addEventListener('alpine:init', () => {
                     :class="activeProviderTab === 'chatgpt' ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500 hover:text-neutral-900 dark:hover:text-white'"
                     class="px-3.5 py-2 rounded-[12px] transition-all whitespace-nowrap flex items-center gap-2">
                     <i data-lucide="sparkles" class="w-4 h-4 text-emerald-500"></i>
-                    <span>ChatGPT (Web & Apps)</span>
+                    <span>{{ __('mcp.tab_chatgpt') }}</span>
                 </button>
                 <button
                     type="button"
@@ -525,7 +525,7 @@ document.addEventListener('alpine:init', () => {
                     :class="activeProviderTab === 'cursor' ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500 hover:text-neutral-900 dark:hover:text-white'"
                     class="px-3.5 py-2 rounded-[12px] transition-all whitespace-nowrap flex items-center gap-2">
                     <i data-lucide="code-2" class="w-4 h-4 text-blue-500"></i>
-                    <span>Cursor & Antigravity</span>
+                    <span>{{ __('mcp.tab_cursor') }}</span>
                 </button>
                 <button
                     type="button"
@@ -533,7 +533,7 @@ document.addEventListener('alpine:init', () => {
                     :class="activeProviderTab === 'claude_code' ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500 hover:text-neutral-900 dark:hover:text-white'"
                     class="px-3.5 py-2 rounded-[12px] transition-all whitespace-nowrap flex items-center gap-2">
                     <i data-lucide="terminal" class="w-4 h-4 text-neutral-700 dark:text-neutral-300"></i>
-                    <span>Claude Code CLI</span>
+                    <span>{{ __('mcp.tab_claude_code') }}</span>
                 </button>
                 <button
                     type="button"
@@ -541,7 +541,7 @@ document.addEventListener('alpine:init', () => {
                     :class="activeProviderTab === 'gemini' ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500 hover:text-neutral-900 dark:hover:text-white'"
                     class="px-3.5 py-2 rounded-[12px] transition-all whitespace-nowrap flex items-center gap-2">
                     <i data-lucide="cpu" class="w-4 h-4 text-purple-500"></i>
-                    <span>Google Gemini</span>
+                    <span>{{ __('mcp.tab_gemini') }}</span>
                 </button>
                 <button
                     type="button"
@@ -549,7 +549,7 @@ document.addEventListener('alpine:init', () => {
                     :class="activeProviderTab === 'ollama' ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500 hover:text-neutral-900 dark:hover:text-white'"
                     class="px-3.5 py-2 rounded-[12px] transition-all whitespace-nowrap flex items-center gap-2">
                     <i data-lucide="server" class="w-4 h-4 text-sky-500"></i>
-                    <span>Local / Ollama</span>
+                    <span>{{ __('mcp.tab_ollama') }}</span>
                 </button>
                 <button
                     type="button"
@@ -557,7 +557,7 @@ document.addEventListener('alpine:init', () => {
                     :class="activeProviderTab === 'n8n' ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500 hover:text-neutral-900 dark:hover:text-white'"
                     class="px-3.5 py-2 rounded-[12px] transition-all whitespace-nowrap flex items-center gap-2">
                     <i data-lucide="git-branch" class="w-4 h-4 text-rose-500"></i>
-                    <span>n8n & Dify Automation</span>
+                    <span>{{ __('mcp.tab_n8n') }}</span>
                 </button>
                 <button
                     type="button"
@@ -565,7 +565,7 @@ document.addEventListener('alpine:init', () => {
                     :class="activeProviderTab === 'langchain' ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500 hover:text-neutral-900 dark:hover:text-white'"
                     class="px-3.5 py-2 rounded-[12px] transition-all whitespace-nowrap flex items-center gap-2">
                     <i data-lucide="file-code" class="w-4 h-4 text-indigo-500"></i>
-                    <span>LangChain & Python</span>
+                    <span>{{ __('mcp.tab_langchain') }}</span>
                 </button>
             </div>
 
@@ -577,7 +577,7 @@ document.addEventListener('alpine:init', () => {
                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                         <div class="flex items-center gap-2">
                             <span class="px-2.5 py-1 rounded-[8px] bg-amber-500/10 text-amber-600 dark:text-amber-400 text-xs font-semibold">
-                                Anthropic Claude Ecosystem • Web, Mobile Apps (iOS/Android) & Desktop
+                                {{ __('mcp.claude_ecosystem_badge') }}
                             </span>
                         </div>
 
@@ -588,21 +588,21 @@ document.addEventListener('alpine:init', () => {
                                 @click="claudeMode = 'web'"
                                 :class="claudeMode === 'web' ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500'"
                                 class="px-3 py-1 rounded-[8px] transition-all whitespace-nowrap">
-                                🌐 Claude.ai Web & Mobile (Rekomendasi)
+                                {{ __('mcp.claude_mode_web') }}
                             </button>
                             <button
                                 type="button"
                                 @click="claudeMode = 'desktop_sse'"
                                 :class="claudeMode === 'desktop_sse' ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500'"
                                 class="px-3 py-1 rounded-[8px] transition-all whitespace-nowrap">
-                                🖥️ Claude Desktop (Remote SSE)
+                                {{ __('mcp.claude_mode_desktop_sse') }}
                             </button>
                             <button
                                 type="button"
                                 @click="claudeMode = 'desktop_stdio'"
                                 :class="claudeMode === 'desktop_stdio' ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500'"
                                 class="px-3 py-1 rounded-[8px] transition-all whitespace-nowrap">
-                                💻 Local Dev (CLI Stdio)
+                                {{ __('mcp.claude_mode_desktop_stdio') }}
                             </button>
                         </div>
                     </div>
@@ -612,9 +612,9 @@ document.addEventListener('alpine:init', () => {
                         <div class="p-4 rounded-[16px] bg-blue-50/70 dark:bg-blue-950/30 border border-blue-500/20 text-xs text-blue-800 dark:text-blue-300 leading-relaxed flex items-start gap-3">
                             <i data-lucide="smartphone" class="w-5 h-5 text-blue-500 shrink-0 mt-0.5"></i>
                             <div>
-                                <strong class="font-semibold text-blue-900 dark:text-blue-200">Sinkronisasi Otomatis ke HP (iOS & Android):</strong>
+                                <strong class="font-semibold text-blue-900 dark:text-blue-200">{{ __('mcp.claude_sync_notice_title') }}</strong>
                                 <p class="mt-0.5 text-[11px] text-blue-700 dark:text-blue-300">
-                                    Sekali Anda menambahkan konektor ini di Claude Web, Anda dapat langsung menggunakannya dari aplikasi Claude di iPhone, iPad, dan Android dengan akun yang sama (termasuk fitur Voice Chat).
+                                    {{ __('mcp.claude_sync_notice_desc') }}
                                 </p>
                             </div>
                         </div>
@@ -622,21 +622,21 @@ document.addEventListener('alpine:init', () => {
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-2">
                                 <span class="w-6 h-6 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-xs font-bold flex items-center justify-center">1</span>
-                                <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">Buka Pengaturan Connectors di Claude.ai</h4>
+                                <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.claude_step1_title') }}</h4>
                                 <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
-                                    Kunjungi menu konektor kustom di browser Anda:
+                                    {{ __('mcp.claude_step1_desc') }}
                                 </p>
                                 <a href="https://claude.ai/new?modal=add-custom-connector#customize/connectors" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline">
-                                    <span>Buka claude.ai/customize/connectors</span>
+                                    <span>{{ __('mcp.claude_step1_link') }}</span>
                                     <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
                                 </a>
                             </div>
 
                             <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-2">
                                 <span class="w-6 h-6 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-xs font-bold flex items-center justify-center">2</span>
-                                <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">Isi Nama Konektor</h4>
+                                <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.claude_step2_title') }}</h4>
                                 <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
-                                    Ketik nama konektor agar mudah dikenali di daftar alat Claude:
+                                    {{ __('mcp.claude_step2_desc') }}
                                 </p>
                                 <div class="p-2 rounded-[8px] bg-neutral-200/60 dark:bg-neutral-800 font-mono text-xs text-neutral-900 dark:text-white font-medium select-all">
                                     COOCA ID
@@ -648,12 +648,12 @@ document.addEventListener('alpine:init', () => {
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-2">
                                     <span class="w-6 h-6 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-xs font-bold flex items-center justify-center">3</span>
-                                    <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">Tempelkan MCP Server URL</h4>
+                                    <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.claude_step3_title') }}</h4>
                                 </div>
-                                <span class="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">Token Terpasang Otomatis</span>
+                                <span class="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">{{ __('mcp.claude_step3_badge') }}</span>
                             </div>
                             <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
-                                Salin URL endpoint MCP Server di bawah dan tempelkan ke kolom <strong>MCP server URL</strong> di Claude:
+                                {!! __('mcp.claude_step3_desc') !!}
                             </p>
                             <div class="flex items-center gap-2">
                                 <input
@@ -663,10 +663,10 @@ document.addEventListener('alpine:init', () => {
                                     class="flex-1 font-mono text-xs bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white px-3.5 py-2 rounded-[10px] border border-neutral-200 dark:border-neutral-700 select-all" />
                                 <button
                                     type="button"
-                                    @click="copyText(getClaudeWebUrl(), 'URL Claude Web Connector tersalin!')"
+                                    @click="copyText(getClaudeWebUrl(), '{{ addslashes(__('mcp.toast_claude_web_copied')) }}')"
                                     class="px-4 py-2 rounded-[10px] bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-xs font-medium flex items-center gap-1.5 transition-colors">
                                     <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                                    <span>Salin URL</span>
+                                    <span>{{ __('mcp.btn_copy_url') }}</span>
                                 </button>
                             </div>
                         </div>
@@ -674,10 +674,10 @@ document.addEventListener('alpine:init', () => {
                         <div class="p-4 rounded-[16px] bg-emerald-50/60 dark:bg-emerald-950/30 border border-emerald-500/20 space-y-1">
                             <div class="flex items-center gap-2 text-emerald-800 dark:text-emerald-200 font-semibold text-xs">
                                 <span class="w-5 h-5 rounded-full bg-emerald-600 text-white text-[10px] flex items-center justify-center font-bold">4</span>
-                                <span>Klik Add / Connect & Mulai Chat</span>
+                                <span>{{ __('mcp.claude_step4_title') }}</span>
                             </div>
                             <p class="text-[11px] text-emerald-700 dark:text-emerald-300 leading-relaxed">
-                                Klik <strong>Add Connector</strong>. Buka obrolan baru di Claude.ai atau aplikasi Claude di HP Anda, lalu ketik: <em>"Berapa saldo kas dan bank toko saat ini?"</em>. Claude akan langsung mengeksekusi data toko Anda.
+                                {!! __('mcp.claude_step4_desc') !!}
                             </p>
                         </div>
                     </div>
@@ -690,15 +690,15 @@ document.addEventListener('alpine:init', () => {
                                     <span class="w-6 h-6 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-xs font-bold flex items-center justify-center">1</span>
                                     <button
                                         type="button"
-                                        @click="copyText(getClaudePath(), 'Path berkas tersalin!')"
+                                        @click="copyText(getClaudePath(), '{{ addslashes(__('mcp.toast_file_path_copied')) }}')"
                                         class="text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1">
                                         <i data-lucide="copy" class="w-3 h-3"></i>
-                                        <span>Salin Path</span>
+                                        <span>{{ __('mcp.btn_copy_path') }}</span>
                                     </button>
                                 </div>
-                                <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">Buka Berkas Konfigurasi</h4>
+                                <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.claude_desktop_step1_title') }}</h4>
                                 <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
-                                    Buka aplikasi Claude Desktop &rarr; Settings &rarr; Developer &rarr; Edit Config, atau buka berkas berikut:
+                                    {!! __('mcp.claude_desktop_step1_desc') !!}
                                 </p>
                                 <div class="p-2 rounded-[8px] bg-neutral-200/60 dark:bg-neutral-800 font-mono text-[11px] text-neutral-800 dark:text-neutral-200 break-all select-all">
                                     <span x-text="getClaudePath()"></span>
@@ -707,9 +707,9 @@ document.addEventListener('alpine:init', () => {
 
                             <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-2">
                                 <span class="w-6 h-6 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-xs font-bold flex items-center justify-center">2</span>
-                                <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">Remote Cloud (Tanpa Perlu PHP Lokal)</h4>
+                                <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.claude_desktop_step2_title') }}</h4>
                                 <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
-                                    Konfigurasi Remote SSE langsung terhubung ke server cloud COOCA melalui protokol aman HTTPS.
+                                    {{ __('mcp.claude_desktop_sse_note') }}
                                 </p>
                             </div>
                         </div>
@@ -720,10 +720,10 @@ document.addEventListener('alpine:init', () => {
                                 <span>claude_desktop_config.json</span>
                                 <button
                                     type="button"
-                                    @click="copyText(getClaudeDesktopSseConfig(), 'Konfigurasi Claude Desktop SSE tersalin!')"
+                                    @click="copyText(getClaudeDesktopSseConfig(), '{{ addslashes(__('mcp.toast_claude_desktop_sse_copied')) }}')"
                                     class="px-3 py-1 rounded-[8px] bg-white/10 hover:bg-white/20 text-white text-xs font-medium flex items-center gap-1.5 transition-colors">
                                     <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                                    <span>Salin Konfigurasi</span>
+                                    <span>{{ __('mcp.btn_copy_config') }}</span>
                                 </button>
                             </div>
                             <pre class="p-4 rounded-b-[16px] bg-neutral-900 text-neutral-100 font-mono text-xs overflow-x-auto leading-relaxed select-all"><code x-text="getClaudeDesktopSseConfig()"></code></pre>
@@ -733,9 +733,9 @@ document.addEventListener('alpine:init', () => {
                     {{-- Mode 1C: Claude Desktop Local CLI (Stdio) --}}
                     <div x-show="claudeMode === 'desktop_stdio'" class="space-y-4" style="display: none;">
                         <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-2">
-                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">Khusus Pengembangan di Komputer Lokal (Localhost / Laragon):</h4>
+                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.claude_desktop_stdio_title') }}</h4>
                             <p class="text-[11px] text-neutral-500 dark:text-neutral-400 leading-relaxed">
-                                Mode ini digunakan jika Anda menjalankan Claude Desktop di komputer lokal yang sama dengan folder source code Laravel Anda. Ganti nilai <code class="font-mono text-[10px] bg-neutral-200 dark:bg-neutral-800 px-1 py-0.5 rounded">cwd</code> dengan path absolut folder proyek di PC lokal Anda.
+                                {!! __('mcp.claude_desktop_stdio_note') !!}
                             </p>
                         </div>
 
@@ -744,10 +744,10 @@ document.addEventListener('alpine:init', () => {
                                 <span>claude_desktop_config.json (Local Stdio)</span>
                                 <button
                                     type="button"
-                                    @click="copyText(getClaudeDesktopStdioConfig(), 'Konfigurasi Stdio tersalin!')"
+                                    @click="copyText(getClaudeDesktopStdioConfig(), '{{ addslashes(__('mcp.toast_stdio_config_copied')) }}')"
                                     class="px-3 py-1 rounded-[8px] bg-white/10 hover:bg-white/20 text-white text-xs font-medium flex items-center gap-1.5 transition-colors">
                                     <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                                    <span>Salin Konfigurasi</span>
+                                    <span>{{ __('mcp.btn_copy_config') }}</span>
                                 </button>
                             </div>
                             <pre class="p-4 rounded-b-[16px] bg-neutral-900 text-neutral-100 font-mono text-xs overflow-x-auto leading-relaxed select-all"><code x-text="getClaudeDesktopStdioConfig()"></code></pre>
@@ -760,7 +760,7 @@ document.addEventListener('alpine:init', () => {
                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                         <div class="flex items-center gap-2">
                             <span class="px-2.5 py-1 rounded-[8px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-semibold">
-                                ChatGPT Ecosystem • Web, Mobile Apps (iOS/Android) & GPT Actions
+                                {{ __('mcp.chatgpt_ecosystem_badge') }}
                             </span>
                         </div>
 
@@ -771,14 +771,14 @@ document.addEventListener('alpine:init', () => {
                                 @click="chatgptMode = 'connector'"
                                 :class="chatgptMode === 'connector' ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500'"
                                 class="px-3 py-1 rounded-[8px] transition-all">
-                                ⚡ ChatGPT Apps SDK / MCP Connector
+                                {{ __('mcp.chatgpt_mode_connector') }}
                             </button>
                             <button
                                 type="button"
                                 @click="chatgptMode = 'actions'"
                                 :class="chatgptMode === 'actions' ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500'"
                                 class="px-3 py-1 rounded-[8px] transition-all">
-                                🛠️ Custom GPT Actions (OpenAPI)
+                                {{ __('mcp.chatgpt_mode_actions') }}
                             </button>
                         </div>
                     </div>
@@ -788,31 +788,31 @@ document.addEventListener('alpine:init', () => {
                         <div class="p-4 rounded-[16px] bg-amber-50/70 dark:bg-amber-950/30 border border-amber-500/20 space-y-1.5 text-xs text-amber-900 dark:text-amber-200">
                             <div class="flex items-center gap-2 font-semibold">
                                 <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-600 shrink-0"></i>
-                                <span>Penting: Panduan Mengatasi "Server MCP Menolak Akses"</span>
+                                <span>{{ __('mcp.chatgpt_warning_title') }}</span>
                             </div>
                             <p class="text-[11px] text-amber-800 dark:text-amber-300 leading-relaxed">
-                                Pada form ChatGPT MCP Connector, pilih <strong>"Tanpa autentikasi"</strong> karena token keamanan bisnis Anda telah disematkan langsung di URL koneksi di bawah. Jangan pilih OAuth jika Anda belum mengonfigurasi OpenID Connect Server.
+                                {!! __('mcp.chatgpt_warning_desc') !!}
                             </p>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-2">
                                 <span class="w-6 h-6 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-xs font-bold flex items-center justify-center">1</span>
-                                <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">Nama & Deskripsi Konektor</h4>
+                                <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.chatgpt_name_desc_title') }}</h4>
                                 <div class="space-y-1.5 text-[11px] text-neutral-600 dark:text-neutral-300">
-                                    <div><strong>Nama:</strong> <code class="font-mono bg-neutral-200 dark:bg-neutral-800 px-1 py-0.5 rounded">COOCA ID Assistant</code></div>
-                                    <div><strong>Deskripsi:</strong> Asisten pintar ERP untuk cek keuangan, stok barang, CRM, dan laporan laba rugi.</div>
+                                    <div><strong>{{ __('mcp.chatgpt_lbl_name') }}:</strong> <code class="font-mono bg-neutral-200 dark:bg-neutral-800 px-1 py-0.5 rounded">COOCA ID Assistant</code></div>
+                                    <div><strong>{{ __('mcp.chatgpt_lbl_desc') }}:</strong> {{ __('mcp.chatgpt_desc_val') }}</div>
                                 </div>
                             </div>
 
                             <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-2">
                                 <span class="w-6 h-6 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-xs font-bold flex items-center justify-center">2</span>
-                                <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">Pilihan Autentikasi</h4>
+                                <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.chatgpt_auth_title') }}</h4>
                                 <div class="p-2.5 rounded-[10px] bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800">
-                                    <div class="text-[10px] text-neutral-400 uppercase font-semibold">Autentikasi di Form ChatGPT:</div>
+                                    <div class="text-[10px] text-neutral-400 uppercase font-semibold">{{ __('mcp.chatgpt_auth_form_label') }}:</div>
                                     <div class="font-semibold text-emerald-600 dark:text-emerald-400 mt-0.5 flex items-center gap-1.5">
                                         <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
-                                        <span>Tanpa autentikasi (None)</span>
+                                        <span>{{ __('mcp.chatgpt_auth_none') }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -822,12 +822,12 @@ document.addEventListener('alpine:init', () => {
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-2">
                                     <span class="w-6 h-6 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-xs font-bold flex items-center justify-center">3</span>
-                                    <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">Koneksi (MCP Server URL)</h4>
+                                    <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.chatgpt_conn_title') }}</h4>
                                 </div>
-                                <span class="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">Lengkap dengan Token Query</span>
+                                <span class="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">{{ __('mcp.chatgpt_conn_badge') }}</span>
                             </div>
                             <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
-                                Tempelkan URL lengkap berikut ke kolom <strong>Koneksi (URL)</strong> di form konektor ChatGPT:
+                                {!! __('mcp.chatgpt_step_url_desc') !!}
                             </p>
                             <div class="flex items-center gap-2">
                                 <input
@@ -837,10 +837,10 @@ document.addEventListener('alpine:init', () => {
                                     class="flex-1 font-mono text-xs bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white px-3.5 py-2 rounded-[10px] border border-neutral-200 dark:border-neutral-700 select-all" />
                                 <button
                                     type="button"
-                                    @click="copyText(getChatGptConnectorUrl(), 'URL Konektor ChatGPT tersalin!')"
+                                    @click="copyText(getChatGptConnectorUrl(), '{{ addslashes(__('mcp.toast_chatgpt_connector_copied')) }}')"
                                     class="px-4 py-2 rounded-[10px] bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-xs font-medium flex items-center gap-1.5 transition-colors">
                                     <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                                    <span>Salin URL</span>
+                                    <span>{{ __('mcp.btn_copy_url') }}</span>
                                 </button>
                             </div>
                         </div>
@@ -848,10 +848,10 @@ document.addEventListener('alpine:init', () => {
                         <div class="p-4 rounded-[16px] bg-emerald-50/60 dark:bg-emerald-950/30 border border-emerald-500/20 space-y-1">
                             <div class="flex items-center gap-2 text-emerald-800 dark:text-emerald-200 font-semibold text-xs">
                                 <span class="w-5 h-5 rounded-full bg-emerald-600 text-white text-[10px] flex items-center justify-center font-bold">4</span>
-                                <span>Ikon Logo & Simpan</span>
+                                <span>{{ __('mcp.chatgpt_icon_title') }}</span>
                             </div>
                             <p class="text-[11px] text-emerald-700 dark:text-emerald-300 leading-relaxed">
-                                Unggah ikon format PNG (ukuran 256×256 px, maksimal 10 KB), centang persetujuan keamanan, lalu klik <strong>Simpan / Hubungkan</strong>. Konektor akan langsung aktif di akun ChatGPT Anda.
+                                {!! __('mcp.chatgpt_icon_desc') !!}
                             </p>
                         </div>
                     </div>
@@ -860,16 +860,16 @@ document.addEventListener('alpine:init', () => {
                     <div x-show="chatgptMode === 'actions'" class="space-y-4" style="display: none;">
                         <div class="space-y-3">
                             <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-2">
-                                <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">Langkah 1: Buka GPT Builder di ChatGPT</h4>
+                                <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.chatgpt_actions_step1_title') }}</h4>
                                 <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
-                                    Kunjungi <strong>chatgpt.com &rarr; Explore GPTs &rarr; Create a GPT</strong>. Buka tab <strong>Configure</strong>, gulir ke paling bawah, lalu klik <strong>Create new action</strong>.
+                                    {!! __('mcp.chatgpt_actions_step1_desc') !!}
                                 </p>
                             </div>
 
                             <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-2">
-                                <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">Langkah 2: Impor Skema OpenAPI 3.1 dari URL</h4>
+                                <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.chatgpt_actions_step2_title') }}</h4>
                                 <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
-                                    Pada kolom Schema, klik <strong>Import from URL</strong>, tempelkan URL endpoint di bawah, lalu klik <strong>Import</strong>:
+                                    {!! __('mcp.chatgpt_actions_step2_desc', ['count' => count($tools)]) !!}
                                 </p>
                                 <div class="flex items-center gap-2">
                                     <input
@@ -879,16 +879,16 @@ document.addEventListener('alpine:init', () => {
                                         class="flex-1 font-mono text-xs bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white px-3.5 py-2 rounded-[10px] border border-neutral-200 dark:border-neutral-700 select-all" />
                                     <button
                                         type="button"
-                                        @click="copyText(getChatGptOpenApiUrl(), 'URL OpenAPI tersalin!')"
+                                        @click="copyText(getChatGptOpenApiUrl(), '{{ addslashes(__('mcp.toast_openapi_url_copied')) }}')"
                                         class="px-4 py-2 rounded-[10px] bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-xs font-medium flex items-center gap-1.5 transition-colors">
                                         <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                                        <span>Salin URL</span>
+                                        <span>{{ __('mcp.btn_copy_url') }}</span>
                                     </button>
                                 </div>
                             </div>
 
                             <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-2">
-                                <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">Langkah 3: Konfigurasi Authentication</h4>
+                                <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.chatgpt_actions_step3_title') }}</h4>
                                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
                                     <div class="p-2.5 rounded-[10px] bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800">
                                         <div class="text-[10px] text-neutral-400 uppercase">Authentication Type</div>
@@ -901,13 +901,13 @@ document.addEventListener('alpine:init', () => {
                                     <div class="p-2.5 rounded-[10px] bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 flex items-center justify-between">
                                         <div>
                                             <div class="text-[10px] text-neutral-400 uppercase">API Key Value</div>
-                                            <div class="font-mono text-[11px] text-neutral-900 dark:text-white mt-0.5">Token MCP Anda</div>
+                                            <div class="font-mono text-[11px] text-neutral-900 dark:text-white mt-0.5">{{ __('mcp.chatgpt_your_mcp_token') }}</div>
                                         </div>
                                         <button
                                             type="button"
-                                            @click="copyText(getToken(), 'Token tersalin!')"
+                                            @click="copyText(getToken(), '{{ addslashes(__('mcp.toast_token_copied')) }}')"
                                             class="text-blue-600 dark:text-blue-400 hover:underline text-[11px]">
-                                            Salin
+                                            {{ __('mcp.btn_copy_short') }}
                                         </button>
                                     </div>
                                 </div>
@@ -920,21 +920,21 @@ document.addEventListener('alpine:init', () => {
                 <div x-show="activeProviderTab === 'claude_code'" class="space-y-5" style="display: none;">
                     <div class="flex items-center gap-2">
                         <span class="px-2.5 py-1 rounded-[8px] bg-neutral-500/10 text-neutral-800 dark:text-neutral-200 text-xs font-semibold">
-                            Terminal CLI Agent • Official Anthropic Research
+                            {{ __('mcp.claude_code_badge') }}
                         </span>
-                        <span class="text-xs text-neutral-500 dark:text-neutral-400">Jalankan langsung di terminal proyek Anda</span>
+                        <span class="text-xs text-neutral-500 dark:text-neutral-400">{{ __('mcp.claude_code_subtitle') }}</span>
                     </div>
 
                     <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-3">
-                        <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">Daftarkan MCP Server ke Claude Code dalam 1 Baris:</h4>
+                        <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.claude_code_register_title') }}</h4>
                         <div class="relative">
                             <pre class="p-3.5 rounded-[12px] bg-neutral-900 text-neutral-100 font-mono text-xs overflow-x-auto leading-relaxed select-all"><code x-text="getClaudeCodeCmd()"></code></pre>
                             <button
                                 type="button"
-                                @click="copyText(getClaudeCodeCmd(), 'Perintah CLI tersalin!')"
+                                @click="copyText(getClaudeCodeCmd(), '{{ addslashes(__('mcp.toast_cli_cmd_copied')) }}')"
                                 class="absolute top-2.5 right-2.5 px-3 py-1 rounded-[8px] bg-white/10 hover:bg-white/20 text-white text-xs font-medium flex items-center gap-1.5 transition-colors">
                                 <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                                <span>Salin Perintah</span>
+                                <span>{{ __('mcp.btn_copy_cmd') }}</span>
                             </button>
                         </div>
                     </div>
@@ -943,19 +943,19 @@ document.addEventListener('alpine:init', () => {
                         <div class="p-4 rounded-[16px] border border-neutral-200/80 dark:border-neutral-800 space-y-2">
                             <div class="font-semibold text-neutral-900 dark:text-white flex items-center gap-2">
                                 <i data-lucide="list-checks" class="w-4 h-4 text-emerald-500"></i>
-                                <span>Verifikasi Server Terdaftar</span>
+                                <span>{{ __('mcp.claude_code_verify_title') }}</span>
                             </div>
                             <pre class="p-2.5 rounded-[8px] bg-neutral-100 dark:bg-neutral-900 font-mono text-[11px] text-neutral-800 dark:text-neutral-200">claude mcp list</pre>
-                            <p class="text-[11px] text-neutral-500">Akan menampilkan <code class="font-mono">cooca-erp: Connected ({{ count($tools) }} tools)</code>.</p>
+                            <p class="text-[11px] text-neutral-500">{!! __('mcp.claude_code_verify_desc', ['count' => count($tools)]) !!}</p>
                         </div>
 
                         <div class="p-4 rounded-[16px] border border-neutral-200/80 dark:border-neutral-800 space-y-2">
                             <div class="font-semibold text-neutral-900 dark:text-white flex items-center gap-2">
                                 <i data-lucide="message-square" class="w-4 h-4 text-blue-500"></i>
-                                <span>Contoh Perintah Langsung</span>
+                                <span>{{ __('mcp.claude_code_example_title') }}</span>
                             </div>
-                            <pre class="p-2.5 rounded-[8px] bg-neutral-100 dark:bg-neutral-900 font-mono text-[11px] text-neutral-800 dark:text-neutral-200">claude "Berapa posisi kas dan rekening bank toko saya?"</pre>
-                            <p class="text-[11px] text-neutral-500">Claude Code akan memanggil tool MCP COOCA secara otonom.</p>
+                            <pre class="p-2.5 rounded-[8px] bg-neutral-100 dark:bg-neutral-900 font-mono text-[11px] text-neutral-800 dark:text-neutral-200">claude "{{ __('mcp.claude_code_example_cmd') }}"</pre>
+                            <p class="text-[11px] text-neutral-500">{{ __('mcp.claude_code_example_desc') }}</p>
                         </div>
                     </div>
                 </div>
@@ -965,9 +965,9 @@ document.addEventListener('alpine:init', () => {
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-2">
                             <span class="px-2.5 py-1 rounded-[8px] bg-blue-500/10 text-blue-600 dark:text-blue-400 text-xs font-semibold">
-                                AI Code Editor • Remote SSE & Stdio
+                                {{ __('mcp.cursor_badge') }}
                             </span>
-                            <span class="text-xs text-neutral-500 dark:text-neutral-400">Kompatibel: Cursor, Antigravity, VS Code MCP</span>
+                            <span class="text-xs text-neutral-500 dark:text-neutral-400">{{ __('mcp.cursor_compat_subtitle') }}</span>
                         </div>
 
                         {{-- Sub-toggle Stdio vs SSE --}}
@@ -977,14 +977,14 @@ document.addEventListener('alpine:init', () => {
                                 @click="cursorMode = 'sse'"
                                 :class="cursorMode === 'sse' ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500'"
                                 class="px-2.5 py-1 rounded-[7px] transition-all">
-                                Remote SSE (Rekomendasi)
+                                {{ __('mcp.cursor_mode_sse') }}
                             </button>
                             <button
                                 type="button"
                                 @click="cursorMode = 'stdio'"
                                 :class="cursorMode === 'stdio' ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500'"
                                 class="px-2.5 py-1 rounded-[7px] transition-all">
-                                Local Stdio Pipe
+                                {{ __('mcp.cursor_mode_stdio') }}
                             </button>
                         </div>
                     </div>
@@ -992,23 +992,23 @@ document.addEventListener('alpine:init', () => {
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-1.5">
                             <span class="w-5 h-5 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-[10px] flex items-center justify-center font-bold">1</span>
-                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">Buka Pengaturan MCP</h4>
+                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.cursor_step1_title') }}</h4>
                             <p class="text-[11px] text-neutral-500 dark:text-neutral-400 leading-relaxed">
-                                Buka <strong>Cursor Settings &rarr; Features &rarr; MCP</strong> atau buat berkas <code class="font-mono text-[10px] bg-neutral-200 dark:bg-neutral-800 px-1 py-0.5 rounded">.cursor/mcp.json</code> di root proyek Anda.
+                                {!! __('mcp.cursor_step1_desc') !!}
                             </p>
                         </div>
                         <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-1.5">
                             <span class="w-5 h-5 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-[10px] flex items-center justify-center font-bold">2</span>
-                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">Tempelkan Konfigurasi</h4>
+                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.cursor_step2_title') }}</h4>
                             <p class="text-[11px] text-neutral-500 dark:text-neutral-400 leading-relaxed">
-                                Salin blok JSON di bawah. Token otentikasi telah terisi secara otomatis sesuai token yang Anda pilih.
+                                {{ __('mcp.cursor_step2_desc') }}
                             </p>
                         </div>
                         <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-1.5">
                             <span class="w-5 h-5 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-[10px] flex items-center justify-center font-bold">3</span>
-                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">Cek Titik Status Hijau</h4>
+                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.cursor_step3_title') }}</h4>
                             <p class="text-[11px] text-neutral-500 dark:text-neutral-400 leading-relaxed">
-                                Klik tombol <strong>Refresh</strong> di Cursor. Pastikan titik status server <code class="font-mono text-[10px]">cooca-erp</code> berwarna hijau.
+                                {!! __('mcp.cursor_step3_desc') !!}
                             </p>
                         </div>
                     </div>
@@ -1019,7 +1019,7 @@ document.addEventListener('alpine:init', () => {
                             <span>.cursor/mcp.json</span>
                             <button
                                 type="button"
-                                @click="copyText(cursorMode === 'sse' ? getCursorSseConfig() : getCursorStdioConfig(), 'Konfigurasi Cursor tersalin!')"
+                                @click="copyText(cursorMode === 'sse' ? getCursorSseConfig() : getCursorStdioConfig(), '{{ addslashes(__('mcp.toast_cursor_config_copied')) }}')"
                                 class="px-3 py-1 rounded-[8px] bg-white/10 hover:bg-white/20 text-white text-xs font-medium flex items-center gap-1.5 transition-colors">
                                 <i data-lucide="copy" class="w-3.5 h-3.5"></i>
                                 <span>{{ __('mcp.btn_copy_config') }}</span>
@@ -1033,23 +1033,23 @@ document.addEventListener('alpine:init', () => {
                 <div x-show="activeProviderTab === 'chatgpt'" class="space-y-5" style="display: none;">
                     <div class="flex items-center gap-2">
                         <span class="px-2.5 py-1 rounded-[8px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-semibold">
-                            ChatGPT Web & Mobile • Dynamic OpenAPI 3.1.0 • No-Code Action
+                            {{ __('mcp.chatgpt_actions_badge') }}
                         </span>
-                        <span class="text-xs text-neutral-500 dark:text-neutral-400">Dukungan untuk ChatGPT Plus / Team / Enterprise</span>
+                        <span class="text-xs text-neutral-500 dark:text-neutral-400">{{ __('mcp.chatgpt_support_sub') }}</span>
                     </div>
 
                     <div class="space-y-3">
                         <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-2">
-                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">Langkah 1: Buka GPT Builder di ChatGPT</h4>
+                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.chatgpt_actions_step1_title') }}</h4>
                             <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
-                                Kunjungi <strong>chatgpt.com &rarr; Explore GPTs &rarr; Create a GPT</strong> (atau edit Custom GPT Anda). Buka tab <strong>Configure</strong>, gulir ke bagian paling bawah, lalu klik <strong>Create new action</strong>.
+                                {!! __('mcp.chatgpt_actions_step1_desc') !!}
                             </p>
                         </div>
 
                         <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-2">
-                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">Langkah 2: Impor Skema OpenAPI 3.1 dari URL</h4>
+                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.chatgpt_actions_step2_title') }}</h4>
                             <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
-                                Pada kolom Schema, klik <strong>Import from URL</strong>, tempelkan URL endpoint di bawah, lalu klik <strong>Import</strong>. Seluruh {{ count($tools) }} tool COOCA akan otomatis terkonversi menjadi Actions ChatGPT:
+                                {!! __('mcp.chatgpt_actions_step2_desc', ['count' => count($tools)]) !!}
                             </p>
                             <div class="flex items-center gap-2">
                                 <input
@@ -1059,18 +1059,18 @@ document.addEventListener('alpine:init', () => {
                                     class="flex-1 font-mono text-xs bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white px-3.5 py-2 rounded-[10px] border border-neutral-200 dark:border-neutral-700 select-all" />
                                 <button
                                     type="button"
-                                    @click="copyText('{{ $openApiEndpoint }}', 'URL OpenAPI tersalin!')"
+                                    @click="copyText('{{ $openApiEndpoint }}', '{{ addslashes(__('mcp.toast_openapi_url_copied')) }}')"
                                     class="px-4 py-2 rounded-[10px] bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-xs font-medium flex items-center gap-1.5 transition-colors">
                                     <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                                    <span>Salin URL</span>
+                                    <span>{{ __('mcp.btn_copy_url') }}</span>
                                 </button>
                             </div>
                         </div>
 
                         <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-2">
-                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">Langkah 3: Konfigurasi Authentication</h4>
+                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.chatgpt_actions_step3_title') }}</h4>
                             <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
-                                Klik ikon gear di sebelah <strong>Authentication</strong>, lalu pilih:
+                                {!! __('mcp.chatgpt_actions_step3_desc') !!}
                             </p>
                             <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
                                 <div class="p-2.5 rounded-[10px] bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800">
@@ -1084,22 +1084,22 @@ document.addEventListener('alpine:init', () => {
                                 <div class="p-2.5 rounded-[10px] bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 flex items-center justify-between">
                                     <div>
                                         <div class="text-[10px] text-neutral-400 uppercase">API Key Value</div>
-                                        <div class="font-mono text-[11px] text-neutral-900 dark:text-white mt-0.5">Token MCP Anda</div>
+                                        <div class="font-mono text-[11px] text-neutral-900 dark:text-white mt-0.5">{{ __('mcp.chatgpt_your_mcp_token') }}</div>
                                     </div>
                                     <button
                                         type="button"
-                                        @click="copyText(getToken(), 'Token tersalin!')"
+                                        @click="copyText(getToken(), '{{ addslashes(__('mcp.toast_token_copied')) }}')"
                                         class="text-blue-600 dark:text-blue-400 hover:underline text-[11px]">
-                                        Salin
+                                        {{ __('mcp.btn_copy_short') }}
                                     </button>
                                 </div>
                             </div>
                         </div>
 
                         <div class="p-4 rounded-[16px] bg-emerald-50/60 dark:bg-emerald-950/30 border border-emerald-500/20 space-y-1">
-                            <h4 class="text-xs font-semibold text-emerald-800 dark:text-emerald-200">Langkah 4: Uji Coba di Panel Preview</h4>
+                            <h4 class="text-xs font-semibold text-emerald-800 dark:text-emerald-200">{{ __('mcp.chatgpt_actions_step4_title') }}</h4>
                             <p class="text-[11px] text-emerald-700 dark:text-emerald-300">
-                                Ketik pada chat preview: <em>"Tolong buatkan ringkasan laba rugi toko saya bulan ini"</em>. ChatGPT akan meminta konfirmasi izin akses ke server COOCA (klik <strong>Always Allow</strong>).
+                                {!! __('mcp.chatgpt_actions_step4_desc') !!}
                             </p>
                         </div>
                     </div>
@@ -1109,17 +1109,16 @@ document.addEventListener('alpine:init', () => {
                 <div x-show="activeProviderTab === 'gemini'" class="space-y-5" style="display: none;">
                     <div class="flex items-center gap-2">
                         <span class="px-2.5 py-1 rounded-[8px] bg-purple-500/10 text-purple-600 dark:text-purple-400 text-xs font-semibold">
-                            Google GenAI / Vertex AI • Python SDK & Direct REST Bridge
+                            {{ __('mcp.gemini_badge') }}
                         </span>
-                        <span class="text-xs text-neutral-500 dark:text-neutral-400">Kompatibel: Gemini 1.5 Pro, Flash, Gemini 2.0</span>
+                        <span class="text-xs text-neutral-500 dark:text-neutral-400">{{ __('mcp.gemini_compat_subtitle') }}</span>
                     </div>
 
                     <div class="space-y-4">
                         <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-2">
-                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">Cara Kerja REST Direct Bridge COOCA:</h4>
+                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.gemini_how_it_works_title') }}</h4>
                             <p class="text-[11px] text-neutral-500 dark:text-neutral-400 leading-relaxed">
-                                Google Gemini dapat memanggil {{ count($tools) }} tools COOCA secara instan melalui endpoint REST Bridge:
-                                <code class="font-mono text-neutral-800 dark:text-neutral-200 bg-neutral-200 dark:bg-neutral-800 px-1 py-0.5 rounded">POST {{ $apiBaseUrl }}/tools/{nama_tool}/execute</code> dengan header otentikasi Bearer Token.
+                                {!! __('mcp.gemini_how_it_works_desc') !!}
                             </p>
                         </div>
 
@@ -1129,10 +1128,10 @@ document.addEventListener('alpine:init', () => {
                                 <span>gemini_cooca_bridge.py</span>
                                 <button
                                     type="button"
-                                    @click="copyText(getGeminiPythonCode(), 'Script Python tersalin!')"
+                                    @click="copyText(getGeminiPythonCode(), '{{ addslashes(__('mcp.toast_python_script_copied')) }}')"
                                     class="px-3 py-1 rounded-[8px] bg-white/10 hover:bg-white/20 text-white text-xs font-medium flex items-center gap-1.5 transition-colors">
                                     <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                                    <span>Salin Kode Python</span>
+                                    <span>{{ __('mcp.btn_copy_python') }}</span>
                                 </button>
                             </div>
                             <pre class="p-4 rounded-b-[16px] bg-neutral-900 text-neutral-100 font-mono text-xs overflow-x-auto leading-relaxed select-all"><code x-text="getGeminiPythonCode()"></code></pre>
@@ -1141,13 +1140,13 @@ document.addEventListener('alpine:init', () => {
                         {{-- cURL Quick Test Box --}}
                         <div class="relative">
                             <div class="flex items-center justify-between px-4 py-2 rounded-t-[14px] bg-neutral-800/80 text-neutral-300 text-xs font-mono border-b border-neutral-700">
-                                <span>cURL Terminal Test (Langsung dari Terminal)</span>
+                                <span>{{ __('mcp.gemini_curl_test_title') }}</span>
                                 <button
                                     type="button"
-                                    @click="copyText(getGeminiCurl(), 'Perintah cURL tersalin!')"
+                                    @click="copyText(getGeminiCurl(), '{{ addslashes(__('mcp.toast_curl_cmd_copied')) }}')"
                                     class="px-2.5 py-0.5 rounded-[6px] bg-white/10 hover:bg-white/20 text-white text-[11px] flex items-center gap-1">
                                     <i data-lucide="copy" class="w-3 h-3"></i>
-                                    <span>Salin cURL</span>
+                                    <span>{{ __('mcp.btn_copy_curl') }}</span>
                                 </button>
                             </div>
                             <pre class="p-3.5 rounded-b-[14px] bg-neutral-900 text-neutral-100 font-mono text-xs overflow-x-auto select-all"><code x-text="getGeminiCurl()"></code></pre>
@@ -1159,33 +1158,33 @@ document.addEventListener('alpine:init', () => {
                 <div x-show="activeProviderTab === 'ollama'" class="space-y-5" style="display: none;">
                     <div class="flex items-center gap-2">
                         <span class="px-2.5 py-1 rounded-[8px] bg-sky-500/10 text-sky-600 dark:text-sky-400 text-xs font-semibold">
-                            100% Offline / Local AI • MCP Inspector & Stdio
+                            {{ __('mcp.ollama_badge') }}
                         </span>
-                        <span class="text-xs text-neutral-500 dark:text-neutral-400">Kompatibel: Ollama, Open WebUI, LM Studio, Continue.dev</span>
+                        <span class="text-xs text-neutral-500 dark:text-neutral-400">{{ __('mcp.ollama_compat_subtitle') }}</span>
                     </div>
 
                     <div class="space-y-4">
                         <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-2">
-                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">Metode 1: Uji Coba Cepat dengan MCP Inspector Resmi</h4>
+                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.ollama_method1_title') }}</h4>
                             <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
-                                Jalankan perintah berikut di terminal Anda untuk membuka dashboard inspeksi dan debugging MCP resmi di browser (<code class="font-mono text-[11px]">http://localhost:5173</code>):
+                                {!! __('mcp.ollama_method1_desc') !!}
                             </p>
                             <div class="relative">
                                 <pre class="p-3.5 rounded-[12px] bg-neutral-900 text-neutral-100 font-mono text-xs overflow-x-auto select-all"><code x-text="getOllamaInspectorCmd()"></code></pre>
                                 <button
                                     type="button"
-                                    @click="copyText(getOllamaInspectorCmd(), 'Perintah Inspector tersalin!')"
+                                    @click="copyText(getOllamaInspectorCmd(), '{{ addslashes(__('mcp.toast_inspector_cmd_copied')) }}')"
                                     class="absolute top-2.5 right-2.5 px-2.5 py-1 rounded-[8px] bg-white/10 hover:bg-white/20 text-white text-xs font-medium flex items-center gap-1">
                                     <i data-lucide="copy" class="w-3 h-3"></i>
-                                    <span>Salin</span>
+                                    <span>{{ __('mcp.btn_copy_short') }}</span>
                                 </button>
                             </div>
                         </div>
 
                         <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-2">
-                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">Metode 2: Integrasi ke Open WebUI / Continue.dev</h4>
+                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.ollama_method2_title') }}</h4>
                             <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
-                                Tambahkan server MCP Remote SSE pada konfigurasi Continue.dev atau Open WebUI Tools:
+                                {{ __('mcp.ollama_method2_desc') }}
                             </p>
                             <div class="p-3 rounded-[10px] bg-neutral-100 dark:bg-neutral-900 font-mono text-xs text-neutral-800 dark:text-neutral-200 select-all">
                                 URL: <span class="text-blue-600 dark:text-blue-400">{{ $sseEndpoint }}</span><br>
@@ -1199,41 +1198,40 @@ document.addEventListener('alpine:init', () => {
                 <div x-show="activeProviderTab === 'n8n'" class="space-y-5" style="display: none;">
                     <div class="flex items-center gap-2">
                         <span class="px-2.5 py-1 rounded-[8px] bg-rose-500/10 text-rose-600 dark:text-rose-400 text-xs font-semibold">
-                            Enterprise Workflow Automation • No-Code / Low-Code
+                            {{ __('mcp.n8n_badge') }}
                         </span>
-                        <span class="text-xs text-neutral-500 dark:text-neutral-400">Dukungan: n8n, Dify.ai, Make.com, Flowise</span>
+                        <span class="text-xs text-neutral-500 dark:text-neutral-400">{{ __('mcp.n8n_compat_subtitle') }}</span>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="p-4.5 rounded-[18px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-3">
                             <div class="flex items-center gap-2 font-semibold text-xs text-neutral-900 dark:text-white">
                                 <i data-lucide="workflow" class="w-4 h-4 text-rose-500"></i>
-                                <span>Integrasi di n8n Workflow</span>
+                                <span>{{ __('mcp.n8n_workflow_title') }}</span>
                             </div>
                             <ol class="list-decimal list-inside text-[11px] text-neutral-600 dark:text-neutral-300 space-y-2 leading-relaxed">
-                                <li>Tambahkan node <strong>HTTP Request</strong> di workflow n8n Anda.</li>
-                                <li>Atur Method: <strong>POST</strong>.</li>
+                                <li>{!! __('mcp.n8n_step1') !!}</li>
+                                <li>{!! __('mcp.n8n_step2') !!}</li>
                                 <li>URL: <code class="font-mono text-[10px] bg-neutral-200 dark:bg-neutral-800 px-1 py-0.5 rounded">{{ $apiBaseUrl }}/tools/finance_record_expense/execute</code></li>
                                 <li>Headers: <code class="font-mono text-[10px] bg-neutral-200 dark:bg-neutral-800 px-1 py-0.5 rounded">Authorization: Bearer <span x-text="getToken()"></span></code></li>
-                                <li>Body: Masukkan parameter JSON tool (contoh: amount, category, description).</li>
+                                <li>{{ __('mcp.n8n_step5') }}</li>
                             </ol>
                         </div>
 
                         <div class="p-4.5 rounded-[18px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-3">
                             <div class="flex items-center gap-2 font-semibold text-xs text-neutral-900 dark:text-white">
                                 <i data-lucide="layers" class="w-4 h-4 text-blue-500"></i>
-                                <span>Integrasi di Dify.ai Agent</span>
+                                <span>{{ __('mcp.dify_agent_title') }}</span>
                             </div>
                             <ol class="list-decimal list-inside text-[11px] text-neutral-600 dark:text-neutral-300 space-y-2 leading-relaxed">
-                                <li>Buka Dify.ai &rarr; menu <strong>Tools</strong> &rarr; <strong>Custom Tools</strong>.</li>
-                                <li>Klik <strong>Import from OpenAPI</strong>.</li>
-                                <li>Tempelkan URL OpenAPI COOCA:
+                                <li>{!! __('mcp.dify_step1') !!}</li>
+                                <li>{!! __('mcp.dify_step2') !!}
                                     <div class="mt-1 flex items-center gap-1">
                                         <input type="text" readonly value="{{ $openApiEndpoint }}" class="w-full text-[10px] font-mono px-2 py-1 rounded bg-neutral-200/60 dark:bg-neutral-800" />
                                         <button type="button" @click="copyText('{{ $openApiEndpoint }}')" class="p-1 text-blue-600 dark:text-blue-400"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
                                     </div>
                                 </li>
-                                <li>Atur Authorization: <strong>API Key</strong> &rarr; <strong>Bearer</strong> &rarr; Tempelkan token MCP Anda.</li>
+                                <li>{!! __('mcp.dify_step3') !!}</li>
                             </ol>
                         </div>
                     </div>
@@ -1243,9 +1241,9 @@ document.addEventListener('alpine:init', () => {
                 <div x-show="activeProviderTab === 'langchain'" class="space-y-5" style="display: none;">
                     <div class="flex items-center gap-2">
                         <span class="px-2.5 py-1 rounded-[8px] bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-xs font-semibold">
-                            Python AI Framework • Agentic Tool Calling
+                            {{ __('mcp.langchain_badge') }}
                         </span>
-                        <span class="text-xs text-neutral-500 dark:text-neutral-400">Kompatibel: LangChain, LlamaIndex, CrewAI, AutoGen</span>
+                        <span class="text-xs text-neutral-500 dark:text-neutral-400">{{ __('mcp.langchain_compat_subtitle') }}</span>
                     </div>
 
                     <div class="relative">
@@ -1253,10 +1251,10 @@ document.addEventListener('alpine:init', () => {
                             <span>langchain_cooca_agent.py</span>
                             <button
                                 type="button"
-                                @click="copyText(getLangChainCode(), 'Kode LangChain tersalin!')"
+                                @click="copyText(getLangChainCode(), '{{ addslashes(__('mcp.toast_langchain_code_copied')) }}')"
                                 class="px-3 py-1 rounded-[8px] bg-white/10 hover:bg-white/20 text-white text-xs font-medium flex items-center gap-1.5 transition-colors">
                                 <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                                <span>Salin Kode Python</span>
+                                <span>{{ __('mcp.btn_copy_python') }}</span>
                             </button>
                         </div>
                         <pre class="p-4 rounded-b-[16px] bg-neutral-900 text-neutral-100 font-mono text-xs overflow-x-auto leading-relaxed select-all"><code x-text="getLangChainCode()"></code></pre>
@@ -1279,7 +1277,7 @@ document.addEventListener('alpine:init', () => {
                     </p>
                 </div>
                 <span class="px-3 py-1 rounded-full text-xs font-mono font-medium bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300">
-                    {{ count($tools) }} Tools Terverifikasi
+                    {{ count($tools) }} {{ __('mcp.tool_verified_badge') }}
                 </span>
             </div>
 
@@ -1292,16 +1290,16 @@ document.addEventListener('alpine:init', () => {
                             <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400">mcp:expenses:write</span>
                         </div>
                         <p class="text-xs text-neutral-700 dark:text-neutral-300 mt-1.5 leading-relaxed">
-                            Mencatat pengeluaran operasional toko dari struk/receipt dengan auto-journal akuntansi dan mutasi kas keluar.
+                            {{ __('mcp.tool_1_desc') }}
                         </p>
                     </div>
                     <div class="pt-2 border-t border-neutral-200/60 dark:border-neutral-800 flex items-center justify-between gap-2">
-                        <span class="text-[11px] text-neutral-500 truncate italic">"Catat pengeluaran beli kertas struk 45.000 via kas tunai"</span>
+                        <span class="text-[11px] text-neutral-500 truncate italic">"{{ __('mcp.tool_1_prompt') }}"</span>
                         <button
                             type="button"
-                            @click="copyText('Catat pengeluaran beli kertas struk 45.000 via kas tunai', 'Prompt tersalin!')"
+                            @click="copyText('{{ addslashes(__('mcp.tool_1_prompt')) }}', '{{ addslashes(__('mcp.toast_prompt_copied')) }}')"
                             class="px-2.5 py-1 rounded-[8px] bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-[11px] font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 transition-colors shrink-0">
-                            Salin
+                            {{ __('mcp.btn_copy_short') }}
                         </button>
                     </div>
                 </div>
@@ -1314,16 +1312,16 @@ document.addEventListener('alpine:init', () => {
                             <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">mcp:finance:read</span>
                         </div>
                         <p class="text-xs text-neutral-700 dark:text-neutral-300 mt-1.5 leading-relaxed">
-                            Membaca posisi likuiditas uang tunai toko dan saldo rekening bank aktif secara real-time.
+                            {{ __('mcp.tool_2_desc') }}
                         </p>
                     </div>
                     <div class="pt-2 border-t border-neutral-200/60 dark:border-neutral-800 flex items-center justify-between gap-2">
-                        <span class="text-[11px] text-neutral-500 truncate italic">"Berapa total saldo kas toko dan rekening bank saat ini?"</span>
+                        <span class="text-[11px] text-neutral-500 truncate italic">"{{ __('mcp.tool_2_prompt') }}"</span>
                         <button
                             type="button"
-                            @click="copyText('Berapa total saldo kas toko dan rekening bank aktif saat ini?', 'Prompt tersalin!')"
+                            @click="copyText('{{ addslashes(__('mcp.tool_2_prompt')) }}', '{{ addslashes(__('mcp.toast_prompt_copied')) }}')"
                             class="px-2.5 py-1 rounded-[8px] bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-[11px] font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 transition-colors shrink-0">
-                            Salin
+                            {{ __('mcp.btn_copy_short') }}
                         </button>
                     </div>
                 </div>
@@ -1336,16 +1334,16 @@ document.addEventListener('alpine:init', () => {
                             <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-600 dark:text-indigo-400">mcp:products:write</span>
                         </div>
                         <p class="text-xs text-neutral-700 dark:text-neutral-300 mt-1.5 leading-relaxed">
-                            Mendaftarkan produk baru ke katalog barang dengan modal HPP, harga jual, barcode, dan stok awal.
+                            {{ __('mcp.tool_3_desc') }}
                         </p>
                     </div>
                     <div class="pt-2 border-t border-neutral-200/60 dark:border-neutral-800 flex items-center justify-between gap-2">
-                        <span class="text-[11px] text-neutral-500 truncate italic">"Daftarkan produk Kopi Susu Aren, HPP 8000, jual 18000, stok 50"</span>
+                        <span class="text-[11px] text-neutral-500 truncate italic">"{{ __('mcp.tool_3_prompt') }}"</span>
                         <button
                             type="button"
-                            @click="copyText('Daftarkan produk baru Kopi Susu Aren dengan modal HPP 8000 dan harga jual 18000, stok awal 50 pcs', 'Prompt tersalin!')"
+                            @click="copyText('{{ addslashes(__('mcp.tool_3_prompt')) }}', '{{ addslashes(__('mcp.toast_prompt_copied')) }}')"
                             class="px-2.5 py-1 rounded-[8px] bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-[11px] font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 transition-colors shrink-0">
-                            Salin
+                            {{ __('mcp.btn_copy_short') }}
                         </button>
                     </div>
                 </div>
@@ -1358,16 +1356,16 @@ document.addEventListener('alpine:init', () => {
                             <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-600 dark:text-amber-400">mcp:products:read</span>
                         </div>
                         <p class="text-xs text-neutral-700 dark:text-neutral-300 mt-1.5 leading-relaxed">
-                            Memeriksa jumlah stok produk tertentu atau mendeteksi barang kritis yang stoknya di bawah batas reorder point.
+                            {{ __('mcp.tool_4_desc') }}
                         </p>
                     </div>
                     <div class="pt-2 border-t border-neutral-200/60 dark:border-neutral-800 flex items-center justify-between gap-2">
-                        <span class="text-[11px] text-neutral-500 truncate italic">"Cek barang apa saja yang stoknya kritis atau habis"</span>
+                        <span class="text-[11px] text-neutral-500 truncate italic">"{{ __('mcp.tool_4_prompt') }}"</span>
                         <button
                             type="button"
-                            @click="copyText('Cek barang apa saja yang stoknya kritis atau hampir habis di toko', 'Prompt tersalin!')"
+                            @click="copyText('{{ addslashes(__('mcp.tool_4_prompt')) }}', '{{ addslashes(__('mcp.toast_prompt_copied')) }}')"
                             class="px-2.5 py-1 rounded-[8px] bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-[11px] font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 transition-colors shrink-0">
-                            Salin
+                            {{ __('mcp.btn_copy_short') }}
                         </button>
                     </div>
                 </div>
@@ -1380,16 +1378,16 @@ document.addEventListener('alpine:init', () => {
                             <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-rose-500/10 text-rose-600 dark:text-rose-400">mcp:social:manage</span>
                         </div>
                         <p class="text-xs text-neutral-700 dark:text-neutral-300 mt-1.5 leading-relaxed">
-                            Menjadwalkan penerbitan materi promosi ke Instagram, TikTok, Facebook Page, atau X/Twitter.
+                            {{ __('mcp.tool_5_desc') }}
                         </p>
                     </div>
                     <div class="pt-2 border-t border-neutral-200/60 dark:border-neutral-800 flex items-center justify-between gap-2">
-                        <span class="text-[11px] text-neutral-500 truncate italic">"Jadwalkan postingan promo kopi ke Instagram besok jam 10 pagi"</span>
+                        <span class="text-[11px] text-neutral-500 truncate italic">"{{ __('mcp.tool_5_prompt') }}"</span>
                         <button
                             type="button"
-                            @click="copyText('Jadwalkan postingan promo kopi Beli 1 Gratis 1 ke Instagram besok jam 10 pagi', 'Prompt tersalin!')"
+                            @click="copyText('{{ addslashes(__('mcp.tool_5_prompt')) }}', '{{ addslashes(__('mcp.toast_prompt_copied')) }}')"
                             class="px-2.5 py-1 rounded-[8px] bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-[11px] font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 transition-colors shrink-0">
-                            Salin
+                            {{ __('mcp.btn_copy_short') }}
                         </button>
                     </div>
                 </div>
@@ -1402,16 +1400,16 @@ document.addEventListener('alpine:init', () => {
                             <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400">mcp:reports:read</span>
                         </div>
                         <p class="text-xs text-neutral-700 dark:text-neutral-300 mt-1.5 leading-relaxed">
-                            Menghitung ringkasan laba rugi bisnis: total omzet, HPP, laba kotor, beban operasional, dan margin laba bersih.
+                            {{ __('mcp.tool_6_desc') }}
                         </p>
                     </div>
                     <div class="pt-2 border-t border-neutral-200/60 dark:border-neutral-800 flex items-center justify-between gap-2">
-                        <span class="text-[11px] text-neutral-500 truncate italic">"Hitung ringkasan laba rugi bisnis bulan berjalan"</span>
+                        <span class="text-[11px] text-neutral-500 truncate italic">"{{ __('mcp.tool_6_prompt') }}"</span>
                         <button
                             type="button"
-                            @click="copyText('Hitung ringkasan laba rugi bisnis untuk bulan berjalan', 'Prompt tersalin!')"
+                            @click="copyText('{{ addslashes(__('mcp.tool_6_prompt')) }}', '{{ addslashes(__('mcp.toast_prompt_copied')) }}')"
                             class="px-2.5 py-1 rounded-[8px] bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-[11px] font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 transition-colors shrink-0">
-                            Salin
+                            {{ __('mcp.btn_copy_short') }}
                         </button>
                     </div>
                 </div>
@@ -1424,16 +1422,16 @@ document.addEventListener('alpine:init', () => {
                             <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-teal-500/10 text-teal-600 dark:text-teal-400">mcp:reports:read</span>
                         </div>
                         <p class="text-xs text-neutral-700 dark:text-neutral-300 mt-1.5 leading-relaxed">
-                            Memproyeksikan tren penjualan masa depan dan estimasi omzet berdasarkan data historis transaksi.
+                            {{ __('mcp.tool_7_desc') }}
                         </p>
                     </div>
                     <div class="pt-2 border-t border-neutral-200/60 dark:border-neutral-800 flex items-center justify-between gap-2">
-                        <span class="text-[11px] text-neutral-500 truncate italic">"Berapa estimasi proyeksi omzet 7 hari ke depan?"</span>
+                        <span class="text-[11px] text-neutral-500 truncate italic">"{{ __('mcp.tool_7_prompt') }}"</span>
                         <button
                             type="button"
-                            @click="copyText('Berapa estimasi proyeksi omzet penjualan untuk 7 hari ke depan?', 'Prompt tersalin!')"
+                            @click="copyText('{{ addslashes(__('mcp.tool_7_prompt')) }}', '{{ addslashes(__('mcp.toast_prompt_copied')) }}')"
                             class="px-2.5 py-1 rounded-[8px] bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-[11px] font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 transition-colors shrink-0">
-                            Salin
+                            {{ __('mcp.btn_copy_short') }}
                         </button>
                     </div>
                 </div>
@@ -1446,16 +1444,16 @@ document.addEventListener('alpine:init', () => {
                             <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-sky-500/10 text-sky-600 dark:text-sky-400">mcp:crm:read</span>
                         </div>
                         <p class="text-xs text-neutral-700 dark:text-neutral-300 mt-1.5 leading-relaxed">
-                            Mencari profil pelanggan setia, nomor telepon, tier keanggotaan, dan riwayat belanja.
+                            {{ __('mcp.tool_8_desc') }}
                         </p>
                     </div>
                     <div class="pt-2 border-t border-neutral-200/60 dark:border-neutral-800 flex items-center justify-between gap-2">
-                        <span class="text-[11px] text-neutral-500 truncate italic">"Cari data pelanggan dengan nomor HP 081234567890"</span>
+                        <span class="text-[11px] text-neutral-500 truncate italic">"{{ __('mcp.tool_8_prompt') }}"</span>
                         <button
                             type="button"
-                            @click="copyText('Cari data pelanggan dengan nomor HP 081234567890', 'Prompt tersalin!')"
+                            @click="copyText('{{ addslashes(__('mcp.tool_8_prompt')) }}', '{{ addslashes(__('mcp.toast_prompt_copied')) }}')"
                             class="px-2.5 py-1 rounded-[8px] bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-[11px] font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 transition-colors shrink-0">
-                            Salin
+                            {{ __('mcp.btn_copy_short') }}
                         </button>
                     </div>
                 </div>
@@ -1468,16 +1466,16 @@ document.addEventListener('alpine:init', () => {
                             <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">mcp:whatsapp:send</span>
                         </div>
                         <p class="text-xs text-neutral-700 dark:text-neutral-300 mt-1.5 leading-relaxed">
-                            Mengirimkan pesan notifikasi resmi via WhatsApp Cloud API Meta kepada nomor telepon tujuan.
+                            {{ __('mcp.tool_9_desc') }}
                         </p>
                     </div>
                     <div class="pt-2 border-t border-neutral-200/60 dark:border-neutral-800 flex items-center justify-between gap-2">
-                        <span class="text-[11px] text-neutral-500 truncate italic">"Kirim WA ke 081234567890 bahwa barang sudah siap"</span>
+                        <span class="text-[11px] text-neutral-500 truncate italic">"{{ __('mcp.tool_9_prompt') }}"</span>
                         <button
                             type="button"
-                            @click="copyText('Kirim pesan WhatsApp ke 081234567890 bahwa pesanan sudah selesai dan siap diambil', 'Prompt tersalin!')"
+                            @click="copyText('{{ addslashes(__('mcp.tool_9_prompt')) }}', '{{ addslashes(__('mcp.toast_prompt_copied')) }}')"
                             class="px-2.5 py-1 rounded-[8px] bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-[11px] font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 transition-colors shrink-0">
-                            Salin
+                            {{ __('mcp.btn_copy_short') }}
                         </button>
                     </div>
                 </div>
@@ -1490,16 +1488,16 @@ document.addEventListener('alpine:init', () => {
                             <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-pink-500/10 text-pink-600 dark:text-pink-400">mcp:social:read</span>
                         </div>
                         <p class="text-xs text-neutral-700 dark:text-neutral-300 mt-1.5 leading-relaxed">
-                            Menganalisis performa interaksi media sosial dan ringkasan efektivitas materi pemasaran bisnis.
+                            {{ __('mcp.tool_10_desc') }}
                         </p>
                     </div>
                     <div class="pt-2 border-t border-neutral-200/60 dark:border-neutral-800 flex items-center justify-between gap-2">
-                        <span class="text-[11px] text-neutral-500 truncate italic">"Bagaimana statistik performa postingan medsos toko kita?"</span>
+                        <span class="text-[11px] text-neutral-500 truncate italic">"{{ __('mcp.tool_10_prompt') }}"</span>
                         <button
                             type="button"
-                            @click="copyText('Bagaimana statistik performa postingan media sosial toko kita minggu ini?', 'Prompt tersalin!')"
+                            @click="copyText('{{ addslashes(__('mcp.tool_10_prompt')) }}', '{{ addslashes(__('mcp.toast_prompt_copied')) }}')"
                             class="px-2.5 py-1 rounded-[8px] bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-[11px] font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 transition-colors shrink-0">
-                            Salin
+                            {{ __('mcp.btn_copy_short') }}
                         </button>
                     </div>
                 </div>
@@ -1512,16 +1510,16 @@ document.addEventListener('alpine:init', () => {
                             <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400">mcp:products:manage</span>
                         </div>
                         <p class="text-xs text-neutral-700 dark:text-neutral-300 mt-1.5 leading-relaxed">
-                            Kelola modifier grup & opsi tambahan (topping, varian rasa, tingkat kepedasan, size), perubahan harga jual, serta tautkan ke produk.
+                            {{ __('mcp.tool_11_desc') }}
                         </p>
                     </div>
                     <div class="pt-2 border-t border-neutral-200/60 dark:border-neutral-800 flex items-center justify-between gap-2">
-                        <span class="text-[11px] text-neutral-500 truncate italic">"Buat grup modifier 'Topping' (Boba Rp 3.000, Jelly Rp 2.000) dan tautkan ke Kopi Susu"</span>
+                        <span class="text-[11px] text-neutral-500 truncate italic">"{{ __('mcp.tool_11_prompt') }}"</span>
                         <button
                             type="button"
-                            @click="copyText('Buat modifier group bernama Topping dengan opsi Boba (+3000) dan Jelly (+2000), lalu hubungkan ke produk Kopi Susu', 'Prompt tersalin!')"
+                            @click="copyText('{{ addslashes(__('mcp.tool_11_prompt')) }}', '{{ addslashes(__('mcp.toast_prompt_copied')) }}')"
                             class="px-2.5 py-1 rounded-[8px] bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-[11px] font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 transition-colors shrink-0">
-                            Salin
+                            {{ __('mcp.btn_copy_short') }}
                         </button>
                     </div>
                 </div>
@@ -1534,16 +1532,16 @@ document.addEventListener('alpine:init', () => {
                             <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-600 dark:text-amber-400">mcp:inventory:manage</span>
                         </div>
                         <p class="text-xs text-neutral-700 dark:text-neutral-300 mt-1.5 leading-relaxed">
-                            Master data bahan baku mentah: catat bahan baru, tentukan satuan standar (kg, gr, ml, pcs), kelola harga beli acuan, dan update histori biaya modal.
+                            {{ __('mcp.tool_12_desc') }}
                         </p>
                     </div>
                     <div class="pt-2 border-t border-neutral-200/60 dark:border-neutral-800 flex items-center justify-between gap-2">
-                        <span class="text-[11px] text-neutral-500 truncate italic">"Daftarkan bahan baku 'Biji Kopi Arabika' satuan kg dengan harga Rp 120.000"</span>
+                        <span class="text-[11px] text-neutral-500 truncate italic">"{{ __('mcp.tool_12_prompt') }}"</span>
                         <button
                             type="button"
-                            @click="copyText('Daftarkan bahan baku baru Biji Kopi Arabika dengan satuan kg dan harga beli standar Rp 120.000', 'Prompt tersalin!')"
+                            @click="copyText('{{ addslashes(__('mcp.tool_12_prompt')) }}', '{{ addslashes(__('mcp.toast_prompt_copied')) }}')"
                             class="px-2.5 py-1 rounded-[8px] bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-[11px] font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 transition-colors shrink-0">
-                            Salin
+                            {{ __('mcp.btn_copy_short') }}
                         </button>
                     </div>
                 </div>
@@ -1556,16 +1554,16 @@ document.addEventListener('alpine:init', () => {
                             <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-600 dark:text-indigo-400">mcp:products:manage</span>
                         </div>
                         <p class="text-xs text-neutral-700 dark:text-neutral-300 mt-1.5 leading-relaxed">
-                            Kelola Resep & Bill of Materials (BOM): formulasikan takaran bahan baku per porsi menu, hitung total HPP kalkulasi, dan perbarui modal produk otomatis.
+                            {{ __('mcp.tool_13_desc') }}
                         </p>
                     </div>
                     <div class="pt-2 border-t border-neutral-200/60 dark:border-neutral-800 flex items-center justify-between gap-2">
-                        <span class="text-[11px] text-neutral-500 truncate italic">"Atur resep Latte: 18g Biji Kopi dan 200ml Susu UHT, lalu update HPP produk"</span>
+                        <span class="text-[11px] text-neutral-500 truncate italic">"{{ __('mcp.tool_13_prompt') }}"</span>
                         <button
                             type="button"
-                            @click="copyText('Atur resep untuk produk Latte: 18 gram Biji Kopi dan 200 ml Susu UHT, dan perbarui harga modal base_cost produk otomatis', 'Prompt tersalin!')"
+                            @click="copyText('{{ addslashes(__('mcp.tool_13_prompt')) }}', '{{ addslashes(__('mcp.toast_prompt_copied')) }}')"
                             class="px-2.5 py-1 rounded-[8px] bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-[11px] font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 transition-colors shrink-0">
-                            Salin
+                            {{ __('mcp.btn_copy_short') }}
                         </button>
                     </div>
                 </div>
@@ -1578,16 +1576,16 @@ document.addEventListener('alpine:init', () => {
                             <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-600 dark:text-cyan-400">mcp:inventory:manage</span>
                         </div>
                         <p class="text-xs text-neutral-700 dark:text-neutral-300 mt-1.5 leading-relaxed">
-                            Stock Opname fisik & mutasi stok: sesuaikan selisih fisik barang (variance, rusak, expired) dan lakukan transfer stok antar lokasi gudang/outlet.
+                            {{ __('mcp.tool_14_desc') }}
                         </p>
                     </div>
                     <div class="pt-2 border-t border-neutral-200/60 dark:border-neutral-800 flex items-center justify-between gap-2">
-                        <span class="text-[11px] text-neutral-500 truncate italic">"Sesuaikan stok opname Gula Pasir di Gudang Utama berkurang 2 kg karena susut"</span>
+                        <span class="text-[11px] text-neutral-500 truncate italic">"{{ __('mcp.tool_14_prompt') }}"</span>
                         <button
                             type="button"
-                            @click="copyText('Catat penyesuaian stok opname: Gula Pasir di Gudang Utama ada selisih berkurang 2 kg dengan alasan opname_variance', 'Prompt tersalin!')"
+                            @click="copyText('{{ addslashes(__('mcp.tool_14_prompt')) }}', '{{ addslashes(__('mcp.toast_prompt_copied')) }}')"
                             class="px-2.5 py-1 rounded-[8px] bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-[11px] font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 transition-colors shrink-0">
-                            Salin
+                            {{ __('mcp.btn_copy_short') }}
                         </button>
                     </div>
                 </div>
@@ -1600,16 +1598,16 @@ document.addEventListener('alpine:init', () => {
                             <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-sky-500/10 text-sky-600 dark:text-sky-400">mcp:purchasing:manage</span>
                         </div>
                         <p class="text-xs text-neutral-700 dark:text-neutral-300 mt-1.5 leading-relaxed">
-                            Kelola relasi vendor/pemasok: cari kontak supplier terdaftar, nomor WhatsApp & email sales, serta daftarkan supplier rekanan baru.
+                            {{ __('mcp.tool_15_desc') }}
                         </p>
                     </div>
                     <div class="pt-2 border-t border-neutral-200/60 dark:border-neutral-800 flex items-center justify-between gap-2">
-                        <span class="text-[11px] text-neutral-500 truncate italic">"Tampilkan daftar supplier kopi aktif atau daftarkan CV Sumber Makmur"</span>
+                        <span class="text-[11px] text-neutral-500 truncate italic">"{{ __('mcp.tool_15_prompt') }}"</span>
                         <button
                             type="button"
-                            @click="copyText('Tampilkan daftar supplier aktif di sistem COOCA', 'Prompt tersalin!')"
+                            @click="copyText('{{ addslashes(__('mcp.tool_15_prompt')) }}', '{{ addslashes(__('mcp.toast_prompt_copied')) }}')"
                             class="px-2.5 py-1 rounded-[8px] bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-[11px] font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 transition-colors shrink-0">
-                            Salin
+                            {{ __('mcp.btn_copy_short') }}
                         </button>
                     </div>
                 </div>
@@ -1622,16 +1620,16 @@ document.addEventListener('alpine:init', () => {
                             <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400">mcp:purchasing:manage</span>
                         </div>
                         <p class="text-xs text-neutral-700 dark:text-neutral-300 mt-1.5 leading-relaxed">
-                            Kelola Purchase Order (PO) & Penerimaan: buat PO pengadaan ke vendor, konfirmasi pesanan, dan catat penerimaan fisik barang (Goods Receipt) ke gudang.
+                            {{ __('mcp.tool_16_desc') }}
                         </p>
                     </div>
                     <div class="pt-2 border-t border-neutral-200/60 dark:border-neutral-800 flex items-center justify-between gap-2">
-                        <span class="text-[11px] text-neutral-500 truncate italic">"Buat Purchase Order 50 kg Biji Kopi ke supplier dan terima barang ke Gudang"</span>
+                        <span class="text-[11px] text-neutral-500 truncate italic">"{{ __('mcp.tool_16_prompt') }}"</span>
                         <button
                             type="button"
-                            @click="copyText('Buat PO pembelian 50 kg Biji Kopi ke supplier rekanan dan catat penerimaan barang masuk ke gudang', 'Prompt tersalin!')"
+                            @click="copyText('{{ addslashes(__('mcp.tool_16_prompt')) }}', '{{ addslashes(__('mcp.toast_prompt_copied')) }}')"
                             class="px-2.5 py-1 rounded-[8px] bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-[11px] font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 transition-colors shrink-0">
-                            Salin
+                            {{ __('mcp.btn_copy_short') }}
                         </button>
                     </div>
                 </div>
@@ -1644,16 +1642,16 @@ document.addEventListener('alpine:init', () => {
                             <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-violet-500/10 text-violet-600 dark:text-violet-400">mcp:sales:manage</span>
                         </div>
                         <p class="text-xs text-neutral-700 dark:text-neutral-300 mt-1.5 leading-relaxed">
-                            Kelola Surat Penawaran Harga (Quotation) B2B: susun penawaran harga dengan item & diskon, pantau masa berlaku, dan 1-klik konversi ke Sales Order resmi.
+                            {{ __('mcp.tool_17_desc') }}
                         </p>
                     </div>
                     <div class="pt-2 border-t border-neutral-200/60 dark:border-neutral-800 flex items-center justify-between gap-2">
-                        <span class="text-[11px] text-neutral-500 truncate italic">"Buat penawaran harga 100 cup Kopi Susu untuk PT Mahakarya dan konversi ke Sales Order"</span>
+                        <span class="text-[11px] text-neutral-500 truncate italic">"{{ __('mcp.tool_17_prompt') }}"</span>
                         <button
                             type="button"
-                            @click="copyText('Buat surat penawaran harga 100 cup Kopi Susu seharga Rp 18.000 per cup dengan diskon Rp 100.000 untuk klien', 'Prompt tersalin!')"
+                            @click="copyText('{{ addslashes(__('mcp.tool_17_prompt')) }}', '{{ addslashes(__('mcp.toast_prompt_copied')) }}')"
                             class="px-2.5 py-1 rounded-[8px] bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-[11px] font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 transition-colors shrink-0">
-                            Salin
+                            {{ __('mcp.btn_copy_short') }}
                         </button>
                     </div>
                 </div>
@@ -1666,16 +1664,16 @@ document.addEventListener('alpine:init', () => {
                             <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">mcp:sales:manage</span>
                         </div>
                         <p class="text-xs text-neutral-700 dark:text-neutral-300 mt-1.5 leading-relaxed">
-                            Kelola Pesanan Penjualan (Sales Order / SO): buat order masuk, update status proses/pengiriman, dan 1-klik terbitkan Faktur Tagihan resmi (Invoice).
+                            {{ __('mcp.tool_18_desc') }}
                         </p>
                     </div>
                     <div class="pt-2 border-t border-neutral-200/60 dark:border-neutral-800 flex items-center justify-between gap-2">
-                        <span class="text-[11px] text-neutral-500 truncate italic">"Terbitkan faktur tagihan resmi (Invoice) dari Sales Order SO-202610-0001"</span>
+                        <span class="text-[11px] text-neutral-500 truncate italic">"{{ __('mcp.tool_18_prompt') }}"</span>
                         <button
                             type="button"
-                            @click="copyText('Tampilkan daftar Sales Order berstatus confirmed dan terbitkan invoice dari pesanan tersebut', 'Prompt tersalin!')"
+                            @click="copyText('{{ addslashes(__('mcp.tool_18_prompt')) }}', '{{ addslashes(__('mcp.toast_prompt_copied')) }}')"
                             class="px-2.5 py-1 rounded-[8px] bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-[11px] font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 transition-colors shrink-0">
-                            Salin
+                            {{ __('mcp.btn_copy_short') }}
                         </button>
                     </div>
                 </div>
@@ -1688,16 +1686,16 @@ document.addEventListener('alpine:init', () => {
                             <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-teal-500/10 text-teal-600 dark:text-teal-400">mcp:finance:manage</span>
                         </div>
                         <p class="text-xs text-neutral-700 dark:text-neutral-300 mt-1.5 leading-relaxed">
-                            Kelola Faktur Tagihan (Commercial Invoice): buat faktur baru, rilis & potong stok fisik, serta catat pembayaran masuk dengan pencatatan kas & jurnal otomatis.
+                            {{ __('mcp.tool_19_desc') }}
                         </p>
                     </div>
                     <div class="pt-2 border-t border-neutral-200/60 dark:border-neutral-800 flex items-center justify-between gap-2">
-                        <span class="text-[11px] text-neutral-500 truncate italic">"Catat pembayaran masuk transfer bank Rp 1.500.000 untuk tagihan INV-202610-0001"</span>
+                        <span class="text-[11px] text-neutral-500 truncate italic">"{{ __('mcp.tool_19_prompt') }}"</span>
                         <button
                             type="button"
-                            @click="copyText('Catat pembayaran transfer bank sebesar Rp 1.500.000 untuk melunasi tagihan INV-202610-0001', 'Prompt tersalin!')"
+                            @click="copyText('{{ addslashes(__('mcp.tool_19_prompt')) }}', '{{ addslashes(__('mcp.toast_prompt_copied')) }}')"
                             class="px-2.5 py-1 rounded-[8px] bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-[11px] font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 transition-colors shrink-0">
-                            Salin
+                            {{ __('mcp.btn_copy_short') }}
                         </button>
                     </div>
                 </div>
@@ -1710,16 +1708,16 @@ document.addEventListener('alpine:init', () => {
                             <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400">mcp:services:manage</span>
                         </div>
                         <p class="text-xs text-neutral-700 dark:text-neutral-300 mt-1.5 leading-relaxed">
-                            Kelola Jasa & Layanan (<a href="{{ route('services.index') }}" target="_blank" class="text-blue-600 dark:text-blue-400 underline decoration-dotted">/services</a>): lihat katalog jasa, daftarkan layanan baru beserta tarif & modal HPP, update harga, serta arsipkan jasa dengan guard proteksi finansial.
+                            {!! __('mcp.tool_20_desc', ['link' => route('services.index')]) !!}
                         </p>
                     </div>
                     <div class="pt-2 border-t border-neutral-200/60 dark:border-neutral-800 flex items-center justify-between gap-2">
-                        <span class="text-[11px] text-neutral-500 truncate italic">"Daftarkan jasa Servis AC Cuci Steam tarif Rp 75.000 modal Rp 15.000"</span>
+                        <span class="text-[11px] text-neutral-500 truncate italic">"{{ __('mcp.tool_20_prompt') }}"</span>
                         <button
                             type="button"
-                            @click="copyText('Daftarkan jasa baru Servis AC Cuci Steam dengan tarif Rp 75.000 dan modal operasional Rp 15.000 kategori Elektronik satuan Jasa', 'Prompt tersalin!')"
+                            @click="copyText('{{ addslashes(__('mcp.tool_20_prompt')) }}', '{{ addslashes(__('mcp.toast_prompt_copied')) }}')"
                             class="px-2.5 py-1 rounded-[8px] bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-[11px] font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 transition-colors shrink-0">
-                            Salin
+                            {{ __('mcp.btn_copy_short') }}
                         </button>
                     </div>
                 </div>
@@ -1739,60 +1737,60 @@ document.addEventListener('alpine:init', () => {
                 <div class="p-4 rounded-[16px] bg-neutral-50/70 dark:bg-neutral-900/50 border border-neutral-200/80 dark:border-neutral-800 space-y-1.5">
                     <h5 class="font-semibold text-neutral-900 dark:text-white flex items-center gap-1.5">
                         <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
-                        <span>Server MCP Menolak Akses di ChatGPT?</span>
+                        <span>{{ __('mcp.faq_chatgpt_unauth_q') }}</span>
                     </h5>
                     <p class="text-[11px] text-neutral-500 leading-relaxed">
-                        Di form ChatGPT Apps SDK, pilih <strong>"Tanpa autentikasi"</strong> dan pastikan URL koneksi telah menyertakan <code class="font-mono text-[10px]">?token=cooca_mcp_live_...</code>. Jangan pilih OAuth jika belum ada OIDC server.
+                        {!! __('mcp.faq_chatgpt_unauth_a') !!}
                     </p>
                 </div>
 
                 <div class="p-4 rounded-[16px] bg-neutral-50/70 dark:bg-neutral-900/50 border border-neutral-200/80 dark:border-neutral-800 space-y-1.5">
                     <h5 class="font-semibold text-neutral-900 dark:text-white flex items-center gap-1.5">
                         <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
-                        <span>Bagaimana Akses di HP (iOS/Android)?</span>
+                        <span>{{ __('mcp.faq_mobile_access_q') }}</span>
                     </h5>
                     <p class="text-[11px] text-neutral-500 leading-relaxed">
-                        Cukup hubungkan sekali via Claude.ai Web atau ChatGPT Web. Aplikasi seluler di iPhone & Android Anda akan otomatis tersinkronisasi tanpa perlu konfigurasi ulang.
+                        {{ __('mcp.faq_mobile_access_a') }}
                     </p>
                 </div>
 
                 <div class="p-4 rounded-[16px] bg-neutral-50/70 dark:bg-neutral-900/50 border border-neutral-200/80 dark:border-neutral-800 space-y-1.5">
                     <h5 class="font-semibold text-neutral-900 dark:text-white flex items-center gap-1.5">
                         <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
-                        <span>Uji Coba di Komputer Lokal (Laragon)?</span>
+                        <span>{{ __('mcp.faq_local_testing_q') }}</span>
                     </h5>
                     <p class="text-[11px] text-neutral-500 leading-relaxed">
-                        Gunakan <strong>Cloudflare Tunnel</strong> (<code class="font-mono text-[10px]">cloudflared tunnel --url http://127.0.0.1:80</code>) untuk membuat URL HTTPS instan bebas hambatan halaman peringatan Ngrok.
+                        {!! __('mcp.faq_local_testing_a') !!}
                     </p>
                 </div>
 
                 <div class="p-4 rounded-[16px] bg-neutral-50/70 dark:bg-neutral-900/50 border border-neutral-200/80 dark:border-neutral-800 space-y-1.5">
                     <h5 class="font-semibold text-neutral-900 dark:text-white flex items-center gap-1.5">
                         <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
-                        <span>Error -32000 (Unauthorized)?</span>
+                        <span>{{ __('mcp.faq_error_32000_q') }}</span>
                     </h5>
                     <p class="text-[11px] text-neutral-500 leading-relaxed">
-                        Token yang dimasukkan salah, telah dicabut, atau kedaluwarsa. Terbitkan token baru di bagian atas halaman ini dan perbarui konfigurasi atau URL koneksi.
+                        {{ __('mcp.faq_error_32000_a') }}
                     </p>
                 </div>
 
                 <div class="p-4 rounded-[16px] bg-neutral-50/70 dark:bg-neutral-900/50 border border-neutral-200/80 dark:border-neutral-800 space-y-1.5">
                     <h5 class="font-semibold text-neutral-900 dark:text-white flex items-center gap-1.5">
                         <span class="w-1.5 h-1.5 rounded-full bg-purple-500"></span>
-                        <span>Error -32001 (Lacks Ability)?</span>
+                        <span>{{ __('mcp.faq_error_32001_q') }}</span>
                     </h5>
                     <p class="text-[11px] text-neutral-500 leading-relaxed">
-                        Token Anda tidak memiliki izin untuk tool tersebut. Buat token baru dengan mencentang izin spesifik atau pilih <strong>Semua Akses (*)</strong>.
+                        {!! __('mcp.faq_error_32001_a') !!}
                     </p>
                 </div>
 
                 <div class="p-4 rounded-[16px] bg-neutral-50/70 dark:bg-neutral-900/50 border border-neutral-200/80 dark:border-neutral-800 space-y-1.5">
                     <h5 class="font-semibold text-neutral-900 dark:text-white flex items-center gap-1.5">
                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                        <span>Apakah Data Toko Aman?</span>
+                        <span>{{ __('mcp.faq_data_security_q') }}</span>
                     </h5>
                     <p class="text-[11px] text-neutral-500 leading-relaxed">
-                        Sangat aman. Setiap token terenkripsi SHA-256 dan terisolasi secara ketat pada tenant bisnis Anda. AI tidak dapat mengakses data tenant lain.
+                        {{ __('mcp.faq_data_security_a') }}
                     </p>
                 </div>
             </div>
@@ -1810,7 +1808,7 @@ document.addEventListener('alpine:init', () => {
                     </p>
                 </div>
                 <span class="text-xs text-neutral-500 dark:text-neutral-400">
-                    Menampilkan 15 aktivitas terakhir
+                    {{ __('mcp.lbl_showing_last_15_logs') }}
                 </span>
             </div>
 
@@ -1920,7 +1918,7 @@ document.addEventListener('alpine:init', () => {
                         type="button"
                         @click="openCreateModal = false"
                         class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800 flex items-center justify-center transition-colors cursor-pointer"
-                        aria-label="Tutup modal buat token">
+                        aria-label="{{ __('mcp.aria_close_modal') }}">
                         <i data-lucide="x" class="w-5 h-5"></i>
                     </button>
                 </div>
@@ -1948,7 +1946,7 @@ document.addEventListener('alpine:init', () => {
                         <select
                             name="provider_hint"
                             class="w-full min-h-[44px] text-[16px] sm:text-[15px] px-3 py-2.5 rounded-[12px] bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-white focus:outline-none">
-                            <option value="all">Semua Provider (Universal)</option>
+                            <option value="all">{{ __('mcp.lbl_all_providers_universal') }}</option>
                             <option value="claude">Claude Desktop</option>
                             <option value="cursor">Cursor / Antigravity</option>
                             <option value="openai">ChatGPT / OpenAI</option>
@@ -2052,12 +2050,12 @@ document.addEventListener('alpine:init', () => {
                         type="button"
                         @click="openCreateModal = false"
                         class="px-4 py-2.5 min-h-[44px] rounded-[12px] text-xs font-medium text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">
-                        Batal
+                        {{ __('mcp.btn_cancel') }}
                     </button>
                     <button
                         type="submit"
                         class="px-5 py-2.5 min-h-[44px] rounded-[12px] bg-neutral-900 hover:bg-black dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-100 text-white text-xs font-semibold shadow-sm transition-all">
-                        Terbitkan Kunci Akses
+                        {{ __('mcp.btn_submit_create_token') }}
                     </button>
                 </div>
             </form>

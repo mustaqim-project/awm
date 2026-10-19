@@ -1,9 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
 return [
-    // Page Title & Header
     'page_title' => 'Pengaturan Bisnis & Template',
     'header_title' => 'Pengaturan Bisnis & Template Industri',
     'header_subtitle' => 'Konfigurasi profil usaha, logo resmi, instruksi transfer faktur, strategi pembulatan HPP, dan preset industri.',
@@ -12,23 +9,17 @@ return [
     'breadcrumb_settings' => 'Pengaturan',
     'breadcrumb_profile' => 'Profil & Template',
     'overline' => 'Pengaturan Bisnis & Template',
-
-    // Navigation Tabs
     'tab_general' => 'Profil & Pembulatan',
     'tab_operations' => 'Operasional & Jam Kerja',
     'tab_wa_receipt' => 'Template WA Struk',
     'tab_templates' => 'Preset Industri',
     'tab_modules' => 'Kelola Modul',
-
-    // Governance & Security Fast Links
     'link_audit_logs_title' => 'Jejak Audit & Anti-Fraud',
     'link_audit_logs_desc' => 'Log forensik mutasi & diff data',
     'link_approval_rules_title' => 'Aturan Persetujuan (MAR)',
     'link_approval_rules_desc' => 'Matrix limit approval dokumen',
     'link_roles_title' => 'Hak Akses & Peran',
     'link_roles_desc' => 'Izin otorisasi staf & kasir',
-
-    // Section 1: Company Profile & Logo
     'company_identity' => 'Identitas Usaha & Kop Surat',
     'company_identity_desc' => 'Informasi ini tampil pada kop surat resmi faktur, struk kasir, dan penagihan ke pelanggan.',
     'official_letterhead' => 'Kop Surat Resmi',
@@ -42,8 +33,6 @@ return [
     'phone' => 'Nomor Telepon / WhatsApp Resmi',
     'email' => 'Email Operasional & Penagihan',
     'address' => 'Alamat Kantor / Workshop (Kop Surat)',
-
-    // Aliases for Profile
     'section_identity_title' => 'Identitas Usaha & Kop Surat',
     'section_identity_subtitle' => 'Informasi ini tampil pada kop surat resmi faktur, struk kasir, dan penagihan ke pelanggan.',
     'badge_official_header' => 'Kop Surat Resmi',
@@ -58,8 +47,6 @@ return [
     'biz_email_label' => 'Email Operasional & Penagihan',
     'biz_address_label' => 'Alamat Kantor / Workshop (Kop Surat)',
     'biz_address_placeholder' => 'Jl. Sudirman No. 45, Gedung Cyber Lt. 5, Jakarta...',
-
-    // Section 2: POS & Tax Configuration
     'pos_config' => 'Konfigurasi Kasir (Point of Sale)',
     'pos_config_desc' => 'Atur pemungutan pajak penjualan serta tampilan kartu menu pada terminal kasir POS.',
     'sales_tax' => 'Pajak Penjualan (PPN / PB1)',
@@ -72,8 +59,6 @@ return [
     'pos_tax_desc' => 'Aktifkan pemungutan tarif pajak otomatis pada transaksi kasir POS',
     'pos_images_label' => 'Foto Produk pada Menu Kasir',
     'pos_images_desc' => 'Tampilkan visual foto/thumbnail produk pada kartu katalog POS',
-
-    // Section 3: Official Bank Account
     'bank_instructions' => 'Instruksi Transfer Faktur (Rekening Bank)',
     'bank_instructions_desc' => 'Rincian rekening ini otomatis tercetak pada bagian bawah Faktur Penjualan resmi untuk transfer pembayaran pelanggan.',
     'bank_name' => 'Nama Bank',
@@ -85,8 +70,6 @@ return [
     'bank_name_placeholder' => 'BCA / Mandiri / BNI / BRI',
     'bank_account_number_label' => 'Nomor Rekening',
     'bank_account_holder_label' => 'Atas Nama Pemilik Rekening',
-
-    // Section 4: Currency & Rounding Strategy
     'currency_rounding' => 'Mata Uang & Strategi Pembulatan Harga',
     'currency_rounding_desc' => 'Strategi pembulatan diterapkan pada HPP per unit final dan Harga Jual akhir produk. Kalkulasi internal tetap mempertahankan presisi desimal floating-point murni.',
     'currency_code' => 'Kode Mata Uang',
@@ -98,8 +81,6 @@ return [
     'currency_code_label' => 'Kode Mata Uang',
     'currency_symbol_label' => 'Simbol Mata Uang',
     'rounding_strategy_label' => 'Aturan Pembulatan Output Akhir',
-
-    // Section 5: POS Security & Supervisor PIN
     'pos_security' => 'Keamanan Kasir & PIN Otorisasi Supervisor',
     'pos_security_desc' => 'Kontrol otorisasi kasir untuk tindakan berisiko seperti pemberian diskon besar, pembatalan transaksi (void), dan retur produk (refund).',
     'pos_supervisor_pin' => 'PIN Supervisor Kasir (4–8 Digit)',
@@ -124,8 +105,6 @@ return [
     'max_discount_hint' => 'Diskon kasir melebihi persentase ini wajib otorisasi PIN. Kosongkan jika tanpa batas.',
     'require_pin_void_label' => 'Wajibkan PIN untuk Void (Pembatalan)',
     'require_pin_refund_label' => 'Wajibkan PIN untuk Retur (Refund)',
-
-    // Save Buttons
     'save_business_profile' => 'Simpan Profil & Pengaturan',
     'save_operations' => 'Simpan Jam Operasional & Zona Waktu',
     'save_wa_template' => 'Simpan Template WA',
@@ -135,8 +114,6 @@ return [
     'save_modules_settings' => 'Simpan Konfigurasi Modul',
     'reset_default_template' => 'Kembalikan ke Template Bawaan',
     'reset_wa_template' => 'Reset Template Default',
-
-    // Tab 2: Operations & Operating Hours
     'timezone_title' => 'Zona Waktu & Acuan Kalender Usaha',
     'timezone_desc' => 'Waktu standar untuk faktur penjualan, pelaporan harian kasir, dan otomasi sistem.',
     'base_timezone' => 'Zona Waktu Usaha Utama (Base Timezone)',
@@ -170,8 +147,6 @@ return [
     'change_schedule' => 'Ubah Jadwal',
     'view_details' => 'Lihat Detail',
     'no_branches_yet' => 'Belum ada cabang atau gudang terdaftar.',
-
-    // Tab 3: WA Receipt CMS & WABA Architecture
     'wa_receipt_title' => 'Kustomisasi Pesan WhatsApp Struk',
     'wa_receipt_desc' => 'Atur format pengiriman struk digital ke WhatsApp pelanggan dengan integrasi resmi Meta WhatsApp Business API (WABA) dan WhatsApp Web kasir.',
     'waba_engine_badge' => 'Meta WhatsApp Business API (WABA)',
@@ -217,11 +192,17 @@ return [
     'pos_module_disabled_title' => 'Modul Kasir POS Belum Diaktifkan',
     'pos_module_disabled_desc' => 'Konfigurasi struk WhatsApp digital ini khusus diperuntukkan bagi transaksi kasir POS retail atau resto. Aktifkan modul POS pada tab Kelola Modul jika bisnis Anda membutuhkan mesin kasir.',
     'open_modules_tab' => 'Buka Pengaturan Modul',
-    'default_wa_template' => "🧾 *STRUK PEMBELIAN*\n*{business_name}*\n\nHalo Kak *{customer_name}*! 🙏\nTerima kasih banyak telah berbelanja di *{business_name}*.\n\nBerikut tautan struk digital transaksi Anda: {receipt_link}\n\nSemoga hari Anda menyenangkan! ✨",
+    'default_wa_template' => '🧾 *STRUK PEMBELIAN*
+*{business_name}*
+
+Halo Kak *{customer_name}*! 🙏
+Terima kasih banyak telah berbelanja di *{business_name}*.
+
+Berikut tautan struk digital transaksi Anda: {receipt_link}
+
+Semoga hari Anda menyenangkan! ✨',
     'default_cashier_name' => 'Kasir',
     'default_footer_note' => 'Simpan struk ini sebagai bukti pembayaran sah.',
-
-    // Tab 4: Industry Templates
     'templates_title' => 'Preset Template Industri Siap Pakai',
     'templates_desc' => 'Terapkan struktur kategori dan komponen biaya default secara instan tanpa mengunci kebebasan kustomisasi mandiri Anda.',
     'apply_template_title' => 'Terapkan Template Industri?',
@@ -237,8 +218,6 @@ return [
     'apply' => 'Terapkan',
     'confirm_apply' => 'Terapkan Sekarang',
     'cancel' => 'Batal',
-
-    // Tab 5: Modules Management
     'manage_modules_title' => 'Kelola Modul & Penataan Menu Sidebar',
     'manage_modules_desc' => 'Sesuaikan kompleksitas antarmuka aplikasi dengan alur bisnis Anda. Modul yang dinonaktifkan akan disembunyikan otomatis dari menu sidebar dan hak akses staf, tanpa pernah menghapus data transaksi yang telah tersimpan.',
     'owner_control_title' => 'Kontrol Penuh Pemilik Usaha (Business Owner)',
@@ -251,8 +230,6 @@ return [
     'module_autosave_error' => 'Gagal Menyimpan',
     'module_autosave_notice' => 'Setiap sakelar modul langsung tersimpan dan berlaku otomatis pada alur operasional dan sidebar bisnis.',
     'module_save_failed_msg' => 'Gagal memperbarui status modul. Silakan coba beberapa saat lagi.',
-
-    // Module Clusters
     'cluster_pos_title' => '1. Operasional Kasir POS & Restoran',
     'cluster_pos_desc' => 'Modul kasir cepat, meja dine-in, dan layar dapur.',
     'cluster_b2b_title' => '2. Penjualan B2B, Penawaran & Invoice',
@@ -265,15 +242,11 @@ return [
     'cluster_storefront_desc' => 'Modul etalase storefront online, custom order, slot jadwal, dan kurir pengiriman.',
     'cluster_accounting_title' => '6. Keuangan & Akuntansi Lengkap Korporasi',
     'cluster_accounting_desc' => 'Modul bagan akun (COA), buku jurnal berpasangan, buku besar, neraca saldo, neraca posisi keuangan, dan rekonsiliasi bank.',
-
-    // Notifications & Flash Alerts
     'update_success_general' => 'Profil bisnis dan pengaturan berhasil diperbarui.',
     'update_success_operations' => 'Pengaturan zona waktu dan jam operasional usaha berhasil diperbarui.',
     'update_success_wa' => 'Template pesan WhatsApp struk berhasil diperbarui.',
     'update_success_modules' => 'Konfigurasi modul fitur bisnis Anda berhasil diperbarui.',
-    'apply_template_success' => "Template ':name' berhasil diterapkan (:count komponen biaya ditambahkan). Modul fitur telah disesuaikan otomatis.",
-
-    // Tab Branches & Management
+    'apply_template_success' => 'Template \':name\' berhasil diterapkan (:count komponen biaya ditambahkan). Modul fitur telah disesuaikan otomatis.',
     'tab_branches' => 'Cabang & Toko',
     'branch_management_title' => 'Manajemen Cabang & Toko',
     'branch_management_desc' => 'Kelola seluruh cabang, titik outlet kasir, lokasi presensi karyawan, dan titik pengiriman toko online. Satu cabang dapat memiliki beberapa gudang logistik.',
@@ -305,4 +278,105 @@ return [
     'branch_cannot_delete_has_warehouses' => 'Cabang ini masih menaungi :count gudang aktif. Pindahkan atau hapus gudang-gudang tersebut terlebih dahulu.',
     'no_branches_found' => 'Belum ada cabang terdaftar.',
     'no_branches_found_desc' => 'Klik tombol Tambah Cabang Baru untuk mulai menambahkan cabang atau toko fisik usaha Anda.',
+    'mcp_nav_title' => 'Integrasi AI (MCP)',
+    'mcp_nav_sub' => 'Claude, ChatGPT, Gemini, Cursor',
+    'opt_round_nearest' => 'ROUND - Pembulatan Standar Terdekat',
+    'opt_ceil_up' => 'CEIL - Pembulatan Ke Atas (Plafon)',
+    'opt_floor_down' => 'FLOOR - Pembulatan Ke Bawah',
+    'opt_auto_send_kds' => 'Otomatis Kirim ke KDS',
+    'badge_paperless' => 'Paperless',
+    'lbl_multi_warehouse_arch' => 'Arsitektur 1 Cabang Banyak Gudang:',
+    'btn_open_warehouse_hub' => 'Buka Hub Gudang',
+    'lbl_attendance_geofence' => 'Geofence Presensi:',
+    'lbl_active_timezone' => 'Zona Waktu:',
+    'ph_wa_manual_custom' => 'Tulis format teks WhatsApp manual di sini...',
+    'lbl_format_bold' => 'Tebal',
+    'lbl_format_italic' => 'Miring',
+    'lbl_format_strike' => 'Coret',
+    'lbl_status_online' => 'online',
+    'receipt_mock_hello' => 'Halo :name! Terima kasih telah berbelanja di :store.',
+    'receipt_mock_tx_details' => 'Rincian Transaksi:',
+    'receipt_mock_safe_notice' => 'Struk digital transaksi Anda tersimpan aman di sistem kami.',
+    'receipt_mock_subtotal' => 'Subtotal',
+    'receipt_mock_rounding' => 'Pembulatan',
+    'receipt_mock_total_paid' => 'TOTAL BAYAR',
+    'lbl_sidebar_impact' => 'Sidebar:',
+    'lbl_selected_template' => 'Template Terpilih:',
+    'lbl_industry_category' => 'Kategori Industri:',
+    'template_safety_notice' => 'Data transaksi, saldo stok, dan invoice Anda yang sudah ada tetap aman dan tidak akan terhapus atau tertimpa.',
+    'modal_branch_create_sub' => 'Atur identitas outlet, titik koordinat peta GPS cabang, dan wilayah kurir pengiriman.',
+    'modal_branch_edit_sub' => 'Perbarui informasi cabang, titik koordinat peta GPS, dan wilayah pengiriman toko.',
+    'alert_fix_errors' => 'Ada data yang perlu diperbaiki:',
+    'sec_branch_operational_data' => 'Data Operasional Toko',
+    'ph_branch_name_sample' => 'Contoh: Cabang Senopati',
+    'ph_branch_code_sample' => 'Misal: SNP-01',
+    'sec_village_subdistrict' => 'Tingkat Desa / Kelurahan',
+    'ph_postal_or_subdistrict' => 'Ketik Kode Pos (cth: 12190) atau Nama Kelurahan / Desa (cth: Senayan / Senopati)...',
+    'lbl_can_edit_manually' => 'Bisa diedit manual',
+    'ph_province_sample' => 'Contoh: DKI Jakarta',
+    'ph_city_sample' => 'Contoh: Kota Jakarta Selatan',
+    'ph_district_sample' => 'Contoh: Kebayoran Baru',
+    'ph_subdistrict_sample' => 'Contoh: Senayan',
+    'ph_postal_code_sample' => 'Contoh: 12190',
+    'ph_address_sample' => 'Contoh: Jl. Senopati No. 45, Ruko Blok B-2 (Sebelah Bank BCA)',
+    'lbl_radius_label' => 'Radius:',
+    'unit_meter' => 'Meter',
+    'geofence_attendance_tolerance_desc' => 'Radius toleransi absensi kehadiran karyawan via portal staf menggunakan GPS handphone.',
+    'lbl_set_primary_branch' => 'Jadikan Cabang Utama (Primary Branch)',
+    'desc_primary_branch' => 'Digunakan sebagai titik default penjemputan kurir online dan basis lokasi profil usaha.',
+    'lbl_online_shipping_origin' => 'Titik Kirim Kurir Online',
+    'desc_online_shipping_origin' => 'Pesanan toko online dapat dikirim dari cabang ini via Biteship.',
+    'lbl_allow_self_pickup' => 'Izinkan Ambil di Toko (Self Pickup)',
+    'desc_allow_self_pickup' => 'Pelanggan dapat memilih opsi ambil mandiri langsung di cabang ini.',
+    'err_gps_not_supported' => 'Fitur GPS tidak didukung oleh browser Anda.',
+    'err_gps_failed_prefix' => 'Gagal mengambil lokasi GPS: ',
+    'lbl_searching_gps' => 'Mencari GPS...',
+    'lbl_use_my_gps' => 'Gunakan GPS Saya',
+    'desc_gps_map_hint' => 'Anda dapat mengklik atau menggeser pin biru di atas peta untuk menyesuaikan titik tepat cabang toko Anda. Lingkaran biru menandakan zona toleransi absensi karyawan.',
+    'sec_branch_identity_contact' => 'Identitas Cabang & Kontak',
+    'sec_branch_location_title' => 'Titik Lokasi Cabang & Wilayah Indonesia',
+    'lbl_quick_search_area' => 'Cari Wilayah Cepat (Autocomplete Biteship & Administrasi Indonesia)',
+    'desc_autocomplete_hint' => 'Ketik minimal 3 karakter untuk mengisi otomatis seluruh kolom wilayah di bawah dan memindahkan pin peta GPS, atau isi langsung secara manual.',
+    'sec_administrative_area' => 'Data Wilayah Administratif Cabang',
+    'lbl_province' => 'Provinsi',
+    'lbl_city' => 'Kota / Kabupaten',
+    'lbl_district' => 'Kecamatan',
+    'lbl_village' => 'Kelurahan / Desa',
+    'lbl_postal_code' => 'Kode Pos',
+    'lbl_street_address_detail' => 'Detail Alamat Jalan / No. Ruko / Patokan Lokasi',
+    'lbl_gps_map_pin' => 'Titik Koordinat Peta GPS (Geser Pin ke Lokasi Cabang Toko)',
+    'sec_branch_operational_online' => 'Pengaturan Operasional & Toko Online',
+    'sec_fulfillment_attendance' => 'Fulfillment & Presensi',
+    'opt_round_50' => 'ROUND_50 - Kelipatan 50 Terdekat',
+    'opt_round_100' => 'ROUND_100 - Kelipatan 100 Terdekat (Standar Bisnis UMKM)',
+    'opt_round_500' => 'ROUND_500 - Kelipatan 500 Terdekat',
+    'opt_round_1000' => 'ROUND_1000 - Kelipatan 1.000 Terdekat',
+    'desc_auto_send_kds' => 'Order dari terminal langsung diteruskan ke Layar Dapur & Bar (KDS) tanpa perlu print struk kertas.',
+    'desc_multi_warehouse_arch' => 'Setiap cabang fisik dapat memiliki beberapa gudang persediaan (contoh: Gudang Depan Toko, Gudang Belakang, atau Gudang Dingin). Manajemen stok dan pergerakan barang dikelola di modul',
+    'lbl_warehouse_and_logistics' => 'Gudang & Logistik',
+    'lbl_format_text' => 'teks',
+    'lbl_format_mono' => 'Monospace',
+    'lbl_receipt_no' => 'No. Struk',
+    'lbl_receipt_time' => 'Waktu',
+    'receipt_mock_paid_badge' => 'LUNAS • QRIS Dinamis',
+    'lbl_branch_active_toggle' => 'Status Cabang Aktif (Dapat Melayani Kasir & Presensi Pegawai)',
+    'err_gps_permission_denied' => 'Izin akses lokasi ditolak.',
+    'btn_saving' => 'Menyimpan...',
+    'btn_save_branch' => 'Simpan Cabang',
+    'btn_save_changes' => 'Simpan Perubahan',
+    'delete_branch_warning_prefix' => 'Cabang',
+    'delete_branch_warning_suffix' => 'akan dihapus dari sistem. Jika memiliki riwayat transaksi/stok, cabang akan dinonaktifkan otomatis.',
+    'badge_pos_security' => 'Keamanan POS',
+    'lbl_connected_warehouses_count' => ':count Gudang Terhubung',
+    'waba_type_message' => 'Ketik pesan',
+    'receipt_mock_cashier_1' => 'Kasir 1',
+    'receipt_mock_qr_verification' => 'QR VERIFIKASI COOCA',
+    'receipt_mock_valid_proof' => 'Bukti Transaksi Sah & Terverifikasi',
+    'lbl_preset' => 'Preset',
+    'receipt_mock_fallback_store' => 'Toko Saya',
+    'receipt_mock_fallback_address' => 'Pusat Operasional Bisnis',
+    'receipt_mock_item_1' => '2x Kopi Kenangan Manis',
+    'receipt_mock_item_2' => '1x Croissant Butter Bakar',
+    'receipt_mock_item_3' => '1x Teh Botol Sosro Dingin',
+    'receipt_mock_tax' => 'PB1 / Pajak Resto (10%)',
 ];

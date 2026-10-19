@@ -1,7 +1,7 @@
 @extends('layouts.app', [
-    'title' => 'Riwayat Otorisasi Dokumen - Cooca',
-    'headerTitle' => 'Riwayat Otorisasi Dokumen',
-    'headerSubtitle' => 'Arsip audit trail persetujuan dan penolakan transaksi bisnis masa lalu.'
+    'title' => __('approvals.history_page_title'),
+    'headerTitle' => __('approvals.history_header_title'),
+    'headerSubtitle' => __('approvals.history_header_subtitle')
 ])
 
 @section('content')
@@ -15,10 +15,10 @@
             </div>
             <div>
                 <div class="text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D]">
-                    Arsip Audit Trail
+                    {{ __('approvals.badge_audit_archive') }}
                 </div>
                 <h1 class="text-xl font-bold text-black dark:text-white tracking-tight">
-                    Riwayat Persetujuan Dokumen
+                    {{ __('approvals.history_title') }}
                 </h1>
             </div>
         </div>
@@ -26,7 +26,7 @@
         <div class="flex items-center gap-2.5">
             <a href="{{ route('approvals.inbox') }}" class="min-h-[44px] px-4 rounded-[12px] text-xs font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.98] transition-all flex items-center gap-1.5">
                 <i data-lucide="inbox" class="w-4 h-4"></i>
-                <span>Kembali ke Kotak Masuk</span>
+                <span>{{ __('approvals.btn_back_inbox') }}</span>
             </a>
         </div>
     </header>
@@ -35,22 +35,22 @@
     <div class="flex items-center gap-2 overflow-x-auto pb-1 text-xs no-scrollbar">
         <a href="{{ route('approvals.history') }}"
             class="px-4 py-2.5 rounded-full font-semibold transition-all shrink-0 flex items-center gap-1.5 {{ empty($filterType) ? 'bg-[#007AFF] text-white shadow-sm' : 'bg-white dark:bg-[#1C1C1E] text-black/70 dark:text-white/70 border border-black/[0.06] dark:border-white/[0.08] hover:bg-black/5' }}">
-            <span>Semua Riwayat</span>
+            <span>{{ __('approvals.filter_all_history') }}</span>
         </a>
         <a href="{{ route('approvals.history', ['type' => 'purchase_order']) }}"
             class="px-4 py-2.5 rounded-full font-semibold transition-all shrink-0 flex items-center gap-1.5 {{ $filterType === 'purchase_order' ? 'bg-[#007AFF] text-white shadow-sm' : 'bg-white dark:bg-[#1C1C1E] text-black/70 dark:text-white/70 border border-black/[0.06] dark:border-white/[0.08] hover:bg-black/5' }}">
             <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
-            <span>Purchase Order</span>
+            <span>{{ __('approvals.filter_po') }}</span>
         </a>
         <a href="{{ route('approvals.history', ['type' => 'expense']) }}"
             class="px-4 py-2.5 rounded-full font-semibold transition-all shrink-0 flex items-center gap-1.5 {{ $filterType === 'expense' ? 'bg-[#007AFF] text-white shadow-sm' : 'bg-white dark:bg-[#1C1C1E] text-black/70 dark:text-white/70 border border-black/[0.06] dark:border-white/[0.08] hover:bg-black/5' }}">
             <i data-lucide="receipt" class="w-3.5 h-3.5"></i>
-            <span>Biaya Kas</span>
+            <span>{{ __('approvals.filter_expense') }}</span>
         </a>
         <a href="{{ route('approvals.history', ['type' => 'supplier_invoice']) }}"
             class="px-4 py-2.5 rounded-full font-semibold transition-all shrink-0 flex items-center gap-1.5 {{ $filterType === 'supplier_invoice' ? 'bg-[#007AFF] text-white shadow-sm' : 'bg-white dark:bg-[#1C1C1E] text-black/70 dark:text-white/70 border border-black/[0.06] dark:border-white/[0.08] hover:bg-black/5' }}">
             <i data-lucide="building-2" class="w-3.5 h-3.5"></i>
-            <span>Faktur Supplier</span>
+            <span>{{ __('approvals.filter_supplier_invoice') }}</span>
         </a>
     </div>
 
@@ -62,12 +62,12 @@
             <table class="w-full text-left text-xs">
                 <thead class="bg-black/[0.02] dark:bg-white/[0.03] border-b border-black/[0.06] dark:border-white/[0.08] text-black/60 dark:text-white/60 font-bold uppercase tracking-wider">
                     <tr>
-                        <th class="px-5 py-3.5">Dokumen</th>
-                        <th class="px-5 py-3.5">Pembuat (Maker)</th>
-                        <th class="px-5 py-3.5 text-right">Nominal Transaksi</th>
-                        <th class="px-5 py-3.5 text-center">Status Akhir</th>
-                        <th class="px-5 py-3.5">Waktu Selesai</th>
-                        <th class="px-5 py-3.5">Audit Log Penyetuju</th>
+                        <th class="px-5 py-3.5">{{ __('approvals.th_document') }}</th>
+                        <th class="px-5 py-3.5">{{ __('approvals.th_maker') }}</th>
+                        <th class="px-5 py-3.5 text-right">{{ __('approvals.th_amount') }}</th>
+                        <th class="px-5 py-3.5 text-center">{{ __('approvals.th_final_status') }}</th>
+                        <th class="px-5 py-3.5">{{ __('approvals.th_completed_time') }}</th>
+                        <th class="px-5 py-3.5">{{ __('approvals.th_audit_log') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06] text-black dark:text-white">
@@ -87,12 +87,12 @@
                                 @if ($ticket->isApproved())
                                     <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#34C759]/15 text-[#34C759]">
                                         <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
-                                        <span>Disetujui</span>
+                                        <span>{{ __('approvals.status_approved') }}</span>
                                     </span>
                                 @else
                                     <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#FF3B30]/15 text-[#FF3B30]">
                                         <i data-lucide="x-circle" class="w-3.5 h-3.5"></i>
-                                        <span>Ditolak</span>
+                                        <span>{{ __('approvals.status_rejected') }}</span>
                                     </span>
                                 @endif
                             </td>
@@ -112,7 +112,7 @@
                                     @endforeach
                                     @if ($ticket->rejection_reason)
                                         <div class="text-[11px] text-[#FF3B30] font-medium">
-                                            Alasan Tolak: "{{ $ticket->rejection_reason }}"
+                                            {{ __('approvals.rejection_reason_prefix') }} "{{ $ticket->rejection_reason }}"
                                         </div>
                                     @endif
                                 </div>
@@ -121,7 +121,7 @@
                     @empty
                         <tr>
                             <td colspan="6" class="px-5 py-12 text-center text-black/40 dark:text-white/40">
-                                Belum ada riwayat dokumen yang selesai diotorisasi.
+                                {{ __('approvals.empty_history') }}
                             </td>
                         </tr>
                     @endforelse
@@ -141,18 +141,18 @@
                         @if ($ticket->isApproved())
                             <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#34C759]/15 text-[#34C759] shrink-0">
                                 <i data-lucide="check-circle-2" class="w-3 h-3"></i>
-                                <span>Disetujui</span>
+                                <span>{{ __('approvals.status_approved') }}</span>
                             </span>
                         @else
                             <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#FF3B30]/15 text-[#FF3B30] shrink-0">
                                 <i data-lucide="x-circle" class="w-3 h-3"></i>
-                                <span>Ditolak</span>
+                                <span>{{ __('approvals.status_rejected') }}</span>
                             </span>
                         @endif
                     </div>
 
                     <div class="flex justify-between items-baseline text-xs">
-                        <span class="text-black/50 dark:text-white/50">Nominal:</span>
+                        <span class="text-black/50 dark:text-white/50">{{ __('approvals.amount_label') }}</span>
                         <strong class="text-black dark:text-white font-bold tabular-nums text-sm">Rp {{ number_format($ticket->amount, 0, ',', '.') }}</strong>
                     </div>
 
@@ -173,7 +173,7 @@
                             @endforeach
                             @if ($ticket->rejection_reason)
                                 <div class="text-[#FF3B30] font-medium pl-2">
-                                    Alasan Tolak: "{{ $ticket->rejection_reason }}"
+                                    {{ __('approvals.rejection_reason_prefix') }} "{{ $ticket->rejection_reason }}"
                                 </div>
                             @endif
                         </div>
@@ -181,7 +181,7 @@
                 </div>
             @empty
                 <div class="py-8 text-center text-xs text-black/40 dark:text-white/40">
-                    Belum ada riwayat dokumen yang selesai diotorisasi.
+                    {{ __('approvals.empty_history') }}
                 </div>
             @endforelse
         </div>

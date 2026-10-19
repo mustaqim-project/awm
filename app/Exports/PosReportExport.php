@@ -1113,14 +1113,21 @@ final class PosReportExport
         $no = 1;
         $firstDataRow = 6;
         foreach ($payments as $p) {
+            $methodLabel = is_array($p) ? ($p['method_label'] ?? $p['method'] ?? 'Lainnya') : ($p->method_label ?? $p->method ?? 'Lainnya');
+            $txCount = (int) (is_array($p) ? ($p['count'] ?? $p['tx_count'] ?? 0) : ($p->count ?? $p->tx_count ?? 0));
+            $amount = (float) (is_array($p) ? ($p['amount'] ?? $p['total_amount'] ?? 0) : ($p->amount ?? $p->total_amount ?? 0));
+            $feeAmount = (float) (is_array($p) ? ($p['fee_amount'] ?? $p['fee'] ?? $p['total_fee'] ?? 0) : ($p->fee_amount ?? $p->fee ?? $p->total_fee ?? 0));
+            $countPct = (float) (is_array($p) ? ($p['count_percentage'] ?? 0) : ($p->count_percentage ?? 0));
+            $amountPct = (float) (is_array($p) ? ($p['amount_percentage'] ?? $p['share'] ?? $p['contribution_percent'] ?? 0) : ($p->amount_percentage ?? $p->share ?? $p->contribution_percent ?? 0));
+
             $sheet->setCellValue("A{$row}", $no++);
-            $sheet->setCellValue("B{$row}", $p['method_label']);
-            $sheet->setCellValue("C{$row}", (int) $p['count']);
-            $sheet->setCellValue("D{$row}", (float) $p['amount']);
-            $sheet->setCellValue("E{$row}", (float) $p['fee_amount']);
+            $sheet->setCellValue("B{$row}", $methodLabel);
+            $sheet->setCellValue("C{$row}", $txCount);
+            $sheet->setCellValue("D{$row}", $amount);
+            $sheet->setCellValue("E{$row}", $feeAmount);
             $sheet->setCellValue("F{$row}", "=D{$row}-E{$row}");
-            $sheet->setCellValue("G{$row}", ((float) $p['count_percentage']) / 100);
-            $sheet->setCellValue("H{$row}", ((float) $p['amount_percentage']) / 100);
+            $sheet->setCellValue("G{$row}", $countPct / 100);
+            $sheet->setCellValue("H{$row}", $amountPct / 100);
 
             $sheet->getStyle("A{$row}")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
             $sheet->getStyle("C{$row}")->getNumberFormat()->setFormatCode('#,##0');

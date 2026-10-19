@@ -167,8 +167,8 @@
                         <i data-lucide="bot" class="w-5 h-5"></i>
                     </div>
                     <div>
-                        <p class="text-[13px] font-semibold text-black dark:text-white group-hover:text-[#AF52DE] transition-colors">Integrasi AI (MCP)</p>
-                        <p class="text-[11px] text-black/50 dark:text-white/50">Claude, ChatGPT, Gemini, Cursor</p>
+                        <p class="text-[13px] font-semibold text-black dark:text-white group-hover:text-[#AF52DE] transition-colors">{{ __('settings.mcp_nav_title') }}</p>
+                        <p class="text-[11px] text-black/50 dark:text-white/50">{{ __('settings.mcp_nav_sub') }}</p>
                     </div>
                 </div>
                 <i data-lucide="chevron-right" class="w-4 h-4 text-black/30 dark:text-white/30 group-hover:translate-x-0.5 transition-transform"></i>
@@ -419,13 +419,13 @@
                         <select id="rounding_strategy_select" name="rounding_strategy" required
                             x-model="roundingStrategy"
                             class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition cursor-pointer">
-                            <option value="ROUND">ROUND - Pembulatan Standar Terdekat</option>
-                            <option value="CEIL">CEIL - Pembulatan Ke Atas (Plafon)</option>
-                            <option value="FLOOR">FLOOR - Pembulatan Ke Bawah</option>
-                            <option value="ROUND_50">ROUND_50 - Kelipatan 50 Terdekat</option>
-                            <option value="ROUND_100">ROUND_100 - Kelipatan 100 Terdekat (Standar Bisnis UMKM)</option>
-                            <option value="ROUND_500">ROUND_500 - Kelipatan 500 Terdekat</option>
-                            <option value="ROUND_1000">ROUND_1000 - Kelipatan 1.000 Terdekat</option>
+                            <option value="ROUND">{{ __('settings.opt_round_nearest') }}</option>
+                            <option value="CEIL">{{ __('settings.opt_ceil_up') }}</option>
+                            <option value="FLOOR">{{ __('settings.opt_floor_down') }}</option>
+                            <option value="ROUND_50">{{ __('settings.opt_round_50') }}</option>
+                            <option value="ROUND_100">{{ __('settings.opt_round_100') }}</option>
+                            <option value="ROUND_500">{{ __('settings.opt_round_500') }}</option>
+                            <option value="ROUND_1000">{{ __('settings.opt_round_1000') }}</option>
                         </select>
 
                         <div
@@ -465,7 +465,7 @@
                             </div>
                             <span
                                 class="hidden sm:inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#AF52DE]/10 text-[#AF52DE]">
-                                POS Security
+                                {{ __('settings.badge_pos_security') }}
                             </span>
                         </div>
 
@@ -533,10 +533,10 @@
                                     class="mt-0.5 rounded-[4px] border-black/20 text-[#34C759] focus:ring-[#34C759]">
                                 <div class="text-[13px]">
                                     <span class="font-medium text-black dark:text-white flex items-center gap-1.5">
-                                        <span>Otomatis Kirim ke KDS</span>
-                                        <span class="px-1.5 py-0.2 rounded-full text-[9px] font-bold bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] uppercase">Paperless</span>
+                                        <span>{{ __('settings.opt_auto_send_kds') }}</span>
+                                        <span class="px-1.5 py-0.2 rounded-full text-[9px] font-bold bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] uppercase">{{ __('settings.badge_paperless') }}</span>
                                     </span>
-                                    <span class="text-[11px] text-black/50 dark:text-white/50 block mt-0.5">Order dari terminal langsung diteruskan ke Layar Dapur &amp; Bar (KDS) tanpa perlu print struk kertas.</span>
+                                    <span class="text-[11px] text-black/50 dark:text-white/50 block mt-0.5">{{ __('settings.desc_auto_send_kds') }}</span>
                                 </div>
                             </label>
                         </div>
@@ -597,13 +597,13 @@
                         <i data-lucide="info" class="w-4.5 h-4.5"></i>
                     </div>
                     <div class="text-[12px] leading-relaxed text-slate-700 dark:text-slate-300">
-                        <strong class="font-semibold text-slate-900 dark:text-white">Arsitektur 1 Cabang Banyak Gudang:</strong>
-                        Setiap cabang fisik dapat memiliki beberapa gudang persediaan (contoh: Gudang Depan Toko, Gudang Belakang, atau Gudang Dingin). Manajemen stok dan pergerakan barang dikelola di modul <a href="{{ route('warehouse.index') }}" class="text-[#007AFF] font-bold hover:underline">Gudang & Logistik</a>.
+                        <strong class="font-semibold text-slate-900 dark:text-white">{{ __('settings.lbl_multi_warehouse_arch') }}</strong>
+                        {{ __('settings.desc_multi_warehouse_arch') }} <a href="{{ route('warehouse.index') }}" class="text-[#007AFF] font-bold hover:underline">{{ __('settings.lbl_warehouse_and_logistics') }}</a>.
                     </div>
                 </div>
                 <a href="{{ route('warehouse.index') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[8px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[12px] font-semibold text-[#007AFF] hover:bg-black/[0.03] dark:hover:bg-white/[0.05] transition-all shrink-0">
                     <i data-lucide="warehouse" class="w-3.5 h-3.5"></i>
-                    <span>Buka Hub Gudang</span>
+                    <span>{{ __('settings.btn_open_warehouse_hub') }}</span>
                     <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                 </a>
             </div>
@@ -674,11 +674,11 @@
                             {{-- Section Metadata Bento --}}
                             <div class="mt-3.5 pt-3 border-t border-black/5 dark:border-white/5 grid grid-cols-2 gap-2 text-[11px]">
                                 <div class="p-2 rounded-[8px] bg-black/[0.02] dark:bg-white/[0.03]">
-                                    <span class="text-black/40 dark:text-white/40 block">Geofence Presensi:</span>
+                                    <span class="text-black/40 dark:text-white/40 block">{{ __('settings.lbl_attendance_geofence') }}</span>
                                     <span class="font-semibold text-black dark:text-white tabular-nums">{{ $branch->geofence_radius_meters ?? 100 }} m</span>
                                 </div>
                                 <div class="p-2 rounded-[8px] bg-black/[0.02] dark:bg-white/[0.03]">
-                                    <span class="text-black/40 dark:text-white/40 block">Zona Waktu:</span>
+                                    <span class="text-black/40 dark:text-white/40 block">{{ __('settings.lbl_active_timezone') }}</span>
                                     <span class="font-semibold text-black dark:text-white truncate block">{{ $branch->getTimezone() }}</span>
                                 </div>
                             </div>
@@ -691,7 +691,7 @@
                                     </div>
                                     <div class="min-w-0">
                                         <span class="text-[12px] font-bold text-black dark:text-white block tabular-nums">
-                                            {{ $branch->children->count() }} Gudang Terhubung
+                                            {{ __('settings.lbl_connected_warehouses_count', ['count' => $branch->children->count()]) }}
                                         </span>
                                     </div>
                                 </div>
@@ -1190,7 +1190,7 @@
                                         <textarea id="pos_receipt_wa_template" name="pos_receipt_wa_template" x-ref="waTextarea" x-model="waTemplateText"
                                             rows="7" maxlength="1000"
                                             class="w-full bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[12px] p-3.5 text-[15px] sm:text-[14px] font-mono leading-relaxed text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition resize-y"
-                                            placeholder="Tulis format teks WhatsApp manual di sini..."></textarea>
+                                            placeholder="{{ __('settings.ph_wa_manual_custom') }}"></textarea>
                                         <p class="text-[11px] text-black/45 dark:text-white/45">
                                             {{ __('settings.wa_template_notice') }}
                                         </p>
@@ -1203,10 +1203,10 @@
                                             <span>{{ __('settings.wa_markdown_guide') }}</span>
                                         </div>
                                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-black/60 dark:text-white/60 text-[11px]">
-                                            <div><code>*teks*</code> &rarr; <strong>Tebal</strong></div>
-                                            <div><code>_teks_</code> &rarr; <em>Miring</em></div>
-                                            <div><code>~teks~</code> &rarr; <del>Coret</del></div>
-                                            <div><code>```teks```</code> &rarr; Monospace</div>
+                                            <div><code>*{{ __('settings.lbl_format_text') }}*</code> &rarr; <strong>{{ __('settings.lbl_format_bold') }}</strong></div>
+                                            <div><code>_{{ __('settings.lbl_format_text') }}_</code> &rarr; <em>{{ __('settings.lbl_format_italic') }}</em></div>
+                                            <div><code>~{{ __('settings.lbl_format_text') }}~</code> &rarr; <del>{{ __('settings.lbl_format_strike') }}</del></div>
+                                            <div><code>```{{ __('settings.lbl_format_text') }}```</code> &rarr; {{ __('settings.lbl_format_mono') }}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -1281,7 +1281,7 @@
                                             </h4>
                                             <p class="text-[10px] text-white/70 leading-tight">
                                                 <span x-show="previewMode === 'waba'">{{ __('settings.waba_official_tag') }}</span>
-                                                <span x-show="previewMode === 'manual'">online</span>
+                                                <span x-show="previewMode === 'manual'">{{ __('settings.lbl_status_online') }}</span>
                                             </p>
                                         </div>
                                         <div class="flex items-center gap-3 text-white/80">
@@ -1318,14 +1318,14 @@
 
                                             <!-- Official Meta Template Text Body -->
                                             <div class="space-y-1.5 text-[12px] leading-relaxed pt-0.5">
-                                                <p>Halo <strong class="font-bold text-black dark:text-white">Agung Mustaqim</strong>! Terima kasih telah berbelanja di <strong class="font-bold text-black dark:text-white">{{ $business->name ?? 'Toko Kami' }}</strong>.</p>
+                                                <p>{{ __('settings.receipt_mock_hello', ['name' => 'Agung Mustaqim', 'store' => $business->name ?? 'Cooca Store']) }}</p>
                                                 <div class="py-1.5 px-2 font-mono text-[11px] text-black/80 dark:text-white/80 bg-black/[0.03] dark:bg-white/[0.04] p-1.5 rounded space-y-0.5 border border-black/5 dark:border-white/5">
-                                                    <div class="text-[9.5px] text-black/50 dark:text-white/50 font-sans font-semibold uppercase tracking-wider mb-0.5">Rincian Transaksi:</div>
-                                                    <div>• No. Struk: <strong class="font-bold">POS-20260910-0042</strong></div>
-                                                    <div>• Waktu: <strong class="font-bold">{{ now()->format('d/m/Y H:i') }}</strong></div>
-                                                    <div>• Total Bayar: <strong class="font-bold">Rp 85.000</strong></div>
+                                                    <div class="text-[9.5px] text-black/50 dark:text-white/50 font-sans font-semibold uppercase tracking-wider mb-0.5">{{ __('settings.receipt_mock_tx_details') }}</div>
+                                                    <div>• {{ __('settings.lbl_receipt_no') }}: <strong class="font-bold">POS-20260910-0042</strong></div>
+                                                    <div>• {{ __('settings.lbl_receipt_time') }}: <strong class="font-bold">{{ now()->format('d/m/Y H:i') }}</strong></div>
+                                                    <div>• {{ __('settings.receipt_mock_total_paid') }}: <strong class="font-bold">Rp 85.000</strong></div>
                                                 </div>
-                                                <p class="text-[10.5px] text-black/65 dark:text-white/65">Struk digital transaksi Anda tersimpan aman di sistem kami.</p>
+                                                <p class="text-[10.5px] text-black/65 dark:text-white/65">{{ __('settings.receipt_mock_safe_notice') }}</p>
                                             </div>
 
                                             <!-- Meta Template Footer -->
@@ -1372,7 +1372,7 @@
                                     <div class="bg-[#F0F2F5] dark:bg-[#1F2C34] p-2 flex items-center gap-2 border-t border-black/5 dark:border-white/5">
                                         <div class="w-6 h-6 rounded-full bg-black/10 dark:bg-white/10 flex items-center justify-center text-black/50 dark:text-white/50 text-[11px] font-bold">+</div>
                                         <div class="flex-1 h-7 rounded-full bg-white dark:bg-[#2A3942] px-3 flex items-center text-[11px] text-black/40 dark:text-white/40">
-                                            Ketik pesan
+                                            {{ __('settings.waba_type_message') }}
                                         </div>
                                         <div class="w-6 h-6 rounded-full bg-[#00A884] text-white flex items-center justify-center text-[11px]">▶</div>
                                     </div>
@@ -1410,13 +1410,13 @@
                                     <!-- Store Header -->
                                     <div class="text-center space-y-0.5">
                                         <div class="text-[13px] font-bold tracking-tight text-black dark:text-white uppercase font-sans">
-                                            {{ $business->name ?? 'Toko Saya' }}
+                                            {{ $business->name ?? __('settings.receipt_mock_fallback_store') }}
                                         </div>
                                         <div class="text-[10px] text-black/50 dark:text-white/50">
-                                            {{ $business->address ?? 'Pusat Operasional Bisnis' }}
+                                            {{ $business->address ?? __('settings.receipt_mock_fallback_address') }}
                                         </div>
                                         <div class="text-[9.5px] text-black/40 dark:text-white/40 pt-1">
-                                            POS-20260910-0042 • {{ now()->format('d/m/Y H:i') }} • Kasir 1
+                                            POS-20260910-0042 • {{ now()->format('d/m/Y H:i') }} • {{ __('settings.receipt_mock_cashier_1') }}
                                         </div>
                                     </div>
 
@@ -1427,21 +1427,21 @@
                                     <div class="space-y-1.5 text-[11px]">
                                         <div class="flex justify-between items-start">
                                             <div>
-                                                <div>2x Kopi Kenangan Manis</div>
+                                                <div>{{ __('settings.receipt_mock_item_1') }}</div>
                                                 <div class="text-[9.5px] text-black/45 dark:text-white/45">@ Rp 18.000</div>
                                             </div>
                                             <span class="tabular-nums">Rp 36.000</span>
                                         </div>
                                         <div class="flex justify-between items-start">
                                             <div>
-                                                <div>1x Croissant Butter Bakar</div>
+                                                <div>{{ __('settings.receipt_mock_item_2') }}</div>
                                                 <div class="text-[9.5px] text-black/45 dark:text-white/45">@ Rp 28.000</div>
                                             </div>
                                             <span class="tabular-nums">Rp 28.000</span>
                                         </div>
                                         <div class="flex justify-between items-start">
                                             <div>
-                                                <div>1x Teh Botol Sosro Dingin</div>
+                                                <div>{{ __('settings.receipt_mock_item_3') }}</div>
                                                 <div class="text-[9.5px] text-black/45 dark:text-white/45">@ Rp 7.000</div>
                                             </div>
                                             <span class="tabular-nums">Rp 7.000</span>
@@ -1452,25 +1452,25 @@
                                     <div class="border-t border-dashed border-black/20 dark:border-white/20"></div>
 
                                     <!-- Subtotal & Calculations -->
-                                    <div class="space-y-1 text-[11px]">
+                                     <div class="space-y-1 text-[11px]">
                                         <div class="flex justify-between text-black/60 dark:text-white/60">
-                                            <span>Subtotal</span>
+                                            <span>{{ __('settings.receipt_mock_subtotal') }}</span>
                                             <span class="tabular-nums">Rp 71.000</span>
                                         </div>
                                         <div class="flex justify-between text-black/60 dark:text-white/60">
-                                            <span>PB1 / Resto Tax (10%)</span>
+                                            <span>{{ __('settings.receipt_mock_tax') }}</span>
                                             <span class="tabular-nums">Rp 7.100</span>
                                         </div>
                                         <div class="flex justify-between text-black/60 dark:text-white/60">
-                                            <span>Pembulatan</span>
+                                            <span>{{ __('settings.receipt_mock_rounding') }}</span>
                                             <span class="tabular-nums">Rp 900</span>
                                         </div>
                                         <div class="flex justify-between font-bold text-[12.5px] text-black dark:text-white pt-1 border-t border-black/10 dark:border-white/10">
-                                            <span>TOTAL BAYAR</span>
+                                            <span>{{ __('settings.receipt_mock_total_paid') }}</span>
                                             <span class="tabular-nums text-[#248A3D] dark:text-[#30D158]">Rp 85.000</span>
                                         </div>
                                         <div class="text-[10px] text-right text-black/50 dark:text-white/50">
-                                            LUNAS • QRIS Dinamis
+                                            {{ __('settings.receipt_mock_paid_badge') }}
                                         </div>
                                     </div>
 
@@ -1481,11 +1481,11 @@
                                     <div class="py-1 text-center space-y-1">
                                         <div class="inline-flex items-center justify-center p-2 rounded bg-white dark:bg-black/40 border border-black/10 dark:border-white/10 shadow-xs">
                                             <div class="text-[9px] font-mono tracking-widest text-black/70 dark:text-white/70">
-                                                [ QR VERIFIKASI COOCA ]
+                                                [ {{ __('settings.receipt_mock_qr_verification') }} ]
                                             </div>
                                         </div>
                                         <div class="text-[9px] text-black/40 dark:text-white/40 uppercase tracking-wider">
-                                            Bukti Transaksi Sah &amp; Terverifikasi
+                                            {{ __('settings.receipt_mock_valid_proof') }}
                                         </div>
                                     </div>
 
@@ -1695,7 +1695,7 @@
                                 @if ($business->template_code)
                                     <span
                                         class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158] border border-[#34C759]/20">
-                                        Preset: {{ strtoupper($business->template_code) }}
+                                        {{ __('settings.lbl_preset') }}: {{ strtoupper($business->template_code) }}
                                     </span>
                                 @endif
                             </div>
@@ -1886,7 +1886,7 @@
                                                 <div class="rounded-[8px] bg-black/[0.03] dark:bg-white/[0.04] px-2.5 py-1.5 text-[11px] text-black/65 dark:text-white/65 flex items-start gap-1.5 border border-black/5 dark:border-white/5">
                                                     <i data-lucide="layout-panel-left" class="w-3.5 h-3.5 text-black/40 dark:text-white/40 shrink-0 mt-0.5"></i>
                                                     <div class="line-clamp-2 leading-tight">
-                                                        <strong class="font-medium text-black dark:text-white">Sidebar:</strong> {{ $impactText }}
+                                                        <strong class="font-medium text-black dark:text-white">{{ __('settings.lbl_sidebar_impact') }}</strong> {{ $impactText }}
                                                     </div>
                                                 </div>
                                             @endif
@@ -1996,11 +1996,11 @@
                         <!-- Template Details Preview Card -->
                         <div class="p-4 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 space-y-2">
                             <div class="flex items-center justify-between text-[12px]">
-                                <span class="text-black/50 dark:text-white/50">Template Terpilih:</span>
+                                <span class="text-black/50 dark:text-white/50">{{ __('settings.lbl_selected_template') }}</span>
                                 <span class="font-semibold text-black dark:text-white" x-text="selectedTemplate.name"></span>
                             </div>
                             <div class="flex items-center justify-between text-[12px]">
-                                <span class="text-black/50 dark:text-white/50">Kategori Industri:</span>
+                                <span class="text-black/50 dark:text-white/50">{{ __('settings.lbl_industry_category') }}</span>
                                 <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-[#34C759]/10 text-[#34C759]" x-text="selectedTemplate.category"></span>
                             </div>
                         </div>
@@ -2008,7 +2008,7 @@
                         <!-- No-Panic Microcopy Notice -->
                         <div class="flex items-start gap-2.5 text-[12px] text-black/60 dark:text-white/60">
                             <i data-lucide="check-circle-2" class="w-4 h-4 text-[#34C759] shrink-0 mt-0.5"></i>
-                            <p>Data transaksi, saldo stok, dan invoice Anda yang sudah ada tetap aman dan tidak akan terhapus atau tertimpa.</p>
+                            <p>{{ __('settings.template_safety_notice') }}</p>
                         </div>
 
                         <!-- Action Buttons -->
@@ -2057,15 +2057,15 @@
                             </div>
                             <div>
                                 <p class="text-[10.5px] font-bold uppercase tracking-wider text-black/45 dark:text-white/45 mb-0.5">
-                                    Cabang &amp; Outlet &bull; Pengaturan Usaha
+                                    {{ __('settings.tab_branches') }} &bull; {{ __('settings.page_title') }}
                                 </p>
                                 <h3 class="text-base sm:text-lg font-bold text-black dark:text-white tracking-tight">{{ __('settings.create_branch_title') }}</h3>
-                                <p class="text-xs text-black/55 dark:text-white/55 mt-0.5">Atur identitas outlet, titik koordinat peta GPS cabang, dan wilayah kurir pengiriman.</p>
+                                <p class="text-xs text-black/55 dark:text-white/55 mt-0.5">{{ __('settings.modal_branch_create_sub') }}</p>
                             </div>
                         </div>
                         <button type="button" @click="showCreateBranchModal = false"
                                 class="min-h-[44px] min-w-[44px] rounded-[12px] text-black/40 hover:text-black dark:text-white/40 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition flex items-center justify-center cursor-pointer"
-                                aria-label="Tutup">
+                                aria-label="{{ __('settings.close') }}">
                             <i data-lucide="x" class="w-5 h-5"></i>
                         </button>
                     </div>
@@ -2080,7 +2080,7 @@
                                 <div class="p-4 rounded-[16px] bg-[#FF3B30]/10 border border-[#FF3B30]/25 text-[#FF3B30] dark:text-[#FF453A] text-xs">
                                     <div class="font-bold mb-1.5 flex items-center gap-2">
                                         <i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i>
-                                        <span>Ada data yang perlu diperbaiki:</span>
+                                        <span>{{ __('settings.alert_fix_errors') }}</span>
                                     </div>
                                     <ul class="list-disc list-inside space-y-1 opacity-90 pl-1">
                                         @foreach ($errors->all() as $err)
@@ -2097,9 +2097,9 @@
                                 <div class="flex items-center justify-between pb-1.5 border-b border-black/5 dark:border-white/5">
                                     <div class="flex items-center gap-2">
                                         <span class="w-6 h-6 rounded-full bg-[#007AFF]/15 text-[#007AFF] text-xs font-bold flex items-center justify-center">1</span>
-                                        <h3 class="text-xs sm:text-sm font-bold text-black dark:text-white uppercase tracking-wider">Identitas Cabang &amp; Kontak</h3>
+                                        <h3 class="text-xs sm:text-sm font-bold text-black dark:text-white uppercase tracking-wider">{{ __('settings.sec_branch_identity_contact') }}</h3>
                                     </div>
-                                    <span class="text-[11px] font-medium text-black/45 dark:text-white/45">Data Operasional Toko</span>
+                                    <span class="text-[11px] font-medium text-black/45 dark:text-white/45">{{ __('settings.sec_branch_operational_data') }}</span>
                                 </div>
 
                                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -2111,7 +2111,7 @@
                                             <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-black/40 dark:text-white/40">
                                                 <i data-lucide="store" class="w-4 h-4"></i>
                                             </div>
-                                            <input type="text" name="name" x-model="branchForm.name" required placeholder="Contoh: Cabang Senopati"
+                                            <input type="text" name="name" x-model="branchForm.name" required placeholder="{{ __('settings.ph_branch_name_sample') }}"
                                                    class="w-full pl-10 pr-3.5 py-2.5 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-[12px] sm:rounded-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-xs sm:text-[13px] outline-none">
                                         </div>
                                     </div>
@@ -2124,14 +2124,14 @@
                                             <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-black/40 dark:text-white/40">
                                                 <i data-lucide="hash" class="w-4 h-4"></i>
                                             </div>
-                                            <input type="text" name="code" x-model="branchForm.code" placeholder="Misal: SNP-01"
+                                            <input type="text" name="code" x-model="branchForm.code" placeholder="{{ __('settings.ph_branch_code_sample') }}"
                                                    class="w-full pl-10 pr-3.5 py-2.5 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-[12px] sm:rounded-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-xs sm:text-[13px] font-mono uppercase outline-none">
                                         </div>
                                     </div>
 
                                     <div>
                                         <label class="block font-semibold text-black/80 dark:text-white/85 text-xs mb-1.5">
-                                            Nomor WhatsApp / HP Cabang
+                                            {{ __('settings.branch_phone') }}
                                         </label>
                                         <div class="relative">
                                             <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-black/40 dark:text-white/40">
@@ -2151,15 +2151,15 @@
                                 <div class="flex items-center justify-between pb-1.5 border-b border-black/5 dark:border-white/5">
                                     <div class="flex items-center gap-2">
                                         <span class="w-6 h-6 rounded-full bg-[#007AFF]/15 text-[#007AFF] text-xs font-bold flex items-center justify-center">2</span>
-                                        <h3 class="text-xs sm:text-sm font-bold text-black dark:text-white uppercase tracking-wider">Titik Lokasi Cabang &amp; Wilayah Indonesia</h3>
+                                        <h3 class="text-xs sm:text-sm font-bold text-black dark:text-white uppercase tracking-wider">{{ __('settings.sec_branch_location_title') }}</h3>
                                     </div>
-                                    <span class="text-[11px] font-medium text-black/45 dark:text-white/45">Tingkat Desa / Kelurahan</span>
+                                    <span class="text-[11px] font-medium text-black/45 dark:text-white/45">{{ __('settings.sec_village_subdistrict') }}</span>
                                 </div>
 
                                 <!-- Autocomplete Pencarian Cepat Wilayah Indonesia -->
                                 <div class="relative">
                                     <label class="block font-semibold text-black/80 dark:text-white/85 text-xs mb-1.5">
-                                        Cari Wilayah Cepat (Autocomplete Biteship &amp; Administrasi Indonesia)
+                                        {{ __('settings.lbl_quick_search_area') }}
                                     </label>
                                     <div class="relative">
                                         <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-black/40 dark:text-white/40">
@@ -2170,7 +2170,7 @@
                                                @input.debounce.350ms="searchBranchAreas('create')"
                                                @focus="if(branchSearchResults.length > 0) branchShowDropdown = true"
                                                class="w-full pl-10 pr-10 py-2.5 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-[12px] sm:rounded-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-xs sm:text-[13px] outline-none"
-                                               placeholder="Ketik Kode Pos (cth: 12190) atau Nama Kelurahan / Desa (cth: Senayan / Senopati)...">
+                                               placeholder="{{ __('settings.ph_postal_or_subdistrict') }}">
                                         <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center">
                                             <template x-if="branchIsSearching">
                                                 <i data-lucide="loader-2" class="w-4 h-4 text-[#007AFF] animate-spin"></i>
@@ -2178,7 +2178,7 @@
                                         </div>
                                     </div>
                                     <p class="text-[11px] text-black/50 dark:text-white/50 mt-1">
-                                        Ketik minimal 3 karakter untuk mengisi otomatis seluruh kolom wilayah di bawah dan memindahkan pin peta GPS, atau isi langsung secara manual.
+                                        {{ __('settings.desc_autocomplete_hint') }}
                                     </p>
 
                                     <!-- Dropdown Hasil Pencarian Wilayah -->
@@ -2207,57 +2207,57 @@
                                     <div class="flex items-center justify-between pb-1 border-b border-black/5 dark:border-white/5">
                                         <span class="text-[11px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 flex items-center gap-1.5">
                                             <i data-lucide="map-pinned" class="w-3.5 h-3.5 text-[#007AFF]"></i>
-                                            Data Wilayah Administratif Cabang
+                                            {{ __('settings.sec_administrative_area') }}
                                         </span>
-                                        <span class="text-[10.5px] font-medium text-black/45 dark:text-white/45">Bisa diedit manual</span>
+                                        <span class="text-[10.5px] font-medium text-black/45 dark:text-white/45">{{ __('settings.lbl_can_edit_manually') }}</span>
                                     </div>
 
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                                         <div>
                                             <label class="block font-semibold text-black/80 dark:text-white/85 text-xs mb-1">
-                                                Provinsi <span class="text-[#FF3B30]">*</span>
+                                                {{ __('settings.lbl_province') }} <span class="text-[#FF3B30]">*</span>
                                             </label>
                                             <input type="text" name="province" x-model="branchForm.province" required
                                                    class="w-full px-3.5 py-2.5 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-[12px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-xs outline-none"
-                                                   placeholder="Contoh: DKI Jakarta">
+                                                   placeholder="{{ __('settings.ph_province_sample') }}">
                                         </div>
 
                                         <div>
                                             <label class="block font-semibold text-black/80 dark:text-white/85 text-xs mb-1">
-                                                Kota / Kabupaten <span class="text-[#FF3B30]">*</span>
+                                                {{ __('settings.lbl_city') }} <span class="text-[#FF3B30]">*</span>
                                             </label>
                                             <input type="text" name="city" x-model="branchForm.city" required
                                                    class="w-full px-3.5 py-2.5 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-[12px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-xs outline-none"
-                                                   placeholder="Contoh: Kota Jakarta Selatan">
+                                                   placeholder="{{ __('settings.ph_city_sample') }}">
                                         </div>
                                     </div>
 
                                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
                                         <div>
                                             <label class="block font-semibold text-black/80 dark:text-white/85 text-xs mb-1">
-                                                Kecamatan <span class="text-[#FF3B30]">*</span>
+                                                {{ __('settings.lbl_district') }} <span class="text-[#FF3B30]">*</span>
                                             </label>
                                             <input type="text" name="district" x-model="branchForm.district" required
                                                    class="w-full px-3.5 py-2.5 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-[12px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-xs outline-none"
-                                                   placeholder="Contoh: Kebayoran Baru">
+                                                   placeholder="{{ __('settings.ph_district_sample') }}">
                                         </div>
 
                                         <div>
                                             <label class="block font-semibold text-black/80 dark:text-white/85 text-xs mb-1">
-                                                Kelurahan / Desa <span class="text-[#FF3B30]">*</span>
+                                                {{ __('settings.lbl_village') }} <span class="text-[#FF3B30]">*</span>
                                             </label>
                                             <input type="text" name="village" x-model="branchForm.village" required
                                                    class="w-full px-3.5 py-2.5 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-[12px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-xs outline-none"
-                                                   placeholder="Contoh: Senayan">
+                                                   placeholder="{{ __('settings.ph_subdistrict_sample') }}">
                                         </div>
 
                                         <div>
                                             <label class="block font-semibold text-black/80 dark:text-white/85 text-xs mb-1">
-                                                Kode Pos <span class="text-[#FF3B30]">*</span>
+                                                {{ __('settings.lbl_postal_code') }} <span class="text-[#FF3B30]">*</span>
                                             </label>
                                             <input type="text" name="postal_code" x-model="branchForm.postal_code" required
                                                    class="w-full px-3.5 py-2.5 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-[12px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-xs outline-none font-mono tabular-nums"
-                                                   placeholder="Contoh: 12190">
+                                                   placeholder="{{ __('settings.ph_postal_code_sample') }}">
                                         </div>
                                     </div>
                                 </div>
@@ -2265,25 +2265,25 @@
                                 <!-- Detail Alamat Jalan / Nomor Bangunan -->
                                 <div>
                                     <label class="block font-semibold text-black/80 dark:text-white/85 text-xs mb-1.5">
-                                        Detail Alamat Jalan / No. Ruko / Patokan Lokasi <span class="text-[#FF3B30]">*</span>
+                                        {{ __('settings.lbl_street_address_detail') }} <span class="text-[#FF3B30]">*</span>
                                     </label>
                                     <textarea name="address" rows="2" required x-model="branchForm.address"
                                               class="w-full px-3.5 py-2.5 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-[12px] sm:rounded-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-xs sm:text-[13px] outline-none resize-none"
-                                              placeholder="Contoh: Jl. Senopati No. 45, Ruko Blok B-2 (Sebelah Bank BCA)"></textarea>
+                                              placeholder="{{ __('settings.ph_address_sample') }}"></textarea>
                                 </div>
 
                                 <!-- Peta Interaktif Leaflet.js -->
                                 <div class="space-y-2">
                                     <div class="flex items-center justify-between">
                                         <label class="block font-semibold text-black/80 dark:text-white/85 text-xs">
-                                            Titik Koordinat Peta GPS (Geser Pin ke Lokasi Cabang Toko) <span class="text-[#FF3B30]">*</span>
+                                            {{ __('settings.lbl_gps_map_pin') }} <span class="text-[#FF3B30]">*</span>
                                         </label>
                                         <button type="button"
                                                 @click="useCurrentBranchGps('create')"
                                                 :disabled="branchGpsLoading"
                                                 class="text-xs font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline flex items-center gap-1.5 cursor-pointer disabled:opacity-50">
                                             <i data-lucide="crosshair" class="w-3.5 h-3.5" :class="{'animate-spin': branchGpsLoading}"></i>
-                                            <span x-text="branchGpsLoading ? 'Mencari GPS...' : 'Gunakan GPS Saya'"></span>
+                                            <span x-text="branchGpsLoading ? '{{ addslashes(__('settings.lbl_searching_gps')) }}' : '{{ addslashes(__('settings.lbl_use_my_gps')) }}'"></span>
                                         </button>
                                     </div>
 
@@ -2295,11 +2295,11 @@
                                             <span x-text="branchForm.latitude ? Number(branchForm.latitude).toFixed(5) : '-'"></span>,
                                             <span x-text="branchForm.longitude ? Number(branchForm.longitude).toFixed(5) : '-'"></span>
                                             <span class="text-black/30 dark:text-white/30">&bull;</span>
-                                            <span class="text-[#34C759] font-bold">Radius: <span x-text="branchForm.geofence_radius_meters"></span>m</span>
+                                            <span class="text-[#34C759] font-bold">{{ __('settings.lbl_radius_label') }} <span x-text="branchForm.geofence_radius_meters"></span>m</span>
                                         </div>
                                     </div>
                                     <p class="text-[11px] text-black/50 dark:text-white/50">
-                                        Anda dapat mengklik atau menggeser pin biru di atas peta untuk menyesuaikan titik tepat cabang toko Anda. Lingkaran biru menandakan zona toleransi absensi karyawan.
+                                        {{ __('settings.desc_gps_map_hint') }}
                                     </p>
                                 </div>
 
@@ -2307,13 +2307,13 @@
                                 <div class="p-3.5 rounded-[14px] sm:rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 space-y-1.5">
                                     <div class="flex items-center justify-between text-xs">
                                         <span class="font-semibold text-black/80 dark:text-white/80">{{ __('settings.branch_geofence_radius') }}</span>
-                                        <span class="font-bold text-[#007AFF] font-mono"><span x-text="branchForm.geofence_radius_meters"></span> Meter</span>
+                                        <span class="font-bold text-[#007AFF] font-mono"><span x-text="branchForm.geofence_radius_meters"></span> {{ __('settings.unit_meter') }}</span>
                                     </div>
                                     <input type="range" name="geofence_radius_meters" min="20" max="1000" step="10"
                                            x-model="branchForm.geofence_radius_meters"
                                            @input="updateGeofenceCircle('create')"
                                            class="w-full accent-[#007AFF] cursor-pointer">
-                                    <p class="text-[10.5px] text-black/45 dark:text-white/45">Radius toleransi absensi kehadiran karyawan via portal staf menggunakan GPS handphone.</p>
+                                    <p class="text-[10.5px] text-black/45 dark:text-white/45">{{ __('settings.geofence_attendance_tolerance_desc') }}</p>
                                 </div>
 
                                 <!-- Hidden Form Inputs for Geolocation Metadata -->
@@ -2329,17 +2329,17 @@
                                 <div class="flex items-center justify-between pb-1.5 border-b border-black/5 dark:border-white/5">
                                     <div class="flex items-center gap-2">
                                         <span class="w-6 h-6 rounded-full bg-[#007AFF]/15 text-[#007AFF] text-xs font-bold flex items-center justify-center">3</span>
-                                        <h3 class="text-xs sm:text-sm font-bold text-black dark:text-white uppercase tracking-wider">Pengaturan Operasional &amp; Toko Online</h3>
+                                        <h3 class="text-xs sm:text-sm font-bold text-black dark:text-white uppercase tracking-wider">{{ __('settings.sec_branch_operational_online') }}</h3>
                                     </div>
-                                    <span class="text-[11px] font-medium text-black/45 dark:text-white/45">Fulfillment &amp; Presensi</span>
+                                    <span class="text-[11px] font-medium text-black/45 dark:text-white/45">{{ __('settings.sec_fulfillment_attendance') }}</span>
                                 </div>
 
                                 <div class="space-y-3">
                                     <label class="flex items-start gap-3 p-3.5 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.08] cursor-pointer hover:border-[#FF9500]/40 transition">
                                         <input type="checkbox" name="is_primary" value="1" x-model="branchForm.is_primary" class="mt-0.5 w-4 h-4 rounded text-[#FF9500] focus:ring-[#FF9500]">
                                         <div class="text-xs">
-                                            <span class="font-bold text-black dark:text-white block">Jadikan Cabang Utama (Primary Branch)</span>
-                                            <span class="text-[11px] text-black/55 dark:text-white/55 block mt-0.5">Digunakan sebagai titik default penjemputan kurir online dan basis lokasi profil usaha.</span>
+                                            <span class="font-bold text-black dark:text-white block">{{ __('settings.lbl_set_primary_branch') }}</span>
+                                            <span class="text-[11px] text-black/55 dark:text-white/55 block mt-0.5">{{ __('settings.desc_primary_branch') }}</span>
                                         </div>
                                     </label>
 
@@ -2347,15 +2347,15 @@
                                         <label class="flex items-start gap-2.5 p-3 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.08] cursor-pointer">
                                             <input type="checkbox" name="is_online_fulfillment" value="1" x-model="branchForm.is_online_fulfillment" class="mt-0.5 w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]">
                                             <div class="text-xs">
-                                                <span class="font-semibold text-black/85 dark:text-white/85 block">Titik Kirim Kurir Online</span>
-                                                <span class="text-[10.5px] text-black/50 dark:text-white/50 block">Pesanan toko online dapat dikirim dari cabang ini via Biteship.</span>
+                                                <span class="font-semibold text-black/85 dark:text-white/85 block">{{ __('settings.lbl_online_shipping_origin') }}</span>
+                                                <span class="text-[10.5px] text-black/50 dark:text-white/50 block">{{ __('settings.desc_online_shipping_origin') }}</span>
                                             </div>
                                         </label>
                                         <label class="flex items-start gap-2.5 p-3 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.08] cursor-pointer">
                                             <input type="checkbox" name="allow_storefront_pickup" value="1" x-model="branchForm.allow_storefront_pickup" class="mt-0.5 w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]">
                                             <div class="text-xs">
-                                                <span class="font-semibold text-black/85 dark:text-white/85 block">Izinkan Ambil di Toko (Self Pickup)</span>
-                                                <span class="text-[10.5px] text-black/50 dark:text-white/50 block">Pelanggan dapat memilih opsi ambil mandiri langsung di cabang ini.</span>
+                                                <span class="font-semibold text-black/85 dark:text-white/85 block">{{ __('settings.lbl_allow_self_pickup') }}</span>
+                                                <span class="text-[10.5px] text-black/50 dark:text-white/50 block">{{ __('settings.desc_allow_self_pickup') }}</span>
                                             </div>
                                         </label>
                                     </div>
@@ -2372,7 +2372,7 @@
                             <button type="submit" :disabled="branchSubmitting"
                                     class="min-h-[44px] h-11 px-6 rounded-[12px] text-xs sm:text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition shadow-[0_1px_3px_rgba(0,122,255,0.3)] flex items-center gap-2 cursor-pointer disabled:opacity-50">
                                 <i data-lucide="plus" class="w-4 h-4"></i>
-                                <span x-text="branchSubmitting ? 'Menyimpan...' : 'Simpan Cabang'"></span>
+                                <span x-text="branchSubmitting ? '{{ addslashes(__('settings.btn_saving')) }}' : '{{ addslashes(__('settings.btn_save_branch')) }}'"></span>
                             </button>
                         </div>
                     </form>
@@ -2409,15 +2409,15 @@
                             </div>
                             <div>
                                 <p class="text-[10.5px] font-bold uppercase tracking-wider text-black/45 dark:text-white/45 mb-0.5">
-                                    Cabang &amp; Outlet &bull; Pengaturan Usaha
+                                    {{ __('settings.tab_branches') }} &bull; {{ __('settings.page_title') }}
                                 </p>
                                 <h3 class="text-base sm:text-lg font-bold text-black dark:text-white tracking-tight">{{ __('settings.edit_branch_title') }}</h3>
-                                <p class="text-xs text-black/55 dark:text-white/55 mt-0.5">Perbarui informasi cabang, titik koordinat peta GPS, dan wilayah pengiriman toko.</p>
+                                <p class="text-xs text-black/55 dark:text-white/55 mt-0.5">{{ __('settings.modal_branch_edit_sub') }}</p>
                             </div>
                         </div>
                         <button type="button" @click="showEditBranchModal = false"
                                 class="min-h-[44px] min-w-[44px] rounded-[12px] text-black/40 hover:text-black dark:text-white/40 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition flex items-center justify-center cursor-pointer"
-                                aria-label="Tutup">
+                                aria-label="{{ __('settings.close') }}">
                             <i data-lucide="x" class="w-5 h-5"></i>
                         </button>
                     </div>
@@ -2432,7 +2432,7 @@
                                 <div class="p-4 rounded-[16px] bg-[#FF3B30]/10 border border-[#FF3B30]/25 text-[#FF3B30] dark:text-[#FF453A] text-xs">
                                     <div class="font-bold mb-1.5 flex items-center gap-2">
                                         <i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i>
-                                        <span>Ada data yang perlu diperbaiki:</span>
+                                        <span>{{ __('settings.alert_fix_errors') }}</span>
                                     </div>
                                     <ul class="list-disc list-inside space-y-1 opacity-90 pl-1">
                                         @foreach ($errors->all() as $err)
@@ -2449,9 +2449,9 @@
                                 <div class="flex items-center justify-between pb-1.5 border-b border-black/5 dark:border-white/5">
                                     <div class="flex items-center gap-2">
                                         <span class="w-6 h-6 rounded-full bg-[#007AFF]/15 text-[#007AFF] text-xs font-bold flex items-center justify-center">1</span>
-                                        <h3 class="text-xs sm:text-sm font-bold text-black dark:text-white uppercase tracking-wider">Identitas Cabang &amp; Kontak</h3>
+                                        <h3 class="text-xs sm:text-sm font-bold text-black dark:text-white uppercase tracking-wider">{{ __('settings.sec_branch_identity_contact') }}</h3>
                                     </div>
-                                    <span class="text-[11px] font-medium text-black/45 dark:text-white/45">Data Operasional Toko</span>
+                                    <span class="text-[11px] font-medium text-black/45 dark:text-white/45">{{ __('settings.sec_branch_operational_data') }}</span>
                                 </div>
 
                                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -2476,14 +2476,14 @@
                                             <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-black/40 dark:text-white/40">
                                                 <i data-lucide="hash" class="w-4 h-4"></i>
                                             </div>
-                                            <input type="text" name="code" x-model="branchEditData.code" placeholder="Misal: SNP-01"
+                                            <input type="text" name="code" x-model="branchEditData.code" placeholder="{{ __('settings.ph_branch_code_sample') }}"
                                                    class="w-full pl-10 pr-3.5 py-2.5 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-xs sm:text-[13px] font-mono uppercase outline-none">
                                         </div>
                                     </div>
 
                                     <div>
                                         <label class="block font-semibold text-black/80 dark:text-white/85 text-xs mb-1.5">
-                                            Nomor WhatsApp / HP Cabang
+                                            {{ __('settings.branch_phone') }}
                                         </label>
                                         <div class="relative">
                                             <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-black/40 dark:text-white/40">
@@ -2499,7 +2499,7 @@
                                 <div class="pt-1">
                                     <label class="flex items-center gap-3 p-3 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 cursor-pointer">
                                         <input type="checkbox" name="is_active" value="1" x-model="branchEditData.is_active" class="w-4 h-4 rounded text-[#34C759] focus:ring-[#34C759]">
-                                        <span class="text-xs font-semibold text-black/85 dark:text-white/85">Status Cabang Aktif (Dapat Melayani Kasir &amp; Presensi Pegawai)</span>
+                                        <span class="text-xs font-semibold text-black/85 dark:text-white/85">{{ __('settings.lbl_branch_active_toggle') }}</span>
                                     </label>
                                 </div>
                             </div>
@@ -2511,15 +2511,15 @@
                                 <div class="flex items-center justify-between pb-1.5 border-b border-black/5 dark:border-white/5">
                                     <div class="flex items-center gap-2">
                                         <span class="w-6 h-6 rounded-full bg-[#007AFF]/15 text-[#007AFF] text-xs font-bold flex items-center justify-center">2</span>
-                                        <h3 class="text-xs sm:text-sm font-bold text-black dark:text-white uppercase tracking-wider">Titik Lokasi Cabang &amp; Wilayah Indonesia</h3>
+                                        <h3 class="text-xs sm:text-sm font-bold text-black dark:text-white uppercase tracking-wider">{{ __('settings.sec_branch_location_title') }}</h3>
                                     </div>
-                                    <span class="text-[11px] font-medium text-black/45 dark:text-white/45">Tingkat Desa / Kelurahan</span>
+                                    <span class="text-[11px] font-medium text-black/45 dark:text-white/45">{{ __('settings.sec_village_subdistrict') }}</span>
                                 </div>
 
                                 <!-- Autocomplete Pencarian Cepat Wilayah Indonesia -->
                                 <div class="relative">
                                     <label class="block font-semibold text-black/80 dark:text-white/85 text-xs mb-1.5">
-                                        Cari Wilayah Cepat (Autocomplete Biteship &amp; Administrasi Indonesia)
+                                        {{ __('settings.lbl_quick_search_area') }}
                                     </label>
                                     <div class="relative">
                                         <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-black/40 dark:text-white/40">
@@ -2530,7 +2530,7 @@
                                                @input.debounce.350ms="searchBranchAreas('edit')"
                                                @focus="if(branchSearchResults.length > 0) branchShowDropdown = true"
                                                class="w-full pl-10 pr-10 py-2.5 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-xs sm:text-[13px] outline-none"
-                                               placeholder="Ketik Kode Pos (cth: 12190) atau Nama Kelurahan / Desa (cth: Senayan / Senopati)...">
+                                               placeholder="{{ __('settings.ph_postal_or_subdistrict') }}">
                                         <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center">
                                             <template x-if="branchIsSearching">
                                                 <i data-lucide="loader-2" class="w-4 h-4 text-[#007AFF] animate-spin"></i>
@@ -2538,7 +2538,7 @@
                                         </div>
                                     </div>
                                     <p class="text-[11px] text-black/50 dark:text-white/50 mt-1">
-                                        Ketik minimal 3 karakter untuk mengisi otomatis seluruh kolom wilayah di bawah dan memindahkan pin peta GPS, atau isi langsung secara manual.
+                                        {{ __('settings.desc_autocomplete_hint') }}
                                     </p>
 
                                     <!-- Dropdown Hasil Pencarian Wilayah -->
@@ -2567,57 +2567,57 @@
                                     <div class="flex items-center justify-between pb-1 border-b border-black/5 dark:border-white/5">
                                         <span class="text-[11px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 flex items-center gap-1.5">
                                             <i data-lucide="map-pinned" class="w-3.5 h-3.5 text-[#007AFF]"></i>
-                                            Data Wilayah Administratif Cabang
+                                            {{ __('settings.sec_administrative_area') }}
                                         </span>
-                                        <span class="text-[10.5px] font-medium text-black/45 dark:text-white/45">Bisa diedit manual</span>
+                                        <span class="text-[10.5px] font-medium text-black/45 dark:text-white/45">{{ __('settings.lbl_can_edit_manually') }}</span>
                                     </div>
 
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                                         <div>
                                             <label class="block font-semibold text-black/80 dark:text-white/85 text-xs mb-1">
-                                                Provinsi <span class="text-[#FF3B30]">*</span>
+                                                {{ __('settings.lbl_province') }} <span class="text-[#FF3B30]">*</span>
                                             </label>
                                             <input type="text" name="province" x-model="branchEditData.province" required
                                                    class="w-full px-3.5 py-2.5 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-[12px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-xs outline-none"
-                                                   placeholder="Contoh: DKI Jakarta">
+                                                   placeholder="{{ __('settings.ph_province_sample') }}">
                                         </div>
 
                                         <div>
                                             <label class="block font-semibold text-black/80 dark:text-white/85 text-xs mb-1">
-                                                Kota / Kabupaten <span class="text-[#FF3B30]">*</span>
+                                                {{ __('settings.lbl_city') }} <span class="text-[#FF3B30]">*</span>
                                             </label>
                                             <input type="text" name="city" x-model="branchEditData.city" required
                                                    class="w-full px-3.5 py-2.5 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-[12px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-xs outline-none"
-                                                   placeholder="Contoh: Kota Jakarta Selatan">
+                                                   placeholder="{{ __('settings.ph_city_sample') }}">
                                         </div>
                                     </div>
 
                                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
                                         <div>
                                             <label class="block font-semibold text-black/80 dark:text-white/85 text-xs mb-1">
-                                                Kecamatan <span class="text-[#FF3B30]">*</span>
+                                                {{ __('settings.lbl_district') }} <span class="text-[#FF3B30]">*</span>
                                             </label>
                                             <input type="text" name="district" x-model="branchEditData.district" required
                                                    class="w-full px-3.5 py-2.5 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-[12px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-xs outline-none"
-                                                   placeholder="Contoh: Kebayoran Baru">
+                                                   placeholder="{{ __('settings.ph_district_sample') }}">
                                         </div>
 
                                         <div>
                                             <label class="block font-semibold text-black/80 dark:text-white/85 text-xs mb-1">
-                                                Kelurahan / Desa <span class="text-[#FF3B30]">*</span>
+                                                {{ __('settings.lbl_village') }} <span class="text-[#FF3B30]">*</span>
                                             </label>
                                             <input type="text" name="village" x-model="branchEditData.village" required
                                                    class="w-full px-3.5 py-2.5 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-[12px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-xs outline-none"
-                                                   placeholder="Contoh: Senayan">
+                                                   placeholder="{{ __('settings.ph_subdistrict_sample') }}">
                                         </div>
 
                                         <div>
                                             <label class="block font-semibold text-black/80 dark:text-white/85 text-xs mb-1">
-                                                Kode Pos <span class="text-[#FF3B30]">*</span>
+                                                {{ __('settings.lbl_postal_code') }} <span class="text-[#FF3B30]">*</span>
                                             </label>
                                             <input type="text" name="postal_code" x-model="branchEditData.postal_code" required
                                                    class="w-full px-3.5 py-2.5 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-[12px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-xs outline-none font-mono"
-                                                   placeholder="Contoh: 12190">
+                                                   placeholder="{{ __('settings.ph_postal_code_sample') }}">
                                         </div>
                                     </div>
                                 </div>
@@ -2625,25 +2625,25 @@
                                 <!-- Detail Alamat Jalan / Nomor Bangunan -->
                                 <div>
                                     <label class="block font-semibold text-black/80 dark:text-white/85 text-xs mb-1.5">
-                                        Detail Alamat Jalan / No. Ruko / Patokan Lokasi <span class="text-[#FF3B30]">*</span>
+                                        {{ __('settings.lbl_street_address_detail') }} <span class="text-[#FF3B30]">*</span>
                                     </label>
                                     <textarea name="address" rows="2" required x-model="branchEditData.address"
                                               class="w-full px-3.5 py-2.5 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-xs sm:text-[13px] outline-none resize-none"
-                                              placeholder="Contoh: Jl. Senopati No. 45, Ruko Blok B-2 (Sebelah Bank BCA)"></textarea>
+                                              placeholder="{{ __('settings.ph_address_sample') }}"></textarea>
                                 </div>
 
                                 <!-- Peta Interaktif Leaflet.js -->
                                 <div class="space-y-2">
                                     <div class="flex items-center justify-between">
                                         <label class="block font-semibold text-black/80 dark:text-white/85 text-xs">
-                                            Titik Koordinat Peta GPS (Geser Pin ke Lokasi Cabang Toko) <span class="text-[#FF3B30]">*</span>
+                                            {{ __('settings.lbl_gps_map_pin') }} <span class="text-[#FF3B30]">*</span>
                                         </label>
                                         <button type="button"
                                                 @click="useCurrentBranchGps('edit')"
                                                 :disabled="branchGpsLoading"
                                                 class="text-xs font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline flex items-center gap-1.5 cursor-pointer disabled:opacity-50">
                                             <i data-lucide="crosshair" class="w-3.5 h-3.5" :class="{'animate-spin': branchGpsLoading}"></i>
-                                            <span x-text="branchGpsLoading ? 'Mencari GPS...' : 'Gunakan GPS Saya'"></span>
+                                            <span x-text="branchGpsLoading ? '{{ addslashes(__('settings.lbl_searching_gps')) }}' : '{{ addslashes(__('settings.lbl_use_my_gps')) }}'"></span>
                                         </button>
                                     </div>
 
@@ -2655,11 +2655,11 @@
                                             <span x-text="branchEditData.latitude ? Number(branchEditData.latitude).toFixed(5) : '-'"></span>,
                                             <span x-text="branchEditData.longitude ? Number(branchEditData.longitude).toFixed(5) : '-'"></span>
                                             <span class="text-black/30 dark:text-white/30">&bull;</span>
-                                            <span class="text-[#34C759] font-bold">Radius: <span x-text="branchEditData.geofence_radius_meters"></span>m</span>
+                                            <span class="text-[#34C759] font-bold">{{ __('settings.lbl_radius_label') }} <span x-text="branchEditData.geofence_radius_meters"></span>m</span>
                                         </div>
                                     </div>
                                     <p class="text-[11px] text-black/50 dark:text-white/50">
-                                        Anda dapat mengklik atau menggeser pin biru di atas peta untuk menyesuaikan titik tepat cabang toko Anda. Lingkaran biru menandakan zona toleransi absensi karyawan.
+                                        {{ __('settings.desc_gps_map_hint') }}
                                     </p>
                                 </div>
 
@@ -2667,13 +2667,13 @@
                                 <div class="p-3.5 rounded-[14px] sm:rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 space-y-1.5">
                                     <div class="flex items-center justify-between text-xs">
                                         <span class="font-semibold text-black/80 dark:text-white/80">{{ __('settings.branch_geofence_radius') }}</span>
-                                        <span class="font-bold text-[#007AFF] font-mono"><span x-text="branchEditData.geofence_radius_meters"></span> Meter</span>
+                                        <span class="font-bold text-[#007AFF] font-mono"><span x-text="branchEditData.geofence_radius_meters"></span> {{ __('settings.unit_meter') }}</span>
                                     </div>
                                     <input type="range" name="geofence_radius_meters" min="20" max="1000" step="10"
                                            x-model="branchEditData.geofence_radius_meters"
                                            @input="updateGeofenceCircle('edit')"
                                            class="w-full accent-[#007AFF] cursor-pointer">
-                                    <p class="text-[10.5px] text-black/45 dark:text-white/45">Radius toleransi absensi kehadiran karyawan via portal staf menggunakan GPS handphone.</p>
+                                    <p class="text-[10.5px] text-black/45 dark:text-white/45">{{ __('settings.geofence_attendance_tolerance_desc') }}</p>
                                 </div>
 
                                 <!-- Hidden Form Inputs for Geolocation Metadata -->
@@ -2689,17 +2689,17 @@
                                 <div class="flex items-center justify-between pb-1.5 border-b border-black/5 dark:border-white/5">
                                     <div class="flex items-center gap-2">
                                         <span class="w-6 h-6 rounded-full bg-[#007AFF]/15 text-[#007AFF] text-xs font-bold flex items-center justify-center">3</span>
-                                        <h3 class="text-xs sm:text-sm font-bold text-black dark:text-white uppercase tracking-wider">Pengaturan Operasional &amp; Toko Online</h3>
+                                        <h3 class="text-xs sm:text-sm font-bold text-black dark:text-white uppercase tracking-wider">{{ __('settings.sec_branch_operational_online') }}</h3>
                                     </div>
-                                    <span class="text-[11px] font-medium text-black/45 dark:text-white/45">Fulfillment &amp; Presensi</span>
+                                    <span class="text-[11px] font-medium text-black/45 dark:text-white/45">{{ __('settings.sec_fulfillment_attendance') }}</span>
                                 </div>
 
                                 <div class="space-y-3">
                                     <label class="flex items-start gap-3 p-3.5 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.08] cursor-pointer hover:border-[#FF9500]/40 transition">
                                         <input type="checkbox" name="is_primary" value="1" x-model="branchEditData.is_primary" class="mt-0.5 w-4 h-4 rounded text-[#FF9500] focus:ring-[#FF9500]">
                                         <div class="text-xs">
-                                            <span class="font-bold text-black dark:text-white block">Jadikan Cabang Utama (Primary Branch)</span>
-                                            <span class="text-[11px] text-black/55 dark:text-white/55 block mt-0.5">Digunakan sebagai titik default penjemputan kurir online dan basis lokasi profil usaha.</span>
+                                            <span class="font-bold text-black dark:text-white block">{{ __('settings.lbl_set_primary_branch') }}</span>
+                                            <span class="text-[11px] text-black/55 dark:text-white/55 block mt-0.5">{{ __('settings.desc_primary_branch') }}</span>
                                         </div>
                                     </label>
 
@@ -2707,15 +2707,15 @@
                                         <label class="flex items-start gap-2.5 p-3 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.08] cursor-pointer">
                                             <input type="checkbox" name="is_online_fulfillment" value="1" x-model="branchEditData.is_online_fulfillment" class="mt-0.5 w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]">
                                             <div class="text-xs">
-                                                <span class="font-semibold text-black/85 dark:text-white/85 block">Titik Kirim Kurir Online</span>
-                                                <span class="text-[10.5px] text-black/50 dark:text-white/50 block">Pesanan toko online dapat dikirim dari cabang ini via Biteship.</span>
+                                                <span class="font-semibold text-black/85 dark:text-white/85 block">{{ __('settings.lbl_online_shipping_origin') }}</span>
+                                                <span class="text-[10.5px] text-black/50 dark:text-white/50 block">{{ __('settings.desc_online_shipping_origin') }}</span>
                                             </div>
                                         </label>
                                         <label class="flex items-start gap-2.5 p-3 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.08] cursor-pointer">
                                             <input type="checkbox" name="allow_storefront_pickup" value="1" x-model="branchEditData.allow_storefront_pickup" class="mt-0.5 w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]">
                                             <div class="text-xs">
-                                                <span class="font-semibold text-black/85 dark:text-white/85 block">Izinkan Ambil di Toko (Self Pickup)</span>
-                                                <span class="text-[10.5px] text-black/50 dark:text-white/50 block">Pelanggan dapat memilih opsi ambil mandiri langsung di cabang ini.</span>
+                                                <span class="font-semibold text-black/85 dark:text-white/85 block">{{ __('settings.lbl_allow_self_pickup') }}</span>
+                                                <span class="text-[10.5px] text-black/50 dark:text-white/50 block">{{ __('settings.desc_allow_self_pickup') }}</span>
                                             </div>
                                         </label>
                                     </div>
@@ -2732,7 +2732,7 @@
                             <button type="submit" :disabled="branchSubmitting"
                                     class="min-h-[44px] h-11 px-6 rounded-[12px] text-xs sm:text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition shadow-[0_1px_3px_rgba(0,122,255,0.3)] flex items-center gap-2 cursor-pointer disabled:opacity-50">
                                 <i data-lucide="check" class="w-4 h-4"></i>
-                                <span x-text="branchSubmitting ? 'Menyimpan...' : 'Simpan Perubahan'"></span>
+                                <span x-text="branchSubmitting ? '{{ addslashes(__('settings.btn_saving')) }}' : '{{ addslashes(__('settings.btn_save_changes')) }}'"></span>
                             </button>
                         </div>
                     </form>
@@ -2772,7 +2772,7 @@
                         </div>
                         <p class="text-base font-bold text-black dark:text-white">{{ __('settings.delete_branch_confirm_title') }}</p>
                         <p class="text-xs text-black/60 dark:text-white/60 mt-1.5 leading-relaxed">
-                            Cabang <span x-text="branchDeleteTarget.name" class="font-bold text-black dark:text-white"></span> akan dihapus dari sistem. Jika memiliki riwayat transaksi/stok, cabang akan dinonaktifkan otomatis.
+                            {{ __('settings.delete_branch_warning_prefix') }} <span x-text="branchDeleteTarget.name" class="font-bold text-black dark:text-white"></span> {{ __('settings.delete_branch_warning_suffix') }}
                         </p>
                     </div>
 
@@ -3464,7 +3464,7 @@
 
                 useCurrentBranchGps(target) {
                     if (!navigator.geolocation) {
-                        alert('Fitur GPS tidak didukung oleh browser Anda.');
+                        alert('{{ addslashes(__('settings.err_gps_not_supported')) }}');
                         return;
                     }
 
@@ -3492,7 +3492,7 @@
                         },
                         (err) => {
                             this.branchGpsLoading = false;
-                            alert('Gagal mengambil lokasi GPS: ' + (err.message || 'Izin akses lokasi ditolak.'));
+                            alert('{{ addslashes(__('settings.err_gps_failed_prefix')) }}' + (err.message || '{{ addslashes(__('settings.err_gps_permission_denied')) }}'));
                         },
                         { enableHighAccuracy: true, timeout: 10000 }
                     );

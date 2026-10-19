@@ -1,7 +1,7 @@
 @extends('layouts.app', [
-    'title' => 'Kotak Masuk Persetujuan - Cooca',
-    'headerTitle' => 'Pusat Otorisasi Dokumen (MAR)',
-    'headerSubtitle' => 'Kelola dan setujui permohonan anggaran pengadaan, biaya kas, dan faktur bertingkat.'
+    'title' => __('approvals.inbox_page_title'),
+    'headerTitle' => __('approvals.inbox_header_title'),
+    'headerSubtitle' => __('approvals.inbox_header_subtitle')
 ])
 
 @section('content')
@@ -15,10 +15,10 @@
             </div>
             <div>
                 <div class="text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D]">
-                    Otorisasi Bertingkat
+                    {{ __('approvals.badge_tiered_auth') }}
                 </div>
                 <h1 class="text-xl font-bold text-black dark:text-white tracking-tight">
-                    Kotak Masuk Persetujuan (Inbox)
+                    {{ __('approvals.inbox_title') }}
                 </h1>
             </div>
         </div>
@@ -26,12 +26,12 @@
         <div class="flex flex-wrap items-center gap-2.5 w-full sm:w-auto">
             <a href="{{ route('approvals.history') }}" class="min-h-[44px] px-4 rounded-[12px] text-xs font-semibold text-black/75 dark:text-white/75 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.10] active:scale-[0.98] transition-all flex items-center gap-1.5">
                 <i data-lucide="history" class="w-4 h-4"></i>
-                <span>Riwayat Selesai</span>
+                <span>{{ __('approvals.btn_history') }}</span>
             </a>
             @if(\App\Support\Context::isOwner() || \App\Support\Context::isAdminOrOwner())
             <a href="{{ route('approval-rules.index') }}" class="min-h-[44px] px-4 rounded-[12px] text-xs font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.98] transition-all flex items-center gap-1.5">
                 <i data-lucide="sliders" class="w-4 h-4"></i>
-                <span>Aturan Plafon Approval</span>
+                <span>{{ __('approvals.btn_rules') }}</span>
             </a>
             @endif
         </div>
@@ -41,7 +41,7 @@
     <div class="flex items-center gap-2 overflow-x-auto pb-1 text-xs no-scrollbar">
         <a href="{{ route('approvals.inbox') }}"
             class="px-4 py-2.5 rounded-full font-semibold transition-all shrink-0 flex items-center gap-1.5 {{ empty($filterType) ? 'bg-[#007AFF] text-white shadow-sm' : 'bg-white dark:bg-[#1C1C1E] text-black/70 dark:text-white/70 border border-black/[0.06] dark:border-white/[0.08] hover:bg-black/5' }}">
-            <span>Semua Dokumen</span>
+            <span>{{ __('approvals.filter_all') }}</span>
             <span class="px-2 py-0.5 rounded-full text-[11px] tabular-nums font-bold {{ empty($filterType) ? 'bg-white/20 text-white' : 'bg-black/5 dark:bg-white/10 text-black/70 dark:text-white/70' }}">
                 {{ $counts['all'] ?? 0 }}
             </span>
@@ -49,7 +49,7 @@
         <a href="{{ route('approvals.inbox', ['type' => 'purchase_order']) }}"
             class="px-4 py-2.5 rounded-full font-semibold transition-all shrink-0 flex items-center gap-1.5 {{ $filterType === 'purchase_order' ? 'bg-[#007AFF] text-white shadow-sm' : 'bg-white dark:bg-[#1C1C1E] text-black/70 dark:text-white/70 border border-black/[0.06] dark:border-white/[0.08] hover:bg-black/5' }}">
             <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
-            <span>Purchase Order</span>
+            <span>{{ __('approvals.filter_po') }}</span>
             <span class="px-2 py-0.5 rounded-full text-[11px] tabular-nums font-bold {{ $filterType === 'purchase_order' ? 'bg-white/20 text-white' : 'bg-black/5 dark:bg-white/10 text-black/70 dark:text-white/70' }}">
                 {{ $counts['purchase_order'] ?? 0 }}
             </span>
@@ -57,7 +57,7 @@
         <a href="{{ route('approvals.inbox', ['type' => 'expense']) }}"
             class="px-4 py-2.5 rounded-full font-semibold transition-all shrink-0 flex items-center gap-1.5 {{ $filterType === 'expense' ? 'bg-[#007AFF] text-white shadow-sm' : 'bg-white dark:bg-[#1C1C1E] text-black/70 dark:text-white/70 border border-black/[0.06] dark:border-white/[0.08] hover:bg-black/5' }}">
             <i data-lucide="receipt" class="w-3.5 h-3.5"></i>
-            <span>Biaya Kas</span>
+            <span>{{ __('approvals.filter_expense') }}</span>
             <span class="px-2 py-0.5 rounded-full text-[11px] tabular-nums font-bold {{ $filterType === 'expense' ? 'bg-white/20 text-white' : 'bg-black/5 dark:bg-white/10 text-black/70 dark:text-white/70' }}">
                 {{ $counts['expense'] ?? 0 }}
             </span>
@@ -65,7 +65,7 @@
         <a href="{{ route('approvals.inbox', ['type' => 'supplier_invoice']) }}"
             class="px-4 py-2.5 rounded-full font-semibold transition-all shrink-0 flex items-center gap-1.5 {{ $filterType === 'supplier_invoice' ? 'bg-[#007AFF] text-white shadow-sm' : 'bg-white dark:bg-[#1C1C1E] text-black/70 dark:text-white/70 border border-black/[0.06] dark:border-white/[0.08] hover:bg-black/5' }}">
             <i data-lucide="building-2" class="w-3.5 h-3.5"></i>
-            <span>Faktur Supplier</span>
+            <span>{{ __('approvals.filter_supplier_invoice') }}</span>
             <span class="px-2 py-0.5 rounded-full text-[11px] tabular-nums font-bold {{ $filterType === 'supplier_invoice' ? 'bg-white/20 text-white' : 'bg-black/5 dark:bg-white/10 text-black/70 dark:text-white/70' }}">
                 {{ $counts['supplier_invoice'] ?? 0 }}
             </span>
@@ -93,11 +93,11 @@
                                 {{ $ticket->getDocumentTypeLabel() }}
                             </span>
                             <span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#FF9500]/15 text-[#FF9500]">
-                                Menunggu Level {{ $ticket->current_level }} dari {{ $ticket->total_levels }}
+                                {{ __('approvals.waiting_level', ['current' => $ticket->current_level, 'total' => $ticket->total_levels]) }}
                             </span>
                             <span class="text-xs text-black/40 dark:text-white/40">·</span>
                             <span class="text-xs text-black/50 dark:text-white/50 tabular-nums">
-                                Diajukan {{ $ticket->created_at->diffForHumans() }} ({{ $ticket->created_at->format('d/m/Y H:i') }})
+                                {{ __('approvals.submitted_time', ['diff' => $ticket->created_at->diffForHumans(), 'date' => $ticket->created_at->format('d/m/Y H:i')]) }}
                             </span>
                         </div>
 
@@ -107,7 +107,7 @@
                             </h3>
                             @if ($targetUrl !== '#')
                                 <a href="{{ $targetUrl }}" target="_blank" class="text-xs font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
-                                    <span>Buka Dokumen Asli</span>
+                                    <span>{{ __('approvals.btn_open_original') }}</span>
                                     <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
                                 </a>
                             @endif
@@ -116,12 +116,12 @@
                         <div class="text-xs text-black/60 dark:text-white/60 flex flex-wrap items-center gap-4">
                             <span class="flex items-center gap-1.5">
                                 <i data-lucide="user" class="w-3.5 h-3.5 text-black/40 dark:text-white/40"></i>
-                                <span>Pembuat Draf (Maker): <strong class="text-black dark:text-white">{{ $ticket->requester->name ?? 'Staf' }}</strong></span>
+                                <span>{{ __('approvals.maker_label') }} <strong class="text-black dark:text-white">{{ $ticket->requester->name ?? 'Staf' }}</strong></span>
                             </span>
                             @if ($ticket->rule)
                                 <span class="flex items-center gap-1.5">
                                     <i data-lucide="shield-check" class="w-3.5 h-3.5 text-[#34C759]"></i>
-                                    <span>Aturan: <strong class="text-black dark:text-white">{{ $ticket->rule->name }}</strong></span>
+                                    <span>{{ __('approvals.rule_label') }} <strong class="text-black dark:text-white">{{ $ticket->rule->name }}</strong></span>
                                 </span>
                             @endif
                         </div>
@@ -134,14 +134,14 @@
                             @click="openRejectModal('{{ $ticket->id }}', '{{ $ticket->getDocumentTypeLabel() }}', 'Rp {{ number_format($ticket->amount, 0, ',', '.') }}')"
                             class="min-h-[44px] px-4 py-2.5 rounded-[12px] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 text-[#FF3B30] dark:text-[#FF453A] font-semibold text-xs transition-all active:scale-[0.98] flex items-center gap-1.5">
                             <i data-lucide="x-circle" class="w-4 h-4"></i>
-                            <span>Tolak</span>
+                            <span>{{ __('approvals.btn_reject') }}</span>
                         </button>
                         <button
                             type="button"
                             @click="openApproveModal('{{ $ticket->id }}', '{{ $ticket->getDocumentTypeLabel() }}', 'Rp {{ number_format($ticket->amount, 0, ',', '.') }}', {{ $ticket->current_level }})"
                             class="min-h-[44px] px-6 py-2.5 rounded-[12px] bg-[#34C759] hover:bg-[#2FB34F] text-white font-semibold text-xs shadow-sm shadow-[#34C759]/25 transition-all active:scale-[0.98] flex items-center gap-1.5">
                             <i data-lucide="check-circle-2" class="w-4 h-4"></i>
-                            <span>Setujui (Level {{ $ticket->current_level }})</span>
+                            <span>{{ __('approvals.btn_approve_level', ['level' => $ticket->current_level]) }}</span>
                         </button>
                     </div>
 
@@ -152,9 +152,9 @@
                 <div class="w-14 h-14 rounded-full bg-[#34C759]/10 text-[#34C759] flex items-center justify-center mx-auto">
                     <i data-lucide="check-check" class="w-7 h-7"></i>
                 </div>
-                <h3 class="text-base font-bold text-black dark:text-white">Kotak Masuk Bersih</h3>
+                <h3 class="text-base font-bold text-black dark:text-white">{{ __('approvals.empty_inbox_title') }}</h3>
                 <p class="text-xs text-black/50 dark:text-white/50 max-w-sm mx-auto">
-                    Tidak ada permohonan persetujuan yang sedang menunggu tindakan Anda. Semua transaksi telah diproses.
+                    {{ __('approvals.empty_inbox_desc') }}
                 </p>
             </div>
         @endforelse
@@ -205,13 +205,13 @@
                                 <i data-lucide="check-circle-2" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h3 id="approve-modal-title" class="text-base font-bold text-black dark:text-white">Setujui Dokumen</h3>
+                                <h3 id="approve-modal-title" class="text-base font-bold text-black dark:text-white">{{ __('approvals.modal_approve_title') }}</h3>
                                 <p class="text-xs text-black/55 dark:text-white/55" x-text="activeDocTitle"></p>
                             </div>
                         </div>
                         <button type="button" @click="approveModalOpen = false"
                             class="w-10 h-10 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition cursor-pointer"
-                            aria-label="Tutup Dialog">
+                            aria-label="{{ __('common.close') }}">
                             <i data-lucide="x" class="w-5 h-5"></i>
                         </button>
                     </div>
@@ -219,18 +219,18 @@
                     <form :action="'{{ url('/approvals') }}/' + activeTicketId + '/approve'" method="POST" class="space-y-4">
                         @csrf
                         <div class="p-3.5 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.04] text-xs">
-                            <div class="text-black/60 dark:text-white/60">Nominal Transaksi:</div>
+                            <div class="text-black/60 dark:text-white/60">{{ __('approvals.tx_amount_label') }}</div>
                             <div class="text-lg font-bold text-black dark:text-white mt-0.5 tabular-nums" x-text="activeDocAmount"></div>
                         </div>
 
                         <div>
                             <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1.5">
-                                Catatan Persetujuan (Opsional)
+                                {{ __('approvals.notes_optional_label') }}
                             </label>
                             <textarea
                                 name="notes"
                                 rows="2"
-                                placeholder="Contoh: Anggaran telah diperiksa dan disetujui."
+                                placeholder="{{ __('approvals.notes_approve_placeholder') }}"
                                 class="w-full px-3.5 py-2.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.08] text-[16px] sm:text-xs text-black dark:text-white outline-none resize-none focus:ring-2 focus:ring-[#34C759]/50"></textarea>
                         </div>
 
@@ -239,12 +239,12 @@
                                 type="button"
                                 @click="approveModalOpen = false"
                                 class="min-h-[44px] px-4 py-2 rounded-[12px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 active:scale-[0.98]">
-                                Batal
+                                {{ __('common.cancel') }}
                             </button>
                             <button
                                 type="submit"
                                 class="min-h-[44px] px-5 py-2 rounded-[12px] bg-[#34C759] hover:bg-[#2FB34F] text-white text-xs font-semibold shadow-sm active:scale-[0.98]">
-                                Konfirmasi Setujui
+                                {{ __('approvals.btn_confirm_approve') }}
                             </button>
                         </div>
                     </form>
@@ -298,13 +298,13 @@
                                 <i data-lucide="alert-triangle" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h3 id="reject-modal-title" class="text-base font-bold text-black dark:text-white">Tolak Dokumen</h3>
+                                <h3 id="reject-modal-title" class="text-base font-bold text-black dark:text-white">{{ __('approvals.modal_reject_title') }}</h3>
                                 <p class="text-xs text-black/55 dark:text-white/55" x-text="activeDocTitle"></p>
                             </div>
                         </div>
                         <button type="button" @click="rejectModalOpen = false"
                             class="w-10 h-10 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition cursor-pointer"
-                            aria-label="Tutup Dialog">
+                            aria-label="{{ __('common.close') }}">
                             <i data-lucide="x" class="w-5 h-5"></i>
                         </button>
                     </div>
@@ -312,20 +312,20 @@
                     <form :action="'{{ url('/approvals') }}/' + activeTicketId + '/reject'" method="POST" class="space-y-4">
                         @csrf
                         <div class="p-3.5 rounded-[14px] bg-[#FF3B30]/5 border border-[#FF3B30]/15 text-xs">
-                            <div class="text-[#FF3B30] font-semibold">Perhatian:</div>
-                            <div class="text-black/70 dark:text-white/70 mt-0.5">Penolakan dokumen akan menghentikan alur pencairan anggaran. Pembuat draf (Maker) akan menerima alasan penolakan ini.</div>
+                            <div class="text-[#FF3B30] font-semibold">{{ __('approvals.reject_warning_title') }}</div>
+                            <div class="text-black/70 dark:text-white/70 mt-0.5">{{ __('approvals.reject_warning_desc') }}</div>
                         </div>
 
                         <div>
                             <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1.5">
-                                Alasan Penolakan <span class="text-[#FF3B30]">*</span>
+                                {{ __('approvals.reason_required_label') }} <span class="text-[#FF3B30]">*</span>
                             </label>
                             <textarea
                                 name="reason"
                                 rows="3"
                                 required
                                 x-model="rejectionReasonText"
-                                placeholder="Contoh: Harga melampaui batas anggaran atau kuota bulan ini sudah habis."
+                                placeholder="{{ __('approvals.reason_reject_placeholder') }}"
                                 class="w-full px-3.5 py-2.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.08] text-[16px] sm:text-xs text-black dark:text-white outline-none resize-none focus:ring-2 focus:ring-[#FF3B30]/50"></textarea>
                         </div>
 
@@ -334,13 +334,13 @@
                                 type="button"
                                 @click="rejectModalOpen = false"
                                 class="min-h-[44px] px-4 py-2 rounded-[12px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 active:scale-[0.98]">
-                                Batal
+                                {{ __('common.cancel') }}
                             </button>
                             <button
                                 type="submit"
                                 :disabled="!rejectionReasonText.trim()"
                                 class="min-h-[44px] px-5 py-2 rounded-[12px] bg-[#FF3B30] hover:bg-[#E0352B] disabled:opacity-50 text-white text-xs font-semibold shadow-sm active:scale-[0.98]">
-                                Tolak Dokumen
+                                {{ __('approvals.btn_reject_document') }}
                             </button>
                         </div>
                     </form>

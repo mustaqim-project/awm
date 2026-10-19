@@ -138,4 +138,87 @@ final class SalesOrderWebController extends Controller
         return redirect()->route('invoices.show', $invoice)
             ->with('success', "Faktur Penjualan {$invoice->invoice_number} berhasil diterbitkan dari Pesanan {$salesOrder->so_number}.");
     }
+
+    public function edit(SalesOrder $salesOrder): View
+    {
+        $business = Context::requireBusiness();
+        abort_unless($salesOrder->business_id === $business->id, 403);
+
+        $salesOrder->load('customer', 'items.product', 'quotation');
+        $customers       = Customer::where('business_id', $business->id)->orderBy('name')->get();
+        $products        = Product::where('business_id', $business->id)->forSalesOrder()->orderBy('name')->get();
+        $goodsProducts   = Product::where('business_id', $business->id)->forSalesOrder()->goods()->orderBy('name')->get();
+        $serviceProducts = Product::where('business_id', $business->id)->forSalesOrder()->services()->orderBy('name')->get();
+
+        $quotations = Quotation::with('customer', 'items')
+            ->where('business_id', $business->id)
+            ->where(function ($q) use ($salesOrder) {
+                $q->whereDoesntHave('salesOrder')
+                    ->orWhere('id', $salesOrder->quotation_id);
+            })
+            ->orderByDesc('date')
+            ->get();
+
+        return view('app.sales-orders.edit', compact(
+            'business', 'salesOrder', 'customers', 'products', 'goodsProducts', 'serviceProducts', 'quotations'
+        ));
+    }
+
+    public function update(Request $request, SalesOrder $salesOrder): RedirectResponse
+    {
+        $business = Context::requireBusiness();
+        abort_unless($salesOrder->business_id === $business->id, 403);
+
+        $validated = $request->validate([
+            'customer_id'             => [
+                'required',
+                Rule::exists('customers', 'id')->where('business_id', $business->id),
+            ],
+            'so_number'               => ['nullable', 'string', 'max:64'],
+            'order_date'              => ['required', 'date'],
+            'expected_delivery_date'  => ['nullable', 'date', 'after_or_equal:order_date'],
+            'shipping_address'        => ['nullable', 'string', 'max:500'],
+            'quotation_id'            => [
+                'nullable',
+                Rule::exists('quotations', 'id')->where('business_id', $business->id),
+            ],
+            'discount_amount'         => ['nullable', 'numeric', 'min:0'],
+            'tax_percentage'         => ['nullable', 'numeric', 'min:0', 'max:100'],
+            'tax_amount'              => ['nullable', 'numeric', 'min:0'],
+            'status'                  => ['nullable', 'string', 'in:draft,confirmed,processing,completed,cancelled'],
+            'notes'                   => ['nullable', 'string', 'max:1000'],
+            'items'                   => ['required', 'array', 'min:1'],
+            'items.*.product_id'      => [
+                'nullable',
+                Rule::exists('products', 'id')->where('business_id', $business->id),
+            ],
+            'items.*.product_name'    => ['required_without:items.*.product_id', 'nullable', 'string'],
+            'items.*.unit_price'      => ['required', 'numeric', 'min:0'],
+            'items.*.quantity'        => ['required', 'numeric', 'min:0.01'],
+            'items.*.discount_amount' => ['nullable', 'numeric', 'min:0'],
+            'items.*.notes'           => ['nullable', 'string'],
+        ]);
+
+        $updated = $this->salesPipelineService->updateSalesOrder($salesOrder, $validated);
+
+        return redirect()->route('sales.orders.show', $updated)
+            ->with('success', "Pesanan Penjualan {$updated->so_number} berhasil diperbarui.");
+    }
+
+    public function pdf(SalesOrder $salesOrder): \Illuminate\Http\Response
+    {
+        $business = Context::requireBusiness();
+        abort_unless($salesOrder->business_id === $business->id, 403);
+
+        $salesOrder->load(['customer', 'items.product', 'quotation']);
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.sales_order_pdf', [
+            'business' => $business,
+            'salesOrder' => $salesOrder,
+        ])->setPaper('a4', 'portrait');
+
+        $filename = 'Pesanan-' . \Illuminate\Support\Str::slug($salesOrder->so_number) . '.pdf';
+
+        return $pdf->stream($filename);
+    }
 }

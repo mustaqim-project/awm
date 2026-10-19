@@ -292,11 +292,18 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         Route::get('/sales/quotations/create', [QuotationWebController::class, 'create'])->middleware('require.permission:sales.pipeline')->name('sales.quotations.create');
         Route::post('/sales/quotations', [QuotationWebController::class, 'store'])->middleware('require.permission:sales.pipeline')->name('sales.quotations.store');
         Route::get('/sales/quotations/{quotation}', [QuotationWebController::class, 'show'])->middleware('require.permission:sales.view')->name('sales.quotations.show');
+        Route::get('/sales/quotations/{quotation}/edit', [QuotationWebController::class, 'edit'])->middleware('require.permission:sales.pipeline')->name('sales.quotations.edit');
+        Route::put('/sales/quotations/{quotation}', [QuotationWebController::class, 'update'])->middleware('require.permission:sales.pipeline')->name('sales.quotations.update');
+        Route::get('/sales/quotations/{quotation}/pdf', [QuotationWebController::class, 'pdf'])->middleware('require.permission:sales.view')->name('sales.quotations.pdf');
         Route::post('/sales/quotations/{quotation}/convert', [QuotationWebController::class, 'convertToSalesOrder'])->middleware('require.permission:sales.pipeline')->name('sales.quotations.convert');
+
         Route::get('/sales/orders', [SalesOrderWebController::class, 'index'])->middleware('require.permission:sales.view')->name('sales.orders.index');
         Route::get('/sales/orders/create', [SalesOrderWebController::class, 'create'])->middleware('require.permission:sales.pipeline')->name('sales.orders.create');
         Route::post('/sales/orders', [SalesOrderWebController::class, 'store'])->middleware('require.permission:sales.pipeline')->name('sales.orders.store');
         Route::get('/sales/orders/{salesOrder}', [SalesOrderWebController::class, 'show'])->middleware('require.permission:sales.view')->name('sales.orders.show');
+        Route::get('/sales/orders/{salesOrder}/edit', [SalesOrderWebController::class, 'edit'])->middleware('require.permission:sales.pipeline')->name('sales.orders.edit');
+        Route::put('/sales/orders/{salesOrder}', [SalesOrderWebController::class, 'update'])->middleware('require.permission:sales.pipeline')->name('sales.orders.update');
+        Route::get('/sales/orders/{salesOrder}/pdf', [SalesOrderWebController::class, 'pdf'])->middleware('require.permission:sales.view')->name('sales.orders.pdf');
         Route::post('/sales/orders/{salesOrder}/generate-invoice', [SalesOrderWebController::class, 'generateInvoice'])->middleware('require.permission:sales.pipeline')->name('sales.orders.generate-invoice');
 
         // Invoices Management & Generator (Commerce Billing)
@@ -307,6 +314,7 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
             Route::get('/invoices', [InvoiceWebController::class, 'index'])->name('invoices.index');
             Route::get('/invoices/{invoice}', [InvoiceWebController::class, 'show'])->name('invoices.show');
             Route::get('/invoices/{invoice}/print', [InvoiceWebController::class, 'print'])->name('invoices.print');
+            Route::get('/invoices/{invoice}/pdf', [InvoiceWebController::class, 'pdf'])->name('invoices.pdf');
         });
         Route::get('/invoices/{invoice}/edit', [InvoiceWebController::class, 'edit'])->middleware('require.permission:invoices.edit')->name('invoices.edit');
         Route::put('/invoices/{invoice}', [InvoiceWebController::class, 'update'])->middleware('require.permission:invoices.edit')->name('invoices.update');
@@ -322,7 +330,10 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
             Route::get('/sales/returns/create', [SalesReturnWebController::class, 'create'])->name('sales.returns.create');
             Route::post('/sales/returns', [SalesReturnWebController::class, 'store'])->name('sales.returns.store');
             Route::get('/sales/returns/{return}', [SalesReturnWebController::class, 'show'])->name('sales.returns.show');
+            Route::get('/sales/returns/{return}/edit', [SalesReturnWebController::class, 'edit'])->name('sales.returns.edit');
+            Route::put('/sales/returns/{return}', [SalesReturnWebController::class, 'update'])->name('sales.returns.update');
             Route::get('/sales/returns/{return}/print', [SalesReturnWebController::class, 'print'])->name('sales.returns.print');
+            Route::get('/sales/returns/{return}/pdf', [SalesReturnWebController::class, 'pdf'])->name('sales.returns.pdf');
             Route::post('/sales/returns/{return}/approve', [SalesReturnWebController::class, 'approve'])->name('sales.returns.approve');
             Route::post('/sales/returns/{return}/complete', [SalesReturnWebController::class, 'complete'])->name('sales.returns.complete');
         });
@@ -814,11 +825,14 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
 
             // Laporan Keuangan SAK EMKM Resmi
             Route::get('/finance/balance-sheet', [AccountingWebController::class, 'balanceSheet'])->name('finance.balance-sheet');
+            Route::get('/finance/balance-sheet/export-excel', [AccountingWebController::class, 'balanceSheetExportExcel'])->middleware(['require.permission:accounting.view', 'entitlement:export'])->name('finance.balance-sheet.export-excel');
             Route::get('/finance/balance-sheet/opening-template', [AccountingWebController::class, 'openingBalanceTemplate'])->name('finance.balance-sheet.opening-template');
             Route::post('/finance/balance-sheet/opening-preview', [AccountingWebController::class, 'openingBalancePreview'])->name('finance.balance-sheet.opening-preview');
             Route::post('/finance/balance-sheet/opening-execute', [AccountingWebController::class, 'openingBalanceExecute'])->middleware('require.permission:accounting.manage')->name('finance.balance-sheet.opening-execute');
             Route::get('/finance/trial-balance', [AccountingWebController::class, 'trialBalance'])->name('finance.trial-balance');
+            Route::get('/finance/trial-balance/export-excel', [AccountingWebController::class, 'trialBalanceExportExcel'])->middleware(['require.permission:accounting.view', 'entitlement:export'])->name('finance.trial-balance.export-excel');
             Route::get('/finance/general-ledger', [AccountingWebController::class, 'generalLedger'])->name('finance.general-ledger');
+            Route::get('/finance/general-ledger/export-excel', [AccountingWebController::class, 'generalLedgerExportExcel'])->middleware(['require.permission:accounting.view', 'entitlement:export'])->name('finance.general-ledger.export-excel');
 
             // Rekonsiliasi Bank
             Route::get('/finance/reconciliations', [AccountingWebController::class, 'reconciliationIndex'])->name('finance.reconciliations.index');

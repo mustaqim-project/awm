@@ -47,29 +47,29 @@
                         <select x-model="activeChatAgent" 
                                 @change="switchAgent(activeChatAgent)" 
                                 class="bg-[#111827] border border-white/15 text-white font-semibold text-xs rounded-lg px-2 py-0.5 focus:outline-none focus:border-emerald-500 transition cursor-pointer">
-                            <optgroup label="Eksekutif C-Level" class="bg-[#0B0F19] text-white/60 font-semibold">
-                                <option value="ceo" class="text-white">AI CEO (Direktur Utama)</option>
-                                <option value="cfo" class="text-white">AI CFO (Direktur Keuangan)</option>
-                                <option value="coo" class="text-white">AI COO (Direktur Operasional)</option>
-                                <option value="cmo" class="text-white">AI CMO (Direktur Pemasaran)</option>
-                                <option value="sales_director" class="text-white">AI Sales Director (Direktur Penjualan)</option>
-                                <option value="hr_lead" class="text-white">AI HR Lead (Pimpinan SDM)</option>
+                            <optgroup label="{{ __('ai.chat.group_executives') }}" class="bg-[#0B0F19] text-white/60 font-semibold">
+                                <option value="ceo" class="text-white">{{ __('ai.chat.agents.ceo') }}</option>
+                                <option value="cfo" class="text-white">{{ __('ai.chat.agents.cfo') }}</option>
+                                <option value="coo" class="text-white">{{ __('ai.chat.agents.coo') }}</option>
+                                <option value="cmo" class="text-white">{{ __('ai.chat.agents.cmo') }}</option>
+                                <option value="sales_director" class="text-white">{{ __('ai.chat.agents.sales_director') }}</option>
+                                <option value="hr_lead" class="text-white">{{ __('ai.chat.agents.hr_lead') }}</option>
                             </optgroup>
-                            <optgroup label="Spesialis Operasional & Penjualan" class="bg-[#0B0F19] text-white/60 font-semibold">
-                                <option value="business" class="text-white">AI Business Analyst (Strategi & Risiko)</option>
-                                <option value="sales" class="text-white">AI Sales Specialist (Kasir & Transaksi)</option>
-                                <option value="customer" class="text-white">AI Customer Care (Retensi Pelanggan)</option>
-                                <option value="inventory" class="text-white">AI Inventory Specialist (Stok & Gudang)</option>
-                                <option value="purchasing" class="text-white">AI Purchasing Specialist (Pengadaan)</option>
-                                <option value="marketplace" class="text-white">AI Marketplace Specialist (Sinkronisasi)</option>
+                            <optgroup label="{{ __('ai.chat.group_ops_sales') }}" class="bg-[#0B0F19] text-white/60 font-semibold">
+                                <option value="business" class="text-white">{{ __('ai.chat.agents.business') }}</option>
+                                <option value="sales" class="text-white">{{ __('ai.chat.agents.sales') }}</option>
+                                <option value="customer" class="text-white">{{ __('ai.chat.agents.customer') }}</option>
+                                <option value="inventory" class="text-white">{{ __('ai.chat.agents.inventory') }}</option>
+                                <option value="purchasing" class="text-white">{{ __('ai.chat.agents.purchasing') }}</option>
+                                <option value="marketplace" class="text-white">{{ __('ai.chat.agents.marketplace') }}</option>
                             </optgroup>
-                            <optgroup label="Spesialis Finansial, Konten & SDM" class="bg-[#0B0F19] text-white/60 font-semibold">
-                                <option value="finance" class="text-white">AI Finance Specialist (Arus Kas & Audit)</option>
-                                <option value="reporting" class="text-white">AI Reporting Specialist (Laporan Bisnis)</option>
-                                <option value="marketing" class="text-white">AI Marketing Specialist (Kampanye Iklan)</option>
-                                <option value="content" class="text-white">AI Content Specialist (Katalog & Promo)</option>
-                                <option value="social_media" class="text-white">AI Social Media Specialist (Audiens)</option>
-                                <option value="hr" class="text-white">AI HR Specialist (Presensi Karyawan)</option>
+                            <optgroup label="{{ __('ai.chat.group_finance_content_hr') }}" class="bg-[#0B0F19] text-white/60 font-semibold">
+                                <option value="finance" class="text-white">{{ __('ai.chat.agents.finance') }}</option>
+                                <option value="reporting" class="text-white">{{ __('ai.chat.agents.reporting') }}</option>
+                                <option value="marketing" class="text-white">{{ __('ai.chat.agents.marketing') }}</option>
+                                <option value="content" class="text-white">{{ __('ai.chat.agents.content') }}</option>
+                                <option value="social_media" class="text-white">{{ __('ai.chat.agents.social_media') }}</option>
+                                <option value="hr" class="text-white">{{ __('ai.chat.agents.hr') }}</option>
                             </optgroup>
                         </select>
                     </div>
@@ -147,7 +147,7 @@
 
             <!-- Typing Loading Indicator -->
             <div x-show="isSendingChatMessage" class="flex flex-col items-start max-w-[85%] space-y-1" style="display: none;">
-                <span class="text-[11px] text-white/40 pl-1">Mengetik...</span>
+                <span class="text-[11px] text-white/40 pl-1">{{ __('ai.chat.typing_indicator') }}</span>
                 <div class="bg-emerald-950/60 border border-emerald-500/30 text-emerald-300 rounded-2xl rounded-tl-sm px-4 py-3 text-xs flex items-center gap-2">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse delay-150"></span>

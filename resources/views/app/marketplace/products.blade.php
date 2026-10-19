@@ -1,7 +1,7 @@
 @extends('layouts.app', [
-    'title' => 'Pemetaan Produk & Multi-Harga - ' . $business->name,
-    'headerTitle' => 'Pemetaan Produk & Multi-Harga',
-    'headerSubtitle' => 'Atur perbedaan harga jual dan alokasi stok untuk Shopee, TikTok Shop, dan Tokopedia',
+    'title' => __('marketplace.products_page_title') . ' - ' . $business->name,
+    'headerTitle' => __('marketplace.products_page_title'),
+    'headerSubtitle' => __('marketplace.products_page_subtitle'),
 ])
 
 @section('content')
@@ -78,43 +78,43 @@
     {{-- MODULE HEADER & PERSISTENT MARKETPLACE TABS --}}
     <x-module-header
         module="marketplace"
-        title="Pengaturan Multi-Harga &amp; Stok Marketplace"
-        subtitle="Tetapkan harga berbeda per channel (Shopee, TikTok Shop, Tokopedia) untuk menutupi biaya admin marketplace serta sinkronisasi stok otomatis.">
+        :title="__('marketplace.products_module_title')"
+        :subtitle="__('marketplace.products_module_subtitle')">
         <x-slot:actions>
             {{-- 1-Click Pull / Import Products from Marketplace --}}
-            <form method="POST" action="{{ route('marketplace-hub.products.pull') }}" onsubmit="return typeof AppAlert !== 'undefined' ? AppAlert.confirmSubmit(event, this, 'Sistem akan mengambil seluruh produk aktif dari toko online terhubung (TikTok Shop, Shopee, Tokopedia), membuat master produk baru di COOCA (jika belum ada), dan menautkan SKU serta stok secara otomatis.', 'Tarik Katalog dari Toko Marketplace?', 'info') : true">
+            <form method="POST" action="{{ route('marketplace-hub.products.pull') }}" onsubmit="return typeof AppAlert !== 'undefined' ? AppAlert.confirmSubmit(event, this, '{{ addslashes(__('marketplace.confirm_pull_desc')) }}', '{{ addslashes(__('marketplace.confirm_pull_title')) }}', 'info') : true">
                 @csrf
                 <input type="hidden" name="channel" value="all">
                 <button type="submit"
                     class="min-h-[44px] sm:min-h-0 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#34C759] hover:bg-[#30B753] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 shadow-sm cursor-pointer"
-                    title="Tarik seluruh data produk dari sistem seller (TikTok Shop, Shopee, Tokopedia) ke COOCA">
+                    title="{{ __('marketplace.btn_pull_products_title') }}">
                     <i data-lucide="download" class="w-4 h-4"></i>
-                    <span>Tarik Produk dari Toko</span>
+                    <span>{{ __('marketplace.btn_pull_products') }}</span>
                 </button>
             </form>
 
             {{-- 1-Click Push / Sync All Price & Stock to Marketplace --}}
-            <form method="POST" action="{{ route('marketplace-hub.products.sync-all') }}" onsubmit="return typeof AppAlert !== 'undefined' ? AppAlert.confirmSubmit(event, this, 'Data harga dan stok seluruh produk aktif akan dikirimkan serentak ke Shopee, TikTok Shop, dan Tokopedia.', 'Mulai Sinkronisasi Massal?', 'info') : true">
+            <form method="POST" action="{{ route('marketplace-hub.products.sync-all') }}" onsubmit="return typeof AppAlert !== 'undefined' ? AppAlert.confirmSubmit(event, this, '{{ addslashes(__('marketplace.confirm_sync_desc')) }}', '{{ addslashes(__('marketplace.confirm_sync_title')) }}', 'info') : true">
                 @csrf
                 <button type="submit"
                     class="min-h-[44px] sm:min-h-0 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 shadow-sm cursor-pointer"
-                    title="Kirim pembaruan harga dan stok dari COOCA ke seluruh marketplace">
+                    title="{{ __('marketplace.btn_sync_all_title') }}">
                     <i data-lucide="refresh-cw" class="w-4 h-4"></i>
-                    <span>Sinkronkan ke Toko</span>
+                    <span>{{ __('marketplace.btn_sync_all') }}</span>
                 </button>
             </form>
 
             <a href="{{ route('import.index') }}"
                 class="min-h-[44px] sm:min-h-0 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] flex items-center justify-center gap-1.5 cursor-pointer"
-                title="Impor massal dari file Excel/CSV">
+                title="{{ __('marketplace.btn_import_excel_title') }}">
                 <i data-lucide="file-spreadsheet" class="w-4 h-4"></i>
-                <span class="hidden md:inline">Impor Excel</span>
+                <span class="hidden md:inline">{{ __('marketplace.btn_import_excel') }}</span>
             </a>
 
             <a href="{{ route('marketplace-hub.index') }}"
                 class="min-h-[44px] sm:min-h-0 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] flex items-center justify-center gap-1.5 cursor-pointer">
                 <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                <span>Kembali</span>
+                <span>{{ __('marketplace.back') }}</span>
             </a>
         </x-slot:actions>
     </x-module-header>
@@ -131,11 +131,11 @@
             </div>
             <div class="space-y-1">
                 <h4 class="text-[14px] font-bold text-black dark:text-white flex items-center gap-2 flex-wrap">
-                    <span>Guardrail Regulasi BPOM RI (Sektor Farmasi &amp; Apotek)</span>
-                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FF3B30] text-white">RESTRISI HUKUM</span>
+                    <span>{{ __('marketplace.guardrail_bpom_title') }}</span>
+                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FF3B30] text-white">{{ __('marketplace.guardrail_bpom_badge') }}</span>
                 </h4>
                 <p class="text-[12.5px] text-black/70 dark:text-white/70 leading-relaxed">
-                    Sesuai Peraturan BPOM RI No. 8 Tahun 2020, obat keras (daftar G / lingkaran merah), psikotropika/narkotika, dan obat resep dokter <strong>dilarang keras dijual di marketplace umum</strong>. Sistem COOCA secara otomatis mengunci dan menolak pemetaan produk berlabel obat keras untuk melindungi izin operasional apotek Anda.
+                    {!! __('marketplace.guardrail_bpom_desc') !!}
                 </p>
             </div>
         </div>
@@ -148,11 +148,11 @@
             </div>
             <div class="space-y-1">
                 <h4 class="text-[14px] font-bold text-black dark:text-white flex items-center gap-2 flex-wrap">
-                    <span>Pemisahan Barang Fisik vs Jasa Kasir (Sektor Servis/Bengkel/Salon)</span>
-                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#007AFF] text-white">LOGIKAL FILTER</span>
+                    <span>{{ __('marketplace.guardrail_service_title') }}</span>
+                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#007AFF] text-white">{{ __('marketplace.guardrail_service_badge') }}</span>
                 </h4>
                 <p class="text-[12.5px] text-black/70 dark:text-white/70 leading-relaxed">
-                    Item bertipe <strong>Jasa / Layanan</strong> (ongkos servis, cuci, pemasangan) tidak memerlukan pengiriman kurir ekspedisi dan dikunci dari sinkronisasi marketplace untuk mencegah kesalahan pesanan dan resi logistik. Hanya suku cadang / barang fisik yang dipetakan ke marketplace.
+                    {!! __('marketplace.guardrail_service_desc') !!}
                 </p>
             </div>
         </div>
@@ -167,16 +167,16 @@
                 </div>
                 <div>
                     <h4 class="text-[14px] font-bold text-black dark:text-white flex items-center gap-2 flex-wrap">
-                        <span>Sudah Memiliki Produk di Seller Center (TikTok / Shopee / Tokopedia)?</span>
-                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#34C759] text-white">REVERSE SYNC</span>
+                        <span>{{ __('marketplace.reverse_sync_title') }}</span>
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#34C759] text-white">{{ __('marketplace.reverse_sync_badge') }}</span>
                     </h4>
                     <p class="text-[12.5px] text-black/70 dark:text-white/70 leading-relaxed mt-0.5">
-                        Anda tidak perlu input ulang satu per satu. COOCA mendukung penarikan otomatis katalog langsung dari akun marketplace terhubung ke master data COOCA.
+                        {{ __('marketplace.reverse_sync_desc') }}
                     </p>
                 </div>
             </div>
             <button @click="expanded = !expanded" type="button" class="text-[12px] font-semibold text-[#007AFF] hover:underline shrink-0 flex items-center gap-1 cursor-pointer">
-                <span x-text="expanded ? 'Tutup Panduan' : 'Lihat Cara Tarik Data'"></span>
+                <span x-text="expanded ? '{{ __('marketplace.btn_close_pull_guide') }}' : '{{ __('marketplace.btn_view_pull_guide') }}'"></span>
                 <i data-lucide="chevron-down" class="w-3.5 h-3.5 transition-transform" :class="expanded ? 'rotate-180' : ''"></i>
             </button>
         </div>
@@ -185,19 +185,19 @@
             <div class="p-3.5 rounded-[14px] bg-white/60 dark:bg-black/20 border border-black/5 dark:border-white/5 space-y-1.5">
                 <div class="flex items-center gap-2 font-bold text-black dark:text-white">
                     <span class="w-5 h-5 rounded-full bg-[#34C759] text-white text-[11px] flex items-center justify-center">1</span>
-                    <span>Opsi Otomatis: Tarik via API Langsung</span>
+                    <span>{{ __('marketplace.pull_guide_option_1_title') }}</span>
                 </div>
                 <p class="text-black/60 dark:text-white/60">
-                    Klik tombol hijau <strong>"Tarik Produk dari Toko"</strong> di atas. COOCA akan membaca seluruh produk aktif di Seller Center Anda, membuat master produk baru di COOCA, serta memetakan SKU dan stok otomatis.
+                    {!! __('marketplace.pull_guide_option_1_desc') !!}
                 </p>
             </div>
             <div class="p-3.5 rounded-[14px] bg-white/60 dark:bg-black/20 border border-black/5 dark:border-white/5 space-y-1.5">
                 <div class="flex items-center gap-2 font-bold text-black dark:text-white">
                     <span class="w-5 h-5 rounded-full bg-[#007AFF] text-white text-[11px] flex items-center justify-center">2</span>
-                    <span>Opsi File: Impor Massal Excel / CSV</span>
+                    <span>{{ __('marketplace.pull_guide_option_2_title') }}</span>
                 </div>
                 <p class="text-black/60 dark:text-white/60">
-                    Ekspor daftar produk dari Seller Center marketplace Anda (menu Ekspor / Mass Update), lalu unggah file ke <a href="{{ route('import.index') }}" class="text-[#007AFF] font-bold hover:underline">Pusat Impor Data COOCA</a> untuk memproses ribuan SKU sekaligus.
+                    {!! __('marketplace.pull_guide_option_2_desc', ['url' => route('import.index')]) !!}
                 </p>
             </div>
         </div>
@@ -216,22 +216,22 @@
                 <div class="relative flex-1">
                     <i data-lucide="search" class="w-4 h-4 text-black/40 dark:text-white/40 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
                     <input type="text" name="q" value="{{ request('q') }}"
-                        placeholder="Cari berdasarkan nama produk atau barcode/SKU..."
+                        placeholder="{{ __('marketplace.search_products_placeholder') }}"
                         class="w-full h-10 pl-9 pr-4 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.06] dark:border-white/[0.08] text-[13px] text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/30">
                 </div>
                 <button type="submit"
                     class="h-10 px-4 rounded-[12px] text-[13px] font-bold text-black dark:text-white bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] cursor-pointer transition-colors">
-                    Cari
+                    {{ __('marketplace.search') }}
                 </button>
                 @if(request()->filled('q') || request('channel', 'all') !== 'all' || request('type', 'all') !== 'all' || request('risk', 'all') !== 'all' || request('status', 'all') !== 'all')
                     <a href="{{ route('marketplace-hub.products') }}" class="h-10 px-3 rounded-[12px] text-[12.5px] font-medium text-black/50 hover:text-black dark:hover:text-white flex items-center transition-colors">
-                        Reset Filter
+                        {{ __('marketplace.reset_filter') }}
                     </a>
                 @endif
             </form>
 
             <div class="flex items-center gap-2 self-start md:self-auto text-[12px] text-black/60 dark:text-white/60">
-                <span class="font-medium">Total: <strong class="text-black dark:text-white">{{ $products->total() }}</strong> Produk</span>
+                <span class="font-medium">{!! __('marketplace.total_products_count', ['count' => $products->total()]) !!}</span>
             </div>
         </div>
 
@@ -239,10 +239,10 @@
         <div class="flex flex-wrap items-center justify-between gap-2.5 pt-2 border-t border-black/[0.04] dark:border-white/[0.06]">
             <!-- 1. Channel Filter Pills -->
             <div class="flex items-center gap-1 p-1 rounded-[13px] bg-black/[0.04] dark:bg-white/[0.06] flex-wrap">
-                <span class="text-[11px] font-bold uppercase tracking-wider text-black/40 dark:text-white/40 px-2">Saluran:</span>
+                <span class="text-[11px] font-bold uppercase tracking-wider text-black/40 dark:text-white/40 px-2">{{ __('marketplace.filter_channel_label') }}</span>
                 <a href="{{ route('marketplace-hub.products', array_merge(request()->query(), ['channel' => 'all', 'page' => 1])) }}"
                     class="px-3 py-1 rounded-[8px] text-[11.5px] font-semibold transition-all {{ request('channel', 'all') === 'all' ? 'bg-white dark:bg-[#2C2C2E] shadow-xs text-black dark:text-white font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
-                    Semua
+                    {{ __('marketplace.filter_channel_all') }}
                 </a>
                 <a href="{{ route('marketplace-hub.products', array_merge(request()->query(), ['channel' => 'tiktok_shop', 'page' => 1])) }}"
                     class="px-3 py-1 rounded-[8px] text-[11.5px] font-semibold transition-all flex items-center gap-1.5 {{ request('channel') === 'tiktok_shop' ? 'bg-white dark:bg-[#2C2C2E] shadow-xs text-black dark:text-white font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
@@ -261,7 +261,7 @@
                 </a>
                 <a href="{{ route('marketplace-hub.products', array_merge(request()->query(), ['channel' => 'unmapped', 'page' => 1])) }}"
                     class="px-3 py-1 rounded-[8px] text-[11.5px] font-semibold transition-all {{ request('channel') === 'unmapped' ? 'bg-white dark:bg-[#2C2C2E] shadow-xs text-[#007AFF] font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
-                    Belum Terpetakan
+                    {{ __('marketplace.filter_channel_unmapped') }}
                 </a>
             </div>
 
@@ -270,17 +270,17 @@
                 <div class="flex items-center gap-1 p-1 rounded-[13px] bg-black/[0.04] dark:bg-white/[0.06]">
                     <a href="{{ route('marketplace-hub.products', array_merge(request()->query(), ['status' => 'all', 'page' => 1])) }}"
                         class="px-2.5 py-1 rounded-[8px] text-[11.5px] font-semibold transition-all {{ request('status', 'all') === 'all' ? 'bg-white dark:bg-[#2C2C2E] shadow-xs text-black dark:text-white font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
-                        Semua Status
+                        {{ __('marketplace.filter_status_all') }}
                     </a>
                     <a href="{{ route('marketplace-hub.products', array_merge(request()->query(), ['status' => 'active', 'page' => 1])) }}"
                         class="px-2.5 py-1 rounded-[8px] text-[11.5px] font-semibold transition-all flex items-center gap-1 {{ request('status') === 'active' ? 'bg-[#34C759] text-white shadow-xs font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
                         <span class="w-1.5 h-1.5 rounded-full {{ request('status') === 'active' ? 'bg-white' : 'bg-[#34C759]' }}"></span>
-                        <span>Aktif di Etalase</span>
+                        <span>{{ __('marketplace.filter_status_active') }}</span>
                     </a>
                     <a href="{{ route('marketplace-hub.products', array_merge(request()->query(), ['status' => 'inactive', 'page' => 1])) }}"
                         class="px-2.5 py-1 rounded-[8px] text-[11.5px] font-semibold transition-all flex items-center gap-1 {{ request('status') === 'inactive' ? 'bg-[#FF9500] text-white shadow-xs font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
                         <i data-lucide="eye-off" class="w-3 h-3"></i>
-                        <span>Nonaktif / Delisted</span>
+                        <span>{{ __('marketplace.filter_status_inactive') }}</span>
                     </a>
                 </div>
 
@@ -288,15 +288,15 @@
                 <div class="flex items-center gap-1 p-1 rounded-[13px] bg-black/[0.04] dark:bg-white/[0.06]">
                     <a href="{{ route('marketplace-hub.products', array_merge(request()->query(), ['type' => 'all', 'page' => 1])) }}"
                         class="px-2.5 py-1 rounded-[8px] text-[11.5px] font-semibold transition-all {{ request('type', 'all') === 'all' ? 'bg-white dark:bg-[#2C2C2E] shadow-xs text-black dark:text-white font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
-                        Semua Tipe
+                        {{ __('marketplace.filter_type_all') }}
                     </a>
                     <a href="{{ route('marketplace-hub.products', array_merge(request()->query(), ['type' => 'goods', 'page' => 1])) }}"
                         class="px-2.5 py-1 rounded-[8px] text-[11.5px] font-semibold transition-all {{ request('type', 'all') === 'goods' ? 'bg-white dark:bg-[#2C2C2E] shadow-xs text-[#007AFF] font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
-                        Barang Fisik
+                        {{ __('marketplace.filter_type_goods') }}
                     </a>
                     <a href="{{ route('marketplace-hub.products', array_merge(request()->query(), ['type' => 'service', 'page' => 1])) }}"
                         class="px-2.5 py-1 rounded-[8px] text-[11.5px] font-semibold transition-all {{ request('type', 'all') === 'service' ? 'bg-white dark:bg-[#2C2C2E] shadow-xs text-[#FF9500] font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
-                        Jasa
+                        {{ __('marketplace.filter_type_service') }}
                     </a>
                 </div>
 
@@ -304,9 +304,9 @@
                 <div class="flex items-center gap-1 p-1 rounded-[13px] bg-black/[0.04] dark:bg-white/[0.06]">
                     <a href="{{ route('marketplace-hub.products', array_merge(request()->query(), ['risk' => request('risk') === 'out_of_stock' ? 'all' : 'out_of_stock', 'page' => 1])) }}"
                         class="px-2.5 py-1 rounded-[8px] text-[11.5px] font-semibold transition-all flex items-center gap-1 {{ request('risk') === 'out_of_stock' ? 'bg-[#FF3B30] text-white shadow-xs font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}"
-                        title="Tampilkan hanya produk dengan stok fisik habis">
+                        title="{{ __('marketplace.filter_risk_out_of_stock_title') }}">
                         <i data-lucide="package-x" class="w-3.5 h-3.5"></i>
-                        <span>Stok Kosong</span>
+                        <span>{{ __('marketplace.filter_risk_out_of_stock') }}</span>
                     </a>
                 </div>
             </div>
@@ -321,8 +321,8 @@
             <table class="w-full text-left text-[13px] border-collapse min-w-[920px]">
                 <thead>
                     <tr class="border-b border-black/[0.06] dark:border-white/[0.08] bg-black/[0.02] dark:bg-white/[0.02] text-black/60 dark:text-white/60 font-semibold text-[11px] uppercase tracking-wider">
-                        <th class="py-3 px-4 sm:px-6 w-[36%]">Produk</th>
-                        <th class="py-3 px-3 text-right w-[13%]">Harga Toko</th>
+                        <th class="py-3 px-4 sm:px-6 w-[36%]">{{ __('marketplace.th_product') }}</th>
+                        <th class="py-3 px-3 text-right w-[13%]">{{ __('marketplace.th_store_price') }}</th>
                         <th class="py-3 px-3 text-center w-[14%]">
                             <span class="inline-flex items-center gap-1.5 text-[#EE4D2D]">
                                 <span class="w-2 h-2 rounded-full bg-[#EE4D2D]"></span>
@@ -341,7 +341,7 @@
                                 <span>Tokopedia</span>
                             </span>
                         </th>
-                        <th class="py-3 px-4 sm:px-6 text-right w-[9%]">Aksi</th>
+                        <th class="py-3 px-4 sm:px-6 text-right w-[9%]">{{ __('marketplace.th_action') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
@@ -388,19 +388,19 @@
                                             </button>
 
                                             @if(! $product->is_active)
-                                                <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9.5px] font-bold bg-[#8E8E93]/15 text-[#8E8E93]" title="Nonaktif di katalog master COOCA">
+                                                <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9.5px] font-bold bg-[#8E8E93]/15 text-[#8E8E93]" title="{{ __('marketplace.badge_inactive_cooca_title') }}">
                                                     <i data-lucide="pause-circle" class="w-2.5 h-2.5"></i>
-                                                    <span>Nonaktif</span>
+                                                    <span>{{ __('marketplace.badge_inactive_cooca') }}</span>
                                                 </span>
                                             @endif
                                             @if($isRestrictedDrug)
-                                                <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9.5px] font-bold bg-[#FF3B30]/15 text-[#FF3B30]" title="Obat Keras BPOM">
+                                                <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9.5px] font-bold bg-[#FF3B30]/15 text-[#FF3B30]" title="{{ __('marketplace.badge_bpom_title') }}">
                                                     <i data-lucide="shield-alert" class="w-2.5 h-2.5"></i>
-                                                    <span>BPOM</span>
+                                                    <span>{{ __('marketplace.badge_bpom') }}</span>
                                                 </span>
                                             @elseif($isServiceItem)
                                                 <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9.5px] font-bold bg-[#FF9500]/15 text-[#FF9500]">
-                                                    <span>Jasa</span>
+                                                    <span>{{ __('marketplace.badge_service') }}</span>
                                                 </span>
                                             @endif
                                         </div>
@@ -411,15 +411,15 @@
                                             </span>
                                             <span>•</span>
                                             @if($isServiceItem)
-                                                <span class="text-[#FF9500]">Jasa Kasir</span>
+                                                <span class="text-[#FF9500]">{{ __('marketplace.badge_service_cashier') }}</span>
                                             @else
                                                 @if(($product->stock ?? 0) <= 0)
                                                     <span class="inline-flex items-center gap-0.5 text-[#FF3B30] font-semibold">
                                                         <i data-lucide="alert-circle" class="w-3 h-3"></i>
-                                                        <span>Stok Habis</span>
+                                                        <span>{{ __('marketplace.badge_out_of_stock') }}</span>
                                                     </span>
                                                 @else
-                                                    <span>Stok: <strong class="text-black/80 dark:text-white/80 font-mono">{{ $product->stock ?? 0 }}</strong> {{ $product->unit ?? 'pcs' }}</span>
+                                                    <span>{{ __('marketplace.stock_label') }} <strong class="text-black/80 dark:text-white/80 font-mono">{{ $product->stock ?? 0 }}</strong> {{ $product->unit ?? 'pcs' }}</span>
                                                 @endif
                                             @endif
                                             @if($product->category)
@@ -438,10 +438,10 @@
                                 </div>
                                 @if($product->base_cost > 0)
                                     <div class="text-[10.5px] font-mono text-black/40 dark:text-white/40 mt-0.5" title="Harga Pokok Penjualan (HPP)">
-                                        HPP {{ number_format((float)$product->base_cost, 0, ',', '.') }}
+                                        {{ __('marketplace.base_cost_hpp', ['cost' => number_format((float)$product->base_cost, 0, ',', '.')]) }}
                                     </div>
                                 @else
-                                    <div class="text-[10px] text-black/30 dark:text-white/30 mt-0.5">Toko Utama</div>
+                                    <div class="text-[10px] text-black/30 dark:text-white/30 mt-0.5">{{ __('marketplace.main_store') }}</div>
                                 @endif
                             </td>
 
@@ -449,16 +449,16 @@
                             <td class="py-3.5 px-3 text-center">
                                 @if($isRestrictedDrug)
                                     <div class="flex justify-center">
-                                        <span class="h-6 px-2 rounded-[6px] text-[10.5px] font-medium text-[#FF3B30] bg-[#FF3B30]/10 inline-flex items-center gap-1 cursor-not-allowed" title="Obat keras BPOM RI">
+                                        <span class="h-6 px-2 rounded-[6px] text-[10.5px] font-medium text-[#FF3B30] bg-[#FF3B30]/10 inline-flex items-center gap-1 cursor-not-allowed" title="{{ __('marketplace.restricted_drug_warning') }}">
                                             <i data-lucide="lock" class="w-3 h-3"></i>
-                                            <span>Terkunci</span>
+                                            <span>{{ __('marketplace.status_locked') }}</span>
                                         </span>
                                     </div>
                                 @elseif($isServiceItem)
                                     <div class="flex justify-center">
                                         <span class="h-6 px-2 rounded-[6px] text-[10.5px] font-medium text-black/40 dark:text-white/40 bg-black/[0.04] dark:bg-white/[0.06] inline-flex items-center gap-1 cursor-not-allowed">
                                             <i data-lucide="ban" class="w-3 h-3"></i>
-                                            <span>Jasa Offline</span>
+                                            <span>{{ __('marketplace.offline_service') }}</span>
                                         </span>
                                     </div>
                                 @elseif($shopeeMapping && ! empty($shopeeMapping->external_product_id))
@@ -471,7 +471,7 @@
                                             </button>
                                             <div class="flex items-center gap-1 text-[10.5px] text-black/45 dark:text-white/45 mt-0.5">
                                                 <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]"></span>
-                                                <span class="font-mono">Stok {{ $shopeeMapping->getEffectiveStock($product->stock ?? 0) }}</span>
+                                                <span class="font-mono">{{ __('marketplace.stock_label') }} {{ $shopeeMapping->getEffectiveStock($product->stock ?? 0) }}</span>
                                                 @if($shopeeMapping->isBelowCost())
                                                     <span class="text-[#FF3B30]" title="Harga di bawah HPP!"><i data-lucide="alert-triangle" class="w-3 h-3"></i></span>
                                                 @endif
@@ -479,13 +479,13 @@
                                             <div class="flex items-center gap-1.5 mt-0.5">
                                                 <button type="button" @click="openMapping('{{ $product->id }}', 'shopee')"
                                                     class="text-[10px] text-black/40 dark:text-white/40 hover:text-[#007AFF] transition-colors cursor-pointer">
-                                                    Ubah
+                                                    {{ __('marketplace.edit') }}
                                                 </button>
                                                 <span class="text-black/15 dark:text-white/15 text-[8px]">•</span>
                                                 <button type="button" @click="toggleChannelProductDirect('{{ $product->id }}', 'shopee', 'deactivate')"
                                                     class="text-[10px] text-black/35 dark:text-white/35 hover:text-[#FF3B30] transition-colors cursor-pointer"
                                                     title="Tarik produk dari etalase Shopee">
-                                                    Nonaktif
+                                                    {{ __('marketplace.deactivate') }}
                                                 </button>
                                             </div>
                                         </div>
@@ -499,11 +499,11 @@
                                                     class="h-5 px-1.5 rounded-[5px] text-[10px] font-bold text-[#34C759] bg-[#34C759]/10 hover:bg-[#34C759]/20 transition-all cursor-pointer flex items-center gap-0.5"
                                                     title="Aktifkan kembali ke etalase Shopee">
                                                     <i data-lucide="eye" class="w-2.5 h-2.5"></i>
-                                                    <span>Aktifkan</span>
+                                                    <span>{{ __('marketplace.activate') }}</span>
                                                 </button>
                                                 <button type="button" @click="openMapping('{{ $product->id }}', 'shopee')"
                                                     class="text-[10px] text-black/40 dark:text-white/40 hover:text-[#007AFF] cursor-pointer">
-                                                    Ubah
+                                                    {{ __('marketplace.edit') }}
                                                 </button>
                                             </div>
                                         </div>
@@ -514,7 +514,7 @@
                                             class="h-6 px-2 rounded-[6px] text-[10.5px] font-medium text-black/45 dark:text-white/45 bg-black/[0.03] dark:bg-white/[0.05] hover:bg-black/[0.06] hover:text-black dark:hover:text-white transition-all inline-flex items-center gap-1 cursor-pointer"
                                             title="Hubungkan atau Terbitkan ke Shopee">
                                             <i data-lucide="plus" class="w-3 h-3 opacity-60"></i>
-                                            <span>Hubungkan</span>
+                                            <span>{{ __('marketplace.connect') }}</span>
                                         </button>
                                     </div>
                                 @endif
@@ -524,16 +524,16 @@
                             <td class="py-3.5 px-3 text-center">
                                 @if($isRestrictedDrug)
                                     <div class="flex justify-center">
-                                        <span class="h-6 px-2 rounded-[6px] text-[10.5px] font-medium text-[#FF3B30] bg-[#FF3B30]/10 inline-flex items-center gap-1 cursor-not-allowed" title="Obat keras BPOM RI">
+                                        <span class="h-6 px-2 rounded-[6px] text-[10.5px] font-medium text-[#FF3B30] bg-[#FF3B30]/10 inline-flex items-center gap-1 cursor-not-allowed" title="{{ __('marketplace.restricted_drug_warning') }}">
                                             <i data-lucide="lock" class="w-3 h-3"></i>
-                                            <span>Terkunci</span>
+                                            <span>{{ __('marketplace.status_locked') }}</span>
                                         </span>
                                     </div>
                                 @elseif($isServiceItem)
                                     <div class="flex justify-center">
                                         <span class="h-6 px-2 rounded-[6px] text-[10.5px] font-medium text-black/40 dark:text-white/40 bg-black/[0.04] dark:bg-white/[0.06] inline-flex items-center gap-1 cursor-not-allowed">
                                             <i data-lucide="ban" class="w-3 h-3"></i>
-                                            <span>Jasa Offline</span>
+                                            <span>{{ __('marketplace.offline_service') }}</span>
                                         </span>
                                     </div>
                                 @elseif($tiktokMapping && ! empty($tiktokMapping->external_product_id))
@@ -546,7 +546,7 @@
                                             </button>
                                             <div class="flex items-center gap-1 text-[10.5px] text-black/45 dark:text-white/45 mt-0.5">
                                                 <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]"></span>
-                                                <span class="font-mono">Stok {{ $tiktokMapping->getEffectiveStock($product->stock ?? 0) }}</span>
+                                                <span class="font-mono">{{ __('marketplace.stock_label') }} {{ $tiktokMapping->getEffectiveStock($product->stock ?? 0) }}</span>
                                                 @if($tiktokMapping->isBelowCost())
                                                     <span class="text-[#FF3B30]" title="Harga di bawah HPP!"><i data-lucide="alert-triangle" class="w-3 h-3"></i></span>
                                                 @endif
@@ -554,13 +554,13 @@
                                             <div class="flex items-center gap-1.5 mt-0.5">
                                                 <button type="button" @click="openMapping('{{ $product->id }}', 'tiktok_shop')"
                                                     class="text-[10px] text-black/40 dark:text-white/40 hover:text-[#007AFF] transition-colors cursor-pointer">
-                                                    Ubah
+                                                    {{ __('marketplace.edit') }}
                                                 </button>
                                                 <span class="text-black/15 dark:text-white/15 text-[8px]">•</span>
                                                 <button type="button" @click="toggleChannelProductDirect('{{ $product->id }}', 'tiktok_shop', 'deactivate')"
                                                     class="text-[10px] text-black/35 dark:text-white/35 hover:text-[#FF3B30] transition-colors cursor-pointer"
                                                     title="Tarik produk dari etalase TikTok Shop">
-                                                    Nonaktif
+                                                    {{ __('marketplace.deactivate') }}
                                                 </button>
                                             </div>
                                         </div>
@@ -574,11 +574,11 @@
                                                     class="h-5 px-1.5 rounded-[5px] text-[10px] font-bold text-[#34C759] bg-[#34C759]/10 hover:bg-[#34C759]/20 transition-all cursor-pointer flex items-center gap-0.5"
                                                     title="Aktifkan kembali ke etalase TikTok Shop">
                                                     <i data-lucide="eye" class="w-2.5 h-2.5"></i>
-                                                    <span>Aktifkan</span>
+                                                    <span>{{ __('marketplace.activate') }}</span>
                                                 </button>
                                                 <button type="button" @click="openMapping('{{ $product->id }}', 'tiktok_shop')"
                                                     class="text-[10px] text-black/40 dark:text-white/40 hover:text-[#007AFF] cursor-pointer">
-                                                    Ubah
+                                                    {{ __('marketplace.edit') }}
                                                 </button>
                                             </div>
                                         </div>
@@ -589,7 +589,7 @@
                                             class="h-6 px-2 rounded-[6px] text-[10.5px] font-medium text-black/45 dark:text-white/45 bg-black/[0.03] dark:bg-white/[0.05] hover:bg-black/[0.06] hover:text-black dark:hover:text-white transition-all inline-flex items-center gap-1 cursor-pointer"
                                             title="Hubungkan atau Terbitkan ke TikTok Shop">
                                             <i data-lucide="plus" class="w-3 h-3 opacity-60"></i>
-                                            <span>Hubungkan</span>
+                                            <span>{{ __('marketplace.connect') }}</span>
                                         </button>
                                     </div>
                                 @endif
@@ -599,16 +599,16 @@
                             <td class="py-3.5 px-3 text-center">
                                 @if($isRestrictedDrug)
                                     <div class="flex justify-center">
-                                        <span class="h-6 px-2 rounded-[6px] text-[10.5px] font-medium text-[#FF3B30] bg-[#FF3B30]/10 inline-flex items-center gap-1 cursor-not-allowed" title="Obat keras BPOM RI">
+                                        <span class="h-6 px-2 rounded-[6px] text-[10.5px] font-medium text-[#FF3B30] bg-[#FF3B30]/10 inline-flex items-center gap-1 cursor-not-allowed" title="{{ __('marketplace.restricted_drug_warning') }}">
                                             <i data-lucide="lock" class="w-3 h-3"></i>
-                                            <span>Terkunci</span>
+                                            <span>{{ __('marketplace.status_locked') }}</span>
                                         </span>
                                     </div>
                                 @elseif($isServiceItem)
                                     <div class="flex justify-center">
                                         <span class="h-6 px-2 rounded-[6px] text-[10.5px] font-medium text-black/40 dark:text-white/40 bg-black/[0.04] dark:bg-white/[0.06] inline-flex items-center gap-1 cursor-not-allowed">
                                             <i data-lucide="ban" class="w-3 h-3"></i>
-                                            <span>Jasa Offline</span>
+                                            <span>{{ __('marketplace.offline_service') }}</span>
                                         </span>
                                     </div>
                                 @elseif($tokpedMapping && ! empty($tokpedMapping->external_product_id))
@@ -621,7 +621,7 @@
                                             </button>
                                             <div class="flex items-center gap-1 text-[10.5px] text-black/45 dark:text-white/45 mt-0.5">
                                                 <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]"></span>
-                                                <span class="font-mono">Stok {{ $tokpedMapping->getEffectiveStock($product->stock ?? 0) }}</span>
+                                                <span class="font-mono">{{ __('marketplace.stock_label') }} {{ $tokpedMapping->getEffectiveStock($product->stock ?? 0) }}</span>
                                                 @if($tokpedMapping->isBelowCost())
                                                     <span class="text-[#FF3B30]" title="Harga di bawah HPP!"><i data-lucide="alert-triangle" class="w-3 h-3"></i></span>
                                                 @endif
@@ -629,13 +629,13 @@
                                             <div class="flex items-center gap-1.5 mt-0.5">
                                                 <button type="button" @click="openMapping('{{ $product->id }}', 'tokopedia')"
                                                     class="text-[10px] text-black/40 dark:text-white/40 hover:text-[#007AFF] transition-colors cursor-pointer">
-                                                    Ubah
+                                                    {{ __('marketplace.edit') }}
                                                 </button>
                                                 <span class="text-black/15 dark:text-white/15 text-[8px]">•</span>
                                                 <button type="button" @click="toggleChannelProductDirect('{{ $product->id }}', 'tokopedia', 'deactivate')"
                                                     class="text-[10px] text-black/35 dark:text-white/35 hover:text-[#FF3B30] transition-colors cursor-pointer"
                                                     title="Tarik produk dari etalase Tokopedia">
-                                                    Nonaktif
+                                                    {{ __('marketplace.deactivate') }}
                                                 </button>
                                             </div>
                                         </div>
@@ -649,11 +649,11 @@
                                                     class="h-5 px-1.5 rounded-[5px] text-[10px] font-bold text-[#34C759] bg-[#34C759]/10 hover:bg-[#34C759]/20 transition-all cursor-pointer flex items-center gap-0.5"
                                                     title="Aktifkan kembali ke etalase Tokopedia">
                                                     <i data-lucide="eye" class="w-2.5 h-2.5"></i>
-                                                    <span>Aktifkan</span>
+                                                    <span>{{ __('marketplace.activate') }}</span>
                                                 </button>
                                                 <button type="button" @click="openMapping('{{ $product->id }}', 'tokopedia')"
                                                     class="text-[10px] text-black/40 dark:text-white/40 hover:text-[#007AFF] cursor-pointer">
-                                                    Ubah
+                                                    {{ __('marketplace.edit') }}
                                                 </button>
                                             </div>
                                         </div>
@@ -664,7 +664,7 @@
                                             class="h-6 px-2 rounded-[6px] text-[10.5px] font-medium text-black/45 dark:text-white/45 bg-black/[0.03] dark:bg-white/[0.05] hover:bg-black/[0.06] hover:text-black dark:hover:text-white transition-all inline-flex items-center gap-1 cursor-pointer"
                                             title="Hubungkan atau Terbitkan ke Tokopedia">
                                             <i data-lucide="plus" class="w-3 h-3 opacity-60"></i>
-                                            <span>Hubungkan</span>
+                                            <span>{{ __('marketplace.connect') }}</span>
                                         </button>
                                     </div>
                                 @endif
@@ -674,20 +674,20 @@
                             <td class="py-3.5 px-4 sm:px-6 text-right">
                                 @if($isRestrictedDrug || $isServiceItem)
                                     <span class="text-[11px] text-black/35 dark:text-white/35 italic font-medium">
-                                        {{ $isRestrictedDrug ? 'Restriksi BPOM' : 'Jasa Offline' }}
+                                        {{ $isRestrictedDrug ? __('marketplace.status_restricted') : __('marketplace.offline_service') }}
                                     </span>
                                 @else
                                     <div class="flex items-center justify-end gap-1 relative" x-data="{ openMenu: false }" @click.outside="openMenu = false">
                                         <button type="button" @click="openMapping('{{ $product->id }}', 'shopee')"
                                             class="h-7 px-2.5 rounded-[8px] text-[11.5px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 transition-all inline-flex items-center gap-1 cursor-pointer shadow-2xs">
                                             <i data-lucide="sliders" class="w-3 h-3"></i>
-                                            <span>Kelola</span>
+                                            <span>{{ __('marketplace.manage') }}</span>
                                         </button>
 
                                         @if($hasAnyMapping)
                                             <button type="button" @click="openMenu = !openMenu"
                                                 class="w-7 h-7 rounded-[8px] flex items-center justify-center text-black/50 dark:text-white/50 hover:bg-black/[0.06] dark:hover:bg-white/[0.08] transition-colors cursor-pointer"
-                                                title="Menu Aksi Tambahan">
+                                                title="{{ __('marketplace.menu_additional_actions') }}">
                                                 <i data-lucide="more-horizontal" class="w-3.5 h-3.5"></i>
                                             </button>
 
@@ -705,14 +705,14 @@
                                                         @csrf
                                                         <button type="submit" class="w-full text-left px-3 py-1.5 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] flex items-center gap-2 text-black/80 dark:text-white/80 transition-colors cursor-pointer">
                                                             <i data-lucide="dollar-sign" class="w-3.5 h-3.5 text-[#007AFF]"></i>
-                                                            <span>Push Harga ke Toko</span>
+                                                            <span>{{ __('marketplace.push_price_to_store') }}</span>
                                                         </button>
                                                     </form>
                                                     <form method="POST" action="{{ route('marketplace-hub.products.sync-stock', $product->id) }}">
                                                         @csrf
                                                         <button type="submit" class="w-full text-left px-3 py-1.5 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] flex items-center gap-2 text-black/80 dark:text-white/80 transition-colors cursor-pointer">
                                                             <i data-lucide="box" class="w-3.5 h-3.5 text-[#34C759]"></i>
-                                                            <span>Push Stok ke Toko</span>
+                                                            <span>{{ __('marketplace.push_stock_to_store') }}</span>
                                                         </button>
                                                     </form>
                                                 </div>
@@ -722,13 +722,13 @@
                                                         <button type="button" @click="openMenu = false; toggleChannelProductDirect('{{ $product->id }}', 'all', 'deactivate')"
                                                             class="w-full text-left px-3 py-1.5 hover:bg-[#FF3B30]/10 flex items-center gap-2 text-[#FF3B30] transition-colors cursor-pointer">
                                                             <i data-lucide="eye-off" class="w-3.5 h-3.5"></i>
-                                                            <span>Delist dari Semua Toko</span>
+                                                            <span>{{ __('marketplace.delist_all_stores') }}</span>
                                                         </button>
                                                     @elseif($allMappingsInactive)
                                                         <button type="button" @click="openMenu = false; toggleChannelProductDirect('{{ $product->id }}', 'all', 'activate')"
                                                             class="w-full text-left px-3 py-1.5 hover:bg-[#34C759]/10 flex items-center gap-2 text-[#34C759] transition-colors cursor-pointer">
                                                             <i data-lucide="eye" class="w-3.5 h-3.5"></i>
-                                                            <span>Aktifkan Semua Toko</span>
+                                                            <span>{{ __('marketplace.activate_all_stores') }}</span>
                                                         </button>
                                                     @endif
                                                 </div>
@@ -744,8 +744,8 @@
                                 <div class="w-12 h-12 rounded-[16px] bg-black/[0.04] dark:bg-white/[0.06] flex items-center justify-center mx-auto mb-3">
                                     <i data-lucide="inbox" class="w-6 h-6 text-black/40 dark:text-white/40"></i>
                                 </div>
-                                <div class="font-bold text-[14px]">Belum Ada Data Produk</div>
-                                <p class="text-[12px] mt-0.5">Tambahkan produk di menu Produk &amp; Jasa terlebih dahulu.</p>
+                                <div class="font-bold text-[14px]">{{ __('marketplace.empty_products_initial_title') }}</div>
+                                <p class="text-[12px] mt-0.5">{{ __('marketplace.empty_products_initial_desc') }}</p>
                             </td>
                         </tr>
                     @endforelse
@@ -800,7 +800,7 @@
                         </div>
                         <div>
                             <div class="flex items-center gap-2 flex-wrap">
-                                <h3 id="marketplace-mapping-modal-title" class="text-[18px] font-bold text-black dark:text-white tracking-tight">Atur Multi-Harga &amp; Alokasi Stok</h3>
+                                <h3 id="marketplace-mapping-modal-title" class="text-[18px] font-bold text-black dark:text-white tracking-tight">{{ __('marketplace.modal_mapping_title') }}</h3>
                                 <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/20">
                                     Bento XXL v2.0
                                 </span>
@@ -808,7 +808,7 @@
                             <p class="text-[12.5px] text-black/50 dark:text-white/50" x-text="selectedProduct ? (selectedProduct.name + ' • SKU: ' + (selectedProduct.code || '-')) : ''"></p>
                         </div>
                     </div>
-                    <button type="button" @click="mappingModal = false" class="min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 transition-all cursor-pointer active:scale-95" aria-label="Tutup modal">
+                    <button type="button" @click="mappingModal = false" class="min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 transition-all cursor-pointer active:scale-95" aria-label="{{ __('marketplace.close_modal') }}">
                         <i data-lucide="x" class="w-5 h-5"></i>
                     </button>
                 </div>
@@ -834,7 +834,7 @@
                         <!-- 1. Channel Selector Segmented Tabs -->
                         <div>
                             <label class="block text-[12px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50 mb-2">
-                                Pilih Saluran Marketplace
+                                {{ __('marketplace.modal_channel_selector') }}
                             </label>
                             <div class="grid grid-cols-3 gap-2 p-1.5 rounded-[16px] bg-black/[0.04] dark:bg-white/[0.06]">
                                 <button type="button" @click="switchChannel('shopee')"
@@ -863,10 +863,10 @@
                             <div class="flex items-center justify-between">
                                 <div>
                                     <label class="block text-[13px] font-bold text-black dark:text-white">
-                                        Kategori Resmi Marketplace
+                                        {{ __('marketplace.modal_category_title') }}
                                     </label>
                                     <p class="text-[11.5px] text-black/50 dark:text-white/50">
-                                        Wajib untuk listing TikTok Shop &amp; Tokopedia (30 Kategori Resmi)
+                                        {{ __('marketplace.modal_category_sub') }}
                                     </p>
                                 </div>
                                 <template x-if="selectedCategoryObj">
@@ -885,12 +885,12 @@
                                             <i data-lucide="layers" class="w-5 h-5"></i>
                                         </div>
                                         <div class="min-w-0">
-                                            <div class="text-[13px] font-bold text-black dark:text-white truncate" x-text="selectedCategoryObj ? selectedCategoryObj.name : 'Pilih Kategori Marketplace...'"></div>
-                                            <div class="text-[11px] text-black/50 dark:text-white/50 truncate max-w-[280px] sm:max-w-md" x-text="selectedCategoryObj ? selectedCategoryObj.description : 'Klik untuk mencari atau memilih kategori resmi'"></div>
+                                            <div class="text-[13px] font-bold text-black dark:text-white truncate" x-text="selectedCategoryObj ? selectedCategoryObj.name : {{ json_encode(__('marketplace.modal_category_placeholder')) }}"></div>
+                                            <div class="text-[11px] text-black/50 dark:text-white/50 truncate max-w-[280px] sm:max-w-md" x-text="selectedCategoryObj ? selectedCategoryObj.description : {{ json_encode(__('marketplace.modal_category_hint')) }}"></div>
                                         </div>
                                     </div>
                                     <div class="flex items-center gap-1.5 shrink-0 text-black/40 dark:text-white/40">
-                                        <span class="text-[11.5px] font-medium hidden sm:inline" x-text="categoryDropdownOpen ? 'Tutup' : 'Ubah'"></span>
+                                        <span class="text-[11.5px] font-medium hidden sm:inline" x-text="categoryDropdownOpen ? {{ json_encode(__('marketplace.close')) }} : {{ json_encode(__('marketplace.modal_change')) }}"></span>
                                         <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-200" :class="categoryDropdownOpen ? 'rotate-180' : ''"></i>
                                     </div>
                                 </button>
@@ -908,7 +908,7 @@
                                     <!-- Search bar -->
                                     <div class="relative">
                                         <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40"></i>
-                                        <input type="text" x-model="categorySearch" placeholder="Cari nama kategori, id, atau kata kunci (contoh: makanan, sepatu, baju)..."
+                                        <input type="text" x-model="categorySearch" placeholder="{{ __('marketplace.modal_category_search_placeholder') }}"
                                             class="w-full h-9 pl-9 pr-3 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-[12.5px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/30">
                                     </div>
 
@@ -931,7 +931,7 @@
                                             </button>
                                         </template>
                                         <div x-show="filteredCategories.length === 0" class="py-6 text-center text-[12px] text-black/40 dark:text-white/40">
-                                            Tidak ada kategori yang cocok dengan pencarian.
+                                            {{ __('marketplace.modal_category_empty') }}
                                         </div>
                                     </div>
                                 </div>
@@ -948,11 +948,11 @@
                                         <template x-if="form.marketplace_item_id">
                                             <div class="flex items-center gap-2 flex-wrap">
                                                 <span>Item ID: <strong class="font-mono" x-text="form.marketplace_item_id"></strong></span>
-                                                <span class="font-bold px-2 py-0.5 rounded text-[10.5px]" :class="form.is_active ? 'bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158]' : 'bg-[#FF9500]/20 text-[#FF9500]'" x-text="form.is_active ? 'Aktif di Etalase' : 'Non-Aktif / Tarik dari Etalase'"></span>
+                                                <span class="font-bold px-2 py-0.5 rounded text-[10.5px]" :class="form.is_active ? 'bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158]' : 'bg-[#FF9500]/20 text-[#FF9500]'" x-text="form.is_active ? {{ json_encode(__('marketplace.filter_status_active')) }} : {{ json_encode(__('marketplace.delisted_from_channel')) }}"></span>
                                             </div>
                                         </template>
                                         <template x-if="!form.marketplace_item_id">
-                                            <span>Belum terdaftar di channel ini. Klik <strong>"1-Click Terbitkan"</strong> di bawah untuk otomatis upload galeri &amp; terbitkan listing baru.</span>
+                                            <span>{!! __('marketplace.modal_unregistered_hint') !!}</span>
                                         </template>
                                     </div>
                                 </div>
@@ -962,17 +962,17 @@
                                             <button type="button" x-show="form.is_active" @click="toggleChannelProductStatus('deactivate')" :disabled="togglingStatus"
                                                 class="px-2.5 py-1 rounded-[10px] text-[11px] font-bold bg-[#FF3B30]/15 text-[#FF3B30] hover:bg-[#FF3B30]/25 transition-all flex items-center gap-1 cursor-pointer">
                                                 <i data-lucide="eye-off" class="w-3.5 h-3.5"></i>
-                                                <span x-text="togglingStatus ? 'Memproses...' : 'Tarik dari Etalase'"></span>
+                                                <span x-text="togglingStatus ? {{ json_encode(__('marketplace.processing')) }} : {{ json_encode(__('marketplace.btn_delist_modal')) }}"></span>
                                             </button>
                                             <button type="button" x-show="!form.is_active" @click="toggleChannelProductStatus('activate')" :disabled="togglingStatus"
                                                 class="px-2.5 py-1 rounded-[10px] text-[11px] font-bold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158] hover:bg-[#34C759]/25 transition-all flex items-center gap-1 cursor-pointer">
                                                 <i data-lucide="eye" class="w-3.5 h-3.5"></i>
-                                                <span x-text="togglingStatus ? 'Memproses...' : 'Aktifkan ke Etalase'"></span>
+                                                <span x-text="togglingStatus ? {{ json_encode(__('marketplace.processing')) }} : {{ json_encode(__('marketplace.btn_relist_modal')) }}"></span>
                                             </button>
                                         </div>
                                     </template>
                                     <div x-show="selectedProduct" class="shrink-0 text-[11px] font-semibold opacity-90 px-2.5 py-0.5 rounded-full bg-white/60 dark:bg-black/20 border border-current/20">
-                                        <span x-text="((selectedProduct?.images ? selectedProduct.images.length : 0) + (selectedProduct?.image ? 1 : 0)) + ' Foto'"></span>
+                                        <span x-text="((selectedProduct?.images ? selectedProduct.images.length : 0) + (selectedProduct?.image ? 1 : 0)) + ' ' + {{ json_encode(__('marketplace.photos_unit')) }}"></span>
                                     </div>
                                 </div>
                             </div>
@@ -980,34 +980,33 @@
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                                 <div>
                                     <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
-                                        Marketplace Item ID (Manual)
+                                        {{ __('marketplace.modal_item_id_manual') }}
                                     </label>
                                     <input type="text" name="marketplace_item_id" x-model="form.marketplace_item_id"
-                                        placeholder="Contoh: 1982739281"
+                                        placeholder="{{ __('marketplace.placeholder_example_id') }}"
                                         class="w-full h-10 px-3.5 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.1] text-[13px] text-black dark:text-white font-mono placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/30">
                                 </div>
                                 <div>
                                     <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
-                                        Marketplace SKU
+                                        {{ __('marketplace.modal_sku_manual') }}
                                     </label>
                                     <input type="text" name="marketplace_sku" x-model="form.marketplace_sku"
-                                        placeholder="Contoh: SKU-SHP-001"
+                                        placeholder="{{ __('marketplace.placeholder_example_sku') }}"
                                         class="w-full h-10 px-3.5 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.1] text-[13px] text-black dark:text-white font-mono placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/30">
                                 </div>
                             </div>
                         </div>
 
-
                         <!-- 3. Pricing Bento Card -->
                         <div class="p-4 sm:p-5 rounded-[20px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] space-y-4">
                             <div class="flex items-center justify-between">
                                 <div>
-                                    <span class="text-[13.5px] font-bold text-black dark:text-white">Skema Penetapan Harga Saluran</span>
-                                    <p class="text-[11.5px] text-black/50 dark:text-white/50">Tentukan harga berdasarkan nominal Rupiah langsung atau persentase markup</p>
+                                    <span class="text-[13.5px] font-bold text-black dark:text-white">{{ __('marketplace.modal_pricing_scheme') }}</span>
+                                    <p class="text-[11.5px] text-black/50 dark:text-white/50">{{ __('marketplace.modal_pricing_scheme_sub') }}</p>
                                 </div>
                                 <span class="text-[11px] font-bold px-2.5 py-1 rounded-full" 
                                     :class="pricingMode === 'nominal' ? 'bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]' : 'bg-[#007AFF]/10 text-[#007AFF]'">
-                                    <span x-text="pricingMode === 'nominal' ? 'Harga Tetap Rp' : 'Persentase %'"></span>
+                                    <span x-text="pricingMode === 'nominal' ? {{ json_encode(__('marketplace.badge_fixed_price')) }} : {{ json_encode(__('marketplace.badge_percentage')) }}"></span>
                                 </span>
                             </div>
 
@@ -1017,13 +1016,13 @@
                                     :class="pricingMode === 'nominal' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm font-bold' : 'text-black/60 dark:text-white/60 font-medium hover:text-black dark:hover:text-white'"
                                     class="py-2.5 text-[12.5px] rounded-[10px] transition-all flex items-center justify-center gap-2 cursor-pointer">
                                     <i data-lucide="tag" class="w-4 h-4 text-[#34C759]"></i>
-                                    <span>Harga Langsung (Rp)</span>
+                                    <span>{{ __('marketplace.modal_pricing_nominal_tab') }}</span>
                                 </button>
                                 <button type="button" @click="setPricingMode('percentage')"
                                     :class="pricingMode === 'percentage' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm font-bold' : 'text-black/60 dark:text-white/60 font-medium hover:text-black dark:hover:text-white'"
                                     class="py-2.5 text-[12.5px] rounded-[10px] transition-all flex items-center justify-center gap-2 cursor-pointer">
                                     <i data-lucide="percent" class="w-4 h-4 text-[#007AFF]"></i>
-                                    <span>Persentase Markup (%)</span>
+                                    <span>{{ __('marketplace.modal_pricing_percent_tab') }}</span>
                                 </button>
                             </div>
 
@@ -1031,12 +1030,12 @@
                             <div x-show="pricingMode === 'nominal'" class="space-y-3 pt-1">
                                 <div>
                                     <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
-                                        Masukkan Harga Jual di Marketplace (Rp)
+                                        {{ __('marketplace.modal_pricing_nominal_label') }}
                                     </label>
                                     <div class="relative">
                                         <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40 font-bold text-[13px]">Rp</span>
                                         <input type="number" step="100" min="0" name="channel_price" x-model="form.channel_price"
-                                            placeholder="Contoh: 150000"
+                                            placeholder="{{ __('marketplace.placeholder_example_price') }}"
                                             class="w-full h-11 pl-10 pr-3.5 rounded-[12px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] text-[14px] text-black dark:text-white font-mono font-bold focus:outline-none focus:ring-2 focus:ring-[#34C759]/40">
                                     </div>
                                     
@@ -1045,18 +1044,18 @@
                                         <template x-if="nominalDiffVsStore.rawDiff > 0">
                                             <span class="text-[#34C759] font-medium flex items-center gap-1">
                                                 <i data-lucide="trending-up" class="w-3.5 h-3.5"></i>
-                                                <span>+<strong x-text="formatRupiah(nominalDiffVsStore.amount)"></strong> (+<span x-text="nominalDiffVsStore.percent"></span>%) dibanding harga toko COOCA (<span x-text="formatRupiah(selectedProduct.selling_price)"></span>)</span>
+                                                <span>+<strong x-text="formatRupiah(nominalDiffVsStore.amount)"></strong> (+<span x-text="nominalDiffVsStore.percent"></span>%) {{ __('marketplace.compared_to_cooca_store') }} (<span x-text="formatRupiah(selectedProduct.selling_price)"></span>)</span>
                                             </span>
                                         </template>
                                         <template x-if="nominalDiffVsStore.rawDiff < 0">
                                             <span class="text-[#FF9500] font-medium flex items-center gap-1">
                                                 <i data-lucide="trending-down" class="w-3.5 h-3.5"></i>
-                                                <span>-<strong x-text="formatRupiah(nominalDiffVsStore.amount)"></strong> (-<span x-text="nominalDiffVsStore.percent"></span>%) dibanding harga toko COOCA (<span x-text="formatRupiah(selectedProduct.selling_price)"></span>)</span>
+                                                <span>-<strong x-text="formatRupiah(nominalDiffVsStore.amount)"></strong> (-<span x-text="nominalDiffVsStore.percent"></span>%) {{ __('marketplace.compared_to_cooca_store') }} (<span x-text="formatRupiah(selectedProduct.selling_price)"></span>)</span>
                                             </span>
                                         </template>
                                         <template x-if="nominalDiffVsStore.rawDiff === 0">
                                             <span class="text-black/50 dark:text-white/50 font-medium">
-                                                Sama persis dengan harga toko COOCA (<span x-text="formatRupiah(selectedProduct?.selling_price || 0)"></span>)
+                                                {{ __('marketplace.same_as_cooca_store') }} (<span x-text="formatRupiah(selectedProduct?.selling_price || 0)"></span>)
                                             </span>
                                         </template>
                                     </div>
@@ -1064,10 +1063,10 @@
 
                                 <!-- Quick nominal presets -->
                                 <div class="flex flex-wrap items-center gap-1.5 pt-0.5" x-show="selectedProduct">
-                                    <span class="text-[11px] text-black/45 dark:text-white/45">Preset Cepat:</span>
+                                    <span class="text-[11px] text-black/45 dark:text-white/45">{{ __('marketplace.modal_quick_presets') }}</span>
                                     <button type="button" @click="setNominalPrice(Number(selectedProduct.selling_price || 0))"
                                         class="px-2.5 py-1 rounded-[8px] text-[11px] font-semibold bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 hover:border-[#34C759] transition-colors cursor-pointer">
-                                        Sama Harga Toko
+                                        {{ __('marketplace.modal_preset_same_price') }}
                                     </button>
                                     <button type="button" @click="setNominalPrice(Number(selectedProduct.selling_price || 0) + 5000)"
                                         class="px-2.5 py-1 rounded-[8px] text-[11px] font-semibold bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 hover:border-[#34C759] transition-colors cursor-pointer">
@@ -1088,30 +1087,30 @@
                             <div x-show="pricingMode === 'percentage'" class="space-y-3 pt-1">
                                 <div>
                                     <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
-                                        Persentase Markup dari Harga Toko COOCA
+                                        {{ __('marketplace.modal_pricing_percent_label') }}
                                     </label>
                                     <div class="flex items-center gap-3">
                                         <div class="relative w-36">
                                             <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40 font-bold text-[13px]">+</span>
                                             <input type="number" step="0.5" min="-50" max="200" x-model="markupPercent" @input="updateMultiplierFromPercent()"
-                                                placeholder="Contoh: 10"
+                                                placeholder="{{ __('marketplace.placeholder_example_percent') }}"
                                                 class="w-full h-11 pl-8 pr-7 rounded-[12px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] text-[14px] text-black dark:text-white font-mono font-bold focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40">
                                             <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40 font-bold text-[13px]">%</span>
                                         </div>
                                         <input type="hidden" name="price_multiplier" :value="form.price_multiplier">
                                         <div class="text-[13px] text-black/70 dark:text-white/70">
-                                            = <strong class="text-black dark:text-white font-mono text-[14px]" x-text="formatRupiah(computedEffectivePrice)"></strong> di channel
+                                            = <strong class="text-black dark:text-white font-mono text-[14px]" x-text="formatRupiah(computedEffectivePrice)"></strong> {{ __('marketplace.in_channel') }}
                                         </div>
                                     </div>
                                 </div>
 
                                 <!-- Quick percentage presets -->
                                 <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
-                                    <span class="text-[11px] text-black/45 dark:text-white/45">Preset Persen:</span>
+                                    <span class="text-[11px] text-black/45 dark:text-white/45">{{ __('marketplace.modal_quick_presets_percent') }}</span>
                                     <button type="button" @click="setMarkupPercent(0)"
                                         class="px-2.5 py-1 rounded-[8px] text-[11px] font-semibold bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 hover:border-[#007AFF] transition-colors cursor-pointer"
                                         :class="markupPercent == 0 ? 'border-[#007AFF] text-[#007AFF]' : ''">
-                                        Sama (+0%)
+                                        {{ __('marketplace.preset_same_percent') }}
                                     </button>
                                     <button type="button" @click="setMarkupPercent(5)"
                                         class="px-2.5 py-1 rounded-[8px] text-[11px] font-semibold bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 hover:border-[#007AFF] transition-colors cursor-pointer"
@@ -1121,7 +1120,7 @@
                                     <button type="button" @click="setMarkupPercent(8)"
                                         class="px-2.5 py-1 rounded-[8px] text-[11px] font-semibold bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 hover:border-[#007AFF] transition-colors cursor-pointer"
                                         :class="markupPercent == 8 ? 'border-[#007AFF] text-[#007AFF] ring-1 ring-[#007AFF]' : ''">
-                                        +8% (Rekomendasi Fee)
+                                        {{ __('marketplace.modal_preset_percent_fee') }}
                                     </button>
                                     <button type="button" @click="setMarkupPercent(10)"
                                         class="px-2.5 py-1 rounded-[8px] text-[11px] font-semibold bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 hover:border-[#007AFF] transition-colors cursor-pointer"
@@ -1146,11 +1145,11 @@
                         <div class="p-4 sm:p-5 rounded-[20px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] space-y-4">
                             <div class="flex items-center justify-between">
                                 <div>
-                                    <span class="text-[13.5px] font-bold text-black dark:text-white">Skema Alokasi Stok Saluran</span>
-                                    <p class="text-[11.5px] text-black/50 dark:text-white/50">Sinkronisasi otomatis stok fisik gudang atau tetapkan kuota stok mandiri</p>
+                                    <span class="text-[13.5px] font-bold text-black dark:text-white">{{ __('marketplace.modal_stock_scheme') }}</span>
+                                    <p class="text-[11.5px] text-black/50 dark:text-white/50">{{ __('marketplace.modal_stock_scheme_sub') }}</p>
                                 </div>
                                 <span class="text-[11px] font-bold px-2.5 py-1 rounded-full" :class="stockMode === 'auto' ? 'bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]' : 'bg-black/10 text-black/60 dark:text-white/60'">
-                                    <span x-text="stockMode === 'auto' ? 'Otomatis Gudang' : 'Manual Kuota'"></span>
+                                    <span x-text="stockMode === 'auto' ? {{ json_encode(__('marketplace.badge_auto_warehouse')) }} : {{ json_encode(__('marketplace.badge_manual_quota')) }}"></span>
                                 </span>
                             </div>
 
@@ -1160,26 +1159,26 @@
                                     :class="stockMode === 'auto' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm font-bold' : 'text-black/60 dark:text-white/60 font-medium hover:text-black dark:hover:text-white'"
                                     class="py-2.5 text-[12.5px] rounded-[10px] transition-all flex items-center justify-center gap-2 cursor-pointer">
                                     <i data-lucide="refresh-cw" class="w-4 h-4 text-[#34C759]"></i>
-                                    <span>Sinkron Stok Gudang (Auto)</span>
+                                    <span>{{ __('marketplace.modal_stock_auto_tab') }}</span>
                                 </button>
                                 <button type="button" @click="setStockMode('manual')"
                                     :class="stockMode === 'manual' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm font-bold' : 'text-black/60 dark:text-white/60 font-medium hover:text-black dark:hover:text-white'"
                                     class="py-2.5 text-[12.5px] rounded-[10px] transition-all flex items-center justify-center gap-2 cursor-pointer">
                                     <i data-lucide="layers" class="w-4 h-4 text-[#007AFF]"></i>
-                                    <span>Kuota Stok Khusus (Manual)</span>
+                                    <span>{{ __('marketplace.modal_stock_manual_tab') }}</span>
                                 </button>
                             </div>
 
                             <!-- If Auto: Stock Buffer -->
                             <div x-show="stockMode === 'auto'" class="space-y-2 pt-1">
                                 <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">
-                                    Stok Pengaman Toko Fisik / Kasir Offline (Safety Buffer)
+                                    {{ __('marketplace.modal_safety_buffer_label') }}
                                 </label>
                                 <div class="flex items-center gap-3">
                                     <input type="number" min="0" name="stock_buffer" x-model="form.stock_buffer"
                                         class="w-32 h-11 px-3.5 rounded-[12px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] text-[14px] text-black dark:text-white font-mono font-bold">
                                     <div class="text-[12px] text-black/60 dark:text-white/60 leading-relaxed">
-                                        Unit yang selalu dicadangkan untuk kasir toko offline (tidak akan dikirim ke marketplace).
+                                        {{ __('marketplace.modal_safety_buffer_desc') }}
                                     </div>
                                 </div>
 
@@ -1187,42 +1186,42 @@
                                 <div class="p-2.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.06] dark:border-white/[0.08] text-[11.5px] text-black/70 dark:text-white/70 flex items-center justify-between gap-2" x-show="selectedProduct">
                                     <div class="flex items-center gap-1.5">
                                         <i data-lucide="shield-check" class="w-4 h-4 text-[#34C759]"></i>
-                                        <span>Simulasi Alokasi Marketplace:</span>
+                                        <span>{{ __('marketplace.modal_simulated_allocation') }}</span>
                                     </div>
                                     <div class="font-mono font-bold text-black dark:text-white">
-                                        <span x-text="selectedProduct ? selectedProduct.stock : 0"></span> (Gudang) - <span x-text="form.stock_buffer || 0"></span> (Buffer) = <span class="text-[#007AFF] text-[13px]" x-text="effectiveChannelStock"></span> unit
+                                        <span x-text="selectedProduct ? selectedProduct.stock : 0"></span> {{ __('marketplace.warehouse_parenthesis') }} - <span x-text="form.stock_buffer || 0"></span> {{ __('marketplace.buffer_parenthesis') }} = <span class="text-[#007AFF] text-[13px]" x-text="effectiveChannelStock"></span> {{ __('marketplace.unit') }}
                                     </div>
                                 </div>
                                 <div x-show="isBufferExceedingStock" class="p-2.5 rounded-[12px] bg-[#FF9500]/10 border border-[#FF9500]/25 text-[#FF9500] text-[11.5px] flex items-center gap-2">
                                     <i data-lucide="shield-alert" class="w-4 h-4 shrink-0"></i>
-                                    <span>Cadangan buffer melebihi stok gudang! Stok saluran otomatis diset 0 unit untuk mencegah overselling.</span>
+                                    <span>{{ __('marketplace.modal_buffer_exceeds_warning') }}</span>
                                 </div>
                             </div>
 
                             <!-- If Manual: Custom Stock -->
                             <div x-show="stockMode === 'manual'" class="space-y-2 pt-1">
                                 <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">
-                                    Alokasi Kuota Stok Manual di Marketplace
+                                    {{ __('marketplace.modal_custom_stock_label') }}
                                 </label>
                                 <div class="relative">
                                     <input type="number" min="0" name="custom_stock" x-model="form.custom_stock"
-                                        placeholder="Contoh: 50"
+                                        placeholder="{{ __('marketplace.placeholder_example_stock') }}"
                                         class="w-full h-11 px-3.5 rounded-[12px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] text-[14px] text-black dark:text-white font-mono font-bold focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40">
                                 </div>
-                                <p class="text-[11.5px] text-black/50 dark:text-white/50">Hanya angka ini yang akan dikirim ke marketplace, terlepas dari total stok aktual di gudang.</p>
+                                <p class="text-[11.5px] text-black/50 dark:text-white/50">{{ __('marketplace.modal_custom_stock_desc') }}</p>
                             </div>
                         </div>
 
                         <!-- 5. Active Toggle -->
                         <div class="flex items-center justify-between p-4 rounded-[18px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08]">
                             <div>
-                                <span class="text-[13px] font-bold text-black dark:text-white">Status Listing di Etalase Marketplace</span>
-                                <p class="text-[11.5px] text-black/50 dark:text-white/50">Izinkan produk tampil di etalase dan dapat dibeli oleh customer</p>
+                                <span class="text-[13px] font-bold text-black dark:text-white">{{ __('marketplace.modal_listing_status_label') }}</span>
+                                <p class="text-[11.5px] text-black/50 dark:text-white/50">{{ __('marketplace.modal_listing_status_desc') }}</p>
                             </div>
                             <div class="flex items-center gap-3">
                                 <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full transition-colors"
                                     :class="form.is_active ? 'bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]' : 'bg-[#FF9500]/15 text-[#FF9500]'">
-                                    <span x-text="form.is_active ? 'Aktif di Etalase' : 'Nonaktif / Delisted'"></span>
+                                    <span x-text="form.is_active ? {{ json_encode(__('marketplace.filter_status_active')) }} : {{ json_encode(__('marketplace.delisted_from_channel')) }}"></span>
                                 </span>
                                 <label class="relative inline-flex items-center cursor-pointer">
                                     <input type="checkbox" x-model="form.is_active" class="sr-only peer">
@@ -1240,21 +1239,21 @@
                             <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-3">
                                 <div class="flex items-center gap-2">
                                     <i data-lucide="clipboard-check" class="w-4 h-4 text-[#34C759]"></i>
-                                    <h4 class="text-[13px] font-bold text-black dark:text-white">Pemeriksaan Kesiapan Listing</h4>
+                                    <h4 class="text-[13px] font-bold text-black dark:text-white">{{ __('marketplace.inspection_title') }}</h4>
                                 </div>
                                 <template x-if="galleryPhotos.length >= 5">
                                     <span class="text-[10.5px] font-bold px-2.5 py-0.5 rounded-full bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]">
-                                        ✓ Optimal (5+ Foto)
+                                        {{ __('marketplace.inspection_optimal') }}
                                     </span>
                                 </template>
                                 <template x-if="galleryPhotos.length > 0 && galleryPhotos.length < 5">
                                     <span class="text-[10.5px] font-bold px-2.5 py-0.5 rounded-full bg-[#007AFF]/10 text-[#007AFF]">
-                                        <span x-text="galleryPhotos.length + ' Foto'"></span>
+                                        <span x-text="galleryPhotos.length + ' ' + {{ json_encode(__('marketplace.photos_unit')) }}"></span>
                                     </span>
                                 </template>
                                 <template x-if="galleryPhotos.length === 0">
                                     <span class="text-[10.5px] font-bold px-2.5 py-0.5 rounded-full bg-[#FF3B30]/15 text-[#FF3B30]">
-                                        ⚠️ Tanpa Foto
+                                        {{ __('marketplace.inspection_no_photos') }}
                                     </span>
                                 </template>
                             </div>
@@ -1262,19 +1261,19 @@
                             <!-- Gallery thumbnails preview strip -->
                             <div class="space-y-1.5">
                                 <div class="flex items-center justify-between text-[11px] text-black/50 dark:text-white/50">
-                                    <span>Galeri Foto Listing (<span x-text="galleryPhotos.length"></span> foto siap sync):</span>
-                                    <span x-show="galleryPhotos.length >= 5" class="text-[#34C759] font-medium">Sesuai standar TikTok Shop &amp; Tokopedia</span>
-                                    <span x-show="galleryPhotos.length > 0 && galleryPhotos.length < 5" class="text-black/40 dark:text-white/40">Saran: minimal 5 foto</span>
+                                    <span>{{ __('marketplace.inspection_gallery_prefix') }} (<span x-text="galleryPhotos.length"></span> {{ __('marketplace.inspection_min_photos_hint') }}):</span>
+                                    <span x-show="galleryPhotos.length >= 5" class="text-[#34C759] font-medium">{{ __('marketplace.inspection_meets_standard') }}</span>
+                                    <span x-show="galleryPhotos.length > 0 && galleryPhotos.length < 5" class="text-black/40 dark:text-white/40">{{ __('marketplace.inspection_min_photos_hint') }}</span>
                                 </div>
                                 <div class="flex items-center gap-2 overflow-x-auto pb-1 custom-scrollbar">
                                     <template x-for="(photo, pidx) in galleryPhotos" :key="pidx">
                                         <div class="relative w-12 h-12 rounded-[10px] overflow-hidden border border-black/10 dark:border-white/10 shrink-0 group bg-black/5 dark:bg-white/5">
-                                            <img :src="photo.url" class="w-full h-full object-cover" :alt="photo.caption || 'Foto Produk'">
-                                            <span class="absolute bottom-0 inset-x-0 bg-black/70 text-white text-[8px] font-bold text-center py-0.5 truncate" x-text="pidx === 0 ? 'Utama' : '#' + (pidx + 1)"></span>
+                                            <img :src="photo.url" class="w-full h-full object-cover" :alt="photo.caption || {{ json_encode(__('marketplace.th_product')) }}">
+                                            <span class="absolute bottom-0 inset-x-0 bg-black/70 text-white text-[8px] font-bold text-center py-0.5 truncate" x-text="pidx === 0 ? {{ json_encode(__('marketplace.photo_main_badge')) }} : '#' + (pidx + 1)"></span>
                                         </div>
                                     </template>
                                     <div x-show="galleryPhotos.length === 0" class="w-full py-3 text-center text-[11.5px] text-[#FF3B30] bg-[#FF3B30]/10 rounded-[10px] border border-[#FF3B30]/20 font-medium">
-                                        ⚠️ Belum ada foto produk. Harap upload foto di menu Produk &amp; Jasa.
+                                        {{ __('marketplace.inspection_no_photo_alert') }}
                                     </div>
                                 </div>
                             </div>
@@ -1282,11 +1281,11 @@
                             <!-- Logistics Specs (Weight & Dimensions) -->
                             <div class="grid grid-cols-2 gap-2 text-[11.5px] pt-1">
                                 <div class="p-2 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.04] dark:border-white/[0.06]">
-                                    <span class="text-black/50 dark:text-white/50 block text-[10.5px]">Berat Paket Ekspedisi:</span>
+                                    <span class="text-black/50 dark:text-white/50 block text-[10.5px]">{{ __('marketplace.spec_package_weight') }}</span>
                                     <span class="font-bold text-black dark:text-white font-mono" x-text="(selectedProduct?.weight || 200) + ' gram'"></span>
                                 </div>
                                 <div class="p-2 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.04] dark:border-white/[0.06]">
-                                    <span class="text-black/50 dark:text-white/50 block text-[10.5px]">Dimensi Paket (P×L×T):</span>
+                                    <span class="text-black/50 dark:text-white/50 block text-[10.5px]">{{ __('marketplace.spec_package_dimensions') }}</span>
                                     <span class="font-bold text-black dark:text-white font-mono" x-text="(selectedProduct?.length || 10) + '×' + (selectedProduct?.width || 10) + '×' + (selectedProduct?.height || 10) + ' cm'"></span>
                                 </div>
                             </div>
@@ -1297,36 +1296,36 @@
                             <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-3">
                                 <div class="flex items-center gap-2">
                                     <i data-lucide="calculator" class="w-4 h-4 text-[#007AFF]"></i>
-                                    <h4 class="text-[13px] font-bold text-black dark:text-white">Kalkulasi Margin Saluran (Live)</h4>
+                                    <h4 class="text-[13px] font-bold text-black dark:text-white">{{ __('marketplace.calc_margin_live') }}</h4>
                                 </div>
                                 <span class="text-[11px] font-mono text-black/50 dark:text-white/50 uppercase" x-text="form.channel"></span>
                             </div>
 
                             <div class="space-y-2.5 text-[12.5px]">
                                 <div class="flex items-center justify-between text-black/60 dark:text-white/60">
-                                    <span>Modal Dasar (HPP):</span>
+                                    <span>{{ __('marketplace.calc_base_cost') }}</span>
                                     <span class="font-mono font-semibold text-black dark:text-white" x-text="formatRupiah(computedBaseCost)"></span>
                                 </div>
                                 <div class="flex items-center justify-between text-black/60 dark:text-white/60">
-                                    <span>Harga Toko COOCA:</span>
+                                    <span>{{ __('marketplace.calc_store_price') }}</span>
                                     <span class="font-mono font-semibold text-black dark:text-white" x-text="formatRupiah(selectedProduct ? selectedProduct.selling_price : 0)"></span>
                                 </div>
                                 <div class="flex items-center justify-between text-black dark:text-white font-medium">
-                                    <span>Harga Saluran Efektif:</span>
+                                    <span>{{ __('marketplace.calc_effective_channel_price') }}</span>
                                     <span class="font-mono font-bold text-[13.5px] text-[#007AFF]" x-text="formatRupiah(computedEffectivePrice)"></span>
                                 </div>
                                 <div class="flex items-center justify-between text-[#FF3B30] text-[12px]">
-                                    <span>Estimasi Biaya Admin Saluran (~8%):</span>
+                                    <span>{{ __('marketplace.calc_admin_fee_estimate') }}</span>
                                     <span class="font-mono font-medium" x-text="'- ' + formatRupiah(computedAdminFee)"></span>
                                 </div>
 
                                 <div class="pt-2 border-t border-black/[0.06] dark:border-white/[0.08]">
                                     <div class="flex items-center justify-between text-[12.5px] text-black/70 dark:text-white/70">
-                                        <span>Estimasi Payout Bersih:</span>
+                                        <span>{{ __('marketplace.calc_net_payout') }}</span>
                                         <span class="font-mono font-bold text-black dark:text-white" x-text="formatRupiah(computedNetReceived)"></span>
                                     </div>
                                     <div class="flex items-center justify-between text-[13px] pt-1">
-                                        <span class="font-bold text-black dark:text-white">Estimasi Margin Bersih:</span>
+                                        <span class="font-bold text-black dark:text-white">{{ __('marketplace.calc_net_margin') }}</span>
                                         <div class="text-right">
                                             <span class="font-mono font-bold text-[14px]" :class="computedNetMargin < 0 ? 'text-[#FF3B30]' : 'text-[#34C759]'" x-text="formatRupiah(computedNetMargin)"></span>
                                             <span class="text-[11px] block font-mono font-semibold" :class="computedNetMargin < 0 ? 'text-[#FF3B30]' : 'text-[#34C759]'" x-text="'(' + computedMarginPercent + '%)'"></span>
@@ -1339,10 +1338,10 @@
                             <div x-show="isZeroPrice" class="p-3.5 rounded-[16px] bg-[#FF3B30]/10 border border-[#FF3B30]/30 space-y-1 text-[#FF3B30]">
                                 <div class="flex items-center gap-2 text-[12px] font-bold">
                                     <i data-lucide="alert-octagon" class="w-4 h-4 shrink-0"></i>
-                                    <span>PERINGATAN HARGA NOL (GRATIS)</span>
+                                    <span>{{ __('marketplace.warning_zero_price_title') }}</span>
                                 </div>
                                 <p class="text-[11.5px] text-black/80 dark:text-white/80 leading-tight">
-                                    Harga jual saluran tidak boleh Rp 0 atau kosong untuk mencegah pesanan gratis yang merugikan toko.
+                                    {{ __('marketplace.warning_zero_price_desc') }}
                                 </p>
                             </div>
 
@@ -1352,10 +1351,10 @@
                                     <i data-lucide="shield-alert" class="w-4 h-4 shrink-0 mt-0.5 text-[#FF3B30]"></i>
                                     <div class="space-y-1">
                                         <div class="text-[12px] font-bold text-[#FF3B30]">
-                                            PERINGATAN ANTI-MARGIN BLEED
+                                            {{ __('marketplace.warning_margin_bleed_title') }}
                                         </div>
                                         <div class="text-[11.5px] leading-tight text-black/80 dark:text-white/80">
-                                            Harga jual efektif (<span class="font-mono font-bold" x-text="formatRupiah(computedEffectivePrice)"></span>) berada di bawah modal dasar HPP (<span class="font-mono font-bold" x-text="formatRupiah(computedBaseCost)"></span>). Kerugian modal: <strong class="text-[#FF3B30] font-mono font-bold" x-text="formatRupiah(costDeficit)"></strong> per unit.
+                                            {!! __('marketplace.warning_margin_bleed_desc_html') !!}
                                         </div>
                                     </div>
                                 </div>
@@ -1363,7 +1362,7 @@
                                     <input type="checkbox" id="allow_below_cost" x-model="form.allow_below_cost"
                                         class="mt-0.5 rounded-[4px] border-[#FF3B30] text-[#FF3B30] focus:ring-[#FF3B30] cursor-pointer">
                                     <label for="allow_below_cost" class="text-[11.5px] font-semibold text-black dark:text-white cursor-pointer select-none leading-tight">
-                                        Saya menyetujui risiko kerugian dan mengizinkan penetapan harga di bawah modal dasar (HPP).
+                                        {{ __('marketplace.consent_below_cost') }}
                                     </label>
                                 </div>
                             </div>
@@ -1372,7 +1371,7 @@
                             <div x-show="!isZeroPrice && !isBelowCost && computedNetMargin < 0" class="p-3 rounded-[12px] bg-[#FF3B30]/10 border border-[#FF3B30]/20 flex items-start gap-2.5 text-[#FF3B30]">
                                 <i data-lucide="alert-octagon" class="w-4 h-4 shrink-0 mt-0.5"></i>
                                 <div class="text-[11.5px] leading-tight font-medium">
-                                    <strong>Peringatan Potensi Rugi!</strong> Harga jual saluran setelah potongan fee platform (~8%) berada di bawah modal dasar (HPP).
+                                    {!! __('marketplace.warning_loss_potential') !!}
                                 </div>
                             </div>
                         </div>
@@ -1381,20 +1380,20 @@
                         <div class="rounded-[22px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] p-5 space-y-3">
                             <div class="flex items-center gap-2">
                                 <i data-lucide="info" class="w-4 h-4 text-black/50 dark:text-white/50"></i>
-                                <h4 class="text-[12.5px] font-bold text-black dark:text-white">Panduan Sinkronisasi</h4>
+                                <h4 class="text-[12.5px] font-bold text-black dark:text-white">{{ __('marketplace.guidelines_title') }}</h4>
                             </div>
                             <ul class="text-[11.5px] text-black/60 dark:text-white/60 space-y-2 leading-relaxed">
                                 <li class="flex items-start gap-2">
                                     <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0 mt-0.5"></i>
-                                    <span>Setiap pesanan baru di marketplace akan <strong>langsung memotong stok gudang</strong> utama COOCA secara otomatis.</span>
+                                    <span>{!! __('marketplace.guidelines_1') !!}</span>
                                 </li>
                                 <li class="flex items-start gap-2">
                                     <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0 mt-0.5"></i>
-                                    <span>Jika <strong>Stok Pengaman (Buffer)</strong> diset 5 unit dan stok gudang tersisa 8 unit, hanya 3 unit yang dikirimkan ke marketplace.</span>
+                                    <span>{!! __('marketplace.guidelines_2') !!}</span>
                                 </li>
                                 <li class="flex items-start gap-2">
                                     <i data-lucide="shield-check" class="w-3.5 h-3.5 text-[#007AFF] shrink-0 mt-0.5"></i>
-                                    <span>Gunakan faktor pengali minimal <code>1.08</code> untuk menjaga margin toko dari potongan komisi marketplace.</span>
+                                    <span>{!! __('marketplace.guidelines_3') !!}</span>
                                 </li>
                             </ul>
                         </div>
@@ -1405,45 +1404,45 @@
                 <!-- Modal Actions -->
                 <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-4 border-t border-black/[0.06] dark:border-white/[0.08]">
                     <div class="text-[12px] text-black/50 dark:text-white/50">
-                        <span x-show="form.marketplace_item_id">Item ID terhubung: <strong class="font-mono text-black dark:text-white" x-text="form.marketplace_item_id"></strong></span>
+                        <span x-show="form.marketplace_item_id">{{ __('marketplace.item_id_connected') }} <strong class="font-mono text-black dark:text-white" x-text="form.marketplace_item_id"></strong></span>
                         <span x-show="!form.marketplace_item_id" class="inline-flex items-center gap-1 text-[#FF9500] font-semibold">
                             <i data-lucide="info" class="w-3.5 h-3.5"></i>
-                            <span>Listing belum diterbitkan ke marketplace</span>
+                            <span>{{ __('marketplace.listing_not_published') }}</span>
                         </span>
                     </div>
                     <div class="flex items-center justify-end gap-2.5 flex-wrap">
                         <button type="button" @click="mappingModal = false" :disabled="submitting || publishing || togglingStatus"
                             class="h-11 px-4 rounded-[14px] text-[13px] font-semibold text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] transition-all cursor-pointer">
-                            Batal
+                            {{ __('marketplace.cancel') }}
                         </button>
 
                         {{-- 1-Click Direct Delist / Activate from Marketplace Etalase --}}
                         <template x-if="form.marketplace_item_id && form.is_active">
                             <button type="button" @click="toggleChannelProductStatus('deactivate')" :disabled="togglingStatus || publishing || submitting"
                                 class="h-11 px-4 rounded-[14px] text-[13px] font-semibold text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 cursor-pointer"
-                                title="Tarik produk ini dari etalase marketplace secara langsung">
+                                title="{{ __('marketplace.title_delist_direct') }}">
                                 <i data-lucide="eye-off" class="w-4 h-4"></i>
-                                <span x-text="togglingStatus ? 'Memproses...' : 'Tarik dari Etalase'"></span>
+                                <span x-text="togglingStatus ? {{ json_encode(__('marketplace.processing')) }} : {{ json_encode(__('marketplace.btn_delist_modal')) }}"></span>
                             </button>
                         </template>
                         <template x-if="form.marketplace_item_id && !form.is_active">
                             <button type="button" @click="toggleChannelProductStatus('activate')" :disabled="togglingStatus || publishing || submitting"
                                 class="h-11 px-4 rounded-[14px] text-[13px] font-semibold text-[#34C759] bg-[#34C759]/15 hover:bg-[#34C759]/25 active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 cursor-pointer"
-                                title="Aktifkan kembali produk ini di etalase marketplace">
+                                title="{{ __('marketplace.title_relist_direct') }}">
                                 <i data-lucide="eye" class="w-4 h-4"></i>
-                                <span x-text="togglingStatus ? 'Memproses...' : 'Tayangkan Kembali'"></span>
+                                <span x-text="togglingStatus ? {{ json_encode(__('marketplace.processing')) }} : {{ json_encode(__('marketplace.btn_relist_modal')) }}"></span>
                             </button>
                         </template>
 
                         <button type="button" @click="publishToMarketplace()" :disabled="publishing || submitting || togglingStatus || isZeroPrice || (isBelowCost && !form.allow_below_cost)"
                             class="h-11 px-5 rounded-[14px] text-[13px] font-bold text-white bg-[#34C759] hover:bg-[#28A745] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer"
-                            title="Upload listing baru dan seluruh foto galeri langsung ke marketplace">
+                            title="{{ __('marketplace.title_upload_listing') }}">
                             <svg x-show="publishing" class="animate-spin w-4 h-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
                             <i x-show="!publishing" data-lucide="cloud-upload" class="w-4 h-4"></i>
-                            <span x-text="publishing ? 'Menyinkronkan...' : (isZeroPrice ? 'Masukkan Harga Terlebih Dahulu' : (form.marketplace_item_id ? 'Perbarui Listing di ' : '1-Click Terbitkan ke ') + (form.channel === 'tiktok_shop' ? 'TikTok Shop' : (form.channel === 'tokopedia' ? 'Tokopedia' : 'Shopee')))"></span>
+                            <span x-text="publishing ? {{ json_encode(__('marketplace.btn_syncing')) }} : (isZeroPrice ? {{ json_encode(__('marketplace.btn_enter_price_first')) }} : (form.marketplace_item_id ? {{ json_encode(__('marketplace.btn_update_listing_at')) }} : {{ json_encode(__('marketplace.btn_publish_listing_to')) }}) + (form.channel === 'tiktok_shop' ? 'TikTok Shop' : (form.channel === 'tokopedia' ? 'Tokopedia' : 'Shopee')))"></span>
                         </button>
                         <button type="submit" :disabled="submitting || publishing || togglingStatus || isZeroPrice || (isBelowCost && !form.allow_below_cost)"
                             class="h-11 px-5 rounded-[14px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer">
@@ -1451,7 +1450,7 @@
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
-                            <span x-text="submitting ? 'Menyimpan Pengaturan...' : (isZeroPrice ? 'Masukkan Harga Saluran' : (isBelowCost && !form.allow_below_cost ? 'Buka Kunci Risiko untuk Simpan' : 'Simpan Pengaturan Saluran'))"></span>
+                            <span x-text="submitting ? {{ json_encode(__('marketplace.btn_saving_settings')) }} : (isZeroPrice ? {{ json_encode(__('marketplace.btn_enter_channel_price')) }} : (isBelowCost && !form.allow_below_cost ? {{ json_encode(__('marketplace.btn_unlock_risk_to_save')) }} : {{ json_encode(__('marketplace.btn_save_channel_settings')) }}))"></span>
                         </button>
 
                     </div>
@@ -1644,18 +1643,18 @@
                 if (this.isZeroPrice) {
                     e.preventDefault();
                     if (window.AppAlert) {
-                        AppAlert.toast('Harga efektif saluran tidak boleh Rp 0 atau kosong untuk mencegah pesanan gratis.', 'warning');
+                        AppAlert.toast({{ json_encode(__('marketplace.toast_zero_price')) }}, 'warning');
                     } else {
-                        alert('Harga efektif saluran tidak boleh Rp 0 atau kosong untuk mencegah pesanan gratis.');
+                        alert({{ json_encode(__('marketplace.toast_zero_price')) }});
                     }
                     return false;
                 }
                 if (this.isBelowCost && !this.form.allow_below_cost) {
                     e.preventDefault();
                     if (window.AppAlert) {
-                        AppAlert.toast('Buka kunci persetujuan risiko harga di bawah modal dasar (HPP) untuk melanjutkan.', 'warning');
+                        AppAlert.toast({{ json_encode(__('marketplace.toast_unlock_risk')) }}, 'warning');
                     } else {
-                        alert('Buka kunci persetujuan risiko harga di bawah modal dasar (HPP) untuk melanjutkan.');
+                        alert({{ json_encode(__('marketplace.toast_unlock_risk')) }});
                     }
                     return false;
                 }
@@ -1665,27 +1664,29 @@
                 if (!this.selectedProduct) return;
                 if (this.isZeroPrice) {
                     if (window.AppAlert) {
-                        AppAlert.toast('Harga efektif saluran tidak boleh Rp 0 atau kosong.', 'warning');
+                        AppAlert.toast({{ json_encode(__('marketplace.toast_zero_price_short')) }}, 'warning');
                     } else {
-                        alert('Harga efektif saluran tidak boleh Rp 0 atau kosong.');
+                        alert({{ json_encode(__('marketplace.toast_zero_price_short')) }});
                     }
                     return;
                 }
                 if (this.isBelowCost && !this.form.allow_below_cost) {
                     if (window.AppAlert) {
-                        AppAlert.toast('Buka kunci persetujuan risiko harga di bawah modal dasar (HPP) untuk melanjutkan.', 'warning');
+                        AppAlert.toast({{ json_encode(__('marketplace.toast_unlock_risk')) }}, 'warning');
                     } else {
-                        alert('Buka kunci persetujuan risiko harga di bawah modal dasar (HPP) untuk melanjutkan.');
+                        alert({{ json_encode(__('marketplace.toast_unlock_risk')) }});
                     }
                     return;
                 }
 
                 const channelName = this.form.channel === 'tiktok_shop' ? 'TikTok Shop' : (this.form.channel === 'tokopedia' ? 'Tokopedia' : 'Shopee');
+                const publishTitleTpl = {{ json_encode(__('marketplace.confirm_publish_title')) }};
+                const publishDescTpl = {{ json_encode(__('marketplace.confirm_publish_desc')) }};
                 
                 if (window.AppAlert && typeof window.AppAlert['confirm'] === 'function') {
                     const confirmed = await window.AppAlert['confirm'](
-                        `1-Click Terbitkan ke ${channelName}?`,
-                        `Produk "${this.selectedProduct.name}" beserta foto utama dan seluruh galeri fotonya (${this.galleryPhotos.length} foto) akan langsung diunggah dan dibuatkan listing baru di ${channelName}.`
+                        publishTitleTpl.replace(':channel', channelName),
+                        publishDescTpl.replace(':channel', channelName).replace(':name', this.selectedProduct.name).replace(':count', this.galleryPhotos.length)
                     );
                     if (!confirmed) return;
                 }
@@ -1718,13 +1719,14 @@
 
                     const data = await res.json();
                     if (!res.ok || !data.success) {
-                        throw new Error(data.error || data.message || 'Gagal menerbitkan produk ke marketplace.');
+                        throw new Error(data.error || data.message || {{ json_encode(__('marketplace.publish_failed')) }});
                     }
 
                     this.form.marketplace_item_id = data.external_product_id || this.form.marketplace_item_id;
                     
+                    const publishSuccessTpl = {{ json_encode(__('marketplace.publish_success')) }};
                     if (window.AppAlert) {
-                        AppAlert.toast(data.message || `Berhasil menerbitkan listing ke ${channelName}!`, 'success');
+                        AppAlert.toast(data.message || publishSuccessTpl.replace(':channel', channelName), 'success');
                     }
 
                     // Close modal sheet reactively and update in-memory product mapping
@@ -1759,13 +1761,16 @@
             async toggleChannelProductStatus(action) {
                 if (!this.selectedProduct || !this.form.marketplace_item_id) return;
                 const isDeactivate = action === 'deactivate';
-                const actionText = isDeactivate ? 'menonaktifkan / menarik produk dari etalase' : 'mengaktifkan kembali produk di etalase';
+                const actionBadge = isDeactivate ? {{ json_encode(__('marketplace.btn_delist_modal')) }} : {{ json_encode(__('marketplace.activate')) }};
+                const actionText = isDeactivate ? {{ json_encode(__('marketplace.action_deactivate_text')) }} : {{ json_encode(__('marketplace.action_activate_text')) }};
                 const channelName = this.form.channel === 'tiktok_shop' ? 'TikTok Shop' : (this.form.channel === 'tokopedia' ? 'Tokopedia' : 'Shopee');
+                const confirmToggleTitleTpl = {{ json_encode(__('marketplace.confirm_toggle_title')) }};
+                const confirmToggleDescTpl = {{ json_encode(__('marketplace.confirm_toggle_desc')) }};
                 
                 if (window.AppAlert && typeof window.AppAlert['confirm'] === 'function') {
                     const confirmed = await window.AppAlert['confirm'](
-                        `Konfirmasi ${isDeactivate ? 'Tarik dari Etalase' : 'Aktifkan Produk'}?`,
-                        `Apakah Anda yakin ingin ${actionText} "${this.selectedProduct.name}" di ${channelName}?`
+                        confirmToggleTitleTpl.replace(':action', actionBadge),
+                        confirmToggleDescTpl.replace(':action', actionText).replace(':name', this.selectedProduct.name).replace(':channel', channelName)
                     );
                     if (!confirmed) return;
                 }
@@ -1790,7 +1795,7 @@
 
                     const data = await res.json();
                     if (!res.ok || !data.success) {
-                        throw new Error(data.message || data.error || 'Gagal mengubah status etalase produk.');
+                        throw new Error(data.message || data.error || {{ json_encode(__('marketplace.toggle_status_failed')) }});
                     }
 
                     this.form.is_active = !isDeactivate;
@@ -1802,7 +1807,7 @@
                     }
 
                     if (window.AppAlert) {
-                        AppAlert.toast(data.message || 'Status produk berhasil diperbarui.', 'success');
+                        AppAlert.toast(data.message || {{ json_encode(__('marketplace.status_updated_success')) }}, 'success');
                     }
 
                     setTimeout(() => {
@@ -1821,20 +1826,22 @@
             async toggleChannelProductDirect(productId, channel, action) {
                 const product = this.productsMap[productId];
                 const isDeactivate = action === 'deactivate';
-                const actionTitle = isDeactivate ? 'Tarik dari Etalase' : 'Aktifkan Produk';
+                const actionTitle = isDeactivate ? {{ json_encode(__('marketplace.btn_delist_modal')) }} : {{ json_encode(__('marketplace.activate')) }};
+                const actionVerb = isDeactivate ? {{ json_encode(__('marketplace.action_deactivate_text')) }} : {{ json_encode(__('marketplace.action_activate_text')) }};
                 const channelLabel = channel === 'all' 
-                    ? 'seluruh etalase marketplace (Shopee, TikTok Shop, Tokopedia)'
+                    ? {{ json_encode(__('marketplace.channel_all_label')) }}
                     : (channel === 'tiktok_shop' ? 'TikTok Shop' : (channel === 'tokopedia' ? 'Tokopedia' : 'Shopee'));
-                const productName = product ? product.name : 'produk ini';
+                const productName = product ? product.name : {{ json_encode(__('marketplace.th_product')) }};
+                const confirmToggleTitleTpl = {{ json_encode(__('marketplace.confirm_toggle_title')) }};
+                const confirmToggleDescTpl = {{ json_encode(__('marketplace.confirm_toggle_desc')) }};
+                const promptTitle = confirmToggleTitleTpl.replace(':action', actionTitle);
+                const promptMsg = confirmToggleDescTpl.replace(':action', actionVerb).replace(':name', productName).replace(':channel', channelLabel);
 
                 let confirmed = true;
                 if (window.AppAlert && typeof window.AppAlert['confirm'] === 'function') {
-                    confirmed = await window.AppAlert['confirm'](
-                        `Konfirmasi ${actionTitle}?`,
-                        `Apakah Anda yakin ingin ${isDeactivate ? 'menonaktifkan / menarik' : 'mengaktifkan kembali'} "${productName}" di ${channelLabel}?`
-                    );
+                    confirmed = await window.AppAlert['confirm'](promptTitle, promptMsg);
                 } else {
-                    confirmed = confirm(`Apakah Anda yakin ingin ${isDeactivate ? 'menonaktifkan / menarik' : 'mengaktifkan kembali'} "${productName}" di ${channelLabel}?`);
+                    confirmed = confirm(promptMsg);
                 }
 
                 if (!confirmed) return;
@@ -1842,10 +1849,12 @@
                 const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
                 const endpoint = isDeactivate ? 'deactivate' : 'activate';
                 const url = `/marketplace-hub/products/${productId}/${endpoint}`;
+                const procWord = isDeactivate ? {{ json_encode(__('marketplace.action_deactivation')) }} : {{ json_encode(__('marketplace.action_activation')) }};
 
                 try {
+                    const toastProcTpl = {{ json_encode(__('marketplace.toggle_processing_toast')) }};
                     if (window.AppAlert) {
-                        AppAlert.toast(`Memproses ${isDeactivate ? 'penonaktifan' : 'pengaktifan'} di ${channelLabel}...`, 'info');
+                        AppAlert.toast(toastProcTpl.replace(':action', procWord).replace(':channel', channelLabel), 'info');
                     }
 
                     const res = await fetch(url, {
@@ -1859,12 +1868,13 @@
                     });
 
                     const data = await res.json();
+                    const toggleFailedTpl = {{ json_encode(__('marketplace.toggle_failed')) }};
                     if (!res.ok || !data.success) {
-                        throw new Error(data.message || data.error || `Gagal ${isDeactivate ? 'menonaktifkan' : 'mengaktifkan'} produk.`);
+                        throw new Error(data.message || data.error || toggleFailedTpl.replace(':action', procWord));
                     }
 
                     if (window.AppAlert) {
-                        AppAlert.toast(data.message || 'Status listing berhasil diperbarui.', 'success');
+                        AppAlert.toast(data.message || {{ json_encode(__('marketplace.listing_status_updated')) }}, 'success');
                     }
 
                     setTimeout(() => {
@@ -1884,7 +1894,7 @@
                 if (this.selectedProduct.image) {
                     photos.push({
                         url: this.selectedProduct.image.startsWith('http') ? this.selectedProduct.image : ('/storage/' + this.selectedProduct.image),
-                        caption: 'Foto Utama'
+                        caption: {{ json_encode(__('marketplace.photo_main')) }}
                     });
                 }
                 if (Array.isArray(this.selectedProduct.gallery_images)) {
@@ -1893,7 +1903,7 @@
                         if (u) {
                             photos.push({
                                 url: u.startsWith('http') ? u : ('/storage/' + u),
-                                caption: img.caption || 'Foto Galeri'
+                                caption: img.caption || {{ json_encode(__('marketplace.photo_gallery')) }}
                             });
                         }
                     }
@@ -1903,7 +1913,7 @@
                         if (u) {
                             photos.push({
                                 url: u.startsWith('http') ? u : ('/storage/' + u),
-                                caption: img.caption || 'Foto Galeri'
+                                caption: img.caption || {{ json_encode(__('marketplace.photo_gallery')) }}
                             });
                         }
                     }

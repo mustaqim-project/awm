@@ -1,7 +1,7 @@
 @extends('layouts.app', [
-    'title' => 'Detail Jejak Audit - Cooca',
-    'headerTitle' => 'Detail Forensik Log Audit',
-    'headerSubtitle' => 'Pemeriksaan komparasi data lama dan baru (Visual Diff).'
+    'title' => __('audit.show_page_title'),
+    'headerTitle' => __('audit.show_header_title'),
+    'headerSubtitle' => __('audit.show_header_subtitle')
 ])
 
 @section('content')
@@ -12,13 +12,13 @@
         <a href="{{ route('settings.audit-logs.index') }}"
            class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] text-black/75 dark:text-white/75 font-semibold text-[13px] hover:bg-black/[0.08] active:scale-95 transition-all inline-flex items-center gap-1.5">
             <i data-lucide="arrow-left" class="w-4 h-4"></i>
-            <span>Kembali ke Explorer</span>
+            <span>{{ __('audit.btn_back_to_explorer') }}</span>
         </a>
 
         @if($auditLog->isHighRisk())
         <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[12.5px] font-bold bg-[#FF3B30]/15 text-[#FF3B30] dark:text-[#FF453A] border border-[#FF3B30]/20">
             <i data-lucide="shield-alert" class="w-4 h-4"></i>
-            <span>RISIKO TINGGI</span>
+            <span>{{ __('audit.badge_risk_high_upper') }}</span>
         </span>
         @endif
     </div>
@@ -31,11 +31,11 @@
                     {{ $auditLog->getModuleLabel() }} ({{ strtoupper($auditLog->action) }})
                 </h2>
                 <p class="text-[13px] text-black/60 dark:text-white/60 mt-0.5">
-                    Dicatat pada {{ $auditLog->created_at ? $auditLog->created_at->timezone('Asia/Jakarta')->translatedFormat('d F Y, H:i:s') : '-' }} WIB
+                    {{ __('audit.recorded_at', ['datetime' => $auditLog->created_at ? $auditLog->created_at->timezone('Asia/Jakarta')->translatedFormat('d F Y, H:i:s') : '-']) }}
                 </p>
             </div>
             <div class="text-left sm:text-right">
-                <span class="text-[12px] text-black/50 dark:text-white/50 block">ID Referensi Log</span>
+                <span class="text-[12px] text-black/50 dark:text-white/50 block">{{ __('audit.log_ref_id') }}</span>
                 <span class="font-mono text-[13px] font-semibold text-black dark:text-white">{{ $auditLog->id }}</span>
             </div>
         </div>
@@ -43,50 +43,50 @@
         <!-- Forensics Detail Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 rounded-[18px] bg-black/[0.02] dark:bg-white/[0.03] p-4 text-[13px]">
             <div>
-                <span class="font-bold text-black/50 dark:text-white/50 block">Pelaku</span>
-                <span class="font-semibold text-black dark:text-white block mt-0.5">{{ $auditLog->user?->name ?? 'Sistem / Otomatis' }}</span>
+                <span class="font-bold text-black/50 dark:text-white/50 block">{{ __('audit.th_actor') }}</span>
+                <span class="font-semibold text-black dark:text-white block mt-0.5">{{ $auditLog->user?->name ?? __('audit.actor_system') }}</span>
                 <span class="text-black/40 dark:text-white/40 text-[11.5px] block">{{ $auditLog->user?->email ?? '-' }}</span>
             </div>
             <div>
-                <span class="font-bold text-black/50 dark:text-white/50 block">Alamat IP & Perangkat</span>
+                <span class="font-bold text-black/50 dark:text-white/50 block">{{ __('audit.actor_ip_device') }}</span>
                 <span class="font-mono text-black dark:text-white block mt-0.5">{{ $auditLog->ip_address ?: '127.0.0.1' }}</span>
                 <span class="text-black/40 dark:text-white/40 text-[11.5px] block truncate" title="{{ $auditLog->user_agent }}">{{ $auditLog->user_agent ?: '-' }}</span>
             </div>
             <div>
-                <span class="font-bold text-black/50 dark:text-white/50 block">Status Peringatan WhatsApp</span>
+                <span class="font-bold text-black/50 dark:text-white/50 block">{{ __('audit.forensic_wa_status_label') }}</span>
                 @if($auditLog->alert_sent_at)
                 <span class="font-semibold text-emerald-600 dark:text-emerald-400 block mt-0.5">
-                    Terkirim ke {{ $auditLog->alert_recipient }}
+                    {{ __('audit.wa_status_sent_to', ['recipient' => $auditLog->alert_recipient]) }}
                 </span>
                 <span class="text-black/40 dark:text-white/40 text-[11.5px] block">
                     {{ $auditLog->alert_sent_at->timezone('Asia/Jakarta')->translatedFormat('d M Y, H:i') }} WIB
                 </span>
                 @else
-                <span class="text-black/40 dark:text-white/40 block mt-0.5">Tidak dipicu</span>
+                <span class="text-black/40 dark:text-white/40 block mt-0.5">{{ __('audit.wa_not_triggered') }}</span>
                 @endif
             </div>
         </div>
 
         @if($auditLog->risk_reason || $auditLog->notes)
         <div class="p-4 rounded-[16px] {{ $auditLog->isHighRisk() ? 'bg-red-500/10 border border-red-500/20 text-red-900 dark:text-red-200' : 'bg-amber-500/10 border border-amber-500/20 text-amber-900 dark:text-amber-200' }}">
-            <div class="font-bold text-[13.5px]">{{ $auditLog->risk_reason ?: 'Aktivitas Tercatat' }}</div>
-            <div class="text-[13px] mt-1 text-black/75 dark:text-white/80">Alasan/Catatan: {{ $auditLog->notes ?: '-' }}</div>
+            <div class="font-bold text-[13.5px]">{{ $auditLog->risk_reason ?: __('audit.activity_recorded') }}</div>
+            <div class="text-[13px] mt-1 text-black/75 dark:text-white/80">{{ __('audit.reason_notes_prefix') }}{{ $auditLog->notes ?: '-' }}</div>
         </div>
         @endif
 
         <!-- Diff Table -->
         <div>
             <h3 class="text-[13.5px] font-bold text-black/70 dark:text-white/70 uppercase tracking-wider mb-3">
-                Perbandingan Nilai Data (Old vs. New)
+                {{ __('audit.diff_table_heading') }}
             </h3>
 
             <div class="rounded-[18px] border border-black/5 dark:border-white/10 overflow-hidden">
                 <table class="w-full text-left text-[13.5px]">
                     <thead>
                         <tr class="bg-black/[0.03] dark:bg-white/[0.04] border-b border-black/5 dark:border-white/10 text-black/60 dark:text-white/60 font-bold text-[12px] uppercase">
-                            <th class="py-3 px-4 w-1/3">Nama Atribut</th>
-                            <th class="py-3 px-4 w-1/3">Nilai Lama</th>
-                            <th class="py-3 px-4 w-1/3">Nilai Baru</th>
+                            <th class="py-3 px-4 w-1/3">{{ __('audit.th_attribute_name') }}</th>
+                            <th class="py-3 px-4 w-1/3">{{ __('audit.th_old_value_short') }}</th>
+                            <th class="py-3 px-4 w-1/3">{{ __('audit.th_new_value_short') }}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-black/5 dark:divide-white/10">
@@ -107,7 +107,7 @@
                         @empty
                         <tr>
                             <td colspan="3" class="py-6 text-center text-black/40 dark:text-white/40">
-                                Tidak ada atribut data yang tercatat.
+                                {{ __('audit.empty_attributes') }}
                             </td>
                         </tr>
                         @endforelse

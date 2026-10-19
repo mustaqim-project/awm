@@ -2,8 +2,8 @@
 <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 shadow-xs overflow-hidden">
     <div class="p-5 border-b border-black/5 dark:border-white/5 flex flex-wrap items-center justify-between gap-4">
         <div>
-            <h3 class="text-[15px] font-bold text-black dark:text-white">Analisis Jam Sibuk (24-Hour Hourly Heatmap)</h3>
-            <p class="text-[12px] text-black/50 dark:text-white/50">Pemetaan persebaran transaksi dan perolehan omzet per jam operasional</p>
+            <h3 class="text-[15px] font-bold text-black dark:text-white">{{ __('pos.reports_hourly_title') }}</h3>
+            <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('pos.reports_hourly_subtitle') }}</p>
         </div>
     </div>
 
@@ -27,7 +27,7 @@
                         Rp {{ number_format($hInfo->sales / 1000, 0) }}k
                     </div>
                     <div class="text-[10px] text-black/50 dark:text-white/50 tabular-nums">
-                        {{ $hInfo->count }} nota
+                        {{ $hInfo->count }} {{ __('pos.reports_hourly_orders_unit') }}
                     </div>
                 </div>
                 <div class="w-full h-1 bg-black/10 dark:bg-white/10 rounded-full overflow-hidden">
@@ -38,7 +38,7 @@
     </div>
 
     <div class="p-4 border-t border-black/5 dark:border-white/5 bg-black/[0.01] dark:bg-white/[0.01] flex items-center justify-between text-[12px] text-black/50 dark:text-white/50">
-        <span>💡 Jam paling produktif diwarnai biru pekat berdasarkan total omzet.</span>
-        <span>Maksimum Omzet/Jam: <strong class="text-black dark:text-white">Rp {{ number_format($maxSales, 0, ',', '.') }}</strong></span>
+        <span>{{ __('pos.reports_hourly_tip') }}</span>
+        <span>{{ __('pos.reports_hourly_max_revenue') }} <strong class="text-black dark:text-white">Rp {{ number_format($maxSales, 0, ',', '.') }}</strong></span>
     </div>
 </div>

@@ -1,7 +1,7 @@
 @extends('layouts.app', [
-    'title' => 'Jejak Audit & Anti-Fraud - Cooca',
-    'headerTitle' => 'Jejak Audit & Forensik Keamanan',
-    'headerSubtitle' => 'Deteksi kecurangan internal, pantau mutasi data sensitif, dan rekam jejak digital bisnis.'
+    'title' => __('audit.page_title'),
+    'headerTitle' => __('audit.header_title'),
+    'headerSubtitle' => __('audit.header_subtitle')
 ])
 
 @section('content')
@@ -17,21 +17,21 @@
                 <nav class="flex items-center gap-1.5 text-[11.5px] text-black/45 dark:text-white/45 mb-0.5" aria-label="Breadcrumb">
                     <a href="{{ route('dashboard') }}" class="hover:text-[#007AFF] transition-colors">Dashboard</a>
                     <i data-lucide="chevron-right" class="w-3 h-3 opacity-40"></i>
-                    <span>Pengaturan</span>
+                    <span>{{ __('audit.breadcrumb_settings') }}</span>
                     <i data-lucide="chevron-right" class="w-3 h-3 opacity-40"></i>
-                    <span class="text-black/75 dark:text-white/75 font-medium">Jejak Audit</span>
+                    <span class="text-black/75 dark:text-white/75 font-medium">{{ __('audit.breadcrumb_audit_logs') }}</span>
                 </nav>
                 <div class="flex items-center gap-2.5 flex-wrap">
                     <h1 class="text-xl sm:text-2xl font-bold text-black dark:text-white tracking-tight">
-                        Jejak Audit &amp; Anti-Fraud
+                        {{ __('audit.header_title') }}
                     </h1>
                     <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
                         <i data-lucide="lock" class="w-3 h-3"></i>
-                        <span>Append-Only</span>
+                        <span>{{ __('audit.badge_append_only') }}</span>
                     </span>
                 </div>
                 <p class="text-[13px] text-black/55 dark:text-white/55 mt-0.5">
-                    Rekam jejak forensik digital perubahan data penting bisnis yang tidak dapat dimanipulasi atau dihapus.
+                    {{ __('audit.forensic_footprint_desc') }}
                 </p>
             </div>
         </div>
@@ -40,7 +40,7 @@
             <a href="{{ route('settings.audit-logs.export', request()->query()) }}"
                class="min-h-[40px] px-4 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.10] text-black/80 dark:text-white/80 font-semibold text-[13px] flex items-center gap-2 active:scale-95 transition-all border border-black/5 dark:border-white/10">
                 <i data-lucide="download" class="w-4 h-4"></i>
-                <span>Ekspor CSV</span>
+                <span>{{ __('audit.btn_export_csv') }}</span>
             </a>
         </div>
     </header>
@@ -54,7 +54,7 @@
             </div>
             <div class="min-w-0">
                 <div class="text-[12px] font-medium text-black/50 dark:text-white/50">
-                    Aktivitas Tercatat (30 Hari)
+                    {{ __('audit.metric_activity_recorded') }}
                 </div>
                 <div class="text-2xl font-bold text-black dark:text-white tracking-tight mt-0.5">
                     {{ number_format($totalLogsCount, 0, ',', '.') }}
@@ -69,13 +69,13 @@
             </div>
             <div class="min-w-0">
                 <div class="text-[12px] font-medium text-black/50 dark:text-white/50">
-                    Aktivitas Risiko Tinggi
+                    {{ __('audit.metric_high_risk') }}
                 </div>
                 <div class="text-2xl font-bold text-[#FF3B30] dark:text-[#FF453A] tracking-tight mt-0.5 flex items-center gap-2">
                     <span>{{ number_format($highRiskCount, 0, ',', '.') }}</span>
                     @if($highRiskCount > 0)
                     <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20 uppercase tracking-wider">
-                        Perhatian
+                        {{ __('audit.badge_attention') }}
                     </span>
                     @endif
                 </div>
@@ -89,7 +89,7 @@
             </div>
             <div class="min-w-0">
                 <div class="text-[12px] font-medium text-black/50 dark:text-white/50">
-                    Peringatan WA Terkirim
+                    {{ __('audit.metric_wa_alerts_sent') }}
                 </div>
                 <div class="text-2xl font-bold text-emerald-600 dark:text-emerald-400 tracking-tight mt-0.5">
                     {{ number_format($alertSentCount, 0, ',', '.') }}
@@ -115,7 +115,7 @@
                     <div class="relative flex-1 max-w-md">
                         <i data-lucide="search" class="w-4 h-4 text-black/40 dark:text-white/40 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
                         <input type="search" name="q" value="{{ $filters['q'] ?? '' }}"
-                               placeholder="Cari alasan, modul, pelaku, atau IP..."
+                               placeholder="{{ __('audit.search_placeholder') }}"
                                class="w-full min-h-[40px] pl-10 pr-4 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[13px] text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition-all">
                     </div>
 
@@ -126,22 +126,22 @@
                         <div class="inline-flex items-center p-1 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/5 dark:border-white/10 text-[12px] font-semibold">
                             <a href="{{ route('settings.audit-logs.index', array_merge(request()->except('risk_level', 'page'), [])) }}"
                                class="px-3 py-1.5 rounded-[9px] transition-all {{ empty($filters['risk_level']) ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
-                                Semua
+                                {{ __('audit.filter_all') }}
                             </a>
                             <a href="{{ route('settings.audit-logs.index', array_merge(request()->except('page'), ['risk_level' => 'high'])) }}"
                                class="px-3 py-1.5 rounded-[9px] transition-all flex items-center gap-1 {{ ($filters['risk_level'] ?? '') === 'high' ? 'bg-[#FF3B30] text-white shadow-sm font-bold' : 'text-red-600 dark:text-red-400 hover:bg-red-500/10' }}">
                                 <span class="w-1.5 h-1.5 rounded-full bg-current"></span>
-                                <span>Tinggi</span>
+                                <span>{{ __('audit.filter_risk_high') }}</span>
                             </a>
                             <a href="{{ route('settings.audit-logs.index', array_merge(request()->except('page'), ['risk_level' => 'medium'])) }}"
                                class="px-3 py-1.5 rounded-[9px] transition-all flex items-center gap-1 {{ ($filters['risk_level'] ?? '') === 'medium' ? 'bg-amber-500 text-white shadow-sm font-bold' : 'text-amber-600 dark:text-amber-400 hover:bg-amber-500/10' }}">
                                 <span class="w-1.5 h-1.5 rounded-full bg-current"></span>
-                                <span>Sedang</span>
+                                <span>{{ __('audit.filter_risk_medium') }}</span>
                             </a>
                             <a href="{{ route('settings.audit-logs.index', array_merge(request()->except('page'), ['risk_level' => 'low'])) }}"
                                class="px-3 py-1.5 rounded-[9px] transition-all flex items-center gap-1 {{ ($filters['risk_level'] ?? '') === 'low' ? 'bg-emerald-600 text-white shadow-sm font-bold' : 'text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/10' }}">
                                 <span class="w-1.5 h-1.5 rounded-full bg-current"></span>
-                                <span>Rendah</span>
+                                <span>{{ __('audit.filter_risk_low') }}</span>
                             </a>
                         </div>
 
@@ -150,7 +150,7 @@
                                 class="min-h-[38px] px-3.5 rounded-[12px] border text-[12.5px] font-semibold inline-flex items-center gap-1.5 transition-all active:scale-95"
                                 :class="advancedOpen || {{ (!empty($filters['module']) || !empty($filters['user_id']) || !empty($filters['start_date']) || !empty($filters['end_date'])) ? 'true' : 'false' }} ? 'bg-[#007AFF]/10 border-[#007AFF]/30 text-[#007AFF]' : 'bg-black/[0.03] dark:bg-white/[0.05] border-black/10 dark:border-white/10 text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/10'">
                             <i data-lucide="sliders-horizontal" class="w-3.5 h-3.5"></i>
-                            <span>Filter</span>
+                            <span>{{ __('audit.btn_filter') }}</span>
                             @php
                                 $advancedCount = count(array_filter([$filters['module'] ?? null, $filters['user_id'] ?? null, $filters['start_date'] ?? null, $filters['end_date'] ?? null]));
                             @endphp
@@ -164,16 +164,16 @@
                         <!-- Reset Button -->
                         @if(!empty(array_filter($filters)))
                         <a href="{{ route('settings.audit-logs.index') }}"
-                           title="Reset Semua Filter"
+                           title="{{ __('audit.btn_reset') }}"
                            class="min-h-[38px] px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.10] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white text-[12.5px] font-semibold inline-flex items-center gap-1 transition-all">
                             <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-                            <span class="hidden sm:inline">Reset</span>
+                            <span class="hidden sm:inline">{{ __('audit.btn_reset') }}</span>
                         </a>
                         @endif
 
                         <!-- Submit Search Button -->
                         <button type="submit" class="min-h-[38px] px-4 rounded-[12px] bg-[#007AFF] text-white text-[12.5px] font-semibold hover:bg-[#007AFF]/90 active:scale-95 transition-all inline-flex items-center gap-1.5 shrink-0">
-                            <span>Terapkan</span>
+                            <span>{{ __('audit.btn_apply') }}</span>
                         </button>
                     </div>
                 </div>
@@ -192,25 +192,25 @@
                     <!-- Kategori Modul -->
                     <div>
                         <label class="block text-[11.5px] font-semibold text-black/55 dark:text-white/55 mb-1">
-                            Kategori Modul
+                            {{ __('audit.filter_module_category') }}
                         </label>
                         <select name="module" class="w-full min-h-[38px] px-3 rounded-[11px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[12.5px] text-black dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
-                            <option value="">Semua Modul</option>
-                            <option value="pos" {{ ($filters['module'] ?? '') === 'pos' ? 'selected' : '' }}>Kasir POS (Void & Diskon)</option>
-                            <option value="supplier" {{ ($filters['module'] ?? '') === 'supplier' ? 'selected' : '' }}>Pemasok / Rekening Bank</option>
-                            <option value="finance" {{ ($filters['module'] ?? '') === 'finance' ? 'selected' : '' }}>Keuangan & Jurnal</option>
-                            <option value="inventory" {{ ($filters['module'] ?? '') === 'inventory' ? 'selected' : '' }}>Stok & Produk</option>
-                            <option value="users" {{ ($filters['module'] ?? '') === 'users' ? 'selected' : '' }}>Pengguna & Role</option>
+                            <option value="">{{ __('audit.filter_all_modules') }}</option>
+                            <option value="pos" {{ ($filters['module'] ?? '') === 'pos' ? 'selected' : '' }}>{{ __('audit.module_pos') }}</option>
+                            <option value="supplier" {{ ($filters['module'] ?? '') === 'supplier' ? 'selected' : '' }}>{{ __('audit.module_supplier') }}</option>
+                            <option value="finance" {{ ($filters['module'] ?? '') === 'finance' ? 'selected' : '' }}>{{ __('audit.module_finance') }}</option>
+                            <option value="inventory" {{ ($filters['module'] ?? '') === 'inventory' ? 'selected' : '' }}>{{ __('audit.module_inventory') }}</option>
+                            <option value="users" {{ ($filters['module'] ?? '') === 'users' ? 'selected' : '' }}>{{ __('audit.module_users') }}</option>
                         </select>
                     </div>
 
                     <!-- Pelaku / Staf -->
                     <div>
                         <label class="block text-[11.5px] font-semibold text-black/55 dark:text-white/55 mb-1">
-                            Pelaku (User)
+                            {{ __('audit.filter_actor') }}
                         </label>
                         <select name="user_id" class="w-full min-h-[38px] px-3 rounded-[11px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[12.5px] text-black dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
-                            <option value="">Semua Staf / Pengguna</option>
+                            <option value="">{{ __('audit.filter_all_actors') }}</option>
                             @foreach($users as $u)
                             <option value="{{ $u->id }}" {{ ($filters['user_id'] ?? '') === $u->id ? 'selected' : '' }}>
                                 {{ $u->name }}
@@ -222,7 +222,7 @@
                     <!-- Tanggal Mulai -->
                     <div>
                         <label class="block text-[11.5px] font-semibold text-black/55 dark:text-white/55 mb-1">
-                            Dari Tanggal
+                            {{ __('audit.filter_start_date') }}
                         </label>
                         <input type="date" name="start_date" value="{{ $filters['start_date'] ?? '' }}"
                                class="w-full min-h-[38px] px-3 rounded-[11px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[12.5px] text-black dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
@@ -231,7 +231,7 @@
                     <!-- Tanggal Selesai -->
                     <div>
                         <label class="block text-[11.5px] font-semibold text-black/55 dark:text-white/55 mb-1">
-                            Sampai Tanggal
+                            {{ __('audit.filter_end_date') }}
                         </label>
                         <input type="date" name="end_date" value="{{ $filters['end_date'] ?? '' }}"
                                class="w-full min-h-[38px] px-3 rounded-[11px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[12.5px] text-black dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
@@ -245,11 +245,11 @@
             <table class="w-full text-left border-collapse">
                 <thead>
                     <tr class="border-b border-black/5 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] text-[11.5px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">
-                        <th class="py-3 px-5 w-[180px]">Waktu &amp; IP</th>
-                        <th class="py-3 px-5">Aktivitas &amp; Modul</th>
-                        <th class="py-3 px-5 w-[200px]">Pelaku</th>
-                        <th class="py-3 px-5 w-[160px]">Tingkat Risiko</th>
-                        <th class="py-3 px-5 w-[110px] text-right">Aksi</th>
+                        <th class="py-3 px-5 w-[180px]">{{ __('audit.th_time_ip') }}</th>
+                        <th class="py-3 px-5">{{ __('audit.th_activity_module') }}</th>
+                        <th class="py-3 px-5 w-[200px]">{{ __('audit.th_actor') }}</th>
+                        <th class="py-3 px-5 w-[160px]">{{ __('audit.th_risk_level') }}</th>
+                        <th class="py-3 px-5 w-[110px] text-right">{{ __('audit.th_action') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-black/5 dark:divide-white/10 text-[13px]">
@@ -277,15 +277,15 @@
                                     </span>
                                     @if($log->action === 'created')
                                         <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
-                                            DIBUAT
+                                            {{ __('audit.action_created') }}
                                         </span>
                                     @elseif($log->action === 'updated')
                                         <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400">
-                                            DIUBAH
+                                            {{ __('audit.action_updated') }}
                                         </span>
                                     @elseif($log->action === 'deleted')
                                         <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-red-500/10 text-red-600 dark:text-red-400">
-                                            DIHAPUS
+                                            {{ __('audit.action_deleted') }}
                                         </span>
                                     @else
                                         <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-black/5 text-black/60 dark:bg-white/10 dark:text-white/60">
@@ -313,10 +313,10 @@
                                 </div>
                                 <div class="min-w-0">
                                     <div class="font-semibold text-black dark:text-white text-[13px] truncate max-w-[140px]">
-                                        {{ $log->user?->name ?? 'Sistem / Otomatis' }}
+                                        {{ $log->user?->name ?? __('audit.actor_system') }}
                                     </div>
                                     <div class="text-[11.5px] text-black/45 dark:text-white/45 truncate max-w-[140px]">
-                                        {{ $log->user?->email ?? ($log->user ? '-' : 'Otomatisasi Sistem') }}
+                                        {{ $log->user?->email ?? ($log->user ? '-' : __('audit.actor_automation')) }}
                                     </div>
                                 </div>
                             </div>
@@ -328,24 +328,24 @@
                                 @if($log->isHighRisk())
                                     <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11.5px] font-bold bg-[#FF3B30]/10 text-[#FF3B30] dark:bg-[#FF453A]/15 dark:text-[#FF453A] border border-[#FF3B30]/20">
                                         <span class="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
-                                        <span>Risiko Tinggi</span>
+                                        <span>{{ __('audit.badge_risk_high') }}</span>
                                     </span>
                                 @elseif($log->isMediumRisk())
                                     <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11.5px] font-semibold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
                                         <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
-                                        <span>Sedang</span>
+                                        <span>{{ __('audit.badge_risk_medium') }}</span>
                                     </span>
                                 @else
                                     <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11.5px] font-medium bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60">
                                         <span class="w-1.5 h-1.5 rounded-full bg-black/30 dark:bg-white/30"></span>
-                                        <span>Rendah</span>
+                                        <span>{{ __('audit.badge_risk_low') }}</span>
                                     </span>
                                 @endif
 
                                 @if($log->alert_sent_at)
                                 <div class="mt-1 flex items-center gap-1 text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold">
                                     <i data-lucide="check-check" class="w-3.5 h-3.5"></i>
-                                    <span>WA Terkirim {{ $log->alert_sent_at->timezone('Asia/Jakarta')->format('H:i') }}</span>
+                                    <span>{{ __('audit.wa_sent', ['time' => $log->alert_sent_at->timezone('Asia/Jakarta')->format('H:i')]) }}</span>
                                 </div>
                                 @endif
                             </div>
@@ -356,7 +356,7 @@
                             <button type="button" @click="openDiffModal('{{ $log->id }}')"
                                     class="min-h-[36px] px-3 rounded-[10px] text-[12.5px] font-semibold text-black/75 dark:text-white/80 bg-black/[0.03] dark:bg-white/[0.06] hover:bg-[#007AFF]/10 hover:text-[#007AFF] dark:hover:bg-[#0A84FF]/15 dark:hover:text-[#0A84FF] active:scale-95 transition-all inline-flex items-center gap-1.5 border border-black/5 dark:border-white/10">
                                 <i data-lucide="git-compare" class="w-3.5 h-3.5"></i>
-                                <span>Detail</span>
+                                <span>{{ __('audit.btn_detail') }}</span>
                             </button>
                         </td>
                     </tr>
@@ -366,12 +366,12 @@
                             <div class="w-12 h-12 rounded-full bg-black/5 dark:bg-white/5 mx-auto flex items-center justify-center mb-3">
                                 <i data-lucide="inbox" class="w-6 h-6 opacity-60"></i>
                             </div>
-                            <p class="font-semibold text-sm text-black/75 dark:text-white/75">Tidak ada log aktivitas audit yang ditemukan.</p>
-                            <p class="text-xs mt-1">Coba sesuaikan kata kunci, filter modul, atau rentang tanggal.</p>
+                            <p class="font-semibold text-sm text-black/75 dark:text-white/75">{{ __('audit.empty_logs_title') }}</p>
+                            <p class="text-xs mt-1">{{ __('audit.empty_logs_desc') }}</p>
                             @if(!empty(array_filter($filters)))
                             <a href="{{ route('settings.audit-logs.index') }}" class="inline-flex items-center gap-1.5 mt-4 px-4 py-2 rounded-[11px] bg-black/[0.04] dark:bg-white/[0.06] text-[12.5px] font-semibold text-black/70 dark:text-white/70 hover:bg-black/10 transition-all">
                                 <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-                                <span>Reset Filter</span>
+                                <span>{{ __('audit.btn_reset_filter') }}</span>
                             </a>
                             @endif
                         </td>
@@ -392,15 +392,15 @@
                     @if($log->isHighRisk())
                         <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold bg-[#FF3B30]/10 text-[#FF3B30] dark:bg-[#FF453A]/15 dark:text-[#FF453A] border border-[#FF3B30]/20">
                             <span class="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
-                            <span>Tinggi</span>
+                            <span>{{ __('audit.filter_risk_high') }}</span>
                         </span>
                     @elseif($log->isMediumRisk())
                         <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-amber-500/10 text-amber-600 dark:text-amber-400">
-                            <span>Sedang</span>
+                            <span>{{ __('audit.filter_risk_medium') }}</span>
                         </span>
                     @else
                         <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60">
-                            <span>Rendah</span>
+                            <span>{{ __('audit.filter_risk_low') }}</span>
                         </span>
                     @endif
                 </div>
@@ -429,20 +429,20 @@
                         <div class="w-5 h-5 rounded-full bg-black/5 dark:bg-white/10 font-bold text-[9px] flex items-center justify-center shrink-0">
                             {{ strtoupper(substr($log->user?->name ?? 'S', 0, 1)) }}
                         </div>
-                        <span class="truncate">{{ $log->user?->name ?? 'Sistem' }}</span>
+                        <span class="truncate">{{ $log->user?->name ?? __('audit.actor_system_short') }}</span>
                     </div>
 
                     <button type="button" @click="openDiffModal('{{ $log->id }}')"
                             class="min-h-[36px] px-3.5 rounded-[10px] text-[12px] font-semibold text-[#007AFF] dark:text-[#0A84FF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-95 transition-all inline-flex items-center gap-1.5 shrink-0">
                         <i data-lucide="git-compare" class="w-3.5 h-3.5"></i>
-                        <span>Lihat Diff</span>
+                        <span>{{ __('audit.btn_view_diff') }}</span>
                     </button>
                 </div>
             </div>
             @empty
             <div class="p-8 text-center text-black/45 dark:text-white/45">
-                <p class="font-semibold text-sm text-black/75 dark:text-white/75">Tidak ada log ditemukan.</p>
-                <p class="text-xs mt-1">Coba sesuaikan filter pencarian.</p>
+                <p class="font-semibold text-sm text-black/75 dark:text-white/75">{{ __('audit.empty_logs_mobile_title') }}</p>
+                <p class="text-xs mt-1">{{ __('audit.empty_logs_mobile_desc') }}</p>
             </div>
             @endforelse
         </div>
@@ -495,20 +495,20 @@
                         </div>
                         <div>
                             <h3 id="modal-visual-diff-title" class="text-base sm:text-lg font-bold text-black dark:text-white tracking-tight flex items-center gap-2">
-                                <span>Visual Diff Viewer (Komparasi Data)</span>
+                                <span>{{ __('audit.modal_diff_title') }}</span>
                                 <template x-if="activeLog && activeLog.risk_level === 'high'">
                                     <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-500/15 text-red-600 dark:text-red-400 uppercase">
-                                        Risiko Tinggi
+                                        {{ __('audit.badge_risk_high') }}
                                     </span>
                                 </template>
                             </h3>
-                            <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5" x-text="activeLog ? activeLog.module_label + ' • ' + activeLog.created_at_formatted : 'Memuat data...'"></p>
+                            <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5" x-text="activeLog ? activeLog.module_label + ' • ' + activeLog.created_at_formatted : '{{ __('audit.modal_loading') }}'"></p>
                         </div>
                     </div>
 
                     <button type="button" @click="showModal = false"
                             class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 flex items-center justify-center text-black/60 dark:text-white/60 transition-all cursor-pointer"
-                            aria-label="Tutup visual diff">
+                            aria-label="{{ __('audit.close_modal') }}">
                         <i data-lucide="x" class="w-5 h-5"></i>
                     </button>
                 </div>
@@ -518,7 +518,7 @@
                 <template x-if="isLoading">
                     <div class="py-12 text-center">
                         <div class="inline-block animate-spin rounded-full h-8 w-8 border-3 border-[#007AFF] border-r-transparent"></div>
-                        <p class="text-xs text-black/50 dark:text-white/50 mt-3 font-medium">Mengambil jejak perubahan data...</p>
+                        <p class="text-xs text-black/50 dark:text-white/50 mt-3 font-medium">{{ __('audit.modal_fetching_diff') }}</p>
                     </div>
                 </template>
 
@@ -527,22 +527,22 @@
                         <!-- Forensics Overview Box -->
                         <div class="rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/10 p-4 grid grid-cols-1 sm:grid-cols-3 gap-4 text-[12.5px]">
                             <div>
-                                <span class="font-bold text-black/45 dark:text-white/45 text-[11.5px] block">Pelaku (Performer)</span>
+                                <span class="font-bold text-black/45 dark:text-white/45 text-[11.5px] block">{{ __('audit.forensic_actor_label') }}</span>
                                 <span class="font-semibold text-black dark:text-white mt-0.5 block" x-text="activeLog.user_name"></span>
                                 <span class="text-black/45 dark:text-white/45 text-[11px] block truncate" x-text="activeLog.user_email"></span>
                             </div>
                             <div>
-                                <span class="font-bold text-black/45 dark:text-white/45 text-[11.5px] block">Identitas Forensik Digital</span>
+                                <span class="font-bold text-black/45 dark:text-white/45 text-[11.5px] block">{{ __('audit.forensic_identity_label') }}</span>
                                 <span class="font-mono text-black dark:text-white mt-0.5 block" x-text="'IP: ' + activeLog.ip_address"></span>
                                 <span class="text-black/45 dark:text-white/45 text-[11px] block truncate" :title="activeLog.user_agent" x-text="activeLog.user_agent"></span>
                             </div>
                             <div>
-                                <span class="font-bold text-black/45 dark:text-white/45 text-[11.5px] block">Status Peringatan WhatsApp</span>
+                                <span class="font-bold text-black/45 dark:text-white/45 text-[11.5px] block">{{ __('audit.forensic_wa_status_label') }}</span>
                                 <template x-if="activeLog.alert_sent_at">
-                                    <span class="font-semibold text-emerald-600 dark:text-emerald-400 mt-0.5 block" x-text="'Terkirim ke ' + activeLog.alert_recipient + ' (' + activeLog.alert_sent_at + ')'"></span>
+                                    <span class="font-semibold text-emerald-600 dark:text-emerald-400 mt-0.5 block" x-text="'{{ __('audit.sent_to_prefix') }}' + activeLog.alert_recipient + ' (' + activeLog.alert_sent_at + ')'"></span>
                                 </template>
                                 <template x-if="!activeLog.alert_sent_at">
-                                    <span class="text-black/45 dark:text-white/45 mt-0.5 block">Tidak memicu notifikasi darurat</span>
+                                    <span class="text-black/45 dark:text-white/45 mt-0.5 block">{{ __('audit.wa_status_not_triggered') }}</span>
                                 </template>
                             </div>
                         </div>
@@ -552,28 +552,28 @@
                             <div class="rounded-[15px] p-4 border"
                                  :class="activeLog.risk_level === 'high' ? 'bg-red-500/[0.04] border-red-500/20 text-red-900 dark:text-red-200' : 'bg-amber-500/[0.04] border-amber-500/20 text-amber-900 dark:text-amber-200'">
                                 <div class="font-bold text-[13px] flex items-center gap-1.5" x-text="activeLog.risk_reason"></div>
-                                <div class="text-[12px] mt-1 text-black/75 dark:text-white/80" x-text="'Alasan/Catatan: ' + (activeLog.notes || '-')"></div>
+                                <div class="text-[12px] mt-1 text-black/75 dark:text-white/80" x-text="'{{ __('audit.reason_notes_prefix') }}' + (activeLog.notes || '-')"></div>
                             </div>
                         </template>
 
                         <!-- Visual Diff Table -->
                         <div>
                             <h4 class="text-[12px] font-bold text-black/60 dark:text-white/60 uppercase tracking-wider mb-2">
-                                Perbandingan Atribut Data (Old vs. New)
+                                {{ __('audit.diff_table_heading') }}
                             </h4>
 
                             <div class="rounded-[15px] border border-black/5 dark:border-white/10 overflow-hidden">
                                 <table class="w-full text-left text-[12.5px]">
                                     <thead>
                                         <tr class="bg-black/[0.03] dark:bg-white/[0.04] border-b border-black/5 dark:border-white/10 text-black/60 dark:text-white/60 font-semibold text-[11px] uppercase tracking-wider">
-                                            <th class="py-2.5 px-4 w-1/3">Nama Atribut</th>
-                                            <th class="py-2.5 px-4 w-1/3">Nilai Lama (Sebelumnya)</th>
-                                            <th class="py-2.5 px-4 w-1/3">Nilai Baru (Setelahnya)</th>
+                                            <th class="py-2.5 px-4 w-1/3">{{ __('audit.th_attribute_name') }}</th>
+                                            <th class="py-2.5 px-4 w-1/3">{{ __('audit.th_old_value') }}</th>
+                                            <th class="py-2.5 px-4 w-1/3">{{ __('audit.th_new_value') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-black/5 dark:divide-white/10">
                                         <template x-for="item in activeLog.diffs" :key="item.key">
-                                            <tr :class="item.is_different ? 'bg-amber-500/[0.02]' : ''">
+                                             <tr :class="item.is_different ? 'bg-amber-500/[0.02]' : ''">
                                                 <td class="py-2.5 px-4 font-mono font-medium text-black dark:text-white text-[12px]" x-text="item.label"></td>
                                                 <td class="py-2.5 px-4">
                                                     <span :class="item.is_different ? 'line-through text-red-600 dark:text-red-400 bg-red-500/10 px-2 py-0.5 rounded font-mono text-[11.5px]' : 'text-black/50 dark:text-white/50 font-mono text-[11.5px]'"
@@ -597,7 +597,7 @@
             <div class="p-4 border-t border-black/5 dark:border-white/10 flex justify-end">
                 <button type="button" @click="showModal = false"
                         class="min-h-[44px] px-5 rounded-[12px] bg-black dark:bg-white text-white dark:text-black font-semibold text-[13px] hover:opacity-90 active:scale-95 transition-all cursor-pointer">
-                    Tutup
+                    {{ __('common.close') }}
                 </button>
             </div>
         </div>
@@ -628,7 +628,7 @@ function auditLogExplorer() {
                 });
 
                 if (!response.ok) {
-                    throw new Error('Gagal mengambil data log.');
+                    throw new Error(@json(__('audit.error_fetch_log')));
                 }
 
                 this.activeLog = await response.json();
@@ -639,7 +639,7 @@ function auditLogExplorer() {
                 });
             } catch (err) {
                 console.error(err);
-                alert('Terjadi kesalahan saat memuat visual diff data.');
+                alert(@json(__('audit.alert_load_error')));
                 this.showModal = false;
             } finally {
                 this.isLoading = false;

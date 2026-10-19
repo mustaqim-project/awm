@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'COOCA AI — Growth Office'])
+@extends('layouts.app', ['title' => __('ai.offices.growth_title')])
 
 @section('content')
 <div class="space-y-6 w-full" x-data="aiOfficeBase()">
@@ -25,17 +25,17 @@
                 <div>
                     <div class="flex items-center gap-2">
                         <h2 class="text-base font-bold text-black dark:text-white">AI CMO & Sales Director</h2>
-                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-purple-500/10 text-purple-600 dark:text-purple-400">Pertumbuhan Aktif</span>
+                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-purple-500/10 text-purple-600 dark:text-purple-400">{{ __('ai.offices.growth_active') }}</span>
                     </div>
                     <p class="text-xs text-black/50 dark:text-white/50 mt-0.5">Marketing, Sales, Content, Social Media & Customer Retention</p>
                 </div>
             </div>
 
             <div class="text-right">
-                <div class="text-[11px] text-black/40 dark:text-white/40">Fokus Komersial:</div>
+                <div class="text-[11px] text-black/40 dark:text-white/40">{{ __('ai.offices.focus_commercial') }}</div>
                 <div class="text-xs font-semibold text-purple-600 dark:text-purple-400 flex items-center justify-end gap-1.5 mt-0.5">
                     <span class="w-2 h-2 rounded-full bg-purple-500"></span>
-                    <span>Akuisisi & Reaktivasi Pelanggan</span>
+                    <span>{{ __('ai.offices.acquisition_reactivation') }}</span>
                 </div>
             </div>
         </div>
@@ -45,25 +45,25 @@
             <div class="p-3.5 rounded-2xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 space-y-1">
                 <div class="text-[11px] font-bold text-purple-600 dark:text-purple-400 uppercase tracking-wider flex items-center gap-1.5">
                     <i data-lucide="target" class="w-3.5 h-3.5"></i>
-                    <span>Strategi Kampanye (CMO)</span>
+                    <span>{{ __('ai.offices.campaign_strategy') }}</span>
                 </div>
-                <p class="text-xs text-black/70 dark:text-white/70">Merumuskan promosi berkala, paket bundling, dan strategi diskon yang tetap menjaga margin laba.</p>
+                <p class="text-xs text-black/70 dark:text-white/70">{{ __('ai.offices.campaign_strategy_desc') }}</p>
             </div>
 
             <div class="p-3.5 rounded-2xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 space-y-1">
                 <div class="text-[11px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider flex items-center gap-1.5">
                     <i data-lucide="trending-up" class="w-3.5 h-3.5"></i>
-                    <span>Performa Penjualan</span>
+                    <span>{{ __('ai.offices.sales_performance') }}</span>
                 </div>
-                <p class="text-xs text-black/70 dark:text-white/70">Memantau produk terlaris, produk anjlok, dan mendeteksi penurunan omzet untuk segera direspons.</p>
+                <p class="text-xs text-black/70 dark:text-white/70">{{ __('ai.offices.sales_perf_desc') }}</p>
             </div>
 
             <div class="p-3.5 rounded-2xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 space-y-1">
                 <div class="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
                     <i data-lucide="users" class="w-3.5 h-3.5"></i>
-                    <span>Retensi Pelanggan</span>
+                    <span>{{ __('ai.offices.customer_retention') }}</span>
                 </div>
-                <p class="text-xs text-black/70 dark:text-white/70">Segmentasi RFM pelanggan (VIP vs Dormant) dan penyiapan broadcast reaktivasi yang relevan.</p>
+                <p class="text-xs text-black/70 dark:text-white/70">{{ __('ai.offices.customer_retention_desc') }}</p>
             </div>
         </div>
     </div>
@@ -71,43 +71,43 @@
     <!-- GROWTH & CUSTOMER METRICS STRIP -->
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <div class="rounded-2xl p-4 bg-white dark:bg-zinc-900 border border-black/10 dark:border-white/10 shadow-sm">
-            <div class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">Total Pelanggan Terdaftar</div>
+            <div class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">{{ __('ai.offices.total_registered_customers') }}</div>
             <div class="text-lg sm:text-xl font-bold text-black dark:text-white tabular-nums tracking-tight mt-1">
-                {{ number_format($customerSummary['total_customers'] ?? $growthMetrics['total_customers'] ?? 0) }} Kontak
+                {{ __('ai.offices.unit_contacts', ['count' => number_format($customerSummary['total_customers'] ?? $growthMetrics['total_customers'] ?? 0)]) }}
             </div>
-            <div class="text-[10px] text-black/40 dark:text-white/40 mt-1">Database CRM aktif</div>
+            <div class="text-[10px] text-black/40 dark:text-white/40 mt-1">{{ __('ai.offices.total_reg_sub') }}</div>
         </div>
 
         <div class="rounded-2xl p-4 bg-white dark:bg-zinc-900 border border-black/10 dark:border-white/10 shadow-sm">
-            <div class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">Pelanggan Pasif (Dormant)</div>
+            <div class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">{{ __('ai.offices.dormant_customers') }}</div>
             <div class="text-lg sm:text-xl font-bold text-amber-600 dark:text-amber-400 tabular-nums tracking-tight mt-1">
-                {{ number_format($customerSummary['dormant_customers'] ?? 0) }} Kontak
+                {{ __('ai.offices.unit_contacts', ['count' => number_format($customerSummary['dormant_customers'] ?? 0)]) }}
             </div>
-            <div class="text-[10px] text-black/40 dark:text-white/40 mt-1">Belum belanja > 30 hari</div>
+            <div class="text-[10px] text-black/40 dark:text-white/40 mt-1">{{ __('ai.offices.dormant_sub') }}</div>
         </div>
 
         <div class="rounded-2xl p-4 bg-white dark:bg-zinc-900 border border-black/10 dark:border-white/10 shadow-sm">
-            <div class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">Pelanggan VIP / Loyal</div>
+            <div class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">{{ __('ai.offices.vip_customers') }}</div>
             <div class="text-lg sm:text-xl font-bold text-emerald-600 dark:text-emerald-400 tabular-nums tracking-tight mt-1">
-                {{ number_format($customerSummary['vip_customers'] ?? 0) }} Kontak
+                {{ __('ai.offices.unit_contacts', ['count' => number_format($customerSummary['vip_customers'] ?? 0)]) }}
             </div>
-            <div class="text-[10px] text-black/40 dark:text-white/40 mt-1">Frekuensi & nilai belanja tinggi</div>
+            <div class="text-[10px] text-black/40 dark:text-white/40 mt-1">{{ __('ai.offices.vip_sub') }}</div>
         </div>
 
         <div class="rounded-2xl p-4 bg-white dark:bg-zinc-900 border border-black/10 dark:border-white/10 shadow-sm">
-            <div class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">Antrean Konten Medsos</div>
+            <div class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">{{ __('ai.offices.social_content_queue') }}</div>
             <div class="text-lg sm:text-xl font-bold text-purple-600 dark:text-purple-400 tabular-nums tracking-tight mt-1">
-                {{ $growthMetrics['scheduled_posts'] ?? 0 }} Naskah
+                {{ __('ai.offices.unit_scripts', ['count' => $growthMetrics['scheduled_posts'] ?? 0]) }}
             </div>
-            <div class="text-[10px] text-black/40 dark:text-white/40 mt-1">Draf & jadwal tayang konten</div>
+            <div class="text-[10px] text-black/40 dark:text-white/40 mt-1">{{ __('ai.offices.social_content_sub') }}</div>
         </div>
     </div>
 
     <!-- SQUAD WORKSTATIONS (5 AGENTS IN GROWTH OFFICE) -->
     <div class="space-y-4">
         <div>
-            <h3 class="text-sm font-bold text-black dark:text-white">Meja Kerja Tim Pertumbuhan Komersial</h3>
-            <p class="text-xs text-black/50 dark:text-white/50">Lima agen spesialis di bawah naungan AI CMO dan AI Sales Director.</p>
+            <h3 class="text-sm font-bold text-black dark:text-white">{{ __('ai.offices.workstations_growth_commercial_title') }}</h3>
+            <p class="text-xs text-black/50 dark:text-white/50">{{ __('ai.offices.workstations_growth_commercial_sub') }}</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3">
@@ -121,17 +121,17 @@
                             <i data-lucide="target" class="w-4 h-4"></i>
                         </div>
                         <span class="px-1.5 py-0.2 rounded text-[9px] font-bold uppercase {{ $mktgAgent['status'] === 'WORKING' ? 'bg-blue-500/10 text-blue-600' : 'bg-emerald-500/10 text-emerald-600' }}">
-                            {{ $mktgAgent['status_label'] ?? 'Tersedia' }}
+                            {{ $mktgAgent['status_label'] ?? __('ai.offices.available') }}
                         </span>
                     </div>
 
                     <div>
                         <h4 class="text-xs font-bold text-black dark:text-white">Marketing Agent</h4>
-                        <p class="text-[11px] text-black/60 dark:text-white/60 mt-1 line-clamp-3">Analisis kampanye, evaluasi efektivitas diskon, dan rekomendasi promo berkala.</p>
+                        <p class="text-[11px] text-black/60 dark:text-white/60 mt-1 line-clamp-3">{{ __('ai.offices.agent_mktg_desc') }}</p>
                     </div>
 
                     <div class="p-2 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 text-[10px] text-black/70 dark:text-white/70">
-                        <div class="font-semibold text-black dark:text-white truncate">{{ $mktgAgent['current_work'] ?? 'Siaga' }}</div>
+                        <div class="font-semibold text-black dark:text-white truncate">{{ $mktgAgent['current_work'] ?? __('ai.offices.standby') }}</div>
                     </div>
                 </div>
 
@@ -149,17 +149,17 @@
                             <i data-lucide="pen-tool" class="w-4 h-4"></i>
                         </div>
                         <span class="px-1.5 py-0.2 rounded text-[9px] font-bold uppercase {{ $cntAgent['status'] === 'WORKING' ? 'bg-blue-500/10 text-blue-600' : 'bg-emerald-500/10 text-emerald-600' }}">
-                            {{ $cntAgent['status_label'] ?? 'Tersedia' }}
+                            {{ $cntAgent['status_label'] ?? __('ai.offices.available') }}
                         </span>
                     </div>
 
                     <div>
                         <h4 class="text-xs font-bold text-black dark:text-white">Content Agent</h4>
-                        <p class="text-[11px] text-black/60 dark:text-white/60 mt-1 line-clamp-3">Penyusunan naskah copywriting, caption media sosial, dan ide konten promosi.</p>
+                        <p class="text-[11px] text-black/60 dark:text-white/60 mt-1 line-clamp-3">{{ __('ai.offices.agent_cnt_desc') }}</p>
                     </div>
 
                     <div class="p-2 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 text-[10px] text-black/70 dark:text-white/70">
-                        <div class="font-semibold text-black dark:text-white truncate">{{ $cntAgent['current_work'] ?? 'Siaga' }}</div>
+                        <div class="font-semibold text-black dark:text-white truncate">{{ $cntAgent['current_work'] ?? __('ai.offices.standby') }}</div>
                     </div>
                 </div>
 
@@ -177,17 +177,17 @@
                             <i data-lucide="share-2" class="w-4 h-4"></i>
                         </div>
                         <span class="px-1.5 py-0.2 rounded text-[9px] font-bold uppercase {{ $socAgent['status'] === 'WORKING' ? 'bg-blue-500/10 text-blue-600' : 'bg-emerald-500/10 text-emerald-600' }}">
-                            {{ $socAgent['status_label'] ?? 'Tersedia' }}
+                            {{ $socAgent['status_label'] ?? __('ai.offices.available') }}
                         </span>
                     </div>
 
                     <div>
                         <h4 class="text-xs font-bold text-black dark:text-white">Social Media Agent</h4>
-                        <p class="text-[11px] text-black/60 dark:text-white/60 mt-1 line-clamp-3">Penjadwalan tayang postingan, manajemen kanal medsos, dan persiapan materi publikasi.</p>
+                        <p class="text-[11px] text-black/60 dark:text-white/60 mt-1 line-clamp-3">{{ __('ai.offices.agent_soc_desc') }}</p>
                     </div>
 
                     <div class="p-2 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 text-[10px] text-black/70 dark:text-white/70">
-                        <div class="font-semibold text-black dark:text-white truncate">{{ $socAgent['current_work'] ?? 'Siaga' }}</div>
+                        <div class="font-semibold text-black dark:text-white truncate">{{ $socAgent['current_work'] ?? __('ai.offices.standby') }}</div>
                     </div>
                 </div>
 
@@ -205,17 +205,17 @@
                             <i data-lucide="trending-up" class="w-4 h-4"></i>
                         </div>
                         <span class="px-1.5 py-0.2 rounded text-[9px] font-bold uppercase {{ $slsAgent['status'] === 'WORKING' ? 'bg-blue-500/10 text-blue-600' : 'bg-emerald-500/10 text-emerald-600' }}">
-                            {{ $slsAgent['status_label'] ?? 'Tersedia' }}
+                            {{ $slsAgent['status_label'] ?? __('ai.offices.available') }}
                         </span>
                     </div>
 
                     <div>
                         <h4 class="text-xs font-bold text-black dark:text-white">Sales Agent</h4>
-                        <p class="text-[11px] text-black/60 dark:text-white/60 mt-1 line-clamp-3">Analisis tren omzet, produk laris vs anjlok, dan deviasi target penjualan cabang.</p>
+                        <p class="text-[11px] text-black/60 dark:text-white/60 mt-1 line-clamp-3">{{ __('ai.offices.agent_sls_desc') }}</p>
                     </div>
 
                     <div class="p-2 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 text-[10px] text-black/70 dark:text-white/70">
-                        <div class="font-semibold text-black dark:text-white truncate">{{ $slsAgent['current_work'] ?? 'Siaga' }}</div>
+                        <div class="font-semibold text-black dark:text-white truncate">{{ $slsAgent['current_work'] ?? __('ai.offices.standby') }}</div>
                     </div>
                 </div>
 
@@ -233,17 +233,17 @@
                             <i data-lucide="user-check" class="w-4 h-4"></i>
                         </div>
                         <span class="px-1.5 py-0.2 rounded text-[9px] font-bold uppercase {{ $cstAgent['status'] === 'WORKING' ? 'bg-blue-500/10 text-blue-600' : 'bg-emerald-500/10 text-emerald-600' }}">
-                            {{ $cstAgent['status_label'] ?? 'Tersedia' }}
+                            {{ $cstAgent['status_label'] ?? __('ai.offices.available') }}
                         </span>
                     </div>
 
                     <div>
                         <h4 class="text-xs font-bold text-black dark:text-white">Customer Agent</h4>
-                        <p class="text-[11px] text-black/60 dark:text-white/60 mt-1 line-clamp-3">Segmentasi pelanggan, deteksi churn, dan rekomendasi program reaktivasi pelanggan dormant.</p>
+                        <p class="text-[11px] text-black/60 dark:text-white/60 mt-1 line-clamp-3">{{ __('ai.offices.agent_cst_desc') }}</p>
                     </div>
 
                     <div class="p-2 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 text-[10px] text-black/70 dark:text-white/70">
-                        <div class="font-semibold text-black dark:text-white truncate">{{ $cstAgent['current_work'] ?? 'Siaga' }}</div>
+                        <div class="font-semibold text-black dark:text-white truncate">{{ $cstAgent['current_work'] ?? __('ai.offices.standby') }}</div>
                     </div>
                 </div>
 
@@ -260,19 +260,19 @@
     <div class="rounded-3xl p-6 bg-white dark:bg-zinc-900 border border-black/10 dark:border-white/10 shadow-sm space-y-4">
         <div class="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/5">
             <div>
-                <h3 class="text-sm font-bold text-black dark:text-white">Produk Terlaris Saat Ini</h3>
-                <p class="text-xs text-black/50 dark:text-white/50">Digunakan oleh Marketing & Content Agent sebagai materi utama konten promosi.</p>
+                <h3 class="text-sm font-bold text-black dark:text-white">{{ __('ai.offices.top_selling_title') }}</h3>
+                <p class="text-xs text-black/50 dark:text-white/50">{{ __('ai.offices.top_selling_sub') }}</p>
             </div>
-            <button type="button" @click="quickAsk('Siapkan naskah konten promosi media sosial untuk produk terlaris minggu ini')" class="px-3 py-1.5 rounded-xl bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 text-xs font-semibold text-black dark:text-white transition">
-                Buat Konten Promosi &rarr;
+            <button type="button" @click="quickAsk('{{ __('ai.offices.prompt_promo_content') }}')" class="px-3 py-1.5 rounded-xl bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 text-xs font-semibold text-black dark:text-white transition">
+                {{ __('ai.offices.btn_create_promo_content') }} &rarr;
             </button>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
             @foreach(array_slice($topProducts['top_selling'], 0, 4) as $prod)
                 <div class="p-3.5 rounded-2xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 space-y-1">
-                    <div class="text-xs font-bold text-black dark:text-white truncate">{{ $prod['name'] ?? 'Produk' }}</div>
-                    <div class="text-[11px] text-black/50 dark:text-white/50">Terjual: <span class="font-bold text-black dark:text-white tabular-nums">{{ $prod['quantity_sold'] ?? 0 }}</span> unit</div>
+                    <div class="text-xs font-bold text-black dark:text-white truncate">{{ $prod['name'] ?? __('ai.offices.product_fallback') }}</div>
+                    <div class="text-[11px] text-black/50 dark:text-white/50">{!! __('ai.offices.sold_units', ['quantity' => '<span class="font-bold text-black dark:text-white tabular-nums">' . ($prod['quantity_sold'] ?? 0) . '</span>']) !!}</div>
                     <div class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 tabular-nums">
                         Rp {{ number_format($prod['revenue'] ?? 0, 0, ',', '.') }}
                     </div>
@@ -286,11 +286,11 @@
     <div class="rounded-3xl p-6 bg-white dark:bg-zinc-900 border border-black/10 dark:border-white/10 shadow-sm space-y-4">
         <div class="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/5">
             <div>
-                <h3 class="text-sm font-bold text-black dark:text-white">Tugas Pertumbuhan & Kampanye Berjalan</h3>
-                <p class="text-xs text-black/50 dark:text-white/50">Pekerjaan riset konten, copywriting promosi, dan penyiapan broadcast.</p>
+                <h3 class="text-sm font-bold text-black dark:text-white">{{ __('ai.offices.running_growth_tasks_title') }}</h3>
+                <p class="text-xs text-black/50 dark:text-white/50">{{ __('ai.offices.running_growth_tasks_sub') }}</p>
             </div>
             <span class="px-2.5 py-1 rounded-md text-[11px] font-mono font-semibold bg-black/5 dark:bg-white/10 text-black/70 dark:text-white/70">
-                {{ $recentTasks->count() }} Tugas Tercatat
+                {{ __('ai.offices.tasks_recorded', ['count' => $recentTasks->count()]) }}
             </span>
         </div>
 
@@ -309,7 +309,7 @@
                                 <span class="text-xs font-semibold text-black dark:text-white">{{ $task->input }}</span>
                             </div>
                             <div class="text-[11px] text-black/50 dark:text-white/50 mt-0.5">
-                                {{ $task->created_at->diffForHumans() }} &bull; Durasi: {{ $task->duration_ms ?? 0 }}ms
+                                {{ $task->created_at->diffForHumans() }} &bull; {{ __('ai.offices.duration', ['ms' => $task->duration_ms ?? 0]) }}
                             </div>
                         </div>
                     </div>
@@ -328,7 +328,7 @@
                 </div>
             @empty
                 <div class="p-6 rounded-2xl bg-black/[0.01] dark:bg-white/[0.01] border border-black/5 dark:border-white/5 text-center text-xs text-black/50 dark:text-white/50">
-                    Tidak ada tugas aktif di Growth Office. Seluruh agen promosi siaga.
+                    {{ __('ai.offices.no_active_growth_tasks') }}
                 </div>
             @endforelse
         </div>
@@ -341,12 +341,12 @@
             <div>
                 <h3 class="text-sm font-bold text-black dark:text-white flex items-center gap-2">
                     <i data-lucide="shield-check" class="w-4 h-4 text-amber-600 dark:text-amber-400"></i>
-                    <span>Usulan Promosi & Publikasi Menunggu Persetujuan Anda</span>
+                    <span>{{ __('ai.offices.pending_growth_proposals_title') }}</span>
                 </h3>
-                <p class="text-xs text-black/50 dark:text-white/50 mt-0.5">Penayangan konten dan pengaktifan kampanye diskon memerlukan persetujuan pemilik usaha.</p>
+                <p class="text-xs text-black/50 dark:text-white/50 mt-0.5">{{ __('ai.offices.pending_growth_proposals_sub') }}</p>
             </div>
             <a href="{{ route('cooca-ai.actions', ['status' => 'pending']) }}" class="text-xs font-semibold text-amber-600 dark:text-amber-400 hover:underline">
-                Buka Action Center &rarr;
+                {{ __('ai.offices.open_action_center') }} &rarr;
             </a>
         </div>
 
@@ -371,11 +371,11 @@
                         <div class="flex items-center gap-2">
                             <form action="{{ route('cooca-ai.actions.reject', $proposal) }}" method="POST">
                                 @csrf
-                                <button type="submit" class="px-3 py-1.5 rounded-lg bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 font-semibold text-black/80 dark:text-white/80 transition">Tolak</button>
+                                <button type="submit" class="px-3 py-1.5 rounded-lg bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 font-semibold text-black/80 dark:text-white/80 transition">{{ __('ai.offices.reject') }}</button>
                             </form>
                             <form action="{{ route('cooca-ai.actions.approve', $proposal) }}" method="POST">
                                 @csrf
-                                <button type="submit" class="px-3 py-1.5 rounded-lg bg-black hover:bg-black/90 dark:bg-white dark:hover:bg-white/90 text-white dark:text-black font-semibold transition">Setujui</button>
+                                <button type="submit" class="px-3 py-1.5 rounded-lg bg-black hover:bg-black/90 dark:bg-white dark:hover:bg-white/90 text-white dark:text-black font-semibold transition">{{ __('ai.offices.approve') }}</button>
                             </form>
                         </div>
                     </div>
@@ -389,11 +389,11 @@
     <div class="rounded-3xl p-6 bg-white dark:bg-zinc-900 border border-black/10 dark:border-white/10 shadow-sm space-y-4">
         <div class="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/5">
             <div>
-                <h3 class="text-sm font-bold text-black dark:text-white">Arsip Rekam Kerja Pertumbuhan & Marketing</h3>
-                <p class="text-xs text-black/50 dark:text-white/50">Jejak audit pekerjaan naskah konten, kampanye promosi, dan program retensi pelanggan.</p>
+                <h3 class="text-sm font-bold text-black dark:text-white">{{ __('ai.offices.audit_growth_history_title') }}</h3>
+                <p class="text-xs text-black/50 dark:text-white/50">{{ __('ai.offices.audit_growth_history_sub') }}</p>
             </div>
             <a href="{{ route('cooca-ai.history') }}" class="text-xs font-semibold text-black/70 dark:text-white/70 hover:underline">
-                Lihat Seluruh Riwayat &rarr;
+                {{ __('ai.offices.see_all_history') }} &rarr;
             </a>
         </div>
 
@@ -417,7 +417,7 @@
                 </div>
             @empty
                 <div class="p-6 rounded-2xl bg-black/[0.01] dark:bg-white/[0.01] border border-black/5 dark:border-white/5 text-center text-xs text-black/50 dark:text-white/50">
-                    Belum ada riwayat rekam kerja di Growth Office.
+                    {{ __('ai.offices.no_history_growth') }}
                 </div>
             @endforelse
         </div>

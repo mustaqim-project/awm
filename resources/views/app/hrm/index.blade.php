@@ -67,7 +67,7 @@
         })
         .then(res => {
             if (!res.ok) {
-                return res.json().then(err => { throw new Error(err.message || 'Gagal memproses file Excel karyawan.'); });
+                return res.json().then(err => { throw new Error(err.message || '{{ addslashes(__('hrm.err_process_excel_emp')) }}'); });
             }
             return res.json();
         })
@@ -76,12 +76,12 @@
             if (res.success) {
                 this.importEmployeePreview = res.data;
             } else {
-                alert(res.message || 'Gagal menganalisis file karyawan.');
+                alert(res.message || '{{ addslashes(__('hrm.err_analyze_file_emp')) }}');
             }
         })
         .catch(err => {
             this.importEmployeeLoading = false;
-            alert(err.message || 'Terjadi kesalahan saat mengunggah file.');
+            alert(err.message || '{{ addslashes(__('hrm.err_upload_file')) }}');
         });
     },
 
@@ -95,11 +95,11 @@
             : (this.importEmployeePreview.valid_count + this.importEmployeePreview.duplicate_count);
 
         if (totalToProcess <= 0) {
-            alert('Tidak ada baris karyawan yang siap diimpor.');
+            alert('{{ addslashes(__('hrm.err_no_ready_emp_import')) }}');
             return;
         }
 
-        if (!confirm('Apakah Anda yakin ingin memproses ' + totalToProcess + ' data staf ke sistem?')) {
+        if (!confirm('{{ addslashes(__('hrm.confirm_process_emp_prefix')) }}' + totalToProcess + '{{ addslashes(__('hrm.confirm_process_emp_suffix')) }}')) {
             return;
         }
 
@@ -124,12 +124,12 @@
                 alert(res.message);
                 window.location.reload();
             } else {
-                alert(res.message || 'Gagal mengeksekusi import karyawan.');
+                alert(res.message || '{{ addslashes(__('hrm.err_execute_import_emp')) }}');
             }
         })
         .catch(err => {
             this.importEmployeeExecuting = false;
-            alert(err.message || 'Terjadi kesalahan sistem saat mengeksekusi import.');
+            alert(err.message || '{{ addslashes(__('hrm.err_system_import')) }}');
         });
     },
 
@@ -178,7 +178,7 @@
         })
         .then(res => {
             if (!res.ok) {
-                return res.json().then(err => { throw new Error(err.message || 'Gagal memproses file Excel log presensi.'); });
+                return res.json().then(err => { throw new Error(err.message || '{{ addslashes(__('hrm.err_process_excel_att')) }}'); });
             }
             return res.json();
         })
@@ -187,12 +187,12 @@
             if (res.success) {
                 this.importAttendancePreview = res.data;
             } else {
-                alert(res.message || 'Gagal menganalisis file presensi mesin.');
+                alert(res.message || '{{ addslashes(__('hrm.err_analyze_file_att')) }}');
             }
         })
         .catch(err => {
             this.importAttendanceLoading = false;
-            alert(err.message || 'Terjadi kesalahan saat mengunggah file.');
+            alert(err.message || '{{ addslashes(__('hrm.err_upload_file')) }}');
         });
     },
 
@@ -206,11 +206,11 @@
             : (this.importAttendancePreview.valid_count + this.importAttendancePreview.duplicate_count);
 
         if (totalToProcess <= 0) {
-            alert('Tidak ada baris log presensi yang siap diimpor.');
+            alert('{{ addslashes(__('hrm.err_no_ready_att_import')) }}');
             return;
         }
 
-        if (!confirm('Apakah Anda yakin ingin memproses ' + totalToProcess + ' catatan presensi ke sistem?')) {
+        if (!confirm('{{ addslashes(__('hrm.confirm_process_att_prefix')) }}' + totalToProcess + '{{ addslashes(__('hrm.confirm_process_att_suffix')) }}')) {
             return;
         }
 
@@ -235,12 +235,12 @@
                 alert(res.message);
                 window.location.reload();
             } else {
-                alert(res.message || 'Gagal mengeksekusi import presensi.');
+                alert(res.message || '{{ addslashes(__('hrm.err_execute_import_att')) }}');
             }
         })
         .catch(err => {
             this.importAttendanceExecuting = false;
-            alert(err.message || 'Terjadi kesalahan sistem saat mengeksekusi import.');
+            alert(err.message || '{{ addslashes(__('hrm.err_system_import')) }}');
         });
     },
 
@@ -903,7 +903,7 @@
                 :class="activeTab === 'shifts' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-bold' : 'text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white font-semibold'"
                 class="px-3.5 py-2 min-h-[44px] sm:min-h-[38px] rounded-[10px] text-[13px] transition-all flex items-center gap-2 cursor-pointer whitespace-nowrap active:scale-[0.98]">
                 <i data-lucide="clock" class="w-4 h-4 text-[#30B0C7]"></i>
-                <span>Shift Kerja</span>
+                <span>{{ __('hrm.tab_shifts') }}</span>
                 <span class="px-1.5 py-0.2 rounded-full text-[10.5px] bg-black/5 dark:bg-white/10 font-bold">{{ $workShifts->count() }}</span>
             </button>
 
@@ -911,7 +911,7 @@
                 :class="activeTab === 'schedules' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-bold' : 'text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white font-semibold'"
                 class="px-3.5 py-2 min-h-[44px] sm:min-h-[38px] rounded-[10px] text-[13px] transition-all flex items-center gap-2 cursor-pointer whitespace-nowrap active:scale-[0.98]">
                 <i data-lucide="calendar" class="w-4 h-4 text-[#5856D6]"></i>
-                <span>Jadwal Roster</span>
+                <span>{{ __('hrm.tab_schedules') }}</span>
                 <span class="px-1.5 py-0.2 rounded-full text-[10.5px] bg-black/5 dark:bg-white/10 font-bold">{{ $employeeSchedules->total() }}</span>
             </button>
 
@@ -945,15 +945,15 @@
                 <div class="flex items-center gap-2">
                     <a href="{{ route('hrm.employees.export') }}"
                         class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-3.5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold flex items-center gap-2 transition active:scale-[0.98] cursor-pointer"
-                        title="Ekspor seluruh data karyawan ke Excel">
+                        title="{{ __('hrm.title_export_employees_excel') }}">
                         <i data-lucide="download" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
-                        <span class="hidden sm:inline">Ekspor Excel</span>
+                        <span class="hidden sm:inline">{{ __('hrm.btn_export_excel') }}</span>
                     </a>
                     <button type="button" @click="showImportEmployeeModal = true"
                         class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-3.5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold flex items-center gap-2 transition active:scale-[0.98] cursor-pointer"
-                        title="Impor master karyawan dari Excel">
+                        title="{{ __('hrm.title_import_employees_excel') }}">
                         <i data-lucide="upload" class="w-4 h-4 text-[#007AFF]"></i>
-                        <span class="hidden sm:inline">Impor Karyawan</span>
+                        <span class="hidden sm:inline">{{ __('hrm.btn_import_employees') }}</span>
                     </button>
                     <button type="button" @click="showAddEmployeeModal = true"
                         class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-4 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-bold flex items-center gap-2 shadow-[0_2px_8px_rgba(0,122,255,0.3)] transition active:scale-[0.98] cursor-pointer">
@@ -967,15 +967,15 @@
                 <div class="flex items-center gap-2">
                     <a href="{{ route('hrm.attendance.export') }}"
                         class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-3.5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold flex items-center gap-2 transition active:scale-[0.98] cursor-pointer"
-                        title="Ekspor log presensi ke Excel">
+                        title="{{ __('hrm.title_export_attendance_excel') }}">
                         <i data-lucide="download" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
-                        <span class="hidden sm:inline">Ekspor Presensi</span>
+                        <span class="hidden sm:inline">{{ __('hrm.btn_export_attendance') }}</span>
                     </a>
                     <button type="button" @click="showImportAttendanceModal = true"
                         class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-3.5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold flex items-center gap-2 transition active:scale-[0.98] cursor-pointer"
-                        title="Impor log presensi dari mesin fingerprint/biometrik (ZKTeco, Solution, Fingerspot)">
+                        title="{{ __('hrm.title_import_fingerprint') }}">
                         <i data-lucide="fingerprint" class="w-4 h-4 text-[#34C759]"></i>
-                        <span class="hidden sm:inline">Impor Mesin Fingerprint</span>
+                        <span class="hidden sm:inline">{{ __('hrm.btn_import_fingerprint') }}</span>
                     </button>
                     <button type="button" @click="startFaceAttendance('in')"
                         class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-4 rounded-[12px] bg-[#34C759] hover:bg-[#2FB34F] text-white text-[13px] font-bold flex items-center gap-2 shadow-[0_2px_8px_rgba(52,199,89,0.3)] transition active:scale-[0.98] cursor-pointer">
@@ -1005,7 +1005,7 @@
                 <button type="button" @click="showAddShiftModal = true"
                     class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-4 rounded-[12px] bg-[#30B0C7] hover:bg-[#2591a3] text-white text-[13px] font-bold flex items-center gap-2 shadow-[0_2px_8px_rgba(48,176,199,0.3)] transition active:scale-[0.98] cursor-pointer">
                     <i data-lucide="plus" class="w-4 h-4"></i>
-                    <span>Tambah Shift</span>
+                    <span>{{ __('hrm.btn_add_shift') }}</span>
                 </button>
             </template>
 
@@ -1013,7 +1013,7 @@
                 <button type="button" @click="showAddScheduleModal = true"
                     class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-4 rounded-[12px] bg-[#5856D6] hover:bg-[#4745B8] text-white text-[13px] font-bold flex items-center gap-2 shadow-[0_2px_8px_rgba(88,86,214,0.3)] transition active:scale-[0.98] cursor-pointer">
                     <i data-lucide="plus" class="w-4 h-4"></i>
-                    <span>Atur Jadwal Roster</span>
+                    <span>{{ __('hrm.btn_set_roster_schedule') }}</span>
                 </button>
             </template>
 
@@ -2187,13 +2187,13 @@
                 <table class="w-full text-left text-[13px] border-collapse min-w-[950px]">
                     <thead>
                         <tr class="border-b border-black/5 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.03] text-[11px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60">
-                            <th class="py-3.5 px-4 sm:px-5">Nama Shift & Kode</th>
-                            <th class="py-3.5 px-3">Jam Kerja (Mulai - Selesai)</th>
-                            <th class="py-3.5 px-3">Istirahat & Durasi Netto</th>
-                            <th class="py-3.5 px-3">Toleransi (Grace Period)</th>
-                            <th class="py-3.5 px-3">Cakupan Cabang</th>
-                            <th class="py-3.5 px-3">Status</th>
-                            <th class="py-3.5 px-4 text-right">Aksi</th>
+                            <th class="py-3.5 px-4 sm:px-5">{{ __('hrm.th_shift_name_code') }}</th>
+                            <th class="py-3.5 px-3">{{ __('hrm.th_shift_hours') }}</th>
+                            <th class="py-3.5 px-3">{{ __('hrm.th_break_net_hours') }}</th>
+                            <th class="py-3.5 px-3">{{ __('hrm.th_grace_period') }}</th>
+                            <th class="py-3.5 px-3">{{ __('hrm.th_branch_coverage') }}</th>
+                            <th class="py-3.5 px-3">{{ __('hrm.th_status') }}</th>
+                            <th class="py-3.5 px-4 text-right">{{ __('hrm.th_action') }}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-black/5 dark:divide-white/5">
@@ -2220,36 +2220,36 @@
                                     @if($ws->isOvernight())
                                         <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold bg-[#AF52DE]/15 text-[#AF52DE] border border-[#AF52DE]/30 mt-0.5">
                                             <i data-lucide="moon" class="w-3 h-3"></i>
-                                            <span>Shift Lintas Malam (+1 Hari)</span>
+                                            <span>{{ __('hrm.badge_overnight_shift') }}</span>
                                         </span>
                                     @endif
                                 </td>
                                 <td class="py-3.5 px-3 tabular-nums text-black/80 dark:text-white/80 font-medium">
-                                    <div>{{ round($ws->net_work_minutes / 60, 1) }} Jam Kerja</div>
-                                    <div class="text-[11px] text-black/50 dark:text-white/50">Istirahat: {{ $ws->break_duration_minutes }} menit</div>
+                                    <div>{{ round($ws->net_work_minutes / 60, 1) }}{{ __('hrm.unit_work_hours') }}</div>
+                                    <div class="text-[11px] text-black/50 dark:text-white/50">{{ __('hrm.break_prefix') }}{{ $ws->break_duration_minutes }} {{ __('hrm.unit_minutes') }}</div>
                                 </td>
                                 <td class="py-3.5 px-3 tabular-nums">
                                     @if($ws->grace_period_minutes > 0)
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/20">
-                                            {{ $ws->grace_period_minutes }} Menit
+                                            {{ $ws->grace_period_minutes }}{{ __('hrm.unit_minutes_cap') }}
                                         </span>
                                     @else
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-500/10 text-slate-500">
-                                            0 Menit (Ketat)
+                                            {{ __('hrm.opt_grace_0_strict') }}
                                         </span>
                                     @endif
                                 </td>
                                 <td class="py-3.5 px-3 text-[12.5px] text-black/70 dark:text-white/70">
-                                    {{ $ws->location?->name ?? 'Semua Lokasi / Global' }}
+                                    {{ $ws->location?->name ?? __('hrm.all_locations_global') }}
                                 </td>
                                 <td class="py-3.5 px-3">
                                     @if($ws->is_active)
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10.5px] font-bold bg-[#34C759]/15 text-[#34C759]">
-                                            Aktif
+                                            {{ __('hrm.status_active') }}
                                         </span>
                                     @else
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold bg-black/10 dark:bg-white/10 text-black/50 dark:text-white/50">
-                                            Nonaktif
+                                            {{ __('hrm.status_inactive') }}
                                         </span>
                                     @endif
                                 </td>
@@ -2258,10 +2258,10 @@
                                         <button type="button"
                                             @click="openEditShift({{ Js::from($ws) }}, '{{ route('hrm.shifts.update', $ws->id) }}')"
                                             class="h-8.5 px-3 rounded-[9px] text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#0071E3] hover:text-white transition active:scale-[0.98] cursor-pointer">
-                                            Edit
+                                            {{ __('hrm.btn_edit') }}
                                         </button>
                                         <form method="POST" action="{{ route('hrm.shifts.destroy', $ws->id) }}"
-                                            onsubmit="return confirm('Apakah Anda yakin ingin menghapus atau menonaktifkan shift ini?')">
+                                            onsubmit="return confirm('{{ addslashes(__('hrm.confirm_delete_shift')) }}')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
@@ -2276,7 +2276,7 @@
                             <tr>
                                 <td colspan="7" class="py-12 text-center text-black/50 dark:text-white/50 font-medium">
                                     <i data-lucide="clock" class="w-8 h-8 mx-auto mb-2 text-black/30 dark:text-white/30"></i>
-                                    <p class="text-xs">Belum ada shift kerja yang dikonfigurasi. Klik tombol "Tambah Shift" untuk membuat shift baru.</p>
+                                    <p class="text-xs">{{ __('hrm.empty_shift_desc') }}</p>
                                 </td>
                             </tr>
                         @endforelse
@@ -2297,30 +2297,30 @@
                                 @endif
                             </div>
                             @if($ws->is_active)
-                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10.5px] font-bold bg-[#34C759]/15 text-[#34C759] shrink-0">Aktif</span>
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10.5px] font-bold bg-[#34C759]/15 text-[#34C759] shrink-0">{{ __('hrm.status_active') }}</span>
                             @else
-                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10.5px] font-semibold bg-black/10 dark:bg-white/10 text-black/50 dark:text-white/50 shrink-0">Nonaktif</span>
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10.5px] font-semibold bg-black/10 dark:bg-white/10 text-black/50 dark:text-white/50 shrink-0">{{ __('hrm.status_inactive') }}</span>
                             @endif
                         </div>
 
                         <div class="p-3 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 space-y-2 text-xs">
                             <div class="flex items-center justify-between">
-                                <span class="text-black/55 dark:text-white/55">Jam Kerja</span>
+                                <span class="text-black/55 dark:text-white/55">{{ __('hrm.label_work_hours') }}</span>
                                 <span class="font-bold font-mono text-[13px] text-black dark:text-white">{{ $ws->start_time }} - {{ $ws->end_time }}</span>
                             </div>
                             @if($ws->isOvernight())
                                 <div class="text-[10.5px] font-bold text-[#AF52DE] flex items-center gap-1">
                                     <i data-lucide="moon" class="w-3 h-3"></i>
-                                    <span>Shift Melewati Tengah Malam (+1 Hari)</span>
+                                    <span>{{ __('hrm.badge_overnight_shift_long') }}</span>
                                 </div>
                             @endif
                             <div class="flex items-center justify-between pt-1 border-t border-black/5 dark:border-white/5">
-                                <span class="text-black/55 dark:text-white/55">Toleransi / Grace Period</span>
-                                <span class="font-semibold">{{ $ws->grace_period_minutes > 0 ? $ws->grace_period_minutes . ' menit' : '0 menit (ketat)' }}</span>
+                                <span class="text-black/55 dark:text-white/55">{{ __('hrm.label_grace_period') }}</span>
+                                <span class="font-semibold">{{ $ws->grace_period_minutes > 0 ? $ws->grace_period_minutes . ' ' . __('hrm.unit_minutes') : __('hrm.opt_grace_0_strict_lower') }}</span>
                             </div>
                             <div class="flex items-center justify-between">
-                                <span class="text-black/55 dark:text-white/55">Lokasi</span>
-                                <span class="font-semibold">{{ $ws->location?->name ?? 'Semua Lokasi' }}</span>
+                                <span class="text-black/55 dark:text-white/55">{{ __('hrm.label_location') }}</span>
+                                <span class="font-semibold">{{ $ws->location?->name ?? __('hrm.label_all_locations') }}</span>
                             </div>
                         </div>
 
@@ -2329,10 +2329,10 @@
                                 @click="openEditShift({{ Js::from($ws) }}, '{{ route('hrm.shifts.update', $ws->id) }}')"
                                 class="flex-1 h-10 px-3 rounded-[11px] text-[12.5px] font-bold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#0071E3] hover:text-white transition active:scale-[0.98] flex items-center justify-center gap-1.5 cursor-pointer">
                                 <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
-                                <span>Edit Shift</span>
+                                <span>{{ __('hrm.btn_edit_shift') }}</span>
                             </button>
                             <form method="POST" action="{{ route('hrm.shifts.destroy', $ws->id) }}"
-                                onsubmit="return confirm('Apakah Anda yakin ingin menghapus atau menonaktifkan shift ini?')">
+                                onsubmit="return confirm('{{ addslashes(__('hrm.confirm_delete_shift')) }}')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit"
@@ -2344,7 +2344,7 @@
                     </div>
                 @empty
                     <div class="py-8 text-center text-black/50 dark:text-white/50 text-xs">
-                        Belum ada shift kerja yang dikonfigurasi.
+                        {{ __('hrm.empty_shift_short') }}
                     </div>
                 @endforelse
             </div>
@@ -2360,9 +2360,9 @@
             <input type="hidden" name="tab" value="schedules">
             <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 items-end">
                 <div>
-                    <label class="block text-[11px] uppercase font-bold text-black/60 dark:text-white/60 mb-1">Karyawan</label>
+                    <label class="block text-[11px] uppercase font-bold text-black/60 dark:text-white/60 mb-1">{{ __('hrm.th_employee') }}</label>
                     <select name="sch_user_id" class="w-full h-10 px-3 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-xs font-semibold text-black dark:text-white focus:ring-1 focus:ring-[#5856D6]">
-                        <option value="">Semua Karyawan</option>
+                        <option value="">{{ __('hrm.filter_all_employees') }}</option>
                         @foreach($memberships as $m)
                             @if($m->user)
                                 <option value="{{ $m->user->id }}" {{ $schUserId === $m->user->id ? 'selected' : '' }}>{{ $m->user->name }}</option>
@@ -2371,34 +2371,46 @@
                     </select>
                 </div>
                 <div>
-                    <label class="block text-[11px] uppercase font-bold text-black/60 dark:text-white/60 mb-1">Shift Kerja</label>
+                    <label class="block text-[11px] uppercase font-bold text-black/60 dark:text-white/60 mb-1">{{ __('hrm.field_work_shift') }}</label>
                     <select name="sch_shift_id" class="w-full h-10 px-3 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-xs font-semibold text-black dark:text-white focus:ring-1 focus:ring-[#5856D6]">
-                        <option value="">Semua Shift</option>
+                        <option value="">{{ __('hrm.filter_all_shifts') }}</option>
                         @foreach($workShifts as $ws)
                             <option value="{{ $ws->id }}" {{ $schShiftId === $ws->id ? 'selected' : '' }}>{{ $ws->name }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div>
-                    <label class="block text-[11px] uppercase font-bold text-black/60 dark:text-white/60 mb-1">Tipe Jadwal</label>
+                    <label class="block text-[11px] uppercase font-bold text-black/60 dark:text-white/60 mb-1">{{ __('hrm.field_schedule_type') }}</label>
                     <select name="sch_type" class="w-full h-10 px-3 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-xs font-semibold text-black dark:text-white focus:ring-1 focus:ring-[#5856D6]">
-                        <option value="">Semua Tipe</option>
-                        <option value="recurring" {{ $schType === 'recurring' ? 'selected' : '' }}>Roster Mingguan (Senin-Minggu)</option>
-                        <option value="specific_date" {{ $schType === 'specific_date' ? 'selected' : '' }}>Tanggal Spesifik</option>
+                        <option value="">{{ __('hrm.filter_all_types') }}</option>
+                        <option value="recurring" {{ $schType === 'recurring' ? 'selected' : '' }}>{{ __('hrm.opt_recurring_weekly') }}</option>
+                        <option value="specific_date" {{ $schType === 'specific_date' ? 'selected' : '' }}>{{ __('hrm.opt_specific_date') }}</option>
                     </select>
                 </div>
                 <div class="flex items-center gap-2">
                     <button type="submit" class="flex-1 h-10 px-4 rounded-[10px] bg-[#5856D6] hover:bg-[#4745B8] text-white text-xs font-bold transition cursor-pointer">
-                        Terapkan Filter
+                        {{ __('hrm.apply_filter') }}
                     </button>
                     @if($schUserId || $schShiftId || $schType)
                         <a href="{{ route('hrm.index', ['tab' => 'schedules']) }}" class="h-10 px-3 rounded-[10px] bg-black/5 dark:bg-white/10 text-black/60 dark:text-white/60 text-xs font-semibold flex items-center justify-center hover:text-black dark:hover:text-white">
-                            Reset
+                            {{ __('hrm.reset_filter') }}
                         </a>
                     @endif
                 </div>
             </div>
         </form>
+
+        @php
+            $dayLabels = [
+                'monday' => __('hrm.day_monday'),
+                'tuesday' => __('hrm.day_tuesday'),
+                'wednesday' => __('hrm.day_wednesday'),
+                'thursday' => __('hrm.day_thursday'),
+                'friday' => __('hrm.day_friday'),
+                'saturday' => __('hrm.day_saturday'),
+                'sunday' => __('hrm.day_sunday'),
+            ];
+        @endphp
 
         <div class="rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 overflow-hidden shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
             <!-- Desktop Table View (>= 768px) -->
@@ -2406,51 +2418,40 @@
                 <table class="w-full text-left text-[13px] border-collapse min-w-[950px]">
                     <thead>
                         <tr class="border-b border-black/5 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.03] text-[11px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60">
-                            <th class="py-3.5 px-4 sm:px-5">Karyawan</th>
-                            <th class="py-3.5 px-3">Pola / Waktu Jadwal</th>
-                            <th class="py-3.5 px-3">Penugasan Shift</th>
-                            <th class="py-3.5 px-3">Periode Berlaku</th>
-                            <th class="py-3.5 px-3">Cabang / Lokasi</th>
-                            <th class="py-3.5 px-3">Catatan</th>
-                            <th class="py-3.5 px-4 text-right">Aksi</th>
+                            <th class="py-3.5 px-4 sm:px-5">{{ __('hrm.th_employee') }}</th>
+                            <th class="py-3.5 px-3">{{ __('hrm.th_schedule_pattern') }}</th>
+                            <th class="py-3.5 px-3">{{ __('hrm.th_shift_assignment') }}</th>
+                            <th class="py-3.5 px-3">{{ __('hrm.th_valid_period') }}</th>
+                            <th class="py-3.5 px-3">{{ __('hrm.th_branch_location') }}</th>
+                            <th class="py-3.5 px-3">{{ __('hrm.th_notes') }}</th>
+                            <th class="py-3.5 px-4 text-right">{{ __('hrm.th_action') }}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-black/5 dark:divide-white/5">
                         @forelse($employeeSchedules as $sch)
-                            @php
-                                $dayLabels = [
-                                    'monday' => 'Senin',
-                                    'tuesday' => 'Selasa',
-                                    'wednesday' => 'Rabu',
-                                    'thursday' => 'Kamis',
-                                    'friday' => 'Jumat',
-                                    'saturday' => 'Sabtu',
-                                    'sunday' => 'Minggu',
-                                ];
-                            @endphp
                             <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors">
                                 <td class="py-3.5 px-4 sm:px-5 font-bold text-black dark:text-white">
-                                    {{ $sch->user?->name ?? 'Karyawan' }}
+                                    {{ $sch->user?->name ?? __('hrm.default_employee_name') }}
                                     <div class="text-[11px] text-black/50 dark:text-white/50 font-normal">{{ $sch->user?->email }}</div>
                                 </td>
                                 <td class="py-3.5 px-3">
                                     @if($sch->schedule_type === 'recurring')
                                         <div class="font-bold text-[#5856D6] flex items-center gap-1.5">
                                             <i data-lucide="rotate-cw" class="w-3.5 h-3.5"></i>
-                                            <span>Setiap Hari {{ $dayLabels[$sch->day_of_week] ?? ucfirst($sch->day_of_week) }}</span>
+                                            <span>{{ __('hrm.every_day_prefix', ['day' => $dayLabels[$sch->day_of_week] ?? ucfirst($sch->day_of_week)]) }}</span>
                                         </div>
-                                        <span class="text-[10.5px] text-black/50 dark:text-white/50">Roster Mingguan</span>
+                                        <span class="text-[10.5px] text-black/50 dark:text-white/50">{{ __('hrm.recurring_roster_sub') }}</span>
                                     @else
                                         <div class="font-bold text-[#007AFF] tabular-nums">
                                             {{ $sch->specific_date ? \Carbon\Carbon::parse($sch->specific_date)->translatedFormat('d M Y') : '-' }}
                                         </div>
-                                        <span class="text-[10.5px] text-black/50 dark:text-white/50">Tanggal Spesifik</span>
+                                        <span class="text-[10.5px] text-black/50 dark:text-white/50">{{ __('hrm.opt_specific_date') }}</span>
                                     @endif
                                 </td>
                                 <td class="py-3.5 px-3">
                                     @if($sch->is_off_day)
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#FF3B30]/15 text-[#FF3B30] border border-[#FF3B30]/30">
-                                            Libur / OFF
+                                            {{ __('hrm.badge_off_day') }}
                                         </span>
                                     @elseif($sch->workShift)
                                         <div class="font-bold text-black dark:text-white flex items-center gap-1.5">
@@ -2467,14 +2468,14 @@
                                 </td>
                                 <td class="py-3.5 px-3 text-[11.5px] tabular-nums text-black/70 dark:text-white/70">
                                     @if($sch->effective_date || $sch->end_date)
-                                        <div>Mulai: {{ $sch->effective_date ? \Carbon\Carbon::parse($sch->effective_date)->format('d/m/Y') : 'Selalu' }}</div>
-                                        <div>Selesai: {{ $sch->end_date ? \Carbon\Carbon::parse($sch->end_date)->format('d/m/Y') : 'Seterusnya' }}</div>
+                                        <div>{{ __('hrm.shift_starts_at') }} {{ $sch->effective_date ? \Carbon\Carbon::parse($sch->effective_date)->format('d/m/Y') : __('hrm.shift_always') }}</div>
+                                        <div>{{ __('hrm.shift_ends_at') }} {{ $sch->end_date ? \Carbon\Carbon::parse($sch->end_date)->format('d/m/Y') : __('hrm.shift_indefinite') }}</div>
                                     @else
-                                        <span class="text-black/40 dark:text-white/40">Permanen</span>
+                                        <span class="text-black/40 dark:text-white/40">{{ __('hrm.shift_permanent') }}</span>
                                     @endif
                                 </td>
                                 <td class="py-3.5 px-3 text-[12.5px] text-black/70 dark:text-white/70">
-                                    {{ $sch->location?->name ?? 'Semua Lokasi' }}
+                                    {{ $sch->location?->name ?? __('hrm.all_locations_global') }}
                                 </td>
                                 <td class="py-3.5 px-3 text-[11.5px] text-black/60 dark:text-white/60 max-w-xs truncate">
                                     {{ $sch->notes ?: '-' }}
@@ -2484,10 +2485,10 @@
                                         <button type="button"
                                             @click="openEditSchedule({{ Js::from($sch) }}, '{{ route('hrm.schedules.update', $sch->id) }}')"
                                             class="h-8.5 px-3 rounded-[9px] text-[12px] font-semibold text-[#5856D6] bg-[#5856D6]/10 hover:bg-[#5856D6] hover:text-white transition active:scale-[0.98] cursor-pointer">
-                                            Edit
+                                            {{ __('hrm.btn_edit') }}
                                         </button>
                                         <form method="POST" action="{{ route('hrm.schedules.destroy', $sch->id) }}"
-                                            onsubmit="return confirm('Apakah Anda yakin ingin menghapus jadwal ini?')">
+                                            onsubmit="return confirm('{{ __('hrm.confirm_delete_schedule') }}')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
@@ -2502,7 +2503,7 @@
                             <tr>
                                 <td colspan="7" class="py-12 text-center text-black/50 dark:text-white/50 font-medium">
                                     <i data-lucide="calendar" class="w-8 h-8 mx-auto mb-2 text-black/30 dark:text-white/30"></i>
-                                    <p class="text-xs">Belum ada jadwal atau roster khusus. Karyawan akan mengikuti shift default atau berstatus bebas jadwal.</p>
+                                    <p class="text-xs">{{ __('hrm.empty_roster_desc') }}</p>
                                 </td>
                             </tr>
                         @endforelse
@@ -2515,27 +2516,27 @@
                 @forelse($employeeSchedules as $sch)
                     <div class="p-4 space-y-3">
                         <div class="flex items-center justify-between gap-2">
-                            <span class="font-bold text-black dark:text-white text-[14px]">{{ $sch->user?->name ?? 'Karyawan' }}</span>
+                            <span class="font-bold text-black dark:text-white text-[14px]">{{ $sch->user?->name ?? __('hrm.default_employee_name') }}</span>
                             @if($sch->is_off_day)
-                                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FF3B30]/15 text-[#FF3B30]">OFF / Libur</span>
+                                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FF3B30]/15 text-[#FF3B30]">{{ __('hrm.badge_off_day') }}</span>
                             @elseif($sch->workShift)
                                 <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#5856D6]/15 text-[#5856D6]">{{ $sch->workShift->name }}</span>
                             @endif
                         </div>
                         <div class="p-3 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 space-y-1.5 text-xs">
                             <div class="flex items-center justify-between">
-                                <span class="text-black/55 dark:text-white/55">Pola Jadwal</span>
+                                <span class="text-black/55 dark:text-white/55">{{ __('hrm.schedule_pattern') }}</span>
                                 <span class="font-bold">
                                     @if($sch->schedule_type === 'recurring')
-                                        Setiap {{ ucfirst($sch->day_of_week) }}
+                                        {{ __('hrm.every_day_prefix', ['day' => $dayLabels[$sch->day_of_week] ?? ucfirst($sch->day_of_week)]) }}
                                     @else
-                                        {{ $sch->specific_date ? \Carbon\Carbon::parse($sch->specific_date)->format('d M Y') : '-' }}
+                                        {{ $sch->specific_date ? \Carbon\Carbon::parse($sch->specific_date)->translatedFormat('d M Y') : '-' }}
                                     @endif
                                 </span>
                             </div>
                             @if($sch->workShift && !$sch->is_off_day)
                                 <div class="flex items-center justify-between">
-                                    <span class="text-black/55 dark:text-white/55">Jam Shift</span>
+                                    <span class="text-black/55 dark:text-white/55">{{ __('hrm.shift_hours') }}</span>
                                     <span class="font-mono font-bold">{{ $sch->workShift->start_time }} - {{ $sch->workShift->end_time }}</span>
                                 </div>
                             @endif
@@ -2550,10 +2551,10 @@
                                 @click="openEditSchedule({{ Js::from($sch) }}, '{{ route('hrm.schedules.update', $sch->id) }}')"
                                 class="flex-1 h-10 px-3 rounded-[11px] text-[12.5px] font-bold text-[#5856D6] bg-[#5856D6]/10 hover:bg-[#5856D6] hover:text-white transition active:scale-[0.98] flex items-center justify-center gap-1.5 cursor-pointer">
                                 <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
-                                <span>Edit Jadwal</span>
+                                <span>{{ __('hrm.btn_edit_schedule') }}</span>
                             </button>
                             <form method="POST" action="{{ route('hrm.schedules.destroy', $sch->id) }}"
-                                onsubmit="return confirm('Apakah Anda yakin ingin menghapus jadwal ini?')">
+                                onsubmit="return confirm('{{ __('hrm.confirm_delete_schedule') }}')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit"
@@ -2565,7 +2566,7 @@
                     </div>
                 @empty
                     <div class="py-8 text-center text-black/50 dark:text-white/50 text-xs">
-                        Belum ada jadwal khusus.
+                        {{ __('hrm.empty_roster_desc') }}
                     </div>
                 @endforelse
             </div>
@@ -2805,7 +2806,7 @@
                                     {{ $loan->loan_number }}
                                 </td>
                                 <td class="py-3.5 px-3 font-semibold text-black dark:text-white">
-                                    {{ $loan->user?->name ?? 'Karyawan' }}
+                                    {{ $loan->user?->name ?? __('hrm.default_employee_name') }}
                                 </td>
                                 <td class="py-3.5 px-3 text-black/70 dark:text-white/70 tabular-nums font-medium">
                                     {{ \Carbon\Carbon::parse($loan->loan_date)->translatedFormat('d M Y') }}
@@ -2892,7 +2893,7 @@
                         </div>
 
                         <div class="font-bold text-[14px] text-black dark:text-white">
-                            {{ $loan->user?->name ?? 'Karyawan' }}
+                            {{ $loan->user?->name ?? __('hrm.default_employee_name') }}
                         </div>
 
                         <!-- Loan Metrics Grid -->
@@ -4616,8 +4617,8 @@
                                 <i data-lucide="clock" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h3 class="text-[16px] font-bold text-black dark:text-white">Tambah Shift Kerja Baru</h3>
-                                <p class="text-[12px] text-black/60 dark:text-white/60">Konfigurasi jam mulai, jam selesai, toleransi & shift malam</p>
+                                <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('hrm.modal_add_shift_title') }}</h3>
+                                <p class="text-[12px] text-black/60 dark:text-white/60">{{ __('hrm.modal_add_shift_sub') }}</p>
                             </div>
                         </div>
                         <button type="button" @click="showAddShiftModal = false" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition cursor-pointer" aria-label="{{ __('common.close') }}">
@@ -4631,25 +4632,25 @@
                 @csrf
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
                     <div class="sm:col-span-2">
-                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">Nama Shift <span class="text-[#FF3B30]">*</span></label>
-                        <input type="text" name="name" required placeholder="Contoh: Shift Pagi, Shift Siang, Shift Malam"
+                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_shift_name') }} <span class="text-[#FF3B30]">*</span></label>
+                        <input type="text" name="name" required placeholder="{{ __('hrm.shift_name_placeholder') }}"
                             class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#30B0C7]/40">
                     </div>
                     <div>
-                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">Kode Singkat</label>
-                        <input type="text" name="code" placeholder="PAGI / ML-1" maxlength="20"
+                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_shift_code') }}</label>
+                        <input type="text" name="code" placeholder="{{ __('hrm.shift_code_placeholder') }}" maxlength="20"
                             class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] font-mono font-semibold text-black dark:text-white uppercase focus:ring-2 focus:ring-[#30B0C7]/40">
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                     <div>
-                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">Jam Mulai Kerja <span class="text-[#FF3B30]">*</span></label>
+                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_start_time') }} <span class="text-[#FF3B30]">*</span></label>
                         <input type="time" name="start_time" required value="08:00"
                             class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[15px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#30B0C7]/40">
                     </div>
                     <div>
-                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">Jam Selesai Kerja <span class="text-[#FF3B30]">*</span></label>
+                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_end_time') }} <span class="text-[#FF3B30]">*</span></label>
                         <input type="time" name="end_time" required value="17:00"
                             class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[15px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#30B0C7]/40">
                     </div>
@@ -4657,27 +4658,27 @@
 
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
                     <div>
-                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">Toleransi Keterlambatan <span class="text-[#FF3B30]">*</span></label>
+                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_late_grace') }} <span class="text-[#FF3B30]">*</span></label>
                         <select name="grace_period_minutes" class="w-full h-11 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[13px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#30B0C7]/40">
-                            <option value="0">0 Menit (Ketat / Langsung Late)</option>
-                            <option value="5">5 Menit</option>
-                            <option value="10" selected>10 Menit (Rekomendasi)</option>
-                            <option value="15">15 Menit</option>
-                            <option value="30">30 Menit</option>
+                            <option value="0">{{ __('hrm.opt_grace_0') }}</option>
+                            <option value="5">{{ __('hrm.opt_grace_5') }}</option>
+                            <option value="10" selected>{{ __('hrm.opt_grace_10') }}</option>
+                            <option value="15">{{ __('hrm.opt_grace_15') }}</option>
+                            <option value="30">{{ __('hrm.opt_grace_30') }}</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">Durasi Istirahat</label>
+                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_break_duration') }}</label>
                         <div class="relative">
                             <input type="number" name="break_duration_minutes" value="60" min="0" max="240"
                                 class="w-full h-11 px-3.5 pr-12 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[13.5px] font-semibold text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#30B0C7]/40">
-                            <span class="absolute right-3.5 top-3 text-xs text-black/40 dark:text-white/40 font-medium">menit</span>
+                            <span class="absolute right-3.5 top-3 text-xs text-black/40 dark:text-white/40 font-medium">{{ __('hrm.unit_minutes') }}</span>
                         </div>
                     </div>
                     <div>
-                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">Lokasi / Cabang</label>
+                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_branch_location') }}</label>
                         <select name="location_id" class="w-full h-11 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[13px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#30B0C7]/40">
-                            <option value="">Semua Lokasi / Global</option>
+                            <option value="">{{ __('hrm.all_locations_global') }}</option>
                             @foreach($locations as $loc)
                                 <option value="{{ $loc->id }}">{{ $loc->name }}</option>
                             @endforeach
@@ -4692,8 +4693,8 @@
                             <i data-lucide="moon" class="w-4 h-4"></i>
                         </div>
                         <div>
-                            <span class="text-xs font-bold text-black dark:text-white block">Shift Lintas Tengah Malam (Overnight)</span>
-                            <span class="text-[11px] text-black/60 dark:text-white/60 block">Centang jika shift berlanjut hingga keesokan harinya (misal 22:00 - 06:00).</span>
+                            <span class="text-xs font-bold text-black dark:text-white block">{{ __('hrm.field_overnight_shift') }}</span>
+                            <span class="text-[11px] text-black/60 dark:text-white/60 block">{{ __('hrm.field_overnight_hint') }}</span>
                         </div>
                     </div>
                     <label class="relative inline-flex items-center cursor-pointer">
@@ -4703,19 +4704,19 @@
                 </div>
 
                 <div>
-                    <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">Catatan / Deskripsi</label>
-                    <textarea name="description" rows="2" placeholder="Catatan shift, operasional, atau petunjuk serah terima kasir"
+                    <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_shift_description') }}</label>
+                    <textarea name="description" rows="2" placeholder="{{ __('hrm.shift_notes_placeholder') }}"
                         class="w-full p-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white"></textarea>
                 </div>
 
                 <div class="pt-3 border-t border-black/5 dark:border-white/10 flex items-center justify-end gap-2.5">
                     <button type="button" @click="showAddShiftModal = false"
                         class="h-11 px-4.5 rounded-[12px] text-xs font-semibold text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition cursor-pointer">
-                        Batal
+                        {{ __('hrm.btn_cancel') }}
                     </button>
                     <button type="submit" :disabled="isSubmittingForm"
                         class="h-11 px-5 rounded-[12px] bg-[#30B0C7] hover:bg-[#2591a3] text-white text-xs font-bold transition active:scale-[0.98] shadow-sm cursor-pointer">
-                        Simpan Shift Kerja
+                        {{ __('hrm.btn_save_shift') }}
                     </button>
                 </div>
             </form>
@@ -4759,8 +4760,8 @@
                                 <i data-lucide="edit-3" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h3 class="text-[16px] font-bold text-black dark:text-white">Edit Shift Kerja</h3>
-                                <p class="text-[12px] text-black/60 dark:text-white/60">Perbarui parameter jam kerja atau toleransi</p>
+                                <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('hrm.modal_edit_shift_title') }}</h3>
+                                <p class="text-[12px] text-black/60 dark:text-white/60">{{ __('hrm.modal_edit_shift_sub') }}</p>
                             </div>
                         </div>
                         <button type="button" @click="showEditShiftModal = false" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition cursor-pointer" aria-label="{{ __('common.close') }}">
@@ -4775,12 +4776,12 @@
                 @method('PUT')
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
                     <div class="sm:col-span-2">
-                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">Nama Shift <span class="text-[#FF3B30]">*</span></label>
+                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_shift_name') }} <span class="text-[#FF3B30]">*</span></label>
                         <input type="text" name="name" required :value="selectedShift?.name || ''"
                             class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/40">
                     </div>
                     <div>
-                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">Kode Singkat</label>
+                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_shift_code') }}</label>
                         <input type="text" name="code" :value="selectedShift?.code || ''" maxlength="20"
                             class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] font-mono font-semibold text-black dark:text-white uppercase focus:ring-2 focus:ring-[#007AFF]/40">
                     </div>
@@ -4788,12 +4789,12 @@
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                     <div>
-                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">Jam Mulai Kerja <span class="text-[#FF3B30]">*</span></label>
+                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_start_time') }} <span class="text-[#FF3B30]">*</span></label>
                         <input type="time" name="start_time" required :value="selectedShift?.start_time || ''"
                             class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[15px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/40">
                     </div>
                     <div>
-                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">Jam Selesai Kerja <span class="text-[#FF3B30]">*</span></label>
+                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_end_time') }} <span class="text-[#FF3B30]">*</span></label>
                         <input type="time" name="end_time" required :value="selectedShift?.end_time || ''"
                             class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[15px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/40">
                     </div>
@@ -4801,27 +4802,27 @@
 
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
                     <div>
-                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">Toleransi Keterlambatan <span class="text-[#FF3B30]">*</span></label>
+                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_late_grace') }} <span class="text-[#FF3B30]">*</span></label>
                         <select name="grace_period_minutes" class="w-full h-11 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[13px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/40">
-                            <option value="0" :selected="selectedShift?.grace_period_minutes === 0">0 Menit (Ketat / Langsung Late)</option>
-                            <option value="5" :selected="selectedShift?.grace_period_minutes === 5">5 Menit</option>
-                            <option value="10" :selected="selectedShift?.grace_period_minutes === 10">10 Menit</option>
-                            <option value="15" :selected="selectedShift?.grace_period_minutes === 15">15 Menit</option>
-                            <option value="30" :selected="selectedShift?.grace_period_minutes === 30">30 Menit</option>
+                            <option value="0" :selected="selectedShift?.grace_period_minutes === 0">{{ __('hrm.opt_grace_0') }}</option>
+                            <option value="5" :selected="selectedShift?.grace_period_minutes === 5">{{ __('hrm.opt_grace_5') }}</option>
+                            <option value="10" :selected="selectedShift?.grace_period_minutes === 10">{{ __('hrm.opt_grace_10_plain') }}</option>
+                            <option value="15" :selected="selectedShift?.grace_period_minutes === 15">{{ __('hrm.opt_grace_15') }}</option>
+                            <option value="30" :selected="selectedShift?.grace_period_minutes === 30">{{ __('hrm.opt_grace_30') }}</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">Durasi Istirahat</label>
+                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_break_duration') }}</label>
                         <div class="relative">
                             <input type="number" name="break_duration_minutes" :value="selectedShift?.break_duration_minutes || 0" min="0" max="240"
                                 class="w-full h-11 px-3.5 pr-12 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[13.5px] font-semibold text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/40">
-                            <span class="absolute right-3.5 top-3 text-xs text-black/40 dark:text-white/40 font-medium">menit</span>
+                            <span class="absolute right-3.5 top-3 text-xs text-black/40 dark:text-white/40 font-medium">{{ __('hrm.unit_minutes') }}</span>
                         </div>
                     </div>
                     <div>
-                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">Lokasi / Cabang</label>
+                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_branch_location') }}</label>
                         <select name="location_id" class="w-full h-11 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[13px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/40">
-                            <option value="">Semua Lokasi / Global</option>
+                            <option value="">{{ __('hrm.all_locations_global') }}</option>
                             @foreach($locations as $loc)
                                 <option value="{{ $loc->id }}" :selected="selectedShift?.location_id === '{{ $loc->id }}'">{{ $loc->name }}</option>
                             @endforeach
@@ -4836,8 +4837,8 @@
                             <i data-lucide="moon" class="w-4 h-4"></i>
                         </div>
                         <div>
-                            <span class="text-xs font-bold text-black dark:text-white block">Shift Lintas Tengah Malam (Overnight)</span>
-                            <span class="text-[11px] text-black/60 dark:text-white/60 block">Centang jika shift berlanjut hingga keesokan harinya (misal 22:00 - 06:00).</span>
+                            <span class="text-xs font-bold text-black dark:text-white block">{{ __('hrm.field_overnight_shift') }}</span>
+                            <span class="text-[11px] text-black/60 dark:text-white/60 block">{{ __('hrm.field_overnight_hint') }}</span>
                         </div>
                     </div>
                     <label class="relative inline-flex items-center cursor-pointer">
@@ -4847,7 +4848,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">Catatan / Deskripsi</label>
+                    <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_shift_description') }}</label>
                     <textarea name="description" rows="2" :value="selectedShift?.description || ''"
                         class="w-full p-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white"></textarea>
                 </div>
@@ -4855,11 +4856,11 @@
                 <div class="pt-3 border-t border-black/5 dark:border-white/10 flex items-center justify-end gap-2.5">
                     <button type="button" @click="showEditShiftModal = false"
                         class="h-11 px-4.5 rounded-[12px] text-xs font-semibold text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition cursor-pointer">
-                        Batal
+                        {{ __('hrm.btn_cancel') }}
                     </button>
                     <button type="submit" :disabled="isSubmittingForm"
                         class="h-11 px-5 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-xs font-bold transition active:scale-[0.98] shadow-sm cursor-pointer">
-                        Perbarui Shift Kerja
+                        {{ __('hrm.btn_update_shift') }}
                     </button>
                 </div>
             </form>
@@ -4903,8 +4904,8 @@
                                 <i data-lucide="calendar" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h3 class="text-[16px] font-bold text-black dark:text-white">Atur Jadwal Kerja Karyawan</h3>
-                                <p class="text-[12px] text-black/60 dark:text-white/60">Pola mingguan atau jadwal pada tanggal tertentu</p>
+                                <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('hrm.modal_add_roster_title') }}</h3>
+                                <p class="text-[12px] text-black/60 dark:text-white/60">{{ __('hrm.modal_add_roster_sub') }}</p>
                             </div>
                         </div>
                         <button type="button" @click="showAddScheduleModal = false" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition cursor-pointer" aria-label="{{ __('common.close') }}">
@@ -4918,7 +4919,7 @@
                 @csrf
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                     <div>
-                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">Karyawan <span class="text-[#FF3B30]">*</span></label>
+                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_employee_required') }} <span class="text-[#FF3B30]">*</span></label>
                         <select name="user_id" required class="w-full h-11 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[13px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#5856D6]/40">
                             @foreach($memberships as $m)
                                 @if($m->user)
@@ -4928,10 +4929,10 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">Tipe Jadwal <span class="text-[#FF3B30]">*</span></label>
+                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_schedule_type') }} <span class="text-[#FF3B30]">*</span></label>
                         <select name="schedule_type" x-model="scheduleType" class="w-full h-11 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[13px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#5856D6]/40">
-                            <option value="recurring">Roster Mingguan Berulang (Setiap Hari X)</option>
-                            <option value="specific_date">Tanggal Spesifik (Jadwal Khusus/Lembur/Event)</option>
+                            <option value="recurring">{{ __('hrm.opt_weekly_pattern') }}</option>
+                            <option value="specific_date">{{ __('hrm.opt_specific_date_event') }}</option>
                         </select>
                     </div>
                 </div>
@@ -4940,28 +4941,28 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                     <template x-if="scheduleType === 'recurring'">
                         <div>
-                            <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">Hari Kerja <span class="text-[#FF3B30]">*</span></label>
+                            <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_work_day') }} <span class="text-[#FF3B30]">*</span></label>
                             <select name="day_of_week" class="w-full h-11 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[13px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#5856D6]/40">
-                                <option value="monday">Senin</option>
-                                <option value="tuesday">Selasa</option>
-                                <option value="wednesday">Rabu</option>
-                                <option value="thursday">Kamis</option>
-                                <option value="friday">Jumat</option>
-                                <option value="saturday">Sabtu</option>
-                                <option value="sunday">Minggu</option>
+                                <option value="monday">{{ __('hrm.day_monday') }}</option>
+                                <option value="tuesday">{{ __('hrm.day_tuesday') }}</option>
+                                <option value="wednesday">{{ __('hrm.day_wednesday') }}</option>
+                                <option value="thursday">{{ __('hrm.day_thursday') }}</option>
+                                <option value="friday">{{ __('hrm.day_friday') }}</option>
+                                <option value="saturday">{{ __('hrm.day_saturday') }}</option>
+                                <option value="sunday">{{ __('hrm.day_sunday') }}</option>
                             </select>
                         </div>
                     </template>
                     <template x-if="scheduleType === 'specific_date'">
                         <div>
-                            <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">Tanggal Spesifik <span class="text-[#FF3B30]">*</span></label>
+                            <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_specific_date_req') }} <span class="text-[#FF3B30]">*</span></label>
                             <input type="date" name="specific_date" value="{{ date('Y-m-d') }}"
                                 class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[13.5px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#5856D6]/40">
                         </div>
                     </template>
 
                     <div>
-                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">Penugasan Shift</label>
+                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.th_shift_assignment') }}</label>
                         <select name="work_shift_id" :disabled="isOffDay" class="w-full h-11 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[13px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#5856D6]/40 disabled:opacity-40">
                             @foreach($workShifts as $ws)
                                 <option value="{{ $ws->id }}">{{ $ws->name }} ({{ $ws->start_time }} - {{ $ws->end_time }}{{ $ws->isOvernight() ? ' +1' : '' }})</option>
@@ -4977,8 +4978,8 @@
                             <i data-lucide="coffee" class="w-4 h-4"></i>
                         </div>
                         <div>
-                            <span class="text-xs font-bold text-black dark:text-white block">Hari Libur / OFF Day</span>
-                            <span class="text-[11px] text-black/60 dark:text-white/60 block">Karyawan tidak memiliki kewajiban kerja pada jadwal ini.</span>
+                            <span class="text-xs font-bold text-black dark:text-white block">{{ __('hrm.field_off_day') }}</span>
+                            <span class="text-[11px] text-black/60 dark:text-white/60 block">{{ __('hrm.field_off_day_hint') }}</span>
                         </div>
                     </div>
                     <label class="relative inline-flex items-center cursor-pointer">
@@ -4989,22 +4990,22 @@
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                     <div>
-                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">Mulai Berlaku (Effective Date)</label>
-                        <input type="date" name="effective_date" placeholder="Kosongkan jika permanen"
+                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_effective_from') }}</label>
+                        <input type="date" name="effective_date" placeholder="{{ __('hrm.effective_date_ph') }}"
                             class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[13.5px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#5856D6]/40">
-                        <span class="text-[10px] text-black/50 dark:text-white/50 block mt-1">Perubahan shift tidak akan mengubah riwayat absensi masa lalu sebelum tanggal ini.</span>
+                        <span class="text-[10px] text-black/50 dark:text-white/50 block mt-1">{{ __('hrm.field_shift_change_hint') }}</span>
                     </div>
                     <div>
-                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">Berakhir Pada (End Date)</label>
-                        <input type="date" name="end_date" placeholder="Kosongkan jika seterusnya"
+                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_effective_until') }}</label>
+                        <input type="date" name="end_date" placeholder="{{ __('hrm.end_date_ph') }}"
                             class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[13.5px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#5856D6]/40">
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">Lokasi / Cabang Khusus</label>
+                    <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_override_location') }}</label>
                     <select name="location_id" class="w-full h-11 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[13px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#5856D6]/40">
-                        <option value="">Ikuti Penempatan Karyawan</option>
+                        <option value="">{{ __('hrm.opt_follow_placement') }}</option>
                         @foreach($locations as $loc)
                             <option value="{{ $loc->id }}">{{ $loc->name }}</option>
                         @endforeach
@@ -5012,19 +5013,19 @@
                 </div>
 
                 <div>
-                    <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">Catatan / Catatan Roster</label>
-                    <input type="text" name="notes" placeholder="Contoh: Roster Putaran Minggu Ganjil / Pengganti Mas Joko"
+                    <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_roster_notes') }}</label>
+                    <input type="text" name="notes" placeholder="{{ __('hrm.roster_notes_placeholder') }}"
                         class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white">
                 </div>
 
                 <div class="pt-3 border-t border-black/5 dark:border-white/10 flex items-center justify-end gap-2.5">
                     <button type="button" @click="showAddScheduleModal = false"
                         class="h-11 px-4.5 rounded-[12px] text-xs font-semibold text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition cursor-pointer">
-                        Batal
+                        {{ __('hrm.btn_cancel') }}
                     </button>
                     <button type="submit" :disabled="isSubmittingForm"
                         class="h-11 px-5 rounded-[12px] bg-[#5856D6] hover:bg-[#4745B8] text-white text-xs font-bold transition active:scale-[0.98] shadow-sm cursor-pointer">
-                        Simpan Jadwal Roster
+                        {{ __('hrm.btn_save_roster') }}
                     </button>
                 </div>
             </form>
@@ -5068,8 +5069,8 @@
                                 <i data-lucide="edit-3" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h3 class="text-[16px] font-bold text-black dark:text-white">Edit Jadwal Kerja</h3>
-                                <p class="text-[12px] text-black/60 dark:text-white/60">Perbarui penugasan shift atau hari kerja karyawan</p>
+                                <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('hrm.modal_edit_roster_title') }}</h3>
+                                <p class="text-[12px] text-black/60 dark:text-white/60">{{ __('hrm.modal_edit_roster_sub') }}</p>
                             </div>
                         </div>
                         <button type="button" @click="showEditScheduleModal = false" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition cursor-pointer" aria-label="{{ __('common.close') }}">
@@ -5084,7 +5085,7 @@
                 @method('PUT')
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                     <div>
-                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">Karyawan <span class="text-[#FF3B30]">*</span></label>
+                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_employee_required') }} <span class="text-[#FF3B30]">*</span></label>
                         <select name="user_id" required class="w-full h-11 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[13px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#5856D6]/40">
                             @foreach($memberships as $m)
                                 @if($m->user)
@@ -5094,10 +5095,10 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">Tipe Jadwal <span class="text-[#FF3B30]">*</span></label>
+                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_schedule_type') }} <span class="text-[#FF3B30]">*</span></label>
                         <select name="schedule_type" x-model="scheduleType" class="w-full h-11 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[13px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#5856D6]/40">
-                            <option value="recurring" :selected="selectedSchedule?.schedule_type === 'recurring'">Roster Mingguan Berulang</option>
-                            <option value="specific_date" :selected="selectedSchedule?.schedule_type === 'specific_date'">Tanggal Spesifik</option>
+                            <option value="recurring" :selected="selectedSchedule?.schedule_type === 'recurring'">{{ __('hrm.opt_weekly_pattern_short') }}</option>
+                            <option value="specific_date" :selected="selectedSchedule?.schedule_type === 'specific_date'">{{ __('hrm.opt_specific_date_short') }}</option>
                         </select>
                     </div>
                 </div>
@@ -5105,28 +5106,28 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                     <template x-if="scheduleType === 'recurring'">
                         <div>
-                            <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">Hari Kerja <span class="text-[#FF3B30]">*</span></label>
+                            <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_work_day') }} <span class="text-[#FF3B30]">*</span></label>
                             <select name="day_of_week" class="w-full h-11 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[13px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#5856D6]/40">
-                                <option value="monday" :selected="selectedSchedule?.day_of_week === 'monday'">Senin</option>
-                                <option value="tuesday" :selected="selectedSchedule?.day_of_week === 'tuesday'">Selasa</option>
-                                <option value="wednesday" :selected="selectedSchedule?.day_of_week === 'wednesday'">Rabu</option>
-                                <option value="thursday" :selected="selectedSchedule?.day_of_week === 'thursday'">Kamis</option>
-                                <option value="friday" :selected="selectedSchedule?.day_of_week === 'friday'">Jumat</option>
-                                <option value="saturday" :selected="selectedSchedule?.day_of_week === 'saturday'">Sabtu</option>
-                                <option value="sunday" :selected="selectedSchedule?.day_of_week === 'sunday'">Minggu</option>
+                                <option value="monday" :selected="selectedSchedule?.day_of_week === 'monday'">{{ __('hrm.day_monday') }}</option>
+                                <option value="tuesday" :selected="selectedSchedule?.day_of_week === 'tuesday'">{{ __('hrm.day_tuesday') }}</option>
+                                <option value="wednesday" :selected="selectedSchedule?.day_of_week === 'wednesday'">{{ __('hrm.day_wednesday') }}</option>
+                                <option value="thursday" :selected="selectedSchedule?.day_of_week === 'thursday'">{{ __('hrm.day_thursday') }}</option>
+                                <option value="friday" :selected="selectedSchedule?.day_of_week === 'friday'">{{ __('hrm.day_friday') }}</option>
+                                <option value="saturday" :selected="selectedSchedule?.day_of_week === 'saturday'">{{ __('hrm.day_saturday') }}</option>
+                                <option value="sunday" :selected="selectedSchedule?.day_of_week === 'sunday'">{{ __('hrm.day_sunday') }}</option>
                             </select>
                         </div>
                     </template>
                     <template x-if="scheduleType === 'specific_date'">
                         <div>
-                            <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">Tanggal Spesifik <span class="text-[#FF3B30]">*</span></label>
+                            <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_specific_date_req') }} <span class="text-[#FF3B30]">*</span></label>
                             <input type="date" name="specific_date" :value="selectedSchedule?.specific_date ? selectedSchedule.specific_date.substring(0, 10) : ''"
                                 class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[13.5px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#5856D6]/40">
                         </div>
                     </template>
 
                     <div>
-                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">Penugasan Shift</label>
+                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.th_shift_assignment') }}</label>
                         <select name="work_shift_id" :disabled="isOffDay" class="w-full h-11 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[13px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#5856D6]/40 disabled:opacity-40">
                             @foreach($workShifts as $ws)
                                 <option value="{{ $ws->id }}" :selected="selectedSchedule?.work_shift_id === '{{ $ws->id }}'">{{ $ws->name }} ({{ $ws->start_time }} - {{ $ws->end_time }}{{ $ws->isOvernight() ? ' +1' : '' }})</option>
@@ -5142,8 +5143,8 @@
                             <i data-lucide="coffee" class="w-4 h-4"></i>
                         </div>
                         <div>
-                            <span class="text-xs font-bold text-black dark:text-white block">Hari Libur / OFF Day</span>
-                            <span class="text-[11px] text-black/60 dark:text-white/60 block">Karyawan tidak memiliki kewajiban kerja pada jadwal ini.</span>
+                            <span class="text-xs font-bold text-black dark:text-white block">{{ __('hrm.field_off_day') }}</span>
+                            <span class="text-[11px] text-black/60 dark:text-white/60 block">{{ __('hrm.field_off_day_hint') }}</span>
                         </div>
                     </div>
                     <label class="relative inline-flex items-center cursor-pointer">
@@ -5154,21 +5155,21 @@
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                     <div>
-                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">Mulai Berlaku (Effective Date)</label>
+                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_effective_from') }}</label>
                         <input type="date" name="effective_date" :value="selectedSchedule?.effective_date ? selectedSchedule.effective_date.substring(0, 10) : ''"
                             class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[13.5px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#5856D6]/40">
                     </div>
                     <div>
-                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">Berakhir Pada (End Date)</label>
+                        <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_effective_until') }}</label>
                         <input type="date" name="end_date" :value="selectedSchedule?.end_date ? selectedSchedule.end_date.substring(0, 10) : ''"
                             class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[13.5px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#5856D6]/40">
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">Lokasi / Cabang Khusus</label>
+                    <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_override_location') }}</label>
                     <select name="location_id" class="w-full h-11 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[13px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#5856D6]/40">
-                        <option value="">Ikuti Penempatan Karyawan</option>
+                        <option value="">{{ __('hrm.opt_follow_placement') }}</option>
                         @foreach($locations as $loc)
                             <option value="{{ $loc->id }}" :selected="selectedSchedule?.location_id === '{{ $loc->id }}'">{{ $loc->name }}</option>
                         @endforeach
@@ -5176,7 +5177,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">Catatan / Catatan Roster</label>
+                    <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_roster_notes') }}</label>
                     <input type="text" name="notes" :value="selectedSchedule?.notes || ''"
                         class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white">
                 </div>
@@ -5184,11 +5185,11 @@
                 <div class="pt-3 border-t border-black/5 dark:border-white/10 flex items-center justify-end gap-2.5">
                     <button type="button" @click="showEditScheduleModal = false"
                         class="h-11 px-4.5 rounded-[12px] text-xs font-semibold text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition cursor-pointer">
-                        Batal
+                        {{ __('hrm.btn_cancel') }}
                     </button>
                     <button type="submit" :disabled="isSubmittingForm"
                         class="h-11 px-5 rounded-[12px] bg-[#5856D6] hover:bg-[#4745B8] text-white text-xs font-bold transition active:scale-[0.98] shadow-sm cursor-pointer">
-                        Perbarui Jadwal Roster
+                        {{ __('hrm.btn_update_roster') }}
                     </button>
                 </div>
             </form>
@@ -5235,8 +5236,8 @@
                                 <i data-lucide="users" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h3 class="text-base sm:text-lg font-bold text-black dark:text-white">Impor Data Karyawan Massal</h3>
-                                <p class="text-xs text-black/55 dark:text-white/55">Upload berkas Excel master staf untuk membuat akun, struktur gaji, dan penempatan cabang secara instan</p>
+                                <h3 class="text-base sm:text-lg font-bold text-black dark:text-white">{{ __('hrm.modal_import_emp_title') }}</h3>
+                                <p class="text-xs text-black/55 dark:text-white/55">{{ __('hrm.modal_import_emp_sub') }}</p>
                             </div>
                         </div>
                         <button type="button" @click="if (!importEmployeeExecuting) showImportEmployeeModal = false"
@@ -5255,14 +5256,14 @@
                         <div class="space-y-1">
                             <div class="flex items-center gap-2 text-[#007AFF] font-bold text-[13px]">
                                 <span class="w-5 h-5 rounded-full bg-[#007AFF]/15 flex items-center justify-center text-[11px] font-bold">1</span>
-                                <span>Langkah 1: Unduh Format Template Karyawan</span>
+                                <span>{{ __('hrm.step_1_download_emp_template') }}</span>
                             </div>
-                            <p class="text-[12px] text-black/60 dark:text-white/60">Gunakan format template resmi Cooca dengan kolom Nama, Email, No. WA, Role, Jabatan, Gaji Pokok, dan Penempatan Cabang.</p>
+                            <p class="text-[12px] text-black/60 dark:text-white/60">{{ __('hrm.step_1_emp_template_desc') }}</p>
                         </div>
                         <a href="{{ route('hrm.employees.template') }}"
                            class="h-9 px-4 rounded-[10px] bg-[#007AFF] hover:bg-[#0066D6] text-white text-[12px] font-semibold transition flex items-center justify-center gap-1.5 shadow-sm shrink-0 active:scale-[0.98]">
                             <i data-lucide="download" class="w-3.5 h-3.5"></i>
-                            <span>Unduh Template (.xlsx)</span>
+                            <span>{{ __('hrm.btn_download_template_xlsx') }}</span>
                         </a>
                     </div>
 
@@ -5270,9 +5271,9 @@
                     <div class="flex items-center justify-between pt-1">
                         <div class="flex items-center gap-2 text-black/80 dark:text-white/80 font-bold text-[13px]">
                             <span class="w-5 h-5 rounded-full bg-black/10 dark:bg-white/10 flex items-center justify-center text-[11px] font-bold">2</span>
-                            <span>Langkah 2: Unggah Berkas Excel Staf Karyawan</span>
+                            <span>{{ __('hrm.step_2_upload_emp_file') }}</span>
                         </div>
-                        <span class="text-[11px] text-black/40 dark:text-white/40">Maksimal 10 MB (.xlsx, .csv)</span>
+                        <span class="text-[11px] text-black/40 dark:text-white/40">{{ __('hrm.max_file_size_10mb') }}</span>
                     </div>
 
                     <label class="border-2 border-dashed border-black/15 dark:border-white/15 hover:border-[#007AFF] dark:hover:border-[#007AFF] rounded-[20px] p-8 sm:p-12 flex flex-col items-center justify-center text-center cursor-pointer transition bg-black/[0.01] hover:bg-[#007AFF]/[0.02] block">
@@ -5284,8 +5285,8 @@
                         </div>
 
                         <div class="space-y-1">
-                            <span class="text-base font-bold text-black dark:text-white block" x-text="importEmployeeLoading ? 'Menganalisis file Excel...' : 'Pilih atau Tarik File Excel Karyawan (.xlsx)'"></span>
-                            <span class="text-xs text-black/50 dark:text-white/50 block">Mendukung format data Excel (.xlsx) resmi Cooca</span>
+                            <span class="text-base font-bold text-black dark:text-white block" x-text="importEmployeeLoading ? '{{ addslashes(__('hrm.upload_emp_file_analyzing')) }}' : '{{ addslashes(__('hrm.upload_emp_file_idle')) }}'"></span>
+                            <span class="text-xs text-black/50 dark:text-white/50 block">{{ __('hrm.upload_emp_format_hint') }}</span>
                         </div>
                     </label>
                 </div>
@@ -5295,19 +5296,19 @@
                     <!-- KPI Cards -->
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
                         <div class="p-3.5 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] space-y-1">
-                            <span class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">Total Staf</span>
+                            <span class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">{{ __('hrm.metric_total_staff') }}</span>
                             <div class="text-2xl font-bold font-mono text-black dark:text-white" x-text="importEmployeePreview ? importEmployeePreview.total_rows : 0"></div>
                         </div>
                         <div class="p-3.5 rounded-[16px] bg-emerald-500/[0.08] border border-emerald-500/20 space-y-1">
-                            <span class="text-[11px] font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">Siap Impor</span>
+                            <span class="text-[11px] font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">{{ __('hrm.metric_ready_import') }}</span>
                             <div class="text-2xl font-bold font-mono text-emerald-600 dark:text-emerald-400" x-text="importEmployeePreview ? importEmployeePreview.valid_count : 0"></div>
                         </div>
                         <div class="p-3.5 rounded-[16px] bg-amber-500/[0.08] border border-amber-500/20 space-y-1">
-                            <span class="text-[11px] font-semibold text-amber-700 dark:text-amber-400 uppercase tracking-wider">Sudah Terdaftar</span>
+                            <span class="text-[11px] font-semibold text-amber-700 dark:text-amber-400 uppercase tracking-wider">{{ __('hrm.metric_duplicate') }}</span>
                             <div class="text-2xl font-bold font-mono text-amber-600 dark:text-amber-400" x-text="importEmployeePreview ? importEmployeePreview.duplicate_count : 0"></div>
                         </div>
                         <div class="p-3.5 rounded-[16px] bg-rose-500/[0.08] border border-rose-500/20 space-y-1">
-                            <span class="text-[11px] font-semibold text-rose-700 dark:text-rose-400 uppercase tracking-wider">Format Salah</span>
+                            <span class="text-[11px] font-semibold text-rose-700 dark:text-rose-400 uppercase tracking-wider">{{ __('hrm.metric_format_error') }}</span>
                             <div class="text-2xl font-bold font-mono text-rose-600 dark:text-rose-400" x-text="importEmployeePreview ? importEmployeePreview.error_count : 0"></div>
                         </div>
                     </div>
@@ -5318,34 +5319,34 @@
                             <button type="button" @click="importEmployeeFilter = 'all'"
                                 class="px-3 py-1.5 rounded-[8px] transition"
                                 :class="importEmployeeFilter === 'all' ? 'bg-white dark:bg-[#1C1C1E] text-black dark:text-white shadow-sm font-semibold' : 'text-black/60 dark:text-white/60'">
-                                Semua (<span x-text="importEmployeePreview ? importEmployeePreview.total_rows : 0"></span>)
+                                {{ __('hrm.filter_all') }} (<span x-text="importEmployeePreview ? importEmployeePreview.total_rows : 0"></span>)
                             </button>
                             <button type="button" @click="importEmployeeFilter = 'valid'"
                                 class="px-3 py-1.5 rounded-[8px] transition"
                                 :class="importEmployeeFilter === 'valid' ? 'bg-white dark:bg-[#1C1C1E] text-emerald-600 font-semibold shadow-sm' : 'text-black/60 dark:text-white/60'">
-                                Siap (<span x-text="importEmployeePreview ? importEmployeePreview.valid_count : 0"></span>)
+                                {{ __('hrm.filter_ready') }} (<span x-text="importEmployeePreview ? importEmployeePreview.valid_count : 0"></span>)
                             </button>
                             <button type="button" @click="importEmployeeFilter = 'duplicate'"
                                 class="px-3 py-1.5 rounded-[8px] transition"
                                 :class="importEmployeeFilter === 'duplicate' ? 'bg-white dark:bg-[#1C1C1E] text-amber-600 font-semibold shadow-sm' : 'text-black/60 dark:text-white/60'">
-                                Duplikat (<span x-text="importEmployeePreview ? importEmployeePreview.duplicate_count : 0"></span>)
+                                {{ __('hrm.filter_duplicate') }} (<span x-text="importEmployeePreview ? importEmployeePreview.duplicate_count : 0"></span>)
                             </button>
                             <button type="button" @click="importEmployeeFilter = 'error'"
                                 class="px-3 py-1.5 rounded-[8px] transition"
                                 :class="importEmployeeFilter === 'error' ? 'bg-white dark:bg-[#1C1C1E] text-rose-600 font-semibold shadow-sm' : 'text-black/60 dark:text-white/60'">
-                                Error (<span x-text="importEmployeePreview ? importEmployeePreview.error_count : 0"></span>)
+                                {{ __('hrm.filter_error') }} (<span x-text="importEmployeePreview ? importEmployeePreview.error_count : 0"></span>)
                             </button>
                         </div>
 
                         <div class="flex items-center gap-3 text-[12px]">
-                            <span class="text-black/50 dark:text-white/50 font-medium">Jika email/nomor sudah terdaftar:</span>
+                            <span class="text-black/50 dark:text-white/50 font-medium">{{ __('hrm.dup_strategy_emp_label') }}</span>
                             <label class="flex items-center gap-1.5 cursor-pointer font-medium text-black dark:text-white">
                                 <input type="radio" value="skip" x-model="importEmployeeDuplicateStrategy" class="text-[#007AFF] focus:ring-0">
-                                <span>Lewati</span>
+                                <span>{{ __('hrm.dup_strategy_skip') }}</span>
                             </label>
                             <label class="flex items-center gap-1.5 cursor-pointer font-medium text-black dark:text-white">
                                 <input type="radio" value="update" x-model="importEmployeeDuplicateStrategy" class="text-[#007AFF] focus:ring-0">
-                                <span>Perbarui Data</span>
+                                <span>{{ __('hrm.dup_strategy_update') }}</span>
                             </label>
                         </div>
                     </div>
@@ -5356,23 +5357,23 @@
                             <table class="w-full text-left text-[12px] border-collapse min-w-[800px]">
                                 <thead class="sticky top-0 bg-[#F5F5F7] dark:bg-[#252528] border-b border-black/[0.08] dark:border-white/[0.1] text-black/60 dark:text-white/60 font-semibold z-10">
                                     <tr>
-                                        <th class="py-2.5 px-3 w-16 text-center">Status</th>
-                                        <th class="py-2.5 px-3">Nama Karyawan</th>
-                                        <th class="py-2.5 px-3">Email & No. WA</th>
-                                        <th class="py-2.5 px-3">Role & Jabatan</th>
-                                        <th class="py-2.5 px-3">Tipe Kerja</th>
-                                        <th class="py-2.5 px-3 text-right">Gaji Pokok</th>
-                                        <th class="py-2.5 px-3">Cabang / Lokasi</th>
-                                        <th class="py-2.5 px-3">Keterangan / Pesan</th>
+                                        <th class="py-2.5 px-3 w-16 text-center">{{ __('hrm.th_status') }}</th>
+                                        <th class="py-2.5 px-3">{{ __('hrm.th_employee_name') }}</th>
+                                        <th class="py-2.5 px-3">{{ __('hrm.th_email_phone') }}</th>
+                                        <th class="py-2.5 px-3">{{ __('hrm.th_role_position') }}</th>
+                                        <th class="py-2.5 px-3">{{ __('hrm.th_work_type') }}</th>
+                                        <th class="py-2.5 px-3 text-right">{{ __('hrm.th_basic_salary') }}</th>
+                                        <th class="py-2.5 px-3">{{ __('hrm.th_branch_location') }}</th>
+                                        <th class="py-2.5 px-3">{{ __('hrm.th_notes_message') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.04]">
                                     <template x-for="(row, idx) in (importEmployeePreview ? importEmployeePreview.rows.filter(r => importEmployeeFilter === 'all' || r.status === importEmployeeFilter) : [])" :key="idx">
                                         <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition">
                                             <td class="py-2.5 px-3 text-center">
-                                                <span x-show="row.status === 'valid'" class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Siap</span>
-                                                <span x-show="row.status === 'duplicate'" class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-600 border border-amber-500/20">Duplikat</span>
-                                                <span x-show="row.status === 'error'" class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/10 text-rose-600 border border-rose-500/20">Error</span>
+                                                <span x-show="row.status === 'valid'" class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">{{ __('hrm.filter_ready') }}</span>
+                                                <span x-show="row.status === 'duplicate'" class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-600 border border-amber-500/20">{{ __('hrm.filter_duplicate') }}</span>
+                                                <span x-show="row.status === 'error'" class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/10 text-rose-600 border border-rose-500/20">{{ __('hrm.filter_error') }}</span>
                                             </td>
                                             <td class="py-2.5 px-3 font-semibold text-black dark:text-white" x-text="row.name || '-'"></td>
                                             <td class="py-2.5 px-3 text-black/70 dark:text-white/70">
@@ -5385,7 +5386,7 @@
                                             </td>
                                             <td class="py-2.5 px-3 text-black/70 dark:text-white/70 capitalize" x-text="row.employment_type || 'full_time'"></td>
                                             <td class="py-2.5 px-3 text-right font-mono font-semibold text-black dark:text-white" x-text="'Rp ' + formatCurrency(row.base_salary)"></td>
-                                            <td class="py-2.5 px-3 text-black/70 dark:text-white/70" x-text="row.location_name || 'Kantor Pusat'"></td>
+                                            <td class="py-2.5 px-3 text-black/70 dark:text-white/70" x-text="row.location_name || '{{ addslashes(__('hrm.default_hq_location')) }}'"></td>
                                             <td class="py-2.5 px-3">
                                                 <div class="space-y-0.5">
                                                     <template x-for="(msg, mi) in row.messages" :key="mi">
@@ -5410,7 +5411,7 @@
                         class="h-10 px-4 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold transition cursor-pointer flex items-center gap-1.5"
                         :disabled="importEmployeeExecuting">
                         <i data-lucide="refresh-cw" class="w-4 h-4"></i>
-                        <span>Ganti Berkas</span>
+                        <span>{{ __('hrm.btn_change_excel_file') }}</span>
                     </button>
                 </div>
 
@@ -5418,7 +5419,7 @@
                     <button type="button" @click="if (!importEmployeeExecuting) showImportEmployeeModal = false"
                         class="h-10 px-5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold transition cursor-pointer"
                         :disabled="importEmployeeExecuting">
-                        Batal
+                        {{ __('hrm.btn_cancel') }}
                     </button>
 
                     <button type="button" x-show="importEmployeePreview" @click="executeEmployeeImport()"
@@ -5426,7 +5427,7 @@
                         :disabled="importEmployeeExecuting || !importEmployeePreview || (importEmployeeDuplicateStrategy === 'skip' ? importEmployeePreview.valid_count : (importEmployeePreview.valid_count + importEmployeePreview.duplicate_count)) === 0">
                         <i data-lucide="loader" class="w-4 h-4 animate-spin" x-show="importEmployeeExecuting"></i>
                         <i data-lucide="check" class="w-4 h-4" x-show="!importEmployeeExecuting"></i>
-                        <span x-text="importEmployeeExecuting ? 'Sedang Memproses...' : ('Komit Impor (' + (importEmployeeDuplicateStrategy === 'skip' ? importEmployeePreview.valid_count : (importEmployeePreview.valid_count + importEmployeePreview.duplicate_count)) + ' Karyawan)')"></span>
+                        <span x-text="importEmployeeExecuting ? '{{ addslashes(__('hrm.processing_import')) }}' : ('{{ addslashes(__('hrm.commit_import_prefix')) }}' + (importEmployeeDuplicateStrategy === 'skip' ? importEmployeePreview.valid_count : (importEmployeePreview.valid_count + importEmployeePreview.duplicate_count)) + '{{ addslashes(__('hrm.commit_import_suffix_employees')) }}')"></span>
                     </button>
                 </div>
                 </div>
@@ -5471,8 +5472,8 @@
                                 <i data-lucide="fingerprint" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h3 class="text-base sm:text-lg font-bold text-black dark:text-white">Impor Log Mesin Presensi Biometrik</h3>
-                                <p class="text-xs text-black/55 dark:text-white/55">Upload log presensi dari ZKTeco, Solution, Fingerspot, atau mesin absensi sidik jari lainnya</p>
+                                <h3 class="text-base sm:text-lg font-bold text-black dark:text-white">{{ __('hrm.modal_import_att_title') }}</h3>
+                                <p class="text-xs text-black/55 dark:text-white/55">{{ __('hrm.modal_import_att_sub') }}</p>
                             </div>
                         </div>
                         <button type="button" @click="if (!importAttendanceExecuting) showImportAttendanceModal = false"
@@ -5491,14 +5492,14 @@
                         <div class="space-y-1">
                             <div class="flex items-center gap-2 text-[#248A3D] dark:text-[#30D158] font-bold text-[13px]">
                                 <span class="w-5 h-5 rounded-full bg-[#34C759]/15 flex items-center justify-center text-[11px] font-bold">1</span>
-                                <span>Langkah 1: Unduh Format Template Log Mesin</span>
+                                <span>{{ __('hrm.step_1_download_att_template') }}</span>
                             </div>
-                            <p class="text-[12px] text-black/60 dark:text-white/60">Gunakan format template standar log mesin (ZKTeco, Solution, Fingerspot) dengan kolom NIK/Email, Tanggal, Jam Masuk & Jam Keluar.</p>
+                            <p class="text-[12px] text-black/60 dark:text-white/60">{{ __('hrm.step_1_att_template_desc') }}</p>
                         </div>
                         <a href="{{ route('hrm.attendance.template') }}"
                            class="h-9 px-4 rounded-[10px] bg-[#34C759] hover:bg-[#28A745] text-white text-[12px] font-semibold transition flex items-center justify-center gap-1.5 shadow-sm shrink-0 active:scale-[0.98]">
                             <i data-lucide="download" class="w-3.5 h-3.5"></i>
-                            <span>Unduh Template (.xlsx)</span>
+                            <span>{{ __('hrm.btn_download_template_xlsx') }}</span>
                         </a>
                     </div>
 
@@ -5506,9 +5507,9 @@
                     <div class="flex items-center justify-between pt-1">
                         <div class="flex items-center gap-2 text-black/80 dark:text-white/80 font-bold text-[13px]">
                             <span class="w-5 h-5 rounded-full bg-black/10 dark:bg-white/10 flex items-center justify-center text-[11px] font-bold">2</span>
-                            <span>Langkah 2: Unggah Berkas Log Mesin Presensi</span>
+                            <span>{{ __('hrm.step_2_upload_att_file') }}</span>
                         </div>
-                        <span class="text-[11px] text-black/40 dark:text-white/40">Maksimal 10 MB (.xlsx, .csv)</span>
+                        <span class="text-[11px] text-black/40 dark:text-white/40">{{ __('hrm.max_file_size_10mb') }}</span>
                     </div>
 
                     <label class="border-2 border-dashed border-black/15 dark:border-white/15 hover:border-[#34C759] dark:hover:border-[#34C759] rounded-[20px] p-8 sm:p-12 flex flex-col items-center justify-center text-center cursor-pointer transition bg-black/[0.01] hover:bg-[#34C759]/[0.02] block">
@@ -5520,8 +5521,8 @@
                         </div>
 
                         <div class="space-y-1">
-                            <span class="text-base font-bold text-black dark:text-white block" x-text="importAttendanceLoading ? 'Menganalisis file presensi mesin...' : 'Pilih atau Tarik Berkas Log Presensi (.xlsx)'"></span>
-                            <span class="text-xs text-black/50 dark:text-white/50 block">Mendukung format kolom NIK/Email/Nama, Tanggal, Jam Masuk, Jam Keluar</span>
+                            <span class="text-base font-bold text-black dark:text-white block" x-text="importAttendanceLoading ? '{{ addslashes(__('hrm.upload_att_file_analyzing')) }}' : '{{ addslashes(__('hrm.upload_att_file_idle')) }}'"></span>
+                            <span class="text-xs text-black/50 dark:text-white/50 block">{{ __('hrm.upload_att_format_hint') }}</span>
                         </div>
                     </label>
                 </div>
@@ -5531,24 +5532,24 @@
                     <!-- KPI Cards -->
                     <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
                         <div class="p-3.5 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] space-y-1">
-                            <span class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">Total Baris</span>
+                            <span class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">{{ __('hrm.metric_total_rows') }}</span>
                             <div class="text-2xl font-bold font-mono text-black dark:text-white" x-text="importAttendancePreview ? importAttendancePreview.total_rows : 0"></div>
                         </div>
                         <div class="p-3.5 rounded-[16px] bg-emerald-500/[0.08] border border-emerald-500/20 space-y-1">
-                            <span class="text-[11px] font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">Siap Impor</span>
+                            <span class="text-[11px] font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">{{ __('hrm.metric_ready_import') }}</span>
                             <div class="text-2xl font-bold font-mono text-emerald-600 dark:text-emerald-400" x-text="importAttendancePreview ? importAttendancePreview.valid_count : 0"></div>
                         </div>
                         <div class="p-3.5 rounded-[16px] bg-amber-500/[0.08] border border-amber-500/20 space-y-1">
-                            <span class="text-[11px] font-semibold text-amber-700 dark:text-amber-400 uppercase tracking-wider">Sudah Ada</span>
+                            <span class="text-[11px] font-semibold text-amber-700 dark:text-amber-400 uppercase tracking-wider">{{ __('hrm.metric_already_exists') }}</span>
                             <div class="text-2xl font-bold font-mono text-amber-600 dark:text-amber-400" x-text="importAttendancePreview ? importAttendancePreview.duplicate_count : 0"></div>
                         </div>
                         <div class="p-3.5 rounded-[16px] bg-rose-500/[0.08] border border-rose-500/20 space-y-1">
-                            <span class="text-[11px] font-semibold text-rose-700 dark:text-rose-400 uppercase tracking-wider">Format Salah</span>
+                            <span class="text-[11px] font-semibold text-rose-700 dark:text-rose-400 uppercase tracking-wider">{{ __('hrm.metric_format_error') }}</span>
                             <div class="text-2xl font-bold font-mono text-rose-600 dark:text-rose-400" x-text="importAttendancePreview ? importAttendancePreview.error_count : 0"></div>
                         </div>
                         <div class="p-3.5 rounded-[16px] bg-[#34C759]/[0.08] border border-[#34C759]/20 space-y-1 col-span-2 sm:col-span-1">
-                            <span class="text-[11px] font-semibold text-[#34C759] uppercase tracking-wider">Total Jam Kerja</span>
-                            <div class="text-xl font-bold font-mono text-[#34C759]" x-text="importAttendancePreview ? (importAttendancePreview.total_work_hours + ' Jam') : '0 Jam'"></div>
+                            <span class="text-[11px] font-semibold text-[#34C759] uppercase tracking-wider">{{ __('hrm.metric_total_work_hours') }}</span>
+                            <div class="text-xl font-bold font-mono text-[#34C759]" x-text="importAttendancePreview ? (importAttendancePreview.total_work_hours + ' {{ addslashes(__('hrm.unit_hours')) }}') : '0 {{ addslashes(__('hrm.unit_hours')) }}'"></div>
                         </div>
                     </div>
 
@@ -5558,34 +5559,34 @@
                             <button type="button" @click="importAttendanceFilter = 'all'"
                                 class="px-3 py-1.5 rounded-[8px] transition"
                                 :class="importAttendanceFilter === 'all' ? 'bg-white dark:bg-[#1C1C1E] text-black dark:text-white shadow-sm font-semibold' : 'text-black/60 dark:text-white/60'">
-                                Semua (<span x-text="importAttendancePreview ? importAttendancePreview.total_rows : 0"></span>)
+                                {{ __('hrm.filter_all') }} (<span x-text="importAttendancePreview ? importAttendancePreview.total_rows : 0"></span>)
                             </button>
                             <button type="button" @click="importAttendanceFilter = 'valid'"
                                 class="px-3 py-1.5 rounded-[8px] transition"
                                 :class="importAttendanceFilter === 'valid' ? 'bg-white dark:bg-[#1C1C1E] text-emerald-600 font-semibold shadow-sm' : 'text-black/60 dark:text-white/60'">
-                                Siap (<span x-text="importAttendancePreview ? importAttendancePreview.valid_count : 0"></span>)
+                                {{ __('hrm.filter_ready') }} (<span x-text="importAttendancePreview ? importAttendancePreview.valid_count : 0"></span>)
                             </button>
                             <button type="button" @click="importAttendanceFilter = 'duplicate'"
                                 class="px-3 py-1.5 rounded-[8px] transition"
                                 :class="importAttendanceFilter === 'duplicate' ? 'bg-white dark:bg-[#1C1C1E] text-amber-600 font-semibold shadow-sm' : 'text-black/60 dark:text-white/60'">
-                                Duplikat (<span x-text="importAttendancePreview ? importAttendancePreview.duplicate_count : 0"></span>)
+                                {{ __('hrm.filter_duplicate') }} (<span x-text="importAttendancePreview ? importAttendancePreview.duplicate_count : 0"></span>)
                             </button>
                             <button type="button" @click="importAttendanceFilter = 'error'"
                                 class="px-3 py-1.5 rounded-[8px] transition"
                                 :class="importAttendanceFilter === 'error' ? 'bg-white dark:bg-[#1C1C1E] text-rose-600 font-semibold shadow-sm' : 'text-black/60 dark:text-white/60'">
-                                Error (<span x-text="importAttendancePreview ? importAttendancePreview.error_count : 0"></span>)
+                                {{ __('hrm.filter_error') }} (<span x-text="importAttendancePreview ? importAttendancePreview.error_count : 0"></span>)
                             </button>
                         </div>
 
                         <div class="flex items-center gap-3 text-[12px]">
-                            <span class="text-black/50 dark:text-white/50 font-medium">Jika log tanggal tersebut sudah ada:</span>
+                            <span class="text-black/50 dark:text-white/50 font-medium">{{ __('hrm.dup_strategy_att_label') }}</span>
                             <label class="flex items-center gap-1.5 cursor-pointer font-medium text-black dark:text-white">
                                 <input type="radio" value="skip" x-model="importAttendanceDuplicateStrategy" class="text-[#34C759] focus:ring-0">
-                                <span>Lewati</span>
+                                <span>{{ __('hrm.dup_strategy_skip') }}</span>
                             </label>
                             <label class="flex items-center gap-1.5 cursor-pointer font-medium text-black dark:text-white">
                                 <input type="radio" value="update" x-model="importAttendanceDuplicateStrategy" class="text-[#34C759] focus:ring-0">
-                                <span>Perbarui Jam</span>
+                                <span>{{ __('hrm.dup_strategy_update_hours') }}</span>
                             </label>
                         </div>
                     </div>
@@ -5596,24 +5597,24 @@
                             <table class="w-full text-left text-[12px] border-collapse min-w-[750px]">
                                 <thead class="sticky top-0 bg-[#F5F5F7] dark:bg-[#252528] border-b border-black/[0.08] dark:border-white/[0.1] text-black/60 dark:text-white/60 font-semibold z-10">
                                     <tr>
-                                        <th class="py-2.5 px-3 w-16 text-center">Status</th>
-                                        <th class="py-2.5 px-3">Karyawan</th>
-                                        <th class="py-2.5 px-3">Tanggal</th>
-                                        <th class="py-2.5 px-3">Jam Masuk</th>
-                                        <th class="py-2.5 px-3">Jam Keluar</th>
-                                        <th class="py-2.5 px-3">Keterlambatan</th>
-                                        <th class="py-2.5 px-3">Durasi Kerja</th>
-                                        <th class="py-2.5 px-3">Status Presensi</th>
-                                        <th class="py-2.5 px-3">Keterangan / Diagnostik</th>
+                                        <th class="py-2.5 px-3 w-16 text-center">{{ __('hrm.th_status') }}</th>
+                                        <th class="py-2.5 px-3">{{ __('hrm.th_employee') }}</th>
+                                        <th class="py-2.5 px-3">{{ __('hrm.th_date') }}</th>
+                                        <th class="py-2.5 px-3">{{ __('hrm.th_clock_in') }}</th>
+                                        <th class="py-2.5 px-3">{{ __('hrm.th_clock_out') }}</th>
+                                        <th class="py-2.5 px-3">{{ __('hrm.th_tardiness') }}</th>
+                                        <th class="py-2.5 px-3">{{ __('hrm.th_work_duration') }}</th>
+                                        <th class="py-2.5 px-3">{{ __('hrm.th_attendance_status') }}</th>
+                                        <th class="py-2.5 px-3">{{ __('hrm.th_diagnostic') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.04]">
                                     <template x-for="(row, idx) in (importAttendancePreview ? importAttendancePreview.rows.filter(r => importAttendanceFilter === 'all' || r.status === importAttendanceFilter) : [])" :key="idx">
                                         <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition">
                                             <td class="py-2.5 px-3 text-center">
-                                                <span x-show="row.status === 'valid'" class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Siap</span>
-                                                <span x-show="row.status === 'duplicate'" class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-600 border border-amber-500/20">Duplikat</span>
-                                                <span x-show="row.status === 'error'" class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/10 text-rose-600 border border-rose-500/20">Error</span>
+                                                <span x-show="row.status === 'valid'" class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">{{ __('hrm.filter_ready') }}</span>
+                                                <span x-show="row.status === 'duplicate'" class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-600 border border-amber-500/20">{{ __('hrm.filter_duplicate') }}</span>
+                                                <span x-show="row.status === 'error'" class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/10 text-rose-600 border border-rose-500/20">{{ __('hrm.filter_error') }}</span>
                                             </td>
                                             <td class="py-2.5 px-3 font-semibold text-black dark:text-white">
                                                 <div x-text="row.user_name || row.identifier"></div>
@@ -5622,12 +5623,12 @@
                                             <td class="py-2.5 px-3 tabular-nums text-black/80 dark:text-white/80" x-text="row.date || '-'"></td>
                                             <td class="py-2.5 px-3 font-mono font-bold text-emerald-600 dark:text-emerald-400" x-text="row.clock_in ? row.clock_in.substring(11, 16) : '-'"></td>
                                             <td class="py-2.5 px-3 font-mono font-bold text-black/70 dark:text-white/70" x-text="row.clock_out ? row.clock_out.substring(11, 16) : '-'"></td>
-                                            <td class="py-2.5 px-3 tabular-nums" :class="row.late_minutes > 0 ? 'text-amber-600 dark:text-amber-400 font-bold' : 'text-black/50 dark:text-white/50'" x-text="row.late_minutes > 0 ? (row.late_minutes + ' mnt') : 'Tepat Waktu'"></td>
+                                            <td class="py-2.5 px-3 tabular-nums" :class="row.late_minutes > 0 ? 'text-amber-600 dark:text-amber-400 font-bold' : 'text-black/50 dark:text-white/50'" x-text="row.late_minutes > 0 ? (row.late_minutes + ' {{ addslashes(__('hrm.unit_minutes_short')) }}') : '{{ addslashes(__('hrm.status_on_time')) }}'"></td>
                                             <td class="py-2.5 px-3 tabular-nums font-medium text-black dark:text-white" x-text="Math.floor((row.work_duration_minutes || 0) / 60) + 'j ' + ((row.work_duration_minutes || 0) % 60) + 'm'"></td>
                                             <td class="py-2.5 px-3">
                                                 <span class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider"
                                                     :class="row.attendance_status === 'late' ? 'bg-amber-500/10 text-amber-600' : 'bg-emerald-500/10 text-emerald-600'"
-                                                    x-text="row.attendance_status === 'late' ? 'Terlambat' : 'Hadir'"></span>
+                                                    x-text="row.attendance_status === 'late' ? '{{ addslashes(__('hrm.status_late')) }}' : '{{ addslashes(__('hrm.status_present')) }}'"></span>
                                             </td>
                                             <td class="py-2.5 px-3">
                                                 <div class="space-y-0.5">
@@ -5653,7 +5654,7 @@
                         class="h-10 px-4 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold transition cursor-pointer flex items-center gap-1.5"
                         :disabled="importAttendanceExecuting">
                         <i data-lucide="refresh-cw" class="w-4 h-4"></i>
-                        <span>Ganti Berkas</span>
+                        <span>{{ __('hrm.btn_change_excel_file') }}</span>
                     </button>
                 </div>
 
@@ -5661,7 +5662,7 @@
                     <button type="button" @click="if (!importAttendanceExecuting) showImportAttendanceModal = false"
                         class="h-10 px-5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold transition cursor-pointer"
                         :disabled="importAttendanceExecuting">
-                        Batal
+                        {{ __('hrm.btn_cancel') }}
                     </button>
 
                     <button type="button" x-show="importAttendancePreview" @click="executeAttendanceImport()"
@@ -5669,7 +5670,7 @@
                         :disabled="importAttendanceExecuting || !importAttendancePreview || (importAttendanceDuplicateStrategy === 'skip' ? importAttendancePreview.valid_count : (importAttendancePreview.valid_count + importAttendancePreview.duplicate_count)) === 0">
                         <i data-lucide="loader" class="w-4 h-4 animate-spin" x-show="importAttendanceExecuting"></i>
                         <i data-lucide="check" class="w-4 h-4" x-show="!importAttendanceExecuting"></i>
-                        <span x-text="importAttendanceExecuting ? 'Sedang Memproses...' : ('Komit Impor (' + (importAttendanceDuplicateStrategy === 'skip' ? importAttendancePreview.valid_count : (importAttendancePreview.valid_count + importAttendancePreview.duplicate_count)) + ' Presensi)')"></span>
+                        <span x-text="importAttendanceExecuting ? '{{ addslashes(__('hrm.processing_import')) }}' : ('{{ addslashes(__('hrm.commit_import_prefix')) }}' + (importAttendanceDuplicateStrategy === 'skip' ? importAttendancePreview.valid_count : (importAttendancePreview.valid_count + importAttendancePreview.duplicate_count)) + '{{ addslashes(__('hrm.commit_import_suffix_attendance')) }}')"></span>
                     </button>
                 </div>
                 </div>

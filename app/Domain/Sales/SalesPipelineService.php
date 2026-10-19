@@ -130,6 +130,80 @@ final class SalesPipelineService
     }
 
     /**
+     * Update an existing Quotation with line items.
+     */
+    public function updateQuotation(Quotation $quotation, array $data): Quotation
+    {
+        return DB::transaction(function () use ($quotation, $data) {
+            $business = $quotation->business;
+
+            $itemsData = $data['items'] ?? [];
+            if (empty($itemsData)) {
+                throw new InvalidArgumentException('Penawaran harga harus memiliki minimal satu baris item.');
+            }
+
+            $subtotal = 0.0;
+            foreach ($itemsData as $item) {
+                $lineQty = (float) ($item['quantity'] ?? 1);
+                $linePrice = (float) ($item['unit_price'] ?? 0);
+                $lineDiscount = (float) ($item['discount_amount'] ?? 0);
+                $subtotal += ($lineQty * $linePrice) - $lineDiscount;
+            }
+
+            $overallDiscount = (float) ($data['discount_amount'] ?? 0);
+            $taxPercentage = array_key_exists('tax_percentage', $data)
+                ? (float) $data['tax_percentage']
+                : ($business->pos_enable_tax ? (float) $business->pos_tax_percent : 0.0);
+            $taxableAmount = max(0.0, $subtotal - $overallDiscount);
+            $taxAmount = array_key_exists('tax_amount', $data) && (float) $data['tax_amount'] > 0
+                ? (float) $data['tax_amount']
+                : (($taxableAmount * $taxPercentage) / 100.0);
+            $totalAmount = max(0, ($subtotal - $overallDiscount) + $taxAmount);
+
+            $quotation->update([
+                'customer_id' => $data['customer_id'] ?? $quotation->customer_id,
+                'quotation_number' => $data['quotation_number'] ?? $quotation->quotation_number,
+                'date' => $data['date'] ?? $quotation->date,
+                'expiry_date' => $data['expiry_date'] ?? $quotation->expiry_date,
+                'subtotal' => $subtotal,
+                'discount_amount' => $overallDiscount,
+                'tax_percentage' => $taxPercentage,
+                'tax_amount' => $taxAmount,
+                'total_amount' => $totalAmount,
+                'status' => $data['status'] ?? $quotation->status,
+                'notes' => $data['notes'] ?? $quotation->notes,
+                'terms_and_conditions' => $data['terms_and_conditions'] ?? $quotation->terms_and_conditions,
+            ]);
+
+            // Re-sync items
+            $quotation->items()->delete();
+
+            foreach ($itemsData as $item) {
+                $lineQty = (float) ($item['quantity'] ?? 1);
+                $linePrice = (float) ($item['unit_price'] ?? 0);
+                $lineDiscount = (float) ($item['discount_amount'] ?? 0);
+                $lineSubtotal = ($lineQty * $linePrice) - $lineDiscount;
+
+                $product = !empty($item['product_id']) ? Product::find($item['product_id']) : null;
+                $name = $item['product_name'] ?? ($product ? $product->name : 'Item Penawaran');
+
+                QuotationItem::create([
+                    'quotation_id' => $quotation->id,
+                    'product_id' => $product?->id,
+                    'product_name' => $name,
+                    'unit_price' => $linePrice,
+                    'quantity' => $lineQty,
+                    'discount_amount' => $lineDiscount,
+                    'subtotal' => $lineSubtotal,
+                    'notes' => $item['notes'] ?? null,
+                ]);
+            }
+
+            return $quotation->fresh(['items', 'customer']);
+        });
+    }
+
+    /**
      * 1-Click Convert Quotation to Sales Order.
      */
     public function convertQuotationToSalesOrder(Quotation $quotation): SalesOrder
@@ -237,6 +311,81 @@ final class SalesPipelineService
             }
 
             return $salesOrder->load('items', 'customer');
+        });
+    }
+
+    /**
+     * Update an existing Sales Order with line items.
+     */
+    public function updateSalesOrder(SalesOrder $salesOrder, array $data): SalesOrder
+    {
+        return DB::transaction(function () use ($salesOrder, $data) {
+            $business = $salesOrder->business;
+
+            $itemsData = $data['items'] ?? [];
+            if (empty($itemsData)) {
+                throw new InvalidArgumentException('Pesanan penjualan harus memiliki minimal satu baris item.');
+            }
+
+            $subtotal = 0.0;
+            foreach ($itemsData as $item) {
+                $lineQty = (float) ($item['quantity'] ?? 1);
+                $linePrice = (float) ($item['unit_price'] ?? 0);
+                $lineDiscount = (float) ($item['discount_amount'] ?? 0);
+                $subtotal += ($lineQty * $linePrice) - $lineDiscount;
+            }
+
+            $overallDiscount = (float) ($data['discount_amount'] ?? 0);
+            $taxPercentage = array_key_exists('tax_percentage', $data)
+                ? (float) $data['tax_percentage']
+                : ($salesOrder->tax_percentage ?? ($business->pos_enable_tax ? (float) $business->pos_tax_percent : 0.0));
+            $taxableAmount = max(0.0, $subtotal - $overallDiscount);
+            $taxAmount = array_key_exists('tax_amount', $data) && (float) $data['tax_amount'] > 0
+                ? (float) $data['tax_amount']
+                : (($taxableAmount * $taxPercentage) / 100.0);
+            $totalAmount = max(0, ($subtotal - $overallDiscount) + $taxAmount);
+
+            $salesOrder->update([
+                'customer_id' => $data['customer_id'] ?? $salesOrder->customer_id,
+                'quotation_id' => $data['quotation_id'] ?? $salesOrder->quotation_id,
+                'so_number' => $data['so_number'] ?? $salesOrder->so_number,
+                'order_date' => $data['order_date'] ?? $salesOrder->order_date,
+                'expected_delivery_date' => $data['expected_delivery_date'] ?? $salesOrder->expected_delivery_date,
+                'shipping_address' => $data['shipping_address'] ?? $salesOrder->shipping_address,
+                'subtotal' => $subtotal,
+                'discount_amount' => $overallDiscount,
+                'tax_amount' => $taxAmount,
+                'total_amount' => $totalAmount,
+                'status' => $data['status'] ?? $salesOrder->status,
+                'notes' => $data['notes'] ?? $salesOrder->notes,
+            ]);
+
+            // Re-sync line items
+            $salesOrder->items()->delete();
+
+            foreach ($itemsData as $item) {
+                $lineQty = (float) ($item['quantity'] ?? 1);
+                $linePrice = (float) ($item['unit_price'] ?? 0);
+                $lineDiscount = (float) ($item['discount_amount'] ?? 0);
+                $lineSubtotal = ($lineQty * $linePrice) - $lineDiscount;
+
+                $product = !empty($item['product_id']) ? Product::find($item['product_id']) : null;
+                $name = $item['product_name'] ?? ($product ? $product->name : 'Item Pesanan');
+
+                SalesOrderItem::create([
+                    'sales_order_id' => $salesOrder->id,
+                    'product_id' => $product?->id,
+                    'product_name' => $name,
+                    'unit_price' => $linePrice,
+                    'quantity' => $lineQty,
+                    'fulfilled_quantity' => (float) ($item['fulfilled_quantity'] ?? 0),
+                    'discount_amount' => $lineDiscount,
+                    'subtotal' => $lineSubtotal,
+                    'notes' => $item['notes'] ?? null,
+                ]);
+            }
+
+            return $salesOrder->fresh(['items', 'customer']);
         });
     }
 

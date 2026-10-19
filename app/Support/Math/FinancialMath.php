@@ -61,4 +61,39 @@ final class FinancialMath
 
         return $formatted === '' ? '0' : $formatted;
     }
+
+    /**
+     * Konversi angka nominal ke format kata-kata (terbilang) resmi Bahasa Indonesia.
+     * Contoh: 1500000 => "Satu Juta Lima Ratus Ribu Rupiah"
+     */
+    public static function terbilang(int|float $nilai): string
+    {
+        $nilai = abs((float) $nilai);
+        $huruf = ['', 'Satu', 'Dua', 'Tiga', 'Empat', 'Lima', 'Enam', 'Tujuh', 'Delapan', 'Sembilan', 'Sepuluh', 'Sebelas'];
+
+        if ($nilai < 12) {
+            $hasil = ' ' . $huruf[(int) $nilai];
+        } elseif ($nilai < 20) {
+            $hasil = self::terbilang($nilai - 10) . ' Belas';
+        } elseif ($nilai < 100) {
+            $hasil = self::terbilang((int) ($nilai / 10)) . ' Puluh ' . self::terbilang(fmod($nilai, 10));
+        } elseif ($nilai < 200) {
+            $hasil = ' Seratus ' . self::terbilang($nilai - 100);
+        } elseif ($nilai < 1000) {
+            $hasil = self::terbilang((int) ($nilai / 100)) . ' Ratus ' . self::terbilang(fmod($nilai, 100));
+        } elseif ($nilai < 2000) {
+            $hasil = ' Seribu ' . self::terbilang($nilai - 1000);
+        } elseif ($nilai < 1000000) {
+            $hasil = self::terbilang((int) ($nilai / 1000)) . ' Ribu ' . self::terbilang(fmod($nilai, 1000));
+        } elseif ($nilai < 1000000000) {
+            $hasil = self::terbilang((int) ($nilai / 1000000)) . ' Juta ' . self::terbilang(fmod($nilai, 1000000));
+        } elseif ($nilai < 1000000000000) {
+            $hasil = self::terbilang((int) ($nilai / 1000000000)) . ' Miliar ' . self::terbilang(fmod($nilai, 1000000000));
+        } else {
+            $hasil = self::terbilang((int) ($nilai / 1000000000000)) . ' Triliun ' . self::terbilang(fmod($nilai, 1000000000000));
+        }
+
+        $clean = trim(preg_replace('/\s+/', ' ', $hasil));
+        return $clean !== '' ? $clean . ' Rupiah' : 'Nol Rupiah';
+    }
 }

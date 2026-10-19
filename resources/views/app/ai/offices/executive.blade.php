@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'COOCA AI — Executive Office'])
+@extends('layouts.app', ['title' => __('ai.offices.executive_title')])
 
 @section('content')
 <div class="space-y-6 w-full" x-data="aiOfficeBase()">
@@ -25,17 +25,17 @@
                 <div>
                     <div class="flex items-center gap-2">
                         <h2 class="text-base font-bold text-black dark:text-white">AI CEO</h2>
-                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">Aktif & Siaga</span>
+                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">{{ __('ai.offices.active_standby') }}</span>
                     </div>
                     <p class="text-xs text-black/50 dark:text-white/50 mt-0.5">Chief Executive Officer &bull; Business Command & Strategy</p>
                 </div>
             </div>
 
             <div class="text-right">
-                <div class="text-[11px] text-black/40 dark:text-white/40">Status Kepemimpinan:</div>
+                <div class="text-[11px] text-black/40 dark:text-white/40">{{ __('ai.offices.status_leadership') }}</div>
                 <div class="text-xs font-semibold text-amber-600 dark:text-amber-400 flex items-center justify-end gap-1.5 mt-0.5">
                     <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-                    <span>Pengambilan Keputusan Strategis</span>
+                    <span>{{ __('ai.offices.decision_making') }}</span>
                 </div>
             </div>
         </div>
@@ -45,25 +45,25 @@
             <div class="p-3.5 rounded-2xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 space-y-1">
                 <div class="text-[11px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
                     <i data-lucide="trending-up" class="w-3.5 h-3.5"></i>
-                    <span>Pertumbuhan Omzet</span>
+                    <span>{{ __('ai.offices.rev_growth') }}</span>
                 </div>
-                <p class="text-xs text-black/70 dark:text-white/70">Memantau pergerakan omzet harian dan deviasi target mingguan dari kanal kasir & digital.</p>
+                <p class="text-xs text-black/70 dark:text-white/70">{{ __('ai.offices.rev_growth_desc') }}</p>
             </div>
 
             <div class="p-3.5 rounded-2xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 space-y-1">
                 <div class="text-[11px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider flex items-center gap-1.5">
                     <i data-lucide="shield-alert" class="w-3.5 h-3.5"></i>
-                    <span>Mitigasi Risiko Keuangan</span>
+                    <span>{{ __('ai.offices.financial_risk_mitigation') }}</span>
                 </div>
-                <p class="text-xs text-black/70 dark:text-white/70">Mencegah pembengkakan beban kas, memantau piutang jatuh tempo & pengeluaran kas abnormal.</p>
+                <p class="text-xs text-black/70 dark:text-white/70">{{ __('ai.offices.financial_risk_desc') }}</p>
             </div>
 
             <div class="p-3.5 rounded-2xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 space-y-1">
                 <div class="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
                     <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-                    <span>Koordinasi Antar Divisi</span>
+                    <span>{{ __('ai.offices.inter_division_coordination') }}</span>
                 </div>
-                <p class="text-xs text-black/70 dark:text-white/70">Mendelegasikan analisis ke AI CFO, COO, dan CMO sebelum mengajukan proposal ke pemilik.</p>
+                <p class="text-xs text-black/70 dark:text-white/70">{{ __('ai.offices.inter_division_desc') }}</p>
             </div>
         </div>
     </div>
@@ -71,43 +71,43 @@
     <!-- FINANCIAL & EXECUTIVE KPI STRIP (Apple HIG Tabular Nums) -->
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <div class="rounded-2xl p-4 bg-white dark:bg-zinc-900 border border-black/10 dark:border-white/10 shadow-sm">
-            <div class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">Omzet Bulan Ini</div>
+            <div class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">{{ __('ai.offices.monthly_revenue') }}</div>
             <div class="text-lg sm:text-xl font-bold text-black dark:text-white tabular-nums tracking-tight mt-1">
                 Rp {{ number_format($financialHealth['monthly_revenue'] ?? $salesSummary['total_sales'] ?? 0, 0, ',', '.') }}
             </div>
-            <div class="text-[10px] text-black/40 dark:text-white/40 mt-1">Berdasarkan transaksi POS & Invoice</div>
+            <div class="text-[10px] text-black/40 dark:text-white/40 mt-1">{{ __('ai.offices.monthly_rev_sub') }}</div>
         </div>
 
         <div class="rounded-2xl p-4 bg-white dark:bg-zinc-900 border border-black/10 dark:border-white/10 shadow-sm">
-            <div class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">Pengeluaran Kas</div>
+            <div class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">{{ __('ai.offices.cash_expense') }}</div>
             <div class="text-lg sm:text-xl font-bold text-black dark:text-white tabular-nums tracking-tight mt-1">
                 Rp {{ number_format($financialHealth['monthly_expense'] ?? 0, 0, ',', '.') }}
             </div>
-            <div class="text-[10px] text-black/40 dark:text-white/40 mt-1">Beban operasional & logistik</div>
+            <div class="text-[10px] text-black/40 dark:text-white/40 mt-1">{{ __('ai.offices.cash_expense_sub') }}</div>
         </div>
 
         <div class="rounded-2xl p-4 bg-white dark:bg-zinc-900 border border-black/10 dark:border-white/10 shadow-sm">
-            <div class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">Estimasi Laba Kotor</div>
+            <div class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">{{ __('ai.offices.gross_profit_est') }}</div>
             <div class="text-lg sm:text-xl font-bold text-emerald-600 dark:text-emerald-400 tabular-nums tracking-tight mt-1">
                 Rp {{ number_format($financialHealth['net_margin_estimate'] ?? 0, 0, ',', '.') }}
             </div>
-            <div class="text-[10px] text-black/40 dark:text-white/40 mt-1">Margin sehat di atas 20%</div>
+            <div class="text-[10px] text-black/40 dark:text-white/40 mt-1">{{ __('ai.offices.gross_profit_sub') }}</div>
         </div>
 
         <div class="rounded-2xl p-4 bg-white dark:bg-zinc-900 border border-black/10 dark:border-white/10 shadow-sm">
-            <div class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">Piutang Belum Terbayar</div>
+            <div class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">{{ __('ai.offices.unpaid_receivables') }}</div>
             <div class="text-lg sm:text-xl font-bold text-amber-600 dark:text-amber-400 tabular-nums tracking-tight mt-1">
                 Rp {{ number_format($financialHealth['unpaid_invoices_amount'] ?? 0, 0, ',', '.') }}
             </div>
-            <div class="text-[10px] text-black/40 dark:text-white/40 mt-1">Faktur & kasbon pelanggan aktif</div>
+            <div class="text-[10px] text-black/40 dark:text-white/40 mt-1">{{ __('ai.offices.unpaid_receivables_sub') }}</div>
         </div>
     </div>
 
     <!-- EXECUTIVE SQUAD WORKSTATIONS (AI CFO, FINANCE, REPORTING, BUSINESS AGENT) -->
     <div class="space-y-4">
         <div>
-            <h3 class="text-sm font-bold text-black dark:text-white">Meja Kerja Tim Eksekutif & Keuangan</h3>
-            <p class="text-xs text-black/50 dark:text-white/50">Agen spesialis yang bertanggung jawab langsung kepada AI CEO dan AI CFO.</p>
+            <h3 class="text-sm font-bold text-black dark:text-white">{{ __('ai.offices.workstations_exec_title') }}</h3>
+            <p class="text-xs text-black/50 dark:text-white/50">{{ __('ai.offices.workstations_exec_sub') }}</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -123,25 +123,25 @@
                             </div>
                             <div>
                                 <h4 class="text-xs font-bold text-black dark:text-white">Business Agent</h4>
-                                <div class="text-[10px] text-black/40 dark:text-white/40">Laporan ke: AI CEO</div>
+                                <div class="text-[10px] text-black/40 dark:text-white/40">{{ __('ai.offices.reports_to', ['lead' => 'AI CEO']) }}</div>
                             </div>
                         </div>
 
                         <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase {{ $bizAgent['status'] === 'WORKING' ? 'bg-blue-500/10 text-blue-600' : ($bizAgent['status'] === 'WAITING_APPROVAL' ? 'bg-amber-500/10 text-amber-600' : 'bg-emerald-500/10 text-emerald-600') }}">
-                            {{ $bizAgent['status_label'] ?? 'Tersedia' }}
+                            {{ $bizAgent['status_label'] ?? __('ai.offices.available') }}
                         </span>
                     </div>
 
-                    <p class="text-xs text-black/60 dark:text-white/60">Analisis menyeluruh kesehatan bisnis, identifikasi masalah operasional, dan peluang antar modul.</p>
+                    <p class="text-xs text-black/60 dark:text-white/60">{{ __('ai.offices.agent_biz_desc') }}</p>
                     
                     <div class="p-2.5 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 text-[11px] text-black/70 dark:text-white/70">
-                        <span class="text-black/40 dark:text-white/40 font-medium">Tugas Saat Ini:</span>
-                        <div class="font-semibold text-black dark:text-white truncate mt-0.5">{{ $bizAgent['current_work'] ?? 'Tidak ada tugas aktif' }}</div>
+                        <span class="text-black/40 dark:text-white/40 font-medium">{{ __('ai.offices.current_task') }}</span>
+                        <div class="font-semibold text-black dark:text-white truncate mt-0.5">{{ $bizAgent['current_work'] ?? __('ai.offices.no_active_task') }}</div>
                     </div>
                 </div>
 
                 <div class="text-[10px] text-black/40 dark:text-white/40 pt-2 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
-                    <span>Aktivitas Terakhir:</span>
+                    <span>{{ __('ai.offices.last_activity') }}</span>
                     <span class="font-medium">{{ $bizAgent['last_active'] ?? '-' }}</span>
                 </div>
             </div>
@@ -157,25 +157,25 @@
                             </div>
                             <div>
                                 <h4 class="text-xs font-bold text-black dark:text-white">Finance Agent</h4>
-                                <div class="text-[10px] text-black/40 dark:text-white/40">Laporan ke: AI CFO</div>
+                                <div class="text-[10px] text-black/40 dark:text-white/40">{{ __('ai.offices.reports_to', ['lead' => 'AI CFO']) }}</div>
                             </div>
                         </div>
 
                         <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase {{ $finAgent['status'] === 'WORKING' ? 'bg-blue-500/10 text-blue-600' : ($finAgent['status'] === 'WAITING_APPROVAL' ? 'bg-amber-500/10 text-amber-600' : 'bg-emerald-500/10 text-emerald-600') }}">
-                            {{ $finAgent['status_label'] ?? 'Tersedia' }}
+                            {{ $finAgent['status_label'] ?? __('ai.offices.available') }}
                         </span>
                     </div>
 
-                    <p class="text-xs text-black/60 dark:text-white/60">Analisis pendapatan, pengeluaran kas, saldo kasbank, piutang, dan deteksi anomali finansial.</p>
+                    <p class="text-xs text-black/60 dark:text-white/60">{{ __('ai.offices.agent_fin_desc') }}</p>
                     
                     <div class="p-2.5 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 text-[11px] text-black/70 dark:text-white/70">
-                        <span class="text-black/40 dark:text-white/40 font-medium">Tugas Saat Ini:</span>
-                        <div class="font-semibold text-black dark:text-white truncate mt-0.5">{{ $finAgent['current_work'] ?? 'Tidak ada tugas aktif' }}</div>
+                        <span class="text-black/40 dark:text-white/40 font-medium">{{ __('ai.offices.current_task') }}</span>
+                        <div class="font-semibold text-black dark:text-white truncate mt-0.5">{{ $finAgent['current_work'] ?? __('ai.offices.no_active_task') }}</div>
                     </div>
                 </div>
 
                 <div class="text-[10px] text-black/40 dark:text-white/40 pt-2 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
-                    <span>Aktivitas Terakhir:</span>
+                    <span>{{ __('ai.offices.last_activity') }}</span>
                     <span class="font-medium">{{ $finAgent['last_active'] ?? '-' }}</span>
                 </div>
             </div>
@@ -191,25 +191,25 @@
                             </div>
                             <div>
                                 <h4 class="text-xs font-bold text-black dark:text-white">Reporting Agent</h4>
-                                <div class="text-[10px] text-black/40 dark:text-white/40">Laporan ke: AI CFO</div>
+                                <div class="text-[10px] text-black/40 dark:text-white/40">{{ __('ai.offices.reports_to', ['lead' => 'AI CFO']) }}</div>
                             </div>
                         </div>
 
                         <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase {{ $repAgent['status'] === 'WORKING' ? 'bg-blue-500/10 text-blue-600' : ($repAgent['status'] === 'WAITING_APPROVAL' ? 'bg-amber-500/10 text-amber-600' : 'bg-emerald-500/10 text-emerald-600') }}">
-                            {{ $repAgent['status_label'] ?? 'Tersedia' }}
+                            {{ $repAgent['status_label'] ?? __('ai.offices.available') }}
                         </span>
                     </div>
 
-                    <p class="text-xs text-black/60 dark:text-white/60">Penyusunan rekapitulasi performa harian, mingguan, bulanan, dan ringkasan eksekutif untuk manajemen.</p>
+                    <p class="text-xs text-black/60 dark:text-white/60">{{ __('ai.offices.agent_rep_desc') }}</p>
                     
                     <div class="p-2.5 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 text-[11px] text-black/70 dark:text-white/70">
-                        <span class="text-black/40 dark:text-white/40 font-medium">Tugas Saat Ini:</span>
-                        <div class="font-semibold text-black dark:text-white truncate mt-0.5">{{ $repAgent['current_work'] ?? 'Tidak ada tugas aktif' }}</div>
+                        <span class="text-black/40 dark:text-white/40 font-medium">{{ __('ai.offices.current_task') }}</span>
+                        <div class="font-semibold text-black dark:text-white truncate mt-0.5">{{ $repAgent['current_work'] ?? __('ai.offices.no_active_task') }}</div>
                     </div>
                 </div>
 
                 <div class="text-[10px] text-black/40 dark:text-white/40 pt-2 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
-                    <span>Aktivitas Terakhir:</span>
+                    <span>{{ __('ai.offices.last_activity') }}</span>
                     <span class="font-medium">{{ $repAgent['last_active'] ?? '-' }}</span>
                 </div>
             </div>
@@ -221,11 +221,11 @@
     <div class="rounded-3xl p-6 bg-white dark:bg-zinc-900 border border-black/10 dark:border-white/10 shadow-sm space-y-4">
         <div class="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/5">
             <div>
-                <h3 class="text-sm font-bold text-black dark:text-white">Pekerjaan Berjalan di Executive Office</h3>
-                <p class="text-xs text-black/50 dark:text-white/50">Daftar tugas analitis yang sedang atau baru saja diproses oleh agen eksekutif.</p>
+                <h3 class="text-sm font-bold text-black dark:text-white">{{ __('ai.offices.active_tasks_exec_title') }}</h3>
+                <p class="text-xs text-black/50 dark:text-white/50">{{ __('ai.offices.active_tasks_sub') }}</p>
             </div>
             <span class="px-2.5 py-1 rounded-md text-[11px] font-mono font-semibold bg-black/5 dark:bg-white/10 text-black/70 dark:text-white/70">
-                {{ $recentTasks->count() }} Tugas Tercatat
+                {{ __('ai.offices.tasks_recorded', ['count' => $recentTasks->count()]) }}
             </span>
         </div>
 
@@ -244,7 +244,7 @@
                                 <span class="text-xs font-semibold text-black dark:text-white">{{ $task->input }}</span>
                             </div>
                             <div class="text-[11px] text-black/50 dark:text-white/50 mt-0.5">
-                                {{ $task->created_at->diffForHumans() }} &bull; Durasi: {{ $task->duration_ms ?? 0 }}ms
+                                {{ $task->created_at->diffForHumans() }} &bull; {{ __('ai.offices.duration', ['ms' => $task->duration_ms ?? 0]) }}
                             </div>
                         </div>
                     </div>
@@ -263,7 +263,7 @@
                 </div>
             @empty
                 <div class="p-6 rounded-2xl bg-black/[0.01] dark:bg-white/[0.01] border border-black/5 dark:border-white/5 text-center text-xs text-black/50 dark:text-white/50">
-                    Tidak ada tugas aktif di Executive Office. Seluruh agen siaga.
+                    {{ __('ai.offices.no_active_tasks_exec') }}
                 </div>
             @endforelse
         </div>
@@ -276,12 +276,12 @@
             <div>
                 <h3 class="text-sm font-bold text-black dark:text-white flex items-center gap-2">
                     <i data-lucide="shield-check" class="w-4 h-4 text-amber-600 dark:text-amber-400"></i>
-                    <span>Usulan Keputusan Eksekutif Menunggu Persetujuan Anda</span>
+                    <span>{{ __('ai.offices.pending_decisions_title') }}</span>
                 </h3>
-                <p class="text-xs text-black/50 dark:text-white/50 mt-0.5">AI CEO & AI CFO dilarang melakukan aksi finansial sepihak. Persetujuan pemilik usaha wajib.</p>
+                <p class="text-xs text-black/50 dark:text-white/50 mt-0.5">{{ __('ai.offices.pending_decisions_sub') }}</p>
             </div>
             <a href="{{ route('cooca-ai.actions', ['status' => 'pending']) }}" class="text-xs font-semibold text-amber-600 dark:text-amber-400 hover:underline">
-                Buka Action Center &rarr;
+                {{ __('ai.offices.open_action_center') }} &rarr;
             </a>
         </div>
 
@@ -308,11 +308,11 @@
                         <div class="flex items-center gap-2">
                             <form action="{{ route('cooca-ai.actions.reject', $proposal) }}" method="POST">
                                 @csrf
-                                <button type="submit" class="px-3 py-1.5 rounded-lg bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 font-semibold text-black/80 dark:text-white/80 transition">Tolak</button>
+                                <button type="submit" class="px-3 py-1.5 rounded-lg bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 font-semibold text-black/80 dark:text-white/80 transition">{{ __('ai.offices.reject') }}</button>
                             </form>
                             <form action="{{ route('cooca-ai.actions.approve', $proposal) }}" method="POST">
                                 @csrf
-                                <button type="submit" class="px-3 py-1.5 rounded-lg bg-black hover:bg-black/90 dark:bg-white dark:hover:bg-white/90 text-white dark:text-black font-semibold transition">Setujui</button>
+                                <button type="submit" class="px-3 py-1.5 rounded-lg bg-black hover:bg-black/90 dark:bg-white dark:hover:bg-white/90 text-white dark:text-black font-semibold transition">{{ __('ai.offices.approve') }}</button>
                             </form>
                         </div>
                     </div>
@@ -326,11 +326,11 @@
     <div class="rounded-3xl p-6 bg-white dark:bg-zinc-900 border border-black/10 dark:border-white/10 shadow-sm space-y-4">
         <div class="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/5">
             <div>
-                <h3 class="text-sm font-bold text-black dark:text-white">Arsip Rekam Kerja Eksekutif</h3>
-                <p class="text-xs text-black/50 dark:text-white/50">Jejak audit pekerjaan yang telah diselesaikan oleh tim Executive Office.</p>
+                <h3 class="text-sm font-bold text-black dark:text-white">{{ __('ai.offices.audit_history_title') }}</h3>
+                <p class="text-xs text-black/50 dark:text-white/50">{{ __('ai.offices.audit_history_sub') }}</p>
             </div>
             <a href="{{ route('cooca-ai.history') }}" class="text-xs font-semibold text-black/70 dark:text-white/70 hover:underline">
-                Lihat Seluruh Riwayat &rarr;
+                {{ __('ai.offices.see_all_history') }} &rarr;
             </a>
         </div>
 
@@ -354,7 +354,7 @@
                 </div>
             @empty
                 <div class="p-6 rounded-2xl bg-black/[0.01] dark:bg-white/[0.01] border border-black/5 dark:border-white/5 text-center text-xs text-black/50 dark:text-white/50">
-                    Belum ada riwayat rekam kerja di Executive Office.
+                    {{ __('ai.offices.no_history_exec') }}
                 </div>
             @endforelse
         </div>

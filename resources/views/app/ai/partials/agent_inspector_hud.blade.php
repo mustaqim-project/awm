@@ -38,14 +38,14 @@
                         <div class="text-xs text-slate-500 dark:text-slate-300 font-medium" x-text="selectedAgentData.title || 'Specialized Agent'"></div>
                     </div>
                 </div>
-                <button @click="deselectAgent()" class="text-slate-400 hover:text-slate-900 dark:hover:text-white transition p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 cursor-pointer" title="Tutup">
+                <button @click="deselectAgent()" class="text-slate-400 hover:text-slate-900 dark:hover:text-white transition p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 cursor-pointer" title="{{ __('ai.hud.close') }}">
                     <i data-lucide="x" class="w-4 h-4"></i>
                 </button>
             </div>
 
             <!-- Room Location & Team Badge -->
             <div class="flex items-center justify-between text-xs px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10">
-                <span class="text-slate-500 dark:text-slate-400">Ruangan &amp; Tim:</span>
+                <span class="text-slate-500 dark:text-slate-400">{{ __('ai.hud.room_and_team') }}</span>
                 <span class="font-semibold text-cyan-700 dark:text-cyan-300" x-text="(selectedAgentData.room || 'Virtual Office') + ' • ' + (selectedAgentData.teamName || 'Tim Digital')"></span>
             </div>
 
@@ -53,7 +53,7 @@
             <div class="space-y-1 p-3.5 rounded-2xl bg-slate-100/80 dark:bg-black/40 border border-slate-200 dark:border-white/10">
                 <div class="text-[11px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
                     <i data-lucide="clipboard-list" class="w-3.5 h-3.5 text-cyan-500"></i>
-                    <span>Tanggung Jawab Utama:</span>
+                    <span>{{ __('ai.hud.duties') }}</span>
                 </div>
                 <p class="text-xs text-slate-700 dark:text-slate-200 leading-relaxed font-normal" x-text="selectedAgentData.duties || selectedAgentData.description || 'Melakukan tugas komputasi dan analisis operasional.'"></p>
             </div>
@@ -61,12 +61,12 @@
             <!-- Executive Lead & Collaborators -->
             <div class="grid grid-cols-2 gap-2 text-xs">
                 <div class="p-2.5 rounded-xl bg-slate-100/70 dark:bg-white/5 border border-slate-200/80 dark:border-white/5">
-                    <span class="text-slate-500 dark:text-slate-400 block text-[10px] font-medium">Pimpinan / Lead:</span>
+                    <span class="text-slate-500 dark:text-slate-400 block text-[10px] font-medium">{{ __('ai.hud.lead') }}</span>
                     <span class="font-bold text-amber-700 dark:text-amber-300 truncate block mt-0.5" x-text="selectedAgentData.lead || 'AI Lead'"></span>
                 </div>
                 <div class="p-2.5 rounded-xl bg-slate-100/70 dark:bg-white/5 border border-slate-200/80 dark:border-white/5">
-                    <span class="text-slate-500 dark:text-slate-400 block text-[10px] font-medium">Rekan Kerja Tim:</span>
-                    <span class="font-bold text-cyan-700 dark:text-cyan-300 truncate block mt-0.5" x-text="(selectedAgentData.teammates && selectedAgentData.teammates.length > 0) ? selectedAgentData.teammates.join(', ') : 'Mandiri'"></span>
+                    <span class="text-slate-500 dark:text-slate-400 block text-[10px] font-medium">{{ __('ai.hud.teammates') }}</span>
+                    <span class="font-bold text-cyan-700 dark:text-cyan-300 truncate block mt-0.5" x-text="(selectedAgentData.teammates && selectedAgentData.teammates.length > 0) ? selectedAgentData.teammates.join(', ') : '{{ __('ai.hud.solo') }}'"></span>
                 </div>
             </div>
 
@@ -78,7 +78,7 @@
                     class="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white text-xs font-bold flex items-center justify-center gap-2 transition shadow-lg shadow-indigo-500/25 cursor-pointer active:scale-98"
                 >
                     <i data-lucide="sparkles" class="w-4 h-4 text-white"></i>
-                    <span x-text="`Konsultasi / Tugaskan ${selectedAgentData.name || selectedAgent}`"></span>
+                    <span x-text="'{{ __('ai.hud.consult_agent', ['name' => '']) }}' + (selectedAgentData.name || selectedAgent)"></span>
                 </button>
 
                 <!-- Secondary Actions (POV Mode & Avatar Customizer) -->
@@ -90,7 +90,7 @@
                         title="Kendalikan agen dalam sudut pandang 3D"
                     >
                         <i data-lucide="gamepad-2" class="w-3.5 h-3.5 text-indigo-500"></i>
-                        <span>POV Kamera</span>
+                        <span>{{ __('ai.hud.camera_pov') }}</span>
                     </button>
                     <button
                         type="button"
@@ -99,7 +99,7 @@
                         title="Ubah penampilan avatar karakter ini"
                     >
                         <i data-lucide="palette" class="w-3.5 h-3.5 text-purple-500"></i>
-                        <span>Ganti Avatar</span>
+                        <span>{{ __('ai.hud.change_avatar') }}</span>
                     </button>
                 </div>
             </div>
@@ -120,17 +120,17 @@
                         <div class="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2">
                             <span x-text="selectedRoomData.name || selectedRoom"></span>
                         </div>
-                        <div class="text-xs text-cyan-700 dark:text-cyan-300 font-medium" x-text="selectedRoomData.subtitle || 'Fasilitas Virtual Office'"></div>
+                        <div class="text-xs text-cyan-700 dark:text-cyan-300 font-medium" x-text="selectedRoomData.subtitle || '{{ __('ai.hud.facility_title') }}'"></div>
                     </div>
                 </div>
-                <button @click="deselectRoom()" class="text-slate-400 hover:text-slate-900 dark:hover:text-white transition p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 cursor-pointer" title="Tutup">
+                <button @click="deselectRoom()" class="text-slate-400 hover:text-slate-900 dark:hover:text-white transition p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 cursor-pointer" title="{{ __('ai.hud.close') }}">
                     <i data-lucide="x" class="w-4 h-4"></i>
                 </button>
             </div>
 
             <!-- Team & Supervisor Tag -->
             <div class="flex items-center justify-between text-xs px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10">
-                <span class="text-slate-500 dark:text-slate-400">Tim &amp; Pimpinan:</span>
+                <span class="text-slate-500 dark:text-slate-400">{{ __('ai.hud.team_and_supervisor') }}</span>
                 <span class="font-semibold text-amber-700 dark:text-amber-300" x-text="(selectedRoomData.teamName || 'Tim Terkait') + ' (Lead: ' + (selectedRoomData.lead || 'AI Lead') + ')'"></span>
             </div>
 
@@ -138,14 +138,14 @@
             <div class="space-y-1 p-3.5 rounded-2xl bg-slate-100/80 dark:bg-black/40 border border-slate-200 dark:border-white/10">
                 <div class="text-[11px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
                     <i data-lucide="target" class="w-3.5 h-3.5 text-cyan-500"></i>
-                    <span>Lingkup Operasional:</span>
+                    <span>{{ __('ai.hud.room_scope') }}</span>
                 </div>
                 <p class="text-xs text-slate-700 dark:text-slate-200 leading-relaxed font-normal" x-text="selectedRoomData.scope || 'Fasilitas operasional bisnis terpadu.'"></p>
             </div>
 
             <!-- Roster Agen di Ruangan Ini -->
             <div class="p-2.5 rounded-xl bg-slate-100/70 dark:bg-white/5 border border-slate-200/80 dark:border-white/5 space-y-1">
-                <span class="text-slate-500 dark:text-slate-400 text-[10px] font-medium block">Agen di Ruangan Ini:</span>
+                <span class="text-slate-500 dark:text-slate-400 text-[10px] font-medium block">{{ __('ai.hud.agents_in_room') }}</span>
                 <div class="flex flex-wrap gap-1">
                     <template x-for="ag in (selectedRoomData.agents || [])" :key="ag">
                         <span class="px-2 py-0.5 rounded-md bg-white dark:bg-white/10 text-slate-800 dark:text-white border border-slate-200 dark:border-transparent text-[10px] font-mono" x-text="ag"></span>
@@ -161,7 +161,7 @@
                     class="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 hover:from-cyan-700 hover:to-indigo-700 text-white text-xs font-bold flex items-center justify-center gap-2 transition shadow-lg shadow-cyan-500/25 cursor-pointer active:scale-98"
                 >
                     <i data-lucide="users" class="w-4 h-4 text-white"></i>
-                    <span x-text="`Konsultasi dengan Tim ${selectedRoomData.name || 'Ruangan Ini'}`"></span>
+                    <span x-text="'{{ __('ai.hud.consult_room', ['room' => '']) }}' + (selectedRoomData.name || '')"></span>
                 </button>
             </div>
         </div>

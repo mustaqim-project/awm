@@ -70,8 +70,8 @@
             <i data-lucide="key" class="w-4 h-4"></i>
         </div>
         <div class="space-y-1 text-xs text-slate-700 dark:text-zinc-300">
-            <div class="font-bold text-slate-900 dark:text-white">Panduan Penggunaan API Key Mandiri (BYOAI)</div>
-            <p class="leading-relaxed">Fitur Tanya AI tidak memerlukan top-up token. Cukup klik tombol <strong>Dapatkan API Key</strong> pada provider pilihan Anda di bawah ini (misal: Google AI Studio atau OpenAI), dapatkan API Key dari situs resmi mereka, lalu salin dan simpan di kolom yang tersedia. Setelah tersimpan, Anda dapat langsung mengobrol dengan tim AI di Virtual Office.</p>
+            <div class="font-bold text-slate-900 dark:text-white">{{ __('ai.providers.guide_title') }}</div>
+            <p class="leading-relaxed">{!! __('ai.providers.guide_desc', ['btn' => '<strong>' . __('ai.providers.get_api_key') . '</strong>']) !!}</p>
         </div>
     </div>
 
@@ -83,11 +83,11 @@
             </div>
             <div class="space-y-1 text-xs">
                 <div class="font-bold text-slate-900 dark:text-white text-sm flex items-center gap-2">
-                    <span>Tabel &amp; Formulir Input Aturan AI (DO's &amp; DON'Ts)</span>
-                    <span class="px-2 py-0.5 rounded-full text-[9.5px] font-bold bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20 font-mono">Aktif</span>
+                    <span>{{ __('ai.providers.rules_card_title') }}</span>
+                    <span class="px-2 py-0.5 rounded-full text-[9.5px] font-bold bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20 font-mono">{{ __('ai.providers.rules_card_active') }}</span>
                 </div>
                 <p class="text-slate-600 dark:text-zinc-300 leading-relaxed">
-                    Kontrol instruksi apa yang boleh dilakukan (DO's) dan dilarang keras dilakukan (DON'Ts) oleh AI saat melayani pelanggan di Inbox obrolan, kasir POS, maupun modul pengadaan.
+                    {{ __('ai.providers.rules_card_desc') }}
                 </p>
             </div>
         </div>
@@ -95,7 +95,7 @@
             <a href="{{ route('social-media.inbox.index', ['rules' => 1]) }}"
                class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-bold text-xs shadow-sm transition flex items-center gap-1.5 whitespace-nowrap">
                 <i data-lucide="sliders" class="w-4 h-4"></i>
-                <span>Buka Tabel Kelola Aturan</span>
+                <span>{{ __('ai.providers.btn_open_rules') }}</span>
                 <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
             </a>
         </div>
@@ -106,22 +106,22 @@
             'openai' => [
                 'name' => 'OpenAI Platform',
                 'url' => 'https://platform.openai.com/api-keys',
-                'desc' => 'Dapatkan API Key di OpenAI Developer Platform',
+                'desc' => __('ai.providers.portal_openai_desc'),
             ],
             'gemini' => [
                 'name' => 'Google AI Studio',
                 'url' => 'https://aistudio.google.com/app/apikey',
-                'desc' => 'Dapatkan API Key di Google AI Studio (Tersedia Tier Gratis)',
+                'desc' => __('ai.providers.portal_gemini_desc'),
             ],
             'anthropic' => [
                 'name' => 'Anthropic Console',
                 'url' => 'https://console.anthropic.com/settings/keys',
-                'desc' => 'Dapatkan API Key Claude di Anthropic Console',
+                'desc' => __('ai.providers.portal_anthropic_desc'),
             ],
             'openrouter' => [
                 'name' => 'OpenRouter Keys',
                 'url' => 'https://openrouter.ai/keys',
-                'desc' => 'Akses multi-model AI global via satu API key OpenRouter',
+                'desc' => __('ai.providers.portal_openrouter_desc'),
             ],
         ];
     @endphp
@@ -188,7 +188,7 @@
                                target="_blank" 
                                rel="noopener noreferrer"
                                class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-[11px] shrink-0 transition flex items-center gap-1 shadow-sm active:scale-95">
-                                <span>Dapatkan API Key</span>
+                                <span>{{ __('ai.providers.get_api_key') }}</span>
                                 <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
                             </a>
                         </div>
@@ -360,12 +360,12 @@ function aiProvidersApp() {
                 const data = await res.json();
                 if (data.success && Array.isArray(data.models) && data.models.length > 0) {
                     this.providers[slug].models = data.models;
-                    this.showToast(data.message || 'Model aktif berhasil dideteksi.', 'success');
+                    this.showToast(data.message || @js(__('ai.providers.models_detected_success')), 'success');
                 } else {
-                    this.showToast(data.message || 'Gagal mendeteksi model.', 'error');
+                    this.showToast(data.message || @js(__('ai.providers.models_detect_failed')), 'error');
                 }
             } catch (err) {
-                this.showToast('Gagal terhubung: ' + err.message, 'error');
+                this.showToast(@js(__('ai.providers.failed_to_connect', ['error' => ''])) + err.message, 'error');
             } finally {
                 this.detectingModels = null;
                 this.$nextTick(() => {
@@ -402,7 +402,7 @@ function aiProvidersApp() {
                     this.providers[slug].status = 'connected';
                     this.providers[slug].last_error = null;
                     this.providers[slug].latency = data.latency_ms || null;
-                    this.providers[slug].tested_at = data.tested_at_human || 'Baru saja';
+                    this.providers[slug].tested_at = data.tested_at_human || @js(__('ai.providers.just_now'));
 
                     if (Array.isArray(data.available_models) && data.available_models.length > 0) {
                         this.providers[slug].models = data.available_models;
@@ -412,16 +412,16 @@ function aiProvidersApp() {
                         modelSelect.value = data.model;
                     }
 
-                    this.showToast(data.message || 'Koneksi provider berhasil diverifikasi!', 'success');
+                    this.showToast(data.message || @js(__('ai.providers.connection_verified_success')), 'success');
                 } else {
                     this.providers[slug].status = 'error';
-                    this.providers[slug].last_error = data.message || 'Koneksi gagal.';
-                    this.showToast(data.message || 'Koneksi gagal diverifikasi.', 'error');
+                    this.providers[slug].last_error = data.message || @js(__('ai.providers.connection_error'));
+                    this.showToast(data.message || @js(__('ai.providers.connection_failed')), 'error');
                 }
             } catch (err) {
                 this.providers[slug].status = 'error';
                 this.providers[slug].last_error = err.message;
-                this.showToast('Kesalahan jaringan: ' + err.message, 'error');
+                this.showToast(@js(__('ai.alerts.network_error')) + ' ' + err.message, 'error');
             } finally {
                 this.testingProvider = null;
                 this.$nextTick(() => {

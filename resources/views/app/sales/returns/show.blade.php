@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'Detail Retur Penjualan ' . $return->return_number])
+@extends('layouts.app', ['title' => __('sales.returns.detail_title', ['number' => $return->return_number])])
 
 @section('content')
     <div class="max-w-[1100px] mx-auto space-y-6 pb-28 lg:pb-12" x-data="{
@@ -30,10 +30,9 @@
             <div>
                 <nav class="flex items-center gap-1.5 text-[12px] text-black/50 dark:text-white/50 mb-1"
                     aria-label="Breadcrumb">
-                    <a href="{{ route('dashboard') }}" class="hover:text-[#007AFF] transition-colors">Dashboard</a>
+                    <a href="{{ route('dashboard') }}" class="hover:text-[#007AFF] transition-colors">{{ __('sales.returns.breadcrumb_dashboard') }}</a>
                     <i data-lucide="chevron-right" class="w-3.5 h-3.5 opacity-40"></i>
-                    <a href="{{ route('sales.returns.index') }}" class="hover:text-[#007AFF] transition-colors">Retur
-                        Penjualan</a>
+                    <a href="{{ route('sales.returns.index') }}" class="hover:text-[#007AFF] transition-colors">{{ __('sales.returns.breadcrumb_sales_returns') }}</a>
                     <i data-lucide="chevron-right" class="w-3.5 h-3.5 opacity-40"></i>
                     <span class="text-black dark:text-white font-mono font-medium">{{ $return->return_number }}</span>
                 </nav>
@@ -43,17 +42,17 @@
                     @if ($return->status === 'completed')
                         <span
                             class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#34C759]/12 text-[#248A3D] dark:text-[#30D158]">
-                            <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]"></span> Selesai &amp; Direstock
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]"></span> {{ __('sales.returns.status_completed_restocked') }}
                         </span>
                     @elseif($return->status === 'approved')
                         <span
                             class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#007AFF]/12 text-[#007AFF] dark:text-[#0A84FF]">
-                            <span class="w-1.5 h-1.5 rounded-full bg-[#007AFF]"></span> Disetujui
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#007AFF]"></span> {{ __('sales.returns.status_approved_badge') }}
                         </span>
                     @else
                         <span
                             class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#FF9500]/12 text-[#B25E00] dark:text-[#FF9F0A]">
-                            <span class="w-1.5 h-1.5 rounded-full bg-[#FF9500]"></span> Draft (Menunggu Persetujuan)
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#FF9500]"></span> {{ __('sales.returns.status_draft_waiting') }}
                         </span>
                     @endif
                 </div>
@@ -66,7 +65,7 @@
                         <button type="button" @click="promptApprove()"
                             class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
                             <i data-lucide="check" class="w-4 h-4"></i>
-                            <span>Setujui Retur</span>
+                            <span>{{ __('sales.returns.btn_approve_return') }}</span>
                         </button>
 
                         <form id="approve-form" method="POST" action="{{ route('sales.returns.approve', $return) }}"
@@ -77,7 +76,7 @@
                         <button type="button" @click="promptComplete()"
                             class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#34C759] hover:bg-[#30B350] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5 shadow-[0_1px_2px_rgba(52,199,89,0.25)]">
                             <i data-lucide="check-circle" class="w-4 h-4"></i>
-                            <span>Selesaikan &amp; Restock</span>
+                            <span>{{ __('sales.returns.btn_complete_restock') }}</span>
                         </button>
 
                         <form id="complete-form" method="POST" action="{{ route('sales.returns.complete', $return) }}"
@@ -90,16 +89,16 @@
                 <!-- Dedicated Print & PDF Route -->
                 <a href="{{ route('sales.returns.print', $return) }}" target="_blank"
                     class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] shadow-[0_1px_2px_rgba(0,122,255,0.25)] transition flex items-center gap-1.5"
-                    title="Buka tampilan cetak & unduh PDF resmi dokumen ini">
+                    title="{{ __('sales.returns.btn_print_pdf_tooltip') }}">
                     <i data-lucide="printer" class="w-4 h-4 text-white"></i>
-                    <span>Cetak / Unduh PDF</span>
+                    <span>{{ __('sales.returns.btn_print_pdf') }}</span>
                 </a>
 
                 <!-- Back Link -->
                 <a href="{{ route('sales.returns.index') }}"
                     class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition flex items-center gap-1.5">
                     <i data-lucide="arrow-left" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
-                    <span>Kembali</span>
+                    <span>{{ __('sales.returns.btn_back') }}</span>
                 </a>
             </div>
         </header>
@@ -112,7 +111,7 @@
                         <img src="{{ $business->logo_url }}" alt="{{ $business->name }}" class="max-h-12 max-w-[140px] object-contain mb-1">
                     @endif
                     <h1 class="text-base font-bold text-slate-950 uppercase tracking-wide leading-tight">{{ $business->legal_name ?: $business->name }}</h1>
-                    <p class="text-xs text-slate-600">{{ $business->address ?? 'Alamat Kantor / Toko Operasional' }}</p>
+                    <p class="text-xs text-slate-600">{{ $business->address ?? __('sales.returns.header_kop_office_address') }}</p>
                     <p class="text-xs text-slate-600">
                         @if ($business->email) Email: {{ $business->email }} @endif
                         @if ($business->phone) | Telp: {{ $business->phone }} @endif
@@ -122,11 +121,11 @@
                     @endif
                 </div>
                 <div class="text-right space-y-0.5">
-                    <div class="text-lg font-bold tracking-wider text-slate-950 uppercase">NOTA RETUR PENJUALAN</div>
-                    <div class="text-xs text-slate-500 font-semibold tracking-wide uppercase">SALES RETURN NOTE</div>
+                    <div class="text-lg font-bold tracking-wider text-slate-950 uppercase">{{ __('sales.returns.header_doc_title') }}</div>
+                    <div class="text-xs text-slate-500 font-semibold tracking-wide uppercase">{{ __('sales.returns.header_doc_subtitle') }}</div>
                     <div class="text-sm font-bold text-slate-800 font-mono mt-1">{{ $return->return_number }}</div>
                     <div class="text-[11px] font-semibold text-slate-600 uppercase tracking-wider mt-1">
-                        STATUS: {{ strtoupper($return->status) }}
+                        {{ __('sales.invoices.print_status') }} {{ strtoupper($return->status) }}
                     </div>
                 </div>
             </div>
@@ -156,7 +155,7 @@
         <div
             class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 sm:p-5 print:hidden">
             <span class="text-[11px] font-semibold text-black/40 dark:text-white/40 uppercase tracking-wider block mb-3">
-                Alur Proses Retur Penjualan
+                {{ __('sales.returns.stepper_title') }}
             </span>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
                 <!-- Step 1: Draft -->
@@ -171,9 +170,8 @@
                         @endif
                     </div>
                     <div>
-                        <h3 class="text-[13px] font-semibold text-black dark:text-white">1. Pengajuan Draft</h3>
-                        <p class="text-[11px] text-black/50 dark:text-white/50 mt-0.5">Item &amp; kuantitas retur dicatat ke
-                            sistem.</p>
+                        <h3 class="text-[13px] font-semibold text-black dark:text-white">{{ __('sales.returns.step_1_title') }}</h3>
+                        <p class="text-[11px] text-black/50 dark:text-white/50 mt-0.5">{{ __('sales.returns.step_1_desc') }}</p>
                         <span
                             class="text-[10px] tabular-nums text-black/40 dark:text-white/40 block mt-1">{{ $return->created_at->format('d M Y, H:i') }}</span>
                     </div>
@@ -191,11 +189,10 @@
                         @endif
                     </div>
                     <div>
-                        <h3 class="text-[13px] font-semibold text-black dark:text-white">2. Persetujuan Retur</h3>
-                        <p class="text-[11px] text-black/50 dark:text-white/50 mt-0.5">Disetujui untuk pemeriksaan fisik
-                            barang.</p>
+                        <h3 class="text-[13px] font-semibold text-black dark:text-white">{{ __('sales.returns.step_2_title') }}</h3>
+                        <p class="text-[11px] text-black/50 dark:text-white/50 mt-0.5">{{ __('sales.returns.step_2_desc') }}</p>
                         <span class="text-[10px] tabular-nums text-black/40 dark:text-white/40 block mt-1">
-                            {{ $return->approved_at ? $return->approved_at->format('d M Y, H:i') : ($return->status === 'approved' ? 'Sedang diverifikasi' : 'Menunggu approval') }}
+                            {{ $return->approved_at ? $return->approved_at->format('d M Y, H:i') : ($return->status === 'approved' ? __('sales.returns.step_2_verifying') : __('sales.returns.step_2_waiting')) }}
                         </span>
                     </div>
                 </div>
@@ -212,11 +209,10 @@
                         @endif
                     </div>
                     <div>
-                        <h3 class="text-[13px] font-semibold text-black dark:text-white">3. Selesai &amp; Restock</h3>
-                        <p class="text-[11px] text-black/50 dark:text-white/50 mt-0.5">Stok gudang bertambah &amp;
-                            kompensasi terekam.</p>
+                        <h3 class="text-[13px] font-semibold text-black dark:text-white">{{ __('sales.returns.step_3_title') }}</h3>
+                        <p class="text-[11px] text-black/50 dark:text-white/50 mt-0.5">{{ __('sales.returns.step_3_desc') }}</p>
                         <span class="text-[10px] tabular-nums text-black/40 dark:text-white/40 block mt-1">
-                            {{ $return->completed_at ? $return->completed_at->format('d M Y, H:i') : 'Menunggu penyelesaian' }}
+                            {{ $return->completed_at ? $return->completed_at->format('d M Y, H:i') : __('sales.returns.step_3_waiting') }}
                         </span>
                     </div>
                 </div>
@@ -229,20 +225,20 @@
             <div class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 space-y-3">
                 <div class="flex items-center justify-between border-b border-black/5 dark:border-white/5 pb-2.5">
                     <h3 class="text-[13px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50">
-                        Sumber Transaksi &amp; Pelanggan
+                        {{ __('sales.returns.card_origin_customer_title') }}
                     </h3>
                     @if ($return->invoice)
                         <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-[#007AFF]/10 text-[#007AFF]">
-                            Faktur B2B
+                            {{ __('sales.returns.source_invoice_btn') }}
                         </span>
                     @elseif($return->posOrder)
                         <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-[#5856D6]/10 text-[#5856D6]">
-                            Kasir POS
+                            {{ __('sales.returns.source_pos_badge') }}
                         </span>
                     @else
                         <span
                             class="px-2 py-0.5 rounded text-[10px] font-semibold bg-black/5 dark:bg-white/5 text-black/50 dark:text-white/50">
-                            Manual
+                            {{ __('sales.returns.source_manual_badge') }}
                         </span>
                     @endif
                 </div>
@@ -250,7 +246,7 @@
                 <div class="space-y-2 text-[13px]">
                     <div
                         class="flex justify-between items-center py-1 border-b border-black/[0.04] dark:border-white/[0.04]">
-                        <span class="text-black/50 dark:text-white/50">Nomor Dokumen Asal:</span>
+                        <span class="text-black/50 dark:text-white/50">{{ __('sales.returns.label_origin_doc_number') }}</span>
                         <span class="font-semibold tabular-nums text-black dark:text-white">
                             @if ($return->invoice)
                                 {{ $return->invoice->invoice_number }}
@@ -264,14 +260,14 @@
 
                     <div
                         class="flex justify-between items-center py-1 border-b border-black/[0.04] dark:border-white/[0.04]">
-                        <span class="text-black/50 dark:text-white/50">Nama Pelanggan:</span>
+                        <span class="text-black/50 dark:text-white/50">{{ __('sales.returns.label_customer_name') }}</span>
                         <span class="font-semibold text-black dark:text-white">
                             @if ($return->invoice)
-                                {{ $return->invoice->customer?->name ?? 'Pelanggan Umum' }}
+                                {{ $return->invoice->customer?->name ?? __('sales.returns.general_customer') }}
                             @elseif($return->posOrder)
-                                {{ $return->posOrder->customer?->name ?? ($return->posOrder->customer_name_guest ?: 'Tamu Kasir') }}
+                                {{ $return->posOrder->customer?->name ?? ($return->posOrder->customer_name_guest ?: __('sales.returns.guest_customer')) }}
                             @else
-                                {{ $return->customer?->name ?? 'Pelanggan Umum' }}
+                                {{ $return->customer?->name ?? __('sales.returns.general_customer') }}
                             @endif
                         </span>
                     </div>
@@ -279,17 +275,16 @@
                     @if ($return->location)
                         <div
                             class="flex justify-between items-center py-1 border-b border-black/[0.04] dark:border-white/[0.04]">
-                            <span class="text-black/50 dark:text-white/50">Gudang Restock:</span>
+                            <span class="text-black/50 dark:text-white/50">{{ __('sales.returns.label_restock_warehouse') }}</span>
                             <span class="font-medium text-black dark:text-white">{{ $return->location->name }}</span>
                         </div>
                     @endif
 
                     <div class="pt-1">
-                        <span class="text-black/50 dark:text-white/50 block text-[12px] mb-1">Alasan Retur
-                            Pelanggan:</span>
+                        <span class="text-black/50 dark:text-white/50 block text-[12px] mb-1">{{ __('sales.returns.label_customer_return_reason') }}</span>
                         <div
                             class="p-3 rounded-[8px] bg-black/[0.02] dark:bg-white/[0.03] text-black/80 dark:text-white/80 italic text-[12px]">
-                            &ldquo;{{ $return->reason ?: 'Tidak ada catatan spesifik.' }}&rdquo;
+                            &ldquo;{{ $return->reason ?: __('sales.returns.no_specific_note') }}&rdquo;
                         </div>
                     </div>
                 </div>
@@ -299,17 +294,16 @@
             <div class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 space-y-3">
                 <div class="flex items-center justify-between border-b border-black/5 dark:border-white/5 pb-2.5">
                     <h3 class="text-[13px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50">
-                        Kompensasi &amp; Nilai Retur
+                        {{ __('sales.returns.card_compensation_title') }}
                     </h3>
                     <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-[#FF3B30]/10 text-[#FF3B30]">
-                        Refund
+                        {{ __('sales.returns.badge_refund') }}
                     </span>
                 </div>
 
                 <div class="space-y-3 text-[13px]">
                     <div>
-                        <span class="text-[12px] text-black/45 dark:text-white/45 block">Total Nilai Refund /
-                            Kompensasi:</span>
+                        <span class="text-[12px] text-black/45 dark:text-white/45 block">{{ __('sales.returns.label_total_refund_comp') }}</span>
                         <div class="text-[24px] font-bold tabular-nums text-[#FF3B30] mt-0.5">
                             Rp {{ number_format($return->total_amount, 0, ',', '.') }}
                         </div>
@@ -318,34 +312,34 @@
                     <div
                         class="p-3 rounded-[10px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 space-y-1">
                         <div class="flex items-center justify-between">
-                            <span class="text-black/50 dark:text-white/50">Metode Kompensasi:</span>
+                            <span class="text-black/50 dark:text-white/50">{{ __('sales.returns.label_comp_method') }}</span>
                             @if (($return->refund_method ?? 'cash_refund') === 'cash_refund')
-                                <span class="font-semibold text-black dark:text-white">Tunai (Cash Refund)</span>
+                                <span class="font-semibold text-black dark:text-white">{{ __('sales.returns.comp_cash_refund_val') }}</span>
                             @elseif(($return->refund_method ?? '') === 'credit_note')
-                                <span class="font-semibold text-[#007AFF]">Pemotongan Tagihan (Credit Note)</span>
+                                <span class="font-semibold text-[#007AFF]">{{ __('sales.returns.comp_credit_note_val') }}</span>
                             @else
-                                <span class="font-semibold text-[#FF9500]">Deposit (Store Credit)</span>
+                                <span class="font-semibold text-[#FF9500]">{{ __('sales.returns.comp_store_credit_val') }}</span>
                             @endif
                         </div>
                         <p class="text-[11px] text-black/45 dark:text-white/45 leading-relaxed">
                             @if (($return->refund_method ?? 'cash_refund') === 'cash_refund')
-                                Pengembalian uang tunai langsung kepada pelanggan dari kas kasir / rekening operasional.
+                                {{ __('sales.returns.comp_cash_desc') }}
                             @elseif(($return->refund_method ?? '') === 'credit_note')
-                                Nilai retur akan dikurangkan langsung dari sisa kewajiban piutang pada faktur penjualan.
+                                {{ __('sales.returns.comp_credit_note_desc') }}
                             @else
-                                Nilai retur disimpan sebagai saldo deposit pelanggan untuk pembelian berikutnya.
+                                {{ __('sales.returns.comp_store_credit_desc') }}
                             @endif
                         </p>
                     </div>
 
                     <div class="flex items-center justify-between pt-1 text-[12px]">
-                        <span class="text-black/50 dark:text-white/50">Status Restock Fisik:</span>
+                        <span class="text-black/50 dark:text-white/50">{{ __('sales.returns.label_physical_restock_status') }}</span>
                         @if ($return->status === 'completed')
                             <span class="text-[#34C759] dark:text-[#30D158] font-semibold flex items-center gap-1">
-                                <span>✓</span> Stok telah kembali ke gudang
+                                <span>✓</span> {{ __('sales.returns.status_restocked_success') }}
                             </span>
                         @else
-                            <span class="text-[#FF9500] font-medium">Menunggu penyelesaian fisik</span>
+                            <span class="text-[#FF9500] font-medium">{{ __('sales.returns.status_restock_waiting') }}</span>
                         @endif
                     </div>
                 </div>
@@ -356,10 +350,10 @@
         <div class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 overflow-hidden">
             <div class="p-4 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
                 <h3 class="text-[15px] font-semibold text-black dark:text-white">
-                    Daftar Barang yang Diretur Pelanggan
+                    {{ __('sales.returns.card_items_title') }}
                 </h3>
                 <span class="text-[12px] tabular-nums text-black/50 dark:text-white/50">
-                    Total: <strong class="text-black dark:text-white">{{ $return->items->count() }}</strong> Jenis Item
+                    {{ __('sales.returns.total_item_kinds', ['count' => $return->items->count()]) }}
                 </span>
             </div>
 
@@ -369,10 +363,10 @@
                         <tr
                             class="border-b border-black/5 dark:border-white/10 text-black/40 dark:text-white/40 text-[11px] font-semibold uppercase tracking-wide">
                             <th class="py-2.5 px-4 w-12 text-center">#</th>
-                            <th class="py-2.5 px-4">Barang / Item Produk</th>
-                            <th class="py-2.5 px-4 text-center">Kuantitas Retur</th>
-                            <th class="py-2.5 px-4 text-right">Harga Satuan Asal</th>
-                            <th class="py-2.5 px-4 text-right">Nilai Retur (Subtotal)</th>
+                            <th class="py-2.5 px-4">{{ __('sales.returns.col_item_product') }}</th>
+                            <th class="py-2.5 px-4 text-center">{{ __('sales.returns.col_return_qty') }}</th>
+                            <th class="py-2.5 px-4 text-right">{{ __('sales.returns.col_unit_price_origin') }}</th>
+                            <th class="py-2.5 px-4 text-right">{{ __('sales.returns.col_return_subtotal') }}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
@@ -404,7 +398,7 @@
                         @empty
                             <tr>
                                 <td colspan="5" class="py-8 text-center text-black/40 dark:text-white/40 italic">
-                                    Tidak ada rincian item dalam dokumen retur ini.
+                                    {{ __('sales.returns.no_items_in_return') }}
                                 </td>
                             </tr>
                         @endforelse
@@ -412,7 +406,7 @@
                     <tfoot class="border-t border-black/5 dark:border-white/10">
                         <tr>
                             <td colspan="4" class="py-3 px-4 text-right font-semibold text-black dark:text-white">
-                                Grand Total Nilai Retur:
+                                {{ __('sales.returns.grand_total_return_value') }}
                             </td>
                             <td class="py-3 px-4 text-right font-bold tabular-nums text-[#FF3B30] text-[15px]">
                                 Rp {{ number_format($return->total_amount, 0, ',', '.') }}
@@ -426,30 +420,30 @@
         <!-- Print Signatures (Visible on Print Only) -->
         <div class="hidden print:grid grid-cols-3 gap-6 pt-12 text-center text-xs text-black/70">
             <div class="space-y-16">
-                <p class="font-semibold">Diajukan oleh (Pelanggan),</p>
+                <p class="font-semibold">{{ __('sales.returns.sig_submitted_by_customer') }}</p>
                 <div>
                     <p class="font-bold border-b border-black/30 pb-1 mx-8">
-                        {{ $return->invoice?->customer?->name ?? ($return->posOrder?->customer?->name ?? ($return->customer?->name ?? 'Pelanggan')) }}
+                        {{ $return->invoice?->customer?->name ?? ($return->posOrder?->customer?->name ?? ($return->customer?->name ?? __('sales.returns.label_buyer_customer_plain'))) }}
                     </p>
-                    <p class="text-[10px] text-black/50 mt-1">Tanda Tangan &amp; Nama Jelas</p>
+                    <p class="text-[10px] text-black/50 mt-1">{{ __('sales.returns.sig_customer_sign_name') }}</p>
                 </div>
             </div>
 
             <div class="space-y-16">
-                <p class="font-semibold">Diterima Fisik (Staff Gudang),</p>
+                <p class="font-semibold">{{ __('sales.returns.sig_received_warehouse') }}</p>
                 <div>
                     <p class="font-bold border-b border-black/30 pb-1 mx-8">( ........................................ )
                     </p>
-                    <p class="text-[10px] text-black/50 mt-1">Petugas Verifikasi Fisik</p>
+                    <p class="text-[10px] text-black/50 mt-1">{{ __('sales.returns.sig_warehouse_checker') }}</p>
                 </div>
             </div>
 
             <div class="space-y-16">
-                <p class="font-semibold">Disetujui oleh (Supervisor / Kasir),</p>
+                <p class="font-semibold">{{ __('sales.returns.sig_approved_by') }}</p>
                 <div>
                     <p class="font-bold border-b border-black/30 pb-1 mx-8">( ........................................ )
                     </p>
-                    <p class="text-[10px] text-black/50 mt-1">Authorized Signature</p>
+                    <p class="text-[10px] text-black/50 mt-1">{{ __('sales.returns.sig_authorized_signature') }}</p>
                 </div>
             </div>
         </div>
@@ -487,20 +481,20 @@
                         x-transition:leave-end="opacity-0 scale-95">
 
                         <div class="px-4 pt-5 pb-4">
-                            <p id="sales-return-approve-dialog-title" class="text-[17px] font-semibold text-black dark:text-white">Setujui Retur?</p>
+                            <p id="sales-return-approve-dialog-title" class="text-[17px] font-semibold text-black dark:text-white">{{ __('sales.returns.dialog_approve_title') }}</p>
                             <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
-                                Status dokumen akan disetujui untuk pemeriksaan fisik barang yang dikembalikan.
+                                {{ __('sales.returns.dialog_approve_desc') }}
                             </p>
                         </div>
 
                         <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
                             <button type="button" @click="approveModalOpen = false"
                                 class="min-h-[44px] py-3 text-black/60 dark:text-white/60 border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
-                                Batal
+                                {{ __('sales.returns.btn_cancel') }}
                             </button>
                             <button type="button" @click="submitApprove()"
                                 class="min-h-[44px] py-3 text-[#007AFF] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
-                                Setujui
+                                {{ __('sales.returns.dialog_approve_btn') }}
                             </button>
                         </div>
                     </div>
@@ -541,20 +535,20 @@
                         x-transition:leave-end="opacity-0 scale-95">
 
                         <div class="px-4 pt-5 pb-4">
-                            <p id="sales-return-complete-dialog-title" class="text-[17px] font-semibold text-black dark:text-white">Selesaikan &amp; Restock?</p>
+                            <p id="sales-return-complete-dialog-title" class="text-[17px] font-semibold text-black dark:text-white">{{ __('sales.returns.dialog_complete_title') }}</p>
                             <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
-                                Sistem akan mengembalikan kuantitas barang ke stok gudang dan mencatat penyesuaian kompensasi.
+                                {{ __('sales.returns.dialog_complete_desc') }}
                             </p>
                         </div>
 
                         <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
                             <button type="button" @click="completeModalOpen = false"
                                 class="min-h-[44px] py-3 text-black/60 dark:text-white/60 border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
-                                Batal
+                                {{ __('sales.returns.btn_cancel') }}
                             </button>
                             <button type="button" @click="submitComplete()"
                                 class="min-h-[44px] py-3 text-[#34C759] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
-                                Selesaikan
+                                {{ __('sales.returns.dialog_complete_btn') }}
                             </button>
                         </div>
                     </div>

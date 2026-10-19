@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laporan Resmi POS & Rekonsiliasi - {{ $business->name }}</title>
+    <title>{{ __('pos.reports_print_doc_title') }} - {{ $business->name }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
@@ -286,13 +286,13 @@
     <div class="action-bar">
         <div style="display: flex; align-items: center; gap: 8px;">
             <a href="{{ route('pos.reports.index', ['tab' => $filter->activeTab ?? 'overview']) }}" class="btn-close">
-                &larr; Kembali ke Dashboard
+                &larr; {{ __('pos.reports_print_back_dashboard') }}
             </a>
-            <span style="font-size: 11px; color: #64748B;">Pratinjau Cetak Siap Dokumen A4 / Ekspor PDF</span>
+            <span style="font-size: 11px; color: #64748B;">{{ __('pos.reports_print_preview_title') }}</span>
         </div>
         <button onclick="window.print()" class="btn-print">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-            Cetak Laporan / Simpan PDF
+            {{ __('pos.reports_print_btn_action') }}
         </button>
     </div>
 
@@ -300,15 +300,15 @@
     <div class="doc-header">
         <div class="doc-title">
             <h1>{{ $business->name }}</h1>
-            <h2>MASTER LAPORAN PENJUALAN KASIR POS & REKONSILIASI FISKAL</h2>
+            <h2>{{ __('pos.reports_print_master_heading') }}</h2>
             <div style="font-size: 10px; color: #475569; margin-top: 4px;">
-                Lokasi: <strong>{{ $locationName }}</strong> | Industri: <strong>{{ ucfirst($business->industry_type ?? 'Multi-Industry') }}</strong>
+                {{ __('pos.reports_print_location_label') }}: <strong>{{ $locationName }}</strong> | {{ __('pos.reports_print_industry_label') }}: <strong>{{ ucfirst($business->industry_type ?? 'Multi-Industry') }}</strong>
             </div>
         </div>
         <div class="doc-meta">
-            <div>Periode: <strong>{{ $filter->startDate->translatedFormat('d M Y') }} - {{ $filter->endDate->translatedFormat('d M Y') }}</strong></div>
-            <div>Waktu Cetak: <strong>{{ now()->format('d/m/Y H:i:s') }} WIB</strong></div>
-            <div>Dokumen ID: <strong>POS-REP-{{ strtoupper(substr(md5($business->id . now()->toDateString()), 0, 8)) }}</strong></div>
+            <div>{{ __('pos.reports_print_period_label') }}: <strong>{{ $filter->startDate->translatedFormat('d M Y') }} - {{ $filter->endDate->translatedFormat('d M Y') }}</strong></div>
+            <div>{{ __('pos.reports_print_print_time_label') }}: <strong>{{ now()->format('d/m/Y H:i:s') }} WIB</strong></div>
+            <div>{{ __('pos.reports_print_doc_id_label') }}: <strong>POS-REP-{{ strtoupper(substr(md5($business->id . now()->toDateString()), 0, 8)) }}</strong></div>
             <div style="color: #059669; font-weight: 700; margin-top: 2px;">COOCA SINGLE-SOURCE-OF-TRUTH</div>
         </div>
     </div>
@@ -316,43 +316,43 @@
     <!-- Bento Top KPI Cards -->
     <div class="bento-kpi-grid">
         <div class="bento-card blue">
-            <div class="bento-label">Omzet Bersih Penjualan</div>
+            <div class="bento-label">{{ __('pos.reports_print_net_sales') }}</div>
             <div class="bento-value">Rp {{ number_format($kpi->netSales, 0, ',', '.') }}</div>
-            <div class="bento-sub">Bruto: Rp {{ number_format($kpi->grossSales, 0, ',', '.') }}</div>
+            <div class="bento-sub">{{ __('pos.reports_print_gross_label') }}: Rp {{ number_format($kpi->grossSales, 0, ',', '.') }}</div>
         </div>
         <div class="bento-card">
-            <div class="bento-label">Transaksi Selesai</div>
-            <div class="bento-value">{{ number_format($kpi->totalOrders, 0, ',', '.') }} Pesanan</div>
-            <div class="bento-sub">AOV: Rp {{ number_format($kpi->averageOrderValue, 0, ',', '.') }}</div>
+            <div class="bento-label">{{ __('pos.reports_print_completed_trx') }}</div>
+            <div class="bento-value">{{ __('pos.reports_print_total_orders_val', ['count' => number_format($kpi->totalOrders, 0, ',', '.')]) }}</div>
+            <div class="bento-sub">{{ __('pos.reports_print_aov_label') }}: Rp {{ number_format($kpi->averageOrderValue, 0, ',', '.') }}</div>
         </div>
         <div class="bento-card">
-            <div class="bento-label">Total Beban Pokok (HPP)</div>
+            <div class="bento-label">{{ __('pos.reports_print_total_hpp') }}</div>
             <div class="bento-value">Rp {{ number_format($kpi->totalHpp, 0, ',', '.') }}</div>
-            <div class="bento-sub">BOM & Pembelian Riil</div>
+            <div class="bento-sub">{{ __('pos.reports_print_bom_real_purchase') }}</div>
         </div>
         <div class="bento-card emerald">
-            <div class="bento-label">Laba Kotor & Margin</div>
+            <div class="bento-label">{{ __('pos.reports_print_profit_margin') }}</div>
             <div class="bento-value">Rp {{ number_format($kpi->grossProfit, 0, ',', '.') }}</div>
-            <div class="bento-sub" style="color: #065F46; font-weight: 700;">Margin: {{ number_format($kpi->grossMarginPercent, 1) }}%</div>
+            <div class="bento-sub" style="color: #065F46; font-weight: 700;">{{ __('pos.reports_print_margin_label') }}: {{ number_format($kpi->grossMarginPercent, 1) }}%</div>
         </div>
     </div>
 
     <!-- TABEL 1: Performa Saluran Penjualan & Ojol Delivery -->
-    <div class="section-heading">1. Performa Saluran Penjualan & Online Food Delivery (Ojol Settlement)</div>
+    <div class="section-heading">{{ __('pos.reports_print_sec1_title') }}</div>
     <table class="print-table">
         <thead>
             <tr>
-                <th>Saluran Penjualan</th>
-                <th class="num">Pesanan</th>
-                <th class="num">Omzet Bruto</th>
-                <th class="num">Diskon</th>
-                <th class="num">Omzet Kasir</th>
-                <th class="num">MDR %</th>
-                <th class="num">Komisi Ojol</th>
-                <th class="num">Net Payout Resto</th>
-                <th class="num">Modal HPP</th>
-                <th class="num">Laba Riil</th>
-                <th class="num">Margin %</th>
+                <th>{{ __('pos.reports_print_col_channel') }}</th>
+                <th class="num">{{ __('pos.reports_print_col_orders') }}</th>
+                <th class="num">{{ __('pos.reports_print_col_gross') }}</th>
+                <th class="num">{{ __('pos.reports_print_col_discount') }}</th>
+                <th class="num">{{ __('pos.reports_print_col_pos_turnover') }}</th>
+                <th class="num">{{ __('pos.reports_print_col_mdr') }}</th>
+                <th class="num">{{ __('pos.reports_print_col_ojol_fee') }}</th>
+                <th class="num">{{ __('pos.reports_print_col_net_payout') }}</th>
+                <th class="num">{{ __('pos.reports_print_col_cogs') }}</th>
+                <th class="num">{{ __('pos.reports_print_col_real_profit') }}</th>
+                <th class="num">{{ __('pos.reports_print_col_margin_pct') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -361,7 +361,7 @@
             @endphp
             @forelse($channels as $ch)
                 @php
-                    $chName = is_array($ch) ? ($ch['channel_name'] ?? $ch['channel_label'] ?? 'Saluran POS') : ($ch->channel_name ?? $ch->channel_label ?? 'Saluran POS');
+                    $chName = is_array($ch) ? ($ch['channel_name'] ?? $ch['channel_label'] ?? __('pos.reports_print_fallback_channel')) : ($ch->channel_name ?? $ch->channel_label ?? __('pos.reports_print_fallback_channel'));
                     $ordCount = is_array($ch) ? ($ch['orders_count'] ?? $ch['total_orders'] ?? 0) : ($ch->orders_count ?? $ch->total_orders ?? 0);
                     $gSales = is_array($ch) ? ($ch['gross_sales'] ?? 0.0) : ($ch->gross_sales ?? 0.0);
                     $disc = is_array($ch) ? ($ch['total_discount'] ?? 0.0) : ($ch->total_discount ?? 0.0);
@@ -391,13 +391,13 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="11" style="text-align: center; color: #94A3B8;">Tidak ada data saluran penjualan pada periode ini.</td>
+                    <td colspan="11" style="text-align: center; color: #94A3B8;">{{ __('pos.reports_print_no_channels') }}</td>
                 </tr>
             @endforelse
         </tbody>
         <tfoot>
             <tr>
-                <td>TOTAL KESELURUHAN</td>
+                <td>{{ __('pos.reports_print_total_overall') }}</td>
                 <td class="num">{{ number_format($totOrders, 0, ',', '.') }}</td>
                 <td class="num">Rp {{ number_format($totGross, 0, ',', '.') }}</td>
                 <td class="num">Rp {{ number_format($totDisc, 0, ',', '.') }}</td>
@@ -415,20 +415,20 @@
     <!-- Two Column Section: Top Products & 3-Way Reconciliation -->
     <div class="two-cols">
         <div>
-            <div class="section-heading">2. Top 10 Produk & Menu Terlaris</div>
+            <div class="section-heading">{{ __('pos.reports_print_sec2_title') }}</div>
             <table class="print-table">
                 <thead>
                     <tr>
-                        <th>Nama Produk / Menu</th>
-                        <th class="num">Qty</th>
-                        <th class="num">Total Omzet</th>
-                        <th class="num">Margin</th>
+                        <th>{{ __('pos.reports_print_col_prod_menu') }}</th>
+                        <th class="num">{{ __('pos.reports_print_col_qty') }}</th>
+                        <th class="num">{{ __('pos.reports_print_col_total_turnover') }}</th>
+                        <th class="num">{{ __('pos.reports_print_col_margin') }}</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($topProducts as $p)
                         @php
-                            $pName = is_array($p) ? ($p['product_name'] ?? 'Produk') : ($p->product_name ?? 'Produk');
+                            $pName = is_array($p) ? ($p['product_name'] ?? __('pos.reports_print_fallback_product')) : ($p->product_name ?? __('pos.reports_print_fallback_product'));
                             $pQty = is_array($p) ? ($p['total_quantity'] ?? 0) : ($p->total_qty ?? $p->totalQuantity ?? 0);
                             $pSales = is_array($p) ? ($p['total_sales'] ?? 0) : ($p->net_sales ?? $p->netSales ?? 0);
                             $pMargin = is_array($p) ? ($p['margin_percent'] ?? 0) : ($p->grossMarginPercent ?? $p->margin_percent ?? 0);
@@ -440,20 +440,20 @@
                             <td class="num" style="color: #059669; font-weight: 600;">{{ number_format((float) $pMargin, 1) }}%</td>
                         </tr>
                     @empty
-                        <tr><td colspan="4" style="text-align: center; color: #94A3B8;">Tidak ada data produk.</td></tr>
+                        <tr><td colspan="4" style="text-align: center; color: #94A3B8;">{{ __('pos.reports_print_no_products') }}</td></tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
 
         <div>
-            <div class="section-heading">3. Rekonsiliasi Kas 3-Arah & Mutasi Pembayaran</div>
+            <div class="section-heading">{{ __('pos.reports_print_sec3_title') }}</div>
             <table class="print-table">
                 <thead>
                     <tr>
-                        <th>Metode Pembayaran</th>
-                        <th class="num">Frekuensi</th>
-                        <th class="num">Nominal Kas Masuk</th>
+                        <th>{{ __('pos.reports_print_col_payment_method') }}</th>
+                        <th class="num">{{ __('pos.reports_print_col_frequency') }}</th>
+                        <th class="num">{{ __('pos.reports_print_col_cash_in') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -464,14 +464,14 @@
                             <td class="num" style="font-weight: 600;">Rp {{ number_format($pm['amount'], 0, ',', '.') }}</td>
                         </tr>
                     @empty
-                        <tr><td colspan="3" style="text-align: center; color: #94A3B8;">Tidak ada mutasi kas.</td></tr>
+                        <tr><td colspan="3" style="text-align: center; color: #94A3B8;">{{ __('pos.reports_print_no_cash_mutations') }}</td></tr>
                     @endforelse
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td>Status Integritas Kas</td>
+                        <td>{{ __('pos.reports_print_cash_integrity_status') }}</td>
                         <td colspan="2" style="text-align: right; color: {{ $reconciliation->isBalanced ? '#059669' : '#DC2626' }};">
-                            {{ $reconciliation->isBalanced ? 'BALANCE / COCOK (0 Selisih)' : 'SELISIH: Rp ' . number_format($reconciliation->orderPaymentDiscrepancy, 0, ',', '.') }}
+                            {{ $reconciliation->isBalanced ? __('pos.reports_print_balance_match') : __('pos.reports_print_discrepancy_prefix') . ': Rp ' . number_format($reconciliation->orderPaymentDiscrepancy, 0, ',', '.') }}
                         </td>
                     </tr>
                 </tfoot>
@@ -480,19 +480,19 @@
     </div>
 
     <!-- TABEL 4: 20 Transaksi Terbaru dengan Info Kontekstual 20 Industri -->
-    <div class="section-heading">4. Buku Besar Transaksi Terbaru (Sample Audit)</div>
+    <div class="section-heading">{{ __('pos.reports_print_sec4_title') }}</div>
     <table class="print-table">
         <thead>
             <tr>
-                <th>No. Order</th>
-                <th>Waktu</th>
-                <th>Saluran</th>
-                <th>Ref / Meja</th>
-                <th>Metadata 20 Industri</th>
-                <th>Pelanggan</th>
-                <th class="num">Omzet</th>
-                <th>Metode</th>
-                <th>Status</th>
+                <th>{{ __('pos.reports_print_col_order_no') }}</th>
+                <th>{{ __('pos.reports_print_col_time') }}</th>
+                <th>{{ __('pos.reports_print_col_channel_short') }}</th>
+                <th>{{ __('pos.reports_print_col_table_ref') }}</th>
+                <th>{{ __('pos.reports_print_col_industry_meta') }}</th>
+                <th>{{ __('pos.reports_print_col_customer') }}</th>
+                <th class="num">{{ __('pos.reports_print_col_turnover') }}</th>
+                <th>{{ __('pos.reports_print_col_method') }}</th>
+                <th>{{ __('pos.reports_print_col_status') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -516,13 +516,13 @@
                     <td><span class="badge badge-{{ $tx->sales_channel === 'shopeefood' ? 'shopee' : ($tx->sales_channel === 'gofood' ? 'gofood' : ($tx->sales_channel === 'grabfood' ? 'grab' : 'pos')) }}">{{ strtoupper($tx->sales_channel ?? 'POS') }}</span></td>
                     <td>{{ $tx->external_order_ref ?: ($tx->table_or_reference ?: '-') }}</td>
                     <td>{{ $indSummary }}</td>
-                    <td>{{ Str::limit($tx->customer?->name ?? ($tx->customer_name_guest ?: 'Umum'), 18) }}</td>
+                    <td>{{ Str::limit($tx->customer?->name ?? ($tx->customer_name_guest ?: __('pos.reports_print_fallback_customer')), 18) }}</td>
                     <td class="num" style="font-weight: 700;">Rp {{ number_format((float) $tx->total_amount, 0, ',', '.') }}</td>
                     <td>{{ $tx->payments->pluck('payment_method')->unique()->implode(', ') ?: '-' }}</td>
                     <td>{{ strtoupper($tx->status) }}</td>
                 </tr>
             @empty
-                <tr><td colspan="9" style="text-align: center; color: #94A3B8;">Tidak ada riwayat transaksi.</td></tr>
+                <tr><td colspan="9" style="text-align: center; color: #94A3B8;">{{ __('pos.reports_print_no_trx_history') }}</td></tr>
             @endforelse
         </tbody>
     </table>
@@ -530,19 +530,19 @@
     <!-- Tanda Tangan Resmi -->
     <div class="signature-block">
         <div class="sig-box">
-            <div class="sig-title">Kasir / Petugas Pelapor</div>
-            <div class="sig-name">{{ auth()->user()?->name ?? 'Kasir Bertugas' }}</div>
-            <div class="sig-role">Staf Operasional POS</div>
+            <div class="sig-title">{{ __('pos.reports_print_sig_cashier_title') }}</div>
+            <div class="sig-name">{{ auth()->user()?->name ?? __('pos.reports_print_fallback_cashier') }}</div>
+            <div class="sig-role">{{ __('pos.reports_print_sig_cashier_role') }}</div>
         </div>
         <div class="sig-box">
-            <div class="sig-title">Supervisor / Audit Keuangan</div>
+            <div class="sig-title">{{ __('pos.reports_print_sig_supervisor_title') }}</div>
             <div class="sig-name">( ........................................ )</div>
-            <div class="sig-role">Finance & Accounting Lead</div>
+            <div class="sig-role">{{ __('pos.reports_print_sig_supervisor_role') }}</div>
         </div>
         <div class="sig-box">
-            <div class="sig-title">Pemilik Usaha / Direktur</div>
+            <div class="sig-title">{{ __('pos.reports_print_sig_owner_title') }}</div>
             <div class="sig-name">{{ $business->name }}</div>
-            <div class="sig-role">Managing Director / Owner</div>
+            <div class="sig-role">{{ __('pos.reports_print_sig_owner_role') }}</div>
         </div>
     </div>
 </div>

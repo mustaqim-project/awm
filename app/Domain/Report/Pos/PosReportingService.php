@@ -497,9 +497,19 @@ final class PosReportingService
         return $categories->map(function ($row) use ($totalSalesSum) {
             $sales = (float) $row->net_sales;
             $profit = (float) $row->gross_profit;
+            $qty = (float) $row->total_qty;
+            $cogs = (float) $row->total_hpp;
+            $gross = (float) $row->gross_sales;
 
             $row->margin_percent = FinancialMath::calculateMargin($profit, $sales);
             $row->contribution_percent = FinancialMath::safeDivide($sales, $totalSalesSum) * 100;
+
+            // Universal aliases for view & export compatibility
+            $row->total_quantity = $qty;
+            $row->gross_revenue = $gross;
+            $row->total_sales = $sales;
+            $row->total_cogs = $cogs;
+            $row->revenue_share_percent = $row->contribution_percent;
 
             return $row;
         });
@@ -512,7 +522,7 @@ final class PosReportingService
      */
     public function getCashierPerformance(PosReportFilterDTO $filter): Collection
     {
-        return $this->buildBaseOrdersQuery($filter)
+        $cashiers = $this->buildBaseOrdersQuery($filter)
             ->leftJoin('users', 'pos_orders.user_id', '=', 'users.id')
             ->selectRaw("
                 pos_orders.user_id,
@@ -526,17 +536,31 @@ final class PosReportingService
             ")
             ->groupBy('pos_orders.user_id', DB::raw("COALESCE(users.name, 'Kasir Terhapus')"))
             ->orderByDesc('net_sales')
-            ->get()
-            ->map(function ($row) {
-                $count = (int) $row->orders_count;
-                $sales = (float) $row->net_sales;
-                $profit = (float) $row->gross_profit;
+            ->get();
 
-                $row->aov = FinancialMath::safeDivide($sales, (float) $count);
-                $row->margin_percent = FinancialMath::calculateMargin($profit, $sales);
+        $totalSalesSum = (float) $cashiers->sum('net_sales');
 
-                return $row;
-            });
+        return $cashiers->map(function ($row) use ($totalSalesSum) {
+            $count = (int) $row->orders_count;
+            $sales = (float) $row->net_sales;
+            $profit = (float) $row->gross_profit;
+
+            $row->aov = FinancialMath::safeDivide($sales, (float) $count);
+            $row->average_order_value = $row->aov;
+            $row->margin_percent = FinancialMath::calculateMargin($profit, $sales);
+            $row->revenue_contribution_percent = FinancialMath::safeDivide($sales, $totalSalesSum) * 100;
+            $row->contribution_percent = $row->revenue_contribution_percent;
+
+            // Universal aliases
+            $row->name = $row->cashier_name;
+            $row->total_orders = $count;
+            $row->total_sales = $sales;
+            $row->total_revenue = $sales;
+            $row->total_profit = $profit;
+            $row->items_sold = (float) $count;
+
+            return $row;
+        });
     }
 
     /**
@@ -570,8 +594,20 @@ final class PosReportingService
             $profit = (float) $row->gross_profit;
 
             $row->aov = FinancialMath::safeDivide($sales, (float) $count);
+            $row->average_order_value = $row->aov;
             $row->margin_percent = FinancialMath::calculateMargin($profit, $sales);
             $row->contribution_percent = FinancialMath::safeDivide($sales, $totalSalesSum) * 100;
+            $row->revenue_contribution_percent = $row->contribution_percent;
+            $row->revenue_share_percent = $row->contribution_percent;
+
+            // Universal aliases
+            $row->name = $row->location_name;
+            $row->outlet_name = $row->location_name;
+            $row->code = substr(strtoupper(preg_replace('/[^A-Za-z0-9]/', '', (string) $row->location_name)), 0, 4);
+            $row->total_orders = $count;
+            $row->total_sales = $sales;
+            $row->total_revenue = $sales;
+            $row->total_profit = $profit;
 
             return $row;
         });
@@ -599,6 +635,8 @@ final class PosReportingService
 
         if ($filter->locationId) $payQuery->where('pos_orders.location_id', $filter->locationId);
         if ($filter->userId) $payQuery->where('pos_orders.user_id', $filter->userId);
+        if ($filter->posShiftId) $payQuery->where('pos_orders.pos_shift_id', $filter->posShiftId);
+        if ($filter->salesChannel) $payQuery->where('pos_orders.sales_channel', $filter->salesChannel);
 
         $methods = $payQuery
             ->selectRaw('
@@ -612,11 +650,43 @@ final class PosReportingService
             ->orderByDesc('total_amount')
             ->get();
 
+        $totalTxCount = (int) $methods->sum('tx_count');
         $totalCollected = (float) $methods->sum('total_amount');
 
-        return $methods->map(function ($row) use ($totalCollected) {
+        return $methods->map(function ($row) use ($totalCollected, $totalTxCount) {
             $amount = (float) $row->total_amount;
-            $row->contribution_percent = FinancialMath::safeDivide($amount, $totalCollected) * 100;
+            $txCount = (int) $row->tx_count;
+            $fee = (float) $row->total_fee;
+            $net = (float) $row->net_settlement;
+            $share = FinancialMath::safeDivide($amount, $totalCollected) * 100;
+            $countShare = FinancialMath::safeDivide($txCount, $totalTxCount) * 100;
+
+            $methodRaw = (string) $row->payment_method;
+            $methodLabel = match (strtolower($methodRaw)) {
+                'cash' => 'Tunai (Kas Kasir)',
+                'qris' => 'QRIS (Cooca Pay / Statis)',
+                'qris_dynamic' => 'QRIS Dinamis (TriPay)',
+                'edc_debit' => 'EDC Kartu Debit Bank',
+                'edc_credit' => 'EDC Kartu Kredit',
+                'transfer' => 'Transfer Bank Langsung',
+                'customer_credit' => 'Kasbon / Piutang Pelanggan',
+                'loyalty_points' => 'Poin Loyalitas Member',
+                default => strtoupper($methodRaw) ?: 'Lainnya',
+            };
+
+            // Set both properties and attributes for full compatibility across Views, Exports, and Tests
+            $row->raw_method = $methodRaw;
+            $row->method = $methodLabel;
+            $row->method_label = $methodLabel;
+            $row->count = $txCount;
+            $row->amount = $amount;
+            $row->fee = $fee;
+            $row->fee_amount = $fee;
+            $row->net_amount = $net;
+            $row->share = $share;
+            $row->contribution_percent = $share;
+            $row->amount_percentage = $share;
+            $row->count_percentage = $countShare;
 
             return $row;
         });
@@ -629,7 +699,7 @@ final class PosReportingService
      */
     public function getDiscountAnalytics(PosReportFilterDTO $filter): Collection
     {
-        return $this->buildBaseOrdersQuery($filter)
+        $discounts = $this->buildBaseOrdersQuery($filter)
             ->where(function ($q): void {
                 $q->where('pos_orders.discount_amount', '>', 0)
                   ->orWhere('pos_orders.voucher_discount_amount', '>', 0)
@@ -651,6 +721,22 @@ final class PosReportingService
             )
             ->orderByDesc('total_discount_given')
             ->get();
+
+        $totalDiscountSum = (float) $discounts->sum('total_discount_given');
+
+        return $discounts->map(function ($row) use ($totalDiscountSum) {
+            $totalAmount = (float) $row->total_discount_given;
+            $count = (int) $row->orders_count;
+            $share = FinancialMath::safeDivide($totalAmount, $totalDiscountSum) * 100;
+
+            $row->type_label = (string) ($row->promo_code ?: ($row->discount_type ?: 'Diskon Transaksi'));
+            $row->count = $count;
+            $row->total_amount = $totalAmount;
+            $row->percentage_of_total_discount = $share;
+            $row->share = $share;
+
+            return $row;
+        });
     }
 
     /**

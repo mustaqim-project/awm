@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Domain\Commerce\InvoiceNumberGenerator;
 use App\Domain\Commerce\InvoiceService;
+use App\Exports\InvoiceReportExport;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\Invoice;
@@ -156,16 +157,16 @@ final class InvoiceWebController extends Controller
     }
 
     /**
-     * Show form for editing an existing draft invoice.
+     * Show form for editing an existing invoice (when unpaid and not void).
      */
     public function edit(Invoice $invoice): View|RedirectResponse
     {
         $business = Context::requireBusiness();
         abort_unless($invoice->business_id === $business->id, 403);
 
-        if ($invoice->status !== Invoice::STATUS_DRAFT) {
+        if (in_array($invoice->status, [Invoice::STATUS_PAID, Invoice::STATUS_VOID], true) || (float) $invoice->paid_amount > 0) {
             return redirect()->route('invoices.show', $invoice->id)
-                ->with('error', "Faktur [{$invoice->invoice_number}] dengan status [{$invoice->status}] tidak dapat diedit. Hanya draf faktur yang dapat disunting sebelum diterbitkan.");
+                ->with('error', "Faktur [{$invoice->invoice_number}] tidak dapat diedit karena sudah lunas, dibatalkan, atau memiliki pembayaran tercatat.");
         }
 
         $invoice->load(['customer', 'purchaseOrder', 'items.product', 'items.unit']);
@@ -186,16 +187,16 @@ final class InvoiceWebController extends Controller
     }
 
     /**
-     * Update an existing draft invoice with line items.
+     * Update an existing invoice with line items.
      */
     public function update(Request $request, Invoice $invoice): RedirectResponse
     {
         $business = Context::requireBusiness();
         abort_unless($invoice->business_id === $business->id, 403);
 
-        if ($invoice->status !== Invoice::STATUS_DRAFT) {
+        if (in_array($invoice->status, [Invoice::STATUS_PAID, Invoice::STATUS_VOID], true) || (float) $invoice->paid_amount > 0) {
             return redirect()->route('invoices.show', $invoice->id)
-                ->with('error', 'Hanya faktur berstatus Draf yang dapat disunting.');
+                ->with('error', 'Faktur yang sudah lunas atau memiliki pembayaran tercatat tidak dapat disunting.');
         }
 
         $validated = $request->validate([
@@ -282,15 +283,40 @@ final class InvoiceWebController extends Controller
     }
 
     /**
-     * Export all invoices to Excel CSV format.
+     * Download or stream formal business correspondence PDF for Invoice (A4).
      */
-    public function exportExcel(): StreamedResponse
+    public function pdf(Invoice $invoice): \Illuminate\Http\Response
+    {
+        $business = Context::requireBusiness();
+        abort_unless($invoice->business_id === $business->id, 403);
+
+        $invoice->load(['customer', 'purchaseOrder', 'items.unit', 'items.product', 'payments']);
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.invoice_pdf', [
+            'business' => $business,
+            'invoice' => $invoice,
+        ])->setPaper('a4', 'portrait');
+
+        $filename = 'Faktur-' . \Illuminate\Support\Str::slug($invoice->invoice_number) . '.pdf';
+
+        return $pdf->stream($filename);
+    }
+
+    /**
+     * Export all invoices to Excel XLSX format (or CSV fallback).
+     */
+    public function exportExcel(Request $request): StreamedResponse
     {
         $business = Context::requireBusiness();
 
-        $invoices = Invoice::with(['customer', 'items', 'payments'])
+        $invoices = Invoice::with(['customer', 'items', 'payments', 'purchaseOrder'])
             ->latest('invoice_date')
             ->get();
+
+        if ($request->query('format') !== 'csv') {
+            $exporter = new InvoiceReportExport();
+            return $exporter->download($business, $invoices);
+        }
 
         $filename = 'Laporan_Faktur_Penjualan_' . \Illuminate\Support\Str::slug($business->name) . '_' . date('Y-m-d_His') . '.csv';
 
@@ -468,6 +494,34 @@ final class InvoiceWebController extends Controller
 
         $errorMsg = $result['error'] ?: 'Gagal mengirim pengingat ke saluran terpilih.';
         return back()->with('error', $errorMsg)->with('wa_url', $result['wa_url'] ?? null);
+    }
+
+    /**
+     * Generate and stream PDF for this invoice.
+     */
+    public function pdf(Invoice $invoice): \Illuminate\Http\Response
+    {
+        $business = Context::requireBusiness();
+        abort_unless($invoice->business_id === $business->id, 403);
+
+        $invoice->load(['customer', 'purchaseOrder', 'items.product', 'items.unit', 'payments.creator', 'salesOrder']);
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.invoice_pdf', [
+            'business' => $business,
+            'invoice' => $invoice,
+        ])->setPaper('a4', 'portrait');
+
+        $filename = 'Faktur-' . \Illuminate\Support\Str::slug($invoice->invoice_number) . '.pdf';
+
+        return $pdf->stream($filename);
+    }
+
+    /**
+     * Print preview or direct print for this invoice.
+     */
+    public function print(Invoice $invoice): \Illuminate\Http\Response
+    {
+        return $this->pdf($invoice);
     }
 }
 

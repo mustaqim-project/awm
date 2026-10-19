@@ -392,4 +392,9 @@ return [
     'peace_of_mind_delete_group' => 'Peace of mind: Historical sales transaction records using this variant remain safely preserved.',
     'modal_delete_option_title' => 'Delete Variant Option?',
     'modal_delete_option_desc' => 'will be removed from this group.',
+    'import_recipe_title' => 'Import recipe formula from Excel / CSV file',
+    'label_portion' => 'Portion / Measure',
+    'price_label' => 'Price',
+    'waste_label' => 'waste',
+    'notes_label' => 'Notes',
 ];

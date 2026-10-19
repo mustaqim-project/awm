@@ -136,8 +136,12 @@ final class InvoiceService
         array $itemsData,
         array $attributes = []
     ): Invoice {
-        if ($invoice->status !== Invoice::STATUS_DRAFT) {
-            throw new InvalidArgumentException('Hanya draf faktur yang dapat disunting.');
+        if (in_array($invoice->status, [Invoice::STATUS_PAID, Invoice::STATUS_VOID], true)) {
+            throw new InvalidArgumentException('Faktur yang sudah lunas atau dibatalkan (void) tidak dapat disunting.');
+        }
+
+        if ((float) $invoice->paid_amount > 0) {
+            throw new InvalidArgumentException('Faktur dengan pembayaran tercatat tidak dapat disunting langsung.');
         }
 
         if (empty($itemsData)) {

@@ -1,7 +1,7 @@
 @extends('layouts.app', [
-    'title' => 'Retur Penjualan - Cooca',
-    'headerTitle' => 'Retur Penjualan & Pengembalian Barang',
-    'headerSubtitle' => 'Kelola pengembalian barang pelanggan atas faktur penjualan atau kasir POS, penerbitan credit note, dan pengembalian stok gudang.',
+    'title' => __('sales.returns.page_title'),
+    'headerTitle' => __('sales.returns.header_title'),
+    'headerSubtitle' => __('sales.returns.header_subtitle'),
 ])
 
 @section('content')
@@ -17,13 +17,13 @@
 
         <x-module-header
             module="sales"
-            title="Retur Penjualan &amp; Kompensasi"
-            subtitle="Pengembalian barang pelanggan, pemotongan faktur (Credit Note), dan pemulihan stok.">
+            :title="__('sales.returns.module_title')"
+            :subtitle="__('sales.returns.module_subtitle')">
             @if (\App\Support\Context::hasPermission('sales.returns') || \App\Support\Context::hasPermission('sales.pipeline'))
                 <a href="{{ route('sales.returns.create') }}"
                     class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all flex items-center justify-center gap-2 shadow-sm shadow-[#007AFF]/25 w-full sm:w-auto">
                     <i data-lucide="plus" class="w-4 h-4"></i>
-                    <span>Buat Retur Penjualan</span>
+                    <span>{{ __('sales.returns.btn_create') }}</span>
                 </a>
             @endif
         </x-module-header>
@@ -53,45 +53,45 @@
             <!-- Tile 1: Nilai Retur (System Red) -->
             <div
                 class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between">
-                <span class="text-[12px] font-medium text-black/50 dark:text-white/50">Nilai Retur Halaman</span>
+                <span class="text-[12px] font-medium text-black/50 dark:text-white/50">{{ __('sales.returns.kpi_page_amount') }}</span>
                 <div class="mt-2 flex items-baseline justify-between">
                     <span class="text-[22px] sm:text-[24px] font-bold tabular-nums text-[#FF3B30] dark:text-[#FF453A]">
                         Rp {{ number_format($pageTotalAmount, 0, ',', '.') }}
                     </span>
-                    <span class="text-[11px] font-medium text-[#FF3B30] dark:text-[#FF453A]">Refund</span>
+                    <span class="text-[11px] font-medium text-[#FF3B30] dark:text-[#FF453A]">{{ __('sales.returns.kpi_refund') }}</span>
                 </div>
             </div>
 
             <!-- Tile 2: Total Retur (Neutral) -->
             <div
                 class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between">
-                <span class="text-[12px] font-medium text-black/50 dark:text-white/50">Total Dokumen Retur</span>
+                <span class="text-[12px] font-medium text-black/50 dark:text-white/50">{{ __('sales.returns.kpi_total_returns') }}</span>
                 <div class="mt-2 flex items-baseline justify-between">
                     <span
                         class="text-[24px] font-bold tabular-nums text-black dark:text-white">{{ number_format($totalReturnsCount, 0, ',', '.') }}</span>
-                    <span class="text-[11px] font-medium text-black/40 dark:text-white/40">Tercatat</span>
+                    <span class="text-[11px] font-medium text-black/40 dark:text-white/40">{{ __('sales.returns.kpi_recorded') }}</span>
                 </div>
             </div>
 
             <!-- Tile 3: Menunggu Persetujuan (System Orange) -->
             <div
                 class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between">
-                <span class="text-[12px] font-medium text-black/50 dark:text-white/50">Menunggu Persetujuan</span>
+                <span class="text-[12px] font-medium text-black/50 dark:text-white/50">{{ __('sales.returns.kpi_pending_approval') }}</span>
                 <div class="mt-2 flex items-baseline justify-between">
                     <span
                         class="text-[24px] font-bold tabular-nums text-[#FF9500] dark:text-[#FF9F0A]">{{ $draftReturns->count() }}</span>
-                    <span class="text-[11px] font-medium text-[#FF9500] dark:text-[#FF9F0A]">Draft</span>
+                    <span class="text-[11px] font-medium text-[#FF9500] dark:text-[#FF9F0A]">{{ __('sales.returns.status_draft') }}</span>
                 </div>
             </div>
 
             <!-- Tile 4: Selesai & Restock (System Green) -->
             <div
                 class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between">
-                <span class="text-[12px] font-medium text-black/50 dark:text-white/50">Selesai &amp; Restock</span>
+                <span class="text-[12px] font-medium text-black/50 dark:text-white/50">{{ __('sales.returns.kpi_completed_returns') }}</span>
                 <div class="mt-2 flex items-baseline justify-between">
                     <span
                         class="text-[24px] font-bold tabular-nums text-[#34C759] dark:text-[#30D158]">{{ $completedReturns->count() }}</span>
-                    <span class="text-[11px] font-medium text-[#34C759] dark:text-[#30D158]">Stok Kembali</span>
+                    <span class="text-[11px] font-medium text-[#34C759] dark:text-[#30D158]">{{ __('sales.returns.stock_returned') }}</span>
                 </div>
             </div>
         </div>
@@ -106,14 +106,14 @@
                     <thead>
                         <tr
                             class="border-b border-black/5 dark:border-white/10 text-black/40 dark:text-white/40 text-[11px] font-semibold uppercase tracking-wide">
-                            <th class="py-2.5 px-4">No. Retur</th>
-                            <th class="py-2.5 px-4">Referensi Transaksi</th>
-                            <th class="py-2.5 px-4">Pelanggan</th>
-                            <th class="py-2.5 px-4">Tanggal Retur</th>
-                            <th class="py-2.5 px-4">Metode Kompensasi</th>
-                            <th class="py-2.5 px-4 text-right">Nilai Retur</th>
-                            <th class="py-2.5 px-4 text-center">Status</th>
-                            <th class="py-2.5 px-4 text-right">Aksi</th>
+                            <th class="py-2.5 px-4">{{ __('sales.returns.col_return_number') }}</th>
+                            <th class="py-2.5 px-4">{{ __('sales.returns.col_transaction_ref') }}</th>
+                            <th class="py-2.5 px-4">{{ __('sales.returns.col_customer') }}</th>
+                            <th class="py-2.5 px-4">{{ __('sales.returns.col_return_date') }}</th>
+                            <th class="py-2.5 px-4">{{ __('sales.returns.col_compensation_type') }}</th>
+                            <th class="py-2.5 px-4 text-right">{{ __('sales.returns.col_total_amount') }}</th>
+                            <th class="py-2.5 px-4 text-center">{{ __('sales.returns.col_status') }}</th>
+                            <th class="py-2.5 px-4 text-right">{{ __('sales.returns.col_actions') }}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
@@ -146,11 +146,11 @@
                                 </td>
                                 <td class="py-3 px-4 font-medium text-black dark:text-white">
                                     @if ($return->invoice)
-                                        {{ $return->invoice->customer?->name ?? 'Pelanggan Umum' }}
+                                        {{ $return->invoice->customer?->name ?? __('sales.returns.general_customer') }}
                                     @elseif($return->posOrder)
-                                        {{ $return->posOrder->customer?->name ?? ($return->posOrder->customer_name_guest ?: 'Tamu Kasir') }}
+                                        {{ $return->posOrder->customer?->name ?? ($return->posOrder->customer_name_guest ?: __('sales.returns.guest_customer')) }}
                                     @else
-                                        {{ $return->customer?->name ?? 'Pelanggan Umum' }}
+                                        {{ $return->customer?->name ?? __('sales.returns.general_customer') }}
                                     @endif
                                 </td>
                                 <td class="py-3 px-4 tabular-nums text-black/60 dark:text-white/60 whitespace-nowrap">
@@ -159,7 +159,15 @@
                                 <td class="py-3 px-4 whitespace-nowrap">
                                     <span
                                         class="inline-flex items-center px-2 py-0.5 rounded-[6px] text-[11px] font-medium bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70">
-                                        {{ str_replace('_', ' ', $return->refund_method ?? 'cash_refund') }}
+                                        @if ($return->refund_method === 'credit_note')
+                                            {{ __('sales.returns.comp_credit_note') }}
+                                        @elseif($return->refund_method === 'cash_refund')
+                                            {{ __('sales.returns.comp_cash_refund') }}
+                                        @elseif($return->refund_method === 'exchange')
+                                            {{ __('sales.returns.comp_exchange') }}
+                                        @else
+                                            {{ str_replace('_', ' ', $return->refund_method ?? 'cash_refund') }}
+                                        @endif
                                     </span>
                                 </td>
                                 <td
@@ -170,24 +178,24 @@
                                     @if ($return->status === 'completed')
                                         <span
                                             class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#34C759]/12 text-[#248A3D] dark:text-[#30D158]">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]"></span> Selesai
+                                            <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]"></span> {{ __('sales.returns.status_completed') }}
                                         </span>
                                     @elseif($return->status === 'approved')
                                         <span
                                             class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#007AFF]/12 text-[#007AFF] dark:text-[#0A84FF]">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-[#007AFF]"></span> Disetujui
+                                            <span class="w-1.5 h-1.5 rounded-full bg-[#007AFF]"></span> {{ __('sales.returns.status_approved') }}
                                         </span>
                                     @else
                                         <span
                                             class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#FF9500]/12 text-[#B25E00] dark:text-[#FF9F0A]">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-[#FF9500]"></span> Draft
+                                            <span class="w-1.5 h-1.5 rounded-full bg-[#FF9500]"></span> {{ __('sales.returns.status_draft') }}
                                         </span>
                                     @endif
                                 </td>
                                 <td class="py-3 px-4 text-right whitespace-nowrap">
                                      <a href="{{ route('sales.returns.show', $return) }}"
                                          class="h-7 px-2.5 rounded-[6px] text-[12px] font-medium text-[#007AFF] hover:bg-[#007AFF]/8 transition-colors inline-flex items-center gap-1">
-                                         <span>Detail</span>
+                                         <span>{{ __('sales.returns.btn_detail') }}</span>
                                          <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
                                      </a>
                                  </td>
@@ -201,14 +209,11 @@
                                             <path stroke-linecap="round" stroke-linejoin="round"
                                                 d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
                                         </svg>
-                                        <h4 class="text-[15px] font-medium text-black dark:text-white">Belum Ada Transaksi
-                                             Retur</h4>
-                                        <p class="text-[13px] text-black/50 dark:text-white/50 max-w-sm">Pengembalian barang
-                                             dari kasir POS atau faktur B2B akan tercatat rapi di sini untuk pemulihan stok.
-                                         </p>
+                                        <h4 class="text-[15px] font-medium text-black dark:text-white">{{ __('sales.returns.empty_title') }}</h4>
+                                        <p class="text-[13px] text-black/50 dark:text-white/50 max-w-sm">{{ __('sales.returns.empty_desc') }}</p>
                                          <a href="{{ route('sales.returns.create') }}"
                                              class="mt-2 h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] transition flex items-center gap-1.5">
-                                             <span>Buat Retur Pertama</span>
+                                             <span>{{ __('sales.returns.btn_create_first') }}</span>
                                          </a>
                                      </div>
                                  </td>
@@ -241,11 +246,11 @@
                         </div>
                         <p class="text-[13px] text-black/60 dark:text-white/60 truncate">
                             @if ($return->invoice)
-                                {{ $return->invoice->customer?->name ?? 'Pelanggan Umum' }}
+                                {{ $return->invoice->customer?->name ?? __('sales.returns.general_customer') }}
                             @elseif($return->posOrder)
-                                {{ $return->posOrder->customer?->name ?? ($return->posOrder->customer_name_guest ?: 'Tamu Kasir') }}
+                                {{ $return->posOrder->customer?->name ?? ($return->posOrder->customer_name_guest ?: __('sales.returns.guest_customer')) }}
                             @else
-                                {{ $return->customer?->name ?? 'Pelanggan Umum' }}
+                                {{ $return->customer?->name ?? __('sales.returns.general_customer') }}
                             @endif
                         </p>
                         <p class="text-[12px] text-black/45 dark:text-white/45 mt-0.5 tabular-nums">
@@ -254,13 +259,13 @@
                         </p>
                     </div>
                     <div class="flex items-center gap-1 shrink-0 text-black/30 dark:text-white/30">
-                        <span class="text-[12px] font-medium text-[#007AFF]">Detail</span>
+                        <span class="text-[12px] font-medium text-[#007AFF]">{{ __('sales.returns.btn_detail') }}</span>
                         <i data-lucide="chevron-right" class="w-4 h-4 text-black/30 dark:text-white/30"></i>
                     </div>
                 </a>
             @empty
                 <div class="p-8 text-center text-black/40 dark:text-white/40 text-[13px]">
-                    Belum ada data retur penjualan.
+                    {{ __('sales.returns.empty_mobile') }}
                 </div>
             @endforelse
         </div>
@@ -272,10 +277,10 @@
             <div
                 class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 px-4 py-3 flex items-center justify-between text-[13px] text-black/60 dark:text-white/60">
                 <div>
-                    Menampilkan <span
+                    {{ __('sales.invoices.pagination_showing') }} <span
                         class="font-medium text-black dark:text-white tabular-nums">{{ $returns->firstItem() ?? 0 }}–{{ $returns->lastItem() ?? 0 }}</span>
-                    dari <span class="font-medium text-black dark:text-white tabular-nums">{{ $returns->total() }}</span>
-                    retur
+                    {{ __('sales.invoices.pagination_of') }} <span class="font-medium text-black dark:text-white tabular-nums">{{ $returns->total() }}</span>
+                    {{ __('sales.returns.pagination_returns') }}
                 </div>
                 <div>
                     {{ $returns->links() }}

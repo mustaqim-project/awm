@@ -1,5 +1,5 @@
 @extends('layouts.public_marketing', [
-    'title' => 'Status Pemulihan Akses Akun - Cooca',
+    'title' => __('auth.recovery.status_meta_title'),
     'noindex' => true,
 ])
 
@@ -19,9 +19,8 @@
             <!-- Official COOCA Branding & Header -->
             <div class="text-center space-y-2 mb-2">
                 @include('auth.partials.brand-logo', ['class' => 'mb-3'])
-                <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">Status Pemulihan Akun</h1>
-                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400">Pantau perkembangan verifikasi berkas
-                    permohonan pemulihan akses Anda</p>
+                <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">{{ __('auth.recovery.status_heading') }}</h1>
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400">{{ __('auth.recovery.status_subheading') }}</p>
             </div>
 
             @if ($recovery)
@@ -33,17 +32,16 @@
                         class="flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 p-4 sm:p-5 rounded-[20px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08]">
                         <div>
                             <span
-                                class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wider block">Nomor
-                                Tiket Permohonan</span>
+                                class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wider block">{{ __('auth.recovery.ticket_number_label') }}</span>
                             <div class="flex items-center gap-2.5 mt-0.5">
                                 <span
                                     class="text-lg sm:text-xl font-mono font-bold text-black dark:text-white tracking-wide">{{ $recovery->ticket_number }}</span>
                                 <button type="button"
                                     @click="navigator.clipboard.writeText('{{ $recovery->ticket_number }}'); copied = true; setTimeout(() => copied = false, 2000)"
-                                    class="px-2.5 py-1 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black/70 dark:text-white/70 text-[11px] font-medium inline-flex items-center gap-1 transition-all"
-                                    title="Salin Nomor Tiket">
+                                    class="px-2.5 py-1 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black/70 dark:text-white/70 text-[11px] font-medium inline-flex items-center gap-1 transition-all cursor-pointer"
+                                    title="{{ __('auth.recovery.copy_btn') }}">
                                     <i :data-lucide="copied ? 'check' : 'copy'" class="w-3.5 h-3.5"></i>
-                                    <span x-text="copied ? 'Tersalin!' : 'Salin'"></span>
+                                    <span x-text="copied ? {{ json_encode(__('auth.recovery.copied_btn')) }} : {{ json_encode(__('auth.recovery.copy_btn')) }}"></span>
                                 </button>
                             </div>
                         </div>
@@ -54,19 +52,19 @@
                                 <span
                                     class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FF9500]/10 border border-[#FF9500]/25 text-[#FF9500] dark:text-[#FF9F0A] text-xs font-semibold">
                                     <span class="w-2 h-2 rounded-full bg-[#FF9500] animate-ping"></span>
-                                    <span>Menunggu Review Admin</span>
+                                    <span>{{ __('auth.recovery.status_pending_badge') }}</span>
                                 </span>
                             @elseif ($recovery->status === \App\Models\AccountRecoveryRequest::STATUS_APPROVED)
                                 <span
                                     class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#34C759]/10 border border-[#34C759]/25 text-[#34C759] dark:text-[#30D158] text-xs font-semibold">
                                     <i data-lucide="check-circle-2" class="w-4 h-4 text-[#34C759] dark:text-[#30D158]"></i>
-                                    <span>Disetujui Resmi</span>
+                                    <span>{{ __('auth.recovery.status_approved_badge') }}</span>
                                 </span>
                             @else
                                 <span
                                     class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#FF3B30]/10 border border-[#FF3B30]/25 text-[#FF3B30] dark:text-[#FF453A] text-xs font-semibold">
                                     <i data-lucide="x-circle" class="w-4 h-4 text-[#FF3B30] dark:text-[#FF453A]"></i>
-                                    <span>Permohonan Ditolak</span>
+                                    <span>{{ __('auth.recovery.status_rejected_badge') }}</span>
                                 </span>
                             @endif
                         </div>
@@ -81,11 +79,9 @@
                                 <i data-lucide="hourglass" class="w-5 h-5"></i>
                             </div>
                             <div class="space-y-1">
-                                <strong class="font-bold block text-sm sm:text-base text-black dark:text-white">Sedang
-                                    Ditinjau Administrator</strong>
+                                <strong class="font-bold block text-sm sm:text-base text-black dark:text-white">{{ __('auth.recovery.status_pending_title') }}</strong>
                                 <p class="text-xs sm:text-sm leading-relaxed text-black/70 dark:text-white/70">
-                                    Berkas identitas dan dokumen legalitas usaha Anda sedang diverifikasi secara manual.
-                                    Proses peninjauan memakan waktu maksimal 1x24 jam kerja.
+                                    {{ __('auth.recovery.status_pending_desc') }}
                                 </p>
                             </div>
                         </div>
@@ -97,11 +93,9 @@
                                 <i data-lucide="shield-check" class="w-5 h-5"></i>
                             </div>
                             <div class="space-y-1">
-                                <strong class="font-bold block text-sm sm:text-base text-black dark:text-white">Pemulihan
-                                    Akun Berhasil Disetujui</strong>
+                                <strong class="font-bold block text-sm sm:text-base text-black dark:text-white">{{ __('auth.recovery.status_approved_title') }}</strong>
                                 <p class="text-xs sm:text-sm leading-relaxed text-black/70 dark:text-white/70">
-                                    Email dan nomor WhatsApp Anda telah resmi diperbarui ke kontak baru. Silakan masuk
-                                    menggunakan kredensial yang baru saja disetujui.
+                                    {{ __('auth.recovery.status_approved_desc') }}
                                 </p>
                             </div>
                         </div>
@@ -113,11 +107,10 @@
                                 <i data-lucide="alert-triangle" class="w-5 h-5"></i>
                             </div>
                             <div class="space-y-1">
-                                <strong class="font-bold block text-sm sm:text-base text-black dark:text-white">Permohonan
-                                    Belum Dapat Disetujui</strong>
+                                <strong class="font-bold block text-sm sm:text-base text-black dark:text-white">{{ __('auth.recovery.status_rejected_title') }}</strong>
                                 <p class="text-xs sm:text-sm leading-relaxed text-black/70 dark:text-white/70">
-                                    Catatan Administrator: <span
-                                        class="font-semibold italic text-black dark:text-white">"{{ $recovery->rejection_reason ?? 'Dokumen bukti tidak memenuhi standar verifikasi kepemilikan bisnis.' }}"</span>
+                                    {{ __('auth.recovery.admin_notes_prefix') }}<span
+                                        class="font-semibold italic text-black dark:text-white">"{{ $recovery->rejection_reason ?? __('auth.recovery.default_rejection_reason') }}"</span>
                                 </p>
                             </div>
                         </div>
@@ -127,32 +120,28 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs pt-1">
                         <div
                             class="p-4 rounded-[18px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08]">
-                            <span class="text-[11px] font-medium text-black/45 dark:text-white/45 block mb-1">Nama
-                                Pemohon</span>
+                            <span class="text-[11px] font-medium text-black/45 dark:text-white/45 block mb-1">{{ __('auth.recovery.applicant_label') }}</span>
                             <span
                                 class="font-semibold text-black dark:text-white text-sm">{{ $recovery->applicant_name }}</span>
                         </div>
 
                         <div
                             class="p-4 rounded-[18px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08]">
-                            <span class="text-[11px] font-medium text-black/45 dark:text-white/45 block mb-1">Nama Bisnis /
-                                Toko</span>
+                            <span class="text-[11px] font-medium text-black/45 dark:text-white/45 block mb-1">{{ __('auth.recovery.business_label') }}</span>
                             <span
                                 class="font-semibold text-black dark:text-white text-sm">{{ $recovery->business_name }}</span>
                         </div>
 
                         <div
                             class="p-4 rounded-[18px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08]">
-                            <span class="text-[11px] font-medium text-black/45 dark:text-white/45 block mb-1">Jenis
-                                Kendala</span>
+                            <span class="text-[11px] font-medium text-black/45 dark:text-white/45 block mb-1">{{ __('auth.recovery.issue_type_label') }}</span>
                             <span
                                 class="font-semibold text-[#007AFF] dark:text-[#0A84FF] text-sm">{{ $recovery->getIssueTypeLabel() }}</span>
                         </div>
 
                         <div
                             class="p-4 rounded-[18px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08]">
-                            <span class="text-[11px] font-medium text-black/45 dark:text-white/45 block mb-1">Waktu
-                                Pengajuan</span>
+                            <span class="text-[11px] font-medium text-black/45 dark:text-white/45 block mb-1">{{ __('auth.recovery.submission_time_label') }}</span>
                             <span
                                 class="font-semibold text-black dark:text-white text-sm">{{ $recovery->created_at->translatedFormat('d M Y, H:i') }}
                                 WIB</span>
@@ -160,8 +149,7 @@
 
                         <div
                             class="p-4 rounded-[18px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08]">
-                            <span class="text-[11px] font-medium text-black/45 dark:text-white/45 block mb-1">Email Baru
-                                Pengganti</span>
+                            <span class="text-[11px] font-medium text-black/45 dark:text-white/45 block mb-1">{{ __('auth.recovery.new_email_replacement_label') }}</span>
                             <span class="font-mono font-semibold text-black dark:text-white text-sm">
                                 {{ $recovery->getMaskedNewEmail() }}
                             </span>
@@ -169,8 +157,7 @@
 
                         <div
                             class="p-4 rounded-[18px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08]">
-                            <span class="text-[11px] font-medium text-black/45 dark:text-white/45 block mb-1">Nomor WhatsApp
-                                Baru</span>
+                            <span class="text-[11px] font-medium text-black/45 dark:text-white/45 block mb-1">{{ __('auth.recovery.new_phone_replacement_label') }}</span>
                             <span class="font-mono font-semibold text-black dark:text-white text-sm">
                                 {{ $recovery->getMaskedNewPhone() }}
                             </span>
@@ -182,26 +169,26 @@
                         @if ($recovery->status === \App\Models\AccountRecoveryRequest::STATUS_APPROVED)
                             <a href="{{ route('login') }}"
                                 class="flex-1 min-h-[50px] py-3.5 px-5 rounded-[16px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-sm text-center shadow-lg shadow-[#007AFF]/25 transition-all flex items-center justify-center gap-2 active:scale-[0.98]">
-                                <span>Masuk ke Dashboard Sekarang</span>
+                                <span>{{ __('auth.recovery.login_now_btn') }}</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </a>
                         @elseif ($recovery->status === \App\Models\AccountRecoveryRequest::STATUS_REJECTED)
                             <a href="{{ route('account-recovery.create') }}"
                                 class="flex-1 min-h-[50px] py-3.5 px-5 rounded-[16px] bg-[#FF3B30] hover:bg-[#E0352B] text-white font-semibold text-sm text-center shadow-lg shadow-[#FF3B30]/25 transition-all flex items-center justify-center gap-2 active:scale-[0.98]">
                                 <i data-lucide="refresh-cw" class="w-4 h-4"></i>
-                                <span>Ajukan Ulang dengan Dokumen Baru</span>
+                                <span>{{ __('auth.recovery.reapply_btn') }}</span>
                             </a>
                         @else
                             <button type="button" onclick="location.reload()"
-                                class="flex-1 min-h-[50px] py-3.5 px-5 rounded-[16px] bg-black/[0.04] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white font-semibold text-sm text-center border border-black/5 dark:border-white/10 transition-all flex items-center justify-center gap-2 active:scale-[0.98]">
+                                class="flex-1 min-h-[50px] py-3.5 px-5 rounded-[16px] bg-black/[0.04] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white font-semibold text-sm text-center border border-black/5 dark:border-white/10 transition-all flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer">
                                 <i data-lucide="rotate-cw" class="w-4 h-4"></i>
-                                <span>Segarkan Status Terbaru</span>
+                                <span>{{ __('auth.recovery.refresh_status_btn') }}</span>
                             </button>
                         @endif
 
                         <a href="{{ route('landing') }}"
                             class="min-h-[50px] py-3.5 px-5 rounded-[16px] bg-black/[0.03] dark:bg-white/[0.05] hover:bg-black/[0.06] dark:hover:bg-white/[0.1] border border-black/5 dark:border-white/10 text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white font-semibold text-sm text-center transition-all flex items-center justify-center">
-                            Beranda
+                            {{ __('auth.recovery.home_btn') }}
                         </a>
                     </div>
                 </div>
@@ -221,7 +208,7 @@
                         <div>
                             <label for="ticket"
                                 class="block text-xs sm:text-sm font-semibold text-black/80 dark:text-white/85 uppercase tracking-wider mb-2">
-                                Nomor Tiket Pemulihan <span class="text-[#FF3B30]">*</span>
+                                {{ __('auth.recovery.search_ticket_label') }} <span class="text-[#FF3B30]">*</span>
                             </label>
                             <div class="relative">
                                 <div
@@ -229,26 +216,25 @@
                                     <i data-lucide="ticket" class="w-5 h-5"></i>
                                 </div>
                                 <input type="text" name="ticket" id="ticket" required
-                                    placeholder="Contoh: REC-202609-AB12CD"
+                                    placeholder="{{ __('auth.recovery.search_ticket_placeholder') }}"
                                     class="w-full pl-11 pr-4 py-3 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 rounded-[16px] text-black dark:text-white font-mono placeholder:text-black/35 dark:placeholder:text-white/35 text-[16px] sm:text-sm uppercase transition-all focus:outline-none focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15">
                             </div>
-                            <p class="mt-1.5 text-xs text-black/50 dark:text-white/50">Masukkan nomor tiket yang Anda
-                                terima saat mengirim permohonan pemulihan.</p>
+                            <p class="mt-1.5 text-xs text-black/50 dark:text-white/50">{{ __('auth.recovery.search_ticket_hint') }}</p>
                         </div>
 
                         <button type="submit"
-                            class="w-full min-h-[50px] py-3.5 px-5 rounded-[16px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-sm sm:text-base shadow-lg shadow-[#007AFF]/25 transition-all flex items-center justify-center gap-2 active:scale-[0.98]">
+                            class="w-full min-h-[50px] py-3.5 px-5 rounded-[16px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-sm sm:text-base shadow-lg shadow-[#007AFF]/25 transition-all flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer">
                             <i data-lucide="search" class="w-4 h-4 sm:w-5 sm:h-5"></i>
-                            <span>Cari Status Permohonan</span>
+                            <span>{{ __('auth.recovery.search_ticket_btn') }}</span>
                         </button>
                     </form>
 
                     <div
                         class="mt-6 pt-5 border-t border-black/[0.06] dark:border-white/[0.08] text-center text-xs sm:text-sm text-black/60 dark:text-white/60">
-                        Belum mengajukan pemulihan akun?
+                        {{ __('auth.recovery.not_applied_yet') }}
                         <a href="{{ route('account-recovery.create') }}"
                             class="font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline transition-colors ml-1">
-                            Buat Pengajuan Baru
+                            {{ __('auth.recovery.apply_new_link') }}
                         </a>
                     </div>
                 </div>

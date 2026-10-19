@@ -1,4 +1,4 @@
-@extends('layouts.public_marketing', ['title' => 'Pilih Bisnis - Cooca', 'noindex' => true])
+@extends('layouts.public_marketing', ['title' => __('auth.select_business.meta_title'), 'noindex' => true])
 
 @section('content')
     <div class="min-h-[calc(100vh-16rem)] flex flex-col justify-center py-10 sm:py-16 px-4 sm:px-6 lg:px-8"
@@ -7,8 +7,8 @@
             <!-- Official COOCA Branding & Header -->
             <div class="text-center mb-8">
                 @include('auth.partials.brand-logo', ['class' => 'mb-5'])
-                <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Pilih Workspace Bisnis</h1>
-                <p class="mt-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400">Pilih entitas toko yang ingin Anda operasikan atau buka cabang bisnis baru</p>
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">{{ __('auth.select_business.heading') }}</h1>
+                <p class="mt-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400">{{ __('auth.select_business.subheading') }}</p>
             </div>
 
             <!-- Businesses Selection List (Bento Grouped Card) -->
@@ -20,21 +20,19 @@
                             class="w-14 h-14 rounded-2xl bg-black/[0.03] dark:bg-white/[0.05] flex items-center justify-center mx-auto mb-3.5 text-black/40 dark:text-white/40">
                             <i data-lucide="store" class="w-7 h-7"></i>
                         </div>
-                        <h3 class="text-base font-bold text-black dark:text-white">Belum Ada Bisnis Terdaftar</h3>
-                        <p class="text-xs sm:text-sm mt-1 max-w-sm mx-auto text-black/55 dark:text-white/55">Anda belum
-                            memiliki bisnis aktif. Buat entitas bisnis pertama Anda untuk mulai menggunakan sistem kasir &
-                            pembukuan.</p>
+                        <h3 class="text-base font-bold text-black dark:text-white">{{ __('auth.select_business.no_business_title') }}</h3>
+                        <p class="text-xs sm:text-sm mt-1 max-w-sm mx-auto text-black/55 dark:text-white/55">{{ __('auth.select_business.no_business_desc') }}</p>
                         <button type="button" @click="showCreateModal = true"
                             class="mt-5 min-h-[48px] px-5 py-2.5 rounded-[16px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-sm shadow-lg shadow-[#007AFF]/25 inline-flex items-center gap-2 transition-all active:scale-[0.98]">
                             <i data-lucide="plus-circle" class="w-4 h-4"></i>
-                            <span>Daftarkan Bisnis Baru Sekarang</span>
+                            <span>{{ __('auth.select_business.register_business_btn') }}</span>
                         </button>
                     </div>
                 @else
                     <div class="space-y-3">
                         <div
                             class="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-black/45 dark:text-white/45 px-1">
-                            Bisnis & Cabang Anda ({{ $businesses->count() }})
+                            {{ __('auth.select_business.businesses_and_branches', ['count' => $businesses->count()]) }}
                         </div>
                         @foreach ($businesses as $biz)
                             <form method="POST" action="{{ route('businesses.switch') }}">
@@ -57,12 +55,11 @@
                                             </div>
                                             <div
                                                 class="text-xs text-black/50 dark:text-white/50 flex items-center gap-2 mt-0.5">
-                                                <span>Mata Uang: <strong>{{ $biz->currency_code }}</strong>
+                                                <span>{{ __('auth.select_business.currency_label') }} <strong>{{ $biz->currency_code }}</strong>
                                                     ({{ $biz->currency_symbol }})
                                                 </span>
                                                 <span>•</span>
-                                                <span class="text-[#007AFF] dark:text-[#0A84FF] font-medium">Buka Kasir &
-                                                    Dashboard</span>
+                                                <span class="text-[#007AFF] dark:text-[#0A84FF] font-medium">{{ __('auth.select_business.open_pos_and_dashboard') }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -82,15 +79,15 @@
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit"
-                            class="text-black/55 dark:text-white/55 hover:text-[#FF3B30] dark:hover:text-[#FF453A] transition-colors font-medium flex items-center gap-1.5 py-1.5">
+                            class="text-black/55 dark:text-white/55 hover:text-[#FF3B30] dark:hover:text-[#FF453A] transition-colors font-medium flex items-center gap-1.5 py-1.5 cursor-pointer">
                             <i data-lucide="log-out" class="w-4 h-4"></i>
-                            <span>Keluar Akun</span>
+                            <span>{{ __('auth.verify_email.logout_btn') }}</span>
                         </button>
                     </form>
                     <button type="button" @click="showCreateModal = true"
-                        class="min-h-[44px] px-4 py-2 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-xs sm:text-sm flex items-center gap-2 shadow-md shadow-[#007AFF]/20 transition-all active:scale-[0.98]">
+                        class="min-h-[44px] px-4 py-2 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-xs sm:text-sm flex items-center gap-2 shadow-md shadow-[#007AFF]/20 transition-all active:scale-[0.98] cursor-pointer">
                         <i data-lucide="plus" class="w-4 h-4"></i>
-                        <span>Tambah Bisnis Baru</span>
+                        <span>{{ __('auth.select_business.add_business_btn') }}</span>
                     </button>
                 </div>
             </div>
@@ -114,14 +111,12 @@
                                 <i data-lucide="plus-circle" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h3 class="text-base sm:text-lg font-bold text-black dark:text-white">Tambah Bisnis Baru
-                                </h3>
-                                <p class="text-xs text-black/50 dark:text-white/50">Buka entitas usaha atau cabang toko baru
-                                    Anda</p>
+                                <h3 class="text-base sm:text-lg font-bold text-black dark:text-white">{{ __('auth.select_business.modal_title') }}</h3>
+                                <p class="text-xs text-black/50 dark:text-white/50">{{ __('auth.select_business.modal_subtitle') }}</p>
                             </div>
                         </div>
                         <button type="button" @click="showCreateModal = false"
-                            class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.05] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white flex items-center justify-center transition-colors">
+                            class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.05] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white flex items-center justify-center transition-colors cursor-pointer">
                             <i data-lucide="x" class="w-4 h-4"></i>
                         </button>
                     </div>
@@ -130,10 +125,10 @@
                         @csrf
                         <div>
                             <label class="block font-semibold text-black/80 dark:text-white/85 mb-1.5 text-xs sm:text-sm">
-                                Nama Bisnis / Entitas Usaha <span class="text-[#FF3B30]">*</span>
+                                {{ __('auth.select_business.name_label') }} <span class="text-[#FF3B30]">*</span>
                             </label>
                             <input type="text" name="name" required
-                                placeholder="Contoh: Kedai Kopi Senja / Toko Berkah"
+                                placeholder="{{ __('auth.select_business.name_placeholder') }}"
                                 class="w-full px-4 py-3 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 rounded-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 transition-all text-[16px] sm:text-sm outline-none">
                         </div>
 
@@ -143,11 +138,11 @@
                             get currentTmpl() { return this.templateList[this.selectedTemplate] || null; }
                         }" class="space-y-2">
                             <label class="block font-semibold text-black/80 dark:text-white/85 text-xs sm:text-sm">
-                                Template Industri & Tata Letak Fitur
+                                {{ __('auth.select_business.template_label') }}
                             </label>
                             <select name="template_code" x-model="selectedTemplate"
                                 class="w-full px-4 py-3 bg-black/[0.03] dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[14px] text-black dark:text-white focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 transition-all text-[16px] sm:text-sm outline-none">
-                                <option value="">-- Setup Manual (Semua Fitur Tersedia) --</option>
+                                <option value="">{{ __('auth.select_business.template_manual') }}</option>
                                 @foreach ($templates as $tmpl)
                                     <option value="{{ $tmpl->code }}">{{ $tmpl->name }}
                                         ({{ strtoupper($tmpl->industry_category) }})
@@ -160,19 +155,19 @@
                                     class="p-3.5 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.08] space-y-2 text-xs">
                                     <div class="flex items-center justify-between font-semibold">
                                         <span class="text-[#007AFF] dark:text-[#0A84FF]"
-                                            x-text="'Penataan Modul: ' + currentTmpl.name"></span>
+                                            x-text="{{ json_encode(__('auth.select_business.module_layout', ['name' => '__NAME__'])) }}.replace('__NAME__', currentTmpl.name)"></span>
                                         <span
                                             class="px-2.5 py-0.5 rounded-full bg-[#34C759]/10 text-[#34C759] dark:text-[#30D158] text-[10px] font-bold"
                                             x-text="currentTmpl.category"></span>
                                     </div>
                                     <div class="text-black/70 dark:text-white/70">
-                                        <span class="text-[#34C759] dark:text-[#30D158] font-semibold">Module Active:</span>
+                                        <span class="text-[#34C759] dark:text-[#30D158] font-semibold">{{ __('auth.select_business.module_active') }}</span>
                                         <span x-text="currentTmpl.enabled.map(i => i.name).join(', ')"></span>
                                     </div>
                                     <template x-if="currentTmpl.disabled && currentTmpl.disabled.length > 0">
                                         <div
                                             class="text-black/45 dark:text-white/45 text-[11px] pt-1.5 border-t border-black/5 dark:border-white/5">
-                                            <span>Module Non-Active: </span>
+                                            <span>{{ __('auth.select_business.module_inactive') }} </span>
                                             <span class="line-through"
                                                 x-text="currentTmpl.disabled.map(i => i.name).join(', ')"></span>
                                         </div>
@@ -180,14 +175,13 @@
                                 </div>
                             </template>
                             <p class="text-[11px] sm:text-xs text-black/50 dark:text-white/50">
-                                Sistem secara otomatis menyesuaikan tampilan POS Kasir dan modul operasional sesuai industri
-                                pilihan Anda.
+                                {{ __('auth.select_business.template_hint') }}
                             </p>
                         </div>
 
                         <div>
                             <label class="block font-semibold text-black/80 dark:text-white/85 mb-1.5 text-xs sm:text-sm">
-                                Mata Uang Utama Transaksi
+                                {{ __('auth.select_business.currency_select_label') }}
                             </label>
                             <select name="currency"
                                 class="w-full px-4 py-3 bg-black/[0.03] dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[14px] text-black dark:text-white focus:border-[#007AFF] transition-all text-[16px] sm:text-sm outline-none">
@@ -201,13 +195,13 @@
                         <div
                             class="flex items-center justify-end gap-3 pt-4 border-t border-black/[0.06] dark:border-white/[0.08]">
                             <button type="button" @click="showCreateModal = false"
-                                class="min-h-[46px] px-5 py-2.5 rounded-[14px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black/75 dark:text-white/80 font-semibold text-xs sm:text-sm transition-all">
-                                Batal
+                                class="min-h-[46px] px-5 py-2.5 rounded-[14px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black/75 dark:text-white/80 font-semibold text-xs sm:text-sm transition-all cursor-pointer">
+                                {{ __('auth.select_business.cancel_btn') }}
                             </button>
                             <button type="submit"
-                                class="min-h-[46px] px-5 py-2.5 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-[#007AFF]/25 transition-all active:scale-[0.98]">
+                                class="min-h-[46px] px-5 py-2.5 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-[#007AFF]/25 transition-all active:scale-[0.98] cursor-pointer">
                                 <i data-lucide="check" class="w-4 h-4"></i>
-                                <span>Simpan & Buka Bisnis</span>
+                                <span>{{ __('auth.select_business.save_and_open_btn') }}</span>
                             </button>
                         </div>
                     </form>

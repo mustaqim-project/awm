@@ -20,21 +20,21 @@
             <a href="{{ route('cooca-ai.index') }}"
                class="px-3.5 py-1.5 rounded-lg transition-all flex items-center gap-1.5 shrink-0 select-none {{ in_array($activeOffice, ['lobby', 'executive', 'operations', 'growth', 'studio'], true) ? 'bg-white dark:bg-zinc-700 text-indigo-700 dark:text-indigo-300 shadow-sm font-bold' : 'text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/5' }}">
                 <i data-lucide="sparkles" class="w-3.5 h-3.5 {{ in_array($activeOffice, ['lobby', 'executive', 'operations', 'growth', 'studio'], true) ? 'text-indigo-600 dark:text-indigo-400' : 'opacity-70' }}"></i>
-                <span>AI Studio</span>
+                <span>{{ __('ai.navigation.ai_studio') }}</span>
             </a>
 
             <!-- 5. AI POS Intelligence -->
             <a href="{{ route('pos.ai.index') }}"
                class="px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 shrink-0 select-none {{ $activeOffice === 'pos' ? 'bg-white dark:bg-zinc-700 text-emerald-700 dark:text-emerald-400 shadow-sm font-bold' : 'text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/5' }}">
                 <i data-lucide="layout-grid" class="w-3.5 h-3.5 {{ $activeOffice === 'pos' ? 'text-emerald-500' : 'opacity-70' }}"></i>
-                <span>AI POS</span>
+                <span>{{ __('ai.navigation.ai_pos') }}</span>
             </a>
 
             <!-- 6. Pusat Aksi & Approval -->
             <a href="{{ route('cooca-ai.actions') }}"
                class="relative px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 shrink-0 select-none {{ $activeOffice === 'actions' ? 'bg-white dark:bg-zinc-700 text-amber-700 dark:text-amber-400 shadow-sm font-bold' : 'text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/5' }}">
                 <i data-lucide="check-square" class="w-3.5 h-3.5 {{ $activeOffice === 'actions' ? 'text-amber-500' : 'opacity-70' }}"></i>
-                <span>Action Center</span>
+                <span>{{ __('ai.navigation.action_center') }}</span>
                 @if($pendingCount > 0)
                     <span class="px-1.5 py-0.2 rounded-full text-[9px] font-bold bg-amber-500 text-white tabular-nums">{{ $pendingCount }}</span>
                 @endif
@@ -44,14 +44,14 @@
             <a href="{{ route('cooca-ai.history') }}"
                class="px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 shrink-0 select-none {{ $activeOffice === 'history' ? 'bg-white dark:bg-zinc-700 text-sky-700 dark:text-sky-400 shadow-sm font-bold' : 'text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/5' }}">
                 <i data-lucide="history" class="w-3.5 h-3.5 {{ $activeOffice === 'history' ? 'text-sky-500' : 'opacity-70' }}"></i>
-                <span>Riwayat Sesi</span>
+                <span>{{ __('ai.navigation.session_history') }}</span>
             </a>
 
             <!-- 8. Pengaturan Provider -->
             <a href="{{ route('cooca-ai.providers') }}"
                class="px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 shrink-0 select-none {{ $activeOffice === 'providers' ? 'bg-white dark:bg-zinc-700 text-slate-900 dark:text-white shadow-sm font-bold' : 'text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/5' }}">
                 <i data-lucide="settings" class="w-3.5 h-3.5 {{ $activeOffice === 'providers' ? 'text-indigo-500' : 'opacity-70' }}"></i>
-                <span>Pengaturan AI</span>
+                <span>{{ __('ai.navigation.settings') }}</span>
             </a>
 
         </div>
@@ -62,12 +62,12 @@
                 <button type="button" @click="openConsultationModal()"
                         class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white text-xs font-semibold shadow-sm transition flex items-center gap-1.5 cursor-pointer active:scale-95">
                     <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-                    <span>Tanya AI</span>
+                    <span>{{ __('ai.navigation.ask_ai') }}</span>
                 </button>
                 <button type="button" @click="triggerDailyDiagnosis()"
                         class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-200 text-xs font-semibold transition flex items-center gap-1.5 border border-slate-200/80 dark:border-white/10 cursor-pointer active:scale-95">
                     <i data-lucide="activity" class="w-3.5 h-3.5 text-amber-500"></i>
-                    <span class="hidden sm:inline">Evaluasi Harian</span>
+                    <span class="hidden sm:inline">{{ __('ai.navigation.daily_eval') }}</span>
                 </button>
             @else
                 @php
@@ -81,7 +81,7 @@
                 <a href="{{ $hasConfiguredNavProvider ? route('cooca-ai.index') : route('cooca-ai.providers') }}"
                    class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white text-xs font-semibold shadow-sm transition flex items-center gap-1.5 cursor-pointer active:scale-95">
                     <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-                    <span>Tanya AI</span>
+                    <span>{{ __('ai.navigation.ask_ai') }}</span>
                 </a>
             @endif
         </div>
@@ -96,13 +96,13 @@
                 <i data-lucide="alert-circle" class="w-4 h-4"></i>
             </div>
             <div>
-                <h4 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">Perhatian: {{ $pendingCount }} Usulan Aksi Menunggu Keputusan Anda</h4>
-                <p class="text-xs text-slate-600 dark:text-zinc-300 mt-0.5">Digital workforce AI telah menyiapkan rekomendasi aksi yang memerlukan persetujuan pemilik bisnis.</p>
+                <h4 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">{{ __('ai.lobby.pending_banner_title', ['count' => $pendingCount]) }}</h4>
+                <p class="text-xs text-slate-600 dark:text-zinc-300 mt-0.5">{{ __('ai.lobby.pending_banner_desc') }}</p>
             </div>
         </div>
         <div class="flex items-center gap-2 shrink-0">
             <a href="{{ route('cooca-ai.actions', ['status' => 'pending']) }}" class="px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold transition shadow-sm flex items-center gap-1.5">
-                <span>Tinjau Proposal</span>
+                <span>{{ __('ai.navigation.review_proposals') }}</span>
                 <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
             </a>
         </div>

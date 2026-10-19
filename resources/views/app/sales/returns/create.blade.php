@@ -1,7 +1,7 @@
 @extends('layouts.app', [
-    'title' => 'Buat Retur Penjualan - Cooca',
-    'headerTitle' => 'Formulir Retur Penjualan',
-    'headerSubtitle' => 'Pilih sumber transaksi (Faktur Penjualan atau Kasir POS), tentukan kuantitas yang diretur, dan atur kompensasi pengembalian dana.',
+    'title' => __('sales.returns.create_title'),
+    'headerTitle' => __('sales.returns.create_heading'),
+    'headerSubtitle' => __('sales.returns.create_subtitle_desc'),
 ])
 
 @section('content')
@@ -15,30 +15,28 @@
             <div>
                 <nav class="flex items-center gap-1.5 text-[12px] text-black/50 dark:text-white/50 mb-1"
                     aria-label="Breadcrumb">
-                    <a href="{{ route('dashboard') }}" class="hover:text-[#007AFF] transition-colors">Dashboard</a>
+                    <a href="{{ route('dashboard') }}" class="hover:text-[#007AFF] transition-colors">{{ __('sales.returns.breadcrumb_dashboard') }}</a>
                     <i data-lucide="chevron-right" class="w-3.5 h-3.5 opacity-40"></i>
-                    <a href="{{ route('sales.returns.index') }}" class="hover:text-[#007AFF] transition-colors">Retur
-                        Penjualan</a>
+                    <a href="{{ route('sales.returns.index') }}" class="hover:text-[#007AFF] transition-colors">{{ __('sales.returns.breadcrumb_sales_returns') }}</a>
                     <i data-lucide="chevron-right" class="w-3.5 h-3.5 opacity-40"></i>
-                    <span class="text-black dark:text-white font-medium">Buat Retur Baru</span>
+                    <span class="text-black dark:text-white font-medium">{{ __('sales.returns.breadcrumb_create') }}</span>
                 </nav>
-                <h1 class="text-[20px] font-semibold text-black dark:text-white tracking-tight">Formulir Retur Penjualan
+                <h1 class="text-[20px] font-semibold text-black dark:text-white tracking-tight">{{ __('sales.returns.create_heading') }}
                 </h1>
-                <p class="text-[13px] text-black/50 dark:text-white/50">Pengembalian barang atas transaksi faktur penjualan
-                    B2B atau struk kasir POS.</p>
+                <p class="text-[13px] text-black/50 dark:text-white/50">{{ __('sales.returns.create_subheading') }}</p>
             </div>
 
             <div class="flex items-center gap-2">
                 <a href="{{ route('sales.returns.index') }}"
                     class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition flex items-center">
-                    <span>Batal</span>
+                    <span>{{ __('sales.returns.btn_cancel') }}</span>
                 </a>
                 @if (\App\Support\Context::hasPermission('sales.returns') || \App\Support\Context::hasPermission('sales.pipeline'))
                     <button type="button" @click="promptSaveReturn()"
                         :disabled="!hasSelectedSource() || getSelectedCount() === 0"
                         class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] disabled:opacity-40 disabled:cursor-not-allowed active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
                         <i data-lucide="check" class="w-4 h-4"></i>
-                        <span>Simpan Draft Retur</span>
+                        <span>{{ __('sales.returns.btn_save_draft') }}</span>
                     </button>
                 @endif
             </div>
@@ -50,7 +48,7 @@
                 class="rounded-[14px] bg-[#FF3B30]/12 border border-[#FF3B30]/20 p-4 text-[13px] text-[#C41E17] dark:text-[#FF453A] space-y-1">
                 <div class="flex items-center gap-2 font-semibold">
                     <span class="w-2 h-2 rounded-full bg-[#FF3B30]"></span>
-                    <span>Harap periksa isian formulir berikut:</span>
+                    <span>{{ __('sales.returns.form_check_notice') }}</span>
                 </div>
                 <ul class="list-disc list-inside space-y-0.5 pl-4 text-[12px]">
                     @foreach ($errors->all() as $error)
@@ -70,10 +68,9 @@
                 <div
                     class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-black/5 dark:border-white/5 pb-3">
                     <div>
-                        <h2 class="text-[17px] font-semibold text-black dark:text-white">1. Pilih Sumber Transaksi Penjualan
+                        <h2 class="text-[17px] font-semibold text-black dark:text-white">{{ __('sales.returns.sec_ref_source_title') }}
                         </h2>
-                        <p class="text-[13px] text-black/50 dark:text-white/50 mt-0.5">Tentukan apakah retur berasal dari
-                            Faktur B2B resmi atau Struk Transaksi Kasir POS.</p>
+                        <p class="text-[13px] text-black/50 dark:text-white/50 mt-0.5">{{ __('sales.returns.sec_ref_source_desc') }}</p>
                     </div>
 
                     <!-- Source Switcher Segmented Control -->
@@ -84,14 +81,14 @@
                                 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' :
                                 'text-black/55 dark:text-white/55'"
                             class="px-3 py-1 rounded-[7px] transition-all flex items-center gap-1.5 cursor-pointer">
-                            <span>Faktur B2B</span>
+                            <span>{{ __('sales.returns.source_invoice_btn') }}</span>
                         </button>
                         <button type="button" @click="setSourceType('pos_order')"
                             :class="sourceType === 'pos_order' ?
                                 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' :
                                 'text-black/55 dark:text-white/55'"
                             class="px-3 py-1 rounded-[7px] transition-all flex items-center gap-1.5 cursor-pointer">
-                            <span>Kasir POS (Struk)</span>
+                            <span>{{ __('sales.returns.source_pos_btn') }}</span>
                         </button>
                     </div>
                 </div>
@@ -100,15 +97,15 @@
                 <div x-show="sourceType === 'invoice'" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">
-                            Pilih Dokumen Faktur Penjualan (Invoice) <span class="text-[#FF3B30]">*</span>
+                            {{ __('sales.returns.select_invoice_doc_label') }} <span class="text-[#FF3B30]">*</span>
                         </label>
                         <select name="invoice_id" x-model="selectedInvoiceId" @change="onInvoiceChange()"
                             :required="sourceType === 'invoice'"
                             class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition cursor-pointer">
-                            <option value="">- Pilih Dokumen Faktur -</option>
+                            <option value="">{{ __('sales.returns.select_invoice_doc_placeholder') }}</option>
                             @foreach ($invoices as $invoice)
                                 <option value="{{ $invoice->id }}">
-                                    {{ $invoice->invoice_number }} - {{ $invoice->customer?->name ?? 'Pelanggan Umum' }} (Rp
+                                    {{ $invoice->invoice_number }} - {{ $invoice->customer?->name ?? __('sales.returns.general_customer') }} (Rp
                                     {{ number_format($invoice->total_amount, 0, ',', '.') }})
                                 </option>
                             @endforeach
@@ -120,15 +117,14 @@
                         <div
                             class="w-full p-3.5 rounded-[10px] bg-[#007AFF]/8 border border-[#007AFF]/15 text-[12px] space-y-1">
                             <div class="flex justify-between items-center">
-                                <span class="text-[11px] font-semibold text-[#007AFF] uppercase tracking-wider">Faktur
-                                    Terpilih</span>
+                                <span class="text-[11px] font-semibold text-[#007AFF] uppercase tracking-wider">{{ __('sales.returns.selected_invoice_badge') }}</span>
                                 <span class="font-mono text-black dark:text-white font-bold"
                                     x-text="selectedRecord?.number"></span>
                             </div>
                             <div class="flex justify-between text-black/60 dark:text-white/60 text-[12px]">
-                                <span>Pelanggan: <strong class="text-black dark:text-white"
+                                <span>{{ __('sales.returns.customer_label') }} <strong class="text-black dark:text-white"
                                         x-text="selectedRecord?.customer_name"></strong></span>
-                                <span>Tgl: <span class="tabular-nums" x-text="selectedRecord?.date"></span></span>
+                                <span>{{ __('sales.returns.date_short_label') }} <span class="tabular-nums" x-text="selectedRecord?.date"></span></span>
                             </div>
                         </div>
                     </div>
@@ -138,16 +134,16 @@
                 <div x-show="sourceType === 'pos_order'" x-cloak class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">
-                            Pilih Transaksi Kasir POS <span class="text-[#FF3B30]">*</span>
+                            {{ __('sales.returns.select_pos_order_label') }} <span class="text-[#FF3B30]">*</span>
                         </label>
                         <select name="pos_order_id" x-model="selectedPosOrderId" @change="onPosOrderChange()"
                             :required="sourceType === 'pos_order'"
                             class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition cursor-pointer">
-                            <option value="">- Pilih Transaksi Kasir POS -</option>
+                            <option value="">{{ __('sales.returns.select_pos_order_placeholder') }}</option>
                             @foreach ($posOrders as $order)
                                 <option value="{{ $order->id }}">
                                     {{ $order->order_number }} -
-                                    {{ $order->customer?->name ?? ($order->customer_name_guest ?: 'Tamu Kasir') }} (Rp
+                                    {{ $order->customer?->name ?? ($order->customer_name_guest ?: __('sales.returns.guest_customer')) }} (Rp
                                     {{ number_format($order->total_amount, 0, ',', '.') }})
                                 </option>
                             @endforeach
@@ -159,15 +155,14 @@
                         <div
                             class="w-full p-3.5 rounded-[10px] bg-[#5856D6]/8 border border-[#5856D6]/15 text-[12px] space-y-1">
                             <div class="flex justify-between items-center">
-                                <span class="text-[11px] font-semibold text-[#5856D6] uppercase tracking-wider">Transaksi
-                                    Kasir POS</span>
+                                <span class="text-[11px] font-semibold text-[#5856D6] uppercase tracking-wider">{{ __('sales.returns.selected_pos_badge') }}</span>
                                 <span class="font-mono text-black dark:text-white font-bold"
                                     x-text="selectedRecord?.number"></span>
                             </div>
                             <div class="flex justify-between text-black/60 dark:text-white/60 text-[12px]">
-                                <span>Pelanggan: <strong class="text-black dark:text-white"
+                                <span>{{ __('sales.returns.customer_label') }} <strong class="text-black dark:text-white"
                                         x-text="selectedRecord?.customer_name"></strong></span>
-                                <span>Waktu: <span class="tabular-nums" x-text="selectedRecord?.date"></span></span>
+                                <span>{{ __('sales.returns.time_label') }} <span class="tabular-nums" x-text="selectedRecord?.date"></span></span>
                             </div>
                         </div>
                     </div>
@@ -180,15 +175,14 @@
                 <div
                     class="flex flex-wrap items-center justify-between gap-3 border-b border-black/5 dark:border-white/5 pb-3">
                     <div>
-                        <h2 class="text-[17px] font-semibold text-black dark:text-white">2. Pilih Item yang Dikembalikan
+                        <h2 class="text-[17px] font-semibold text-black dark:text-white">{{ __('sales.returns.sec_select_items_title') }}
                         </h2>
-                        <p class="text-[13px] text-black/50 dark:text-white/50 mt-0.5">Centang produk yang ingin diretur dan
-                            sesuaikan jumlah kuantitas pengembalian.</p>
+                        <p class="text-[13px] text-black/50 dark:text-white/50 mt-0.5">{{ __('sales.returns.sec_select_items_desc') }}</p>
                     </div>
                     <div class="flex items-center gap-2" x-show="availableItems.length > 0">
                         <button type="button" @click="toggleSelectAll()"
                             class="h-8 px-3 rounded-[8px] text-[12px] font-medium text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition cursor-pointer">
-                            <span x-text="isAllSelected() ? 'Batal Pilih Semua' : 'Pilih Semua Item'"></span>
+                            <span x-text="isAllSelected() ? '{{ __('sales.returns.btn_deselect_all') }}' : '{{ __('sales.returns.btn_select_all') }}'"></span>
                         </button>
                     </div>
                 </div>
@@ -201,14 +195,14 @@
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
                         </svg>
-                        <span>Silakan pilih sumber transaksi penjualan di atas untuk memuat rincian item produk.</span>
+                        <span>{{ __('sales.returns.select_source_first_hint') }}</span>
                     </div>
                 </div>
 
                 <!-- State Dipilih tapi Tidak Ada Item Tersisa -->
                 <div x-show="hasSelectedSource() && availableItems.length === 0" x-cloak
                     class="p-4 rounded-[10px] bg-[#FF9500]/10 border border-[#FF9500]/20 text-[13px] text-[#B25E00] dark:text-[#FF9F0A] text-center">
-                    Transaksi ini tidak memiliki item atau seluruh item sudah selesai diretur sebelumnya.
+                    {{ __('sales.returns.no_items_remaining_hint') }}
                 </div>
 
                 <!-- Tabel Item Transaksi -->
@@ -218,13 +212,13 @@
                         <thead>
                             <tr
                                 class="border-b border-black/5 dark:border-white/10 text-black/40 dark:text-white/40 text-[11px] font-semibold uppercase tracking-wide">
-                                <th class="py-2.5 px-3 w-12 text-center">Retur</th>
-                                <th class="py-2.5 px-3">Produk / Item</th>
-                                <th class="py-2.5 px-3 text-right w-28">Harga Satuan</th>
-                                <th class="py-2.5 px-3 text-center w-24">Qty Beli</th>
-                                <th class="py-2.5 px-3 text-center w-28">Batas Retur</th>
-                                <th class="py-2.5 px-3 text-right w-32">Qty Retur</th>
-                                <th class="py-2.5 px-3 text-right w-36">Subtotal Retur</th>
+                                <th class="py-2.5 px-3 w-12 text-center">{{ __('sales.returns.col_return_checkbox') }}</th>
+                                <th class="py-2.5 px-3">{{ __('sales.returns.col_product_item') }}</th>
+                                <th class="py-2.5 px-3 text-right w-28">{{ __('sales.returns.col_unit_price') }}</th>
+                                <th class="py-2.5 px-3 text-center w-24">{{ __('sales.returns.col_purchased_qty') }}</th>
+                                <th class="py-2.5 px-3 text-center w-28">{{ __('sales.returns.col_max_return_qty') }}</th>
+                                <th class="py-2.5 px-3 text-right w-32">{{ __('sales.returns.col_return_qty_input') }}</th>
+                                <th class="py-2.5 px-3 text-right w-36">{{ __('sales.returns.col_subtotal_return') }}</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
@@ -242,7 +236,7 @@
                                         <!-- Input hidden item id sesuai sourceType -->
                                         <template x-if="sourceType === 'invoice'">
                                             <input type="hidden" :name="'items[' + idx + '][invoice_item_id]'"
-                                                :value="item.item_id">
+                                                 :value="item.item_id">
                                         </template>
                                         <template x-if="sourceType === 'pos_order'">
                                             <input type="hidden" :name="'items[' + idx + '][pos_order_item_id]'"
@@ -273,7 +267,7 @@
                                         <span x-text="item.max_qty"></span>
                                         <template x-if="item.returned_qty > 0">
                                             <span class="text-[10px] text-black/40 dark:text-white/40 block font-normal"
-                                                x-text="'(Pernah: ' + item.returned_qty + ')'"></span>
+                                                x-text="'{{ __('sales.returns.returned_previously_label', ['qty' => '__QTY__']) }}'.replace('__QTY__', item.returned_qty)"></span>
                                         </template>
                                     </td>
 
@@ -287,8 +281,7 @@
                                                 class="w-full h-8 text-right tabular-nums bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[6px] px-2 text-[12px] font-semibold text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 disabled:opacity-30">
                                         </template>
                                         <template x-if="item.max_qty <= 0">
-                                            <span class="text-[11px] text-[#FF3B30] block text-right font-medium">Habis
-                                                Diretur</span>
+                                            <span class="text-[11px] text-[#FF3B30] block text-right font-medium">{{ __('sales.returns.exhausted_returned') }}</span>
                                         </template>
                                     </td>
 
@@ -306,11 +299,11 @@
                 <div x-show="availableItems.length > 0" x-cloak
                     class="pt-3 border-t border-black/5 dark:border-white/5 flex justify-between items-center text-[13px]">
                     <div class="text-black/50 dark:text-white/50">
-                        <span>Item dipilih: </span>
-                        <strong class="text-black dark:text-white tabular-nums" x-text="getSelectedCount()"></strong> item
+                        <span>{{ __('sales.returns.items_selected_count') }} </span>
+                        <strong class="text-black dark:text-white tabular-nums" x-text="getSelectedCount()"></strong> {{ __('sales.returns.items_unit') }}
                     </div>
                     <div class="flex items-center gap-2">
-                        <span class="font-semibold text-black/60 dark:text-white/60">Total Nilai Retur:</span>
+                        <span class="font-semibold text-black/60 dark:text-white/60">{{ __('sales.returns.total_return_value_label') }}</span>
                         <span class="text-[18px] font-bold tabular-nums text-[#FF3B30]"
                             x-text="'Rp ' + Math.round(calculateTotalReturn()).toLocaleString('id-ID')"></span>
                     </div>
@@ -321,31 +314,29 @@
             <div
                 class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 sm:p-6 space-y-4">
                 <div class="border-b border-black/5 dark:border-white/5 pb-3">
-                    <h2 class="text-[17px] font-semibold text-black dark:text-white">3. Kompensasi &amp; Alasan
-                        Pengembalian</h2>
-                    <p class="text-[13px] text-black/50 dark:text-white/50 mt-0.5">Pilih bentuk pengembalian dana bagi
-                        pelanggan serta dokumentasikan alasan retur barang.</p>
+                    <h2 class="text-[17px] font-semibold text-black dark:text-white">{{ __('sales.returns.sec_compensation_title') }}</h2>
+                    <p class="text-[13px] text-black/50 dark:text-white/50 mt-0.5">{{ __('sales.returns.sec_compensation_subtitle') }}</p>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">
-                            Metode Kompensasi / Pengembalian Dana <span class="text-[#FF3B30]">*</span>
+                            {{ __('sales.returns.refund_method_label') }} <span class="text-[#FF3B30]">*</span>
                         </label>
                         <select name="refund_method" x-model="refundMethod" required
                             class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition cursor-pointer">
-                            <option value="cash_refund">Refund Kas / Tunai Langsung</option>
-                            <option value="credit_note">Credit Note (Potongan Tagihan Faktur Berikutnya)</option>
-                            <option value="store_credit">Store Credit / Saldo Deposit Pelanggan</option>
+                            <option value="cash_refund">{{ __('sales.returns.opt_cash_refund_direct') }}</option>
+                            <option value="credit_note">{{ __('sales.returns.opt_credit_note_next') }}</option>
+                            <option value="store_credit">{{ __('sales.returns.opt_store_credit_deposit') }}</option>
                         </select>
                     </div>
 
                     <div>
                         <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">
-                            Alasan Retur Penjualan <span class="text-[#FF3B30]">*</span>
+                            {{ __('sales.returns.reason_return_label') }} <span class="text-[#FF3B30]">*</span>
                         </label>
                         <input name="reason"
-                            placeholder="Contoh: Barang rusak saat pengiriman, salah varian, cacat pabrik..." required
+                            placeholder="{{ __('sales.returns.reason_return_placeholder') }}" required
                             class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                     </div>
                 </div>
@@ -355,12 +346,12 @@
             <div class="flex items-center justify-end gap-2 pt-2">
                 <a href="{{ route('sales.returns.index') }}"
                     class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition">
-                    Batal
+                    {{ __('sales.returns.btn_cancel') }}
                 </a>
                 <button type="button" @click="promptSaveReturn()"
                     :disabled="!hasSelectedSource() || getSelectedCount() === 0"
                     class="h-9 px-5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] disabled:opacity-40 disabled:cursor-not-allowed active:scale-[0.97] active:opacity-80 transition shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
-                    Simpan Draft Retur
+                    {{ __('sales.returns.btn_save_draft') }}
                 </button>
             </div>
         </form>
@@ -398,20 +389,20 @@
                         x-transition:leave-end="opacity-0 scale-95">
 
                         <div class="px-4 pt-5 pb-4">
-                            <p id="sales-return-confirm-dialog-title" class="text-[17px] font-semibold text-black dark:text-white">Simpan Draft Retur?</p>
+                            <p id="sales-return-confirm-dialog-title" class="text-[17px] font-semibold text-black dark:text-white">{{ __('sales.returns.dialog_confirm_draft_title') }}</p>
                             <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
-                                Simpan dokumen draft retur ini? Dokumen akan menunggu persetujuan manajemen untuk pemeriksaan fisik.
+                                {{ __('sales.returns.dialog_confirm_draft_desc') }}
                             </p>
                         </div>
 
                         <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
                             <button type="button" @click="confirmReturnModalOpen = false"
                                 class="min-h-[44px] py-3 text-black/60 dark:text-white/60 border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
-                                Batal
+                                {{ __('sales.returns.btn_cancel') }}
                             </button>
                             <button type="button" @click="submitReturn()"
                                 class="min-h-[44px] py-3 text-[#007AFF] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
-                                Simpan
+                                {{ __('sales.returns.dialog_save_btn') }}
                             </button>
                         </div>
                     </div>
@@ -555,7 +546,7 @@
                 promptSaveReturn() {
                     const count = this.getSelectedCount();
                     if (count === 0) {
-                        alert('Pilih setidaknya 1 item produk dengan kuantitas lebih dari 0.');
+                        alert('{{ __('sales.returns.select_one_item_prompt') }}');
                         return;
                     }
                     this.confirmReturnModalOpen = true;

@@ -8,6 +8,7 @@ use App\Domain\Accounting\AccountingReportService;
 use App\Domain\Accounting\AutoJournalService;
 use App\Domain\Accounting\BankReconciliationService;
 use App\Http\Controllers\Controller;
+use App\Exports\AccountingReportExport;
 use App\Models\BankStatement;
 use App\Models\BankStatementLine;
 use App\Models\CashAccount;
@@ -27,7 +28,8 @@ final class AccountingWebController extends Controller
     public function __construct(
         private readonly AutoJournalService $journalService = new AutoJournalService,
         private readonly AccountingReportService $reportService = new AccountingReportService,
-        private readonly BankReconciliationService $reconciliationService = new BankReconciliationService
+        private readonly BankReconciliationService $reconciliationService = new BankReconciliationService,
+        private readonly AccountingReportExport $reportExport = new AccountingReportExport
     ) {}
 
     /**
@@ -244,6 +246,59 @@ final class AccountingWebController extends Controller
         $ledger = $this->reportService->getGeneralLedger($business, $accountId, $startDate, $endDate);
 
         return view('app.finance.accounting.general-ledger', compact('business', 'ledger', 'startDate', 'endDate', 'accountId'));
+    }
+
+    /**
+     * Export Neraca Keuangan (Balance Sheet) ke Excel XLSX dengan styling lengkap.
+     */
+    public function balanceSheetExportExcel(Request $request): StreamedResponse
+    {
+        $business = Context::requireBusiness();
+        $asOfDate = $request->filled('as_of_date') ? Carbon::parse($request->string('as_of_date')->toString()) : now();
+
+        $sheet = $this->reportService->getBalanceSheet($business, $asOfDate);
+
+        return $this->reportExport->downloadBalanceSheet($business, $asOfDate, $sheet);
+    }
+
+    /**
+     * Export Neraca Saldo (Trial Balance) ke Excel XLSX dengan styling lengkap.
+     */
+    public function trialBalanceExportExcel(Request $request): StreamedResponse
+    {
+        $business = Context::requireBusiness();
+
+        $startDate = $request->filled('start_date') ? Carbon::parse($request->string('start_date')->toString()) : now()->startOfYear();
+        $endDate = $request->filled('end_date') ? Carbon::parse($request->string('end_date')->toString()) : now();
+
+        if ($startDate->gt($endDate)) {
+            [$startDate, $endDate] = [$endDate, $startDate];
+        }
+
+        $trial = $this->reportService->getTrialBalance($business, $startDate, $endDate);
+
+        return $this->reportExport->downloadTrialBalance($business, $startDate, $endDate, $trial);
+    }
+
+    /**
+     * Export Buku Besar Umum (General Ledger) ke Excel XLSX dengan styling lengkap.
+     */
+    public function generalLedgerExportExcel(Request $request): StreamedResponse
+    {
+        $business = Context::requireBusiness();
+
+        $accountId = $request->filled('account_id') ? $request->string('account_id')->toString() : null;
+        $startDate = $request->filled('start_date') ? Carbon::parse($request->string('start_date')->toString()) : now()->startOfMonth();
+        $endDate = $request->filled('end_date') ? Carbon::parse($request->string('end_date')->toString()) : now();
+
+        if ($startDate->gt($endDate)) {
+            [$startDate, $endDate] = [$endDate, $startDate];
+        }
+
+        $ledger = $this->reportService->getGeneralLedger($business, $accountId, $startDate, $endDate);
+        $selectedAccount = $ledger['selected_account'] ?? null;
+
+        return $this->reportExport->downloadGeneralLedger($business, $selectedAccount, $startDate, $endDate, $ledger);
     }
 
     /**

@@ -1,7 +1,7 @@
 @extends('layouts.app', [
-    'title' => 'Penawaran ' . $quotation->quotation_number,
-    'headerTitle' => 'Detail Surat Penawaran',
-    'headerSubtitle' => 'Dokumen resmi penawaran harga komersial ke pelanggan'
+    'title' => __('sales.quotations.show_page_title', ['number' => $quotation->quotation_number]),
+    'headerTitle' => __('sales.quotations.show_header_title'),
+    'headerSubtitle' => __('sales.quotations.show_header_subtitle')
 ])
 
 @section('content')
@@ -24,9 +24,9 @@
         <div>
             <!-- Breadcrumb minimal -->
             <nav class="flex items-center gap-1.5 text-[12px] text-black/50 dark:text-white/50 mb-1" aria-label="Breadcrumb">
-                <a href="{{ route('dashboard') }}" class="hover:text-[#007AFF] transition-colors">Dashboard</a>
+                <a href="{{ route('dashboard') }}" class="hover:text-[#007AFF] transition-colors">{{ __('sales.quotations.breadcrumb_dashboard') }}</a>
                 <i data-lucide="chevron-right" class="w-3.5 h-3.5 opacity-40"></i>
-                <a href="{{ route('sales.quotations.index') }}" class="hover:text-[#007AFF] transition-colors">Penawaran Harga</a>
+                <a href="{{ route('sales.quotations.index') }}" class="hover:text-[#007AFF] transition-colors">{{ __('sales.quotations.breadcrumb_quotations') }}</a>
                 <i data-lucide="chevron-right" class="w-3.5 h-3.5 opacity-40"></i>
                 <span class="text-black dark:text-white font-medium">{{ $quotation->quotation_number }}</span>
             </nav>
@@ -34,15 +34,15 @@
                 <h1 class="text-[20px] font-semibold text-black dark:text-white tracking-tight tabular-nums">{{ $quotation->quotation_number }}</h1>
                 @if($quotation->status === 'accepted')
                     <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#34C759]/12 text-[#248A3D] dark:text-[#30D158]">
-                        <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]"></span> Disetujui
+                        <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]"></span> {{ __('sales.quotations.status_accepted') }}
                     </span>
                 @elseif($quotation->status === 'sent')
                     <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#007AFF]/12 text-[#007AFF] dark:text-[#0A84FF]">
-                        <span class="w-1.5 h-1.5 rounded-full bg-[#007AFF]"></span> Terkirim
+                        <span class="w-1.5 h-1.5 rounded-full bg-[#007AFF]"></span> {{ __('sales.quotations.status_sent') }}
                     </span>
                 @elseif($quotation->status === 'rejected')
                     <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#FF3B30]/12 text-[#C41E17] dark:text-[#FF453A]">
-                        <span class="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span> Ditolak
+                        <span class="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span> {{ __('sales.quotations.status_rejected') }}
                     </span>
                 @else
                     <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-black/[0.06] dark:bg-white/[0.08] text-black/60 dark:text-white/60">
@@ -51,8 +51,7 @@
                 @endif
             </div>
             <p class="text-[13px] text-black/50 dark:text-white/50 mt-0.5">
-                Klien: <span class="font-medium text-black dark:text-white">{{ $quotation->customer->name }}</span> &bull; 
-                Total: <span class="font-medium text-black dark:text-white tabular-nums">Rp {{ number_format($quotation->total_amount, 0, ',', '.') }}</span>
+                {{ __('sales.quotations.client_meta', ['name' => $quotation->customer->name, 'total' => number_format($quotation->total_amount, 0, ',', '.')]) }}
             </p>
         </div>
 
@@ -63,20 +62,20 @@
                 @csrf
                 <button type="button" @click="openConvert()" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
                     <i data-lucide="arrow-right-circle" class="w-4 h-4"></i>
-                    <span>Ubah ke Sales Order</span>
+                    <span>{{ __('sales.quotations.btn_convert_to_so') }}</span>
                 </button>
             </form>
             @elseif($quotation->salesOrder)
             <a href="{{ route('sales.orders.show', $quotation->salesOrder) }}" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#0071E3]/15 active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5">
                 <i data-lucide="eye" class="w-4 h-4"></i>
-                <span>Lihat SO ({{ $quotation->salesOrder->so_number }})</span>
+                <span>{{ __('sales.quotations.btn_view_so', ['number' => $quotation->salesOrder->so_number]) }}</span>
             </a>
             @endif
 
             <!-- Print / Cetak -->
             <button onclick="window.print()" type="button" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5">
                 <i data-lucide="printer" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
-                <span>Cetak</span>
+                <span>{{ __('sales.quotations.btn_print') }}</span>
             </button>
 
             <!-- WhatsApp Share -->
@@ -87,12 +86,12 @@
             <a href="https://api.whatsapp.com/send?phone={{ preg_replace('/[^0-9]/', '', $quotation->customer->phone) }}&text={{ $waText }}" target="_blank"
                class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-[#248A3D] dark:text-[#30D158] bg-[#34C759]/10 hover:bg-[#34C759]/15 active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5">
                 <i data-lucide="message-circle" class="w-4 h-4"></i>
-                <span>WhatsApp</span>
+                <span>{{ __('sales.quotations.btn_whatsapp') }}</span>
             </a>
             @endif
 
             <a href="{{ route('sales.quotations.index') }}" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center">
-                Tutup
+                {{ __('sales.quotations.btn_close') }}
             </a>
         </div>
     </header>
@@ -105,17 +104,17 @@
         <div class="flex flex-col sm:flex-row justify-between items-start gap-6 border-b border-black/5 dark:border-white/10 pb-6">
             <div>
                 <h2 class="text-[22px] font-bold text-black dark:text-white tracking-tight">{{ $business->name }}</h2>
-                <p class="text-[13px] text-black/60 dark:text-white/60 mt-1">{{ $business->address ?? 'Operasional Bisnis' }}</p>
+                <p class="text-[13px] text-black/60 dark:text-white/60 mt-1">{{ $business->address ?? __('sales.quotations.doc_business_fallback') }}</p>
                 <p class="text-[13px] text-black/50 dark:text-white/50">{{ $business->phone ?? '' }} &bull; {{ $business->email ?? '' }}</p>
             </div>
 
             <div class="text-left sm:text-right">
-                <span class="text-[11px] font-semibold uppercase tracking-wider text-[#007AFF] dark:text-[#0A84FF]">Surat Penawaran Harga</span>
+                <span class="text-[11px] font-semibold uppercase tracking-wider text-[#007AFF] dark:text-[#0A84FF]">{{ __('sales.quotations.doc_heading_title') }}</span>
                 <p class="text-[20px] font-bold tabular-nums text-black dark:text-white mt-0.5">{{ $quotation->quotation_number }}</p>
                 <div class="mt-2 text-[12px] space-y-0.5 text-black/60 dark:text-white/60 tabular-nums">
-                    <p>Tanggal: <span class="font-medium text-black dark:text-white">{{ $quotation->date->format('d M Y') }}</span></p>
+                    <p>{{ __('sales.quotations.doc_date_label') }} <span class="font-medium text-black dark:text-white">{{ $quotation->date->format('d M Y') }}</span></p>
                     @if($quotation->expiry_date)
-                    <p>Berlaku Sampai: <span class="font-medium text-black dark:text-white">{{ $quotation->expiry_date->format('d M Y') }}</span></p>
+                    <p>{{ __('sales.quotations.doc_valid_until_label') }} <span class="font-medium text-black dark:text-white">{{ $quotation->expiry_date->format('d M Y') }}</span></p>
                     @endif
                 </div>
             </div>
@@ -123,7 +122,7 @@
 
         <!-- Kepada / Customer Details -->
         <div class="rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 p-4 max-w-sm">
-            <span class="text-[10px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40">DITUJUKAN KEPADA:</span>
+            <span class="text-[10px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40">{{ __('sales.quotations.doc_to_customer_label') }}</span>
             <h3 class="text-[15px] font-semibold text-black dark:text-white mt-1">{{ $quotation->customer->name }}</h3>
             @if($quotation->customer->company)
             <p class="text-[13px] text-black/60 dark:text-white/60">{{ $quotation->customer->company }}</p>
@@ -139,11 +138,11 @@
             <table class="w-full text-left text-[13px]">
                 <thead>
                     <tr class="border-b border-black/5 dark:border-white/10">
-                        <th class="px-3 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 w-12 text-center">No.</th>
-                        <th class="px-3 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40">Deskripsi Item</th>
-                        <th class="px-3 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right w-36">Harga Satuan</th>
-                        <th class="px-3 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right w-24">Jumlah</th>
-                        <th class="px-3 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right w-36">Subtotal</th>
+                        <th class="px-3 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 w-12 text-center">{{ __('sales.quotations.doc_col_num') }}</th>
+                        <th class="px-3 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40">{{ __('sales.quotations.doc_col_desc') }}</th>
+                        <th class="px-3 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right w-36">{{ __('sales.quotations.doc_col_unit_price') }}</th>
+                        <th class="px-3 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right w-24">{{ __('sales.quotations.doc_col_qty') }}</th>
+                        <th class="px-3 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right w-36">{{ __('sales.quotations.doc_col_subtotal') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
@@ -175,31 +174,31 @@
         <div class="flex flex-col sm:flex-row justify-between items-start gap-6 pt-4 border-t border-black/5 dark:border-white/10">
             <div class="space-y-1.5 text-[12px] text-black/60 dark:text-white/60 max-w-sm">
                 @if($quotation->notes)
-                <p class="font-semibold text-black dark:text-white">Catatan Tambahan:</p>
+                <p class="font-semibold text-black dark:text-white">{{ __('sales.quotations.doc_additional_notes') }}</p>
                 <p class="whitespace-pre-line text-black/70 dark:text-white/70">{{ $quotation->notes }}</p>
                 @endif
-                <p class="text-[11px] text-black/40 dark:text-white/40 pt-2">Diterbitkan secara digital oleh COOCA ID.</p>
+                <p class="text-[11px] text-black/40 dark:text-white/40 pt-2">{{ __('sales.quotations.doc_digital_notice') }}</p>
             </div>
 
             <div class="w-full sm:w-72 space-y-2 text-[13px]">
                 <div class="flex justify-between text-black/60 dark:text-white/60">
-                    <span>Subtotal:</span>
+                    <span>{{ __('sales.quotations.doc_subtotal_label') }}</span>
                     <span class="font-semibold tabular-nums text-black dark:text-white">Rp {{ number_format($quotation->subtotal, 0, ',', '.') }}</span>
                 </div>
                 @if($quotation->discount_amount > 0)
                 <div class="flex justify-between text-[#FF3B30] dark:text-[#FF453A]">
-                    <span>Diskon:</span>
+                    <span>{{ __('sales.quotations.doc_discount_label') }}</span>
                     <span class="font-semibold tabular-nums">- Rp {{ number_format($quotation->discount_amount, 0, ',', '.') }}</span>
                 </div>
                 @endif
                 @if($quotation->tax_amount > 0)
                 <div class="flex justify-between text-black/60 dark:text-white/60">
-                    <span>Pajak (PPN):</span>
+                    <span>{{ __('sales.quotations.doc_tax_label') }}</span>
                     <span class="font-semibold tabular-nums text-black dark:text-white">Rp {{ number_format($quotation->tax_amount, 0, ',', '.') }}</span>
                 </div>
                 @endif
                 <div class="pt-2 border-t border-black/5 dark:border-white/10 flex justify-between text-[16px] font-bold text-black dark:text-white">
-                    <span>Total Penawaran:</span>
+                    <span>{{ __('sales.quotations.doc_total_label') }}</span>
                     <span class="text-[#007AFF] dark:text-[#0A84FF] tabular-nums">Rp {{ number_format($quotation->total_amount, 0, ',', '.') }}</span>
                 </div>
             </div>
@@ -240,18 +239,18 @@
                     x-transition:leave-end="opacity-0 scale-95">
 
                     <div class="px-5 pt-5 pb-4">
-                        <p id="quotation-convert-dialog-title" class="text-[17px] font-semibold text-black dark:text-white">Ubah ke Sales Order?</p>
+                        <p id="quotation-convert-dialog-title" class="text-[17px] font-semibold text-black dark:text-white">{{ __('sales.quotations.modal_convert_title') }}</p>
                         <p class="text-[13px] text-black/60 dark:text-white/60 mt-1.5 leading-snug">
-                            Surat penawaran ini akan dikonversi menjadi Pesanan Penjualan resmi dan siap diproses di modul penjualan.
+                            {{ __('sales.quotations.modal_convert_prompt') }}
                         </p>
                     </div>
 
                     <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
                         <button type="button" @click="closeConvert()" class="min-h-[44px] py-3 text-black/70 dark:text-white/70 border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
-                            Batal
+                            {{ __('sales.quotations.modal_btn_cancel') }}
                         </button>
                         <button type="button" @click="submitConvert()" class="min-h-[44px] py-3 text-[#007AFF] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
-                            Konversi
+                            {{ __('sales.quotations.modal_btn_convert') }}
                         </button>
                     </div>
                 </div>

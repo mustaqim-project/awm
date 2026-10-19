@@ -392,4 +392,9 @@ return [
     'peace_of_mind_delete_group' => 'Tenang: Riwayat transaksi penjualan masa lalu yang menggunakan varian ini tetap aman tersimpan.',
     'modal_delete_option_title' => 'Hapus Opsi Varian?',
     'modal_delete_option_desc' => 'akan dihapus dari grup ini.',
+    'import_recipe_title' => 'Import formula resep dari file Excel / CSV',
+    'label_portion' => 'Takaran',
+    'price_label' => 'Harga',
+    'waste_label' => 'susut',
+    'notes_label' => 'Catatan',
 ];

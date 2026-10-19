@@ -1,0 +1,150 @@
+<?php
+
+return [
+    // Page & Header Titles
+    'title' => 'Raw Materials & Pricing',
+    'header_title' => 'Raw Materials & Suppliers Catalog',
+    'header_subtitle' => 'Manage effective acquisition cost, yield rate, waste percentage, and material price history',
+    'breadcrumb_dashboard' => 'Dashboard',
+    'breadcrumb_materials' => 'Raw Materials',
+    'breadcrumb_catalog' => 'Materials Catalog',
+    'catalog_title' => 'Raw Materials & Suppliers Catalog',
+    'catalog_subtitle' => 'Manage effective purchase cost, waste/yield rate, and raw material supplier relationships',
+    'export_excel' => 'Export Excel',
+    'export_excel_title' => 'Export full raw materials catalog to Excel file (.xlsx)',
+    'import_excel' => 'Import Excel',
+    'import_excel_title' => 'Bulk import raw materials from Excel / CSV file',
+    'add_material' => 'Add Raw Material',
+
+    // JS / Alpine Messages
+    'error_save_category' => 'Failed to save category',
+    'error_save_unit' => 'Failed to save unit',
+    'error_save_supplier' => 'Failed to save supplier',
+
+    // Bento KPI Summary
+    'kpi_total_materials' => 'Total Raw Materials',
+    'kpi_registered_items' => 'Registered Items',
+    'kpi_categories' => 'Material Categories',
+    'kpi_classification' => 'Classifications',
+    'kpi_suppliers' => 'Vendor Suppliers',
+    'kpi_active_vendors' => 'Active Vendors',
+    'kpi_waste_management' => 'Waste Management',
+    'kpi_yield_waste' => 'Yield & Waste',
+    'kpi_auto_cogs' => 'Automatic COGS',
+
+    // Search and Filters
+    'search_placeholder' => 'Search material name or SKU...',
+    'all_categories' => 'All Categories',
+    'btn_reset' => 'Reset',
+
+    // Table Headers
+    'th_name_sku' => 'Material Name & SKU',
+    'th_category' => 'Category',
+    'th_unit' => 'Purchase Unit',
+    'th_last_purchase_price' => 'Last Purchase Price',
+    'th_yield_waste' => 'Yield / Waste',
+    'th_effective_cost' => 'Effective Cost / Unit',
+    'th_actions' => 'Action',
+
+    // Table Row & Badges
+    'no_sku' => 'No SKU',
+    'supplier_prefix' => 'Supplier:',
+    'general_category' => 'General',
+    'default_unit' => 'pcs',
+    'yield_badge' => ':pct% Yield',
+    'waste_badge' => ':pct% Waste',
+    'btn_update_price' => 'Update Price',
+    'btn_edit' => 'Edit',
+    'title_edit_spec' => 'Edit Material Specification',
+    'btn_delete' => 'Delete',
+    'title_delete_material' => 'Delete Raw Material',
+    'empty_materials' => 'No raw material records found.',
+
+    // Mobile Grouped Card
+    'label_last_purchase_price' => 'Last Purchase Price:',
+    'label_supplier' => 'Supplier:',
+    'btn_price_short' => 'Price',
+
+    // Modal: Tambah Bahan Baku
+    'modal_add_badge' => 'Inventory Form',
+    'modal_add_title' => 'Add New Raw Material',
+    'section_identity' => 'Raw Material Identity',
+    'label_material_name' => 'Raw Material Name',
+    'placeholder_material_name' => 'e.g. High Protein Wheat Flour',
+    'label_sku_barcode' => 'SKU Code / Barcode',
+    'placeholder_sku' => 'MAT-001 (optional)',
+    'label_purchase_unit' => 'Purchase Unit',
+    'btn_new_unit' => 'New Unit',
+    'label_category' => 'Material Category',
+    'btn_new_category' => 'Category',
+    'option_no_category' => '-- No Category --',
+    'label_primary_supplier' => 'Primary Supplier',
+    'btn_new_supplier' => 'Supplier',
+    'option_no_supplier' => '-- No Supplier --',
+    'section_efficiency' => 'Material Efficiency (Yield & Waste)',
+    'label_yield_pct' => 'Yield Percentage (%)',
+    'standard_yield' => 'Standard: 100%',
+    'label_waste_pct' => 'Waste Percentage (%)',
+    'standard_waste' => 'Standard: 0%',
+    'section_initial_price' => 'Initial Purchase Pricing',
+    'label_net_purchase_price' => 'Net Purchase Price (Rp)',
+    'label_shipping_cost' => 'Shipping Cost',
+    'label_purchase_discount' => 'Purchase Discount',
+    'label_est_effective_cost' => 'Estimated Effective Cost / Unit',
+    'sub_est_effective_cost' => 'Includes shipping, discount & yield factor',
+    'btn_cancel' => 'Cancel',
+    'btn_save_material' => 'Save Raw Material',
+
+    // Modal: Update Harga Bahan
+    'modal_price_badge' => 'Purchase Price History',
+    'modal_price_default_title' => 'Update Price',
+    'label_new_purchase_price' => 'New Purchase Price (Rp)',
+    'label_supplier_vendor' => 'Supplier / Vendor',
+    'option_same_supplier' => '-- Same Supplier / General --',
+    'label_adjustment_notes' => 'Adjustment Notes',
+    'placeholder_notes' => 'e.g. Factory price increase',
+    'btn_save_price_history' => 'Save Price History',
+
+    // Modal: Edit Spesifikasi Bahan
+    'modal_edit_badge' => 'Edit Master Data',
+    'modal_edit_title' => 'Change Material Specifications',
+    'btn_save_changes' => 'Save Changes',
+
+    // Quick Add Modals
+    'modal_quick_sup_title' => 'Add New Supplier',
+    'label_sup_name' => 'Supplier / Vendor Name',
+    'placeholder_sup_name' => 'e.g. PT Bogasari Flour Mills',
+    'label_sup_pic' => 'PIC / Contact Person',
+    'placeholder_sup_pic' => 'John Doe',
+    'label_sup_phone' => 'Mobile / WhatsApp',
+    'placeholder_sup_phone' => '08123456789',
+    'label_sup_address' => 'Warehouse / Office Address',
+    'placeholder_sup_address' => 'City / Delivery address',
+    'btn_saving' => 'Saving...',
+    'btn_save_supplier' => 'Save Supplier',
+
+    'modal_quick_cat_title' => 'Add Material Category',
+    'label_cat_name' => 'Category Name',
+    'placeholder_cat_name' => 'e.g. Natural Spices & Seasoning',
+    'label_cat_desc' => 'Category Description',
+    'placeholder_cat_desc' => 'Material classification notes...',
+    'btn_save_category' => 'Save Category',
+
+    'modal_quick_unit_title' => 'Add New Purchase Unit',
+    'label_unit_code' => 'Code / Symbol',
+    'placeholder_unit_code' => 'sack / jerrycan',
+    'label_unit_dimension' => 'Dimension Type',
+    'unit_type_weight' => 'Weight (kg, sack)',
+    'unit_type_volume' => 'Volume (liter, ml)',
+    'unit_type_quantity' => 'Quantity (pcs, pack)',
+    'unit_type_custom' => 'Other',
+    'label_unit_name' => 'Full Unit Name',
+    'placeholder_unit_name' => 'e.g. 25 Kilogram Sack',
+    'btn_save_unit' => 'Save Unit',
+
+    // Apple Alert Dialog (Hapus)
+    'dialog_delete_title' => 'Delete Raw Material?',
+    'dialog_delete_prefix' => 'Material',
+    'dialog_delete_suffix' => 'will be removed from the inventory master list.',
+    'dialog_delete_microcopy' => 'Don\'t worry: Historical product recipes (BOM) and Goods Receipt purchase records utilizing this material remain safely stored.',
+];

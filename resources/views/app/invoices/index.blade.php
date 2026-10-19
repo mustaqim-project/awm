@@ -1,7 +1,7 @@
 @extends('layouts.app', [
-    'title' => 'Faktur Penjualan (Invoices)',
-    'headerTitle' => 'Manajemen Faktur & Penagihan',
-    'headerSubtitle' => 'Kelola faktur penjualan komersial, pelacakan piutang, dan pencatatan pembayaran'
+    'title' => __('sales.invoices.page_title'),
+    'headerTitle' => __('sales.invoices.header_title'),
+    'headerSubtitle' => __('sales.invoices.header_subtitle')
 ])
 
 @section('content')
@@ -27,13 +27,13 @@
 
     <x-module-header
         module="sales"
-        title="Faktur Penjualan"
-        subtitle="Kelola faktur komersial, pelacakan piutang, dan pencatatan pembayaran">
+        :title="__('sales.invoices.module_title')"
+        :subtitle="__('sales.invoices.module_subtitle')">
         @if(\App\Support\Context::hasPermission('invoices.export'))
         <a href="{{ route('invoices.export-excel') }}"
            class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.97] transition-all flex items-center justify-center gap-2">
             <i data-lucide="file-spreadsheet" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
-            <span>Export CSV</span>
+            <span>{{ __('sales.invoices.btn_export_csv') }}</span>
         </a>
         @endif
 
@@ -41,7 +41,7 @@
         <a href="{{ route('invoices.create') }}"
            class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all flex items-center justify-center gap-2 shadow-sm shadow-[#007AFF]/25">
             <i data-lucide="plus" class="w-4 h-4"></i>
-            <span>Buat Faktur Baru</span>
+            <span>{{ __('sales.invoices.btn_create_new') }}</span>
         </a>
         @endif
     </x-module-header>
@@ -74,45 +74,45 @@
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <!-- Tile 1: Total Nilai Faktur (Neutral) -->
         <div class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between">
-            <span class="text-[12px] font-medium text-black/50 dark:text-white/50">Total Nilai Faktur</span>
+            <span class="text-[12px] font-medium text-black/50 dark:text-white/50">{{ __('sales.invoices.kpi_total_invoiced') }}</span>
             <div class="mt-2 flex items-baseline justify-between">
                 <span class="text-[20px] sm:text-[22px] font-bold tabular-nums text-black dark:text-white">
                     {{ $business->currency_symbol }} {{ number_format($totalInvoiced, 0, ',', '.') }}
                 </span>
-                <span class="text-[11px] text-black/40 dark:text-white/40">Tertagih</span>
+                <span class="text-[11px] text-black/40 dark:text-white/40">{{ __('sales.invoices.kpi_invoiced_sub') }}</span>
             </div>
         </div>
 
         <!-- Tile 2: Sudah Diterima (System Green for Profit/Paid) -->
         <div class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between">
-            <span class="text-[12px] font-medium text-black/50 dark:text-white/50">Sudah Diterima (Lunas)</span>
+            <span class="text-[12px] font-medium text-black/50 dark:text-white/50">{{ __('sales.invoices.kpi_total_paid') }}</span>
             <div class="mt-2 flex items-baseline justify-between">
                 <span class="text-[20px] sm:text-[22px] font-bold tabular-nums text-[#34C759] dark:text-[#30D158]">
                     {{ $business->currency_symbol }} {{ number_format($totalPaid, 0, ',', '.') }}
                 </span>
-                <span class="text-[11px] font-medium text-[#34C759] dark:text-[#30D158]">Kas Masuk</span>
+                <span class="text-[11px] font-medium text-[#34C759] dark:text-[#30D158]">{{ __('sales.invoices.kpi_paid_sub') }}</span>
             </div>
         </div>
 
         <!-- Tile 3: Sisa Piutang (System Orange for Receivables) -->
         <div class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between">
-            <span class="text-[12px] font-medium text-black/50 dark:text-white/50">Sisa Piutang Belum Bayar</span>
+            <span class="text-[12px] font-medium text-black/50 dark:text-white/50">{{ __('sales.invoices.kpi_unpaid_receivables') }}</span>
             <div class="mt-2 flex items-baseline justify-between">
                 <span class="text-[20px] sm:text-[22px] font-bold tabular-nums text-[#FF9500] dark:text-[#FF9F0A]">
                     {{ $business->currency_symbol }} {{ number_format($totalReceivables, 0, ',', '.') }}
                 </span>
-                <span class="text-[11px] font-medium text-[#FF9500] dark:text-[#FF9F0A]">Tertunda</span>
+                <span class="text-[11px] font-medium text-[#FF9500] dark:text-[#FF9F0A">{{ __('sales.invoices.kpi_unpaid_sub') }}</span>
             </div>
         </div>
 
         <!-- Tile 4: Laba Kotor Riil (System Green) -->
         <div class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between">
-            <span class="text-[12px] font-medium text-black/50 dark:text-white/50">Laba Kotor Riil (Gross Profit)</span>
+            <span class="text-[12px] font-medium text-black/50 dark:text-white/50">{{ __('sales.invoices.kpi_gross_profit') }}</span>
             <div class="mt-2 flex items-baseline justify-between">
                 <span class="text-[20px] sm:text-[22px] font-bold tabular-nums text-[#34C759] dark:text-[#30D158]">
                     {{ $business->currency_symbol }} {{ number_format($totalGrossProfit, 0, ',', '.') }}
                 </span>
-                <span class="text-[11px] font-medium text-[#34C759] dark:text-[#30D158]">Margin</span>
+                <span class="text-[11px] font-medium text-[#34C759] dark:text-[#30D158">{{ __('sales.invoices.kpi_margin_sub') }}</span>
             </div>
         </div>
     </div>
@@ -128,7 +128,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                 </svg>
                 <input type="text" name="search" value="{{ request('search') }}"
-                       placeholder="Cari no. faktur, nama klien, atau perusahaan..."
+                       placeholder="{{ __('sales.invoices.search_placeholder') }}"
                        class="w-full h-9 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] pl-9 pr-3 text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
             </div>
 
@@ -136,19 +136,19 @@
             <div class="flex items-center gap-2">
                 <select name="status" onchange="this.form.submit()"
                         class="h-9 px-3 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                    <option value="">Semua Status Tagihan</option>
-                    <option value="draft" {{ request('status') === 'draft' ? 'selected' : '' }}>Draft (Konsep)</option>
-                    <option value="sent" {{ request('status') === 'sent' ? 'selected' : '' }}>Terkirim (Sent)</option>
-                    <option value="unpaid" {{ request('status') === 'unpaid' ? 'selected' : '' }}>Belum Bayar (Unpaid)</option>
-                    <option value="partially_paid" {{ request('status') === 'partially_paid' ? 'selected' : '' }}>Cicilan (Partially Paid)</option>
-                    <option value="paid" {{ request('status') === 'paid' ? 'selected' : '' }}>Lunas (Paid)</option>
-                    <option value="overdue" {{ request('status') === 'overdue' ? 'selected' : '' }}>Jatuh Tempo (Overdue)</option>
-                    <option value="void" {{ request('status') === 'void' ? 'selected' : '' }}>Dibatalkan (Void)</option>
+                    <option value="">{{ __('sales.invoices.filter_all_status') }}</option>
+                    <option value="draft" {{ request('status') === 'draft' ? 'selected' : '' }}>{{ __('sales.invoices.status_draft') }}</option>
+                    <option value="sent" {{ request('status') === 'sent' ? 'selected' : '' }}>{{ __('sales.invoices.status_sent') }}</option>
+                    <option value="unpaid" {{ request('status') === 'unpaid' ? 'selected' : '' }}>{{ __('sales.invoices.status_unpaid') }}</option>
+                    <option value="partially_paid" {{ request('status') === 'partially_paid' ? 'selected' : '' }}>{{ __('sales.invoices.status_partially_paid') }}</option>
+                    <option value="paid" {{ request('status') === 'paid' ? 'selected' : '' }}>{{ __('sales.invoices.status_paid') }}</option>
+                    <option value="overdue" {{ request('status') === 'overdue' ? 'selected' : '' }}>{{ __('sales.invoices.status_overdue') }}</option>
+                    <option value="void" {{ request('status') === 'void' ? 'selected' : '' }}>{{ __('sales.invoices.status_void') }}</option>
                 </select>
 
                 @if(request('search') || request('status'))
                     <a href="{{ route('invoices.index') }}" class="h-9 px-3 rounded-[10px] text-[12px] font-medium text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 flex items-center justify-center transition">
-                        Reset Filter
+                        {{ __('sales.invoices.btn_reset_filter') }}
                     </a>
                 @endif
             </div>
@@ -158,19 +158,21 @@
     <!-- ===================================================== -->
     <!-- 4. DENSE DATA TABLE (DESKTOP & TABLET)                 -->
     <!-- ===================================================== -->
+    <!-- 4. DENSE DATA TABLE (DESKTOP & TABLET)                 -->
+    <!-- ===================================================== -->
     <div x-data="coocaTableSort()" class="hidden sm:block rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 overflow-hidden">
         <div class="overflow-x-auto">
             <table class="w-full text-left text-[13px]">
                 <thead>
                     <tr class="border-b border-black/5 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02]">
-                        <x-table-sort-th :col="0" type="string" title="Nomor Faktur & Tanggal" class="whitespace-nowrap" />
-                        <x-table-sort-th :col="1" type="string" title="Pelanggan / Klien" class="whitespace-nowrap" />
-                        <x-table-sort-th :col="2" type="date" title="Jatuh Tempo" class="whitespace-nowrap" />
-                        <x-table-sort-th :col="3" type="string" title="Status" align="center" class="whitespace-nowrap" />
-                        <x-table-sort-th :col="4" type="number" title="Total Tagihan" align="right" class="whitespace-nowrap" />
-                        <x-table-sort-th :col="5" type="number" title="Sisa Piutang" align="right" class="whitespace-nowrap" />
-                        <x-table-sort-th :col="6" type="number" title="Laba Kotor" align="right" class="whitespace-nowrap" />
-                        <th class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right whitespace-nowrap">Aksi</th>
+                        <x-table-sort-th :col="0" type="string" :title="__('sales.invoices.col_invoice_number') . ' & ' . __('sales.invoices.col_date')" class="whitespace-nowrap" />
+                        <x-table-sort-th :col="1" type="string" :title="__('sales.invoices.col_customer')" class="whitespace-nowrap" />
+                        <x-table-sort-th :col="2" type="date" :title="__('sales.invoices.col_due_date')" class="whitespace-nowrap" />
+                        <x-table-sort-th :col="3" type="string" :title="__('sales.invoices.col_status')" align="center" class="whitespace-nowrap" />
+                        <x-table-sort-th :col="4" type="number" :title="__('sales.invoices.col_total_amount')" align="right" class="whitespace-nowrap" />
+                        <x-table-sort-th :col="5" type="number" :title="__('sales.invoices.col_balance_due')" align="right" class="whitespace-nowrap" />
+                        <x-table-sort-th :col="6" type="number" :title="__('sales.invoices.col_gross_profit')" align="right" class="whitespace-nowrap" />
+                        <th class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right whitespace-nowrap">{{ __('sales.invoices.col_actions') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
@@ -188,7 +190,7 @@
                             @endif
                         </td>
                         <td data-sort-value="{{ strtolower($inv->customer?->name ?? '') }}" class="py-3 px-4">
-                            <div class="font-medium text-black dark:text-white">{{ $inv->customer?->name ?? 'Pelanggan' }}</div>
+                            <div class="font-medium text-black dark:text-white">{{ $inv->customer?->name ?? __('sales.invoices.col_customer') }}</div>
                             @if($inv->customer?->company_name)
                                 <div class="text-[11px] text-black/45 dark:text-white/45">{{ $inv->customer->company_name }}</div>
                             @endif
@@ -197,20 +199,20 @@
                             <div>{{ $inv->due_date?->translatedFormat('d M Y') }}</div>
                             @if($inv->balance_due > 0 && $inv->due_date && $inv->due_date->isPast())
                                 <span class="inline-flex items-center text-[10px] font-semibold text-[#FF3B30] dark:text-[#FF453A]">
-                                    Terlewat {{ $inv->due_date->diffForHumans() }}
+                                    {{ __('sales.invoices.overdue_diff', ['diff' => $inv->due_date->diffForHumans()]) }}
                                 </span>
                             @endif
                         </td>
                         <td data-sort-value="{{ $inv->status }}" class="py-3 px-4 text-center">
                             @php
                                 $statusStyles = [
-                                    'draft' => ['bg' => 'bg-black/6 dark:bg-white/8', 'text' => 'text-black/55 dark:text-white/55', 'dot' => 'bg-black/40 dark:bg-white/40', 'label' => 'Draft'],
-                                    'sent' => ['bg' => 'bg-[#007AFF]/12', 'text' => 'text-[#007AFF] dark:text-[#0A84FF]', 'dot' => 'bg-[#007AFF]', 'label' => 'Terkirim'],
-                                    'unpaid' => ['bg' => 'bg-[#FF9500]/12', 'text' => 'text-[#B25E00] dark:text-[#FF9F0A]', 'dot' => 'bg-[#FF9500]', 'label' => 'Belum Bayar'],
-                                    'partially_paid' => ['bg' => 'bg-[#FF9500]/12', 'text' => 'text-[#B25E00] dark:text-[#FF9F0A]', 'dot' => 'bg-[#FF9500]', 'label' => 'Cicilan'],
-                                    'paid' => ['bg' => 'bg-[#34C759]/12', 'text' => 'text-[#248A3D] dark:text-[#30D158]', 'dot' => 'bg-[#34C759]', 'label' => 'Lunas'],
-                                    'overdue' => ['bg' => 'bg-[#FF3B30]/12', 'text' => 'text-[#C41E17] dark:text-[#FF453A]', 'dot' => 'bg-[#FF3B30]', 'label' => 'Jatuh Tempo'],
-                                    'void' => ['bg' => 'bg-black/6 dark:bg-white/8', 'text' => 'text-black/40 dark:text-white/40 line-through', 'dot' => 'bg-black/30', 'label' => 'Dibatalkan'],
+                                    'draft' => ['bg' => 'bg-black/6 dark:bg-white/8', 'text' => 'text-black/55 dark:text-white/55', 'dot' => 'bg-black/40 dark:bg-white/40', 'label' => __('sales.invoices.status_draft')],
+                                    'sent' => ['bg' => 'bg-[#007AFF]/12', 'text' => 'text-[#007AFF] dark:text-[#0A84FF]', 'dot' => 'bg-[#007AFF]', 'label' => __('sales.invoices.status_sent')],
+                                    'unpaid' => ['bg' => 'bg-[#FF9500]/12', 'text' => 'text-[#B25E00] dark:text-[#FF9F0A]', 'dot' => 'bg-[#FF9500]', 'label' => __('sales.invoices.status_unpaid')],
+                                    'partially_paid' => ['bg' => 'bg-[#FF9500]/12', 'text' => 'text-[#B25E00] dark:text-[#FF9F0A]', 'dot' => 'bg-[#FF9500]', 'label' => __('sales.invoices.status_partially_paid')],
+                                    'paid' => ['bg' => 'bg-[#34C759]/12', 'text' => 'text-[#248A3D] dark:text-[#30D158]', 'dot' => 'bg-[#34C759]', 'label' => __('sales.invoices.status_paid')],
+                                    'overdue' => ['bg' => 'bg-[#FF3B30]/12', 'text' => 'text-[#C41E17] dark:text-[#FF453A]', 'dot' => 'bg-[#FF3B30]', 'label' => __('sales.invoices.status_overdue')],
+                                    'void' => ['bg' => 'bg-black/6 dark:bg-white/8', 'text' => 'text-black/40 dark:text-white/40 line-through', 'dot' => 'bg-black/30', 'label' => __('sales.invoices.status_void')],
                                 ];
                                 $style = $statusStyles[$inv->status] ?? $statusStyles['draft'];
                             @endphp
@@ -230,20 +232,20 @@
                         </td>
                         <td class="py-3 px-4 text-right">
                             <div class="flex items-center justify-end gap-1">
-                                <a href="{{ route('invoices.show', $inv->id) }}" class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#007AFF] hover:bg-[#007AFF]/8 transition-colors flex items-center" title="Lihat Faktur">
-                                    Detail
+                                <a href="{{ route('invoices.show', $inv->id) }}" class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#007AFF] hover:bg-[#007AFF]/8 transition-colors flex items-center" title="{{ __('sales.invoices.btn_detail') }}">
+                                    {{ __('sales.invoices.btn_detail') }}
                                 </a>
                                 @if($inv->status === 'draft' && (\App\Support\Context::hasPermission('invoices.edit') || \App\Support\Context::hasPermission('invoices.create')))
-                                    <a href="{{ route('invoices.edit', $inv->id) }}" class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#FF9500] hover:bg-[#FF9500]/10 transition-colors flex items-center" title="Edit Draf Faktur">
-                                        Edit
+                                    <a href="{{ route('invoices.edit', $inv->id) }}" class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#FF9500] hover:bg-[#FF9500]/10 transition-colors flex items-center" title="{{ __('sales.invoices.btn_edit_invoice') }}">
+                                        {{ __('sales.invoices.breadcrumb_edit') }}
                                     </a>
                                 @endif
-                                <a href="{{ route('invoices.print', $inv->id) }}" target="_blank" class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition-colors flex items-center" title="Cetak Faktur">
-                                    Cetak
+                                <a href="{{ route('invoices.print', $inv->id) }}" target="_blank" class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition-colors flex items-center" title="{{ __('sales.invoices.btn_print') }}">
+                                    {{ __('sales.invoices.print_heading') }}
                                 </a>
                                 @if($inv->status === 'draft' || $inv->status === 'void')
-                                    <button type="button" @click="openDelete('{{ route('invoices.destroy', $inv->id) }}', '{{ addslashes($inv->invoice_number) }}')" class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#FF3B30] hover:bg-[#FF3B30]/8 transition-colors flex items-center" title="Hapus Faktur">
-                                        Hapus
+                                    <button type="button" @click="openDelete('{{ route('invoices.destroy', $inv->id) }}', '{{ addslashes($inv->invoice_number) }}')" class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#FF3B30] hover:bg-[#FF3B30]/8 transition-colors flex items-center" title="{{ __('sales.invoices.btn_delete') }}">
+                                        {{ __('sales.invoices.btn_delete') }}
                                     </button>
                                 @endif
                             </div>
@@ -256,8 +258,8 @@
                                 <svg class="w-10 h-10 text-black/20 dark:text-white/20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
                                 </svg>
-                                <p class="text-[13px] font-medium">Belum ada faktur penjualan yang diterbitkan.</p>
-                                <p class="text-[11px] text-black/40 dark:text-white/40">Buat faktur baru atau terbitkan langsung dari purchase order pelanggan.</p>
+                                <p class="text-[13px] font-medium">{{ __('sales.invoices.empty_title') }}</p>
+                                <p class="text-[11px] text-black/40 dark:text-white/40">{{ __('sales.invoices.empty_desc') }}</p>
                             </div>
                         </td>
                     </tr>
@@ -269,7 +271,7 @@
         @if($invoices->hasPages())
         <div class="px-4 py-3 border-t border-black/5 dark:border-white/10 flex items-center justify-between text-[13px] text-black/60 dark:text-white/60">
             <div>
-                Menampilkan <span class="font-medium text-black dark:text-white tabular-nums">{{ $invoices->firstItem() ?? 0 }}–{{ $invoices->lastItem() ?? 0 }}</span> dari <span class="font-medium text-black dark:text-white tabular-nums">{{ $invoices->total() }}</span> faktur
+                {{ __('sales.invoices.pagination_showing') }} <span class="font-medium text-black dark:text-white tabular-nums">{{ $invoices->firstItem() ?? 0 }}–{{ $invoices->lastItem() ?? 0 }}</span> {{ __('sales.invoices.pagination_of') }} <span class="font-medium text-black dark:text-white tabular-nums">{{ $invoices->total() }}</span> {{ __('sales.invoices.pagination_invoices') }}
             </div>
             <div>
                 {{ $invoices->links() }}
@@ -285,13 +287,13 @@
         @forelse($invoices as $inv)
             @php
                 $statusStyles = [
-                    'draft' => ['dot' => 'bg-black/40', 'label' => 'Draft'],
-                    'sent' => ['dot' => 'bg-[#007AFF]', 'label' => 'Sent'],
-                    'unpaid' => ['dot' => 'bg-[#FF9500]', 'label' => 'Unpaid'],
-                    'partially_paid' => ['dot' => 'bg-[#FF9500]', 'label' => 'Cicilan'],
-                    'paid' => ['dot' => 'bg-[#34C759]', 'label' => 'Lunas'],
-                    'overdue' => ['dot' => 'bg-[#FF3B30]', 'label' => 'Overdue'],
-                    'void' => ['dot' => 'bg-black/30', 'label' => 'Void'],
+                    'draft' => ['dot' => 'bg-black/40', 'label' => __('sales.invoices.status_draft')],
+                    'sent' => ['dot' => 'bg-[#007AFF]', 'label' => __('sales.invoices.status_sent')],
+                    'unpaid' => ['dot' => 'bg-[#FF9500]', 'label' => __('sales.invoices.status_unpaid')],
+                    'partially_paid' => ['dot' => 'bg-[#FF9500]', 'label' => __('sales.invoices.status_partially_paid')],
+                    'paid' => ['dot' => 'bg-[#34C759]', 'label' => __('sales.invoices.status_paid')],
+                    'overdue' => ['dot' => 'bg-[#FF3B30]', 'label' => __('sales.invoices.status_overdue')],
+                    'void' => ['dot' => 'bg-black/30', 'label' => __('sales.invoices.status_void')],
                 ];
                 $style = $statusStyles[$inv->status] ?? $statusStyles['draft'];
             @endphp
@@ -305,24 +307,24 @@
                         </span>
                     </div>
                     <p class="text-[13px] text-black/60 dark:text-white/60 mt-0.5 truncate">
-                        {{ $inv->customer?->name ?? 'Pelanggan' }} · {{ $inv->invoice_date?->translatedFormat('d M Y') }}
+                        {{ $inv->customer?->name ?? __('sales.invoices.col_customer') }} · {{ $inv->invoice_date?->translatedFormat('d M Y') }}
                     </p>
                     <p class="text-[13px] font-semibold tabular-nums mt-0.5 text-black dark:text-white">
                         {{ $business->currency_symbol }} {{ number_format((float) $inv->total_amount, 0, ',', '.') }}
                         @if($inv->balance_due > 0)
                             <span class="text-[11px] font-medium text-[#FF9500] dark:text-[#FF9F0A] ml-1">
-                                (Sisa: {{ $business->currency_symbol }} {{ number_format((float)$inv->balance_due, 0, ',', '.') }})
+                                ({{ __('sales.invoices.card_remaining_balance') }} {{ $business->currency_symbol }} {{ number_format((float)$inv->balance_due, 0, ',', '.') }})
                             </span>
                         @endif
                     </p>
                 </a>
                 <div class="flex items-center gap-1.5 shrink-0">
                     <a href="{{ route('invoices.show', $inv->id) }}" class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium text-[#007AFF] bg-[#007AFF]/10 flex items-center">
-                        Detail
+                        {{ __('sales.invoices.btn_detail') }}
                     </a>
                     @if($inv->status === 'draft' && (\App\Support\Context::hasPermission('invoices.edit') || \App\Support\Context::hasPermission('invoices.create')))
                         <a href="{{ route('invoices.edit', $inv->id) }}" class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium text-[#FF9500] bg-[#FF9500]/10 flex items-center">
-                            Edit
+                            {{ __('sales.invoices.breadcrumb_edit') }}
                         </a>
                     @endif
                     @if($inv->status === 'draft' || $inv->status === 'void')
@@ -336,7 +338,7 @@
             </div>
         @empty
             <div class="p-8 text-center text-black/40 dark:text-white/40 text-[13px]">
-                Belum ada faktur penjualan yang diterbitkan.
+                {{ __('sales.invoices.empty_title') }}
             </div>
         @endforelse
 
@@ -381,20 +383,20 @@
                      x-transition:leave-end="opacity-0 scale-95">
 
                     <div class="px-4 pt-5 pb-4">
-                        <p id="invoice-delete-dialog-title" class="text-[17px] font-semibold text-black dark:text-white">Hapus Faktur?</p>
+                        <p id="invoice-delete-dialog-title" class="text-[17px] font-semibold text-black dark:text-white">{{ __('sales.invoices.delete_modal_title') }}</p>
                         <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
-                            Faktur <span x-text="deleteTarget.name" class="font-medium text-black dark:text-white"></span> akan dihapus permanen dari sistem.
+                            {{ __('sales.invoices.delete_modal_prompt') }}
                         </p>
                     </div>
 
                     <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
                         <button type="button" @click="closeDelete()"
                                 class="min-h-[44px] py-3 text-[#007AFF] border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
-                            Batal
+                            {{ __('sales.invoices.delete_btn_cancel') }}
                         </button>
                         <button type="button" @click="submitDelete()"
                                 class="min-h-[44px] py-3 text-[#FF3B30] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
-                            Hapus
+                            {{ __('sales.invoices.delete_btn_confirm') }}
                         </button>
                     </div>
                 </div>

@@ -2,11 +2,11 @@
 <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 shadow-xs overflow-hidden">
     <div class="p-5 border-b border-black/5 dark:border-white/5 flex flex-wrap items-center justify-between gap-4">
         <div>
-            <h3 class="text-[15px] font-bold text-black dark:text-white">Buku Besar Transaksi (Transactions Ledger)</h3>
-            <p class="text-[12px] text-black/50 dark:text-white/50">Daftar lengkap nota pesanan POS dengan identifikasi saluran penjualan, nomor meja/ojol, dan metadata spesifik 20 industri</p>
+            <h3 class="text-[15px] font-bold text-black dark:text-white">{{ __('pos.reports_trx_title') }}</h3>
+            <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('pos.reports_trx_subtitle') }}</p>
         </div>
         <div class="text-[12px] font-medium text-black/60 dark:text-white/60">
-            Total: <span class="font-bold text-black dark:text-white">{{ $transactions->total() }}</span> transaksi
+            {{ __('pos.reports_total_prefix') }}: <span class="font-bold text-black dark:text-white">{{ $transactions->total() }}</span> {{ __('pos.reports_trx_unit') }}
         </div>
     </div>
 
@@ -14,18 +14,18 @@
         <table class="w-full text-left text-[13px] border-collapse whitespace-nowrap">
             <thead>
                 <tr class="border-b border-black/5 dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.02] text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">
-                    <th class="py-3 px-4">No. Nota & Saluran</th>
-                    <th class="py-3 px-4">Tanggal & Waktu</th>
-                    <th class="py-3 px-4">Kasir & Outlet</th>
-                    <th class="py-3 px-4">Pelanggan & Metadata Industri</th>
-                    <th class="py-3 px-4 text-center">Qty Item</th>
-                    <th class="py-3 px-4 text-right">Subtotal</th>
-                    <th class="py-3 px-4 text-right">Diskon Promo</th>
-                    <th class="py-3 px-4 text-right">Pajak / Svc</th>
-                    <th class="py-3 px-4 text-right">Total Akhir</th>
-                    <th class="py-3 px-4 text-right">Laba Kotor</th>
-                    <th class="py-3 px-4 text-center">Status</th>
-                    <th class="py-3 px-4 text-center">Aksi</th>
+                    <th class="py-3 px-4">{{ __('pos.reports_col_order_channel') }}</th>
+                    <th class="py-3 px-4">{{ __('pos.reports_col_date_time') }}</th>
+                    <th class="py-3 px-4">{{ __('pos.reports_col_cashier_outlet') }}</th>
+                    <th class="py-3 px-4">{{ __('pos.reports_col_customer_meta') }}</th>
+                    <th class="py-3 px-4 text-center">{{ __('pos.reports_col_qty') }}</th>
+                    <th class="py-3 px-4 text-right">{{ __('pos.reports_col_subtotal') }}</th>
+                    <th class="py-3 px-4 text-right">{{ __('pos.reports_col_discount') }}</th>
+                    <th class="py-3 px-4 text-right">{{ __('pos.reports_col_tax_svc') }}</th>
+                    <th class="py-3 px-4 text-right">{{ __('pos.reports_col_final_total') }}</th>
+                    <th class="py-3 px-4 text-right">{{ __('pos.reports_col_gross_profit') }}</th>
+                    <th class="py-3 px-4 text-center">{{ __('pos.reports_col_status') }}</th>
+                    <th class="py-3 px-4 text-center">{{ __('pos.reports_col_action') }}</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-black/5 dark:divide-white/5">
@@ -49,11 +49,11 @@
                             'shopeefood' => ['name' => 'ShopeeFood', 'bg' => '#EE4D2D', 'tag' => 'SF'],
                             'gofood' => ['name' => 'GoFood', 'bg' => '#EE2724', 'tag' => 'GF'],
                             'grabfood' => ['name' => 'GrabFood', 'bg' => '#00B14F', 'tag' => 'GB'],
-                            'storefront' => ['name' => 'Toko Online', 'bg' => '#007AFF', 'tag' => 'WEB'],
+                            'storefront' => ['name' => __('pos.reports_channel_online'), 'bg' => '#007AFF', 'tag' => 'WEB'],
                             'dine_in' => ['name' => 'Dine-In', 'bg' => '#AF52DE', 'tag' => 'MEJA'],
                             'takeaway' => ['name' => 'Takeaway', 'bg' => '#FF9500', 'tag' => 'TA'],
-                            'pos_direct' => ['name' => 'Kasir POS', 'bg' => '#34C759', 'tag' => 'POS'],
-                            'pos' => ['name' => 'Kasir POS', 'bg' => '#34C759', 'tag' => 'POS'],
+                            'pos_direct' => ['name' => __('pos.reports_channel_pos'), 'bg' => '#34C759', 'tag' => 'POS'],
+                            'pos' => ['name' => __('pos.reports_channel_pos'), 'bg' => '#34C759', 'tag' => 'POS'],
                         ];
                         $chInfo = $channelMeta[$channel] ?? ['name' => ucfirst($channel), 'bg' => '#8E8E93', 'tag' => 'POS'];
                     @endphp
@@ -92,14 +92,14 @@
 
                         {{-- Kasir & Outlet --}}
                         <td class="py-3 px-4 text-[12px]">
-                            <div class="font-medium text-black dark:text-white">{{ $order->user?->name ?? 'Kasir Utama' }}</div>
-                            <div class="text-[11px] text-black/40 dark:text-white/40">{{ $order->location?->name ?? 'Outlet Utama' }}</div>
+                            <div class="font-medium text-black dark:text-white">{{ $order->user?->name ?? __('pos.reports_fallback_main_cashier') }}</div>
+                            <div class="text-[11px] text-black/40 dark:text-white/40">{{ $order->location?->name ?? __('pos.reports_fallback_main_outlet') }}</div>
                         </td>
 
                         {{-- Pelanggan & Metadata 20 Industri --}}
                         <td class="py-3 px-4 text-[12px]">
                             <div class="font-semibold text-black dark:text-white">
-                                {{ $order->customer?->name ?? $order->customer_name_guest ?? 'Pelanggan Umum' }}
+                                {{ $order->customer?->name ?? $order->customer_name_guest ?? __('pos.reports_fallback_general_customer') }}
                             </div>
 
                             {{-- Dynamic 20 Industry Context Badges --}}
@@ -117,7 +117,7 @@
                                 @endif
                                 @if ($order->technician)
                                     <span class="text-[10px] text-[#007AFF] font-medium">
-                                        • Mekanik: {{ $order->technician->name }}
+                                        • {{ __('pos.reports_meta_mechanic') }}: {{ $order->technician->name }}
                                     </span>
                                 @endif
 
@@ -129,7 +129,7 @@
                                 @endif
                                 @if ($order->rack_location)
                                     <span class="px-1.5 py-0.5 rounded-[5px] bg-[#FF9500]/10 text-[#FF9500] font-mono text-[10px]">
-                                        Rak {{ $order->rack_location }}
+                                        {{ __('pos.reports_meta_rack', ['rack' => $order->rack_location]) }}
                                     </span>
                                 @endif
 
@@ -140,12 +140,12 @@
                                 @endphp
                                 @if ($hasBatch)
                                     <span class="px-1.5 py-0.5 rounded-[5px] bg-[#34C759]/10 text-[#34C759] text-[10px]">
-                                        💊 Batch Terdata
+                                        💊 {{ __('pos.reports_meta_batch') }}
                                     </span>
                                 @endif
                                 @if ($hasSerial)
                                     <span class="px-1.5 py-0.5 rounded-[5px] bg-[#AF52DE]/10 text-[#AF52DE] font-mono text-[10px]">
-                                        🏷️ IMEI/Serial
+                                        🏷️ {{ __('pos.reports_meta_imei') }}
                                     </span>
                                 @endif
                             </div>
@@ -193,7 +193,7 @@
                             <button type="button"
                                     @click="$dispatch('open-pos-order-detail', { orderId: '{{ $order->id }}' })"
                                     class="inline-flex items-center justify-center p-1.5 rounded-[8px] hover:bg-black/[0.06] dark:hover:bg-white/[0.08] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-all cursor-pointer"
-                                    title="Quick-View Rincian Nota">
+                                    title="{{ __('pos.reports_trx_quick_view_title') }}">
                                 <i data-lucide="eye" class="w-4 h-4"></i>
                             </button>
                         </td>
@@ -201,7 +201,7 @@
                 @empty
                     <tr>
                         <td colspan="12" class="py-12 text-center text-black/40 dark:text-white/40 text-[13px]">
-                            Tidak ada transaksi ditemukan pada filter aktif
+                            {{ __('pos.reports_trx_empty') }}
                         </td>
                     </tr>
                 @endforelse
@@ -212,7 +212,7 @@
     @if ($transactions->hasPages())
         <div class="p-4 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
             <div class="text-[12px] text-black/50 dark:text-white/50">
-                Menampilkan halaman {{ $transactions->currentPage() }} dari {{ $transactions->lastPage() }} (Total {{ $transactions->total() }} nota)
+                {{ __('pos.reports_pagination_info', ['current' => $transactions->currentPage(), 'last' => $transactions->lastPage(), 'total' => $transactions->total()]) }}
             </div>
             <div>
                 {{ $transactions->links() }}

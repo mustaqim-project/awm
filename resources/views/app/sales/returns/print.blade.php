@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nota Retur Penjualan {{ $return->return_number }} - {{ $business->name }}</title>
+    <title>{{ __('sales.returns.print_page_title', ['number' => $return->return_number, 'business' => $business->name]) }}</title>
 
     <!-- Google Fonts / SF Pro Fallback -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -113,7 +113,7 @@
             <div class="flex items-center gap-2">
                 <span class="w-2.5 h-2.5 rounded-full {{ $return->status === 'completed' ? 'bg-[#34C759]' : ($return->status === 'approved' ? 'bg-[#007AFF]' : 'bg-[#FF9500]') }}"></span>
                 <span class="text-[13px] font-semibold text-black dark:text-white tracking-tight">
-                    Nota Retur Penjualan (A4 Ready) • {{ $return->return_number }}
+                    {{ __('sales.returns.print_bar_title', ['number' => $return->return_number]) }}
                 </span>
             </div>
             <div class="flex items-center gap-2">
@@ -123,7 +123,7 @@
                         <line x1="19" y1="12" x2="5" y2="12"></line>
                         <polyline points="12 19 5 12 12 5"></polyline>
                     </svg>
-                    <span>Kembali</span>
+                    <span>{{ __('sales.returns.btn_back') }}</span>
                 </a>
                 <button onclick="window.print()"
                     class="h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] flex items-center gap-1.5 transition-all">
@@ -134,7 +134,7 @@
                         <path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6" />
                         <rect x="6" y="14" width="12" height="8" rx="1" />
                     </svg>
-                    <span>Cetak Printer</span>
+                    <span>{{ __('sales.returns.btn_print_printer') }}</span>
                 </button>
                 <button id="btnDownloadPdf" onclick="downloadPDF()"
                     class="h-9 px-4 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-semibold shadow-[0_1px_2px_rgba(0,122,255,0.25)] flex items-center gap-1.5 active:scale-[0.97] transition-all">
@@ -144,7 +144,7 @@
                         <polyline points="7 10 12 15 17 10" />
                         <line x1="12" y1="15" x2="12" y2="3" />
                     </svg>
-                    <span>Download PDF Langsung</span>
+                    <span>{{ __('sales.returns.btn_download_pdf_direct') }}</span>
                 </button>
             </div>
         </div>
@@ -154,7 +154,7 @@
                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
             </svg>
-            <span>Klik <strong>"Download PDF Langsung"</strong> untuk mengunduh dokumen secara instan dengan format A4 presisi tanpa header URL/tanggal peramban.</span>
+            <span>{!! __('sales.returns.print_bar_instruction') !!}</span>
         </div>
     </div>
 
@@ -176,7 +176,7 @@
                         {{ $business->legal_name ?: $business->name }}
                     </h1>
                     <p class="text-xs text-slate-600">
-                        {{ $business->address ?? 'Alamat Kantor / Toko Operasional' }}
+                        {{ $business->address ?? __('sales.returns.header_kop_office_address') }}
                     </p>
                     <p class="text-xs text-slate-600">
                         @if ($business->email)
@@ -193,17 +193,17 @@
             </div>
 
             <div class="text-right space-y-0.5">
-                <div class="text-lg font-bold tracking-wider text-slate-950 uppercase">NOTA RETUR PENJUALAN</div>
-                <div class="text-xs text-slate-500 font-semibold tracking-wide uppercase">SALES RETURN NOTE</div>
+                <div class="text-lg font-bold tracking-wider text-slate-950 uppercase">{{ __('sales.returns.header_doc_title') }}</div>
+                <div class="text-xs text-slate-500 font-semibold tracking-wide uppercase">{{ __('sales.returns.header_doc_subtitle') }}</div>
                 <div class="text-sm tabular-nums font-bold text-slate-800 font-mono mt-1">{{ $return->return_number }}</div>
                 <div class="text-[11px] font-semibold uppercase tracking-wider text-slate-600 mt-1">
-                    STATUS: 
+                    {{ __('sales.invoices.print_status') }} 
                     @if ($return->status === 'completed')
-                        <span class="font-bold text-emerald-700">SELESAI &amp; RESTOCKED</span>
+                        <span class="font-bold text-emerald-700">{{ __('sales.returns.status_completed_badge') }}</span>
                     @elseif ($return->status === 'approved')
-                        <span class="font-bold text-sky-700">DISETUJUI (APPROVED)</span>
+                        <span class="font-bold text-sky-700">{{ __('sales.returns.status_approved_badge_print') }}</span>
                     @else
-                        <span class="font-bold text-amber-700">DRAFT PENGAJUAN</span>
+                        <span class="font-bold text-amber-700">{{ __('sales.returns.status_draft_badge_print') }}</span>
                     @endif
                 </div>
             </div>
@@ -213,14 +213,14 @@
         <div class="grid grid-cols-2 gap-8 text-xs">
             <!-- Kolom Kiri: Pelanggan & Sumber -->
             <div class="space-y-1.5">
-                <div class="font-bold text-slate-500 uppercase tracking-wider text-[10px]">Pelanggan / Pembeli:</div>
+                <div class="font-bold text-slate-500 uppercase tracking-wider text-[10px]">{{ __('sales.returns.label_buyer_customer') }}</div>
                 <div class="text-sm font-bold text-slate-950">
                     @if ($return->invoice)
-                        {{ $return->invoice->customer?->name ?? 'Pelanggan Umum' }}
+                        {{ $return->invoice->customer?->name ?? __('sales.returns.general_customer') }}
                     @elseif($return->posOrder)
-                        {{ $return->posOrder->customer?->name ?? ($return->posOrder->customer_name_guest ?: 'Tamu Kasir') }}
+                        {{ $return->posOrder->customer?->name ?? ($return->posOrder->customer_name_guest ?: __('sales.returns.guest_customer')) }}
                     @else
-                        {{ $return->customer?->name ?? 'Pelanggan Umum' }}
+                        {{ $return->customer?->name ?? __('sales.returns.general_customer') }}
                     @endif
                 </div>
 
@@ -232,18 +232,18 @@
                     <div class="font-semibold text-slate-800">{{ $customerObj->company_name }}</div>
                 @endif
                 <div class="text-slate-600 whitespace-pre-line">{{ $customerObj?->billing_address ?? ($customerObj?->address ?? '-') }}</div>
-                <div class="text-slate-600 tabular-nums">Kontak: {{ $customerObj?->phone ?? ($customerObj?->email ?? '-') }}</div>
+                <div class="text-slate-600 tabular-nums">{{ __('sales.returns.label_contact') }} {{ $customerObj?->phone ?? ($customerObj?->email ?? '-') }}</div>
                 
                 <div class="pt-2 border-t border-slate-200 mt-2 space-y-1">
                     <div class="flex items-center gap-2">
-                        <span class="text-slate-500">Sumber Dokumen:</span>
+                        <span class="text-slate-500">{{ __('sales.returns.label_source_doc') }}</span>
                         <span class="font-semibold text-slate-900 font-mono">
                             @if ($return->invoice)
-                                Faktur Penjualan #{{ $return->invoice->invoice_number }}
+                                {{ __('sales.returns.source_sales_invoice_ref', ['number' => $return->invoice->invoice_number]) }}
                             @elseif ($return->posOrder)
-                                Transaksi Kasir #{{ $return->posOrder->order_number }}
+                                {{ __('sales.returns.source_pos_receipt_ref', ['number' => $return->posOrder->order_number]) }}
                             @else
-                                Manual
+                                {{ __('sales.returns.source_manual_badge') }}
                             @endif
                         </span>
                     </div>
@@ -253,38 +253,38 @@
             <!-- Kolom Kanan: Tanggal, Gudang & Kompensasi -->
             <div class="space-y-2 text-right">
                 <div class="flex justify-end gap-4">
-                    <span class="text-slate-500">Tanggal Pengajuan:</span>
+                    <span class="text-slate-500">{{ __('sales.returns.label_submission_date') }}</span>
                     <span class="tabular-nums font-bold text-slate-900">
                         {{ $return->return_date ? $return->return_date->translatedFormat('d F Y') : $return->created_at->translatedFormat('d F Y') }}
                     </span>
                 </div>
                 @if ($return->approved_at)
                     <div class="flex justify-end gap-4">
-                        <span class="text-slate-500">Tanggal Disetujui:</span>
+                        <span class="text-slate-500">{{ __('sales.returns.label_approved_date') }}</span>
                         <span class="tabular-nums font-semibold text-slate-800">{{ $return->approved_at->translatedFormat('d F Y, H:i') }}</span>
                     </div>
                 @endif
                 @if ($return->completed_at)
                     <div class="flex justify-end gap-4">
-                        <span class="text-slate-500">Tanggal Selesai/Restock:</span>
+                        <span class="text-slate-500">{{ __('sales.returns.label_completed_date') }}</span>
                         <span class="tabular-nums font-semibold text-emerald-800">{{ $return->completed_at->translatedFormat('d F Y, H:i') }}</span>
                     </div>
                 @endif
                 @if ($return->location)
                     <div class="flex justify-end gap-4">
-                        <span class="text-slate-500">Gudang Penerima:</span>
+                        <span class="text-slate-500">{{ __('sales.returns.label_receiving_warehouse') }}</span>
                         <span class="font-semibold text-slate-900">{{ $return->location->name }}</span>
                     </div>
                 @endif
                 <div class="flex justify-end gap-4">
-                    <span class="text-slate-500">Metode Kompensasi:</span>
+                    <span class="text-slate-500">{{ __('sales.returns.label_comp_method') }}</span>
                     <span class="font-bold text-slate-900">
                         @if (($return->refund_method ?? 'cash_refund') === 'cash_refund')
-                            Pengembalian Tunai (Cash Refund)
+                            {{ __('sales.returns.comp_cash_refund') }}
                         @elseif (($return->refund_method ?? '') === 'credit_note')
-                            Pemotongan Tagihan (Credit Note)
+                            {{ __('sales.returns.comp_credit_note') }}
                         @else
-                            Saldo Deposit (Store Credit)
+                            {{ __('sales.returns.comp_store_credit') }}
                         @endif
                     </span>
                 </div>
@@ -293,9 +293,9 @@
 
         <!-- Alasan Retur Box -->
         <div class="p-3 bg-slate-50 border border-slate-200 rounded text-xs space-y-1">
-            <span class="font-bold text-slate-700 uppercase tracking-wider text-[10px] block">Alasan Retur / Keluhan Pelanggan:</span>
+            <span class="font-bold text-slate-700 uppercase tracking-wider text-[10px] block">{{ __('sales.returns.label_return_reason_complaint') }}</span>
             <p class="text-slate-800 italic leading-relaxed">
-                &ldquo;{{ $return->reason ?: 'Tidak ada catatan spesifik dari pelanggan.' }}&rdquo;
+                &ldquo;{{ $return->reason ?: __('sales.returns.no_specific_complaint') }}&rdquo;
             </p>
         </div>
 
@@ -305,11 +305,11 @@
                 <thead>
                     <tr class="border-y-2 border-slate-900 text-slate-950 font-bold uppercase tracking-wider text-[10.5px]">
                         <th class="py-2.5 px-2 text-center w-8">#</th>
-                        <th class="py-2.5 px-3">Deskripsi Barang / Produk</th>
-                        <th class="py-2.5 px-3 text-center w-24">SKU / Kode</th>
-                        <th class="py-2.5 px-3 text-center w-24">Qty Retur</th>
-                        <th class="py-2.5 px-3 text-right w-32">Harga Satuan Asal</th>
-                        <th class="py-2.5 px-3 text-right w-36">Nilai Kompensasi</th>
+                        <th class="py-2.5 px-3">{{ __('sales.returns.col_item_desc') }}</th>
+                        <th class="py-2.5 px-3 text-center w-24">{{ __('sales.returns.col_sku_code') }}</th>
+                        <th class="py-2.5 px-3 text-center w-24">{{ __('sales.returns.col_return_qty') }}</th>
+                        <th class="py-2.5 px-3 text-right w-32">{{ __('sales.returns.col_unit_price_origin') }}</th>
+                        <th class="py-2.5 px-3 text-right w-36">{{ __('sales.returns.col_compensation_value') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-200">
@@ -338,7 +338,7 @@
                     @empty
                         <tr>
                             <td colspan="6" class="py-6 text-center text-slate-400 italic">
-                                Tidak ada rincian item dalam dokumen retur ini.
+                                {{ __('sales.returns.no_items_in_return') }}
                             </td>
                         </tr>
                     @endforelse
@@ -346,7 +346,7 @@
                 <tfoot class="border-t-2 border-slate-900 font-bold">
                     <tr>
                         <td colspan="5" class="py-3 px-3 text-right uppercase tracking-wider text-slate-900 text-xs">
-                            Total Nilai Pengembalian / Refund:
+                            {{ __('sales.returns.total_refund_value_label') }}
                         </td>
                         <td class="py-3 px-3 text-right tabular-nums text-base text-rose-700 font-bold">
                             Rp {{ number_format($return->total_amount, 0, ',', '.') }}
@@ -359,26 +359,26 @@
         <!-- Informasi Kompensasi & Restock -->
         <div class="grid grid-cols-2 gap-6 text-xs keep-together pt-2">
             <div class="p-3 bg-slate-50 border border-slate-200 rounded space-y-1">
-                <span class="font-bold text-slate-700 uppercase tracking-wider text-[10px] block">Ketentuan Kompensasi:</span>
+                <span class="font-bold text-slate-700 uppercase tracking-wider text-[10px] block">{{ __('sales.returns.terms_compensation_title') }}</span>
                 <p class="text-slate-600 leading-relaxed text-[11px]">
                     @if (($return->refund_method ?? 'cash_refund') === 'cash_refund')
-                        Pengembalian dana tunai dilakukan langsung kepada pihak pelanggan. Nilai ini telah dicatat sebagai pengeluaran kompensasi retur.
+                        {{ __('sales.returns.terms_cash_desc') }}
                     @elseif (($return->refund_method ?? '') === 'credit_note')
-                        Nilai retur ini secara otomatis memotong saldo piutang tertagih pada faktur penjualan terkait.
+                        {{ __('sales.returns.terms_credit_note_desc') }}
                     @else
-                        Nilai retur ini disimpan sebagai deposit saldo pelanggan (store credit) untuk transaksi penjualan di masa depan.
+                        {{ __('sales.returns.terms_store_credit_desc') }}
                     @endif
                 </p>
             </div>
             <div class="p-3 bg-slate-50 border border-slate-200 rounded space-y-1">
-                <span class="font-bold text-slate-700 uppercase tracking-wider text-[10px] block">Status Verifikasi Fisik Barang:</span>
+                <span class="font-bold text-slate-700 uppercase tracking-wider text-[10px] block">{{ __('sales.returns.status_physical_verify_title') }}</span>
                 <div class="text-[11px] font-semibold {{ $return->status === 'completed' ? 'text-emerald-700' : 'text-amber-700' }}">
                     @if ($return->status === 'completed')
-                        ✓ Barang telah diterima, diperiksa, dan dimasukkan kembali ke stok inventori gudang.
+                        {{ __('sales.returns.verify_completed_desc') }}
                     @elseif ($return->status === 'approved')
-                        Barang telah disetujui retur dan sedang dalam proses inspeksi fisik gudang.
+                        {{ __('sales.returns.verify_approved_desc') }}
                     @else
-                        Menunggu persetujuan manajemen sebelum penerimaan fisik barang.
+                        {{ __('sales.returns.verify_draft_desc') }}
                     @endif
                 </div>
             </div>
@@ -390,28 +390,28 @@
                 <!-- Kolom 1: Pelanggan -->
                 <div class="space-y-16">
                     <div>
-                        <div class="text-slate-500">Diajukan oleh,</div>
-                        <div class="font-bold text-slate-950 mt-1">Pelanggan / Pembeli</div>
+                        <div class="text-slate-500">{{ __('sales.returns.sig_submitted_by') }}</div>
+                        <div class="font-bold text-slate-950 mt-1">{{ __('sales.returns.label_buyer_customer_plain') }}</div>
                     </div>
                     <div>
                         <div class="border-t border-slate-400 w-44 mx-auto pt-1 font-semibold text-slate-800">
-                            {{ $customerObj?->name ?? 'Pelanggan' }}
+                            {{ $customerObj?->name ?? __('sales.returns.label_buyer_customer_plain') }}
                         </div>
-                        <div class="text-[10px] text-slate-500 mt-0.5">Tanda Tangan &amp; Nama Jelas</div>
+                        <div class="text-[10px] text-slate-500 mt-0.5">{{ __('sales.returns.sig_customer_sign_name') }}</div>
                     </div>
                 </div>
 
                 <!-- Kolom 2: Staff Gudang -->
                 <div class="space-y-16">
                     <div>
-                        <div class="text-slate-500">Diverifikasi &amp; Diterima oleh,</div>
-                        <div class="font-bold text-slate-950 mt-1">Petugas Gudang / Pemeriksa</div>
+                        <div class="text-slate-500">{{ __('sales.returns.sig_verified_received_by') }}</div>
+                        <div class="font-bold text-slate-950 mt-1">{{ __('sales.returns.sig_warehouse_checker_title') }}</div>
                     </div>
                     <div>
                         <div class="border-t border-slate-400 w-44 mx-auto pt-1 font-semibold text-slate-800">
                             ( ........................................ )
                         </div>
-                        <div class="text-[10px] text-slate-500 mt-0.5">Stempel &amp; Tanggal Terima</div>
+                        <div class="text-[10px] text-slate-500 mt-0.5">{{ __('sales.returns.sig_stamp_date') }}</div>
                     </div>
                 </div>
 
@@ -419,13 +419,13 @@
                 <div class="space-y-16">
                     <div>
                         <div class="text-slate-500">{{ $business->name }},</div>
-                        <div class="font-bold text-slate-950 mt-1">Disetujui oleh (Manajemen)</div>
+                        <div class="font-bold text-slate-950 mt-1">{{ __('sales.returns.sig_approved_management') }}</div>
                     </div>
                     <div>
                         <div class="border-t border-slate-400 w-44 mx-auto pt-1 font-semibold text-slate-800">
                             ( ........................................ )
                         </div>
-                        <div class="text-[10px] text-slate-500 mt-0.5">Authorized Signature</div>
+                        <div class="text-[10px] text-slate-500 mt-0.5">{{ __('sales.returns.sig_authorized_signature') }}</div>
                     </div>
                 </div>
             </div>
@@ -433,7 +433,7 @@
 
         <!-- Footnote -->
         <div class="pt-6 border-t border-slate-200 text-center text-[10px] text-slate-400">
-            Dokumen ini diterbitkan secara sah melalui sistem manajemen bisnis COOCA ERP • Dicetak pada {{ date('d F Y, H:i') }} WIB
+            {{ __('sales.returns.footnote_system_doc', ['date' => date('d F Y, H:i')]) }}
         </div>
 
     </div>
@@ -450,7 +450,7 @@
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                <span>Membuat PDF...</span>
+                <span>{{ __('sales.returns.pdf_generating') }}</span>
             `;
 
             const element = document.querySelector('.print-sheet');
@@ -489,7 +489,7 @@
                     btn.classList.remove('opacity-75', 'cursor-wait');
                     btn.innerHTML = `
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                        <span>✓ Berhasil Diunduh!</span>
+                        <span>{{ __('sales.returns.pdf_download_success') }}</span>
                     `;
                     setTimeout(() => {
                         btn.innerHTML = originalHtml;

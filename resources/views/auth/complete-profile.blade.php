@@ -1,4 +1,4 @@
-@extends('layouts.public_marketing', ['title' => 'Lengkapi Profil & Lokasi Usaha - Cooca', 'noindex' => true])
+@extends('layouts.public_marketing', ['title' => __('auth.complete_profile.meta_title'), 'noindex' => true])
 
 @section('content')
     @php
@@ -23,9 +23,9 @@
             <!-- Official COOCA Branding & Header -->
             <div class="text-center mb-8">
                 @include('auth.partials.brand-logo', ['class' => 'mb-5'])
-                <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Setup Profil &amp; Lokasi Usaha</h1>
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">{{ __('auth.complete_profile.heading') }}</h1>
                 <p class="mt-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-lg mx-auto leading-relaxed">
-                    Konfirmasi identitas bisnis dan tentukan titik lokasi cabang utama untuk struk kasir, faktur, dan kalkulasi otomatis kurir pengiriman.
+                    {{ __('auth.complete_profile.subheading') }}
                 </p>
             </div>
 
@@ -38,7 +38,7 @@
                         class="mb-6 p-4 rounded-[18px] bg-[#FF3B30]/10 border border-[#FF3B30]/25 text-[#FF3B30] dark:text-[#FF453A] text-sm animate-shake">
                         <div class="font-semibold mb-1.5 flex items-center gap-2">
                             <i data-lucide="alert-circle" class="w-5 h-5 shrink-0"></i>
-                            <span>Ada data yang perlu diperbaiki:</span>
+                            <span>{{ __('auth.complete_profile.validation_alert_title') }}</span>
                         </div>
                         <ul class="list-disc list-inside space-y-1 text-xs opacity-90 pl-1">
                             @foreach ($errors->all() as $err)
@@ -57,13 +57,13 @@
                     <div class="space-y-4">
                         <div class="flex items-center gap-2 pb-1 border-b border-black/5 dark:border-white/5">
                             <span class="w-6 h-6 rounded-full bg-[#007AFF]/10 text-[#007AFF] text-xs font-bold flex items-center justify-center">1</span>
-                            <h3 class="text-sm font-bold text-black dark:text-white uppercase tracking-wider">Identitas Usaha &amp; Kontak</h3>
+                            <h3 class="text-sm font-bold text-black dark:text-white uppercase tracking-wider">{{ __('auth.complete_profile.section_1_title') }}</h3>
                         </div>
 
                         <div>
                             <label for="name"
                                 class="block font-semibold text-black/80 dark:text-white/85 text-xs sm:text-sm mb-1.5">
-                                Nama Lengkap Pemilik / Penanggung Jawab <span class="text-[#FF3B30]">*</span>
+                                {{ __('auth.complete_profile.owner_full_name') }} <span class="text-[#FF3B30]">*</span>
                             </label>
                             <div class="relative">
                                 <div
@@ -73,7 +73,7 @@
                                 <input type="text" name="name" id="name" value="{{ old('name', $user->name) }}"
                                     required
                                     class="w-full pl-11 pr-4 py-3 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-[16px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-[15px] sm:text-sm outline-none"
-                                    placeholder="Contoh: Budi Pratama">
+                                    placeholder="{{ __('auth.complete_profile.owner_full_name_placeholder') }}">
                             </div>
                         </div>
 
@@ -81,7 +81,7 @@
                             <div>
                                 <label for="phone"
                                     class="block font-semibold text-black/80 dark:text-white/85 text-xs sm:text-sm mb-1.5">
-                                    Nomor WhatsApp / HP Aktif <span class="text-[#FF3B30]">*</span>
+                                    {{ __('auth.complete_profile.phone_active_label') }} <span class="text-[#FF3B30]">*</span>
                                 </label>
                                 <div class="relative">
                                     <div
@@ -91,14 +91,14 @@
                                     <input type="text" name="phone" id="phone"
                                         value="{{ old('phone', $user->phone ?? ($business->phone ?? '')) }}" required
                                         class="w-full pl-11 pr-4 py-3 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-[16px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-[15px] sm:text-sm outline-none"
-                                        placeholder="081234567890">
+                                        placeholder="{{ __('auth.register.phone_placeholder') }}">
                                 </div>
                             </div>
 
                             <div>
                                 <label for="business_name"
                                     class="block font-semibold text-black/80 dark:text-white/85 text-xs sm:text-sm mb-1.5">
-                                    Nama Usaha / Toko / Brand <span class="text-[#FF3B30]">*</span>
+                                    {{ __('auth.complete_profile.business_brand_label') }} <span class="text-[#FF3B30]">*</span>
                                 </label>
                                 <div class="relative">
                                     <div
@@ -109,7 +109,7 @@
                                         value="{{ old('business_name', str_starts_with($business->name ?? '', 'Usaha ') ? '' : $business->name ?? '') }}"
                                         required
                                         class="w-full pl-11 pr-4 py-3 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-[16px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-[15px] sm:text-sm outline-none"
-                                        placeholder="Contoh: Kopi Kenangan Manis">
+                                        placeholder="{{ __('auth.complete_profile.business_brand_placeholder') }}">
                                 </div>
                             </div>
                         </div>
@@ -122,15 +122,15 @@
                         <div class="flex items-center justify-between pb-1 border-b border-black/5 dark:border-white/5">
                             <div class="flex items-center gap-2">
                                 <span class="w-6 h-6 rounded-full bg-[#34C759]/15 text-[#34C759] text-xs font-bold flex items-center justify-center">2</span>
-                                <h3 class="text-sm font-bold text-black dark:text-white uppercase tracking-wider">Titik Lokasi Usaha Utama</h3>
+                                <h3 class="text-sm font-bold text-black dark:text-white uppercase tracking-wider">{{ __('auth.complete_profile.section_2_title') }}</h3>
                             </div>
-                            <span class="text-[11px] font-medium text-black/45 dark:text-white/45">Tingkat Desa / Kelurahan</span>
+                            <span class="text-[11px] font-medium text-black/45 dark:text-white/45">{{ __('auth.complete_profile.level_village_badge') }}</span>
                         </div>
 
                         <!-- Autocomplete Pencarian Cepat Wilayah Indonesia -->
                         <div class="relative">
                             <label class="block font-semibold text-black/80 dark:text-white/85 text-xs sm:text-sm mb-1.5">
-                                Cari Wilayah Cepat (Autocomplete)
+                                {{ __('auth.complete_profile.search_area_label') }}
                             </label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-black/40 dark:text-white/40">
@@ -141,7 +141,7 @@
                                     @input.debounce.350ms="searchAreas()"
                                     @focus="if(searchResults.length > 0) showDropdown = true"
                                     class="w-full pl-11 pr-10 py-3 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-[16px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-[15px] sm:text-sm outline-none"
-                                    placeholder="Ketik Kode Pos (cth: 12190) atau Nama Kelurahan / Desa (cth: Senayan)...">
+                                    placeholder="{{ __('auth.complete_profile.search_area_placeholder') }}">
                                 <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center">
                                     <template x-if="isSearching">
                                         <i data-lucide="loader-2" class="w-4 h-4 text-[#007AFF] animate-spin"></i>
@@ -149,7 +149,7 @@
                                 </div>
                             </div>
                             <p class="text-[11.5px] text-black/50 dark:text-white/50 mt-1">
-                                Ketik minimal 3 karakter untuk mengisi otomatis seluruh kolom wilayah di bawah, atau isi langsung secara manual.
+                                {{ __('auth.complete_profile.search_area_hint') }}
                             </p>
 
                             <!-- Dropdown Hasil Pencarian Wilayah -->
@@ -178,58 +178,58 @@
                             <div class="flex items-center justify-between pb-1 border-b border-black/5 dark:border-white/5">
                                 <span class="text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 flex items-center gap-1.5">
                                     <i data-lucide="map-pinned" class="w-4 h-4 text-[#007AFF]"></i>
-                                    Data Wilayah Administratif Usaha
+                                    {{ __('auth.complete_profile.admin_data_title') }}
                                 </span>
-                                <span class="text-[11px] font-medium text-black/45 dark:text-white/45">Bisa diedit manual</span>
+                                <span class="text-[11px] font-medium text-black/45 dark:text-white/45">{{ __('auth.complete_profile.can_edit_manually') }}</span>
                             </div>
 
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                                 <div>
                                     <label for="province" class="block font-semibold text-black/80 dark:text-white/85 text-xs mb-1">
-                                        Provinsi <span class="text-[#FF3B30]">*</span>
+                                        {{ __('auth.complete_profile.province_label') }} <span class="text-[#FF3B30]">*</span>
                                     </label>
                                     <input type="text" name="province" id="province" x-model="selectedArea.province" required
                                         class="w-full px-3.5 py-2.5 bg-white dark:bg-[#1E2538] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-[14px] outline-none"
-                                        placeholder="Contoh: DKI Jakarta">
+                                        placeholder="{{ __('auth.complete_profile.province_placeholder') }}">
                                 </div>
 
                                 <div>
                                     <label for="city" class="block font-semibold text-black/80 dark:text-white/85 text-xs mb-1">
-                                        Kota / Kabupaten <span class="text-[#FF3B30]">*</span>
+                                        {{ __('auth.complete_profile.city_label') }} <span class="text-[#FF3B30]">*</span>
                                     </label>
                                     <input type="text" name="city" id="city" x-model="selectedArea.city" required
                                         class="w-full px-3.5 py-2.5 bg-white dark:bg-[#1E2538] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-[14px] outline-none"
-                                        placeholder="Contoh: Kota Jakarta Selatan">
+                                        placeholder="{{ __('auth.complete_profile.city_placeholder') }}">
                                 </div>
                             </div>
 
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                                 <div>
                                     <label for="district" class="block font-semibold text-black/80 dark:text-white/85 text-xs mb-1">
-                                        Kecamatan <span class="text-[#FF3B30]">*</span>
+                                        {{ __('auth.complete_profile.district_label') }} <span class="text-[#FF3B30]">*</span>
                                     </label>
                                     <input type="text" name="district" id="district" x-model="selectedArea.district" required
                                         class="w-full px-3.5 py-2.5 bg-white dark:bg-[#1E2538] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-[14px] outline-none"
-                                        placeholder="Contoh: Kebayoran Baru">
+                                        placeholder="{{ __('auth.complete_profile.district_placeholder') }}">
                                 </div>
 
                                 <div>
                                     <label for="village" class="block font-semibold text-black/80 dark:text-white/85 text-xs mb-1">
-                                        Kelurahan / Desa <span class="text-[#FF3B30]">*</span>
+                                        {{ __('auth.complete_profile.village_label') }} <span class="text-[#FF3B30]">*</span>
                                     </label>
                                     <input type="text" name="village" id="village" x-model="selectedArea.village" required
                                         class="w-full px-3.5 py-2.5 bg-white dark:bg-[#1E2538] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-[14px] outline-none"
-                                        placeholder="Contoh: Senayan">
+                                        placeholder="{{ __('auth.complete_profile.village_placeholder') }}">
                                 </div>
                             </div>
 
                             <div>
                                 <label for="postal_code" class="block font-semibold text-black/80 dark:text-white/85 text-xs mb-1">
-                                    Kode Pos <span class="text-[#FF3B30]">*</span>
+                                    {{ __('auth.complete_profile.postal_code_label') }} <span class="text-[#FF3B30]">*</span>
                                 </label>
                                 <input type="text" name="postal_code" id="postal_code" x-model="selectedArea.postal_code" required
                                     class="w-full sm:w-1/2 px-3.5 py-2.5 bg-white dark:bg-[#1E2538] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-[14px] outline-none font-mono"
-                                    placeholder="Contoh: 12190">
+                                    placeholder="{{ __('auth.complete_profile.postal_code_placeholder') }}">
                             </div>
                         </div>
 
@@ -242,25 +242,25 @@
                         <div>
                             <label for="address"
                                 class="block font-semibold text-black/80 dark:text-white/85 text-xs sm:text-sm mb-1.5">
-                                Detail Alamat Jalan / No. Ruko / Patokan <span class="text-[#FF3B30]">*</span>
+                                {{ __('auth.complete_profile.address_detail_label') }} <span class="text-[#FF3B30]">*</span>
                             </label>
                             <textarea name="address" id="address" rows="2" required x-model="address"
                                 class="w-full px-4 py-3 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-[16px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-[15px] sm:text-sm outline-none resize-none"
-                                placeholder="Contoh: Jl. Sudirman No. 45, Ruko Blok B-2 (Sebelah Bank BCA)"></textarea>
+                                placeholder="{{ __('auth.complete_profile.address_detail_placeholder') }}"></textarea>
                         </div>
 
                         <!-- Peta Interaktif Leaflet.js -->
                         <div class="space-y-2">
                             <div class="flex items-center justify-between">
                                 <label class="block font-semibold text-black/80 dark:text-white/85 text-xs sm:text-sm">
-                                    Titik Koordinat Peta GPS (Geser Pin ke Lokasi Toko) <span class="text-[#FF3B30]">*</span>
+                                    {{ __('auth.complete_profile.gps_coordinates_label') }} <span class="text-[#FF3B30]">*</span>
                                 </label>
                                 <button type="button"
                                     @click="useCurrentGps()"
                                     :disabled="isGpsLoading"
                                     class="text-[12px] font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline flex items-center gap-1.5">
                                     <i data-lucide="crosshair" class="w-3.5 h-3.5" :class="{'animate-spin': isGpsLoading}"></i>
-                                    <span x-text="isGpsLoading ? 'Mencari GPS...' : 'Gunakan GPS Saya'"></span>
+                                    <span x-text="isGpsLoading ? {{ json_encode(__('auth.complete_profile.searching_gps')) }} : {{ json_encode(__('auth.complete_profile.use_my_gps')) }}"></span>
                                 </button>
                             </div>
 
@@ -274,7 +274,7 @@
                                 </div>
                             </div>
                             <p class="text-[11.5px] text-black/50 dark:text-white/50">
-                                Anda dapat mengklik atau menggeser pin biru di atas peta untuk menyesuaikan titik tepat toko Anda.
+                                {{ __('auth.complete_profile.gps_instructions') }}
                             </p>
                         </div>
                     </div>
@@ -284,14 +284,14 @@
                         class="p-4 rounded-[18px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.04] dark:border-white/[0.06] text-xs text-black/65 dark:text-white/65 flex items-start gap-2.5">
                         <i data-lucide="shield-check" class="w-4 h-4 text-[#34C759] shrink-0 mt-0.5"></i>
                         <p class="leading-relaxed">
-                            Data lokasi ini akan ditetapkan sebagai <strong>Cabang Utama</strong> usaha Anda. Anda dapat menambah gudang atau cabang baru kapan saja melalui menu Manajemen Gudang.
+                            {!! __('auth.complete_profile.branch_notice') !!}
                         </p>
                     </div>
 
                     <div class="pt-2">
                         <button type="submit"
                             class="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#00C2FF] via-[#00A3FF] to-[#007AFF] hover:from-[#1cd0ff] hover:to-[#006fe6] text-white font-bold text-sm sm:text-[15px] shadow-[0_2px_12px_rgba(0,194,255,0.3)] hover:shadow-[0_4px_20px_rgba(0,194,255,0.5)] active:scale-[0.99] min-h-[48px] transition-all focus:outline-none focus:ring-4 focus:ring-[#007AFF]/25 cursor-pointer">
-                            <span>Konfirmasi &amp; Masuk ke Workspace</span>
+                            <span>{{ __('auth.complete_profile.submit_btn') }}</span>
                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </button>
                     </div>
@@ -476,7 +476,7 @@
 
                 useCurrentGps() {
                     if (!navigator.geolocation) {
-                        alert('Fitur GPS tidak didukung oleh browser Anda.');
+                        alert({{ json_encode(__('auth.complete_profile.js_gps_not_supported')) }});
                         return;
                     }
 
@@ -496,7 +496,7 @@
                         },
                         (err) => {
                             this.isGpsLoading = false;
-                            alert('Gagal mengambil lokasi GPS: ' + (err.message || 'Izin akses lokasi ditolak.'));
+                            alert({{ json_encode(__('auth.complete_profile.js_gps_failed')) }} + (err.message || {{ json_encode(__('auth.complete_profile.js_gps_permission_denied')) }}));
                         },
                         { enableHighAccuracy: true, timeout: 10000 }
                     );

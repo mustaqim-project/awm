@@ -1,4 +1,4 @@
-@extends('layouts.public_marketing', ['title' => 'Pemulihan Akses Akun & Reset Kontak - Cooca', 'noindex' => true])
+@extends('layouts.public_marketing', ['title' => __('auth.recovery.create_meta_title'), 'noindex' => true])
 
 @section('content')
     <div class="min-h-[calc(100vh-16rem)] flex flex-col justify-center py-10 sm:py-16 px-4 sm:px-6 lg:px-8">
@@ -6,10 +6,9 @@
             <!-- Official COOCA Branding & Header -->
             <div class="text-center mb-8">
                 @include('auth.partials.brand-logo', ['class' => 'mb-5'])
-                <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Pemulihan Akses Akun</h1>
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">{{ __('auth.recovery.create_heading') }}</h1>
                 <p class="mt-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-lg mx-auto">
-                    Gunakan layanan ini jika Anda kehilangan akses ke nomor WhatsApp, HP hilang/rusak, atau alamat email
-                    terdaftar tidak dapat dibuka.
+                    {{ __('auth.recovery.create_subheading') }}
                 </p>
             </div>
 
@@ -21,7 +20,7 @@
                         class="mb-6 p-4 rounded-[20px] bg-[#FF3B30]/10 border border-[#FF3B30]/25 text-[#FF3B30] dark:text-[#FF453A] text-sm animate-shake">
                         <div class="flex items-center gap-2 font-bold mb-2">
                             <i data-lucide="alert-circle" class="w-5 h-5 shrink-0"></i>
-                            <span>Terdapat {{ $errors->count() }} Kendala Pada Formulir:</span>
+                            <span>{{ __('auth.recovery.error_summary_title', ['count' => $errors->count()]) }}</span>
                         </div>
                         <ul class="list-disc list-inside space-y-1 text-xs mb-3 pl-1">
                             @foreach ($errors->all() as $error)
@@ -31,8 +30,7 @@
                         <div
                             class="p-3 rounded-[14px] bg-[#FF3B30]/10 border border-[#FF3B30]/20 text-xs flex items-start gap-2">
                             <i data-lucide="info" class="w-4 h-4 shrink-0 mt-0.5"></i>
-                            <span><strong>Pemberitahuan Berkas:</strong> Demi keamanan browser, berkas KTP &amp; dokumen
-                                usaha wajib dipilih kembali jika formulir sempat gagal divalidasi.</span>
+                            <span><strong>{{ __('auth.recovery.file_notice_title') }}</strong> {{ __('auth.recovery.file_notice_desc') }}</span>
                         </div>
                     </div>
                     <script>
@@ -75,7 +73,7 @@
                     <div>
                         <label
                             class="block text-xs sm:text-sm font-bold text-black/80 dark:text-white/85 uppercase tracking-wider mb-3">
-                            1. Jenis Kendala Verifikasi <span class="text-[#FF3B30]">*</span>
+                            {{ __('auth.recovery.section_1_title') }} <span class="text-[#FF3B30]">*</span>
                         </label>
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                             <label
@@ -88,10 +86,9 @@
                                 <div
                                     class="flex items-center gap-2 mb-1.5 font-bold text-xs sm:text-sm text-black dark:text-white">
                                     <i data-lucide="smartphone" class="w-4 h-4 text-[#007AFF] dark:text-[#0A84FF]"></i>
-                                    <span>HP / WA Hilang</span>
+                                    <span>{{ __('auth.recovery.issue_phone_lost_title') }}</span>
                                 </div>
-                                <span class="text-xs leading-relaxed opacity-80">HP hilang/rusak atau nomor WhatsApp tidak
-                                    aktif lagi.</span>
+                                <span class="text-xs leading-relaxed opacity-80">{{ __('auth.recovery.issue_phone_lost_desc') }}</span>
                             </label>
 
                             <label
@@ -104,10 +101,9 @@
                                 <div
                                     class="flex items-center gap-2 mb-1.5 font-bold text-xs sm:text-sm text-black dark:text-white">
                                     <i data-lucide="mail-x" class="w-4 h-4 text-[#007AFF] dark:text-[#0A84FF]"></i>
-                                    <span>Email Terkunci</span>
+                                    <span>{{ __('auth.recovery.issue_email_inaccessible_title') }}</span>
                                 </div>
-                                <span class="text-xs leading-relaxed opacity-80">Email lama tidak bisa dibuka, hangus, atau
-                                    lupa akses.</span>
+                                <span class="text-xs leading-relaxed opacity-80">{{ __('auth.recovery.issue_email_inaccessible_desc') }}</span>
                             </label>
 
                             <label
@@ -119,10 +115,9 @@
                                 <div
                                     class="flex items-center gap-2 mb-1.5 font-bold text-xs sm:text-sm text-black dark:text-white">
                                     <i data-lucide="shield-alert" class="w-4 h-4 text-[#FF9500] dark:text-[#FF9F0A]"></i>
-                                    <span>Keduanya Bermasalah</span>
+                                    <span>{{ __('auth.recovery.issue_both_title') }}</span>
                                 </div>
-                                <span class="text-xs leading-relaxed opacity-80">HP hilang dan email terdaftar juga tidak
-                                    dapat dibuka.</span>
+                                <span class="text-xs leading-relaxed opacity-80">{{ __('auth.recovery.issue_both_desc') }}</span>
                             </label>
                         </div>
                     </div>
@@ -131,17 +126,17 @@
                     <div class="pt-4 border-t border-black/[0.06] dark:border-white/[0.08]">
                         <label
                             class="block text-xs sm:text-sm font-bold text-black/80 dark:text-white/85 uppercase tracking-wider mb-3">
-                            2. Data Akun &amp; Bisnis Terdaftar
+                            {{ __('auth.recovery.section_2_title') }}
                         </label>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label for="applicant_name"
                                     class="block font-semibold text-black/75 dark:text-white/80 text-xs sm:text-sm mb-1.5">
-                                    Nama Lengkap Pemilik <span class="text-[#FF3B30]">*</span>
+                                    {{ __('auth.recovery.applicant_name_label') }} <span class="text-[#FF3B30]">*</span>
                                 </label>
                                 <input type="text" name="applicant_name" id="applicant_name" required
                                     value="{{ old('applicant_name', $prefill['applicant_name']) }}"
-                                    placeholder="Nama sesuai KTP"
+                                    placeholder="{{ __('auth.recovery.applicant_name_placeholder') }}"
                                     class="w-full px-4 py-3 bg-black/[0.03] dark:bg-white/[0.05] border @error('applicant_name') border-[#FF3B30] ring-4 ring-[#FF3B30]/15 @else border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 @enderror rounded-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-[16px] sm:text-sm outline-none">
                                 @error('applicant_name')
                                     <span
@@ -152,11 +147,11 @@
                             <div>
                                 <label for="business_name"
                                     class="block font-semibold text-black/75 dark:text-white/80 text-xs sm:text-sm mb-1.5">
-                                    Nama Bisnis / Usaha <span class="text-[#FF3B30]">*</span>
+                                    {{ __('auth.recovery.business_name_label') }} <span class="text-[#FF3B30]">*</span>
                                 </label>
                                 <input type="text" name="business_name" id="business_name" required
                                     value="{{ old('business_name', $prefill['business_name']) }}"
-                                    placeholder="Contoh: Kopi Senja Mandiri"
+                                    placeholder="{{ __('auth.recovery.business_name_placeholder') }}"
                                     class="w-full px-4 py-3 bg-black/[0.03] dark:bg-white/[0.05] border @error('business_name') border-[#FF3B30] ring-4 ring-[#FF3B30]/15 @else border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 @enderror rounded-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-[16px] sm:text-sm outline-none">
                                 @error('business_name')
                                     <span
@@ -167,7 +162,7 @@
                             <div>
                                 <label for="old_email"
                                     class="block font-semibold text-black/75 dark:text-white/80 text-xs sm:text-sm mb-1.5">
-                                    Email Akun Terdaftar <span class="text-[#FF3B30]">*</span>
+                                    {{ __('auth.recovery.old_email_label') }} <span class="text-[#FF3B30]">*</span>
                                 </label>
                                 <input type="email" name="old_email" id="old_email" required
                                     value="{{ old('old_email', $prefill['old_email']) }}"
@@ -182,11 +177,11 @@
                             <div>
                                 <label for="old_phone"
                                     class="block font-semibold text-black/75 dark:text-white/80 text-xs sm:text-sm mb-1.5">
-                                    Nomor WhatsApp Lama (Opsional)
+                                    {{ __('auth.recovery.old_phone_label') }}
                                 </label>
                                 <input type="text" name="old_phone" id="old_phone"
                                     value="{{ old('old_phone', $prefill['old_phone']) }}"
-                                    placeholder="081234567890 (jika ingat)"
+                                    placeholder="{{ __('auth.recovery.old_phone_placeholder') }}"
                                     class="w-full px-4 py-3 bg-black/[0.03] dark:bg-white/[0.05] border @error('old_phone') border-[#FF3B30] ring-4 ring-[#FF3B30]/15 @else border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 @enderror rounded-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-[16px] sm:text-sm outline-none">
                                 @error('old_phone')
                                     <span
@@ -202,17 +197,16 @@
                             <i data-lucide="sparkles" class="w-4 h-4 text-[#007AFF] dark:text-[#0A84FF]"></i>
                             <label
                                 class="block text-xs sm:text-sm font-bold text-black dark:text-white uppercase tracking-wider">
-                                3. Kontak Baru Pengganti (Wajib Aktif)
+                                {{ __('auth.recovery.section_3_title') }}
                             </label>
                         </div>
-                        <p class="text-xs text-black/55 dark:text-white/55 mb-3">Setelah disetujui Administrator, akun Anda
-                            akan otomatis dialihkan ke kontak baru ini.</p>
+                        <p class="text-xs text-black/55 dark:text-white/55 mb-3">{{ __('auth.recovery.section_3_subtitle') }}</p>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label for="new_email"
                                     class="block font-semibold text-black/75 dark:text-white/80 text-xs sm:text-sm mb-1.5">
-                                    Alamat Email Baru <span class="text-[#FF3B30]">*</span>
+                                    {{ __('auth.recovery.new_email_label') }} <span class="text-[#FF3B30]">*</span>
                                 </label>
                                 <div class="relative">
                                     <div
@@ -220,22 +214,21 @@
                                         <i data-lucide="mail" class="w-4 h-4"></i>
                                     </div>
                                     <input type="email" name="new_email" id="new_email" required
-                                        value="{{ old('new_email') }}" placeholder="emailbaru.aktif@gmail.com"
+                                        value="{{ old('new_email') }}" placeholder="{{ __('auth.recovery.new_email_placeholder') }}"
                                         class="w-full pl-11 pr-4 py-3 bg-black/[0.03] dark:bg-white/[0.05] border @error('new_email') border-[#FF3B30] ring-4 ring-[#FF3B30]/15 @else border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 @enderror rounded-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-[16px] sm:text-sm outline-none">
                                 </div>
                                 @error('new_email')
                                     <span
                                         class="text-[#FF3B30] dark:text-[#FF453A] text-xs mt-1 block font-medium">{{ $message }}</span>
                                 @else
-                                    <p class="mt-1.5 text-[11px] sm:text-xs text-black/50 dark:text-white/50">Pastikan email
-                                        baru ini belum terdaftar di akun Cooca lain.</p>
+                                    <p class="mt-1.5 text-[11px] sm:text-xs text-black/50 dark:text-white/50">{{ __('auth.recovery.new_email_hint') }}</p>
                                 @enderror
                             </div>
 
                             <div>
                                 <label for="new_phone"
                                     class="block font-semibold text-black/75 dark:text-white/80 text-xs sm:text-sm mb-1.5">
-                                    Nomor WhatsApp Baru <span class="text-[#FF3B30]">*</span>
+                                    {{ __('auth.recovery.new_phone_label') }} <span class="text-[#FF3B30]">*</span>
                                 </label>
                                 <div class="relative">
                                     <div
@@ -243,15 +236,14 @@
                                         <i data-lucide="phone" class="w-4 h-4"></i>
                                     </div>
                                     <input type="text" name="new_phone" id="new_phone" required
-                                        value="{{ old('new_phone') }}" placeholder="08123456789 atau 628123456789"
+                                        value="{{ old('new_phone') }}" placeholder="{{ __('auth.recovery.new_phone_placeholder') }}"
                                         class="w-full pl-11 pr-4 py-3 bg-black/[0.03] dark:bg-white/[0.05] border @error('new_phone') border-[#FF3B30] ring-4 ring-[#FF3B30]/15 @else border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 @enderror rounded-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-[16px] sm:text-sm outline-none">
                                 </div>
                                 @error('new_phone')
                                     <span
                                         class="text-[#FF3B30] dark:text-[#FF453A] text-xs mt-1 block font-medium">{{ $message }}</span>
                                 @else
-                                    <p class="mt-1.5 text-[11px] sm:text-xs text-black/50 dark:text-white/50">Nomor ini harus
-                                        aktif di WhatsApp untuk menerima notifikasi persetujuan.</p>
+                                    <p class="mt-1.5 text-[11px] sm:text-xs text-black/50 dark:text-white/50">{{ __('auth.recovery.new_phone_hint') }}</p>
                                 @enderror
                             </div>
                         </div>
@@ -261,10 +253,10 @@
                     <div class="pt-4 border-t border-black/[0.06] dark:border-white/[0.08]">
                         <label for="reason_description"
                             class="block text-xs sm:text-sm font-bold text-black/80 dark:text-white/85 uppercase tracking-wider mb-2">
-                            4. Kronologi &amp; Penjelasan Kendala <span class="text-[#FF3B30]">*</span>
+                            {{ __('auth.recovery.section_4_title') }} <span class="text-[#FF3B30]">*</span>
                         </label>
                         <textarea name="reason_description" id="reason_description" rows="3" required
-                            placeholder="Jelaskan secara ringkas bagaimana Anda kehilangan akses HP / nomor WhatsApp atau mengapa email tidak dapat dibuka..."
+                            placeholder="{{ __('auth.recovery.reason_placeholder') }}"
                             class="w-full px-4 py-3 bg-black/[0.03] dark:bg-white/[0.05] border @error('reason_description') border-[#FF3B30] ring-4 ring-[#FF3B30]/15 @else border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 @enderror rounded-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 text-[16px] sm:text-sm transition-all outline-none leading-relaxed">{{ old('reason_description') }}</textarea>
                         @error('reason_description')
                             <span
@@ -278,11 +270,10 @@
                             <i data-lucide="paperclip" class="w-4 h-4 text-[#007AFF] dark:text-[#0A84FF]"></i>
                             <label
                                 class="block text-xs sm:text-sm font-bold text-black dark:text-white uppercase tracking-wider">
-                                5. Berkas Bukti Otentik Kepemilikan Akun
+                                {{ __('auth.recovery.section_5_title') }}
                             </label>
                         </div>
-                        <p class="text-xs text-black/55 dark:text-white/55 mb-3.5">Lampirkan dokumen pendukung asli berikut
-                            (Maks. 5MB per file, format JPG/PNG/PDF):</p>
+                        <p class="text-xs text-black/55 dark:text-white/55 mb-3.5">{{ __('auth.recovery.section_5_subtitle') }}</p>
 
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
                             <!-- Bukti KTP -->
@@ -290,13 +281,11 @@
                                 class="p-4 rounded-[18px] bg-black/[0.02] dark:bg-white/[0.03] border @error('identity_card') border-[#FF3B30] ring-2 ring-[#FF3B30]/30 @else border-black/[0.06] dark:border-white/[0.08] @enderror flex flex-col justify-between">
                                 <div>
                                     <div class="flex items-center justify-between mb-1.5">
-                                        <span class="text-xs sm:text-sm font-bold text-black dark:text-white">Foto KTP /
-                                            SIM</span>
+                                        <span class="text-xs sm:text-sm font-bold text-black dark:text-white">{{ __('auth.recovery.ktp_title') }}</span>
                                         <span
-                                            class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-[#FF3B30]/10 text-[#FF3B30] dark:text-[#FF453A] uppercase">Wajib</span>
+                                            class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-[#FF3B30]/10 text-[#FF3B30] dark:text-[#FF453A] uppercase">{{ __('auth.recovery.required_badge') }}</span>
                                     </div>
-                                    <p class="text-[11px] text-black/50 dark:text-white/50 mb-3">Identitas resmi pemilik
-                                        usaha.</p>
+                                    <p class="text-[11px] text-black/50 dark:text-white/50 mb-3">{{ __('auth.recovery.ktp_desc') }}</p>
                                 </div>
                                 <div>
                                     <input type="file" name="identity_card" id="identity_card" required
@@ -316,7 +305,7 @@
                                         <div
                                             class="mt-2.5 p-2 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] text-xs text-black/70 dark:text-white/70 flex items-center gap-1.5">
                                             <i data-lucide="file-text" class="w-4 h-4 text-[#FF3B30]"></i>
-                                            <span>Dokumen PDF terpilih</span>
+                                            <span>{{ __('auth.recovery.pdf_selected') }}</span>
                                         </div>
                                     </template>
                                 </div>
@@ -327,13 +316,11 @@
                                 class="p-4 rounded-[18px] bg-black/[0.02] dark:bg-white/[0.03] border @error('business_proof') border-[#FF3B30] ring-2 ring-[#FF3B30]/30 @else border-black/[0.06] dark:border-white/[0.08] @enderror flex flex-col justify-between">
                                 <div>
                                     <div class="flex items-center justify-between mb-1.5">
-                                        <span class="text-xs sm:text-sm font-bold text-black dark:text-white">Bukti
-                                            Usaha</span>
+                                        <span class="text-xs sm:text-sm font-bold text-black dark:text-white">{{ __('auth.recovery.biz_proof_title') }}</span>
                                         <span
-                                            class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-[#FF3B30]/10 text-[#FF3B30] dark:text-[#FF453A] uppercase">Wajib</span>
+                                            class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-[#FF3B30]/10 text-[#FF3B30] dark:text-[#FF453A] uppercase">{{ __('auth.recovery.required_badge') }}</span>
                                     </div>
-                                    <p class="text-[11px] text-black/50 dark:text-white/50 mb-3">NIB / SIUP / SKU / Foto
-                                        Toko.</p>
+                                    <p class="text-[11px] text-black/50 dark:text-white/50 mb-3">{{ __('auth.recovery.biz_proof_desc') }}</p>
                                 </div>
                                 <div>
                                     <input type="file" name="business_proof" id="business_proof" required
@@ -353,7 +340,7 @@
                                         <div
                                             class="mt-2.5 p-2 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] text-xs text-black/70 dark:text-white/70 flex items-center gap-1.5">
                                             <i data-lucide="file-text" class="w-4 h-4 text-[#FF3B30]"></i>
-                                            <span>Dokumen PDF terpilih</span>
+                                            <span>{{ __('auth.recovery.pdf_selected') }}</span>
                                         </div>
                                     </template>
                                 </div>
@@ -364,13 +351,11 @@
                                 class="p-4 rounded-[18px] bg-black/[0.02] dark:bg-white/[0.03] border @error('selfie_proof') border-[#FF3B30] ring-2 ring-[#FF3B30]/30 @else border-black/[0.06] dark:border-white/[0.08] @enderror flex flex-col justify-between">
                                 <div>
                                     <div class="flex items-center justify-between mb-1.5">
-                                        <span class="text-xs sm:text-sm font-bold text-black dark:text-white">Selfie Pegang
-                                            KTP</span>
+                                        <span class="text-xs sm:text-sm font-bold text-black dark:text-white">{{ __('auth.recovery.selfie_title') }}</span>
                                         <span
-                                            class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF] uppercase">Dianjurkan</span>
+                                            class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF] uppercase">{{ __('auth.recovery.recommended_badge') }}</span>
                                     </div>
-                                    <p class="text-[11px] text-black/50 dark:text-white/50 mb-3">Foto wajah memegang KTP
-                                        fisik.</p>
+                                    <p class="text-[11px] text-black/50 dark:text-white/50 mb-3">{{ __('auth.recovery.selfie_desc') }}</p>
                                 </div>
                                 <div>
                                     <input type="file" name="selfie_proof" id="selfie_proof" accept="image/*"
@@ -397,20 +382,18 @@
                             class="p-4 rounded-[18px] bg-[#007AFF]/10 border border-[#007AFF]/25 text-[#007AFF] dark:text-[#0A84FF] text-xs sm:text-sm flex items-start gap-3 mb-5">
                             <i data-lucide="info" class="w-5 h-5 shrink-0 mt-0.5"></i>
                             <div class="leading-relaxed">
-                                Permohonan Anda akan diverifikasi langsung oleh <strong>Tim Auditor Cooca Platform</strong>
-                                untuk melindungi data toko dari pembajakan. Nomor tiket pelacakan akan otomatis diterbitkan
-                                setelah formulir dikirim.
+                                {!! __('auth.recovery.auditor_notice') !!}
                             </div>
                         </div>
 
                         <button type="submit" :disabled="submitting"
                             :class="submitting ? 'opacity-60 cursor-not-allowed' : ''"
-                            class="w-full min-h-[52px] py-4 px-5 rounded-[16px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-bold text-sm sm:text-base shadow-lg shadow-[#007AFF]/25 transition-all flex items-center justify-center gap-2.5 active:scale-[0.98]">
+                            class="w-full min-h-[52px] py-4 px-5 rounded-[16px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-bold text-sm sm:text-base shadow-lg shadow-[#007AFF]/25 transition-all flex items-center justify-center gap-2.5 active:scale-[0.98] cursor-pointer">
                             <i data-lucide="shield-check" class="w-5 h-5" x-show="!submitting"></i>
                             <i data-lucide="loader-2" class="w-5 h-5 animate-spin" x-show="submitting"
                                 style="display: none;"></i>
                             <span
-                                x-text="submitting ? 'Mengirim Berkas & Permohonan...' : 'Ajukan Permohonan Pemulihan Akses'"></span>
+                                x-text="submitting ? {{ json_encode(__('auth.recovery.submitting_btn')) }} : {{ json_encode(__('auth.recovery.submit_btn')) }}"></span>
                         </button>
                     </div>
                 </form>
@@ -421,13 +404,13 @@
                     <a href="{{ route('account-recovery.check') }}"
                         class="text-[#007AFF] dark:text-[#0A84FF] hover:underline transition-colors flex items-center gap-1.5 font-semibold py-1">
                         <i data-lucide="search" class="w-4 h-4"></i>
-                        <span>Sudah Punya Tiket? Cek Status Permohonan</span>
+                        <span>{{ __('auth.recovery.has_ticket_check') }}</span>
                     </a>
 
                     <div class="flex items-center gap-4">
                         <a href="{{ route('login') }}"
                             class="text-black/55 dark:text-white/55 hover:text-black dark:hover:text-white transition-colors py-1">
-                            Batal & Kembali ke Login
+                            {{ __('auth.recovery.cancel_to_login') }}
                         </a>
                     </div>
                 </div>

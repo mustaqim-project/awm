@@ -246,4 +246,155 @@ final class SalesReturnWebController extends Controller
 
         return back()->with('success', "Retur {$return->return_number} selesai dan stok berhasil dikembalikan ke inventori.");
     }
+
+    public function edit(SalesReturn $return): View|RedirectResponse
+    {
+        $business = Context::requireBusiness();
+        abort_unless($return->business_id === $business->id, 403);
+
+        if ($return->status !== SalesReturn::STATUS_DRAFT) {
+            return redirect()->route('sales.returns.show', $return)
+                ->with('error', "Retur [{$return->return_number}] tidak dapat diedit karena sudah berstatus [{$return->status}]. Hanya draf retur yang dapat disunting.");
+        }
+
+        $return->load(['invoice.items.product', 'posOrder.items.product', 'items', 'customer']);
+
+        $sourceType = $return->invoice_id ? 'invoice' : 'pos_order';
+        $itemsData = [];
+
+        if ($sourceType === 'invoice' && $return->invoice) {
+            $invoice = $return->invoice;
+            $itemsData = $invoice->items->map(function ($item) use ($return) {
+                $returnedQty = (float) SalesReturnItem::where('invoice_item_id', $item->id)
+                    ->where('sales_return_id', '!=', $return->id)
+                    ->whereHas('salesReturn', fn($q) => $q->where('status', SalesReturn::STATUS_COMPLETED))
+                    ->sum('quantity');
+                $maxReturnable = max(0, (float) $item->quantity - $returnedQty);
+
+                $existingReturnItem = $return->items->firstWhere('invoice_item_id', $item->id);
+                $isSelected = $existingReturnItem !== null;
+                $currentQty = $existingReturnItem ? (float) $existingReturnItem->quantity : ($maxReturnable > 0 ? 1 : 0);
+
+                return [
+                    'item_id'      => $item->id,
+                    'product_name' => $item->item_name ?? $item->product?->name ?? 'Item Produk',
+                    'sku'          => $item->sku ?? $item->product?->sku ?? '-',
+                    'unit_price'   => (float) $item->unit_price,
+                    'original_qty' => (float) $item->quantity,
+                    'returned_qty' => $returnedQty,
+                    'max_qty'      => $maxReturnable,
+                    'selected'     => $isSelected,
+                    'quantity'     => $currentQty,
+                ];
+            })->values()->all();
+        } elseif ($sourceType === 'pos_order' && $return->posOrder) {
+            $posOrder = $return->posOrder;
+            $itemsData = $posOrder->items->map(function ($item) use ($return) {
+                $returnedQty = (float) SalesReturnItem::where('pos_order_item_id', $item->id)
+                    ->where('sales_return_id', '!=', $return->id)
+                    ->whereHas('salesReturn', fn($q) => $q->where('status', SalesReturn::STATUS_COMPLETED))
+                    ->sum('quantity');
+                $maxReturnable = max(0, (float) $item->quantity - $returnedQty);
+
+                $existingReturnItem = $return->items->firstWhere('pos_order_item_id', $item->id);
+                $isSelected = $existingReturnItem !== null;
+                $currentQty = $existingReturnItem ? (float) $existingReturnItem->quantity : ($maxReturnable > 0 ? 1 : 0);
+
+                return [
+                    'item_id'      => $item->id,
+                    'product_name' => $item->product_name ?? $item->product?->name ?? 'Item Produk POS',
+                    'sku'          => $item->product_code ?? $item->product?->sku ?? '-',
+                    'unit_price'   => (float) $item->unit_price,
+                    'original_qty' => (float) $item->quantity,
+                    'returned_qty' => $returnedQty,
+                    'max_qty'      => $maxReturnable,
+                    'selected'     => $isSelected,
+                    'quantity'     => $currentQty,
+                ];
+            })->values()->all();
+        }
+
+        return view('app.sales.returns.edit', compact('business', 'return', 'sourceType', 'itemsData'));
+    }
+
+    public function update(Request $request, SalesReturn $return): RedirectResponse
+    {
+        $business = Context::requireBusiness();
+        abort_unless($return->business_id === $business->id, 403);
+
+        if ($return->status !== SalesReturn::STATUS_DRAFT) {
+            return redirect()->route('sales.returns.show', $return)
+                ->with('error', 'Hanya draf retur yang dapat disunting.');
+        }
+
+        $rawItems = $request->input('items', []);
+        $filteredItems = array_values(array_filter($rawItems, function ($it) {
+            $isSelected = !empty($it['selected']) && ($it['selected'] === '1' || $it['selected'] === true || $it['selected'] === 'true');
+            $qty = (float) ($it['quantity'] ?? 0);
+            return $isSelected && $qty > 0;
+        }));
+
+        if (empty($filteredItems)) {
+            $filteredItems = array_values(array_filter($rawItems, function ($it) {
+                return (float) ($it['quantity'] ?? 0) > 0;
+            }));
+        }
+
+        $request->merge(['items' => $filteredItems]);
+
+        if ($return->pos_order_id) {
+            $validated = $request->validate([
+                'reason'                    => ['required', 'string', 'max:255'],
+                'refund_method'             => ['required', 'in:credit_note,cash_refund,store_credit'],
+                'return_date'               => ['nullable', 'date'],
+                'items'                     => ['required', 'array', 'min:1'],
+                'items.*.pos_order_item_id' => ['required', 'exists:pos_order_items,id'],
+                'items.*.quantity'          => ['required', 'numeric', 'gt:0'],
+            ]);
+        } else {
+            $validated = $request->validate([
+                'reason'                  => ['required', 'string', 'max:255'],
+                'refund_method'           => ['required', 'in:credit_note,cash_refund,store_credit'],
+                'return_date'             => ['nullable', 'date'],
+                'items'                   => ['required', 'array', 'min:1'],
+                'items.*.invoice_item_id' => ['required', 'exists:invoice_items,id'],
+                'items.*.quantity'        => ['required', 'numeric', 'gt:0'],
+            ]);
+        }
+
+        try {
+            $updated = $this->service->updateDraftReturn(
+                $return,
+                $validated['items'],
+                $validated
+            );
+        } catch (InvalidArgumentException $exception) {
+            return back()->withInput()->withErrors(['items' => $exception->getMessage()]);
+        }
+
+        return redirect()->route('sales.returns.show', $updated)
+            ->with('success', "Draft retur penjualan {$updated->return_number} berhasil diperbarui.");
+    }
+
+    public function pdf(SalesReturn $return): \Illuminate\Http\Response
+    {
+        $business = Context::requireBusiness();
+        abort_unless($return->business_id === $business->id, 403);
+
+        $return->load(['invoice.customer', 'posOrder.customer', 'customer', 'items.product', 'location']);
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.sales_return_pdf', [
+            'business' => $business,
+            'return' => $return,
+        ])->setPaper('a4', 'portrait');
+
+        $filename = 'Nota-Retur-' . \Illuminate\Support\Str::slug($return->return_number) . '.pdf';
+
+        return $pdf->stream($filename);
+    }
+
+    public function print(SalesReturn $return): \Illuminate\Http\Response
+    {
+        return $this->pdf($return);
+    }
 }

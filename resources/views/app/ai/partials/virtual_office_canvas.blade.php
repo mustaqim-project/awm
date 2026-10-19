@@ -42,7 +42,7 @@
         'role' => $t->executive_role ?? $t->agent,
         'input' => $t->input,
         'status' => $t->status,
-        'time' => $t->created_at?->diffForHumans() ?? 'Baru saja',
+        'time' => $t->created_at?->diffForHumans() ?? __('ai.canvas.just_now'),
     ])->values();
     $proposalsData = $pendingProposals->take(5)->map(fn($p) => [
         'id' => $p->id,
@@ -54,10 +54,10 @@
     $historiesData = $recentHistories->take(25)->map(fn($h) => [
         'id' => $h->id,
         'agent' => $h->agent ?? 'system',
-        'action' => $h->action ?? $h->title ?? 'Eksekusi Otomasi',
-        'details' => $h->details ?? $h->description ?? $h->input ?? 'Aktivitas AI tersinkronisasi',
+        'action' => $h->action ?? $h->title ?? __('ai.canvas.auto_execution'),
+        'details' => $h->details ?? $h->description ?? $h->input ?? __('ai.canvas.synced_activity'),
         'status' => $h->status ?? 'success',
-        'time' => $h->created_at?->diffForHumans() ?? 'Baru saja',
+        'time' => $h->created_at?->diffForHumans() ?? __('ai.canvas.just_now'),
     ])->values();
 
     $businessCurrent = \App\Support\Context::business();
@@ -152,7 +152,7 @@
             <div class="hidden sm:flex items-center gap-2 pl-2 border-l border-black/10 dark:border-white/10 text-xs">
                 <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 font-medium">
                     <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span><strong class="font-bold text-slate-900 dark:text-white">{{ $totalAgentsCount }} AI Agent</strong>: <span class="font-bold text-emerald-600 dark:text-emerald-400">{{ $activeAgentsCount }}</span> Aktif &bull; <span class="text-slate-500 dark:text-slate-400">{{ $idleAgentsCount }}</span> Siaga</span>
+                    <span><strong class="font-bold text-slate-900 dark:text-white">{{ $totalAgentsCount }} AI Agent</strong>: <span class="font-bold text-emerald-600 dark:text-emerald-400">{{ $activeAgentsCount }}</span> {{ __('ai.canvas.active') }} &bull; <span class="text-slate-500 dark:text-slate-400">{{ $idleAgentsCount }}</span> {{ __('ai.canvas.standby') }}</span>
                 </span>
             </div>
         </div>
@@ -213,7 +213,7 @@
                 x-show="viewMode === '3d'"
                 class="px-2.5 py-1.5 rounded-xl border border-black/10 dark:border-white/10 text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer"
                 :class="isNightMode ? 'bg-indigo-500/10 text-indigo-400 border-indigo-500/30' : 'bg-black/5 dark:bg-white/5 text-black/70 dark:text-white/70'"
-                :title="isNightMode ? 'Beralih ke Siang (Sunlight)' : 'Beralih ke Malam Cyberpunk'"
+                :title="isNightMode ? '{{ __('ai.canvas.switch_to_day') }}' : '{{ __('ai.canvas.switch_to_night') }}'"
             >
                 <i :data-lucide="isNightMode ? 'moon' : 'sun'" class="w-3.5 h-3.5 text-amber-500"></i>
                 <span class="hidden md:inline" x-text="isNightMode ? 'Night Mode' : 'Daylight'"></span>
@@ -235,10 +235,10 @@
                 type="button"
                 @click="openAvatarModal()"
                 class="px-2.5 py-1.5 rounded-xl bg-[#AF52DE]/10 hover:bg-[#AF52DE]/20 text-[#AF52DE] dark:text-[#BF5AF2] border border-[#AF52DE]/30 text-xs font-semibold flex items-center gap-1.5 transition shadow-sm cursor-pointer"
-                title="Kustomisasi Karakter & Avatar AI"
+                title="{{ __('ai.canvas.customize_avatars') }}"
             >
                 <i data-lucide="palette" class="w-3.5 h-3.5"></i>
-                <span class="hidden sm:inline">Avatar Agen</span>
+                <span class="hidden sm:inline">{{ __('ai.canvas.agent_avatars') }}</span>
             </button>
 
             <!-- Organisasi & Pembagian Tugas Modal Trigger -->
@@ -246,10 +246,10 @@
                 type="button"
                 @click="openOrgChartModal()"
                 class="px-2.5 py-1.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 border border-cyan-500/30 text-xs font-semibold flex items-center gap-1.5 transition shadow-sm cursor-pointer"
-                title="Lihat Struktur Tim & Pembagian Tugas 12 AI Agent"
+                title="{{ __('ai.canvas.org_chart_title') }}"
             >
                 <i data-lucide="users" class="w-3.5 h-3.5"></i>
-                <span class="hidden sm:inline">12 Agen &amp; Pembagian Tugas</span>
+                <span class="hidden sm:inline">{{ __('ai.canvas.agents_and_roles') }}</span>
             </button>
 
             <!-- Work Simulation Trigger -->
@@ -260,7 +260,7 @@
                 class="px-3 py-1.5 rounded-xl bg-black dark:bg-white hover:bg-black/90 dark:hover:bg-white/90 text-white dark:text-black text-xs font-semibold flex items-center gap-1.5 transition disabled:opacity-50 shadow-sm cursor-pointer"
             >
                 <i data-lucide="sparkles" class="w-3.5 h-3.5" :class="isScanning ? 'animate-spin' : ''"></i>
-                <span x-text="isScanning ? 'Menganalisis...' : 'Simulasi Kerja'"></span>
+                <span x-text="isScanning ? '{{ __('ai.canvas.analyzing') }}' : '{{ __('ai.canvas.simulate_work') }}'"></span>
             </button>
 
             <!-- Fullscreen Viewport Mode Button -->
@@ -269,10 +269,10 @@
                 @click="toggleFullscreen()"
                 x-show="viewMode === '3d'"
                 class="px-3 py-1.5 rounded-xl border border-indigo-500/30 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 text-xs font-semibold flex items-center gap-1.5 transition shadow-sm cursor-pointer"
-                :title="isFullscreen ? 'Keluar Mode Layar Penuh [ESC]' : 'Mode Layar Penuh (Fullscreen) [F]'"
+                :title="isFullscreen ? '{{ __('ai.canvas.exit_fullscreen_tooltip') }}' : '{{ __('ai.canvas.fullscreen_tooltip') }}'"
             >
                 <i :data-lucide="isFullscreen ? 'minimize-2' : 'maximize-2'" class="w-3.5 h-3.5"></i>
-                <span x-text="isFullscreen ? 'Keluar Fullscreen' : 'Full Screen'"></span>
+                <span x-text="isFullscreen ? '{{ __('ai.canvas.exit_fullscreen') }}' : '{{ __('ai.canvas.fullscreen') }}'"></span>
                 <span class="hidden xl:inline text-[10px] opacity-60 font-mono" x-text="isFullscreen ? '[ESC]' : '[F]'"></span>
             </button>
         </div>
@@ -1622,7 +1622,7 @@
                             <i data-lucide="zap" class="w-4 h-4"></i>
                         </div>
                         <div class="text-base font-black text-emerald-600 dark:text-emerald-400 tabular-nums">{{ $activeAgentsCount }}</div>
-                        <div class="text-[9px] text-emerald-600/80 dark:text-emerald-400/80 font-medium">Aktif</div>
+                        <div class="text-[9px] text-emerald-600/80 dark:text-emerald-400/80 font-medium">{{ __('ai.canvas.active') }}</div>
                     </div>
 
                     <!-- Idle -->
@@ -1631,7 +1631,7 @@
                             <i data-lucide="moon" class="w-4 h-4"></i>
                         </div>
                         <div class="text-base font-black text-slate-700 dark:text-slate-300 tabular-nums">{{ $idleAgentsCount }}</div>
-                        <div class="text-[9px] text-slate-500 dark:text-slate-400 font-medium">Siaga</div>
+                        <div class="text-[9px] text-slate-500 dark:text-slate-400 font-medium">{{ __('ai.canvas.standby') }}</div>
                     </div>
 
                     <!-- Waiting Approval -->
@@ -1640,7 +1640,7 @@
                             <i data-lucide="clock" class="w-4 h-4"></i>
                         </div>
                         <div class="text-base font-black text-amber-600 dark:text-amber-400 tabular-nums">{{ $pendingApprovalsCount }}</div>
-                        <div class="text-[9px] text-amber-600/80 dark:text-amber-400/80 font-medium">Menunggu</div>
+                        <div class="text-[9px] text-amber-600/80 dark:text-amber-400/80 font-medium">{{ __('ai.canvas.waiting') }}</div>
                     </div>
                 </div>
             </div>
@@ -1674,7 +1674,7 @@
                     @empty
                         <div class="py-3 text-center text-xs text-slate-500 dark:text-slate-400">
                             <i data-lucide="check-circle" class="w-5 h-5 mx-auto mb-1 text-emerald-500/80"></i>
-                            <p class="text-[11px]">Seluruh 12 agen dalam kondisi siap &amp; siaga.</p>
+                            <p class="text-[11px]">{{ __('ai.canvas.all_standby') }}</p>
                         </div>
                     @endforelse
                 </div>
@@ -1704,7 +1704,7 @@
                     @empty
                         <div class="py-3 text-center text-xs text-slate-500 dark:text-slate-400">
                             <i data-lucide="check" class="w-5 h-5 mx-auto mb-1 text-slate-400"></i>
-                            <p class="text-[11px]">Tidak ada usulan yang menunggu persetujuan.</p>
+                            <p class="text-[11px]">{{ __('ai.canvas.no_pending_proposals') }}</p>
                         </div>
                     @endforelse
                 </div>
@@ -1730,7 +1730,7 @@
                         </div>
                     @empty
                         <div class="py-3 text-center text-xs text-slate-500 dark:text-slate-400">
-                            <p class="text-[11px]">Belum ada riwayat aktivitas terbaru.</p>
+                            <p class="text-[11px]">{{ __('ai.canvas.no_recent_activity') }}</p>
                         </div>
                     @endforelse
                 </div>

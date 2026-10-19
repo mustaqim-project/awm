@@ -359,7 +359,7 @@
                         </div>
                         <div class="text-right shrink-0">
                             <span
-                                class="text-xs font-semibold text-black/45 dark:text-white/45 block text-[10px]">Total</span>
+                                class="text-xs font-semibold text-black/45 dark:text-white/45 block text-[10px]">{{ __('pos.total') }}</span>
                             <span class="text-sm font-extrabold text-[#007AFF] tabular-nums"
                                 x-text="formatRupiah(latestQrNotification?.total_amount)"></span>
                         </div>
@@ -374,7 +374,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
                             </svg>
-                            <span>Lihat Antrean (<span x-text="pendingQrCount"></span>)</span>
+                            <span>{{ __('pos.view_queue') }} (<span x-text="pendingQrCount"></span>)</span>
                         </button>
 
                         <button type="button"
@@ -385,7 +385,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
                             </svg>
-                            <span>Buka di Kasir</span>
+                            <span>{{ __('pos.open_in_cashier') }}</span>
                         </button>
                     </div>
                 </div>
@@ -412,7 +412,7 @@
                 <!-- Back to Dashboard / Brand Logo -->
                 <a href="{{ route('dashboard') }}"
                     class="flex items-center gap-2 text-white hover:opacity-90 transition shrink-0"
-                    title="Kembali ke Dashboard">
+                    title="{{ __('pos.back_to_dashboard') }}">
                     <div class="w-8.5 h-8.5 sm:w-9 sm:h-9 shrink-0 rounded-[10px] bg-[#007AFF] text-white flex items-center justify-center font-black text-sm shadow-sm">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349m-16.5 11.65V9.35m0 0a3.001 3.001 0 003.75-.615A2.993 2.993 0 009 9.35c.667 0 1.3-.217 1.815-.584a3 3 0 004.37 0c.515.367 1.148.584 1.815.584a3 3 0 002.25-.966 3 3 0 003.75.615m-16.5 0L12 3l7.5 6.35" />
@@ -460,11 +460,11 @@
                     <input type="text" x-ref="barcodeSearchInput" x-model="searchQuery"
                         @input="filterProducts()"
                         @keydown.enter="handleBarcodeOrSearch()"
-                        placeholder="Cari nama produk, SKU, atau scan barcode..."
+                        placeholder="{{ __('pos.search_products_placeholder') }}"
                         class="w-full h-10 bg-white border border-transparent rounded-[12px] pl-10 pr-11 text-[13px] text-black placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-[#007AFF] shadow-sm transition">
                     <button type="button" @click="requestBarcodeScannerAccess()"
                         class="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-black/50 hover:text-[#007AFF] transition"
-                        title="Scan Barcode Kamera">
+                        title="{{ __('pos.scan_barcode') }}">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5zM6.75 6.75h.75v.75h-.75v-.75zM6.75 16.5h.75v.75h-.75v-.75zM16.5 6.75h.75v.75h-.75v-.75z" />
                         </svg>
@@ -480,7 +480,7 @@
                     <!-- Scan Barcode Kamera Button (Besar & Mudah Ditekan) -->
                     <button type="button" @click="requestBarcodeScannerAccess()"
                         class="h-10 w-10 sm:h-11 sm:w-11 rounded-[12px] bg-white/10 hover:bg-white/15 active:scale-95 text-white flex items-center justify-center border border-white/15 shadow-sm transition shrink-0"
-                        title="Scan Barcode Kamera">
+                        title="{{ __('pos.scan_barcode') }}">
                         <svg class="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5zM6.75 6.75h.75v.75h-.75v-.75zM6.75 16.5h.75v.75h-.75v-.75zM16.5 6.75h.75v.75h-.75v-.75z" />
                         </svg>
@@ -505,7 +505,7 @@
                     <!-- Hamburger Drawer Toggle Button (Besar & Menonjol) -->
                     <button type="button" @click="mobileMenuOpen = true"
                         class="h-10 w-10 sm:h-11 sm:w-11 rounded-[12px] bg-[#007AFF] hover:bg-[#0071EB] active:scale-95 text-white flex items-center justify-center border border-white/20 shadow-md transition shrink-0 relative"
-                        title="Buka Menu Kasir POS">
+                        title="{{ __('pos.open_cashier_menu') }}">
                         <svg class="w-5.5 h-5.5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                         </svg>
@@ -533,18 +533,18 @@
                         <div
                             class="flex items-center gap-1.5 px-2.5 py-1 rounded-[10px] bg-[#34C759]/20 border border-[#34C759]/30 text-[#30D158] text-[11px]">
                             <span class="w-2 h-2 shrink-0 rounded-full bg-[#34C759] animate-pulse"></span>
-                            <span class="hidden md:inline font-semibold">Shift Aktif</span>
+                            <span class="hidden md:inline font-semibold">{{ __('pos.shift_active') }}</span>
                             <button @click="openShiftCloseModal()"
-                                class="px-2 py-0.5 rounded-[6px] bg-[#0B1528] hover:bg-black/50 text-white text-[10px] font-bold transition ml-0.5">Tutup</button>
+                                class="px-2 py-0.5 rounded-[6px] bg-[#0B1528] hover:bg-black/50 text-white text-[10px] font-bold transition ml-0.5">{{ __('pos.close') }}</button>
                         </div>
                     </template>
                     <template x-if="!activeShift">
                         <div
                             class="flex items-center gap-1.5 px-2.5 py-1 rounded-[10px] bg-[#FF9500]/20 border border-[#FF9500]/30 text-[#FF9F0A] text-[11px]">
                             <span class="w-2 h-2 shrink-0 rounded-full bg-[#FF9500]"></span>
-                            <span class="hidden md:inline font-semibold">Shift Tutup</span>
+                            <span class="hidden md:inline font-semibold">{{ __('pos.shift_closed') }}</span>
                             <button @click="showOpenShiftModal = true"
-                                class="px-2 py-0.5 rounded-[6px] bg-[#0B1528] hover:bg-black/50 text-white text-[10px] font-bold transition ml-0.5">Buka</button>
+                                class="px-2 py-0.5 rounded-[6px] bg-[#0B1528] hover:bg-black/50 text-white text-[10px] font-bold transition ml-0.5">{{ __('pos.open_shift_action') ?? 'Buka' }}</button>
                         </div>
                     </template>
 
@@ -555,7 +555,7 @@
                             'bg-[#007AFF] text-white ring-2 ring-white/30' :
                             'bg-white/10 hover:bg-white/15 text-white border border-white/10'"
                         class="h-8.5 sm:h-9 px-2.5 sm:px-3 rounded-[10px] active:scale-[0.97] text-[12px] font-medium transition flex items-center gap-1.5 relative"
-                        title="Pesanan Masuk dari Meja QR">
+                        title="{{ __('pos.qr_orders_title') }}">
                         <div class="relative flex items-center justify-center">
                             <svg class="w-4 h-4 text-[#007AFF] shrink-0" fill="none" stroke="currentColor"
                                 stroke-width="2" viewBox="0 0 24 24">
@@ -576,13 +576,13 @@
                         <!-- Resto Meja Selector Button -->
                         <button @click="openTablesModal('tables')"
                             class="h-8.5 sm:h-9 px-2.5 sm:px-3 rounded-[10px] bg-white/10 hover:bg-white/15 active:scale-[0.97] text-white text-[12px] font-medium transition flex items-center gap-1.5 border border-white/10"
-                            title="Daftar Meja & Sesi Tagihan Meja">
+                            title="{{ __('pos.tables_and_bills_title') }}">
                             <svg class="w-4 h-4 text-[#34C759] shrink-0" fill="none" stroke="currentColor"
                                 stroke-width="1.8" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
                             </svg>
-                            <span class="hidden md:inline">Meja</span>
+                            <span class="hidden md:inline">{{ __('pos.table') }}</span>
                             <template x-if="selectedTable">
                                 <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-[#34C759]/30 text-[#34C759]"
                                     x-text="'M-' + selectedTable.table_number"></span>
@@ -593,7 +593,7 @@
                         <button @click="openTablesModal('reservations')"
                             :class="todayReservations.length > 0 ? 'bg-[#5856D6] text-white ring-2 ring-white/20' : 'bg-white/10 hover:bg-white/15 text-white border border-white/10'"
                             class="h-8.5 sm:h-9 px-2.5 sm:px-3 rounded-[10px] active:scale-[0.97] text-[12px] font-medium transition flex items-center gap-1.5 relative"
-                            title="Jadwal Reservasi Meja dari Storefront">
+                            title="{{ __('pos.table_reservations_title') }}">
                             <svg class="w-4 h-4 text-white shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
                             </svg>
@@ -622,7 +622,7 @@
                     <!-- Antrean Hold Button -->
                     <button @click="showHeldOrdersModal = true"
                         class="h-8.5 sm:h-9 px-2.5 sm:px-3 rounded-[10px] bg-white/10 hover:bg-white/15 active:scale-[0.97] text-white text-[12px] font-medium transition flex items-center gap-1.5 border border-white/10"
-                        title="Antrean Transaksi (Hold)">
+                        title="{{ __('pos.held_orders_title') }}">
                         <svg class="w-4 h-4 text-[#FF9500] shrink-0" fill="none" stroke="currentColor"
                             stroke-width="1.8" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -745,13 +745,13 @@
                             </svg>
                         </div>
                         <div>
-                            <h3 class="font-bold text-[14px] text-white leading-tight">Menu Kasir POS</h3>
-                            <p class="text-[10px] text-white/50">Navigasi & Operasional</p>
+                            <h3 class="font-bold text-[14px] text-white leading-tight">{{ __('pos.cashier_menu_title') }}</h3>
+                            <p class="text-[10px] text-white/50">{{ __('pos.nav_and_operations') }}</p>
                         </div>
                     </div>
                     <button type="button" @click="mobileMenuOpen = false"
                         class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/15 text-white/70 hover:text-white flex items-center justify-center transition active:scale-95"
-                        title="Tutup Menu">
+                        title="{{ __('pos.close_menu') }}">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                         </svg>
@@ -763,28 +763,28 @@
 
                     <!-- 0. Connectivity Status Bento Card -->
                     <div class="p-3 rounded-[16px] bg-white/[0.04] border border-white/10 flex items-center justify-between">
-                        <span class="text-[11px] font-semibold uppercase tracking-wider text-white/50">Status Koneksi</span>
+                        <span class="text-[11px] font-semibold uppercase tracking-wider text-white/50">{{ __('pos.connection_status') }}</span>
                         <span :class="isOnline ? 'bg-[#34C759]/20 border-[#34C759]/30 text-[#30D158]' : 'bg-[#FF3B30]/20 border-[#FF3B30]/30 text-[#FF453A]'"
                             class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border text-[11px] font-bold">
                             <span :class="isOnline ? 'bg-[#34C759]' : 'bg-[#FF3B30]'" class="w-1.5 h-1.5 rounded-full animate-pulse"></span>
-                            <span x-text="isOnline ? 'Online' : 'Offline'"></span>
+                            <span x-text="isOnline ? '{{ __('pos.online') }}' : '{{ __('pos.offline') }}'"></span>
                         </span>
                     </div>
 
                     <!-- 1. Shift Status Bento Card -->
                     <div class="p-3.5 rounded-[16px] bg-white/[0.04] border border-white/10 space-y-3">
                         <div class="flex items-center justify-between">
-                            <span class="text-[11px] font-semibold uppercase tracking-wider text-white/50">Status Shift</span>
+                            <span class="text-[11px] font-semibold uppercase tracking-wider text-white/50">{{ __('pos.shift_status') }}</span>
                             <template x-if="activeShift">
                                 <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#34C759]/20 border border-[#34C759]/30 text-[#30D158] text-[11px] font-bold">
                                     <span class="w-1.5 h-1.5 rounded-full bg-[#34C759] animate-pulse"></span>
-                                    Aktif
+                                    {{ __('pos.status_active') }}
                                 </span>
                             </template>
                             <template x-if="!activeShift">
                                 <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#FF9500]/20 border border-[#FF9500]/30 text-[#FF9F0A] text-[11px] font-bold">
                                     <span class="w-1.5 h-1.5 rounded-full bg-[#FF9500]"></span>
-                                    Tutup
+                                    {{ __('pos.shift_closed') }}
                                 </span>
                             </template>
                         </div>
@@ -792,27 +792,27 @@
                         <template x-if="activeShift">
                             <div class="space-y-2">
                                 <div class="text-[12px] text-white/70">
-                                    Shift dibuka oleh <strong class="text-white">{{ $user->name }}</strong>
+                                    {{ __('pos.shift_opened_by') }} <strong class="text-white">{{ $user->name }}</strong>
                                 </div>
                                 <button type="button" @click="mobileMenuOpen = false; openShiftCloseModal()"
                                     class="w-full h-9 rounded-[10px] bg-[#FF3B30] hover:bg-[#FF453A] text-white text-[12px] font-bold transition flex items-center justify-center gap-2 active:scale-95 shadow-sm">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
                                     </svg>
-                                    Tutup Shift Sekarang
+                                    {{ __('pos.close_shift_now') }}
                                 </button>
                             </div>
                         </template>
 
                         <template x-if="!activeShift">
                             <div class="space-y-2">
-                                <p class="text-[11px] text-white/60">Shift belum dibuka. Buka shift kasir untuk mulai transaksi.</p>
+                                <p class="text-[11px] text-white/60">{{ __('pos.shift_not_open_desc') }}</p>
                                 <button type="button" @click="mobileMenuOpen = false; showOpenShiftModal = true"
                                     class="w-full h-9 rounded-[10px] bg-[#34C759] hover:bg-[#30D158] text-black font-bold text-[12px] transition flex items-center justify-center gap-2 active:scale-95 shadow-sm">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                                     </svg>
-                                    Buka Shift Kasir
+                                    {{ __('pos.open_cashier_shift') }}
                                 </button>
                             </div>
                         </template>
@@ -820,7 +820,7 @@
 
                     <!-- 2. Outlet Selector (for multi-location) -->
                     <div class="p-3 rounded-[16px] bg-white/[0.04] border border-white/10 space-y-2">
-                        <label class="text-[11px] font-semibold uppercase tracking-wider text-white/50 block">Lokasi Outlet</label>
+                        <label class="text-[11px] font-semibold uppercase tracking-wider text-white/50 block">{{ __('pos.outlet_location') }}</label>
                         <div class="relative">
                             <select x-model="selectedLocationId" @change="changeLocation()"
                                 class="w-full h-10 rounded-[10px] bg-white/10 border border-white/15 px-3 pr-8 text-white text-[12px] font-medium focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
@@ -835,7 +835,7 @@
 
                     <!-- 3. Operational Navigation Menu Items -->
                     <div class="space-y-1.5">
-                        <span class="text-[11px] font-semibold uppercase tracking-wider text-white/50 px-1 block">Fitur Kasir</span>
+                        <span class="text-[11px] font-semibold uppercase tracking-wider text-white/50 px-1 block">{{ __('pos.cashier_features') }}</span>
 
                         @if ($business && ($business->isFoodIndustry() || $business->hasDineInFeature()))
                         <!-- Auto Kirim KDS Quick Toggle (Paperless) -->
@@ -849,14 +849,14 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <div class="font-bold text-[13px] text-white">Auto Kirim ke Dapur (KDS)</div>
-                                    <div class="text-[11px] text-white/50" x-text="posAutoSendKds ? 'Paperless: Order otomatis ke layar dapur' : 'Manual / Tidak otomatis ke KDS'"></div>
+                                    <div class="font-bold text-[13px] text-white">{{ __('pos.auto_send_kds') }}</div>
+                                    <div class="text-[11px] text-white/50" x-text="posAutoSendKds ? '{{ __('pos.kds_auto_desc') }}' : '{{ __('pos.kds_manual_desc') }}'"></div>
                                 </div>
                             </div>
                             <div class="flex items-center gap-2">
                                 <span class="px-2 py-0.5 rounded-full font-bold text-[10px]"
                                     :class="posAutoSendKds ? 'bg-[#34C759]/20 text-[#34C759]' : 'bg-white/10 text-white/50'"
-                                    x-text="posAutoSendKds ? 'AKTIF' : 'NONAKTIF'"></span>
+                                    x-text="posAutoSendKds ? '{{ __('pos.status_active_upper') }}' : '{{ __('pos.status_inactive_upper') }}'"></span>
                             </div>
                         </button>
                         @endif
@@ -872,12 +872,12 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <div class="font-bold text-[13px] text-white">Pesanan Meja QR</div>
-                                    <div class="text-[11px] text-white/50">Order langsung via QR resto</div>
+                                    <div class="font-bold text-[13px] text-white">{{ __('pos.qr_table_orders') }}</div>
+                                    <div class="text-[11px] text-white/50">{{ __('pos.order_via_qr_desc') }}</div>
                                 </div>
                             </div>
                             <div class="flex items-center gap-1.5">
-                                <span x-show="pendingQrCount > 0" x-text="pendingQrCount + ' baru'"
+                                <span x-show="pendingQrCount > 0" x-text="pendingQrCount + ' ' + '{{ __('pos.new_badge') }}'"
                                     class="px-2 py-0.5 rounded-full bg-[#007AFF] text-white font-bold text-[10px] animate-pulse"></span>
                                 <svg class="w-4 h-4 text-white/40 group-hover:text-white transition" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
@@ -896,8 +896,8 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <div class="font-bold text-[13px] text-white">Daftar Meja Resto</div>
-                                        <div class="text-[11px] text-white/50">Status & sesi tagihan meja</div>
+                                        <div class="font-bold text-[13px] text-white">{{ __('pos.dine_in_tables') }}</div>
+                                        <div class="text-[11px] text-white/50">{{ __('pos.table_bill_status_desc') }}</div>
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-1.5">
@@ -920,8 +920,8 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <div class="font-bold text-[13px] text-white">Buku Reservasi Storefront</div>
-                                        <div class="text-[11px] text-white/50">Jadwal booking tamu hari ini</div>
+                                        <div class="font-bold text-[13px] text-white">{{ __('pos.storefront_reservations') }}</div>
+                                        <div class="text-[11px] text-white/50">{{ __('pos.today_reservations_desc') }}</div>
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-1.5">
@@ -944,12 +944,12 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <div class="font-bold text-[13px] text-white">Antrean Hold</div>
-                                    <div class="text-[11px] text-white/50">Pesanan yang ditahan sementara</div>
+                                    <div class="font-bold text-[13px] text-white">{{ __('pos.held_queue') }}</div>
+                                    <div class="text-[11px] text-white/50">{{ __('pos.held_queue_desc') }}</div>
                                 </div>
                             </div>
                             <div class="flex items-center gap-1.5">
-                                <span x-show="heldOrders.length > 0" x-text="heldOrders.length + ' hold'"
+                                <span x-show="heldOrders.length > 0" x-text="heldOrders.length + ' ' + '{{ __('pos.held_unit') }}'"
                                     class="px-2 py-0.5 rounded-full bg-[#FF9500] text-black font-bold text-[10px]"></span>
                                 <svg class="w-4 h-4 text-white/40 group-hover:text-white transition" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
@@ -968,8 +968,8 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <div class="font-bold text-[13px] text-white">Kas Masuk / Kas Keluar</div>
-                                        <div class="text-[11px] text-white/50">Petty cash & mutasi kasir</div>
+                                        <div class="font-bold text-[13px] text-white">{{ __('pos.cash_in_out') }}</div>
+                                        <div class="text-[11px] text-white/50">{{ __('pos.petty_cash_desc') }}</div>
                                     </div>
                                 </div>
                                 <svg class="w-4 h-4 text-white/40 group-hover:text-white transition" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -989,8 +989,8 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <div class="font-bold text-[13px] text-white">Setting POS & Hardware</div>
-                                    <div class="text-[11px] text-white/50">Printer Thermal, Mode POS, Kitchen</div>
+                                    <div class="font-bold text-[13px] text-white">{{ __('pos.pos_hardware_settings') }}</div>
+                                    <div class="text-[11px] text-white/50">{{ __('pos.pos_hardware_desc') }}</div>
                                 </div>
                             </div>
                             <svg class="w-4 h-4 text-white/40 group-hover:text-white transition" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -1012,13 +1012,13 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <div class="font-bold text-[13px] text-white">Mode Tampilan</div>
-                                    <div class="text-[11px] text-white/50" x-text="isDarkMode ? 'Tema Gelap (Dark)' : 'Tema Terang (Light)'"></div>
+                                    <div class="font-bold text-[13px] text-white">{{ __('pos.display_mode') }}</div>
+                                    <div class="text-[11px] text-white/50" x-text="isDarkMode ? '{{ __('pos.theme_dark') }}' : '{{ __('pos.theme_light') }}'"></div>
                                 </div>
                             </div>
                             <button type="button" @click="toggleTheme()"
                                 class="px-3 py-1.5 rounded-[8px] bg-white/10 hover:bg-white/20 active:scale-95 text-white text-[11px] font-bold transition">
-                                Ganti
+                                {{ __('pos.switch_theme') }}
                             </button>
                         </div>
                     </div>
@@ -1032,7 +1032,7 @@
                         </div>
                         <div class="min-w-0 flex-1">
                             <div class="font-bold text-[13px] text-white truncate">{{ $user->name }}</div>
-                            <div class="text-[11px] text-white/50 truncate">Kasir Bertugas</div>
+                            <div class="text-[11px] text-white/50 truncate">{{ __('pos.cashier_on_duty') }}</div>
                         </div>
                     </div>
 
@@ -1041,7 +1041,7 @@
                         <svg class="w-4 h-4 text-white/70" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
                         </svg>
-                        Kembali ke Dashboard
+                        {{ __('pos.back_to_dashboard') }}
                     </a>
                 </div>
             </div>
@@ -1066,11 +1066,11 @@
                                 ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm font-bold'
                                 : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white font-medium'"
                             class="h-8 sm:h-9 px-3 sm:px-3.5 rounded-[10px] text-[12px] sm:text-[13px] whitespace-nowrap transition-all flex items-center gap-1.5 active:scale-[0.97]"
-                            title="Harga Dine-in / Reguler">
+                            title="{{ __('pos.dine_in_tooltip') }}">
                             <svg class="w-3.5 h-3.5 text-[#007AFF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
                             </svg>
-                            <span>Dine In</span>
+                            <span>{{ __('pos.dine_in_short') }}</span>
                         </button>
 
                         <!-- 2. Takeaway -->
@@ -1079,11 +1079,11 @@
                                 ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm font-bold'
                                 : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white font-medium'"
                             class="h-8 sm:h-9 px-3 sm:px-3.5 rounded-[10px] text-[12px] sm:text-[13px] whitespace-nowrap transition-all flex items-center gap-1.5 active:scale-[0.97]"
-                            title="Harga Takeaway / Bawa Pulang">
+                            title="{{ __('pos.takeaway_box_tooltip') }}">
                             <svg class="w-3.5 h-3.5 text-[#FF9500]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25c-.669 0-1.189-.578-1.119-1.243l1.263-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
                             </svg>
-                            <span>Takeaway</span>
+                            <span>{{ __('pos.takeaway_short') }}</span>
                         </button>
 
                         <!-- 3. GoFood -->
@@ -1092,7 +1092,7 @@
                                 ? 'bg-[#00AA13] text-white shadow-sm font-bold ring-2 ring-[#00AA13]/30'
                                 : 'text-black/60 dark:text-white/60 hover:text-[#00AA13] font-medium'"
                             class="h-8 sm:h-9 px-3 sm:px-3.5 rounded-[10px] text-[12px] sm:text-[13px] whitespace-nowrap transition-all flex items-center gap-1.5 active:scale-[0.97]"
-                            title="Harga Khusus GoFood">
+                            title="{{ __('pos.online_special_price') }} GoFood">
                             <span class="w-2 h-2 rounded-full" :class="salesChannel === 'gofood' ? 'bg-white' : 'bg-[#00AA13]'"></span>
                             <span>GoFood</span>
                         </button>
@@ -1103,7 +1103,7 @@
                                 ? 'bg-[#00B14F] text-white shadow-sm font-bold ring-2 ring-[#00B14F]/30'
                                 : 'text-black/60 dark:text-white/60 hover:text-[#00B14F] font-medium'"
                             class="h-8 sm:h-9 px-3 sm:px-3.5 rounded-[10px] text-[12px] sm:text-[13px] whitespace-nowrap transition-all flex items-center gap-1.5 active:scale-[0.97]"
-                            title="Harga Khusus GrabFood">
+                            title="{{ __('pos.online_special_price') }} GrabFood">
                             <span class="w-2 h-2 rounded-full" :class="salesChannel === 'grabfood' ? 'bg-white' : 'bg-[#00B14F]'"></span>
                             <span>GrabFood</span>
                         </button>
@@ -1114,7 +1114,7 @@
                                 ? 'bg-[#EE4D2D] text-white shadow-sm font-bold ring-2 ring-[#EE4D2D]/30'
                                 : 'text-black/60 dark:text-white/60 hover:text-[#EE4D2D] font-medium'"
                             class="h-8 sm:h-9 px-3 sm:px-3.5 rounded-[10px] text-[12px] sm:text-[13px] whitespace-nowrap transition-all flex items-center gap-1.5 active:scale-[0.97]"
-                            title="Harga Khusus ShopeeFood">
+                            title="{{ __('pos.online_special_price') }} ShopeeFood">
                             <span class="w-2 h-2 rounded-full" :class="salesChannel === 'shopeefood' ? 'bg-white' : 'bg-[#EE4D2D]'"></span>
                             <span>ShopeeFood</span>
                         </button>
@@ -1148,7 +1148,7 @@
                         <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
                         </svg>
-                        <span>Semua Item</span>
+                        <span>{{ __('pos.all_items') }}</span>
                     </button>
 
                     <!-- 2. Produk Fisik -->
@@ -1160,7 +1160,7 @@
                         <svg class="w-5 h-5 shrink-0 text-black/50 dark:text-white/50" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
                         </svg>
-                        <span>Produk Fisik</span>
+                        <span>{{ __('pos.physical_products') }}</span>
                     </button>
 
                     <!-- 3. Jasa / Layanan -->
@@ -1172,7 +1172,7 @@
                         <svg class="w-5 h-5 shrink-0 text-black/50 dark:text-white/50" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75a4.5 4.5 0 01-4.884 4.484c-1.076-.091-2.264.398-3.03 1.164l-4.5 4.5a2.25 2.25 0 01-3.182-3.182l4.5-4.5c.766-.766 1.255-1.954 1.164-3.03A4.5 4.5 0 0117.25 2.25a.75.75 0 01.53 1.28l-1.97 1.97a.75.75 0 001.06 1.06l1.97-1.97a.75.75 0 011.28.53z" />
                         </svg>
-                        <span>Jasa / Layanan</span>
+                        <span>{{ __('pos.services') }}</span>
                     </button>
 
                     <!-- 4. Dynamic Business Categories -->
@@ -1223,7 +1223,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
                             </svg>
                             <span class="text-[10.5px] font-semibold leading-tight text-center max-w-full px-0.5 break-words line-clamp-2"
-                                style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">Semua</span>
+                                style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">{{ __('pos.all_items_short') }}</span>
                         </button>
 
                         <!-- 2. Produk Fisik (Mobile) -->
@@ -1238,7 +1238,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
                             </svg>
                             <span class="text-[10.5px] font-semibold leading-tight text-center max-w-full px-0.5 break-words line-clamp-2"
-                                style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">Fisik</span>
+                                style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">{{ __('pos.physical_products_short') }}</span>
                         </button>
 
                         <!-- 3. Jasa / Layanan (Mobile) -->
@@ -1253,7 +1253,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75a4.5 4.5 0 01-4.884 4.484c-1.076-.091-2.264.398-3.03 1.164l-4.5 4.5a2.25 2.25 0 01-3.182-3.182l4.5-4.5c.766-.766 1.255-1.954 1.164-3.03A4.5 4.5 0 0117.25 2.25a.75.75 0 01.53 1.28l-1.97 1.97a.75.75 0 001.06 1.06l1.97-1.97a.75.75 0 011.28.53z" />
                             </svg>
                             <span class="text-[10.5px] font-semibold leading-tight text-center max-w-full px-0.5 break-words line-clamp-2"
-                                style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">Jasa</span>
+                                style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">{{ __('pos.services_short') }}</span>
                         </button>
 
                         <!-- 4. Dynamic Business Categories (Mobile) -->
@@ -1329,7 +1329,7 @@
                                                     <template x-if="product.type === 'service'">
                                                         <span
                                                             class="absolute top-1.5 right-1.5 text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#AF52DE] text-white shadow-xs">
-                                                            Jasa
+                                                            {{ __('pos.services_label') }}
                                                         </span>
                                                     </template>
                                                     <template x-if="product.type !== 'service'">
@@ -1338,7 +1338,7 @@
                                                             :class="product.current_stock > 0 ?
                                                                 'text-[#34C759] border border-[#34C759]' :
                                                                 'text-[#FF3B30] border border-[#FF3B30]'"
-                                                            x-text="'Stok: ' + (product.current_stock ?? 0)">
+                                                            x-text="'{{ __('pos.stock') }}: ' + (product.current_stock ?? 0)">
                                                         </span>
                                                     </template>
                                                 </div>
@@ -1354,12 +1354,12 @@
                                                     x-text="product.code || '-'"></span>
                                                 <template x-if="product.type === 'service'">
                                                     <span class="inline-flex items-center px-1.5 py-0.2 rounded text-[8.5px] sm:text-[9px] font-bold bg-[#AF52DE]/15 text-[#AF52DE]">
-                                                        Jasa
+                                                        {{ __('pos.services_label') }}
                                                     </span>
                                                 </template>
                                                 <template x-if="product.modifier_groups && product.modifier_groups.length > 0">
                                                     <span class="inline-flex items-center px-1.5 py-0.2 rounded text-[8.5px] sm:text-[9px] font-bold bg-[#007AFF]/10 text-[#007AFF]">
-                                                        + Varian
+                                                        {{ __('pos.plus_variant') }}
                                                     </span>
                                                 </template>
                                             </div>
@@ -1379,7 +1379,7 @@
                                             </div>
                                             <button type="button" @click.stop="handleProductClick(product)"
                                                 class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#007AFF] hover:bg-[#0062CC] text-white flex items-center justify-center font-bold text-sm sm:text-base shadow-sm shrink-0 active:scale-90 transition-all"
-                                                title="Tambah ke Keranjang">
+                                                title="{{ __('pos.add_to_cart') }}">
                                                 <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                                                 </svg>
@@ -1397,8 +1397,8 @@
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
                                 </svg>
-                                <div class="text-[13px] sm:text-[14px] font-semibold text-black/60 dark:text-white/60">Tidak ada produk ditemukan</div>
-                                <div class="text-[11px] sm:text-[12px] text-black/40 dark:text-white/40 mt-0.5">Coba ubah kata kunci pencarian atau kategori filter</div>
+                                <div class="text-[13px] sm:text-[14px] font-semibold text-black/60 dark:text-white/60">{{ __('pos.no_products_found') }}</div>
+                                <div class="text-[11px] sm:text-[12px] text-black/40 dark:text-white/40 mt-0.5">{{ __('pos.no_products_found_hint') }}</div>
                             </div>
                         </div>
 
@@ -1408,7 +1408,7 @@
                                 <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-black/40 dark:text-white/40 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
                                 </svg>
-                                <span class="truncate">Total <strong class="text-black dark:text-white font-bold" x-text="filteredProducts.length"></strong> item</span>
+                                <span class="truncate">{{ __('pos.total_label') }} <strong class="text-black dark:text-white font-bold" x-text="filteredProducts.length"></strong> {{ __('pos.items_unit') }}</span>
                             </div>
 
                             <div class="flex items-center gap-1 select-none shrink-0" x-show="filteredProducts.length > 0">
@@ -1451,22 +1451,22 @@
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
                             </svg>
-                            <span>Keranjang Kasir</span>
+                            <span>{{ __('pos.cart_title') }}</span>
                         </div>
                         <div class="flex items-center gap-2">
                             <span class="px-2.5 py-0.5 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/80 font-bold text-xs tabular-nums"
-                                x-text="cart.length + ' item'">0 item</span>
+                                x-text="cart.length + ' ' + '{{ __('pos.items_unit') }}'">0 item</span>
                             <button type="button" @click="clearCart()"
                                 class="text-[12px] text-[#FF3B30] hover:text-[#D70015] flex items-center gap-1 font-semibold transition"
-                                title="Reset Keranjang">
+                                title="{{ __('pos.reset_cart_tooltip') }}">
                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                 </svg>
-                                <span>Reset</span>
+                                <span>{{ __('pos.reset_cart') }}</span>
                             </button>
                             <button @click="closeMobileCart()"
                                 class="pos-cart-btn-close lg:hidden p-1 rounded-md text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white"
-                                title="Tutup keranjang">
+                                title="{{ __('pos.close_cart_tooltip') }}">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -1488,7 +1488,7 @@
                                         d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                                 </svg>
                                 <span class="truncate font-medium pr-1"
-                                    x-text="activeCustomer ? activeCustomer.name : 'Pelanggan Umum (Guest)'"></span>
+                                    x-text="activeCustomer ? activeCustomer.name : '{{ __('pos.guest_customer') }}'"></span>
                                 <svg class="w-3 h-3 text-black/40 dark:text-white/40 shrink-0 transition-transform duration-200"
                                     :class="customerDropdownOpen ? 'rotate-180' : ''" fill="none"
                                     stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -1500,7 +1500,7 @@
                             <!-- Clear Customer selection button (Reset to Guest) -->
                             <button x-show="activeCustomer" @click.stop="selectCustomer(null)" type="button"
                                 class="absolute right-6 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-black/10 dark:bg-white/20 text-black/60 dark:text-white/60 hover:bg-black/20 dark:hover:bg-white/30 flex items-center justify-center transition"
-                                title="Reset ke Pelanggan Umum">
+                                title="{{ __('pos.reset_to_guest') }}">
                                 <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" stroke-width="2.5"
                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -1520,7 +1520,7 @@
                                             d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                                     </svg>
                                     <input type="text" x-ref="customerSearchInput" x-model="customerSearchQuery"
-                                        placeholder="Cari nama / nomor HP..."
+                                        placeholder="{{ __('pos.search_customer_placeholder') }}"
                                         class="w-full h-8.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[8px] pl-8 pr-7 text-[12px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40">
                                     <button x-show="customerSearchQuery"
                                         @click="customerSearchQuery = ''; $refs.customerSearchInput?.focus()"
@@ -1551,7 +1551,7 @@
                                                         d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                                                 </svg>
                                             </div>
-                                            <span class="truncate">Pelanggan Umum (Guest)</span>
+                                            <span class="truncate">{{ __('pos.guest_customer') }}</span>
                                         </div>
                                         <svg x-show="!selectedCustomerId" class="w-3.5 h-3.5 shrink-0" fill="none"
                                             stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
@@ -1577,7 +1577,7 @@
                                                 </div>
                                                 <div class="text-[11px] opacity-70 flex items-center gap-2 mt-0.5">
                                                     <span x-show="cust.phone" x-text="cust.phone"></span>
-                                                    <span x-text="Number(cust.points_balance || 0) + ' Poin'"></span>
+                                                    <span x-text="Number(cust.points_balance || 0) + ' ' + '{{ __('pos.points_unit') }}'"></span>
                                                 </div>
                                             </div>
                                             <svg x-show="selectedCustomerId === cust.id" class="w-3.5 h-3.5 shrink-0"
@@ -1592,7 +1592,7 @@
                                     <!-- Empty State -->
                                     <div x-show="filteredCustomers.length === 0"
                                         class="py-3 text-center text-xs text-black/45 dark:text-white/45">
-                                        <p>Pelanggan tidak ditemukan.</p>
+                                        <p>{{ __('pos.customer_not_found') }}</p>
                                     </div>
                                 </div>
 
@@ -1600,7 +1600,7 @@
                                 <div
                                     class="pt-2 mt-1 border-t border-black/10 dark:border-white/10 flex items-center justify-between text-[11px]">
                                     <span class="text-black/40 dark:text-white/40"
-                                        x-text="filteredCustomers.length + ' data'"></span>
+                                        x-text="filteredCustomers.length + ' ' + '{{ __('pos.data_unit') }}'"></span>
                                     <button type="button" @click="customerDropdownOpen = false; openCustomerModal()"
                                         class="text-[#007AFF] font-semibold hover:underline flex items-center gap-1">
                                         <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2"
@@ -1608,7 +1608,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round"
                                                 d="M12 4.5v15m7.5-7.5h-15" />
                                         </svg>
-                                        <span>Pelanggan Baru</span>
+                                        <span>{{ __('pos.new_customer') }}</span>
                                     </button>
                                 </div>
                             </div>
@@ -1617,7 +1617,7 @@
                         <!-- Quick Add Customer Button -->
                         <button type="button" @click="openCustomerModal()"
                             class="shrink-0 h-9 w-9 rounded-[10px] bg-[#007AFF] text-white hover:bg-[#0062CC] transition flex items-center justify-center active:scale-[0.97] shadow-xs"
-                            title="Tambah Pelanggan Baru" aria-label="Tambah Pelanggan Baru">
+                            title="{{ __('pos.add_new_customer') }}" aria-label="{{ __('pos.add_new_customer') }}">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5"
                                 viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -1629,11 +1629,11 @@
                         <button type="button" @click="setSalesChannel('takeaway'); detachTableFromCart()"
                             :class="salesChannel === 'takeaway' ? 'bg-[#007AFF] text-white shadow-xs font-semibold' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70 hover:bg-black/[0.07] dark:hover:bg-white/[0.1]'"
                             class="shrink-0 h-9 px-3 rounded-[10px] border border-black/5 dark:border-white/10 text-[12px] transition flex items-center gap-1.5 active:scale-[0.97]"
-                            title="Bungkus / Takeaway">
+                            title="{{ __('pos.takeaway_box_tooltip') }}">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25c-.669 0-1.189-.578-1.119-1.243l1.263-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
                             </svg>
-                            <span>Bungkus</span>
+                            <span>{{ __('pos.takeaway_box') }}</span>
                         </button>
 
                         @if ($business->hasDineInFeature())
@@ -1642,11 +1642,11 @@
                             <button type="button" @click="setSalesChannel('dine_in'); dineDropdown = !dineDropdown"
                                 :class="salesChannel === 'dine_in' ? 'bg-[#007AFF] text-white shadow-xs font-semibold' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70 hover:bg-black/[0.07] dark:hover:bg-white/[0.1]'"
                                 class="h-9 px-3 rounded-[10px] border border-black/5 dark:border-white/10 text-[12px] transition flex items-center gap-1.5 active:scale-[0.97]"
-                                title="Makan di Tempat / Dine In">
+                                title="{{ __('pos.dine_in_tooltip') }}">
                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6z" />
                                 </svg>
-                                <span x-text="selectedTable ? ('Meja ' + selectedTable.table_number) : 'Dine In'"></span>
+                                <span x-text="selectedTable ? ('{{ __('pos.table') }} ' + selectedTable.table_number) : '{{ __('pos.dine_in_short') }}'"></span>
                                 <svg class="w-3 h-3 transition-transform" :class="dineDropdown ? 'rotate-180' : ''" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                                 </svg>
@@ -1656,13 +1656,13 @@
                                 class="absolute right-0 top-full mt-1.5 z-40 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[12px] p-1.5 shadow-[0_10px_30px_rgba(0,0,0,0.25)] text-black dark:text-white min-w-[160px]">
                                 <button type="button" @click="orderType = 'dine_in'; dineDropdown = false; openTablesModal()"
                                     class="w-full text-left px-2.5 py-1.5 rounded-[8px] hover:bg-black/[0.04] dark:hover:bg-white/[0.06] text-xs font-medium flex items-center justify-between transition">
-                                    <span>Pilih / Ganti Meja</span>
+                                    <span>{{ __('pos.select_change_table') }}</span>
                                     <span class="text-[10px] text-[#007AFF] font-bold">F&B</span>
                                 </button>
                                 <button type="button" @click="orderType = 'delivery'; dineDropdown = false"
                                     class="w-full text-left px-2.5 py-1.5 rounded-[8px] hover:bg-black/[0.04] dark:hover:bg-white/[0.06] text-xs font-medium flex items-center justify-between transition">
-                                    <span>Kirim (Delivery)</span>
-                                    <span class="text-[10px] opacity-60">Kurir</span>
+                                    <span>{{ __('pos.delivery_courier') }}</span>
+                                    <span class="text-[10px] opacity-60">{{ __('pos.courier_label') }}</span>
                                 </button>
                             </div>
                         </div>
@@ -1687,24 +1687,23 @@
                                 <div class="min-w-0">
                                     <div class="flex items-center gap-1.5">
                                         <span class="font-bold text-[13px] text-black dark:text-white truncate"
-                                            x-text="'Meja ' + (selectedTable ? selectedTable.table_number : '') + (selectedTable && selectedTable.name ? ' • ' + selectedTable.name : '')"></span>
+                                            x-text="'{{ __('pos.table') }} ' + (selectedTable ? selectedTable.table_number : '') + (selectedTable && selectedTable.name ? ' • ' + selectedTable.name : '')"></span>
                                         <span x-show="activeTableOrderId"
-                                            class="px-1.5 py-0.2 rounded-full text-[9px] font-bold bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] uppercase">QR
-                                            Aktif</span>
+                                            class="px-1.5 py-0.2 rounded-full text-[9px] font-bold bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] uppercase">{{ __('pos.active_qr_badge') }}</span>
                                     </div>
                                     <div class="text-[11px] text-black/60 dark:text-white/60 truncate">
                                         <span x-show="activeTableCustomerName"
                                             x-text="activeTableCustomerName + ' • '"></span>
                                         <span x-show="activeTableOrderNumber" class="font-mono text-[#007AFF]"
                                             x-text="'#' + activeTableOrderNumber"></span>
-                                        <span x-show="!activeTableOrderId" class="italic">Meja Dine In Baru</span>
+                                        <span x-show="!activeTableOrderId" class="italic">{{ __('pos.new_dine_in_table') }}</span>
                                     </div>
                                 </div>
                             </div>
                             <div class="flex items-center gap-1 shrink-0">
                                 <button type="button" @click="refreshTableCart()" x-show="activeTableOrderId"
                                     class="p-1 rounded-[6px] hover:bg-black/5 dark:hover:bg-white/10 text-black/60 dark:text-white/60 hover:text-[#007AFF] transition"
-                                    title="Segarkan pesanan meja">
+                                    title="{{ __('pos.refresh_table_orders') }}">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"
                                         viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -1713,11 +1712,11 @@
                                 </button>
                                 <button type="button" @click="openTablesModal()"
                                     class="px-2 py-0.5 rounded-[6px] bg-black/5 dark:bg-white/10 hover:bg-black/10 text-[11px] font-semibold text-black/70 dark:text-white/80 transition">
-                                    Ganti
+                                    {{ __('pos.change_table_btn') }}
                                 </button>
                                 <button type="button" @click="detachTableFromCart()"
                                     class="p-1 rounded-[6px] text-black/40 hover:text-[#FF3B30] transition"
-                                    title="Lepas meja dari keranjang">
+                                    title="{{ __('pos.detach_table') }}">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"
                                         viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -1741,7 +1740,7 @@
                                 <div x-show="externalOrderRef" class="text-[11px] font-mono opacity-90 truncate" x-text="'Ref: #' + externalOrderRef"></div>
                             </div>
                         </div>
-                        <span class="text-[10px] font-bold uppercase tracking-wider bg-black/20 px-2 py-0.5 rounded-[6px] shrink-0">Harga Khusus Online</span>
+                        <span class="text-[10px] font-bold uppercase tracking-wider bg-black/20 px-2 py-0.5 rounded-[6px] shrink-0">{{ __('pos.online_special_price') }}</span>
                     </div>
                     @endif
 
@@ -1756,8 +1755,8 @@
                                     x-text="activeCustomer ? activeCustomer.membership_tier : ''"></span>
                             </div>
                             <div class="text-[11px] text-[#248A3D] dark:text-[#30D158] mt-0.5">
-                                Saldo: <span class="font-semibold tabular-nums"
-                                    x-text="activeCustomer ? activeCustomer.points_balance : 0"></span> Poin
+                                {{ __('pos.balance_points_colon') }} <span class="font-semibold tabular-nums"
+                                    x-text="activeCustomer ? activeCustomer.points_balance : 0"></span> {{ __('pos.points_unit') }}
                             </div>
                         </div>
                         <template x-if="activeCustomer && activeCustomer.points_balance > 0">
@@ -1765,7 +1764,7 @@
                                 :class="redeemPoints ? 'bg-[#007AFF] text-white' :
                                     'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] border border-[#007AFF]/30'"
                                 class="px-2.5 py-1 rounded-[7px] text-[10px] font-semibold transition active:scale-[0.97]">
-                                <span x-text="redeemPoints ? 'Batalkan Poin' : 'Tukar Poin'"></span>
+                                <span x-text="redeemPoints ? '{{ __('pos.cancel_points') }}' : '{{ __('pos.redeem_points') }}'"></span>
                             </button>
                         </template>
                     </div>
@@ -1789,10 +1788,10 @@
                                     <svg class="w-4 h-4 shrink-0 text-[#007AFF]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.32l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.32 4.486c.049.58.025 1.193-.14 1.743" />
                                     </svg>
-                                    <span class="truncate font-medium" x-text="vehicleLicensePlate ? ('SPK: ' + vehicleLicensePlate + (vehicleModel ? ' • ' + vehicleModel : '')) : 'SPK Bengkel (Plat & Mekanik)'"></span>
+                                    <span class="truncate font-medium" x-text="vehicleLicensePlate ? ('SPK: ' + vehicleLicensePlate + (vehicleModel ? ' • ' + vehicleModel : '')) : '{{ __('pos.workshop_spk_btn') }}'"></span>
                                 </div>
                                 <div class="flex items-center gap-1 shrink-0">
-                                    <span x-show="vehicleLicensePlate" class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-[#007AFF] text-white">Terisi</span>
+                                    <span x-show="vehicleLicensePlate" class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-[#007AFF] text-white">{{ __('pos.filled_badge') }}</span>
                                     <svg class="w-3.5 h-3.5 text-black/40 dark:text-white/40" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                                     </svg>
@@ -1809,10 +1808,10 @@
                                     <svg class="w-4 h-4 shrink-0 text-[#5856D6]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0l-3-3m3 3l3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
                                     </svg>
-                                    <span class="truncate font-medium" x-text="laundryWeightKg ? ('Laundry: ' + laundryWeightKg + ' kg' + (rackLocation ? ' • Rak ' + rackLocation : '')) : 'Timbangan Cucian & Lokasi Rak'"></span>
+                                    <span class="truncate font-medium" x-text="laundryWeightKg ? ('Laundry: ' + laundryWeightKg + ' kg' + (rackLocation ? ' • Rak ' + rackLocation : '')) : '{{ __('pos.laundry_spk_btn') }}'"></span>
                                 </div>
                                 <div class="flex items-center gap-1 shrink-0">
-                                    <span x-show="laundryWeightKg" class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-[#5856D6] text-white">Terisi</span>
+                                    <span x-show="laundryWeightKg" class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-[#5856D6] text-white">{{ __('pos.filled_badge') }}</span>
                                     <svg class="w-3.5 h-3.5 text-black/40 dark:text-white/40" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                                     </svg>
@@ -1827,9 +1826,9 @@
                                     <svg class="w-4 h-4 shrink-0 text-[#34C759]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.942A4.5 4.5 0 0115.89 17H8.11a4.5 4.5 0 01-2.34-.658L4.2 15.3m15.6 0a2.25 2.25 0 00.2-.958V8.25a2.25 2.25 0 00-2.25-2.25H6.25A2.25 2.25 0 004 8.25v6.092c0 .332.072.658.2.958" />
                                     </svg>
-                                    <span class="truncate font-semibold">Mode Apotek (Batch &amp; ED Obat Aktif)</span>
+                                    <span class="truncate font-semibold">{{ __('pos.pharmacy_spk_mode') }}</span>
                                 </div>
-                                <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158]">Farmasi</span>
+                                <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158]">{{ __('pos.pharmacy') }}</span>
                             </div>
                         </div>
                     @elseif (!$isFnB && !$isRetail)
@@ -1842,10 +1841,10 @@
                                     <svg class="w-4 h-4 shrink-0 text-[#007AFF]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v1.094m7.5 0a48.667 48.667 0 00-7.5 0" />
                                     </svg>
-                                    <span class="truncate font-medium" x-text="(technicianId || serviceNotes) ? 'Catatan Layanan Terisi' : 'Catatan Layanan & Petugas'"></span>
+                                    <span class="truncate font-medium" x-text="(technicianId || serviceNotes) ? '{{ __('pos.general_service_filled_btn') }}' : '{{ __('pos.general_service_spk_btn') }}'"></span>
                                 </div>
                                 <div class="flex items-center gap-1 shrink-0">
-                                    <span x-show="technicianId || serviceNotes" class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-[#007AFF] text-white">Terisi</span>
+                                    <span x-show="technicianId || serviceNotes" class="text-[10px] font-bold px-1.5 py-0.2 rounded bg-[#007AFF] text-white">{{ __('pos.filled_badge') }}</span>
                                     <svg class="w-3.5 h-3.5 text-black/40 dark:text-white/40" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                                     </svg>
@@ -1870,7 +1869,7 @@
                                     </template>
                                     <template x-if="item.notes">
                                         <div class="inline-block text-[10px] text-[#FF9500] font-medium bg-[#FF9500]/10 border border-[#FF9500]/20 px-1.5 py-0.5 rounded mt-0.5"
-                                            x-text="'Catatan: ' + item.notes"></div>
+                                            x-text="'{{ __('pos.service_notes_colon') }} ' + item.notes"></div>
                                     </template>
                                     <!-- Pharmacy / Apotek Badges -->
                                     <div x-show="item.batch_number || item.expired_date || item.dosage_instructions" class="flex flex-wrap gap-1 mt-0.5">
@@ -1895,7 +1894,7 @@
                                     class="flex items-center gap-1 bg-black/[0.04] dark:bg-black/50 rounded-[8px] p-0.5 border border-black/[0.06] dark:border-white/10 focus-within:border-[#007AFF]/80 transition">
                                     <button type="button" @click="decrementQty(index)"
                                         class="w-6 h-6 rounded-[6px] bg-white dark:bg-white/[0.08] hover:bg-black/[0.05] dark:hover:bg-white/[0.14] text-black dark:text-white flex items-center justify-center font-bold text-xs shrink-0 active:scale-[0.95]"
-                                        title="Kurangi 1">-</button>
+                                        title="{{ __('pos.decrease_qty_1') }}">-</button>
                                     <div class="flex items-center">
                                         <input type="number" step="any" min="0.0001" :value="item.quantity"
                                             @input="updateItemQty(index, $event.target.value)"
@@ -1911,19 +1910,19 @@
                                     </div>
                                     <button type="button" @click="incrementQty(index)"
                                         class="w-6 h-6 rounded-[6px] bg-white dark:bg-white/[0.08] hover:bg-black/[0.05] dark:hover:bg-white/[0.14] text-black dark:text-white flex items-center justify-center font-bold text-xs shrink-0 active:scale-[0.95]"
-                                        title="Tambah 1">+</button>
+                                        title="{{ __('pos.increase_qty_1') }}">+</button>
                                 </div>
                                 <div class="flex items-center gap-1">
                                     <button type="button" @click="openItemDetailModal(index)"
                                         class="p-1 rounded-[6px] text-black/40 dark:text-white/40 hover:text-[#007AFF] hover:bg-black/5 dark:hover:bg-white/10 transition"
-                                        title="Catatan, Nomor Batch & Dosis Obat">
+                                        title="{{ __('pos.item_notes_batch_title') }}">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                                         </svg>
                                     </button>
                                     <button type="button" @click="removeFromCart(index)"
                                         class="p-1 rounded-[6px] text-black/30 dark:text-white/30 hover:text-[#FF3B30] hover:bg-black/5 dark:hover:bg-white/10 transition"
-                                        title="Hapus dari keranjang">
+                                        title="{{ __('pos.remove_from_cart') }}">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5"
                                             viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -1943,8 +1942,8 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
                             </svg>
                         </div>
-                        <div class="text-[13.5px] font-semibold text-black/60 dark:text-white/60">Keranjang Kosong</div>
-                        <div class="text-[11.5px] text-black/40 dark:text-white/40 mt-1">Pilih produk di katalog atau scan barcode</div>
+                        <div class="text-[13.5px] font-semibold text-black/60 dark:text-white/60">{{ __('pos.empty_cart_title') }}</div>
+                        <div class="text-[11.5px] text-black/40 dark:text-white/40 mt-1">{{ __('pos.empty_cart_desc') }}</div>
                     </div>
                 </div>
 
@@ -1954,7 +1953,7 @@
                     <div class="space-y-1.5 text-xs">
                         <!-- Subtotal -->
                         <div class="flex justify-between text-black/60 dark:text-white/60 font-medium">
-                            <span>Subtotal</span>
+                            <span>{{ __('pos.subtotal') }}</span>
                             <span class="tabular-nums font-semibold text-black dark:text-white"
                                 x-text="formatRupiah(subtotal)"></span>
                         </div>
@@ -1964,8 +1963,8 @@
                             <div class="relative shrink-0">
                                 <select x-model="discountType"
                                     class="h-8 bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 rounded-[8px] pl-2 pr-6 text-[11px] font-semibold text-black dark:text-white focus:outline-none appearance-none cursor-pointer">
-                                    <option value="fixed" class="bg-white dark:bg-[#1C1C1E]">Diskon Rp</option>
-                                    <option value="percentage" class="bg-white dark:bg-[#1C1C1E]">Diskon %</option>
+                                    <option value="fixed" class="bg-white dark:bg-[#1C1C1E]">{{ __('pos.discount_nominal') }}</option>
+                                    <option value="percentage" class="bg-white dark:bg-[#1C1C1E]">{{ __('pos.discount_percent') }}</option>
                                 </select>
                                 <svg class="w-3 h-3 text-black/40 dark:text-white/40 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
@@ -1977,11 +1976,11 @@
                                 class="h-8 min-w-0 flex-1 bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 rounded-[8px] px-2.5 text-[12px] tabular-nums text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
                             <button type="button" @click="$refs.barcodeInput?.focus()"
                                 class="h-8 px-3 rounded-[8px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.1] dark:hover:bg-white/[0.12] text-black dark:text-white text-[11px] font-semibold transition active:scale-[0.97]">
-                                Terapkan
+                                {{ __('pos.apply_btn') }}
                             </button>
                         </div>
                         <div x-show="orderDiscountAmount > 0" class="flex justify-between text-[#FF3B30] text-[11px]">
-                            <span>Diskon Transaksi</span>
+                            <span>{{ __('pos.order_discount') }}</span>
                             <span class="tabular-nums font-semibold"
                                 x-text="'-' + formatRupiah(orderDiscountAmount)"></span>
                         </div>
@@ -1992,23 +1991,23 @@
                                 <svg class="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40 pointer-events-none" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 010 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 010-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375z" />
                                 </svg>
-                                <input type="text" x-model="voucherCode" placeholder="KODE VOUCHER..."
+                                <input type="text" x-model="voucherCode" placeholder="{{ __('pos.voucher_code_placeholder') }}"
                                     class="h-8 w-full bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 rounded-[8px] pl-8 pr-2.5 text-[11px] text-black dark:text-white uppercase tracking-wider focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
                             </div>
                             <button @click="applyVoucher()" type="button"
                                 class="h-8 px-3 rounded-[8px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.1] dark:hover:bg-white/[0.12] text-black dark:text-white text-[11px] font-semibold transition active:scale-[0.97]">
-                                Terapkan
+                                {{ __('pos.apply_btn') }}
                             </button>
                         </div>
 
                         <div x-show="voucherDiscount > 0" class="flex justify-between text-[#34C759] text-[11px]">
-                            <span>Diskon Voucher</span>
+                            <span>{{ __('pos.voucher_discount') }}</span>
                             <span class="tabular-nums font-semibold"
                                 x-text="'-' + formatRupiah(voucherDiscount)"></span>
                         </div>
 
                         <div x-show="pointsDiscount > 0" class="flex justify-between text-[#30B0C7] text-[11px]">
-                            <span>Tukar Poin</span>
+                            <span>{{ __('pos.redeem_points') }}</span>
                             <span class="tabular-nums font-semibold" x-text="'-' + formatRupiah(pointsDiscount)"></span>
                         </div>
 
@@ -2030,9 +2029,9 @@
                     <div
                         class="pt-2.5 border-t border-black/[0.06] dark:border-white/10 flex items-baseline justify-between">
                         <div>
-                            <div class="text-[12px] font-bold text-black/70 dark:text-white/70">Total Tagihan</div>
+                            <div class="text-[12px] font-bold text-black/70 dark:text-white/70">{{ __('pos.total_bill_label') }}</div>
                             <div class="text-[11px] text-black/45 dark:text-white/45 tabular-nums"
-                                x-text="cart.length + ' item'"></div>
+                                x-text="cart.length + ' ' + '{{ __('pos.items_unit') }}'"></div>
                         </div>
                         <div class="text-[24px] sm:text-[26px] font-black text-black dark:text-white tabular-nums tracking-tight"
                             x-text="formatRupiah(grandTotal)"></div>
@@ -2043,7 +2042,7 @@
                     <div class="pt-2">
                         <button type="button" @click="sendCartToKitchen()" :disabled="cart.length === 0 || isSendingToKitchen"
                             class="w-full h-10 rounded-[12px] bg-[#34C759]/15 hover:bg-[#34C759]/25 active:scale-[0.98] text-[#248A3D] dark:text-[#30D158] font-bold text-[12.5px] border border-[#34C759]/30 flex items-center justify-center gap-2 transition disabled:opacity-35 disabled:cursor-not-allowed shadow-xs"
-                            title="Kirim pesanan ke antrean layar dapur (KDS) tanpa perlu cetak struk kertas">
+                            title="{{ __('pos.send_to_kitchen_tooltip') }}">
                             <template x-if="!isSendingToKitchen">
                                 <svg class="w-4 h-4 shrink-0 text-[#34C759]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23.693l-1.57-.393m15.6 0l1.4 3.5a2.25 2.25 0 01-2.09 3.085H5.89a2.25 2.25 0 01-2.09-3.085l1.4-3.5" />
@@ -2055,7 +2054,7 @@
                                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
                                 </svg>
                             </template>
-                            <span>Kirim ke Dapur (KDS &bull; Tanpa Cetak)</span>
+                            <span>{{ __('pos.send_to_kitchen_kds_btn') }}</span>
                         </button>
                     </div>
                     @endif
@@ -2064,11 +2063,11 @@
                     <div class="grid grid-cols-3 gap-2 pt-1.5">
                         <button @click="promptHoldCart()" :disabled="cart.length === 0"
                             class="col-span-1 h-12 rounded-[14px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.07] dark:hover:bg-white/[0.1] active:scale-[0.97] text-black/80 dark:text-white/90 font-semibold text-[13px] flex items-center justify-center gap-1.5 transition disabled:opacity-35 disabled:cursor-not-allowed border border-black/[0.06] dark:border-white/[0.08]"
-                            title="Tahan transaksi keranjang">
+                            title="{{ __('pos.hold_cart_tooltip') }}">
                             <svg class="w-4 h-4 text-[#FF9500] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            <span>Hold</span>
+                            <span>{{ __('pos.hold') }}</span>
                         </button>
                         <button @click="openPaymentModal()" :disabled="cart.length === 0"
                             class="col-span-2 h-12 rounded-[14px] bg-[#007AFF] hover:bg-[#0062CC] active:scale-[0.98] text-white font-bold text-[14px] sm:text-[15px] shadow-[0_4px_16px_rgba(0,122,255,0.3)] flex items-center justify-between px-3.5 sm:px-4 transition disabled:opacity-35 disabled:cursor-not-allowed overflow-hidden">
@@ -2077,7 +2076,7 @@
                                     <rect width="20" height="14" x="2" y="5" rx="2" />
                                     <line x1="2" x2="22" y1="10" y2="10" />
                                 </svg>
-                                <span>Bayar</span>
+                                <span>{{ __('pos.pay') }}</span>
                                 <span class="hidden sm:inline-block px-1.5 py-0.5 rounded text-[10px] font-bold bg-white/20 uppercase tracking-wider">F9</span>
                             </div>
                             <span class="font-black tabular-nums text-[15px] sm:text-[16px]" x-text="formatRupiah(grandTotal)"></span>
@@ -2192,8 +2191,8 @@
                         </svg>
                     </div>
                     <div>
-                        <h3 class="font-bold text-[17px] text-black dark:text-white leading-tight">Pembayaran Kasir POS</h3>
-                        <p class="text-[11px] text-black/50 dark:text-white/50">Pilih metode pembayaran tunggal atau kombinasi (split)</p>
+                        <h3 class="font-bold text-[17px] text-black dark:text-white leading-tight">{{ __('pos.pos_checkout_payment_title') }}</h3>
+                        <p class="text-[11px] text-black/50 dark:text-white/50">{{ __('pos.pos_checkout_payment_subtitle') }}</p>
                     </div>
                 </div>
 
@@ -2203,13 +2202,13 @@
                         :class="!isSplitPayment ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
                         class="px-3 py-1.5 rounded-[9px] transition flex items-center gap-1.5">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
-                        <span>Satu Metode</span>
+                        <span>{{ __('pos.single_payment_tab') }}</span>
                     </button>
                     <button type="button" @click="initSplitPayment()"
                         :class="isSplitPayment ? 'bg-[#007AFF] text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
                         class="px-3 py-1.5 rounded-[9px] transition flex items-center gap-1.5">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
-                        <span>Split Payment (Majemuk)</span>
+                        <span>{{ __('pos.split_payment_tab') }}</span>
                     </button>
                     <button type="button" @click="showPaymentModal = false"
                         class="ml-2 w-7 h-7 rounded-full bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black/50 dark:text-white/50 flex items-center justify-center">
@@ -2223,12 +2222,12 @@
                 <!-- Tagihan Summary Box -->
                 <div class="p-4 rounded-[16px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 flex items-center justify-between gap-3">
                     <div>
-                        <div class="text-[11px] font-medium text-black/50 dark:text-white/50 uppercase tracking-wider">Total Tagihan</div>
+                        <div class="text-[11px] font-medium text-black/50 dark:text-white/50 uppercase tracking-wider">{{ __('pos.total_bill_label') }}</div>
                         <div class="text-[24px] sm:text-[28px] font-extrabold text-[#007AFF] tabular-nums tracking-tight"
                             x-text="formatRupiah(grandTotal)"></div>
                     </div>
                     <div class="text-right">
-                        <div class="text-[11px] font-medium text-black/50 dark:text-white/50 uppercase tracking-wider">Uang Diterima</div>
+                        <div class="text-[11px] font-medium text-black/50 dark:text-white/50 uppercase tracking-wider">{{ __('pos.received_amount_label') }}</div>
                         <div class="text-[20px] font-bold text-black dark:text-white tabular-nums"
                             x-text="formatRupiah(currentTenderAmount)"></div>
                     </div>
@@ -2236,43 +2235,43 @@
 
                 <!-- Payment Methods Grid -->
                 <div>
-                    <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-2">Pilih Kanal Pembayaran</label>
+                    <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-2">{{ __('pos.select_payment_channel_label') }}</label>
                     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
                         <button type="button" @click="selectedPayMethod = 'cash'"
                             :class="selectedPayMethod === 'cash' ? 'bg-[#007AFF] text-white ring-2 ring-[#007AFF]/30' : 'bg-black/[0.03] dark:bg-white/[0.05] text-black/80 dark:text-white/80 hover:bg-black/[0.06] dark:hover:bg-white/[0.08]'"
                             class="p-3 rounded-[14px] flex flex-col items-center justify-center gap-1.5 text-xs font-semibold transition active:scale-[0.97] border border-black/5 dark:border-white/5">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" /></svg>
-                            <span>Tunai (Cash)</span>
+                            <span>{{ __('pos.method_cash_label') }}</span>
                         </button>
                         <button type="button" @click="selectedPayMethod = 'qris'; currentTenderAmount = grandTotal;"
                             :class="selectedPayMethod === 'qris' ? 'bg-[#007AFF] text-white ring-2 ring-[#007AFF]/30' : 'bg-black/[0.03] dark:bg-white/[0.05] text-black/80 dark:text-white/80 hover:bg-black/[0.06] dark:hover:bg-white/[0.08]'"
                             class="p-3 rounded-[14px] flex flex-col items-center justify-center gap-1.5 text-xs font-semibold transition active:scale-[0.97] border border-black/5 dark:border-white/5">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z" /></svg>
-                            <span>QRIS Cooca Pay</span>
+                            <span>{{ __('pos.method_qris_cooca_pay') }}</span>
                         </button>
                         <button type="button" @click="selectedPayMethod = 'edc_debit'"
                             :class="selectedPayMethod === 'edc_debit' ? 'bg-[#007AFF] text-white ring-2 ring-[#007AFF]/30' : 'bg-black/[0.03] dark:bg-white/[0.05] text-black/80 dark:text-white/80 hover:bg-black/[0.06] dark:hover:bg-white/[0.08]'"
                             class="p-3 rounded-[14px] flex flex-col items-center justify-center gap-1.5 text-xs font-semibold transition active:scale-[0.97] border border-black/5 dark:border-white/5">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" /></svg>
-                            <span>EDC Debit</span>
+                            <span>{{ __('pos.method_edc_debit') }}</span>
                         </button>
                         <button type="button" @click="selectedPayMethod = 'edc_credit'"
                             :class="selectedPayMethod === 'edc_credit' ? 'bg-[#007AFF] text-white ring-2 ring-[#007AFF]/30' : 'bg-black/[0.03] dark:bg-white/[0.05] text-black/80 dark:text-white/80 hover:bg-black/[0.06] dark:hover:bg-white/[0.08]'"
                             class="p-3 rounded-[14px] flex flex-col items-center justify-center gap-1.5 text-xs font-semibold transition active:scale-[0.97] border border-black/5 dark:border-white/5">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" /></svg>
-                            <span>EDC Kredit</span>
+                            <span>{{ __('pos.method_edc_credit') }}</span>
                         </button>
                         <button type="button" @click="selectedPayMethod = 'transfer'"
                             :class="selectedPayMethod === 'transfer' ? 'bg-[#007AFF] text-white ring-2 ring-[#007AFF]/30' : 'bg-black/[0.03] dark:bg-white/[0.05] text-black/80 dark:text-white/80 hover:bg-black/[0.06] dark:hover:bg-white/[0.08]'"
                             class="p-3 rounded-[14px] flex flex-col items-center justify-center gap-1.5 text-xs font-semibold transition active:scale-[0.97] border border-black/5 dark:border-white/5">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" /></svg>
-                            <span>Transfer Bank</span>
+                            <span>{{ __('pos.method_transfer_bank') }}</span>
                         </button>
                         <button type="button" @click="selectedPayMethod = 'customer_credit'"
                             :class="selectedPayMethod === 'customer_credit' ? 'bg-[#007AFF] text-white ring-2 ring-[#007AFF]/30' : 'bg-black/[0.03] dark:bg-white/[0.05] text-black/80 dark:text-white/80 hover:bg-black/[0.06] dark:hover:bg-white/[0.08]'"
                             class="p-3 rounded-[14px] flex flex-col items-center justify-center gap-1.5 text-xs font-semibold transition active:scale-[0.97] border border-black/5 dark:border-white/5">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                            <span>Kasbon / Piutang</span>
+                            <span>{{ __('pos.method_customer_credit') }}</span>
                         </button>
                     </div>
                 </div>
@@ -2280,18 +2279,18 @@
                 {{-- Opsi Mesin EDC & Nomor Approval jika metode EDC dipilih --}}
                 <div x-show="selectedPayMethod === 'edc_debit' || selectedPayMethod === 'edc_credit'" class="p-3.5 rounded-[14px] bg-[#007AFF]/5 dark:bg-[#007AFF]/10 border border-[#007AFF]/20 grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-[11px] font-semibold text-black/70 dark:text-white/70 mb-1">Pilih Mesin EDC Bank *</label>
+                        <label class="block text-[11px] font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('pos.select_edc_machine_label') }}</label>
                         <select x-model="selectedEdcTerminalId"
                             class="w-full h-10 px-3 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-xs font-medium text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
-                            <option value="">-- Pilih Mesin EDC --</option>
+                            <option value="">{{ __('pos.select_edc_placeholder') }}</option>
                             <template x-for="t in storeEdcTerminals" :key="t.id">
                                 <option :value="t.id" x-text="t.terminal_name + ' (' + t.bank_name + ' - TID: ' + t.terminal_id_tid + ')'"></option>
                             </template>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-[11px] font-semibold text-black/70 dark:text-white/70 mb-1">No. Approval / Ref EDC (Opsional)</label>
-                        <input type="text" x-model="paymentRefNumber" placeholder="Contoh: APPR-992019"
+                        <label class="block text-[11px] font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('pos.edc_approval_ref_optional') }}</label>
+                        <input type="text" x-model="paymentRefNumber" placeholder="{{ __('pos.example_edc_appr_placeholder') }}"
                             class="w-full h-10 px-3 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-xs font-mono text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                     </div>
                 </div>
@@ -2299,9 +2298,9 @@
                 <!-- Input Nominal Tender -->
                 <div>
                     <div class="flex items-center justify-between mb-1.5">
-                        <label class="block text-xs font-semibold text-black/70 dark:text-white/70">Nominal Uang Bayar (Rp)</label>
+                        <label class="block text-xs font-semibold text-black/70 dark:text-white/70">{{ __('pos.payment_amount_input_label') }}</label>
                         <span x-show="selectedPayMethod === 'qris'" class="text-[10px] font-bold text-[#007AFF] bg-[#007AFF]/10 px-2 py-0.5 rounded-full border border-[#007AFF]/20">
-                            QRIS TriPay Otomatis Pas
+                            {{ __('pos.qris_tripay_auto_exact') }}
                         </span>
                     </div>
                     <input type="number" x-model.number="currentTenderAmount"
@@ -2310,13 +2309,13 @@
                     <!-- QRIS Dynamic Info Alert -->
                     <div x-show="selectedPayMethod === 'qris'" class="mt-2 p-2.5 rounded-[10px] bg-[#007AFF]/8 border border-[#007AFF]/15 flex items-center gap-2 text-xs text-[#007AFF]">
                         <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" /></svg>
-                        <span>Kode QRIS dinamis akan dibuat otomatis dari gateway TriPay sesuai total tagihan saat tombol ditekan.</span>
+                        <span>{{ __('pos.qris_dynamic_generation_notice') }}</span>
                     </div>
 
                     <!-- Quick Cash Presets (only for Cash) -->
                     <div x-show="selectedPayMethod === 'cash'" class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-2">
                         <button type="button" @click="currentTenderAmount = grandTotal"
-                            class="h-9 rounded-[10px] bg-[#007AFF]/12 hover:bg-[#007AFF]/20 text-xs font-bold text-[#007AFF] tabular-nums transition active:scale-[0.97]">Uang Pas</button>
+                            class="h-9 rounded-[10px] bg-[#007AFF]/12 hover:bg-[#007AFF]/20 text-xs font-bold text-[#007AFF] tabular-nums transition active:scale-[0.97]">{{ __('pos.exact_amount_btn') }}</button>
                         <button type="button" @click="currentTenderAmount = 50000"
                             class="h-9 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-xs font-semibold text-black/80 dark:text-white/80 tabular-nums transition active:scale-[0.97]">50.000</button>
                         <button type="button" @click="currentTenderAmount = 100000"
@@ -2328,7 +2327,7 @@
 
                 <!-- Kembalian Live Indicator -->
                 <div class="p-3.5 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 flex items-center justify-between">
-                    <span class="text-xs font-medium text-black/60 dark:text-white/60">Kembalian:</span>
+                    <span class="text-xs font-medium text-black/60 dark:text-white/60">{{ __('pos.change_amount_colon') }}</span>
                     <span class="text-[20px] font-extrabold text-[#34C759] tabular-nums"
                         x-text="formatRupiah(Math.max(0, currentTenderAmount - grandTotal))"></span>
                 </div>
@@ -2339,19 +2338,19 @@
                 {{-- Financial Balance Status Bar --}}
                 <div class="p-4 rounded-[16px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
                     <div>
-                        <span class="text-[10px] uppercase font-bold text-black/45 dark:text-white/45 block">Total Tagihan</span>
+                        <span class="text-[10px] uppercase font-bold text-black/45 dark:text-white/45 block">{{ __('pos.total_bill') }}</span>
                         <span class="text-base font-extrabold text-black dark:text-white tabular-nums block mt-0.5" x-text="formatRupiah(grandTotal)"></span>
                     </div>
                     <div>
-                        <span class="text-[10px] uppercase font-bold text-[#007AFF] block">Total Teralokasi</span>
+                        <span class="text-[10px] uppercase font-bold text-[#007AFF] block">{{ __('pos.total_allocated_label') }}</span>
                         <span class="text-base font-extrabold text-[#007AFF] tabular-nums block mt-0.5" x-text="formatRupiah(totalSplitPaid)"></span>
                     </div>
                     <div>
-                        <span class="text-[10px] uppercase font-bold text-black/45 dark:text-white/45 block">Sisa Kurang</span>
+                        <span class="text-[10px] uppercase font-bold text-black/45 dark:text-white/45 block">{{ __('pos.remaining_underpaid_label') }}</span>
                         <span class="text-base font-extrabold tabular-nums block mt-0.5" :class="splitRemainingAmount > 0 ? 'text-[#FF3B30]' : 'text-black/40 dark:text-white/40'" x-text="formatRupiah(splitRemainingAmount)"></span>
                     </div>
                     <div>
-                        <span class="text-[10px] uppercase font-bold text-[#34C759] block">Kembalian</span>
+                        <span class="text-[10px] uppercase font-bold text-[#34C759] block">{{ __('pos.change_label') }}</span>
                         <span class="text-base font-extrabold text-[#34C759] tabular-nums block mt-0.5" x-text="formatRupiah(splitChangeAmount)"></span>
                     </div>
                 </div>
@@ -2360,12 +2359,12 @@
                 <div class="flex items-center gap-2 overflow-x-auto pb-1">
                     <span class="text-[11px] font-bold text-black/50 dark:text-white/50 shrink-0 flex items-center gap-1">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-8-6h16" /></svg>
-                        <span>Bagi Rata:</span>
+                        <span>{{ __('pos.split_evenly_label') }}</span>
                     </span>
-                    <button type="button" @click="splitEvenly(2)" class="px-2.5 py-1 rounded-[8px] bg-black/5 dark:bg-white/10 hover:bg-[#007AFF] hover:text-white text-xs font-semibold text-black dark:text-white transition">2 Orang</button>
-                    <button type="button" @click="splitEvenly(3)" class="px-2.5 py-1 rounded-[8px] bg-black/5 dark:bg-white/10 hover:bg-[#007AFF] hover:text-white text-xs font-semibold text-black dark:text-white transition">3 Orang</button>
-                    <button type="button" @click="splitEvenly(4)" class="px-2.5 py-1 rounded-[8px] bg-black/5 dark:bg-white/10 hover:bg-[#007AFF] hover:text-white text-xs font-semibold text-black dark:text-white transition">4 Orang</button>
-                    <button type="button" @click="splitEvenly(5)" class="px-2.5 py-1 rounded-[8px] bg-black/5 dark:bg-white/10 hover:bg-[#007AFF] hover:text-white text-xs font-semibold text-black dark:text-white transition">5 Orang</button>
+                    <button type="button" @click="splitEvenly(2)" class="px-2.5 py-1 rounded-[8px] bg-black/5 dark:bg-white/10 hover:bg-[#007AFF] hover:text-white text-xs font-semibold text-black dark:text-white transition">{{ __('pos.people_count_preset', ['count' => 2]) }}</button>
+                    <button type="button" @click="splitEvenly(3)" class="px-2.5 py-1 rounded-[8px] bg-black/5 dark:bg-white/10 hover:bg-[#007AFF] hover:text-white text-xs font-semibold text-black dark:text-white transition">{{ __('pos.people_count_preset', ['count' => 3]) }}</button>
+                    <button type="button" @click="splitEvenly(4)" class="px-2.5 py-1 rounded-[8px] bg-black/5 dark:bg-white/10 hover:bg-[#007AFF] hover:text-white text-xs font-semibold text-black dark:text-white transition">{{ __('pos.people_count_preset', ['count' => 4]) }}</button>
+                    <button type="button" @click="splitEvenly(5)" class="px-2.5 py-1 rounded-[8px] bg-black/5 dark:bg-white/10 hover:bg-[#007AFF] hover:text-white text-xs font-semibold text-black dark:text-white transition">{{ __('pos.people_count_preset', ['count' => 5]) }}</button>
                 </div>
 
                 {{-- Dynamic Split Rows Container --}}
@@ -2375,7 +2374,7 @@
                             <div class="flex items-center justify-between">
                                 <span class="text-xs font-bold text-black dark:text-white flex items-center gap-1.5">
                                     <span class="w-5 h-5 rounded-full bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center text-[10px]" x-text="idx + 1"></span>
-                                    <span>Metode Pembayaran #<span x-text="idx + 1"></span></span>
+                                    <span>{{ __('pos.payment_method_index_prefix') }}<span x-text="idx + 1"></span></span>
                                 </span>
                                 <button type="button" @click="removeSplitRow(idx)" x-show="splitPaymentRows.length > 1"
                                     class="w-6 h-6 rounded-full hover:bg-[#FF3B30]/10 text-[#FF3B30] flex items-center justify-center transition">
@@ -2386,25 +2385,25 @@
                             <div class="grid grid-cols-1 sm:grid-cols-12 gap-2.5">
                                 {{-- Dropdown Metode --}}
                                 <div class="sm:col-span-4">
-                                    <label class="block text-[10px] font-medium text-black/50 dark:text-white/50 mb-1">Kanal Bayar *</label>
+                                    <label class="block text-[10px] font-medium text-black/50 dark:text-white/50 mb-1">{{ __('pos.pay_channel_required_label') }}</label>
                                     <select x-model="row.payment_method"
                                         class="w-full h-10 px-2.5 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-xs font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
-                                        <option value="cash">Tunai (Cash)</option>
-                                        <option value="qris">QRIS Cooca Pay</option>
-                                        <option value="edc_debit">EDC Debit</option>
-                                        <option value="edc_credit">EDC Kredit</option>
-                                        <option value="transfer">Transfer Bank</option>
-                                        <option value="customer_credit">Kasbon / Piutang</option>
+                                        <option value="cash">{{ __('pos.method_cash') }}</option>
+                                        <option value="qris">{{ __('pos.method_qris') }}</option>
+                                        <option value="edc_debit">{{ __('pos.method_edc_debit') }}</option>
+                                        <option value="edc_credit">{{ __('pos.method_edc_credit') }}</option>
+                                        <option value="transfer">{{ __('pos.method_transfer') }}</option>
+                                        <option value="customer_credit">{{ __('pos.method_customer_credit') }}</option>
                                     </select>
                                 </div>
 
                                 {{-- Input Nominal & Auto Fill Sisa --}}
                                 <div class="sm:col-span-4">
                                     <div class="flex items-center justify-between mb-1">
-                                        <label class="text-[10px] font-medium text-black/50 dark:text-white/50">Nominal (Rp) *</label>
+                                        <label class="text-[10px] font-medium text-black/50 dark:text-white/50">{{ __('pos.nominal_rp_required_label') }}</label>
                                         <button type="button" @click="fillRemainingSplit(idx)" x-show="splitRemainingAmount > 0"
                                             class="text-[10px] font-bold text-[#007AFF] hover:underline">
-                                            + Sisa (<span x-text="formatRupiah(splitRemainingAmount)"></span>)
+                                            {{ __('pos.plus_remaining_prefix') }} (<span x-text="formatRupiah(splitRemainingAmount)"></span>)
                                         </button>
                                     </div>
                                     <input type="number" min="0" x-model.number="row.amount" @input="sanitizeSplitAmount(idx)"
@@ -2414,19 +2413,19 @@
                                 {{-- Detail EDC / Ref --}}
                                 <div class="sm:col-span-4">
                                     <label class="block text-[10px] font-medium text-black/50 dark:text-white/50 mb-1">
-                                        <span x-text="row.payment_method.startsWith('edc') ? 'Mesin EDC / Approval' : 'No. Ref / Catatan'"></span>
+                                        <span x-text="row.payment_method.startsWith('edc') ? '{{ __('pos.edc_machine_or_approval_label') }}' : '{{ __('pos.ref_or_notes_label') }}'"></span>
                                     </label>
                                     <template x-if="row.payment_method.startsWith('edc') && storeEdcTerminals.length > 0">
                                         <select x-model="row.store_edc_terminal_id"
                                             class="w-full h-10 px-2.5 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-xs font-medium text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
-                                            <option value="">-- Pilih EDC --</option>
+                                            <option value="">{{ __('pos.select_edc_short_placeholder') }}</option>
                                             <template x-for="t in storeEdcTerminals" :key="t.id">
                                                 <option :value="t.id" x-text="t.terminal_name + ' (' + t.terminal_id_tid + ')'"></option>
                                             </template>
                                         </select>
                                     </template>
                                     <template x-if="!row.payment_method.startsWith('edc') || storeEdcTerminals.length === 0">
-                                        <input type="text" x-model="row.reference_number" placeholder="No. ref / approval..."
+                                        <input type="text" x-model="row.reference_number" placeholder="{{ __('pos.ref_or_approval_placeholder') }}"
                                             class="w-full h-10 px-3 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
                                     </template>
                                 </div>
@@ -2449,17 +2448,17 @@
                     <template x-if="isSplitPayment && splitRemainingAmount > 0">
                         <span class="text-[#FF3B30] font-semibold flex items-center gap-1">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" /></svg>
-                            <span>Alokasi kurang <strong x-text="formatRupiah(splitRemainingAmount)"></strong></span>
+                            <span>{{ __('pos.underpaid_allocation_notice') }} <strong x-text="formatRupiah(splitRemainingAmount)"></strong></span>
                         </span>
                     </template>
                     <template x-if="isSplitPayment && splitRemainingAmount === 0">
                         <span class="text-[#34C759] font-bold flex items-center gap-1">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
-                            <span>Total Pembayaran Pas</span>
+                            <span>{{ __('pos.exact_split_payment_notice') }}</span>
                         </span>
                     </template>
                     <template x-if="!isSplitPayment && currentTenderAmount >= grandTotal">
-                        <span class="text-[#34C759] font-bold">Siap diproses</span>
+                        <span class="text-[#34C759] font-bold">{{ __('pos.ready_to_process_badge') }}</span>
                     </template>
                 </div>
 
@@ -2471,13 +2470,13 @@
                     <button type="button" @click="submitCheckout()"
                         :disabled="isProcessing || (isSplitPayment ? splitRemainingAmount > 0 : currentTenderAmount < grandTotal)"
                         class="h-10 px-6 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] text-white font-bold text-xs shadow-sm disabled:opacity-35 transition flex items-center gap-2">
-                        <span x-show="!isProcessing" x-text="isSplitPayment ? (window.COOCA_I18N?.finish_split_payment || '{{ __('pos.finish_split_payment') }}') : (selectedPayMethod === 'qris' ? 'Buat QRIS Dinamis (TriPay)' : (window.COOCA_I18N?.finish_transaction || '{{ __('pos.finish_transaction') }}'))"></span>
+                        <span x-show="!isProcessing" x-text="isSplitPayment ? (window.COOCA_I18N?.finish_split_payment || '{{ __('pos.finish_split_payment') }}') : (selectedPayMethod === 'qris' ? '{{ __('pos.generate_dynamic_qris_btn') }}' : (window.COOCA_I18N?.finish_transaction || '{{ __('pos.finish_transaction') }}'))"></span>
                         <span x-show="isProcessing" class="flex items-center gap-1.5">
                             <svg class="animate-spin h-3.5 w-3.5 text-white" fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
-                            <span>Memproses...</span>
+                            <span>{{ __('pos.processing_status') }}</span>
                         </span>
                     </button>
                 </div>
@@ -2503,14 +2502,14 @@
                         </svg>
                     </div>
                     <div class="min-w-0">
-                        <h3 class="font-extrabold text-[15px] sm:text-base text-black dark:text-white tracking-tight leading-tight">QRIS Dinamis Kasir</h3>
-                        <p class="text-[11px] text-black/50 dark:text-white/50 truncate" x-text="activeQrisOrder ? ('Order #' + activeQrisOrder.order_number) : 'Memuat data order...'"></p>
+                        <h3 class="font-extrabold text-[15px] sm:text-base text-black dark:text-white tracking-tight leading-tight">{{ __('pos.qris_cashier_dynamic_title') }}</h3>
+                        <p class="text-[11px] text-black/50 dark:text-white/50 truncate" x-text="activeQrisOrder ? ('{{ __('pos.order') }} #' + activeQrisOrder.order_number) : '{{ __('pos.loading_order_data') }}'"></p>
                     </div>
                 </div>
                 <div class="flex items-center gap-1.5">
                     <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/20 flex items-center gap-1">
                         <svg class="w-3 h-3 text-[#007AFF]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/></svg>
-                        <span>Terkunci</span>
+                        <span>{{ __('pos.locked_badge') }}</span>
                     </span>
                     <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#34C759]/10 text-[#34C759] border border-[#34C759]/20">
                         TriPay QRIS
@@ -2521,8 +2520,8 @@
             <!-- Amount Card -->
             <div class="p-3.5 rounded-[16px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/10 flex items-center justify-between">
                 <div>
-                    <span class="text-[10px] uppercase font-bold text-black/40 dark:text-white/40 block">Total Tagihan</span>
-                    <span class="text-xs font-semibold text-black/70 dark:text-white/70">Scan lewat e-Wallet & m-Banking</span>
+                    <span class="text-[10px] uppercase font-bold text-black/40 dark:text-white/40 block">{{ __('pos.total_bill') }}</span>
+                    <span class="text-xs font-semibold text-black/70 dark:text-white/70">{{ __('pos.qris_scan_instruction_subtitle') }}</span>
                 </div>
                 <span class="font-black text-[20px] sm:text-[22px] text-[#007AFF] tabular-nums"
                     x-text="activeQrisOrder ? formatRupiah(activeQrisOrder.total_amount) : ''"></span>
@@ -2539,23 +2538,23 @@
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
-                        <span class="text-xs font-medium text-gray-500">Menyiapkan QR Code...</span>
+                        <span class="text-xs font-medium text-gray-500">{{ __('pos.preparing_qr_code') }}</span>
                     </div>
                 </template>
                 <div class="mt-2.5 text-[10.5px] font-bold text-gray-600 uppercase tracking-wider flex items-center gap-1.5">
                     <span class="w-2 h-2 rounded-full bg-[#007AFF] animate-ping"></span>
-                    <span>Menunggu Pembayaran Pelanggan...</span>
+                    <span>{{ __('pos.waiting_customer_payment') }}</span>
                 </div>
             </div>
 
             <!-- Countdown Timer & Auto Polling Notice -->
             <div class="space-y-1 text-center text-xs">
                 <div class="flex items-center justify-center gap-1.5 text-black/70 dark:text-white/70 font-semibold">
-                    <span>Masa Berlaku QR:</span>
+                    <span>{{ __('pos.qr_validity_period_label') }}</span>
                     <span class="font-mono text-[#FF9500] font-extrabold tabular-nums text-sm" x-text="qrisCountdownFormatted">15:00</span>
                 </div>
                 <p class="text-[11px] text-black/45 dark:text-white/45">
-                    Sistem mendeteksi transaksi secara realtime (setiap 3 detik). Struk akan terbuka otomatis setelah dibayar.
+                    {{ __('pos.qris_auto_detection_notice') }}
                 </p>
             </div>
 
@@ -2566,12 +2565,12 @@
                         class="h-10 px-3 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white font-bold text-xs shadow-xs transition flex items-center justify-center gap-1.5 disabled:opacity-50">
                         <svg x-show="!isCheckingQrisStatus" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" /></svg>
                         <svg x-show="isCheckingQrisStatus" class="animate-spin h-3.5 w-3.5 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                        <span x-text="isCheckingQrisStatus ? 'Mengecek...' : 'Cek Status Sekarang'"></span>
+                        <span x-text="isCheckingQrisStatus ? '{{ __('pos.checking_status') }}' : '{{ __('pos.check_status_now_btn') }}'"></span>
                     </button>
                     <button type="button" @click="printQrisSlip()"
                         class="h-10 px-3 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] text-black dark:text-white font-bold text-xs transition flex items-center justify-center gap-1.5">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24-1.076-.673-2.13-1.27-3.118m0 0A10.978 10.978 0 0112 7.5c2.47 0 4.757.818 6.55 2.211m-6.55 7.789a10.978 10.978 0 01-6.55-2.211M12 21a9 9 0 100-18 9 9 0 000 18z" /></svg>
-                        <span>Cetak Slip QR</span>
+                        <span>{{ __('pos.print_qr_slip_btn') }}</span>
                     </button>
                 </div>
 
@@ -2579,14 +2578,14 @@
                 <button type="button" @click="simulateQrisPayment()" :disabled="isSimulatingQris"
                     class="w-full h-9 rounded-[10px] bg-[#34C759]/10 hover:bg-[#34C759]/20 text-[#34C759] font-bold text-xs transition flex items-center justify-center gap-1.5 disabled:opacity-40 border border-[#34C759]/25">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    <span x-text="isSimulatingQris ? 'Memproses Simulasi...' : '[Sandbox] Simulasi Pelanggan Bayar Berhasil'"></span>
+                    <span x-text="isSimulatingQris ? '{{ __('pos.processing_simulation') }}' : '{{ __('pos.qris_sandbox_simulation_btn') }}'"></span>
                 </button>
                 @endif
 
                 <button type="button" @click="cancelQrisPayment()" :disabled="isCancellingQris"
                     class="w-full h-10 rounded-[12px] text-xs font-bold text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.98] transition disabled:opacity-40 flex items-center justify-center gap-1.5 border border-[#FF3B30]/20">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" /></svg>
-                    <span x-text="isCancellingQris ? 'Membatalkan sesi QRIS...' : 'Ganti Metode Bayar'"></span>
+                    <span x-text="isCancellingQris ? '{{ __('pos.cancelling_qris_session') }}' : '{{ __('pos.change_payment_method_btn') }}'"></span>
                 </button>
             </div>
         </div>
@@ -2614,18 +2613,18 @@
                     </div>
                     <div class="min-w-0">
                         <h3 class="font-extrabold text-[17px] text-black dark:text-white tracking-tight leading-snug">
-                            Transaksi Berhasil!</h3>
+                            {{ __('pos.transaction_success_title') }}</h3>
                         <div class="flex items-center gap-2 mt-0.5">
                             <span
                                 class="font-mono text-[11px] font-bold px-1.5 py-0.2 rounded bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70"
                                 x-text="lastCompletedOrder ? ('#' + lastCompletedOrder.order_number) : ''"></span>
-                            <span class="text-[11px] font-medium text-[#34C759]">Lunas</span>
+                            <span class="text-[11px] font-medium text-[#34C759]">{{ __('pos.paid_status_badge') }}</span>
                         </div>
                     </div>
                 </div>
                 <button type="button" @click="resetForNewOrder()"
                     class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] dark:hover:bg-white/[0.15] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white flex items-center justify-center transition shrink-0"
-                    title="Tutup (Esc)">
+                    title="{{ __('pos.close_esc_tooltip') }}">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                     </svg>
@@ -2637,23 +2636,21 @@
                 class="grid grid-cols-3 gap-2 p-3 rounded-2xl bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 text-center">
                 <div class="px-2 py-1">
                     <span
-                        class="text-[10px] uppercase tracking-wider font-semibold text-black/45 dark:text-white/45 block">Total
-                        Belanja</span>
+                        class="text-[10px] uppercase tracking-wider font-semibold text-black/45 dark:text-white/45 block">{{ __('pos.total_shopping_label') }}</span>
                     <span
                         class="text-[13px] sm:text-[14px] font-bold text-black dark:text-white tabular-nums block mt-0.5 truncate"
                         x-text="formatRupiah(lastCompletedOrder ? lastCompletedOrder.total_amount : 0)"></span>
                 </div>
                 <div class="px-2 py-1 border-x border-black/5 dark:border-white/5">
                     <span
-                        class="text-[10px] uppercase tracking-wider font-semibold text-black/45 dark:text-white/45 block">Total
-                        Bayar</span>
+                        class="text-[10px] uppercase tracking-wider font-semibold text-black/45 dark:text-white/45 block">{{ __('pos.total_paid_label') }}</span>
                     <span
                         class="text-[13px] sm:text-[14px] font-bold text-black dark:text-white tabular-nums block mt-0.5 truncate"
                         x-text="formatRupiah(lastCompletedOrder ? lastCompletedOrder.paid_amount : 0)"></span>
                 </div>
                 <div class="px-2 py-1">
                     <span
-                        class="text-[10px] uppercase tracking-wider font-semibold text-[#34C759] block">Kembalian</span>
+                        class="text-[10px] uppercase tracking-wider font-semibold text-[#34C759] block">{{ __('pos.change_label') }}</span>
                     <span
                         class="text-[13px] sm:text-[14px] font-extrabold text-[#34C759] tabular-nums block mt-0.5 truncate"
                         x-text="formatRupiah(lastCompletedOrder ? lastCompletedOrder.change_amount : 0)"></span>
@@ -2667,9 +2664,9 @@
                     <svg class="w-4 h-4 shrink-0 text-[#34C759]" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <span class="truncate">Pesanan Otomatis Masuk ke Layar Dapur (KDS) &bull; Paperless</span>
+                    <span class="truncate">{{ __('pos.kds_paperless_notice') }}</span>
                 </div>
-                <span class="text-[10px] uppercase font-extrabold tracking-wider px-2 py-0.5 rounded-full bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] shrink-0 ml-2">KDS Live</span>
+                <span class="text-[10px] uppercase font-extrabold tracking-wider px-2 py-0.5 rounded-full bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] shrink-0 ml-2">{{ __('pos.kds_live_badge') }}</span>
             </div>
 
             <!-- WhatsApp Feedback Toast (If Triggered) -->
@@ -2698,7 +2695,7 @@
             <!-- BENTO ACTIONS GRID -->
             <div class="space-y-2.5">
                 <div class="text-[11px] font-bold uppercase tracking-wider text-black/40 dark:text-white/40 px-0.5">
-                    Aksi Tagihan &amp; Struk
+                    {{ __('pos.receipt_billing_actions_heading') }}
                 </div>
 
                 <!-- Primary Row: Thermal Hardware ESC/POS & WhatsApp Bot -->
@@ -2720,15 +2717,15 @@
                             </div>
                             <span
                                 class="text-[9px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-white/20 text-white backdrop-blur-xs"
-                                x-text="directPrinting ? 'Mencetak...' : 'Hardware ESC/POS'">
+                                x-text="directPrinting ? '{{ __('pos.printing_status') }}' : '{{ __('pos.hardware_esc_pos_badge') }}'">
                             </span>
                         </div>
                         <!-- Bottom Info & CTA -->
                         <div class="mt-3">
-                            <div class="font-extrabold text-[14px] leading-tight">Cetak Struk ESC/POS</div>
+                            <div class="font-extrabold text-[14px] leading-tight">{{ __('pos.print_receipt_esc_pos_title') }}</div>
                             <div class="text-[11px] text-white/90 mt-0.5 flex items-center justify-between">
-                                <span>Kirim ke printer thermal</span>
-                                <span class="font-bold group-hover:translate-x-0.5 transition" x-text="directPrinting ? 'Mencetak...' : 'Cetak'"></span>
+                                <span>{{ __('pos.send_to_thermal_printer_sub') }}</span>
+                                <span class="font-bold group-hover:translate-x-0.5 transition" x-text="directPrinting ? '{{ __('pos.printing_status') }}' : '{{ __('pos.print_action_label') }}'"></span>
                             </div>
                         </div>
                     </button>
@@ -2751,18 +2748,17 @@
                                 :class="waBotSent ? 'bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158]' : (sendingWaBot ?
                                     'bg-[#FF9500]/20 text-[#FF9500]' : 'bg-[#25D366]/20 text-[#25D366]')">
                                 <span
-                                    x-text="sendingWaBot ? 'Mengirim...' : (waBotSent ? 'Terkirim' : 'Bot Otomatis')"></span>
+                                    x-text="sendingWaBot ? '{{ __('pos.sending_status') }}' : (waBotSent ? '{{ __('pos.sent_status') }}' : '{{ __('pos.auto_bot_status') }}')"></span>
                             </span>
                         </div>
                         <!-- Bottom Info & CTA -->
                         <div class="mt-3">
-                            <div class="font-extrabold text-[14px] text-black dark:text-white leading-tight">Kirim
-                                WhatsApp</div>
+                            <div class="font-extrabold text-[14px] text-black dark:text-white leading-tight">{{ __('pos.send_whatsapp_title') }}</div>
                             <div
                                 class="text-[11px] text-black/60 dark:text-white/60 mt-0.5 flex items-center justify-between">
-                                <span>Kirim e-struk ke pelanggan</span>
+                                <span>{{ __('pos.send_e_receipt_customer_sub') }}</span>
                                 <span class="font-bold text-[#25D366] group-hover:translate-x-0.5 transition">
-                                    <span x-text="waBotSent ? 'Kirim Ulang' : 'Kirim'"></span>
+                                    <span x-text="waBotSent ? '{{ __('pos.resend_action_label') }}' : '{{ __('pos.send_action_label') }}'"></span>
                                 </span>
                             </div>
                         </div>
@@ -2783,11 +2779,11 @@
                                 </svg>
                             </div>
                             <div class="min-w-0">
-                                <div class="text-[11px] font-bold text-black dark:text-white truncate" x-text="kitchenPrinting ? 'Mengirim...' : 'Tiket Dapur'">Tiket Dapur</div>
-                                <div class="text-[9px] text-black/45 dark:text-white/45 truncate">KOT Station</div>
+                                <div class="text-[11px] font-bold text-black dark:text-white truncate" x-text="kitchenPrinting ? '{{ __('pos.sending_status') }}' : '{{ __('pos.kitchen_ticket_title') }}'">{{ __('pos.kitchen_ticket_title') }}</div>
+                                <div class="text-[9px] text-black/45 dark:text-white/45 truncate">{{ __('pos.kot_station_sub') }}</div>
                             </div>
                         </div>
-                        <span class="text-[10px] font-bold text-[#FF9500] group-hover:translate-x-0.5 transition shrink-0" x-text="kitchenPrinting ? 'Mengirim...' : 'Kirim'"></span>
+                        <span class="text-[10px] font-bold text-[#FF9500] group-hover:translate-x-0.5 transition shrink-0" x-text="kitchenPrinting ? '{{ __('pos.sending_status') }}' : '{{ __('pos.send_action_label') }}'"></span>
                     </button>
 
                     <!-- Bento Tile 4: Pratinjau & Cetak Browser (Fallback) -->
@@ -2803,8 +2799,8 @@
                                 </svg>
                             </div>
                             <div class="min-w-0">
-                                <div class="text-[11px] font-bold text-black dark:text-white truncate">Browser Print</div>
-                                <div class="text-[9px] text-black/45 dark:text-white/45 truncate">Pratinjau HTML</div>
+                                <div class="text-[11px] font-bold text-black dark:text-white truncate">{{ __('pos.browser_print_title') }}</div>
+                                <div class="text-[9px] text-black/45 dark:text-white/45 truncate">{{ __('pos.browser_print_sub') }}</div>
                             </div>
                         </div>
                         <span
@@ -2824,8 +2820,8 @@
                                 </svg>
                             </div>
                             <div class="min-w-0">
-                                <div class="text-[11px] font-bold text-[#007AFF] truncate">Gambar Struk</div>
-                                <div class="text-[9px] text-[#007AFF]/70 truncate">Foto PNG WA</div>
+                                <div class="text-[11px] font-bold text-[#007AFF] truncate">{{ __('pos.image_receipt_title') }}</div>
+                                <div class="text-[9px] text-[#007AFF]/70 truncate">{{ __('pos.image_receipt_sub') }}</div>
                             </div>
                         </div>
                         <span
@@ -2843,7 +2839,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
                     </svg>
-                    <span>Selesai &amp; Transaksi Baru</span>
+                    <span>{{ __('pos.finish_new_transaction_btn') }}</span>
                     <span
                         class="text-[10px] text-black/40 dark:text-white/40 font-normal px-1.5 py-0.5 rounded bg-black/5 dark:bg-white/10 ml-1">Esc</span>
                 </button>
@@ -2884,8 +2880,8 @@
                         </svg>
                     </div>
                     <div>
-                        <h3 class="font-semibold text-base sm:text-lg text-black dark:text-white leading-tight">Pengaturan &amp; Perangkat POS</h3>
-                        <p class="text-xs text-black/50 dark:text-white/50">Pusat kontrol printer, laci kasir, layar dapur &amp; operasional</p>
+                        <h3 class="font-semibold text-base sm:text-lg text-black dark:text-white leading-tight">{{ __('pos.pos_settings_devices_title') }}</h3>
+                        <p class="text-xs text-black/50 dark:text-white/50">{{ __('pos.pos_settings_devices_subtitle') }}</p>
                     </div>
                 </div>
                 <button type="button" @click="showPosSettingsModal = false"
@@ -2912,13 +2908,13 @@
                                 </div>
                                 <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#007AFF]/15 text-[#007AFF] uppercase tracking-wide">Hardware</span>
                             </div>
-                            <h4 class="font-semibold text-sm text-black dark:text-white group-hover:text-[#007AFF] transition">Pengaturan Printer Thermal</h4>
+                            <h4 class="font-semibold text-sm text-black dark:text-white group-hover:text-[#007AFF] transition">{{ __('pos.thermal_printer_settings_title') }}</h4>
                             <p class="text-xs text-black/60 dark:text-white/60 mt-1 leading-relaxed">
-                                Konfigurasi printer USB, LAN/Ethernet, Bluetooth, ukuran kertas 58/80mm, dan tes cetak struk.
+                                {{ __('pos.thermal_printer_settings_desc') }}
                             </p>
                         </div>
                         <div class="mt-3 pt-2.5 border-t border-black/5 dark:border-white/5 flex items-center justify-between text-xs text-[#007AFF] font-medium">
-                            <span>Buka Konfigurasi</span>
+                            <span>{{ __('pos.open_configuration_link') }}</span>
                             <span class="group-hover:translate-x-0.5 transition">→</span>
                         </div>
                     </a>
@@ -2933,15 +2929,15 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" />
                                     </svg>
                                 </div>
-                                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#34C759]/15 text-[#34C759] uppercase tracking-wide">Aksi Cepat</span>
+                                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#34C759]/15 text-[#34C759] uppercase tracking-wide">{{ __('pos.badge_quick_action') }}</span>
                             </div>
-                            <h4 class="font-semibold text-sm text-black dark:text-white group-hover:text-[#34C759] transition">Buka Laci Kas (Cash Drawer)</h4>
+                            <h4 class="font-semibold text-sm text-black dark:text-white group-hover:text-[#34C759] transition">{{ __('pos.open_cash_drawer_card_title') }}</h4>
                             <p class="text-xs text-black/60 dark:text-white/60 mt-1 leading-relaxed">
-                                Kirim sinyal manual (No-Sale Pop) untuk membuka laci kasir dengan pencatatan audit forensik.
+                                {{ __('pos.open_cash_drawer_card_desc') }}
                             </p>
                         </div>
                         <div class="mt-3 pt-2.5 border-t border-black/5 dark:border-white/5 flex items-center justify-between text-xs text-[#34C759] font-medium">
-                            <span>Buka Laci Sekarang</span>
+                            <span>{{ __('pos.open_drawer_now_btn') }}</span>
                             <i data-lucide="zap" class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition"></i>
                         </div>
                     </button>
@@ -2957,15 +2953,15 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0H3" />
                                         </svg>
                                     </div>
-                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#FF9500]/15 text-[#FF9500] uppercase tracking-wide">Dapur &amp; Bar</span>
+                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#FF9500]/15 text-[#FF9500] uppercase tracking-wide">{{ __('pos.badge_kitchen_bar') }}</span>
                                 </div>
-                                <h4 class="font-semibold text-sm text-black dark:text-white group-hover:text-[#FF9500] transition">Layar Dapur &amp; Bar (KDS)</h4>
+                                <h4 class="font-semibold text-sm text-black dark:text-white group-hover:text-[#FF9500] transition">{{ __('pos.kitchen_display_bar_card_title') }}</h4>
                                 <p class="text-xs text-black/60 dark:text-white/60 mt-1 leading-relaxed">
-                                    Tampilan tiket pesanan real-time untuk koki &amp; barista tanpa boros kertas struk.
+                                    {{ __('pos.kitchen_display_bar_card_desc') }}
                                 </p>
                             </div>
                             <div class="mt-3 pt-2.5 border-t border-black/5 dark:border-white/5 flex items-center justify-between text-xs text-[#FF9500] font-medium">
-                                <span>Buka Layar KDS</span>
+                                <span>{{ __('pos.open_kds_screen_link') }}</span>
                                 <span class="group-hover:translate-x-0.5 transition">↗</span>
                             </div>
                         </a>
@@ -2983,15 +2979,15 @@
                                     </div>
                                     <span class="text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide"
                                         :class="posAutoSendKds ? 'bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158]' : 'bg-black/10 dark:bg-white/10 text-black/50 dark:text-white/50'"
-                                        x-text="posAutoSendKds ? 'Aktif' : 'Nonaktif'"></span>
+                                        x-text="posAutoSendKds ? '{{ __('pos.active') }}' : '{{ __('pos.inactive') }}'"></span>
                                 </div>
-                                <h4 class="font-semibold text-sm text-black dark:text-white">Auto Kirim ke Dapur (KDS)</h4>
+                                <h4 class="font-semibold text-sm text-black dark:text-white">{{ __('pos.auto_send_kds_card_title') }}</h4>
                                 <p class="text-xs text-black/60 dark:text-white/60 mt-1 leading-relaxed">
-                                    Kirim pesanan kasir langsung ke antrean layar dapur secara otomatis tanpa harus cetak kertas struk.
+                                    {{ __('pos.auto_send_kds_card_desc') }}
                                 </p>
                             </div>
                             <div class="mt-3 pt-2.5 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
-                                <span class="text-xs font-medium text-black/70 dark:text-white/70" x-text="posAutoSendKds ? 'Fitur Paperless Aktif' : 'Fitur Nonaktif'"></span>
+                                <span class="text-xs font-medium text-black/70 dark:text-white/70" x-text="posAutoSendKds ? '{{ __('pos.paperless_feature_active') }}' : '{{ __('pos.paperless_feature_inactive') }}'"></span>
                                 <button type="button" @click="toggleAutoKds()"
                                     class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none"
                                     :class="posAutoSendKds ? 'bg-[#34C759]' : 'bg-black/20 dark:bg-white/20'">
@@ -3012,15 +3008,15 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
                                 </div>
-                                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#5856D6]/15 text-[#5856D6] uppercase tracking-wide">Rekonsiliasi</span>
+                                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#5856D6]/15 text-[#5856D6] uppercase tracking-wide">{{ __('pos.badge_reconciliation') }}</span>
                             </div>
-                            <h4 class="font-semibold text-sm text-black dark:text-white group-hover:text-[#5856D6] transition">Rekapitulasi Shift Kasir</h4>
+                            <h4 class="font-semibold text-sm text-black dark:text-white group-hover:text-[#5856D6] transition">{{ __('pos.shift_recap_card_title') }}</h4>
                             <p class="text-xs text-black/60 dark:text-white/60 mt-1 leading-relaxed">
-                                Riwayat buka/tutup shift kasir, selisih kas fisik, rekonsiliasi, dan cetak ulang ringkasan.
+                                {{ __('pos.shift_recap_card_desc') }}
                             </p>
                         </div>
                         <div class="mt-3 pt-2.5 border-t border-black/5 dark:border-white/5 flex items-center justify-between text-xs text-[#5856D6] font-medium">
-                            <span>Lihat Riwayat Shift</span>
+                            <span>{{ __('pos.view_shift_history_link') }}</span>
                             <span class="group-hover:translate-x-0.5 transition">→</span>
                         </div>
                     </a>
@@ -3036,15 +3032,15 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
                                         </svg>
                                     </div>
-                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#AF52DE]/15 text-[#AF52DE] uppercase tracking-wide">Audit Transaksi</span>
+                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#AF52DE]/15 text-[#AF52DE] uppercase tracking-wide">{{ __('pos.badge_transaction_audit') }}</span>
                                 </div>
-                                <h4 class="font-semibold text-sm text-black dark:text-white group-hover:text-[#AF52DE] transition">Daftar Transaksi &amp; Void</h4>
+                                <h4 class="font-semibold text-sm text-black dark:text-white group-hover:text-[#AF52DE] transition">{{ __('pos.transaction_void_list_title') }}</h4>
                                 <p class="text-xs text-black/60 dark:text-white/60 mt-1 leading-relaxed">
-                                    Pencarian riwayat struk, pembatalan pesanan (Void), dan retur penjualan dengan PIN otorisasi.
+                                    {{ __('pos.transaction_void_list_desc') }}
                                 </p>
                             </div>
                             <div class="mt-3 pt-2.5 border-t border-black/5 dark:border-white/5 flex items-center justify-between text-xs text-[#AF52DE] font-medium">
-                                <span>Buka Transaksi</span>
+                                <span>{{ __('pos.open_transactions_link') }}</span>
                                 <span class="group-hover:translate-x-0.5 transition">→</span>
                             </div>
                         </a>
@@ -3061,15 +3057,15 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
                                         </svg>
                                     </div>
-                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#00C7BE]/15 text-[#00C7BE] uppercase tracking-wide">F&amp;B Dine-In</span>
+                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#00C7BE]/15 text-[#00C7BE] uppercase tracking-wide">{{ __('pos.badge_fnb_dine_in') }}</span>
                                 </div>
-                                <h4 class="font-semibold text-sm text-black dark:text-white group-hover:text-[#00C7BE] transition">Manajemen Meja &amp; QR</h4>
+                                <h4 class="font-semibold text-sm text-black dark:text-white group-hover:text-[#00C7BE] transition">{{ __('pos.table_mgmt_qr_title') }}</h4>
                                 <p class="text-xs text-black/60 dark:text-white/60 mt-1 leading-relaxed">
-                                    Pengaturan layout meja, unduh kartu QR code pemesanan mandiri, dan monitoring sesi meja makan.
+                                    {{ __('pos.table_mgmt_qr_desc') }}
                                 </p>
                             </div>
                             <div class="mt-3 pt-2.5 border-t border-black/5 dark:border-white/5 flex items-center justify-between text-xs text-[#00C7BE] font-medium">
-                                <span>Buka Meja &amp; QR</span>
+                                <span>{{ __('pos.open_table_qr_btn') }}</span>
                                 <span class="group-hover:translate-x-0.5 transition">→</span>
                             </div>
                         </a>
@@ -3082,11 +3078,11 @@
             <div class="px-6 py-3.5 border-t border-black/5 dark:border-white/10 flex items-center justify-between bg-black/[0.02] dark:bg-white/[0.02]">
                 <div class="flex items-center gap-2 text-xs text-black/50 dark:text-white/50">
                     <span class="w-2 h-2 rounded-full bg-[#34C759]"></span>
-                    <span>Kasir: <strong class="text-black/70 dark:text-white/70">{{ auth()->user()->name ?? 'Kasir' }}</strong></span>
+                    <span>{{ __('pos.cashier_label_colon') }} <strong class="text-black/70 dark:text-white/70">{{ auth()->user()->name ?? __('pos.cashier') }}</strong></span>
                 </div>
                 <button type="button" @click="showPosSettingsModal = false"
                     class="h-9 px-4 rounded-xl bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.1] dark:hover:bg-white/[0.15] active:scale-95 text-xs font-semibold transition">
-                    Tutup
+                    {{ __('pos.close') }}
                 </button>
             </div>
         </div>
@@ -3100,27 +3096,24 @@
         style="display: none;">
         <div
             class="pos-modal-panel w-full max-w-md bg-white dark:bg-[#2C2C2E] rounded-[16px] border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] text-black dark:text-white">
-            <h3 class="font-semibold text-[17px] text-black dark:text-white">Buka Shift Kasir Baru</h3>
+            <h3 class="font-semibold text-[17px] text-black dark:text-white">{{ __('pos.shift_open_modal_title') }}</h3>
             <div class="space-y-3">
                 <div>
-                    <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1.5">Modal Awal
-                        Kasir (Rp)</label>
+                    <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.shift_opening_cash_label') }}</label>
                     <input type="number" x-model.number="shiftOpeningCash"
                         class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[10px] px-3.5 text-[16px] font-semibold tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
                 </div>
                 <div>
-                    <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1.5">Catatan Shift
-                        (Opsional)</label>
-                    <input type="text" x-model="shiftNotes" placeholder="Catatan shift..."
+                    <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.shift_notes_optional') }}</label>
+                    <input type="text" x-model="shiftNotes" placeholder="{{ __('pos.shift_notes_placeholder') }}"
                         class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[10px] px-3.5 text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
                 </div>
             </div>
             <div class="flex justify-end gap-2 pt-3 border-t border-black/10 dark:border-white/10">
                 <button @click="showOpenShiftModal = false"
-                    class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/[0.06] dark:hover:bg-white/[0.08] transition">Batal</button>
+                    class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/[0.06] dark:hover:bg-white/[0.08] transition">{{ __('pos.cancel') }}</button>
                 <button @click="submitOpenShift()"
-                    class="h-9 px-5 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] text-white font-semibold text-[13px] transition shadow-sm">Buka
-                    Shift</button>
+                    class="h-9 px-5 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] text-white font-semibold text-[13px] transition shadow-sm">{{ __('pos.open_shift_btn') }}</button>
             </div>
         </div>
     </div>
@@ -3133,33 +3126,33 @@
         style="display: none;">
         <div
             class="pos-modal-panel w-full max-w-md bg-white dark:bg-[#2C2C2E] rounded-[16px] border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] text-black dark:text-white">
-            <h3 class="font-semibold text-[17px] text-black dark:text-white">Tutup Shift Kasir &amp; Rekonsiliasi</h3>
+            <h3 class="font-semibold text-[17px] text-black dark:text-white">{{ __('pos.shift_close_modal_title') }}</h3>
 
             <div
                 class="p-3.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 space-y-1.5 text-xs">
                 <div class="flex justify-between text-black/60 dark:text-white/60">
-                    <span>Modal Awal:</span>
+                    <span>{{ __('pos.opening_cash_colon') }}</span>
                     <span class="tabular-nums font-medium text-black dark:text-white"
                         x-text="formatRupiah(shiftSummary.opening_cash)"></span>
                 </div>
                 <div class="flex justify-between text-black/60 dark:text-white/60">
-                    <span>Penjualan Tunai:</span>
+                    <span>{{ __('pos.cash_sales_colon') }}</span>
                     <span class="tabular-nums font-medium text-black dark:text-white"
                         x-text="formatRupiah(shiftSummary.cash_sales)"></span>
                 </div>
                 <div class="flex justify-between text-black/60 dark:text-white/60">
-                    <span>Penjualan Non-Tunai / QRIS:</span>
+                    <span>{{ __('pos.non_cash_sales_colon') }}</span>
                     <span class="tabular-nums font-medium text-[#007AFF]"
                         x-text="formatRupiah(shiftSummary.non_cash_sales || 0)"></span>
                 </div>
                 <div class="flex justify-between text-black/60 dark:text-white/60">
-                    <span>Kas Masuk / Keluar:</span>
+                    <span>{{ __('pos.cash_in_out_colon') }}</span>
                     <span class="tabular-nums font-medium text-black dark:text-white"
                         x-text="formatRupiah(shiftSummary.cash_in - shiftSummary.cash_out)"></span>
                 </div>
                 <div x-show="shiftSummary.expected_cash !== null && shiftSummary.expected_cash !== undefined"
                     class="flex justify-between text-[#34C759] font-semibold border-t border-black/5 dark:border-white/5 pt-1.5 text-[13px]">
-                    <span>Uang Fisik Diharapkan:</span>
+                    <span>{{ __('pos.expected_physical_cash_colon') }}</span>
                     <span class="tabular-nums font-bold" x-text="formatRupiah(shiftSummary.expected_cash)"></span>
                 </div>
                 <div x-show="shiftSummary.expected_cash === null || shiftSummary.expected_cash === undefined"
@@ -3167,20 +3160,19 @@
                     <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
                     </svg>
-                    <span>Mode Blind Count: Hitung uang tunai fisik di laci tanpa estimasi sistem.</span>
+                    <span>{{ __('pos.blind_count_mode_desc') }}</span>
                 </div>
             </div>
 
             <div class="space-y-3">
                 <div>
-                    <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1.5">Hitungan Kas
-                        Fisik Aktual di Laci (Rp)</label>
+                    <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.actual_cash_label') }}</label>
                     <input type="number" x-model.number="shiftActualCash"
                         class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[10px] px-3.5 text-[16px] font-bold tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
                 </div>
                 <div x-show="shiftSummary.expected_cash !== null && shiftSummary.expected_cash !== undefined"
                     class="p-3 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 flex justify-between items-center text-xs">
-                    <span class="text-black/60 dark:text-white/60">Selisih Kas:</span>
+                    <span class="text-black/60 dark:text-white/60">{{ __('pos.cash_difference_colon') }}</span>
                     <span
                         :class="(shiftActualCash - shiftSummary.expected_cash) === 0 ? 'text-[#34C759] font-bold' :
                             'text-[#FF3B30] font-bold'"
@@ -3191,10 +3183,9 @@
 
             <div class="flex justify-end gap-2 pt-3 border-t border-black/10 dark:border-white/10">
                 <button @click="showCloseShiftModal = false"
-                    class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/[0.06] dark:hover:bg-white/[0.08] transition">Batal</button>
+                    class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/[0.06] dark:hover:bg-white/[0.08] transition">{{ __('pos.cancel') }}</button>
                 <button @click="submitCloseShift()"
-                    class="h-9 px-5 rounded-[10px] bg-[#FF3B30] hover:bg-[#E0352B] active:scale-[0.97] text-white font-semibold text-[13px] transition">Tutup
-                    &amp; Rekonsiliasi</button>
+                    class="h-9 px-5 rounded-[10px] bg-[#FF3B30] hover:bg-[#E0352B] active:scale-[0.97] text-white font-semibold text-[13px] transition">{{ __('pos.close_reconcile_btn') }}</button>
             </div>
         </div>
     </div>
@@ -3208,8 +3199,7 @@
         <div
             class="pos-modal-panel w-full max-w-lg bg-white dark:bg-[#2C2C2E] rounded-[16px] border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] text-black dark:text-white">
             <div class="flex items-center justify-between pb-3 border-b border-black/10 dark:border-white/10">
-                <h3 class="font-semibold text-[17px] text-black dark:text-white">Daftar Antrean Transaksi (Held Carts)
-                </h3>
+                <h3 class="font-semibold text-[17px] text-black dark:text-white">{{ __('pos.held_orders_modal_title') }}</h3>
                 <button @click="showHeldOrdersModal = false"
                     class="w-7 h-7 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
@@ -3230,13 +3220,13 @@
                         </div>
                         <button @click="resumeHeldOrder(ho.id)"
                             class="h-8 px-3 rounded-[8px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] text-white font-semibold text-[12px] transition">
-                            Lanjutkan
+                            {{ __('pos.resume_order_btn') }}
                         </button>
                     </div>
                 </template>
                 <div x-show="heldOrders.length === 0"
                     class="text-center py-8 text-xs text-black/40 dark:text-white/40">
-                    Tidak ada transaksi yang di-hold saat ini.
+                    {{ __('pos.no_held_orders_desc') }}
                 </div>
             </div>
         </div>
@@ -3250,24 +3240,21 @@
         <div class="pos-modal-panel w-full max-w-sm bg-white dark:bg-[#2C2C2E] rounded-[16px] border border-black/10 dark:border-white/10 p-5 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] text-black dark:text-white"
             @click.outside="showHoldPromptModal = false">
             <div>
-                <h3 class="font-semibold text-[17px] text-black dark:text-white">Simpan Antrean (Hold)</h3>
-                <p class="text-[12px] text-black/45 dark:text-white/45 mt-0.5">Beri label meja atau nama pelanggan
-                    untuk melanjutkan nanti.</p>
+                <h3 class="font-semibold text-[17px] text-black dark:text-white">{{ __('pos.hold_save_modal_title') }}</h3>
+                <p class="text-[12px] text-black/45 dark:text-white/45 mt-0.5">{{ __('pos.hold_save_modal_desc') }}</p>
             </div>
             <form @submit.prevent="confirmHoldCart()">
                 <div>
-                    <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1.5">Label Antrean
-                        / No. Meja *</label>
+                    <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.hold_label_required') }}</label>
                     <input x-ref="holdLabelInput" type="text" x-model="holdOrderLabel" required
-                        maxlength="100" placeholder="Contoh: Meja 4 / Bpk. Rudi"
+                        maxlength="100" placeholder="{{ __('pos.hold_reference_placeholder') }}"
                         class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[10px] px-3 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
                 </div>
                 <div class="flex justify-end gap-2 pt-3 mt-4 border-t border-black/10 dark:border-white/10">
                     <button type="button" @click="showHoldPromptModal = false"
-                        class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/[0.06] dark:hover:bg-white/[0.08] transition">Batal</button>
+                        class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/[0.06] dark:hover:bg-white/[0.08] transition">{{ __('pos.cancel') }}</button>
                     <button type="submit"
-                        class="h-9 px-4 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] text-white font-semibold text-[13px] transition shadow-sm">Simpan
-                        Antrean</button>
+                        class="h-9 px-4 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] text-white font-semibold text-[13px] transition shadow-sm">{{ __('pos.hold_save_btn') }}</button>
                 </div>
             </form>
         </div>
@@ -3479,15 +3466,14 @@
                             d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
                     </svg>
                 </div>
-                <p class="text-[16px] font-semibold text-black dark:text-white">Izinkan Akses Kamera?</p>
-                <p class="text-[12px] text-black/60 dark:text-white/60 mt-1 leading-snug">Kamera digunakan untuk
-                    memindai barcode produk secara otomatis.</p>
+                <p class="text-[16px] font-semibold text-black dark:text-white">{{ __('pos.allow_camera_access_title') }}</p>
+                <p class="text-[12px] text-black/60 dark:text-white/60 mt-1 leading-snug">{{ __('pos.allow_camera_access_desc') }}</p>
             </div>
             <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[14px] font-medium">
                 <button type="button" @click="showScannerPermission = false"
-                    class="py-2.5 text-[#007AFF] border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition">Batal</button>
+                    class="py-2.5 text-[#007AFF] border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition">{{ __('pos.cancel') }}</button>
                 <button type="button" @click="confirmBarcodeScannerAccess()"
-                    class="py-2.5 text-[#007AFF] font-semibold active:bg-black/5 dark:active:bg-white/5 transition">Izinkan</button>
+                    class="py-2.5 text-[#007AFF] font-semibold active:bg-black/5 dark:active:bg-white/5 transition">{{ __('pos.allow') }}</button>
             </div>
         </div>
     </div>
@@ -3503,8 +3489,7 @@
             <div class="flex items-center justify-between gap-3">
                 <div>
                     <h3 class="font-semibold text-[17px] text-black dark:text-white">{{ __('pos.scan_barcode_title') }}</h3>
-                    <p class="text-[12px] text-black/45 dark:text-white/45 mt-0.5">Arahkan kamera ke barcode hingga
-                        produk terdeteksi.</p>
+                    <p class="text-[12px] text-black/45 dark:text-white/45 mt-0.5">{{ __('pos.point_camera_desc') }}</p>
                 </div>
                 <button type="button" @click="closeBarcodeScanner()"
                     class="w-7 h-7 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center">
@@ -3525,7 +3510,7 @@
                 </div>
                 <div x-show="scannerStarting"
                     class="absolute inset-0 flex items-center justify-center bg-black/70 text-xs text-white/60">
-                    <span class="flex items-center gap-2">Menyiapkan kamera...</span>
+                    <span class="flex items-center gap-2">{{ __('pos.preparing_camera') }}</span>
                 </div>
             </div>
 
@@ -3534,7 +3519,7 @@
                 x-text="scannerError"></div>
 
             <div x-show="scannerDevices.length > 1" class="space-y-1">
-                <label class="block text-[11px] text-black/50 dark:text-white/50 font-medium">Pilih Kamera</label>
+                <label class="block text-[11px] text-black/50 dark:text-white/50 font-medium">{{ __('pos.select_camera') }}</label>
                 <select x-model="selectedScannerDeviceId" @change="startBarcodeScanner()"
                     class="w-full h-9 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[8px] px-3 text-xs text-black dark:text-white">
                     <template x-for="device in scannerDevices" :key="device.deviceId">
@@ -3545,10 +3530,9 @@
             </div>
 
             <div class="flex items-center justify-between gap-3 pt-2 border-t border-black/10 dark:border-white/10">
-                <span class="text-[11px] text-black/40 dark:text-white/40">Scanner USB/Bluetooth juga tetap aktif via
-                    kolom pencarian.</span>
+                <span class="text-[11px] text-black/40 dark:text-white/40">{{ __('pos.usb_scanner_active_hint') }}</span>
                 <button type="button" @click="closeBarcodeScanner()"
-                    class="h-8 px-3 rounded-[8px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.1] dark:hover:bg-white/[0.12] text-black dark:text-white text-[12px] font-medium transition">Tutup</button>
+                    class="h-8 px-3 rounded-[8px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.1] dark:hover:bg-white/[0.12] text-black dark:text-white text-[12px] font-medium transition">{{ __('pos.close') }}</button>
             </div>
         </div>
     </div>
@@ -3662,16 +3646,16 @@
                     <div
                         class="flex items-center justify-between gap-3 pt-3 border-t border-black/[0.06] dark:border-white/[0.08]">
                         <div>
-                            <div class="text-[10px] text-black/50 dark:text-white/50 font-medium">Subtotal Item</div>
+                            <div class="text-[10px] text-black/50 dark:text-white/50 font-medium">{{ __('pos.subtotal_item') }}</div>
                             <div class="text-sm font-extrabold text-black dark:text-white tabular-nums"
                                 x-text="formatRupiah(calculateModifierTotalPrice() * modifierItemQty)"></div>
                         </div>
                         <div class="flex items-center gap-2">
                             <button type="button" @click="showModifierModal = false"
-                                class="h-9 px-3.5 rounded-[10px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/[0.05] dark:hover:bg-white/[0.08]">Batal</button>
+                                class="h-9 px-3.5 rounded-[10px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/[0.05] dark:hover:bg-white/[0.08]">{{ __('pos.cancel') }}</button>
                             <button type="button" @click="addModifierItemToCart()"
                                 class="h-9 px-4 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white text-xs font-bold transition shadow-sm">
-                                Tambah ke Pesanan
+                                {{ __('pos.add_to_order') }}
                             </button>
                         </div>
                     </div>
@@ -3700,24 +3684,24 @@
                     <div>
                         <h3 class="font-bold text-[15px] text-black dark:text-white leading-tight">
                             @if ($isWorkshop && !$isLaundry)
-                                SPK Bengkel &amp; Kendaraan
+                                {{ __('pos.workshop_spk_title') }}
                             @elseif ($isLaundry && !$isWorkshop)
-                                Layanan Laundry Kiloan
+                                {{ __('pos.laundry_service_title') }}
                             @elseif ($isWorkshop && $isLaundry)
-                                SPK Bengkel &amp; Layanan Laundry
+                                {{ __('pos.workshop_laundry_title') }}
                             @else
-                                Catatan Layanan &amp; Petugas
+                                {{ __('pos.service_notes_staff_title') }}
                             @endif
                         </h3>
                         <p class="text-[11px] text-black/50 dark:text-white/50">
                             @if ($isWorkshop && !$isLaundry)
-                                Formulir Surat Perintah Kerja, Kendaraan &amp; Mekanik
+                                {{ __('pos.workshop_form_desc') }}
                             @elseif ($isLaundry && !$isWorkshop)
-                                Formulir Timbangan Cucian &amp; Lokasi Rak
+                                {{ __('pos.laundry_form_desc') }}
                             @elseif ($isWorkshop && $isLaundry)
-                                Formulir SPK Bengkel &amp; Data Cucian Laundry
+                                {{ __('pos.workshop_laundry_form_desc') }}
                             @else
-                                Formulir Penugasan Petugas &amp; Instruksi Layanan
+                                {{ __('pos.staff_assignment_form_desc') }}
                             @endif
                         </p>
                     </div>
@@ -3739,7 +3723,7 @@
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.25V6.75A2.25 2.25 0 0012 4.5H6.75A2.25 2.25 0 004.5 6.75v12" />
                     </svg>
-                    <span>Bengkel &amp; Kendaraan</span>
+                    <span>{{ __('pos.workshop_vehicle') }}</span>
                 </button>
                 <button type="button" @click="serviceVerticalTab = 'laundry'"
                     :class="serviceVerticalTab === 'laundry' ? 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' : 'text-black/60 dark:text-white/60'"
@@ -3747,7 +3731,7 @@
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0l-3-3m3 3l3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
                     </svg>
-                    <span>Laundry Kiloan</span>
+                    <span>{{ __('pos.laundry_service') }}</span>
                 </button>
             </div>
             @endif
@@ -3757,27 +3741,27 @@
             <div x-show="serviceVerticalTab === 'workshop'" class="space-y-3">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div class="space-y-1">
-                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">Nomor Polisi (Plat)</label>
+                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('pos.license_plate') }}</label>
                         <input type="text" x-model="vehicleLicensePlate" placeholder="Cth: B 1234 XYZ"
                             class="w-full h-9 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 px-3 text-[13px] font-mono font-bold uppercase text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                     </div>
                     <div class="space-y-1">
-                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">Tipe / Model Kendaraan</label>
+                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('pos.vehicle_model') }}</label>
                         <input type="text" x-model="vehicleModel" placeholder="Cth: Honda Vario 160"
                             class="w-full h-9 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 px-3 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                     </div>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div class="space-y-1">
-                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">KM Odometer</label>
+                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('pos.odometer_km') }}</label>
                         <input type="number" x-model="vehicleMileage" placeholder="Cth: 24500"
                             class="w-full h-9 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 px-3 text-[13px] font-mono text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                     </div>
                     <div class="space-y-1">
-                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">Teknisi / Mekanik</label>
+                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('pos.mechanic_technician') }}</label>
                         <select x-model="technicianId"
                             class="w-full h-9 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 px-2.5 text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] cursor-pointer">
-                            <option value="" class="bg-white dark:bg-[#1C1C1E]">-- Pilih Mekanik --</option>
+                            <option value="" class="bg-white dark:bg-[#1C1C1E]">{{ __('pos.select_mechanic_placeholder') }}</option>
                             <template x-for="t in technicians" :key="t.id">
                                 <option :value="t.id" :selected="technicianId === t.id" x-text="t.name" class="bg-white dark:bg-[#1C1C1E]"></option>
                             </template>
@@ -3785,7 +3769,7 @@
                     </div>
                 </div>
                 <div class="space-y-1">
-                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">Catatan Servis / Keluhan (SPK)</label>
+                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('pos.service_complaint_spk_label') }}</label>
                     <textarea x-model="serviceNotes" rows="2" placeholder="Cth: Servis berkala, ganti oli mesin, cek bunyi di roda depan..."
                         class="w-full rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 p-2.5 text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]"></textarea>
                 </div>
@@ -3797,32 +3781,32 @@
             <div x-show="serviceVerticalTab === 'laundry'" class="space-y-3">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div class="space-y-1">
-                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">Total Timbangan (Kg)</label>
+                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('pos.total_scale_kg') }}</label>
                         <input type="number" step="0.01" min="0" x-model="laundryWeightKg" placeholder="Cth: 4.50"
                             class="w-full h-9 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 px-3 text-[13px] font-bold font-mono text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                     </div>
                     <div class="space-y-1">
-                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">Nomor Rak / Loker Cucian</label>
+                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('pos.laundry_rack_location') }}</label>
                         <input type="text" x-model="rackLocation" placeholder="Cth: Rak B-02 / Loker 05"
                             class="w-full h-9 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 px-3 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                     </div>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div class="space-y-1">
-                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">Estimasi Selesai</label>
+                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('pos.estimated_finish_time') }}</label>
                         <input type="datetime-local" x-model="estimatedCompletionAt"
                             class="w-full h-9 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 px-2.5 text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                     </div>
                     <div class="space-y-1">
-                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">Status Cucian</label>
+                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('pos.laundry_status') }}</label>
                         <select x-model="laundryStatus"
                             class="w-full h-9 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 px-2.5 text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] cursor-pointer">
-                            <option value="received" class="bg-white dark:bg-[#1C1C1E]">Diterima</option>
-                            <option value="washing" class="bg-white dark:bg-[#1C1C1E]">Sedang Dicuci</option>
-                            <option value="drying" class="bg-white dark:bg-[#1C1C1E]">Pengeringan</option>
-                            <option value="ironing" class="bg-white dark:bg-[#1C1C1E]">Penyetrikaan</option>
-                            <option value="ready" class="bg-white dark:bg-[#1C1C1E]">Siap Diambil</option>
-                            <option value="completed" class="bg-white dark:bg-[#1C1C1E]">Selesai / Diambil</option>
+                            <option value="received" class="bg-white dark:bg-[#1C1C1E]">{{ __('pos.status_received') }}</option>
+                            <option value="washing" class="bg-white dark:bg-[#1C1C1E]">{{ __('pos.status_washing') }}</option>
+                            <option value="drying" class="bg-white dark:bg-[#1C1C1E]">{{ __('pos.status_drying') }}</option>
+                            <option value="ironing" class="bg-white dark:bg-[#1C1C1E]">{{ __('pos.status_ironing') }}</option>
+                            <option value="ready" class="bg-white dark:bg-[#1C1C1E]">{{ __('pos.status_ready') }}</option>
+                            <option value="completed" class="bg-white dark:bg-[#1C1C1E]">{{ __('pos.status_completed_taken') }}</option>
                         </select>
                     </div>
                 </div>
@@ -3833,18 +3817,18 @@
             @if (!$isWorkshop && !$isLaundry)
             <div class="space-y-3">
                 <div class="space-y-1">
-                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">Petugas / Pelaksana Layanan</label>
+                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('pos.service_staff_executor') }}</label>
                     <select x-model="technicianId"
                         class="w-full h-9 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 px-2.5 text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] cursor-pointer">
-                        <option value="" class="bg-white dark:bg-[#1C1C1E]">-- Pilih Petugas / Pelaksana --</option>
+                        <option value="" class="bg-white dark:bg-[#1C1C1E]">{{ __('pos.select_service_staff_placeholder') }}</option>
                         <template x-for="t in technicians" :key="t.id">
                             <option :value="t.id" :selected="technicianId === t.id" x-text="t.name" class="bg-white dark:bg-[#1C1C1E]"></option>
                         </template>
                     </select>
                 </div>
                 <div class="space-y-1">
-                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">Catatan Pengerjaan Layanan</label>
-                    <textarea x-model="serviceNotes" rows="3" placeholder="Cth: Instruksi khusus pelanggan, catatan pengerjaan..."
+                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('pos.service_execution_notes_label') }}</label>
+                    <textarea x-model="serviceNotes" rows="3" placeholder="{{ __('pos.service_notes_placeholder') }}"
                         class="w-full rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 p-2.5 text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]"></textarea>
                 </div>
             </div>
@@ -3854,14 +3838,14 @@
             <div class="flex items-center justify-between pt-3 border-t border-black/[0.06] dark:border-white/[0.08]">
                 <button type="button" @click="vehicleLicensePlate = ''; vehicleModel = ''; vehicleMileage = null; technicianId = ''; serviceNotes = ''; laundryWeightKg = null; rackLocation = ''; estimatedCompletionAt = ''; laundryStatus = 'received';"
                     class="h-9 px-3 rounded-[10px] text-xs font-semibold text-[#FF3B30] hover:bg-[#FF3B30]/10 transition">
-                    Hapus Data Layanan
+                    {{ __('pos.delete_service_data') }}
                 </button>
                 <div class="flex items-center gap-2">
                     <button type="button" @click="showServiceVerticalModal = false"
-                        class="h-9 px-3.5 rounded-[10px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/[0.05] dark:hover:bg-white/[0.08]">Batal</button>
+                        class="h-9 px-3.5 rounded-[10px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/[0.05] dark:hover:bg-white/[0.08]">{{ __('pos.cancel') }}</button>
                     <button type="button" @click="showServiceVerticalModal = false"
                         class="h-9 px-4 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white text-xs font-bold transition shadow-sm">
-                        Simpan Data Layanan
+                        {{ __('pos.save_service_data') }}
                     </button>
                 </div>
             </div>
@@ -3912,8 +3896,8 @@
 
             <div class="space-y-3">
                 <div class="space-y-1">
-                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('pos.item_notes_label') ?? 'Catatan Khusus Item' }}</label>
-                    <input type="text" x-model="editingItemNotes" placeholder="{{ __('pos.item_notes_placeholder') ?? 'Cth: Diskon khusus, permintaan khusus...' }}"
+                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('pos.item_notes_label') }}</label>
+                    <input type="text" x-model="editingItemNotes" placeholder="{{ __('pos.item_notes_placeholder') }}"
                         class="w-full h-9 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 px-3 text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                 </div>
 
@@ -3923,7 +3907,7 @@
                     <div class="grid grid-cols-2 gap-2">
                         <div class="space-y-1">
                             <label class="block text-[11px] font-medium text-black/60 dark:text-white/60">{{ __('pos.batch_number') }}</label>
-                            <input type="text" x-model="editingItemBatchNumber" placeholder="Cth: BATCH-2026A"
+                            <input type="text" x-model="editingItemBatchNumber" placeholder="{{ __('pos.batch_placeholder') }}"
                                 class="w-full h-8 rounded-[7px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 px-2.5 text-[12px] font-mono text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                         </div>
                         <div class="space-y-1">
@@ -3934,7 +3918,7 @@
                     </div>
                     <div class="space-y-1">
                         <label class="block text-[11px] font-medium text-black/60 dark:text-white/60">{{ __('pos.dosage_instructions') }}</label>
-                        <input type="text" x-model="editingItemDosage" placeholder="Cth: 3 x 1 tablet sehari setelah makan"
+                        <input type="text" x-model="editingItemDosage" placeholder="{{ __('pos.dosage_placeholder') }}"
                             class="w-full h-8 rounded-[7px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 px-2.5 text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                     </div>
                 </div>
@@ -3972,15 +3956,14 @@
                         </svg>
                     </div>
                     <div>
-                        <h3 class="font-bold text-base text-black dark:text-white">Pesanan Masuk dari Meja QR</h3>
-                        <p class="text-xs text-black/50 dark:text-white/50">Pelanggan scan QR meja dan mengirim
-                            pesanan langsung.</p>
+                        <h3 class="font-bold text-base text-black dark:text-white">{{ __('pos.qr_incoming_orders_title') }}</h3>
+                        <p class="text-xs text-black/50 dark:text-white/50">{{ __('pos.qr_incoming_orders_desc') }}</p>
                     </div>
                 </div>
                 <div class="flex items-center gap-2">
                     <button type="button" @click="fetchIncomingOrders()"
                         class="p-2 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white"
-                        title="Segarkan">
+                        title="{{ __('pos.refresh') }}">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
                             viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -4013,18 +3996,18 @@
                                     <template x-if="order.is_paid">
                                         <span class="px-2 py-0.5 rounded-md text-[11px] font-bold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158] inline-flex items-center gap-1">
                                             <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                                            <span x-text="'Lunas (' + (order.payment_channel || 'QRIS') + ')'"></span>
+                                            <span x-text="'{{ __('pos.paid_status_badge') }} (' + (order.payment_channel || 'QRIS') + ')'"></span>
                                         </span>
                                     </template>
                                     <template x-if="!order.is_paid">
                                         <span class="px-2 py-0.5 rounded-md text-[11px] font-bold bg-[#FF9500]/15 text-[#D97706] dark:text-[#FBBF24] inline-flex items-center gap-1">
                                             <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                            <span>Bayar di Kasir</span>
+                                            <span>{{ __('pos.pay_at_cashier') }}</span>
                                         </span>
                                     </template>
                                 </div>
                                 <div class="text-xs font-semibold text-black dark:text-white mt-1">
-                                    <span x-text="order.customer_name_guest || 'Pelanggan'"></span>
+                                    <span x-text="order.customer_name_guest || '{{ __('pos.customer') }}'"></span>
                                     <span class="text-black/45 dark:text-white/45"
                                         x-text="' • ' + (order.customer_phone_guest || '-')"></span>
                                 </div>
@@ -4036,7 +4019,7 @@
                         <!-- General Order Note -->
                         <div x-show="order.notes"
                             class="p-2 rounded-[8px] bg-[#FF9500]/10 border border-[#FF9500]/25 text-xs text-[#FF9500] font-medium flex items-center gap-1.5">
-                            <span class="font-bold">Catatan Meja:</span>
+                            <span class="font-bold">{{ __('pos.table_notes_colon') }}</span>
                             <span x-text="order.notes"></span>
                         </div>
 
@@ -4070,7 +4053,7 @@
                         <!-- Total & Action Buttons -->
                         <div class="flex items-center justify-between gap-3 pt-1">
                             <div>
-                                <span class="text-[10px] text-black/50 dark:text-white/50 block">Total Tagihan</span>
+                                <span class="text-[10px] text-black/50 dark:text-white/50 block">{{ __('pos.total_bill_label') }}</span>
                                 <span class="text-base font-extrabold text-black dark:text-white tabular-nums"
                                     x-text="formatRupiah(order.total_amount)"></span>
                             </div>
@@ -4078,33 +4061,33 @@
                                 <template x-if="!order.is_paid">
                                     <button type="button" @click="promptRejectOrder(order)"
                                         class="h-9 px-3 rounded-[10px] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 text-[#FF3B30] text-xs font-bold transition">
-                                        Tolak
+                                        {{ __('pos.reject') }}
                                     </button>
                                 </template>
                                 <template x-if="order.is_paid">
                                     <span class="text-[11px] text-[#34C759] font-medium px-2 py-1 bg-[#34C759]/10 rounded-md">
-                                        Sudah Bayar
+                                        {{ __('pos.already_paid') }}
                                     </span>
                                 </template>
                                 <button type="button" @click="acceptIncomingOrder(order.id)"
                                     class="h-9 px-3.5 rounded-[10px] bg-[#34C759]/15 hover:bg-[#34C759]/25 text-[#248A3D] dark:text-[#30D158] text-xs font-bold transition flex items-center gap-1.5"
-                                    title="Terima dan teruskan ke dapur">
+                                    title="{{ __('pos.accept_and_forward_kds_tooltip') }}">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
                                         stroke-width="2.5" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                             d="M4.5 12.75l6 6 9-13.5" />
                                     </svg>
-                                    <span>Terima Saja</span>
+                                    <span>{{ __('pos.accept_only') }}</span>
                                 </button>
                                 <button type="button" @click="acceptAndLoadToCart(order.id)"
                                     class="h-9 px-4 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white text-xs font-bold transition shadow-sm flex items-center gap-1.5"
-                                    title="Terima pesanan dan langsung muat ke keranjang kasir">
+                                    title="{{ __('pos.accept_and_load_cart_tooltip') }}">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
                                         stroke-width="2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                             d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
                                     </svg>
-                                    <span>Buka di Kasir</span>
+                                    <span>{{ __('pos.open_cashier') }}</span>
                                 </button>
                             </div>
                         </div>
@@ -4118,7 +4101,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <span>Tidak ada antrean pesanan QR baru.</span>
+                    <span>{{ __('pos.no_incoming_qr_orders') }}</span>
                 </div>
             </div>
         </div>
@@ -4134,20 +4117,19 @@
             @click.outside="showRejectReasonModal = false">
             <div>
                 <h3 class="font-bold text-base text-[#FF3B30]">{{ __('pos.reject_table_order') }}</h3>
-                <p class="text-xs text-black/60 dark:text-white/60 mt-1">Masukkan alasan penolakan agar tercatat di
-                    histori order.</p>
+                <p class="text-xs text-black/60 dark:text-white/60 mt-1">{{ __('pos.reject_table_order_desc') }}</p>
             </div>
             <div>
-                <label class="block text-xs font-semibold text-black dark:text-white mb-1">Alasan Penolakan</label>
-                <textarea x-model="rejectionReason" rows="3" placeholder="Cth: Bahan baku habis, Meja sedang reservasi..."
+                <label class="block text-xs font-semibold text-black dark:text-white mb-1">{{ __('pos.rejection_reason_label') }}</label>
+                <textarea x-model="rejectionReason" rows="3" placeholder="{{ __('pos.rejection_reason_placeholder') }}"
                     class="w-full rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 p-2.5 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF3B30]"></textarea>
             </div>
             <div class="flex items-center justify-end gap-2 pt-2">
                 <button type="button" @click="showRejectReasonModal = false"
-                    class="h-9 px-3.5 rounded-[10px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/[0.05] dark:hover:bg-white/[0.08]">Batal</button>
+                    class="h-9 px-3.5 rounded-[10px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/[0.05] dark:hover:bg-white/[0.08]">{{ __('pos.cancel') }}</button>
                 <button type="button" @click="submitRejectOrder()"
                     class="h-9 px-4 rounded-[10px] bg-[#FF3B30] hover:bg-[#D70015] text-white text-xs font-bold transition">
-                    Konfirmasi Tolak
+                    {{ __('pos.confirm_reject') }}
                 </button>
             </div>
         </div>
@@ -4172,24 +4154,24 @@
                         </svg>
                     </div>
                     <div>
-                        <h3 class="font-bold text-base text-black dark:text-white">Manajemen Meja &amp; Reservasi Restoran</h3>
-                        <p class="text-xs text-black/50 dark:text-white/50">Pilih meja transaksi kasir, pantau tagihan, atau check-in reservasi storefront.</p>
+                        <h3 class="font-bold text-base text-black dark:text-white">{{ __('pos.table_reservations_mgmt_title') }}</h3>
+                        <p class="text-xs text-black/50 dark:text-white/50">{{ __('pos.table_reservations_mgmt_desc') }}</p>
                     </div>
                 </div>
                 <div class="flex items-center gap-2">
                     <a href="{{ route('storefront.reservations.index') }}" target="_blank"
                         class="text-xs font-semibold text-[#5856D6] hover:underline flex items-center gap-1 hidden sm:flex"
-                        title="Buka Manajemen Reservasi Storefront">
+                        title="{{ __('pos.open_reservation_module') }}">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
                         </svg>
-                        <span>Data Reservasi</span>
+                        <span>{{ __('pos.reservations_data_link') }}</span>
                     </a>
                     <span class="text-black/20 dark:text-white/20 hidden sm:inline">•</span>
                     @if (\App\Support\Context::hasPermission('pos.tables'))
                         <a href="{{ route('pos.tables.index') }}" target="_blank"
                             class="text-xs font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
-                            <span>Kelola Meja &amp; QR</span>
+                            <span>{{ __('pos.manage_tables_qr') }}</span>
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"
                                 viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -4216,7 +4198,7 @@
                         <svg class="w-3.5 h-3.5 text-[#34C759]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
                         </svg>
-                        <span>Status Meja &amp; Tagihan</span>
+                        <span>{{ __('pos.table_status_bill') }}</span>
                         <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-black/5 dark:bg-white/10" x-text="tables.length"></span>
                     </button>
 
@@ -4226,15 +4208,15 @@
                         <svg class="w-3.5 h-3.5 text-[#5856D6]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
                         </svg>
-                        <span>Reservasi Storefront Hari Ini</span>
+                        <span>{{ __('pos.today_storefront_reservations') }}</span>
                         <span x-show="todayReservations.length > 0" x-text="todayReservations.length"
                             class="px-1.5 py-0.2 rounded-full bg-[#5856D6] text-white font-bold text-[10px]"></span>
                     </button>
                 </div>
 
                 <div class="text-[11px] text-black/40 dark:text-white/40 hidden sm:block pr-2">
-                    <span x-show="tableModalTab === 'tables'">Klik meja untuk sambungkan ke kasir</span>
-                    <span x-show="tableModalTab === 'reservations'">Tamu datang? Klik Check-In untuk duduk di meja</span>
+                    <span x-show="tableModalTab === 'tables'">{{ __('pos.click_table_to_connect') }}</span>
+                    <span x-show="tableModalTab === 'reservations'">{{ __('pos.guest_arrived_checkin') }}</span>
                 </div>
             </div>
 
@@ -4253,7 +4235,7 @@
                                     <span class="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded"
                                         :class="tbl.status === 'available' ? 'bg-[#34C759]/20 text-[#34C759]' : (tbl
                                             .status === 'waiting_payment' ? 'bg-[#FF9500]/20 text-[#FF9500]' :
-                                            'bg-[#007AFF]/20 text-[#007AFF]')"
+                                             'bg-[#007AFF]/20 text-[#007AFF]')"
                                         x-text="tbl.status"></span>
                                 </div>
                                 <div class="text-[11px] text-black/50 dark:text-white/50 mt-0.5"
@@ -4265,7 +4247,7 @@
                                     <div class="flex items-center justify-between font-bold">
                                         <span class="inline-flex items-center gap-1 truncate">
                                             <i data-lucide="calendar" class="w-3 h-3 text-[#5856D6]"></i>
-                                            <span>Booking Hari Ini</span>
+                                            <span>{{ __('pos.today_booking') }}</span>
                                         </span>
                                         <span x-text="tbl.today_reservation?.time_slot"></span>
                                     </div>
@@ -4290,17 +4272,17 @@
                                     <div class="flex flex-col gap-1.5">
                                         <button type="button" @click="loadTableOrderToCart(tbl)"
                                             class="w-full h-8 rounded-[8px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white text-[11px] font-bold transition flex items-center justify-center gap-1.5 shadow-sm"
-                                            title="Muat seluruh pesanan meja ke keranjang kasir">
+                                            title="{{ __('pos.load_table_orders_tooltip') }}">
                                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
                                                 stroke-width="2" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round"
                                                     d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
                                             </svg>
-                                            <span>Cek &amp; Muat ke Keranjang</span>
+                                            <span>{{ __('pos.check_load_to_cart') }}</span>
                                         </button>
                                         <button type="button" @click="loadTableOrderToCart(tbl, true)"
                                             class="w-full h-7 rounded-[7px] bg-[#34C759] hover:bg-[#28A745] active:scale-[0.98] text-white text-[11px] font-bold transition flex items-center justify-center gap-1">
-                                            <span>Bayar Cepat</span>
+                                            <span>{{ __('pos.quick_pay') }}</span>
                                         </button>
                                     </div>
                                 </template>
@@ -4308,7 +4290,7 @@
                                     x-if="!tbl.active_session || !tbl.active_session.orders || tbl.active_session.orders.length === 0">
                                     <button type="button" @click="selectTableForCart(tbl)"
                                         class="w-full h-8 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white text-[11px] font-semibold transition">
-                                        Pilih Meja Ini (Dine In)
+                                        {{ __('pos.select_this_table_dine_in') }}
                                     </button>
                                 </template>
                             </div>
@@ -4327,11 +4309,11 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
                         </svg>
                     </div>
-                    <h4 class="font-bold text-sm text-black dark:text-white">Tidak Ada Jadwal Reservasi Hari Ini</h4>
-                    <p class="text-xs text-black/50 dark:text-white/50 max-w-sm mt-1">Belum ada booking meja dari storefront untuk hari ini. Pelanggan dapat melakukan booking via katalog storefront online Anda.</p>
+                    <h4 class="font-bold text-sm text-black dark:text-white">{{ __('pos.no_reservation_schedule_today') }}</h4>
+                    <p class="text-xs text-black/50 dark:text-white/50 max-w-sm mt-1">{{ __('pos.no_today_storefront_bookings') }}</p>
                     <a href="{{ route('storefront.reservations.index') }}" target="_blank"
                         class="mt-4 px-3.5 py-1.5 rounded-[10px] bg-[#5856D6] hover:bg-[#4B49C2] text-white text-xs font-semibold transition inline-flex items-center gap-1.5 shadow-sm">
-                        <span>Buka Modul Reservasi</span>
+                        <span>{{ __('pos.open_reservation_module') }}</span>
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>
                     </a>
                 </div>
@@ -4353,7 +4335,7 @@
 
                                     <!-- Guest Count -->
                                     <div class="px-2 py-0.5 rounded-full bg-black/5 dark:bg-white/10 text-black/70 dark:text-white/70 text-[11px] font-semibold">
-                                        <span x-text="rsv.guest_count + ' Tamu'"></span>
+                                        <span x-text="rsv.guest_count + ' {{ __('pos.guest_count_suffix') }}'"></span>
                                     </div>
 
                                     <!-- Status Badge -->
@@ -4363,7 +4345,7 @@
                                             'bg-[#007AFF]/20 text-[#007AFF]': rsv.status === 'confirmed',
                                             'bg-[#FF9500]/20 text-[#FF9500]': rsv.status === 'pending_confirmation'
                                         }"
-                                        x-text="rsv.status === 'seated' ? 'Sudah Duduk' : (rsv.status === 'confirmed' ? 'Terkonfirmasi' : 'Menunggu Konfirmasi')"></span>
+                                        x-text="rsv.status === 'seated' ? '{{ __('pos.seating_status_seated') }}' : (rsv.status === 'confirmed' ? '{{ __('pos.seating_status_confirmed') }}' : '{{ __('pos.seating_status_pending') }}')"></span>
 
                                     <!-- Reservation Code -->
                                     <span class="font-mono text-[10px] text-black/40 dark:text-white/40" x-text="'#' + rsv.reservation_code"></span>
@@ -4375,7 +4357,7 @@
                                     <template x-if="rsv.customer_phone">
                                         <a :href="'https://wa.me/' + rsv.customer_phone.replace(/[^0-9]/g, '')" target="_blank"
                                             class="text-[11px] font-medium text-[#34C759] hover:underline flex items-center gap-1"
-                                            title="Chat Pelanggan di WhatsApp">
+                                            title="{{ __('pos.chat_whatsapp_customer') }}">
                                             <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
                                             <span x-text="rsv.customer_phone"></span>
                                         </a>
@@ -4384,25 +4366,25 @@
 
                                 <!-- Assigned Table Display & Selector -->
                                 <div class="text-xs text-black/60 dark:text-white/60 flex items-center gap-1.5">
-                                    <span>Penempatan:</span>
+                                    <span>{{ __('pos.table_placement_label') }}</span>
                                     <template x-if="rsv.pos_table_name">
                                         <span class="font-bold text-[#007AFF] bg-[#007AFF]/10 px-2 py-0.5 rounded-[6px]" x-text="rsv.pos_table_name"></span>
                                     </template>
                                     <template x-if="!rsv.pos_table_name">
                                         <div class="inline-flex items-center gap-1.5">
-                                            <span class="text-[#FF9500] font-semibold italic">Belum ditentukan</span>
+                                            <span class="text-[#FF9500] font-semibold italic">{{ __('pos.not_assigned_yet') }}</span>
                                             <select x-model="rsv.pos_table_id"
                                                 class="h-7 text-xs rounded-[6px] border border-black/15 dark:border-white/15 bg-white dark:bg-[#1C1C1E] text-black dark:text-white px-2 py-0.5 focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
-                                                <option value="">-- Pilih Meja --</option>
+                                                <option value="">{{ __('pos.select_table_placeholder') }}</option>
                                                 <template x-for="tbl in tables" :key="tbl.id">
-                                                    <option :value="tbl.id" x-text="'Meja ' + tbl.table_number + (tbl.name ? ' (' + tbl.name + ')' : '') + ' • ' + tbl.capacity + ' Kursi'"></option>
+                                                    <option :value="tbl.id" x-text="'{{ __('pos.table') }} ' + tbl.table_number + (tbl.name ? ' (' + tbl.name + ')' : '') + ' • ' + tbl.capacity + ' {{ __('pos.seats_suffix') }}'"></option>
                                                 </template>
                                             </select>
                                         </div>
                                     </template>
                                 </div>
 
-                                <div x-show="rsv.notes" class="text-[11px] text-black/50 dark:text-white/50 italic" x-text="'Catatan: ' + rsv.notes"></div>
+                                <div x-show="rsv.notes" class="text-[11px] text-black/50 dark:text-white/50 italic" x-text="'{{ __('pos.order_note_label') }} ' + rsv.notes"></div>
                             </div>
 
                             <!-- Right: Check-In & Action Buttons -->
@@ -4414,7 +4396,7 @@
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                                         </svg>
-                                        <span x-text="isSeatingReservation ? 'Memproses...' : 'Check-In &amp; Dudukkan'"></span>
+                                        <span x-text="isSeatingReservation ? '{{ __('pos.processing_status') }}' : '{{ __('pos.checkin_and_seat') }}'"></span>
                                     </button>
                                 </template>
 
@@ -4426,7 +4408,7 @@
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
                                             </svg>
-                                            <span>Buka Kasir</span>
+                                            <span>{{ __('pos.open_cashier') }}</span>
                                         </button>
                                     </div>
                                 </template>
@@ -4451,9 +4433,9 @@
                     <div
                         class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-3">
                         <div>
-                            <h3 class="font-bold text-base text-black dark:text-white">Pembayaran Pesanan Meja</h3>
+                            <h3 class="font-bold text-base text-black dark:text-white">{{ __('pos.table_order_payment_title') }}</h3>
                             <div class="text-xs text-black/50 dark:text-white/50"
-                                x-text="'Pesanan #' + activeTableOrder.order_number"></div>
+                                x-text="'{{ __('pos.order_prefix') }} #' + activeTableOrder.order_number"></div>
                         </div>
                         <button type="button" @click="showTablePaymentModal = false"
                             class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center">
@@ -4494,18 +4476,18 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                                     </svg>
                                 </div>
-                                <span class="text-xs font-bold uppercase tracking-wider">Sudah Lunas via TriPay QRIS</span>
+                                <span class="text-xs font-bold uppercase tracking-wider">{{ __('pos.paid_via_qris_badge') }}</span>
                             </div>
                             <div class="flex items-baseline justify-between pt-1">
-                                <span class="text-xs text-black/60 dark:text-white/60 font-medium">Total Terbayar:</span>
+                                <span class="text-xs text-black/60 dark:text-white/60 font-medium">{{ __('pos.total_paid_label_colon') }}</span>
                                 <span class="text-xl font-black text-[#248A3D] dark:text-[#30D158] tabular-nums" x-text="formatRupiah(activeTableOrder.total_amount)"></span>
                             </div>
                             <div class="text-[11px] text-black/50 dark:text-white/50 border-t border-[#34C759]/15 pt-2 flex items-center justify-between">
-                                <span>Kanal: <b class="font-semibold text-black/80 dark:text-white/80" x-text="activeTableOrder.payment_channel || 'QRIS Dinamis'"></b></span>
+                                <span>{{ __('pos.payment_channel_colon') }} <b class="font-semibold text-black/80 dark:text-white/80" x-text="activeTableOrder.payment_channel || '{{ __('pos.method_qris') }}'"></b></span>
                                 <span x-show="activeTableOrder.gateway_reference" class="font-mono text-[10px]" x-text="'Ref: ' + activeTableOrder.gateway_reference"></span>
                             </div>
                             <div class="p-2 rounded-[8px] bg-[#34C759]/15 text-[11px] text-[#248A3D] dark:text-[#30D158] font-medium leading-relaxed">
-                                Tamu meja telah melunasi tagihan ini secara mandiri. Jangan menagih uang tunai kembali ke pelanggan.
+                                {{ __('pos.guest_paid_self_notice') }}
                             </div>
                         </div>
                     </template>
@@ -4514,46 +4496,46 @@
                         <div>
                             <!-- Total Amount Display -->
                             <div class="text-center py-2 bg-[#007AFF]/10 rounded-[12px] border border-[#007AFF]/20">
-                                <span class="text-xs text-[#007AFF] font-medium block">Total yang Harus Dibayar</span>
+                                <span class="text-xs text-[#007AFF] font-medium block">{{ __('pos.total_to_be_paid_block') }}</span>
                                 <span class="text-2xl font-black text-[#007AFF] tabular-nums"
                                     x-text="formatRupiah(activeTableOrder.total_amount)"></span>
                             </div>
 
                             <!-- Payment Method Selector -->
                             <div class="space-y-1.5 mt-3">
-                                <label class="block text-xs font-semibold text-black dark:text-white">Metode Pembayaran</label>
+                                <label class="block text-xs font-semibold text-black dark:text-white">{{ __('pos.payment_method') }}</label>
                                 <div class="grid grid-cols-4 gap-2">
                                     <button type="button"
                                         @click="selectedTablePayMethod = 'cash'; tableTenderAmount = activeTableOrder.total_amount"
                                         :class="selectedTablePayMethod === 'cash' ? 'bg-[#007AFF] text-white font-bold' :
                                             'bg-black/[0.04] dark:bg-white/[0.06] text-black dark:text-white'"
-                                        class="h-9 rounded-[8px] text-xs transition">Tunai</button>
+                                        class="h-9 rounded-[8px] text-xs transition">{{ __('pos.method_cash') }}</button>
                                     <button type="button"
                                         @click="selectedTablePayMethod = 'qris'; tableTenderAmount = activeTableOrder.total_amount"
                                         :class="selectedTablePayMethod === 'qris' ? 'bg-[#007AFF] text-white font-bold' :
                                             'bg-black/[0.04] dark:bg-white/[0.06] text-black dark:text-white'"
-                                        class="h-9 rounded-[8px] text-xs transition">QRIS</button>
+                                        class="h-9 rounded-[8px] text-xs transition">{{ __('pos.qris_label') }}</button>
                                     <button type="button"
                                         @click="selectedTablePayMethod = 'transfer'; tableTenderAmount = activeTableOrder.total_amount"
                                         :class="selectedTablePayMethod === 'transfer' ? 'bg-[#007AFF] text-white font-bold' :
                                             'bg-black/[0.04] dark:bg-white/[0.06] text-black dark:text-white'"
-                                        class="h-9 rounded-[8px] text-xs transition">Transfer</button>
+                                        class="h-9 rounded-[8px] text-xs transition">{{ __('pos.method_transfer') }}</button>
                                     <button type="button"
                                         @click="selectedTablePayMethod = 'debit'; tableTenderAmount = activeTableOrder.total_amount"
                                         :class="selectedTablePayMethod === 'debit' ? 'bg-[#007AFF] text-white font-bold' :
                                             'bg-black/[0.04] dark:bg-white/[0.06] text-black dark:text-white'"
-                                        class="h-9 rounded-[8px] text-xs transition">Debit</button>
+                                        class="h-9 rounded-[8px] text-xs transition">{{ __('pos.method_debit') }}</button>
                                 </div>
                             </div>
 
                             <!-- Tender Amount (for Cash) -->
                             <div x-show="selectedTablePayMethod === 'cash'" class="space-y-1.5 mt-3">
-                                <label class="block text-xs font-semibold text-black dark:text-white">Nominal Diterima</label>
+                                <label class="block text-xs font-semibold text-black dark:text-white">{{ __('pos.nominal_received_label') }}</label>
                                 <input type="number" x-model.number="tableTenderAmount"
                                     class="w-full h-10 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 px-3 font-bold text-sm text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                                 <div x-show="tableTenderAmount > activeTableOrder.total_amount"
                                     class="text-xs text-[#34C759] font-bold">
-                                    Kembalian: <span
+                                    {{ __('pos.change_amount_colon') }} <span
                                         x-text="formatRupiah(tableTenderAmount - activeTableOrder.total_amount)"></span>
                                 </div>
                             </div>
@@ -4564,7 +4546,7 @@
                     <div
                         class="flex items-center justify-end gap-2 pt-2 border-t border-black/[0.06] dark:border-white/[0.08]">
                         <button type="button" @click="showTablePaymentModal = false"
-                            class="h-10 px-4 rounded-[10px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/[0.05] dark:hover:bg-white/[0.08]">Batal</button>
+                            class="h-10 px-4 rounded-[10px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/[0.05] dark:hover:bg-white/[0.08]">{{ __('pos.cancel') }}</button>
                         <template x-if="activeTableOrder.is_paid">
                             <button type="button" @click="submitPayTableOrder()"
                                 :disabled="isProcessing"
@@ -4572,14 +4554,14 @@
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                                 </svg>
-                                <span>Selesaikan & Bersihkan Meja</span>
+                                <span>{{ __('pos.settle_clear_table') }}</span>
                             </button>
                         </template>
                         <template x-if="!activeTableOrder.is_paid">
                             <button type="button" @click="submitPayTableOrder()"
                                 :disabled="tableTenderAmount < activeTableOrder.total_amount || isProcessing"
                                 class="h-10 px-5 rounded-[10px] bg-[#34C759] hover:bg-[#28A745] active:scale-[0.98] text-white text-xs font-bold transition shadow-sm disabled:opacity-40">
-                                Konfirmasi Lunas
+                                {{ __('pos.confirm_paid_settle') }}
                             </button>
                         </template>
                     </div>
@@ -5198,11 +5180,11 @@
 
                 scannerMessage(error) {
                     if (error?.name === 'NotAllowedError' || error?.name === 'PermissionDeniedError')
-                    return 'Akses kamera ditolak. Izinkan kamera di browser lalu coba lagi.';
-                    if (error?.name === 'NotFoundError') return 'Kamera tidak ditemukan pada perangkat ini.';
-                    if (error?.name === 'NotReadableError') return 'Kamera sedang digunakan aplikasi lain.';
-                    if (window.isSecureContext === false) return 'Scanner kamera memerlukan HTTPS atau localhost.';
-                    return 'Kamera tidak dapat dibuka. Periksa izin kamera lalu coba lagi.';
+                    return '{{ __('pos.camera_denied') }}';
+                    if (error?.name === 'NotFoundError') return '{{ __('pos.camera_not_found') }}';
+                    if (error?.name === 'NotReadableError') return '{{ __('pos.camera_in_use') }}';
+                    if (window.isSecureContext === false) return '{{ __('pos.camera_secure_context') }}';
+                    return '{{ __('pos.camera_error_permission') }}';
                 },
 
                 getProductPrice(product) {
@@ -5301,11 +5283,11 @@
 
                 async clearCart() {
                     const confirmed = await AppAlert.confirm({
-                        title: 'Kosongkan Keranjang?',
-                        message: 'Semua item pesanan yang dipilih akan dihapus dari keranjang transaksi.',
+                        title: '{{ __('pos.swal_clear_cart_title') }}',
+                        message: '{{ __('pos.swal_clear_cart_desc') }}',
                         type: 'danger',
-                        confirmText: 'Ya, Kosongkan',
-                        cancelText: 'Batal'
+                        confirmText: '{{ __('pos.clear_cart_confirm') }}',
+                        cancelText: '{{ __('pos.cancel') }}'
                     });
                     if (confirmed) {
                         this.cart = [];
@@ -5422,7 +5404,7 @@
                             const validationMessage = data.errors ?
                                 Object.values(data.errors).flat()[0] :
                                 data.message;
-                            throw new Error(validationMessage || 'Pelanggan gagal disimpan.');
+                            throw new Error(validationMessage || '{{ __('pos.customer_save_failed') }}');
                         }
 
                         this.customers.push(data.customer);
@@ -5433,7 +5415,7 @@
                             phone: ''
                         };
                     } catch (error) {
-                        this.customerFormError = error.message || 'Pelanggan gagal disimpan.';
+                        this.customerFormError = error.message || '{{ __('pos.customer_save_failed') }}';
                     } finally {
                         this.isCreatingCustomer = false;
                     }
@@ -5478,13 +5460,13 @@
                         const data = await res.json();
                         if (!res.ok || !data.success) {
                             this.voucherDiscount = 0;
-                            throw new Error(data.message || 'Kode voucher tidak valid.');
+                            throw new Error(data.message || '{{ __('pos.voucher_invalid_code') }}');
                         }
                         this.voucherDiscount = Number(data.discount_amount) || 0;
-                        AppAlert.success(data.message || "Voucher berhasil diterapkan!");
+                        AppAlert.success(data.message || '{{ __('pos.voucher_applied_success') }}');
                     } catch (error) {
                         this.voucherDiscount = 0;
-                        AppAlert.error(error.message || 'Voucher tidak dapat diterapkan.');
+                        AppAlert.error(error.message || '{{ __('pos.voucher_cannot_apply') }}');
                     }
                 },
 
@@ -5679,10 +5661,10 @@
 
                             this.handleOrderSuccess(data);
                         } else {
-                            AppAlert.error('Gagal: ' + (data.message || 'Terjadi kesalahan.'));
+                            AppAlert.error('{{ __('pos.fail_prefix') }}: ' + (data.message || '{{ __('pos.network_error') }}'));
                         }
                     } catch (e) {
-                        AppAlert.error('Terjadi kesalahan jaringan.');
+                        AppAlert.error('{{ __('pos.network_error') }}');
                     } finally {
                         this.isProcessing = false;
                         this.$nextTick(() => {
@@ -5708,7 +5690,7 @@
                         } else {
                             clearInterval(this.qrisCountdownTimer);
                             if (this.qrisPollingTimer) clearInterval(this.qrisPollingTimer);
-                            AppAlert.warning('Waktu pembayaran QRIS telah kedaluwarsa. Kasir dapat membatalkan atau membuat ulang transaksi.');
+                            AppAlert.warning('{{ __('pos.qris_expired_warning') }}');
                         }
                     }, 1000);
                 },
@@ -5732,7 +5714,7 @@
                                 if (this.qrisCountdownTimer) clearInterval(this.qrisCountdownTimer);
                                 this.showQrisModal = false;
                                 this.handleOrderSuccess(data);
-                                AppAlert.success(data.message || 'Pembayaran QRIS berhasil dikonfirmasi!');
+                                AppAlert.success(data.message || '{{ __('pos.qris_payment_confirmed') }}');
                             }
                         } catch (e) {
                             // network retry silently
@@ -5757,12 +5739,12 @@
                             if (this.qrisCountdownTimer) clearInterval(this.qrisCountdownTimer);
                             this.showQrisModal = false;
                             this.handleOrderSuccess(data);
-                            AppAlert.success(data.message || 'Pembayaran QRIS telah diverifikasi!');
+                            AppAlert.success(data.message || '{{ __('pos.qris_payment_verified') }}');
                         } else {
-                            AppAlert.info(data.message || 'Belum ada pembayaran masuk. Menunggu scan pelanggan...');
+                            AppAlert.info(data.message || '{{ __('pos.qris_waiting_scan') }}');
                         }
                     } catch (e) {
-                        AppAlert.error('Gagal mengecek status: ' + e.message);
+                        AppAlert.error('{{ __('pos.qris_check_status_failed') }}' + e.message);
                     } finally {
                         this.isCheckingQrisStatus = false;
                     }
@@ -5770,7 +5752,7 @@
 
                 async cancelQrisPayment() {
                     if (!this.activeQrisOrder || this.isCancellingQris) return;
-                    if (!confirm('Ganti metode pembayaran? Sesi QRIS ini akan dibatalkan di server sehingga kasir dapat memilih metode pembayaran lain.')) {
+                    if (!confirm('{{ __('pos.confirm_change_payment_qris') }}')) {
                         return;
                     }
 
@@ -5784,7 +5766,7 @@
                                 'Accept': 'application/json',
                                 'X-CSRF-TOKEN': this.csrfToken
                             },
-                            body: JSON.stringify({ reason: 'Kasir mengganti metode pembayaran.' })
+                            body: JSON.stringify({ reason: '{{ __('pos.cashier_change_payment_reason') }}' })
                         });
                         const data = await resp.json();
                         if (data.success) {
@@ -5794,12 +5776,12 @@
                             this.activeQrisOrder = null;
                             this.activeQrisPayment = null;
                             this.showPaymentModal = true;
-                            AppAlert.info('Sesi QRIS dibatalkan. Silakan pilih metode pembayaran lain.');
+                            AppAlert.info('{{ __('pos.qris_session_cancelled') }}');
                         } else {
-                            AppAlert.error(data.message || 'Gagal membatalkan sesi QRIS.');
+                            AppAlert.error(data.message || '{{ __('pos.qris_cancel_failed') }}');
                         }
                     } catch (e) {
-                        AppAlert.error('Terjadi kesalahan jaringan: ' + e.message);
+                        AppAlert.error('{{ __('pos.network_error_detail') }}' + e.message);
                     } finally {
                         this.isCancellingQris = false;
                     }
@@ -5824,12 +5806,12 @@
                             if (this.qrisCountdownTimer) clearInterval(this.qrisCountdownTimer);
                             this.showQrisModal = false;
                             this.handleOrderSuccess(data);
-                            AppAlert.success('[Sandbox] Simulasi pembayaran QRIS sukses!');
+                            AppAlert.success('{{ __('pos.qris_simulation_success') }}');
                         } else {
-                            AppAlert.error(data.message || 'Gagal simulasi pembayaran QRIS.');
+                            AppAlert.error(data.message || '{{ __('pos.qris_simulation_failed') }}');
                         }
                     } catch (e) {
-                        AppAlert.error('Gagal simulasi: ' + e.message);
+                        AppAlert.error('{{ __('pos.simulation_failed_prefix') }}' + e.message);
                     } finally {
                         this.isSimulatingQris = false;
                     }
@@ -5842,10 +5824,10 @@
                     const qrUrl = this.activeQrisPayment.qr_url;
                     const win = window.open('', '_blank', 'width=460,height=620');
                     if (!win) {
-                        AppAlert.warning('Izinkan popup browser untuk membuka slip QRIS.');
+                        AppAlert.warning('{{ __('pos.allow_popup_qris_slip') }}');
                         return;
                     }
-                    win.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>QRIS TriPay - Order #${orderNum}</title><style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;text-align:center;padding:24px;color:#111;margin:0;background:#fff}.header{margin-bottom:12px}.brand{font-size:16px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px}.sub{font-size:12px;color:#666;margin-top:4px}.badge{display:inline-block;padding:4px 10px;border-radius:999px;background:#e8f4fd;color:#007aff;font-size:11px;font-weight:700;margin-top:8px}.amount-box{margin:16px auto;padding:12px;border-radius:12px;background:#f8f9fa;border:1px dashed #d1d5db;max-width:320px}.amount-label{font-size:11px;color:#6b7280;text-transform:uppercase;font-weight:700}.amount-val{font-size:24px;font-weight:900;color:#007aff;margin-top:2px}.qr-box{margin:12px auto;padding:12px;border-radius:16px;border:1px solid #e5e7eb;display:inline-block;background:#fff;box-shadow:0 4px 12px rgba(0,0,0,0.05)}.qr-img{width:240px;height:240px;object-fit:contain;display:block}.footer{margin-top:14px;font-size:11.5px;color:#4b5563;line-height:1.5}.actions{margin-top:18px}.btn{padding:9px 20px;border-radius:10px;background:#007aff;color:#fff;font-size:13px;font-weight:700;border:none;cursor:pointer}@media print{.actions{display:none}body{padding:0}}</style></head><body><div class="header"><div class="brand">{{ $business->name ?? 'COOCA KASIR' }}</div><div class="sub">Pembayaran QRIS Dinamis • Pesanan #${orderNum}</div><span class="badge">NMID / Gateway TriPay QRIS</span></div><div class="amount-box"><div class="amount-label">Total Tagihan</div><div class="amount-val">${totalFormatted}</div></div><div class="qr-box"><img src="${qrUrl}" class="qr-img" alt="QRIS Code" /></div><div class="footer">Scan dengan GoPay, OVO, DANA, BCA, Livin, BRI, ShopeePay, atau m-Banking apa saja.</div><div class="actions"><button class="btn" onclick="window.print()">Cetak Slip QR</button></div></body></html>`);
+                    win.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>{{ __('pos.qris_slip_title') }}${orderNum}</title><style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;text-align:center;padding:24px;color:#111;margin:0;background:#fff}.header{margin-bottom:12px}.brand{font-size:16px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px}.sub{font-size:12px;color:#666;margin-top:4px}.badge{display:inline-block;padding:4px 10px;border-radius:999px;background:#e8f4fd;color:#007aff;font-size:11px;font-weight:700;margin-top:8px}.amount-box{margin:16px auto;padding:12px;border-radius:12px;background:#f8f9fa;border:1px dashed #d1d5db;max-width:320px}.amount-label{font-size:11px;color:#6b7280;text-transform:uppercase;font-weight:700}.amount-val{font-size:24px;font-weight:900;color:#007aff;margin-top:2px}.qr-box{margin:12px auto;padding:12px;border-radius:16px;border:1px solid #e5e7eb;display:inline-block;background:#fff;box-shadow:0 4px 12px rgba(0,0,0,0.05)}.qr-img{width:240px;height:240px;object-fit:contain;display:block}.footer{margin-top:14px;font-size:11.5px;color:#4b5563;line-height:1.5}.actions{margin-top:18px}.btn{padding:9px 20px;border-radius:10px;background:#007aff;color:#fff;font-size:13px;font-weight:700;border:none;cursor:pointer}@media print{.actions{display:none}body{padding:0}}</style></head><body><div class="header"><div class="brand">{{ $business->name ?? 'COOCA POS' }}</div><div class="sub">{{ __('pos.qris_slip_header_sub') }}${orderNum}</div><span class="badge">{{ __('pos.qris_slip_badge') }}</span></div><div class="amount-box"><div class="amount-label">{{ __('pos.qris_slip_total_bill') }}</div><div class="amount-val">${totalFormatted}</div></div><div class="qr-box"><img src="${qrUrl}" class="qr-img" alt="QRIS Code" /></div><div class="footer">{{ __('pos.qris_slip_scan_hint') }}</div><div class="actions"><button class="btn" onclick="window.print()">{{ __('pos.print_qr_slip_btn') }}</button></div></body></html>`);
                     win.document.close();
                 },
 
@@ -5855,7 +5837,7 @@
                     this.lastReceiptImageUrl = data.receipt_image_url || ('/receipt/' + data.order.id + '/image');
                     this.lastWhatsAppUrl = data.whatsapp_url;
                     this.waBotSent = data.whatsapp_bot_sent || false;
-                    this.waBotFeedback = this.waBotSent ? 'Struk otomatis terkirim ke WhatsApp!' : '';
+                    this.waBotFeedback = this.waBotSent ? '{{ __('pos.receipt_sent_wa') }}' : '';
                     this.waBotFeedbackSuccess = this.waBotSent;
                     this.lastOrderSentToKds = !!data.sent_to_kds;
                     this.showPaymentModal = false;
@@ -5954,7 +5936,7 @@
                             }
                         })
                         .catch(() => {
-                            this.waBotFeedback = 'Gagal menghubungi server WhatsApp';
+                            this.waBotFeedback = '{{ __('pos.failed_contact_wa_server') }}';
                             this.waBotFeedbackSuccess = false;
                         })
                         .finally(() => {
@@ -5988,21 +5970,21 @@
                                         })
                                     });
                                     if (agentRes.ok) {
-                                        AppAlert.success('Struk berhasil dicetak via Local POS Agent (USB/Bluetooth).');
+                                        AppAlert.success('{{ __('pos.receipt_printed_agent') }}');
                                     } else {
-                                        AppAlert.success(data.message || 'Job antrean printer berhasil dibuat.');
+                                        AppAlert.success(data.message || '{{ __('pos.printer_queue_job_created') }}');
                                     }
                                 } catch (agentErr) {
-                                    AppAlert.success(data.message || 'Job antrean printer berhasil dibuat.');
+                                    AppAlert.success(data.message || '{{ __('pos.printer_queue_job_created') }}');
                                 }
                             } else {
-                                AppAlert.success(data.message || 'Struk berhasil dikirim ke printer thermal.');
+                                AppAlert.success(data.message || '{{ __('pos.receipt_sent_thermal_printer') }}');
                             }
                         } else {
-                            AppAlert.error(data.message || 'Gagal mengirim cetakan ke printer.');
+                            AppAlert.error(data.message || '{{ __('pos.printer_send_failed') }}');
                         }
                     } catch (e) {
-                        AppAlert.error('Terjadi gangguan jaringan printer.');
+                        AppAlert.error('{{ __('pos.printer_network_error') }}');
                     } finally {
                         this.directPrinting = false;
                     }
@@ -6022,12 +6004,12 @@
                         });
                         const data = await res.json();
                         if (data.success) {
-                            AppAlert.success(data.message || 'Tiket pesanan dapur berhasil dikirim.');
+                            AppAlert.success(data.message || '{{ __('pos.kitchen_ticket_sent') }}');
                         } else {
-                            AppAlert.error(data.message || 'Gagal mencetak tiket dapur.');
+                            AppAlert.error(data.message || '{{ __('pos.kitchen_ticket_print_failed') }}');
                         }
                     } catch (e) {
-                        AppAlert.error('Terjadi gangguan komunikasi dengan printer dapur.');
+                        AppAlert.error('{{ __('pos.kitchen_printer_comm_error') }}');
                     } finally {
                         this.kitchenPrinting = false;
                     }
@@ -6055,12 +6037,12 @@
                             }
                         } else {
                             if (typeof AppAlert !== 'undefined') {
-                                AppAlert.error(data.message || 'Gagal mengubah pengaturan Auto KDS.');
+                                AppAlert.error(data.message || '{{ __('pos.auto_kds_toggle_failed') }}');
                             }
                         }
                     } catch (e) {
                         if (typeof AppAlert !== 'undefined') {
-                            AppAlert.error('Terjadi gangguan jaringan saat mengubah pengaturan KDS.');
+                            AppAlert.error('{{ __('pos.kds_setting_network_error') }}');
                         }
                     }
                 },
@@ -6069,10 +6051,10 @@
                     if (this.cart.length === 0 || this.isSendingToKitchen) return;
 
                     const confirmed = await AppAlert.confirm({
-                        title: 'Kirim Pesanan ke Dapur (KDS)?',
-                        message: 'Pesanan akan langsung muncul di antrean Layar Dapur/Bar secara real-time tanpa perlu cetak struk fisik.',
-                        confirmText: 'Kirim ke Dapur',
-                        cancelText: 'Batal',
+                        title: '{{ __('pos.swal_send_kds_title') }}',
+                        message: '{{ __('pos.swal_send_kds_desc') }}',
+                        confirmText: '{{ __('pos.send_to_kitchen') }}',
+                        cancelText: '{{ __('pos.cancel') }}',
                         type: 'info'
                     });
                     if (!confirmed) return;
@@ -6114,7 +6096,7 @@
 
                         const data = await res.json();
                         if (data.success) {
-                            AppAlert.success(data.message || 'Pesanan berhasil dikirim ke antrean Layar Dapur (KDS).');
+                            AppAlert.success(data.message || '{{ __('pos.order_sent_kds_success') }}');
                             if (data.order && this.selectedTable) {
                                 this.activeTableOrderId = data.order.id;
                                 this.activeTableOrderNumber = data.order.order_number;
@@ -6124,10 +6106,10 @@
                                 this.fetchTables();
                             }
                         } else {
-                            AppAlert.error(data.message || 'Gagal mengirim pesanan ke dapur.');
+                            AppAlert.error(data.message || '{{ __('pos.order_send_kitchen_failed') }}');
                         }
                     } catch (e) {
-                        AppAlert.error('Terjadi gangguan jaringan saat mengirim pesanan ke KDS.');
+                        AppAlert.error('{{ __('pos.kds_network_error') }}');
                     } finally {
                         this.isSendingToKitchen = false;
                     }
@@ -6135,11 +6117,11 @@
 
                 async promptManualDrawerPop() {
                     const confirmed = await AppAlert.confirm({
-                        title: 'Buka Laci Kas (Cash Drawer)?',
-                        message: 'Tindakan pembukaan laci kas secara manual (No-Sale Drawer Pop) akan dicatat dalam Log Audit Forensik Sistem.',
+                        title: '{{ __('pos.swal_open_drawer_title') }}',
+                        message: '{{ __('pos.swal_open_drawer_desc') }}',
                         type: 'warning',
-                        confirmText: 'Buka Laci Sekarang',
-                        cancelText: 'Batal'
+                        confirmText: '{{ __('pos.open_drawer_now') }}',
+                        cancelText: '{{ __('pos.cancel') }}'
                     });
                     if (!confirmed) return;
 
@@ -6157,12 +6139,12 @@
                         });
                         const data = await res.json();
                         if (data.success) {
-                            AppAlert.success(data.message || 'Sinyal buka laci kas berhasil dikirim.');
+                            AppAlert.success(data.message || '{{ __('pos.drawer_open_signal_sent') }}');
                         } else {
-                            AppAlert.error(data.message || 'Gagal membuka laci kas.');
+                            AppAlert.error(data.message || '{{ __('pos.drawer_open_failed') }}');
                         }
                     } catch (e) {
-                        AppAlert.error('Gagal mengirim sinyal ke laci kas.');
+                        AppAlert.error('{{ __('pos.drawer_signal_send_failed') }}');
                     }
                 },
 
@@ -6397,7 +6379,7 @@
                             arr.splice(idx, 1);
                         } else {
                             if (group.max_selection > 0 && arr.length >= group.max_selection) {
-                                AppAlert.warning(`Maksimal pilihan untuk ${group.name} adalah ${group.max_selection}.`);
+                                AppAlert.warning("{{ __('pos.modifier_max_selection_exceeded') }}".replace(':group', group.name).replace(':max', group.max_selection));
                                 return;
                             }
                             arr.push(option.id);
@@ -6434,7 +6416,7 @@
                         if (group.is_required) {
                             const val = this.selectedModifiers[group.id];
                             if (!val || (Array.isArray(val) && val.length === 0)) {
-                                AppAlert.warning(`Silakan pilih opsi untuk ${group.name}.`);
+                                AppAlert.warning("{{ __('pos.modifier_please_select_option') }}".replace(':group', group.name));
                                 return;
                             }
                         }
@@ -6554,15 +6536,15 @@
                         });
                         const data = await res.json();
                         if (data.success) {
-                            AppAlert.success('Pesanan berhasil diterima dan diteruskan ke Dapur/Bar!');
+                            AppAlert.success('{{ __('pos.order_accepted_forwarded_kitchen') }}');
                             this.incomingQrOrders = this.incomingQrOrders.filter(o => o.id !== orderId);
                             this.pendingQrCount = this.incomingQrOrders.length;
                             this.fetchTables();
                         } else {
-                            AppAlert.error(data.message || 'Gagal menerima pesanan');
+                            AppAlert.error(data.message || '{{ __('pos.order_accept_failed') }}');
                         }
                     } catch (e) {
-                        AppAlert.error('Terjadi kesalahan saat menerima pesanan');
+                        AppAlert.error('{{ __('pos.order_accept_error') }}');
                     }
                 },
 
@@ -6575,7 +6557,7 @@
                 async submitRejectOrder() {
                     if (!this.rejectingOrder) return;
                     if (!this.rejectionReason.trim()) {
-                        AppAlert.warning('Mohon masukkan alasan penolakan.');
+                        AppAlert.warning('{{ __('pos.rejection_reason_required') }}');
                         return;
                     }
 
@@ -6593,16 +6575,16 @@
                         });
                         const data = await res.json();
                         if (data.success) {
-                            AppAlert.success('Pesanan ditolak.');
+                            AppAlert.success('{{ __('pos.order_rejected_msg') }}');
                             this.incomingQrOrders = this.incomingQrOrders.filter(o => o.id !== this.rejectingOrder.id);
                             this.pendingQrCount = this.incomingQrOrders.length;
                             this.showRejectReasonModal = false;
                             this.rejectingOrder = null;
                         } else {
-                            AppAlert.error(data.message || 'Gagal menolak pesanan');
+                            AppAlert.error(data.message || '{{ __('pos.order_reject_failed') }}');
                         }
                     } catch (e) {
-                        AppAlert.error('Terjadi kesalahan saat menolak pesanan');
+                        AppAlert.error('{{ __('pos.order_reject_error') }}');
                     }
                 },
 
@@ -6635,7 +6617,7 @@
                 async seatReservation(rsv, customTableId = null) {
                     const tableId = customTableId || rsv.pos_table_id;
                     if (!tableId) {
-                        AppAlert.warning('Pilih meja terlebih dahulu untuk tamu reservasi ini.');
+                        AppAlert.warning('{{ __('pos.select_table_first_reservation') }}');
                         return;
                     }
 
@@ -6657,7 +6639,7 @@
 
                         const data = await res.json();
                         if (data.success) {
-                            AppAlert.success(data.message || 'Tamu berhasil check-in dan duduk di meja.');
+                            AppAlert.success(data.message || '{{ __('pos.guest_checkin_seated_success') }}');
                             await this.fetchTables();
 
                             const targetTable = (this.tables || []).find(t => t.id === tableId);
@@ -6670,11 +6652,11 @@
                                 this.showTablesModal = false;
                             }
                         } else {
-                            AppAlert.error(data.message || 'Gagal check-in reservasi');
+                            AppAlert.error(data.message || '{{ __('pos.reservation_checkin_failed') }}');
                         }
                     } catch (e) {
                         console.error('Seat reservation error:', e);
-                        AppAlert.error('Terjadi kesalahan saat check-in tamu reservasi.');
+                        AppAlert.error('{{ __('pos.checkin_error') }}');
                     } finally {
                         this.isSeatingReservation = false;
                     }
@@ -6695,7 +6677,7 @@
                         this.activeTableOrderNumber = null;
                         this.activeTableCustomerName = null;
                         this.showTablesModal = false;
-                        AppAlert.info(`Meja ${table.table_number} dipilih. Silakan tambahkan menu ke keranjang.`);
+                        AppAlert.info("{{ __('pos.table_selected_add_menu') }}".replace(':table', table.table_number));
                         return;
                     }
 
@@ -6706,7 +6688,7 @@
                     this.activeTableOrderId = order.id;
                     this.activeTableOrderNumber = order.order_number;
                     this.activeTableCustomerName = order.customer_name_guest || session?.customer_name || (
-                        'Pelanggan Meja ' + table.table_number);
+                        '{{ __('pos.table_customer_prefix') }} ' + table.table_number);
 
                     // Konversi item order dari meja ke format keranjang kasir POS
                     const newCart = [];
@@ -6714,7 +6696,7 @@
                         newCart.push({
                             cart_item_id: item.id || (Date.now() + Math.random()),
                             product_id: item.product_id || null,
-                            product_name: item.product_name || item.name || 'Menu',
+                            product_name: item.product_name || item.name || '{{ __('pos.default_menu_name') }}',
                             unit_price: Number(item.unit_price || 0),
                             unit_symbol: item.unit_symbol || '',
                             quantity: Number(item.quantity || 1),
@@ -6739,7 +6721,7 @@
                     }
 
                     AppAlert.success(
-                        `Pesanan Meja ${table.table_number} (${this.activeTableCustomerName}) berhasil dimuat ke keranjang.`
+                        "{{ __('pos.table_order_loaded_cart') }}".replace(':table', table.table_number).replace(':customer', this.activeTableCustomerName)
                         );
 
                     this.$nextTick(() => {
@@ -6760,7 +6742,7 @@
                         this.activeTableOrderNumber = null;
                         this.activeTableCustomerName = null;
                         this.showTablesModal = false;
-                        AppAlert.success(`Meja ${table.table_number} dipilih untuk transaksi kasir ini.`);
+                        AppAlert.success("{{ __('pos.table_selected_for_register') }}".replace(':table', table.table_number));
                     }
                 },
 
@@ -6769,7 +6751,7 @@
                     this.activeTableOrderId = null;
                     this.activeTableOrderNumber = null;
                     this.activeTableCustomerName = null;
-                    AppAlert.info('Koneksi meja dilepas dari keranjang.');
+                    AppAlert.info('{{ __('pos.table_disconnected_cart') }}');
                 },
 
                 async refreshTableCart() {
@@ -6829,13 +6811,13 @@
                             if (targetTable) {
                                 this.loadTableOrderToCart(targetTable);
                             } else {
-                                AppAlert.success(data.message || 'Pesanan diterima.');
+                                AppAlert.success(data.message || '{{ __('pos.order_accepted_msg') }}');
                             }
                         } else {
-                            AppAlert.error(data.message || 'Gagal menerima pesanan');
+                            AppAlert.error(data.message || '{{ __('pos.order_accept_failed') }}');
                         }
                     } catch (e) {
-                        AppAlert.error('Terjadi kesalahan saat menerima pesanan');
+                        AppAlert.error('{{ __('pos.order_accept_error') }}');
                     } finally {
                         this.isProcessing = false;
                     }
@@ -6843,7 +6825,7 @@
 
                 openPayTableOrder(table) {
                     if (!table.active_session || !table.active_session.orders || table.active_session.orders.length === 0) {
-                        AppAlert.warning('Tidak ada tagihan aktif untuk meja ini.');
+                        AppAlert.warning('{{ __('pos.no_active_bill_table') }}');
                         return;
                     }
                     const order = table.active_session.orders.find(o => o.status !== 'completed' && o.status !== 'voided' &&
@@ -6858,7 +6840,7 @@
                 async submitPayTableOrder() {
                     if (!this.activeTableOrder) return;
                     if (!this.activeTableOrder.is_paid && this.tableTenderAmount < this.activeTableOrder.total_amount) {
-                        AppAlert.warning('Nominal pembayaran kurang.');
+                        AppAlert.warning('{{ __('pos.tender_amount_insufficient') }}');
                         return;
                     }
 
@@ -6881,7 +6863,7 @@
                         });
                         const data = await res.json();
                         if (data.success) {
-                            AppAlert.success(data.message || 'Pembayaran berhasil diselesaikan.');
+                            AppAlert.success(data.message || '{{ __('pos.payment_settled_success') }}');
                             this.showTablePaymentModal = false;
                             this.lastCompletedOrder = data.order;
                             this.lastReceiptUrl = data.receipt_url;
@@ -6891,10 +6873,10 @@
                             this.showSuccessModal = true;
                             this.fetchIncomingOrders();
                         } else {
-                            AppAlert.error(data.message || 'Gagal memproses pembayaran meja.');
+                            AppAlert.error(data.message || '{{ __('pos.table_payment_process_failed') }}');
                         }
                     } catch (e) {
-                        AppAlert.error('Terjadi kesalahan memproses pembayaran meja.');
+                        AppAlert.error('{{ __('pos.table_payment_process_error') }}');
                     } finally {
                         this.isProcessing = false;
                     }
@@ -6978,11 +6960,11 @@
                 },
 
                 formatNotificationItems(order) {
-                    if (!order || !order.items || order.items.length === 0) return 'Tidak ada rincian item';
+                    if (!order || !order.items || order.items.length === 0) return '{{ __('pos.no_item_details') }}';
                     const firstItem = order.items[0];
                     const firstText = `${firstItem.quantity}x ${firstItem.product_name || firstItem.name}`;
                     if (order.items.length === 1) return firstText;
-                    return `${firstText}, +${order.items.length - 1} item lainnya`;
+                    return `${firstText}, +${order.items.length - 1} {{ __('pos.other_items_suffix') }}`;
                 },
 
                 sendDesktopNotification(order, totalNewCount = 1) {
@@ -6990,11 +6972,13 @@
                         if ('Notification' in window && Notification.permission === 'granted') {
                             const tableNum = order.table_number || order.pos_table?.table_number || order
                                 .table_or_reference || '-';
-                            const custName = order.customer_name || order.customer_name_guest || 'Pelanggan';
-                            const title = `Pesanan QR Masuk - Meja ${tableNum}` + (totalNewCount > 1 ?
-                                ` (+${totalNewCount - 1} pesanan)` : '');
-                            const body =
-                                `${custName} memesan ${order.items?.length || 0} item • Total: ${this.formatRupiah(order.total_amount)}. Klik untuk buka di kasir.`;
+                            const custName = order.customer_name || order.customer_name_guest || '{{ __('pos.default_customer_label') }}';
+                            const title = "{{ __('pos.qr_order_incoming_table') }}".replace(':table', tableNum) + (totalNewCount > 1 ?
+                                "{{ __('pos.order_multiple_suffix') }}".replace(':count', totalNewCount - 1) : '');
+                            const body = "{{ __('pos.qr_order_incoming_body') }}"
+                                .replace(':customer', custName)
+                                .replace(':count', order.items?.length || 0)
+                                .replace(':total', this.formatRupiah(order.total_amount));
 
                             const notif = new Notification(title, {
                                 body: body,
@@ -7071,10 +7055,10 @@
                     if (!dateStr) return '';
                     const diffMs = new Date() - new Date(dateStr);
                     const diffMins = Math.floor(diffMs / 60000);
-                    if (diffMins < 1) return 'Baru saja';
-                    if (diffMins < 60) return `${diffMins} m lalu`;
+                    if (diffMins < 1) return '{{ __('pos.just_now') }}';
+                    if (diffMins < 60) return `${diffMins} {{ __('pos.minutes_ago_suffix') }}`;
                     const hours = Math.floor(diffMins / 60);
-                    return `${hours} jam lalu`;
+                    return `${hours} {{ __('pos.hours_ago_suffix') }}`;
                 },
 
                 changeLocation() {

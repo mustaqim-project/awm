@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'COOCA AI Digital Company'])
+@extends('layouts.app', ['title' => __('ai.offices.digital_company_title')])
 
 @section('content')
 <div class="space-y-6" x-data="aiOfficeApp()">
@@ -8,12 +8,12 @@
         <div>
             <div class="flex items-center gap-2">
                 <span class="px-2.5 py-0.5 rounded-md text-[11px] font-semibold tracking-wide bg-black/5 dark:bg-white/10 text-black/80 dark:text-white/80 border border-black/10 dark:border-white/10">
-                    DIGITAL WORKFORCE
+                    {{ __('ai.offices.digital_workforce') }}
                 </span>
-                <span class="text-xs text-black/50 dark:text-white/50 font-mono">12 Agents &bull; 5 Departments</span>
+                <span class="text-xs text-black/50 dark:text-white/50 font-mono">{!! __('ai.offices.agents_and_depts', ['agents' => 12, 'depts' => 5]) !!}</span>
             </div>
-            <h1 class="text-2xl font-bold text-black dark:text-white tracking-tight mt-1">COOCA AI Office</h1>
-            <p class="text-xs text-black/60 dark:text-white/60 mt-0.5">Struktur perusahaan digital otonom terintegrasi. AI bertugas menganalisis dan menyiapkan usulan, pemilik bisnis memegang keputusan akhir.</p>
+            <h1 class="text-2xl font-bold text-black dark:text-white tracking-tight mt-1">{{ __('ai.offices.office_header_title') }}</h1>
+            <p class="text-xs text-black/60 dark:text-white/60 mt-0.5">{{ __('ai.offices.office_header_subtitle') }}</p>
         </div>
 
         <div class="flex flex-wrap items-center gap-2">
@@ -37,7 +37,7 @@
 
             <button @click="openConsultationModal()" class="px-4 py-2 rounded-xl bg-black hover:bg-black/90 dark:bg-white dark:hover:bg-white/90 text-white dark:text-black font-semibold text-xs shadow-sm transition flex items-center gap-2">
                 <i data-lucide="sparkles" class="w-4 h-4"></i>
-                <span>Konsultasi AI</span>
+                <span>{{ __('ai.offices.btn_consult_ai') }}</span>
             </button>
         </div>
     </div>
@@ -50,13 +50,13 @@
                 <i data-lucide="alert-circle" class="w-5 h-5"></i>
             </div>
             <div>
-                <h4 class="text-xs font-bold text-black dark:text-white uppercase tracking-wider">Perhatian: {{ $pendingCount }} Usulan Aksi Menunggu Keputusan</h4>
-                <p class="text-xs text-black/70 dark:text-white/70 mt-0.5">Digital workforce telah menyiapkan rekomendasi aksi yang memerlukan persetujuan pemilik usaha.</p>
+                <h4 class="text-xs font-bold text-black dark:text-white uppercase tracking-wider">{{ __('ai.offices.alert_pending_proposals_title', ['count' => $pendingCount]) }}</h4>
+                <p class="text-xs text-black/70 dark:text-white/70 mt-0.5">{{ __('ai.offices.alert_pending_proposals_desc') }}</p>
             </div>
         </div>
         <div class="flex items-center gap-2 shrink-0">
             <a href="{{ route('ai.actions', ['status' => 'pending']) }}" class="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold transition">
-                Tinjau Proposal
+                {{ __('ai.offices.btn_review_proposals') }}
             </a>
         </div>
     </div>
@@ -75,7 +75,7 @@
                     <div>
                         <div class="flex items-center gap-2">
                             <h2 class="text-sm font-bold text-black dark:text-white">AI CEO</h2>
-                            <span class="px-2 py-0.2 rounded text-[10px] font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">Aktif & Siaga</span>
+                            <span class="px-2 py-0.2 rounded text-[10px] font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">{{ __('ai.offices.active_standby') }}</span>
                         </div>
                         <p class="text-xs text-black/50 dark:text-white/50">Strategy & Business Health</p>
                     </div>
@@ -83,24 +83,24 @@
 
                 <button @click="triggerDailyDiagnosis()" :disabled="isEvaluating" class="px-2.5 py-1.5 rounded-lg bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 text-xs font-semibold text-black/80 dark:text-white/80 transition flex items-center gap-1.5 border border-black/10 dark:border-white/10">
                     <i data-lucide="activity" class="w-3.5 h-3.5 text-amber-500"></i>
-                    <span x-text="isEvaluating ? 'Menganalisis...' : 'Evaluasi Harian'"></span>
+                    <span x-text="isEvaluating ? '{{ __('ai.offices.eval_evaluating') }}' : '{{ __('ai.offices.eval_daily') }}'"></span>
                 </button>
             </div>
 
             <div class="space-y-2 border-t border-black/5 dark:border-white/5 pt-3">
-                <div class="text-xs font-semibold text-black/80 dark:text-white/80">Fokus Prioritas Strategis:</div>
+                <div class="text-xs font-semibold text-black/80 dark:text-white/80">{{ __('ai.offices.executive_priorities_title') }}</div>
                 <ul class="space-y-1.5 text-xs text-black/70 dark:text-white/70">
                     <li class="flex items-start gap-2">
                         <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 shrink-0"></span>
-                        <span>Memantau stabilitas omzet dan menjaga rasio margin laba kotor di atas 25%.</span>
+                        <span>{{ __('ai.offices.executive_priority_1') }}</span>
                     </li>
                     <li class="flex items-start gap-2">
                         <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 shrink-0"></span>
-                        <span>Mencegah keterlambatan pembayaran termin kasbon dan mengaktifkan pelanggan pasif.</span>
+                        <span>{{ __('ai.offices.executive_priority_2') }}</span>
                     </li>
                     <li class="flex items-start gap-2">
                         <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 shrink-0"></span>
-                        <span>Menjamin ketersediaan bahan baku kritis sebelum mencapai titik Reorder Point (ROP).</span>
+                        <span>{{ __('ai.offices.executive_priority_3') }}</span>
                     </li>
                 </ul>
             </div>
@@ -116,14 +116,14 @@
                     <div>
                         <div class="flex items-center gap-2">
                             <h2 class="text-sm font-bold text-black dark:text-white">AI COO</h2>
-                            <span class="px-2 py-0.2 rounded text-[10px] font-semibold bg-blue-500/10 text-blue-600 dark:text-blue-400">Orkestrasi Siaga</span>
+                            <span class="px-2 py-0.2 rounded text-[10px] font-semibold bg-blue-500/10 text-blue-600 dark:text-blue-400">{{ __('ai.offices.ops_orchestration_standby_short') }}</span>
                         </div>
                         <p class="text-xs text-black/50 dark:text-white/50">Operations & Department Coordination</p>
                     </div>
                 </div>
 
                 <div class="text-right">
-                    <div class="text-xs text-black/40 dark:text-white/40">Provider Aktif:</div>
+                    <div class="text-xs text-black/40 dark:text-white/40">{{ __('ai.offices.active_provider') }}</div>
                     <div class="text-xs font-mono font-bold text-black/80 dark:text-white/80 uppercase">{{ $resolvedProvider['provider']->getProviderName() }}</div>
                 </div>
             </div>
@@ -131,16 +131,16 @@
             <!-- Operations Stats Bento Strip -->
             <div class="grid grid-cols-3 gap-2 border-t border-black/5 dark:border-white/5 pt-3">
                 <div class="p-2.5 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5">
-                    <div class="text-[11px] text-black/50 dark:text-white/50 font-medium">Tim Terlibat</div>
-                    <div class="text-base font-bold text-black dark:text-white tabular-nums mt-0.5">5 Divisi</div>
+                    <div class="text-[11px] text-black/50 dark:text-white/50 font-medium">{{ __('ai.offices.teams_involved') }}</div>
+                    <div class="text-base font-bold text-black dark:text-white tabular-nums mt-0.5">{{ __('ai.offices.unit_divisions', ['count' => 5]) }}</div>
                 </div>
                 <div class="p-2.5 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5">
-                    <div class="text-[11px] text-black/50 dark:text-white/50 font-medium">Total Agen</div>
-                    <div class="text-base font-bold text-black dark:text-white tabular-nums mt-0.5">12 Agen</div>
+                    <div class="text-[11px] text-black/50 dark:text-white/50 font-medium">{{ __('ai.offices.total_agents') }}</div>
+                    <div class="text-base font-bold text-black dark:text-white tabular-nums mt-0.5">{{ __('ai.offices.unit_agents', ['count' => 12]) }}</div>
                 </div>
                 <div class="p-2.5 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5">
-                    <div class="text-[11px] text-black/50 dark:text-white/50 font-medium">Butuh Review</div>
-                    <div class="text-base font-bold text-amber-600 dark:text-amber-400 tabular-nums mt-0.5">{{ $pendingCount }} Aksi</div>
+                    <div class="text-[11px] text-black/50 dark:text-white/50 font-medium">{{ __('ai.offices.needs_review') }}</div>
+                    <div class="text-base font-bold text-amber-600 dark:text-amber-400 tabular-nums mt-0.5">{{ __('ai.offices.action_count', ['count' => $pendingCount]) }}</div>
                 </div>
             </div>
         </div>
@@ -149,8 +149,8 @@
     <!-- 5 DEPARTMENTS FLOOR & AGENT WORKSTATIONS -->
     <div class="space-y-4">
         <div class="flex items-center justify-between">
-            <h3 class="text-xs font-bold text-black/60 dark:text-white/60 uppercase tracking-wider">Departemen & Meja Kerja Digital Workforce</h3>
-            <span class="text-xs text-black/40 dark:text-white/40">Status mencerminkan riwayat tugas riil backend</span>
+            <h3 class="text-xs font-bold text-black/60 dark:text-white/60 uppercase tracking-wider">{{ __('ai.offices.dept_and_desks') }}</h3>
+            <span class="text-xs text-black/40 dark:text-white/40">{{ __('ai.offices.status_real_history') }}</span>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
@@ -160,15 +160,15 @@
                 <div class="flex items-center justify-between pb-2 border-b border-black/5 dark:border-white/5">
                     <div class="flex items-center gap-2">
                         <i data-lucide="badge-dollar-sign" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
-                        <span class="text-xs font-bold text-black dark:text-white">Sales Department</span>
+                        <span class="text-xs font-bold text-black dark:text-white">{{ __('ai.offices.dept_sales') }}</span>
                     </div>
-                    <span class="text-[10px] font-mono text-black/50 dark:text-white/50">Lead: Sales Director</span>
+                    <span class="text-[10px] font-mono text-black/50 dark:text-white/50">{{ __('ai.offices.lead_sales_director') }}</span>
                 </div>
 
                 <!-- Agents in Sales -->
                 <div class="space-y-2">
                     <!-- Sales Agent -->
-                    @php $sStatus = $agentStatuses['sales'] ?? ['status' => 'IDLE', 'status_label' => 'Tersedia', 'current_work' => 'Tidak ada tugas', 'last_active' => '']; @endphp
+                    @php $sStatus = $agentStatuses['sales'] ?? ['status' => 'IDLE', 'status_label' => __('ai.offices.available'), 'current_work' => __('ai.offices.no_tasks'), 'last_active' => '']; @endphp
                     <div class="p-2.5 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 space-y-1">
                         <div class="flex items-center justify-between">
                             <span class="text-xs font-semibold text-black dark:text-white flex items-center gap-1.5">
@@ -183,7 +183,7 @@
                     </div>
 
                     <!-- Customer Agent -->
-                    @php $cStatus = $agentStatuses['customer'] ?? ['status' => 'IDLE', 'status_label' => 'Tersedia', 'current_work' => 'Tidak ada tugas', 'last_active' => '']; @endphp
+                    @php $cStatus = $agentStatuses['customer'] ?? ['status' => 'IDLE', 'status_label' => __('ai.offices.available'), 'current_work' => __('ai.offices.no_tasks'), 'last_active' => '']; @endphp
                     <div class="p-2.5 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 space-y-1">
                         <div class="flex items-center justify-between">
                             <span class="text-xs font-semibold text-black dark:text-white flex items-center gap-1.5">
@@ -204,14 +204,14 @@
                 <div class="flex items-center justify-between pb-2 border-b border-black/5 dark:border-white/5">
                     <div class="flex items-center gap-2">
                         <i data-lucide="boxes" class="w-4 h-4 text-blue-600 dark:text-blue-400"></i>
-                        <span class="text-xs font-bold text-black dark:text-white">Operations Department</span>
+                        <span class="text-xs font-bold text-black dark:text-white">{{ __('ai.offices.dept_operations') }}</span>
                     </div>
-                    <span class="text-[10px] font-mono text-black/50 dark:text-white/50">Lead: AI COO</span>
+                    <span class="text-[10px] font-mono text-black/50 dark:text-white/50">{{ __('ai.offices.lead_coo') }}</span>
                 </div>
 
                 <div class="space-y-2">
                     <!-- Inventory Agent -->
-                    @php $iStatus = $agentStatuses['inventory'] ?? ['status' => 'IDLE', 'status_label' => 'Tersedia', 'current_work' => 'Tidak ada tugas', 'last_active' => '']; @endphp
+                    @php $iStatus = $agentStatuses['inventory'] ?? ['status' => 'IDLE', 'status_label' => __('ai.offices.available'), 'current_work' => __('ai.offices.no_tasks'), 'last_active' => '']; @endphp
                     <div class="p-2.5 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 space-y-1">
                         <div class="flex items-center justify-between">
                             <span class="text-xs font-semibold text-black dark:text-white flex items-center gap-1.5">
@@ -224,7 +224,7 @@
                     </div>
 
                     <!-- Purchasing Agent -->
-                    @php $pStatus = $agentStatuses['purchasing'] ?? ['status' => 'IDLE', 'status_label' => 'Tersedia', 'current_work' => 'Tidak ada tugas', 'last_active' => '']; @endphp
+                    @php $pStatus = $agentStatuses['purchasing'] ?? ['status' => 'IDLE', 'status_label' => __('ai.offices.available'), 'current_work' => __('ai.offices.no_tasks'), 'last_active' => '']; @endphp
                     <div class="p-2.5 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 space-y-1">
                         <div class="flex items-center justify-between">
                             <span class="text-xs font-semibold text-black dark:text-white flex items-center gap-1.5">
@@ -237,7 +237,7 @@
                     </div>
 
                     <!-- Marketplace Agent -->
-                    @php $mStatus = $agentStatuses['marketplace'] ?? ['status' => 'IDLE', 'status_label' => 'Tersedia', 'current_work' => 'Tidak ada tugas', 'last_active' => '']; @endphp
+                    @php $mStatus = $agentStatuses['marketplace'] ?? ['status' => 'IDLE', 'status_label' => __('ai.offices.available'), 'current_work' => __('ai.offices.no_tasks'), 'last_active' => '']; @endphp
                     <div class="p-2.5 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 space-y-1">
                         <div class="flex items-center justify-between">
                             <span class="text-xs font-semibold text-black dark:text-white flex items-center gap-1.5">
@@ -256,14 +256,14 @@
                 <div class="flex items-center justify-between pb-2 border-b border-black/5 dark:border-white/5">
                     <div class="flex items-center gap-2">
                         <i data-lucide="wallet" class="w-4 h-4 text-amber-600 dark:text-amber-400"></i>
-                        <span class="text-xs font-bold text-black dark:text-white">Finance Department</span>
+                        <span class="text-xs font-bold text-black dark:text-white">{{ __('ai.offices.dept_finance') }}</span>
                     </div>
-                    <span class="text-[10px] font-mono text-black/50 dark:text-white/50">Lead: AI CFO</span>
+                    <span class="text-[10px] font-mono text-black/50 dark:text-white/50">{{ __('ai.offices.lead_cfo') }}</span>
                 </div>
 
                 <div class="space-y-2">
                     <!-- Finance Agent -->
-                    @php $fStatus = $agentStatuses['finance'] ?? ['status' => 'IDLE', 'status_label' => 'Tersedia', 'current_work' => 'Tidak ada tugas', 'last_active' => '']; @endphp
+                    @php $fStatus = $agentStatuses['finance'] ?? ['status' => 'IDLE', 'status_label' => __('ai.offices.available'), 'current_work' => __('ai.offices.no_tasks'), 'last_active' => '']; @endphp
                     <div class="p-2.5 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 space-y-1">
                         <div class="flex items-center justify-between">
                             <span class="text-xs font-semibold text-black dark:text-white flex items-center gap-1.5">
@@ -276,7 +276,7 @@
                     </div>
 
                     <!-- Reporting Agent -->
-                    @php $rStatus = $agentStatuses['reporting'] ?? ['status' => 'IDLE', 'status_label' => 'Tersedia', 'current_work' => 'Tidak ada tugas', 'last_active' => '']; @endphp
+                    @php $rStatus = $agentStatuses['reporting'] ?? ['status' => 'IDLE', 'status_label' => __('ai.offices.available'), 'current_work' => __('ai.offices.no_tasks'), 'last_active' => '']; @endphp
                     <div class="p-2.5 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 space-y-1">
                         <div class="flex items-center justify-between">
                             <span class="text-xs font-semibold text-black dark:text-white flex items-center gap-1.5">
@@ -295,14 +295,14 @@
                 <div class="flex items-center justify-between pb-2 border-b border-black/5 dark:border-white/5">
                     <div class="flex items-center gap-2">
                         <i data-lucide="sparkles" class="w-4 h-4 text-purple-600 dark:text-purple-400"></i>
-                        <span class="text-xs font-bold text-black dark:text-white">Marketing Department</span>
+                        <span class="text-xs font-bold text-black dark:text-white">{{ __('ai.offices.dept_marketing') }}</span>
                     </div>
-                    <span class="text-[10px] font-mono text-black/50 dark:text-white/50">Lead: AI CMO</span>
+                    <span class="text-[10px] font-mono text-black/50 dark:text-white/50">{{ __('ai.offices.lead_cmo') }}</span>
                 </div>
 
                 <div class="space-y-2">
                     <!-- Marketing Agent -->
-                    @php $mktStatus = $agentStatuses['marketing'] ?? ['status' => 'IDLE', 'status_label' => 'Tersedia', 'current_work' => 'Tidak ada tugas', 'last_active' => '']; @endphp
+                    @php $mktStatus = $agentStatuses['marketing'] ?? ['status' => 'IDLE', 'status_label' => __('ai.offices.available'), 'current_work' => __('ai.offices.no_tasks'), 'last_active' => '']; @endphp
                     <div class="p-2.5 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 space-y-1">
                         <div class="flex items-center justify-between">
                             <span class="text-xs font-semibold text-black dark:text-white flex items-center gap-1.5">
@@ -315,7 +315,7 @@
                     </div>
 
                     <!-- Content Agent -->
-                    @php $cntStatus = $agentStatuses['content'] ?? ['status' => 'IDLE', 'status_label' => 'Tersedia', 'current_work' => 'Tidak ada tugas', 'last_active' => '']; @endphp
+                    @php $cntStatus = $agentStatuses['content'] ?? ['status' => 'IDLE', 'status_label' => __('ai.offices.available'), 'current_work' => __('ai.offices.no_tasks'), 'last_active' => '']; @endphp
                     <div class="p-2.5 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 space-y-1">
                         <div class="flex items-center justify-between">
                             <span class="text-xs font-semibold text-black dark:text-white flex items-center gap-1.5">
@@ -328,7 +328,7 @@
                     </div>
 
                     <!-- Social Media Agent -->
-                    @php $socStatus = $agentStatuses['social_media'] ?? ['status' => 'IDLE', 'status_label' => 'Tersedia', 'current_work' => 'Tidak ada tugas', 'last_active' => '']; @endphp
+                    @php $socStatus = $agentStatuses['social_media'] ?? ['status' => 'IDLE', 'status_label' => __('ai.offices.available'), 'current_work' => __('ai.offices.no_tasks'), 'last_active' => '']; @endphp
                     <div class="p-2.5 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 space-y-1">
                         <div class="flex items-center justify-between">
                             <span class="text-xs font-semibold text-black dark:text-white flex items-center gap-1.5">
@@ -347,14 +347,14 @@
                 <div class="flex items-center justify-between pb-2 border-b border-black/5 dark:border-white/5">
                     <div class="flex items-center gap-2">
                         <i data-lucide="user-check" class="w-4 h-4 text-teal-600 dark:text-teal-400"></i>
-                        <span class="text-xs font-bold text-black dark:text-white">People & HR Department</span>
+                        <span class="text-xs font-bold text-black dark:text-white">{{ __('ai.offices.dept_hr') }}</span>
                     </div>
-                    <span class="text-[10px] font-mono text-black/50 dark:text-white/50">Lead: AI HR Lead</span>
+                    <span class="text-[10px] font-mono text-black/50 dark:text-white/50">{{ __('ai.offices.lead_hr_lead') }}</span>
                 </div>
 
                 <div class="space-y-2">
                     <!-- HR Agent -->
-                    @php $hrStatus = $agentStatuses['hr'] ?? ['status' => 'IDLE', 'status_label' => 'Tersedia', 'current_work' => 'Tidak ada tugas', 'last_active' => '']; @endphp
+                    @php $hrStatus = $agentStatuses['hr'] ?? ['status' => 'IDLE', 'status_label' => __('ai.offices.available'), 'current_work' => __('ai.offices.no_tasks'), 'last_active' => '']; @endphp
                     <div class="p-2.5 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 space-y-1">
                         <div class="flex items-center justify-between">
                             <span class="text-xs font-semibold text-black dark:text-white flex items-center gap-1.5">
@@ -373,14 +373,14 @@
                 <div class="flex items-center justify-between pb-2 border-b border-black/5 dark:border-white/5">
                     <div class="flex items-center gap-2">
                         <i data-lucide="line-chart" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i>
-                        <span class="text-xs font-bold text-black dark:text-white">Executive Analyst</span>
+                        <span class="text-xs font-bold text-black dark:text-white">{{ __('ai.offices.dept_analyst') }}</span>
                     </div>
-                    <span class="text-[10px] font-mono text-black/50 dark:text-white/50">Lead: AI CEO</span>
+                    <span class="text-[10px] font-mono text-black/50 dark:text-white/50">{{ __('ai.offices.lead_ceo') }}</span>
                 </div>
 
                 <div class="space-y-2">
                     <!-- Business Agent -->
-                    @php $bizStatus = $agentStatuses['business'] ?? ['status' => 'IDLE', 'status_label' => 'Tersedia', 'current_work' => 'Tidak ada tugas', 'last_active' => '']; @endphp
+                    @php $bizStatus = $agentStatuses['business'] ?? ['status' => 'IDLE', 'status_label' => __('ai.offices.available'), 'current_work' => __('ai.offices.no_tasks'), 'last_active' => '']; @endphp
                     <div class="p-2.5 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 space-y-1">
                         <div class="flex items-center justify-between">
                             <span class="text-xs font-semibold text-black dark:text-white flex items-center gap-1.5">
@@ -404,7 +404,7 @@
                 <i data-lucide="activity" class="w-4 h-4 text-black/70 dark:text-white/70"></i>
                 <h3 class="text-sm font-bold text-black dark:text-white">AI Activity Feed</h3>
             </div>
-            <a href="{{ route('ai.history') }}" class="text-xs font-semibold text-black/60 hover:text-black dark:text-white/60 dark:hover:text-white transition">Lihat Riwayat Lengkap &rarr;</a>
+            <a href="{{ route('ai.history') }}" class="text-xs font-semibold text-black/60 hover:text-black dark:text-white/60 dark:hover:text-white transition">{{ __('ai.offices.see_all_history') }} &rarr;</a>
         </div>
 
         @if($workHistories->isEmpty())
@@ -412,8 +412,8 @@
                 <div class="w-10 h-10 rounded-xl bg-black/5 dark:bg-white/5 mx-auto flex items-center justify-center text-black/30 dark:text-white/30">
                     <i data-lucide="inbox" class="w-5 h-5"></i>
                 </div>
-                <div class="text-xs font-semibold text-black/60 dark:text-white/60">Semua tim telah terbarui.</div>
-                <p class="text-xs text-black/40 dark:text-white/40">Belum ada sesi pekerjaan AI hari ini. Klik "Konsultasi AI" atau "Evaluasi Harian" untuk memulai analisis.</p>
+                <div class="text-xs font-semibold text-black/60 dark:text-white/60">{{ __('ai.offices.all_teams_updated') }}</div>
+                <p class="text-xs text-black/40 dark:text-white/40">{{ __('ai.offices.no_sessions_today') }}</p>
             </div>
         @else
             <div class="divide-y divide-black/5 dark:divide-white/5">
@@ -428,9 +428,9 @@
                         </div>
 
                         <div class="flex items-center gap-3 shrink-0 text-xs text-black/60 dark:text-white/60 font-mono">
-                            <span title="Temuan Terdeteksi">{{ $history->insights_count }} Temuan</span>
+                            <span title="Temuan Terdeteksi">{{ __('ai.offices.findings_detected', ['count' => $history->insights_count]) }}</span>
                             &bull;
-                            <span title="Aksi Diusulkan" class="font-bold text-black dark:text-white">{{ $history->actions_count }} Usulan</span>
+                            <span title="Aksi Diusulkan" class="font-bold text-black dark:text-white">{{ __('ai.offices.proposals_suggested', ['count' => $history->actions_count]) }}</span>
                         </div>
                     </div>
                 @endforeach
@@ -469,18 +469,18 @@
                  @click.outside="closeConsultationModal()"
                  class="relative w-full max-w-4xl bg-white dark:bg-zinc-900 rounded-[24px] sm:rounded-3xl border border-black/10 dark:border-white/10 shadow-2xl flex flex-col max-h-[90vh] overflow-hidden z-10">
                 
-                <!-- Modal Header -->
+                 <!-- Modal Header -->
                 <div class="p-5 border-b border-black/10 dark:border-white/10 flex items-center justify-between">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-xl bg-black dark:bg-white text-white dark:text-black flex items-center justify-center shrink-0">
                             <i data-lucide="sparkles" class="w-5 h-5"></i>
                         </div>
                         <div>
-                            <h3 id="ai-office-consultation-title" class="text-sm font-bold text-black dark:text-white">Konsultasi AI Digital Company</h3>
-                            <p class="text-xs text-black/50 dark:text-white/50">Pertanyaan Anda akan dianalisis oleh AI CEO &amp; AI COO bersama divisi terkait.</p>
+                            <h3 id="ai-office-consultation-title" class="text-sm font-bold text-black dark:text-white">{{ __('ai.offices.consultation_title') }}</h3>
+                            <p class="text-xs text-black/50 dark:text-white/50">{{ __('ai.offices.consultation_subtitle') }}</p>
                         </div>
                     </div>
-                    <button type="button" @click="closeConsultationModal()" class="min-w-[44px] min-h-[44px] rounded-full hover:bg-black/5 dark:hover:bg-white/5 flex items-center justify-center text-black/50 dark:text-white/50 transition active:scale-95" aria-label="Tutup modal">
+                    <button type="button" @click="closeConsultationModal()" class="min-w-[44px] min-h-[44px] rounded-full hover:bg-black/5 dark:hover:bg-white/5 flex items-center justify-center text-black/50 dark:text-white/50 transition active:scale-95" aria-label="{{ __('common.close') }}">
                         <i data-lucide="x" class="w-5 h-5"></i>
                     </button>
                 </div>
@@ -493,28 +493,28 @@
                     <div class="relative">
                         <textarea x-model="userQuery" 
                                   rows="3" 
-                                  placeholder="Contoh: Kenapa omzet saya turun minggu ini? / Produk apa yang stoknya harus segera dibeli? / Siapkan promo untuk pelanggan dormant..."
+                                  placeholder="{{ __('ai.offices.consultation_placeholder') }}"
                                   class="w-full bg-black/[0.02] dark:bg-white/[0.02] border border-black/15 dark:border-white/15 rounded-2xl p-4 text-xs sm:text-sm text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:border-black dark:focus:border-white transition"></textarea>
                     </div>
 
                     <div class="flex flex-wrap items-center justify-between gap-3">
                         <!-- Quick Question Chips -->
                         <div class="flex flex-wrap items-center gap-1.5">
-                            <button type="button" @click="quickAsk('Kenapa penjualan saya menurun minggu ini?')" class="px-2.5 py-1 rounded-lg bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 text-[11px] font-medium text-black/70 dark:text-white/70 transition">
-                                Analisis Penurunan Omzet
+                            <button type="button" @click="quickAsk('{{ __('ai.offices.prompt_revenue_drop') }}')" class="px-2.5 py-1 rounded-lg bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 text-[11px] font-medium text-black/70 dark:text-white/70 transition">
+                                {{ __('ai.offices.chip_revenue_drop') }}
                             </button>
-                            <button type="button" @click="quickAsk('Produk apa yang stoknya kritis dan perlu segera di-reorder?')" class="px-2.5 py-1 rounded-lg bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 text-[11px] font-medium text-black/70 dark:text-white/70 transition">
-                                Cek Stok Kritis
+                            <button type="button" @click="quickAsk('{{ __('ai.offices.prompt_critical_stock') }}')" class="px-2.5 py-1 rounded-lg bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 text-[11px] font-medium text-black/70 dark:text-white/70 transition">
+                                {{ __('ai.offices.chip_critical_stock') }}
                             </button>
-                            <button type="button" @click="quickAsk('Siapkan promo penawaran untuk pelanggan yang sudah pasif.')" class="px-2.5 py-1 rounded-lg bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 text-[11px] font-medium text-black/70 dark:text-white/70 transition">
-                                Promo Pelanggan Dormant
+                            <button type="button" @click="quickAsk('{{ __('ai.offices.prompt_dormant_promo') }}')" class="px-2.5 py-1 rounded-lg bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 text-[11px] font-medium text-black/70 dark:text-white/70 transition">
+                                {{ __('ai.offices.chip_dormant_promo') }}
                             </button>
                         </div>
 
                         <button type="submit" 
                                 :disabled="isSubmitting || !userQuery.trim()" 
                                 class="px-4 py-2 rounded-xl bg-black hover:bg-black/90 dark:bg-white dark:hover:bg-white/90 text-white dark:text-black font-semibold text-xs transition disabled:opacity-40 flex items-center gap-1.5 shrink-0">
-                            <span x-text="isSubmitting ? 'Menganalisis Data...' : 'Kirim ke AI'"></span>
+                            <span x-text="isSubmitting ? '{{ __('ai.offices.analyzing_data') }}' : '{{ __('ai.offices.send_to_ai') }}'"></span>
                             <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                         </button>
                     </div>
@@ -525,8 +525,8 @@
                     <div class="inline-block animate-spin text-black/60 dark:text-white/60">
                         <i data-lucide="loader" class="w-6 h-6"></i>
                     </div>
-                    <div class="text-xs font-bold text-black dark:text-white">AI COO sedang mengkoordinasikan divisi terkait...</div>
-                    <p class="text-[11px] text-black/50 dark:text-white/50">Membaca data penjualan, memeriksa inventori, dan menyiapkan rekomendasi terukur.</p>
+                    <div class="text-xs font-bold text-black dark:text-white">{{ __('ai.offices.coordinating_divisions') }}</div>
+                    <p class="text-[11px] text-black/50 dark:text-white/50">{{ __('ai.offices.coordinating_sub') }}</p>
                 </div>
 
                 <!-- Structured Response Container -->
@@ -535,7 +535,7 @@
                         
                         <!-- Header & Participating Squad -->
                         <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-black/5 dark:border-white/5">
-                            <div class="text-xs font-bold text-black dark:text-white">Hasil Analisis Tim Digital:</div>
+                            <div class="text-xs font-bold text-black dark:text-white">{{ __('ai.offices.team_analysis_result') }}</div>
                             <div class="flex flex-wrap items-center gap-1.5">
                                 <template x-for="agentName in (responseResult?.participating_agents || [])" :key="agentName">
                                     <span class="px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-black/5 dark:bg-white/10 text-black/80 dark:text-white/80" x-text="agentName"></span>
@@ -552,7 +552,7 @@
                         <!-- Findings -->
                         <template x-if="responseResult?.findings && responseResult.findings.length > 0">
                             <div>
-                                <div class="text-xs font-semibold text-black/40 dark:text-white/40 uppercase tracking-wider mb-2">Temuan Faktual</div>
+                                <div class="text-xs font-semibold text-black/40 dark:text-white/40 uppercase tracking-wider mb-2">{{ __('ai.offices.factual_findings') }}</div>
                                 <ul class="space-y-1 text-xs text-black/70 dark:text-white/70">
                                     <template x-for="(finding, i) in responseResult.findings" :key="i">
                                         <li class="flex items-start gap-2">
@@ -567,7 +567,7 @@
                         <!-- Recommendations -->
                         <template x-if="responseResult?.recommendations && responseResult.recommendations.length > 0">
                             <div>
-                                <div class="text-xs font-semibold text-black/40 dark:text-white/40 uppercase tracking-wider mb-2">Rekomendasi Strategis</div>
+                                <div class="text-xs font-semibold text-black/40 dark:text-white/40 uppercase tracking-wider mb-2">{{ __('ai.offices.strategic_recommendations') }}</div>
                                 <ul class="space-y-1 text-xs text-black/70 dark:text-white/70">
                                     <template x-for="(rec, i) in responseResult.recommendations" :key="i">
                                         <li class="flex items-start gap-2">
@@ -582,7 +582,7 @@
                         <!-- Proposed Actions -->
                         <template x-if="responseResult?.proposals && responseResult.proposals.length > 0">
                             <div class="pt-3 border-t border-black/5 dark:border-white/5 space-y-3">
-                                <div class="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Usulan Aksi Bisnis Disiapkan (Menunggu Persetujuan)</div>
+                                <div class="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider">{{ __('ai.offices.proposals_pending_approval') }}</div>
                                 
                                 <div class="grid grid-cols-1 gap-2.5">
                                     <template x-for="prop in responseResult.proposals" :key="prop.id">
@@ -597,7 +597,7 @@
 
                                             <div class="flex items-center gap-2 shrink-0">
                                                 <a href="{{ route('ai.actions') }}" class="px-3 py-1.5 rounded-lg bg-black dark:bg-white text-white dark:text-black text-xs font-semibold">
-                                                    Buka Action Center &rarr;
+                                                    {{ __('ai.offices.open_action_center') }} &rarr;
                                                 </a>
                                             </div>
                                         </div>
@@ -613,8 +613,8 @@
 
             <!-- Modal Footer -->
             <div class="p-4 border-t border-black/10 dark:border-white/10 flex items-center justify-between text-xs text-black/50 dark:text-white/50 bg-black/[0.01] dark:bg-white/[0.01]">
-                <span>Setiap aksi penulisan data tetap memerlukan persetujuan manual pemilik usaha.</span>
-                <button type="button" @click="closeConsultationModal()" class="min-h-[44px] px-4 py-2 rounded-xl bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 font-semibold text-black dark:text-white transition active:scale-95">Tutup</button>
+                <span>{{ __('ai.offices.modal_notice') }}</span>
+                <button type="button" @click="closeConsultationModal()" class="min-h-[44px] px-4 py-2 rounded-xl bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 font-semibold text-black dark:text-white transition active:scale-95">{{ __('common.close') }}</button>
             </div>
 
         </div>
@@ -669,10 +669,10 @@ function aiOfficeApp() {
                 if (data.success) {
                     this.responseResult = data.data;
                 } else {
-                    alert(data.message || 'Gagal memproses permintaan.');
+                    alert(data.message || '{{ __('ai.script.error_processing') }}');
                 }
             } catch (err) {
-                alert('Terjadi kesalahan jaringan: ' + err.message);
+                alert('{{ __('ai.script.network_error_prefix') }}' + err.message);
             } finally {
                 this.isSubmitting = false;
                 this.$nextTick(() => {
@@ -700,10 +700,10 @@ function aiOfficeApp() {
                     this.responseResult = data.data;
                     this.showConsultationModal = true;
                 } else {
-                    alert(data.message || 'Gagal menjalankan evaluasi.');
+                    alert(data.message || '{{ __('ai.script.eval_failed') }}');
                 }
             } catch (err) {
-                alert('Terjadi kesalahan jaringan: ' + err.message);
+                alert('{{ __('ai.script.network_error_prefix') }}' + err.message);
             } finally {
                 this.isEvaluating = false;
                 this.$nextTick(() => {

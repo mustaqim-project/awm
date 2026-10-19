@@ -1,0 +1,150 @@
+<?php
+
+return [
+    // Page & Header Titles
+    'title' => 'Bahan Baku & Harga',
+    'header_title' => 'Katalog Bahan Baku & Pemasok',
+    'header_subtitle' => 'Kelola harga akuisisi efektif, rendemen (yield), susut (waste), dan riwayat harga bahan',
+    'breadcrumb_dashboard' => 'Dashboard',
+    'breadcrumb_materials' => 'Bahan Baku',
+    'breadcrumb_catalog' => 'Katalog Bahan Baku',
+    'catalog_title' => 'Katalog Bahan Baku & Pemasok',
+    'catalog_subtitle' => 'Kelola harga beli efektif, susut/rendemen (yield), dan relasi pemasok bahan baku',
+    'export_excel' => 'Export Excel',
+    'export_excel_title' => 'Export seluruh katalog bahan baku ke file Excel (.xlsx)',
+    'import_excel' => 'Import Excel',
+    'import_excel_title' => 'Import data bahan baku massal dari file Excel / CSV',
+    'add_material' => 'Tambah Bahan Baku',
+
+    // JS / Alpine Messages
+    'error_save_category' => 'Gagal menyimpan kategori',
+    'error_save_unit' => 'Gagal menyimpan satuan',
+    'error_save_supplier' => 'Gagal menyimpan supplier',
+
+    // Bento KPI Summary
+    'kpi_total_materials' => 'Total Bahan Baku',
+    'kpi_registered_items' => 'Item Terdaftar',
+    'kpi_categories' => 'Kategori Bahan',
+    'kpi_classification' => 'Klasifikasi',
+    'kpi_suppliers' => 'Pemasok Vendor',
+    'kpi_active_vendors' => 'Vendor Aktif',
+    'kpi_waste_management' => 'Manajemen Susut',
+    'kpi_yield_waste' => 'Yield & Waste',
+    'kpi_auto_cogs' => 'Otomatis HPP',
+
+    // Search and Filters
+    'search_placeholder' => 'Cari nama bahan atau SKU...',
+    'all_categories' => 'Semua Kategori',
+    'btn_reset' => 'Reset',
+
+    // Table Headers
+    'th_name_sku' => 'Nama Bahan & SKU',
+    'th_category' => 'Kategori',
+    'th_unit' => 'Satuan Beli',
+    'th_last_purchase_price' => 'Harga Beli Terakhir',
+    'th_yield_waste' => 'Yield / Waste',
+    'th_effective_cost' => 'Biaya Efektif / Unit',
+    'th_actions' => 'Aksi',
+
+    // Table Row & Badges
+    'no_sku' => 'No SKU',
+    'supplier_prefix' => 'Supplier:',
+    'general_category' => 'Umum',
+    'default_unit' => 'pcs',
+    'yield_badge' => ':pct% Yield',
+    'waste_badge' => ':pct% Waste',
+    'btn_update_price' => 'Update Harga',
+    'btn_edit' => 'Edit',
+    'title_edit_spec' => 'Edit Spesifikasi Bahan',
+    'btn_delete' => 'Hapus',
+    'title_delete_material' => 'Hapus Bahan Baku',
+    'empty_materials' => 'Belum ada data bahan baku ditemukan.',
+
+    // Mobile Grouped Card
+    'label_last_purchase_price' => 'Harga Beli Terakhir:',
+    'label_supplier' => 'Pemasok:',
+    'btn_price_short' => 'Harga',
+
+    // Modal: Tambah Bahan Baku
+    'modal_add_badge' => 'Formulir Inventori',
+    'modal_add_title' => 'Tambah Bahan Baku Baru',
+    'section_identity' => 'Identitas Bahan Baku',
+    'label_material_name' => 'Nama Bahan Baku',
+    'placeholder_material_name' => 'Contoh: Tepung Terigu Protein Tinggi Cakra Kembar',
+    'label_sku_barcode' => 'Kode SKU / Barcode',
+    'placeholder_sku' => 'MAT-001 (opsional)',
+    'label_purchase_unit' => 'Satuan Beli',
+    'btn_new_unit' => 'Satuan Baru',
+    'label_category' => 'Kategori Bahan',
+    'btn_new_category' => 'Kategori',
+    'option_no_category' => '-- Tanpa Kategori --',
+    'label_primary_supplier' => 'Supplier Utama',
+    'btn_new_supplier' => 'Supplier',
+    'option_no_supplier' => '-- Tanpa Supplier --',
+    'section_efficiency' => 'Efisiensi Bahan (Yield & Waste)',
+    'label_yield_pct' => 'Rendemen (Yield %)',
+    'standard_yield' => 'Standar: 100%',
+    'label_waste_pct' => 'Susut (Waste %)',
+    'standard_waste' => 'Standar: 0%',
+    'section_initial_price' => 'Harga Pembelian Awal',
+    'label_net_purchase_price' => 'Harga Beli Bersih (Rp)',
+    'label_shipping_cost' => 'Ongkos Kirim',
+    'label_purchase_discount' => 'Diskon Beli',
+    'label_est_effective_cost' => 'Estimasi Biaya Efektif / Unit',
+    'sub_est_effective_cost' => 'Termasuk ongkir, diskon & faktor yield',
+    'btn_cancel' => 'Batal',
+    'btn_save_material' => 'Simpan Bahan Baku',
+
+    // Modal: Update Harga Bahan
+    'modal_price_badge' => 'Riwayat Harga Beli',
+    'modal_price_default_title' => 'Update Harga',
+    'label_new_purchase_price' => 'Harga Beli Baru (Rp)',
+    'label_supplier_vendor' => 'Pemasok / Vendor',
+    'option_same_supplier' => '-- Pemasok yang Sama / Umum --',
+    'label_adjustment_notes' => 'Catatan Penyesuaian',
+    'placeholder_notes' => 'Contoh: Kenaikan harga pabrik',
+    'btn_save_price_history' => 'Simpan Riwayat Harga',
+
+    // Modal: Edit Spesifikasi Bahan
+    'modal_edit_badge' => 'Edit Master Data',
+    'modal_edit_title' => 'Ubah Spesifikasi Bahan',
+    'btn_save_changes' => 'Simpan Perubahan',
+
+    // Quick Add Modals
+    'modal_quick_sup_title' => 'Tambah Supplier Baru',
+    'label_sup_name' => 'Nama Supplier / Vendor',
+    'placeholder_sup_name' => 'Contoh: PT Bogasari Flour Mills',
+    'label_sup_pic' => 'PIC / Kontak',
+    'placeholder_sup_pic' => 'Pak Budi',
+    'label_sup_phone' => 'No. HP/WA',
+    'placeholder_sup_phone' => '08123456789',
+    'label_sup_address' => 'Alamat Gudang / Kantor',
+    'placeholder_sup_address' => 'Kota / Alamat pengiriman',
+    'btn_saving' => 'Menyimpan...',
+    'btn_save_supplier' => 'Simpan Supplier',
+
+    'modal_quick_cat_title' => 'Tambah Kategori Bahan',
+    'label_cat_name' => 'Nama Kategori',
+    'placeholder_cat_name' => 'Contoh: Bumbu & Rempah Alami',
+    'label_cat_desc' => 'Deskripsi Kategori',
+    'placeholder_cat_desc' => 'Catatan klasifikasi bahan...',
+    'btn_save_category' => 'Simpan Kategori',
+
+    'modal_quick_unit_title' => 'Tambah Satuan Beli Baru',
+    'label_unit_code' => 'Kode Simbol',
+    'placeholder_unit_code' => 'sak / jerigen',
+    'label_unit_dimension' => 'Tipe Dimensi',
+    'unit_type_weight' => 'Berat (kg, sak)',
+    'unit_type_volume' => 'Volume (liter, ml)',
+    'unit_type_quantity' => 'Kuantitas (pcs, pack)',
+    'unit_type_custom' => 'Lainnya',
+    'label_unit_name' => 'Nama Satuan Lengkap',
+    'placeholder_unit_name' => 'Contoh: Sak 25 Kilogram',
+    'btn_save_unit' => 'Simpan Satuan',
+
+    // Apple Alert Dialog (Hapus)
+    'dialog_delete_title' => 'Hapus Bahan Baku?',
+    'dialog_delete_prefix' => 'Bahan',
+    'dialog_delete_suffix' => 'akan dihapus dari daftar master inventori.',
+    'dialog_delete_microcopy' => 'Tenang: Resep produk (BOM) masa lalu dan riwayat pembelian/penerimaan barang (Goods Receipt) yang menggunakan bahan ini tetap aman tersimpan.',
+];

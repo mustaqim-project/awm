@@ -1,7 +1,7 @@
 @extends('layouts.app', [
-    'title' => 'Buat Faktur Penjualan',
-    'headerTitle' => 'Buat Faktur Penjualan (Invoice)',
-    'headerSubtitle' => 'Terbitkan tagihan resmi dari katalog produk, purchase order pelanggan, atau hasil kalkulasi HPP'
+    'title' => __('sales.invoices.create_title'),
+    'headerTitle' => __('sales.invoices.create_header_title'),
+    'headerSubtitle' => __('sales.invoices.create_header_subtitle')
 ])
 
 @section('content')
@@ -33,7 +33,7 @@
                 product_id: '{{ $prefillProduct->id }}',
                 item_name: '{{ addslashes($prefillProduct->name) }}',
                 sku: '{{ addslashes($prefillProduct->code ?? '') }}',
-                description: 'Hasil kalkulasi HPP sistem',
+                description: '{{ addslashes(__('sales.invoices.hpp_prefill_desc')) }}',
                 quantity: {{ $prefillQty > 0 ? $prefillQty : 1 }},
                 unit_id: '{{ $prefillProduct->output_unit_id }}',
                 unit_price: {{ $prefillPrice > 0 ? $prefillPrice : ($prefillProduct->selling_price > 0 ? $prefillProduct->selling_price : 0) }},
@@ -184,24 +184,24 @@
             <div>
                 <!-- Minimal Breadcrumb -->
                 <nav class="flex items-center gap-1.5 text-[12px] text-black/50 dark:text-white/50 mb-1" aria-label="Breadcrumb">
-                    <a href="{{ route('dashboard') }}" class="hover:text-[#007AFF] transition-colors">Dashboard</a>
+                    <a href="{{ route('dashboard') }}" class="hover:text-[#007AFF] transition-colors">{{ __('sales.invoices.breadcrumb_dashboard') }}</a>
                     <i data-lucide="chevron-right" class="w-3.5 h-3.5 opacity-40"></i>
-                    <a href="{{ route('invoices.index') }}" class="hover:text-[#007AFF] transition-colors">Faktur Penjualan</a>
+                    <a href="{{ route('invoices.index') }}" class="hover:text-[#007AFF] transition-colors">{{ __('sales.invoices.breadcrumb_invoices') }}</a>
                     <i data-lucide="chevron-right" class="w-3.5 h-3.5 opacity-40"></i>
-                    <span class="text-black dark:text-white font-medium">Buat Baru</span>
+                    <span class="text-black dark:text-white font-medium">{{ __('sales.invoices.breadcrumb_create') }}</span>
                 </nav>
-                <h1 class="text-[20px] font-semibold text-black dark:text-white tracking-tight">Buat Faktur Penjualan</h1>
-                <p class="text-[13px] text-black/50 dark:text-white/50">Lengkapi data penagihan komersial atau impor dari Purchase Order</p>
+                <h1 class="text-[20px] font-semibold text-black dark:text-white tracking-tight">{{ __('sales.invoices.create_title') }}</h1>
+                <p class="text-[13px] text-black/50 dark:text-white/50">{{ __('sales.invoices.create_subtitle') }}</p>
             </div>
 
             <!-- Toolbar Actions -->
             <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
                 <a href="{{ route('invoices.index') }}" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 active:scale-[0.97] transition-all flex items-center justify-center">
-                    Batal
+                    {{ __('sales.invoices.btn_cancel') }}
                 </a>
                 <button type="submit" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
                     <i data-lucide="send" class="w-4 h-4"></i>
-                    <span>Terbitkan Faktur</span>
+                    <span>{{ __('sales.invoices.btn_save_invoice') }}</span>
                 </button>
             </div>
         </header>
@@ -212,16 +212,16 @@
         <div class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 sm:p-6 space-y-4">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-black/5 dark:border-white/10">
                 <div>
-                    <h2 class="text-[15px] font-semibold text-black dark:text-white">Identitas Penagihan &amp; Dokumen</h2>
-                    <p class="text-[12px] text-black/50 dark:text-white/50">Tentukan pelanggan, tanggal jatuh tempo, dan referensi transaksi</p>
+                    <h2 class="text-[15px] font-semibold text-black dark:text-white">{{ __('sales.invoices.sec_client_info') }}</h2>
+                    <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('sales.invoices.sec_client_info_desc') }}</p>
                 </div>
 
                 <!-- Opsi Tarik dari Purchase Order -->
                 @if($availablePurchaseOrders->isNotEmpty())
                 <div class="flex items-center gap-2">
-                    <span class="text-[12px] text-black/50 dark:text-white/50">Tarik dari PO:</span>
+                    <span class="text-[12px] text-black/50 dark:text-white/50">{{ __('sales.invoices.po_pull_label') }}</span>
                     <select name="purchase_order_id" x-model="purchaseOrderId" @change="onPoChange()" class="h-8 px-2.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] text-[12px] text-[#007AFF] font-medium focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                        <option value="">-- Buat Faktur Manual --</option>
+                        <option value="">{{ __('sales.invoices.po_manual_invoice') }}</option>
                         <template x-for="po in availablePos" :key="po.id">
                             <option :value="po.id" x-text="po.po_number + ' - ' + (po.customer ? po.customer.name : '')"></option>
                         </template>
@@ -233,9 +233,9 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-[13px]">
                 <!-- Customer Select -->
                 <div class="sm:col-span-2">
-                    <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">Pilih Pelanggan / Klien *</label>
+                    <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">{{ __('sales.invoices.customer_select_label') }}</label>
                     <select name="customer_id" x-model="customerId" @change="onCustomerChange()" required class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                        <option value="">-- Pilih Pelanggan --</option>
+                        <option value="">{{ __('sales.invoices.customer_select_placeholder') }}</option>
                         @foreach($customers as $cust)
                             <option value="{{ $cust->id }}" {{ ($selectedPo?->customer_id ?? '') === $cust->id ? 'selected' : '' }}>
                                 {{ $cust->name }} {{ $cust->company_name ? "({$cust->company_name})" : '' }}
@@ -246,42 +246,42 @@
 
                 <!-- Nama Pengirim -->
                 <div>
-                    <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">Nama Pengirim / Penjual</label>
+                    <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">{{ __('sales.invoices.sender_name_label') }}</label>
                     <input type="text" name="sender_name" x-model="senderName" placeholder="{{ $business->name }}" class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                 </div>
 
                 <!-- Nama Penerima -->
                 <div>
-                    <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">Nama Penerima / Kontak Klien</label>
-                    <input type="text" name="recipient_name" x-model="recipientName" placeholder="Nama penerima barang / PIC" class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                    <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">{{ __('sales.invoices.recipient_name_label') }}</label>
+                    <input type="text" name="recipient_name" x-model="recipientName" placeholder="{{ __('sales.invoices.recipient_name_placeholder') }}" class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                 </div>
 
                 <div>
-                    <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">Tanggal Faktur *</label>
+                    <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">{{ __('sales.invoices.invoice_date_label') }} *</label>
                     <input type="date" name="invoice_date" x-model="invoiceDate" required class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                 </div>
 
                 <div>
-                    <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">Tanggal Jatuh Tempo *</label>
+                    <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">{{ __('sales.invoices.due_date_label') }} *</label>
                     <input type="date" name="due_date" x-model="dueDate" required class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                 </div>
 
                 <div>
-                    <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">Nomor Faktur (Opsional)</label>
-                    <input type="text" name="invoice_number" placeholder="Otomatis (INV-YYYYMM-XXXX)" class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] tabular-nums text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                    <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">{{ __('sales.invoices.invoice_number_opt_label') }}</label>
+                    <input type="text" name="invoice_number" placeholder="{{ __('sales.invoices.invoice_number_auto_placeholder') }}" class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] tabular-nums text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                 </div>
 
                 <div>
-                    <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">Termin Pembayaran</label>
+                    <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">{{ __('sales.invoices.payment_terms_col_label') }}</label>
                     <input type="text" name="payment_terms" x-model="paymentTerms" placeholder="Net 30 / COD" class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                 </div>
 
                 <div>
-                    <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">Status Awal</label>
+                    <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">{{ __('sales.invoices.initial_status_label') }}</label>
                     <select name="status" class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                        <option value="draft">Draft (Belum Terbit)</option>
-                        <option value="sent" selected>Sent (Terkirim ke Klien)</option>
-                        <option value="unpaid">Unpaid (Resmi Menunggu Bayar)</option>
+                        <option value="draft">{{ __('sales.invoices.status_draft_label') }}</option>
+                        <option value="sent" selected>{{ __('sales.invoices.status_sent_label') }}</option>
+                        <option value="unpaid">{{ __('sales.invoices.status_unpaid_label') }}</option>
                     </select>
                 </div>
 
@@ -289,10 +289,10 @@
                 @if($locations->isNotEmpty())
                 <div>
                     <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">
-                        Gudang Pengeluaran
+                        {{ __('sales.invoices.warehouse_location_label') }}
                     </label>
                     <select name="location_id" class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                        <option value="">-- Otomatis (Gudang Utama) --</option>
+                        <option value="">{{ __('sales.invoices.warehouse_auto_option') }}</option>
                         @foreach($locations as $loc)
                             <option value="{{ $loc->id }}" {{ $loc->is_primary ? 'selected' : '' }}>
                                 {{ $loc->name }} {{ $loc->type ? "({$loc->type})" : '' }}
@@ -310,15 +310,15 @@
         <div class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 sm:p-6 space-y-4">
             <div class="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/10">
                 <div>
-                    <h3 class="text-[15px] font-semibold text-black dark:text-white">Rincian Item &amp; Harga Jual</h3>
-                    <p class="text-[12px] text-black/50 dark:text-white/50">Pilih dari katalog untuk auto-fill harga jual dan snapshot HPP modal</p>
+                    <h3 class="text-[15px] font-semibold text-black dark:text-white">{{ __('sales.invoices.sec_items_title') }}</h3>
+                    <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('sales.invoices.sec_items_desc') }}</p>
                 </div>
 
                 <button type="button" @click="addItem()" class="h-8 px-3 rounded-[8px] text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.97] transition-all flex items-center gap-1.5">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                     </svg>
-                    <span>Tambah Baris</span>
+                    <span>{{ __('sales.invoices.btn_add_item') }}</span>
                 </button>
             </div>
 
@@ -327,12 +327,12 @@
                     <table class="block sm:table w-full text-left text-[13px]">
                         <thead class="hidden sm:table-header-group">
                             <tr class="border-b border-black/5 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] whitespace-nowrap">
-                                <th class="py-2.5 px-3 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 w-2/5">Produk / Item *</th>
-                                <th class="py-2.5 px-3 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 w-24">Satuan *</th>
-                                <th class="py-2.5 px-3 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 w-20 text-right">Qty *</th>
-                                <th class="py-2.5 px-3 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 w-32 text-right">Harga Jual *</th>
-                                <th class="py-2.5 px-3 text-[11px] font-semibold uppercase tracking-wide text-[#FF9500] dark:text-[#FF9F0A] w-28 text-right">HPP Modal</th>
-                                <th class="py-2.5 px-3 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 w-32 text-right">Subtotal</th>
+                                <th class="py-2.5 px-3 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 w-2/5">{{ __('sales.invoices.col_product_item') }}</th>
+                                <th class="py-2.5 px-3 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 w-24">{{ __('sales.invoices.col_unit') }}</th>
+                                <th class="py-2.5 px-3 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 w-20 text-right">{{ __('sales.invoices.col_qty') }}</th>
+                                <th class="py-2.5 px-3 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 w-32 text-right">{{ __('sales.invoices.col_selling_price') }}</th>
+                                <th class="py-2.5 px-3 text-[11px] font-semibold uppercase tracking-wide text-[#FF9500] dark:text-[#FF9F0A] w-28 text-right">{{ __('sales.invoices.col_hpp') }}</th>
+                                <th class="py-2.5 px-3 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 w-32 text-right">{{ __('sales.invoices.col_subtotal') }}</th>
                                 <th class="py-2.5 px-2 w-8 text-center"></th>
                             </tr>
                         </thead>
@@ -344,13 +344,13 @@
                                             <span class="text-[11px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50" x-text="'Item #' + (index + 1)"></span>
                                             <button type="button" @click="removeItem(index)" :disabled="items.length <= 1" class="h-6 px-2 rounded-[5px] text-[#FF3B30] bg-[#FF3B30]/10 text-[11px] font-medium disabled:opacity-30 flex items-center gap-1">
                                                 <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
-                                                <span>Hapus</span>
+                                                <span>{{ __('sales.invoices.btn_delete') }}</span>
                                             </button>
                                         </div>
-                                        <span class="block sm:hidden text-[10px] uppercase font-semibold text-black/40 dark:text-white/40 mb-1">Pilih Produk</span>
+                                        <span class="block sm:hidden text-[10px] uppercase font-semibold text-black/40 dark:text-white/40 mb-1">{{ __('sales.invoices.select_product_label') }}</span>
                                         <select :name="'items[' + index + '][product_id]'" x-model="item.product_id" @change="onProductChange(index)" 
                                                 class="w-full h-8 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2 text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                                            <option value="">-- Pilih Produk Fisik atau Layanan --</option>
+                                            <option value="">{{ __('sales.invoices.product_select_placeholder') }}</option>
                                             <template x-for="prod in products" :key="prod.id">
                                                 <option :value="prod.id" x-text="(prod.type === 'service' ? '[Jasa] ' : '') + prod.name + (prod.selling_price > 0 ? ' (Rp ' + new Intl.NumberFormat('id-ID').format(prod.selling_price) + ')' : '')"></option>
                                             </template>
@@ -358,16 +358,16 @@
                                         <div class="mt-0.5 flex items-center gap-1" x-show="item.product_id">
                                             <template x-if="products.find(p => p.id === item.product_id)?.type === 'service'">
                                                 <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-purple-500/15 text-purple-700 dark:text-purple-300">
-                                                    Jasa / Layanan (Bebas Stok)
+                                                    {{ __('sales.invoices.badge_service') }}
                                                 </span>
                                             </template>
                                         </div>
-                                        <input type="text" :name="'items[' + index + '][item_name]'" x-model="item.item_name" required placeholder="Nama item pada faktur"
+                                        <input type="text" :name="'items[' + index + '][item_name]'" x-model="item.item_name" required placeholder="{{ __('sales.invoices.item_name_placeholder') }}"
                                             class="w-full h-7 bg-transparent border-b border-black/10 dark:border-white/10 px-1 text-[12px] text-black dark:text-white mt-1.5 placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:border-[#007AFF] transition">
                                         <input type="hidden" :name="'items[' + index + '][sku]'" x-model="item.sku">
                                     </td>
                                     <td class="inline-block sm:table-cell w-[48%] sm:w-24 py-0 sm:py-2.5 px-0 sm:px-3 align-top">
-                                        <span class="block sm:hidden text-[10px] uppercase font-semibold text-black/40 dark:text-white/40 mb-1">Satuan</span>
+                                        <span class="block sm:hidden text-[10px] uppercase font-semibold text-black/40 dark:text-white/40 mb-1">{{ __('sales.invoices.col_unit') }}</span>
                                         <select :name="'items[' + index + '][unit_id]'" x-model="item.unit_id" required class="w-full h-8 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2 text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                                             <template x-for="u in units" :key="u.id">
                                                 <option :value="u.id" x-text="u.name + ' (' + u.code + ')'"></option>
@@ -375,23 +375,23 @@
                                         </select>
                                     </td>
                                     <td class="inline-block sm:table-cell w-[48%] sm:w-20 ml-[4%] sm:ml-0 text-left sm:text-right py-0 sm:py-2.5 px-0 sm:px-3 align-top">
-                                        <span class="block sm:hidden text-[10px] uppercase font-semibold text-black/40 dark:text-white/40 mb-1 text-left">Jumlah Qty</span>
+                                        <span class="block sm:hidden text-[10px] uppercase font-semibold text-black/40 dark:text-white/40 mb-1 text-left">{{ __('sales.invoices.col_qty') }}</span>
                                         <input type="number" step="any" min="0.0001" :name="'items[' + index + '][quantity]'" x-model="item.quantity" required
                                             class="w-full h-8 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2 text-[13px] text-left sm:text-right tabular-nums font-semibold text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                                     </td>
                                     <td class="inline-block sm:table-cell w-[48%] sm:w-32 text-left sm:text-right py-0 sm:py-2.5 px-0 sm:px-3 align-top">
-                                        <span class="block sm:hidden text-[10px] uppercase font-semibold text-black/40 dark:text-white/40 mb-1 text-left">Harga Jual</span>
+                                        <span class="block sm:hidden text-[10px] uppercase font-semibold text-black/40 dark:text-white/40 mb-1 text-left">{{ __('sales.invoices.col_selling_price') }}</span>
                                         <input type="number" step="any" min="0" :name="'items[' + index + '][unit_price]'" x-model="item.unit_price" required
                                             class="w-full h-8 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2 text-[13px] text-left sm:text-right tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                                     </td>
                                     <td class="inline-block sm:table-cell w-[48%] sm:w-28 ml-[4%] sm:ml-0 text-left sm:text-right py-0 sm:py-2.5 px-0 sm:px-3 align-top">
-                                        <span class="block sm:hidden text-[10px] uppercase font-semibold text-[#FF9500] dark:text-[#FF9F0A] mb-1 text-left">HPP Modal</span>
-                                        <input type="number" step="any" min="0" :name="'items[' + index + '][unit_hpp]'" x-model="item.unit_hpp" title="Snapshot HPP Modal"
+                                        <span class="block sm:hidden text-[10px] uppercase font-semibold text-[#FF9500] dark:text-[#FF9F0A] mb-1 text-left">{{ __('sales.invoices.col_hpp') }}</span>
+                                        <input type="number" step="any" min="0" :name="'items[' + index + '][unit_hpp]'" x-model="item.unit_hpp" title="{{ __('sales.invoices.col_hpp') }}"
                                             class="w-full h-8 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2 text-[13px] text-left sm:text-right tabular-nums text-[#FF9500] dark:text-[#FF9F0A] focus:outline-none focus:ring-2 focus:ring-[#FF9500]/50 transition">
                                     </td>
                                     <td class="block sm:table-cell py-1.5 sm:py-2.5 px-0 sm:px-3 text-right tabular-nums font-semibold text-black dark:text-white text-[13px] border-t sm:border-0 border-black/[0.04] dark:border-white/[0.06]">
                                         <div class="flex sm:block items-center justify-between">
-                                            <span class="block sm:hidden text-[11px] font-semibold text-black/50 dark:text-white/50">Subtotal Baris:</span>
+                                            <span class="block sm:hidden text-[11px] font-semibold text-black/50 dark:text-white/50">{{ __('sales.invoices.col_row_subtotal') }}</span>
                                             <span class="text-[14px] sm:text-[13px] text-[#007AFF] sm:text-black dark:sm:text-white font-bold sm:font-semibold" x-text="formatCurrency(item.quantity * item.unit_price)"></span>
                                         </div>
                                     </td>
@@ -415,34 +415,34 @@
                 <div class="space-y-3 w-full sm:max-w-md text-[13px]">
                     <div class="p-4 rounded-[12px] bg-[#34C759]/10 border border-[#34C759]/20 flex items-center justify-between">
                         <div>
-                            <div class="text-[11px] text-[#248A3D] dark:text-[#30D158] font-semibold uppercase tracking-wider">Estimasi Laba Kotor Transaksi:</div>
+                            <div class="text-[11px] text-[#248A3D] dark:text-[#30D158] font-semibold uppercase tracking-wider">{{ __('sales.invoices.est_gross_profit_label') }}</div>
                             <div class="text-[20px] font-bold text-[#248A3D] dark:text-[#30D158] tabular-nums" x-text="formatCurrency(totalGrossProfit)"></div>
                         </div>
                         <div class="text-right">
-                            <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] tabular-nums" x-text="'Margin ' + Math.round(grossMarginPercentage) + '%'"></span>
+                            <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] tabular-nums" x-text="'{{ __('sales.invoices.margin_label') }} ' + Math.round(grossMarginPercentage) + '%'"></span>
                         </div>
                     </div>
 
                     <div>
-                        <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">Catatan Tagihan (Tampil pada Faktur - Mendukung Baris Baru)</label>
-                        <textarea name="notes" rows="3" placeholder="Terima kasih atas kerja sama bisnis Anda...&#10;Catatan tambahan baris kedua..." class="w-full bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] p-3 text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition leading-relaxed">{{ old('notes') }}</textarea>
+                        <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">{{ __('sales.invoices.notes_label') }}</label>
+                        <textarea name="notes" rows="3" placeholder="{{ __('sales.invoices.notes_placeholder') }}" class="w-full bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] p-3 text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition leading-relaxed">{{ old('notes') }}</textarea>
                     </div>
 
                     <div>
-                        <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">Ketentuan Pembayaran &amp; Garansi</label>
-                        <textarea name="terms_conditions" rows="2" placeholder="Pembayaran ditransfer ke rekening resmi. Komplain maksimal 3 hari..." class="w-full bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] p-3 text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition"></textarea>
+                        <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">{{ __('sales.invoices.terms_warranty_label') }}</label>
+                        <textarea name="terms_conditions" rows="2" placeholder="{{ __('sales.invoices.terms_warranty_placeholder') }}" class="w-full bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] p-3 text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition"></textarea>
                     </div>
                 </div>
 
                 <!-- Right: Totals Breakdown -->
                 <div class="w-full sm:w-80 p-4 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 space-y-2.5 text-[13px]">
                     <div class="flex justify-between text-black/60 dark:text-white/60">
-                        <span>Subtotal Barang:</span>
+                        <span>{{ __('sales.invoices.subtotal_label') }}</span>
                         <span class="tabular-nums font-medium text-black dark:text-white" x-text="formatCurrency(subtotal)"></span>
                     </div>
 
                     <div class="flex items-center justify-between gap-2">
-                        <span class="text-black/60 dark:text-white/60">Potongan Diskon:</span>
+                        <span class="text-black/60 dark:text-white/60">{{ __('sales.invoices.discount_label') }}</span>
                         <div class="flex items-center gap-1.5">
                             <input type="number" step="any" min="0" name="discount_value" x-model="discountValue" class="w-20 h-7 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[6px] px-2 text-[12px] tabular-nums text-right text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                             <select name="discount_type" x-model="discountType" class="h-7 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[6px] px-1.5 text-[11px] text-black/70 dark:text-white/70 focus:outline-none">
@@ -453,17 +453,17 @@
                     </div>
 
                     <div class="flex items-center justify-between gap-2">
-                        <span class="text-black/60 dark:text-white/60">Pajak PPN (%):</span>
+                        <span class="text-black/60 dark:text-white/60">{{ __('sales.invoices.tax_vat_label') }}</span>
                         <input type="number" step="any" min="0" max="100" name="tax_percentage" x-model="taxPercentage" placeholder="11" class="w-20 h-7 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[6px] px-2 text-[12px] tabular-nums text-right text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                     </div>
 
                     <div class="flex items-center justify-between gap-2">
-                        <span class="text-black/60 dark:text-white/60">Ongkos Kirim:</span>
+                        <span class="text-black/60 dark:text-white/60">{{ __('sales.invoices.shipping_cost_label') }}</span>
                         <input type="number" step="any" min="0" name="shipping_cost" x-model="shippingCost" placeholder="0" class="w-24 h-7 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[6px] px-2 text-[12px] tabular-nums text-right text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                     </div>
 
                     <div class="pt-2 border-t border-black/5 dark:border-white/10 flex justify-between items-center text-[15px] font-bold text-black dark:text-white">
-                        <span>Total Tagihan:</span>
+                        <span>{{ __('sales.invoices.grand_total_label') }}</span>
                         <span class="tabular-nums text-[18px] text-[#007AFF]" x-text="formatCurrency(grandTotal)"></span>
                     </div>
                 </div>
@@ -473,14 +473,14 @@
         <!-- Sticky/Bottom Form Actions -->
         <div class="flex items-center justify-end gap-2 pt-2">
             <a href="{{ route('invoices.index') }}" class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 active:scale-[0.97] transition-all flex items-center justify-center">
-                Batal
+                {{ __('sales.invoices.btn_cancel') }}
             </a>
             @if(\App\Support\Context::hasPermission('invoices.create'))
             <button type="submit" class="h-9 px-5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
                 </svg>
-                <span>Terbitkan Faktur Penjualan</span>
+                <span>{{ __('sales.invoices.btn_save_invoice') }}</span>
             </button>
             @endif
         </div>

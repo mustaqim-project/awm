@@ -107,4 +107,65 @@ final class QuotationWebController extends Controller
         return redirect()->route('sales.orders.show', $salesOrder)
             ->with('success', "Penawaran {$quotation->quotation_number} berhasil diubah menjadi Pesanan Penjualan {$salesOrder->so_number}!");
     }
+
+    public function edit(Quotation $quotation): View
+    {
+        $business        = Context::requireBusiness();
+        abort_unless($quotation->business_id === $business->id, 403);
+
+        $quotation->load('customer', 'items.product');
+        $customers       = Customer::where('business_id', $business->id)->orderBy('name')->get();
+        $products        = Product::where('business_id', $business->id)->where('is_active', true)->orderBy('name')->get();
+        $goodsProducts   = Product::where('business_id', $business->id)->where('is_active', true)->goods()->orderBy('name')->get();
+        $serviceProducts = Product::where('business_id', $business->id)->where('is_active', true)->services()->orderBy('name')->get();
+
+        return view('app.quotations.edit', compact('business', 'quotation', 'customers', 'products', 'goodsProducts', 'serviceProducts'));
+    }
+
+    public function update(Request $request, Quotation $quotation): RedirectResponse
+    {
+        $business = Context::requireBusiness();
+        abort_unless($quotation->business_id === $business->id, 403);
+
+        $validated = $request->validate([
+            'customer_id' => ['required', 'exists:customers,id'],
+            'quotation_number' => ['nullable', 'string', 'max:64'],
+            'date' => ['required', 'date'],
+            'expiry_date' => ['nullable', 'date', 'after_or_equal:date'],
+            'discount_amount' => ['nullable', 'numeric', 'min:0'],
+            'tax_amount' => ['nullable', 'numeric', 'min:0'],
+            'status' => ['nullable', 'string', 'in:draft,sent,accepted,declined,converted'],
+            'notes' => ['nullable', 'string', 'max:1000'],
+            'terms_and_conditions' => ['nullable', 'string', 'max:2000'],
+            'items' => ['required', 'array', 'min:1'],
+            'items.*.product_id' => ['nullable', 'exists:products,id'],
+            'items.*.product_name' => ['required_without:items.*.product_id', 'nullable', 'string'],
+            'items.*.unit_price' => ['required', 'numeric', 'min:0'],
+            'items.*.quantity' => ['required', 'numeric', 'min:0.01'],
+            'items.*.discount_amount' => ['nullable', 'numeric', 'min:0'],
+            'items.*.notes' => ['nullable', 'string'],
+        ]);
+
+        $updated = $this->salesPipelineService->updateQuotation($quotation, $validated);
+
+        return redirect()->route('sales.quotations.show', $updated)
+            ->with('success', "Surat Penawaran {$updated->quotation_number} berhasil diperbarui.");
+    }
+
+    public function pdf(Quotation $quotation): \Illuminate\Http\Response
+    {
+        $business = Context::requireBusiness();
+        abort_unless($quotation->business_id === $business->id, 403);
+
+        $quotation->load(['customer', 'items.product', 'salesOrder']);
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.quotation_pdf', [
+            'business' => $business,
+            'quotation' => $quotation,
+        ])->setPaper('a4', 'portrait');
+
+        $filename = 'Penawaran-' . \Illuminate\Support\Str::slug($quotation->quotation_number) . '.pdf';
+
+        return $pdf->stream($filename);
+    }
 }

@@ -1,7 +1,7 @@
 @extends('layouts.app', [
-    'title' => 'Pesanan Marketplace - ' . $business->name,
-    'headerTitle' => 'Pesanan Masuk Marketplace',
-    'headerSubtitle' => 'Feed transaksi pesanan terpadu dari Shopee, TikTok Shop, dan Tokopedia',
+    'title' => __('marketplace.orders_page_title') . ' - ' . $business->name,
+    'headerTitle' => __('marketplace.orders_page_title'),
+    'headerSubtitle' => __('marketplace.orders_page_subtitle'),
 ])
 
 @section('content')
@@ -15,24 +15,24 @@
     {{-- MODULE HEADER & PERSISTENT MARKETPLACE TABS --}}
     <x-module-header
         module="marketplace"
-        title="Pesanan Masuk Marketplace"
-        subtitle="Pantau seluruh pesanan masuk dari Shopee, TikTok Shop, dan Tokopedia secara real-time yang memotong stok gudang otomatis.">
+        :title="__('marketplace.orders_page_title')"
+        :subtitle="__('marketplace.orders_module_subtitle')">
         <x-slot:actions>
             <a href="{{ route('marketplace-hub.orders.export', request()->only(['channel', 'status', 'start_date', 'end_date'])) }}"
                 class="min-h-[44px] sm:min-h-0 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 cursor-pointer"
-                title="Ekspor seluruh pesanan marketplace yang terfilter ke Excel (.xlsx)">
+                title="{{ __('marketplace.btn_export_excel_title') }}">
                 <i data-lucide="download" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
-                <span>Ekspor Excel</span>
+                <span>{{ __('marketplace.btn_export_excel') }}</span>
             </a>
             <button type="button" @click="pullModal = true"
                 class="min-h-[44px] sm:min-h-0 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 shadow-sm cursor-pointer">
                 <i data-lucide="download-cloud" class="w-4 h-4"></i>
-                <span>Tarik Pesanan Terbaru</span>
+                <span>{{ __('marketplace.btn_pull_latest_orders') }}</span>
             </button>
             <a href="{{ route('marketplace-hub.index') }}"
                 class="min-h-[44px] sm:min-h-0 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] flex items-center justify-center gap-1.5 cursor-pointer">
                 <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                <span>Kembali ke Hub</span>
+                <span>{{ __('marketplace.back_to_hub') }}</span>
             </a>
         </x-slot:actions>
     </x-module-header>
@@ -47,7 +47,7 @@
             <!-- Channel Filter -->
             <select name="channel" onchange="this.form.submit()"
                 class="h-10 px-3 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.06] dark:border-white/[0.08] text-[13px] text-black dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#007AFF]/30">
-                <option value="">Semua Saluran (All Channels)</option>
+                <option value="">{{ __('marketplace.all_channels_select') }}</option>
                 <option value="shopee" {{ request('channel') === 'shopee' ? 'selected' : '' }}>Shopee</option>
                 <option value="tiktok_shop" {{ request('channel') === 'tiktok_shop' ? 'selected' : '' }}>TikTok Shop</option>
                 <option value="tokopedia" {{ request('channel') === 'tokopedia' ? 'selected' : '' }}>Tokopedia</option>
@@ -56,23 +56,23 @@
             <!-- Status Filter -->
             <select name="status" onchange="this.form.submit()"
                 class="h-10 px-3 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.06] dark:border-white/[0.08] text-[13px] text-black dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#007AFF]/30">
-                <option value="">Semua Status Pesanan</option>
-                <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>Menunggu Pembayaran</option>
-                <option value="paid" {{ request('status') === 'paid' ? 'selected' : '' }}>Sudah Dibayar / Siap Dikirim</option>
-                <option value="shipped" {{ request('status') === 'shipped' ? 'selected' : '' }}>Dalam Pengiriman</option>
-                <option value="completed" {{ request('status') === 'completed' ? 'selected' : '' }}>Selesai</option>
-                <option value="cancelled" {{ request('status') === 'cancelled' ? 'selected' : '' }}>Dibatalkan</option>
+                <option value="">{{ __('marketplace.all_order_statuses_select') }}</option>
+                <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>{{ __('marketplace.status_pending_payment') }}</option>
+                <option value="paid" {{ request('status') === 'paid' ? 'selected' : '' }}>{{ __('marketplace.status_paid_ready') }}</option>
+                <option value="shipped" {{ request('status') === 'shipped' ? 'selected' : '' }}>{{ __('marketplace.status_in_transit') }}</option>
+                <option value="completed" {{ request('status') === 'completed' ? 'selected' : '' }}>{{ __('marketplace.status_completed') }}</option>
+                <option value="cancelled" {{ request('status') === 'cancelled' ? 'selected' : '' }}>{{ __('marketplace.status_cancelled') }}</option>
             </select>
 
             @if(request()->filled('channel') || request()->filled('status'))
                 <a href="{{ route('marketplace-hub.orders') }}" class="h-10 px-3 rounded-[12px] text-[12.5px] font-medium text-black/50 hover:text-black dark:hover:text-white flex items-center">
-                    Reset Filter
+                    {{ __('marketplace.reset_filter') }}
                 </a>
             @endif
         </form>
 
         <div class="text-[12px] text-black/60 dark:text-white/60">
-            <span>Total: <strong>{{ $orders->total() }}</strong> Pesanan</span>
+            <span>{!! __('marketplace.total_orders_count', ['count' => $orders->total()]) !!}</span>
         </div>
     </div>
 
@@ -84,12 +84,12 @@
             <table class="w-full text-left text-[13px] border-collapse">
                 <thead>
                     <tr class="border-b border-black/[0.06] dark:border-white/[0.08] bg-black/[0.02] dark:bg-white/[0.02] text-black/60 dark:text-white/60 font-semibold text-[11.5px] uppercase tracking-wider">
-                        <th class="py-3.5 px-4 sm:px-6">No. Pesanan &amp; Saluran</th>
-                        <th class="py-3.5 px-4">Pelanggan</th>
-                        <th class="py-3.5 px-4">Item &amp; Produk</th>
-                        <th class="py-3.5 px-4 text-right">Total Transaksi</th>
-                        <th class="py-3.5 px-4 text-center">Status</th>
-                        <th class="py-3.5 px-4 sm:px-6 text-right">Waktu Pesanan</th>
+                        <th class="py-3.5 px-4 sm:px-6">{{ __('marketplace.th_order_sn_channel') }}</th>
+                        <th class="py-3.5 px-4">{{ __('marketplace.th_customer') }}</th>
+                        <th class="py-3.5 px-4">{{ __('marketplace.th_items_products') }}</th>
+                        <th class="py-3.5 px-4 text-right">{{ __('marketplace.th_transaction_total') }}</th>
+                        <th class="py-3.5 px-4 text-center">{{ __('marketplace.th_order_status') }}</th>
+                        <th class="py-3.5 px-4 sm:px-6 text-right">{{ __('marketplace.th_order_time') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
@@ -117,7 +117,7 @@
                             <!-- Col 2: Customer -->
                             <td class="py-4 px-4">
                                 <div class="font-bold text-black dark:text-white text-[13px]">
-                                    {{ $order->buyer_name ?? 'Pelanggan Marketplace' }}
+                                    {{ $order->buyer_name ?? __('marketplace.default_marketplace_buyer') }}
                                 </div>
                                 @if($order->buyer_phone)
                                     <div class="text-[11px] text-black/50 dark:text-white/50 font-mono">
@@ -133,7 +133,7 @@
                                     $itemCount = is_countable($items) ? count($items) : 0;
                                 @endphp
                                 <div class="font-medium text-black dark:text-white">
-                                    {{ $itemCount }} Item Produk
+                                    {{ __('marketplace.items_count', ['count' => $itemCount]) }}
                                 </div>
                                 @if(!empty($items[0]['item_name'] ?? ($items[0]['name'] ?? null)))
                                     <div class="text-[11px] text-black/60 dark:text-white/60 truncate max-w-[200px]">
@@ -161,7 +161,7 @@
                                 </div>
                                 @if($order->channel_fee > 0)
                                     <div class="text-[10.5px] text-black/45 dark:text-white/45">
-                                        Fee: Rp {{ number_format((float)$order->channel_fee, 0, ',', '.') }}
+                                        {{ __('marketplace.fee_label', ['amount' => 'Rp ' . number_format((float)$order->channel_fee, 0, ',', '.')]) }}
                                     </div>
                                 @endif
                             </td>
@@ -198,8 +198,8 @@
                                 <div class="w-12 h-12 rounded-[16px] bg-black/[0.04] dark:bg-white/[0.06] flex items-center justify-center mx-auto mb-3">
                                     <i data-lucide="shopping-bag" class="w-6 h-6 text-black/40 dark:text-white/40"></i>
                                 </div>
-                                <div class="font-bold text-[14px]">Belum Ada Pesanan Masuk</div>
-                                <p class="text-[12px] mt-0.5">Pesanan dari Shopee, TikTok Shop, dan Tokopedia akan muncul di sini secara otomatis via Webhook atau penarikan manual.</p>
+                                <div class="font-bold text-[14px]">{{ __('marketplace.empty_orders_title') }}</div>
+                                <p class="text-[12px] mt-0.5">{{ __('marketplace.empty_orders_desc') }}</p>
                             </td>
                         </tr>
                     @endforelse
@@ -252,11 +252,11 @@
                             <i data-lucide="download-cloud" class="w-5 h-5"></i>
                         </div>
                         <div>
-                            <h3 id="pull-orders-modal-title" class="text-[16px] font-bold text-black dark:text-white">Tarik Pesanan Marketplace</h3>
-                            <p class="text-[12px] text-black/50 dark:text-white/50">Sinkronkan transaksi terkini secara manual via API resmi.</p>
+                            <h3 id="pull-orders-modal-title" class="text-[16px] font-bold text-black dark:text-white">{{ __('marketplace.pull_orders_modal_title') }}</h3>
+                            <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('marketplace.pull_orders_modal_sub') }}</p>
                         </div>
                     </div>
-                    <button type="button" @click="pullModal = false" class="min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-all cursor-pointer active:scale-95" aria-label="Tutup modal">
+                    <button type="button" @click="pullModal = false" class="min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-all cursor-pointer active:scale-95" aria-label="{{ __('marketplace.close') }}">
                         <i data-lucide="x" class="w-4 h-4"></i>
                     </button>
                 </div>
@@ -264,7 +264,7 @@
                 <form method="POST" action="{{ route('marketplace-hub.orders.pull') }}" @submit="submitting = true" class="space-y-4">
                     @csrf
                     <div>
-                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-2">Pilih Saluran Toko</label>
+                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-2">{{ __('marketplace.pull_orders_select_channel') }}</label>
                         <div class="grid grid-cols-3 gap-2 p-1.5 rounded-[16px] bg-black/[0.04] dark:bg-white/[0.06]">
                             <button type="button" @click="selectedPullChannel = 'shopee'"
                                 :class="selectedPullChannel === 'shopee' ? 'bg-white dark:bg-[#2C2C2E] shadow-sm font-bold text-[#EE4D2D]' : 'text-black/60 dark:text-white/60 font-medium'"
@@ -287,13 +287,13 @@
 
                     <div class="p-3.5 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] text-[12px] text-black/60 dark:text-white/60 flex items-center gap-2.5">
                         <i data-lucide="info" class="w-4 h-4 text-[#007AFF] shrink-0"></i>
-                        <span>Pesanan berstatus terbayar akan otomatis mengurangi stok produk COOCA secara real-time.</span>
+                        <span>{{ __('marketplace.pull_orders_auto_deduct_info') }}</span>
                     </div>
 
                     <div class="flex items-center justify-end gap-2.5 pt-2">
                         <button type="button" @click="pullModal = false" :disabled="submitting"
                             class="min-h-[44px] px-4 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] transition-all cursor-pointer active:scale-95">
-                            Batal
+                            {{ __('marketplace.cancel') }}
                         </button>
                         <button type="submit" :disabled="submitting"
                             class="min-h-[44px] px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer">
@@ -301,7 +301,7 @@
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
-                            <span x-text="submitting ? 'Menarik Pesanan...' : 'Mulai Tarik Pesanan'"></span>
+                            <span x-text="submitting ? '{{ __('marketplace.btn_pulling_orders') }}' : '{{ __('marketplace.btn_start_pull_orders') }}'"></span>
                         </button>
                     </div>
                 </form>

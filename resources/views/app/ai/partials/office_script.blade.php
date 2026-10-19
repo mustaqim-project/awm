@@ -190,7 +190,7 @@ function aiOfficeBase() {
                 this.agentChatHistories[role] = [{
                     sender: 'ai',
                     text: this.agentDefaultGreetings[role] || this.agentDefaultGreetings.cfo,
-                    time: 'Baru saja'
+                    time: '{{ __('ai.script.just_now') }}'
                 }];
                 this.saveChatHistoriesToStorage();
             }
@@ -247,7 +247,7 @@ function aiOfficeBase() {
                 this.agentChatHistories[role] = [{
                     sender: 'ai',
                     text: this.agentDefaultGreetings[role] || this.agentDefaultGreetings.cfo,
-                    time: 'Baru saja'
+                    time: '{{ __('ai.script.just_now') }}'
                 }];
                 this.saveChatHistoriesToStorage();
             }
@@ -316,7 +316,7 @@ function aiOfficeBase() {
                 if (data.needs_provider) {
                     this.agentChatHistories[role].push({
                         sender: 'ai',
-                        text: 'Konfigurasi AI Provider diperlukan. Silakan hubungkan API Key Anda terlebih dahulu.',
+                        text: '{{ __('ai.script.needs_provider') }}',
                         time: timeStr,
                         needs_provider: true
                     });
@@ -328,7 +328,7 @@ function aiOfficeBase() {
                 }
 
                 if (data.success && data.data) {
-                    const aiReply = data.data.summary || data.data.raw || 'Analisis operasional diselesaikan.';
+                    const aiReply = data.data.summary || data.data.raw || '{{ __('ai.script.default_ops_analysis') }}';
                     this.agentChatHistories[role].push({
                         sender: 'ai',
                         text: aiReply,
@@ -338,7 +338,7 @@ function aiOfficeBase() {
                 } else {
                     this.agentChatHistories[role].push({
                         sender: 'ai',
-                        text: data.message || 'Mohon maaf, terjadi kendala saat memproses instruksi bisnis.',
+                        text: data.message || '{{ __('ai.script.error_processing') }}',
                         time: timeStr
                     });
                     this.saveChatHistoriesToStorage();
@@ -346,7 +346,7 @@ function aiOfficeBase() {
             } catch (err) {
                 this.agentChatHistories[role].push({
                     sender: 'ai',
-                    text: 'Terjadi gangguan koneksi jaringan. Silakan periksa koneksi internet Anda.',
+                    text: '{{ __('ai.script.network_error') }}',
                     time: timeStr
                 });
                 this.saveChatHistoriesToStorage();
@@ -371,7 +371,7 @@ function aiOfficeBase() {
             this.agentChatHistories[role] = [{
                 sender: 'ai',
                 text: this.agentDefaultGreetings[role] || this.agentDefaultGreetings.cfo,
-                time: 'Baru saja'
+                time: '{{ __('ai.script.just_now') }}'
             }];
             this.saveChatHistoriesToStorage();
             this.$nextTick(() => {
@@ -409,16 +409,16 @@ function aiOfficeBase() {
                     const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }).replace(':', '.');
                     this.agentChatHistories[role].push({
                         sender: 'ai',
-                        text: (data.data && (data.data.summary || data.data.raw)) ? data.data.summary : 'Evaluasi kesehatan bisnis harian selesai.',
+                        text: (data.data && (data.data.summary || data.data.raw)) ? data.data.summary : '{{ __('ai.script.eval_completed') }}',
                         time: timeStr
                     });
                     this.saveChatHistoriesToStorage();
                     this.showConsultationModal = true;
                 } else {
-                    alert(data.message || 'Gagal menjalankan evaluasi.');
+                    alert(data.message || '{{ __('ai.script.eval_failed') }}');
                 }
             } catch (err) {
-                alert('Terjadi kesalahan jaringan: ' + err.message);
+                alert('{{ __('ai.script.network_error_prefix') }}' + err.message);
             } finally {
                 this.isEvaluating = false;
                 this.$nextTick(() => {

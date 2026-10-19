@@ -35,20 +35,20 @@
                 <button type="button" @click="expanded = !expanded"
                     class="h-9 px-3 rounded-[10px] text-[12px] font-semibold text-black/70 dark:text-white/70 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.10] flex items-center gap-1.5 transition-all">
                     <i data-lucide="sliders-horizontal" class="w-3.5 h-3.5"></i>
-                    <span>Filter Lanjutan</span>
+                    <span>{{ __('pos.reports_filter_advanced') }}</span>
                     <i data-lucide="chevron-down" class="w-3.5 h-3.5 transition-transform duration-200" :class="{ 'rotate-180': expanded }"></i>
                 </button>
 
                 <a href="{{ route('pos.reports.index', ['tab' => $activeTab]) }}"
                     class="h-9 px-3 rounded-[10px] text-[12px] font-semibold text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.06] flex items-center gap-1 transition-all">
                     <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-                    <span>Reset</span>
+                    <span>{{ __('pos.reports_filter_reset') }}</span>
                 </a>
 
                 <button type="submit"
                     class="h-9 px-4 rounded-[10px] text-[12px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all flex items-center gap-1.5 shadow-xs">
                     <i data-lucide="check" class="w-3.5 h-3.5"></i>
-                    <span>Terapkan</span>
+                    <span>{{ __('pos.reports_filter_apply') }}</span>
                 </button>
             </div>
         </div>
@@ -56,23 +56,23 @@
         {{-- Row 2: Standard Date Range Picker --}}
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 pt-2 border-t border-black/5 dark:border-white/5">
             <div>
-                <label class="block text-[11px] font-medium text-black/50 dark:text-white/50 mb-1">Dari Tanggal</label>
+                <label class="block text-[11px] font-medium text-black/50 dark:text-white/50 mb-1">{{ __('pos.reports_filter_start_date') }}</label>
                 <input type="date" id="filterStartDate" name="start_date" value="{{ $startDate->toDateString() }}"
                     onchange="document.getElementById('filterPresetInput').value = 'custom'"
                     class="w-full h-10 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 rounded-[10px] px-3 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
             </div>
 
             <div>
-                <label class="block text-[11px] font-medium text-black/50 dark:text-white/50 mb-1">Sampai Tanggal</label>
+                <label class="block text-[11px] font-medium text-black/50 dark:text-white/50 mb-1">{{ __('pos.reports_filter_end_date') }}</label>
                 <input type="date" id="filterEndDate" name="end_date" value="{{ $endDate->toDateString() }}"
                     onchange="document.getElementById('filterPresetInput').value = 'custom'"
                     class="w-full h-10 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 rounded-[10px] px-3 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
             </div>
 
             <div>
-                <label class="block text-[11px] font-medium text-black/50 dark:text-white/50 mb-1">Cabang / Outlet</label>
+                <label class="block text-[11px] font-medium text-black/50 dark:text-white/50 mb-1">{{ __('pos.reports_filter_outlet') }}</label>
                 <select name="location_id" class="w-full h-10 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 rounded-[10px] px-3 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
-                    <option value="">Semua Outlet</option>
+                    <option value="">{{ __('pos.reports_filter_all_outlets') }}</option>
                     @foreach ($locations as $loc)
                         <option value="{{ $loc->id }}" {{ request('location_id') == $loc->id ? 'selected' : '' }}>{{ $loc->name }}</option>
                     @endforeach
@@ -80,9 +80,9 @@
             </div>
 
             <div>
-                <label class="block text-[11px] font-medium text-black/50 dark:text-white/50 mb-1">Kasir / Operator</label>
+                <label class="block text-[11px] font-medium text-black/50 dark:text-white/50 mb-1">{{ __('pos.reports_filter_cashier') }}</label>
                 <select name="user_id" class="w-full h-10 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 rounded-[10px] px-3 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
-                    <option value="">Semua Kasir</option>
+                    <option value="">{{ __('pos.reports_filter_all_cashiers') }}</option>
                     @foreach ($cashiers as $cUser)
                         <option value="{{ $cUser->id }}" {{ request('user_id') == $cUser->id ? 'selected' : '' }}>{{ $cUser->name }}</option>
                     @endforeach
@@ -93,9 +93,9 @@
         {{-- Row 3: Advanced Collapsible Filters --}}
         <div x-show="expanded" x-transition.opacity.duration.200ms class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 pt-3 border-t border-black/5 dark:border-white/5">
             <div>
-                <label class="block text-[11px] font-medium text-black/50 dark:text-white/50 mb-1">Kategori Produk</label>
+                <label class="block text-[11px] font-medium text-black/50 dark:text-white/50 mb-1">{{ __('pos.reports_filter_category') }}</label>
                 <select name="category_id" class="w-full h-10 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 rounded-[10px] px-3 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
-                    <option value="">Semua Kategori</option>
+                    <option value="">{{ __('pos.reports_filter_all_categories') }}</option>
                     @foreach ($categories as $cat)
                         <option value="{{ $cat->id }}" {{ request('category_id') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
                     @endforeach
@@ -103,40 +103,40 @@
             </div>
 
             <div>
-                <label class="block text-[11px] font-medium text-black/50 dark:text-white/50 mb-1">Metode Pembayaran</label>
+                <label class="block text-[11px] font-medium text-black/50 dark:text-white/50 mb-1">{{ __('pos.reports_filter_payment_method') }}</label>
                 <select name="payment_method" class="w-full h-10 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 rounded-[10px] px-3 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
-                    <option value="">Semua Metode</option>
-                    <option value="cash" {{ request('payment_method') === 'cash' ? 'selected' : '' }}>Tunai (Cash)</option>
+                    <option value="">{{ __('pos.reports_filter_all_payment_methods') }}</option>
+                    <option value="cash" {{ request('payment_method') === 'cash' ? 'selected' : '' }}>{{ __('pos.reports_filter_method_cash') }}</option>
                     <option value="qris" {{ request('payment_method') === 'qris' ? 'selected' : '' }}>QRIS</option>
                     <option value="edc_debit" {{ request('payment_method') === 'edc_debit' ? 'selected' : '' }}>Debit Card</option>
-                    <option value="edc_credit" {{ request('payment_method') === 'edc_credit' ? 'selected' : '' }}>Kartu Kredit</option>
-                    <option value="transfer" {{ request('payment_method') === 'transfer' ? 'selected' : '' }}>Transfer Bank</option>
-                    <option value="customer_credit" {{ request('payment_method') === 'customer_credit' ? 'selected' : '' }}>Kasbon (Piutang)</option>
-                    <option value="loyalty_points" {{ request('payment_method') === 'loyalty_points' ? 'selected' : '' }}>Poin Loyalitas</option>
+                    <option value="edc_credit" {{ request('payment_method') === 'edc_credit' ? 'selected' : '' }}>{{ __('pos.reports_filter_method_credit_card') }}</option>
+                    <option value="transfer" {{ request('payment_method') === 'transfer' ? 'selected' : '' }}>{{ __('pos.reports_filter_method_bank_transfer') }}</option>
+                    <option value="customer_credit" {{ request('payment_method') === 'customer_credit' ? 'selected' : '' }}>{{ __('pos.reports_filter_method_receivable') }}</option>
+                    <option value="loyalty_points" {{ request('payment_method') === 'loyalty_points' ? 'selected' : '' }}>{{ __('pos.reports_filter_method_points') }}</option>
                 </select>
             </div>
 
             <div>
-                <label class="block text-[11px] font-medium text-black/50 dark:text-white/50 mb-1">Kanal Penjualan</label>
+                <label class="block text-[11px] font-medium text-black/50 dark:text-white/50 mb-1">{{ __('pos.reports_filter_sales_channel') }}</label>
                 <select name="sales_channel" class="w-full h-10 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 rounded-[10px] px-3 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
-                    <option value="">Semua Kanal</option>
-                    <option value="pos" {{ request('sales_channel') === 'pos' ? 'selected' : '' }}>Kasir POS Langsung</option>
-                    <option value="qr_table" {{ request('sales_channel') === 'qr_table' ? 'selected' : '' }}>QR Order Meja</option>
+                    <option value="">{{ __('pos.reports_filter_all_channels') }}</option>
+                    <option value="pos" {{ request('sales_channel') === 'pos' ? 'selected' : '' }}>{{ __('pos.reports_filter_channel_pos') }}</option>
+                    <option value="qr_table" {{ request('sales_channel') === 'qr_table' ? 'selected' : '' }}>{{ __('pos.reports_filter_channel_qr') }}</option>
                     <option value="grabfood" {{ request('sales_channel') === 'grabfood' ? 'selected' : '' }}>GrabFood</option>
                     <option value="gofood" {{ request('sales_channel') === 'gofood' ? 'selected' : '' }}>GoFood</option>
                     <option value="shopeefood" {{ request('sales_channel') === 'shopeefood' ? 'selected' : '' }}>ShopeeFood</option>
-                    <option value="online" {{ request('sales_channel') === 'online' ? 'selected' : '' }}>Website Storefront</option>
+                    <option value="online" {{ request('sales_channel') === 'online' ? 'selected' : '' }}>{{ __('pos.reports_filter_channel_storefront') }}</option>
                 </select>
             </div>
 
             <div>
-                <label class="block text-[11px] font-medium text-black/50 dark:text-white/50 mb-1">Status Transaksi</label>
+                <label class="block text-[11px] font-medium text-black/50 dark:text-white/50 mb-1">{{ __('pos.reports_filter_status') }}</label>
                 <select name="status" class="w-full h-10 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 rounded-[10px] px-3 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
-                    <option value="">Selesai (Completed & Partial)</option>
-                    <option value="completed" {{ request('status') === 'completed' ? 'selected' : '' }}>Hanya Selesai (Completed)</option>
-                    <option value="voided" {{ request('status') === 'voided' ? 'selected' : '' }}>Dibatalkan (Voided)</option>
-                    <option value="refunded" {{ request('status') === 'refunded' ? 'selected' : '' }}>Direfund (Refunded)</option>
-                    <option value="draft_held" {{ request('status') === 'draft_held' ? 'selected' : '' }}>Tertahan (Held)</option>
+                    <option value="">{{ __('pos.reports_filter_status_all_finished') }}</option>
+                    <option value="completed" {{ request('status') === 'completed' ? 'selected' : '' }}>{{ __('pos.reports_filter_status_completed') }}</option>
+                    <option value="voided" {{ request('status') === 'voided' ? 'selected' : '' }}>{{ __('pos.reports_filter_status_voided') }}</option>
+                    <option value="refunded" {{ request('status') === 'refunded' ? 'selected' : '' }}>{{ __('pos.reports_filter_status_refunded') }}</option>
+                    <option value="draft_held" {{ request('status') === 'draft_held' ? 'selected' : '' }}>{{ __('pos.reports_filter_status_held') }}</option>
                 </select>
             </div>
         </div>

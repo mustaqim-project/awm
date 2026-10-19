@@ -1,7 +1,7 @@
 @extends('layouts.app', [
-    'title' => 'Bahan Baku & Harga',
-    'headerTitle' => 'Katalog Bahan Baku & Pemasok',
-    'headerSubtitle' => 'Kelola harga akuisisi efektif, rendemen (yield), susut (waste), dan riwayat harga bahan',
+    'title' => __('materials.title'),
+    'headerTitle' => __('materials.header_title'),
+    'headerSubtitle' => __('materials.header_subtitle'),
 ])
 
 @section('content')
@@ -121,7 +121,7 @@
                 });
     
                 const data = await res.json();
-                if (!res.ok) throw new Error(data.message || 'Gagal menyimpan kategori');
+                if (!res.ok) throw new Error(data.message || '{{ __('materials.error_save_category') }}');
     
                 const newCat = data.category || data.data || data;
                 this.categories.push(newCat);
@@ -157,7 +157,7 @@
                 });
     
                 const data = await res.json();
-                if (!res.ok) throw new Error(data.message || 'Gagal menyimpan satuan');
+                if (!res.ok) throw new Error(data.message || '{{ __('materials.error_save_unit') }}');
     
                 const newUnit = data.unit || data.data || data;
                 this.units.push(newUnit);
@@ -194,7 +194,7 @@
                 });
     
                 const data = await res.json();
-                if (!res.ok) throw new Error(data.message || 'Gagal menyimpan supplier');
+                if (!res.ok) throw new Error(data.message || '{{ __('materials.error_save_supplier') }}');
     
                 const newSup = data.supplier || data.data || data;
                 this.suppliers.push(newSup);
@@ -214,32 +214,32 @@
         <!-- 1. TOOLBAR / PAGE HEADER                                -->
         <!-- ===================================================== -->
         <x-module-header
-            title="Katalog Bahan Baku & Pemasok"
-            subtitle="Kelola harga beli efektif, susut/rendemen (yield), dan relasi pemasok bahan baku"
+            title="{{ __('materials.catalog_title') }}"
+            subtitle="{{ __('materials.catalog_subtitle') }}"
             :breadcrumbs="[
-                ['label' => 'Dashboard', 'url' => route('dashboard')],
-                ['label' => 'Bahan Baku', 'url' => route('materials.index')],
-                ['label' => 'Katalog Bahan Baku', 'url' => null],
+                ['label' => __('materials.breadcrumb_dashboard'), 'url' => route('dashboard')],
+                ['label' => __('materials.breadcrumb_materials'), 'url' => route('materials.index')],
+                ['label' => __('materials.breadcrumb_catalog'), 'url' => null],
             ]">
             <a href="{{ route('materials.export') }}"
                 class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.97] transition-all flex items-center justify-center gap-2"
-                title="Export seluruh katalog bahan baku ke file Excel (.xlsx)">
+                title="{{ __('materials.export_excel_title') }}">
                 <i data-lucide="download" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
-                <span>Export Excel</span>
+                <span>{{ __('materials.export_excel') }}</span>
             </a>
 
             @if (\App\Support\Context::hasPermission('materials.create'))
                 <a href="{{ route('import.index', ['tab' => 'materials']) }}"
                     class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.97] transition-all flex items-center justify-center gap-2"
-                    title="Import data bahan baku massal dari file Excel / CSV">
+                    title="{{ __('materials.import_excel_title') }}">
                     <i data-lucide="upload" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
-                    <span>Import Excel</span>
+                    <span>{{ __('materials.import_excel') }}</span>
                 </a>
 
                 <button type="button" @click="showAddModal = true"
                     class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all flex items-center justify-center gap-2 shadow-sm shadow-[#007AFF]/25">
                     <i data-lucide="plus" class="w-4 h-4"></i>
-                    <span>Tambah Bahan Baku</span>
+                    <span>{{ __('materials.add_material') }}</span>
                 </button>
             @endif
         </x-module-header>
@@ -258,8 +258,7 @@
                 class="rounded-[20px] bg-white/80 dark:bg-[#1C1C1E]/80 backdrop-blur-xl border border-black/[0.06] dark:border-white/[0.08] p-4 sm:p-5 flex flex-col justify-between shadow-xs">
                 <div class="flex items-center justify-between">
                     <span
-                        class="text-[12px] font-semibold text-[#8E8E93] dark:text-[#98989D] uppercase tracking-wider">Total
-                        Bahan Baku</span>
+                        class="text-[12px] font-semibold text-[#8E8E93] dark:text-[#98989D] uppercase tracking-wider">{{ __('materials.kpi_total_materials') }}</span>
                     <div class="w-8 h-8 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -270,7 +269,7 @@
                 <div class="mt-3 flex items-baseline justify-between">
                     <span
                         class="text-[26px] font-bold tabular-nums text-[#1C1C1E] dark:text-[#F2F2F7]">{{ $materials->total() }}</span>
-                    <span class="text-[11px] font-medium text-[#8E8E93] dark:text-[#98989D]">Item Terdaftar</span>
+                    <span class="text-[11px] font-medium text-[#8E8E93] dark:text-[#98989D]">{{ __('materials.kpi_registered_items') }}</span>
                 </div>
             </div>
 
@@ -279,8 +278,7 @@
                 class="rounded-[20px] bg-white/80 dark:bg-[#1C1C1E]/80 backdrop-blur-xl border border-black/[0.06] dark:border-white/[0.08] p-4 sm:p-5 flex flex-col justify-between shadow-xs">
                 <div class="flex items-center justify-between">
                     <span
-                        class="text-[12px] font-semibold text-[#8E8E93] dark:text-[#98989D] uppercase tracking-wider">Kategori
-                        Bahan</span>
+                        class="text-[12px] font-semibold text-[#8E8E93] dark:text-[#98989D] uppercase tracking-wider">{{ __('materials.kpi_categories') }}</span>
                     <div class="w-8 h-8 rounded-[10px] bg-[#5856D6]/10 text-[#5856D6] flex items-center justify-center">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -291,7 +289,7 @@
                 <div class="mt-3 flex items-baseline justify-between">
                     <span class="text-[26px] font-bold tabular-nums text-[#5856D6]"><span
                             x-text="categories.length">{{ $categories->count() }}</span></span>
-                    <span class="text-[11px] font-medium text-[#8E8E93] dark:text-[#98989D]">Klasifikasi</span>
+                    <span class="text-[11px] font-medium text-[#8E8E93] dark:text-[#98989D]">{{ __('materials.kpi_classification') }}</span>
                 </div>
             </div>
 
@@ -300,8 +298,7 @@
                 class="rounded-[20px] bg-white/80 dark:bg-[#1C1C1E]/80 backdrop-blur-xl border border-black/[0.06] dark:border-white/[0.08] p-4 sm:p-5 flex flex-col justify-between shadow-xs">
                 <div class="flex items-center justify-between">
                     <span
-                        class="text-[12px] font-semibold text-[#8E8E93] dark:text-[#98989D] uppercase tracking-wider">Pemasok
-                        Vendor</span>
+                        class="text-[12px] font-semibold text-[#8E8E93] dark:text-[#98989D] uppercase tracking-wider">{{ __('materials.kpi_suppliers') }}</span>
                     <div class="w-8 h-8 rounded-[10px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -312,7 +309,7 @@
                 <div class="mt-3 flex items-baseline justify-between">
                     <span class="text-[26px] font-bold tabular-nums text-[#34C759] dark:text-[#30D158]"><span
                             x-text="suppliers.length">{{ $suppliers->count() }}</span></span>
-                    <span class="text-[11px] font-medium text-[#34C759] dark:text-[#30D158]">Vendor Aktif</span>
+                    <span class="text-[11px] font-medium text-[#34C759] dark:text-[#30D158]">{{ __('materials.kpi_active_vendors') }}</span>
                 </div>
             </div>
 
@@ -321,8 +318,7 @@
                 class="rounded-[20px] bg-white/80 dark:bg-[#1C1C1E]/80 backdrop-blur-xl border border-black/[0.06] dark:border-white/[0.08] p-4 sm:p-5 flex flex-col justify-between shadow-xs">
                 <div class="flex items-center justify-between">
                     <span
-                        class="text-[12px] font-semibold text-[#8E8E93] dark:text-[#98989D] uppercase tracking-wider">Manajemen
-                        Susut</span>
+                        class="text-[12px] font-semibold text-[#8E8E93] dark:text-[#98989D] uppercase tracking-wider">{{ __('materials.kpi_waste_management') }}</span>
                     <div class="w-8 h-8 rounded-[10px] bg-[#FF9500]/10 text-[#FF9500] flex items-center justify-center">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -331,8 +327,8 @@
                     </div>
                 </div>
                 <div class="mt-3 flex items-baseline justify-between">
-                    <span class="text-[22px] font-bold text-[#FF9500] dark:text-[#FF9F0A]">Yield &amp; Waste</span>
-                    <span class="text-[11px] font-medium text-[#8E8E93] dark:text-[#98989D]">Otomatis HPP</span>
+                    <span class="text-[22px] font-bold text-[#FF9500] dark:text-[#FF9F0A]">{{ __('materials.kpi_yield_waste') }}</span>
+                    <span class="text-[11px] font-medium text-[#8E8E93] dark:text-[#98989D]">{{ __('materials.kpi_auto_cogs') }}</span>
                 </div>
             </div>
         </div>
@@ -352,7 +348,7 @@
                             d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                     </svg>
                     <input type="text" name="search" value="{{ request('search') }}"
-                        placeholder="Cari nama bahan atau SKU..."
+                        placeholder="{{ __('materials.search_placeholder') }}"
                         class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[12px] pl-10 pr-3.5 text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                 </div>
 
@@ -360,7 +356,7 @@
                 <div class="flex items-center gap-2">
                     <select name="category_id" onchange="this.form.submit()"
                         class="h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[12px] text-[13px] font-medium text-[#1C1C1E] dark:text-[#F2F2F7] focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                        <option value="">Semua Kategori</option>
+                        <option value="">{{ __('materials.all_categories') }}</option>
                         @foreach ($categories as $cat)
                             <option value="{{ $cat->id }}"
                                 {{ request('category_id') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
@@ -374,7 +370,7 @@
                                 viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                             </svg>
-                            <span>Reset</span>
+                            <span>{{ __('materials.btn_reset') }}</span>
                         </a>
                     @endif
                 </div>
@@ -391,15 +387,15 @@
                     <thead>
                         <tr
                             class="border-b border-black/[0.06] dark:border-white/[0.08] bg-black/[0.02] dark:bg-white/[0.02]">
-                            <x-table-sort-th :col="0" type="string" title="Nama Bahan & SKU" class="whitespace-nowrap" />
-                            <x-table-sort-th :col="1" type="string" title="Kategori" class="whitespace-nowrap" />
-                            <x-table-sort-th :col="2" type="string" title="Satuan Beli" class="whitespace-nowrap" />
-                            <x-table-sort-th :col="3" type="number" title="Harga Beli Terakhir" align="right" class="whitespace-nowrap" />
-                            <x-table-sort-th :col="4" type="number" title="Yield / Waste" align="center" class="whitespace-nowrap" />
-                            <x-table-sort-th :col="5" type="number" title="Biaya Efektif / Unit" align="right" class="whitespace-nowrap" />
+                            <x-table-sort-th :col="0" type="string" :title="__('materials.th_name_sku')" class="whitespace-nowrap" />
+                            <x-table-sort-th :col="1" type="string" :title="__('materials.th_category')" class="whitespace-nowrap" />
+                            <x-table-sort-th :col="2" type="string" :title="__('materials.th_unit')" class="whitespace-nowrap" />
+                            <x-table-sort-th :col="3" type="number" :title="__('materials.th_last_purchase_price')" align="right" class="whitespace-nowrap" />
+                            <x-table-sort-th :col="4" type="number" :title="__('materials.th_yield_waste')" align="center" class="whitespace-nowrap" />
+                            <x-table-sort-th :col="5" type="number" :title="__('materials.th_effective_cost')" align="right" class="whitespace-nowrap" />
                             <th
                                 class="py-3 px-4 text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D] text-right whitespace-nowrap">
-                                Aksi</th>
+                                {{ __('materials.th_actions') }}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
@@ -411,15 +407,15 @@
                                 <td data-sort-value="{{ strtolower($mat->name) }}" class="py-3.5 px-4 font-medium text-[#1C1C1E] dark:text-[#F2F2F7]">
                                     <div class="font-semibold text-[13.5px]">{{ $mat->name }}</div>
                                     <div class="text-[11px] text-[#8E8E93] dark:text-[#98989D] tabular-nums mt-0.5">
-                                        {{ $mat->sku ?? 'No SKU' }} · Supplier: <span
+                                        {{ $mat->sku ?? __('materials.no_sku') }} · {{ __('materials.supplier_prefix') }} <span
                                             class="font-medium text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80">{{ $mat->supplier?->name ?? '-' }}</span>
                                     </div>
                                 </td>
                                 <td data-sort-value="{{ strtolower($mat->category?->name ?? '') }}" class="py-3.5 px-4 text-[#3C3C43]/80 dark:text-[#EBEBF5]/80">
-                                    {{ $mat->category?->name ?? 'Umum' }}
+                                    {{ $mat->category?->name ?? __('materials.general_category') }}
                                 </td>
                                 <td data-sort-value="{{ strtolower($mat->unit?->name ?? '') }}" class="py-3.5 px-4 text-[#1C1C1E] dark:text-[#F2F2F7] tabular-nums font-medium">
-                                    {{ $mat->unit?->name ?? 'pcs' }} <span
+                                    {{ $mat->unit?->name ?? __('materials.default_unit') }} <span
                                         class="text-[11px] text-[#8E8E93] dark:text-[#98989D]">({{ $mat->unit?->code }})</span>
                                 </td>
                                 <td data-sort-value="{{ (float) ($latestPrice?->purchase_price ?? 0) }}"
@@ -430,12 +426,12 @@
                                 <td data-sort-value="{{ (float) $mat->yield_percentage }}" class="py-3.5 px-4 text-center whitespace-nowrap">
                                     <span
                                         class="inline-flex items-center px-2 py-0.5 rounded-[6px] text-[11px] font-semibold bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] tabular-nums">
-                                        {{ $mat->yield_percentage }}% Yield
+                                        {{ __('materials.yield_badge', ['pct' => $mat->yield_percentage]) }}
                                     </span>
                                     @if ($mat->waste_percentage > 0)
                                         <span
                                             class="inline-flex items-center px-2 py-0.5 rounded-[6px] text-[11px] font-semibold bg-[#FF3B30]/10 text-[#C41E17] dark:text-[#FF453A] tabular-nums ml-1">
-                                            {{ $mat->waste_percentage }}% Waste
+                                            {{ __('materials.waste_badge', ['pct' => $mat->waste_percentage]) }}
                                         </span>
                                     @endif
                                 </td>
@@ -449,20 +445,20 @@
                                         @if (\App\Support\Context::hasPermission('materials.edit'))
                                             <button type="button" @click="openPriceModal({{ Js::from($mat) }})"
                                                 class="h-8 px-2.5 rounded-[8px] text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 transition-colors">
-                                                Update Harga
+                                                {{ __('materials.btn_update_price') }}
                                             </button>
                                             <button type="button" @click="openEditModal({{ Js::from($mat) }})"
                                                 class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium text-[#1C1C1E] dark:text-[#F2F2F7] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] transition-colors"
-                                                title="Edit Spesifikasi Bahan">
-                                                Edit
+                                                title="{{ __('materials.title_edit_spec') }}">
+                                                {{ __('materials.btn_edit') }}
                                             </button>
                                         @endif
                                         @if (\App\Support\Context::hasPermission('materials.delete'))
                                             <button type="button"
                                                 @click="openDelete('{{ $mat->id }}', {{ Js::from($mat->name) }})"
                                                 class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium text-[#FF3B30] hover:bg-[#FF3B30]/10 transition-colors"
-                                                title="Hapus Bahan Baku">
-                                                Hapus
+                                                title="{{ __('materials.title_delete_material') }}">
+                                                {{ __('materials.btn_delete') }}
                                             </button>
                                             <form id="form-delete-{{ $mat->id }}" method="POST"
                                                 action="{{ route('materials.destroy', $mat->id) }}" class="hidden">
@@ -476,7 +472,7 @@
                         @empty
                             <tr>
                                 <td colspan="7" class="py-12 text-center text-[#8E8E93] dark:text-[#98989D]">
-                                    Belum ada data bahan baku ditemukan.
+                                    {{ __('materials.empty_materials') }}
                                 </td>
                             </tr>
                         @endforelse
@@ -507,7 +503,7 @@
                             <h3 class="text-[15px] font-bold text-[#1C1C1E] dark:text-[#F2F2F7] leading-tight truncate">
                                 {{ $mat->name }}</h3>
                             <div class="text-[12px] text-[#8E8E93] dark:text-[#98989D] mt-0.5">
-                                {{ $mat->sku ?? 'No SKU' }} · {{ $mat->category?->name ?? 'Umum' }}
+                                {{ $mat->sku ?? __('materials.no_sku') }} · {{ $mat->category?->name ?? __('materials.general_category') }}
                             </div>
                         </div>
                         <div class="text-right shrink-0">
@@ -522,14 +518,14 @@
                     <div
                         class="grid grid-cols-2 gap-2 pt-2 border-t border-black/[0.04] dark:border-white/[0.06] text-[12px]">
                         <div>
-                            <span class="text-[#8E8E93] block text-[11px]">Harga Beli Terakhir:</span>
+                            <span class="text-[#8E8E93] block text-[11px]">{{ __('materials.label_last_purchase_price') }}</span>
                             <span class="font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] tabular-nums">
                                 {{ $business->currency_symbol }}
                                 {{ number_format((float) ($latestPrice?->purchase_price ?? 0), 0, ',', '.') }}
                             </span>
                         </div>
                         <div>
-                            <span class="text-[#8E8E93] block text-[11px]">Pemasok:</span>
+                            <span class="text-[#8E8E93] block text-[11px]">{{ __('materials.label_supplier') }}</span>
                             <span class="font-medium text-[#1C1C1E] dark:text-[#F2F2F7] truncate block">
                                 {{ $mat->supplier?->name ?? '-' }}
                             </span>
@@ -541,12 +537,12 @@
                         <div class="flex items-center gap-1.5">
                             <span
                                 class="inline-flex items-center px-2 py-0.5 rounded-[6px] text-[10.5px] font-semibold bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158]">
-                                {{ $mat->yield_percentage }}% Yield
+                                {{ __('materials.yield_badge', ['pct' => $mat->yield_percentage]) }}
                             </span>
                             @if ($mat->waste_percentage > 0)
                                 <span
                                     class="inline-flex items-center px-2 py-0.5 rounded-[6px] text-[10.5px] font-semibold bg-[#FF3B30]/10 text-[#C41E17] dark:text-[#FF453A]">
-                                    {{ $mat->waste_percentage }}% Waste
+                                    {{ __('materials.waste_badge', ['pct' => $mat->waste_percentage]) }}
                                 </span>
                             @endif
                         </div>
@@ -555,18 +551,18 @@
                             @if (\App\Support\Context::hasPermission('materials.edit'))
                                 <button type="button" @click="openPriceModal({{ Js::from($mat) }})"
                                     class="h-9 px-3 rounded-[10px] text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 active:scale-95 transition-all">
-                                    Harga
+                                    {{ __('materials.btn_price_short') }}
                                 </button>
                                 <button type="button" @click="openEditModal({{ Js::from($mat) }})"
                                     class="h-9 px-3 rounded-[10px] text-[12px] font-medium text-[#1C1C1E] dark:text-[#F2F2F7] bg-black/[0.04] dark:bg-white/[0.06] active:scale-95 transition-all">
-                                    Edit
+                                    {{ __('materials.btn_edit') }}
                                 </button>
                             @endif
                             @if (\App\Support\Context::hasPermission('materials.delete'))
                                 <button type="button"
                                     @click="openDelete('{{ $mat->id }}', {{ Js::from($mat->name) }})"
                                     class="h-9 px-3 rounded-[10px] text-[12px] font-medium text-[#FF3B30] hover:bg-[#FF3B30]/10 active:scale-95 transition-all">
-                                    Hapus
+                                    {{ __('materials.btn_delete') }}
                                 </button>
                             @endif
                         </div>
@@ -575,7 +571,7 @@
             @empty
                 <div
                     class="rounded-[20px] bg-white/80 dark:bg-[#1C1C1E]/80 p-8 text-center text-[#8E8E93] border border-black/[0.06] dark:border-white/[0.08]">
-                    Belum ada data bahan baku ditemukan.
+                    {{ __('materials.empty_materials') }}
                 </div>
             @endforelse
 
@@ -609,10 +605,10 @@
                         class="px-5 sm:px-6 py-4 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-[#F2F2F7]/50 dark:bg-white/[0.02]">
                         <div>
                             <div class="text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D]">
-                                Formulir Inventori</div>
+                                {{ __('materials.modal_add_badge') }}</div>
                             <h3
                                 class="text-[18px] sm:text-[22px] font-bold text-[#1C1C1E] dark:text-[#F2F2F7] tracking-tight">
-                                Tambah Bahan Baku Baru</h3>
+                                {{ __('materials.modal_add_title') }}</h3>
                         </div>
                         <button type="button" @click="showAddModal = false"
                             class="w-9 h-9 rounded-full bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center transition-colors">
@@ -635,15 +631,15 @@
                                     class="rounded-[20px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.04] dark:border-white/[0.06] p-4 sm:p-5 space-y-4">
                                     <h4
                                         class="text-[13px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D]">
-                                        Identitas Bahan Baku</h4>
+                                        {{ __('materials.section_identity') }}</h4>
 
                                     <div>
                                         <label
                                             class="block text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] mb-1.5">
-                                            Nama Bahan Baku <span class="text-[#FF3B30]">*</span>
+                                            {{ __('materials.label_material_name') }} <span class="text-[#FF3B30]">*</span>
                                         </label>
                                         <input type="text" name="name" x-model="addForm.name" required
-                                            placeholder="Contoh: Tepung Terigu Protein Tinggi Cakra Kembar"
+                                            placeholder="{{ __('materials.placeholder_material_name') }}"
                                             class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] px-3.5 text-[16px] sm:text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                                     </div>
 
@@ -651,10 +647,10 @@
                                         <div>
                                             <label
                                                 class="block text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] mb-1.5">
-                                                Kode SKU / Barcode
+                                                {{ __('materials.label_sku_barcode') }}
                                             </label>
                                             <input type="text" name="sku" x-model="addForm.sku"
-                                                placeholder="MAT-001 (opsional)"
+                                                placeholder="{{ __('materials.placeholder_sku') }}"
                                                 class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] px-3.5 text-[16px] sm:text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] tabular-nums focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                                         </div>
 
@@ -662,11 +658,11 @@
                                             <div class="flex items-center justify-between mb-1.5">
                                                 <label
                                                     class="text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">
-                                                    Satuan Beli <span class="text-[#FF3B30]">*</span>
+                                                    {{ __('materials.label_purchase_unit') }} <span class="text-[#FF3B30]">*</span>
                                                 </label>
                                                 <button type="button" @click="showAddUnitModal = true"
                                                     class="text-[11px] font-semibold text-[#007AFF] hover:underline flex items-center gap-0.5">
-                                                    <span>[ + ]</span> <span>Satuan Baru</span>
+                                                    <span>[ + ]</span> <span>{{ __('materials.btn_new_unit') }}</span>
                                                 </button>
                                             </div>
                                             <select name="unit_id" x-model="addForm.unit_id" required
@@ -683,16 +679,15 @@
                                         <div>
                                             <div class="flex items-center justify-between mb-1.5">
                                                 <label
-                                                    class="text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">Kategori
-                                                    Bahan</label>
+                                                    class="text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">{{ __('materials.label_category') }}</label>
                                                 <button type="button" @click="showAddCategoryModal = true"
                                                     class="text-[11px] font-semibold text-[#007AFF] hover:underline flex items-center gap-0.5">
-                                                    <span>[ + ]</span> <span>Kategori</span>
+                                                    <span>[ + ]</span> <span>{{ __('materials.btn_new_category') }}</span>
                                                 </button>
                                             </div>
                                             <select name="category_id" x-model="addForm.category_id"
                                                 class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] px-3 text-[16px] sm:text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                                                <option value="">-- Tanpa Kategori --</option>
+                                                <option value="">{{ __('materials.option_no_category') }}</option>
                                                 <template x-for="cat in categories" :key="cat.id">
                                                     <option :value="cat.id" x-text="cat.name"></option>
                                                 </template>
@@ -702,16 +697,15 @@
                                         <div>
                                             <div class="flex items-center justify-between mb-1.5">
                                                 <label
-                                                    class="text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">Supplier
-                                                    Utama</label>
+                                                    class="text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">{{ __('materials.label_primary_supplier') }}</label>
                                                 <button type="button" @click="showAddSupplierModal = true"
                                                     class="text-[11px] font-semibold text-[#007AFF] hover:underline flex items-center gap-0.5">
-                                                    <span>[ + ]</span> <span>Supplier</span>
+                                                    <span>[ + ]</span> <span>{{ __('materials.btn_new_supplier') }}</span>
                                                 </button>
                                             </div>
                                             <select name="supplier_id" x-model="addForm.supplier_id"
                                                 class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] px-3 text-[16px] sm:text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                                                <option value="">-- Tanpa Supplier --</option>
+                                                <option value="">{{ __('materials.option_no_supplier') }}</option>
                                                 <template x-for="sup in suppliers" :key="sup.id">
                                                     <option :value="sup.id" x-text="sup.name"></option>
                                                 </template>
@@ -728,25 +722,23 @@
                                     class="rounded-[20px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.04] dark:border-white/[0.06] p-4 sm:p-5 space-y-3">
                                     <h4
                                         class="text-[13px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D]">
-                                        Efisiensi Bahan (Yield &amp; Waste)</h4>
+                                        {{ __('materials.section_efficiency') }}</h4>
                                     <div class="grid grid-cols-2 gap-3">
                                         <div>
                                             <label
-                                                class="block text-[12px] font-medium text-[#1C1C1E] dark:text-[#F2F2F7] mb-1">Rendemen
-                                                (Yield %)</label>
-                                            <input type="number" name="yield_percentage"
+                                                class="block text-[12px] font-medium text-[#1C1C1E] dark:text-[#F2F2F7] mb-1">{{ __('materials.label_yield_pct') }}</label>
+                                                <input type="number" name="yield_percentage"
                                                 x-model="addForm.yield_percentage" min="1" max="500" required
                                                 class="w-full h-10 px-3 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.1] rounded-[10px] text-[15px] text-[#1C1C1E] dark:text-[#F2F2F7] font-semibold tabular-nums focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
-                                            <span class="text-[10px] text-[#8E8E93] mt-0.5 block">Standar: 100%</span>
+                                            <span class="text-[10px] text-[#8E8E93] mt-0.5 block">{{ __('materials.standard_yield') }}</span>
                                         </div>
                                         <div>
                                             <label
-                                                class="block text-[12px] font-medium text-[#1C1C1E] dark:text-[#F2F2F7] mb-1">Susut
-                                                (Waste %)</label>
-                                            <input type="number" name="waste_percentage"
+                                                class="block text-[12px] font-medium text-[#1C1C1E] dark:text-[#F2F2F7] mb-1">{{ __('materials.label_waste_pct') }}</label>
+                                                <input type="number" name="waste_percentage"
                                                 x-model="addForm.waste_percentage" min="0" max="100" required
                                                 class="w-full h-10 px-3 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.1] rounded-[10px] text-[15px] text-[#1C1C1E] dark:text-[#F2F2F7] font-semibold tabular-nums focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
-                                            <span class="text-[10px] text-[#8E8E93] mt-0.5 block">Standar: 0%</span>
+                                            <span class="text-[10px] text-[#8E8E93] mt-0.5 block">{{ __('materials.standard_waste') }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -756,11 +748,10 @@
                                     class="rounded-[20px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.04] dark:border-white/[0.06] p-4 sm:p-5 space-y-3">
                                     <h4
                                         class="text-[13px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D]">
-                                        Harga Pembelian Awal</h4>
+                                        {{ __('materials.section_initial_price') }}</h4>
                                     <div>
                                         <label
-                                            class="block text-[12px] font-medium text-[#1C1C1E] dark:text-[#F2F2F7] mb-1">Harga
-                                            Beli Bersih (Rp) <span class="text-[#FF3B30]">*</span></label>
+                                            class="block text-[12px] font-medium text-[#1C1C1E] dark:text-[#F2F2F7] mb-1">{{ __('materials.label_net_purchase_price') }} <span class="text-[#FF3B30]">*</span></label>
                                         <input type="number" name="purchase_price" x-model="addForm.purchase_price"
                                             required min="1" placeholder="50000"
                                             class="w-full h-10 px-3.5 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.1] rounded-[10px] text-[16px] sm:text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] font-semibold tabular-nums focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
@@ -768,15 +759,13 @@
 
                                     <div class="grid grid-cols-2 gap-3">
                                         <div>
-                                            <label class="block text-[11px] font-medium text-[#8E8E93] mb-1">Ongkos
-                                                Kirim</label>
+                                            <label class="block text-[11px] font-medium text-[#8E8E93] mb-1">{{ __('materials.label_shipping_cost') }}</label>
                                             <input type="number" name="shipping_cost" x-model="addForm.shipping_cost"
                                                 min="0" value="0"
                                                 class="w-full h-9 px-3 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.1] rounded-[8px] text-[13px] text-[#1C1C1E] dark:text-[#F2F2F7] tabular-nums focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
                                         </div>
                                         <div>
-                                            <label class="block text-[11px] font-medium text-[#8E8E93] mb-1">Diskon
-                                                Beli</label>
+                                            <label class="block text-[11px] font-medium text-[#8E8E93] mb-1">{{ __('materials.label_purchase_discount') }}</label>
                                             <input type="number" name="discount_amount"
                                                 x-model="addForm.discount_amount" min="0" value="0"
                                                 class="w-full h-9 px-3 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.1] rounded-[8px] text-[13px] text-[#1C1C1E] dark:text-[#F2F2F7] tabular-nums focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
@@ -789,10 +778,8 @@
                                     class="rounded-[20px] p-4 bg-[#34C759]/10 border border-[#34C759]/20 flex items-center justify-between">
                                     <div>
                                         <span
-                                            class="text-[11px] font-bold uppercase tracking-wider text-[#248A3D] dark:text-[#30D158] block">Estimasi
-                                            Biaya Efektif / Unit</span>
-                                        <span class="text-[11px] text-[#248A3D]/80 dark:text-[#30D158]/80">Termasuk ongkir,
-                                            diskon &amp; faktor yield</span>
+                                            class="text-[11px] font-bold uppercase tracking-wider text-[#248A3D] dark:text-[#30D158] block">{{ __('materials.label_est_effective_cost') }}</span>
+                                        <span class="text-[11px] text-[#248A3D]/80 dark:text-[#30D158]/80">{{ __('materials.sub_est_effective_cost') }}</span>
                                     </div>
                                     <div class="text-right">
                                         <span
@@ -809,11 +796,11 @@
                             class="pt-4 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-end gap-3 sticky bottom-0 bg-white dark:bg-[#1C1C1E] pb-2 sm:pb-0">
                             <button type="button" @click="showAddModal = false"
                                 class="h-11 px-5 rounded-[12px] text-[14px] font-medium text-[#1C1C1E] dark:text-[#F2F2F7] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-colors">
-                                Batal
+                                {{ __('materials.btn_cancel') }}
                             </button>
                             <button type="submit"
                                 class="h-11 px-6 rounded-[12px] text-[14px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all shadow-sm shadow-[#007AFF]/25">
-                                Simpan Bahan Baku
+                                {{ __('materials.btn_save_material') }}
                             </button>
                         </div>
                     </form>
@@ -842,9 +829,9 @@
                         class="px-5 sm:px-6 py-4 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-[#F2F2F7]/50 dark:bg-white/[0.02]">
                         <div>
                             <div class="text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D]">
-                                Riwayat Harga Beli</div>
+                                {{ __('materials.modal_price_badge') }}</div>
                             <h3 class="text-[18px] sm:text-[20px] font-bold text-[#1C1C1E] dark:text-[#F2F2F7]"
-                                x-text="selectedMaterial ? selectedMaterial.name : 'Update Harga'"></h3>
+                                x-text="selectedMaterial ? selectedMaterial.name : '{{ __('materials.modal_price_default_title') }}'"></h3>
                         </div>
                         <button type="button" @click="showPriceModal = false"
                             class="w-9 h-9 rounded-full bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black/60 dark:text-white/60 flex items-center justify-center transition-colors">
@@ -862,7 +849,7 @@
 
                             <div>
                                 <label class="block text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] mb-1">
-                                    Harga Beli Baru (Rp) <span class="text-[#FF3B30]">*</span>
+                                    {{ __('materials.label_new_purchase_price') }} <span class="text-[#FF3B30]">*</span>
                                 </label>
                                 <input type="number" name="purchase_price" required min="1" step="100"
                                     placeholder="50000"
@@ -872,15 +859,13 @@
                             <div class="grid grid-cols-2 gap-3">
                                 <div>
                                     <label
-                                        class="block text-[12px] font-medium text-[#1C1C1E] dark:text-[#F2F2F7] mb-1">Ongkos
-                                        Kirim</label>
+                                        class="block text-[12px] font-medium text-[#1C1C1E] dark:text-[#F2F2F7] mb-1">{{ __('materials.label_shipping_cost') }}</label>
                                     <input type="number" name="shipping_cost" value="0" min="0"
                                         class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] text-[#1C1C1E] dark:text-[#F2F2F7] tabular-nums focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                                 </div>
                                 <div>
                                     <label
-                                        class="block text-[12px] font-medium text-[#1C1C1E] dark:text-[#F2F2F7] mb-1">Diskon
-                                        Pembelian</label>
+                                        class="block text-[12px] font-medium text-[#1C1C1E] dark:text-[#F2F2F7] mb-1">{{ __('materials.label_purchase_discount') }}</label>
                                     <input type="number" name="discount_amount" value="0" min="0"
                                         class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] text-[#1C1C1E] dark:text-[#F2F2F7] tabular-nums focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                                 </div>
@@ -888,11 +873,10 @@
 
                             <div>
                                 <label
-                                    class="block text-[12px] font-medium text-[#1C1C1E] dark:text-[#F2F2F7] mb-1">Pemasok /
-                                    Vendor</label>
+                                    class="block text-[12px] font-medium text-[#1C1C1E] dark:text-[#F2F2F7] mb-1">{{ __('materials.label_supplier_vendor') }}</label>
                                 <select name="supplier_id"
                                     class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[13px] text-[#1C1C1E] dark:text-[#F2F2F7] focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                                    <option value="">-- Pemasok yang Sama / Umum --</option>
+                                    <option value="">{{ __('materials.option_same_supplier') }}</option>
                                     <template x-for="sup in suppliers" :key="sup.id">
                                         <option :value="sup.id"
                                             :selected="selectedMaterial && selectedMaterial.supplier_id == sup.id"
@@ -903,19 +887,17 @@
 
                             <div>
                                 <label
-                                    class="block text-[12px] font-medium text-[#1C1C1E] dark:text-[#F2F2F7] mb-1">Catatan
-                                    Penyesuaian</label>
-                                <input type="text" name="notes" placeholder="Contoh: Kenaikan harga pabrik"
+                                    class="block text-[12px] font-medium text-[#1C1C1E] dark:text-[#F2F2F7] mb-1">{{ __('materials.label_adjustment_notes') }}</label>
+                                <input type="text" name="notes" placeholder="{{ __('materials.placeholder_notes') }}"
                                     class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] text-[#1C1C1E] dark:text-[#F2F2F7] focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                             </div>
 
                             <div
                                 class="pt-3 flex justify-end gap-2.5 border-t border-black/[0.06] dark:border-white/[0.08]">
                                 <button type="button" @click="showPriceModal = false"
-                                    class="h-10 px-4 rounded-[12px] text-[13px] font-medium text-[#1C1C1E] dark:text-[#F2F2F7] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] transition">Batal</button>
+                                    class="h-10 px-4 rounded-[12px] text-[13px] font-medium text-[#1C1C1E] dark:text-[#F2F2F7] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] transition">{{ __('materials.btn_cancel') }}</button>
                                 <button type="submit"
-                                    class="h-10 px-5 rounded-[12px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition shadow-sm shadow-[#007AFF]/25">Simpan
-                                    Riwayat Harga</button>
+                                    class="h-10 px-5 rounded-[12px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition shadow-sm shadow-[#007AFF]/25">{{ __('materials.btn_save_price_history') }}</button>
                             </div>
                         </form>
                     </template>
@@ -944,9 +926,8 @@
                         class="px-5 sm:px-6 py-4 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-[#F2F2F7]/50 dark:bg-white/[0.02]">
                         <div>
                             <div class="text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D]">
-                                Edit Master Data</div>
-                            <h3 class="text-[18px] sm:text-[20px] font-bold text-[#1C1C1E] dark:text-[#F2F2F7]">Ubah
-                                Spesifikasi Bahan</h3>
+                                {{ __('materials.modal_edit_badge') }}</div>
+                            <h3 class="text-[18px] sm:text-[20px] font-bold text-[#1C1C1E] dark:text-[#F2F2F7]">{{ __('materials.modal_edit_title') }}</h3>
                         </div>
                         <button type="button" @click="showEditModal = false"
                             class="w-9 h-9 rounded-full bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] text-black/60 dark:text-white/60 flex items-center justify-center transition-colors">
@@ -964,7 +945,7 @@
 
                         <div>
                             <label class="block text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] mb-1.5">
-                                Nama Bahan Baku <span class="text-[#FF3B30]">*</span>
+                                {{ __('materials.label_material_name') }} <span class="text-[#FF3B30]">*</span>
                             </label>
                             <input type="text" name="name" x-model="editMaterial.name" required
                                 class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[12px] px-3.5 text-[16px] sm:text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
@@ -973,22 +954,20 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label
-                                    class="block text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] mb-1.5">Kode
-                                    SKU / Barcode</label>
+                                    class="block text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] mb-1.5">{{ __('materials.label_sku_barcode') }}</label>
                                 <input type="text" name="sku" x-model="editMaterial.sku"
                                     class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[12px] px-3.5 text-[16px] sm:text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] tabular-nums focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                             </div>
                             <div>
                                 <div class="flex items-center justify-between mb-1.5">
-                                    <label class="text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">Kategori
-                                        Bahan</label>
+                                    <label class="text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">{{ __('materials.label_category') }}</label>
                                     <button type="button" @click="showAddCategoryModal = true"
                                         class="text-[11px] font-semibold text-[#007AFF] hover:underline">[ + ]
-                                        Kategori</button>
+                                        {{ __('materials.btn_new_category') }}</button>
                                 </div>
                                 <select name="category_id" x-model="editMaterial.category_id"
                                     class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[12px] px-3 text-[16px] sm:text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                                    <option value="">-- Tanpa Kategori --</option>
+                                    <option value="">{{ __('materials.option_no_category') }}</option>
                                     <template x-for="cat in categories" :key="cat.id">
                                         <option :value="cat.id" x-text="cat.name"></option>
                                     </template>
@@ -999,11 +978,11 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <div class="flex items-center justify-between mb-1.5">
-                                    <label class="text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">Satuan Beli
+                                    <label class="text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">{{ __('materials.label_purchase_unit') }}
                                         <span class="text-[#FF3B30]">*</span></label>
                                     <button type="button" @click="showAddUnitModal = true"
                                         class="text-[11px] font-semibold text-[#007AFF] hover:underline">[ + ]
-                                        Satuan</button>
+                                        {{ __('materials.btn_new_unit') }}</button>
                                 </div>
                                 <select name="unit_id" x-model="editMaterial.unit_id" required
                                     class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[12px] px-3 text-[16px] sm:text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
@@ -1014,15 +993,14 @@
                             </div>
                             <div>
                                 <div class="flex items-center justify-between mb-1.5">
-                                    <label class="text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">Pemasok
-                                        Utama</label>
+                                    <label class="text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">{{ __('materials.label_primary_supplier') }}</label>
                                     <button type="button" @click="showAddSupplierModal = true"
                                         class="text-[11px] font-semibold text-[#007AFF] hover:underline">[ + ]
-                                        Supplier</button>
+                                        {{ __('materials.btn_new_supplier') }}</button>
                                 </div>
                                 <select name="supplier_id" x-model="editMaterial.supplier_id"
                                     class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[12px] px-3 text-[16px] sm:text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                                    <option value="">-- Tanpa Pemasok --</option>
+                                    <option value="">{{ __('materials.option_no_supplier') }}</option>
                                     <template x-for="sup in suppliers" :key="sup.id">
                                         <option :value="sup.id" x-text="sup.name"></option>
                                     </template>
@@ -1032,10 +1010,9 @@
 
                         <div class="pt-3 flex justify-end gap-2.5 border-t border-black/[0.06] dark:border-white/[0.08]">
                             <button type="button" @click="showEditModal = false"
-                                class="h-10 px-4 rounded-[12px] text-[13px] font-medium text-[#1C1C1E] dark:text-[#F2F2F7] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] transition">Batal</button>
+                                class="h-10 px-4 rounded-[12px] text-[13px] font-medium text-[#1C1C1E] dark:text-[#F2F2F7] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] transition">{{ __('materials.btn_cancel') }}</button>
                             <button type="submit"
-                                class="h-10 px-5 rounded-[12px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition shadow-sm shadow-[#007AFF]/25">Simpan
-                                Perubahan</button>
+                                class="h-10 px-5 rounded-[12px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition shadow-sm shadow-[#007AFF]/25">{{ __('materials.btn_save_changes') }}</button>
                         </div>
                     </form>
                 </div>
@@ -1054,7 +1031,7 @@
             <div class="w-full max-w-md rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] p-5 sm:p-6 space-y-4 shadow-2xl"
                 @click.outside="showAddSupplierModal = false">
                 <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-3">
-                    <h3 class="text-[16px] font-bold text-[#1C1C1E] dark:text-[#F2F2F7]">Tambah Supplier Baru</h3>
+                    <h3 class="text-[16px] font-bold text-[#1C1C1E] dark:text-[#F2F2F7]">{{ __('materials.modal_quick_sup_title') }}</h3>
                     <button type="button" @click="showAddSupplierModal = false"
                         class="w-7 h-7 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center text-black/50 dark:text-white/50">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5"
@@ -1071,36 +1048,36 @@
 
                 <form @submit.prevent="submitQuickSupplier" class="space-y-3.5 text-[13px]">
                     <div>
-                        <label class="block font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] mb-1">Nama Supplier / Vendor
+                        <label class="block font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] mb-1">{{ __('materials.label_sup_name') }}
                             <span class="text-[#FF3B30]">*</span></label>
                         <input type="text" x-model="quickSup.name" required
-                            placeholder="Contoh: PT Bogasari Flour Mills"
+                            placeholder="{{ __('materials.placeholder_sup_name') }}"
                             class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] focus:ring-2 focus:ring-[#007AFF]/50">
                     </div>
                     <div class="grid grid-cols-2 gap-2.5">
                         <div>
-                            <label class="block font-medium text-[#8E8E93] mb-1">PIC / Kontak</label>
-                            <input type="text" x-model="quickSup.contact_person" placeholder="Pak Budi"
+                            <label class="block font-medium text-[#8E8E93] mb-1">{{ __('materials.label_sup_pic') }}</label>
+                            <input type="text" x-model="quickSup.contact_person" placeholder="{{ __('materials.placeholder_sup_pic') }}"
                                 class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[13px] text-[#1C1C1E] dark:text-[#F2F2F7] focus:ring-2 focus:ring-[#007AFF]/50">
                         </div>
                         <div>
-                            <label class="block font-medium text-[#8E8E93] mb-1">No. HP/WA</label>
-                            <input type="text" x-model="quickSup.phone" placeholder="08123456789"
+                            <label class="block font-medium text-[#8E8E93] mb-1">{{ __('materials.label_sup_phone') }}</label>
+                            <input type="text" x-model="quickSup.phone" placeholder="{{ __('materials.placeholder_sup_phone') }}"
                                 class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[13px] text-[#1C1C1E] dark:text-[#F2F2F7] tabular-nums focus:ring-2 focus:ring-[#007AFF]/50">
                         </div>
                     </div>
                     <div>
-                        <label class="block font-medium text-[#8E8E93] mb-1">Alamat Gudang / Kantor</label>
-                        <input type="text" x-model="quickSup.address" placeholder="Kota / Alamat pengiriman"
+                        <label class="block font-medium text-[#8E8E93] mb-1">{{ __('materials.label_sup_address') }}</label>
+                        <input type="text" x-model="quickSup.address" placeholder="{{ __('materials.placeholder_sup_address') }}"
                             class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] text-[#1C1C1E] dark:text-[#F2F2F7] focus:ring-2 focus:ring-[#007AFF]/50">
                     </div>
                     <div class="pt-2 flex justify-end gap-2">
                         <button type="button" @click="showAddSupplierModal = false"
-                            class="h-9 px-3.5 rounded-[10px] text-[13px] bg-black/[0.06] dark:bg-white/[0.08] text-[#1C1C1E] dark:text-[#F2F2F7]">Batal</button>
+                            class="h-9 px-3.5 rounded-[10px] text-[13px] bg-black/[0.06] dark:bg-white/[0.08] text-[#1C1C1E] dark:text-[#F2F2F7]">{{ __('materials.btn_cancel') }}</button>
                         <button type="submit" :disabled="quickSup.isSubmitting"
                             class="h-9 px-4 rounded-[10px] text-[13px] font-semibold bg-[#007AFF] text-white flex items-center gap-1.5 shadow-sm shadow-[#007AFF]/25">
-                            <span x-show="quickSup.isSubmitting">Menyimpan...</span>
-                            <span x-show="!quickSup.isSubmitting">Simpan Supplier</span>
+                            <span x-show="quickSup.isSubmitting">{{ __('materials.btn_saving') }}</span>
+                            <span x-show="!quickSup.isSubmitting">{{ __('materials.btn_save_supplier') }}</span>
                         </button>
                     </div>
                 </form>
@@ -1116,7 +1093,7 @@
             <div class="w-full max-w-md rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] p-5 sm:p-6 space-y-4 shadow-2xl"
                 @click.outside="showAddCategoryModal = false">
                 <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-3">
-                    <h3 class="text-[16px] font-bold text-[#1C1C1E] dark:text-[#F2F2F7]">Tambah Kategori Bahan</h3>
+                    <h3 class="text-[16px] font-bold text-[#1C1C1E] dark:text-[#F2F2F7]">{{ __('materials.modal_quick_cat_title') }}</h3>
                     <button type="button" @click="showAddCategoryModal = false"
                         class="w-7 h-7 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center text-black/50 dark:text-white/50">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5"
@@ -1133,24 +1110,24 @@
 
                 <form @submit.prevent="submitQuickCategory" class="space-y-3.5 text-[13px]">
                     <div>
-                        <label class="block font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] mb-1">Nama Kategori <span
+                        <label class="block font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] mb-1">{{ __('materials.label_cat_name') }} <span
                                 class="text-[#FF3B30]">*</span></label>
                         <input type="text" x-model="quickCat.name" required
-                            placeholder="Contoh: Bumbu &amp; Rempah Alami"
+                            placeholder="{{ __('materials.placeholder_cat_name') }}"
                             class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] focus:ring-2 focus:ring-[#007AFF]/50">
                     </div>
                     <div>
-                        <label class="block font-medium text-[#8E8E93] mb-1">Deskripsi Kategori</label>
-                        <input type="text" x-model="quickCat.description" placeholder="Catatan klasifikasi bahan..."
+                        <label class="block font-medium text-[#8E8E93] mb-1">{{ __('materials.label_cat_desc') }}</label>
+                        <input type="text" x-model="quickCat.description" placeholder="{{ __('materials.placeholder_cat_desc') }}"
                             class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] text-[#1C1C1E] dark:text-[#F2F2F7] focus:ring-2 focus:ring-[#007AFF]/50">
                     </div>
                     <div class="pt-2 flex justify-end gap-2">
                         <button type="button" @click="showAddCategoryModal = false"
-                            class="h-9 px-3.5 rounded-[10px] text-[13px] bg-black/[0.06] dark:bg-white/[0.08] text-[#1C1C1E] dark:text-[#F2F2F7]">Batal</button>
+                            class="h-9 px-3.5 rounded-[10px] text-[13px] bg-black/[0.06] dark:bg-white/[0.08] text-[#1C1C1E] dark:text-[#F2F2F7]">{{ __('materials.btn_cancel') }}</button>
                         <button type="submit" :disabled="quickCat.isSubmitting"
                             class="h-9 px-4 rounded-[10px] text-[13px] font-semibold bg-[#007AFF] text-white flex items-center gap-1.5 shadow-sm shadow-[#007AFF]/25">
-                            <span x-show="quickCat.isSubmitting">Menyimpan...</span>
-                            <span x-show="!quickCat.isSubmitting">Simpan Kategori</span>
+                            <span x-show="quickCat.isSubmitting">{{ __('materials.btn_saving') }}</span>
+                            <span x-show="!quickCat.isSubmitting">{{ __('materials.btn_save_category') }}</span>
                         </button>
                     </div>
                 </form>
@@ -1166,7 +1143,7 @@
             <div class="w-full max-w-md rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] p-5 sm:p-6 space-y-4 shadow-2xl"
                 @click.outside="showAddUnitModal = false">
                 <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-3">
-                    <h3 class="text-[16px] font-bold text-[#1C1C1E] dark:text-[#F2F2F7]">Tambah Satuan Beli Baru</h3>
+                    <h3 class="text-[16px] font-bold text-[#1C1C1E] dark:text-[#F2F2F7]">{{ __('materials.modal_quick_unit_title') }}</h3>
                     <button type="button" @click="showAddUnitModal = false"
                         class="w-7 h-7 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center text-black/50 dark:text-white/50">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5"
@@ -1184,36 +1161,36 @@
                 <form @submit.prevent="submitQuickUnit" class="space-y-3.5 text-[13px]">
                     <div class="grid grid-cols-2 gap-3">
                         <div>
-                            <label class="block font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] mb-1">Kode Simbol <span
+                            <label class="block font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] mb-1">{{ __('materials.label_unit_code') }} <span
                                     class="text-[#FF3B30]">*</span></label>
-                            <input type="text" x-model="quickUnit.code" required placeholder="sak / jerigen"
+                            <input type="text" x-model="quickUnit.code" required placeholder="{{ __('materials.placeholder_unit_code') }}"
                                 class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] tabular-nums focus:ring-2 focus:ring-[#007AFF]/50">
                         </div>
                         <div>
-                            <label class="block font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] mb-1">Tipe Dimensi <span
+                            <label class="block font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] mb-1">{{ __('materials.label_unit_dimension') }} <span
                                     class="text-[#FF3B30]">*</span></label>
                             <select x-model="quickUnit.category" required
                                 class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-2.5 text-[13px] text-[#1C1C1E] dark:text-[#F2F2F7] focus:ring-2 focus:ring-[#007AFF]/50">
-                                <option value="weight">Berat (kg, sak)</option>
-                                <option value="volume">Volume (liter, ml)</option>
-                                <option value="quantity">Kuantitas (pcs, pack)</option>
-                                <option value="custom">Lainnya</option>
+                                <option value="weight">{{ __('materials.unit_type_weight') }}</option>
+                                <option value="volume">{{ __('materials.unit_type_volume') }}</option>
+                                <option value="quantity">{{ __('materials.unit_type_quantity') }}</option>
+                                <option value="custom">{{ __('materials.unit_type_custom') }}</option>
                             </select>
                         </div>
                     </div>
                     <div>
-                        <label class="block font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] mb-1">Nama Satuan Lengkap
+                        <label class="block font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] mb-1">{{ __('materials.label_unit_name') }}
                             <span class="text-[#FF3B30]">*</span></label>
-                        <input type="text" x-model="quickUnit.name" required placeholder="Contoh: Sak 25 Kilogram"
+                        <input type="text" x-model="quickUnit.name" required placeholder="{{ __('materials.placeholder_unit_name') }}"
                             class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] focus:ring-2 focus:ring-[#007AFF]/50">
                     </div>
                     <div class="pt-2 flex justify-end gap-2">
                         <button type="button" @click="showAddUnitModal = false"
-                            class="h-9 px-3.5 rounded-[10px] text-[13px] bg-black/[0.06] dark:bg-white/[0.08] text-[#1C1C1E] dark:text-[#F2F2F7]">Batal</button>
+                            class="h-9 px-3.5 rounded-[10px] text-[13px] bg-black/[0.06] dark:bg-white/[0.08] text-[#1C1C1E] dark:text-[#F2F2F7]">{{ __('materials.btn_cancel') }}</button>
                         <button type="submit" :disabled="quickUnit.isSubmitting"
                             class="h-9 px-4 rounded-[10px] text-[13px] font-semibold bg-[#007AFF] text-white flex items-center gap-1.5 shadow-sm shadow-[#007AFF]/25">
-                            <span x-show="quickUnit.isSubmitting">Menyimpan...</span>
-                            <span x-show="!quickUnit.isSubmitting">Simpan Satuan</span>
+                            <span x-show="quickUnit.isSubmitting">{{ __('materials.btn_saving') }}</span>
+                            <span x-show="!quickUnit.isSubmitting">{{ __('materials.btn_save_unit') }}</span>
                         </button>
                     </div>
                 </form>
@@ -1240,10 +1217,10 @@
                                     d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                             </svg>
                         </div>
-                        <h3 class="text-[17px] font-bold text-[#1C1C1E] dark:text-[#F2F2F7]">Hapus Bahan Baku?</h3>
+                        <h3 class="text-[17px] font-bold text-[#1C1C1E] dark:text-[#F2F2F7]">{{ __('materials.dialog_delete_title') }}</h3>
                         <p class="text-[13px] text-[#8E8E93] dark:text-[#98989D] mt-1.5 leading-relaxed">
-                            Bahan <strong class="text-[#1C1C1E] dark:text-[#F2F2F7]" x-text="deleteTarget.name"></strong>
-                            akan dihapus dari daftar master inventori.
+                            {{ __('materials.dialog_delete_prefix') }} <strong class="text-[#1C1C1E] dark:text-[#F2F2F7]" x-text="deleteTarget.name"></strong>
+                            {{ __('materials.dialog_delete_suffix') }}
                         </p>
 
                         <!-- Penenang Jiwa Microcopy (Mandat Apple HIG) -->
@@ -1255,8 +1232,7 @@
                                     d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                             <p class="text-[11.5px] text-[#3C3C43]/70 dark:text-[#EBEBF5]/70 leading-relaxed">
-                                Tenang: Resep produk (BOM) masa lalu dan riwayat pembelian/penerimaan barang (Goods Receipt)
-                                yang menggunakan bahan ini tetap aman tersimpan.
+                                {{ __('materials.dialog_delete_microcopy') }}
                             </p>
                         </div>
                     </div>
@@ -1265,11 +1241,11 @@
                         class="grid grid-cols-2 border-t border-black/[0.06] dark:border-white/[0.08] text-[15px] font-medium">
                         <button type="button" @click="closeDelete()"
                             class="py-3.5 text-[#007AFF] border-r border-black/[0.06] dark:border-white/[0.08] active:bg-black/5 dark:active:bg-white/5 transition-colors">
-                            Batal
+                            {{ __('materials.btn_cancel') }}
                         </button>
                         <button type="button" @click="submitDelete()"
                             class="py-3.5 text-[#FF3B30] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors">
-                            Hapus
+                            {{ __('materials.btn_delete') }}
                         </button>
                     </div>
                 </div>

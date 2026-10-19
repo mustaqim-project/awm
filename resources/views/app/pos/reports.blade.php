@@ -33,21 +33,21 @@
     {{-- 3. 15-TAB MODULAR SEGMENTED CONTROLS (FASE 4) --}}
     @php
         $tabDefinitions = [
-            'overview' => ['label' => 'Ringkasan', 'icon' => 'layout-dashboard'],
-            'transactions' => ['label' => 'Buku Transaksi', 'icon' => 'receipt'],
-            'products' => ['label' => 'Produk & Menu', 'icon' => 'package'],
-            'categories' => ['label' => 'Kategori', 'icon' => 'tag'],
-            'cashiers' => ['label' => 'Kasir & Staf', 'icon' => 'users'],
-            'outlets' => ['label' => 'Cabang', 'icon' => 'store'],
-            'payments' => ['label' => 'Pembayaran', 'icon' => 'credit-card'],
-            'discounts' => ['label' => 'Audit Diskon', 'icon' => 'percent'],
-            'refunds' => ['label' => 'Retur & Refund', 'icon' => 'rotate-ccw'],
-            'voids' => ['label' => 'Audit Void/Fraud', 'icon' => 'shield-alert'],
-            'shifts' => ['label' => 'Rekonsiliasi Kas Shift', 'icon' => 'coins'],
-            'hourly' => ['label' => 'Jam Sibuk (Heatmap)', 'icon' => 'clock'],
-            'customers' => ['label' => 'Pelanggan', 'icon' => 'user-check'],
-            'channels' => ['label' => 'Saluran Jual', 'icon' => 'shopping-bag'],
-            'profitability' => ['label' => 'Margin & HPP', 'icon' => 'trending-up'],
+            'overview' => ['label' => __('pos.reports_tab_overview'), 'icon' => 'layout-dashboard'],
+            'transactions' => ['label' => __('pos.reports_tab_transactions'), 'icon' => 'receipt'],
+            'products' => ['label' => __('pos.reports_tab_products'), 'icon' => 'package'],
+            'categories' => ['label' => __('pos.reports_tab_categories'), 'icon' => 'tag'],
+            'cashiers' => ['label' => __('pos.reports_tab_cashiers'), 'icon' => 'users'],
+            'outlets' => ['label' => __('pos.reports_tab_outlets'), 'icon' => 'store'],
+            'payments' => ['label' => __('pos.reports_tab_payments'), 'icon' => 'credit-card'],
+            'discounts' => ['label' => __('pos.reports_tab_discounts'), 'icon' => 'percent'],
+            'refunds' => ['label' => __('pos.reports_tab_refunds'), 'icon' => 'rotate-ccw'],
+            'voids' => ['label' => __('pos.reports_tab_voids'), 'icon' => 'shield-alert'],
+            'shifts' => ['label' => __('pos.reports_tab_shifts'), 'icon' => 'coins'],
+            'hourly' => ['label' => __('pos.reports_tab_hourly'), 'icon' => 'clock'],
+            'customers' => ['label' => __('pos.reports_tab_customers'), 'icon' => 'user-check'],
+            'channels' => ['label' => __('pos.reports_tab_channels'), 'icon' => 'shopping-bag'],
+            'profitability' => ['label' => __('pos.reports_tab_profitability'), 'icon' => 'trending-up'],
         ];
     @endphp
 

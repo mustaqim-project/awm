@@ -82,6 +82,97 @@ final class SalesReturnService
         });
     }
 
+    /**
+     * Update an existing draft sales return with line items.
+     *
+     * @param array<int, array<string, mixed>> $items
+     * @param array<string, mixed> $attributes
+     */
+    public function updateDraftReturn(SalesReturn $return, array $items, array $attributes = []): SalesReturn
+    {
+        return DB::transaction(function () use ($return, $items, $attributes): SalesReturn {
+            $return = SalesReturn::with('items')->lockForUpdate()->findOrFail($return->id);
+            if ($return->status !== SalesReturn::STATUS_DRAFT) {
+                throw new InvalidArgumentException('Hanya retur berstatus draft yang dapat diedit.');
+            }
+
+            $return->update([
+                'return_date' => $attributes['return_date'] ?? $return->return_date,
+                'reason' => $attributes['reason'] ?? $return->reason,
+                'refund_method' => $attributes['refund_method'] ?? $return->refund_method,
+            ]);
+
+            // Re-sync items
+            $return->items()->delete();
+
+            $total = 0.0;
+            if ($return->invoice_id) {
+                $invoice = Invoice::with('items')->findOrFail($return->invoice_id);
+                foreach ($items as $row) {
+                    $source = $invoice->items->firstWhere('id', $row['invoice_item_id'] ?? null);
+                    $quantity = (float) ($row['quantity'] ?? 0);
+                    if (! $source || $quantity <= 0) {
+                        throw new InvalidArgumentException('Item retur tidak valid.');
+                    }
+                    $returned = (float) SalesReturnItem::where('invoice_item_id', $source->id)
+                        ->where('sales_return_id', '!=', $return->id)
+                        ->whereHas('salesReturn', fn ($query) => $query->where('status', SalesReturn::STATUS_COMPLETED))
+                        ->sum('quantity');
+                    if ($quantity > (float) $source->quantity - $returned + 0.00005) {
+                        throw new InvalidArgumentException("Quantity retur melebihi sisa item {$source->item_name}.");
+                    }
+                    $subtotal = $quantity * (float) $source->unit_price;
+                    $total += $subtotal;
+                    SalesReturnItem::create([
+                        'sales_return_id' => $return->id,
+                        'invoice_item_id' => $source->id,
+                        'product_id' => $source->product_id,
+                        'item_name' => $source->item_name,
+                        'quantity' => $quantity,
+                        'unit_price' => $source->unit_price,
+                        'unit_hpp' => $source->unit_hpp,
+                        'subtotal' => $subtotal,
+                    ]);
+                }
+            } elseif ($return->pos_order_id) {
+                $order = PosOrder::with('items')->findOrFail($return->pos_order_id);
+                foreach ($items as $row) {
+                    $source = $order->items->firstWhere('id', $row['pos_order_item_id'] ?? null);
+                    $quantity = (float) ($row['quantity'] ?? 0);
+                    if (! $source || $quantity <= 0) {
+                        throw new InvalidArgumentException('Item refund POS tidak valid.');
+                    }
+                    $returned = (float) SalesReturnItem::where('pos_order_item_id', $source->id)
+                        ->where('sales_return_id', '!=', $return->id)
+                        ->whereHas('salesReturn', fn ($query) => $query->where('status', SalesReturn::STATUS_COMPLETED))
+                        ->sum('quantity');
+                    if ($quantity > (float) $source->quantity - $returned + 0.00005) {
+                        throw new InvalidArgumentException("Quantity refund melebihi sisa item {$source->product_name}.");
+                    }
+                    $subtotal = $quantity * (float) $source->unit_price;
+                    $total += $subtotal;
+                    SalesReturnItem::create([
+                        'sales_return_id' => $return->id,
+                        'pos_order_item_id' => $source->id,
+                        'product_id' => $source->product_id,
+                        'item_name' => $source->product_name,
+                        'quantity' => $quantity,
+                        'unit_price' => $source->unit_price,
+                        'unit_hpp' => $source->unit_cost_hpp,
+                        'subtotal' => $subtotal,
+                    ]);
+                }
+            }
+
+            if ($total <= 0) {
+                throw new InvalidArgumentException('Retur harus memiliki nilai lebih besar dari nol.');
+            }
+
+            $return->update(['total_amount' => $total]);
+            return $return->fresh('items');
+        });
+    }
+
     public function approve(SalesReturn $return, ?string $userId = null): SalesReturn
     {
         if ($return->status !== SalesReturn::STATUS_DRAFT) {

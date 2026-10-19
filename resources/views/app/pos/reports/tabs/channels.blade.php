@@ -26,7 +26,7 @@
         {{-- Card 1: Total Omzet Bruto (GMV) --}}
         <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 sm:p-5 flex flex-col justify-between shadow-xs transition-all hover:border-black/10 dark:hover:border-white/10">
             <div class="flex items-center justify-between">
-                <span class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">Total Omzet Bruto (GMV)</span>
+                <span class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">{{ __('pos.reports_channels_gmv') }}</span>
                 <span class="w-2.5 h-2.5 rounded-full bg-[#007AFF]"></span>
             </div>
             <div class="mt-3">
@@ -34,7 +34,7 @@
                     Rp {{ number_format($totalGrossGMV > 0 ? $totalGrossGMV : $totalNetSales, 0, ',', '.') }}
                 </div>
                 <div class="text-[11px] text-black/50 dark:text-white/50 mt-1 tabular-nums">
-                    {{ number_format($totalChannelOrders, 0, ',', '.') }} pesanan • {{ $channelSales->count() }} saluran aktif
+                    {{ __('pos.reports_channels_orders_active', ['orders' => number_format($totalChannelOrders, 0, ',', '.'), 'channels' => $channelSales->count()]) }}
                 </div>
             </div>
         </div>
@@ -42,7 +42,7 @@
         {{-- Card 2: Estimasi Komisi Platform Mitra (MDR Ojol) --}}
         <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 sm:p-5 flex flex-col justify-between shadow-xs transition-all hover:border-black/10 dark:hover:border-white/10">
             <div class="flex items-center justify-between">
-                <span class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">Potongan Komisi Platform</span>
+                <span class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">{{ __('pos.reports_channels_platform_fee') }}</span>
                 <span class="w-2.5 h-2.5 rounded-full bg-[#EE4D2D]"></span>
             </div>
             <div class="mt-3">
@@ -58,7 +58,7 @@
         {{-- Card 3: Net Payout Hak Resto (Dana Bersih Cair) --}}
         <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 sm:p-5 flex flex-col justify-between shadow-xs transition-all hover:border-black/10 dark:hover:border-white/10">
             <div class="flex items-center justify-between">
-                <span class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">Net Payout Hak Resto</span>
+                <span class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">{{ __('pos.reports_channels_net_payout') }}</span>
                 <span class="w-2.5 h-2.5 rounded-full bg-[#34C759]"></span>
             </div>
             <div class="mt-3">
@@ -66,7 +66,7 @@
                     Rp {{ number_format($totalNetPayout, 0, ',', '.') }}
                 </div>
                 <div class="text-[11px] text-black/50 dark:text-white/50 mt-1 tabular-nums">
-                    Estimasi dana bersih masuk rekening resto
+                    {{ __('pos.reports_channels_net_payout_sub') }}
                 </div>
             </div>
         </div>
@@ -74,7 +74,7 @@
         {{-- Card 4: Laba Bersih Riil & Margin % --}}
         <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 sm:p-5 flex flex-col justify-between shadow-xs transition-all hover:border-black/10 dark:hover:border-white/10">
             <div class="flex items-center justify-between">
-                <span class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">Laba Bersih Riil Saluran</span>
+                <span class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">{{ __('pos.reports_channels_real_profit') }}</span>
                 <span class="w-2.5 h-2.5 rounded-full bg-[#AF52DE]"></span>
             </div>
             <div class="mt-3">
@@ -82,8 +82,8 @@
                     Rp {{ number_format($totalRealProfit, 0, ',', '.') }}
                 </div>
                 <div class="flex items-center gap-1.5 mt-1 text-[11px]">
-                    <span class="font-bold text-[#AF52DE] dark:text-[#BF5AF2] tabular-nums">Margin Riil: {{ number_format($overallRealMargin, 1) }}%</span>
-                    <span class="text-black/40 dark:text-white/40">(Setelah HPP & Komisi)</span>
+                    <span class="font-bold text-[#AF52DE] dark:text-[#BF5AF2] tabular-nums">{{ __('pos.reports_channels_real_margin', ['percent' => number_format($overallRealMargin, 1)]) }}</span>
+                    <span class="text-black/40 dark:text-white/40">{{ __('pos.reports_channels_after_cogs') }}</span>
                 </div>
             </div>
         </div>
@@ -94,15 +94,15 @@
         <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 shadow-xs">
             <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
                 <div>
-                    <h3 class="text-[15px] font-bold text-black dark:text-white">Komposisi Pendapatan per Saluran</h3>
-                    <p class="text-[12px] text-black/50 dark:text-white/50">Proporsi omzet dan perbandingan penjualan langsung kasir vs layanan pesan-antar online</p>
+                    <h3 class="text-[15px] font-bold text-black dark:text-white">{{ __('pos.reports_channels_composition_title') }}</h3>
+                    <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('pos.reports_channels_composition_sub') }}</p>
                 </div>
                 <div class="flex flex-wrap items-center gap-3 text-[11px] font-medium">
                     <span class="px-2.5 py-1 rounded-full bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/20">
-                        Langsung: {{ number_format($directSales->sum('net_sales') > 0 && $totalNetSales > 0 ? ($directSales->sum('net_sales') / $totalNetSales) * 100 : 0, 1) }}%
+                        {{ __('pos.reports_channels_direct_pct', ['percent' => number_format($directSales->sum('net_sales') > 0 && $totalNetSales > 0 ? ($directSales->sum('net_sales') / $totalNetSales) * 100 : 0, 1)]) }}
                     </span>
                     <span class="px-2.5 py-1 rounded-full bg-[#EE4D2D]/10 text-[#EE4D2D] border border-[#EE4D2D]/20">
-                        Ojol Delivery: {{ number_format($onlineDeliverySales->sum('net_sales') > 0 && $totalNetSales > 0 ? ($onlineDeliverySales->sum('net_sales') / $totalNetSales) * 100 : 0, 1) }}%
+                        {{ __('pos.reports_channels_delivery_pct', ['percent' => number_format($onlineDeliverySales->sum('net_sales') > 0 && $totalNetSales > 0 ? ($onlineDeliverySales->sum('net_sales') / $totalNetSales) * 100 : 0, 1)]) }}
                     </span>
                 </div>
             </div>
@@ -145,11 +145,11 @@
     <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 shadow-xs overflow-hidden">
         <div class="p-5 border-b border-black/5 dark:border-white/5 flex flex-wrap items-center justify-between gap-4">
             <div>
-                <h3 class="text-[15px] font-bold text-black dark:text-white">Rincian Finansial Saluran Penjualan & Ojol Delivery</h3>
-                <p class="text-[12px] text-black/50 dark:text-white/50">Matriks komprehensif omzet bruto, potongan promo, komisi platform mitra, net payout resto, modal HPP, dan margin riil</p>
+                <h3 class="text-[15px] font-bold text-black dark:text-white">{{ __('pos.reports_channels_matrix_title') }}</h3>
+                <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('pos.reports_channels_matrix_sub') }}</p>
             </div>
             <div class="text-[12px] font-medium text-black/60 dark:text-white/60">
-                Total: <span class="font-bold text-black dark:text-white">{{ $channelSales->count() }}</span> saluran terdata
+                {{ __('pos.reports_total_prefix') }}: <span class="font-bold text-black dark:text-white">{{ $channelSales->count() }}</span> {{ __('pos.reports_channels_unit') }}
             </div>
         </div>
 
@@ -157,20 +157,20 @@
             <table class="w-full text-left text-[13px] border-collapse whitespace-nowrap">
                 <thead>
                     <tr class="border-b border-black/5 dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.02] text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">
-                        <th class="py-3 px-4">Saluran Penjualan</th>
-                        <th class="py-3 px-4 text-center">Tipe Kanal</th>
-                        <th class="py-3 px-4 text-center">Jumlah Order</th>
-                        <th class="py-3 px-4 text-right">Omzet Bruto (GMV)</th>
-                        <th class="py-3 px-4 text-right">Diskon Promo</th>
-                        <th class="py-3 px-4 text-right">Penjualan Bersih</th>
-                        <th class="py-3 px-4 text-center">Komisi Platform</th>
-                        <th class="py-3 px-4 text-right">Potongan Komisi (Rp)</th>
-                        <th class="py-3 px-4 text-right">Net Payout (Dana Cair)</th>
-                        <th class="py-3 px-4 text-right">Total HPP (BOM)</th>
-                        <th class="py-3 px-4 text-right">Laba Bersih Riil</th>
-                        <th class="py-3 px-4 text-right">Margin Riil %</th>
-                        <th class="py-3 px-4 text-right">AOV (Nota)</th>
-                        <th class="py-3 px-4 text-right">Kontribusi %</th>
+                        <th class="py-3 px-4">{{ __('pos.reports_col_channel') }}</th>
+                        <th class="py-3 px-4 text-center">{{ __('pos.reports_col_channel_type') }}</th>
+                        <th class="py-3 px-4 text-center">{{ __('pos.reports_col_order_count') }}</th>
+                        <th class="py-3 px-4 text-right">{{ __('pos.reports_col_gross_gmv') }}</th>
+                        <th class="py-3 px-4 text-right">{{ __('pos.reports_col_discount') }}</th>
+                        <th class="py-3 px-4 text-right">{{ __('pos.reports_col_net_sales') }}</th>
+                        <th class="py-3 px-4 text-center">{{ __('pos.reports_col_platform_commission') }}</th>
+                        <th class="py-3 px-4 text-right">{{ __('pos.reports_col_commission_amount') }}</th>
+                        <th class="py-3 px-4 text-right">{{ __('pos.reports_col_net_payout') }}</th>
+                        <th class="py-3 px-4 text-right">{{ __('pos.reports_col_total_bom') }}</th>
+                        <th class="py-3 px-4 text-right">{{ __('pos.reports_col_real_net_profit') }}</th>
+                        <th class="py-3 px-4 text-right">{{ __('pos.reports_col_real_margin_pct') }}</th>
+                        <th class="py-3 px-4 text-right">{{ __('pos.reports_col_aov_receipt') }}</th>
+                        <th class="py-3 px-4 text-right">{{ __('pos.reports_col_contrib_pct') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-black/5 dark:divide-white/5">
@@ -218,15 +218,15 @@
                             <td class="py-3 px-4 text-center">
                                 @if (($ch->channel_type ?? '') === 'online_delivery' || in_array($ch->sales_channel, ['shopeefood', 'gofood', 'grabfood']))
                                     <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#FF9500]/10 text-[#FF9500] border border-[#FF9500]/20">
-                                        Ojol Mitra
+                                        {{ __('pos.reports_channels_delivery_ojol') }}
                                     </span>
                                 @elseif (($ch->channel_type ?? '') === 'direct_online' || $ch->sales_channel === 'storefront')
                                     <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/20">
-                                        Toko Online
+                                        {{ __('pos.reports_channel_online') }}
                                     </span>
                                 @else
                                     <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#34C759]/10 text-[#34C759] border border-[#34C759]/20">
-                                        Langsung (POS)
+                                        {{ __('pos.reports_channels_direct_pos') }}
                                     </span>
                                 @endif
                             </td>
@@ -258,7 +258,7 @@
                                         {{ number_format($feePct, 0) }}%
                                     </span>
                                 @else
-                                    <span class="text-[11px] text-black/40 dark:text-white/40 font-medium">0% (Bebas Fee)</span>
+                                    <span class="text-[11px] text-black/40 dark:text-white/40 font-medium">{{ __('pos.reports_channels_no_fee') }}</span>
                                 @endif
                             </td>
 
@@ -302,7 +302,7 @@
                     @empty
                         <tr>
                             <td colspan="14" class="py-12 text-center text-black/40 dark:text-white/40 text-[13px]">
-                                Tidak ada data saluran penjualan pada filter aktif
+                                {{ __('pos.reports_channels_empty') }}
                             </td>
                         </tr>
                     @endforelse
@@ -311,7 +311,7 @@
                     <tfoot>
                         <tr class="border-t-2 border-black/10 dark:border-white/10 bg-black/[0.03] dark:bg-white/[0.03] font-bold text-black dark:text-white">
                             <td class="py-3 px-4" colspan="2">
-                                TOTAL REKAPITULASI
+                                {{ __('pos.reports_channels_total_summary') }}
                             </td>
                             <td class="py-3 px-4 text-center tabular-nums text-[#007AFF]">
                                 {{ number_format($totalChannelOrders, 0, ',', '.') }}
@@ -363,27 +363,27 @@
                 <i data-lucide="calculator" class="w-4 h-4"></i>
             </div>
             <div class="flex-1 min-w-0">
-                <h4 class="text-[14px] font-bold text-black dark:text-white">Standar Perhitungan Finansial Online Food Delivery (F&B)</h4>
+                <h4 class="text-[14px] font-bold text-black dark:text-white">{{ __('pos.reports_channels_calc_standard') }}</h4>
                 <p class="text-[12px] text-black/70 dark:text-white/70 mt-1">
-                    Untuk memberikan visibilitas profitabilitas yang akurat bagi pemilik resto & kafe, sistem COOCA menghitung pembagian hasil kanal pesan-antar berdasarkan rumus resmi:
+                    {{ __('pos.reports_channels_edu_desc') }}
                 </p>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-3">
                     <div class="p-3 rounded-[12px] bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/5">
-                        <div class="text-[11px] font-bold text-[#EE4D2D] uppercase tracking-wider">1. Komisi Platform Mitra (MDR)</div>
+                        <div class="text-[11px] font-bold text-[#EE4D2D] uppercase tracking-wider">{{ __('pos.reports_channels_calc_step1') }}</div>
                         <div class="text-[12px] text-black/80 dark:text-white/80 mt-1 font-mono">
-                            Komisi = Penjualan Murni × % Fee (ShopeeFood 20%, GoFood 20%, GrabFood 25%)
+                            {{ __('pos.reports_channels_calc_step1_formula') }}
                         </div>
                     </div>
                     <div class="p-3 rounded-[12px] bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/5">
-                        <div class="text-[11px] font-bold text-[#34C759] uppercase tracking-wider">2. Net Payout Hak Resto</div>
+                        <div class="text-[11px] font-bold text-[#34C759] uppercase tracking-wider">{{ __('pos.reports_channels_calc_step2') }}</div>
                         <div class="text-[12px] text-black/80 dark:text-white/80 mt-1 font-mono">
-                            Dana Cair = Penjualan Bersih - Potongan Komisi Platform
+                            {{ __('pos.reports_channels_calc_step2_formula') }}
                         </div>
                     </div>
                     <div class="p-3 rounded-[12px] bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/5">
-                        <div class="text-[11px] font-bold text-[#AF52DE] uppercase tracking-wider">3. Laba Bersih Riil Resto</div>
+                        <div class="text-[11px] font-bold text-[#AF52DE] uppercase tracking-wider">{{ __('pos.reports_channels_calc_step3') }}</div>
                         <div class="text-[12px] text-black/80 dark:text-white/80 mt-1 font-mono">
-                            Laba Riil = Dana Cair Rekening - Total Modal HPP (BOM Cost)
+                            {{ __('pos.reports_channels_calc_step3_formula') }}
                         </div>
                     </div>
                 </div>
