@@ -69,31 +69,45 @@ final class FinancialMath
     public static function terbilang(int|float $nilai): string
     {
         $nilai = abs((float) $nilai);
+        if ($nilai == 0) {
+            return 'Nol Rupiah';
+        }
+        $hasil = trim(preg_replace('/\s+/', ' ', self::ejaAngka($nilai)));
+        return $hasil !== '' ? $hasil . ' Rupiah' : 'Nol Rupiah';
+    }
+
+    private static function ejaAngka(float $nilai): string
+    {
         $huruf = ['', 'Satu', 'Dua', 'Tiga', 'Empat', 'Lima', 'Enam', 'Tujuh', 'Delapan', 'Sembilan', 'Sepuluh', 'Sebelas'];
 
         if ($nilai < 12) {
-            $hasil = ' ' . $huruf[(int) $nilai];
-        } elseif ($nilai < 20) {
-            $hasil = self::terbilang($nilai - 10) . ' Belas';
-        } elseif ($nilai < 100) {
-            $hasil = self::terbilang((int) ($nilai / 10)) . ' Puluh ' . self::terbilang(fmod($nilai, 10));
-        } elseif ($nilai < 200) {
-            $hasil = ' Seratus ' . self::terbilang($nilai - 100);
-        } elseif ($nilai < 1000) {
-            $hasil = self::terbilang((int) ($nilai / 100)) . ' Ratus ' . self::terbilang(fmod($nilai, 100));
-        } elseif ($nilai < 2000) {
-            $hasil = ' Seribu ' . self::terbilang($nilai - 1000);
-        } elseif ($nilai < 1000000) {
-            $hasil = self::terbilang((int) ($nilai / 1000)) . ' Ribu ' . self::terbilang(fmod($nilai, 1000));
-        } elseif ($nilai < 1000000000) {
-            $hasil = self::terbilang((int) ($nilai / 1000000)) . ' Juta ' . self::terbilang(fmod($nilai, 1000000));
-        } elseif ($nilai < 1000000000000) {
-            $hasil = self::terbilang((int) ($nilai / 1000000000)) . ' Miliar ' . self::terbilang(fmod($nilai, 1000000000));
-        } else {
-            $hasil = self::terbilang((int) ($nilai / 1000000000000)) . ' Triliun ' . self::terbilang(fmod($nilai, 1000000000000));
+            return ' ' . $huruf[(int) $nilai];
+        }
+        if ($nilai < 20) {
+            return self::ejaAngka($nilai - 10) . ' Belas';
+        }
+        if ($nilai < 100) {
+            return self::ejaAngka((int) ($nilai / 10)) . ' Puluh ' . self::ejaAngka(fmod($nilai, 10));
+        }
+        if ($nilai < 200) {
+            return ' Seratus ' . self::ejaAngka($nilai - 100);
+        }
+        if ($nilai < 1000) {
+            return self::ejaAngka((int) ($nilai / 100)) . ' Ratus ' . self::ejaAngka(fmod($nilai, 100));
+        }
+        if ($nilai < 2000) {
+            return ' Seribu ' . self::ejaAngka($nilai - 1000);
+        }
+        if ($nilai < 1000000) {
+            return self::ejaAngka((int) ($nilai / 1000)) . ' Ribu ' . self::ejaAngka(fmod($nilai, 1000));
+        }
+        if ($nilai < 1000000000) {
+            return self::ejaAngka((int) ($nilai / 1000000)) . ' Juta ' . self::ejaAngka(fmod($nilai, 1000000));
+        }
+        if ($nilai < 1000000000000) {
+            return self::ejaAngka((int) ($nilai / 1000000000)) . ' Miliar ' . self::ejaAngka(fmod($nilai, 1000000000));
         }
 
-        $clean = trim(preg_replace('/\s+/', ' ', $hasil));
-        return $clean !== '' ? $clean . ' Rupiah' : 'Nol Rupiah';
+        return self::ejaAngka((int) ($nilai / 1000000000000)) . ' Triliun ' . self::ejaAngka(fmod($nilai, 1000000000000));
     }
 }

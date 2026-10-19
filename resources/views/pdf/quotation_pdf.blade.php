@@ -7,16 +7,16 @@
     <style>
         @page {
             size: a4 portrait;
-            margin: 20mm;
+            margin: 18mm 20mm 18mm 20mm;
         }
         * {
             box-sizing: border-box;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
         }
         body {
-            font-size: 10.5px;
-            color: #1e293b;
-            line-height: 1.4;
+            font-size: 10px;
+            color: #111827;
+            line-height: 1.45;
             background: #ffffff;
             margin: 0;
             padding: 0;
@@ -26,461 +26,483 @@
             border-collapse: collapse;
         }
 
-        /* 1. Header / Kop Surat */
-        .header-table {
+        /* 1. Kop Surat Resmi Indonesia */
+        .kop-table {
             width: 100%;
-            margin-bottom: 14px;
-            border-bottom: 2px solid #0f172a;
-            padding-bottom: 10px;
+            margin-bottom: 0px;
         }
-        .brand-logo-img {
-            max-height: 44px;
-            max-width: 150px;
+        .kop-logo-cell {
+            width: 75px;
+            vertical-align: middle;
+            padding-right: 14px;
+        }
+        .kop-logo {
+            max-height: 55px;
+            max-width: 105px;
             object-fit: contain;
-            margin-bottom: 4px;
         }
-        .brand-name {
-            font-size: 14px;
-            font-weight: 800;
-            color: #020617;
-            letter-spacing: 0.2px;
-            line-height: 1.25;
-        }
-        .brand-meta {
-            font-size: 9.5px;
-            color: #475569;
-            margin-top: 2px;
-            line-height: 1.35;
-        }
-        .doc-title {
-            font-size: 17px;
-            font-weight: 800;
-            color: #020617;
-            text-align: right;
-            letter-spacing: 0.3px;
-            margin: 0;
-        }
-        .doc-number {
-            font-size: 12px;
-            font-weight: 700;
-            color: #1e293b;
-            text-align: right;
-            margin-top: 2px;
-        }
-        .doc-ref {
-            font-size: 9.5px;
-            color: #64748b;
-            text-align: right;
-            margin-top: 1px;
-        }
-        .status-badge-container {
-            text-align: right;
-            margin-top: 4px;
-        }
-        .status-badge {
-            display: inline-block;
-            padding: 2px 8px;
-            font-size: 9px;
-            font-weight: 800;
-            text-transform: uppercase;
-            border-radius: 3px;
-            letter-spacing: 0.5px;
-        }
-        .status-draft { background-color: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
-        .status-sent { background-color: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
-        .status-accepted { background-color: #ecfdf5; color: #047857; border: 1px solid #059669; }
-        .status-converted { background-color: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; }
-        .status-declined { background-color: #fef2f2; color: #b91c1c; border: 1px solid #f87171; }
-        .status-rejected { background-color: #fef2f2; color: #b91c1c; border: 1px solid #f87171; }
-
-        /* 2. Meta Grid (2 Kolom) */
-        .meta-table {
-            width: 100%;
-            margin-bottom: 16px;
-        }
-        .meta-label {
-            font-size: 8.5px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #64748b;
-            margin-bottom: 3px;
-        }
-        .client-name {
-            font-size: 12px;
-            font-weight: 800;
-            color: #020617;
-            line-height: 1.3;
-        }
-        .client-company {
-            font-size: 10px;
-            font-weight: 700;
-            color: #334155;
-            margin-top: 1px;
-        }
-        .client-detail {
-            font-size: 9.5px;
-            color: #475569;
-            margin-top: 2px;
-            line-height: 1.35;
-        }
-        .info-kv-table td {
-            padding: 1.5px 0;
-            font-size: 10px;
-        }
-        .info-kv-label {
-            color: #64748b;
-            width: 48%;
-        }
-        .info-kv-value {
-            text-align: right;
-            font-weight: 700;
-            color: #0f172a;
-            width: 52%;
-        }
-
-        /* 3. Items Table */
-        .items-table {
-            width: 100%;
-            margin-bottom: 14px;
-        }
-        .items-table th {
-            background-color: #f1f5f9;
-            color: #0f172a;
-            font-size: 9.5px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: 6px 8px;
-            border-top: 2px solid #0f172a;
-            border-bottom: 2px solid #0f172a;
+        .kop-text-cell {
+            vertical-align: middle;
             text-align: left;
         }
-        .items-table td {
-            padding: 7px 8px;
-            border-bottom: 1px solid #e2e8f0;
+        .kop-title {
+            font-size: 15px;
+            font-weight: bold;
+            color: #0f172a;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            line-height: 1.2;
+        }
+        .kop-meta {
+            font-size: 9px;
+            color: #334155;
+            margin-top: 3px;
+            line-height: 1.35;
+        }
+        .kop-divider {
+            margin-top: 8px;
+            margin-bottom: 14px;
+        }
+        .kop-line-thick {
+            border-top: 2.5px solid #0f172a;
+            margin-bottom: 1.5px;
+        }
+        .kop-line-thin {
+            border-top: 0.75px solid #0f172a;
+        }
+
+        /* 2. Metadata Surat Resmi & Tanggal */
+        .meta-section-table {
+            width: 100%;
+            margin-bottom: 12px;
+        }
+        .letter-ref-table td {
+            font-size: 10px;
+            padding: 1.5px 0;
+            vertical-align: top;
+        }
+        .ref-label {
+            width: 65px;
+            color: #475569;
+        }
+        .ref-sep {
+            width: 12px;
+            color: #475569;
+            text-align: center;
+        }
+        .ref-val {
+            color: #0f172a;
+            font-weight: 600;
+        }
+        .letter-date-box {
+            text-align: right;
+            font-size: 10px;
+            color: #0f172a;
+        }
+
+        /* 3. Kepada Yth. & Pembuka */
+        .recipient-box {
+            margin-top: 8px;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+        .recipient-greeting {
+            font-size: 10px;
+            color: #334155;
+        }
+        .recipient-name {
             font-size: 10.5px;
+            font-weight: bold;
+            color: #0f172a;
+        }
+        .recipient-company {
+            font-size: 10px;
+            font-weight: 600;
+            color: #334155;
+        }
+        .recipient-address {
+            font-size: 9.5px;
+            color: #475569;
+        }
+        .letter-opening {
+            font-size: 10px;
+            color: #1e293b;
+            margin-bottom: 10px;
+            line-height: 1.45;
+            text-align: justify;
+        }
+
+        /* 4. Tabel Rincian Resmi */
+        .official-table {
+            width: 100%;
+            margin-bottom: 12px;
+            border: 1px solid #334155;
+        }
+        .official-table th {
+            background-color: #f8fafc;
+            color: #0f172a;
+            font-size: 9px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            padding: 6px 7px;
+            border: 1px solid #334155;
+        }
+        .official-table td {
+            padding: 6px 7px;
+            border: 1px solid #cbd5e1;
+            font-size: 9.5px;
+            color: #1e293b;
             vertical-align: top;
         }
         .item-name {
-            font-weight: 700;
-            color: #020617;
-            line-height: 1.3;
+            font-weight: bold;
+            color: #0f172a;
         }
         .item-meta {
-            font-size: 9px;
+            font-size: 8.5px;
             color: #64748b;
             margin-top: 1px;
         }
-        .text-right { text-align: right; }
-        .text-center { text-align: center; }
-
-        /* 4. Financial Calculation & Notes */
-        .bottom-table {
-            width: 100%;
-            border-top: 2px solid #0f172a;
-            padding-top: 8px;
-            margin-bottom: 16px;
-        }
-        .notes-heading {
-            font-size: 9px;
-            font-weight: 800;
-            text-transform: uppercase;
-            color: #0f172a;
-            margin-bottom: 2px;
-        }
-        .notes-content {
-            font-size: 9.5px;
+        .item-notes {
+            font-size: 8.5px;
             color: #475569;
-            line-height: 1.35;
+            margin-top: 2px;
+            font-style: italic;
+        }
+
+        /* 5. Summary Section */
+        .summary-section-table {
+            width: 100%;
+            margin-bottom: 12px;
+        }
+        .terbilang-box {
+            background-color: #f8fafc;
+            border-left: 3px solid #0f172a;
+            padding: 6px 9px;
             margin-bottom: 8px;
+            font-size: 9.5px;
+            color: #1e293b;
+            line-height: 1.4;
+        }
+        .terbilang-label {
+            font-size: 8.5px;
+            font-weight: bold;
+            color: #475569;
+            text-transform: uppercase;
         }
         .terms-box {
-            background-color: #f8fafc;
-            border-left: 3px solid #64748b;
-            padding: 7px 10px;
-            font-size: 9.5px;
+            font-size: 9px;
             color: #334155;
             line-height: 1.4;
         }
-        .terms-box-title {
-            font-size: 9px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #0f172a;
-            margin-bottom: 3px;
+        .terms-box ol {
+            margin: 2px 0 0 16px;
+            padding: 0;
         }
-        .totals-table {
-            width: 100%;
-        }
-        .totals-table td {
-            padding: 2.5px 0;
-            font-size: 10.5px;
-        }
-        .total-label {
-            color: #475569;
-            text-align: left;
-        }
-        .total-val {
-            font-weight: 700;
-            color: #0f172a;
-            text-align: right;
-        }
-        .grand-total-row td {
-            border-top: 2px solid #0f172a;
-            padding-top: 6px;
-            margin-top: 4px;
-            font-size: 12.5px;
-            font-weight: 800;
-            color: #020617;
+        .terms-box li {
+            margin-bottom: 2px;
         }
 
-        /* 5. Signature Section */
-        .sign-table {
+        .totals-table td {
+            padding: 2.5px 0;
+            font-size: 10px;
+        }
+        .total-lbl {
+            width: 48%;
+            color: #475569;
+        }
+        .total-sep {
+            width: 6%;
+            color: #475569;
+            text-align: center;
+        }
+        .total-val {
+            width: 46%;
+            text-align: right;
+            font-weight: 600;
+            color: #0f172a;
+        }
+        .grand-total-row td {
+            border-top: 1.5px solid #0f172a;
+            border-bottom: 1.5px solid #0f172a;
+            padding: 5px 0;
+            font-size: 11px;
+            font-weight: bold;
+            color: #0f172a;
+        }
+
+        .letter-closing {
+            font-size: 10px;
+            color: #1e293b;
+            margin-top: 10px;
+            margin-bottom: 16px;
+            line-height: 1.45;
+        }
+
+        /* 6. Tanda Tangan */
+        .signature-table {
             width: 100%;
-            margin-top: 24px;
             page-break-inside: avoid;
         }
-        .sign-box {
-            width: 42%;
+        .sig-box {
+            width: 45%;
             text-align: center;
             vertical-align: top;
         }
-        .sign-title {
+        .sig-title {
             font-size: 9.5px;
-            color: #64748b;
-            margin-bottom: 2px;
+            color: #334155;
         }
-        .sign-entity {
-            font-size: 10.5px;
-            font-weight: 700;
+        .sig-company {
+            font-size: 10px;
+            font-weight: bold;
             color: #0f172a;
+            margin-top: 1px;
         }
-        .sign-space {
-            height: 52px;
+        .sig-space {
+            height: 55px;
         }
-        .sign-line {
-            border-top: 1px solid #64748b;
-            width: 75%;
-            margin: 0 auto 3px auto;
+        .sig-name {
+            font-size: 10px;
+            font-weight: bold;
+            color: #0f172a;
+            text-decoration: underline;
         }
-        .sign-caption {
-            font-size: 9px;
-            color: #475569;
-            font-weight: 600;
-        }
-        .sign-sub {
+        .sig-caption {
             font-size: 8.5px;
-            color: #94a3b8;
+            color: #64748b;
+            margin-top: 2px;
         }
 
-        /* 6. Footer */
-        .footer {
+        .official-footer {
             margin-top: 18px;
             padding-top: 6px;
-            border-top: 1px solid #e2e8f0;
-            font-size: 8.5px;
-            color: #94a3b8;
+            border-top: 0.5px solid #cbd5e1;
+            font-size: 8px;
+            color: #64748b;
             text-align: center;
         }
     </style>
 </head>
 <body>
 
-    <!-- 1. HEADER SECTION (KOP SURAT) -->
-    <table class="header-table">
+    <!-- KOP SURAT RESMI -->
+    <table class="kop-table">
         <tr>
-            <td style="width: 56%; vertical-align: top;">
-                @if(!empty($business->pdf_logo))
-                    <div>
-                        <img src="{{ $business->pdf_logo }}" alt="{{ $business->name }}" class="brand-logo-img">
-                    </div>
-                @endif
-                <div class="brand-name">{{ $business->name }}</div>
-                <div class="brand-meta">
+            @if(!empty($business->pdf_logo))
+            <td class="kop-logo-cell">
+                <img src="{{ $business->pdf_logo }}" alt="{{ $business->name }}" class="kop-logo">
+            </td>
+            @endif
+            <td class="kop-text-cell">
+                <div class="kop-title">{{ $business->name }}</div>
+                <div class="kop-meta">
                     @if($business->address){{ $business->address }}<br>@endif
-                    @if($business->phone)Telp / WA: {{ $business->phone }} &bull; @endif
+                    @if($business->phone)Telp / WhatsApp: {{ $business->phone }} &bull; @endif
                     @if($business->email)Email: {{ $business->email }}@endif
                     @if($business->tax_identification_number)<br>NPWP: {{ $business->tax_identification_number }}@endif
                 </div>
             </td>
-            <td style="width: 44%; vertical-align: top; text-align: right;">
-                <div class="doc-title">Surat Penawaran</div>
-                <div class="doc-number">No: {{ $quotation->quotation_number }}</div>
-                <div class="status-badge-container">
-                    <span class="status-badge status-{{ $quotation->status }}">
-                        {{ strtoupper($quotation->status) }}
-                    </span>
-                </div>
-            </td>
         </tr>
     </table>
 
-    <!-- 2. DETAIL PENAWARAN & KLIEN (2 KOLOM) -->
-    <table class="meta-table">
+    <div class="kop-divider">
+        <div class="kop-line-thick"></div>
+        <div class="kop-line-thin"></div>
+    </div>
+
+    <!-- NOMOR SURAT & TANGGAL RESMI -->
+    <table class="meta-section-table">
         <tr>
-            <!-- Pihak Klien -->
-            <td style="width: 52%; vertical-align: top; padding-right: 14px;">
-                <div class="meta-label">Ditujukan Kepada:</div>
-                <div class="client-name">{{ $quotation->customer?->name ?? 'Pelanggan Umum' }}</div>
-                @if($quotation->customer?->company_name || $quotation->customer?->company)
-                    <div class="client-company">{{ $quotation->customer->company_name ?? $quotation->customer->company }}</div>
-                @endif
-                <div class="client-detail">
-                    @if($quotation->customer?->address)
-                        {{ $quotation->customer->address }}<br>
-                    @endif
-                    @if($quotation->customer?->phone)Telp: {{ $quotation->customer->phone }} @endif
-                    @if($quotation->customer?->email)&bull; Email: {{ $quotation->customer->email }} @endif
-                </div>
-            </td>
-
-            <td style="width: 4%;"></td>
-
-            <!-- Rincian Tanggal & Masa Berlaku -->
-            <td style="width: 44%; vertical-align: top;">
-                <div class="meta-label">Informasi Dokumen:</div>
-                <table class="info-kv-table">
+            <td style="width: 58%; vertical-align: top;">
+                <table class="letter-ref-table">
                     <tr>
-                        <td class="info-kv-label">Tanggal Penawaran:</td>
-                        <td class="info-kv-value">{{ $quotation->date?->format('d/m/Y') ?? date('d/m/Y') }}</td>
+                        <td class="ref-label">Nomor</td>
+                        <td class="ref-sep">:</td>
+                        <td class="ref-val">{{ $quotation->quotation_number }}</td>
                     </tr>
                     <tr>
-                        <td class="info-kv-label">Masa Berlaku:</td>
-                        <td class="info-kv-value" style="color: #b91c1c;">
-                            {{ $quotation->expiry_date?->format('d/m/Y') ?? '14 Hari' }}
-                        </td>
+                        <td class="ref-label">Lampiran</td>
+                        <td class="ref-sep">:</td>
+                        <td class="ref-val">-</td>
                     </tr>
                     <tr>
-                        <td class="info-kv-label">Mata Uang:</td>
-                        <td class="info-kv-value">{{ $business->currency_symbol ?? 'IDR' }} (Rupiah)</td>
+                        <td class="ref-label">Perihal</td>
+                        <td class="ref-sep">:</td>
+                        <td class="ref-val" style="font-weight: bold;">Penawaran Harga Produk &amp; Layanan</td>
                     </tr>
                 </table>
             </td>
+            <td style="width: 42%; vertical-align: top; text-align: right;">
+                <div class="letter-date-box">
+                    {{ $business->city ? $business->city . ', ' : '' }}{{ $quotation->date ? \Carbon\Carbon::parse($quotation->date)->locale('id')->translatedFormat('d F Y') : date('d F Y') }}
+                </div>
+                @if($quotation->expiry_date)
+                <div style="font-size: 9px; color: #475569; margin-top: 3px;">
+                    Masa Berlaku s/d: <strong>{{ \Carbon\Carbon::parse($quotation->expiry_date)->locale('id')->translatedFormat('d F Y') }}</strong>
+                </div>
+                @endif
+            </td>
         </tr>
     </table>
 
-    <!-- 3. TABEL RINCIAN ITEM PENAWARAN -->
-    <table class="items-table">
+    <!-- TUJUAN SURAT (KEPADA YTH.) -->
+    <div class="recipient-box">
+        <div class="recipient-greeting">Kepada Yth.</div>
+        <div class="recipient-name">{{ $quotation->customer?->name ?? 'Pimpinan Perusahaan / Pelanggan' }}</div>
+        @if($quotation->customer?->company_name || $quotation->customer?->company)
+            <div class="recipient-company">{{ $quotation->customer->company_name ?? $quotation->customer->company }}</div>
+        @endif
+        @if($quotation->customer?->address)
+            <div class="recipient-address">{{ $quotation->customer->address }}</div>
+        @endif
+        @if($quotation->customer?->phone)
+            <div style="font-size: 9px; color: #475569;">Telp: {{ $quotation->customer->phone }}</div>
+        @endif
+    </div>
+
+    <!-- PEMBUKA SURAT RESMI -->
+    <div class="letter-opening">
+        Dengan hormat,<br>
+        Sehubungan dengan kebutuhan pengadaan produk dan layanan pada perusahaan Bapak/Ibu, bersama ini kami sampaikan rincian penawaran harga resmi dengan perincian sebagai berikut:
+    </div>
+
+    <!-- TABEL RINCIAN ITEM -->
+    <table class="official-table">
         <thead>
             <tr>
-                <th style="width: 5%;" class="text-center">No</th>
-                <th style="width: 43%;">Deskripsi Produk / Layanan</th>
-                <th style="width: 9%;" class="text-center">Satuan</th>
-                <th style="width: 11%;" class="text-right">Kuantitas</th>
-                <th style="width: 16%;" class="text-right">Harga Satuan</th>
-                <th style="width: 16%;" class="text-right">Subtotal</th>
+                <th style="width: 5%; text-align: center;">No.</th>
+                <th style="width: 45%;">Nama Barang / Layanan</th>
+                <th style="width: 9%; text-align: center;">Satuan</th>
+                <th style="width: 9%; text-align: right;">Jumlah</th>
+                <th style="width: 16%; text-align: right;">Harga Satuan (Rp)</th>
+                <th style="width: 16%; text-align: right;">Total Harga (Rp)</th>
             </tr>
         </thead>
         <tbody>
             @forelse($quotation->items as $idx => $item)
             <tr>
-                <td class="text-center" style="color: #64748b;">{{ $idx + 1 }}</td>
+                <td style="text-align: center; color: #475569;">{{ $idx + 1 }}.</td>
                 <td>
                     <div class="item-name">{{ $item->product_name }}</div>
                     @if($item->product?->code || $item->product?->sku)
-                        <div class="item-meta">SKU: {{ $item->product->code ?? $item->product->sku }}</div>
+                        <div class="item-meta">Kode: {{ $item->product->code ?? $item->product->sku }}</div>
+                    @endif
+                    @if($item->notes)
+                        <div class="item-notes">{{ $item->notes }}</div>
                     @endif
                 </td>
-                <td class="text-center" style="text-transform: uppercase; color: #475569;">
-                    {{ $item->product?->outputUnit?->code ?? ($item->product?->unit ?? 'pcs') }}
+                <td style="text-align: center;">
+                    {{ $item->product?->outputUnit?->code ?? ($item->product?->unit ?? 'Pcs') }}
                 </td>
-                <td class="text-right" style="font-weight: 700; color: #0f172a;">
+                <td style="text-align: right; font-weight: bold;">
                     {{ (float) $item->quantity == (int) $item->quantity ? number_format((float) $item->quantity, 0, ',', '.') : rtrim(rtrim(number_format((float) $item->quantity, 2, ',', '.'), '0'), ',') }}
                 </td>
-                <td class="text-right" style="color: #334155;">
-                    Rp {{ number_format((float) $item->unit_price, 0, ',', '.') }}
+                <td style="text-align: right;">
+                    {{ number_format((float) $item->unit_price, 0, ',', '.') }}
                 </td>
-                <td class="text-right" style="font-weight: 700; color: #020617;">
-                    Rp {{ number_format((float) ($item->total_price ?? ($item->quantity * $item->unit_price)), 0, ',', '.') }}
+                <td style="text-align: right; font-weight: bold;">
+                    {{ number_format((float) ($item->total_price ?? ($item->quantity * $item->unit_price)), 0, ',', '.') }}
                 </td>
             </tr>
             @empty
             <tr>
-                <td colspan="6" class="text-center" style="padding: 16px; color: #94a3b8;">Tidak ada item rincian penawaran.</td>
+                <td colspan="6" style="text-align: center; padding: 16px; color: #64748b;">Tidak ada rincian item penawaran.</td>
             </tr>
             @endforelse
         </tbody>
     </table>
 
-    <!-- 4. TOTALS & SYARAT KETENTUAN -->
-    <table class="bottom-table">
+    <!-- RINGKASAN BIAYA & SYARAT KETENTUAN -->
+    <table class="summary-section-table">
         <tr>
             <td style="width: 54%; vertical-align: top; padding-right: 18px;">
+                <div class="terbilang-box">
+                    <span class="terbilang-label">Terbilang:</span><br>
+                    <em># {{ \App\Support\Math\FinancialMath::terbilang($quotation->total_amount) }} #</em>
+                </div>
+
                 @if($quotation->notes)
-                <div>
-                    <div class="notes-heading">Catatan Penawaran:</div>
-                    <div class="notes-content">{{ $quotation->notes }}</div>
+                <div style="font-size: 9px; margin-bottom: 6px;">
+                    <strong>Catatan Khusus:</strong><br>
+                    {!! nl2br(e($quotation->notes)) !!}
                 </div>
                 @endif
 
-                @if($quotation->terms_and_conditions)
                 <div class="terms-box">
-                    <div class="terms-box-title">Syarat & Ketentuan:</div>
-                    {!! nl2br(e($quotation->terms_and_conditions)) !!}
+                    <strong>Syarat &amp; Ketentuan Penawaran:</strong>
+                    @if($quotation->terms_and_conditions)
+                        <div>{!! nl2br(e($quotation->terms_and_conditions)) !!}</div>
+                    @else
+                        <ol>
+                            <li>Harga penawaran berlaku sampai dengan tanggal masa berlaku yang tertera.</li>
+                            <li>Pemesanan dianggap sah setelah surat penawaran ini ditandatangani atau diterbitkan Surat Pesanan (PO) resmi.</li>
+                            <li>Pembayaran dilakukan melalui transfer ke rekening resmi perusahaan.</li>
+                        </ol>
+                    @endif
                 </div>
-                @else
-                <div class="terms-box">
-                    <div class="terms-box-title">Syarat & Ketentuan Umum:</div>
-                    <div>1. Harga penawaran berlaku hingga tanggal masa berlaku tertera.</div>
-                    <div style="margin-top: 2px;">2. Konfirmasi pesanan dapat dilakukan dengan menandatangani surat ini atau menerbitkan Purchase Order resmi.</div>
-                </div>
-                @endif
             </td>
-
             <td style="width: 46%; vertical-align: top;">
                 <table class="totals-table">
                     <tr>
-                        <td class="total-label">Subtotal:</td>
+                        <td class="total-lbl">Subtotal</td>
+                        <td class="total-sep">:</td>
                         <td class="total-val">Rp {{ number_format((float) $quotation->subtotal, 0, ',', '.') }}</td>
                     </tr>
                     @if((float) $quotation->discount_amount > 0)
                     <tr>
-                        <td class="total-label">Diskon:</td>
-                        <td class="total-val" style="color: #e11d48;">- Rp {{ number_format((float) $quotation->discount_amount, 0, ',', '.') }}</td>
+                        <td class="total-lbl">Diskon Khusus</td>
+                        <td class="total-sep">:</td>
+                        <td class="total-val" style="color: #b91c1c;">- Rp {{ number_format((float) $quotation->discount_amount, 0, ',', '.') }}</td>
                     </tr>
                     @endif
                     @if((float) $quotation->tax_amount > 0)
                     <tr>
-                        <td class="total-label">Pajak (PPN):</td>
+                        <td class="total-lbl">Pajak (PPN)</td>
+                        <td class="total-sep">:</td>
                         <td class="total-val">+ Rp {{ number_format((float) $quotation->tax_amount, 0, ',', '.') }}</td>
                     </tr>
                     @endif
                     <tr class="grand-total-row">
-                        <td>Total Penawaran:</td>
-                        <td class="text-right">Rp {{ number_format((float) $quotation->total_amount, 0, ',', '.') }}</td>
+                        <td class="total-lbl">Total Penawaran</td>
+                        <td class="total-sep">:</td>
+                        <td class="total-val">Rp {{ number_format((float) $quotation->total_amount, 0, ',', '.') }}</td>
                     </tr>
                 </table>
             </td>
         </tr>
     </table>
 
-    <!-- 5. TANDA TANGAN OTORISASI -->
-    <table class="sign-table">
+    <!-- PENUTUP SURAT RESMI -->
+    <div class="letter-closing">
+        Demikian surat penawaran harga ini kami sampaikan. Besar harapan kami untuk dapat menjalin kerja sama yang baik dengan perusahaan Bapak/Ibu. Atas perhatian dan kerjasamanya, kami mengucapkan terima kasih.
+    </div>
+
+    <!-- TANDA TANGAN RESMI -->
+    <table class="signature-table">
         <tr>
-            <td class="sign-box">
-                <div class="sign-title">Persetujuan Klien / Pemesan,</div>
-                <div class="sign-space"></div>
-                <div class="sign-line"></div>
-                <div class="sign-caption">( {{ $quotation->customer?->company_name ?? ($quotation->customer?->name ?? '....................................') }} )</div>
-                <div class="sign-sub">Tanda Tangan & Cap Perusahaan</div>
+            <td class="sig-box">
+                <div class="sig-title">Menyetujui / Diterima oleh,</div>
+                <div class="sig-company">{{ $quotation->customer?->company_name ?? ($quotation->customer?->name ?? 'Pihak Pemesan') }}</div>
+                <div class="sig-space"></div>
+                <div class="sig-name">( {{ $quotation->customer?->name ?? '..................................................' }} )</div>
+                <div class="sig-caption">Tanda Tangan &amp; Cap Perusahaan</div>
             </td>
-            <td style="width: 16%;"></td>
-            <td class="sign-box">
-                <div class="sign-title">{{ $business->name }},</div>
-                <div class="sign-entity">Bagian Penjualan & Kemitraan</div>
-                <div class="sign-space"></div>
-                <div class="sign-line"></div>
-                <div class="sign-caption">( Sales Representative )</div>
-                <div class="sign-sub">Authorized Signature</div>
+            <td style="width: 10%;"></td>
+            <td class="sig-box">
+                <div class="sig-title">Hormat kami,</div>
+                <div class="sig-company">{{ $business->name }}</div>
+                <div class="sig-space"></div>
+                <div class="sig-name">( .................................................. )</div>
+                <div class="sig-caption">Bagian Penjualan &amp; Kemitraan</div>
             </td>
         </tr>
     </table>
 
-    <!-- 6. FOOTER RESMI -->
-    <div class="footer">
-        Surat Penawaran ini dibuat secara otomatis melalui COOCA ERP &bull; Dicetak: {{ date('d/m/Y H:i') }} WIB
+    <!-- FOOTER RESMI -->
+    <div class="official-footer">
+        Dokumen ini diterbitkan secara resmi oleh {{ $business->name }}.
     </div>
 
 </body>

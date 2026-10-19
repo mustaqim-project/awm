@@ -7,16 +7,16 @@
     <style>
         @page {
             size: a4 portrait;
-            margin: 20mm;
+            margin: 18mm 20mm 18mm 20mm;
         }
         * {
             box-sizing: border-box;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
         }
         body {
-            font-size: 10.5px;
-            color: #1e293b;
-            line-height: 1.4;
+            font-size: 10px;
+            color: #111827;
+            line-height: 1.45;
             background: #ffffff;
             margin: 0;
             padding: 0;
@@ -26,507 +26,499 @@
             border-collapse: collapse;
         }
 
-        /* 1. Header / Kop Surat */
-        .header-table {
+        /* 1. Kop Surat Resmi Indonesia */
+        .kop-table {
             width: 100%;
-            margin-bottom: 14px;
-            border-bottom: 2px solid #0f172a;
-            padding-bottom: 10px;
+            margin-bottom: 0px;
         }
-        .brand-logo-img {
-            max-height: 44px;
-            max-width: 150px;
+        .kop-logo-cell {
+            width: 75px;
+            vertical-align: middle;
+            padding-right: 14px;
+        }
+        .kop-logo {
+            max-height: 55px;
+            max-width: 105px;
             object-fit: contain;
-            margin-bottom: 4px;
         }
-        .brand-name {
-            font-size: 14px;
-            font-weight: 800;
-            color: #020617;
-            letter-spacing: 0.2px;
-            line-height: 1.25;
-        }
-        .brand-meta {
-            font-size: 9.5px;
-            color: #475569;
-            margin-top: 2px;
-            line-height: 1.35;
-        }
-        .doc-title {
-            font-size: 17px;
-            font-weight: 800;
-            color: #020617;
-            text-align: right;
-            letter-spacing: 0.3px;
-            margin: 0;
-        }
-        .doc-number {
-            font-size: 12px;
-            font-weight: 700;
-            color: #1e293b;
-            text-align: right;
-            margin-top: 2px;
-        }
-        .doc-ref {
-            font-size: 9.5px;
-            color: #64748b;
-            text-align: right;
-            margin-top: 1px;
-        }
-        .status-badge-container {
-            text-align: right;
-            margin-top: 4px;
-        }
-        .status-badge {
-            display: inline-block;
-            padding: 2px 8px;
-            font-size: 9px;
-            font-weight: 800;
-            text-transform: uppercase;
-            border-radius: 3px;
-            letter-spacing: 0.5px;
-        }
-        .status-paid { background-color: #ecfdf5; color: #047857; border: 1px solid #059669; }
-        .status-unpaid { background-color: #fef2f2; color: #b91c1c; border: 1px solid #f87171; }
-        .status-partial { background-color: #fefce8; color: #854d0e; border: 1px solid #facc15; }
-        .status-overdue { background-color: #7f1d1d; color: #ffffff; }
-        .status-draft { background-color: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
-
-        /* 2. Meta Grid (2 Kolom) */
-        .meta-table {
-            width: 100%;
-            margin-bottom: 16px;
-        }
-        .meta-label {
-            font-size: 8.5px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #64748b;
-            margin-bottom: 3px;
-        }
-        .client-name {
-            font-size: 12px;
-            font-weight: 800;
-            color: #020617;
-            line-height: 1.3;
-        }
-        .client-company {
-            font-size: 10px;
-            font-weight: 700;
-            color: #334155;
-            margin-top: 1px;
-        }
-        .client-detail {
-            font-size: 9.5px;
-            color: #475569;
-            margin-top: 2px;
-            line-height: 1.35;
-        }
-        .info-kv-table td {
-            padding: 1.5px 0;
-            font-size: 10px;
-        }
-        .info-kv-label {
-            color: #64748b;
-            width: 48%;
-        }
-        .info-kv-value {
-            text-align: right;
-            font-weight: 700;
-            color: #0f172a;
-            width: 52%;
-        }
-
-        /* 3. Items Table */
-        .items-table {
-            width: 100%;
-            margin-bottom: 14px;
-        }
-        .items-table th {
-            background-color: #f1f5f9;
-            color: #0f172a;
-            font-size: 9.5px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: 6px 8px;
-            border-top: 2px solid #0f172a;
-            border-bottom: 2px solid #0f172a;
+        .kop-text-cell {
+            vertical-align: middle;
             text-align: left;
         }
-        .items-table td {
-            padding: 7px 8px;
-            border-bottom: 1px solid #e2e8f0;
+        .kop-title {
+            font-size: 15px;
+            font-weight: bold;
+            color: #0f172a;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            line-height: 1.2;
+        }
+        .kop-meta {
+            font-size: 9px;
+            color: #334155;
+            margin-top: 3px;
+            line-height: 1.35;
+        }
+        .kop-divider {
+            margin-top: 8px;
+            margin-bottom: 14px;
+        }
+        .kop-line-thick {
+            border-top: 2.5px solid #0f172a;
+            margin-bottom: 1.5px;
+        }
+        .kop-line-thin {
+            border-top: 0.75px solid #0f172a;
+        }
+
+        /* 2. Metadata Faktur & Tanggal */
+        .meta-section-table {
+            width: 100%;
+            margin-bottom: 12px;
+        }
+        .letter-ref-table td {
+            font-size: 10px;
+            padding: 1.5px 0;
+            vertical-align: top;
+        }
+        .ref-label {
+            width: 90px;
+            color: #475569;
+        }
+        .ref-sep {
+            width: 12px;
+            color: #475569;
+            text-align: center;
+        }
+        .ref-val {
+            color: #0f172a;
+            font-weight: 600;
+        }
+        .letter-date-box {
+            text-align: right;
+            font-size: 10px;
+            color: #0f172a;
+        }
+
+        /* 3. Kepada Yth. & Detail Penagihan */
+        .recipient-box {
+            margin-top: 8px;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+        .recipient-greeting {
+            font-size: 10px;
+            color: #334155;
+        }
+        .recipient-name {
             font-size: 10.5px;
+            font-weight: bold;
+            color: #0f172a;
+        }
+        .recipient-company {
+            font-size: 10px;
+            font-weight: 600;
+            color: #334155;
+        }
+        .recipient-address {
+            font-size: 9.5px;
+            color: #475569;
+        }
+
+        /* 4. Tabel Rincian Resmi */
+        .official-table {
+            width: 100%;
+            margin-bottom: 12px;
+            border: 1px solid #334155;
+        }
+        .official-table th {
+            background-color: #f8fafc;
+            color: #0f172a;
+            font-size: 9px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            padding: 6px 7px;
+            border: 1px solid #334155;
+        }
+        .official-table td {
+            padding: 6px 7px;
+            border: 1px solid #cbd5e1;
+            font-size: 9.5px;
+            color: #1e293b;
             vertical-align: top;
         }
         .item-name {
-            font-weight: 700;
-            color: #020617;
-            line-height: 1.3;
+            font-weight: bold;
+            color: #0f172a;
         }
         .item-meta {
-            font-size: 9px;
+            font-size: 8.5px;
             color: #64748b;
             margin-top: 1px;
         }
-        .text-right { text-align: right; }
-        .text-center { text-align: center; }
 
-        /* 4. Financial Calculation & Notes */
-        .bottom-table {
+        /* 5. Summary Section */
+        .summary-section-table {
             width: 100%;
-            border-top: 2px solid #0f172a;
-            padding-top: 8px;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
-        .notes-heading {
-            font-size: 9px;
-            font-weight: 800;
-            text-transform: uppercase;
-            color: #0f172a;
-            margin-bottom: 2px;
-        }
-        .notes-content {
-            font-size: 9.5px;
-            color: #475569;
-            line-height: 1.35;
+        .terbilang-box {
+            background-color: #f8fafc;
+            border-left: 3px solid #0f172a;
+            padding: 6px 9px;
             margin-bottom: 8px;
+            font-size: 9.5px;
+            color: #1e293b;
+            line-height: 1.4;
+        }
+        .terbilang-label {
+            font-size: 8.5px;
+            font-weight: bold;
+            color: #475569;
+            text-transform: uppercase;
         }
         .bank-box {
+            border: 1px solid #cbd5e1;
             background-color: #f8fafc;
-            border-left: 3px solid #64748b;
             padding: 7px 10px;
-            font-size: 9.5px;
+            font-size: 9px;
             color: #334155;
             line-height: 1.4;
         }
         .bank-box-title {
-            font-size: 9px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            font-weight: bold;
             color: #0f172a;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
         }
-        .totals-table {
-            width: 100%;
-        }
+
         .totals-table td {
             padding: 2.5px 0;
-            font-size: 10.5px;
+            font-size: 10px;
         }
-        .total-label {
+        .total-lbl {
+            width: 50%;
             color: #475569;
-            text-align: left;
+        }
+        .total-sep {
+            width: 6%;
+            color: #475569;
+            text-align: center;
         }
         .total-val {
-            font-weight: 700;
-            color: #0f172a;
+            width: 44%;
             text-align: right;
+            font-weight: 600;
+            color: #0f172a;
         }
         .grand-total-row td {
-            border-top: 2px solid #0f172a;
-            padding-top: 6px;
-            margin-top: 4px;
-            font-size: 12.5px;
-            font-weight: 800;
-            color: #020617;
+            border-top: 1.5px solid #0f172a;
+            border-bottom: 1px solid #cbd5e1;
+            padding: 5px 0;
+            font-size: 11px;
+            font-weight: bold;
+            color: #0f172a;
         }
         .balance-due-row td {
             border-top: 1px solid #cbd5e1;
-            padding-top: 4px;
-            font-size: 11.5px;
-            font-weight: 800;
-            color: #b45309;
+            border-bottom: 1.5px solid #0f172a;
+            padding: 5px 0;
+            font-size: 11px;
+            font-weight: bold;
+            color: #b91c1c;
         }
 
-        /* 5. Signature Section */
-        .sign-table {
+        /* 6. Tanda Tangan */
+        .signature-table {
             width: 100%;
-            margin-top: 24px;
+            margin-top: 14px;
             page-break-inside: avoid;
         }
-        .sign-box {
-            width: 42%;
+        .sig-box {
+            width: 45%;
             text-align: center;
             vertical-align: top;
         }
-        .sign-title {
+        .sig-title {
             font-size: 9.5px;
-            color: #64748b;
-            margin-bottom: 2px;
+            color: #334155;
         }
-        .sign-entity {
-            font-size: 10.5px;
-            font-weight: 700;
+        .sig-company {
+            font-size: 10px;
+            font-weight: bold;
             color: #0f172a;
+            margin-top: 1px;
         }
-        .sign-space {
-            height: 52px;
+        .sig-space {
+            height: 55px;
         }
-        .sign-line {
-            border-top: 1px solid #64748b;
-            width: 75%;
-            margin: 0 auto 3px auto;
+        .sig-name {
+            font-size: 10px;
+            font-weight: bold;
+            color: #0f172a;
+            text-decoration: underline;
         }
-        .sign-caption {
-            font-size: 9px;
-            color: #475569;
-            font-weight: 600;
-        }
-        .sign-sub {
+        .sig-caption {
             font-size: 8.5px;
-            color: #94a3b8;
+            color: #64748b;
+            margin-top: 2px;
         }
 
-        /* 6. Footer */
-        .footer {
+        .official-footer {
             margin-top: 18px;
             padding-top: 6px;
-            border-top: 1px solid #e2e8f0;
-            font-size: 8.5px;
-            color: #94a3b8;
+            border-top: 0.5px solid #cbd5e1;
+            font-size: 8px;
+            color: #64748b;
             text-align: center;
         }
     </style>
 </head>
 <body>
 
-    <!-- 1. HEADER SECTION (KOP SURAT) -->
-    <table class="header-table">
+    <!-- KOP SURAT RESMI -->
+    <table class="kop-table">
         <tr>
-            <td style="width: 56%; vertical-align: top;">
-                @if(!empty($business->pdf_logo))
-                    <div>
-                        <img src="{{ $business->pdf_logo }}" alt="{{ $business->name }}" class="brand-logo-img">
-                    </div>
-                @endif
-                <div class="brand-name">{{ $business->name }}</div>
+            @if(!empty($business->pdf_logo))
+            <td class="kop-logo-cell">
+                <img src="{{ $business->pdf_logo }}" alt="{{ $business->name }}" class="kop-logo">
+            </td>
+            @endif
+            <td class="kop-text-cell">
+                <div class="kop-title">{{ $business->name }}</div>
                 @if($invoice->sender_name)
-                    <div style="font-size: 10px; font-weight: 700; color: #334155;">Pengirim: {{ $invoice->sender_name }}</div>
+                    <div style="font-size: 9.5px; font-weight: bold; color: #334155;">Pengirim: {{ $invoice->sender_name }}</div>
                 @endif
-                <div class="brand-meta">
+                <div class="kop-meta">
                     @if($business->address){{ $business->address }}<br>@endif
-                    @if($business->phone)Telp / WA: {{ $business->phone }} &bull; @endif
+                    @if($business->phone)Telp / WhatsApp: {{ $business->phone }} &bull; @endif
                     @if($business->email)Email: {{ $business->email }}@endif
                     @if($business->tax_identification_number)<br>NPWP: {{ $business->tax_identification_number }}@endif
                 </div>
             </td>
-            <td style="width: 44%; vertical-align: top; text-align: right;">
-                <div class="doc-title">Faktur Penjualan</div>
-                <div class="doc-number">No: {{ $invoice->invoice_number }}</div>
-                @if($invoice->purchaseOrder)
-                    <div class="doc-ref">Ref. PO: {{ $invoice->purchaseOrder->po_number }}</div>
-                @elseif($invoice->salesOrder)
-                    <div class="doc-ref">Ref. SO: {{ $invoice->salesOrder->so_number }}</div>
-                @endif
-                @php
-                    $paymentStatus = $invoice->payment_status ?? ($invoice->status === 'paid' ? 'paid' : ($invoice->paid_amount > 0 ? 'partial' : 'unpaid'));
-                @endphp
-                <div class="status-badge-container">
-                    <span class="status-badge status-{{ $paymentStatus }}">
-                        {{ strtoupper($paymentStatus === 'paid' ? 'LUNAS (PAID)' : ($paymentStatus === 'partial' ? 'DIBAYAR SEBAGIAN' : 'BELUM DIBAYAR')) }}
-                    </span>
-                </div>
-            </td>
         </tr>
     </table>
 
-    <!-- 2. DETAIL TAGIHAN & KLIEN (2 KOLOM) -->
-    <table class="meta-table">
+    <div class="kop-divider">
+        <div class="kop-line-thick"></div>
+        <div class="kop-line-thin"></div>
+    </div>
+
+    <!-- NOMOR FAKTUR & TANGGAL RESMI -->
+    <table class="meta-section-table">
         <tr>
-            <!-- Pihak Pembeli -->
-            <td style="width: 52%; vertical-align: top; padding-right: 14px;">
-                <div class="meta-label">Ditagihkan Kepada:</div>
-                <div class="client-name">{{ $invoice->customer?->name ?? 'Pelanggan Umum' }}</div>
-                @if($invoice->recipient_name)
-                    <div class="client-company">U.P: {{ $invoice->recipient_name }}</div>
-                @endif
-                @if($invoice->customer?->company_name || $invoice->customer?->company)
-                    <div class="client-company">{{ $invoice->customer->company_name ?? $invoice->customer->company }}</div>
-                @endif
-                <div class="client-detail">
-                    @if($invoice->customer?->billing_address || $invoice->customer?->address)
-                        {{ $invoice->customer->billing_address ?? $invoice->customer->address }}<br>
+            <td style="width: 58%; vertical-align: top;">
+                <table class="letter-ref-table">
+                    <tr>
+                        <td class="ref-label">No. Faktur</td>
+                        <td class="ref-sep">:</td>
+                        <td class="ref-val">{{ $invoice->invoice_number }}</td>
+                    </tr>
+                    @if($invoice->purchaseOrder)
+                    <tr>
+                        <td class="ref-label">Ref. No. PO</td>
+                        <td class="ref-sep">:</td>
+                        <td class="ref-val">{{ $invoice->purchaseOrder->po_number }}</td>
+                    </tr>
+                    @elseif($invoice->salesOrder)
+                    <tr>
+                        <td class="ref-label">Ref. No. SO</td>
+                        <td class="ref-sep">:</td>
+                        <td class="ref-val">{{ $invoice->salesOrder->so_number }}</td>
+                    </tr>
                     @endif
-                    @if($invoice->customer?->phone)Telp: {{ $invoice->customer->phone }} @endif
-                    @if($invoice->customer?->email)&bull; Email: {{ $invoice->customer->email }} @endif
-                    @if($invoice->customer?->tax_identification_number)<br>NPWP: {{ $invoice->customer->tax_identification_number }}@endif
-                </div>
-            </td>
-
-            <td style="width: 4%;"></td>
-
-            <!-- Rincian Tanggal & Pembayaran -->
-            <td style="width: 44%; vertical-align: top;">
-                <div class="meta-label">Informasi Transaksi:</div>
-                <table class="info-kv-table">
                     <tr>
-                        <td class="info-kv-label">Tanggal Faktur:</td>
-                        <td class="info-kv-value">{{ $invoice->invoice_date?->format('d/m/Y') ?? date('d/m/Y') }}</td>
-                    </tr>
-                    <tr>
-                        <td class="info-kv-label">Jatuh Tempo:</td>
-                        <td class="info-kv-value" style="color: #b91c1c;">
-                            {{ $invoice->due_date?->format('d/m/Y') ?? 'Sesuai Ketentuan' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="info-kv-label">Syarat Pembayaran:</td>
-                        <td class="info-kv-value">{{ $invoice->payment_terms ?? 'Net 30' }}</td>
-                    </tr>
-                    <tr>
-                        <td class="info-kv-label">Mata Uang:</td>
-                        <td class="info-kv-value">{{ $business->currency_symbol ?? 'IDR' }} (Rupiah)</td>
+                        <td class="ref-label">Perihal</td>
+                        <td class="ref-sep">:</td>
+                        <td class="ref-val" style="font-weight: bold;">Faktur Penjualan (Commercial Invoice)</td>
                     </tr>
                 </table>
             </td>
+            <td style="width: 42%; vertical-align: top; text-align: right;">
+                <div class="letter-date-box">
+                    Tanggal Faktur: <strong>{{ $invoice->invoice_date ? \Carbon\Carbon::parse($invoice->invoice_date)->locale('id')->translatedFormat('d F Y') : date('d F Y') }}</strong>
+                </div>
+                <div style="font-size: 9px; color: #b91c1c; margin-top: 3px;">
+                    Jatuh Tempo: <strong>{{ $invoice->due_date ? \Carbon\Carbon::parse($invoice->due_date)->locale('id')->translatedFormat('d F Y') : 'Sesuai Ketentuan' }}</strong>
+                </div>
+                @if($invoice->payment_terms)
+                <div style="font-size: 9px; color: #475569; margin-top: 2px;">
+                    Syarat Pembayaran: {{ $invoice->payment_terms }}
+                </div>
+                @endif
+            </td>
         </tr>
     </table>
 
-    <!-- 3. TABEL RINCIAN ITEM -->
-    <table class="items-table">
+    <!-- TUJUAN PENAGIHAN (KEPADA YTH.) -->
+    <div class="recipient-box">
+        <div class="recipient-greeting">Kepada Yth.</div>
+        <div class="recipient-name">{{ $invoice->recipient_name ?: ($invoice->customer?->name ?? 'Pelanggan / Pembeli') }}</div>
+        @if($invoice->customer?->company_name || $invoice->customer?->company)
+            <div class="recipient-company">{{ $invoice->customer->company_name ?? $invoice->customer->company }}</div>
+        @endif
+        @if($invoice->customer?->billing_address || $invoice->customer?->address)
+            <div class="recipient-address">{{ $invoice->customer->billing_address ?? $invoice->customer->address }}</div>
+        @endif
+        @if($invoice->customer?->phone)
+            <div style="font-size: 9px; color: #475569;">Telp: {{ $invoice->customer->phone }}</div>
+        @endif
+        @if($invoice->customer?->tax_identification_number)
+            <div style="font-size: 9px; color: #475569;">NPWP: {{ $invoice->customer->tax_identification_number }}</div>
+        @endif
+    </div>
+
+    <!-- TABEL RINCIAN BARANG / JASA -->
+    <table class="official-table">
         <thead>
             <tr>
-                <th style="width: 5%;" class="text-center">No</th>
-                <th style="width: 43%;">Deskripsi Produk / Jasa</th>
-                <th style="width: 9%;" class="text-center">Satuan</th>
-                <th style="width: 11%;" class="text-right">Kuantitas</th>
-                <th style="width: 16%;" class="text-right">Harga Satuan</th>
-                <th style="width: 16%;" class="text-right">Subtotal</th>
+                <th style="width: 5%; text-align: center;">No.</th>
+                <th style="width: 45%;">Deskripsi Produk / Jasa</th>
+                <th style="width: 9%; text-align: center;">Satuan</th>
+                <th style="width: 9%; text-align: right;">Jumlah</th>
+                <th style="width: 16%; text-align: right;">Harga Satuan (Rp)</th>
+                <th style="width: 16%; text-align: right;">Subtotal (Rp)</th>
             </tr>
         </thead>
         <tbody>
             @forelse($invoice->items as $idx => $item)
             <tr>
-                <td class="text-center" style="color: #64748b;">{{ $idx + 1 }}</td>
+                <td style="text-align: center; color: #475569;">{{ $idx + 1 }}.</td>
                 <td>
                     <div class="item-name">{{ $item->item_name ?? $item->product_name }}</div>
                     @if($item->sku || $item->product?->sku || $item->product?->code)
-                        <div class="item-meta">SKU: {{ $item->sku ?? ($item->product?->sku ?? $item->product?->code) }}</div>
+                        <div class="item-meta">Kode: {{ $item->sku ?? ($item->product?->sku ?? $item->product?->code) }}</div>
                     @endif
                     @if($item->description)
                         <div class="item-meta">{{ $item->description }}</div>
                     @endif
                 </td>
-                <td class="text-center" style="text-transform: uppercase; color: #475569;">
-                    {{ $item->unit?->code ?? ($item->unit?->symbol ?? 'pcs') }}
+                <td style="text-align: center;">
+                    {{ $item->unit?->code ?? ($item->unit?->symbol ?? 'Pcs') }}
                 </td>
-                <td class="text-right" style="font-weight: 700; color: #0f172a;">
+                <td style="text-align: right; font-weight: bold;">
                     {{ (float) $item->quantity == (int) $item->quantity ? number_format((float) $item->quantity, 0, ',', '.') : rtrim(rtrim(number_format((float) $item->quantity, 2, ',', '.'), '0'), ',') }}
                 </td>
-                <td class="text-right" style="color: #334155;">
-                    Rp {{ number_format((float) $item->unit_price, 0, ',', '.') }}
+                <td style="text-align: right;">
+                    {{ number_format((float) $item->unit_price, 0, ',', '.') }}
                 </td>
-                <td class="text-right" style="font-weight: 700; color: #020617;">
-                    Rp {{ number_format((float) ($item->total_price ?? $item->subtotal ?? ($item->quantity * $item->unit_price)), 0, ',', '.') }}
+                <td style="text-align: right; font-weight: bold;">
+                    {{ number_format((float) ($item->total_price ?? $item->subtotal ?? ($item->quantity * $item->unit_price)), 0, ',', '.') }}
                 </td>
             </tr>
             @empty
             <tr>
-                <td colspan="6" class="text-center" style="padding: 16px; color: #94a3b8;">Tidak ada item rincian faktur.</td>
+                <td colspan="6" style="text-align: center; padding: 16px; color: #64748b;">Tidak ada rincian item faktur.</td>
             </tr>
             @endforelse
         </tbody>
     </table>
 
-    <!-- 4. TOTALS & CATATAN PEMBAYARAN -->
-    <table class="bottom-table">
+    <!-- RINGKASAN PEMBAYARAN & REKENING BANK -->
+    <table class="summary-section-table">
         <tr>
             <td style="width: 54%; vertical-align: top; padding-right: 18px;">
+                <div class="terbilang-box">
+                    <span class="terbilang-label">Terbilang:</span><br>
+                    <em># {{ \App\Support\Math\FinancialMath::terbilang($invoice->total_amount) }} #</em>
+                </div>
+
                 @if($invoice->notes)
-                <div>
-                    <div class="notes-heading">Catatan Penagihan:</div>
-                    <div class="notes-content">{{ $invoice->notes }}</div>
+                <div style="font-size: 9px; margin-bottom: 6px;">
+                    <strong>Catatan Penagihan:</strong><br>
+                    {!! nl2br(e($invoice->notes)) !!}
                 </div>
                 @endif
 
                 <div class="bank-box">
-                    <div class="bank-box-title">Informasi Rekening Pembayaran:</div>
-                    <div>Silakan transfer ke rekening resmi <strong>{{ $business->name }}</strong></div>
-                    <div style="margin-top: 2px;">
+                    <div class="bank-box-title">Instruksi Pembayaran Transfer Bank:</div>
+                    <div>Pembayaran dapat ditransfer ke rekening resmi&nbsp;<strong>{{ $business->name }}</strong>:</div>
+                    <div style="margin-top: 3px;">
                         Bank: <strong>{{ str_starts_with(strtolower($business->bank_name ?? ''), 'bank') ? $business->bank_name : 'Bank ' . ($business->bank_name ?? 'BCA / Mandiri / BNI') }}</strong><br>
                         No. Rekening: <strong>{{ $business->bank_account_number ?? '-' }}</strong><br>
                         Atas Nama: <strong>{{ $business->bank_account_holder ?? $business->name }}</strong>
                     </div>
                     <div style="font-size: 8.5px; color: #64748b; margin-top: 3px;">
-                        * Sertakan No. Faktur (<strong>{{ $invoice->invoice_number }}</strong>) pada berita transfer.
+                        * Mohon cantumkan No. Faktur (<strong>{{ $invoice->invoice_number }}</strong>) pada keterangan transfer.
                     </div>
                 </div>
             </td>
-
             <td style="width: 46%; vertical-align: top;">
                 <table class="totals-table">
                     <tr>
-                        <td class="total-label">Subtotal:</td>
+                        <td class="total-lbl">Subtotal</td>
+                        <td class="total-sep">:</td>
                         <td class="total-val">Rp {{ number_format((float) $invoice->subtotal, 0, ',', '.') }}</td>
                     </tr>
                     @if((float) $invoice->discount_amount > 0)
                     <tr>
-                        <td class="total-label">Diskon:</td>
-                        <td class="total-val" style="color: #e11d48;">- Rp {{ number_format((float) $invoice->discount_amount, 0, ',', '.') }}</td>
+                        <td class="total-lbl">Diskon Khusus</td>
+                        <td class="total-sep">:</td>
+                        <td class="total-val" style="color: #b91c1c;">- Rp {{ number_format((float) $invoice->discount_amount, 0, ',', '.') }}</td>
                     </tr>
                     @endif
                     @if((float) $invoice->tax_amount > 0)
                     <tr>
-                        <td class="total-label">Pajak (PPN {{ $invoice->tax_percentage ?? 11 }}%):</td>
+                        <td class="total-lbl">Pajak (PPN {{ $invoice->tax_percentage ?? 11 }}%)</td>
+                        <td class="total-sep">:</td>
                         <td class="total-val">+ Rp {{ number_format((float) $invoice->tax_amount, 0, ',', '.') }}</td>
                     </tr>
                     @endif
                     @if((float) $invoice->shipping_cost > 0)
                     <tr>
-                        <td class="total-label">Ongkos Kirim:</td>
+                        <td class="total-lbl">Ongkos Kirim</td>
+                        <td class="total-sep">:</td>
                         <td class="total-val">+ Rp {{ number_format((float) $invoice->shipping_cost, 0, ',', '.') }}</td>
                     </tr>
                     @endif
                     <tr class="grand-total-row">
-                        <td>Total Tagihan:</td>
-                        <td class="text-right">Rp {{ number_format((float) $invoice->total_amount, 0, ',', '.') }}</td>
+                        <td class="total-lbl">Total Tagihan</td>
+                        <td class="total-sep">:</td>
+                        <td class="total-val">Rp {{ number_format((float) $invoice->total_amount, 0, ',', '.') }}</td>
                     </tr>
                     @php
-                        $paid = (float) ($invoice->paid_amount ?? ($paymentStatus === 'paid' ? $invoice->total_amount : 0));
+                        $paid = (float) ($invoice->paid_amount ?? ($invoice->status === 'paid' ? $invoice->total_amount : 0));
                         $balance = max(0, (float)$invoice->total_amount - $paid);
                     @endphp
                     <tr>
-                        <td class="total-label" style="color: #047857; padding-top: 4px;">Telah Dibayar:</td>
+                        <td class="total-lbl" style="color: #047857; padding-top: 4px;">Telah Dibayar</td>
+                        <td class="total-sep" style="color: #047857; padding-top: 4px;">:</td>
                         <td class="total-val" style="color: #047857; padding-top: 4px;">Rp {{ number_format($paid, 0, ',', '.') }}</td>
                     </tr>
                     <tr class="balance-due-row">
-                        <td>Sisa Tagihan:</td>
-                        <td class="text-right">Rp {{ number_format($balance, 0, ',', '.') }}</td>
+                        <td class="total-lbl">Sisa Tagihan</td>
+                        <td class="total-sep">:</td>
+                        <td class="total-val">Rp {{ number_format($balance, 0, ',', '.') }}</td>
                     </tr>
                 </table>
             </td>
         </tr>
     </table>
 
-    <!-- 5. TANDA TANGAN OTORISASI -->
-    <table class="sign-table">
+    <!-- TANDA TANGAN RESMI -->
+    <table class="signature-table">
         <tr>
-            <td class="sign-box">
-                <div class="sign-title">Penerima / Pembeli,</div>
-                <div class="sign-space"></div>
-                <div class="sign-line"></div>
-                <div class="sign-caption">( {{ $invoice->recipient_name ?: ($invoice->customer?->company_name ?? ($invoice->customer?->name ?? '....................................')) }} )</div>
-                <div class="sign-sub">Tanda Tangan & Cap Pembeli</div>
+            <td class="sig-box">
+                <div class="sig-title">Penerima / Pembeli,</div>
+                <div class="sig-company">{{ $invoice->customer?->company_name ?? ($invoice->customer?->name ?? 'Pihak Pembeli') }}</div>
+                <div class="sig-space"></div>
+                <div class="sig-name">( {{ $invoice->recipient_name ?: ($invoice->customer?->name ?? '..................................................') }} )</div>
+                <div class="sig-caption">Tanda Tangan &amp; Cap Pembeli</div>
             </td>
-            <td style="width: 16%;"></td>
-            <td class="sign-box">
-                <div class="sign-title">{{ $business->name }},</div>
-                <div class="sign-entity">Bagian Keuangan & Otorisasi</div>
-                <div class="sign-space"></div>
-                <div class="sign-line"></div>
-                <div class="sign-caption">( {{ $invoice->sender_name ?: 'Finance Department' }} )</div>
-                <div class="sign-sub">Authorized Signature</div>
+            <td style="width: 10%;"></td>
+            <td class="sig-box">
+                <div class="sig-title">Hormat kami,</div>
+                <div class="sig-company">{{ $business->name }}</div>
+                <div class="sig-space"></div>
+                <div class="sig-name">( {{ $invoice->sender_name ?: '..................................................' }} )</div>
+                <div class="sig-caption">Bagian Keuangan &amp; Administrasi</div>
             </td>
         </tr>
     </table>
 
-    <!-- 6. FOOTER RESMI -->
-    <div class="footer">
-        Faktur ini sah dan diakui sebagai bukti penagihan resmi dari {{ $business->name }} &bull; Dicetak otomatis via COOCA ERP pada {{ date('d/m/Y H:i') }} WIB
+    <!-- FOOTER RESMI -->
+    <div class="official-footer">
+        Faktur ini sah dan diakui sebagai bukti penagihan resmi dari {{ $business->name }}.
     </div>
 
 </body>
