@@ -52,6 +52,7 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 
 #### 2. What Was Done
 - **Harmonisasi Template PDF DomPDF (`resources/views/pdf/`):**
+  - **Pelebaran Margin Halaman (@page margin):** Menambah margin halaman pada seluruh 4 template dari `12mm 14mm 12mm 14mm` menjadi `20mm 22mm 20mm 22mm` (atas 20mm, kanan 22mm, bawah 20mm, kiri 22mm). Hal ini memberi ruang nafas yang elegan, memastikan dokumen tidak mepet ke tepi kertas saat dicetak fisik (bebas risiko terpotong batas cetak printer maupun binder lubang kertas).
   - **`invoice_pdf.blade.php`**: Dirombak ke standar korporat formal bergaris ganda atas/bawah `#0f172a`, kop surat profesional dengan logo Base64 dan NPWP, metadata pelanggan 2-kolom, tabel item 6-kolom (No, Deskripsi, Satuan, Kuantitas, Harga Satuan, Subtotal), rincian rekening pembayaran bergaris kiri tebal `#0f172a`, ringkasan total formal, dan blok tanda tangan ganda.
   - **`sales_order_pdf.blade.php`**: Diselaraskan 100% mengikuti format Faktur Penjualan (identik dalam ukuran font, warna `#0f172a`, padding tabel, perlakuan diskon/pajak/ongkir, kotak catatan & syarat ketentuan, dan tanda tangan).
   - **`quotation_pdf.blade.php`**: Diselaraskan 100% mengikuti format Faktur Penjualan (judul SURAT PENAWARAN HARGA, masa berlaku, syarat pembayaran/termin, kotak catatan penawaran, dan tanda tangan persetujuan klien).

@@ -7,7 +7,7 @@
     <style>
         @page {
             size: a4 portrait;
-            margin: 12mm 14mm 12mm 14mm;
+            margin: 20mm 22mm 20mm 22mm;
         }
         * {
             box-sizing: border-box;
