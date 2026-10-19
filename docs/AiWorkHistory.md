@@ -33,6 +33,76 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-10-19-363] Standarisasi PDF & Logo Cetak (SO, Penawaran, Retur, Faktur), Eliminasi Client-Side Capture, Penyempurnaan Form Edit & Perbaikan Relasi SalesReturn
+
+- **Date:** 2026-10-19
+- **Status:** COMPLETED
+- **Module:** Sales & Commerce (Sales Orders, Quotations, Sales Returns, Invoices, POS Reporting)
+- **Feature:** Standarisasi PDF DomPDF Selevel Faktur Penjualan, Resolver Base64 Logo Bisnis, Perbaikan Relasi User pada SalesReturn, Perbaikan Validasi Status & Form Edit
+- **Work Type:** Bug Fix | UI/UX | PDF Generation | Multi-Tenant Architecture | Reporting Stability
+
+#### 1. Business Context & Objective
+- **Konteks:** Menindaklanjuti permintaan perbaikan pada modul Pesanan Penjualan (SO), Surat Penawaran (Quotation), dan Retur Penjualan (Sales Return) agar format cetak PDF, logo, dan gayanya seragam dengan Faktur Penjualan (Invoice). Selain itu, memastikan fungsi cetak tidak lagi mengandalkan capture tampilan layar browser (`html2pdf`/`html2canvas`) melainkan menghasilkan file PDF resmi yang di-generate langsung dari server, seluruh data dapat disunting (edit) tanpa error validasi, serta mengatasi insiden error produksi `Call to undefined relationship [user] on model [App\Models\SalesReturn]` pada laporan POS.
+- **Target:**
+  1. Memperbaiki error fatal relasi `user` pada model `SalesReturn` yang menyebabkan crash di `PosReportingService`.
+  2. Mengimplementasikan accessor logo Base64 (`$business->pdf_logo`) pada model `Business` untuk memastikan DomPDF dapat merender logo tenant secara konsisten tanpa kendala allow_url_fopen / network context.
+  3. Mengubah seluruh endpoint cetak (`invoices.print`, `sales.returns.print`, `sales.orders.print`, `sales.quotations.print`) agar langsung men-stream dokumen PDF murni (Content-Type: `application/pdf`), mengeliminasi capture DOM client-side.
+  4. Menyelaraskan tata letak, kop surat, warna aksen Apple HIG (`#007aff`), kartu metadata, tabel item, dan blok tanda tangan pada template PDF Penawaran, Pesanan Penjualan, dan Retur Penjualan.
+  5. Memperbaiki formulir edit pada SO (opsi status `partially_fulfilled` & `fulfilled`, fallback dropdown produk), Penawaran (tombol simpan di header, opsi status `rejected`), Retur (opsi `exchange`), dan Faktur (izin edit bagi faktur berstatus belum lunas `paid_amount <= 0`).
+
+#### 2. What Was Done
+- **Perbaikan Relasi Model `SalesReturn`:**
+  - Menambahkan relasi `user()`, `creator()`, `approver()`, dan `completer()` pada `App\Models\SalesReturn`.
+- **Implementasi Accessor Logo PDF pada Model `Business`:**
+  - Menambahkan `getPdfLogoAttribute()` yang membaca file logo tenant dari direktori storage lokal dan mengonversinya ke Base64 data URI (`data:image/...;base64,...`), menjamin kompatibilitas rendering DomPDF lokal maupun produksi Hostinger.
+- **Standarisasi Controller & Route Cetak PDF:**
+  - `InvoiceWebController`: Method `print()` kini langsung me-return stream `$this->pdf($invoice)`.
+  - `SalesReturnWebController`: Method `print()` me-return `$this->pdf($return)`. Memperluas validasi `update()` untuk menerima metode `exchange`.
+  - `SalesOrderWebController`: Menambahkan method `print()` yang memanggil `$this->pdf($salesOrder)`. Memperluas validasi status `update()` untuk menerima `partially_fulfilled` dan `fulfilled`.
+  - `QuotationWebController`: Menambahkan method `print()` yang memanggil `$this->pdf($quotation)`. Memperluas validasi status `update()` untuk menerima `rejected`.
+  - `routes/owner.php`: Mendaftarkan route `sales.quotations.print` dan `sales.orders.print`.
+- **Penyelarasan Template PDF Blade:**
+  - `invoice_pdf.blade.php`: Memakai `$business->pdf_logo` dan NPWP.
+  - `sales_order_pdf.blade.php`: Menambahkan `$business->pdf_logo`, badge status `partially_fulfilled` & `fulfilled`, serta NPWP.
+  - `quotation_pdf.blade.php`: Menambahkan `$business->pdf_logo`, NPWP, dan class CSS status `.status-rejected`.
+  - `sales_return_pdf.blade.php`: Merombak styling kop dan aksen utama dari merah menjadi `#007aff`, menambahkan `$business->pdf_logo`, NPWP, dan menyelaraskan summary-box.
+- **Penyempurnaan Tampilan Edit & Hak Akses:**
+  - `sales-orders/edit.blade.php`: Menambahkan opsi status `partially_fulfilled` dan `fulfilled`, serta fallback dropdown produk.
+  - `quotations/edit.blade.php`: Menambahkan tombol "Simpan Perubahan" pada header toolbar, form id, dan opsi status `rejected`.
+  - `sales/returns/edit.blade.php`: Menambahkan opsi `exchange` pada dropdown metode kompensasi.
+  - `invoices/show.blade.php` & `invoices/index.blade.php`: Menampilkan tombol edit faktur untuk seluruh faktur yang belum memiliki pembayaran (`paid_amount <= 0` dan bukan `paid`/`void`).
+
+#### 3. Technical Changes
+- **Files Affected:**
+  - `app/Models/SalesReturn.php`
+  - `app/Models/Business.php`
+  - `app/Http/Controllers/Web/InvoiceWebController.php`
+  - `app/Http/Controllers/Web/SalesReturnWebController.php`
+  - `app/Http/Controllers/Web/Sales/SalesOrderWebController.php`
+  - `app/Http/Controllers/Web/Sales/QuotationWebController.php`
+  - `routes/owner.php`
+  - `resources/views/pdf/invoice_pdf.blade.php`
+  - `resources/views/pdf/sales_order_pdf.blade.php`
+  - `resources/views/pdf/quotation_pdf.blade.php`
+  - `resources/views/pdf/sales_return_pdf.blade.php`
+  - `resources/views/app/sales-orders/edit.blade.php`
+  - `resources/views/app/quotations/edit.blade.php`
+  - `resources/views/app/sales/returns/edit.blade.php`
+  - `resources/views/app/invoices/show.blade.php`
+  - `resources/views/app/invoices/index.blade.php`
+  - `tests/Feature/SalesReturnPrintPdfTest.php`
+
+#### 4. Verification & Testing
+- **PHP Syntax Linting:** `php -l` seluruh 7 berkas PHP lulus dengan 0 kesalahan sintaks.
+- **Automated Tests:**
+  - `php artisan test --filter=SalesReturnPrintPdfTest` -> 3 passed, 7 assertions (0 failure, 0 error).
+  - `php artisan test --filter=SalesPipelineFeatureTest` -> 4 passed, 14 assertions (0 failure, 0 error).
+  - `php artisan test --filter=SalesAndPurchaseReturnIntegrationTest` -> 2 passed, 7 assertions (0 failure, 0 error).
+- **Tinker Verification:** `App\Models\SalesReturn::with('user')->first()` berhasil dieksekusi tanpa `RelationNotFoundException`.
+- **Cache Invalidation:** `view:clear`, `route:clear`, `config:clear` berhasil dijalankan.
+
+---
+
 ### [WORK-2026-10-16-362] Remediasi Sistemik Modal Pop-up: Eliminasi Masalah Tumpukan Overlay & Visibilitas Modal (Zero Dark Overlay Trap)
 
 - **Date:** 2026-10-16

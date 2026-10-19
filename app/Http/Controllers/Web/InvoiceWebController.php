@@ -272,16 +272,11 @@ final class InvoiceWebController extends Controller
     }
 
     /**
-     * Render professional commercial tax invoice print-ready layout (A4).
+     * Stream or print professional commercial tax invoice PDF layout (A4).
      */
-    public function print(Invoice $invoice): View
+    public function print(Invoice $invoice): \Illuminate\Http\Response
     {
-        $business = Context::requireBusiness();
-        abort_unless($invoice->business_id === $business->id, 403);
-
-        $invoice->load(['customer', 'purchaseOrder', 'items.product', 'items.unit', 'payments.creator', 'salesOrder']);
-
-        return view('app.invoices.print', compact('business', 'invoice'));
+        return $this->pdf($invoice);
     }
 
     /**

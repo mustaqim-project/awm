@@ -295,6 +295,7 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         Route::get('/sales/quotations/{quotation}/edit', [QuotationWebController::class, 'edit'])->middleware('require.permission:sales.pipeline')->name('sales.quotations.edit');
         Route::put('/sales/quotations/{quotation}', [QuotationWebController::class, 'update'])->middleware('require.permission:sales.pipeline')->name('sales.quotations.update');
         Route::get('/sales/quotations/{quotation}/pdf', [QuotationWebController::class, 'pdf'])->middleware('require.permission:sales.view')->name('sales.quotations.pdf');
+        Route::get('/sales/quotations/{quotation}/print', [QuotationWebController::class, 'print'])->middleware('require.permission:sales.view')->name('sales.quotations.print');
         Route::post('/sales/quotations/{quotation}/convert', [QuotationWebController::class, 'convertToSalesOrder'])->middleware('require.permission:sales.pipeline')->name('sales.quotations.convert');
 
         Route::get('/sales/orders', [SalesOrderWebController::class, 'index'])->middleware('require.permission:sales.view')->name('sales.orders.index');
@@ -304,6 +305,7 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         Route::get('/sales/orders/{salesOrder}/edit', [SalesOrderWebController::class, 'edit'])->middleware('require.permission:sales.pipeline')->name('sales.orders.edit');
         Route::put('/sales/orders/{salesOrder}', [SalesOrderWebController::class, 'update'])->middleware('require.permission:sales.pipeline')->name('sales.orders.update');
         Route::get('/sales/orders/{salesOrder}/pdf', [SalesOrderWebController::class, 'pdf'])->middleware('require.permission:sales.view')->name('sales.orders.pdf');
+        Route::get('/sales/orders/{salesOrder}/print', [SalesOrderWebController::class, 'print'])->middleware('require.permission:sales.view')->name('sales.orders.print');
         Route::post('/sales/orders/{salesOrder}/generate-invoice', [SalesOrderWebController::class, 'generateInvoice'])->middleware('require.permission:sales.pipeline')->name('sales.orders.generate-invoice');
 
         // Invoices Management & Generator (Commerce Billing)

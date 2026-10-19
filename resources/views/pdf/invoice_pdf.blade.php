@@ -204,11 +204,17 @@
     <table class="header-table">
         <tr>
             <td style="width: 55%; vertical-align: top;">
+                @if(!empty($business->pdf_logo))
+                    <div style="margin-bottom: 6px;">
+                        <img src="{{ $business->pdf_logo }}" alt="{{ $business->name }}" style="max-height: 48px; max-width: 170px; object-fit: contain;">
+                    </div>
+                @endif
                 <h1 class="brand-logo">{{ $business->name }}</h1>
                 <div class="brand-sub">
                     @if($business->address) {{ $business->address }}<br> @endif
                     @if($business->phone) Telp / WA: {{ $business->phone }} &bull; @endif
                     @if($business->email) Email: {{ $business->email }} @endif
+                    @if($business->tax_identification_number)<br>NPWP: {{ $business->tax_identification_number }}@endif
                 </div>
             </td>
             <td style="width: 45%; vertical-align: top; text-align: right;">

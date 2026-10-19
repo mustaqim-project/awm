@@ -71,9 +71,10 @@
         }
         .status-draft { background-color: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
         .status-sent { background-color: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
-        .status-accepted { background-color: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+        .status-accepted { background-color: #ecfdf5; color: #047857; border: 1.5px solid #059669; }
         .status-converted { background-color: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; }
         .status-declined { background-color: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+        .status-rejected { background-color: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
 
         .meta-table {
             margin-bottom: 18px;
@@ -196,11 +197,17 @@
     <table class="header-table">
         <tr>
             <td style="width: 55%; vertical-align: top;">
+                @if(!empty($business->pdf_logo))
+                    <div style="margin-bottom: 6px;">
+                        <img src="{{ $business->pdf_logo }}" alt="{{ $business->name }}" style="max-height: 48px; max-width: 170px; object-fit: contain;">
+                    </div>
+                @endif
                 <h1 class="brand-logo">{{ $business->name }}</h1>
                 <div class="brand-sub">
                     @if($business->address) {{ $business->address }}<br> @endif
                     @if($business->phone) Telp / WA: {{ $business->phone }} &bull; @endif
                     @if($business->email) Email: {{ $business->email }} @endif
+                    @if($business->tax_identification_number)<br>NPWP: {{ $business->tax_identification_number }}@endif
                 </div>
             </td>
             <td style="width: 45%; vertical-align: top; text-align: right;">

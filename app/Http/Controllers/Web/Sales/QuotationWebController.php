@@ -134,7 +134,7 @@ final class QuotationWebController extends Controller
             'expiry_date' => ['nullable', 'date', 'after_or_equal:date'],
             'discount_amount' => ['nullable', 'numeric', 'min:0'],
             'tax_amount' => ['nullable', 'numeric', 'min:0'],
-            'status' => ['nullable', 'string', 'in:draft,sent,accepted,declined,converted'],
+            'status' => ['nullable', 'string', 'in:draft,sent,accepted,rejected,declined,converted,expired,cancelled'],
             'notes' => ['nullable', 'string', 'max:1000'],
             'terms_and_conditions' => ['nullable', 'string', 'max:2000'],
             'items' => ['required', 'array', 'min:1'],
@@ -150,6 +150,11 @@ final class QuotationWebController extends Controller
 
         return redirect()->route('sales.quotations.show', $updated)
             ->with('success', "Surat Penawaran {$updated->quotation_number} berhasil diperbarui.");
+    }
+
+    public function print(Quotation $quotation): \Illuminate\Http\Response
+    {
+        return $this->pdf($quotation);
     }
 
     public function pdf(Quotation $quotation): \Illuminate\Http\Response

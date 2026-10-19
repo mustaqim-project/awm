@@ -36,11 +36,11 @@
                 <span>{{ __('sales.invoices.btn_list') }}</span>
             </a>
 
-            {{-- Tombol Edit Draf Faktur (hanya tampil saat draft) --}}
-            @if($invoice->status === 'draft' && (\App\Support\Context::hasPermission('invoices.edit') || \App\Support\Context::hasPermission('invoices.create')))
+            {{-- Tombol Edit Faktur (tampil saat belum lunas dan belum ada pembayaran, bukan void) --}}
+            @if(!in_array($invoice->status, ['paid', 'void'], true) && (float) $invoice->paid_amount <= 0 && (\App\Support\Context::hasPermission('invoices.edit') || \App\Support\Context::hasPermission('invoices.create')))
             <a href="{{ route('invoices.edit', $invoice->id) }}" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-[#FF9500] dark:text-[#FF9F0A] bg-[#FF9500]/10 dark:bg-[#FF9500]/20 hover:bg-[#FF9500]/15 dark:hover:bg-[#FF9500]/30 active:scale-[0.97] transition-all flex items-center justify-center gap-1.5">
                 <i data-lucide="edit-3" class="w-4 h-4"></i>
-                <span>{{ __('sales.invoices.btn_edit_draft') }}</span>
+                <span>{{ $invoice->status === 'draft' ? __('sales.invoices.btn_edit_draft') : 'Edit Faktur' }}</span>
             </a>
             @endif
 

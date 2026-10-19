@@ -36,4 +36,8 @@ class SalesReturn extends Model
     public function customer(): BelongsTo { return $this->belongsTo(Customer::class); }
     public function location(): BelongsTo { return $this->belongsTo(Location::class); }
     public function items(): HasMany { return $this->hasMany(SalesReturnItem::class); }
+    public function user(): BelongsTo { return $this->belongsTo(User::class, 'created_by'); }
+    public function creator(): BelongsTo { return $this->belongsTo(User::class, 'created_by'); }
+    public function approver(): BelongsTo { return $this->belongsTo(User::class, 'approved_by'); }
+    public function completer(): BelongsTo { return $this->belongsTo(User::class, 'completed_by'); }
 }

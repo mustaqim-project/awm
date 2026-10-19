@@ -212,15 +212,9 @@ final class SalesReturnWebController extends Controller
         ]);
     }
 
-    public function print(SalesReturn $return): View
+    public function print(SalesReturn $return): \Illuminate\Http\Response
     {
-        $business = Context::requireBusiness();
-        abort_unless($return->business_id === $business->id, 403);
-
-        return view('app.sales.returns.print', [
-            'business' => $business,
-            'return'   => $return->load(['invoice.customer', 'posOrder.customer', 'customer', 'items.product', 'location']),
-        ]);
+        return $this->pdf($return);
     }
 
     public function approve(SalesReturn $return): RedirectResponse
@@ -345,7 +339,7 @@ final class SalesReturnWebController extends Controller
         if ($return->pos_order_id) {
             $validated = $request->validate([
                 'reason'                    => ['required', 'string', 'max:255'],
-                'refund_method'             => ['required', 'in:credit_note,cash_refund,store_credit'],
+                'refund_method'             => ['required', 'in:credit_note,cash_refund,store_credit,exchange'],
                 'return_date'               => ['nullable', 'date'],
                 'items'                     => ['required', 'array', 'min:1'],
                 'items.*.pos_order_item_id' => ['required', 'exists:pos_order_items,id'],
@@ -354,7 +348,7 @@ final class SalesReturnWebController extends Controller
         } else {
             $validated = $request->validate([
                 'reason'                  => ['required', 'string', 'max:255'],
-                'refund_method'           => ['required', 'in:credit_note,cash_refund,store_credit'],
+                'refund_method'           => ['required', 'in:credit_note,cash_refund,store_credit,exchange'],
                 'return_date'             => ['nullable', 'date'],
                 'items'                   => ['required', 'array', 'min:1'],
                 'items.*.invoice_item_id' => ['required', 'exists:invoice_items,id'],

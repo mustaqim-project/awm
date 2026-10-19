@@ -103,6 +103,8 @@
                         <option value="draft" {{ old('status', $salesOrder->status) == 'draft' ? 'selected' : '' }}>Draft</option>
                         <option value="confirmed" {{ old('status', $salesOrder->status) == 'confirmed' ? 'selected' : '' }}>Confirmed (Dikonfirmasi)</option>
                         <option value="processing" {{ old('status', $salesOrder->status) == 'processing' ? 'selected' : '' }}>Processing (Sedang Diproses)</option>
+                        <option value="partially_fulfilled" {{ old('status', $salesOrder->status) == 'partially_fulfilled' ? 'selected' : '' }}>Partially Fulfilled (Dikirim Sebagian)</option>
+                        <option value="fulfilled" {{ old('status', $salesOrder->status) == 'fulfilled' ? 'selected' : '' }}>Fulfilled (Terkirim Penuh)</option>
                         <option value="completed" {{ old('status', $salesOrder->status) == 'completed' ? 'selected' : '' }}>Completed (Selesai)</option>
                         <option value="cancelled" {{ old('status', $salesOrder->status) == 'cancelled' ? 'selected' : '' }}>Cancelled (Dibatalkan)</option>
                     </select>
@@ -196,6 +198,13 @@
                                                 </option>
                                                 @endforeach
                                             </optgroup>
+                                        @endif
+                                        @if((!isset($goodsProducts) || $goodsProducts->isEmpty()) && (!isset($serviceProducts) || $serviceProducts->isEmpty()) && isset($products))
+                                            @foreach($products as $p)
+                                            <option value="{{ $p->id }}" data-price="{{ $p->selling_price }}" data-name="{{ $p->name }}" data-type="{{ $p->isService() ? 'service' : 'goods' }}">
+                                                {{ $p->name }} (Rp {{ number_format($p->selling_price, 0, ',', '.') }})
+                                            </option>
+                                            @endforeach
                                         @endif
                                     </select>
                                     <input type="hidden" :name="'items['+idx+'][product_name]'" x-model="item.product_name">

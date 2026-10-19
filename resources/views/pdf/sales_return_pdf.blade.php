@@ -27,13 +27,13 @@
         }
         .header-table {
             margin-bottom: 16px;
-            border-bottom: 2px solid #ef4444;
+            border-bottom: 2px solid #007aff;
             padding-bottom: 12px;
         }
         .brand-logo {
             font-size: 22px;
             font-weight: 800;
-            color: #ef4444;
+            color: #007aff;
             letter-spacing: -0.5px;
             margin: 0;
         }
@@ -55,7 +55,7 @@
         .doc-number {
             font-size: 12px;
             font-weight: 700;
-            color: #ef4444;
+            color: #007aff;
             text-align: right;
             margin-top: 2px;
         }
@@ -134,8 +134,8 @@
             margin-bottom: 18px;
         }
         .summary-box {
-            background-color: #fef2f2;
-            border: 1px solid #fecaca;
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
             border-radius: 6px;
             padding: 10px 14px;
         }
@@ -144,12 +144,12 @@
             font-size: 11px;
         }
         .summary-total {
-            border-top: 2px solid #ef4444;
+            border-top: 2px solid #007aff;
             margin-top: 6px;
             padding-top: 6px;
             font-size: 13px;
             font-weight: 800;
-            color: #b91c1c;
+            color: #007aff;
         }
 
         .reason-box {
@@ -195,11 +195,17 @@
     <table class="header-table">
         <tr>
             <td style="width: 55%; vertical-align: top;">
+                @if(!empty($business->pdf_logo))
+                    <div style="margin-bottom: 6px;">
+                        <img src="{{ $business->pdf_logo }}" alt="{{ $business->name }}" style="max-height: 48px; max-width: 170px; object-fit: contain;">
+                    </div>
+                @endif
                 <h1 class="brand-logo">{{ $business->name }}</h1>
                 <div class="brand-sub">
                     @if($business->address) {{ $business->address }}<br> @endif
                     @if($business->phone) Telp / WA: {{ $business->phone }} &bull; @endif
                     @if($business->email) Email: {{ $business->email }} @endif
+                    @if($business->tax_identification_number)<br>NPWP: {{ $business->tax_identification_number }}@endif
                 </div>
             </td>
             <td style="width: 45%; vertical-align: top; text-align: right;">

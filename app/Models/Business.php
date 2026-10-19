@@ -155,6 +155,48 @@ class Business extends Model
         return \App\Domain\Storage\TenantStorage::url($this->logo_path);
     }
 
+    public function getPdfLogoAttribute(): ?string
+    {
+        $rawPath = $this->logo_path;
+
+        if (empty($rawPath)) {
+            return null;
+        }
+
+        $relativePath = ltrim($rawPath, '/');
+        if (str_starts_with($relativePath, 'public/')) {
+            $relativePath = substr($relativePath, 7);
+        }
+        if (str_starts_with($relativePath, 'storage/')) {
+            $relativePath = substr($relativePath, 8);
+        }
+
+        $candidates = [
+            storage_path('app/public/' . $relativePath),
+            public_path('storage/' . $relativePath),
+            public_path($relativePath),
+        ];
+
+        foreach ($candidates as $candidate) {
+            if (file_exists($candidate) && is_file($candidate)) {
+                $ext = strtolower(pathinfo($candidate, PATHINFO_EXTENSION));
+                $mime = match ($ext) {
+                    'jpg', 'jpeg' => 'image/jpeg',
+                    'png' => 'image/png',
+                    'webp' => 'image/webp',
+                    'svg' => 'image/svg+xml',
+                    default => 'image/png',
+                };
+                $data = @file_get_contents($candidate);
+                if ($data !== false && strlen($data) > 0) {
+                    return 'data:' . $mime . ';base64,' . base64_encode($data);
+                }
+            }
+        }
+
+        return $this->logo_url;
+    }
+
     public function getCurrencyCodeAttribute(): string
     {
         return $this->currency ?? 'IDR';

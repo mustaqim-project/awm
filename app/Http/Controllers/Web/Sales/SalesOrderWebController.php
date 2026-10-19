@@ -185,7 +185,7 @@ final class SalesOrderWebController extends Controller
             'discount_amount'         => ['nullable', 'numeric', 'min:0'],
             'tax_percentage'         => ['nullable', 'numeric', 'min:0', 'max:100'],
             'tax_amount'              => ['nullable', 'numeric', 'min:0'],
-            'status'                  => ['nullable', 'string', 'in:draft,confirmed,processing,completed,cancelled'],
+            'status'                  => ['nullable', 'string', 'in:draft,confirmed,processing,partially_fulfilled,completed,fulfilled,cancelled'],
             'notes'                   => ['nullable', 'string', 'max:1000'],
             'items'                   => ['required', 'array', 'min:1'],
             'items.*.product_id'      => [
@@ -203,6 +203,11 @@ final class SalesOrderWebController extends Controller
 
         return redirect()->route('sales.orders.show', $updated)
             ->with('success', "Pesanan Penjualan {$updated->so_number} berhasil diperbarui.");
+    }
+
+    public function print(SalesOrder $salesOrder): \Illuminate\Http\Response
+    {
+        return $this->pdf($salesOrder);
     }
 
     public function pdf(SalesOrder $salesOrder): \Illuminate\Http\Response

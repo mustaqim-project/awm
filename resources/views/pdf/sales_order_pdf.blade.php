@@ -72,7 +72,9 @@
         .status-draft { background-color: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
         .status-confirmed { background-color: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
         .status-processing { background-color: #fefce8; color: #854d0e; border: 1px solid #fef08a; }
-        .status-completed { background-color: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+        .status-partially_fulfilled { background-color: #fefce8; color: #854d0e; border: 1px solid #fef08a; }
+        .status-completed { background-color: #ecfdf5; color: #047857; border: 1.5px solid #059669; }
+        .status-fulfilled { background-color: #ecfdf5; color: #047857; border: 1.5px solid #059669; }
         .status-cancelled { background-color: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
 
         .meta-table {
@@ -186,11 +188,17 @@
     <table class="header-table">
         <tr>
             <td style="width: 55%; vertical-align: top;">
+                @if(!empty($business->pdf_logo))
+                    <div style="margin-bottom: 6px;">
+                        <img src="{{ $business->pdf_logo }}" alt="{{ $business->name }}" style="max-height: 48px; max-width: 170px; object-fit: contain;">
+                    </div>
+                @endif
                 <h1 class="brand-logo">{{ $business->name }}</h1>
                 <div class="brand-sub">
                     @if($business->address) {{ $business->address }}<br> @endif
                     @if($business->phone) Telp / WA: {{ $business->phone }} &bull; @endif
                     @if($business->email) Email: {{ $business->email }} @endif
+                    @if($business->tax_identification_number)<br>NPWP: {{ $business->tax_identification_number }}@endif
                 </div>
             </td>
             <td style="width: 45%; vertical-align: top; text-align: right;">

@@ -235,7 +235,7 @@
                                 <a href="{{ route('invoices.show', $inv->id) }}" class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#007AFF] hover:bg-[#007AFF]/8 transition-colors flex items-center" title="{{ __('sales.invoices.btn_detail') }}">
                                     {{ __('sales.invoices.btn_detail') }}
                                 </a>
-                                @if($inv->status === 'draft' && (\App\Support\Context::hasPermission('invoices.edit') || \App\Support\Context::hasPermission('invoices.create')))
+                                @if(!in_array($inv->status, ['paid', 'void'], true) && (float) $inv->paid_amount <= 0 && (\App\Support\Context::hasPermission('invoices.edit') || \App\Support\Context::hasPermission('invoices.create')))
                                     <a href="{{ route('invoices.edit', $inv->id) }}" class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#FF9500] hover:bg-[#FF9500]/10 transition-colors flex items-center" title="{{ __('sales.invoices.btn_edit_invoice') }}">
                                         {{ __('sales.invoices.breadcrumb_edit') }}
                                     </a>
@@ -322,7 +322,7 @@
                     <a href="{{ route('invoices.show', $inv->id) }}" class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium text-[#007AFF] bg-[#007AFF]/10 flex items-center">
                         {{ __('sales.invoices.btn_detail') }}
                     </a>
-                    @if($inv->status === 'draft' && (\App\Support\Context::hasPermission('invoices.edit') || \App\Support\Context::hasPermission('invoices.create')))
+                    @if(!in_array($inv->status, ['paid', 'void'], true) && (float) $inv->paid_amount <= 0 && (\App\Support\Context::hasPermission('invoices.edit') || \App\Support\Context::hasPermission('invoices.create')))
                         <a href="{{ route('invoices.edit', $inv->id) }}" class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium text-[#FF9500] bg-[#FF9500]/10 flex items-center">
                             {{ __('sales.invoices.breadcrumb_edit') }}
                         </a>

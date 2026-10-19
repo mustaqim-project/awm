@@ -36,10 +36,13 @@
         </div>
 
         <div class="flex items-center gap-2">
-            <a href="{{ route('sales.quotations.show', $quotation) }}" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5">
-                <i data-lucide="arrow-left" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
+            <a href="{{ route('sales.quotations.show', $quotation) }}" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition flex items-center">
                 <span>Kembali</span>
             </a>
+            <button type="submit" form="form-edit-quotation" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
+                <i data-lucide="check" class="w-4 h-4"></i>
+                <span>Simpan Perubahan</span>
+            </button>
         </div>
     </header>
 
@@ -61,7 +64,7 @@
     <!-- ===================================================== -->
     <!-- 2. FORM BODY                                          -->
     <!-- ===================================================== -->
-    <form action="{{ route('sales.quotations.update', $quotation) }}" method="POST" class="space-y-6">
+    <form id="form-edit-quotation" action="{{ route('sales.quotations.update', $quotation) }}" method="POST" class="space-y-6">
         @csrf
         @method('PUT')
 
@@ -94,7 +97,7 @@
                         <option value="draft" {{ old('status', $quotation->status) == 'draft' ? 'selected' : '' }}>Draft</option>
                         <option value="sent" {{ old('status', $quotation->status) == 'sent' ? 'selected' : '' }}>Sent (Terkirim)</option>
                         <option value="accepted" {{ old('status', $quotation->status) == 'accepted' ? 'selected' : '' }}>Accepted (Disetujui Klien)</option>
-                        <option value="declined" {{ old('status', $quotation->status) == 'declined' ? 'selected' : '' }}>Declined (Ditolak)</option>
+                        <option value="rejected" {{ in_array(old('status', $quotation->status), ['rejected', 'declined']) ? 'selected' : '' }}>Rejected / Declined (Ditolak)</option>
                         @if($quotation->status === 'converted')
                         <option value="converted" selected>Converted (Telah Jadi SO)</option>
                         @endif

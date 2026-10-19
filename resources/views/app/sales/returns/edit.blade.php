@@ -200,6 +200,7 @@
                         <option value="cash_refund">{{ __('sales.returns.opt_cash_refund_direct') }}</option>
                         <option value="credit_note">{{ __('sales.returns.opt_credit_note_next') }}</option>
                         <option value="store_credit">{{ __('sales.returns.opt_store_credit_deposit') }}</option>
+                        <option value="exchange">Tukar Barang (Exchange)</option>
                     </select>
                 </div>
 

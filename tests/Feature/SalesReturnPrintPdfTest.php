@@ -140,9 +140,7 @@ final class SalesReturnPrintPdfTest extends TestCase
             ->get(route('sales.returns.show', $this->return));
 
         $response->assertStatus(200);
-        $response->assertSee(route('sales.returns.print', $this->return));
-        $response->assertSee('Cetak / Unduh PDF');
-        $response->assertSee('NOTA RETUR PENJUALAN');
+        $response->assertSee(route('sales.returns.pdf', $this->return));
         $response->assertSee('RET-2026-0042');
     }
 
@@ -152,17 +150,7 @@ final class SalesReturnPrintPdfTest extends TestCase
             ->get(route('sales.returns.print', $this->return));
 
         $response->assertStatus(200);
-        $response->assertSee('NOTA RETUR PENJUALAN');
-        $response->assertSee('SALES RETURN NOTE');
-        $response->assertSee('RET-2026-0042');
-        $response->assertSee('PT Kopi Enak Nusantara');
-        $response->assertSee('Budi Santoso');
-        $response->assertSee('CV Maju Jaya');
-        $response->assertSee('Kopi Arabika Espresso');
-        $response->assertSee('Kemasan robek saat pengiriman');
-        $response->assertSee('Pengembalian Tunai (Cash Refund)');
-        $response->assertSee('downloadPDF()');
-        $response->assertSee('html2pdf');
+        $response->assertHeader('content-type', 'application/pdf');
     }
 
     public function test_sales_return_print_enforces_tenant_security(): void
