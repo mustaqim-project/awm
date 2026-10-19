@@ -346,4 +346,65 @@ final class PdfLetterTemplatesTest extends TestCase
 
         $this->assertStringContainsString($this->user->name, $renderedQuoDefaultHtml);
     }
+
+    public function test_quotation_and_invoice_security_idor_protections(): void
+    {
+        $competingBusiness = Business::create(['name' => 'PT Pesaing Jahat']);
+        $foreignCustomer = Customer::create([
+            'business_id' => $competingBusiness->id,
+            'name'        => 'Pelanggan Rahasia Tenant Lain',
+        ]);
+        $foreignProduct = Product::create([
+            'business_id'    => $competingBusiness->id,
+            'output_unit_id' => $this->unit->id,
+            'code'           => 'SEC-FOREIGN-01',
+            'name'           => 'Produk Rahasia Tenant Lain',
+            'selling_price'  => 1000000,
+            'is_active'      => true,
+        ]);
+
+        // 1. Attempting to create Quotation with foreign customer belonging to another tenant must fail validation
+        $response = $this->actingAs($this->user)->post(route('sales.quotations.store'), [
+            'customer_id' => $foreignCustomer->id,
+            'date'        => now()->toDateString(),
+            'items'       => [
+                [
+                    'product_id'   => $this->product->id,
+                    'product_name' => 'Produk Legal',
+                    'unit_price'   => 50000,
+                    'quantity'     => 1,
+                ],
+            ],
+        ]);
+        $response->assertSessionHasErrors(['customer_id']);
+
+        // 2. Attempting to create Quotation with foreign product belonging to another tenant must fail validation
+        $responseProduct = $this->actingAs($this->user)->post(route('sales.quotations.store'), [
+            'customer_id' => $this->customer->id,
+            'date'        => now()->toDateString(),
+            'items'       => [
+                [
+                    'product_id'   => $foreignProduct->id,
+                    'product_name' => 'Produk Curian',
+                    'unit_price'   => 50000,
+                    'quantity'     => 1,
+                ],
+            ],
+        ]);
+        $responseProduct->assertSessionHasErrors(['items.0.product_id']);
+
+        // 3. Attempting to access foreign invoice must be blocked with 403
+        $foreignInvoice = Invoice::create([
+            'business_id'    => $competingBusiness->id,
+            'customer_id'    => $foreignCustomer->id,
+            'invoice_number' => 'INV-FOREIGN-999',
+            'invoice_date'   => now()->toDateString(),
+            'due_date'       => now()->addDays(7)->toDateString(),
+            'status'         => Invoice::STATUS_UNPAID,
+            'total_amount'   => 500000,
+        ]);
+
+        $res = $this->actingAs($this->user)->get(route('invoices.show', $foreignInvoice));
+        $this->assertTrue(in_array($res->status(), [403, 404], true));
+    }
 }

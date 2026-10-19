@@ -17,6 +17,7 @@ use App\Models\Unit;
 use App\Support\Context;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -121,9 +122,18 @@ final class InvoiceWebController extends Controller
         $business = Context::requireBusiness();
 
         $validated = $request->validate([
-            'customer_id' => ['required', 'exists:customers,id'],
-            'location_id' => ['nullable', 'exists:locations,id'],
-            'purchase_order_id' => ['nullable', 'exists:purchase_orders,id'],
+            'customer_id' => [
+                'required',
+                Rule::exists('customers', 'id')->where('business_id', $business->id),
+            ],
+            'location_id' => [
+                'nullable',
+                Rule::exists('locations', 'id')->where('business_id', $business->id),
+            ],
+            'purchase_order_id' => [
+                'nullable',
+                Rule::exists('purchase_orders', 'id')->where('business_id', $business->id),
+            ],
             'invoice_number' => ['nullable', 'string', 'max:100'],
             'sender_name' => ['nullable', 'string', 'max:150'],
             'recipient_name' => ['nullable', 'string', 'max:150'],
@@ -138,7 +148,10 @@ final class InvoiceWebController extends Controller
             'notes' => ['nullable', 'string'],
             'terms_conditions' => ['nullable', 'string'],
             'items' => ['required', 'array', 'min:1'],
-            'items.*.product_id' => ['nullable', 'exists:products,id'],
+            'items.*.product_id' => [
+                'nullable',
+                Rule::exists('products', 'id')->where('business_id', $business->id),
+            ],
             'items.*.item_name' => ['required', 'string', 'max:255'],
             'items.*.sku' => ['nullable', 'string', 'max:100'],
             'items.*.description' => ['nullable', 'string'],
@@ -200,8 +213,14 @@ final class InvoiceWebController extends Controller
         }
 
         $validated = $request->validate([
-            'customer_id' => ['required', 'exists:customers,id'],
-            'location_id' => ['nullable', 'exists:locations,id'],
+            'customer_id' => [
+                'required',
+                Rule::exists('customers', 'id')->where('business_id', $business->id),
+            ],
+            'location_id' => [
+                'nullable',
+                Rule::exists('locations', 'id')->where('business_id', $business->id),
+            ],
             'sender_name' => ['nullable', 'string', 'max:150'],
             'recipient_name' => ['nullable', 'string', 'max:150'],
             'invoice_date' => ['required', 'date'],
@@ -214,7 +233,10 @@ final class InvoiceWebController extends Controller
             'notes' => ['nullable', 'string'],
             'terms_conditions' => ['nullable', 'string'],
             'items' => ['required', 'array', 'min:1'],
-            'items.*.product_id' => ['nullable', 'exists:products,id'],
+            'items.*.product_id' => [
+                'nullable',
+                Rule::exists('products', 'id')->where('business_id', $business->id),
+            ],
             'items.*.item_name' => ['required', 'string', 'max:255'],
             'items.*.sku' => ['nullable', 'string', 'max:100'],
             'items.*.description' => ['nullable', 'string'],
@@ -238,6 +260,8 @@ final class InvoiceWebController extends Controller
     public function show(Invoice $invoice): View
     {
         $business = Context::requireBusiness();
+        abort_unless($invoice->business_id === $business->id, 403);
+
         $invoice->load(['customer', 'purchaseOrder', 'items.product', 'items.unit', 'payments.creator']);
 
         return view('app.invoices.show', compact('business', 'invoice'));
@@ -248,6 +272,9 @@ final class InvoiceWebController extends Controller
      */
     public function recordPayment(Request $request, Invoice $invoice): RedirectResponse
     {
+        $business = Context::requireBusiness();
+        abort_unless($invoice->business_id === $business->id, 403);
+
         $validated = $request->validate([
             'amount' => ['required', 'numeric', 'gt:0'],
             'payment_date' => ['required', 'date'],

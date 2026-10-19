@@ -320,8 +320,8 @@
     <!-- KOP SURAT RESMI -->
     @php
         $businessContacts = array_filter([
-            !empty($business->phone) ? 'Telp / WhatsApp: ' . $business->phone : null,
-            !empty($business->email) ? 'Email: ' . $business->email : null,
+            !empty($business->phone) ? 'Telp / WhatsApp: ' . e($business->phone) : null,
+            !empty($business->email) ? 'Email: ' . e($business->email) : null,
         ]);
     @endphp
     <table class="kop-table">

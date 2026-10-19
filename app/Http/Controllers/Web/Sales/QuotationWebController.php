@@ -12,6 +12,7 @@ use App\Models\Quotation;
 use App\Support\Context;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 final class QuotationWebController extends Controller
@@ -61,7 +62,10 @@ final class QuotationWebController extends Controller
         $business = Context::requireBusiness();
 
         $validated = $request->validate([
-            'customer_id' => ['required', 'exists:customers,id'],
+            'customer_id' => [
+                'required',
+                Rule::exists('customers', 'id')->where('business_id', $business->id),
+            ],
             'quotation_number' => ['nullable', 'string', 'max:64'],
             'sender_name' => ['nullable', 'string', 'max:150'],
             'recipient_name' => ['nullable', 'string', 'max:150'],
@@ -71,11 +75,15 @@ final class QuotationWebController extends Controller
             'tax_amount' => ['nullable', 'numeric', 'min:0'],
             'notes' => ['nullable', 'string', 'max:1000'],
             'items' => ['required', 'array', 'min:1'],
-            'items.*.product_id' => ['nullable', 'exists:products,id'],
+            'items.*.product_id' => [
+                'nullable',
+                Rule::exists('products', 'id')->where('business_id', $business->id),
+            ],
             'items.*.product_name' => ['required_without:items.*.product_id', 'nullable', 'string'],
             'items.*.unit_price' => ['required', 'numeric', 'min:0'],
             'items.*.quantity' => ['required', 'numeric', 'min:0.01'],
             'items.*.discount_amount' => ['nullable', 'numeric', 'min:0'],
+            'items.*.notes' => ['nullable', 'string'],
         ]);
 
         $quotation = $this->salesPipelineService->createQuotation($business, $validated);
@@ -130,7 +138,10 @@ final class QuotationWebController extends Controller
         abort_unless($quotation->business_id === $business->id, 403);
 
         $validated = $request->validate([
-            'customer_id' => ['required', 'exists:customers,id'],
+            'customer_id' => [
+                'required',
+                Rule::exists('customers', 'id')->where('business_id', $business->id),
+            ],
             'quotation_number' => ['nullable', 'string', 'max:64'],
             'sender_name' => ['nullable', 'string', 'max:150'],
             'recipient_name' => ['nullable', 'string', 'max:150'],
@@ -142,7 +153,10 @@ final class QuotationWebController extends Controller
             'notes' => ['nullable', 'string', 'max:1000'],
             'terms_and_conditions' => ['nullable', 'string', 'max:2000'],
             'items' => ['required', 'array', 'min:1'],
-            'items.*.product_id' => ['nullable', 'exists:products,id'],
+            'items.*.product_id' => [
+                'nullable',
+                Rule::exists('products', 'id')->where('business_id', $business->id),
+            ],
             'items.*.product_name' => ['required_without:items.*.product_id', 'nullable', 'string'],
             'items.*.unit_price' => ['required', 'numeric', 'min:0'],
             'items.*.quantity' => ['required', 'numeric', 'min:0.01'],
