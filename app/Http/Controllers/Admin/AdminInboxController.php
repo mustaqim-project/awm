@@ -348,17 +348,22 @@ class AdminInboxController extends Controller
             SystemSetting::get('meta_system_user_token')
             ?: SystemSetting::get('social_media_page_token')
             ?: SystemSetting::get('instagram_access_token')
-            ?: SystemSetting::get('social_media_app_token', '')
+            ?: SystemSetting::get('social_media_app_token')
+            ?: config('services.meta_whatsapp.token')
+            ?: config('services.meta_social.app_token', '')
         );
 
         $pageId = (string) (
             SystemSetting::get('meta_page_id')
-            ?: SystemSetting::get('social_media_page_id', '')
+            ?: SystemSetting::get('social_media_page_id')
+            ?: '1340316975827711'
         );
 
         $phoneNumberId = (string) (
             SystemSetting::get('whatsapp_phone_number_id')
-            ?: SystemSetting::get('whatsapp_gateway_account_id', '')
+            ?: SystemSetting::get('whatsapp_gateway_account_id')
+            ?: config('services.meta_whatsapp.phone_number_id')
+            ?: '1304859399385592'
         );
 
         $replyId = (string) Str::uuid();
@@ -437,34 +442,49 @@ class AdminInboxController extends Controller
                 }
                 // 4. WhatsApp Cloud API
                 elseif ($channel === 'whatsapp') {
-                    $waTarget = $comment->from_id;
-                    $targetPhoneId = $phoneNumberId ?: $comment->platform_post_id;
+                    $rawTarget = (string) $comment->from_id;
+                    $waTarget = preg_replace('/[^0-9]/', '', $rawTarget);
+                    if (str_starts_with($waTarget, '0')) {
+                        $waTarget = '62' . substr($waTarget, 1);
+                    }
 
-                    if ($targetPhoneId) {
+                    $targetPhoneId = (string) (
+                        $phoneNumberId
+                        ?: (is_numeric($comment->platform_post_id) ? $comment->platform_post_id : null)
+                        ?: config('services.meta_whatsapp.phone_number_id')
+                        ?: '1304859399385592'
+                    );
+
+                    if ($targetPhoneId && $waTarget) {
                         if ($imageUrl) {
                             // WhatsApp Image message with optional caption
                             $payload = [
                                 'messaging_product' => 'whatsapp',
+                                'recipient_type'    => 'individual',
                                 'to'                => $waTarget,
                                 'type'              => 'image',
                                 'image'             => [
                                     'link'    => $imageUrl,
                                     'caption' => ! empty($messageText) ? $messageText : null,
                                 ],
-                                'access_token'      => $token,
                             ];
                         } else {
                             // WhatsApp Text message
                             $payload = [
                                 'messaging_product' => 'whatsapp',
+                                'recipient_type'    => 'individual',
                                 'to'                => $waTarget,
                                 'type'              => 'text',
-                                'text'              => ['body' => $messageText],
-                                'access_token'      => $token,
+                                'text'              => [
+                                    'preview_url' => false,
+                                    'body'        => $messageText,
+                                ],
                             ];
                         }
 
-                        $res = Http::timeout(12)->post("https://graph.facebook.com/v21.0/{$targetPhoneId}/messages", $payload);
+                        $res = Http::withToken($token)
+                            ->timeout(12)
+                            ->post("https://graph.facebook.com/v21.0/{$targetPhoneId}/messages", $payload);
 
                         if ($res->successful()) {
                             $replyId = (string) (data_get($res->json(), 'messages.0.id') ?? $replyId);
@@ -562,24 +582,31 @@ class AdminInboxController extends Controller
             SystemSetting::get('meta_system_user_token')
             ?: SystemSetting::get('social_media_page_token')
             ?: SystemSetting::get('instagram_access_token')
-            ?: SystemSetting::get('social_media_app_token', '')
+            ?: SystemSetting::get('social_media_app_token')
+            ?: config('services.meta_whatsapp.token')
+            ?: config('services.meta_social.app_token', '')
         );
 
         $pageId = (string) (
             SystemSetting::get('meta_page_id')
-            ?: SystemSetting::get('social_media_page_id', '')
+            ?: SystemSetting::get('social_media_page_id')
+            ?: '1340316975827711'
         );
 
         $replyId = (string) Str::uuid();
 
-        // 1. Send via Meta Graph API Private Reply
+        // 1. Send via Meta Graph API Private Reply or Direct Message
         try {
             if (! empty($token)) {
                 $targetPath = ! empty($pageId) ? "{$pageId}/messages" : "me/messages";
+                $isComment = in_array($comment->platform, ['instagram_comments', 'facebook_comments', 'facebook'], true);
+                $recipientPayload = ($isComment && ! str_starts_with((string) $comment->platform_comment_id, 'dm_ref_'))
+                    ? ['comment_id' => $comment->platform_comment_id]
+                    : ['id' => $comment->from_id ?: $comment->platform_comment_id];
 
                 if ($imageUrl) {
-                    Http::timeout(12)->post("https://graph.facebook.com/v21.0/{$targetPath}", [
-                        'recipient'    => ['comment_id' => $comment->platform_comment_id],
+                    Http::withToken($token)->timeout(12)->post("https://graph.facebook.com/v21.0/{$targetPath}", [
+                        'recipient'    => $recipientPayload,
                         'message'      => [
                             'attachment' => [
                                 'type'    => 'image',
@@ -589,15 +616,13 @@ class AdminInboxController extends Controller
                                 ],
                             ],
                         ],
-                        'access_token' => $token,
                     ]);
                 }
 
                 if (! empty($messageText)) {
-                    $res = Http::timeout(12)->post("https://graph.facebook.com/v21.0/{$targetPath}", [
-                        'recipient'    => ['comment_id' => $comment->platform_comment_id],
+                    $res = Http::withToken($token)->timeout(12)->post("https://graph.facebook.com/v21.0/{$targetPath}", [
+                        'recipient'    => $recipientPayload,
                         'message'      => ['text' => $messageText],
-                        'access_token' => $token,
                     ]);
 
                     if ($res->successful()) {
