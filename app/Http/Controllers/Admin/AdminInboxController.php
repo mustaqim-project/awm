@@ -177,6 +177,82 @@ class AdminInboxController extends Controller
     }
 
     /**
+     * AJAX/GET: Retrieve direct chat history with a specific customer for the DM modal.
+     */
+    public function customerHistory(Request $request): JsonResponse
+    {
+        $customerId = (string) $request->query('customer_id', '');
+        $customerName = (string) $request->query('customer_name', '');
+        $channel = (string) $request->query('channel', 'instagram');
+
+        $targetChannel = match ($channel) {
+            'facebook', 'facebook_comments', 'messenger' => 'messenger',
+            'whatsapp' => 'whatsapp',
+            default => 'instagram',
+        };
+
+        $platformPageId = (string) (SystemSetting::get('meta_page_id') ?: SystemSetting::get('social_media_page_id', ''));
+        $platformIgId = (string) (SystemSetting::get('meta_instagram_id') ?: SystemSetting::get('instagram_account_id', ''));
+
+        $query = SocialMediaComment::query()
+            ->where('is_platform', true)
+            ->whereIn('platform', [$targetChannel, $targetChannel . '_dm']);
+
+        $query->where(function ($q) use ($customerId, $customerName) {
+            $hasCondition = false;
+            if (! empty($customerId)) {
+                $q->where('from_id', $customerId);
+                $hasCondition = true;
+            }
+            if (! empty($customerName)) {
+                if ($hasCondition) {
+                    $q->orWhere('from_name', $customerName);
+                } else {
+                    $q->where('from_name', $customerName);
+                    $hasCondition = true;
+                }
+            }
+            // Also match if message has customer reference
+            if (! empty($customerId)) {
+                $q->orWhere('parent_comment_id', 'like', "%{$customerId}%");
+            }
+        });
+
+        $messages = $query->orderBy('created_time', 'asc')
+            ->orderBy('created_at', 'asc')
+            ->take(100)
+            ->get();
+
+        $formatted = $messages->map(function ($m) use ($customerName, $platformPageId, $platformIgId) {
+            $isFromPage = (bool) $m->is_from_page
+                || str_contains(strtolower((string) $m->from_name), 'cooca')
+                || in_array((string) $m->from_id, array_filter([$platformPageId, $platformIgId]), true);
+
+            return [
+                'id'           => $m->id,
+                'comment_id'   => $m->platform_comment_id,
+                'from_id'      => $m->from_id,
+                'from_name'    => $isFromPage ? 'Cooca Indonesia' : ($m->from_name ?: $customerName),
+                'message'      => $m->message,
+                'is_from_page' => $isFromPage,
+                'is_cooca'     => $isFromPage,
+                'time'         => $m->created_time ? $m->created_time->format('H.i') : $m->created_at->format('H.i'),
+                'time_relative'=> $m->created_time ? $m->created_time->diffForHumans(null, true) : 'Baru saja',
+                'date'         => $m->created_time ? $m->created_time->format('d M Y') : $m->created_at->format('d M Y'),
+            ];
+        });
+
+        return response()->json([
+            'success'       => true,
+            'messages'      => $formatted,
+            'count'         => $formatted->count(),
+            'channel'       => $targetChannel,
+            'customer_name' => $customerName,
+            'customer_id'   => $customerId,
+        ]);
+    }
+
+    /**
      * Save Meta Omnichannel Settings & Webhook Credentials.
      */
     public function saveSettings(Request $request): RedirectResponse
@@ -782,6 +858,10 @@ class AdminInboxController extends Controller
             return in_array($p, ['messenger', 'instagram', 'instagram_dm', 'whatsapp'], true);
         });
 
+        // Preload Meta IDs for accurate Cooca Official attribution
+        $platformPageId = (string) (SystemSetting::get('meta_page_id') ?: SystemSetting::get('social_media_page_id', ''));
+        $platformIgId = (string) (SystemSetting::get('meta_instagram_id') ?: SystemSetting::get('instagram_account_id', ''));
+
         // =========================================================================
         // A. BUILD COMMENT THREADS (Grouped by Post Comment + Child Replies)
         // =========================================================================
@@ -813,42 +893,68 @@ class AdminInboxController extends Controller
             $postCommentsCount = (int) ($post?->metrics['comments'] ?? 1);
             $postPublishedAt = $post?->published_at ? $post->published_at->format('d M Y H.i') : ($c->created_time ? $c->created_time->format('d M Y H.i') : '1 Sep 2026 14.30');
 
-            // Find child replies
+            // Find child replies (Sub-komentar / balasan)
             $threadReplies = $repliesComments->filter(function ($r) use ($c) {
                 return $r->parent_comment_id === $c->platform_comment_id
                     || $r->parent_comment_id === $c->id;
-            })->map(function ($r) {
+            })->map(function ($r) use ($platformPageId, $platformIgId) {
+                $isCooca = (bool) $r->is_from_page
+                    || str_contains(strtolower((string) $r->from_name), 'cooca')
+                    || in_array((string) $r->from_id, array_filter([$platformPageId, $platformIgId]), true);
+
                 return [
                     'id'           => $r->id,
                     'comment_id'   => $r->platform_comment_id,
                     'from_id'      => $r->from_id,
-                    'from_name'    => $r->from_name ?: ($r->is_from_page ? 'Cooca Indonesia' : 'Pengguna'),
+                    'from_name'    => $isCooca ? 'Cooca Indonesia' : ($r->from_name ?: 'Pengguna'),
                     'message'      => $r->message,
-                    'is_from_page' => (bool) $r->is_from_page,
+                    'is_from_page' => $isCooca,
+                    'is_cooca'     => $isCooca,
+                    'role'         => $isCooca ? 'cooca' : 'visitor',
                     'time'         => $r->created_time ? $r->created_time->diffForHumans(null, true) : 'Baru saja',
+                    'time_exact'   => $r->created_time ? $r->created_time->format('H.i') : $r->created_at->format('H.i'),
                     'date'         => $r->created_time ? $r->created_time->format('d M Y') : $r->created_at->format('d M Y'),
                     'parent_id'    => $r->parent_comment_id,
                 ];
             })->values()->all();
 
+            $isParentCooca = (bool) $c->is_from_page
+                || str_contains(strtolower((string) $c->from_name), 'cooca')
+                || in_array((string) $c->from_id, array_filter([$platformPageId, $platformIgId]), true);
+
+            $parentCommentData = [
+                'id'           => $c->id,
+                'comment_id'   => $c->platform_comment_id,
+                'from_id'      => $c->from_id,
+                'from_name'    => $isParentCooca ? 'Cooca Indonesia' : ($c->from_name ?: 'Pengguna'),
+                'message'      => $c->message,
+                'is_from_page' => $isParentCooca,
+                'is_cooca'     => $isParentCooca,
+                'role'         => $isParentCooca ? 'cooca' : 'visitor',
+                'time'         => $c->created_time ? $c->created_time->diffForHumans(null, true) : '2 jam',
+                'time_exact'   => $c->created_time ? $c->created_time->format('H.i') : $c->created_at->format('H.i'),
+                'date'         => $c->created_time ? $c->created_time->format('d M Y') : $c->created_at->format('d M Y'),
+                'parent_id'    => null,
+            ];
+
             $sortTimestamp = $c->created_time ? $c->created_time->timestamp : $c->created_at->timestamp;
 
             $threads[] = [
-                'id'           => $c->id,
-                'comment_id'   => $c->platform_comment_id,
-                'customer_id'  => $c->from_id ?: $c->id,
-                'name'         => $c->from_name ?: 'Pengguna Media Sosial',
-                'channel'      => $channel,
-                'channel_raw'  => $c->platform,
-                'last_message' => $c->message,
-                'status'       => $c->status ?: 'unread',
-                'is_unread'    => $c->status === 'unread',
-                'post_snippet' => Str::limit($postCaption, 60),
-                'time'         => $c->created_time ? $c->created_time->format('H.i') : $c->created_at->format('H.i'),
-                'time_relative'=> $c->created_time ? $c->created_time->diffForHumans(null, true) : '2 jam',
-                'date'         => $c->created_time ? $c->created_time->format('d M Y') : $c->created_at->format('d M Y'),
-                'sort_time'    => $sortTimestamp,
-                'post'         => [
+                'id'             => $c->id,
+                'comment_id'     => $c->platform_comment_id,
+                'customer_id'    => $c->from_id ?: $c->id,
+                'name'           => $c->from_name ?: 'Pengguna Media Sosial',
+                'channel'        => $channel,
+                'channel_raw'    => $c->platform,
+                'last_message'   => $c->message,
+                'status'         => $c->status ?: 'unread',
+                'is_unread'      => $c->status === 'unread',
+                'post_snippet'   => Str::limit($postCaption, 60),
+                'time'           => $c->created_time ? $c->created_time->format('H.i') : $c->created_at->format('H.i'),
+                'time_relative'  => $c->created_time ? $c->created_time->diffForHumans(null, true) : '2 jam',
+                'date'           => $c->created_time ? $c->created_time->format('d M Y') : $c->created_at->format('d M Y'),
+                'sort_time'      => $sortTimestamp,
+                'post'           => [
                     'id'             => $post?->id ?? $c->platform_post_id,
                     'title'          => Str::limit($postCaption, 70),
                     'caption'        => $postCaption,
@@ -858,19 +964,9 @@ class AdminInboxController extends Controller
                     'published_at'   => $postPublishedAt,
                     'author'         => 'cooca.indonesia',
                 ],
-                'messages'     => array_merge([
-                    [
-                        'id'           => $c->id,
-                        'comment_id'   => $c->platform_comment_id,
-                        'from_id'      => $c->from_id,
-                        'from_name'    => $c->from_name ?: 'Pengguna',
-                        'message'      => $c->message,
-                        'is_from_page' => false,
-                        'time'         => $c->created_time ? $c->created_time->diffForHumans(null, true) : '2 jam',
-                        'date'         => $c->created_time ? $c->created_time->format('d M Y') : $c->created_at->format('d M Y'),
-                        'parent_id'    => null,
-                    ]
-                ], $threadReplies),
+                'parent_comment' => $parentCommentData,
+                'replies'        => $threadReplies,
+                'messages'       => array_merge([$parentCommentData], $threadReplies),
             ];
         }
 
@@ -974,7 +1070,7 @@ class AdminInboxController extends Controller
             ]
         );
 
-        // 1. Instagram Comments Demo
+        // 1. Instagram Comments Demo (Visitor)
         SocialMediaComment::updateOrCreate(
             [
                 'is_platform'         => true,
@@ -984,12 +1080,33 @@ class AdminInboxController extends Controller
             [
                 'social_media_post_id' => $post->id,
                 'platform_post_id'     => $post->platform_post_id,
+                'parent_comment_id'    => null,
                 'from_id'              => 'agung.mustaqim',
                 'from_name'            => 'agung.mustaqim',
                 'message'              => '🔥🔥🔥',
                 'is_from_page'         => false,
                 'status'               => 'unread',
                 'created_time'         => now()->subHours(2),
+            ]
+        );
+
+        // 1b. Instagram Comments Demo (Official Cooca Reply)
+        SocialMediaComment::updateOrCreate(
+            [
+                'is_platform'         => true,
+                'platform'            => 'instagram_comments',
+                'platform_comment_id' => 'ig_comm_reply_cooca_001',
+            ],
+            [
+                'social_media_post_id' => $post->id,
+                'platform_post_id'     => $post->platform_post_id,
+                'parent_comment_id'    => 'ig_comm_agung_001',
+                'from_id'              => 'cooca.indonesia',
+                'from_name'            => 'Cooca Indonesia',
+                'message'              => 'Halo Kak! Terima kasih telah menghubungi kami. Ada yang bisa kami bantu? 😊',
+                'is_from_page'         => true,
+                'status'               => 'replied',
+                'created_time'         => now()->subMinutes(17),
             ]
         );
 

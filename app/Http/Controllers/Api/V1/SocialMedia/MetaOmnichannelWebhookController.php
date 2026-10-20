@@ -326,6 +326,7 @@ class MetaOmnichannelWebhookController extends Controller
 
         // Determine if FB or IG comment
         $platformPageId = (string) (SystemSetting::get('meta_page_id') ?: SystemSetting::get('social_media_page_id', ''));
+        $platformIgId = (string) (SystemSetting::get('meta_instagram_id') ?: SystemSetting::get('instagram_account_id', ''));
         $platform = 'facebook_comments';
         if ($object === 'instagram' || $isFromSocialMediaEndpoint || str_contains($commentId, 'ig_') || isset($val['media']) || isset($val['media']['id'])) {
             $platform = 'instagram_comments';
@@ -349,6 +350,11 @@ class MetaOmnichannelWebhookController extends Controller
             }
         }
 
+        $isFromCooca = ($senderId === $platformPageId)
+            || (! empty($platformIgId) && $senderId === $platformIgId)
+            || str_contains(strtolower($senderName), 'cooca')
+            || str_contains(strtolower($senderName), 'admin');
+
         SocialMediaComment::updateOrCreate(
             [
                 'is_platform'         => true,
@@ -364,7 +370,7 @@ class MetaOmnichannelWebhookController extends Controller
                 'from_id'                 => $senderId,
                 'from_name'               => $senderName,
                 'message'                 => $message,
-                'is_from_page'            => ($senderId === $platformPageId),
+                'is_from_page'            => $isFromCooca,
                 'status'                  => 'unread',
                 'created_time'            => $createdTime,
             ]

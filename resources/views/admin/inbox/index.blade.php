@@ -416,60 +416,166 @@
                                 </div>
                             </div>
 
-                            {{-- COMMENTS STREAM BODY --}}
+                            {{-- COMMENTS STREAM BODY: SEPARATION OF VISITOR COMMENT & COOCA OFFICIAL SUB-REPLIES --}}
                             <div id="messagesContainer" class="flex-1 p-5 overflow-y-auto space-y-4 min-h-0 bg-white dark:bg-[#1C1C1E]">
-                                <template x-for="(msg, idx) in selectedThread.messages" :key="idx">
-                                    <div :class="msg.is_from_page ? 'pl-11' : ''" class="space-y-1">
-                                        <div class="flex items-start justify-between gap-3 group">
-                                            <div class="flex items-start gap-3 min-w-0">
-                                                {{-- Avatar --}}
-                                                <div class="w-8 h-8 rounded-full overflow-hidden bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-[11px] font-bold text-slate-700 dark:text-slate-200 shrink-0 mt-0.5">
-                                                    <template x-if="msg.is_from_page">
-                                                        <img src="{{ asset('assets/image/cooca-icon.png') }}" class="w-full h-full object-cover" alt="Cooca">
-                                                    </template>
-                                                    <template x-if="!msg.is_from_page">
-                                                        <span x-text="getInitials(msg.from_name)"></span>
-                                                    </template>
-                                                </div>
+                                
+                                {{-- 1. KOMENTAR UTAMA (DARI PENGUNJUNG) --}}
+                                <div class="rounded-[16px] border border-[#E5E7EB] dark:border-white/10 bg-[#F9FAFB]/70 dark:bg-white/[0.02] p-4 transition-all">
+                                    <div class="flex items-center justify-between gap-2 mb-2.5 pb-2 border-b border-[#E5E7EB]/70 dark:border-white/5">
+                                        <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10.5px] font-semibold bg-slate-200/90 dark:bg-white/10 text-slate-700 dark:text-slate-300">
+                                            <i data-lucide="user" class="w-3 h-3 text-slate-500"></i>
+                                            <span>Komentar Pengunjung</span>
+                                        </span>
+                                        <span class="text-[11px] text-[#6B7280] dark:text-[#9CA3AF]" x-text="getParentComment(selectedThread).time_exact || getParentComment(selectedThread).time"></span>
+                                    </div>
 
-                                                {{-- Comment Content & Actions --}}
-                                                <div class="min-w-0">
-                                                    <div class="text-[13px] text-[#111827] dark:text-white leading-relaxed">
-                                                        <span class="font-bold mr-1.5" x-text="msg.from_name"></span>
-                                                        <span x-text="msg.message"></span>
-                                                    </div>
-
-                                                    {{-- Action Subline from Screenshot: [Time] · Balas · Kirim Pesan · ••• --}}
-                                                    <div class="flex items-center gap-2 mt-1 text-[11.5px] text-[#6B7280] dark:text-[#9CA3AF]">
-                                                        <span x-text="msg.time"></span>
-                                                        <span>·</span>
-                                                        <button type="button" @click="startReplyComment(msg)" class="font-semibold text-[#1877F2] hover:underline">
-                                                            Balas
-                                                        </button>
-                                                        <template x-if="!msg.is_from_page">
-                                                            <div class="flex items-center gap-2">
-                                                                <span>·</span>
-                                                                <button type="button" @click="openPrivateDmModal(msg)" class="font-semibold text-[#1877F2] hover:underline flex items-center gap-1">
-                                                                    <span>Kirim Pesan</span>
-                                                                    <i data-lucide="send" class="w-2.5 h-2.5"></i>
-                                                                </button>
-                                                            </div>
-                                                        </template>
-                                                        <span>·</span>
-                                                        <button type="button" class="hover:text-gray-900 dark:hover:text-white">
-                                                            <i data-lucide="more-horizontal" class="w-3.5 h-3.5"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
+                                    <div class="flex items-start justify-between gap-3">
+                                        <div class="flex items-start gap-3 min-w-0 flex-1">
+                                            {{-- Visitor Avatar --}}
+                                            <div class="w-9 h-9 rounded-full bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-800 flex items-center justify-center text-[12px] font-bold text-slate-700 dark:text-slate-200 shrink-0 mt-0.5">
+                                                <span x-text="getInitials(getParentComment(selectedThread).from_name)"></span>
                                             </div>
 
-                                            {{-- Heart / Like Icon --}}
-                                            <button type="button" @click="msg.liked = !msg.liked" class="text-gray-400 hover:text-red-500 transition-colors p-1 shrink-0">
-                                                <i data-lucide="heart" class="w-4 h-4" :class="msg.liked ? 'fill-red-500 text-red-500' : ''"></i>
-                                            </button>
+                                            <div class="min-w-0 flex-1">
+                                                <div class="flex items-center gap-2">
+                                                    <span class="font-bold text-[13.5px] text-[#111827] dark:text-white" x-text="getParentComment(selectedThread).from_name"></span>
+                                                </div>
+                                                <p class="text-[13.5px] text-[#1F2937] dark:text-[#F3F4F6] mt-1 whitespace-pre-wrap leading-relaxed font-normal" x-text="getParentComment(selectedThread).message"></p>
+
+                                                {{-- Action Subline --}}
+                                                <div class="flex items-center gap-3 mt-2.5 text-[11.5px] text-[#6B7280] dark:text-[#9CA3AF]">
+                                                    <span x-text="getParentComment(selectedThread).time"></span>
+                                                    <span>·</span>
+                                                    <button type="button" @click="startReplyComment(getParentComment(selectedThread))" class="font-semibold text-[#1877F2] hover:underline flex items-center gap-1">
+                                                        <i data-lucide="reply" class="w-3 h-3"></i>
+                                                        <span>Balas</span>
+                                                    </button>
+                                                    <span>·</span>
+                                                    <button type="button" @click="openPrivateDmModal(getParentComment(selectedThread))" class="font-semibold text-emerald-600 hover:underline flex items-center gap-1">
+                                                        <i data-lucide="send" class="w-3 h-3"></i>
+                                                        <span>Kirim Pesan</span>
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
+
+                                        {{-- Heart / Like Icon --}}
+                                        <button type="button" @click="getParentComment(selectedThread).liked = !getParentComment(selectedThread).liked" class="text-gray-400 hover:text-red-500 transition-colors p-1 shrink-0">
+                                            <i data-lucide="heart" class="w-4 h-4" :class="getParentComment(selectedThread).liked ? 'fill-red-500 text-red-500' : ''"></i>
+                                        </button>
                                     </div>
-                                </template>
+                                </div>
+
+                                {{-- 2. SUB-THREAD BALASAN (REPLIES CONTAINER) --}}
+                                <div class="relative ml-4 pl-4 sm:ml-6 sm:pl-6 border-l-2 border-indigo-200 dark:border-indigo-900/60 space-y-3 pt-1">
+                                    {{-- Thread Connector Header --}}
+                                    <div class="flex items-center gap-2 text-[11.5px] font-semibold text-[#6B7280] dark:text-[#9CA3AF] -ml-6 sm:-ml-8 pl-1">
+                                        <span class="w-4 h-4 rounded-full bg-indigo-100 dark:bg-indigo-950/80 border border-indigo-300 dark:border-indigo-800 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+                                            <i data-lucide="corner-down-right" class="w-2.5 h-2.5"></i>
+                                        </span>
+                                        <span>Sub-Balasan (<span x-text="getThreadReplies(selectedThread).length"></span>)</span>
+                                    </div>
+
+                                    {{-- KONDISI JIKA BELUM ADA BALASAN SAMA SEKALI --}}
+                                    <div x-show="getThreadReplies(selectedThread).length === 0" 
+                                         class="p-3.5 rounded-[14px] bg-amber-50/60 dark:bg-amber-950/20 border border-dashed border-amber-300/80 dark:border-amber-900/40 text-[12px] flex items-center justify-between gap-3">
+                                        <div class="flex items-center gap-2 text-amber-800 dark:text-amber-300">
+                                            <i data-lucide="info" class="w-4 h-4 shrink-0 text-amber-600"></i>
+                                            <span>Belum ada balasan dari Cooca Official untuk komentar ini.</span>
+                                        </div>
+                                        <button type="button" @click="startReplyComment(getParentComment(selectedThread))"
+                                                class="px-3 py-1 rounded-[8px] bg-[#1877F2] hover:bg-[#166FE5] text-white text-[11.5px] font-semibold flex items-center gap-1 shrink-0 transition-colors">
+                                            <i data-lucide="reply" class="w-3 h-3"></i>
+                                            <span>Balas Sekarang</span>
+                                        </button>
+                                    </div>
+
+                                    {{-- DAFTAR SUB-BALASAN --}}
+                                    <template x-for="(reply, rIdx) in getThreadReplies(selectedThread)" :key="reply.id || rIdx">
+                                        <div class="space-y-1">
+                                            {{-- A. SUB BALASAN DARI COOCA OFFICIAL (ADMIN / HALAMAN) --}}
+                                            <template x-if="reply.is_cooca || reply.is_from_page">
+                                                <div class="rounded-[16px] bg-gradient-to-r from-blue-50/90 via-sky-50/40 to-white dark:from-[#1877F2]/15 dark:to-transparent border border-blue-200/90 dark:border-[#1877F2]/30 p-3.5 sm:p-4 shadow-xs">
+                                                    <div class="flex items-start justify-between gap-3">
+                                                        <div class="flex items-start gap-3 min-w-0 flex-1">
+                                                            {{-- Cooca Official Avatar with Verified Badge --}}
+                                                            <div class="relative shrink-0">
+                                                                <div class="w-8 h-8 rounded-full overflow-hidden bg-black ring-2 ring-[#1877F2]/30">
+                                                                    <img src="{{ asset('assets/image/cooca-icon.png') }}" class="w-full h-full object-cover" alt="Cooca Official">
+                                                                </div>
+                                                                <span class="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full bg-[#1877F2] text-white flex items-center justify-center ring-1 ring-white dark:ring-[#1C1C1E]">
+                                                                    <i data-lucide="check" class="w-2 h-2"></i>
+                                                                </span>
+                                                            </div>
+
+                                                            <div class="min-w-0 flex-1">
+                                                                <div class="flex items-center gap-2 flex-wrap">
+                                                                    <span class="font-bold text-[13px] text-[#111827] dark:text-white" x-text="reply.from_name || 'Cooca Indonesia'"></span>
+                                                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#1877F2] text-white shadow-xs">
+                                                                        <i data-lucide="badge-check" class="w-3 h-3"></i>
+                                                                        <span>Balasan Resmi Cooca (Admin)</span>
+                                                                    </span>
+                                                                </div>
+                                                                <p class="text-[13px] text-[#1F2937] dark:text-[#E5E7EB] mt-1 whitespace-pre-wrap leading-relaxed font-normal" x-text="reply.message"></p>
+
+                                                                <div class="flex items-center gap-2 mt-2 text-[11px] text-[#6B7280] dark:text-[#9CA3AF]">
+                                                                    <span x-text="reply.time"></span>
+                                                                    <span>·</span>
+                                                                    <span class="text-emerald-600 dark:text-emerald-400 font-medium">Terkirim ke Media Sosial</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        {{-- Heart / Like Icon --}}
+                                                        <button type="button" @click="reply.liked = !reply.liked" class="text-gray-400 hover:text-red-500 transition-colors p-1 shrink-0">
+                                                            <i data-lucide="heart" class="w-4 h-4" :class="reply.liked ? 'fill-red-500 text-red-500' : ''"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </template>
+
+                                            {{-- B. SUB BALASAN DARI PENGUNJUNG LAIN --}}
+                                            <template x-if="!reply.is_cooca && !reply.is_from_page">
+                                                <div class="rounded-[16px] bg-slate-50 dark:bg-white/[0.04] border border-slate-200 dark:border-white/10 p-3.5 shadow-xs">
+                                                    <div class="flex items-start justify-between gap-3">
+                                                        <div class="flex items-start gap-3 min-w-0 flex-1">
+                                                            {{-- Visitor Avatar --}}
+                                                            <div class="w-7 h-7 rounded-full bg-slate-300 dark:bg-slate-700 flex items-center justify-center text-[10px] font-bold text-slate-700 dark:text-slate-200 shrink-0 mt-0.5">
+                                                                <span x-text="getInitials(reply.from_name)"></span>
+                                                            </div>
+
+                                                            <div class="min-w-0 flex-1">
+                                                                <div class="flex items-center gap-2 flex-wrap">
+                                                                    <span class="font-bold text-[12.5px] text-[#111827] dark:text-white" x-text="reply.from_name"></span>
+                                                                    <span class="px-1.5 py-0.5 rounded text-[10px] font-medium bg-slate-200 text-slate-600 dark:bg-white/10 dark:text-slate-300">Balasan Pengunjung</span>
+                                                                </div>
+                                                                <p class="text-[12.5px] text-[#374151] dark:text-[#D1D5DB] mt-1 whitespace-pre-wrap leading-relaxed" x-text="reply.message"></p>
+
+                                                                <div class="flex items-center gap-2.5 mt-2 text-[11px] text-[#6B7280] dark:text-[#9CA3AF]">
+                                                                    <span x-text="reply.time"></span>
+                                                                    <span>·</span>
+                                                                    <button type="button" @click="startReplyComment(reply)" class="font-semibold text-[#1877F2] hover:underline">
+                                                                        Balas
+                                                                    </button>
+                                                                    <span>·</span>
+                                                                    <button type="button" @click="openPrivateDmModal(reply)" class="font-semibold text-emerald-600 hover:underline flex items-center gap-1">
+                                                                        <span>Kirim Pesan</span>
+                                                                        <i data-lucide="send" class="w-2.5 h-2.5"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        {{-- Heart / Like Icon --}}
+                                                        <button type="button" @click="reply.liked = !reply.liked" class="text-gray-400 hover:text-red-500 transition-colors p-1 shrink-0">
+                                                            <i data-lucide="heart" class="w-4 h-4" :class="reply.liked ? 'fill-red-500 text-red-500' : ''"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </template>
+                                </div>
                             </div>
 
                             {{-- BOTTOM COMMENT COMPOSER (MATCHING SCREENSHOT 1) --}}
@@ -716,56 +822,169 @@
 
         </div>
 
-    {{-- FLOATING PRIVATE DM POPUP (EXACT MATCHING SCREENSHOT 2) --}}
-    <div x-show="activePrivateDm" x-cloak
-         class="fixed bottom-5 right-6 w-80 sm:w-88 bg-white dark:bg-[#1C1C1E] rounded-2xl shadow-2xl border border-[#E5E7EB] dark:border-white/15 z-50 overflow-hidden transition-all duration-200">
-        
-        {{-- Header: Commenter Avatar, Name, and Close Button --}}
-        <div class="px-4 py-3 bg-[#F9FAFB] dark:bg-[#2C2C2E] border-b border-[#E5E7EB] dark:border-white/10 flex items-center justify-between">
-            <div class="flex items-center gap-2.5 min-w-0">
-                <div class="w-8 h-8 rounded-full overflow-hidden bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-[11px] font-bold text-slate-700 dark:text-slate-200 shrink-0">
-                    <span x-text="activePrivateDm ? getInitials(activePrivateDm.from_name) : 'U'"></span>
+    {{-- EXPANDED DIRECT MESSAGE (DM) MODAL DIALOG WITH CHAT HISTORY --}}
+    <div x-show="activePrivateDm" @keydown.escape.window="activePrivateDm = null" x-cloak
+         class="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-5">
+        <div @click.outside="activePrivateDm = null"
+             class="bg-white dark:bg-[#1C1C1E] border border-[#E5E7EB] dark:border-white/10 rounded-[24px] shadow-2xl w-full max-w-2xl h-[650px] max-h-[92vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+            
+            {{-- Header: Customer Profile, Channel Badge, Actions & Close Button --}}
+            <div class="px-5 py-3.5 bg-[#F9FAFB] dark:bg-[#2C2C2E] border-b border-[#E5E7EB] dark:border-white/10 flex items-center justify-between gap-3 shrink-0">
+                <div class="flex items-center gap-3 min-w-0">
+                    <div class="relative shrink-0">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#E2E8F0] to-[#CBD5E1] dark:from-[#374151] dark:to-[#1F2937] flex items-center justify-center font-bold text-[13px] text-[#334155] dark:text-[#F1F5F9]">
+                            <span x-text="activePrivateDm ? getInitials(activePrivateDm.customer_name || activePrivateDm.from_name) : 'U'"></span>
+                        </div>
+                        <span class="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full flex items-center justify-center text-white ring-2 ring-white dark:ring-[#2C2C2E]"
+                              :class="activePrivateDm?.target_channel === 'messenger' ? 'bg-[#1877F2]' : 'bg-[#E1306C]'">
+                            <i :data-lucide="activePrivateDm?.target_channel === 'messenger' ? 'message-circle' : 'instagram'" class="w-2.5 h-2.5"></i>
+                        </span>
+                    </div>
+
+                    <div class="min-w-0">
+                        <div class="flex items-center gap-2">
+                            <span class="text-[14.5px] font-bold text-[#111827] dark:text-white truncate" x-text="activePrivateDm?.customer_name || activePrivateDm?.from_name || 'Pengguna'"></span>
+                            <span class="px-2 py-0.5 rounded-full text-[10.5px] font-semibold text-white flex items-center gap-1"
+                                  :class="activePrivateDm?.target_channel === 'messenger' ? 'bg-[#1877F2]' : 'bg-[#E1306C]'">
+                                <i :data-lucide="activePrivateDm?.target_channel === 'messenger' ? 'message-circle' : 'instagram'" class="w-2.5 h-2.5"></i>
+                                <span x-text="activePrivateDm?.target_channel === 'messenger' ? 'Messenger' : 'Instagram Direct'"></span>
+                            </span>
+                        </div>
+                        <p class="text-[11.5px] text-[#6B7280] dark:text-[#9CA3AF] truncate mt-0.5">
+                            Kirim pesan privat langsung ke inbox akun pelanggan
+                        </p>
+                    </div>
                 </div>
-                <div class="min-w-0">
-                    <span class="text-[13px] font-bold text-[#111827] dark:text-white truncate block" x-text="activePrivateDm?.from_name || ''"></span>
-                    <span class="text-[10.5px] text-[#6B7280] dark:text-[#9CA3AF] flex items-center gap-1">
-                        <i :data-lucide="activePrivateDm?.channel === 'facebook_comments' ? 'message-circle' : 'instagram'" class="w-2.5 h-2.5"></i>
-                        <span x-text="activePrivateDm?.channel === 'facebook_comments' ? 'Kirim ke Messenger' : 'Kirim ke Instagram DM'"></span>
+
+                {{-- Header Actions --}}
+                <div class="flex items-center gap-2 shrink-0">
+                    <button type="button" @click="directToDmOnly(activePrivateDm)"
+                            class="px-2.5 py-1.5 rounded-[8px] bg-white dark:bg-[#1C1C1E] border border-[#D1D5DB] dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 text-[11.5px] font-medium text-[#1877F2] flex items-center gap-1.5 transition-colors">
+                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                        <span class="hidden sm:inline">Buka di Ruang DM</span>
+                    </button>
+                    <button type="button" @click="activePrivateDm = null" class="w-8 h-8 rounded-[8px] text-gray-400 hover:text-gray-600 dark:hover:text-white hover:bg-gray-200/50 dark:hover:bg-white/10 flex items-center justify-center transition-colors">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+
+            {{-- Context Callout: Originating Comment Reference --}}
+            <div class="px-5 py-2.5 bg-blue-50/70 dark:bg-[#1877F2]/10 border-b border-blue-100 dark:border-[#1877F2]/20 flex items-center justify-between gap-3 text-[12px] shrink-0">
+                <div class="flex items-center gap-2 truncate text-blue-900 dark:text-blue-200">
+                    <i data-lucide="reply" class="w-3.5 h-3.5 text-[#1877F2] shrink-0"></i>
+                    <span class="truncate">
+                        Membalas komentar: <strong class="font-semibold" x-text="'&quot;' + (activePrivateDm?.message || '') + '&quot;'"></strong>
                     </span>
                 </div>
-            </div>
-            <button type="button" @click="activePrivateDm = null" class="text-gray-400 hover:text-gray-600 dark:hover:text-white p-1 rounded-lg">
-                <i data-lucide="x" class="w-4 h-4"></i>
-            </button>
-        </div>
-
-        {{-- Body & Composer --}}
-        <div class="p-3.5 space-y-3 bg-white dark:bg-[#1C1C1E]">
-            <div class="p-2 rounded-[8px] bg-blue-50/70 dark:bg-[#1877F2]/10 border border-blue-100 dark:border-[#1877F2]/20 text-[11px] text-[#1877F2] leading-tight">
-                Balas komentar ini secara privat lewat DM resmi Meta dan langsung dialihkan ke ruang obrolan DM.
+                <span class="text-[11px] text-blue-600 dark:text-blue-400 shrink-0 font-medium hidden sm:inline">
+                    Resmi Meta Private Reply
+                </span>
             </div>
 
-            <div class="flex items-center gap-2.5">
-                <div class="w-8 h-8 rounded-full overflow-hidden bg-black shrink-0">
-                    <img src="{{ asset('assets/image/cooca-icon.png') }}" class="w-full h-full object-cover" alt="Cooca">
+            {{-- CHAT HISTORY AREA (HISTORY CHAT) --}}
+            <div id="dmHistoryContainer" class="flex-1 p-4 sm:p-5 overflow-y-auto space-y-3.5 min-h-0 bg-[#F9FAFB]/60 dark:bg-black/15">
+                {{-- Loading Skeleton --}}
+                <div x-show="isLoadingDmHistory" class="flex flex-col items-center justify-center h-48 space-y-2">
+                    <div class="w-6 h-6 border-2 border-[#1877F2] border-t-transparent rounded-full animate-spin"></div>
+                    <span class="text-[12px] text-gray-500">Memuat riwayat chat...</span>
                 </div>
-                <div class="flex-1 relative">
-                    <input type="text" x-model="privateDmText" @keydown.enter.prevent="submitPrivateDm()"
-                           placeholder="Tulis pesan..."
-                           class="w-full h-9.5 px-3 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-[#D1D5DB] dark:border-white/15 text-[12.5px] text-[#111827] dark:text-white placeholder-[#9CA3AF] focus:outline-hidden focus:border-[#1877F2]">
+
+                {{-- Empty History State --}}
+                <div x-show="!isLoadingDmHistory && dmChatHistory.length === 0" class="h-full flex flex-col items-center justify-center text-center p-6 select-none">
+                    <div class="w-14 h-14 rounded-2xl bg-[#E7F3FF] dark:bg-[#1877F2]/20 text-[#1877F2] flex items-center justify-center mb-2.5">
+                        <i data-lucide="messages-square" class="w-7 h-7"></i>
+                    </div>
+                    <h4 class="text-[14px] font-bold text-gray-900 dark:text-white">Belum Ada Riwayat Pesan Pribadi</h4>
+                    <p class="text-[12px] text-gray-500 dark:text-gray-400 max-w-sm mt-1 leading-relaxed">
+                        Ini adalah pesan privat pertama ke <strong x-text="'@' + (activePrivateDm?.customer_name || activePrivateDm?.from_name || 'pengguna')"></strong>. Balasan Anda akan terkirim langsung ke inbox Instagram DM / Messenger resmi mereka.
+                    </p>
                 </div>
-                <button type="button" @click="submitPrivateDm()" :disabled="!privateDmText.trim() || isSendingDm"
-                        class="w-9.5 h-9.5 rounded-[10px] bg-[#1877F2] hover:bg-[#166FE5] text-white flex items-center justify-center disabled:opacity-50 transition-colors shrink-0">
-                    <i data-lucide="send" class="w-4 h-4" :class="isSendingDm ? 'animate-pulse' : ''"></i>
-                </button>
+
+                {{-- Render Chat History Messages --}}
+                <div x-show="!isLoadingDmHistory && dmChatHistory.length > 0" class="space-y-3">
+                    <div class="text-center my-1">
+                        <span class="px-2.5 py-0.5 rounded-full text-[10.5px] font-medium bg-black/5 dark:bg-white/10 text-[#6B7280] dark:text-[#9CA3AF]">
+                            Riwayat Percakapan
+                        </span>
+                    </div>
+
+                    <template x-for="(hMsg, hIdx) in dmChatHistory" :key="hMsg.id || hIdx">
+                        <div>
+                            {{-- Customer Incoming Message (Left Bubble) --}}
+                            <template x-if="!hMsg.is_cooca && !hMsg.is_from_page">
+                                <div class="flex items-end gap-2.5 max-w-[85%] sm:max-w-[75%]">
+                                    <div class="w-7 h-7 rounded-full bg-slate-300 dark:bg-slate-700 flex items-center justify-center text-[10px] font-bold text-slate-700 dark:text-slate-200 shrink-0 mb-1">
+                                        <span x-text="getInitials(hMsg.from_name)"></span>
+                                    </div>
+                                    <div class="space-y-1">
+                                        <div class="bg-white dark:bg-[#2C2C2E] p-3 rounded-[16px] rounded-bl-[3px] border border-[#E5E7EB] dark:border-white/10 shadow-xs">
+                                            <span class="text-[10.5px] font-semibold text-[#1877F2] block mb-0.5" x-text="hMsg.from_name"></span>
+                                            <p class="text-[13px] text-[#1F2937] dark:text-[#F3F4F6] whitespace-pre-wrap leading-relaxed" x-text="hMsg.message"></p>
+                                        </div>
+                                        <span class="text-[10px] text-[#9CA3AF] px-1 block" x-text="hMsg.time"></span>
+                                    </div>
+                                </div>
+                            </template>
+
+                            {{-- Cooca Official Outbound Message (Right Bubble) --}}
+                            <template x-if="hMsg.is_cooca || hMsg.is_from_page">
+                                <div class="flex items-end justify-end gap-2.5 ml-auto max-w-[85%] sm:max-w-[75%]">
+                                    <div class="space-y-1 text-right">
+                                        <div class="bg-[#1877F2] text-white p-3 rounded-[16px] rounded-br-[3px] shadow-xs text-left">
+                                            <div class="flex items-center gap-1.5 mb-1 text-[10.5px] font-semibold text-blue-100">
+                                                <i data-lucide="badge-check" class="w-3 h-3 text-white"></i>
+                                                <span>Cooca Official</span>
+                                            </div>
+                                            <p class="text-[13px] text-white whitespace-pre-wrap leading-relaxed" x-text="hMsg.message"></p>
+                                        </div>
+                                        <span class="text-[10px] text-[#9CA3AF] px-1 block text-right" x-text="hMsg.time"></span>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+                </div>
             </div>
 
-            <div class="flex items-center justify-between pt-1">
-                <button type="button" @click="directToDmOnly(activePrivateDm)" class="text-[11px] text-[#1877F2] hover:underline flex items-center gap-1 font-medium">
-                    <span>Buka di Ruang DM Langsung</span>
-                    <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                </button>
+            {{-- COMPOSER & TEMPLATES FOOTER --}}
+            <div class="p-4 bg-white dark:bg-[#1C1C1E] border-t border-[#E5E7EB] dark:border-white/10 shrink-0 space-y-2.5">
+                {{-- Quick Templates Pills --}}
+                <div class="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-0.5">
+                    <span class="text-[11px] font-semibold text-[#9CA3AF] shrink-0 mr-1">Template:</span>
+                    <button type="button" @click="privateDmText = 'Halo Kak! Terima kasih telah menghubungi kami. Ada yang bisa kami bantu? 😊'"
+                            class="px-2.5 py-1 rounded-full text-[11px] bg-[#F3F4F6] dark:bg-white/5 hover:bg-[#E5E7EB] text-[#374151] dark:text-[#D1D5DB] transition-colors whitespace-nowrap">
+                        Sapaan Ramah
+                    </button>
+                    <button type="button" @click="privateDmText = 'Halo Kak, mohon informasikan nomor handphone / email akun Cooca Anda agar dapat kami bantu cek lebih lanjut ya.'"
+                            class="px-2.5 py-1 rounded-full text-[11px] bg-[#F3F4F6] dark:bg-white/5 hover:bg-[#E5E7EB] text-[#374151] dark:text-[#D1D5DB] transition-colors whitespace-nowrap">
+                        Minta Info Akun
+                    </button>
+                    <button type="button" @click="privateDmText = 'Halo Kak, untuk informasi paket dan konsultasi gratis implementasi COOCA, bisa kirimkan detail bisnis Anda disini ya!'"
+                            class="px-2.5 py-1 rounded-full text-[11px] bg-[#F3F4F6] dark:bg-white/5 hover:bg-[#E5E7EB] text-[#374151] dark:text-[#D1D5DB] transition-colors whitespace-nowrap">
+                        Konsultasi Paket
+                    </button>
+                </div>
+
+                {{-- Textarea & Action Bar --}}
+                <div class="flex items-end gap-2.5">
+                    <div class="w-8 h-8 rounded-full overflow-hidden bg-black shrink-0 mb-1 hidden sm:block">
+                        <img src="{{ asset('assets/image/cooca-icon.png') }}" class="w-full h-full object-cover" alt="Cooca">
+                    </div>
+                    <div class="flex-1 relative">
+                        <textarea id="privateDmTextarea" x-model="privateDmText" @keydown.enter.prevent="if(!$event.shiftKey) submitPrivateDm()"
+                                  rows="2"
+                                  placeholder="Tulis pesan DM resmi ke pelanggan... (Enter untuk kirim, Shift+Enter untuk baris baru)"
+                                  class="w-full p-3 rounded-[12px] bg-[#F9FAFB] dark:bg-[#2C2C2E] border border-[#D1D5DB] dark:border-white/15 text-[13px] text-[#111827] dark:text-white placeholder-[#9CA3AF] focus:outline-hidden focus:border-[#1877F2] resize-none transition-colors"></textarea>
+                    </div>
+                    <button type="button" @click="submitPrivateDm()" :disabled="!privateDmText.trim() || isSendingDm"
+                            class="h-[46px] px-4 sm:px-5 rounded-[12px] bg-[#1877F2] hover:bg-[#166FE5] disabled:opacity-50 disabled:cursor-not-allowed text-white text-[13px] font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all shrink-0">
+                        <i data-lucide="send" class="w-4 h-4" :class="isSendingDm ? 'animate-pulse' : ''"></i>
+                        <span x-text="isSendingDm ? 'Mengirim...' : 'Kirim DM'"></span>
+                    </button>
+                </div>
             </div>
+
         </div>
     </div>
 
@@ -905,6 +1124,8 @@ function adminInboxHub() {
         replyTargetComment: null,
         activePrivateDm: null,
         privateDmText: '',
+        dmChatHistory: [],
+        isLoadingDmHistory: false,
         isSendingDm: false,
         isSending: false,
         isSyncing: false,
@@ -953,9 +1174,11 @@ function adminInboxHub() {
                                 t.id === this.selectedThread.id || 
                                 (t.customer_id && t.customer_id === this.selectedThread.customer_id && t.channel === this.selectedThread.channel)
                             );
-                            if (updated && updated.messages && updated.messages.length !== this.selectedThread.messages.length) {
-                                const oldLen = this.selectedThread.messages.length;
+                            if (updated && updated.messages && updated.messages.length !== (this.selectedThread.messages?.length || 0)) {
+                                const oldLen = this.selectedThread.messages?.length || 0;
                                 this.selectedThread.messages = updated.messages;
+                                this.selectedThread.replies = updated.replies || [];
+                                this.selectedThread.parent_comment = updated.parent_comment || null;
                                 this.selectedThread.last_message = updated.last_message;
                                 this.selectedThread.time = updated.time;
                                 this.selectedThread.status = updated.status;
@@ -1171,6 +1394,35 @@ function adminInboxHub() {
             }
         },
 
+        getParentComment(thread) {
+            if (!thread) return { from_name: 'Pengguna', message: '', time: '' };
+            if (thread.parent_comment) return thread.parent_comment;
+            if (Array.isArray(thread.messages) && thread.messages.length > 0) return thread.messages[0];
+            return {
+                id: thread.id,
+                comment_id: thread.comment_id,
+                from_id: thread.customer_id,
+                from_name: thread.name || 'Pengguna',
+                message: thread.last_message || '',
+                is_from_page: false,
+                is_cooca: false,
+                role: 'visitor',
+                time: thread.time_relative || thread.time || 'Baru saja',
+                time_exact: thread.time || '',
+                date: thread.date || 'Hari ini',
+                parent_id: null,
+            };
+        },
+
+        getThreadReplies(thread) {
+            if (!thread) return [];
+            if (Array.isArray(thread.replies)) return thread.replies;
+            if (Array.isArray(thread.messages) && thread.messages.length > 1) {
+                return thread.messages.slice(1);
+            }
+            return [];
+        },
+
         startReplyComment(msg) {
             this.replyTargetComment = msg;
             this.$nextTick(() => {
@@ -1183,23 +1435,81 @@ function adminInboxHub() {
             this.replyTargetComment = null;
         },
 
-        openPrivateDmModal(msg) {
+        async openPrivateDmModal(msg) {
+            const parent = this.getParentComment(this.selectedThread);
+            const targetMsg = msg || parent;
+            const channel = this.selectedThread ? this.selectedThread.channel : 'instagram_comments';
+            const targetDmChannel = (channel === 'facebook_comments' || channel === 'facebook') ? 'messenger' : 'instagram';
+
+            const customerId = targetMsg?.from_id || this.selectedThread?.customer_id;
+            const customerName = targetMsg?.from_name || this.selectedThread?.name;
+
             this.activePrivateDm = {
-                ...msg,
-                channel: this.selectedThread ? this.selectedThread.channel : 'instagram_comments'
+                ...targetMsg,
+                customer_id: customerId,
+                customer_name: customerName,
+                target_channel: targetDmChannel,
+                channel: channel,
+                post_title: this.selectedThread?.post?.title || this.selectedThread?.post_snippet || 'Postingan Media Sosial',
             };
             this.privateDmText = '';
+            this.dmChatHistory = [];
+            this.isLoadingDmHistory = true;
+
+            // 1. Immediately look up matching threads in memory for instant UX
+            const localThread = this.allThreads.find(t =>
+                (t.channel === targetDmChannel || ['instagram', 'instagram_dm', 'messenger', 'whatsapp'].includes(t.channel)) &&
+                (t.customer_id === customerId || t.name === customerName)
+            );
+            if (localThread && Array.isArray(localThread.messages) && localThread.messages.length > 0) {
+                this.dmChatHistory = [...localThread.messages];
+            }
+
             this.$nextTick(() => {
                 if (window.lucide) window.lucide.createIcons();
-                const dmInput = document.querySelector('input[placeholder="Tulis pesan..."]');
-                if (dmInput) dmInput.focus();
             });
+
+            // 2. Concurrently fetch fresh server history from database
+            try {
+                const queryParams = new URLSearchParams({
+                    customer_id: customerId || '',
+                    customer_name: customerName || '',
+                    channel: targetDmChannel,
+                });
+
+                const res = await fetch(`/admin/inbox/customer-history?${queryParams.toString()}`, {
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.success && Array.isArray(data.messages)) {
+                        this.dmChatHistory = data.messages;
+                    }
+                }
+            } catch (e) {
+                console.warn('Failed to load customer history:', e);
+            } finally {
+                this.isLoadingDmHistory = false;
+                this.$nextTick(() => {
+                    this.scrollDmHistoryToBottom();
+                    if (window.lucide) window.lucide.createIcons();
+                    const textarea = document.getElementById('privateDmTextarea');
+                    if (textarea) textarea.focus();
+                });
+            }
+        },
+
+        scrollDmHistoryToBottom() {
+            const el = document.getElementById('dmHistoryContainer');
+            if (el) {
+                el.scrollTop = el.scrollHeight;
+            }
         },
 
         async submitPrivateDm() {
-            if (!this.selectedThread || !this.activePrivateDm || !this.privateDmText.trim() || this.isSendingDm) return;
+            if (!this.activePrivateDm || !this.privateDmText.trim() || this.isSendingDm) return;
 
-            const commentId = this.activePrivateDm.id || this.selectedThread.id;
+            const commentId = this.activePrivateDm.id || this.selectedThread?.id;
             const message = this.privateDmText.trim();
             this.isSendingDm = true;
 
@@ -1217,28 +1527,30 @@ function adminInboxHub() {
                 const data = await response.json();
 
                 if (response.ok && data.success) {
-                    const targetChannel = data.redirect_channel || (this.selectedThread.channel === 'facebook_comments' ? 'messenger' : 'instagram');
-                    const customerId = data.customer_id;
+                    const newReply = data.reply || {
+                        id: Date.now(),
+                        from_name: 'Cooca Indonesia',
+                        message: message,
+                        is_from_page: true,
+                        is_cooca: true,
+                        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                        date: 'Hari ini',
+                    };
 
-                    // Close floating popup
-                    this.activePrivateDm = null;
+                    // Instantly append to dialog history
+                    this.dmChatHistory.push(newReply);
                     this.privateDmText = '';
 
-                    // AUTO DIRECT TO DM CHANNEL
-                    this.setChannel(targetChannel);
-                    this.filterThreads();
-
-                    // Find and select the customer DM thread
-                    let dmThread = this.displayedThreads.find(t => t.customer_id === customerId)
-                                || this.allThreads.find(t => t.customer_id === customerId);
-
-                    if (dmThread) {
-                        this.selectThread(dmThread);
+                    // Update thread status if on comment
+                    if (this.selectedThread) {
+                        this.selectedThread.status = 'replied';
                     }
 
                     this.$nextTick(() => {
-                        this.scrollToBottom();
+                        this.scrollDmHistoryToBottom();
                         if (window.lucide) window.lucide.createIcons();
+                        const textarea = document.getElementById('privateDmTextarea');
+                        if (textarea) textarea.focus();
                     });
                 } else {
                     alert(data.message || 'Gagal mengirim pesan DM.');
@@ -1295,18 +1607,26 @@ function adminInboxHub() {
                     const newReply = data.reply || {
                         id: Date.now(),
                         message: textToSend,
-                        created_at: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                        sender: 'Cooca Indonesia',
+                        from_name: 'Cooca Indonesia',
+                        is_from_page: true,
+                        is_cooca: true,
+                        role: 'cooca',
+                        time: 'Baru saja',
+                        time_exact: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                        date: 'Hari ini',
                     };
 
-                    this.selectedThread.messages.push({
-                        id: newReply.id,
-                        from_name: 'Cooca Indonesia',
-                        message: newReply.message,
-                        is_from_page: true,
-                        time: 'Baru saja',
-                        date: 'Hari ini',
-                    });
+                    // Add to replies array
+                    if (!this.selectedThread.replies) {
+                        this.selectedThread.replies = [];
+                    }
+                    this.selectedThread.replies.push(newReply);
+
+                    // Also keep messages array synchronized
+                    if (!this.selectedThread.messages) {
+                        this.selectedThread.messages = [this.getParentComment(this.selectedThread)];
+                    }
+                    this.selectedThread.messages.push(newReply);
 
                     this.selectedThread.is_unread = false;
                     this.selectedThread.status = 'read';
