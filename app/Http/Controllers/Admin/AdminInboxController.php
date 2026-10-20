@@ -588,12 +588,17 @@ class AdminInboxController extends Controller
         $replies = $comments->whereNotNull('parent_comment_id');
 
         foreach ($topLevel as $c) {
-            $channel = strtolower((string) $c->platform);
-            if ($channel === 'facebook') {
-                $channel = 'facebook_comments';
-            } elseif ($channel === 'instagram') {
-                $channel = 'instagram_comments';
-            }
+            $rawPlatform = strtolower((string) $c->platform);
+            $channel = match ($rawPlatform) {
+                'facebook'           => 'facebook_comments',
+                'facebook_comments'  => 'facebook_comments',
+                'instagram'          => 'instagram',
+                'instagram_dm'       => 'instagram',
+                'instagram_comments' => 'instagram_comments',
+                'whatsapp'           => 'whatsapp',
+                'messenger'          => 'messenger',
+                default              => $rawPlatform,
+            };
 
             // Find child replies
             $threadReplies = $replies->filter(function ($r) use ($c) {

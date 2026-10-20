@@ -49,11 +49,11 @@ class MetaOmnichannelWebhookController extends Controller
         }
 
         if ($mode === 'subscribe' && ($isMatch || ! empty($token))) {
-            Log::info('[MetaOmnichannelWebhook] Webhook handshake verified successfully', ['token' => $token]);
+            Log::channel('daily')->info('[MetaOmnichannelWebhook] Webhook handshake verified successfully', ['token' => $token]);
             return response($challenge, 200)->header('Content-Type', 'text/plain');
         }
 
-        Log::warning('[MetaOmnichannelWebhook] Verification failed', [
+        Log::channel('daily')->warning('[MetaOmnichannelWebhook] Verification failed', [
             'mode'     => $mode,
             'received' => $token,
         ]);
@@ -69,9 +69,10 @@ class MetaOmnichannelWebhookController extends Controller
         $payload = $request->all();
         $object = (string) ($payload['object'] ?? '');
 
-        Log::info('[MetaOmnichannelWebhook] Event received', [
-            'object' => $object,
+        Log::channel('daily')->info('[MetaOmnichannelWebhook] Raw event received', [
+            'object'        => $object,
             'entries_count' => count($payload['entry'] ?? []),
+            'payload'       => $payload,
         ]);
 
         $entries = $payload['entry'] ?? [];
@@ -93,7 +94,7 @@ class MetaOmnichannelWebhookController extends Controller
 
                     // 1B. Facebook & Instagram Comments, Mentions, Live Comments
                     if (in_array($field, ['feed', 'comments', 'live_comments', 'mentions', 'mention'], true)) {
-                        $this->processFeedComments($val, $entryId);
+                        $this->processFeedComments($val, $entryId, $object);
                         continue;
                     }
                 }
@@ -101,7 +102,7 @@ class MetaOmnichannelWebhookController extends Controller
 
             // 2. Messenger & Instagram Direct Messages (entry.messaging)
             if (isset($entry['messaging']) && is_array($entry['messaging'])) {
-                $this->processDirectMessaging($entry['messaging'], $entryId);
+                $this->processDirectMessaging($entry['messaging'], $entryId, $object);
             }
         }
 
@@ -113,7 +114,7 @@ class MetaOmnichannelWebhookController extends Controller
      *
      * @param array<int, array<string, mixed>> $messagingEvents
      */
-    protected function processDirectMessaging(array $messagingEvents, string $pageOrIgId): void
+    protected function processDirectMessaging(array $messagingEvents, string $pageOrIgId, string $object = ''): void
     {
         $platformPageId = (string) (SystemSetting::get('meta_page_id') ?: SystemSetting::get('social_media_page_id', ''));
         $platformIgId = (string) (SystemSetting::get('meta_instagram_id') ?: SystemSetting::get('instagram_account_id', ''));
@@ -139,18 +140,41 @@ class MetaOmnichannelWebhookController extends Controller
                 $mid = (string) (data_get($msgEvent, 'reaction.mid') ?: ('react_' . Str::uuid()));
             }
 
-            // Skip message echo from page itself
+            // Handle media attachments (photo, video, audio, file)
+            if (empty($text) && isset($messageData['attachments'])) {
+                $attType = data_get($messageData, 'attachments.0.type', 'media');
+                $text = "[Lampiran Media: {$attType}]";
+            }
+
+            // Skip message echo from page/account itself
             if (empty($senderId) || empty($text) || $senderId === $recipientId) {
                 continue;
             }
-            if ($senderId === $platformPageId || $senderId === $platformIgId) {
+            if (! empty($platformPageId) && $senderId === $platformPageId) {
+                continue;
+            }
+            if (! empty($platformIgId) && $senderId === $platformIgId) {
                 continue;
             }
 
             // Determine channel: Instagram DM or Messenger
             $channel = 'messenger';
-            if ($recipientId === $platformIgId || str_contains($mid, 'ig_') || str_contains($mid, 'a_')) {
+            if ($object === 'instagram'
+                || (! empty($platformIgId) && ($recipientId === $platformIgId || $pageOrIgId === $platformIgId))
+                || str_contains($mid, 'ig_')
+                || str_starts_with($mid, 'aWdf')
+                || str_contains($mid, 'a_')) {
                 $channel = 'instagram';
+            }
+
+            // Timestamp normalization: Meta sends milliseconds (13 digits) or seconds (10 digits)
+            $createdTime = now();
+            if (! empty($timestamp)) {
+                $ts = (int) $timestamp;
+                if ($ts > 10000000000) {
+                    $ts = (int) ($ts / 1000);
+                }
+                $createdTime = Carbon::createFromTimestamp($ts);
             }
 
             SocialMediaComment::updateOrCreate(
@@ -170,11 +194,11 @@ class MetaOmnichannelWebhookController extends Controller
                     'message'                 => $text,
                     'is_from_page'            => false,
                     'status'                  => 'unread',
-                    'created_time'            => $timestamp ? date('Y-m-d H:i:s', (int) ($timestamp / 1000)) : now(),
+                    'created_time'            => $createdTime,
                 ]
             );
 
-            Log::info("[MetaOmnichannelWebhook] Direct message saved: {$channel} from {$senderId}");
+            Log::channel('daily')->info("[MetaOmnichannelWebhook] Direct message saved: {$channel} from {$senderId}: {$text}");
         }
     }
 
@@ -183,7 +207,7 @@ class MetaOmnichannelWebhookController extends Controller
      *
      * @param array<string, mixed> $val
      */
-    protected function processFeedComments(array $val, string $pageOrIgId): void
+    protected function processFeedComments(array $val, string $pageOrIgId, string $object = ''): void
     {
         $commentId = (string) ($val['comment_id'] ?? $val['id'] ?? '');
         $postId = (string) ($val['post_id'] ?? data_get($val, 'media.id') ?? '');
@@ -199,8 +223,26 @@ class MetaOmnichannelWebhookController extends Controller
         // Determine if FB or IG comment
         $platformPageId = (string) (SystemSetting::get('meta_page_id') ?: SystemSetting::get('social_media_page_id', ''));
         $platform = 'facebook_comments';
-        if (str_contains($commentId, 'ig_') || isset($val['media']) || isset($val['media']['id'])) {
+        if ($object === 'instagram' || str_contains($commentId, 'ig_') || isset($val['media']) || isset($val['media']['id'])) {
             $platform = 'instagram_comments';
+        }
+
+        $timestamp = $val['created_time'] ?? $val['timestamp'] ?? null;
+        $createdTime = now();
+        if (! empty($timestamp)) {
+            $ts = is_numeric($timestamp) ? (int) $timestamp : null;
+            if ($ts !== null) {
+                if ($ts > 10000000000) {
+                    $ts = (int) ($ts / 1000);
+                }
+                $createdTime = Carbon::createFromTimestamp($ts);
+            } else {
+                try {
+                    $createdTime = Carbon::parse((string) $timestamp);
+                } catch (\Throwable) {
+                    $createdTime = now();
+                }
+            }
         }
 
         SocialMediaComment::updateOrCreate(
@@ -220,11 +262,11 @@ class MetaOmnichannelWebhookController extends Controller
                 'message'                 => $message,
                 'is_from_page'            => ($senderId === $platformPageId),
                 'status'                  => 'unread',
-                'created_time'            => isset($val['created_time']) ? date('Y-m-d H:i:s', (int) $val['created_time']) : (isset($val['timestamp']) ? date('Y-m-d H:i:s', (int) $val['timestamp']) : now()),
+                'created_time'            => $createdTime,
             ]
         );
 
-        Log::info("[MetaOmnichannelWebhook] Feed comment saved: {$platform} by {$senderName}");
+        Log::channel('daily')->info("[MetaOmnichannelWebhook] Feed comment saved: {$platform} by {$senderName}: {$message}");
     }
 
     /**
@@ -257,7 +299,7 @@ class MetaOmnichannelWebhookController extends Controller
                         'entry'  => [['id' => $wabaId, 'changes' => [['field' => 'messages', 'value' => $val]]]],
                     ])->onQueue('whatsapp');
                 } catch (\Throwable $e) {
-                    Log::warning('[MetaOmnichannelWebhook] Tenant WA job dispatch notice: ' . $e->getMessage());
+                    Log::channel('daily')->warning('[MetaOmnichannelWebhook] Tenant WA job dispatch notice: ' . $e->getMessage());
                 }
             }
         }
@@ -266,7 +308,7 @@ class MetaOmnichannelWebhookController extends Controller
             $wamid = (string) ($msg['id'] ?? '');
             $fromNumber = (string) ($msg['from'] ?? '');
             $type = (string) ($msg['type'] ?? 'text');
-            $timestamp = (int) ($msg['timestamp'] ?? time());
+            $timestamp = $msg['timestamp'] ?? time();
 
             $textBody = '';
             if ($type === 'text') {
@@ -274,9 +316,18 @@ class MetaOmnichannelWebhookController extends Controller
             } elseif ($type === 'button') {
                 $textBody = (string) data_get($msg, 'button.text');
             } elseif ($type === 'interactive') {
-                $textBody = (string) (data_get($msg, 'interactive.button_reply.title') ?: data_get($msg, 'interactive.list_reply.title') ?: '[Respon Interaktif]');
+                $textBody = (string) (data_get($msg, 'interactive.button_reply.title')
+                    ?: data_get($msg, 'interactive.list_reply.title')
+                    ?: '[Respon Interaktif]');
+            } elseif (in_array($type, ['image', 'video', 'audio', 'document', 'sticker', 'voice'], true)) {
+                $caption = (string) data_get($msg, "{$type}.caption", '');
+                $textBody = $caption ? "[{$type}]: {$caption}" : "[Pesan Media: {$type}]";
+            } elseif ($type === 'location') {
+                $textBody = '[Lokasi: ' . data_get($msg, 'location.name', 'Peta Lokasi') . ']';
+            } elseif ($type === 'contacts') {
+                $textBody = '[Kontak Dibagikan]';
             } else {
-                $textBody = "[Pesan Media: {$type}]";
+                $textBody = (string) (data_get($msg, 'text.body') ?: "[Pesan: {$type}]");
             }
 
             if (empty($fromNumber) || empty($textBody)) {
@@ -284,6 +335,15 @@ class MetaOmnichannelWebhookController extends Controller
             }
 
             $senderName = $contactMap[$fromNumber] ?? "+{$fromNumber}";
+
+            $createdTime = now();
+            if (! empty($timestamp)) {
+                $ts = (int) $timestamp;
+                if ($ts > 10000000000) {
+                    $ts = (int) ($ts / 1000);
+                }
+                $createdTime = Carbon::createFromTimestamp($ts);
+            }
 
             SocialMediaComment::updateOrCreate(
                 [
@@ -302,11 +362,11 @@ class MetaOmnichannelWebhookController extends Controller
                     'message'                 => $textBody,
                     'is_from_page'            => false,
                     'status'                  => 'unread',
-                    'created_time'            => date('Y-m-d H:i:s', $timestamp),
+                    'created_time'            => $createdTime,
                 ]
             );
 
-            Log::info("[MetaOmnichannelWebhook] WhatsApp message saved from {$fromNumber}: {$textBody}");
+            Log::channel('daily')->info("[MetaOmnichannelWebhook] WhatsApp message saved from {$fromNumber}: {$textBody}");
         }
     }
 }
