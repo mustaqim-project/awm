@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Api\V1\SocialMedia;
 use App\Http\Controllers\Controller;
 use App\Models\SocialMediaAccount;
 use App\Models\SocialMediaComment;
+use App\Models\SocialMediaPost;
 use App\Models\SystemSetting;
 use App\Models\WhatsAppAccount;
 use Illuminate\Http\JsonResponse;
@@ -315,12 +316,29 @@ class MetaOmnichannelWebhookController extends Controller
      */
     protected function processFeedComments(array $val, string $pageOrIgId, string $object = '', ?Request $request = null): void
     {
+        $verb = (string) ($val['verb'] ?? 'add');
         $commentId = (string) ($val['comment_id'] ?? $val['id'] ?? '');
+
+        // Handle deleted/removed comments
+        if (in_array($verb, ['remove', 'delete'], true)) {
+            if (! empty($commentId)) {
+                SocialMediaComment::where('platform_comment_id', $commentId)->delete();
+                Log::channel('daily')->info("[MetaOmnichannelWebhook] Comment removed/deleted: {$commentId}");
+            }
+            return;
+        }
+
         $postId = (string) ($val['post_id'] ?? data_get($val, 'media.id') ?? '');
         $message = (string) ($val['message'] ?? $val['text'] ?? '');
         $senderId = (string) (data_get($val, 'from.id') ?: ($val['sender_id'] ?? ''));
         $senderName = (string) (data_get($val, 'from.username') ?: data_get($val, 'from.name') ?: ($val['sender_name'] ?? 'Pengguna Media Sosial'));
         $parentId = (string) ($val['parent_id'] ?? '');
+
+        // Handle photo / attachment in Facebook comments
+        $mediaUrl = (string) ($val['photo'] ?? data_get($val, 'attachment.media.image.src') ?? data_get($val, 'attachment.url') ?? '');
+        if (empty($message) && ! empty($mediaUrl)) {
+            $message = '[Foto Komentar]';
+        }
 
         if (empty($commentId) && empty($message)) {
             return;
@@ -337,6 +355,17 @@ class MetaOmnichannelWebhookController extends Controller
         $platform = 'facebook_comments';
         if ($object === 'instagram' || $isFromSocialMediaEndpoint || str_contains($commentId, 'ig_') || isset($val['media']) || isset($val['media']['id'])) {
             $platform = 'instagram_comments';
+        }
+
+        // Auto-discover IDs if missing
+        if ($platform === 'facebook_comments' && empty($platformPageId) && ! empty($pageOrIgId) && $pageOrIgId !== '0') {
+            SystemSetting::set('meta_page_id', $pageOrIgId, 'meta_omnichannel');
+            SystemSetting::set('social_media_page_id', $pageOrIgId, 'social_media');
+            $platformPageId = $pageOrIgId;
+        } elseif ($platform === 'instagram_comments' && empty($platformIgId) && ! empty($pageOrIgId) && $pageOrIgId !== '0') {
+            SystemSetting::set('meta_instagram_id', $pageOrIgId, 'meta_omnichannel');
+            SystemSetting::set('instagram_account_id', $pageOrIgId, 'social_media');
+            $platformIgId = $pageOrIgId;
         }
 
         $timestamp = $val['created_time'] ?? $val['timestamp'] ?? null;
@@ -360,7 +389,35 @@ class MetaOmnichannelWebhookController extends Controller
         $isFromCooca = ($senderId === $platformPageId)
             || (! empty($platformIgId) && $senderId === $platformIgId)
             || str_contains(strtolower($senderName), 'cooca')
-            || str_contains(strtolower($senderName), 'admin');
+            || str_contains(strtolower($senderName), 'admin')
+            || ($senderName === 'cooca.indonesia');
+
+        // Robust parent_id evaluation: Top-level comments on FB/IG often send parent_id === post_id
+        $isReply = ! empty($parentId)
+            && $parentId !== $postId
+            && $parentId !== $pageOrIgId
+            && ! str_contains($postId, $parentId)
+            && ! str_contains($parentId, $postId);
+        $parentCommentId = $isReply ? Str::limit((string) $parentId, 500, '') : null;
+
+        // Auto-link or auto-create SocialMediaPost so UI displays post details & thumbnail
+        $postRecordId = null;
+        if (! empty($postId)) {
+            $linkedPost = SocialMediaPost::where('platform_post_id', $postId)->first();
+            if (! $linkedPost) {
+                $linkedPost = SocialMediaPost::create([
+                    'is_platform'      => true,
+                    'platform'         => $platform === 'instagram_comments' ? 'instagram' : 'facebook',
+                    'platform_post_id' => Str::limit($postId, 500, ''),
+                    'content'          => $platform === 'instagram_comments' ? 'Postingan Instagram Resmi Cooca' : 'Postingan Facebook Halaman Resmi Cooca',
+                    'media_type'       => 'image',
+                    'media_urls'       => ['assets/image/cooca_hero_banner.png'],
+                    'status'           => 'published',
+                    'published_at'     => $createdTime,
+                ]);
+            }
+            $postRecordId = $linkedPost->id;
+        }
 
         SocialMediaComment::updateOrCreate(
             [
@@ -371,19 +428,21 @@ class MetaOmnichannelWebhookController extends Controller
             [
                 'business_id'             => null,
                 'social_media_account_id' => null,
-                'social_media_post_id'    => null,
+                'social_media_post_id'    => $postRecordId,
                 'platform_post_id'        => Str::limit((string) ($postId ?: $pageOrIgId), 500, ''),
-                'parent_comment_id'       => ($parentId && $parentId !== $postId) ? Str::limit((string) $parentId, 500, '') : null,
+                'parent_comment_id'       => $parentCommentId,
                 'from_id'                 => Str::limit((string) $senderId, 500, ''),
                 'from_name'               => $senderName,
                 'message'                 => $message,
+                'media_url'               => ! empty($mediaUrl) ? $mediaUrl : null,
+                'media_type'              => ! empty($mediaUrl) ? 'image' : null,
                 'is_from_page'            => $isFromCooca,
-                'status'                  => 'unread',
+                'status'                  => $isFromCooca ? 'replied' : 'unread',
                 'created_time'            => $createdTime,
             ]
         );
 
-        Log::channel('daily')->info("[MetaOmnichannelWebhook] Feed comment saved: {$platform} by {$senderName}: {$message}");
+        Log::channel('daily')->info("[MetaOmnichannelWebhook] Feed comment saved: {$platform} by {$senderName}: {$message} (parent: " . ($parentCommentId ?? 'NULL') . ")");
     }
 
     /**

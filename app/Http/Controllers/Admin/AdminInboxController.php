@@ -104,10 +104,10 @@ class AdminInboxController extends Controller
 
         // Meta Omnichannel Credentials & Config
         $metaSettings = [
-            'meta_page_id'                      => (string) (SystemSetting::get('meta_page_id') ?: SystemSetting::get('social_media_page_id', '')),
-            'meta_system_user_token'            => (string) (SystemSetting::get('meta_system_user_token') ?: SystemSetting::get('social_media_page_token') ?: SystemSetting::get('instagram_access_token', '')),
-            'meta_instagram_id'                 => (string) (SystemSetting::get('meta_instagram_id') ?: SystemSetting::get('instagram_account_id', '')),
-            'whatsapp_phone_number_id'          => (string) (SystemSetting::get('whatsapp_phone_number_id', '')),
+            'meta_page_id'                      => (string) (SystemSetting::get('meta_page_id') ?: SystemSetting::get('social_media_page_id', '') ?: '1340316975827711'),
+            'meta_system_user_token'            => (string) (SystemSetting::get('meta_system_user_token') ?: SystemSetting::get('social_media_page_token') ?: SystemSetting::get('instagram_access_token', '') ?: config('services.meta_whatsapp.token', '')),
+            'meta_instagram_id'                 => (string) (SystemSetting::get('meta_instagram_id') ?: SystemSetting::get('instagram_account_id', '') ?: '17841439846162016'),
+            'whatsapp_phone_number_id'          => (string) (SystemSetting::get('whatsapp_phone_number_id', '') ?: '1304859399385592'),
             'social_media_webhook_verify_token' => (string) (SystemSetting::get('social_media_webhook_verify_token', 'cooca_meta_social_webhook_token')),
             'webhook_url'                       => url('/api/v1/meta/omnichannel/webhook'),
         ];
@@ -284,8 +284,15 @@ class AdminInboxController extends Controller
         if (! empty($validated['meta_instagram_id'])) {
             SystemSetting::set('instagram_account_id', (string) $validated['meta_instagram_id'], 'social_media');
         }
+        // Auto-subscribe the Page to Webhook fields (feed, messages, conversations)
+        $targetPageId = (string) ($validated['meta_page_id'] ?? SystemSetting::get('meta_page_id', ''));
+        $targetToken = (string) ($validated['meta_system_user_token'] ?? SystemSetting::get('meta_system_user_token', ''));
+        if (! empty($targetPageId) && ! empty($targetToken)) {
+            $pageTok = $this->metaClient->getPageAccessToken($targetPageId, $targetToken) ?: $targetToken;
+            $this->metaClient->subscribePageApps($targetPageId, $pageTok);
+        }
 
-        return back()->with('success', 'Pengaturan Kredensial Meta & Webhook berhasil disimpan!');
+        return back()->with('success', 'Pengaturan Kredensial Meta & Webhook berhasil disimpan dan Webhook Page Feed aktif!');
     }
 
     /**
@@ -415,9 +422,10 @@ class AdminInboxController extends Controller
                 // 2. Facebook Comments
                 elseif (in_array($channel, ['facebook', 'facebook_comments'], true)) {
                     $fbCommentText = $messageText ?: ($imageUrl ? "Lampiran: {$imageUrl}" : '');
+                    $pageToken = ! empty($pageId) ? ($this->metaClient->getPageAccessToken($pageId, $token) ?: $token) : $token;
                     $res = Http::timeout(12)->post("https://graph.facebook.com/v21.0/{$comment->platform_comment_id}/comments", [
                         'message'      => $fbCommentText,
-                        'access_token' => $token,
+                        'access_token' => $pageToken,
                     ]);
 
                     if ($res->successful()) {
@@ -737,17 +745,24 @@ class AdminInboxController extends Controller
      */
     public function syncMeta(Request $request): JsonResponse|RedirectResponse
     {
-        $pageId = (string) (SystemSetting::get('meta_page_id') ?: SystemSetting::get('social_media_page_id', ''));
+        $pageId = (string) (
+            SystemSetting::get('meta_page_id')
+            ?: SystemSetting::get('social_media_page_id')
+            ?: '1340316975827711'
+        );
         $token = (string) (
             SystemSetting::get('meta_system_user_token')
             ?: SystemSetting::get('social_media_page_token')
             ?: SystemSetting::get('instagram_access_token')
-            ?: SystemSetting::get('social_media_app_token', '')
+            ?: SystemSetting::get('social_media_app_token')
+            ?: config('services.meta_whatsapp.token')
+            ?: config('services.meta_social.app_token', '')
         );
         $igUserId = (string) (
             SystemSetting::get('meta_instagram_id')
             ?: SystemSetting::get('instagram_account_id')
-            ?: SystemSetting::get('instagram_graph_user_id', '')
+            ?: SystemSetting::get('instagram_graph_user_id')
+            ?: '17841439846162016'
         );
 
         if (empty($token)) {
@@ -760,6 +775,12 @@ class AdminInboxController extends Controller
 
         $newCount = 0;
         $errors = [];
+
+        // 0. Ensure Page is subscribed to Webhooks (feed, messages, conversations, reactions)
+        $pageToken = ! empty($pageId) ? ($this->metaClient->getPageAccessToken($pageId, $token) ?: $token) : $token;
+        if (! empty($pageId) && ! empty($pageToken)) {
+            $this->metaClient->subscribePageApps($pageId, $pageToken);
+        }
 
         // 1. Sinkronkan Percakapan Messenger Halaman Facebook
         if (! empty($pageId)) {
@@ -808,11 +829,31 @@ class AdminInboxController extends Controller
                 $errors[] = 'Messenger: ' . $e->getMessage();
             }
 
-            // 2. Sinkronkan Komentar Facebook Page Feed
+            // 2. Sinkronkan Postingan & Komentar Facebook Page Feed
             try {
-                $feedPosts = $this->metaClient->getPageFeedComments($pageId, $token, 25);
+                $feedPosts = $this->metaClient->getPageFeedComments($pageId, $pageToken, 25);
                 foreach ($feedPosts as $post) {
                     $postId = (string) ($post['id'] ?? '');
+                    $postMsg = (string) ($post['message'] ?? '');
+                    $postPic = (string) ($post['full_picture'] ?? '');
+                    $postTime = $post['created_time'] ?? null;
+
+                    // Auto-link/upsert SocialMediaPost so preview shows real content and thumbnail
+                    $savedPost = SocialMediaPost::updateOrCreate(
+                        [
+                            'is_platform'      => true,
+                            'platform'         => 'facebook',
+                            'platform_post_id' => $postId,
+                        ],
+                        [
+                            'content'      => $postMsg ?: 'Postingan Facebook Halaman Resmi Cooca',
+                            'media_type'   => $postPic ? 'image' : 'text',
+                            'media_urls'   => $postPic ? [$postPic] : [],
+                            'status'       => 'published',
+                            'published_at' => $postTime ? Carbon::parse($postTime) : now(),
+                        ]
+                    );
+
                     $comments = data_get($post, 'comments.data', []);
                     foreach ($comments as $comment) {
                         $commId = (string) ($comment['id'] ?? '');
@@ -820,10 +861,13 @@ class AdminInboxController extends Controller
                         $commFromId = (string) data_get($comment, 'from.id');
                         $commFromName = (string) (data_get($comment, 'from.name') ?: 'Pengguna Facebook');
                         $commTime = data_get($comment, 'created_time');
+                        $parentId = (string) data_get($comment, 'parent.id', '');
+                        $isReply = (! empty($parentId) && $parentId !== $postId && ! str_contains($postId, $parentId) && ! str_contains($parentId, $postId));
+                        $mediaUrl = (string) data_get($comment, 'attachment.media.image.src', '');
 
-                        if ($commFromId === $pageId || empty($commMsg)) {
-                            continue;
-                        }
+                        $isFromCooca = ($commFromId === $pageId)
+                            || str_contains(strtolower($commFromName), 'cooca')
+                            || str_contains(strtolower($commFromName), 'admin');
 
                         $saved = SocialMediaComment::updateOrCreate(
                             [
@@ -834,19 +878,59 @@ class AdminInboxController extends Controller
                             [
                                 'business_id'             => null,
                                 'social_media_account_id' => null,
-                                'social_media_post_id'    => null,
+                                'social_media_post_id'    => $savedPost->id,
                                 'platform_post_id'        => $postId ?: $pageId,
-                                'parent_comment_id'       => null,
+                                'parent_comment_id'       => $isReply ? $parentId : null,
                                 'from_id'                 => $commFromId,
                                 'from_name'               => $commFromName,
-                                'message'                 => $commMsg,
-                                'is_from_page'            => false,
-                                'status'                  => 'unread',
+                                'message'                 => $commMsg ?: ($mediaUrl ? '[Foto Komentar]' : '👍'),
+                                'media_url'               => $mediaUrl ?: null,
+                                'media_type'              => $mediaUrl ? 'image' : null,
+                                'is_from_page'            => $isFromCooca,
+                                'status'                  => $isFromCooca ? 'replied' : 'unread',
                                 'created_time'            => $commTime ? Carbon::parse($commTime) : now(),
                             ]
                         );
                         if ($saved->wasRecentlyCreated) {
                             $newCount++;
+                        }
+
+                        // Process sub-comments / replies
+                        $subComments = data_get($comment, 'comments.data', []);
+                        foreach ($subComments as $sub) {
+                            $subId = (string) ($sub['id'] ?? '');
+                            $subMsg = (string) ($sub['message'] ?? '');
+                            $subFromId = (string) data_get($sub, 'from.id');
+                            $subFromName = (string) (data_get($sub, 'from.name') ?: 'Pengguna Facebook');
+                            $subTime = data_get($sub, 'created_time');
+                            $subMediaUrl = (string) data_get($sub, 'attachment.media.image.src', '');
+                            $isSubCooca = ($subFromId === $pageId) || str_contains(strtolower($subFromName), 'cooca');
+
+                            $savedSub = SocialMediaComment::updateOrCreate(
+                                [
+                                    'is_platform'         => true,
+                                    'platform'            => 'facebook_comments',
+                                    'platform_comment_id' => $subId,
+                                ],
+                                [
+                                    'business_id'             => null,
+                                    'social_media_account_id' => null,
+                                    'social_media_post_id'    => $savedPost->id,
+                                    'platform_post_id'        => $postId ?: $pageId,
+                                    'parent_comment_id'       => $commId,
+                                    'from_id'                 => $subFromId,
+                                    'from_name'               => $subFromName,
+                                    'message'                 => $subMsg ?: ($subMediaUrl ? '[Foto Komentar]' : '👍'),
+                                    'media_url'               => $subMediaUrl ?: null,
+                                    'media_type'              => $subMediaUrl ? 'image' : null,
+                                    'is_from_page'            => $isSubCooca,
+                                    'status'                  => $isSubCooca ? 'replied' : 'unread',
+                                    'created_time'            => $subTime ? Carbon::parse($subTime) : now(),
+                                ]
+                            );
+                            if ($savedSub->wasRecentlyCreated) {
+                                $newCount++;
+                            }
                         }
                     }
                 }
@@ -903,20 +987,41 @@ class AdminInboxController extends Controller
 
             if (! empty($igUserId)) {
                 try {
-                    $mediaItems = $this->metaClient->getInstagramMediaComments($igUserId, $token, 20);
+                    $mediaItems = $this->metaClient->getInstagramMediaComments($igUserId, $token, 25);
                     foreach ($mediaItems as $media) {
                         $mediaId = (string) ($media['id'] ?? '');
+                        $caption = (string) ($media['caption'] ?? '');
+                        $mediaUrl = (string) ($media['media_url'] ?? $media['thumbnail_url'] ?? '');
+                        $timestamp = $media['timestamp'] ?? null;
+
+                        $savedPost = SocialMediaPost::updateOrCreate(
+                            [
+                                'is_platform'      => true,
+                                'platform'         => 'instagram',
+                                'platform_post_id' => $mediaId,
+                            ],
+                            [
+                                'content'      => $caption ?: 'Postingan Instagram Resmi Cooca',
+                                'media_type'   => strtolower((string) ($media['media_type'] ?? 'image')),
+                                'media_urls'   => $mediaUrl ? [$mediaUrl] : [],
+                                'status'       => 'published',
+                                'published_at' => $timestamp ? Carbon::parse($timestamp) : now(),
+                            ]
+                        );
+
                         $comments = data_get($media, 'comments.data', []);
                         foreach ($comments as $comment) {
                             $commId = (string) ($comment['id'] ?? '');
                             $commMsg = (string) ($comment['text'] ?? $comment['message'] ?? '');
-                            $commFromId = (string) data_get($comment, 'from.id');
+                            $commFromId = (string) (data_get($comment, 'from.id') ?: data_get($comment, 'username') ?: '');
                             $commFromName = (string) ($comment['username'] ?? data_get($comment, 'from.username') ?: 'Pengguna Instagram');
                             $commTime = data_get($comment, 'timestamp');
+                            $parentId = (string) data_get($comment, 'parent_id', '');
+                            $isReply = (! empty($parentId) && $parentId !== $mediaId);
 
-                            if ($commFromId === $igUserId || empty($commMsg)) {
-                                continue;
-                            }
+                            $isFromCooca = ($commFromId === $igUserId)
+                                || str_contains(strtolower($commFromName), 'cooca')
+                                || ($commFromName === 'cooca.indonesia');
 
                             $saved = SocialMediaComment::updateOrCreate(
                                 [
@@ -927,19 +1032,54 @@ class AdminInboxController extends Controller
                                 [
                                     'business_id'             => null,
                                     'social_media_account_id' => null,
-                                    'social_media_post_id'    => null,
+                                    'social_media_post_id'    => $savedPost->id,
                                     'platform_post_id'        => $mediaId,
-                                    'parent_comment_id'       => null,
+                                    'parent_comment_id'       => $isReply ? $parentId : null,
                                     'from_id'                 => $commFromId,
                                     'from_name'               => $commFromName,
                                     'message'                 => $commMsg,
-                                    'is_from_page'            => false,
-                                    'status'                  => 'unread',
+                                    'is_from_page'            => $isFromCooca,
+                                    'status'                  => $isFromCooca ? 'replied' : 'unread',
                                     'created_time'            => $commTime ? Carbon::parse($commTime) : now(),
                                 ]
                             );
                             if ($saved->wasRecentlyCreated) {
                                 $newCount++;
+                            }
+
+                            // Sub-replies on IG
+                            $replies = data_get($comment, 'replies.data', []);
+                            foreach ($replies as $rep) {
+                                $repId = (string) ($rep['id'] ?? '');
+                                $repText = (string) ($rep['text'] ?? '');
+                                $repFromId = (string) (data_get($rep, 'from.id') ?: data_get($rep, 'username') ?: '');
+                                $repFromName = (string) (data_get($rep, 'username') ?: data_get($rep, 'from.username') ?: 'Pengguna Instagram');
+                                $repTime = data_get($rep, 'timestamp');
+                                $isRepCooca = ($repFromId === $igUserId) || str_contains(strtolower($repFromName), 'cooca') || ($repFromName === 'cooca.indonesia');
+
+                                $savedRep = SocialMediaComment::updateOrCreate(
+                                    [
+                                        'is_platform'         => true,
+                                        'platform'            => 'instagram_comments',
+                                        'platform_comment_id' => $repId,
+                                    ],
+                                    [
+                                        'business_id'             => null,
+                                        'social_media_account_id' => null,
+                                        'social_media_post_id'    => $savedPost->id,
+                                        'platform_post_id'        => $mediaId,
+                                        'parent_comment_id'       => $commId,
+                                        'from_id'                 => $repFromId,
+                                        'from_name'               => $repFromName,
+                                        'message'                 => $repText,
+                                        'is_from_page'            => $isRepCooca,
+                                        'status'                  => $isRepCooca ? 'replied' : 'unread',
+                                        'created_time'            => $repTime ? Carbon::parse($repTime) : now(),
+                                    ]
+                                );
+                                if ($savedRep->wasRecentlyCreated) {
+                                    $newCount++;
+                                }
                             }
                         }
                     }
@@ -951,7 +1091,7 @@ class AdminInboxController extends Controller
 
         $message = $newCount > 0
             ? "Berhasil menyinkronkan {$newCount} data pesan/komentar baru dari Meta Graph API."
-            : "Sinkronisasi selesai. Tidak ada data pesan atau komentar baru dari Meta saat ini.";
+            : "Sinkronisasi selesai. Seluruh data pesan dan komentar terbaru dari Meta sudah termutakhirkan.";
 
         if (! empty($errors)) {
             Log::info('[AdminInbox] Sync Meta notices: ' . implode(' | ', $errors));
@@ -1009,7 +1149,13 @@ class AdminInboxController extends Controller
         $topLevelComments = $commentItems->whereNull('parent_comment_id');
         $repliesComments = $commentItems->whereNotNull('parent_comment_id');
 
-        foreach ($topLevelComments as $c) {
+        // Safety guarantee: If a reply's parent comment does not exist among top-level comments,
+        // promote it to a top-level thread so no comment is lost
+        $knownParentIds = $topLevelComments->pluck('platform_comment_id')->filter()->unique()->all();
+        $orphanComments = $repliesComments->reject(fn($r) => in_array($r->parent_comment_id, $knownParentIds, true));
+        $allTopComments = $topLevelComments->concat($orphanComments);
+
+        foreach ($allTopComments as $c) {
             $rawPlatform = strtolower((string) $c->platform);
             $channel = ($rawPlatform === 'facebook' || $rawPlatform === 'facebook_comments') ? 'facebook_comments' : 'instagram_comments';
 

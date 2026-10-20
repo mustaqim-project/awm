@@ -777,11 +777,66 @@ class MetaSocialMediaClient
      *
      * @return list<array<string, mixed>>
      */
+    /**
+     * Get Page Access Token specifically for a Facebook Page.
+     */
+    public function getPageAccessToken(string $pageId, string $userOrSystemToken): ?string
+    {
+        try {
+            $res = Http::timeout(8)->get($this->endpoint("{$pageId}", $userOrSystemToken), [
+                'fields'       => 'id,name,access_token',
+                'access_token' => $userOrSystemToken,
+            ]);
+
+            if ($res->successful()) {
+                $token = (string) $res->json('access_token');
+                if (! empty($token)) {
+                    return $token;
+                }
+            }
+        } catch (\Throwable $e) {
+            Log::warning("[MetaSocialMediaClient] getPageAccessToken exception: " . $e->getMessage());
+        }
+
+        return null;
+    }
+
+    /**
+     * Subscribe Facebook Page to Webhooks (feed, messages, conversations, reactions).
+     *
+     * @param list<string> $fields
+     */
+    public function subscribePageApps(string $pageId, string $pageToken, array $fields = ['feed', 'messages', 'conversations', 'messaging_postbacks', 'message_reactions']): bool
+    {
+        try {
+            $res = Http::timeout(10)->post($this->endpoint("{$pageId}/subscribed_apps", $pageToken), [
+                'subscribed_fields' => implode(',', $fields),
+                'access_token'      => $pageToken,
+            ]);
+
+            if ($res->successful() && $res->json('success') === true) {
+                Log::info("[MetaSocialMediaClient] Successfully subscribed page {$pageId} to fields: " . implode(',', $fields));
+                return true;
+            }
+
+            Log::warning("[MetaSocialMediaClient] subscribePageApps failed for page {$pageId}: " . $res->body());
+            return false;
+        } catch (\Throwable $e) {
+            Log::warning("[MetaSocialMediaClient] subscribePageApps exception: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Fetch recent posts and their comments from a Facebook Page feed.
+     *
+     * @return list<array<string, mixed>>
+     */
     public function getPageFeedComments(string $pageId, string $pageToken, int $limit = 15): array
     {
         try {
-            $res = Http::timeout(10)->get($this->endpoint("{$pageId}/feed", $pageToken), [
-                'fields'       => 'id,message,created_time,comments{id,message,created_time,from}',
+            $res = Http::timeout(12)->get($this->endpoint("{$pageId}/feed", $pageToken), [
+                'fields'       => 'id,message,created_time,full_picture,permalink_url,comments{id,message,created_time,from,parent,attachment,comments{id,message,created_time,from,parent,attachment}}',
                 'limit'        => $limit,
                 'access_token' => $pageToken,
             ]);
@@ -808,8 +863,8 @@ class MetaSocialMediaClient
     public function getInstagramMediaComments(string $igUserId, string $pageToken, int $limit = 15): array
     {
         try {
-            $res = Http::timeout(10)->get($this->endpoint("{$igUserId}/media", $pageToken), [
-                'fields'       => 'id,caption,timestamp,comments{id,text,timestamp,from,username}',
+            $res = Http::timeout(12)->get($this->endpoint("{$igUserId}/media", $pageToken), [
+                'fields'       => 'id,caption,media_type,media_url,thumbnail_url,permalink,timestamp,comments{id,text,timestamp,from,username,parent_id,replies{id,text,timestamp,from,username}}',
                 'limit'        => $limit,
                 'access_token' => $pageToken,
             ]);
