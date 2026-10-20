@@ -58,10 +58,10 @@ return new class extends Migration
             $table->foreignUuid('social_media_account_id')->constrained('social_media_accounts')->cascadeOnDelete();
             $table->foreignUuid('social_media_post_id')->nullable()->constrained('social_media_posts')->nullOnDelete();
             $table->string('platform', 30)->comment('facebook, instagram, threads');
-            $table->string('platform_comment_id', 150)->index();
-            $table->string('platform_post_id', 150)->index();
-            $table->string('parent_comment_id', 150)->nullable()->index();
-            $table->string('from_id', 150)->nullable();
+            $table->string('platform_comment_id', 500)->index();
+            $table->string('platform_post_id', 500)->index();
+            $table->string('parent_comment_id', 500)->nullable()->index();
+            $table->string('from_id', 500)->nullable();
             $table->string('from_name')->nullable();
             $table->text('message');
             $table->boolean('is_from_page')->default(false);
