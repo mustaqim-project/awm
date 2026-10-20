@@ -80,14 +80,31 @@
                         <span>{{ __('settings.tab_operations') }}</span>
                     </button>
 
-                    @if ($business->isModuleEnabled('pos_retail') || $business->isModuleEnabled('pos_dinein'))
-                        <button type="button" @click="activeTab = 'wa_receipt'"
-                            :class="activeTab === 'wa_receipt' ?
+                    <button type="button" @click="activeTab = 'whatsapp'"
+                        :class="(activeTab === 'whatsapp' || activeTab === 'wa_receipt') ?
+                            'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm font-semibold' :
+                            'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
+                        class="min-h-[40px] px-4 py-2 rounded-[9px] transition-all flex items-center justify-center gap-2 shrink-0 active:scale-[0.98]">
+                        <i data-lucide="message-square" class="w-4 h-4 text-[#34C759]"></i>
+                        <span>{{ __('settings.tab_whatsapp') }}</span>
+                        @if (isset($whatsappAccount) && $whatsappAccount && $whatsappAccount->isActive())
+                            <span class="w-2 h-2 rounded-full bg-[#34C759] animate-pulse"></span>
+                        @endif
+                    </button>
+
+                    @if ($business->isModuleEnabled('channels_marketing'))
+                        <button type="button" @click="activeTab = 'social_media'"
+                            :class="(activeTab === 'social_media' || activeTab === 'social' || activeTab === 'channels') ?
                                 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm font-semibold' :
                                 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
                             class="min-h-[40px] px-4 py-2 rounded-[9px] transition-all flex items-center justify-center gap-2 shrink-0 active:scale-[0.98]">
-                            <i data-lucide="message-square" class="w-4 h-4 text-[#34C759]"></i>
-                            <span>{{ __('settings.tab_wa_receipt') }}</span>
+                            <i data-lucide="share-2" class="w-4 h-4 text-[#FF2D55]"></i>
+                            <span>{{ __('settings.tab_social_media') }}</span>
+                            @if (isset($socialAccounts) && $socialAccounts->where('status', 'active')->count() > 0)
+                                <span class="px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158] tabular-nums">
+                                    {{ $socialAccounts->where('status', 'active')->count() }}
+                                </span>
+                            @endif
                         </button>
                     @endif
 
@@ -1041,518 +1058,20 @@
         </div>
 
         <!-- ===================================================== -->
-        <!-- TAB: CMS TEMPLATE WHATSAPP STRUK                      -->
+        <!-- TAB: WHATSAPP CLOUD API & STRUK SETTINGS              -->
         <!-- ===================================================== -->
-        <div x-show="activeTab === 'wa_receipt'" class="space-y-6" style="display: none;">
-            @if ($business->isModuleEnabled('pos_retail') || $business->isModuleEnabled('pos_dinein'))
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                    <!-- Form & Controls (Left Column, 7 cols) -->
-                    <div class="lg:col-span-7 space-y-6">
-
-                        <!-- WABA Architecture & Delivery Banner (Bento Card) -->
-                        <div class="rounded-[16px] bg-[#34C759]/[0.06] dark:bg-[#34C759]/[0.08] border border-[#34C759]/20 p-5 space-y-4">
-                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                                <div class="flex items-center gap-2.5">
-                                    <div class="w-8 h-8 rounded-[8px] bg-[#34C759] text-white flex items-center justify-center shrink-0 shadow-sm">
-                                        <i data-lucide="check-circle-2" class="w-4 h-4"></i>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-[14px] font-semibold text-black dark:text-white flex items-center gap-2">
-                                            <span>{{ __('settings.waba_channel_architecture_title') }}</span>
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10.5px] font-semibold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]">
-                                                {{ __('settings.waba_engine_badge') }}
-                                            </span>
-                                        </h3>
-                                        <p class="text-[12px] text-black/60 dark:text-white/60 mt-0.5">
-                                            {{ __('settings.waba_channel_architecture_desc') }}
-                                        </p>
-                                    </div>
-                                </div>
-
-                                @if (isset($whatsappAccount) && $whatsappAccount && $whatsappAccount->isActive())
-                                    <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11.5px] font-medium bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158] shrink-0">
-                                        <span class="w-2 h-2 rounded-full bg-[#34C759] animate-pulse"></span>
-                                        <span>{{ __('settings.waba_active_status') }} ({{ $whatsappAccount->display_phone_number ?? $whatsappAccount->phone_number }})</span>
-                                    </div>
-                                @else
-                                    <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11.5px] font-medium bg-black/5 dark:bg-white/10 text-black/70 dark:text-white/70 shrink-0">
-                                        <span class="w-2 h-2 rounded-full bg-[#007AFF]"></span>
-                                        <span>{{ __('settings.waba_platform_status') }}</span>
-                                    </div>
-                                @endif
-                            </div>
-
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1 text-[12px]">
-                                <div class="p-3 rounded-[12px] bg-white/70 dark:bg-black/20 border border-black/5 dark:border-white/5 space-y-1">
-                                    <div class="font-semibold text-black/90 dark:text-white/90 flex items-center gap-1.5">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]"></span>
-                                        <span>{{ __('settings.waba_mode_auto_title') }}</span>
-                                    </div>
-                                    <p class="text-black/60 dark:text-white/60 text-[11.5px] leading-relaxed">
-                                        {{ __('settings.waba_mode_auto_desc', ['template' => 'cooca_pos_receipt']) }}
-                                    </p>
-                                </div>
-                                <div class="p-3 rounded-[12px] bg-white/70 dark:bg-black/20 border border-black/5 dark:border-white/5 space-y-1">
-                                    <div class="font-semibold text-black/90 dark:text-white/90 flex items-center gap-1.5">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-[#007AFF]"></span>
-                                        <span>{{ __('settings.waba_mode_manual_title') }}</span>
-                                    </div>
-                                    <p class="text-black/60 dark:text-white/60 text-[11.5px] leading-relaxed">
-                                        {{ __('settings.waba_mode_manual_desc') }}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Form Card -->
-                        <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 sm:p-6 space-y-5 shadow-sm">
-                            <div class="border-b border-black/5 dark:border-white/5 pb-4">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-[10px] bg-[#34C759]/12 text-[#34C759] flex items-center justify-center shrink-0">
-                                        <i data-lucide="message-square" class="w-5 h-5"></i>
-                                    </div>
-                                    <div>
-                                        <h2 class="text-[17px] font-semibold text-black dark:text-white">{{ __('settings.wa_receipt_title') }}</h2>
-                                        <p class="text-[13px] text-black/50 dark:text-white/50 mt-0.5">{{ __('settings.wa_receipt_desc') }}</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <form method="POST" action="{{ route('settings.update') }}" class="space-y-6">
-                                @csrf
-                                @method('PUT')
-                                <input type="hidden" name="_tab" value="wa_receipt">
-
-                                <!-- BAGIAN 1: Catatan Kaki Struk Digital (pos_receipt_footer_note) -->
-                                <div class="p-4 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 space-y-2.5">
-                                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
-                                        <div>
-                                            <label for="pos_receipt_footer_note" class="block text-[13px] font-semibold text-black dark:text-white">
-                                                {{ __('settings.receipt_footer_section_title') }}
-                                            </label>
-                                            <p class="text-[11.5px] text-black/50 dark:text-white/50">
-                                                {{ __('settings.receipt_footer_section_desc') }}
-                                            </p>
-                                        </div>
-                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-[10.5px] font-medium bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] shrink-0 self-start sm:self-auto">
-                                            {{ __('settings.receipt_footer_note_badge') }}
-                                        </span>
-                                    </div>
-                                    <input type="text" id="pos_receipt_footer_note" name="pos_receipt_footer_note"
-                                        x-model="receiptFooterNote"
-                                        value="{{ old('pos_receipt_footer_note', $business->pos_receipt_footer_note) }}"
-                                        placeholder="{{ __('settings.receipt_footer_note_hint') }}"
-                                        maxlength="500"
-                                        class="w-full h-11 px-3.5 rounded-[10px] bg-white dark:bg-black/20 border border-black/10 dark:border-white/10 text-[15px] sm:text-[14px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#34C759]/50 transition">
-                                </div>
-
-                                <!-- BAGIAN 2: Format Teks Struk Manual (pos_receipt_wa_template) -->
-                                <div class="space-y-3 pt-2">
-                                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
-                                        <div>
-                                            <label for="pos_receipt_wa_template" class="block text-[13px] font-semibold text-black dark:text-white">
-                                                {{ __('settings.wa_manual_section_title') }}
-                                            </label>
-                                            <p class="text-[11.5px] text-black/50 dark:text-white/50">
-                                                {{ __('settings.wa_manual_section_desc') }}
-                                            </p>
-                                        </div>
-                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-[10.5px] font-medium bg-[#007AFF]/10 text-[#007AFF] shrink-0 self-start sm:self-auto">
-                                            {{ __('settings.wa_manual_template_badge') }}
-                                        </span>
-                                    </div>
-
-                                    <!-- Dynamic Variable Chips -->
-                                    <div class="space-y-1.5">
-                                        <label class="block text-[12px] font-medium text-black/70 dark:text-white/70">
-                                            {{ __('settings.dynamic_variables') }} <span class="text-[11px] font-normal text-black/40 dark:text-white/40">{{ __('settings.dynamic_variables_hint') }}</span>
-                                        </label>
-                                        <div class="flex flex-wrap gap-2">
-                                            @foreach (['{business_name}', '{customer_name}', '{order_number}', '{date}', '{cashier_name}', '{receipt_link}', '{footer_note}'] as $tag)
-                                                <button type="button" @click="insertTag('{{ $tag }}')"
-                                                    class="px-2.5 py-1 rounded-full text-[11.5px] font-medium bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF]/20 active:scale-[0.97] transition flex items-center gap-1 cursor-pointer min-h-[32px]">
-                                                    <span>+</span>
-                                                    <span class="font-mono">{{ $tag }}</span>
-                                                </button>
-                                            @endforeach
-                                        </div>
-                                    </div>
-
-                                    <!-- Template Textarea -->
-                                    <div class="space-y-1.5">
-                                        <div class="flex items-center justify-between">
-                                            <span class="text-[12px] font-medium text-black/70 dark:text-white/70">
-                                                {{ __('settings.wa_template_format') }}
-                                            </span>
-                                            <span class="text-[11px] text-black/40 dark:text-white/40 font-mono tabular-nums"
-                                                x-text="(waTemplateText ? waTemplateText.length : 0) + ' / 1000 karakter'"></span>
-                                        </div>
-                                        <textarea id="pos_receipt_wa_template" name="pos_receipt_wa_template" x-ref="waTextarea" x-model="waTemplateText"
-                                            rows="7" maxlength="1000"
-                                            class="w-full bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[12px] p-3.5 text-[15px] sm:text-[14px] font-mono leading-relaxed text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition resize-y"
-                                            placeholder="{{ __('settings.ph_wa_manual_custom') }}"></textarea>
-                                        <p class="text-[11px] text-black/45 dark:text-white/45">
-                                            {{ __('settings.wa_template_notice') }}
-                                        </p>
-                                    </div>
-
-                                    <!-- Markdown Cheatsheet Guide -->
-                                    <div class="rounded-[10px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 p-3 text-[12px] space-y-1.5">
-                                        <div class="font-medium text-black/70 dark:text-white/70 flex items-center gap-1.5">
-                                            <i data-lucide="info" class="w-3.5 h-3.5 text-[#007AFF]"></i>
-                                            <span>{{ __('settings.wa_markdown_guide') }}</span>
-                                        </div>
-                                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-black/60 dark:text-white/60 text-[11px]">
-                                            <div><code>*{{ __('settings.lbl_format_text') }}*</code> &rarr; <strong>{{ __('settings.lbl_format_bold') }}</strong></div>
-                                            <div><code>_{{ __('settings.lbl_format_text') }}_</code> &rarr; <em>{{ __('settings.lbl_format_italic') }}</em></div>
-                                            <div><code>~{{ __('settings.lbl_format_text') }}~</code> &rarr; <del>{{ __('settings.lbl_format_strike') }}</del></div>
-                                            <div><code>```{{ __('settings.lbl_format_text') }}```</code> &rarr; {{ __('settings.lbl_format_mono') }}</div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Action Buttons -->
-                                @if (\App\Support\Context::hasPermission('settings.edit'))
-                                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-3 border-t border-black/5 dark:border-white/5">
-                                        <button type="button" @click="resetToDefaultTemplate()"
-                                            class="h-11 sm:h-10 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] transition flex items-center justify-center min-h-[44px]">
-                                            {{ __('settings.reset_default_template') }}
-                                        </button>
-                                        <button type="submit"
-                                            class="h-11 sm:h-10 px-6 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition flex items-center justify-center gap-2 shadow-[0_1px_2px_rgba(0,122,255,0.25)] min-h-[44px]">
-                                            <i data-lucide="check" class="w-4 h-4"></i>
-                                            <span>{{ __('settings.save_wa_template') }}</span>
-                                        </button>
-                                    </div>
-                                @endif
-                            </form>
-                        </div>
-                    </div>
-
-                    <!-- WhatsApp Live Phone Preview (Right Column, 5 cols) -->
-                    <div class="lg:col-span-5">
-                        <div class="lg:sticky lg:top-6 space-y-3">
-                            <div class="flex items-center justify-between px-1">
-                                <span class="text-[12px] font-semibold tracking-wider uppercase text-black/40 dark:text-white/40">{{ __('settings.live_preview') }}</span>
-                                <span class="inline-flex items-center gap-1.5 text-[11px] font-medium text-[#34C759]">
-                                    <span class="w-2 h-2 rounded-full bg-[#34C759] animate-pulse"></span>
-                                    {{ __('settings.auto_sync') }}
-                                </span>
-                            </div>
-
-                            <!-- Preview Mode Segmented Switcher -->
-                            <div class="p-1 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] flex gap-1 text-[12px] font-medium">
-                                <button type="button" @click="previewMode = 'waba'"
-                                    :class="previewMode === 'waba' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
-                                    class="flex-1 py-1.5 px-2 rounded-[9px] transition flex items-center justify-center gap-1.5 min-h-[36px]">
-                                    <span class="w-2 h-2 rounded-full bg-[#34C759]"></span>
-                                    <span class="truncate">{{ __('settings.preview_mode_waba') }}</span>
-                                </button>
-                                <button type="button" @click="previewMode = 'manual'"
-                                    :class="previewMode === 'manual' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
-                                    class="flex-1 py-1.5 px-2 rounded-[9px] transition flex items-center justify-center gap-1.5 min-h-[36px]">
-                                    <i data-lucide="share-2" class="w-3.5 h-3.5 text-[#007AFF]"></i>
-                                    <span class="truncate">{{ __('settings.preview_mode_manual') }}</span>
-                                </button>
-                            </div>
-
-                            <!-- Apple iOS Hardware Phone Frame -->
-                            <div class="w-full max-w-[340px] mx-auto rounded-[38px] p-2.5 bg-neutral-900 shadow-[0_20px_60px_rgba(0,0,0,0.35)] border border-neutral-800">
-                                <div class="rounded-[28px] overflow-hidden bg-[#EFEAE2] dark:bg-[#0B141A] flex flex-col min-h-[520px] border border-black/10 dark:border-white/10 select-none relative">
-
-                                    <!-- Dynamic Island Header -->
-                                    <div class="bg-[#075E54] dark:bg-[#1F2C34] pt-2 pb-1 flex justify-center">
-                                        <div class="w-20 h-4 rounded-full bg-black flex items-center justify-end px-2">
-                                            <div class="w-1.5 h-1.5 rounded-full bg-neutral-700"></div>
-                                        </div>
-                                    </div>
-
-                                    <!-- WhatsApp Top Bar -->
-                                    <div class="bg-[#075E54] dark:bg-[#1F2C34] text-white px-3.5 py-2.5 flex items-center gap-2.5 shadow-sm">
-                                        <div class="w-8 h-8 rounded-full bg-white/20 text-white font-bold text-[13px] flex items-center justify-center">
-                                            {{ strtoupper(substr($business->name ?? 'T', 0, 1)) }}
-                                        </div>
-                                        <div class="flex-1 min-w-0">
-                                            <h4 class="text-[13px] font-semibold truncate leading-tight text-white flex items-center gap-1">
-                                                <span>{{ $business->name ?? 'Toko Saya' }}</span>
-                                                <template x-if="previewMode === 'waba'">
-                                                    <span class="text-[#34C759] text-[12px]" title="Official Business Account">✓</span>
-                                                </template>
-                                            </h4>
-                                            <p class="text-[10px] text-white/70 leading-tight">
-                                                <span x-show="previewMode === 'waba'">{{ __('settings.waba_official_tag') }}</span>
-                                                <span x-show="previewMode === 'manual'">{{ __('settings.lbl_status_online') }}</span>
-                                            </p>
-                                        </div>
-                                        <div class="flex items-center gap-3 text-white/80">
-                                            <i data-lucide="phone" class="w-4 h-4"></i>
-                                            <i data-lucide="more-vertical" class="w-4 h-4"></i>
-                                        </div>
-                                    </div>
-
-                                    <!-- WhatsApp Chat Body Area -->
-                                    <div class="flex-1 p-3 flex flex-col justify-end space-y-2 overflow-y-auto">
-
-                                        <!-- PREVIEW MODE 1: WABA BOT (META OFFICIAL) -->
-                                        <div x-show="previewMode === 'waba'"
-                                            class="bg-[#D9FDD3] dark:bg-[#005C4B] text-[#111B21] dark:text-[#E9EDEF] rounded-[12px] rounded-tr-none p-2.5 shadow-sm max-w-[96%] ml-auto text-[12px] leading-relaxed space-y-2">
-
-                                            <!-- WABA Header Badge & Status -->
-                                            <div class="flex items-center justify-between text-[10px] pb-1 border-b border-black/10 dark:border-white/10 text-black/60 dark:text-white/60">
-                                                <span class="font-semibold text-[#1F7A37] dark:text-[#53bdeb] flex items-center gap-1">
-                                                    <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]"></span>
-                                                    <span>{{ __('settings.waba_template_badge') }}</span>
-                                                </span>
-                                                <span class="font-mono uppercase text-[9px] bg-black/5 dark:bg-white/10 px-1.5 py-0.2 rounded text-black/70 dark:text-white/70">cooca_pos_receipt</span>
-                                            </div>
-
-                                            <!-- Official Meta Template Text Header Component -->
-                                            <div class="pt-0.5 pb-1 border-b border-black/10 dark:border-white/10 flex items-center justify-between">
-                                                <span class="font-bold text-[13px] text-black dark:text-white tracking-tight uppercase">
-                                                    {{ __('settings.waba_header_text') }}
-                                                </span>
-                                                <span class="text-[9px] font-medium text-black/40 dark:text-white/40 font-mono">
-                                                    HEADER: TEXT
-                                                </span>
-                                            </div>
-
-                                            <!-- Official Meta Template Text Body -->
-                                            <div class="space-y-1.5 text-[12px] leading-relaxed pt-0.5">
-                                                <p>{{ __('settings.receipt_mock_hello', ['name' => 'Agung Mustaqim', 'store' => $business->name ?? 'Cooca Store']) }}</p>
-                                                <div class="py-1.5 px-2 font-mono text-[11px] text-black/80 dark:text-white/80 bg-black/[0.03] dark:bg-white/[0.04] p-1.5 rounded space-y-0.5 border border-black/5 dark:border-white/5">
-                                                    <div class="text-[9.5px] text-black/50 dark:text-white/50 font-sans font-semibold uppercase tracking-wider mb-0.5">{{ __('settings.receipt_mock_tx_details') }}</div>
-                                                    <div>• {{ __('settings.lbl_receipt_no') }}: <strong class="font-bold">POS-20260910-0042</strong></div>
-                                                    <div>• {{ __('settings.lbl_receipt_time') }}: <strong class="font-bold">{{ now()->format('d/m/Y H:i') }}</strong></div>
-                                                    <div>• {{ __('settings.receipt_mock_total_paid') }}: <strong class="font-bold">Rp 85.000</strong></div>
-                                                </div>
-                                                <p class="text-[10.5px] text-black/65 dark:text-white/65">{{ __('settings.receipt_mock_safe_notice') }}</p>
-                                            </div>
-
-                                            <!-- Meta Template Footer -->
-                                            <div class="text-[10px] text-black/45 dark:text-white/45 italic pt-0.5">
-                                                {{ __('settings.waba_footer_official') }}
-                                            </div>
-
-                                            <!-- Meta Interactive Button (URL Destination Link) -->
-                                            <div class="pt-1.5 border-t border-black/10 dark:border-white/10">
-                                                <div class="w-full py-2 rounded-[8px] bg-white/90 dark:bg-white/10 text-[#007AFF] dark:text-[#53bdeb] font-semibold text-[11.5px] flex items-center justify-center gap-1.5 shadow-xs">
-                                                    <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-                                                    <span>{{ __('settings.waba_open_digital_receipt') }}</span>
-                                                </div>
-                                                <div class="text-[9px] text-center text-black/40 dark:text-white/40 pt-1 font-mono truncate">
-                                                    ↗ https://cooca.id/r/POS-20260910-0042
-                                                </div>
-                                            </div>
-
-                                            <!-- Time & Read Status -->
-                                            <div class="flex items-center justify-end gap-1 text-[10px] text-black/45 dark:text-white/50 select-none pt-0.5">
-                                                <span class="tabular-nums">{{ now()->format('H:i') }}</span>
-                                                <span class="text-[#53bdeb] font-bold text-[11px]">✓✓</span>
-                                            </div>
-                                        </div>
-
-                                        <!-- PREVIEW MODE 2: MANUAL CHAT (WA.ME) -->
-                                        <div x-show="previewMode === 'manual'" style="display: none;"
-                                            class="bg-[#D9FDD3] dark:bg-[#005C4B] text-[#111B21] dark:text-[#E9EDEF] rounded-[12px] rounded-tr-none p-2.5 shadow-sm max-w-[96%] ml-auto text-[12.5px] leading-relaxed space-y-2">
-
-                                            <!-- Rendered WhatsApp Text Caption -->
-                                            <div class="whitespace-pre-wrap select-text text-[12px] leading-relaxed break-words pt-1"
-                                                x-html="formatWaMarkdown(waRenderedPreview)"></div>
-
-                                            <!-- Time & Read Status -->
-                                            <div class="flex items-center justify-end gap-1 text-[10px] text-black/45 dark:text-white/50 select-none">
-                                                <span class="tabular-nums">{{ now()->format('H:i') }}</span>
-                                                <span class="text-[#53bdeb] font-bold text-[11px]">✓✓</span>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                    <!-- Fake Message Input Bar -->
-                                    <div class="bg-[#F0F2F5] dark:bg-[#1F2C34] p-2 flex items-center gap-2 border-t border-black/5 dark:border-white/5">
-                                        <div class="w-6 h-6 rounded-full bg-black/10 dark:bg-white/10 flex items-center justify-center text-black/50 dark:text-white/50 text-[11px] font-bold">+</div>
-                                        <div class="flex-1 h-7 rounded-full bg-white dark:bg-[#2A3942] px-3 flex items-center text-[11px] text-black/40 dark:text-white/40">
-                                            {{ __('settings.waba_type_message') }}
-                                        </div>
-                                        <div class="w-6 h-6 rounded-full bg-[#00A884] text-white flex items-center justify-center text-[11px]">▶</div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <!-- Destination Web Page Card: Where receipt image & footer note actually live -->
-                            <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-4 sm:p-5 space-y-3.5 shadow-sm">
-                                <div class="flex items-start justify-between gap-3 border-b border-black/5 dark:border-white/5 pb-3">
-                                    <div class="space-y-0.5">
-                                        <div class="flex items-center gap-2">
-                                            <span class="w-2 h-2 rounded-full bg-[#007AFF]"></span>
-                                            <h4 class="text-[13px] font-semibold text-black dark:text-white">
-                                                {{ __('settings.waba_receipt_paper_title') }}
-                                            </h4>
-                                        </div>
-                                        <p class="text-[11.5px] text-black/55 dark:text-white/55 leading-relaxed">
-                                            {{ __('settings.waba_receipt_paper_desc') }}
-                                        </p>
-                                    </div>
-                                    <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-[#007AFF]/10 text-[#007AFF] shrink-0">
-                                        {{ __('settings.waba_link_destination_badge') }}
-                                    </span>
-                                </div>
-
-                                <!-- Browser URL Bar Mockup -->
-                                <div class="flex items-center gap-2 px-3 py-1.5 rounded-[9px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/5 text-[11px] font-mono text-black/60 dark:text-white/60">
-                                    <i data-lucide="lock" class="w-3 h-3 text-[#34C759] shrink-0"></i>
-                                    <span class="truncate">https://cooca.id/r/POS-20260910-0042</span>
-                                </div>
-
-                                <!-- Rendered Thermal Receipt Paper Simulation -->
-                                <div class="rounded-[12px] bg-[#FAF8F5] dark:bg-[#141416] border border-black/10 dark:border-white/10 p-4 font-mono text-[11.5px] text-black/85 dark:text-white/85 space-y-2.5 shadow-inner">
-                                    <!-- Store Header -->
-                                    <div class="text-center space-y-0.5">
-                                        <div class="text-[13px] font-bold tracking-tight text-black dark:text-white uppercase font-sans">
-                                            {{ $business->name ?? __('settings.receipt_mock_fallback_store') }}
-                                        </div>
-                                        <div class="text-[10px] text-black/50 dark:text-white/50">
-                                            {{ $business->address ?? __('settings.receipt_mock_fallback_address') }}
-                                        </div>
-                                        <div class="text-[9.5px] text-black/40 dark:text-white/40 pt-1">
-                                            POS-20260910-0042 • {{ now()->format('d/m/Y H:i') }} • {{ __('settings.receipt_mock_cashier_1') }}
-                                        </div>
-                                    </div>
-
-                                    <!-- Divider -->
-                                    <div class="border-t border-dashed border-black/20 dark:border-white/20"></div>
-
-                                    <!-- Item Table Breakdown -->
-                                    <div class="space-y-1.5 text-[11px]">
-                                        <div class="flex justify-between items-start">
-                                            <div>
-                                                <div>{{ __('settings.receipt_mock_item_1') }}</div>
-                                                <div class="text-[9.5px] text-black/45 dark:text-white/45">@ Rp 18.000</div>
-                                            </div>
-                                            <span class="tabular-nums">Rp 36.000</span>
-                                        </div>
-                                        <div class="flex justify-between items-start">
-                                            <div>
-                                                <div>{{ __('settings.receipt_mock_item_2') }}</div>
-                                                <div class="text-[9.5px] text-black/45 dark:text-white/45">@ Rp 28.000</div>
-                                            </div>
-                                            <span class="tabular-nums">Rp 28.000</span>
-                                        </div>
-                                        <div class="flex justify-between items-start">
-                                            <div>
-                                                <div>{{ __('settings.receipt_mock_item_3') }}</div>
-                                                <div class="text-[9.5px] text-black/45 dark:text-white/45">@ Rp 7.000</div>
-                                            </div>
-                                            <span class="tabular-nums">Rp 7.000</span>
-                                        </div>
-                                    </div>
-
-                                    <!-- Divider -->
-                                    <div class="border-t border-dashed border-black/20 dark:border-white/20"></div>
-
-                                    <!-- Subtotal & Calculations -->
-                                     <div class="space-y-1 text-[11px]">
-                                        <div class="flex justify-between text-black/60 dark:text-white/60">
-                                            <span>{{ __('settings.receipt_mock_subtotal') }}</span>
-                                            <span class="tabular-nums">Rp 71.000</span>
-                                        </div>
-                                        <div class="flex justify-between text-black/60 dark:text-white/60">
-                                            <span>{{ __('settings.receipt_mock_tax') }}</span>
-                                            <span class="tabular-nums">Rp 7.100</span>
-                                        </div>
-                                        <div class="flex justify-between text-black/60 dark:text-white/60">
-                                            <span>{{ __('settings.receipt_mock_rounding') }}</span>
-                                            <span class="tabular-nums">Rp 900</span>
-                                        </div>
-                                        <div class="flex justify-between font-bold text-[12.5px] text-black dark:text-white pt-1 border-t border-black/10 dark:border-white/10">
-                                            <span>{{ __('settings.receipt_mock_total_paid') }}</span>
-                                            <span class="tabular-nums text-[#248A3D] dark:text-[#30D158]">Rp 85.000</span>
-                                        </div>
-                                        <div class="text-[10px] text-right text-black/50 dark:text-white/50">
-                                            {{ __('settings.receipt_mock_paid_badge') }}
-                                        </div>
-                                    </div>
-
-                                    <!-- Divider -->
-                                    <div class="border-t border-dashed border-black/20 dark:border-white/20"></div>
-
-                                    <!-- Verification QR & Barcode Simulation -->
-                                    <div class="py-1 text-center space-y-1">
-                                        <div class="inline-flex items-center justify-center p-2 rounded bg-white dark:bg-black/40 border border-black/10 dark:border-white/10 shadow-xs">
-                                            <div class="text-[9px] font-mono tracking-widest text-black/70 dark:text-white/70">
-                                                [ {{ __('settings.receipt_mock_qr_verification') }} ]
-                                            </div>
-                                        </div>
-                                        <div class="text-[9px] text-black/40 dark:text-white/40 uppercase tracking-wider">
-                                            {{ __('settings.receipt_mock_valid_proof') }}
-                                        </div>
-                                    </div>
-
-                                    <!-- LIVE REACTIVE STAMPED FOOTER NOTE -->
-                                    <div class="p-2.5 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.05] border border-dashed border-black/15 dark:border-white/15 text-center space-y-1">
-                                        <div class="text-[9.5px] uppercase font-bold tracking-wider text-[#248A3D] dark:text-[#30D158] flex items-center justify-center gap-1 font-sans">
-                                            <i data-lucide="feather" class="w-3 h-3"></i>
-                                            <span>{{ __('settings.receipt_footer_note') }}</span>
-                                        </div>
-                                        <div class="text-[11.5px] font-mono italic text-black/85 dark:text-white/85 leading-relaxed break-words"
-                                            x-text="receiptFooterNote ? receiptFooterNote : '{{ __('settings.default_footer_note') }}'">
-                                        </div>
-                                    </div>
-
-                                    <!-- Action Buttons Simulation -->
-                                    <div class="pt-1 flex gap-2 font-sans">
-                                        <div class="flex-1 py-1.5 px-2 rounded-[8px] bg-black/5 dark:bg-white/10 text-center text-[10.5px] font-semibold text-black/75 dark:text-white/75 flex items-center justify-center gap-1">
-                                            <i data-lucide="printer" class="w-3 h-3"></i>
-                                            <span>{{ __('settings.print_receipt_btn') }}</span>
-                                        </div>
-                                        <div class="flex-1 py-1.5 px-2 rounded-[8px] bg-[#007AFF]/10 text-center text-[10.5px] font-semibold text-[#007AFF] flex items-center justify-center gap-1">
-                                            <i data-lucide="download" class="w-3 h-3"></i>
-                                            <span>{{ __('settings.download_receipt_image_btn') }}</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="text-center text-[8.5px] text-black/35 dark:text-white/35 font-sans pt-1">
-                                        Powered by COOCA POS • cooca.id
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Informational Callout -->
-                            <div class="rounded-[12px] bg-[#34C759]/8 border border-[#34C759]/20 p-3.5 text-[12px] text-black/60 dark:text-white/60 space-y-1">
-                                <p class="font-medium text-[#248A3D] dark:text-[#30D158] flex items-center gap-1.5">
-                                    <i data-lucide="shield-check" class="w-4 h-4 text-[#34C759]"></i>
-                                    <span>{{ __('settings.delivery_info') }}</span>
-                                </p>
-                                <p>{{ __('settings.delivery_info_desc') }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @else
-                <!-- Auto-Hiding Placeholder for Non-POS Businesses -->
-                <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-8 text-center space-y-4 shadow-sm max-w-lg mx-auto my-8">
-                    <div class="w-12 h-12 rounded-[14px] bg-[#FF9500]/10 text-[#FF9500] flex items-center justify-center mx-auto">
-                        <i data-lucide="shield-alert" class="w-6 h-6"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-[17px] font-semibold text-black dark:text-white">{{ __('settings.pos_module_disabled_title') }}</h3>
-                        <p class="text-[13px] text-black/55 dark:text-white/55 mt-1 leading-relaxed">
-                            {{ __('settings.pos_module_disabled_desc') }}
-                        </p>
-                    </div>
-                    @if (\App\Support\Context::isOwner())
-                        <div class="pt-2">
-                            <button type="button" @click="activeTab = 'modules'"
-                                class="inline-flex items-center gap-2 px-5 py-2.5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] transition active:scale-[0.98] min-h-[44px]">
-                                <i data-lucide="layers" class="w-4 h-4"></i>
-                                <span>{{ __('settings.open_modules_tab') }}</span>
-                            </button>
-                        </div>
-                    @endif
-                </div>
-            @endif
+        <div x-show="activeTab === 'whatsapp' || activeTab === 'wa_receipt'" class="space-y-6" style="display: none;">
+            @include('app.settings.integrations.whatsapp')
         </div>
+
+        @if ($business->isModuleEnabled('channels_marketing'))
+            <!-- ===================================================== -->
+            <!-- TAB: SOCIAL MEDIA INTEGRATIONS & OAUTH CHANNELS       -->
+            <!-- ===================================================== -->
+            <div x-show="activeTab === 'social_media' || activeTab === 'social' || activeTab === 'channels'" class="space-y-6" style="display: none;">
+                @include('app.settings.integrations.social_media')
+            </div>
+        @endif
 
         <!-- ===================================================== -->
         <!-- TAB 4: 20 PRESET TEMPLATE INDUSTRI (§35)              -->
@@ -2794,6 +2313,71 @@
                 </div>
             </div>
         </template>
+
+        {{-- MODAL SUPERVISOR PIN DISCONNECT WHATSAPP WABA --}}
+        <template x-teleport="body">
+            <div x-show="showDisconnectModal" x-cloak
+                role="dialog" aria-modal="true" aria-labelledby="disconnect-modal-title"
+                @keydown.escape.window="showDisconnectModal = false"
+                class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/70 dark:bg-black/85"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0">
+                <div @click.away="showDisconnectModal = false"
+                    class="w-full max-w-md rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl p-6 space-y-4"
+                    x-transition:enter="ease-out duration-200"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="ease-in duration-150"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95">
+                    
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-[#FF3B30]/12 text-[#FF3B30] flex items-center justify-center shrink-0">
+                            <i data-lucide="lock" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 id="disconnect-modal-title" class="text-[16px] font-bold text-black dark:text-white">{{ __('whatsapp.disconnect_supervisor_title') }}</h3>
+                            <p class="text-[12px] text-black/55 dark:text-white/55">{{ __('whatsapp.disconnect_supervisor_modal_sub') }}</p>
+                        </div>
+                    </div>
+
+                    <p class="text-[12.5px] text-black/70 dark:text-white/70 leading-relaxed">
+                        {{ __('whatsapp.disconnect_supervisor_desc') }}
+                    </p>
+
+                    <div class="space-y-1.5">
+                        <label class="block text-[11.5px] font-bold text-black/60 dark:text-white/60 uppercase">{{ __('whatsapp.supervisor_pin_label') }}</label>
+                        <input type="password" maxlength="6" inputmode="numeric" x-model="disconnectPin"
+                            @keydown.enter.prevent="submitDisconnectWithPin()"
+                            placeholder="••••••"
+                            class="w-full h-12 text-center tracking-[0.5em] text-xl font-mono rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/15 focus:outline-none focus:ring-2 focus:ring-[#FF3B30] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30">
+                    </div>
+
+                    <template x-if="disconnectError">
+                        <div class="p-3 rounded-[10px] bg-[#FF3B30]/10 text-[#C41E17] dark:text-[#FF453A] text-xs font-semibold flex items-center gap-2">
+                            <i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i>
+                            <span x-text="disconnectError"></span>
+                        </div>
+                    </template>
+
+                    <div class="flex items-center justify-end gap-3 pt-2">
+                        <button type="button" @click="showDisconnectModal = false"
+                            class="min-h-[44px] px-4 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition">
+                            {{ __('whatsapp.cancel_btn') }}
+                        </button>
+                        <button type="button" @click="submitDisconnectWithPin()" :disabled="disconnectLoading || !disconnectPin.trim()"
+                            class="min-h-[44px] px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#FF3B30] hover:bg-[#E0352B] active:scale-[0.98] transition shadow-md shadow-[#FF3B30]/25 disabled:opacity-50 flex items-center gap-2">
+                            <i data-lucide="unlink" class="w-4 h-4"></i>
+                            <span x-text="disconnectLoading ? '{{ __('whatsapp.verifying') }}' : '{{ __('whatsapp.disconnect_action_btn') }}'"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </template>
     </div>
 
     <script>
@@ -2802,6 +2386,30 @@
                 activeTab: @json(request('tab', session('active_tab', 'general'))),
                 templateSearch: '',
                 selectedCategory: 'all',
+
+                // WhatsApp WABA & Receipt Gateway state
+                metaAccount: @json($whatsappAccount),
+                waSession: @json($waSession ?? null),
+                embeddedLoading: false,
+                embeddedSuccess: null,
+                embeddedError: null,
+                metaEmbeddedPhoneId: null,
+                metaEmbeddedWabaId: null,
+                showDisconnectModal: false,
+                disconnectPin: '',
+                disconnectError: '',
+                disconnectLoading: false,
+                testPhone: '',
+                testMessage: '',
+                testLoading: false,
+                testResult: '',
+                testOk: false,
+
+                // Social Media Omnichannel state
+                socialLoading: false,
+                socialErrorMessage: '',
+                socialSuccessMessage: '',
+                disconnectedSocialIds: [],
                 logoPreview: @json($business->logo_url),
                 roundingStrategy: @json($business->rounding_strategy ?? 'ROUND_100'),
                 templateModalOpen: false,
@@ -2901,6 +2509,31 @@
                         const url = new URL(window.location);
                         url.searchParams.set('tab', val);
                         window.history.replaceState({}, '', url);
+                    });
+
+                    // Check for OAuth or Embedded code in URL params
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const authCode = urlParams.get('code');
+                    if (authCode) {
+                        if (this.activeTab === 'social_media' || this.activeTab === 'social' || this.activeTab === 'channels') {
+                            this.handleOAuthCode(authCode);
+                        } else if (this.activeTab === 'whatsapp' || this.activeTab === 'wa_receipt') {
+                            this.exchangeEmbeddedCode(authCode);
+                        }
+                    }
+
+                    // Listen for Meta Embedded Signup PostMessage
+                    window.addEventListener('message', (event) => {
+                        if (event.origin !== "https://www.facebook.com" && event.origin !== "https://web.facebook.com") return;
+                        try {
+                            const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+                            if (data.type === 'WA_EMBEDDED_SIGNUP') {
+                                if (data.event === 'FINISH' && data.data) {
+                                    this.metaEmbeddedPhoneId = data.data.phone_number_id || null;
+                                    this.metaEmbeddedWabaId = data.data.waba_id || null;
+                                }
+                            }
+                        } catch (e) {}
                     });
 
                     if (this.showCreateBranchModal) {
@@ -3516,6 +3149,392 @@
                 submitDeleteBranch() {
                     if (this.$refs.deleteBranchForm) {
                         this.$refs.deleteBranchForm.submit();
+                    }
+                },
+
+                // =====================================================
+                // WhatsApp WABA & Gateway Methods
+                // =====================================================
+                async refreshMetaStatus() {
+                    try {
+                        const response = await fetch('{{ route('whatsapp.meta.status') }}', {
+                            headers: { 'Accept': 'application/json' }
+                        });
+                        const data = await response.json();
+                        if (!response.ok || !data.success || !data.account) return;
+
+                        const account = data.account;
+                        this.metaAccount = {
+                            ...this.metaAccount,
+                            ...account,
+                            is_active: Boolean(data.connected && account.is_connected !== false)
+                        };
+                    } catch (e) {}
+                },
+
+                async launchEmbeddedSignup() {
+                    this.embeddedLoading = true;
+                    this.embeddedError = null;
+                    this.embeddedSuccess = null;
+
+                    try {
+                        const configRes = await fetch('{{ route('whatsapp.meta.config') }}', {
+                            headers: { 'Accept': 'application/json' }
+                        });
+                        const configData = await configRes.json();
+                        if (!configRes.ok || !configData.success) {
+                            this.embeddedError = configData.error || {{ Js::from(__('whatsapp.error_meta_app_id_missing')) }};
+                            this.embeddedLoading = false;
+                            return;
+                        }
+
+                        if (!configData.config_id || String(configData.config_id).trim() === '') {
+                            this.embeddedLoading = false;
+                            this.embeddedError = {{ Js::from(__('whatsapp.error_meta_config_id_missing')) }};
+                            return;
+                        }
+
+                        await this.ensureFbSdkLoaded(configData.app_id, configData.version || 'v26.0');
+
+                        const loginOptions = {
+                            config_id: String(configData.config_id).trim(),
+                            response_type: 'code',
+                            override_default_response_type: true,
+                            extras: {
+                                setup: {
+                                    business: {
+                                        name: {{ Js::from($business->name) }}
+                                    }
+                                }
+                            }
+                        };
+
+                        FB.login((response) => {
+                            if (response.authResponse && response.authResponse.code) {
+                                this.exchangeEmbeddedCode(
+                                    response.authResponse.code,
+                                    this.metaEmbeddedWabaId,
+                                    this.metaEmbeddedPhoneId
+                                );
+                            } else {
+                                this.embeddedLoading = false;
+                                this.embeddedError = {{ Js::from(__('whatsapp.error_meta_auth_cancelled')) }};
+                            }
+                        }, loginOptions);
+                    } catch (err) {
+                        this.embeddedLoading = false;
+                        this.embeddedError = {{ Js::from(__('whatsapp.error_launch_signup_failed')) }} + ': ' + (err.message || err);
+                    }
+                },
+
+                ensureFbSdkLoaded(appId, version) {
+                    return new Promise((resolve) => {
+                        if (window.FB) {
+                            resolve();
+                            return;
+                        }
+                        window.fbAsyncInit = function() {
+                            FB.init({
+                                appId: appId,
+                                autoLogAppEvents: true,
+                                xfbml: true,
+                                version: version
+                            });
+                            resolve();
+                        };
+                        const js = document.createElement('script');
+                        js.id = 'facebook-jssdk';
+                        js.src = 'https://connect.facebook.net/en_US/sdk.js';
+                        js.async = true;
+                        js.defer = true;
+                        document.body.appendChild(js);
+                    });
+                },
+
+                async exchangeEmbeddedCode(code, wabaId = null, phoneId = null) {
+                    this.embeddedLoading = true;
+                    try {
+                        const res = await fetch('{{ route('whatsapp.meta.exchange-code') }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]')?.content || ''
+                            },
+                            body: JSON.stringify({
+                                code: code,
+                                waba_id: wabaId,
+                                phone_number_id: phoneId
+                            })
+                        });
+                        const data = await res.json();
+                        if (res.ok && data.success) {
+                            this.embeddedSuccess = {{ Js::from(__('whatsapp.meta_connected_success')) }};
+                            this.metaAccount = data.account;
+                            if (window.AppAlert) {
+                                AppAlert.success(this.embeddedSuccess);
+                            }
+                        } else {
+                            this.embeddedError = data.error || {{ Js::from(__('whatsapp.error_meta_exchange_failed')) }};
+                        }
+                    } catch (e) {
+                        this.embeddedError = {{ Js::from(__('whatsapp.error_meta_credentials_save')) }};
+                    } finally {
+                        this.embeddedLoading = false;
+                    }
+                },
+
+                async toggleServiceStatus(e) {
+                    const isChecked = e.target.checked;
+                    try {
+                        const formData = new FormData();
+                        formData.append('is_active', isChecked ? '1' : '0');
+                        formData.append('provider', 'meta_cloud');
+                        formData.append('_token', document.querySelector('meta[name=csrf-token]')?.content || '');
+                        await fetch('{{ route('whatsapp.settings') }}', {
+                            method: 'POST',
+                            body: formData,
+                            headers: { 'Accept': 'application/json' }
+                        });
+                        if (this.metaAccount) {
+                            this.metaAccount.is_active = isChecked;
+                        }
+                        if (window.AppAlert) {
+                            AppAlert.toast('success', isChecked ? 'Layanan WhatsApp diaktifkan' : 'Layanan WhatsApp dinonaktifkan');
+                        }
+                    } catch (err) {
+                        console.error('Failed to toggle service status', err);
+                    }
+                },
+
+                disconnectMeta() {
+                    const hasPin = {{ $business->hasSupervisorPin() ? 'true' : 'false' }};
+                    if (hasPin) {
+                        this.disconnectPin = '';
+                        this.disconnectError = '';
+                        this.showDisconnectModal = true;
+                    } else {
+                        this.confirmDisconnectDirect();
+                    }
+                },
+
+                async confirmDisconnectDirect() {
+                    let confirmed = false;
+                    if (window.AppAlert) {
+                        confirmed = await AppAlert.confirm({
+                            title: {{ Js::from(__('whatsapp.disconnect_confirm_title')) }},
+                            message: {{ Js::from(__('whatsapp.disconnect_confirm_desc')) }},
+                            type: 'danger',
+                            confirmText: {{ Js::from(__('whatsapp.disconnect_btn')) }},
+                            cancelText: {{ Js::from(__('whatsapp.cancel_btn')) }}
+                        });
+                    } else {
+                        confirmed = confirm({{ Js::from(__('whatsapp.disconnect_confirm_desc')) }});
+                    }
+                    if (!confirmed) return;
+                    this.executeDisconnect('');
+                },
+
+                async submitDisconnectWithPin() {
+                    if (this.disconnectLoading) return;
+                    if (!this.disconnectPin.trim()) {
+                        this.disconnectError = {{ Js::from(__('whatsapp.supervisor_pin_required')) }};
+                        return;
+                    }
+                    this.disconnectLoading = true;
+                    this.disconnectError = '';
+                    await this.executeDisconnect(this.disconnectPin);
+                    this.disconnectLoading = false;
+                },
+
+                async executeDisconnect(pin) {
+                    try {
+                        const res = await fetch('{{ route('whatsapp.meta.disconnect') }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]')?.content || ''
+                            },
+                            body: JSON.stringify({ pin: pin })
+                        });
+                        const data = await res.json();
+                        if (res.ok && data.success) {
+                            this.showDisconnectModal = false;
+                            this.metaAccount = null;
+                            if (window.AppAlert) {
+                                AppAlert.success('Akun WhatsApp resmi berhasil diputuskan.');
+                            }
+                        } else {
+                            const errMsg = data.message || {{ Js::from(__('whatsapp.supervisor_pin_invalid')) }};
+                            if (this.showDisconnectModal) {
+                                this.disconnectError = errMsg;
+                            } else {
+                                alert(errMsg);
+                            }
+                        }
+                    } catch (e) {
+                        console.error('Failed to disconnect Meta account', e);
+                        if (this.showDisconnectModal) {
+                            this.disconnectError = {{ Js::from(__('whatsapp.error_network_disconnect')) }};
+                        }
+                    }
+                },
+
+                async sendTest() {
+                    if (this.testLoading) return;
+                    if (!this.testPhone.trim() || !this.testMessage.trim()) {
+                        this.testResult = {{ Js::from(__('whatsapp.test_validation_error')) }};
+                        this.testOk = false;
+                        return;
+                    }
+                    this.testLoading = true;
+                    this.testResult = '';
+                    try {
+                        const res = await fetch('{{ route('whatsapp.test') }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]')?.content || ''
+                            },
+                            body: JSON.stringify({
+                                phone: this.testPhone,
+                                message: this.testMessage
+                            })
+                        });
+                        const data = await res.json();
+                        this.testOk = data.success ?? false;
+                        this.testResult = this.testOk 
+                            ? {{ Js::from(__('whatsapp.test_success')) }} 
+                            : ({{ Js::from(__('whatsapp.test_failed_prefix')) }} + ': ' + (data.error || {{ Js::from(__('whatsapp.server_error')) }}));
+                    } catch (e) {
+                        this.testResult = {{ Js::from(__('whatsapp.test_network_error')) }};
+                        this.testOk = false;
+                    } finally {
+                        this.testLoading = false;
+                    }
+                },
+
+                // =====================================================
+                // Social Media Omnichannel Methods
+                // =====================================================
+                async launchMetaLogin() {
+                    this.socialLoading = true;
+                    this.socialErrorMessage = '';
+                    try {
+                        const res = await fetch('{{ route('social-media.config') }}', {
+                            headers: { 'Accept': 'application/json' }
+                        });
+                        const data = await res.json();
+
+                        if (!data.success || !data.login_url) {
+                            this.socialErrorMessage = data.message || @js(__('social_media.meta_not_configured'));
+                            this.socialLoading = false;
+                            return;
+                        }
+
+                        window.location.href = data.login_url;
+                    } catch (e) {
+                        this.socialErrorMessage = @js(__('common.error')) + ': ' + (e.message || e);
+                        this.socialLoading = false;
+                    }
+                },
+
+                async handleOAuthCode(code) {
+                    this.socialLoading = true;
+                    try {
+                        const res = await fetch('{{ route('social-media.exchange-token') }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]')?.content || ''
+                            },
+                            body: JSON.stringify({ code: code })
+                        });
+
+                        const data = await res.json();
+                        if (res.ok && data.success) {
+                            this.socialSuccessMessage = data.message || @js(__('social_media.meta_connected_success'));
+                            if (window.AppAlert) {
+                                AppAlert.success(this.socialSuccessMessage);
+                            }
+                        } else {
+                            this.socialErrorMessage = data.error || @js(__('social_media.meta_token_invalid'));
+                            if (window.AppAlert) {
+                                AppAlert.error(this.socialErrorMessage);
+                            }
+                        }
+                    } catch (e) {
+                        this.socialErrorMessage = @js(__('common.error'));
+                    } finally {
+                        this.socialLoading = false;
+                    }
+                },
+
+                async disconnectSocial(accountId) {
+                    let confirmed = false;
+                    if (window.AppAlert) {
+                        confirmed = await AppAlert.confirm({
+                            title: @js(__('social_media.disconnect_confirm_title')),
+                            message: @js(__('social_media.disconnect_confirm_msg')),
+                            type: 'danger',
+                            confirmText: @js(__('social_media.disconnect_confirm_btn')),
+                            cancelText: @js(__('social_media.cancel'))
+                        });
+                    } else {
+                        confirmed = confirm(@js(__('social_media.disconnect_confirm_msg')));
+                    }
+                    if (!confirmed) return;
+
+                    let pin = null;
+                    @if(!empty($business->pos_supervisor_pin))
+                    if (window.Swal) {
+                        const { value: inputPin } = await Swal.fire({
+                            title: @js(__('social_media.supervisor_pin_required')),
+                            input: 'password',
+                            inputAttributes: {
+                                inputmode: 'numeric',
+                                pattern: '[0-9]*',
+                                maxlength: 6
+                            },
+                            inputPlaceholder: @js(__('social_media.supervisor_pin_placeholder')),
+                            showCancelButton: true,
+                            confirmButtonText: @js(__('common.confirm')),
+                            cancelButtonText: @js(__('common.cancel'))
+                        });
+                        if (!inputPin) return;
+                        pin = inputPin;
+                    }
+                    @endif
+
+                    try {
+                        const res = await fetch('{{ route('social-media.disconnect') }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]')?.content || ''
+                            },
+                            body: JSON.stringify({ account_id: accountId, pin: pin })
+                        });
+
+                        const data = await res.json();
+                        if (data.success) {
+                            this.disconnectedSocialIds.push(accountId);
+                            if (window.AppAlert) {
+                                AppAlert.success(data.message || @js(__('social_media.account_disconnected_success')));
+                            }
+                        } else {
+                            if (window.AppAlert) {
+                                AppAlert.error(data.error || data.message || @js(__('social_media.account_not_found')));
+                            }
+                        }
+                    } catch (e) {
+                        if (window.AppAlert) {
+                            AppAlert.error(@js(__('common.error')));
+                        }
                     }
                 }
             };

@@ -307,7 +307,7 @@
                                     <span>Sinkronkan Meta Sekarang</span>
                                 </button>
                             @else
-                                <a href="{{ route('social-media.index') }}"
+                                <a href="{{ route('settings.index', ['tab' => 'social_media']) }}"
                                     class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[10px] text-[11.5px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] shadow-xs active:scale-95 transition">
                                     <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
                                     <span>Hubungkan Akun Meta</span>
@@ -346,7 +346,7 @@
                                 <span>Tarik Data Terbaru dari Meta</span>
                             </button>
                         @else
-                            <a href="{{ route('social-media.index') }}"
+                            <a href="{{ route('settings.index', ['tab' => 'social_media']) }}"
                                 class="px-4 py-2 rounded-[12px] text-[12.5px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] shadow-xs active:scale-95 transition flex items-center gap-1.5">
                                 <i data-lucide="link" class="w-3.5 h-3.5"></i>
                                 <span>Hubungkan Akun Media Sosial</span>

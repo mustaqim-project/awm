@@ -501,7 +501,7 @@
                                 @if($accounts->isEmpty())
                                     <div class="p-3 rounded-[12px] bg-[#FF9500]/10 border border-[#FF9500]/25 text-[12px] text-[#FF9500] flex items-center gap-2">
                                         <i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i>
-                                        <span>{{ __('social_media.no_active_accounts_alert') }} <a href="{{ route('social-media.index') }}" class="underline font-bold">{{ __('social_media.connect_now_link') }}</a>.</span>
+                                        <span>{{ __('social_media.no_active_accounts_alert') }} <a href="{{ route('settings.index', ['tab' => 'social_media']) }}" class="underline font-bold">{{ __('social_media.connect_now_link') }}</a>.</span>
                                     </div>
                                 @endif
                             </div>

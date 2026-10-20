@@ -49,9 +49,25 @@ final class SettingWebController extends Controller
         $timezones = \App\Support\TimezoneHelper::supportedTimezones();
         $operatingHours = $business->getOperatingHours();
         $currentTimezone = $business->getTimezone();
-        $whatsappAccount = \App\Models\WhatsAppAccount::where('business_id', $business->id)
-            ->where('status', 'active')
-            ->first();
+        $whatsappAccount = \App\Models\WhatsAppAccount::where('business_id', $business->id)->first();
+        $waSession = \App\Models\WhatsAppSession::where('business_id', $business->id)->first();
+        $socialAccounts = \App\Models\SocialMediaAccount::where('business_id', $business->id)->get();
+        $accounts = $socialAccounts;
+
+        if (\App\Models\WhatsAppMessageTemplate::count() === 0) {
+            \App\Domain\WhatsApp\CloudApi\Templates\CoocaStandardTemplates::seedLocalTemplates($whatsappAccount?->waba_id ?: 'platform_default');
+        }
+
+        $approvedTemplates = \App\Models\WhatsAppMessageTemplate::approved()
+            ->where(function ($q) use ($business, $whatsappAccount) {
+                $q->whereNull('business_id');
+                if ($whatsappAccount?->waba_id) {
+                    $q->orWhere('waba_id', $whatsappAccount->waba_id);
+                }
+                $q->orWhere('business_id', $business->id);
+            })
+            ->orderBy('name')
+            ->get();
 
         return view('app.settings.index', compact(
             'business',
@@ -63,7 +79,11 @@ final class SettingWebController extends Controller
             'timezones',
             'operatingHours',
             'currentTimezone',
-            'whatsappAccount'
+            'whatsappAccount',
+            'waSession',
+            'socialAccounts',
+            'accounts',
+            'approvedTemplates'
         ));
     }
 
@@ -87,6 +107,8 @@ final class SettingWebController extends Controller
             'pos_tax_percent' => ['nullable', 'numeric', 'min:0', 'max:100'],
             'pos_receipt_footer_note' => ['nullable', 'string', 'max:500'],
             'pos_receipt_wa_template' => ['nullable', 'string', 'max:2000'],
+            'auto_send_receipt' => ['nullable', 'boolean'],
+            'receipt_template' => ['nullable', 'string', 'max:2000'],
             'pos_supervisor_pin' => ['nullable', 'string', 'digits_between:4,8'],
             'pos_max_cashier_discount_percent' => ['nullable', 'numeric', 'min:0', 'max:100'],
             'pos_require_pin_for_void' => ['nullable', 'boolean'],
@@ -138,10 +160,29 @@ final class SettingWebController extends Controller
         }
         if (array_key_exists('pos_receipt_wa_template', $validated)) {
             $updateData['pos_receipt_wa_template'] = $validated['pos_receipt_wa_template'];
-            // Sync to WhatsAppSession if exists
-            \App\Models\WhatsAppSession::where('business_id', $business->id)->update([
-                'receipt_template' => $validated['pos_receipt_wa_template'],
-            ]);
+        }
+
+        // Sync WhatsApp Gateway session settings if provided
+        if ($request->has('auto_send_receipt') || $request->has('receipt_template') || array_key_exists('pos_receipt_wa_template', $validated)) {
+            $waSession = \App\Models\WhatsAppSession::firstOrCreate(
+                ['business_id' => $business->id],
+                [
+                    'session_id' => 'wa_' . $business->id,
+                    'provider' => 'meta_cloud',
+                    'is_active' => true,
+                ]
+            );
+            if ($waSession) {
+                if ($request->has('auto_send_receipt')) {
+                    $waSession->auto_send_receipt = $request->boolean('auto_send_receipt');
+                }
+                if ($request->has('receipt_template')) {
+                    $waSession->receipt_template = $request->input('receipt_template');
+                } elseif (array_key_exists('pos_receipt_wa_template', $validated)) {
+                    $waSession->receipt_template = $validated['pos_receipt_wa_template'];
+                }
+                $waSession->save();
+            }
         }
         if (array_key_exists('bank_name', $validated)) {
             $updateData['bank_name'] = $validated['bank_name'];
@@ -280,7 +321,8 @@ final class SettingWebController extends Controller
 
         $tab = $request->input('_tab', 'general');
         $msg = match ($tab) {
-            'wa_receipt' => 'Template pesan WhatsApp struk berhasil diperbarui.',
+            'wa_receipt', 'whatsapp' => 'Pengaturan WhatsApp Gateway dan struk berhasil diperbarui.',
+            'social_media', 'channels', 'social' => 'Pengaturan integrasi media sosial berhasil diperbarui.',
             'operations' => 'Pengaturan zona waktu dan jam operasional usaha berhasil diperbarui.',
             default => 'Profil bisnis dan pengaturan berhasil diperbarui.',
         };

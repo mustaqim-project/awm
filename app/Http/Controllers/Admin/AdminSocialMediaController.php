@@ -53,9 +53,11 @@ class AdminSocialMediaController extends Controller
             'platform_scheduled_at' => ['nullable', 'array'],
             'platform_scheduled_at.*' => ['nullable', 'date'],
             'content'               => ['nullable', 'string', 'max:5000'],
-            'media_type'            => ['nullable', 'string', 'in:image,video,reels,story,carousel,text'],
+            'media_type'            => ['nullable', 'string', 'in:image,photo,video,reels,story,carousel,text'],
             'media_url'             => ['nullable', 'url', 'max:1000'],
-            'media_file'            => ['nullable', 'file', 'mimes:jpg,jpeg,png,mp4,mov', 'max:102400'],
+            'media_file'            => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp,gif,mp4,mov', 'max:102400'],
+            'media_files'           => ['nullable', 'array', 'max:10'],
+            'media_files.*'         => ['file', 'mimes:jpg,jpeg,png,webp,gif,mp4,mov', 'max:102400'],
             'scheduled_at'          => ['nullable', 'date'],
         ]);
 
@@ -69,12 +71,36 @@ class AdminSocialMediaController extends Controller
             : (! empty($validated['platform']) ? [$validated['platform']] : ['instagram']);
         $selectedPlatforms = array_values(array_unique($selectedPlatforms));
 
+        // Anti-SSRF check on direct external media URL
+        if (! empty($validated['media_url'])) {
+            $parsed = parse_url(trim($validated['media_url']));
+            $scheme = strtolower($parsed['scheme'] ?? '');
+            if ($scheme !== 'https') {
+                return back()->withInput()->with('error', 'URL media wajib menggunakan protokol HTTPS yang aman.');
+            }
+            $host = strtolower($parsed['host'] ?? '');
+            if (empty($host) || in_array($host, ['localhost', '127.0.0.1', '::1', '0.0.0.0'], true)) {
+                return back()->withInput()->with('error', 'Host URL media privat atau lokal tidak diizinkan.');
+            }
+        }
+
         $mediaUrls = [];
         $localPaths = [];
 
-        if ($request->hasFile('media_file')) {
+        if ($request->hasFile('media_files')) {
+            foreach ($request->file('media_files') as $file) {
+                if ($file && $file->isValid()) {
+                    $ext = $file->getClientOriginalExtension() ?: 'jpg';
+                    $filename = (string) \Illuminate\Support\Str::uuid() . '.' . $ext;
+                    $path = \App\Domain\Storage\AdminStorage::storePublicFile($file, 'social-media-assets/platform', $filename);
+                    $mediaUrls[] = \App\Domain\Storage\AdminStorage::publicUrl($path);
+                    $localPaths[] = $path;
+                }
+            }
+        } elseif ($request->hasFile('media_file')) {
             $file = $request->file('media_file');
-            $filename = (string) \Illuminate\Support\Str::uuid() . '.' . $file->getClientOriginalExtension();
+            $ext = $file->getClientOriginalExtension() ?: 'jpg';
+            $filename = (string) \Illuminate\Support\Str::uuid() . '.' . $ext;
             $path = \App\Domain\Storage\AdminStorage::storePublicFile($file, 'social-media-assets/platform', $filename);
             $mediaUrls[] = \App\Domain\Storage\AdminStorage::publicUrl($path);
             $localPaths[] = $path;
@@ -82,7 +108,8 @@ class AdminSocialMediaController extends Controller
             $mediaUrls[] = $validated['media_url'];
         }
 
-        $mediaType = $validated['media_type'] ?? (! empty($mediaUrls) ? 'image' : 'text');
+        $rawMediaType = $validated['media_type'] ?? (! empty($mediaUrls) ? 'image' : 'text');
+        $mediaType = $rawMediaType === 'photo' ? 'image' : $rawMediaType;
         $content = (string) ($validated['content'] ?? '');
 
         if (empty($content) && empty($mediaUrls)) {

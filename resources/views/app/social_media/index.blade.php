@@ -23,6 +23,30 @@
 
         <x-module-tabs module="communication" />
 
+        {{-- UNIFIED SETTINGS HUB MIGRATION NOTICE BANNER (Cluster 4 Standard) --}}
+        <div class="rounded-[18px] bg-gradient-to-r from-[#1877F2]/[0.08] via-[#E1306C]/[0.06] to-transparent border border-[#1877F2]/20 p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs">
+            <div class="flex items-center gap-3.5">
+                <div class="w-10 h-10 rounded-[12px] bg-gradient-to-br from-[#1877F2] to-[#E1306C] text-white flex items-center justify-center shrink-0 shadow-sm">
+                    <i data-lucide="sliders" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h3 class="text-[14px] font-bold text-black dark:text-white flex items-center gap-2">
+                        <span>Pusat Pengaturan Saluran Media Sosial Terpadu</span>
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#007AFF]/15 text-[#007AFF] border border-[#007AFF]/25">Settings Hub</span>
+                    </h3>
+                    <p class="text-[12px] text-black/60 dark:text-white/60 mt-0.5">
+                        Otorisasi Meta OAuth (Facebook &amp; Instagram), TikTok, LinkedIn, dan pemutusan akun kini dipusatkan di <strong>Pengaturan Usaha</strong>.
+                    </p>
+                </div>
+            </div>
+            <a href="{{ route('settings.index', ['tab' => 'social_media']) }}"
+                class="min-h-[38px] px-4 rounded-[10px] text-[12.5px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center gap-2 shrink-0 shadow-sm">
+                <i data-lucide="settings" class="w-4 h-4"></i>
+                <span>Buka Pengaturan Saluran</span>
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+            </a>
+        </div>
+
         {{-- 3. MAIN COCKPIT GRID --}}
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
 

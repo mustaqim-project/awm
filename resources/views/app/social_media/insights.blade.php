@@ -580,7 +580,7 @@
                     </div>
 
                     @if(!$fb['connected'])
-                        <a href="{{ route('social-media.index') }}" class="w-full h-8 text-[11px] font-semibold rounded-[10px] bg-black/5 dark:bg-white/5 hover:bg-black/10 text-black dark:text-white flex items-center justify-center gap-1 transition-all">
+                        <a href="{{ route('settings.index', ['tab' => 'social_media']) }}" class="w-full h-8 text-[11px] font-semibold rounded-[10px] bg-black/5 dark:bg-white/5 hover:bg-black/10 text-black dark:text-white flex items-center justify-center gap-1 transition-all">
                             {{ __('social_media.channel_connect_cta') }} <i data-lucide="arrow-right" class="w-3 h-3"></i>
                         </a>
                     @endif
@@ -632,7 +632,7 @@
                     </div>
 
                     @if(!$ig['connected'])
-                        <a href="{{ route('social-media.index') }}" class="w-full h-8 text-[11px] font-semibold rounded-[10px] bg-black/5 dark:bg-white/5 hover:bg-black/10 text-black dark:text-white flex items-center justify-center gap-1 transition-all">
+                        <a href="{{ route('settings.index', ['tab' => 'social_media']) }}" class="w-full h-8 text-[11px] font-semibold rounded-[10px] bg-black/5 dark:bg-white/5 hover:bg-black/10 text-black dark:text-white flex items-center justify-center gap-1 transition-all">
                             {{ __('social_media.channel_connect_cta') }} <i data-lucide="arrow-right" class="w-3 h-3"></i>
                         </a>
                     @endif
@@ -684,7 +684,7 @@
                     </div>
 
                     @if(!$tt['connected'])
-                        <a href="{{ route('social-media.index') }}" class="w-full h-8 text-[11px] font-semibold rounded-[10px] bg-black/5 dark:bg-white/5 hover:bg-black/10 text-black dark:text-white flex items-center justify-center gap-1 transition-all">
+                        <a href="{{ route('settings.index', ['tab' => 'social_media']) }}" class="w-full h-8 text-[11px] font-semibold rounded-[10px] bg-black/5 dark:bg-white/5 hover:bg-black/10 text-black dark:text-white flex items-center justify-center gap-1 transition-all">
                             {{ __('social_media.channel_connect_cta') }} <i data-lucide="arrow-right" class="w-3 h-3"></i>
                         </a>
                     @endif
@@ -736,7 +736,7 @@
                     </div>
 
                     @if(!$li['connected'])
-                        <a href="{{ route('social-media.index') }}" class="w-full h-8 text-[11px] font-semibold rounded-[10px] bg-black/5 dark:bg-white/5 hover:bg-black/10 text-black dark:text-white flex items-center justify-center gap-1 transition-all">
+                        <a href="{{ route('settings.index', ['tab' => 'social_media']) }}" class="w-full h-8 text-[11px] font-semibold rounded-[10px] bg-black/5 dark:bg-white/5 hover:bg-black/10 text-black dark:text-white flex items-center justify-center gap-1 transition-all">
                             {{ __('social_media.channel_connect_cta') }} <i data-lucide="arrow-right" class="w-3 h-3"></i>
                         </a>
                     @endif

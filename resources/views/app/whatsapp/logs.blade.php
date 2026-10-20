@@ -95,7 +95,7 @@
                             {{ __('whatsapp.empty_logs_desc') }}
                         </p>
                     </div>
-                    <a href="{{ route('whatsapp.index') }}"
+                    <a href="{{ route('settings.index', ['tab' => 'whatsapp']) }}"
                         class="inline-flex items-center gap-1.5 mt-2 text-[13px] font-bold text-[#007AFF] hover:underline min-h-[44px] px-3">
                         <span>{{ __('whatsapp.view_gateway_status') }}</span>
                         <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>

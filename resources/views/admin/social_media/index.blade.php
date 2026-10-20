@@ -1401,407 +1401,823 @@
                     aria-hidden="true"></div>
 
                 <!-- Centering Wrapper -->
-                <div class="relative z-10 min-h-full flex items-center justify-center p-4 pointer-events-none">
-                    <div class="bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[24px] shadow-2xl max-w-xl w-full max-h-[90vh] overflow-y-auto p-6 space-y-5 pointer-events-auto"
+                <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-5 md:p-6 pointer-events-none">
+                    <div class="relative w-full max-w-5xl xl:max-w-6xl 2xl:max-w-[1440px] rounded-[26px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl p-5 sm:p-7 space-y-6 my-4 max-h-[92vh] overflow-y-auto pointer-events-auto"
                         @click.stop>
 
-                <div class="flex items-center justify-between pb-4 border-b border-black/[0.06] dark:border-white/[0.08]">
-                    <div class="flex items-center gap-3">
-                        <div
-                            class="w-10 h-10 rounded-[14px] bg-[#007AFF]/12 text-[#007AFF] flex items-center justify-center">
-                            <i data-lucide="feather" class="w-5 h-5"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-[17px] font-bold text-black dark:text-white">Buat Postingan Resmi Cooca</h3>
-                            <p class="text-[12px] text-black/50 dark:text-white/50">Publikasikan konten resmi ke akun media
-                                sosial platform</p>
-                        </div>
-                    </div>
-                    <button type="button" @click="openCreatePostModal = false"
-                        class="text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white">
-                        <i data-lucide="x" class="w-5 h-5"></i>
-                    </button>
-                </div>
-
-                <form method="POST" action="{{ route('admin.social-media.posts.store') }}"
-                    enctype="multipart/form-data" class="space-y-4">
-                    @csrf
-
-                    {{-- Pilihan Platform (Multi-Select Bento Tiles) --}}
-                    <div class="space-y-2">
-                        <div class="flex items-center justify-between">
-                            <label
-                                class="text-[11px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50">Pilih
-                                Saluran Publikasi Resmi Platform</label>
-                            <button type="button" @click="toggleAllPlatforms()"
-                                class="text-[11.5px] font-bold text-[#007AFF] hover:underline">
-                                <span
-                                    x-text="selectedPlatforms.length === allPlatforms.length ? 'Pilih Instagram Saja' : 'Pilih Semua Saluran'"></span>
+                        {{-- Modal Header --}}
+                        <div class="flex items-center justify-between pb-4 border-b border-black/[0.06] dark:border-white/[0.08]">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-[14px] bg-gradient-to-br from-[#1877F2]/15 via-[#E1306C]/15 to-[#007AFF]/15 text-[#007AFF] flex items-center justify-center shrink-0 shadow-xs">
+                                    <i data-lucide="feather" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-[17px] sm:text-[18px] font-bold text-black dark:text-white tracking-tight">Buat Postingan Resmi Cooca</h3>
+                                    <p class="text-[12px] sm:text-[12.5px] text-black/55 dark:text-white/55">Publikasikan konten resmi platform ke akun media sosial Cooca dengan pratinjau live omnichannel</p>
+                                </div>
+                            </div>
+                            <button type="button" @click="openCreatePostModal = false"
+                                class="w-9 h-9 rounded-full flex items-center justify-center text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
+                                aria-label="Tutup modal">
+                                <i data-lucide="x" class="w-5 h-5"></i>
                             </button>
                         </div>
-                        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
-                            {{-- Instagram --}}
-                            <label class="flex items-center gap-2 p-3 rounded-[14px] border cursor-pointer transition-all"
-                                :class="selectedPlatforms.includes('instagram') ?
-                                    'bg-[#E1306C]/10 border-[#E1306C] text-[#E1306C] font-bold shadow-xs' :
-                                    'bg-black/[0.02] dark:bg-white/[0.02] border-black/10 dark:border-white/10 text-black/70 dark:text-white/70'">
-                                <input type="checkbox" name="platforms[]" value="instagram" x-model="selectedPlatforms"
-                                    class="sr-only">
-                                <div
-                                    class="w-7 h-7 rounded-[8px] bg-[#E1306C]/15 text-[#E1306C] flex items-center justify-center shrink-0">
-                                    <i data-lucide="instagram" class="w-4 h-4"></i>
-                                </div>
-                                <div class="min-w-0">
-                                    <div class="text-[12px] leading-tight">Instagram</div>
-                                    <div class="text-[10px] opacity-70 font-mono">@cooca.indonesia</div>
-                                </div>
-                            </label>
 
-                            {{-- Facebook --}}
-                            <label class="flex items-center gap-2 p-3 rounded-[14px] border cursor-pointer transition-all"
-                                :class="selectedPlatforms.includes('facebook') ?
-                                    'bg-[#1877F2]/10 border-[#1877F2] text-[#1877F2] font-bold shadow-xs' :
-                                    'bg-black/[0.02] dark:bg-white/[0.02] border-black/10 dark:border-white/10 text-black/70 dark:text-white/70'">
-                                <input type="checkbox" name="platforms[]" value="facebook" x-model="selectedPlatforms"
-                                    class="sr-only">
-                                <div
-                                    class="w-7 h-7 rounded-[8px] bg-[#1877F2]/15 text-[#1877F2] flex items-center justify-center shrink-0">
-                                    <i data-lucide="facebook" class="w-4 h-4"></i>
-                                </div>
-                                <div class="min-w-0">
-                                    <div class="text-[12px] leading-tight">Facebook</div>
-                                    <div class="text-[10px] opacity-70">Page Resmi</div>
-                                </div>
-                            </label>
+                        <form method="POST" action="{{ route('admin.social-media.posts.store') }}"
+                            enctype="multipart/form-data" class="space-y-6" @submit="isSubmitting = true">
+                            @csrf
+                            <input type="hidden" name="media_type" :value="postFormat">
 
-                            {{-- Threads --}}
-                            <label class="flex items-center gap-2 p-3 rounded-[14px] border cursor-pointer transition-all"
-                                :class="selectedPlatforms.includes('threads') ?
-                                    'bg-black/10 dark:bg-white/15 border-black dark:border-white text-black dark:text-white font-bold shadow-xs' :
-                                    'bg-black/[0.02] dark:bg-white/[0.02] border-black/10 dark:border-white/10 text-black/70 dark:text-white/70'">
-                                <input type="checkbox" name="platforms[]" value="threads" x-model="selectedPlatforms"
-                                    class="sr-only">
-                                <div
-                                    class="w-7 h-7 rounded-[8px] bg-black/10 dark:bg-white/10 text-black dark:text-white flex items-center justify-center shrink-0">
-                                    <i data-lucide="at-sign" class="w-4 h-4"></i>
-                                </div>
-                                <div class="min-w-0">
-                                    <div class="text-[12px] leading-tight">Threads</div>
-                                    <div class="text-[10px] opacity-70">Meta Threads</div>
-                                </div>
-                            </label>
+                            {{-- Form Content with Bento 2-Column Architecture --}}
+                            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
 
-                            {{-- TikTok --}}
-                            <label class="flex items-center gap-2 p-3 rounded-[14px] border cursor-pointer transition-all"
-                                :class="selectedPlatforms.includes('tiktok') ?
-                                    'bg-black/10 dark:bg-white/15 border-black dark:border-white text-black dark:text-white font-bold shadow-xs' :
-                                    'bg-black/[0.02] dark:bg-white/[0.02] border-black/10 dark:border-white/10 text-black/70 dark:text-white/70'">
-                                <input type="checkbox" name="platforms[]" value="tiktok" x-model="selectedPlatforms"
-                                    class="sr-only">
-                                <div
-                                    class="w-7 h-7 rounded-[8px] bg-black/10 dark:bg-white/10 text-black dark:text-white flex items-center justify-center shrink-0">
-                                    <i data-lucide="video" class="w-4 h-4"></i>
-                                </div>
-                                <div class="min-w-0">
-                                    <div class="text-[12px] leading-tight">TikTok</div>
-                                    <div class="text-[10px] opacity-70">Open API</div>
-                                </div>
-                            </label>
+                                {{-- LEFT COLUMN: FORM CONTROLS & SETTINGS (Col-span 7) --}}
+                                <div class="lg:col-span-7 space-y-5">
 
-                            {{-- LinkedIn --}}
-                            <label class="flex items-center gap-2 p-3 rounded-[14px] border cursor-pointer transition-all"
-                                :class="selectedPlatforms.includes('linkedin') ?
-                                    'bg-[#0A66C2]/10 border-[#0A66C2] text-[#0A66C2] font-bold shadow-xs' :
-                                    'bg-black/[0.02] dark:bg-white/[0.02] border-black/10 dark:border-white/10 text-black/70 dark:text-white/70'">
-                                <input type="checkbox" name="platforms[]" value="linkedin" x-model="selectedPlatforms"
-                                    class="sr-only">
-                                <div
-                                    class="w-7 h-7 rounded-[8px] bg-[#0A66C2]/15 text-[#0A66C2] flex items-center justify-center shrink-0">
-                                    <i data-lucide="linkedin" class="w-4 h-4"></i>
-                                </div>
-                                <div class="min-w-0">
-                                    <div class="text-[12px] leading-tight">LinkedIn</div>
-                                    <div class="text-[10px] opacity-70">Community</div>
-                                </div>
-                            </label>
-                        </div>
-                        <div x-show="selectedPlatforms.length === 0" class="text-[11.5px] text-[#FF3B30] font-semibold">
-                            * Pilih minimal 1 saluran untuk mempublikasikan postingan.
-                        </div>
-                    </div>
-
-                    {{-- Pilihan Format Konten (Bento Selector: Feed, Reels, Story) --}}
-                    <div class="space-y-2">
-                        <div class="flex items-center justify-between">
-                            <label
-                                class="text-[11px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50">Format
-                                Konten</label>
-                            <span class="text-[11px] text-[#007AFF] font-semibold" x-text="postFormatLabel()"></span>
-                        </div>
-                        <div class="grid grid-cols-3 gap-2.5">
-                            {{-- Feed Post --}}
-                            <label
-                                class="p-3 rounded-[14px] border cursor-pointer transition-all flex flex-col items-center text-center gap-1.5"
-                                :class="postFormat === 'image' ?
-                                    'bg-[#007AFF]/10 border-[#007AFF] text-[#007AFF] font-bold shadow-xs' :
-                                    'bg-black/[0.02] dark:bg-white/[0.02] border-black/10 dark:border-white/10 text-black/70 dark:text-white/70'">
-                                <input type="radio" name="media_type" value="image" x-model="postFormat"
-                                    class="sr-only">
-                                <div
-                                    class="w-8 h-8 rounded-[9px] bg-[#007AFF]/15 text-[#007AFF] flex items-center justify-center">
-                                    <i data-lucide="image" class="w-4 h-4"></i>
-                                </div>
-                                <div>
-                                    <div class="text-[12px] leading-tight">Postingan Feed</div>
-                                    <div class="text-[10px] opacity-70">Foto / Grafis</div>
-                                </div>
-                            </label>
-
-                            {{-- Reels Video --}}
-                            <label
-                                class="p-3 rounded-[14px] border cursor-pointer transition-all flex flex-col items-center text-center gap-1.5"
-                                :class="postFormat === 'reels' ?
-                                    'bg-[#E1306C]/10 border-[#E1306C] text-[#E1306C] font-bold shadow-xs' :
-                                    'bg-black/[0.02] dark:bg-white/[0.02] border-black/10 dark:border-white/10 text-black/70 dark:text-white/70'">
-                                <input type="radio" name="media_type" value="reels" x-model="postFormat"
-                                    class="sr-only">
-                                <div
-                                    class="w-8 h-8 rounded-[9px] bg-[#E1306C]/15 text-[#E1306C] flex items-center justify-center">
-                                    <i data-lucide="film" class="w-4 h-4"></i>
-                                </div>
-                                <div>
-                                    <div class="text-[12px] leading-tight">Reels Video</div>
-                                    <div class="text-[10px] opacity-70">Video Vertikal</div>
-                                </div>
-                            </label>
-
-                            {{-- Instagram Story --}}
-                            <label
-                                class="p-3 rounded-[14px] border cursor-pointer transition-all flex flex-col items-center text-center gap-1.5"
-                                :class="postFormat === 'story' ?
-                                    'bg-[#AF52DE]/10 border-[#AF52DE] text-[#AF52DE] font-bold shadow-xs' :
-                                    'bg-black/[0.02] dark:bg-white/[0.02] border-black/10 dark:border-white/10 text-black/70 dark:text-white/70'">
-                                <input type="radio" name="media_type" value="story" x-model="postFormat"
-                                    class="sr-only">
-                                <div
-                                    class="w-8 h-8 rounded-[9px] bg-[#AF52DE]/15 text-[#AF52DE] flex items-center justify-center">
-                                    <i data-lucide="history" class="w-4 h-4"></i>
-                                </div>
-                                <div>
-                                    <div class="text-[12px] leading-tight">Cerita / Story</div>
-                                    <div class="text-[10px] opacity-70">Tayang 24 Jam</div>
-                                </div>
-                            </label>
-                        </div>
-
-                        {{-- Guidance helper for selected format --}}
-                        <div
-                            class="p-2.5 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.04] text-[11px] text-black/60 dark:text-white/60 flex items-center gap-2">
-                            <i data-lucide="info" class="w-3.5 h-3.5 text-[#007AFF] shrink-0"></i>
-                            <span x-show="postFormat === 'image'">Format standar profil. Cocok untuk gambar infografis,
-                                pengumuman, atau promo produk.</span>
-                            <span x-show="postFormat === 'reels'" style="display: none;">Unggah video format vertikal 9:16
-                                (MP4/MOV). Konten akan diterbitkan di Reels dan dibagikan ke Feed.</span>
-                            <span x-show="postFormat === 'story'" style="display: none;">Format Story tayang 24 jam. Pada
-                                Instagram API, Story tidak menyertakan caption teks.</span>
-                        </div>
-                    </div>
-
-                    {{-- Isi Caption --}}
-                    <div>
-                        <div class="flex items-center justify-between mb-1.5">
-                            <label class="text-[11px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50">
-                                Caption / Isi Postingan
-                                <span x-show="postFormat === 'story'"
-                                    class="text-[10.5px] font-normal lowercase opacity-70">(opsional untuk story)</span>
-                            </label>
-                            <span class="text-[11px] font-mono text-black/45 dark:text-white/45"><span
-                                    x-text="postCaption.length"></span> / 2.200</span>
-                        </div>
-                        <textarea name="content" x-model="postCaption" rows="4" :required="postFormat !== 'story'"
-                            maxlength="2200"
-                            :placeholder="postFormat === 'story' ?
-                                'Caption opsional (Instagram Story memprioritaskan visual media)...' :
-                                'Tuliskan caption postingan resmi Cooca... Jelaskan promo, pembaruan sistem, atau tips bisnis untuk UMKM.'"
-                            class="w-full bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/15 rounded-[12px] p-3 text-[13px] text-black dark:text-white placeholder-black/35 dark:placeholder-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40 transition-all"></textarea>
-
-                        {{-- Chip Tagar --}}
-                        <div class="flex flex-wrap gap-1.5 mt-2">
-                            <span class="text-[11px] text-black/45 dark:text-white/45 self-center">Tagar cepat:</span>
-                            @foreach (['#CoocaERP', '#UMKMIndonesia', '#KasirDigital', '#BisnisSukses', '#SaaSMaju'] as $tag)
-                                <button type="button" @click="insertHashtag('{{ $tag }}')"
-                                    class="px-2 py-0.5 rounded-[7px] text-[11px] font-mono bg-black/[0.04] dark:bg-white/[0.06] text-[#007AFF] hover:bg-[#007AFF]/10 transition-colors">
-                                    {{ $tag }}
-                                </button>
-                            @endforeach
-                        </div>
-                    </div>
-
-                    {{-- Unggah Berkas Media atau URL --}}
-                    <div class="space-y-3">
-                        <label
-                            class="block text-[11px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50">Media
-                            Gambar / Video</label>
-                        <div
-                            class="p-3.5 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.08] space-y-2.5">
-                            <div>
-                                <span class="text-[11.5px] font-medium text-black/70 dark:text-white/70 block mb-1">Unggah
-                                    dari Perangkat (Foto/Video)</span>
-                                <input type="file" name="media_file"
-                                    accept="image/jpeg,image/png,video/mp4,video/quicktime"
-                                    class="w-full text-[12px] text-black/70 dark:text-white/70 file:mr-3 file:py-1.5 file:px-3 file:rounded-[8px] file:border-0 file:text-[12px] file:font-semibold file:bg-[#007AFF]/10 file:text-[#007AFF] hover:file:bg-[#007AFF]/15 cursor-pointer">
-                            </div>
-                            <div class="text-center text-[11px] text-black/40 dark:text-white/40 font-bold uppercase">--
-                                ATAU --</div>
-                            <div>
-                                <span
-                                    class="text-[11.5px] font-medium text-black/70 dark:text-white/70 block mb-1">Masukkan
-                                    URL Media Publik</span>
-                                <input type="url" name="media_url" placeholder="https://domain.com/storage/post.jpg"
-                                    class="w-full min-h-[38px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/15 rounded-[10px] px-3 text-[12.5px] text-black dark:text-white placeholder-black/35 dark:placeholder-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40">
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- Opsi Waktu Publikasi (Multi-Mode & Per-Channel Support) --}}
-                    <div
-                        class="p-3.5 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.08] space-y-3">
-                        <div class="flex items-center justify-between">
-                            <label
-                                class="block text-[11px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50">Waktu
-                                Publikasi Saluran</label>
-                            <span
-                                class="px-2 py-0.5 rounded-full text-[10.5px] font-semibold bg-[#007AFF]/10 text-[#007AFF]">Fleksibel</span>
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[12px]">
-                            <label
-                                class="p-2.5 rounded-[10px] border cursor-pointer transition-all flex items-center gap-2"
-                                :class="postPublishMode === 'now' ?
-                                    'bg-[#007AFF]/10 border-[#007AFF] text-black dark:text-white font-bold shadow-xs' :
-                                    'bg-white dark:bg-[#2C2C2E] border-black/10 dark:border-white/10 text-black/70 dark:text-white/70'">
-                                <input type="radio" name="timing_mode" value="now" x-model="postPublishMode"
-                                    class="sr-only">
-                                <i data-lucide="zap" class="w-3.5 h-3.5 text-[#007AFF]"></i>
-                                <span>Semua Sekarang</span>
-                            </label>
-
-                            <label
-                                class="p-2.5 rounded-[10px] border cursor-pointer transition-all flex items-center gap-2"
-                                :class="postPublishMode === 'schedule_all' ?
-                                    'bg-[#5856D6]/10 border-[#5856D6] text-black dark:text-white font-bold shadow-xs' :
-                                    'bg-white dark:bg-[#2C2C2E] border-black/10 dark:border-white/10 text-black/70 dark:text-white/70'">
-                                <input type="radio" name="timing_mode" value="schedule_all" x-model="postPublishMode"
-                                    class="sr-only">
-                                <i data-lucide="clock" class="w-3.5 h-3.5 text-[#5856D6]"></i>
-                                <span>Jadwal Serentak</span>
-                            </label>
-
-                            <label
-                                class="p-2.5 rounded-[10px] border cursor-pointer transition-all flex items-center gap-2"
-                                :class="postPublishMode === 'per_channel' ?
-                                    'bg-[#FF9500]/10 border-[#FF9500] text-black dark:text-white font-bold shadow-xs' :
-                                    'bg-white dark:bg-[#2C2C2E] border-black/10 dark:border-white/10 text-black/70 dark:text-white/70'">
-                                <input type="radio" name="timing_mode" value="per_channel" x-model="postPublishMode"
-                                    class="sr-only">
-                                <i data-lucide="sliders" class="w-3.5 h-3.5 text-[#FF9500]"></i>
-                                <span>Beda per Saluran</span>
-                            </label>
-                        </div>
-
-                        {{-- Mode B: Jadwal Serentak --}}
-                        <div x-show="postPublishMode === 'schedule_all'"
-                            class="pt-2 border-t border-black/5 dark:border-white/5 space-y-1.5" style="display: none;">
-                            <label class="block text-[11.5px] font-semibold text-black/70 dark:text-white/70">Pilih Tanggal
-                                &amp; Jam Penayangan Serentak</label>
-                            <input type="datetime-local" name="scheduled_at"
-                                class="w-full min-h-[38px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/15 rounded-[10px] px-3 text-[12.5px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5856D6]">
-                            <p class="text-[11px] text-black/50 dark:text-white/50">
-                                Seluruh saluran yang dipilih akan otomatis dipublikasikan bersamaan oleh cron scheduler saat
-                                waktu tiba.
-                            </p>
-                        </div>
-
-                        {{-- Mode C: Beda Waktu per Saluran --}}
-                        <div x-show="postPublishMode === 'per_channel'"
-                            class="pt-2 border-t border-black/5 dark:border-white/5 space-y-2.5" style="display: none;">
-                            <p class="text-[11.5px] text-black/60 dark:text-white/60">
-                                Atur waktu spesifik per media sosial (misal: Instagram langsung sekarang, Facebook jam 2
-                                siang, Threads nanti malam, TikTok besok):
-                            </p>
-                            <div class="space-y-2">
-                                <template x-for="ch in selectedPlatforms" :key="ch">
-                                    <div
-                                        class="p-3 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 space-y-2">
+                                    {{-- 1. Pilihan Platform (Multi-Select Bento Tiles) --}}
+                                    <div class="space-y-2">
                                         <div class="flex items-center justify-between">
-                                            <div class="flex items-center gap-2">
-                                                <div class="w-6 h-6 rounded-[6px] flex items-center justify-center"
-                                                    :class="ch === 'instagram' ? 'bg-[#E1306C]/15 text-[#E1306C]' : (
-                                                        ch === 'facebook' ? 'bg-[#1877F2]/15 text-[#1877F2]' : (
-                                                        ch === 'linkedin' ? 'bg-[#0A66C2]/15 text-[#0A66C2]' :
-                                                        'bg-black/10 dark:bg-white/15 text-black dark:text-white'))">
-                                                    <template x-if="ch === 'instagram'"><i data-lucide="instagram"
-                                                            class="w-3.5 h-3.5"></i></template>
-                                                    <template x-if="ch === 'facebook'"><i data-lucide="facebook"
-                                                            class="w-3.5 h-3.5"></i></template>
-                                                    <template x-if="ch === 'threads'"><i data-lucide="at-sign"
-                                                            class="w-3.5 h-3.5"></i></template>
-                                                    <template x-if="ch === 'tiktok'"><i data-lucide="video"
-                                                            class="w-3.5 h-3.5"></i></template>
-                                                    <template x-if="ch === 'linkedin'"><i data-lucide="linkedin"
-                                                            class="w-3.5 h-3.5"></i></template>
-                                                </div>
-                                                <span class="text-[12.5px] font-bold capitalize text-black dark:text-white"
-                                                    x-text="ch"></span>
-                                            </div>
-                                            <div
-                                                class="inline-flex p-0.5 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] text-[11px]">
-                                                <button type="button" @click="channelTiming[ch] = 'now'"
-                                                    :class="channelTiming[ch] === 'now' ?
-                                                        'bg-white dark:bg-[#1C1C1E] text-[#007AFF] font-bold shadow-xs' :
-                                                        'text-black/60 dark:text-white/60'"
-                                                    class="px-2.5 py-0.5 rounded-[6px] transition-colors">
-                                                    Langsung
-                                                </button>
-                                                <button type="button" @click="channelTiming[ch] = 'schedule'"
-                                                    :class="channelTiming[ch] === 'schedule' ?
-                                                        'bg-white dark:bg-[#1C1C1E] text-[#FF9500] font-bold shadow-xs' :
-                                                        'text-black/60 dark:text-white/60'"
-                                                    class="px-2.5 py-0.5 rounded-[6px] transition-colors">
-                                                    Jadwalkan
-                                                </button>
-                                            </div>
+                                            <label class="text-[11.5px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60">
+                                                Pilih Saluran Publikasi Resmi Platform <span class="text-[#FF3B30]">*</span>
+                                            </label>
+                                            <button type="button" @click="toggleAllPlatforms()"
+                                                class="text-[11.5px] font-bold text-[#007AFF] hover:underline cursor-pointer">
+                                                <span x-text="selectedPlatforms.length === allPlatforms.length ? 'Pilih Instagram Saja' : 'Pilih Semua Saluran'"></span>
+                                            </button>
                                         </div>
+                                        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2">
+                                            {{-- Instagram --}}
+                                            <label class="p-2.5 rounded-[13px] border cursor-pointer transition-all flex flex-col gap-1.5"
+                                                :class="selectedPlatforms.includes('instagram') ?
+                                                    'bg-[#E1306C]/10 border-[#E1306C] text-[#E1306C] font-bold shadow-xs' :
+                                                    'bg-black/[0.02] dark:bg-white/[0.02] border-black/10 dark:border-white/10 text-black/70 dark:text-white/70 hover:bg-black/[0.04]'">
+                                                <input type="checkbox" name="platforms[]" value="instagram" x-model="selectedPlatforms" class="sr-only">
+                                                <div class="flex items-center justify-between">
+                                                    <div class="w-6 h-6 rounded-[7px] bg-[#E1306C]/15 text-[#E1306C] flex items-center justify-center shrink-0">
+                                                        <i data-lucide="instagram" class="w-3.5 h-3.5"></i>
+                                                    </div>
+                                                    <span class="w-2 h-2 rounded-full" :class="selectedPlatforms.includes('instagram') ? 'bg-[#E1306C]' : 'bg-black/10 dark:bg-white/20'"></span>
+                                                </div>
+                                                <div class="min-w-0">
+                                                    <div class="text-[12px] leading-tight font-bold">Instagram</div>
+                                                    <div class="text-[10px] opacity-70 truncate font-mono">@cooca.indonesia</div>
+                                                </div>
+                                            </label>
 
-                                        <input type="hidden" :name="'platform_timing[' + ch + ']'"
-                                            :value="channelTiming[ch]">
+                                            {{-- Facebook --}}
+                                            <label class="p-2.5 rounded-[13px] border cursor-pointer transition-all flex flex-col gap-1.5"
+                                                :class="selectedPlatforms.includes('facebook') ?
+                                                    'bg-[#1877F2]/10 border-[#1877F2] text-[#1877F2] font-bold shadow-xs' :
+                                                    'bg-black/[0.02] dark:bg-white/[0.02] border-black/10 dark:border-white/10 text-black/70 dark:text-white/70 hover:bg-black/[0.04]'">
+                                                <input type="checkbox" name="platforms[]" value="facebook" x-model="selectedPlatforms" class="sr-only">
+                                                <div class="flex items-center justify-between">
+                                                    <div class="w-6 h-6 rounded-[7px] bg-[#1877F2]/15 text-[#1877F2] flex items-center justify-center shrink-0">
+                                                        <i data-lucide="facebook" class="w-3.5 h-3.5"></i>
+                                                    </div>
+                                                    <span class="w-2 h-2 rounded-full" :class="selectedPlatforms.includes('facebook') ? 'bg-[#1877F2]' : 'bg-black/10 dark:bg-white/20'"></span>
+                                                </div>
+                                                <div class="min-w-0">
+                                                    <div class="text-[12px] leading-tight font-bold">Facebook</div>
+                                                    <div class="text-[10px] opacity-70 truncate">Halaman Resmi</div>
+                                                </div>
+                                            </label>
 
-                                        <div x-show="channelTiming[ch] === 'schedule'"
-                                            class="pt-1.5 border-t border-black/5 dark:border-white/5">
-                                            <input type="datetime-local" :name="'platform_scheduled_at[' + ch + ']'"
-                                                x-model="channelScheduledAt[ch]"
-                                                class="w-full h-8 px-2.5 rounded-[8px] text-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#FF9500]">
+                                            {{-- Threads --}}
+                                            <label class="p-2.5 rounded-[13px] border cursor-pointer transition-all flex flex-col gap-1.5"
+                                                :class="selectedPlatforms.includes('threads') ?
+                                                    'bg-black/10 dark:bg-white/15 border-black dark:border-white text-black dark:text-white font-bold shadow-xs' :
+                                                    'bg-black/[0.02] dark:bg-white/[0.02] border-black/10 dark:border-white/10 text-black/70 dark:text-white/70 hover:bg-black/[0.04]'">
+                                                <input type="checkbox" name="platforms[]" value="threads" x-model="selectedPlatforms" class="sr-only">
+                                                <div class="flex items-center justify-between">
+                                                    <div class="w-6 h-6 rounded-[7px] bg-black/10 dark:bg-white/10 text-black dark:text-white flex items-center justify-center shrink-0">
+                                                        <i data-lucide="at-sign" class="w-3.5 h-3.5"></i>
+                                                    </div>
+                                                    <span class="w-2 h-2 rounded-full" :class="selectedPlatforms.includes('threads') ? 'bg-black dark:bg-white' : 'bg-black/10 dark:bg-white/20'"></span>
+                                                </div>
+                                                <div class="min-w-0">
+                                                    <div class="text-[12px] leading-tight font-bold">Threads</div>
+                                                    <div class="text-[10px] opacity-70 truncate">Meta Threads</div>
+                                                </div>
+                                            </label>
+
+                                            {{-- TikTok --}}
+                                            <label class="p-2.5 rounded-[13px] border cursor-pointer transition-all flex flex-col gap-1.5"
+                                                :class="selectedPlatforms.includes('tiktok') ?
+                                                    'bg-black/10 dark:bg-white/15 border-black dark:border-white text-black dark:text-white font-bold shadow-xs' :
+                                                    'bg-black/[0.02] dark:bg-white/[0.02] border-black/10 dark:border-white/10 text-black/70 dark:text-white/70 hover:bg-black/[0.04]'">
+                                                <input type="checkbox" name="platforms[]" value="tiktok" x-model="selectedPlatforms" class="sr-only">
+                                                <div class="flex items-center justify-between">
+                                                    <div class="w-6 h-6 rounded-[7px] bg-black/10 dark:bg-white/10 text-black dark:text-white flex items-center justify-center shrink-0">
+                                                        <i data-lucide="video" class="w-3.5 h-3.5"></i>
+                                                    </div>
+                                                    <span class="w-2 h-2 rounded-full" :class="selectedPlatforms.includes('tiktok') ? 'bg-black dark:bg-white' : 'bg-black/10 dark:bg-white/20'"></span>
+                                                </div>
+                                                <div class="min-w-0">
+                                                    <div class="text-[12px] leading-tight font-bold">TikTok</div>
+                                                    <div class="text-[10px] opacity-70 truncate">Video Pendek</div>
+                                                </div>
+                                            </label>
+
+                                            {{-- LinkedIn --}}
+                                            <label class="p-2.5 rounded-[13px] border cursor-pointer transition-all flex flex-col gap-1.5"
+                                                :class="selectedPlatforms.includes('linkedin') ?
+                                                    'bg-[#0A66C2]/10 border-[#0A66C2] text-[#0A66C2] font-bold shadow-xs' :
+                                                    'bg-black/[0.02] dark:bg-white/[0.02] border-black/10 dark:border-white/10 text-black/70 dark:text-white/70 hover:bg-black/[0.04]'">
+                                                <input type="checkbox" name="platforms[]" value="linkedin" x-model="selectedPlatforms" class="sr-only">
+                                                <div class="flex items-center justify-between">
+                                                    <div class="w-6 h-6 rounded-[7px] bg-[#0A66C2]/15 text-[#0A66C2] flex items-center justify-center shrink-0">
+                                                        <i data-lucide="linkedin" class="w-3.5 h-3.5"></i>
+                                                    </div>
+                                                    <span class="w-2 h-2 rounded-full" :class="selectedPlatforms.includes('linkedin') ? 'bg-[#0A66C2]' : 'bg-black/10 dark:bg-white/20'"></span>
+                                                </div>
+                                                <div class="min-w-0">
+                                                    <div class="text-[12px] leading-tight font-bold">LinkedIn</div>
+                                                    <div class="text-[10px] opacity-70 truncate">Company Page</div>
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <div x-show="selectedPlatforms.length === 0" class="p-2.5 rounded-[10px] bg-[#FF3B30]/10 border border-[#FF3B30]/20 text-[11.5px] text-[#FF3B30] font-semibold flex items-center gap-1.5">
+                                            <i data-lucide="alert-circle" class="w-3.5 h-3.5 shrink-0"></i>
+                                            <span>Pilih minimal 1 saluran untuk mempublikasikan postingan platform.</span>
                                         </div>
                                     </div>
-                                </template>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div
-                        class="pt-3 flex items-center justify-end gap-3 border-t border-black/[0.06] dark:border-white/[0.08]">
-                        <button type="button" @click="openCreatePostModal = false"
-                            class="min-h-[42px] px-4 rounded-[11px] text-[13px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
-                            Batal
-                        </button>
-                        <button type="submit" :disabled="selectedPlatforms.length === 0"
-                            class="min-h-[42px] px-5 rounded-[11px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none transition-all inline-flex items-center gap-2 shadow-sm">
-                            <i data-lucide="send" class="w-4 h-4"></i>
-                            <span
-                                x-text="postPublishMode !== 'now' ? 'Simpan Postingan & Jadwal' : 'Publikasikan Sekarang'"></span>
-                        </button>
-                    </div>
-                </form>
+                                    {{-- 2. Pilihan Format Konten (Bento Segmented Selector) --}}
+                                    <div class="space-y-2">
+                                        <div class="flex items-center justify-between">
+                                            <label class="text-[11.5px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60">
+                                                Format Konten <span class="text-[#FF3B30]">*</span>
+                                            </label>
+                                            <span class="text-[11.5px] text-[#007AFF] font-semibold" x-text="postFormatLabel()"></span>
+                                        </div>
+                                        <div class="grid grid-cols-2 sm:grid-cols-6 gap-2">
+                                            {{-- Foto Tunggal --}}
+                                            <button type="button" @click="setMediaFormat('photo')"
+                                                :class="postFormat === 'photo' || postFormat === 'image' ? 'bg-[#007AFF] text-white shadow-sm ring-2 ring-[#007AFF]/30' : 'bg-black/[0.03] dark:bg-white/[0.05] text-black/70 dark:text-white/70 hover:bg-black/[0.06]'"
+                                                class="p-2.5 rounded-[14px] border border-black/5 dark:border-white/10 text-left transition-all flex flex-col gap-1 cursor-pointer">
+                                                <div class="flex items-center justify-between">
+                                                    <i data-lucide="image" class="w-4 h-4"></i>
+                                                    <span class="w-1.5 h-1.5 rounded-full" :class="postFormat === 'photo' || postFormat === 'image' ? 'bg-white' : 'bg-transparent'"></span>
+                                                </div>
+                                                <div class="text-[12px] font-bold leading-tight">Foto Tunggal</div>
+                                                <div class="text-[10px] opacity-75 truncate">Feed 4:5 / 1:1</div>
+                                            </button>
+
+                                            {{-- Carousel (Multi-Upload) --}}
+                                            <button type="button" @click="setMediaFormat('carousel')"
+                                                :class="postFormat === 'carousel' ? 'bg-[#FF9500] text-white shadow-sm ring-2 ring-[#FF9500]/30' : 'bg-black/[0.03] dark:bg-white/[0.05] text-black/70 dark:text-white/70 hover:bg-black/[0.06]'"
+                                                class="p-2.5 rounded-[14px] border border-black/5 dark:border-white/10 text-left transition-all flex flex-col gap-1 cursor-pointer">
+                                                <div class="flex items-center justify-between">
+                                                    <i data-lucide="layers" class="w-4 h-4"></i>
+                                                    <span class="w-1.5 h-1.5 rounded-full" :class="postFormat === 'carousel' ? 'bg-white' : 'bg-transparent'"></span>
+                                                </div>
+                                                <div class="text-[12px] font-bold leading-tight">Carousel</div>
+                                                <div class="text-[10px] opacity-75 truncate">2-10 Berkas</div>
+                                            </button>
+
+                                            {{-- Video Feed --}}
+                                            <button type="button" @click="setMediaFormat('video')"
+                                                :class="postFormat === 'video' ? 'bg-[#007AFF] text-white shadow-sm ring-2 ring-[#007AFF]/30' : 'bg-black/[0.03] dark:bg-white/[0.05] text-black/70 dark:text-white/70 hover:bg-black/[0.06]'"
+                                                class="p-2.5 rounded-[14px] border border-black/5 dark:border-white/10 text-left transition-all flex flex-col gap-1 cursor-pointer">
+                                                <div class="flex items-center justify-between">
+                                                    <i data-lucide="video" class="w-4 h-4"></i>
+                                                    <span class="w-1.5 h-1.5 rounded-full" :class="postFormat === 'video' ? 'bg-white' : 'bg-transparent'"></span>
+                                                </div>
+                                                <div class="text-[12px] font-bold leading-tight">Video Feed</div>
+                                                <div class="text-[10px] opacity-75 truncate">16:9 / Landscape</div>
+                                            </button>
+
+                                            {{-- Reels --}}
+                                            <button type="button" @click="setMediaFormat('reels')"
+                                                :class="postFormat === 'reels' ? 'bg-[#AF52DE] text-white shadow-sm ring-2 ring-[#AF52DE]/30' : 'bg-black/[0.03] dark:bg-white/[0.05] text-black/70 dark:text-white/70 hover:bg-black/[0.06]'"
+                                                class="p-2.5 rounded-[14px] border border-black/5 dark:border-white/10 text-left transition-all flex flex-col gap-1 cursor-pointer">
+                                                <div class="flex items-center justify-between">
+                                                    <i data-lucide="film" class="w-4 h-4"></i>
+                                                    <span class="w-1.5 h-1.5 rounded-full" :class="postFormat === 'reels' ? 'bg-white' : 'bg-transparent'"></span>
+                                                </div>
+                                                <div class="text-[12px] font-bold leading-tight">Reels Video</div>
+                                                <div class="text-[10px] opacity-75 truncate">Vertikal 9:16</div>
+                                            </button>
+
+                                            {{-- Story --}}
+                                            <button type="button" @click="setMediaFormat('story')"
+                                                :class="postFormat === 'story' ? 'bg-[#E1306C] text-white shadow-sm ring-2 ring-[#E1306C]/30' : 'bg-black/[0.03] dark:bg-white/[0.05] text-black/70 dark:text-white/70 hover:bg-black/[0.06]'"
+                                                class="p-2.5 rounded-[14px] border border-black/5 dark:border-white/10 text-left transition-all flex flex-col gap-1 cursor-pointer">
+                                                <div class="flex items-center justify-between">
+                                                    <i data-lucide="history" class="w-4 h-4"></i>
+                                                    <span class="w-1.5 h-1.5 rounded-full" :class="postFormat === 'story' ? 'bg-white' : 'bg-transparent'"></span>
+                                                </div>
+                                                <div class="text-[12px] font-bold leading-tight">Story</div>
+                                                <div class="text-[10px] opacity-75 truncate">Tayang 24 Jam</div>
+                                            </button>
+
+                                            {{-- Teks Saja --}}
+                                            <button type="button" @click="setMediaFormat('text')"
+                                                :class="postFormat === 'text' ? 'bg-[#34C759] text-white shadow-sm ring-2 ring-[#34C759]/30' : 'bg-black/[0.03] dark:bg-white/[0.05] text-black/70 dark:text-white/70 hover:bg-black/[0.06]'"
+                                                class="p-2.5 rounded-[14px] border border-black/5 dark:border-white/10 text-left transition-all flex flex-col gap-1 cursor-pointer">
+                                                <div class="flex items-center justify-between">
+                                                    <i data-lucide="align-left" class="w-4 h-4"></i>
+                                                    <span class="w-1.5 h-1.5 rounded-full" :class="postFormat === 'text' ? 'bg-white' : 'bg-transparent'"></span>
+                                                </div>
+                                                <div class="text-[12px] font-bold leading-tight">Teks Saja</div>
+                                                <div class="text-[10px] opacity-75 truncate">Threads / FB / LI</div>
+                                            </button>
+                                        </div>
+
+                                        {{-- Guidance helper for selected format --}}
+                                        <div class="p-2.5 rounded-[11px] bg-black/[0.03] dark:bg-white/[0.04] text-[11.5px] text-black/65 dark:text-white/65 flex items-center gap-2 border border-black/5 dark:border-white/5">
+                                            <i data-lucide="info" class="w-4 h-4 text-[#007AFF] shrink-0"></i>
+                                            <span x-show="postFormat === 'photo' || postFormat === 'image'">Format foto feed standar. Optimal untuk infografis produk, update fitur, promo, atau pengumuman resmi.</span>
+                                            <span x-show="postFormat === 'carousel'" style="display: none;">Carousel multi-gambar/video (2 hingga 10 berkas). Audiens dapat menggeser slide ke samping (swipeable).</span>
+                                            <span x-show="postFormat === 'video'" style="display: none;">Video Feed reguler (H.264/MP4). Optimal untuk video demonstrasi software, tutorial, dan webinar.</span>
+                                            <span x-show="postFormat === 'reels'" style="display: none;">Reels video vertikal 9:16 (1080x1920). Diterbitkan otomatis di Reels &amp; disinkronkan ke feed utama.</span>
+                                            <span x-show="postFormat === 'story'" style="display: none;">Instagram Story berdurasi 24 jam dengan visual penuh. Pada API resmi Meta, Story memprioritaskan visual tanpa teks caption panjang.</span>
+                                            <span x-show="postFormat === 'text'" style="display: none;">Format teks narasi murni tanpa media berkas. Didukung oleh Threads, Facebook, dan LinkedIn.</span>
+                                        </div>
+                                    </div>
+
+                                    {{-- 3. Media Upload Area (Single or Carousel) --}}
+                                    <div x-show="postFormat !== 'text'" class="space-y-3 pt-1">
+                                        <div class="flex items-center justify-between">
+                                            <label class="text-[11.5px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60">
+                                                Berkas Media Gambar / Video <span class="text-[#FF3B30]">*</span>
+                                            </label>
+                                            <div class="inline-flex p-0.5 rounded-[9px] bg-black/[0.04] dark:bg-white/[0.06] text-[11.5px] font-medium">
+                                                <button type="button" @click="mediaSourceTab = 'upload'"
+                                                    :class="mediaSourceTab === 'upload' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-bold' : 'text-black/60 dark:text-white/60'"
+                                                    class="px-2.5 py-1 rounded-[7px] transition-colors cursor-pointer">
+                                                    Unggah Berkas
+                                                </button>
+                                                <button type="button" @click="mediaSourceTab = 'url'"
+                                                    :class="mediaSourceTab === 'url' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-bold' : 'text-black/60 dark:text-white/60'"
+                                                    class="px-2.5 py-1 rounded-[7px] transition-colors cursor-pointer">
+                                                    URL Langsung
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        {{-- Mode A: Carousel Multi-Upload (2 - 10 Media) --}}
+                                        <div x-show="postFormat === 'carousel' && mediaSourceTab === 'upload'" class="space-y-3">
+                                            <input type="file" name="media_files[]" id="admin_carousel_files_input" x-ref="carouselInput" multiple
+                                                @change="handleCarouselFilesSelect($event)" accept="image/jpeg,image/png,image/webp,video/mp4" class="hidden">
+
+                                            <div class="flex items-center justify-between text-[12px]">
+                                                <span class="font-bold text-black/70 dark:text-white/70 flex items-center gap-1.5">
+                                                    <span>Urutan Slide Carousel:</span>
+                                                    <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-[#FF9500]/15 text-[#FF9500]" x-text="carouselItems.length + ' / 10 media'"></span>
+                                                </span>
+                                                <button type="button" @click="$refs.carouselInput.click()"
+                                                    class="px-3 py-1 rounded-[8px] bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF]/20 font-bold text-[11.5px] transition-colors flex items-center gap-1 cursor-pointer">
+                                                    <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                                                    <span>Tambah Slide Media</span>
+                                                </button>
+                                            </div>
+
+                                            {{-- Carousel Empty State Dropzone --}}
+                                            <div x-show="carouselItems.length === 0"
+                                                @click="$refs.carouselInput.click()"
+                                                @dragover.prevent="isDragging = true"
+                                                @dragleave.prevent="isDragging = false"
+                                                @drop.prevent="handleCarouselDrop($event)"
+                                                class="rounded-[18px] border-2 border-dashed p-6 text-center cursor-pointer transition-all group"
+                                                :class="isDragging ? 'border-[#FF9500] bg-[#FF9500]/10 scale-[1.01]' : 'border-black/15 dark:border-white/15 hover:border-[#FF9500] hover:bg-[#FF9500]/5'">
+                                                <div class="w-12 h-12 rounded-[14px] bg-[#FF9500]/10 text-[#FF9500] flex items-center justify-center mx-auto mb-2.5 transition-transform group-hover:scale-110">
+                                                    <i data-lucide="layers" class="w-6 h-6"></i>
+                                                </div>
+                                                <div class="text-[13px] font-bold text-black dark:text-white group-hover:text-[#FF9500] transition-colors">
+                                                    Tarik &amp; Lepas 2 hingga 10 Foto / Video di Sini
+                                                </div>
+                                                <p class="text-[11.5px] text-black/50 dark:text-white/50 mt-1">
+                                                    Mendukung JPG, PNG, WebP, MP4 hingga 20MB per berkas. Klik untuk memilih dari komputer.
+                                                </p>
+                                            </div>
+
+                                            {{-- Carousel Items Tray with Reordering & Sequence Badges --}}
+                                            <div x-show="carouselItems.length > 0" class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                                                <template x-for="(item, idx) in carouselItems" :key="idx">
+                                                    <div class="relative p-2 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 flex flex-col gap-2 group hover:border-[#FF9500]/50 transition-all">
+                                                        {{-- Sequence Badge --}}
+                                                        <div class="absolute top-3 left-3 w-5 h-5 rounded-full bg-black/80 backdrop-blur-md text-white text-[10.5px] font-bold flex items-center justify-center z-10 shadow-xs" x-text="idx + 1"></div>
+
+                                                        {{-- Thumbnail Preview --}}
+                                                        <div class="w-full aspect-square rounded-[10px] overflow-hidden bg-black/5 dark:bg-black/30 flex items-center justify-center relative">
+                                                            <template x-if="item.mime.startsWith('image/')">
+                                                                <img :src="item.previewUrl" class="w-full h-full object-cover">
+                                                            </template>
+                                                            <template x-if="item.mime.startsWith('video/')">
+                                                                <video :src="item.previewUrl" class="w-full h-full object-cover"></video>
+                                                            </template>
+                                                        </div>
+
+                                                        {{-- Slide Title --}}
+                                                        <div class="text-[11px] font-medium text-black/70 dark:text-white/70 truncate px-0.5" x-text="item.name"></div>
+
+                                                        {{-- Reorder & Delete Controls --}}
+                                                        <div class="flex items-center justify-between text-[11px] pt-0.5 border-t border-black/5 dark:border-white/5">
+                                                            <div class="flex items-center gap-1">
+                                                                <button type="button" @click="moveCarouselItem(idx, -1)" :disabled="idx === 0"
+                                                                    class="w-6 h-6 rounded-[6px] bg-black/5 dark:bg-white/10 hover:bg-black/10 flex items-center justify-center disabled:opacity-25 transition-opacity cursor-pointer">
+                                                                    <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i>
+                                                                </button>
+                                                                <button type="button" @click="moveCarouselItem(idx, 1)" :disabled="idx === carouselItems.length - 1"
+                                                                    class="w-6 h-6 rounded-[6px] bg-black/5 dark:bg-white/10 hover:bg-black/10 flex items-center justify-center disabled:opacity-25 transition-opacity cursor-pointer">
+                                                                    <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                                                                </button>
+                                                            </div>
+                                                            <button type="button" @click="removeCarouselItem(idx)"
+                                                                class="w-6 h-6 rounded-[6px] text-[#FF3B30] hover:bg-[#FF3B30]/10 flex items-center justify-center transition-colors cursor-pointer">
+                                                                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                            </div>
+                                        </div>
+
+                                        {{-- Mode B: Single File Upload (Photo, Video, Reels, Story) --}}
+                                        <div x-show="postFormat !== 'carousel' && mediaSourceTab === 'upload'" class="space-y-2.5">
+                                            <input type="file" name="media_file" id="admin_media_file_input" x-ref="fileInput"
+                                                @change="handleFileSelect($event)"
+                                                :accept="postFormat === 'photo' || postFormat === 'image' ? 'image/jpeg,image/png,image/webp,image/gif' : (postFormat === 'video' || postFormat === 'reels' ? 'video/mp4,video/quicktime' : 'image/jpeg,image/png,image/webp,video/mp4,video/quicktime')"
+                                                class="hidden">
+
+                                            {{-- Drop Zone when empty --}}
+                                            <div x-show="!filePreviewUrl"
+                                                @click="$refs.fileInput.click()"
+                                                @dragover.prevent="isDragging = true"
+                                                @dragleave.prevent="isDragging = false"
+                                                @drop.prevent="handleFileDrop($event)"
+                                                class="rounded-[18px] border-2 border-dashed p-6 text-center cursor-pointer transition-all group"
+                                                :class="isDragging ? 'border-[#007AFF] bg-[#007AFF]/10 scale-[1.01]' : 'border-black/15 dark:border-white/15 hover:border-[#007AFF] hover:bg-[#007AFF]/5'">
+                                                <div class="w-12 h-12 rounded-[14px] bg-black/[0.04] dark:bg-white/[0.06] text-black/50 dark:text-white/50 group-hover:text-[#007AFF] group-hover:scale-110 transition-all flex items-center justify-center mx-auto mb-2.5">
+                                                    <i data-lucide="upload-cloud" class="w-6 h-6"></i>
+                                                </div>
+                                                <div class="text-[13px] font-bold text-black dark:text-white group-hover:text-[#007AFF] transition-colors">
+                                                    Tarik &amp; Lepas Berkas di Sini, atau Klik untuk Memilih
+                                                </div>
+                                                <p class="text-[11.5px] text-black/50 dark:text-white/50 mt-1"
+                                                    x-text="postFormat === 'reels' ? 'Wajib video vertikal MP4/MOV (H.264) rasio 9:16 hingga 100MB' : ((postFormat === 'video') ? 'Video horizontal MP4/MOV hingga 100MB (Rasio 16:9 disarankan)' : 'Foto JPG, PNG, WebP hingga 15MB • Rekomendasi rasio 4:5 (1080x1350) atau 1:1')">
+                                                </p>
+                                            </div>
+
+                                            {{-- File Preview Card when selected --}}
+                                            <div x-show="filePreviewUrl" style="display: none;"
+                                                class="rounded-[16px] bg-black/[0.02] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 p-3.5 flex items-center justify-between gap-3">
+                                                <div class="flex items-center gap-3 min-w-0">
+                                                    <template x-if="fileMime && fileMime.startsWith('image/')">
+                                                        <img :src="filePreviewUrl" alt="Pratinjau Foto" class="w-16 h-16 rounded-[10px] object-cover border border-black/10 dark:border-white/10 shrink-0">
+                                                    </template>
+                                                    <template x-if="fileMime && fileMime.startsWith('video/')">
+                                                        <video :src="filePreviewUrl" controls class="w-24 h-16 rounded-[10px] object-cover bg-black shrink-0"></video>
+                                                    </template>
+                                                    <div class="min-w-0">
+                                                        <div class="text-[13px] font-bold text-black dark:text-white truncate" x-text="fileName"></div>
+                                                        <div class="text-[11.5px] text-black/50 dark:text-white/50 flex items-center gap-2 mt-0.5">
+                                                            <span x-text="fileSize"></span>
+                                                            <span>•</span>
+                                                            <span class="uppercase font-semibold text-[#007AFF]" x-text="postFormat"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-center gap-1.5 shrink-0">
+                                                    <button type="button" @click="$refs.fileInput.click()"
+                                                        class="h-8 px-2.5 rounded-[8px] text-[11.5px] font-semibold text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer">
+                                                        Ganti Berkas
+                                                    </button>
+                                                    <button type="button" @click="clearFile()"
+                                                        class="h-8 w-8 rounded-[8px] text-[#FF3B30] hover:bg-[#FF3B30]/10 transition-colors flex items-center justify-center cursor-pointer">
+                                                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {{-- Mode C: Direct URL --}}
+                                        <div x-show="mediaSourceTab === 'url'" style="display: none;" class="space-y-1.5">
+                                            <div class="relative">
+                                                <i data-lucide="link" class="w-4 h-4 absolute left-3 top-3 text-black/40 dark:text-white/40"></i>
+                                                <input type="url" name="media_url" x-model="mediaUrl"
+                                                    placeholder="https://cdn.cooca.id/promo/cooca-erp-v2.jpg"
+                                                    class="w-full h-10 pl-9 pr-3 rounded-[12px] text-[13px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                            </div>
+                                            <p class="text-[11px] text-black/50 dark:text-white/50">
+                                                Pastikan URL dapat diakses publik dengan protokol HTTPS untuk diunduh langsung oleh server Instagram, Facebook, dan TikTok Graph API.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    {{-- 4. Isi Caption & Tagar --}}
+                                    <div class="space-y-2">
+                                        <div class="flex items-center justify-between">
+                                            <label class="text-[11.5px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60">
+                                                Caption / Isi Postingan
+                                                <span x-show="postFormat === 'story'" class="text-[10.5px] font-normal lowercase opacity-70">(opsional untuk story)</span>
+                                            </label>
+                                            <div class="flex items-center gap-2">
+                                                <span class="px-2 py-0.5 rounded-full text-[10.5px] font-bold inline-flex items-center gap-1 border transition-colors"
+                                                    :class="hashtagCount <= 5 ? 'bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158] border-[#34C759]/30' : 'bg-[#FF3B30]/15 text-[#FF3B30] border-[#FF3B30]/30'">
+                                                    <i data-lucide="hash" class="w-3 h-3"></i>
+                                                    <span x-text="hashtagCount + ' / 5 tagar'"></span>
+                                                </span>
+                                                <span class="text-[11.5px] font-mono text-black/45 dark:text-white/45">
+                                                    <span x-text="postCaption.length"></span> / 2.200
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <textarea name="content" x-model="postCaption" rows="4" :required="postFormat !== 'story'"
+                                            maxlength="2200"
+                                            :placeholder="postFormat === 'story' ?
+                                                'Caption opsional (Instagram Story memprioritaskan visual media)...' :
+                                                'Tuliskan caption postingan resmi Cooca... Jelaskan fitur baru, solusi sistem kasir, atau promo berlangganan UMKM.'"
+                                            class="w-full bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/15 rounded-[14px] p-3.5 text-[13px] text-black dark:text-white placeholder-black/35 dark:placeholder-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40 resize-none transition-all"></textarea>
+
+                                        {{-- Alert Exceeding 5 Hashtags --}}
+                                        <div x-show="hashtagCount > 5" style="display: none;"
+                                            class="p-2.5 rounded-[11px] bg-[#FF3B30]/10 border border-[#FF3B30]/25 text-[11.5px] text-[#FF3B30] flex items-center gap-2">
+                                            <i data-lucide="alert-triangle" class="w-4 h-4 shrink-0"></i>
+                                            <span>Maksimal 5 tagar direkomendasikan algoritma Meta untuk jangkauan organik terbaik. Kurangi <span x-text="hashtagCount - 5" class="font-bold"></span> tagar.</span>
+                                        </div>
+
+                                        {{-- Chip Tagar Cepat Cooca --}}
+                                        <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
+                                            <span class="text-[11px] text-black/45 dark:text-white/45">Tagar resmi:</span>
+                                            @foreach (['#CoocaERP', '#UMKMIndonesia', '#KasirDigital', '#BisnisSukses', '#SaaSMaju'] as $tag)
+                                                <button type="button" @click="insertHashtag('{{ $tag }}')"
+                                                    class="px-2 py-0.5 rounded-[7px] text-[11px] font-mono bg-black/[0.04] dark:bg-white/[0.06] text-[#007AFF] hover:bg-[#007AFF]/10 transition-colors cursor-pointer">
+                                                    {{ $tag }}
+                                                </button>
+                                            @endforeach
+                                        </div>
+                                    </div>
+
+                                    {{-- 5. Opsi Waktu Publikasi (Multi-Mode & Per-Channel Support) --}}
+                                    <div class="p-3.5 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 space-y-3">
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <span class="text-[12.5px] font-bold text-black dark:text-white">Waktu &amp; Penjadwalan Publikasi</span>
+                                                <p class="text-[11px] text-black/50 dark:text-white/50">Pilih penayangan langsung serentak atau atur jadwal per saluran</p>
+                                            </div>
+                                            <span class="px-2 py-0.5 rounded-full text-[10.5px] font-semibold bg-[#007AFF]/10 text-[#007AFF]">Fleksibel</span>
+                                        </div>
+
+                                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[12px]">
+                                            <label class="p-2.5 rounded-[10px] border cursor-pointer transition-all flex items-center gap-2"
+                                                :class="postPublishMode === 'now' ?
+                                                    'bg-[#007AFF]/10 border-[#007AFF] text-black dark:text-white font-bold shadow-xs' :
+                                                    'bg-white dark:bg-[#2C2C2E] border-black/10 dark:border-white/10 text-black/70 dark:text-white/70'">
+                                                <input type="radio" name="timing_mode" value="now" x-model="postPublishMode" class="sr-only">
+                                                <i data-lucide="zap" class="w-3.5 h-3.5 text-[#007AFF]"></i>
+                                                <span>Langsung Sekarang</span>
+                                            </label>
+
+                                            <label class="p-2.5 rounded-[10px] border cursor-pointer transition-all flex items-center gap-2"
+                                                :class="postPublishMode === 'schedule_all' ?
+                                                    'bg-[#5856D6]/10 border-[#5856D6] text-black dark:text-white font-bold shadow-xs' :
+                                                    'bg-white dark:bg-[#2C2C2E] border-black/10 dark:border-white/10 text-black/70 dark:text-white/70'">
+                                                <input type="radio" name="timing_mode" value="schedule_all" x-model="postPublishMode" class="sr-only">
+                                                <i data-lucide="clock" class="w-3.5 h-3.5 text-[#5856D6]"></i>
+                                                <span>Jadwal Serentak</span>
+                                            </label>
+
+                                            <label class="p-2.5 rounded-[10px] border cursor-pointer transition-all flex items-center gap-2"
+                                                :class="postPublishMode === 'per_channel' ?
+                                                    'bg-[#FF9500]/10 border-[#FF9500] text-black dark:text-white font-bold shadow-xs' :
+                                                    'bg-white dark:bg-[#2C2C2E] border-black/10 dark:border-white/10 text-black/70 dark:text-white/70'">
+                                                <input type="radio" name="timing_mode" value="per_channel" x-model="postPublishMode" class="sr-only">
+                                                <i data-lucide="sliders" class="w-3.5 h-3.5 text-[#FF9500]"></i>
+                                                <span>Beda per Saluran</span>
+                                            </label>
+                                        </div>
+
+                                        {{-- Mode B: Jadwal Serentak --}}
+                                        <div x-show="postPublishMode === 'schedule_all'" style="display: none;"
+                                            class="pt-2 border-t border-black/5 dark:border-white/5 space-y-1.5">
+                                            <label class="block text-[11.5px] font-semibold text-black/70 dark:text-white/70">Pilih Tanggal &amp; Jam Penayangan Serentak</label>
+                                            <input type="datetime-local" name="scheduled_at"
+                                                class="w-full min-h-[38px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/15 rounded-[10px] px-3 text-[12.5px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5856D6]">
+                                            <p class="text-[11px] text-black/50 dark:text-white/50">
+                                                Seluruh saluran yang dipilih akan otomatis dipublikasikan bersamaan saat waktu tiba.
+                                            </p>
+                                        </div>
+
+                                        {{-- Mode C: Beda Waktu per Saluran --}}
+                                        <div x-show="postPublishMode === 'per_channel'" style="display: none;"
+                                            class="pt-2 border-t border-black/5 dark:border-white/5 space-y-2.5">
+                                            <p class="text-[11.5px] text-black/60 dark:text-white/60">
+                                                Atur waktu spesifik per media sosial (misal: Instagram langsung sekarang, Facebook jam 2 siang, Threads nanti malam):
+                                            </p>
+                                            <div class="space-y-2">
+                                                <template x-for="ch in selectedPlatforms" :key="ch">
+                                                    <div class="p-3 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 space-y-2">
+                                                        <div class="flex items-center justify-between">
+                                                            <div class="flex items-center gap-2">
+                                                                <div class="w-6 h-6 rounded-[6px] flex items-center justify-center"
+                                                                    :class="ch === 'instagram' ? 'bg-[#E1306C]/15 text-[#E1306C]' : (
+                                                                        ch === 'facebook' ? 'bg-[#1877F2]/15 text-[#1877F2]' : (
+                                                                        ch === 'linkedin' ? 'bg-[#0A66C2]/15 text-[#0A66C2]' :
+                                                                        'bg-black/10 dark:bg-white/15 text-black dark:text-white'))">
+                                                                    <template x-if="ch === 'instagram'"><i data-lucide="instagram" class="w-3.5 h-3.5"></i></template>
+                                                                    <template x-if="ch === 'facebook'"><i data-lucide="facebook" class="w-3.5 h-3.5"></i></template>
+                                                                    <template x-if="ch === 'threads'"><i data-lucide="at-sign" class="w-3.5 h-3.5"></i></template>
+                                                                    <template x-if="ch === 'tiktok'"><i data-lucide="video" class="w-3.5 h-3.5"></i></template>
+                                                                    <template x-if="ch === 'linkedin'"><i data-lucide="linkedin" class="w-3.5 h-3.5"></i></template>
+                                                                </div>
+                                                                <span class="text-[12.5px] font-bold capitalize text-black dark:text-white" x-text="ch"></span>
+                                                            </div>
+                                                            <div class="inline-flex p-0.5 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] text-[11px]">
+                                                                <button type="button" @click="channelTiming[ch] = 'now'"
+                                                                    :class="channelTiming[ch] === 'now' ? 'bg-white dark:bg-[#1C1C1E] text-[#007AFF] font-bold shadow-xs' : 'text-black/60 dark:text-white/60'"
+                                                                    class="px-2.5 py-0.5 rounded-[6px] transition-colors cursor-pointer">
+                                                                    Langsung
+                                                                </button>
+                                                                <button type="button" @click="channelTiming[ch] = 'schedule'"
+                                                                    :class="channelTiming[ch] === 'schedule' ? 'bg-white dark:bg-[#1C1C1E] text-[#FF9500] font-bold shadow-xs' : 'text-black/60 dark:text-white/60'"
+                                                                    class="px-2.5 py-0.5 rounded-[6px] transition-colors cursor-pointer">
+                                                                    Jadwalkan
+                                                                </button>
+                                                            </div>
+                                                        </div>
+
+                                                        <input type="hidden" :name="'platform_timing[' + ch + ']'" :value="channelTiming[ch]">
+
+                                                        <div x-show="channelTiming[ch] === 'schedule'" class="pt-1.5 border-t border-black/5 dark:border-white/5">
+                                                            <input type="datetime-local" :name="'platform_scheduled_at[' + ch + ']'"
+                                                                x-model="channelScheduledAt[ch]"
+                                                                class="w-full h-8 px-2.5 rounded-[8px] text-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#FF9500]">
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- RIGHT COLUMN: LIVE OMNICHANNEL PREVIEW & INSPECTOR (Col-span 5) --}}
+                                <div class="lg:col-span-5 space-y-4 lg:sticky lg:top-4">
+
+                                    {{-- Video Aspect Ratio Inspector Alert --}}
+                                    <div x-show="(postFormat === 'reels' || postFormat === 'video') && isLandscapeVideo" style="display: none;"
+                                        class="p-3.5 rounded-[16px] bg-[#FF3B30]/10 border border-[#FF3B30]/25 text-[#FF3B30] space-y-1.5 shadow-xs">
+                                        <div class="flex items-center gap-2 font-bold text-[12.5px]">
+                                            <i data-lucide="smartphone" class="w-4 h-4 shrink-0"></i>
+                                            <span>Video Horizontal Terdeteksi (<span x-text="videoRatio ? videoRatio + ':1' : ''"></span>)</span>
+                                        </div>
+                                        <p class="text-[11.5px] leading-relaxed opacity-90">
+                                            Video yang diunggah berukuran <span x-text="videoWidth + 'x' + videoHeight" class="font-mono font-bold"></span>. Untuk Instagram Reels &amp; TikTok, disarankan format vertikal 9:16 (1080x1920) agar memenuhi layar smartphone secara sempurna.
+                                        </p>
+                                    </div>
+
+                                    <div x-show="(postFormat === 'reels' || postFormat === 'video') && !isLandscapeVideo && videoWidth && videoHeight" style="display: none;"
+                                        class="p-2.5 rounded-[12px] bg-[#34C759]/10 border border-[#34C759]/25 text-[#248A3D] dark:text-[#30D158] flex items-center gap-2 text-[11.5px] font-semibold">
+                                        <i data-lucide="check-circle-2" class="w-4 h-4 shrink-0"></i>
+                                        <span>Rasio vertikal optimal terdeteksi (<span x-text="videoWidth + 'x' + videoHeight" class="font-mono"></span>).</span>
+                                    </div>
+
+                                    {{-- LIVE SMARTPHONE PREVIEW CARD (Apple HIG Bento) --}}
+                                    <div class="rounded-[22px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 p-3.5 space-y-3">
+                                        <div class="flex items-center justify-between pb-2 border-b border-black/5 dark:border-white/5">
+                                            <div class="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-black/55 dark:text-white/55">
+                                                <i data-lucide="smartphone" class="w-3.5 h-3.5 text-[#007AFF]"></i>
+                                                <span>Pratinjau Saluran Live</span>
+                                            </div>
+                                            <div class="flex items-center gap-1.5">
+                                                <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-[#007AFF]/10 text-[#007AFF]" x-text="postFormat.toUpperCase()"></span>
+                                                <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-black/5 dark:bg-white/10 text-black/70 dark:text-white/70" x-text="previewAspectRatio"></span>
+                                            </div>
+                                        </div>
+
+                                        {{-- Aspect Ratio & Social Media Size Toolbar --}}
+                                        <div class="space-y-1.5" x-show="postFormat !== 'text'">
+                                            <div class="flex items-center justify-between text-[11px]">
+                                                <span class="font-bold text-black/60 dark:text-white/60">Simulasi Rasio:</span>
+                                                <span class="text-[10px] font-medium text-[#007AFF] truncate max-w-[210px]" x-text="getAspectRatioDescription()"></span>
+                                            </div>
+                                            <div class="grid grid-cols-4 gap-1 p-1 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] text-[11px] font-bold">
+                                                {{-- 4:5 Feed IG --}}
+                                                <button type="button" @click="previewAspectRatio = '4:5'"
+                                                    :class="previewAspectRatio === '4:5' ? 'bg-white dark:bg-[#2C2C2E] text-[#007AFF] shadow-xs ring-1 ring-[#007AFF]/30' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
+                                                    class="py-1.5 rounded-[9px] transition-all flex flex-col items-center justify-center gap-0.5 cursor-pointer">
+                                                    <span class="text-[12px]">4:5</span>
+                                                    <span class="text-[9px] opacity-75 font-normal">Feed IG</span>
+                                                </button>
+                                                {{-- 1:1 Square --}}
+                                                <button type="button" @click="previewAspectRatio = '1:1'"
+                                                    :class="previewAspectRatio === '1:1' ? 'bg-white dark:bg-[#2C2C2E] text-[#007AFF] shadow-xs ring-1 ring-[#007AFF]/30' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
+                                                    class="py-1.5 rounded-[9px] transition-all flex flex-col items-center justify-center gap-0.5 cursor-pointer">
+                                                    <span class="text-[12px]">1:1</span>
+                                                    <span class="text-[9px] opacity-75 font-normal">Square</span>
+                                                </button>
+                                                {{-- 9:16 Reels / Story --}}
+                                                <button type="button" @click="previewAspectRatio = '9:16'"
+                                                    :class="previewAspectRatio === '9:16' ? 'bg-white dark:bg-[#2C2C2E] text-[#AF52DE] shadow-xs ring-1 ring-[#AF52DE]/30' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
+                                                    class="py-1.5 rounded-[9px] transition-all flex flex-col items-center justify-center gap-0.5 cursor-pointer">
+                                                    <span class="text-[12px]">9:16</span>
+                                                    <span class="text-[9px] opacity-75 font-normal">Reels</span>
+                                                </button>
+                                                {{-- 16:9 Landscape --}}
+                                                <button type="button" @click="previewAspectRatio = '16:9'"
+                                                    :class="previewAspectRatio === '16:9' ? 'bg-white dark:bg-[#2C2C2E] text-[#FF9500] shadow-xs ring-1 ring-[#FF9500]/30' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
+                                                    class="py-1.5 rounded-[9px] transition-all flex flex-col items-center justify-center gap-0.5 cursor-pointer">
+                                                    <span class="text-[12px]">16:9</span>
+                                                    <span class="text-[9px] opacity-75 font-normal">Landscape</span>
+                                                </button>
+                                            </div>
+
+                                            {{-- Fit / Cover mode pill switcher --}}
+                                            <div class="flex items-center justify-between text-[10.5px] px-1 pt-0.5 text-black/50 dark:text-white/50">
+                                                <span>Mode Tampilan:</span>
+                                                <div class="inline-flex items-center gap-1.5">
+                                                    <button type="button" @click="mediaFitMode = 'cover'"
+                                                        :class="mediaFitMode === 'cover' ? 'text-[#007AFF] font-bold underline' : 'hover:text-black dark:hover:text-white'"
+                                                        class="cursor-pointer">
+                                                        Cover (Penuh)
+                                                    </button>
+                                                    <span>•</span>
+                                                    <button type="button" @click="mediaFitMode = 'contain'"
+                                                        :class="mediaFitMode === 'contain' ? 'text-[#007AFF] font-bold underline' : 'hover:text-black dark:hover:text-white'"
+                                                        class="cursor-pointer">
+                                                        Fit (Utuh)
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {{-- Phone Card Container --}}
+                                        <div class="rounded-[20px] bg-white dark:bg-[#151516] border border-black/10 dark:border-white/10 shadow-lg overflow-hidden text-black dark:text-white transition-all duration-300"
+                                            :class="getPreviewCardWidthClass()">
+
+                                            {{-- Reels Top Bar (when 9:16) --}}
+                                            <div x-show="previewAspectRatio === '9:16'" class="px-3.5 py-2.5 bg-black text-white flex items-center justify-between text-[11px] font-bold">
+                                                <div class="flex items-center gap-1.5">
+                                                    <span class="text-[13px] tracking-tight">Reels</span>
+                                                    <i data-lucide="chevron-down" class="w-3.5 h-3.5 opacity-70"></i>
+                                                </div>
+                                                <div class="flex items-center gap-2 opacity-80">
+                                                    <i data-lucide="camera" class="w-4 h-4"></i>
+                                                </div>
+                                            </div>
+
+                                            {{-- Post Card Header (Feed mode: 4:5, 1:1, 16:9) --}}
+                                            <div x-show="previewAspectRatio !== '9:16'" class="p-3 flex items-center justify-between">
+                                                <div class="flex items-center gap-2.5 min-w-0">
+                                                    <div class="w-8 h-8 rounded-full bg-gradient-to-br from-[#1877F2] via-[#E1306C] to-[#000000] text-white font-bold text-[11px] flex items-center justify-center shrink-0 shadow-xs">
+                                                        C
+                                                    </div>
+                                                    <div class="min-w-0">
+                                                        <div class="text-[12.5px] font-bold truncate flex items-center gap-1">
+                                                            <span>cooca.indonesia</span>
+                                                            <i data-lucide="badge-check" class="w-3.5 h-3.5 text-[#007AFF] fill-[#007AFF]"></i>
+                                                        </div>
+                                                        <div class="text-[10px] text-black/50 dark:text-white/50 flex items-center gap-1 truncate">
+                                                            <span x-text="postPublishMode === 'now' ? 'Baru saja' : 'Terjadwal'"></span>
+                                                            <span>•</span>
+                                                            <span x-text="selectedPlatforms.length ? selectedPlatforms.join(', ') : 'Saluran platform'"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <i data-lucide="more-horizontal" class="w-4 h-4 text-black/40 dark:text-white/40"></i>
+                                            </div>
+
+                                            {{-- Post Media Display Area --}}
+                                            <div class="bg-black/5 dark:bg-black/30 relative flex items-center justify-center overflow-hidden transition-all duration-200"
+                                                :class="getPreviewAspectClass()">
+
+                                                {{-- Single Photo Preview --}}
+                                                <template x-if="postFormat === 'photo' || postFormat === 'image' || postFormat === 'story'">
+                                                    <div class="w-full h-full flex items-center justify-center">
+                                                        <template x-if="filePreviewUrl">
+                                                            <img :src="filePreviewUrl" class="w-full h-full" :class="mediaFitMode === 'contain' ? 'object-contain bg-black' : 'object-cover'">
+                                                        </template>
+                                                        <template x-if="!filePreviewUrl && mediaSourceTab === 'url' && mediaUrl">
+                                                            <img :src="mediaUrl" class="w-full h-full" :class="mediaFitMode === 'contain' ? 'object-contain bg-black' : 'object-cover'">
+                                                        </template>
+                                                        <template x-if="!filePreviewUrl && (!mediaUrl || mediaSourceTab !== 'url')">
+                                                            <div class="text-center p-6 space-y-2">
+                                                                <div class="w-12 h-12 rounded-[14px] bg-black/5 dark:bg-white/10 flex items-center justify-center mx-auto text-black/40 dark:text-white/40">
+                                                                    <i data-lucide="image" class="w-6 h-6"></i>
+                                                                </div>
+                                                                <div class="text-[11.5px] font-medium text-black/50 dark:text-white/50">Pratinjau Foto Platform</div>
+                                                            </div>
+                                                        </template>
+                                                    </div>
+                                                </template>
+
+                                                {{-- Carousel Preview --}}
+                                                <template x-if="postFormat === 'carousel'">
+                                                    <div class="w-full h-full relative flex items-center justify-center">
+                                                        <template x-if="carouselItems.length > 0">
+                                                            <div class="w-full h-full relative">
+                                                                <template x-if="carouselItems[activePreviewSlide] && carouselItems[activePreviewSlide].mime.startsWith('image/')">
+                                                                    <img :src="carouselItems[activePreviewSlide].previewUrl" class="w-full h-full" :class="mediaFitMode === 'contain' ? 'object-contain bg-black' : 'object-cover'">
+                                                                </template>
+                                                                <template x-if="carouselItems[activePreviewSlide] && carouselItems[activePreviewSlide].mime.startsWith('video/')">
+                                                                    <video :src="carouselItems[activePreviewSlide].previewUrl" class="w-full h-full" :class="mediaFitMode === 'contain' ? 'object-contain bg-black' : 'object-cover'" controls></video>
+                                                                </template>
+                                                                {{-- Slide Counter Pill --}}
+                                                                <div class="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-full bg-black/70 backdrop-blur-md text-white text-[10px] font-bold">
+                                                                    <span x-text="(activePreviewSlide + 1) + ' / ' + carouselItems.length"></span>
+                                                                </div>
+                                                                {{-- Slide Navigation Arrows --}}
+                                                                <div x-show="carouselItems.length > 1" class="absolute inset-x-2 top-1/2 -translate-y-1/2 flex items-center justify-between pointer-events-none">
+                                                                    <button type="button" @click="activePreviewSlide = Math.max(0, activePreviewSlide - 1)"
+                                                                        :disabled="activePreviewSlide === 0"
+                                                                        class="w-7 h-7 rounded-full bg-black/60 text-white flex items-center justify-center pointer-events-auto disabled:opacity-20 transition-opacity cursor-pointer">
+                                                                        <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                                                                    </button>
+                                                                    <button type="button" @click="activePreviewSlide = Math.min(carouselItems.length - 1, activePreviewSlide + 1)"
+                                                                        :disabled="activePreviewSlide === carouselItems.length - 1"
+                                                                        class="w-7 h-7 rounded-full bg-black/60 text-white flex items-center justify-center pointer-events-auto disabled:opacity-20 transition-opacity cursor-pointer">
+                                                                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </template>
+                                                        <template x-if="carouselItems.length === 0">
+                                                            <div class="text-center p-6 space-y-2">
+                                                                <div class="w-12 h-12 rounded-[14px] bg-[#FF9500]/10 flex items-center justify-center mx-auto text-[#FF9500]">
+                                                                    <i data-lucide="layers" class="w-6 h-6"></i>
+                                                                </div>
+                                                                <div class="text-[11.5px] font-medium text-black/50 dark:text-white/50">Belum ada slide media dipilih</div>
+                                                            </div>
+                                                        </template>
+                                                    </div>
+                                                </template>
+
+                                                {{-- Video / Reels Preview --}}
+                                                <template x-if="postFormat === 'video' || postFormat === 'reels'">
+                                                    <div class="w-full h-full flex items-center justify-center bg-black">
+                                                        <template x-if="filePreviewUrl">
+                                                            <video :src="filePreviewUrl" controls class="w-full h-full" :class="mediaFitMode === 'contain' ? 'object-contain' : 'object-cover'"></video>
+                                                        </template>
+                                                        <template x-if="!filePreviewUrl && mediaSourceTab === 'url' && mediaUrl">
+                                                            <video :src="mediaUrl" controls class="w-full h-full" :class="mediaFitMode === 'contain' ? 'object-contain' : 'object-cover'"></video>
+                                                        </template>
+                                                        <template x-if="!filePreviewUrl && (!mediaUrl || mediaSourceTab !== 'url')">
+                                                            <div class="text-center p-6 space-y-2">
+                                                                <div class="w-12 h-12 rounded-[14px] bg-white/10 flex items-center justify-center mx-auto text-white/50">
+                                                                    <i data-lucide="video" class="w-6 h-6"></i>
+                                                                </div>
+                                                                <div class="text-[11.5px] font-medium text-white/60">Pratinjau Video Platform</div>
+                                                            </div>
+                                                        </template>
+                                                    </div>
+                                                </template>
+
+                                                {{-- Text Format Preview --}}
+                                                <template x-if="postFormat === 'text'">
+                                                    <div class="w-full h-full p-4 flex flex-col justify-center bg-gradient-to-br from-black/[0.03] to-black/[0.06] dark:from-white/[0.03] dark:to-white/[0.06]">
+                                                        <p class="text-[13px] leading-relaxed text-black/80 dark:text-white/80 italic font-serif"
+                                                            x-text="postCaption ? postCaption : 'Pratinjau konten teks postingan Threads / Facebook / LinkedIn...'"></p>
+                                                    </div>
+                                                </template>
+                                            </div>
+
+                                            {{-- Engagement Action Bar --}}
+                                            <div class="p-3 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
+                                                <div class="flex items-center gap-3">
+                                                    <i data-lucide="heart" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
+                                                    <i data-lucide="message-circle" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
+                                                    <i data-lucide="send" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
+                                                </div>
+                                                <i data-lucide="bookmark" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
+                                            </div>
+
+                                            {{-- Live Caption Display --}}
+                                            <div class="px-3 pb-3 text-[12px] leading-relaxed space-y-1">
+                                                <div class="text-black/85 dark:text-white/85">
+                                                    <span class="font-bold mr-1.5">cooca.indonesia</span>
+                                                    <span x-text="postCaption ? (postCaption.length > 140 ? postCaption.slice(0, 140) + '...' : postCaption) : 'Caption postingan resmi platform Cooca akan ditampilkan di sini.'"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{-- Brand Integrity Reminder Card --}}
+                                    <div class="p-3.5 rounded-[16px] bg-[#007AFF]/10 border border-[#007AFF]/20 text-[#007AFF] space-y-1 shadow-xs">
+                                        <div class="flex items-center gap-2 font-bold text-[12px]">
+                                            <i data-lucide="shield-check" class="w-4 h-4 shrink-0"></i>
+                                            <span>Standar Konten Platform Resmi</span>
+                                        </div>
+                                        <p class="text-[11px] leading-relaxed opacity-90">
+                                            Konten yang dipublikasikan dari Admin Center merepresentasikan brand resmi Cooca Indonesia. Pastikan visual tajam dan narasi selaras dengan identitas brand.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- Modal Footer Actions --}}
+                            <div class="pt-4 flex items-center justify-end gap-3 border-t border-black/[0.06] dark:border-white/[0.08]">
+                                <button type="button" @click="openCreatePostModal = false"
+                                    class="min-h-[42px] px-4 rounded-[11px] text-[13px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer">
+                                    Batal
+                                </button>
+                                <button type="submit" :disabled="selectedPlatforms.length === 0 || isSubmitting"
+                                    class="min-h-[42px] px-5 rounded-[11px] text-[13px] font-bold text-white bg-gradient-to-r from-[#1877F2] to-[#E1306C] hover:opacity-95 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none transition-all inline-flex items-center gap-2 shadow-sm cursor-pointer">
+                                    <i data-lucide="send" class="w-4 h-4"></i>
+                                    <span x-text="isSubmitting ? 'Memproses...' : (postPublishMode !== 'now' ? 'Simpan Postingan & Jadwal' : 'Publikasikan Sekarang')"></span>
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -1909,14 +2325,266 @@
                     linkedin: ''
                 },
                 postCaption: '',
-                postFormat: 'image',
+                postFormat: 'photo', // 'photo' | 'carousel' | 'video' | 'reels' | 'story' | 'text'
                 postPublishMode: 'now',
                 copied: null,
 
+                // Media upload state
+                mediaSourceTab: 'upload', // 'upload' | 'url'
+                mediaUrl: '',
+                filePreviewUrl: null,
+                fileName: '',
+                fileSize: '',
+                fileMime: '',
+                videoWidth: null,
+                videoHeight: null,
+                videoRatio: null,
+                isLandscapeVideo: false,
+                carouselItems: [],
+                activePreviewSlide: 0,
+                previewAspectRatio: '4:5',
+                mediaFitMode: 'cover',
+                isDragging: false,
+                isSubmitting: false,
+
+                get hashtagCount() {
+                    const matches = this.postCaption.match(/#[a-z0-9_]+/gi);
+                    return matches ? matches.length : 0;
+                },
+
                 postFormatLabel() {
-                    if (this.postFormat === 'reels') return 'Reels Video Vertikal';
+                    if (this.postFormat === 'carousel') return 'Carousel (2 - 10 Media)';
+                    if (this.postFormat === 'video') return 'Video Feed (16:9 Landscape)';
+                    if (this.postFormat === 'reels') return 'Reels Video (9:16 Vertikal)';
                     if (this.postFormat === 'story') return 'Instagram Story (24 Jam)';
-                    return 'Postingan Feed Standar';
+                    if (this.postFormat === 'text') return 'Teks Narasi Murni';
+                    return 'Foto Feed (4:5 / 1:1)';
+                },
+
+                setMediaFormat(fmt) {
+                    this.postFormat = fmt;
+                    if (fmt === 'text') {
+                        this.clearFile();
+                        this.carouselItems = [];
+                        this.syncCarouselInput();
+                        this.mediaUrl = '';
+                        this.previewAspectRatio = 'text';
+                    } else if (fmt === 'reels' || fmt === 'story') {
+                        this.previewAspectRatio = '9:16';
+                    } else if (fmt === 'photo' || fmt === 'image' || fmt === 'carousel') {
+                        if (this.previewAspectRatio === 'text' || this.previewAspectRatio === '9:16') {
+                            this.previewAspectRatio = '4:5';
+                        }
+                    } else if (fmt === 'video') {
+                        if (this.isLandscapeVideo) {
+                            this.previewAspectRatio = '16:9';
+                        } else if (this.videoRatio && this.videoRatio < 0.75) {
+                            this.previewAspectRatio = '9:16';
+                        } else {
+                            this.previewAspectRatio = '16:9';
+                        }
+                    }
+                    this.$nextTick(() => {
+                        if (window.lucide) window.lucide.createIcons();
+                    });
+                },
+
+                handleFileSelect(event) {
+                    const file = event.target.files[0];
+                    if (!file) return;
+                    this.processSingleFile(file);
+                },
+
+                handleFileDrop(event) {
+                    this.isDragging = false;
+                    const dt = event.dataTransfer;
+                    if (!dt || !dt.files || !dt.files.length) return;
+                    const file = dt.files[0];
+                    if (this.$refs.fileInput) {
+                        try {
+                            const transfer = new DataTransfer();
+                            transfer.items.add(file);
+                            this.$refs.fileInput.files = transfer.files;
+                        } catch (e) {}
+                    }
+                    this.processSingleFile(file);
+                },
+
+                processSingleFile(file) {
+                    this.fileName = file.name;
+                    this.fileMime = file.type;
+                    const sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
+                    this.fileSize = sizeInMB >= 1 ? sizeInMB + ' MB' : Math.round(file.size / 1024) + ' KB';
+
+                    if (this.filePreviewUrl) {
+                        URL.revokeObjectURL(this.filePreviewUrl);
+                    }
+                    this.filePreviewUrl = URL.createObjectURL(file);
+
+                    this.videoWidth = null;
+                    this.videoHeight = null;
+                    this.videoRatio = null;
+                    this.isLandscapeVideo = false;
+
+                    if (file.type.startsWith('video/')) {
+                        const vid = document.createElement('video');
+                        vid.preload = 'metadata';
+                        vid.src = this.filePreviewUrl;
+                        vid.onloadedmetadata = () => {
+                            this.videoWidth = vid.videoWidth;
+                            this.videoHeight = vid.videoHeight;
+                            if (vid.videoHeight > 0) {
+                                const r = vid.videoWidth / vid.videoHeight;
+                                this.videoRatio = r.toFixed(2);
+                                this.isLandscapeVideo = vid.videoWidth > vid.videoHeight;
+                                if (r >= 1.2) {
+                                    this.previewAspectRatio = '16:9';
+                                } else if (r <= 0.65) {
+                                    this.previewAspectRatio = '9:16';
+                                } else if (r <= 0.85) {
+                                    this.previewAspectRatio = '4:5';
+                                } else {
+                                    this.previewAspectRatio = '1:1';
+                                }
+                            }
+                        };
+                    } else if (file.type.startsWith('image/')) {
+                        const img = new Image();
+                        img.src = this.filePreviewUrl;
+                        img.onload = () => {
+                            if (img.height > 0) {
+                                const r = img.width / img.height;
+                                if (r >= 1.35) {
+                                    this.previewAspectRatio = '16:9';
+                                } else if (r <= 0.65) {
+                                    this.previewAspectRatio = '9:16';
+                                } else if (r <= 0.85) {
+                                    this.previewAspectRatio = '4:5';
+                                } else if (r >= 0.95 && r <= 1.05) {
+                                    this.previewAspectRatio = '1:1';
+                                } else {
+                                    this.previewAspectRatio = '4:5';
+                                }
+                            }
+                        };
+                    }
+
+                    if (file.type.startsWith('video/') && (this.postFormat === 'photo' || this.postFormat === 'image')) {
+                        this.postFormat = 'video';
+                    } else if (file.type.startsWith('image/') && (this.postFormat === 'video' || this.postFormat === 'reels')) {
+                        this.postFormat = 'photo';
+                    }
+
+                    this.$nextTick(() => {
+                        if (window.lucide) window.lucide.createIcons();
+                    });
+                },
+
+                handleCarouselFilesSelect(event) {
+                    const files = Array.from(event.target.files);
+                    if (!files.length) return;
+                    this.addCarouselFiles(files);
+                },
+
+                handleCarouselDrop(event) {
+                    this.isDragging = false;
+                    const dt = event.dataTransfer;
+                    if (!dt || !dt.files || !dt.files.length) return;
+                    this.addCarouselFiles(Array.from(dt.files));
+                },
+
+                addCarouselFiles(files) {
+                    for (const file of files) {
+                        if (this.carouselItems.length >= 10) break;
+                        this.carouselItems.push({
+                            file: file,
+                            name: file.name,
+                            mime: file.type,
+                            previewUrl: URL.createObjectURL(file)
+                        });
+                    }
+                    this.syncCarouselInput();
+                    this.$nextTick(() => {
+                        if (window.lucide) window.lucide.createIcons();
+                    });
+                },
+
+                syncCarouselInput() {
+                    if (!this.$refs.carouselInput) return;
+                    try {
+                        const dt = new DataTransfer();
+                        for (const item of this.carouselItems) {
+                            if (item.file) {
+                                dt.items.add(item.file);
+                            }
+                        }
+                        this.$refs.carouselInput.files = dt.files;
+                    } catch (e) {}
+                },
+
+                moveCarouselItem(index, direction) {
+                    const targetIndex = index + direction;
+                    if (targetIndex < 0 || targetIndex >= this.carouselItems.length) return;
+                    const temp = this.carouselItems[index];
+                    this.carouselItems[index] = this.carouselItems[targetIndex];
+                    this.carouselItems[targetIndex] = temp;
+                    this.syncCarouselInput();
+                },
+
+                removeCarouselItem(index) {
+                    const item = this.carouselItems[index];
+                    if (item && item.previewUrl) {
+                        URL.revokeObjectURL(item.previewUrl);
+                    }
+                    this.carouselItems.splice(index, 1);
+                    if (this.activePreviewSlide >= this.carouselItems.length) {
+                        this.activePreviewSlide = Math.max(0, this.carouselItems.length - 1);
+                    }
+                    this.syncCarouselInput();
+                },
+
+                clearFile() {
+                    if (this.filePreviewUrl) {
+                        URL.revokeObjectURL(this.filePreviewUrl);
+                    }
+                    this.filePreviewUrl = null;
+                    this.fileName = '';
+                    this.fileSize = '';
+                    this.fileMime = '';
+                    this.videoWidth = null;
+                    this.videoHeight = null;
+                    this.videoRatio = null;
+                    this.isLandscapeVideo = false;
+                    if (this.$refs.fileInput) {
+                        this.$refs.fileInput.value = '';
+                    }
+                    this.$nextTick(() => {
+                        if (window.lucide) window.lucide.createIcons();
+                    });
+                },
+
+                getPreviewAspectClass() {
+                    if (this.postFormat === 'text') return 'min-h-[220px] p-4';
+                    if (this.previewAspectRatio === '9:16') return 'aspect-[9/16]';
+                    if (this.previewAspectRatio === '1:1') return 'aspect-square';
+                    if (this.previewAspectRatio === '16:9') return 'aspect-[16/9]';
+                    return 'aspect-[4/5]';
+                },
+
+                getPreviewCardWidthClass() {
+                    if (this.previewAspectRatio === '9:16') return 'w-full max-w-[280px] sm:max-w-[300px] mx-auto';
+                    if (this.previewAspectRatio === '16:9') return 'w-full max-w-[380px] mx-auto';
+                    return 'w-full max-w-[340px] sm:max-w-[360px] mx-auto';
+                },
+
+                getAspectRatioDescription() {
+                    switch (this.previewAspectRatio) {
+                        case '4:5': return 'Feed Portrait (1080x1350) - IG Feed';
+                        case '1:1': return 'Square Feed (1080x1080) - Universal';
+                        case '9:16': return 'Vertikal (1080x1920) - Reels & Story';
+                        case '16:9': return 'Landscape (1920x1080) - Video';
+                        default: return '';
+                    }
                 },
 
                 toggleAllPlatforms() {
@@ -1951,6 +2619,13 @@
                     if (tabParam) {
                         this.activeTab = tabParam;
                     }
+                    this.$watch('openCreatePostModal', (val) => {
+                        if (val) {
+                            this.$nextTick(() => {
+                                if (window.lucide) window.lucide.createIcons();
+                            });
+                        }
+                    });
                 }
             };
         }
