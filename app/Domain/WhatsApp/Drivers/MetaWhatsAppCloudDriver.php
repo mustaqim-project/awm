@@ -34,7 +34,7 @@ class MetaWhatsAppCloudDriver
             ?: \App\Models\SystemSetting::get('meta_system_user_token')
             ?: 'EAAUrMrnYomIBStJFCuws2rmo8pP7zNPYcwp3qo4ODjBBh1hDnZAu2atx2mU1It3RGFOM1e0KoZA2TxEOTUDaoyfILeoRBmqCvw18IZBS9ZBSDOgw1CFZBljDOLuWqZA5HDorLXcuMhG4ZAolWWuIP9Vv0gUNMaZCTTFgzxqsQZAZBbxaNgtZAIZANbOusLSBkeZB7tfHjaAZDZD'
         );
-        $this->defaultWabaId = $defaultWabaId ?? (string) (\App\Models\SystemSetting::get('meta_wa_waba_id') ?: config('services.meta_whatsapp.waba_id', '37944837988498077'));
+        $this->defaultWabaId = $defaultWabaId ?? (string) (\App\Models\SystemSetting::get('meta_wa_waba_id') ?: config('services.meta_whatsapp.waba_id', '2292844188142290'));
         $this->version = $version ?? (string) (\App\Models\SystemSetting::get('meta_wa_graph_version') ?: config('services.meta_whatsapp.version', 'v21.0'));
         $this->baseUrl = (string) (\App\Models\SystemSetting::get('meta_wa_graph_url') ?: config('services.meta_whatsapp.graph_url', 'https://graph.facebook.com'));
     }
@@ -245,6 +245,33 @@ class MetaWhatsAppCloudDriver
                 'success' => false,
                 'error'   => $e->getMessage(),
             ];
+        }
+    }
+
+    /**
+     * Subscribe Meta App to the WhatsApp Business Account (WABA) for incoming webhooks.
+     */
+    public function subscribeWabaApps(?string $wabaId = null, ?string $token = null): bool
+    {
+        $targetWabaId = $wabaId ?: $this->defaultWabaId;
+        $authToken = $token ?: $this->defaultToken;
+
+        if (empty($targetWabaId) || empty($authToken)) {
+            return false;
+        }
+
+        try {
+            $url = "{$this->baseUrl}/{$this->version}/{$targetWabaId}/subscribed_apps";
+            $res = Http::withToken($authToken)->timeout(10)->post($url);
+            if ($res->successful() && ($res->json('success') ?? false)) {
+                Log::channel('daily')->info("[Meta WA Cloud] WABA {$targetWabaId} subscribed to app webhooks successfully.");
+                return true;
+            }
+            Log::channel('daily')->warning("[Meta WA Cloud] WABA {$targetWabaId} subscribe response: " . $res->body());
+            return false;
+        } catch (\Throwable $e) {
+            Log::channel('daily')->warning("[Meta WA Cloud] WABA {$targetWabaId} subscribe exception: " . $e->getMessage());
+            return false;
         }
     }
 }

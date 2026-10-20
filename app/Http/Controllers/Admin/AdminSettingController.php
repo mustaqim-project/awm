@@ -219,7 +219,7 @@ final class AdminSettingController extends Controller
             'metaWaAppSecret'        => SystemSetting::get('meta_wa_app_secret') ?: config('services.meta_whatsapp.app_secret', '73b4d4fcdb8e5178c27ed47eeedd83d8'),
             'metaWaHasAppSecret'     => ! empty(SystemSetting::get('meta_wa_app_secret') ?: config('services.meta_whatsapp.app_secret', '')),
             'metaWaPhoneNumberId'    => $resolvedWaPhoneId,
-            'metaWaWabaId'           => SystemSetting::get('meta_wa_waba_id') ?: config('services.meta_whatsapp.waba_id', '37944837988498077'),
+            'metaWaWabaId'           => SystemSetting::get('meta_wa_waba_id') ?: config('services.meta_whatsapp.waba_id', '2292844188142290'),
             'metaWaToken'            => $resolvedWaToken,
             'metaWaHasToken'         => ! empty($resolvedWaToken),
             'metaWaWebhookVerifyToken' => SystemSetting::get('meta_wa_webhook_verify_token') ?: config('services.meta_whatsapp.webhook_verify_token', 'cooca_meta_wa_webhook_secret'),
@@ -560,12 +560,23 @@ final class AdminSettingController extends Controller
             SystemSetting::set('whatsapp_phone_number_id', $savedPhoneId, 'meta_omnichannel');
         }
         if (array_key_exists('meta_wa_waba_id', $validated)) {
-            SystemSetting::set('meta_wa_waba_id', trim((string) $validated['meta_wa_waba_id']), 'whatsapp');
+            $savedWabaId = trim((string) $validated['meta_wa_waba_id']);
+            if (empty($savedWabaId) || $savedWabaId === '37944837988498077') {
+                $savedWabaId = '2292844188142290';
+            }
+            SystemSetting::set('meta_wa_waba_id', $savedWabaId, 'whatsapp');
         }
         if (! empty($validated['meta_wa_token'])) {
             $savedWaToken = trim((string) $validated['meta_wa_token']);
             SystemSetting::set('meta_wa_token', $savedWaToken, 'whatsapp', true);
             SystemSetting::set('meta_system_user_token', $savedWaToken, 'meta_omnichannel', true);
+        }
+
+        // Auto-subscribe Meta App to WABA for incoming webhooks
+        $currentWaba = (string) (SystemSetting::get('meta_wa_waba_id') ?: '2292844188142290');
+        $currentWaTok = (string) (SystemSetting::get('meta_wa_token') ?: SystemSetting::get('meta_system_user_token') ?: config('services.meta_whatsapp.token'));
+        if (! empty($currentWaba) && ! empty($currentWaTok)) {
+            app(\App\Domain\WhatsApp\Drivers\MetaWhatsAppCloudDriver::class)->subscribeWabaApps($currentWaba, $currentWaTok);
         }
         if (array_key_exists('meta_wa_webhook_verify_token', $validated)) {
             SystemSetting::set('meta_wa_webhook_verify_token', trim((string) $validated['meta_wa_webhook_verify_token']), 'whatsapp');
@@ -1139,6 +1150,10 @@ final class AdminSettingController extends Controller
             SystemSetting::set('meta_system_user_token', $token, 'meta_omnichannel', true);
             SystemSetting::set('meta_wa_phone_number_id', $phoneId, 'whatsapp');
             SystemSetting::set('whatsapp_phone_number_id', $phoneId, 'meta_omnichannel');
+
+            // Auto-subscribe Meta App to WABA webhooks
+            $targetWabaId = (string) (SystemSetting::get('meta_wa_waba_id') ?: config('services.meta_whatsapp.waba_id') ?: '2292844188142290');
+            $metaDriver->subscribeWabaApps($targetWabaId, $token);
 
             $details = (array) ($result['data'] ?? []);
             $name = $details['verified_name'] ?? 'Cooca Indonesia';

@@ -1700,14 +1700,26 @@ class AdminInboxController extends Controller
             SystemSetting::set('meta_system_user_token', $defaultPermanentToken, 'meta_omnichannel', true);
         }
 
-        if (empty(SystemSetting::get('meta_wa_waba_id'))) {
-            SystemSetting::set('meta_wa_waba_id', '37944837988498077', 'whatsapp');
+        $currentWabaId = (string) SystemSetting::get('meta_wa_waba_id');
+        if (empty($currentWabaId) || $currentWabaId === '37944837988498077') {
+            SystemSetting::set('meta_wa_waba_id', '2292844188142290', 'whatsapp');
+            $currentWabaId = '2292844188142290';
         }
         if (empty(SystemSetting::get('meta_wa_app_id'))) {
             SystemSetting::set('meta_wa_app_id', '1454871749894754', 'whatsapp');
         }
         if (empty(SystemSetting::get('meta_wa_app_secret'))) {
             SystemSetting::set('meta_wa_app_secret', '73b4d4fcdb8e5178c27ed47eeedd83d8', 'whatsapp', true);
+        }
+
+        // Auto-subscribe Meta App to WABA so incoming customer messages are delivered to webhook
+        $waTokenForSub = (string) (SystemSetting::get('meta_wa_token') ?: SystemSetting::get('meta_system_user_token'));
+        if (! empty($currentWabaId) && ! empty($waTokenForSub)) {
+            try {
+                app(\App\Domain\WhatsApp\Drivers\MetaWhatsAppCloudDriver::class)->subscribeWabaApps($currentWabaId, $waTokenForSub);
+            } catch (\Throwable) {
+                // Ignore if offline
+            }
         }
     }
 }

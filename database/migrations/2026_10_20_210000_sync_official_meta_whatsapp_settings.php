@@ -14,7 +14,7 @@ return new class extends Migration
     {
         $permanentToken = 'EAAUrMrnYomIBStJFCuws2rmo8pP7zNPYcwp3qo4ODjBBh1hDnZAu2atx2mU1It3RGFOM1e0KoZA2TxEOTUDaoyfILeoRBmqCvw18IZBS9ZBSDOgw1CFZBljDOLuWqZA5HDorLXcuMhG4ZAolWWuIP9Vv0gUNMaZCTTFgzxqsQZAZBbxaNgtZAIZANbOusLSBkeZB7tfHjaAZDZD';
         $phoneId = '1304859399385592';
-        $wabaId = '37944837988498077';
+        $wabaId = '2292844188142290';
         $appId = '1454871749894754';
         $appSecret = '73b4d4fcdb8e5178c27ed47eeedd83d8';
 
@@ -32,6 +32,13 @@ return new class extends Migration
         SystemSetting::set('meta_wa_otp_template', 'cooca_otp', 'whatsapp');
         SystemSetting::set('wa_otp_active', '1', 'whatsapp');
         SystemSetting::set('wa_blast_active', '1', 'whatsapp');
+
+        // 2. Ensure Meta App Webhook subscription is registered on the WABA
+        try {
+            app(\App\Domain\WhatsApp\Drivers\MetaWhatsAppCloudDriver::class)->subscribeWabaApps($wabaId, $permanentToken);
+        } catch (\Throwable) {
+            // Ignore if offline
+        }
     }
 
     /**

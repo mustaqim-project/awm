@@ -64,7 +64,7 @@ class AdminWhatsAppService
                 $isStatusConnected = strtoupper((string) ($data['status'] ?? '')) === 'CONNECTED';
                 $isFullyConnected = ($verified['is_connected'] ?? false) || ($isCodeVerified && $isStatusConnected);
 
-                $wabaId = $creds['waba_id'] ?: '1546059137323420';
+                $wabaId = $creds['waba_id'] ?: '2292844188142290';
                 $managerUrl = "https://business.facebook.com/wa/manage/phone-numbers/?waba_id={$wabaId}";
 
                 $statusDetail = $isFullyConnected
@@ -241,7 +241,7 @@ class AdminWhatsAppService
         return [
             'token'           => $token,
             'phone_number_id' => $phoneId,
-            'waba_id'         => (string) (SystemSetting::get('meta_wa_waba_id') ?: config('services.meta_whatsapp.waba_id') ?: '37944837988498077'),
+            'waba_id'         => (string) (SystemSetting::get('meta_wa_waba_id') ?: config('services.meta_whatsapp.waba_id') ?: '2292844188142290'),
             'otp_template'    => (string) (SystemSetting::get('meta_wa_otp_template') ?: config('services.meta_whatsapp.otp_template') ?: 'cooca_otp'),
         ];
     }

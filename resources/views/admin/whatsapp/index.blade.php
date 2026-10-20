@@ -1329,7 +1329,7 @@
                                 Meta Graph API v26.0
                             </span>
                             <span class="text-[12px] font-medium text-black/40 dark:text-white/40">WABA:
-                                {{ $metaCreds['waba_id'] ?: '37944837988498077' }}</span>
+                                {{ $metaCreds['waba_id'] ?: '2292844188142290' }}</span>
                         </div>
                         <h2 class="text-[17px] font-bold text-black dark:text-white">Katalog Template WhatsApp Business
                         </h2>
@@ -2264,7 +2264,7 @@
                     metaStatus: @json($waStatus['meta_status'] ?? 'DISCONNECTED'),
                     platformType: @json($waStatus['platform_type'] ?? 'ON_PREMISE'),
                     statusDetail: @json($waStatus['status_detail'] ?? ''),
-                    managerUrl: @json($waStatus['manager_url'] ?? 'https://business.facebook.com/wa/manage/phone-numbers/?waba_id=37944837988498077'),
+                    managerUrl: @json($waStatus['manager_url'] ?? 'https://business.facebook.com/wa/manage/phone-numbers/?waba_id=2292844188142290'),
                     isLoading: false,
                     blastMessage: '',
 

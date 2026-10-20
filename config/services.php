@@ -48,7 +48,7 @@ return [
         'graph_url'            => env('META_WA_GRAPH_URL', 'https://graph.facebook.com'),
         'token'                => env('META_WA_TOKEN', 'EAAUrMrnYomIBStJFCuws2rmo8pP7zNPYcwp3qo4ODjBBh1hDnZAu2atx2mU1It3RGFOM1e0KoZA2TxEOTUDaoyfILeoRBmqCvw18IZBS9ZBSDOgw1CFZBljDOLuWqZA5HDorLXcuMhG4ZAolWWuIP9Vv0gUNMaZCTTFgzxqsQZAZBbxaNgtZAIZANbOusLSBkeZB7tfHjaAZDZD'),
         'phone_number_id'      => env('META_WA_PHONE_NUMBER_ID', '1304859399385592'),
-        'waba_id'              => env('META_WA_WABA_ID', '37944837988498077'),
+        'waba_id'              => env('META_WA_WABA_ID', '2292844188142290'),
         'otp_template'         => env('META_WA_OTP_TEMPLATE', 'cooca_otp'),
     ],
 

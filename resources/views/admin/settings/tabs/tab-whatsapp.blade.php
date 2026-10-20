@@ -240,8 +240,8 @@
                                 <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
                                     WhatsApp Business Account ID (WABA ID) <span class="text-[#FF3B30]">*</span>
                                 </label>
-                                <input type="text" name="meta_wa_waba_id" value="{{ old('meta_wa_waba_id', $metaWaWabaId ?? '37944837988498077') }}"
-                                    placeholder="37944837988498077" required
+                                <input type="text" name="meta_wa_waba_id" value="{{ old('meta_wa_waba_id', $metaWaWabaId ?? '2292844188142290') }}"
+                                    placeholder="2292844188142290" required
                                     class="w-full h-11 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[13px] text-black dark:text-white font-mono placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#25D366]/50 transition">
                             </div>
 
