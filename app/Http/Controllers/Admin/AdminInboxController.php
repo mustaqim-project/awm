@@ -320,6 +320,17 @@ class AdminInboxController extends Controller
         if (! empty($validated['meta_instagram_id'])) {
             SystemSetting::set('instagram_account_id', (string) $validated['meta_instagram_id'], 'social_media');
         }
+        if (! empty($validated['whatsapp_phone_number_id'])) {
+            $savedPhoneId = trim((string) $validated['whatsapp_phone_number_id']);
+            if (in_array($savedPhoneId, ['1337255202804569', '10987654321'], true) || empty($savedPhoneId)) {
+                $savedPhoneId = '1304859399385592';
+            }
+            SystemSetting::set('whatsapp_phone_number_id', $savedPhoneId, 'meta_omnichannel');
+            SystemSetting::set('meta_wa_phone_number_id', $savedPhoneId, 'whatsapp');
+        }
+        if (! empty($validated['meta_system_user_token'])) {
+            SystemSetting::set('meta_wa_token', (string) $validated['meta_system_user_token'], 'whatsapp', true);
+        }
         // Auto-subscribe the Page to Webhook fields (feed, messages, conversations)
         $targetPageId = (string) ($validated['meta_page_id'] ?? SystemSetting::get('meta_page_id', ''));
         $targetToken = (string) ($validated['meta_system_user_token'] ?? SystemSetting::get('meta_system_user_token', ''));
@@ -396,6 +407,13 @@ class AdminInboxController extends Controller
             ?: config('services.meta_social.app_token', '')
         );
 
+        $waToken = (string) (
+            SystemSetting::get('meta_wa_token')
+            ?: config('services.meta_whatsapp.token')
+            ?: SystemSetting::get('meta_system_user_token')
+            ?: 'EAAUrMrnYomIBStJFCuws2rmo8pP7zNPYcwp3qo4ODjBBh1hDnZAu2atx2mU1It3RGFOM1e0KoZA2TxEOTUDaoyfILeoRBmqCvw18IZBS9ZBSDOgw1CFZBljDOLuWqZA5HDorLXcuMhG4ZAolWWuIP9Vv0gUNMaZCTTFgzxqsQZAZBbxaNgtZAIZANbOusLSBkeZB7tfHjaAZDZD'
+        );
+
         $pageId = (string) (
             SystemSetting::get('meta_page_id')
             ?: SystemSetting::get('social_media_page_id')
@@ -403,7 +421,8 @@ class AdminInboxController extends Controller
         );
 
         $phoneNumberId = (string) (
-            SystemSetting::get('whatsapp_phone_number_id')
+            SystemSetting::get('meta_wa_phone_number_id')
+            ?: SystemSetting::get('whatsapp_phone_number_id')
             ?: SystemSetting::get('whatsapp_gateway_account_id')
             ?: config('services.meta_whatsapp.phone_number_id')
             ?: '1304859399385592'
@@ -414,9 +433,10 @@ class AdminInboxController extends Controller
 
         $replyId = (string) Str::uuid();
         $channel = strtolower((string) $comment->platform);
+        $activeSendToken = ($channel === 'whatsapp') ? $waToken : $token;
 
         try {
-            if (! empty($token)) {
+            if (! empty($activeSendToken)) {
                 // 1. Messenger / Instagram DM (Direct Messages)
                 if (in_array($channel, ['messenger', 'instagram', 'instagram_dm'], true)) {
                     $targetRecipient = $comment->from_id ?: $comment->platform_comment_id;
@@ -551,7 +571,7 @@ class AdminInboxController extends Controller
                             ];
                         }
 
-                        $res = Http::withToken($token)
+                        $res = Http::withToken($waToken)
                             ->timeout(12)
                             ->post("https://graph.facebook.com/v21.0/{$targetPhoneId}/messages", $payload);
 
@@ -1666,10 +1686,28 @@ class AdminInboxController extends Controller
             );
         }
 
-        // Auto-correct invalid whatsapp_phone_number_id in SystemSetting on production
-        $currentPhoneId = (string) SystemSetting::get('whatsapp_phone_number_id');
+        // Auto-correct and self-heal WhatsApp credentials in SystemSetting on production
+        $currentPhoneId = (string) (SystemSetting::get('meta_wa_phone_number_id') ?: SystemSetting::get('whatsapp_phone_number_id'));
         if (empty($currentPhoneId) || in_array($currentPhoneId, ['10987654321', '1337255202804569'], true)) {
+            SystemSetting::set('meta_wa_phone_number_id', '1304859399385592', 'whatsapp');
             SystemSetting::set('whatsapp_phone_number_id', '1304859399385592', 'meta_omnichannel');
+        }
+
+        $currentWaToken = (string) (SystemSetting::get('meta_wa_token') ?: SystemSetting::get('meta_system_user_token'));
+        if (empty($currentWaToken) || ! str_starts_with($currentWaToken, 'EAA')) {
+            $defaultPermanentToken = 'EAAUrMrnYomIBStJFCuws2rmo8pP7zNPYcwp3qo4ODjBBh1hDnZAu2atx2mU1It3RGFOM1e0KoZA2TxEOTUDaoyfILeoRBmqCvw18IZBS9ZBSDOgw1CFZBljDOLuWqZA5HDorLXcuMhG4ZAolWWuIP9Vv0gUNMaZCTTFgzxqsQZAZBbxaNgtZAIZANbOusLSBkeZB7tfHjaAZDZD';
+            SystemSetting::set('meta_wa_token', $defaultPermanentToken, 'whatsapp', true);
+            SystemSetting::set('meta_system_user_token', $defaultPermanentToken, 'meta_omnichannel', true);
+        }
+
+        if (empty(SystemSetting::get('meta_wa_waba_id'))) {
+            SystemSetting::set('meta_wa_waba_id', '37944837988498077', 'whatsapp');
+        }
+        if (empty(SystemSetting::get('meta_wa_app_id'))) {
+            SystemSetting::set('meta_wa_app_id', '1454871749894754', 'whatsapp');
+        }
+        if (empty(SystemSetting::get('meta_wa_app_secret'))) {
+            SystemSetting::set('meta_wa_app_secret', '73b4d4fcdb8e5178c27ed47eeedd83d8', 'whatsapp', true);
         }
     }
 }

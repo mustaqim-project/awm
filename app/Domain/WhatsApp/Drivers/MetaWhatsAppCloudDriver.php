@@ -17,9 +17,24 @@ class MetaWhatsAppCloudDriver
         protected ?string $defaultWabaId = null,
         protected ?string $version = null
     ) {
-        $this->defaultToken = $defaultToken ?? (string) (\App\Models\SystemSetting::get('meta_wa_token') ?: config('services.meta_whatsapp.token', ''));
-        $this->defaultPhoneNumberId = $defaultPhoneNumberId ?? (string) (\App\Models\SystemSetting::get('meta_wa_phone_number_id') ?: config('services.meta_whatsapp.phone_number_id', ''));
-        $this->defaultWabaId = $defaultWabaId ?? (string) (\App\Models\SystemSetting::get('meta_wa_waba_id') ?: config('services.meta_whatsapp.waba_id', ''));
+        $resolvedPhoneId = $defaultPhoneNumberId ?? (string) (
+            \App\Models\SystemSetting::get('meta_wa_phone_number_id')
+            ?: \App\Models\SystemSetting::get('whatsapp_phone_number_id')
+            ?: config('services.meta_whatsapp.phone_number_id')
+            ?: '1304859399385592'
+        );
+        if (in_array($resolvedPhoneId, ['1337255202804569', '10987654321'], true) || empty($resolvedPhoneId)) {
+            $resolvedPhoneId = '1304859399385592';
+        }
+        $this->defaultPhoneNumberId = $resolvedPhoneId;
+
+        $this->defaultToken = $defaultToken ?? (string) (
+            \App\Models\SystemSetting::get('meta_wa_token')
+            ?: config('services.meta_whatsapp.token')
+            ?: \App\Models\SystemSetting::get('meta_system_user_token')
+            ?: 'EAAUrMrnYomIBStJFCuws2rmo8pP7zNPYcwp3qo4ODjBBh1hDnZAu2atx2mU1It3RGFOM1e0KoZA2TxEOTUDaoyfILeoRBmqCvw18IZBS9ZBSDOgw1CFZBljDOLuWqZA5HDorLXcuMhG4ZAolWWuIP9Vv0gUNMaZCTTFgzxqsQZAZBbxaNgtZAIZANbOusLSBkeZB7tfHjaAZDZD'
+        );
+        $this->defaultWabaId = $defaultWabaId ?? (string) (\App\Models\SystemSetting::get('meta_wa_waba_id') ?: config('services.meta_whatsapp.waba_id', '37944837988498077'));
         $this->version = $version ?? (string) (\App\Models\SystemSetting::get('meta_wa_graph_version') ?: config('services.meta_whatsapp.version', 'v21.0'));
         $this->baseUrl = (string) (\App\Models\SystemSetting::get('meta_wa_graph_url') ?: config('services.meta_whatsapp.graph_url', 'https://graph.facebook.com'));
     }

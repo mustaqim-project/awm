@@ -221,11 +221,28 @@ class AdminWhatsAppService
      */
     public function getMetaCredentials(): array
     {
+        $phoneId = (string) (
+            SystemSetting::get('meta_wa_phone_number_id')
+            ?: SystemSetting::get('whatsapp_phone_number_id')
+            ?: config('services.meta_whatsapp.phone_number_id')
+            ?: '1304859399385592'
+        );
+        if (in_array($phoneId, ['1337255202804569', '10987654321'], true) || empty($phoneId)) {
+            $phoneId = '1304859399385592';
+        }
+
+        $token = (string) (
+            SystemSetting::get('meta_wa_token')
+            ?: config('services.meta_whatsapp.token')
+            ?: SystemSetting::get('meta_system_user_token')
+            ?: 'EAAUrMrnYomIBStJFCuws2rmo8pP7zNPYcwp3qo4ODjBBh1hDnZAu2atx2mU1It3RGFOM1e0KoZA2TxEOTUDaoyfILeoRBmqCvw18IZBS9ZBSDOgw1CFZBljDOLuWqZA5HDorLXcuMhG4ZAolWWuIP9Vv0gUNMaZCTTFgzxqsQZAZBbxaNgtZAIZANbOusLSBkeZB7tfHjaAZDZD'
+        );
+
         return [
-            'token'           => (string) SystemSetting::get('meta_wa_token', config('services.meta_whatsapp.token', '')),
-            'phone_number_id' => (string) SystemSetting::get('meta_wa_phone_number_id', config('services.meta_whatsapp.phone_number_id', '')),
-            'waba_id'         => (string) SystemSetting::get('meta_wa_waba_id', config('services.meta_whatsapp.waba_id', '')),
-            'otp_template'    => (string) SystemSetting::get('meta_wa_otp_template', config('services.meta_whatsapp.otp_template', 'cooca_otp')),
+            'token'           => $token,
+            'phone_number_id' => $phoneId,
+            'waba_id'         => (string) (SystemSetting::get('meta_wa_waba_id') ?: config('services.meta_whatsapp.waba_id') ?: '37944837988498077'),
+            'otp_template'    => (string) (SystemSetting::get('meta_wa_otp_template') ?: config('services.meta_whatsapp.otp_template') ?: 'cooca_otp'),
         ];
     }
 

@@ -204,8 +204,8 @@
                                 <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
                                     Meta App ID <span class="text-[#FF3B30]">*</span>
                                 </label>
-                                <input type="text" name="meta_wa_app_id" value="{{ old('meta_wa_app_id', $metaWaAppId ?? '') }}"
-                                    placeholder="Contoh: 1454871749894754" required
+                                <input type="text" name="meta_wa_app_id" value="{{ old('meta_wa_app_id', $metaWaAppId ?? '1454871749894754') }}"
+                                    placeholder="1454871749894754" required
                                     class="w-full h-11 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[13px] text-black dark:text-white font-mono placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#25D366]/50 transition">
                             </div>
 
@@ -230,8 +230,8 @@
                                 <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
                                     Phone Number ID <span class="text-[#FF3B30]">*</span>
                                 </label>
-                                <input type="text" name="meta_wa_phone_number_id" value="{{ old('meta_wa_phone_number_id', $metaWaPhoneNumberId ?? '') }}"
-                                    placeholder="Contoh: 1337255202804569" required
+                                <input type="text" name="meta_wa_phone_number_id" value="{{ old('meta_wa_phone_number_id', $metaWaPhoneNumberId ?? '1304859399385592') }}"
+                                    placeholder="1304859399385592 (+62 852-8786-4176)" required
                                     class="w-full h-11 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[13px] text-black dark:text-white font-mono placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#25D366]/50 transition">
                             </div>
 
@@ -240,8 +240,8 @@
                                 <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
                                     WhatsApp Business Account ID (WABA ID) <span class="text-[#FF3B30]">*</span>
                                 </label>
-                                <input type="text" name="meta_wa_waba_id" value="{{ old('meta_wa_waba_id', $metaWaWabaId ?? '') }}"
-                                    placeholder="Contoh: 37944837988498077" required
+                                <input type="text" name="meta_wa_waba_id" value="{{ old('meta_wa_waba_id', $metaWaWabaId ?? '37944837988498077') }}"
+                                    placeholder="37944837988498077" required
                                     class="w-full h-11 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[13px] text-black dark:text-white font-mono placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#25D366]/50 transition">
                             </div>
 
