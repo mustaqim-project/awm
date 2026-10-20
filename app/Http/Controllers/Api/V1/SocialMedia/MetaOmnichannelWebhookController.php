@@ -175,12 +175,17 @@ class MetaOmnichannelWebhookController extends Controller
             }
 
             // Handle media attachments (photo, video, audio, file, share)
-            if (empty($text) && isset($messageData['attachments'])) {
-                $attType = (string) data_get($messageData, 'attachments.0.type', 'media');
-                $text = "[Lampiran Media: {$attType}]";
+            $imageUrl = null;
+            if (isset($messageData['attachments'])) {
+                $att = data_get($messageData, 'attachments.0', []);
+                $attType = (string) ($att['type'] ?? 'media');
+                $imageUrl = (string) data_get($att, 'payload.url', '');
+                if (empty($text)) {
+                    $text = $attType === 'image' ? '[Foto]' : "[Lampiran Media: {$attType}]";
+                }
             }
 
-            if (empty($text)) {
+            if (empty($text) && empty($imageUrl)) {
                 continue;
             }
 
@@ -251,7 +256,9 @@ class MetaOmnichannelWebhookController extends Controller
                     'parent_comment_id'       => null,
                     'from_id'                 => $customerId,
                     'from_name'               => $senderName,
-                    'message'                 => $text,
+                    'message'                 => $text ?: '[Foto]',
+                    'media_url'               => ! empty($imageUrl) ? $imageUrl : null,
+                    'media_type'              => ! empty($imageUrl) ? 'image' : null,
                     'is_from_page'            => $isFromPage,
                     'status'                  => $isFromPage ? 'replied' : 'unread',
                     'created_time'            => $createdTime,
@@ -441,6 +448,9 @@ class MetaOmnichannelWebhookController extends Controller
             $timestamp = $msg['timestamp'] ?? time();
 
             $textBody = '';
+            $mediaUrl = null;
+            $mediaType = null;
+
             if ($type === 'text') {
                 $textBody = (string) data_get($msg, 'text.body');
             } elseif ($type === 'button') {
@@ -451,7 +461,9 @@ class MetaOmnichannelWebhookController extends Controller
                     ?: '[Respon Interaktif]');
             } elseif (in_array($type, ['image', 'video', 'audio', 'document', 'sticker', 'voice'], true)) {
                 $caption = (string) data_get($msg, "{$type}.caption", '');
-                $textBody = $caption ? "[{$type}]: {$caption}" : "[Pesan Media: {$type}]";
+                $mediaUrl = (string) (data_get($msg, "{$type}.link") ?: data_get($msg, "{$type}.url") ?: '');
+                $mediaType = $type;
+                $textBody = $caption ?: ($type === 'image' ? '[Foto]' : "[Pesan Media: {$type}]");
             } elseif ($type === 'location') {
                 $textBody = '[Lokasi: ' . data_get($msg, 'location.name', 'Peta Lokasi') . ']';
             } elseif ($type === 'contacts') {
@@ -460,7 +472,7 @@ class MetaOmnichannelWebhookController extends Controller
                 $textBody = (string) (data_get($msg, 'text.body') ?: "[Pesan: {$type}]");
             }
 
-            if (empty($fromNumber) || empty($textBody)) {
+            if (empty($fromNumber) || (empty($textBody) && empty($mediaUrl))) {
                 continue;
             }
 
@@ -489,7 +501,9 @@ class MetaOmnichannelWebhookController extends Controller
                     'parent_comment_id'       => null,
                     'from_id'                 => $fromNumber,
                     'from_name'               => $senderName,
-                    'message'                 => $textBody,
+                    'message'                 => $textBody ?: '[Foto]',
+                    'media_url'               => ! empty($mediaUrl) ? $mediaUrl : null,
+                    'media_type'              => $mediaType,
                     'is_from_page'            => false,
                     'status'                  => 'unread',
                     'created_time'            => $createdTime,

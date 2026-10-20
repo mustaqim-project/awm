@@ -51,6 +51,8 @@ class SocialMediaComment extends Model
         'from_id',
         'from_name',
         'message',
+        'media_url',
+        'media_type',
         'is_from_page',
         'status',
         'created_time',

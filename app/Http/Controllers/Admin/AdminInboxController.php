@@ -43,10 +43,8 @@ class AdminInboxController extends Controller
             ->where('status', 'active')
             ->get();
 
-        // Ensure initial demo comments matching user screenshot exist if DB has none
-        if (SocialMediaComment::where('is_platform', true)->count() === 0) {
-            $this->seedInitialPlatformData();
-        }
+        // Ensure initial baseline demo threads exist across all 5 channels
+        $this->ensureInitialPlatformData();
 
         // Platform official comments & customer messages
         $commentsQuery = SocialMediaComment::query()
@@ -141,6 +139,8 @@ class AdminInboxController extends Controller
         $channel = (string) $request->query('channel', 'all');
         $search = (string) $request->query('search', '');
 
+        $this->ensureInitialPlatformData();
+
         $commentsQuery = SocialMediaComment::query()
             ->where('is_platform', true)
             ->with(['post', 'account'])
@@ -234,6 +234,8 @@ class AdminInboxController extends Controller
                 'from_id'      => $m->from_id,
                 'from_name'    => $isFromPage ? 'Cooca Indonesia' : ($m->from_name ?: $customerName),
                 'message'      => $m->message,
+                'media_url'    => $m->media_url,
+                'media_type'   => $m->media_type,
                 'is_from_page' => $isFromPage,
                 'is_cooca'     => $isFromPage,
                 'time'         => $m->created_time ? $m->created_time->format('H.i') : $m->created_at->format('H.i'),
@@ -287,13 +289,46 @@ class AdminInboxController extends Controller
     }
 
     /**
+     * AJAX/Post: Upload media attachment for DM, Messenger, or WhatsApp.
+     */
+    public function uploadMedia(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'image' => ['required', 'file', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],
+        ]);
+
+        $file = $request->file('image');
+        $filename = 'inbox_' . Str::uuid() . '.' . $file->getClientOriginalExtension();
+        $path = $file->storeAs('inbox_media', $filename, 'public');
+        $publicUrl = asset('storage/' . $path);
+
+        return response()->json([
+            'success'  => true,
+            'url'      => $publicUrl,
+            'filename' => $filename,
+        ]);
+    }
+
+    /**
      * AJAX/Post: Send official platform reply to a customer/comment thread.
+     * Supports text, image attachments (WhatsApp Cloud API & Meta Graph API DM), or both.
      */
     public function reply(Request $request, string $id): JsonResponse|RedirectResponse
     {
         $validated = $request->validate([
-            'message' => ['required', 'string', 'max:2000'],
+            'message'   => ['nullable', 'string', 'max:2000'],
+            'image_url' => ['nullable', 'string', 'max:1000'],
         ]);
+
+        $messageText = trim((string) ($validated['message'] ?? ''));
+        $imageUrl = ! empty($validated['image_url']) ? trim((string) $validated['image_url']) : null;
+
+        if (empty($messageText) && empty($imageUrl)) {
+            if ($request->wantsJson()) {
+                return response()->json(['success' => false, 'message' => 'Pesan atau lampiran gambar harus diisi.'], 422);
+            }
+            return back()->with('error', 'Pesan atau lampiran gambar harus diisi.');
+        }
 
         $admin = auth('admin')->user();
         if (! $admin) {
@@ -336,22 +371,47 @@ class AdminInboxController extends Controller
                     $targetRecipient = $comment->from_id ?: $comment->platform_comment_id;
                     $targetPath = ! empty($pageId) ? "{$pageId}/messages" : "me/messages";
 
-                    $res = Http::timeout(12)->post("https://graph.facebook.com/v21.0/{$targetPath}", [
-                        'recipient'    => ['id' => $targetRecipient],
-                        'message'      => ['text' => $validated['message']],
-                        'access_token' => $token,
-                    ]);
+                    // A. Send image attachment if attached
+                    if ($imageUrl) {
+                        $resImg = Http::timeout(12)->post("https://graph.facebook.com/v21.0/{$targetPath}", [
+                            'recipient'    => ['id' => $targetRecipient],
+                            'message'      => [
+                                'attachment' => [
+                                    'type'    => 'image',
+                                    'payload' => [
+                                        'url'         => $imageUrl,
+                                        'is_reusable' => true,
+                                    ],
+                                ],
+                            ],
+                            'access_token' => $token,
+                        ]);
 
-                    if ($res->successful()) {
-                        $replyId = (string) ($res->json('message_id') ?? $res->json('id') ?? $replyId);
-                    } else {
-                        Log::warning('[AdminInbox] Reply DM failed: ' . $res->body());
+                        if ($resImg->successful()) {
+                            $replyId = (string) ($resImg->json('message_id') ?? $resImg->json('id') ?? $replyId);
+                        } else {
+                            Log::warning('[AdminInbox] Reply DM Image failed: ' . $resImg->body());
+                        }
+                    }
+
+                    // B. Send text message if text body is provided
+                    if (! empty($messageText)) {
+                        $resText = Http::timeout(12)->post("https://graph.facebook.com/v21.0/{$targetPath}", [
+                            'recipient'    => ['id' => $targetRecipient],
+                            'message'      => ['text' => $messageText],
+                            'access_token' => $token,
+                        ]);
+
+                        if ($resText->successful() && ! $imageUrl) {
+                            $replyId = (string) ($resText->json('message_id') ?? $resText->json('id') ?? $replyId);
+                        }
                     }
                 }
                 // 2. Facebook Comments
                 elseif (in_array($channel, ['facebook', 'facebook_comments'], true)) {
+                    $fbCommentText = $messageText ?: ($imageUrl ? "Lampiran: {$imageUrl}" : '');
                     $res = Http::timeout(12)->post("https://graph.facebook.com/v21.0/{$comment->platform_comment_id}/comments", [
-                        'message'      => $validated['message'],
+                        'message'      => $fbCommentText,
                         'access_token' => $token,
                     ]);
 
@@ -363,8 +423,9 @@ class AdminInboxController extends Controller
                 }
                 // 3. Instagram Comments
                 elseif (in_array($channel, ['instagram_comments'], true)) {
+                    $igCommentText = $messageText ?: ($imageUrl ? "Lampiran: {$imageUrl}" : '');
                     $res = Http::timeout(12)->post("https://graph.facebook.com/v21.0/{$comment->platform_comment_id}/replies", [
-                        'message'      => $validated['message'],
+                        'message'      => $igCommentText,
                         'access_token' => $token,
                     ]);
 
@@ -380,13 +441,30 @@ class AdminInboxController extends Controller
                     $targetPhoneId = $phoneNumberId ?: $comment->platform_post_id;
 
                     if ($targetPhoneId) {
-                        $res = Http::timeout(12)->post("https://graph.facebook.com/v21.0/{$targetPhoneId}/messages", [
-                            'messaging_product' => 'whatsapp',
-                            'to'                => $waTarget,
-                            'type'              => 'text',
-                            'text'              => ['body' => $validated['message']],
-                            'access_token'      => $token,
-                        ]);
+                        if ($imageUrl) {
+                            // WhatsApp Image message with optional caption
+                            $payload = [
+                                'messaging_product' => 'whatsapp',
+                                'to'                => $waTarget,
+                                'type'              => 'image',
+                                'image'             => [
+                                    'link'    => $imageUrl,
+                                    'caption' => ! empty($messageText) ? $messageText : null,
+                                ],
+                                'access_token'      => $token,
+                            ];
+                        } else {
+                            // WhatsApp Text message
+                            $payload = [
+                                'messaging_product' => 'whatsapp',
+                                'to'                => $waTarget,
+                                'type'              => 'text',
+                                'text'              => ['body' => $messageText],
+                                'access_token'      => $token,
+                            ];
+                        }
+
+                        $res = Http::timeout(12)->post("https://graph.facebook.com/v21.0/{$targetPhoneId}/messages", $payload);
 
                         if ($res->successful()) {
                             $replyId = (string) (data_get($res->json(), 'messages.0.id') ?? $replyId);
@@ -408,7 +486,9 @@ class AdminInboxController extends Controller
                 'parent_comment_id'       => $comment->platform_comment_id ?: $comment->id,
                 'from_id'                 => $comment->from_id ?: $comment->platform_comment_id,
                 'from_name'               => 'Cooca Indonesia (Admin)',
-                'message'                 => $validated['message'],
+                'message'                 => $messageText ?: ($imageUrl ? '[Foto]' : ''),
+                'media_url'               => $imageUrl,
+                'media_type'              => $imageUrl ? 'image' : null,
                 'is_from_page'            => true,
                 'status'                  => 'replied',
                 'created_time'            => now(),
@@ -423,6 +503,8 @@ class AdminInboxController extends Controller
                     'reply'   => [
                         'id'         => $reply->id,
                         'message'    => $reply->message,
+                        'media_url'  => $reply->media_url,
+                        'media_type' => $reply->media_type,
                         'created_at' => now()->format('H:i'),
                         'sender'     => 'Cooca Indonesia',
                     ],
@@ -445,8 +527,19 @@ class AdminInboxController extends Controller
     public function sendPrivateDm(Request $request, string $id): JsonResponse|RedirectResponse
     {
         $validated = $request->validate([
-            'message' => ['required', 'string', 'max:2000'],
+            'message'   => ['nullable', 'string', 'max:2000'],
+            'image_url' => ['nullable', 'string', 'max:1000'],
         ]);
+
+        $messageText = trim((string) ($validated['message'] ?? ''));
+        $imageUrl = ! empty($validated['image_url']) ? trim((string) $validated['image_url']) : null;
+
+        if (empty($messageText) && empty($imageUrl)) {
+            if ($request->wantsJson()) {
+                return response()->json(['success' => false, 'message' => 'Pesan atau lampiran gambar harus diisi.'], 422);
+            }
+            return back()->with('error', 'Pesan atau lampiran gambar harus diisi.');
+        }
 
         $admin = auth('admin')->user();
         if (! $admin) {
@@ -483,16 +576,35 @@ class AdminInboxController extends Controller
         try {
             if (! empty($token)) {
                 $targetPath = ! empty($pageId) ? "{$pageId}/messages" : "me/messages";
-                $res = Http::timeout(12)->post("https://graph.facebook.com/v21.0/{$targetPath}", [
-                    'recipient'    => ['comment_id' => $comment->platform_comment_id],
-                    'message'      => ['text' => $validated['message']],
-                    'access_token' => $token,
-                ]);
 
-                if ($res->successful()) {
-                    $replyId = (string) ($res->json('message_id') ?? $res->json('id') ?? $replyId);
-                } else {
-                    Log::warning('[AdminInbox] Private Reply to comment failed: ' . $res->body());
+                if ($imageUrl) {
+                    Http::timeout(12)->post("https://graph.facebook.com/v21.0/{$targetPath}", [
+                        'recipient'    => ['comment_id' => $comment->platform_comment_id],
+                        'message'      => [
+                            'attachment' => [
+                                'type'    => 'image',
+                                'payload' => [
+                                    'url'         => $imageUrl,
+                                    'is_reusable' => true,
+                                ],
+                            ],
+                        ],
+                        'access_token' => $token,
+                    ]);
+                }
+
+                if (! empty($messageText)) {
+                    $res = Http::timeout(12)->post("https://graph.facebook.com/v21.0/{$targetPath}", [
+                        'recipient'    => ['comment_id' => $comment->platform_comment_id],
+                        'message'      => ['text' => $messageText],
+                        'access_token' => $token,
+                    ]);
+
+                    if ($res->successful()) {
+                        $replyId = (string) ($res->json('message_id') ?? $res->json('id') ?? $replyId);
+                    } else {
+                        Log::warning('[AdminInbox] Private Reply to comment failed: ' . $res->body());
+                    }
                 }
             }
         } catch (\Throwable $e) {
@@ -537,7 +649,9 @@ class AdminInboxController extends Controller
             'parent_comment_id'       => $customerDmThread->platform_comment_id ?: $customerDmThread->id,
             'from_id'                 => $customerId,
             'from_name'               => 'Cooca Indonesia (Admin)',
-            'message'                 => $validated['message'],
+            'message'                 => $messageText ?: ($imageUrl ? '[Foto]' : ''),
+            'media_url'               => $imageUrl,
+            'media_type'              => $imageUrl ? 'image' : null,
             'is_from_page'            => true,
             'status'                  => 'replied',
             'created_time'            => now(),
@@ -556,6 +670,8 @@ class AdminInboxController extends Controller
                 'reply'            => [
                     'id'         => $dmReply->id,
                     'message'    => $dmReply->message,
+                    'media_url'  => $dmReply->media_url,
+                    'media_type' => $dmReply->media_type,
                     'created_at' => now()->format('H:i'),
                     'sender'     => 'Cooca Indonesia',
                 ],
@@ -908,6 +1024,8 @@ class AdminInboxController extends Controller
                     'from_id'      => $r->from_id,
                     'from_name'    => $isCooca ? 'Cooca Indonesia' : ($r->from_name ?: 'Pengguna'),
                     'message'      => $r->message,
+                    'media_url'    => $r->media_url,
+                    'media_type'   => $r->media_type,
                     'is_from_page' => $isCooca,
                     'is_cooca'     => $isCooca,
                     'role'         => $isCooca ? 'cooca' : 'visitor',
@@ -928,6 +1046,8 @@ class AdminInboxController extends Controller
                 'from_id'      => $c->from_id,
                 'from_name'    => $isParentCooca ? 'Cooca Indonesia' : ($c->from_name ?: 'Pengguna'),
                 'message'      => $c->message,
+                'media_url'    => $c->media_url,
+                'media_type'   => $c->media_type,
                 'is_from_page' => $isParentCooca,
                 'is_cooca'     => $isParentCooca,
                 'role'         => $isParentCooca ? 'cooca' : 'visitor',
@@ -947,6 +1067,8 @@ class AdminInboxController extends Controller
                 'channel'        => $channel,
                 'channel_raw'    => $c->platform,
                 'last_message'   => $c->message,
+                'media_url'      => $c->media_url,
+                'media_type'     => $c->media_type,
                 'status'         => $c->status ?: 'unread',
                 'is_unread'      => $c->status === 'unread',
                 'post_snippet'   => Str::limit($postCaption, 60),
@@ -1012,7 +1134,10 @@ class AdminInboxController extends Controller
                     'from_id'      => $m->from_id,
                     'from_name'    => $isFromPage ? 'Cooca Indonesia' : ($m->from_name ?: $customerName),
                     'message'      => $m->message,
+                    'media_url'    => $m->media_url,
+                    'media_type'   => $m->media_type,
                     'is_from_page' => $isFromPage,
+                    'is_cooca'     => $isFromPage,
                     'time'         => $m->created_time ? $m->created_time->format('H.i') : $m->created_at->format('H.i'),
                     'date'         => $m->created_time ? $m->created_time->format('d M Y') : $m->created_at->format('d M Y'),
                     'parent_id'    => $m->parent_comment_id,
@@ -1029,6 +1154,8 @@ class AdminInboxController extends Controller
                 'channel'      => $channel,
                 'channel_raw'  => $latestMsg->platform,
                 'last_message' => $latestMsg->message,
+                'media_url'    => $latestMsg->media_url,
+                'media_type'   => $latestMsg->media_type,
                 'status'       => $threadStatus,
                 'is_unread'    => $hasUnread,
                 'post_snippet' => '',
@@ -1050,11 +1177,12 @@ class AdminInboxController extends Controller
     }
 
     /**
-     * Seed initial demo platform post and comments across all 5 channels.
+     * Ensure baseline demo platform post and comments exist across all 5 channels.
+     * Guaranteed baseline conversation available for WhatsApp, Messenger, Instagram, and Comments.
      */
-    protected function seedInitialPlatformData(): void
+    protected function ensureInitialPlatformData(): void
     {
-        $post = SocialMediaPost::updateOrCreate(
+        $post = SocialMediaPost::firstOrCreate(
             [
                 'is_platform'      => true,
                 'platform'         => 'instagram',
@@ -1070,117 +1198,146 @@ class AdminInboxController extends Controller
             ]
         );
 
-        // 1. Instagram Comments Demo (Visitor)
-        SocialMediaComment::updateOrCreate(
-            [
-                'is_platform'         => true,
-                'platform'            => 'instagram_comments',
-                'platform_comment_id' => 'ig_comm_agung_001',
-            ],
-            [
-                'social_media_post_id' => $post->id,
-                'platform_post_id'     => $post->platform_post_id,
-                'parent_comment_id'    => null,
-                'from_id'              => 'agung.mustaqim',
-                'from_name'            => 'agung.mustaqim',
-                'message'              => '🔥🔥🔥',
-                'is_from_page'         => false,
-                'status'               => 'unread',
-                'created_time'         => now()->subHours(2),
-            ]
-        );
+        // 1. Instagram Comments Baseline
+        if (SocialMediaComment::where('is_platform', true)->where('platform', 'instagram_comments')->count() === 0) {
+            SocialMediaComment::updateOrCreate(
+                [
+                    'is_platform'         => true,
+                    'platform'            => 'instagram_comments',
+                    'platform_comment_id' => 'ig_comm_agung_001',
+                ],
+                [
+                    'social_media_post_id' => $post->id,
+                    'platform_post_id'     => $post->platform_post_id,
+                    'parent_comment_id'    => null,
+                    'from_id'              => 'agung.mustaqim',
+                    'from_name'            => 'agung.mustaqim',
+                    'message'              => '🔥🔥🔥',
+                    'is_from_page'         => false,
+                    'status'               => 'unread',
+                    'created_time'         => now()->subHours(2),
+                ]
+            );
 
-        // 1b. Instagram Comments Demo (Official Cooca Reply)
-        SocialMediaComment::updateOrCreate(
-            [
-                'is_platform'         => true,
-                'platform'            => 'instagram_comments',
-                'platform_comment_id' => 'ig_comm_reply_cooca_001',
-            ],
-            [
-                'social_media_post_id' => $post->id,
-                'platform_post_id'     => $post->platform_post_id,
-                'parent_comment_id'    => 'ig_comm_agung_001',
-                'from_id'              => 'cooca.indonesia',
-                'from_name'            => 'Cooca Indonesia',
-                'message'              => 'Halo Kak! Terima kasih telah menghubungi kami. Ada yang bisa kami bantu? 😊',
-                'is_from_page'         => true,
-                'status'               => 'replied',
-                'created_time'         => now()->subMinutes(17),
-            ]
-        );
+            SocialMediaComment::updateOrCreate(
+                [
+                    'is_platform'         => true,
+                    'platform'            => 'instagram_comments',
+                    'platform_comment_id' => 'ig_comm_reply_cooca_001',
+                ],
+                [
+                    'social_media_post_id' => $post->id,
+                    'platform_post_id'     => $post->platform_post_id,
+                    'parent_comment_id'    => 'ig_comm_agung_001',
+                    'from_id'              => 'cooca.indonesia',
+                    'from_name'            => 'Cooca Indonesia',
+                    'message'              => 'Halo Kak! Terima kasih telah menghubungi kami. Ada yang bisa kami bantu? 😊',
+                    'is_from_page'         => true,
+                    'status'               => 'replied',
+                    'created_time'         => now()->subMinutes(17),
+                ]
+            );
+        }
 
-        // 2. Facebook Comments Demo
-        SocialMediaComment::updateOrCreate(
-            [
-                'is_platform'         => true,
-                'platform'            => 'facebook_comments',
-                'platform_comment_id' => 'fb_comm_agung_002',
-            ],
-            [
-                'social_media_post_id' => $post->id,
-                'platform_post_id'     => $post->platform_post_id,
-                'from_id'              => 'agung.mustaqim',
-                'from_name'            => 'Agung Mustaqim',
-                'message'              => 'Keren sekali solusinya, mau tanya info harga paketnya min?',
-                'is_from_page'         => false,
-                'status'               => 'unread',
-                'created_time'         => now()->subHours(3),
-            ]
-        );
+        // 2. Facebook Comments Baseline
+        if (SocialMediaComment::where('is_platform', true)->whereIn('platform', ['facebook', 'facebook_comments'])->count() === 0) {
+            SocialMediaComment::updateOrCreate(
+                [
+                    'is_platform'         => true,
+                    'platform'            => 'facebook_comments',
+                    'platform_comment_id' => 'fb_comm_agung_002',
+                ],
+                [
+                    'social_media_post_id' => $post->id,
+                    'platform_post_id'     => $post->platform_post_id,
+                    'from_id'              => 'agung.mustaqim',
+                    'from_name'            => 'Agung Mustaqim',
+                    'message'              => 'Keren sekali solusinya, mau tanya info harga paketnya min?',
+                    'is_from_page'         => false,
+                    'status'               => 'unread',
+                    'created_time'         => now()->subHours(3),
+                ]
+            );
+        }
 
-        // 3. Instagram Direct Message Demo
-        SocialMediaComment::updateOrCreate(
-            [
-                'is_platform'         => true,
-                'platform'            => 'instagram',
-                'platform_comment_id' => 'ig_dm_dian_001',
-            ],
-            [
-                'platform_post_id'     => 'meta_ig_account_demo',
-                'from_id'              => 'dian_sari',
-                'from_name'            => 'dian_sari',
-                'message'              => 'Halo min, apakah akun Instagram ini official Cooca?',
-                'is_from_page'         => false,
-                'status'               => 'unread',
-                'created_time'         => now()->subHours(1),
-            ]
-        );
+        // 3. Instagram Direct Message Baseline
+        if (SocialMediaComment::where('is_platform', true)->whereIn('platform', ['instagram', 'instagram_dm'])->count() === 0) {
+            SocialMediaComment::updateOrCreate(
+                [
+                    'is_platform'         => true,
+                    'platform'            => 'instagram',
+                    'platform_comment_id' => 'ig_dm_dian_001',
+                ],
+                [
+                    'platform_post_id'     => 'meta_ig_account_demo',
+                    'from_id'              => 'dian_sari',
+                    'from_name'            => 'dian_sari',
+                    'message'              => 'Halo min, apakah akun Instagram ini official Cooca?',
+                    'is_from_page'         => false,
+                    'status'               => 'unread',
+                    'created_time'         => now()->subHours(1),
+                ]
+            );
+        }
 
-        // 4. Facebook Messenger Demo
-        SocialMediaComment::updateOrCreate(
-            [
-                'is_platform'         => true,
-                'platform'            => 'messenger',
-                'platform_comment_id' => 'fb_msg_budi_001',
-            ],
-            [
-                'platform_post_id'     => 'meta_page_demo',
-                'from_id'              => 'budi_santoso_fb',
-                'from_name'            => 'Budi Santoso',
-                'message'              => 'Halo kak, mau tanya fitur laporan keuangan dan integrasi POS di Cooca.',
-                'is_from_page'         => false,
-                'status'               => 'unread',
-                'created_time'         => now()->subMinutes(45),
-            ]
-        );
+        // 4. Facebook Messenger Baseline
+        if (SocialMediaComment::where('is_platform', true)->where('platform', 'messenger')->count() === 0) {
+            SocialMediaComment::updateOrCreate(
+                [
+                    'is_platform'         => true,
+                    'platform'            => 'messenger',
+                    'platform_comment_id' => 'fb_msg_budi_001',
+                ],
+                [
+                    'platform_post_id'     => 'meta_page_demo',
+                    'from_id'              => 'budi_santoso_fb',
+                    'from_name'            => 'Budi Santoso',
+                    'message'              => 'Halo kak, mau tanya fitur laporan keuangan dan integrasi POS di Cooca.',
+                    'is_from_page'         => false,
+                    'status'               => 'unread',
+                    'created_time'         => now()->subMinutes(45),
+                ]
+            );
+        }
 
-        // 5. WhatsApp Cloud API / Gateway Demo
-        SocialMediaComment::updateOrCreate(
-            [
-                'is_platform'         => true,
-                'platform'            => 'whatsapp',
-                'platform_comment_id' => 'wa_msg_citra_001',
-            ],
-            [
-                'platform_post_id'     => 'meta_wa_phone_demo',
-                'from_id'              => '6281234567890',
-                'from_name'            => 'Citra Lestari (+6281234567890)',
-                'message'              => 'Halo kak, saya mau tanya harga paket Cooca Enterprise untuk 3 cabang retail.',
-                'is_from_page'         => false,
-                'status'               => 'unread',
-                'created_time'         => now()->subMinutes(20),
-            ]
-        );
+        // 5. WhatsApp Cloud API Baseline (Incoming + Outgoing with Image Attachment)
+        if (SocialMediaComment::where('is_platform', true)->where('platform', 'whatsapp')->count() === 0) {
+            SocialMediaComment::updateOrCreate(
+                [
+                    'is_platform'         => true,
+                    'platform'            => 'whatsapp',
+                    'platform_comment_id' => 'wa_msg_citra_001',
+                ],
+                [
+                    'platform_post_id'     => 'meta_wa_phone_demo',
+                    'from_id'              => '6281234567890',
+                    'from_name'            => 'Citra Lestari (+6281234567890)',
+                    'message'              => 'Halo kak, saya mau tanya harga paket Cooca Enterprise untuk 3 cabang retail.',
+                    'is_from_page'         => false,
+                    'status'               => 'unread',
+                    'created_time'         => now()->subMinutes(20),
+                ]
+            );
+
+            SocialMediaComment::updateOrCreate(
+                [
+                    'is_platform'         => true,
+                    'platform'            => 'whatsapp',
+                    'platform_comment_id' => 'wa_msg_cooca_reply_001',
+                ],
+                [
+                    'platform_post_id'     => 'meta_wa_phone_demo',
+                    'parent_comment_id'    => 'wa_msg_citra_001',
+                    'from_id'              => '6281234567890',
+                    'from_name'            => 'Cooca Indonesia (Admin)',
+                    'message'              => 'Halo Kak Citra! Berikut kami lampirkan brosur katalog paket Cooca Enterprise untuk kebutuhan retail multi-cabang. Ada yang ingin ditanyakan lagi kak? 😊',
+                    'media_url'            => asset('assets/image/cooca_hero_banner.png'),
+                    'media_type'           => 'image',
+                    'is_from_page'         => true,
+                    'status'               => 'replied',
+                    'created_time'         => now()->subMinutes(10),
+                ]
+            );
+        }
     }
 }

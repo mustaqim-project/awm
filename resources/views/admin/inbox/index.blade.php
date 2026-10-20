@@ -701,24 +701,45 @@
                                                         </div>
                                                         <div class="space-y-1">
                                                             <div class="bg-white dark:bg-[#2C2C2E] p-3.5 rounded-[16px] rounded-bl-[4px] border border-[#E5E7EB] dark:border-white/10 shadow-xs">
-                                                                <span class="text-[11px] font-semibold text-[#1877F2] block mb-0.5" x-text="msg.from_name"></span>
-                                                                <p class="text-[13px] text-[#1F2937] dark:text-[#F3F4F6] whitespace-pre-wrap leading-relaxed" x-text="msg.message"></p>
+                                                                <span class="text-[11px] font-semibold block mb-1" 
+                                                                      :class="selectedThread.channel === 'whatsapp' ? 'text-emerald-600 dark:text-emerald-400' : (['instagram', 'instagram_dm'].includes(selectedThread.channel) ? 'text-[#E1306C]' : 'text-[#1877F2]')"
+                                                                      x-text="msg.from_name"></span>
+                                                                
+                                                                {{-- Attached Media Image --}}
+                                                                <template x-if="msg.media_url">
+                                                                    <div class="mb-2 rounded-[12px] overflow-hidden max-w-[280px] sm:max-w-xs cursor-pointer border border-black/10 dark:border-white/10 group relative" @click="window.open(msg.media_url, '_blank')">
+                                                                        <img :src="msg.media_url" class="w-full h-auto max-h-56 object-cover group-hover:scale-102 transition-transform duration-200" alt="Lampiran Foto">
+                                                                    </div>
+                                                                </template>
+
+                                                                <p x-show="msg.message && msg.message !== '[Foto]'" class="text-[13px] text-[#1F2937] dark:text-[#F3F4F6] whitespace-pre-wrap leading-relaxed" x-text="msg.message"></p>
                                                             </div>
                                                             <span class="text-[10px] text-[#9CA3AF] px-1 block" x-text="msg.time"></span>
                                                         </div>
                                                     </div>
                                                 </template>
 
-                                                {{-- Outbound Admin/Official Reply --}}
+                                                {{-- Outbound Admin/Official Reply with Channel-specific Bubbles --}}
                                                 <template x-if="msg.is_from_page">
                                                     <div class="flex items-end justify-end gap-2.5 ml-auto max-w-[85%] sm:max-w-[70%]">
                                                         <div class="space-y-1 text-right">
-                                                            <div class="bg-[#1877F2] text-white p-3.5 rounded-[16px] rounded-br-[4px] shadow-xs text-left">
-                                                                <div class="flex items-center gap-1.5 mb-1 text-[11px] font-semibold text-blue-100">
-                                                                    <i data-lucide="badge-check" class="w-3.5 h-3.5 text-white"></i>
-                                                                    <span>Cooca Official</span>
+                                                            <div class="p-3.5 rounded-[16px] rounded-br-[4px] shadow-xs text-left text-white"
+                                                                 :class="selectedThread.channel === 'whatsapp' ? 'bg-gradient-to-r from-[#005C4B] to-[#128C7E]' : (['instagram', 'instagram_dm'].includes(selectedThread.channel) ? 'bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737]' : 'bg-[#1877F2]')">
+                                                                
+                                                                {{-- Official Header with Channel Badge --}}
+                                                                <div class="flex items-center gap-1.5 mb-1.5 text-[11px] font-semibold text-white/90">
+                                                                    <i :data-lucide="selectedThread.channel === 'whatsapp' ? 'message-circle' : (['instagram', 'instagram_dm'].includes(selectedThread.channel) ? 'instagram' : 'badge-check')" class="w-3.5 h-3.5 text-white"></i>
+                                                                    <span x-text="selectedThread.channel === 'whatsapp' ? 'Cooca WhatsApp Official' : (['instagram', 'instagram_dm'].includes(selectedThread.channel) ? 'Cooca Instagram Official' : 'Cooca Official')"></span>
                                                                 </div>
-                                                                <p class="text-[13px] text-white whitespace-pre-wrap leading-relaxed" x-text="msg.message"></p>
+
+                                                                {{-- Attached Media Image in Reply --}}
+                                                                <template x-if="msg.media_url">
+                                                                    <div class="mb-2 rounded-[12px] overflow-hidden max-w-[280px] sm:max-w-xs cursor-pointer border border-white/20 group relative" @click="window.open(msg.media_url, '_blank')">
+                                                                        <img :src="msg.media_url" class="w-full h-auto max-h-56 object-cover group-hover:scale-102 transition-transform duration-200" alt="Lampiran Foto">
+                                                                    </div>
+                                                                </template>
+
+                                                                <p x-show="msg.message && msg.message !== '[Foto]'" class="text-[13px] text-white whitespace-pre-wrap leading-relaxed" x-text="msg.message"></p>
                                                             </div>
                                                             <span class="text-[10px] text-[#9CA3AF] px-1 block text-right" x-text="msg.time"></span>
                                                         </div>
@@ -730,8 +751,24 @@
                                 </template>
                             </div>
 
-                            {{-- DM REPLY CONSOLE (BOTTOM COMPOSER) --}}
+                            {{-- DM REPLY CONSOLE (BOTTOM COMPOSER) WITH IMAGE ATTACHMENT --}}
                             <div class="p-3.5 sm:p-4 bg-white dark:bg-[#1C1C1E] border-t border-[#E5E7EB] dark:border-white/10 shrink-0 space-y-2.5">
+                                {{-- Attached Image Preview Chip --}}
+                                <div x-show="attachedImageUrl" class="p-2.5 rounded-[12px] bg-blue-50 dark:bg-[#1877F2]/10 border border-blue-200 dark:border-[#1877F2]/20 flex items-center justify-between gap-3 animate-in fade-in">
+                                    <div class="flex items-center gap-2.5 min-w-0">
+                                        <div class="w-10 h-10 rounded-[8px] overflow-hidden bg-white border border-blue-300 dark:border-white/10 shrink-0">
+                                            <img :src="attachedImageUrl" class="w-full h-full object-cover" alt="Lampiran">
+                                        </div>
+                                        <div class="min-w-0 text-[12px]">
+                                            <span class="font-bold text-blue-900 dark:text-blue-200 block truncate">Foto/Gambar Terlampir</span>
+                                            <span class="text-[11px] text-blue-700 dark:text-blue-300 truncate block" x-text="attachedImageFilename || 'Siap dikirim ke pelanggan'"></span>
+                                        </div>
+                                    </div>
+                                    <button type="button" @click="removeAttachedImage()" class="p-1 rounded-full text-blue-600 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors">
+                                        <i data-lucide="x" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+
                                 {{-- Quick Responses Pills --}}
                                 <div class="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-1">
                                     <span class="text-[11px] font-semibold text-[#9CA3AF] shrink-0 mr-1">Template:</span>
@@ -749,16 +786,23 @@
                                     </button>
                                 </div>
 
-                                {{-- Textarea & Send button --}}
+                                {{-- Textarea & Action Bar with Image Attachment --}}
                                 <div class="flex items-end gap-2">
+                                    {{-- File Upload Trigger --}}
+                                    <input type="file" x-ref="mediaFileInput" @change="handleFileUpload($event)" accept="image/*" class="hidden">
+                                    <button type="button" @click="$refs.mediaFileInput.click()" :disabled="isUploadingMedia" title="Lampirkan Gambar (Maks 5MB)"
+                                            class="h-[46px] w-[46px] rounded-[12px] border border-[#D1D5DB] dark:border-white/15 bg-[#F9FAFB] dark:bg-[#2C2C2E] hover:bg-[#F3F4F6] dark:hover:bg-white/5 text-[#4B5563] dark:text-[#9CA3AF] hover:text-[#1877F2] flex items-center justify-center transition-colors shrink-0">
+                                        <i data-lucide="image" class="w-5 h-5" :class="isUploadingMedia ? 'animate-spin text-[#1877F2]' : ''"></i>
+                                    </button>
+
                                     <div class="flex-1 min-w-0 relative">
                                         <textarea x-model="replyText" @keydown.enter.prevent="if(!$event.shiftKey) sendReply()"
                                             rows="2"
-                                            placeholder="Tulis balasan resmi sebagai Cooca Official... (Tekan Enter untuk kirim, Shift+Enter untuk baris baru)"
+                                            :placeholder="attachedImageUrl ? 'Tulis pesan/keterangan gambar (opsional)... (Enter untuk kirim)' : 'Tulis balasan resmi sebagai Cooca Official... (Tekan Enter untuk kirim, Shift+Enter untuk baris baru)'"
                                             class="w-full p-2.5 sm:p-3 rounded-[12px] bg-[#F9FAFB] dark:bg-[#2C2C2E] border border-[#D1D5DB] dark:border-white/15 text-[13px] text-[#111827] dark:text-white placeholder-[#9CA3AF] focus:outline-hidden focus:border-[#1877F2] resize-none transition-colors"></textarea>
                                     </div>
 
-                                    <button type="button" @click="sendReply()" :disabled="!replyText.trim() || isSending"
+                                    <button type="button" @click="sendReply()" :disabled="(!replyText.trim() && !attachedImageUrl) || isSending || isUploadingMedia"
                                         class="h-[46px] px-4 sm:px-5 rounded-[12px] bg-[#1877F2] hover:bg-[#166FE5] disabled:opacity-50 disabled:cursor-not-allowed text-white text-[13px] font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all shrink-0">
                                         <i data-lucide="send" class="w-4 h-4" :class="isSending ? 'animate-pulse' : ''"></i>
                                         <span class="hidden sm:inline" x-text="isSending ? 'Mengirim...' : 'Kirim'"></span>
@@ -920,6 +964,14 @@
                                     <div class="space-y-1">
                                         <div class="bg-white dark:bg-[#2C2C2E] p-3 rounded-[16px] rounded-bl-[3px] border border-[#E5E7EB] dark:border-white/10 shadow-xs">
                                             <span class="text-[10.5px] font-semibold text-[#1877F2] block mb-0.5" x-text="hMsg.from_name"></span>
+                                            {{-- Attached Image --}}
+                                            <template x-if="hMsg.media_url">
+                                                <div class="mb-2 rounded-[10px] overflow-hidden border border-black/5 dark:border-white/10 max-w-[260px]">
+                                                    <a :href="hMsg.media_url" target="_blank" rel="noopener">
+                                                        <img :src="hMsg.media_url" class="w-full h-auto max-h-48 object-cover hover:opacity-95 transition-opacity" alt="Lampiran Foto" />
+                                                    </a>
+                                                </div>
+                                            </template>
                                             <p class="text-[13px] text-[#1F2937] dark:text-[#F3F4F6] whitespace-pre-wrap leading-relaxed" x-text="hMsg.message"></p>
                                         </div>
                                         <span class="text-[10px] text-[#9CA3AF] px-1 block" x-text="hMsg.time"></span>
@@ -931,11 +983,20 @@
                             <template x-if="hMsg.is_cooca || hMsg.is_from_page">
                                 <div class="flex items-end justify-end gap-2.5 ml-auto max-w-[85%] sm:max-w-[75%]">
                                     <div class="space-y-1 text-right">
-                                        <div class="bg-[#1877F2] text-white p-3 rounded-[16px] rounded-br-[3px] shadow-xs text-left">
-                                            <div class="flex items-center gap-1.5 mb-1 text-[10.5px] font-semibold text-blue-100">
+                                        <div class="text-white p-3 rounded-[16px] rounded-br-[3px] shadow-xs text-left"
+                                             :class="activePrivateDm?.target_channel === 'messenger' ? 'bg-[#1877F2]' : 'bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737]'">
+                                            <div class="flex items-center gap-1.5 mb-1 text-[10.5px] font-semibold text-white/90">
                                                 <i data-lucide="badge-check" class="w-3 h-3 text-white"></i>
                                                 <span>Cooca Official</span>
                                             </div>
+                                            {{-- Attached Image --}}
+                                            <template x-if="hMsg.media_url">
+                                                <div class="mb-2 rounded-[10px] overflow-hidden bg-black/20 border border-white/20 max-w-[260px]">
+                                                    <a :href="hMsg.media_url" target="_blank" rel="noopener">
+                                                        <img :src="hMsg.media_url" class="w-full h-auto max-h-48 object-cover hover:opacity-95 transition-opacity" alt="Lampiran Foto" />
+                                                    </a>
+                                                </div>
+                                            </template>
                                             <p class="text-[13px] text-white whitespace-pre-wrap leading-relaxed" x-text="hMsg.message"></p>
                                         </div>
                                         <span class="text-[10px] text-[#9CA3AF] px-1 block text-right" x-text="hMsg.time"></span>
@@ -949,6 +1010,22 @@
 
             {{-- COMPOSER & TEMPLATES FOOTER --}}
             <div class="p-4 bg-white dark:bg-[#1C1C1E] border-t border-[#E5E7EB] dark:border-white/10 shrink-0 space-y-2.5">
+                {{-- Preview Media Attachment in Modal --}}
+                <div x-show="modalAttachedImageUrl" x-cloak class="flex items-center gap-2 p-2 bg-blue-50 dark:bg-white/5 border border-blue-200 dark:border-white/10 rounded-[10px]">
+                    <div class="w-12 h-12 rounded-lg overflow-hidden bg-black/10 shrink-0 border border-black/10">
+                        <img :src="modalAttachedImageUrl" class="w-full h-full object-cover" alt="Preview" />
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <span class="text-[11.5px] font-semibold text-gray-800 dark:text-gray-200 truncate block" x-text="modalAttachedImageFilename || 'Foto lampiran siap dikirim'"></span>
+                        <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-medium flex items-center gap-1">
+                            <i data-lucide="check" class="w-3 h-3"></i> Siap dikirimkan ke Meta Graph API
+                        </span>
+                    </div>
+                    <button type="button" @click="removeModalAttachedImage()" class="w-6 h-6 rounded-full hover:bg-rose-100 dark:hover:bg-rose-900/30 text-rose-500 flex items-center justify-center transition-colors">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
                 {{-- Quick Templates Pills --}}
                 <div class="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-0.5">
                     <span class="text-[11px] font-semibold text-[#9CA3AF] shrink-0 mr-1">Template:</span>
@@ -974,10 +1051,18 @@
                     <div class="flex-1 relative">
                         <textarea id="privateDmTextarea" x-model="privateDmText" @keydown.enter.prevent="if(!$event.shiftKey) submitPrivateDm()"
                                   rows="2"
-                                  placeholder="Tulis pesan DM resmi ke pelanggan... (Enter untuk kirim, Shift+Enter untuk baris baru)"
+                                  :placeholder="modalAttachedImageUrl ? 'Tulis pesan/keterangan gambar (opsional)... (Enter untuk kirim)' : 'Tulis pesan DM resmi ke pelanggan... (Enter untuk kirim, Shift+Enter untuk baris baru)'"
                                   class="w-full p-3 rounded-[12px] bg-[#F9FAFB] dark:bg-[#2C2C2E] border border-[#D1D5DB] dark:border-white/15 text-[13px] text-[#111827] dark:text-white placeholder-[#9CA3AF] focus:outline-hidden focus:border-[#1877F2] resize-none transition-colors"></textarea>
                     </div>
-                    <button type="button" @click="submitPrivateDm()" :disabled="!privateDmText.trim() || isSendingDm"
+
+                    {{-- Image Upload Trigger for Modal --}}
+                    <input type="file" x-ref="modalMediaFileInput" @change="handleModalFileUpload($event)" accept="image/*" class="hidden">
+                    <button type="button" @click="$refs.modalMediaFileInput.click()" :disabled="isUploadingModalMedia" title="Lampirkan Gambar (Maks 5MB)"
+                            class="h-[46px] w-[46px] rounded-[12px] border border-[#D1D5DB] dark:border-white/15 bg-[#F9FAFB] dark:bg-[#2C2C2E] hover:bg-[#F3F4F6] dark:hover:bg-white/5 text-[#4B5563] dark:text-[#9CA3AF] hover:text-[#1877F2] flex items-center justify-center transition-colors shrink-0">
+                        <i data-lucide="image" class="w-5 h-5" :class="isUploadingModalMedia ? 'animate-spin text-[#1877F2]' : ''"></i>
+                    </button>
+
+                    <button type="button" @click="submitPrivateDm()" :disabled="(!privateDmText.trim() && !modalAttachedImageUrl) || isSendingDm || isUploadingModalMedia"
                             class="h-[46px] px-4 sm:px-5 rounded-[12px] bg-[#1877F2] hover:bg-[#166FE5] disabled:opacity-50 disabled:cursor-not-allowed text-white text-[13px] font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all shrink-0">
                         <i data-lucide="send" class="w-4 h-4" :class="isSendingDm ? 'animate-pulse' : ''"></i>
                         <span x-text="isSendingDm ? 'Mengirim...' : 'Kirim DM'"></span>
@@ -1124,6 +1209,12 @@ function adminInboxHub() {
         replyTargetComment: null,
         activePrivateDm: null,
         privateDmText: '',
+        attachedImageUrl: '',
+        attachedImageFilename: '',
+        isUploadingMedia: false,
+        modalAttachedImageUrl: '',
+        modalAttachedImageFilename: '',
+        isUploadingModalMedia: false,
         dmChatHistory: [],
         isLoadingDmHistory: false,
         isSendingDm: false,
@@ -1144,10 +1235,10 @@ function adminInboxHub() {
                 }
             });
 
-            // Start background polling for live incoming messages every 6 seconds
+            // Start background polling for live incoming messages every 3.5 seconds
             this.pollTimer = setInterval(() => {
                 this.pollLiveUpdates();
-            }, 6000);
+            }, 3500);
         },
 
         async pollLiveUpdates() {
@@ -1174,7 +1265,10 @@ function adminInboxHub() {
                                 t.id === this.selectedThread.id || 
                                 (t.customer_id && t.customer_id === this.selectedThread.customer_id && t.channel === this.selectedThread.channel)
                             );
-                            if (updated && updated.messages && updated.messages.length !== (this.selectedThread.messages?.length || 0)) {
+                            if (updated && updated.messages && (
+                                updated.messages.length !== (this.selectedThread.messages?.length || 0) ||
+                                updated.last_message !== this.selectedThread.last_message
+                            )) {
                                 const oldLen = this.selectedThread.messages?.length || 0;
                                 this.selectedThread.messages = updated.messages;
                                 this.selectedThread.replies = updated.replies || [];
@@ -1190,6 +1284,33 @@ function adminInboxHub() {
                                     });
                                 }
                             }
+                        }
+
+                        // If DM Modal dialog is currently open, auto-sync its messages too in real-time
+                        if (this.activePrivateDm && !this.isLoadingDmHistory) {
+                            const cId = this.activePrivateDm.customer_id || this.activePrivateDm.from_id;
+                            const cName = this.activePrivateDm.customer_name || this.activePrivateDm.from_name;
+                            const ch = this.activePrivateDm.target_channel || 'instagram';
+                            try {
+                                const queryParams = new URLSearchParams({
+                                    customer_id: cId || '',
+                                    customer_name: cName || '',
+                                    channel: ch,
+                                });
+                                const hRes = await fetch(`/admin/inbox/customer-history?${queryParams.toString()}`, {
+                                    headers: { 'Accept': 'application/json' }
+                                });
+                                if (hRes.ok) {
+                                    const hData = await hRes.json();
+                                    if (hData.success && Array.isArray(hData.messages) && hData.messages.length !== this.dmChatHistory.length) {
+                                        this.dmChatHistory = hData.messages;
+                                        this.$nextTick(() => {
+                                            this.scrollDmHistoryToBottom();
+                                            if (window.lucide) window.lucide.createIcons();
+                                        });
+                                    }
+                                }
+                            } catch (_) {}
                         }
                     }
                 }
@@ -1506,11 +1627,100 @@ function adminInboxHub() {
             }
         },
 
+        async handleFileUpload(event) {
+            const file = event.target.files?.[0];
+            if (!file) return;
+
+            if (file.size > 5 * 1024 * 1024) {
+                alert('Ukuran file maksimal 5MB');
+                event.target.value = '';
+                return;
+            }
+
+            this.isUploadingMedia = true;
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const res = await fetch('/admin/inbox/upload-media', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Accept': 'application/json',
+                    },
+                    body: formData,
+                });
+                const data = await res.json();
+                if (res.ok && data.success) {
+                    this.attachedImageUrl = data.url;
+                    this.attachedImageFilename = data.filename || file.name;
+                    this.$nextTick(() => { if (window.lucide) window.lucide.createIcons(); });
+                } else {
+                    alert(data.message || 'Gagal mengupload gambar.');
+                }
+            } catch (err) {
+                alert('Gagal mengupload gambar: ' + err.message);
+            } finally {
+                this.isUploadingMedia = false;
+                event.target.value = '';
+            }
+        },
+
+        removeAttachedImage() {
+            this.attachedImageUrl = '';
+            this.attachedImageFilename = '';
+        },
+
+        async handleModalFileUpload(event) {
+            const file = event.target.files?.[0];
+            if (!file) return;
+
+            if (file.size > 5 * 1024 * 1024) {
+                alert('Ukuran file maksimal 5MB');
+                event.target.value = '';
+                return;
+            }
+
+            this.isUploadingModalMedia = true;
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const res = await fetch('/admin/inbox/upload-media', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Accept': 'application/json',
+                    },
+                    body: formData,
+                });
+                const data = await res.json();
+                if (res.ok && data.success) {
+                    this.modalAttachedImageUrl = data.url;
+                    this.modalAttachedImageFilename = data.filename || file.name;
+                    this.$nextTick(() => { if (window.lucide) window.lucide.createIcons(); });
+                } else {
+                    alert(data.message || 'Gagal mengupload gambar.');
+                }
+            } catch (err) {
+                alert('Gagal mengupload gambar: ' + err.message);
+            } finally {
+                this.isUploadingModalMedia = false;
+                event.target.value = '';
+            }
+        },
+
+        removeModalAttachedImage() {
+            this.modalAttachedImageUrl = '';
+            this.modalAttachedImageFilename = '';
+        },
+
         async submitPrivateDm() {
-            if (!this.activePrivateDm || !this.privateDmText.trim() || this.isSendingDm) return;
+            if (!this.activePrivateDm || (!this.privateDmText.trim() && !this.modalAttachedImageUrl) || this.isSendingDm || this.isUploadingModalMedia) return;
 
             const commentId = this.activePrivateDm.id || this.selectedThread?.id;
             const message = this.privateDmText.trim();
+            const imageUrl = this.modalAttachedImageUrl || null;
             this.isSendingDm = true;
 
             try {
@@ -1521,7 +1731,7 @@ function adminInboxHub() {
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                         'Accept': 'application/json',
                     },
-                    body: JSON.stringify({ message })
+                    body: JSON.stringify({ message: message, image_url: imageUrl })
                 });
 
                 const data = await response.json();
@@ -1530,9 +1740,12 @@ function adminInboxHub() {
                     const newReply = data.reply || {
                         id: Date.now(),
                         from_name: 'Cooca Indonesia',
-                        message: message,
+                        message: message || (imageUrl ? '[Foto]' : ''),
+                        media_url: imageUrl,
+                        media_type: imageUrl ? 'image' : null,
                         is_from_page: true,
                         is_cooca: true,
+                        role: 'cooca',
                         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
                         date: 'Hari ini',
                     };
@@ -1540,6 +1753,8 @@ function adminInboxHub() {
                     // Instantly append to dialog history
                     this.dmChatHistory.push(newReply);
                     this.privateDmText = '';
+                    this.modalAttachedImageUrl = '';
+                    this.modalAttachedImageFilename = '';
 
                     // Update thread status if on comment
                     if (this.selectedThread) {
@@ -1649,10 +1864,11 @@ function adminInboxHub() {
         },
 
         async sendReply() {
-            if (!this.selectedThread || !this.replyText.trim() || this.isSending) return;
+            if (!this.selectedThread || (!this.replyText.trim() && !this.attachedImageUrl) || this.isSending || this.isUploadingMedia) return;
 
             const threadId = this.selectedThread.id;
             const message = this.replyText.trim();
+            const imageUrl = this.attachedImageUrl || null;
             this.isSending = true;
 
             try {
@@ -1663,7 +1879,7 @@ function adminInboxHub() {
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                         'Accept': 'application/json',
                     },
-                    body: JSON.stringify({ message })
+                    body: JSON.stringify({ message: message, image_url: imageUrl })
                 });
 
                 const data = await response.json();
@@ -1671,7 +1887,9 @@ function adminInboxHub() {
                 if (response.ok && data.success) {
                     const newReply = data.reply || {
                         id: Date.now(),
-                        message: message,
+                        message: message || (imageUrl ? '[Foto]' : ''),
+                        media_url: imageUrl,
+                        media_type: imageUrl ? 'image' : null,
                         created_at: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
                         sender: 'Cooca Official',
                     };
@@ -1680,15 +1898,23 @@ function adminInboxHub() {
                         id: newReply.id,
                         from_name: 'Cooca Official',
                         message: newReply.message,
+                        media_url: newReply.media_url || imageUrl,
+                        media_type: newReply.media_type || (imageUrl ? 'image' : null),
                         is_from_page: true,
-                        time: newReply.created_at,
+                        is_cooca: true,
+                        role: 'cooca',
+                        time: newReply.created_at || 'Baru saja',
                         date: 'Hari ini',
                     });
 
+                    this.selectedThread.last_message = newReply.message || '[Foto]';
                     this.selectedThread.is_unread = false;
                     this.selectedThread.status = 'read';
 
                     this.replyText = '';
+                    this.attachedImageUrl = '';
+                    this.attachedImageFilename = '';
+
                     this.$nextTick(() => {
                         this.scrollToBottom();
                         if (window.lucide) window.lucide.createIcons();
