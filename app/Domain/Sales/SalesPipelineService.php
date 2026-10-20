@@ -102,6 +102,7 @@ final class SalesPipelineService
                 'status' => $data['status'] ?? Quotation::STATUS_SENT,
                 'sender_name' => $data['sender_name'] ?? null,
                 'recipient_name' => $data['recipient_name'] ?? null,
+                'attachment_info' => $data['attachment_info'] ?? '-',
                 'created_by' => $data['created_by'] ?? auth()->id(),
                 'notes' => $data['notes'] ?? null,
                 'terms_and_conditions' => $data['terms_and_conditions'] ?? null,
@@ -176,6 +177,7 @@ final class SalesPipelineService
                 'status' => $data['status'] ?? $quotation->status,
                 'sender_name' => array_key_exists('sender_name', $data) ? $data['sender_name'] : $quotation->sender_name,
                 'recipient_name' => array_key_exists('recipient_name', $data) ? $data['recipient_name'] : $quotation->recipient_name,
+                'attachment_info' => array_key_exists('attachment_info', $data) ? ($data['attachment_info'] ?: '-') : ($quotation->attachment_info ?? '-'),
                 'notes' => $data['notes'] ?? $quotation->notes,
                 'terms_and_conditions' => $data['terms_and_conditions'] ?? $quotation->terms_and_conditions,
             ]);
@@ -231,6 +233,7 @@ final class SalesPipelineService
                 'status' => SalesOrder::STATUS_CONFIRMED,
                 'sender_name' => $quotation->sender_name,
                 'recipient_name' => $quotation->recipient_name,
+                'attachment_info' => $quotation->attachment_info ?? '-',
                 'created_by' => auth()->id() ?? $quotation->created_by,
                 'notes' => "Dikonversi dari Penawaran: {$quotation->quotation_number}",
             ]);
@@ -295,6 +298,7 @@ final class SalesPipelineService
                 'shipping_address' => $data['shipping_address'] ?? null,
                 'sender_name' => $data['sender_name'] ?? null,
                 'recipient_name' => $data['recipient_name'] ?? null,
+                'attachment_info' => $data['attachment_info'] ?? '-',
                 'created_by' => $data['created_by'] ?? auth()->id(),
                 'notes' => $data['notes'] ?? null,
             ]);
@@ -370,6 +374,7 @@ final class SalesPipelineService
                 'status' => $data['status'] ?? $salesOrder->status,
                 'sender_name' => array_key_exists('sender_name', $data) ? $data['sender_name'] : $salesOrder->sender_name,
                 'recipient_name' => array_key_exists('recipient_name', $data) ? $data['recipient_name'] : $salesOrder->recipient_name,
+                'attachment_info' => array_key_exists('attachment_info', $data) ? ($data['attachment_info'] ?: '-') : ($salesOrder->attachment_info ?? '-'),
                 'notes' => $data['notes'] ?? $salesOrder->notes,
             ]);
 
@@ -494,6 +499,7 @@ final class SalesPipelineService
                 'payment_terms' => 'Net 14',
                 'sender_name' => $salesOrder->sender_name,
                 'recipient_name' => $salesOrder->recipient_name,
+                'attachment_info' => $salesOrder->attachment_info ?? '-',
                 'created_by' => auth()->id() ?? $salesOrder->created_by,
                 'notes' => "Diterbitkan dari Pesanan Penjualan: {$salesOrder->so_number}",
             ]);

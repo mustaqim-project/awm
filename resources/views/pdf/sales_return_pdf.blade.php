@@ -387,6 +387,11 @@
                     </tr>
                     @endif
                     <tr>
+                        <td class="ref-label">Lampiran</td>
+                        <td class="ref-sep">:</td>
+                        <td class="ref-val">{{ !empty($return->attachment_info) ? $return->attachment_info : '-' }}</td>
+                    </tr>
+                    <tr>
                         <td class="ref-label">Perihal</td>
                         <td class="ref-sep">:</td>
                         <td class="ref-val" style="font-weight: bold;">Nota Retur Penjualan</td>

@@ -370,6 +370,11 @@
                     </tr>
                     @endif
                     <tr>
+                        <td class="ref-label">Lampiran</td>
+                        <td class="ref-sep">:</td>
+                        <td class="ref-val">{{ !empty($salesOrder->attachment_info) ? $salesOrder->attachment_info : '-' }}</td>
+                    </tr>
+                    <tr>
                         <td class="ref-label">Perihal</td>
                         <td class="ref-sep">:</td>
                         <td class="ref-val" style="font-weight: bold;">Surat Pesanan Penjualan</td>

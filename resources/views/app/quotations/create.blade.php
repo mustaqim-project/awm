@@ -83,6 +83,13 @@
                            placeholder="u.p. Nama PIC Pelanggan"
                            class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                 </div>
+
+                <div class="sm:col-span-2 lg:col-span-4">
+                    <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1">Lampiran <span class="text-black/40 dark:text-white/40 font-normal">(Default: -)</span></label>
+                    <input type="text" name="attachment_info" value="{{ old('attachment_info', '-') }}"
+                           placeholder="-"
+                           class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                </div>
             </div>
         </div>
 

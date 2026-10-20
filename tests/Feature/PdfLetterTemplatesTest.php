@@ -407,4 +407,125 @@ final class PdfLetterTemplatesTest extends TestCase
         $res = $this->actingAs($this->user)->get(route('invoices.show', $foreignInvoice));
         $this->assertTrue(in_array($res->status(), [403, 404], true));
     }
+
+    public function test_attachment_info_renders_with_default_dash_across_all_four_sales_documents(): void
+    {
+        // 1. Quotation (Default vs Custom)
+        $quoDefault = Quotation::create([
+            'business_id'      => $this->business->id,
+            'customer_id'      => $this->customer->id,
+            'quotation_number' => 'QUO-ATT-01',
+            'date'             => now()->toDateString(),
+            'status'           => Quotation::STATUS_DRAFT,
+            'subtotal'         => 100000,
+            'total_amount'     => 100000,
+            'attachment_info'  => null,
+        ]);
+        $quoCustom = Quotation::create([
+            'business_id'      => $this->business->id,
+            'customer_id'      => $this->customer->id,
+            'quotation_number' => 'QUO-ATT-02',
+            'date'             => now()->toDateString(),
+            'status'           => Quotation::STATUS_DRAFT,
+            'subtotal'         => 100000,
+            'total_amount'     => 100000,
+            'attachment_info'  => '1 Berkas Spesifikasi Teknis',
+        ]);
+
+        $htmlQuoDefault = view('pdf.quotation_pdf', ['quotation' => $quoDefault, 'business' => $this->business])->render();
+        $this->assertStringContainsString('Lampiran', $htmlQuoDefault);
+        $this->assertMatchesRegularExpression('/Lampiran\s*<\/td>\s*<td[^>]*>:\s*<\/td>\s*<td[^>]*>-\s*<\/td>/', $htmlQuoDefault);
+
+        $htmlQuoCustom = view('pdf.quotation_pdf', ['quotation' => $quoCustom, 'business' => $this->business])->render();
+        $this->assertStringContainsString('1 Berkas Spesifikasi Teknis', $htmlQuoCustom);
+
+        // 2. Sales Order (Default vs Custom)
+        $soDefault = SalesOrder::create([
+            'business_id'      => $this->business->id,
+            'customer_id'      => $this->customer->id,
+            'so_number'        => 'SO-ATT-01',
+            'order_date'       => now()->toDateString(),
+            'status'           => SalesOrder::STATUS_CONFIRMED,
+            'subtotal'         => 100000,
+            'total_amount'     => 100000,
+            'attachment_info'  => null,
+        ]);
+        $soCustom = SalesOrder::create([
+            'business_id'      => $this->business->id,
+            'customer_id'      => $this->customer->id,
+            'so_number'        => 'SO-ATT-02',
+            'order_date'       => now()->toDateString(),
+            'status'           => SalesOrder::STATUS_CONFIRMED,
+            'subtotal'         => 100000,
+            'total_amount'     => 100000,
+            'attachment_info'  => 'Surat Jalan No. 123',
+        ]);
+
+        $htmlSoDefault = view('pdf.sales_order_pdf', ['salesOrder' => $soDefault, 'business' => $this->business])->render();
+        $this->assertStringContainsString('Lampiran', $htmlSoDefault);
+        $this->assertMatchesRegularExpression('/Lampiran\s*<\/td>\s*<td[^>]*>:\s*<\/td>\s*<td[^>]*>-\s*<\/td>/', $htmlSoDefault);
+
+        $htmlSoCustom = view('pdf.sales_order_pdf', ['salesOrder' => $soCustom, 'business' => $this->business])->render();
+        $this->assertStringContainsString('Surat Jalan No. 123', $htmlSoCustom);
+
+        // 3. Invoice (Default vs Custom)
+        $invDefault = Invoice::create([
+            'business_id'      => $this->business->id,
+            'customer_id'      => $this->customer->id,
+            'invoice_number'   => 'INV-ATT-01',
+            'invoice_date'     => now()->toDateString(),
+            'due_date'         => now()->addDays(30)->toDateString(),
+            'status'           => Invoice::STATUS_UNPAID,
+            'total_amount'     => 100000,
+            'attachment_info'  => null,
+        ]);
+        $invCustom = Invoice::create([
+            'business_id'      => $this->business->id,
+            'customer_id'      => $this->customer->id,
+            'invoice_number'   => 'INV-ATT-02',
+            'invoice_date'     => now()->toDateString(),
+            'due_date'         => now()->addDays(30)->toDateString(),
+            'status'           => Invoice::STATUS_UNPAID,
+            'total_amount'     => 100000,
+            'attachment_info'  => 'Faktur Pajak Seri 010.000',
+        ]);
+
+        $htmlInvDefault = view('pdf.invoice_pdf', ['invoice' => $invDefault, 'business' => $this->business])->render();
+        $this->assertStringContainsString('Lampiran', $htmlInvDefault);
+        $this->assertMatchesRegularExpression('/Lampiran\s*<\/td>\s*<td[^>]*>:\s*<\/td>\s*<td[^>]*>-\s*<\/td>/', $htmlInvDefault);
+
+        $htmlInvCustom = view('pdf.invoice_pdf', ['invoice' => $invCustom, 'business' => $this->business])->render();
+        $this->assertStringContainsString('Faktur Pajak Seri 010.000', $htmlInvCustom);
+
+        // 4. Sales Return (Default vs Custom)
+        $retDefault = SalesReturn::create([
+            'business_id'      => $this->business->id,
+            'customer_id'      => $this->customer->id,
+            'return_number'    => 'RET-ATT-01',
+            'return_date'      => now()->toDateString(),
+            'status'           => SalesReturn::STATUS_DRAFT,
+            'total_amount'     => 100000,
+            'reason'           => 'Barang Cacat',
+            'refund_method'    => SalesReturn::REFUND_CREDIT_NOTE,
+            'attachment_info'  => null,
+        ]);
+        $retCustom = SalesReturn::create([
+            'business_id'      => $this->business->id,
+            'customer_id'      => $this->customer->id,
+            'return_number'    => 'RET-ATT-02',
+            'return_date'      => now()->toDateString(),
+            'status'           => SalesReturn::STATUS_DRAFT,
+            'total_amount'     => 100000,
+            'reason'           => 'Barang Cacat',
+            'refund_method'    => SalesReturn::REFUND_CREDIT_NOTE,
+            'attachment_info'  => 'Berita Acara Retur Fisik No. BA-099',
+        ]);
+
+        $htmlRetDefault = view('pdf.sales_return_pdf', ['return' => $retDefault, 'business' => $this->business])->render();
+        $this->assertStringContainsString('Lampiran', $htmlRetDefault);
+        $this->assertMatchesRegularExpression('/Lampiran\s*<\/td>\s*<td[^>]*>:\s*<\/td>\s*<td[^>]*>-\s*<\/td>/', $htmlRetDefault);
+
+        $htmlRetCustom = view('pdf.sales_return_pdf', ['return' => $retCustom, 'business' => $this->business])->render();
+        $this->assertStringContainsString('Berita Acara Retur Fisik No. BA-099', $htmlRetCustom);
+    }
 }

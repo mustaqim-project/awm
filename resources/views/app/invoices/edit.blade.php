@@ -12,6 +12,7 @@
     dueDate: '{{ $invoice->due_date?->format('Y-m-d') ?? date('Y-m-d', strtotime('+30 days')) }}',
     senderName: '{{ addslashes(old('sender_name', $invoice->sender_name ?: ($invoice->creator?->name ?: $business->name))) }}',
     recipientName: '{{ addslashes(old('recipient_name', $invoice->recipient_name ?: ($invoice->customer?->name ?? ''))) }}',
+    attachmentInfo: '{{ addslashes(old('attachment_info', $invoice->attachment_info ?? '-')) }}',
     
     items: [
         @forelse($invoice->items as $it)
@@ -245,6 +246,14 @@
                     </select>
                 </div>
                 @endif
+
+                <!-- Lampiran Faktur -->
+                <div class="sm:col-span-2 lg:col-span-4">
+                    <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">
+                        Lampiran <span class="text-black/40 dark:text-white/40 font-normal">(Default: -)</span>
+                    </label>
+                    <input type="text" name="attachment_info" x-model="attachmentInfo" placeholder="Contoh: - atau 1 Berkas / Surat Jalan" class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                </div>
             </div>
         </div>
 

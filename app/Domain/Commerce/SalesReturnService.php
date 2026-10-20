@@ -45,6 +45,9 @@ final class SalesReturnService
                 'reason' => $attributes['reason'] ?? 'Retur barang',
                 'status' => SalesReturn::STATUS_DRAFT,
                 'refund_method' => $attributes['refund_method'] ?? SalesReturn::REFUND_CREDIT_NOTE,
+                'attachment_info' => $attributes['attachment_info'] ?? '-',
+                'sender_name' => $attributes['sender_name'] ?? null,
+                'recipient_name' => $attributes['recipient_name'] ?? null,
                 'created_by' => $attributes['created_by'] ?? null,
             ]);
 
@@ -100,6 +103,9 @@ final class SalesReturnService
                 'return_date' => $attributes['return_date'] ?? $return->return_date,
                 'reason' => $attributes['reason'] ?? $return->reason,
                 'refund_method' => $attributes['refund_method'] ?? $return->refund_method,
+                'attachment_info' => $attributes['attachment_info'] ?? ($return->attachment_info ?? '-'),
+                'sender_name' => array_key_exists('sender_name', $attributes) ? $attributes['sender_name'] : $return->sender_name,
+                'recipient_name' => array_key_exists('recipient_name', $attributes) ? $attributes['recipient_name'] : $return->recipient_name,
             ]);
 
             // Re-sync items
@@ -195,6 +201,9 @@ final class SalesReturnService
                 'location_id' => $order->location_id, 'return_number' => $attributes['return_number'] ?? 'PRF-' . now()->format('Ym') . '-' . Str::upper(Str::random(8)),
                 'return_date' => $attributes['return_date'] ?? Carbon::today()->toDateString(), 'reason' => $attributes['reason'] ?? 'Refund POS',
                 'status' => SalesReturn::STATUS_DRAFT, 'total_amount' => 0, 'refund_method' => SalesReturn::REFUND_CASH,
+                'attachment_info' => $attributes['attachment_info'] ?? '-',
+                'sender_name' => $attributes['sender_name'] ?? null,
+                'recipient_name' => $attributes['recipient_name'] ?? null,
                 'created_by' => $attributes['created_by'] ?? null,
             ]);
             $total = 0.0;

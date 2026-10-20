@@ -28,6 +28,7 @@ final class Quotation extends Model
         'quotation_number',
         'sender_name',
         'recipient_name',
+        'attachment_info',
         'date',
         'expiry_date',
         'subtotal',

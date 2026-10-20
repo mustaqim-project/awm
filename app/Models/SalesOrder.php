@@ -27,6 +27,7 @@ final class SalesOrder extends Model
         'so_number',
         'sender_name',
         'recipient_name',
+        'attachment_info',
         'order_date',
         'expected_delivery_date',
         'subtotal',

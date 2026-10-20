@@ -178,6 +178,16 @@
                             placeholder="u.p. Nama PIC Pelanggan"
                             class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                     </div>
+
+                    <!-- Lampiran Surat Pesanan -->
+                    <div class="col-span-1 sm:col-span-2 lg:col-span-4">
+                        <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">
+                            Lampiran <span class="text-black/40 dark:text-white/40 font-normal">(Default: -)</span>
+                        </label>
+                        <input type="text" name="attachment_info" value="{{ old('attachment_info', '-') }}"
+                            placeholder="-"
+                            class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                    </div>
                 </div>
             </div>
 

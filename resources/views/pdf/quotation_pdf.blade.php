@@ -365,7 +365,7 @@
                     <tr>
                         <td class="ref-label">Lampiran</td>
                         <td class="ref-sep">:</td>
-                        <td class="ref-val">-</td>
+                        <td class="ref-val">{{ !empty($quotation->attachment_info) ? $quotation->attachment_info : '-' }}</td>
                     </tr>
                     <tr>
                         <td class="ref-label">Perihal</td>

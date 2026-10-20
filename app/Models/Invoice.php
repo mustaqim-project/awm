@@ -40,6 +40,7 @@ class Invoice extends Model
         'invoice_number',
         'sender_name',
         'recipient_name',
+        'attachment_info',
         'invoice_date',
         'due_date',
         'status',

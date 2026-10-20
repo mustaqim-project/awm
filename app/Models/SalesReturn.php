@@ -24,7 +24,7 @@ class SalesReturn extends Model
     public const REFUND_CASH = 'cash_refund';
     public const REFUND_STORE_CREDIT = 'store_credit';
 
-    protected $fillable = ['business_id', 'invoice_id', 'pos_order_id', 'customer_id', 'location_id', 'return_number', 'return_date', 'reason', 'status', 'total_amount', 'refund_method', 'created_by', 'approved_by', 'approved_at', 'completed_by', 'completed_at'];
+    protected $fillable = ['business_id', 'invoice_id', 'pos_order_id', 'customer_id', 'location_id', 'return_number', 'return_date', 'reason', 'attachment_info', 'sender_name', 'recipient_name', 'status', 'total_amount', 'refund_method', 'created_by', 'approved_by', 'approved_at', 'completed_by', 'completed_at'];
 
     protected function casts(): array
     {
