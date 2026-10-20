@@ -47,9 +47,14 @@ return [
         'version'              => env('META_WA_GRAPH_VERSION', env('META_WA_API_VERSION', 'v21.0')),
         'graph_url'            => env('META_WA_GRAPH_URL', 'https://graph.facebook.com'),
         'token'                => env('META_WA_TOKEN', ''),
-        'phone_number_id'      => env('META_WA_PHONE_NUMBER_ID', ''),
+        'phone_number_id'      => env('META_WA_PHONE_NUMBER_ID', '1304859399385592'),
         'waba_id'              => env('META_WA_WABA_ID', ''),
         'otp_template'         => env('META_WA_OTP_TEMPLATE', 'cooca_otp'),
+    ],
+
+    'wa_server' => [
+        'url'   => env('WA_SERVER_URL', 'https://brown-elephant-881331.hostingersite.com'),
+        'token' => env('WA_WORKER_TOKEN', 'cooca_wa_secret_worker_token_2026'),
     ],
 
     'meta_social' => [

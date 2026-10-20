@@ -70,9 +70,9 @@ class WhatsAppWebhookController extends Controller
             \App\Models\WhatsAppAdminSession::where('session_id', $sessionId)->update($adminSessionUpdate);
         }
 
-        // 3. Log incoming message to message logs if associated with a session
-        if ($sessionId && $message && ! $fromMe) {
-            $waSession = WhatsAppSession::where('session_id', $sessionId)->first();
+        // 3. Log incoming message to message logs and Admin Omnichannel Inbox
+        if ($message && ! $fromMe) {
+            $waSession = $sessionId ? WhatsAppSession::where('session_id', $sessionId)->first() : null;
             if ($waSession && $waSession->business_id) {
                 WhatsAppMessageLog::create([
                     'business_id'     => $waSession->business_id,
@@ -86,6 +86,9 @@ class WhatsAppWebhookController extends Controller
 
             // Ingest into Admin Omnichannel Inbox
             $cleanSender = preg_replace('/[^0-9]/', '', (string) $sender);
+            if (str_starts_with($cleanSender, '0')) {
+                $cleanSender = '62' . substr($cleanSender, 1);
+            }
             $pushName = (string) ($request->input('pushName') ?: "+{$cleanSender}");
             $wamid = (string) ($request->input('id') ?: ('baileys_' . \Illuminate\Support\Str::uuid()));
 
@@ -99,7 +102,7 @@ class WhatsAppWebhookController extends Controller
                     'business_id'             => $waSession?->business_id,
                     'social_media_account_id' => null,
                     'social_media_post_id'    => null,
-                    'platform_post_id'        => $sessionId,
+                    'platform_post_id'        => $sessionId ?: 'wa_gateway',
                     'parent_comment_id'       => null,
                     'from_id'                 => $cleanSender ?: (string) $sender,
                     'from_name'               => $pushName,

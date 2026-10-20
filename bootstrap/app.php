@@ -68,11 +68,14 @@ return Application::configure(basePath: dirname(__DIR__))
             'tripay/callback',
             'billing/payments/*',
             'api/v1/wa/*',
+            'api/wa/*',
             'api/v1/social-media/*',
+            'api/social-media/*',
             'api/v1/meta/*',
             'api/meta/*',
             'api/v1/mcp/*',
             'webhooks/marketplace/*',
+            'live-chat/send',
         ]);
 
         $middleware->web(append: [
