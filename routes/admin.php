@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\AdminCommunityEventController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminErrorLogController;
 use App\Http\Controllers\Admin\AdminFeedbackController;
+use App\Http\Controllers\Admin\AdminInboxController;
 use App\Http\Controllers\Admin\AdminLeadController;
 use App\Http\Controllers\Admin\AdminLegalPageController;
 use App\Http\Controllers\Admin\AdminPasswordResetController;
@@ -253,6 +254,14 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
             Route::post('/posts/{post}/retry', [AdminSocialMediaController::class, 'retryPost'])->name('posts.retry');
             Route::delete('/posts/{post}', [AdminSocialMediaController::class, 'destroyPost'])->name('posts.destroy');
             Route::post('/comments/{comment}/reply', [AdminSocialMediaController::class, 'replyComment'])->name('comments.reply');
+        });
+
+        // Platform Omnichannel Inbox (Standalone Admin Communication Hub)
+        Route::prefix('inbox')->name('inbox.')->group(function (): void {
+            Route::get('/', [AdminInboxController::class, 'index'])->name('index');
+            Route::post('/reply/{id}', [AdminInboxController::class, 'reply'])->name('reply');
+            Route::post('/toggle-status/{id}', [AdminInboxController::class, 'toggleStatus'])->name('toggle-status');
+            Route::post('/sync-meta', [AdminInboxController::class, 'syncMeta'])->name('sync-meta');
         });
 
         // Error Logs & System Diagnostics

@@ -316,6 +316,7 @@
             { title: 'Bisnis (Tenants)', desc: 'Daftar workspace UMKM & status akun', url: '{{ route('admin.businesses.index') }}', icon: 'building-2', cat: 'Ringkasan' },
             { title: 'Basis Pengguna', desc: 'Akun terdaftar, owner & tim kasir', url: '{{ route('admin.users.index') }}', icon: 'users', cat: 'Ringkasan' },
             { title: 'Pemulihan Akun', desc: 'Verifikasi identitas & persetujuan reset', url: '{{ route('admin.account-recoveries.index') }}', icon: 'shield-alert', cat: 'Layanan' },
+            { title: 'Kotak Masuk (Inbox)', desc: 'Omnichannel Messenger, WhatsApp, Instagram & Komentar', url: '{{ route('admin.inbox.index') }}', icon: 'inbox', cat: 'Layanan' },
             { title: 'Feedback & Bug', desc: 'Laporan bug & ide fitur dari tenant', url: '{{ route('admin.feedback.bugs.index') }}', icon: 'messages-square', cat: 'Layanan' },
             { title: 'Langganan & Billing', desc: 'Approval bukti bayar paket langganan', url: '{{ route('admin.subscriptions.index') }}', icon: 'receipt', cat: 'Monetisasi' },
             { title: 'Pencairan Merchant', desc: 'Verifikasi transfer settlement saldo merchant', url: '{{ route('admin.settlements.index') }}', icon: 'arrow-down-to-dot', cat: 'Monetisasi' },
@@ -440,6 +441,27 @@
                         <span
                             class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FF9500] text-white shadow-sm tabular-nums shrink-0 ml-2">
                             {{ $pendingRecoveriesCount }}
+                        </span>
+                    @endif
+                </a>
+
+                <a href="{{ route('admin.inbox.index') }}"
+                    class="flex items-center justify-between px-3 h-10 rounded-[12px] transition-all {{ request()->routeIs('admin.inbox.*') ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25 font-semibold' : 'text-[#3C3C43]/80 dark:text-[#EBEBF5]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
+                    <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                        <i data-lucide="inbox" class="w-4.5 h-4.5 shrink-0" stroke-width="1.8"></i>
+                        <span class="whitespace-nowrap truncate min-w-0 flex-1">Kotak Masuk (Inbox)</span>
+                    </div>
+                    @php
+                        try {
+                            $adminUnreadInboxCount = \App\Models\SocialMediaComment::where('is_platform', true)->where('status', 'unread')->count();
+                        } catch (\Throwable $e) {
+                            $adminUnreadInboxCount = 0;
+                        }
+                    @endphp
+                    @if ($adminUnreadInboxCount > 0)
+                        <span
+                            class="px-2 py-0.5 rounded-full text-[10px] font-bold {{ request()->routeIs('admin.inbox.*') ? 'bg-white text-[#007AFF]' : 'bg-[#007AFF] text-white' }} shadow-sm tabular-nums shrink-0 ml-2">
+                            {{ $adminUnreadInboxCount }}
                         </span>
                     @endif
                 </a>

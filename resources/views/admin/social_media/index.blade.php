@@ -923,6 +923,24 @@
 
         {{-- 5. TAB 2: KOTAK MASUK INTERAKSI (COMMENTS & ENGAGEMENT) --}}
         <div x-show="activeTab === 'inbox'" class="space-y-6">
+            {{-- Banner to Standalone Inbox Menu --}}
+            <div class="p-4 sm:p-5 rounded-[20px] bg-gradient-to-r from-[#E7F3FF] to-[#F0FDF4] dark:from-[#1877F2]/15 dark:to-[#34C759]/10 border border-[#1877F2]/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
+                <div class="flex items-center gap-3.5">
+                    <div class="w-10 h-10 rounded-[14px] bg-[#1877F2] text-white flex items-center justify-center shadow-sm shadow-[#1877F2]/25 shrink-0">
+                        <i data-lucide="inbox" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-[14px] font-bold text-[#111827] dark:text-white">Menu Kotak Masuk (Inbox) Kini Berdiri Sendiri</h4>
+                        <p class="text-[12.5px] text-[#4B5563] dark:text-[#9CA3AF] mt-0.5">Kelola pesan lengkap omnichannel (Messenger, Instagram, WhatsApp & Komentar) di antarmuka Inbox baru.</p>
+                    </div>
+                </div>
+                <a href="{{ route('admin.inbox.index') }}"
+                    class="min-h-[38px] px-4 rounded-[11px] text-[12.5px] font-bold text-white bg-[#1877F2] hover:bg-[#166FE5] transition-all flex items-center justify-center gap-1.5 shadow-sm shrink-0">
+                    <span>Buka Kotak Masuk Baru</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+            </div>
+
             <div
                 class="rounded-[22px] sm:rounded-[24px] bg-white/90 dark:bg-[#1C1C1E]/90 backdrop-blur-md border border-black/[0.08] dark:border-white/[0.08] shadow-sm p-5 sm:p-7 space-y-5">
                 <div
