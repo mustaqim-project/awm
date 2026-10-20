@@ -22,8 +22,13 @@
                 <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-[#1877F2]" :class="isSyncing ? 'animate-spin' : ''"></i>
                 <span x-text="isSyncing ? 'Menyinkronkan...' : 'Sinkronkan Pesan'"></span>
             </button>
-            <a href="{{ route('admin.social-media.index') }}"
+            <button type="button" @click="openMetaSettings = true"
                 class="min-h-[36px] px-3.5 rounded-[10px] text-[12.5px] font-semibold text-[#1877F2] bg-[#E7F3FF] dark:bg-[#1877F2]/20 hover:bg-[#DBEAFE] transition-all flex items-center gap-1.5">
+                <i data-lucide="key" class="w-3.5 h-3.5"></i>
+                <span>Kredensial Meta</span>
+            </button>
+            <a href="{{ route('admin.social-media.index') }}"
+                class="min-h-[36px] px-3.5 rounded-[10px] text-[12.5px] font-medium text-[#4B5563] dark:text-[#9CA3AF] bg-white dark:bg-[#1C1C1E] border border-[#E5E7EB] dark:border-white/10 hover:bg-[#F9FAFB] dark:hover:bg-white/[0.04] transition-all flex items-center gap-1.5">
                 <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
                 <span>Kelola Akun Platform</span>
             </a>
@@ -134,6 +139,11 @@
                                     class="w-full text-left px-3 py-2 text-[#1F2937] dark:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.06] flex items-center gap-2">
                                     <i data-lucide="check-check" class="w-3.5 h-3.5 text-[#34C759]"></i>
                                     <span>Tandai Semua Sudah Dibaca</span>
+                                </button>
+                                <button type="button" @click="openMetaSettings = true; openManage = false"
+                                    class="w-full text-left px-3 py-2 text-[#1877F2] dark:text-[#64D2FF] hover:bg-[#E7F3FF]/60 dark:hover:bg-[#1877F2]/10 flex items-center gap-2 font-medium">
+                                    <i data-lucide="key" class="w-3.5 h-3.5 text-[#1877F2]"></i>
+                                    <span>Pengaturan Kredensial Meta & Webhook</span>
                                 </button>
                                 <div class="my-1 border-t border-[#E5E7EB] dark:border-white/10"></div>
                                 <a href="{{ route('admin.social-media.index') }}"
@@ -508,6 +518,123 @@
 
         </div>
 
+    {{-- MODAL PENGATURAN KREDENSIAL META & WEBHOOK --}}
+    <div x-show="openMetaSettings" @keydown.escape.window="openMetaSettings = false" x-cloak
+        class="fixed inset-0 z-50 overflow-y-auto bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+        <div @click.outside="openMetaSettings = false"
+            class="bg-white dark:bg-[#1C1C1E] border border-[#E5E7EB] dark:border-white/10 rounded-[20px] shadow-2xl max-w-2xl w-full p-6 space-y-5 overflow-hidden">
+            
+            <div class="flex items-start justify-between gap-4 border-b border-[#E5E7EB] dark:border-white/10 pb-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-[12px] bg-[#1877F2]/10 text-[#1877F2] flex items-center justify-center shrink-0">
+                        <i data-lucide="key" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-[17px] font-bold text-[#111827] dark:text-white">Pengaturan Kredensial Meta & Webhook</h2>
+                        <p class="text-[12.5px] text-[#6B7280] dark:text-[#9CA3AF]">Integrasi 1 Token & 1 Webhook untuk Messenger, Instagram, Komentar, dan WhatsApp</p>
+                    </div>
+                </div>
+                <button type="button" @click="openMetaSettings = false" class="text-[#9CA3AF] hover:text-[#111827] dark:hover:text-white p-1 rounded-lg">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <form action="{{ route('admin.inbox.settings') }}" method="POST" class="space-y-4">
+                @csrf
+
+                {{-- INFO CALLOUT WEBHOOK --}}
+                <div class="p-3.5 rounded-[12px] bg-[#F0F7FF] dark:bg-[#1877F2]/10 border border-[#BAE0FF] dark:border-[#1877F2]/20 space-y-2 text-[12px]">
+                    <div class="font-bold text-[#1877F2] flex items-center gap-1.5">
+                        <i data-lucide="link" class="w-4 h-4"></i>
+                        <span>URL Callback Webhook Meta Anda</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <input type="text" readonly value="{{ $metaSettings['webhook_url'] ?? url('/api/v1/meta/omnichannel/webhook') }}" id="metaWebhookUrlInput"
+                            class="flex-1 bg-white dark:bg-[#2C2C2E] border border-[#BAE0FF] dark:border-[#1877F2]/30 text-[12px] font-mono px-2.5 py-1.5 rounded-lg select-all">
+                        <button type="button" @click="navigator.clipboard.writeText(document.getElementById('metaWebhookUrlInput').value); alert('URL Webhook berhasil disalin!')"
+                            class="px-3 py-1.5 bg-[#1877F2] text-white rounded-lg font-medium hover:bg-[#166FE5] shrink-0 text-[11.5px]">
+                            Salin URL
+                        </button>
+                    </div>
+                    <p class="text-[#4B5563] dark:text-[#9CA3AF] text-[11px] leading-relaxed">
+                        Gunakan URL ini di <strong>Meta Developer > Messenger > Webhooks</strong> dan <strong>WhatsApp > Configuration</strong>. Subscribe event: <code class="bg-white/80 dark:bg-black/30 px-1 py-0.5 rounded">messages</code>, <code class="bg-white/80 dark:bg-black/30 px-1 py-0.5 rounded">feed</code>, <code class="bg-white/80 dark:bg-black/30 px-1 py-0.5 rounded">comments</code>.
+                    </p>
+                </div>
+
+                {{-- SYSTEM USER TOKEN --}}
+                <div class="space-y-1">
+                    <label class="block text-[12.5px] font-semibold text-[#374151] dark:text-[#D1D5DB]">
+                        System User Access Token (Meta) <span class="text-rose-500">*</span>
+                    </label>
+                    <input type="password" name="meta_system_user_token" value="{{ $metaSettings['meta_system_user_token'] ?? '' }}"
+                        placeholder="EAA... (Token Pengguna Sistem Meta)"
+                        class="w-full h-10 px-3 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-[#D1D5DB] dark:border-white/15 text-[13px] text-[#111827] dark:text-white placeholder-[#9CA3AF] focus:border-[#1877F2] focus:outline-hidden">
+                    <p class="text-[11px] text-[#6B7280] dark:text-[#9CA3AF]">
+                        Token dari Pengaturan Bisnis Meta (Business Settings) > System Users dengan izin yang sudah Anda miliki (<code>pages_messaging</code>, <code>instagram_manage_messages</code>, dll).
+                    </p>
+                </div>
+
+                {{-- GRID FOR IDs --}}
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                    {{-- PAGE ID --}}
+                    <div class="space-y-1">
+                        <label class="block text-[12.5px] font-semibold text-[#374151] dark:text-[#D1D5DB]">
+                            Facebook Page ID
+                        </label>
+                        <input type="text" name="meta_page_id" value="{{ $metaSettings['meta_page_id'] ?? '' }}"
+                            placeholder="Contoh: 1340316975827711"
+                            class="w-full h-9.5 px-3 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-[#D1D5DB] dark:border-white/15 text-[13px] text-[#111827] dark:text-white placeholder-[#9CA3AF] focus:border-[#1877F2] focus:outline-hidden">
+                        <p class="text-[11px] text-[#6B7280] dark:text-[#9CA3AF]">ID Halaman untuk Messenger & Komentar Post.</p>
+                    </div>
+
+                    {{-- INSTAGRAM ID --}}
+                    <div class="space-y-1">
+                        <label class="block text-[12.5px] font-semibold text-[#374151] dark:text-[#D1D5DB]">
+                            Instagram Business Account ID
+                        </label>
+                        <input type="text" name="meta_instagram_id" value="{{ $metaSettings['meta_instagram_id'] ?? '' }}"
+                            placeholder="Contoh: 17841439846162016"
+                            class="w-full h-9.5 px-3 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-[#D1D5DB] dark:border-white/15 text-[13px] text-[#111827] dark:text-white placeholder-[#9CA3AF] focus:border-[#1877F2] focus:outline-hidden">
+                        <p class="text-[11px] text-[#6B7280] dark:text-[#9CA3AF]">ID Akun Bisnis Instagram terkait Halaman.</p>
+                    </div>
+
+                    {{-- WHATSAPP PHONE NUMBER ID --}}
+                    <div class="space-y-1">
+                        <label class="block text-[12.5px] font-semibold text-[#374151] dark:text-[#D1D5DB]">
+                            WhatsApp Phone Number ID
+                        </label>
+                        <input type="text" name="whatsapp_phone_number_id" value="{{ $metaSettings['whatsapp_phone_number_id'] ?? '' }}"
+                            placeholder="Contoh: 104523456789123"
+                            class="w-full h-9.5 px-3 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-[#D1D5DB] dark:border-white/15 text-[13px] text-[#111827] dark:text-white placeholder-[#9CA3AF] focus:border-[#1877F2] focus:outline-hidden">
+                        <p class="text-[11px] text-[#6B7280] dark:text-[#9CA3AF]">ID Nomor Telepon dari WhatsApp Cloud API.</p>
+                    </div>
+
+                    {{-- WEBHOOK VERIFY TOKEN --}}
+                    <div class="space-y-1">
+                        <label class="block text-[12.5px] font-semibold text-[#374151] dark:text-[#D1D5DB]">
+                            Webhook Verify Token
+                        </label>
+                        <input type="text" name="social_media_webhook_verify_token" value="{{ $metaSettings['social_media_webhook_verify_token'] ?? 'cooca_meta_social_webhook_token' }}"
+                            placeholder="cooca_meta_social_webhook_token"
+                            class="w-full h-9.5 px-3 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-[#D1D5DB] dark:border-white/15 text-[13px] text-[#111827] dark:text-white placeholder-[#9CA3AF] focus:border-[#1877F2] focus:outline-hidden">
+                        <p class="text-[11px] text-[#6B7280] dark:text-[#9CA3AF]">Token verifikasi saat memasukkan webhook di Meta.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-end gap-2.5 pt-3 border-t border-[#E5E7EB] dark:border-white/10">
+                    <button type="button" @click="openMetaSettings = false"
+                        class="h-9.5 px-4 rounded-[10px] text-[13px] font-medium text-[#4B5563] dark:text-[#9CA3AF] hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+                        Batal
+                    </button>
+                    <button type="submit"
+                        class="h-9.5 px-5 rounded-[10px] bg-[#1877F2] hover:bg-[#166FE5] text-white text-[13px] font-bold shadow-sm transition-all flex items-center gap-1.5">
+                        <i data-lucide="check" class="w-4 h-4"></i>
+                        <span>Simpan Kredensial</span>
+                    </button>
+                </div>
+            </form>
+
+        </div>
     </div>
 
 </div>
@@ -525,6 +652,7 @@ function adminInboxHub() {
         replyText: '',
         isSending: false,
         isSyncing: false,
+        openMetaSettings: false,
 
         init() {
             // Select first thread if available
@@ -819,11 +947,18 @@ function adminInboxHub() {
                 });
                 const data = await response.json();
                 if (data.success) {
-                    // Success notification
                     alert(data.message || 'Sinkronisasi berhasil.');
+                    if (data.count && data.count > 0) {
+                        window.location.reload();
+                    }
+                } else {
+                    alert(data.message || 'Gagal menyinkronkan data.');
+                    if (data.message && data.message.includes('belum diisi')) {
+                        this.openMetaSettings = true;
+                    }
                 }
             } catch (err) {
-                console.error(err);
+                alert('Terjadi kendala saat menyinkronkan data: ' + err.message);
             } finally {
                 this.isSyncing = false;
             }

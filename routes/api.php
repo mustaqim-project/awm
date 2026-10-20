@@ -78,9 +78,17 @@ Route::prefix('v1')->middleware('throttle:60,1')->group(function (): void {
     Route::get('/wa/meta/webhook', [\App\Http\Controllers\Api\V1\WhatsApp\MetaWhatsAppWebhookController::class, 'verify']);
     Route::post('/wa/meta/webhook', [\App\Http\Controllers\Api\V1\WhatsApp\MetaWhatsAppWebhookController::class, 'handle']);
 
-    // Official Meta Social Media Webhook (Facebook Pages & Instagram Business)
-    Route::get('/social-media/meta/webhook', [\App\Http\Controllers\Api\V1\SocialMedia\MetaSocialMediaWebhookController::class, 'verify']);
-    Route::post('/social-media/meta/webhook', [\App\Http\Controllers\Api\V1\SocialMedia\MetaSocialMediaWebhookController::class, 'handle']);
+    // Unified Meta Omnichannel Webhook (Messenger, Instagram DM/Comments, WhatsApp Cloud API, FB Feed/Comments)
+    Route::match(['GET', 'POST'], '/meta/omnichannel/webhook', function (\Illuminate\Http\Request $request) {
+        $ctrl = app(\App\Http\Controllers\Api\V1\SocialMedia\MetaOmnichannelWebhookController::class);
+        return $request->isMethod('GET') ? $ctrl->verify($request) : $ctrl->handle($request);
+    });
+
+    // Official Meta Social Media Webhook (Fallback & backward-compatible alias to Omnichannel)
+    Route::match(['GET', 'POST'], '/social-media/meta/webhook', function (\Illuminate\Http\Request $request) {
+        $ctrl = app(\App\Http\Controllers\Api\V1\SocialMedia\MetaOmnichannelWebhookController::class);
+        return $request->isMethod('GET') ? $ctrl->verify($request) : $ctrl->handle($request);
+    });
 
     // Official TikTok Open API Webhook (Event notification & Verification Ping)
     Route::match(['GET', 'POST', 'HEAD'], '/social-media/tiktok/webhook', function (\Illuminate\Http\Request $request) {
@@ -96,8 +104,16 @@ Route::prefix('v1')->middleware('throttle:60,1')->group(function (): void {
     Route::match(['GET', 'POST', 'HEAD'], '/tripay/callback', [\App\Http\Controllers\Api\V1\Payment\TripayCallbackController::class, 'handle']);
 });
 
-// TriPay Webhook Aliases without v1 prefix (e.g. /api/payments/tripay/callback and /api/tripay/callback)
+// Webhook Aliases without v1 prefix
 Route::middleware('throttle:60,1')->group(function (): void {
+    Route::match(['GET', 'POST'], '/meta/omnichannel/webhook', function (\Illuminate\Http\Request $request) {
+        $ctrl = app(\App\Http\Controllers\Api\V1\SocialMedia\MetaOmnichannelWebhookController::class);
+        return $request->isMethod('GET') ? $ctrl->verify($request) : $ctrl->handle($request);
+    });
+    Route::match(['GET', 'POST'], '/social-media/meta/webhook', function (\Illuminate\Http\Request $request) {
+        $ctrl = app(\App\Http\Controllers\Api\V1\SocialMedia\MetaOmnichannelWebhookController::class);
+        return $request->isMethod('GET') ? $ctrl->verify($request) : $ctrl->handle($request);
+    });
     Route::match(['GET', 'POST', 'HEAD'], '/payments/tripay/callback', [\App\Http\Controllers\Api\V1\Payment\TripayCallbackController::class, 'handle']);
     Route::match(['GET', 'POST', 'HEAD'], '/tripay/callback', [\App\Http\Controllers\Api\V1\Payment\TripayCallbackController::class, 'handle']);
 });

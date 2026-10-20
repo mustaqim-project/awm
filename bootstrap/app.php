@@ -68,6 +68,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'billing/payments/*',
             'api/v1/wa/*',
             'api/v1/social-media/*',
+            'api/v1/meta/*',
+            'api/meta/*',
             'api/v1/mcp/*',
             'webhooks/marketplace/*',
         ]);
