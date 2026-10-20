@@ -68,9 +68,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Route;
 
 // WhatsApp Gateway Incoming Webhook (from Render.com Node.js Baileys)
-// NOTE: Only registered under /v1 prefix with throttle. Bare /wa/webhook routes removed
-//       to eliminate the unthrottled attack surface.
-Route::prefix('v1')->middleware('throttle:60,1')->group(function (): void {
+// NOTE: Only registered under /v1 prefix with high-capacity webhook throttle to eliminate 429 drops.
+Route::prefix('v1')->middleware('throttle:600,1')->group(function (): void {
     Route::post('/wa/webhook', [\App\Http\Controllers\Api\V1\WhatsAppWebhookController::class, 'handle']);
     Route::post('/wa/admin-webhook', [\App\Http\Controllers\Api\V1\WhatsAppWebhookController::class, 'handle']);
 
@@ -107,7 +106,7 @@ Route::prefix('v1')->middleware('throttle:60,1')->group(function (): void {
 });
 
 // Webhook Aliases without v1 prefix
-Route::middleware('throttle:60,1')->group(function (): void {
+Route::middleware('throttle:600,1')->group(function (): void {
     Route::match(['GET', 'POST'], '/wa/meta/webhook', function (\Illuminate\Http\Request $request) {
         $ctrl = app(\App\Http\Controllers\Api\V1\SocialMedia\MetaOmnichannelWebhookController::class);
         return $request->isMethod('GET') ? $ctrl->verify($request) : $ctrl->handle($request);

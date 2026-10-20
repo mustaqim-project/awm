@@ -133,6 +133,50 @@ class AdminInboxController extends Controller
     }
 
     /**
+     * AJAX/GET: Real-time background polling endpoint for Inbox messages and unread counts.
+     */
+    public function poll(Request $request): JsonResponse
+    {
+        $status = (string) $request->query('status', 'all');
+        $channel = (string) $request->query('channel', 'all');
+        $search = (string) $request->query('search', '');
+
+        $commentsQuery = SocialMediaComment::query()
+            ->where('is_platform', true)
+            ->with(['post', 'account'])
+            ->latest('created_time');
+
+        if (! empty($search)) {
+            $commentsQuery->where(function ($q) use ($search) {
+                $q->where('from_name', 'like', "%{$search}%")
+                  ->orWhere('message', 'like', "%{$search}%");
+            });
+        }
+
+        $allComments = $commentsQuery->take(300)->get();
+        $threads = $this->buildPlatformThreads($allComments);
+
+        $counts = [
+            'all'                => count($threads),
+            'messenger'          => count(array_filter($threads, fn($t) => $t['channel'] === 'messenger')),
+            'instagram'          => count(array_filter($threads, fn($t) => in_array($t['channel'], ['instagram', 'instagram_dm']))),
+            'whatsapp'           => count(array_filter($threads, fn($t) => $t['channel'] === 'whatsapp')),
+            'facebook_comments'  => count(array_filter($threads, fn($t) => in_array($t['channel'], ['facebook', 'facebook_comments']))),
+            'instagram_comments' => count(array_filter($threads, fn($t) => $t['channel'] === 'instagram_comments')),
+            'unread'             => count(array_filter($threads, fn($t) => $t['is_unread'])),
+            'priority'           => count(array_filter($threads, fn($t) => $t['status'] === 'priority')),
+            'ad_replies'         => count(array_filter($threads, fn($t) => $t['status'] === 'ad_replies')),
+            'followup'           => count(array_filter($threads, fn($t) => $t['status'] === 'followup')),
+        ];
+
+        return response()->json([
+            'success' => true,
+            'threads' => $threads,
+            'counts'  => $counts,
+        ]);
+    }
+
+    /**
      * Save Meta Omnichannel Settings & Webhook Credentials.
      */
     public function saveSettings(Request $request): RedirectResponse
@@ -286,6 +330,7 @@ class AdminInboxController extends Controller
                 'platform_comment_id'     => $replyId,
                 'platform_post_id'        => $comment->platform_post_id,
                 'parent_comment_id'       => $comment->platform_comment_id ?: $comment->id,
+                'from_id'                 => $comment->from_id ?: $comment->platform_comment_id,
                 'from_name'               => 'Cooca Indonesia (Admin)',
                 'message'                 => $validated['message'],
                 'is_from_page'            => true,
@@ -709,6 +754,8 @@ class AdminInboxController extends Controller
 
     /**
      * Build unified thread items from comments/messages.
+     * Direct Chat channels (Messenger, Instagram, WhatsApp) are grouped by Customer Conversation.
+     * Comment channels (FB comments, IG comments) are grouped by Post Comment + Replies.
      *
      * @param  \Illuminate\Support\Collection<int, SocialMediaComment>  $comments
      * @return array<int, array<string, mixed>>
@@ -724,24 +771,26 @@ class AdminInboxController extends Controller
             ->get()
             ->keyBy('platform_post_id');
 
-        // Separate top-level comments and replies
-        $topLevel = $comments->whereNull('parent_comment_id');
-        $replies = $comments->whereNotNull('parent_comment_id');
+        // Separate comment channels from direct chat channels
+        $commentItems = $comments->filter(function ($c) {
+            $p = strtolower((string) $c->platform);
+            return in_array($p, ['facebook_comments', 'instagram_comments', 'facebook'], true);
+        });
 
-        foreach ($topLevel as $c) {
+        $directChatItems = $comments->filter(function ($c) {
+            $p = strtolower((string) $c->platform);
+            return in_array($p, ['messenger', 'instagram', 'instagram_dm', 'whatsapp'], true);
+        });
+
+        // =========================================================================
+        // A. BUILD COMMENT THREADS (Grouped by Post Comment + Child Replies)
+        // =========================================================================
+        $topLevelComments = $commentItems->whereNull('parent_comment_id');
+        $repliesComments = $commentItems->whereNotNull('parent_comment_id');
+
+        foreach ($topLevelComments as $c) {
             $rawPlatform = strtolower((string) $c->platform);
-            $channel = match ($rawPlatform) {
-                'facebook'           => 'facebook_comments',
-                'facebook_comments'  => 'facebook_comments',
-                'instagram'          => 'instagram',
-                'instagram_dm'       => 'instagram',
-                'instagram_comments' => 'instagram_comments',
-                'whatsapp'           => 'whatsapp',
-                'messenger'          => 'messenger',
-                default              => $rawPlatform,
-            };
-
-            $isCommentChannel = in_array($channel, ['instagram_comments', 'facebook_comments'], true);
+            $channel = ($rawPlatform === 'facebook' || $rawPlatform === 'facebook_comments') ? 'facebook_comments' : 'instagram_comments';
 
             // Related post resolution
             $post = $c->post ?? $postsMap->get($c->platform_post_id);
@@ -754,7 +803,7 @@ class AdminInboxController extends Controller
                     $postMediaUrl = str_starts_with($rawUrl, 'http') ? $rawUrl : asset($rawUrl);
                 }
             }
-            if (! $postMediaUrl && $isCommentChannel) {
+            if (! $postMediaUrl) {
                 $postMediaUrl = asset('assets/image/cooca_hero_banner.png');
             }
 
@@ -765,7 +814,7 @@ class AdminInboxController extends Controller
             $postPublishedAt = $post?->published_at ? $post->published_at->format('d M Y H.i') : ($c->created_time ? $c->created_time->format('d M Y H.i') : '1 Sep 2026 14.30');
 
             // Find child replies
-            $threadReplies = $replies->filter(function ($r) use ($c) {
+            $threadReplies = $repliesComments->filter(function ($r) use ($c) {
                 return $r->parent_comment_id === $c->platform_comment_id
                     || $r->parent_comment_id === $c->id;
             })->map(function ($r) {
@@ -782,6 +831,8 @@ class AdminInboxController extends Controller
                 ];
             })->values()->all();
 
+            $sortTimestamp = $c->created_time ? $c->created_time->timestamp : $c->created_at->timestamp;
+
             $threads[] = [
                 'id'           => $c->id,
                 'comment_id'   => $c->platform_comment_id,
@@ -796,6 +847,7 @@ class AdminInboxController extends Controller
                 'time'         => $c->created_time ? $c->created_time->format('H.i') : $c->created_at->format('H.i'),
                 'time_relative'=> $c->created_time ? $c->created_time->diffForHumans(null, true) : '2 jam',
                 'date'         => $c->created_time ? $c->created_time->format('d M Y') : $c->created_at->format('d M Y'),
+                'sort_time'    => $sortTimestamp,
                 'post'         => [
                     'id'             => $post?->id ?? $c->platform_post_id,
                     'title'          => Str::limit($postCaption, 70),
@@ -822,11 +874,87 @@ class AdminInboxController extends Controller
             ];
         }
 
+        // =========================================================================
+        // B. BUILD DIRECT CHAT THREADS (Grouped by Customer / Conversation)
+        // =========================================================================
+        $chatGroups = $directChatItems->groupBy(function ($c) {
+            $raw = strtolower((string) $c->platform);
+            $ch = ($raw === 'instagram_dm' || $raw === 'instagram') ? 'instagram' : $raw;
+            $cid = (string) ($c->from_id ?: $c->platform_comment_id ?: 'customer');
+            return "{$ch}::{$cid}";
+        });
+
+        foreach ($chatGroups as $key => $groupMessages) {
+            [$channel, $customerId] = explode('::', $key, 2);
+
+            // Sort conversation messages chronologically (oldest first for natural chat flow)
+            $sortedMsgs = $groupMessages->sortBy(function ($m) {
+                return $m->created_time ? $m->created_time->timestamp : $m->created_at->timestamp;
+            })->values();
+
+            $latestMsg = $sortedMsgs->last();
+            $customerMsg = $sortedMsgs->firstWhere('is_from_page', false) ?? $latestMsg;
+
+            $customerName = (string) ($customerMsg->from_name ?: $customerMsg->from_id ?: 'Pelanggan');
+            if (in_array($customerName, ['Cooca Indonesia (Admin)', 'Cooca Official', 'Cooca Indonesia'], true)) {
+                $firstNonAdmin = $sortedMsgs->first(fn($m) => ! $m->is_from_page && ! empty($m->from_name));
+                $customerName = $firstNonAdmin ? $firstNonAdmin->from_name : ($customerId ?: 'Pelanggan');
+            }
+
+            // Unread if any incoming message is unread
+            $hasUnread = $sortedMsgs->contains(function ($m) {
+                return ! $m->is_from_page && $m->status === 'unread';
+            });
+
+            $threadStatus = $latestMsg->status ?: ($hasUnread ? 'unread' : 'read');
+
+            $formattedMessages = $sortedMsgs->map(function ($m) use ($customerName) {
+                $isFromPage = (bool) $m->is_from_page;
+                return [
+                    'id'           => $m->id,
+                    'comment_id'   => $m->platform_comment_id,
+                    'from_id'      => $m->from_id,
+                    'from_name'    => $isFromPage ? 'Cooca Indonesia' : ($m->from_name ?: $customerName),
+                    'message'      => $m->message,
+                    'is_from_page' => $isFromPage,
+                    'time'         => $m->created_time ? $m->created_time->format('H.i') : $m->created_at->format('H.i'),
+                    'date'         => $m->created_time ? $m->created_time->format('d M Y') : $m->created_at->format('d M Y'),
+                    'parent_id'    => $m->parent_comment_id,
+                ];
+            })->all();
+
+            $sortTimestamp = $latestMsg->created_time ? $latestMsg->created_time->timestamp : $latestMsg->created_at->timestamp;
+
+            $threads[] = [
+                'id'           => $latestMsg->id,
+                'comment_id'   => $latestMsg->platform_comment_id,
+                'customer_id'  => $customerId,
+                'name'         => $customerName,
+                'channel'      => $channel,
+                'channel_raw'  => $latestMsg->platform,
+                'last_message' => $latestMsg->message,
+                'status'       => $threadStatus,
+                'is_unread'    => $hasUnread,
+                'post_snippet' => '',
+                'time'         => $latestMsg->created_time ? $latestMsg->created_time->format('H.i') : $latestMsg->created_at->format('H.i'),
+                'time_relative'=> $latestMsg->created_time ? $latestMsg->created_time->diffForHumans(null, true) : 'Baru saja',
+                'date'         => $latestMsg->created_time ? $latestMsg->created_time->format('d M Y') : $latestMsg->created_at->format('d M Y'),
+                'sort_time'    => $sortTimestamp,
+                'post'         => null,
+                'messages'     => $formattedMessages,
+            ];
+        }
+
+        // Sort all threads by latest activity descending (newest conversation on top)
+        usort($threads, function ($a, $b) {
+            return ($b['sort_time'] ?? 0) <=> ($a['sort_time'] ?? 0);
+        });
+
         return $threads;
     }
 
     /**
-     * Seed initial demo platform post and comments matching official Meta Business Suite screenshot.
+     * Seed initial demo platform post and comments across all 5 channels.
      */
     protected function seedInitialPlatformData(): void
     {
@@ -846,6 +974,7 @@ class AdminInboxController extends Controller
             ]
         );
 
+        // 1. Instagram Comments Demo
         SocialMediaComment::updateOrCreate(
             [
                 'is_platform'         => true,
@@ -864,6 +993,7 @@ class AdminInboxController extends Controller
             ]
         );
 
+        // 2. Facebook Comments Demo
         SocialMediaComment::updateOrCreate(
             [
                 'is_platform'         => true,
@@ -879,6 +1009,60 @@ class AdminInboxController extends Controller
                 'is_from_page'         => false,
                 'status'               => 'unread',
                 'created_time'         => now()->subHours(3),
+            ]
+        );
+
+        // 3. Instagram Direct Message Demo
+        SocialMediaComment::updateOrCreate(
+            [
+                'is_platform'         => true,
+                'platform'            => 'instagram',
+                'platform_comment_id' => 'ig_dm_dian_001',
+            ],
+            [
+                'platform_post_id'     => 'meta_ig_account_demo',
+                'from_id'              => 'dian_sari',
+                'from_name'            => 'dian_sari',
+                'message'              => 'Halo min, apakah akun Instagram ini official Cooca?',
+                'is_from_page'         => false,
+                'status'               => 'unread',
+                'created_time'         => now()->subHours(1),
+            ]
+        );
+
+        // 4. Facebook Messenger Demo
+        SocialMediaComment::updateOrCreate(
+            [
+                'is_platform'         => true,
+                'platform'            => 'messenger',
+                'platform_comment_id' => 'fb_msg_budi_001',
+            ],
+            [
+                'platform_post_id'     => 'meta_page_demo',
+                'from_id'              => 'budi_santoso_fb',
+                'from_name'            => 'Budi Santoso',
+                'message'              => 'Halo kak, mau tanya fitur laporan keuangan dan integrasi POS di Cooca.',
+                'is_from_page'         => false,
+                'status'               => 'unread',
+                'created_time'         => now()->subMinutes(45),
+            ]
+        );
+
+        // 5. WhatsApp Cloud API / Gateway Demo
+        SocialMediaComment::updateOrCreate(
+            [
+                'is_platform'         => true,
+                'platform'            => 'whatsapp',
+                'platform_comment_id' => 'wa_msg_citra_001',
+            ],
+            [
+                'platform_post_id'     => 'meta_wa_phone_demo',
+                'from_id'              => '6281234567890',
+                'from_name'            => 'Citra Lestari (+6281234567890)',
+                'message'              => 'Halo kak, saya mau tanya harga paket Cooca Enterprise untuk 3 cabang retail.',
+                'is_from_page'         => false,
+                'status'               => 'unread',
+                'created_time'         => now()->subMinutes(20),
             ]
         );
     }

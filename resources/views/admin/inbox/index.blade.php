@@ -44,54 +44,42 @@
                 :class="currentChannel === 'all' ? 'bg-[#E7F3FF] text-[#1877F2] font-semibold dark:bg-[#1877F2]/20 dark:text-[#64D2FF]' : 'text-[#4B5563] dark:text-[#9CA3AF] hover:text-[#111827] dark:hover:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.04]'"
                 class="px-4 py-1.5 rounded-[10px] text-[13.5px] transition-all whitespace-nowrap flex items-center gap-1.5 shrink-0">
                 <span>Semua pesan</span>
-                @if(($counts['all'] ?? 0) > 0)
-                    <span class="text-[11px] px-1.5 py-0.2 rounded-full bg-black/5 dark:bg-white/10">{{ $counts['all'] }}</span>
-                @endif
+                <span x-show="(counts.all || 0) > 0" x-text="counts.all" class="text-[11px] px-1.5 py-0.2 rounded-full bg-black/5 dark:bg-white/10 font-bold"></span>
             </button>
 
             <button type="button" @click="setChannel('messenger')"
                 :class="currentChannel === 'messenger' ? 'bg-[#E7F3FF] text-[#1877F2] font-semibold dark:bg-[#1877F2]/20 dark:text-[#64D2FF]' : 'text-[#4B5563] dark:text-[#9CA3AF] hover:text-[#111827] dark:hover:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.04]'"
                 class="px-4 py-1.5 rounded-[10px] text-[13.5px] transition-all whitespace-nowrap flex items-center gap-1.5 shrink-0">
                 <span>Messenger</span>
-                @if(($counts['messenger'] ?? 0) > 0)
-                    <span class="text-[11px] px-1.5 py-0.2 rounded-full bg-[#1877F2]/15 text-[#1877F2] font-bold">{{ $counts['messenger'] }}</span>
-                @endif
+                <span x-show="(counts.messenger || 0) > 0" x-text="counts.messenger" class="text-[11px] px-1.5 py-0.2 rounded-full bg-[#1877F2]/15 text-[#1877F2] font-bold"></span>
             </button>
 
             <button type="button" @click="setChannel('instagram')"
                 :class="currentChannel === 'instagram' ? 'bg-[#E7F3FF] text-[#1877F2] font-semibold dark:bg-[#1877F2]/20 dark:text-[#64D2FF]' : 'text-[#4B5563] dark:text-[#9CA3AF] hover:text-[#111827] dark:hover:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.04]'"
                 class="px-4 py-1.5 rounded-[10px] text-[13.5px] transition-all whitespace-nowrap flex items-center gap-1.5 shrink-0">
                 <span>Instagram</span>
-                @if(($counts['instagram'] ?? 0) > 0)
-                    <span class="text-[11px] px-1.5 py-0.2 rounded-full bg-[#E1306C]/15 text-[#E1306C] font-bold">{{ $counts['instagram'] }}</span>
-                @endif
+                <span x-show="(counts.instagram || 0) > 0" x-text="counts.instagram" class="text-[11px] px-1.5 py-0.2 rounded-full bg-[#E1306C]/15 text-[#E1306C] font-bold"></span>
             </button>
 
             <button type="button" @click="setChannel('whatsapp')"
                 :class="currentChannel === 'whatsapp' ? 'bg-[#E7F3FF] text-[#1877F2] font-semibold dark:bg-[#1877F2]/20 dark:text-[#64D2FF]' : 'text-[#4B5563] dark:text-[#9CA3AF] hover:text-[#111827] dark:hover:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.04]'"
                 class="px-4 py-1.5 rounded-[10px] text-[13.5px] transition-all whitespace-nowrap flex items-center gap-1.5 shrink-0">
                 <span>WhatsApp</span>
-                @if(($counts['whatsapp'] ?? 0) > 0)
-                    <span class="text-[11px] px-1.5 py-0.2 rounded-full bg-[#25D366]/15 text-[#25D366] font-bold">{{ $counts['whatsapp'] }}</span>
-                @endif
+                <span x-show="(counts.whatsapp || 0) > 0" x-text="counts.whatsapp" class="text-[11px] px-1.5 py-0.2 rounded-full bg-[#25D366]/15 text-[#25D366] font-bold"></span>
             </button>
 
             <button type="button" @click="setChannel('facebook_comments')"
                 :class="currentChannel === 'facebook_comments' ? 'bg-[#E7F3FF] text-[#1877F2] font-semibold dark:bg-[#1877F2]/20 dark:text-[#64D2FF]' : 'text-[#4B5563] dark:text-[#9CA3AF] hover:text-[#111827] dark:hover:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.04]'"
                 class="px-4 py-1.5 rounded-[10px] text-[13.5px] transition-all whitespace-nowrap flex items-center gap-1.5 shrink-0">
                 <span>Komentar Facebook</span>
-                @if(($counts['facebook_comments'] ?? 0) > 0)
-                    <span class="text-[11px] px-1.5 py-0.2 rounded-full bg-[#1877F2]/15 text-[#1877F2] font-bold">{{ $counts['facebook_comments'] }}</span>
-                @endif
+                <span x-show="(counts.facebook_comments || 0) > 0" x-text="counts.facebook_comments" class="text-[11px] px-1.5 py-0.2 rounded-full bg-[#1877F2]/15 text-[#1877F2] font-bold"></span>
             </button>
 
             <button type="button" @click="setChannel('instagram_comments')"
                 :class="currentChannel === 'instagram_comments' ? 'bg-[#E7F3FF] text-[#1877F2] font-semibold dark:bg-[#1877F2]/20 dark:text-[#64D2FF]' : 'text-[#4B5563] dark:text-[#9CA3AF] hover:text-[#111827] dark:hover:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.04]'"
                 class="px-4 py-1.5 rounded-[10px] text-[13.5px] transition-all whitespace-nowrap flex items-center gap-1.5 shrink-0">
                 <span>Komentar Instagram</span>
-                @if(($counts['instagram_comments'] ?? 0) > 0)
-                    <span class="text-[11px] px-1.5 py-0.2 rounded-full bg-[#E1306C]/15 text-[#E1306C] font-bold">{{ $counts['instagram_comments'] }}</span>
-                @endif
+                <span x-show="(counts.instagram_comments || 0) > 0" x-text="counts.instagram_comments" class="text-[11px] px-1.5 py-0.2 rounded-full bg-[#E1306C]/15 text-[#E1306C] font-bold"></span>
             </button>
         </div>
 
@@ -909,6 +897,7 @@ function adminInboxHub() {
         allThreads: @json($allThreads ?? []),
         displayedThreads: @json($threads ?? []),
         selectedThread: null,
+        counts: @json($counts ?? []),
         currentChannel: @json($channel ?? 'all'),
         currentStatus: @json($status ?? 'all'),
         searchKeyword: @json($search ?? ''),
@@ -919,6 +908,8 @@ function adminInboxHub() {
         isSendingDm: false,
         isSending: false,
         isSyncing: false,
+        isPolling: false,
+        pollTimer: null,
         openMetaSettings: false,
 
         init() {
@@ -931,6 +922,59 @@ function adminInboxHub() {
                     window.lucide.createIcons();
                 }
             });
+
+            // Start background polling for live incoming messages every 6 seconds
+            this.pollTimer = setInterval(() => {
+                this.pollLiveUpdates();
+            }, 6000);
+        },
+
+        async pollLiveUpdates() {
+            if (this.isPolling || this.isSending || this.isSendingDm || this.isSyncing) return;
+            this.isPolling = true;
+
+            try {
+                const url = `/admin/inbox/poll?channel=${this.currentChannel}&status=${this.currentStatus}&search=${encodeURIComponent(this.searchKeyword || '')}`;
+                const res = await fetch(url, {
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.success && data.threads) {
+                        this.allThreads = data.threads;
+                        if (data.counts) {
+                            this.counts = data.counts;
+                        }
+                        this.filterThreads(false);
+
+                        // If a thread is currently open, seamlessly sync its messages
+                        if (this.selectedThread) {
+                            const updated = this.allThreads.find(t => 
+                                t.id === this.selectedThread.id || 
+                                (t.customer_id && t.customer_id === this.selectedThread.customer_id && t.channel === this.selectedThread.channel)
+                            );
+                            if (updated && updated.messages && updated.messages.length !== this.selectedThread.messages.length) {
+                                const oldLen = this.selectedThread.messages.length;
+                                this.selectedThread.messages = updated.messages;
+                                this.selectedThread.last_message = updated.last_message;
+                                this.selectedThread.time = updated.time;
+                                this.selectedThread.status = updated.status;
+                                this.selectedThread.is_unread = updated.is_unread;
+                                if (updated.messages.length > oldLen) {
+                                    this.$nextTick(() => {
+                                        this.scrollToBottom();
+                                        if (window.lucide) window.lucide.createIcons();
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+            } catch (e) {
+                // Background polling fails silently without interrupting admin
+            } finally {
+                this.isPolling = false;
+            }
         },
 
         isCommentChannel(channel) {
@@ -966,7 +1010,7 @@ function adminInboxHub() {
             this.filterThreads();
         },
 
-        filterThreads() {
+        filterThreads(resetSelection = true) {
             const channel = this.currentChannel;
             const status = this.currentStatus;
             const search = (this.searchKeyword || '').toLowerCase().trim();
@@ -1011,11 +1055,17 @@ function adminInboxHub() {
 
             // Adjust selected thread
             if (this.displayedThreads.length > 0) {
-                if (!this.selectedThread || !this.displayedThreads.some(t => t.id === this.selectedThread.id)) {
+                const stillExists = this.selectedThread && this.displayedThreads.some(t => 
+                    t.id === this.selectedThread.id || 
+                    (t.customer_id && t.customer_id === this.selectedThread.customer_id && t.channel === this.selectedThread.channel)
+                );
+                if (!this.selectedThread || (!stillExists && resetSelection)) {
                     this.selectedThread = this.displayedThreads[0];
                 }
             } else {
-                this.selectedThread = null;
+                if (resetSelection) {
+                    this.selectedThread = null;
+                }
             }
 
             this.$nextTick(() => {
@@ -1027,6 +1077,11 @@ function adminInboxHub() {
 
         selectThread(thread) {
             this.selectedThread = thread;
+            if (thread.is_unread) {
+                thread.is_unread = false;
+                if (thread.status === 'unread') thread.status = 'read';
+                this.updateThreadStatus('read');
+            }
             this.replyTargetComment = null;
             this.replyText = '';
             this.$nextTick(() => {

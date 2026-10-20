@@ -83,6 +83,32 @@ class WhatsAppWebhookController extends Controller
                     'status'          => 'received',
                 ]);
             }
+
+            // Ingest into Admin Omnichannel Inbox
+            $cleanSender = preg_replace('/[^0-9]/', '', (string) $sender);
+            $pushName = (string) ($request->input('pushName') ?: "+{$cleanSender}");
+            $wamid = (string) ($request->input('id') ?: ('baileys_' . \Illuminate\Support\Str::uuid()));
+
+            \App\Models\SocialMediaComment::updateOrCreate(
+                [
+                    'is_platform'         => true,
+                    'platform'            => 'whatsapp',
+                    'platform_comment_id' => $wamid,
+                ],
+                [
+                    'business_id'             => $waSession?->business_id,
+                    'social_media_account_id' => null,
+                    'social_media_post_id'    => null,
+                    'platform_post_id'        => $sessionId,
+                    'parent_comment_id'       => null,
+                    'from_id'                 => $cleanSender ?: (string) $sender,
+                    'from_name'               => $pushName,
+                    'message'                 => (string) $message,
+                    'is_from_page'            => false,
+                    'status'                  => 'unread',
+                    'created_time'            => now(),
+                ]
+            );
         }
 
         return response()->json([
