@@ -424,7 +424,11 @@
             @if ($recoveries->hasPages())
                 <div class="p-4 border-t border-black/[0.06] dark:border-white/[0.08]">
                     {{ $recoveries->links() }}
-                </div>        <!-- ═══ MODAL-FIRST XXL INSPECTION DESK (Apple HIG Sheet) ═══ -->
+                </div>
+            @endif
+        </div>
+
+        <!-- ═══ MODAL-FIRST XXL INSPECTION DESK (Apple HIG Sheet) ═══ -->
         <template x-teleport="body">
             <div x-show="inspectionModalOpen"
                 class="fixed inset-0 z-[200] overflow-y-auto"
@@ -874,8 +878,5 @@
                 </div>
             </div>
         </template>
-    </div>rder-white/20">
-            </div>
-        </div>
     </div>
 @endsection
