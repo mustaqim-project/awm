@@ -266,49 +266,85 @@
                     <div x-show="displayedThreads.length > 0" class="divide-y divide-[#E5E7EB] dark:divide-white/10">
                         <template x-for="t in displayedThreads" :key="t.id">
                             <div @click="selectThread(t)"
-                                :class="selectedThread && selectedThread.id === t.id ? 'bg-[#E7F3FF]/70 dark:bg-[#1877F2]/15 border-l-4 border-[#1877F2]' : 'hover:bg-[#F9FAFB] dark:hover:bg-white/[0.03]'"
+                                :class="selectedThread && selectedThread.id === t.id ? (isCommentChannel(t.channel) ? 'bg-[#E7F3FF]/70 dark:bg-[#1877F2]/15 border-r-4 border-[#D946EF]' : 'bg-[#E7F3FF]/70 dark:bg-[#1877F2]/15 border-l-4 border-[#1877F2]') : 'hover:bg-[#F9FAFB] dark:hover:bg-white/[0.03]'"
                                 class="p-3.5 cursor-pointer transition-colors flex items-start gap-3 relative">
 
-                                {{-- Avatar with Channel Badge --}}
-                                <div class="relative shrink-0">
-                                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#E2E8F0] to-[#CBD5E1] dark:from-[#374151] dark:to-[#1F2937] flex items-center justify-center font-bold text-[13px] text-[#334155] dark:text-[#F1F5F9]">
-                                        <span x-text="getInitials(t.name)"></span>
-                                    </div>
-
-                                    {{-- Channel Icon Badge --}}
-                                    <span class="absolute -bottom-1 -right-1 w-4.5 h-4.5 rounded-full flex items-center justify-center text-white ring-2 ring-white dark:ring-[#1C1C1E]"
-                                        :class="getChannelBadgeClass(t.channel)">
-                                        <i :data-lucide="getChannelIcon(t.channel)" class="w-2.5 h-2.5"></i>
-                                    </span>
-                                </div>
-
-                                {{-- Thread Summary --}}
-                                <div class="min-w-0 flex-1">
-                                    <div class="flex items-center justify-between gap-1">
-                                        <span class="text-[13px] font-semibold text-[#111827] dark:text-white truncate"
-                                            :class="t.is_unread ? 'font-bold text-[#111827] dark:text-white' : ''"
-                                            x-text="t.name"></span>
-                                        <span class="text-[11px] text-[#6B7280] dark:text-[#9CA3AF] shrink-0" x-text="t.time"></span>
-                                    </div>
-
-                                    <p class="text-[12px] text-[#4B5563] dark:text-[#9CA3AF] truncate mt-0.5"
-                                        :class="t.is_unread ? 'font-semibold text-[#111827] dark:text-[#E5E7EB]' : ''"
-                                        x-text="t.last_message"></p>
-
-                                    {{-- Badges row --}}
-                                    <div class="flex items-center gap-1.5 mt-1.5">
-                                        <span class="text-[10px] px-1.5 py-0.2 rounded-md font-medium"
-                                            :class="getStatusBadgeClass(t.status)"
-                                            x-text="formatStatusLabel(t.status)"></span>
-
-                                        <template x-if="t.post_snippet">
-                                            <span class="text-[10.5px] text-[#6B7280] dark:text-[#9CA3AF] truncate max-w-[150px] flex items-center gap-0.5">
-                                                <i data-lucide="message-square" class="w-2.5 h-2.5"></i>
-                                                <span x-text="t.post_snippet"></span>
+                                {{-- A. COMMENT THREAD VIEW (MATCHING SCREENSHOT 1 & 2) --}}
+                                <template x-if="isCommentChannel(t.channel)">
+                                    <div class="flex items-start gap-3 w-full min-w-0">
+                                        {{-- Post Thumbnail with Social Badge Overlay --}}
+                                        <div class="relative shrink-0 w-11 h-11 rounded-[8px] overflow-hidden bg-gray-100 dark:bg-gray-800 border border-[#E5E7EB] dark:border-white/10">
+                                            <img :src="t.post?.media_url || '{{ asset('assets/image/cooca_hero_banner.png') }}'" 
+                                                 class="w-full h-full object-cover" 
+                                                 alt="Post thumbnail"
+                                                 onerror="this.src='{{ asset('assets/image/cooca-logo-square.png') }}'">
+                                            <span class="absolute bottom-0 right-0 w-4.5 h-4.5 rounded-tl-[6px] flex items-center justify-center text-white ring-1 ring-white dark:ring-[#1C1C1E]"
+                                                  :class="t.channel === 'instagram_comments' ? 'bg-[#E1306C]' : 'bg-[#1877F2]'">
+                                                <i :data-lucide="t.channel === 'instagram_comments' ? 'instagram' : 'facebook'" class="w-2.5 h-2.5"></i>
                                             </span>
-                                        </template>
+                                        </div>
+
+                                        {{-- Thread Summary (Post snippet & User commented) --}}
+                                        <div class="min-w-0 flex-1">
+                                            <div class="flex items-center justify-between gap-1">
+                                                <span class="text-[12.5px] font-semibold text-[#111827] dark:text-white truncate"
+                                                      :class="t.is_unread ? 'font-bold text-[#111827] dark:text-white' : ''"
+                                                      x-text="t.post_snippet || t.name"></span>
+                                                <span class="text-[11px] text-[#6B7280] dark:text-[#9CA3AF] shrink-0" x-text="t.time"></span>
+                                            </div>
+
+                                            <p class="text-[12px] text-[#4B5563] dark:text-[#9CA3AF] truncate mt-0.5">
+                                                <span class="font-medium text-[#111827] dark:text-gray-200" x-text="t.name"></span> commented
+                                            </p>
+
+                                            {{-- Badges row --}}
+                                            <div class="flex items-center gap-1.5 mt-1.5">
+                                                <span class="text-[10px] px-1.5 py-0.2 rounded-md font-medium"
+                                                    :class="getStatusBadgeClass(t.status)"
+                                                    x-text="formatStatusLabel(t.status)"></span>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+                                </template>
+
+                                {{-- B. DIRECT MESSAGE THREAD VIEW (MESSENGER, INSTAGRAM DM, WA) --}}
+                                <template x-if="!isCommentChannel(t.channel)">
+                                    <div class="flex items-start gap-3 w-full min-w-0">
+                                        {{-- Avatar with Channel Badge --}}
+                                        <div class="relative shrink-0">
+                                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#E2E8F0] to-[#CBD5E1] dark:from-[#374151] dark:to-[#1F2937] flex items-center justify-center font-bold text-[13px] text-[#334155] dark:text-[#F1F5F9]">
+                                                <span x-text="getInitials(t.name)"></span>
+                                            </div>
+
+                                            {{-- Channel Icon Badge --}}
+                                            <span class="absolute -bottom-1 -right-1 w-4.5 h-4.5 rounded-full flex items-center justify-center text-white ring-2 ring-white dark:ring-[#1C1C1E]"
+                                                :class="getChannelBadgeClass(t.channel)">
+                                                <i :data-lucide="getChannelIcon(t.channel)" class="w-2.5 h-2.5"></i>
+                                            </span>
+                                        </div>
+
+                                        {{-- Thread Summary --}}
+                                        <div class="min-w-0 flex-1">
+                                            <div class="flex items-center justify-between gap-1">
+                                                <span class="text-[13px] font-semibold text-[#111827] dark:text-white truncate"
+                                                    :class="t.is_unread ? 'font-bold text-[#111827] dark:text-white' : ''"
+                                                    x-text="t.name"></span>
+                                                <span class="text-[11px] text-[#6B7280] dark:text-[#9CA3AF] shrink-0" x-text="t.time"></span>
+                                            </div>
+
+                                            <p class="text-[12px] text-[#4B5563] dark:text-[#9CA3AF] truncate mt-0.5"
+                                                :class="t.is_unread ? 'font-semibold text-[#111827] dark:text-[#E5E7EB]' : ''"
+                                                x-text="t.last_message"></p>
+
+                                            {{-- Badges row --}}
+                                            <div class="flex items-center gap-1.5 mt-1.5">
+                                                <span class="text-[10px] px-1.5 py-0.2 rounded-md font-medium"
+                                                    :class="getStatusBadgeClass(t.status)"
+                                                    x-text="formatStatusLabel(t.status)"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
 
                                 {{-- Unread Dot --}}
                                 <div x-show="t.is_unread" class="w-2.5 h-2.5 rounded-full bg-[#1877F2] shrink-0 mt-1.5"></div>
@@ -347,176 +383,403 @@
                 {{-- CASE B: THREAD SELECTED (DETAIL CHAT & REPLY COMPOSER) --}}
                 <div x-show="selectedThread" class="h-full flex flex-col min-h-0 overflow-hidden">
 
-                    {{-- DETAIL HEADER --}}
-                    <div class="px-5 py-3.5 border-b border-[#E5E7EB] dark:border-white/10 flex items-center justify-between gap-3 bg-white dark:bg-[#1C1C1E] shrink-0">
-                        <div class="flex items-center gap-3 min-w-0">
-                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#E2E8F0] to-[#CBD5E1] dark:from-[#374151] dark:to-[#1F2937] flex items-center justify-center font-bold text-[14px] text-[#334155] dark:text-[#F1F5F9] shrink-0">
-                                <span x-text="selectedThread ? getInitials(selectedThread.name) : ''"></span>
-                            </div>
-                            <div class="min-w-0">
-                                <div class="flex items-center gap-2">
-                                    <h2 class="text-[14.5px] font-bold text-[#111827] dark:text-white truncate" x-text="selectedThread ? selectedThread.name : ''"></h2>
-                                    <span class="px-2 py-0.5 rounded-full text-[10.5px] font-semibold text-white flex items-center gap-1"
-                                        :class="selectedThread ? getChannelBadgeClass(selectedThread.channel) : ''">
-                                        <i :data-lucide="selectedThread ? getChannelIcon(selectedThread.channel) : 'message-circle'" class="w-2.5 h-2.5"></i>
-                                        <span x-text="selectedThread ? formatChannelName(selectedThread.channel) : ''"></span>
-                                    </span>
+                    {{-- ========================================================================= --}}
+                    {{-- B1. KOMENTAR INSTAGRAM & FACEBOOK VIEW (MATCHING USER SCREENSHOT 1 & 2) --}}
+                    {{-- ========================================================================= --}}
+                    <template x-if="isCommentChannel(selectedThread.channel)">
+                        <div class="h-full flex flex-col min-h-0 overflow-hidden">
+                            {{-- POST HEADER BAR --}}
+                            <div class="px-5 py-3 border-b border-[#E5E7EB] dark:border-white/10 flex items-center justify-between gap-3 bg-white dark:bg-[#1C1C1E] shrink-0">
+                                <div class="flex items-center gap-3 min-w-0">
+                                    <div class="w-10 h-10 rounded-[8px] overflow-hidden bg-gray-100 dark:bg-gray-800 border border-[#E5E7EB] shrink-0">
+                                        <img :src="selectedThread.post?.media_url || '{{ asset('assets/image/cooca_hero_banner.png') }}'" 
+                                             class="w-full h-full object-cover" 
+                                             alt="Post thumbnail"
+                                             onerror="this.src='{{ asset('assets/image/cooca-logo-square.png') }}'">
+                                    </div>
+                                    <div class="min-w-0">
+                                        <h2 class="text-[13.5px] font-bold text-[#111827] dark:text-white truncate" 
+                                            x-text="selectedThread.post?.title || selectedThread.post_snippet || 'Postingan Media Sosial'"></h2>
+                                        <p class="text-[11.5px] text-[#6B7280] dark:text-[#9CA3AF] truncate mt-0.5">
+                                            <span x-text="(selectedThread.post?.likes || 5) + ' suka'"></span> · 
+                                            <span x-text="(selectedThread.post?.comments_count || 1) + ' komentar'"></span> · 
+                                            <span x-text="selectedThread.post?.published_at || '1 Sep'"></span>
+                                        </p>
+                                    </div>
                                 </div>
-                                <p class="text-[11.5px] text-[#6B7280] dark:text-[#9CA3AF] truncate mt-0.5">
-                                    ID: <span x-text="selectedThread ? selectedThread.customer_id : ''"></span>
-                                    • Aktif: <span x-text="selectedThread ? selectedThread.date : ''"></span>
-                                </p>
-                            </div>
-                        </div>
 
-                        {{-- ACTIONS BAR --}}
-                        <div class="flex items-center gap-2 shrink-0">
-                            {{-- Status Switcher Dropdown --}}
-                            <div class="relative" x-data="{ openStatus: false }">
-                                <button type="button" @click="openStatus = !openStatus"
-                                    class="h-8 px-2.5 rounded-[8px] border border-[#D1D5DB] dark:border-white/15 bg-white dark:bg-[#2C2C2E] text-[12px] font-medium text-[#374151] dark:text-white hover:bg-[#F9FAFB] flex items-center gap-1.5 transition-colors">
-                                    <span class="w-2 h-2 rounded-full" :class="selectedThread && selectedThread.is_unread ? 'bg-[#1877F2]' : 'bg-[#34C759]'"></span>
-                                    <span x-text="selectedThread ? formatStatusLabel(selectedThread.status) : 'Status'"></span>
-                                    <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-[#9CA3AF]"></i>
-                                </button>
-
-                                <div x-show="openStatus" @click.outside="openStatus = false" x-cloak
-                                    class="absolute right-0 top-9.5 w-44 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-[#E5E7EB] dark:border-white/10 shadow-lg py-1 z-20 text-[12px]">
-                                    <button type="button" @click="updateThreadStatus('unread'); openStatus = false"
-                                        class="w-full text-left px-3 py-1.5 hover:bg-[#F3F4F6] dark:hover:bg-white/5 flex items-center gap-2">
-                                        <span class="w-2 h-2 rounded-full bg-[#1877F2]"></span>
-                                        <span>Tandai Belum Dibaca</span>
+                                {{-- Right Header Actions from Screenshot --}}
+                                <div class="flex items-center gap-1.5 shrink-0">
+                                    <button type="button" disabled class="h-8 px-3 rounded-[8px] bg-[#F3F4F6] dark:bg-white/5 text-[#6B7280] dark:text-[#9CA3AF] text-[12px] font-medium cursor-not-allowed">
+                                        Promosi tidak tersedia
                                     </button>
-                                    <button type="button" @click="updateThreadStatus('read'); openStatus = false"
-                                        class="w-full text-left px-3 py-1.5 hover:bg-[#F3F4F6] dark:hover:bg-white/5 flex items-center gap-2">
-                                        <span class="w-2 h-2 rounded-full bg-[#34C759]"></span>
-                                        <span>Tandai Sudah Dibaca</span>
+                                    <button type="button" title="Laporkan / Spam" @click="updateThreadStatus('ad_replies')" class="w-8 h-8 rounded-[8px] border border-[#E5E7EB] dark:border-white/10 text-[#4B5563] dark:text-[#9CA3AF] hover:bg-gray-50 dark:hover:bg-white/5 flex items-center justify-center transition-colors">
+                                        <i data-lucide="alert-triangle" class="w-4 h-4"></i>
                                     </button>
-                                    <button type="button" @click="updateThreadStatus('priority'); openStatus = false"
-                                        class="w-full text-left px-3 py-1.5 hover:bg-[#F3F4F6] dark:hover:bg-white/5 flex items-center gap-2">
-                                        <span class="w-2 h-2 rounded-full bg-[#FF9500]"></span>
-                                        <span>Tandai Prioritas</span>
+                                    <button type="button" title="Bintang / Prioritas" @click="updateThreadStatus('priority')" class="w-8 h-8 rounded-[8px] border border-[#E5E7EB] dark:border-white/10 text-[#4B5563] dark:text-[#9CA3AF] hover:bg-gray-50 dark:hover:bg-white/5 flex items-center justify-center transition-colors">
+                                        <i data-lucide="star" class="w-4 h-4" :class="selectedThread.status === 'priority' ? 'fill-amber-400 text-amber-500' : ''"></i>
                                     </button>
-                                    <button type="button" @click="updateThreadStatus('ad_replies'); openStatus = false"
-                                        class="w-full text-left px-3 py-1.5 hover:bg-[#F3F4F6] dark:hover:bg-white/5 flex items-center gap-2">
-                                        <span class="w-2 h-2 rounded-full bg-[#AF52DE]"></span>
-                                        <span>Balasan Iklan</span>
+                                    <button type="button" title="Tandai Belum Dibaca" @click="updateThreadStatus('unread')" class="w-8 h-8 rounded-[8px] border border-[#E5E7EB] dark:border-white/10 text-[#4B5563] dark:text-[#9CA3AF] hover:bg-gray-50 dark:hover:bg-white/5 flex items-center justify-center transition-colors">
+                                        <i data-lucide="mail" class="w-4 h-4"></i>
                                     </button>
-                                    <button type="button" @click="updateThreadStatus('followup'); openStatus = false"
-                                        class="w-full text-left px-3 py-1.5 hover:bg-[#F3F4F6] dark:hover:bg-white/5 flex items-center gap-2">
-                                        <span class="w-2 h-2 rounded-full bg-[#007AFF]"></span>
-                                        <span>Perlu Tindak Lanjut</span>
+                                    <button type="button" title="Tandai Selesai" @click="updateThreadStatus('resolved')" class="w-8 h-8 rounded-[8px] border border-[#E5E7EB] dark:border-white/10 text-[#4B5563] dark:text-[#9CA3AF] hover:bg-gray-50 dark:hover:bg-white/5 flex items-center justify-center transition-colors">
+                                        <i data-lucide="check" class="w-4 h-4"></i>
                                     </button>
                                 </div>
                             </div>
-                        </div>
-                    </div>
 
-                    {{-- POST BANNER (IF APPLICABLE) --}}
-                    <div x-show="selectedThread && selectedThread.post_snippet"
-                        class="px-5 py-2.5 bg-[#F9FAFB] dark:bg-white/[0.02] border-b border-[#E5E7EB] dark:border-white/10 text-[12px] text-[#4B5563] dark:text-[#9CA3AF] flex items-center justify-between gap-2">
-                        <div class="flex items-center gap-1.5 min-w-0">
-                            <i data-lucide="file-text" class="w-3.5 h-3.5 text-[#1877F2] shrink-0"></i>
-                            <span class="font-medium text-[#111827] dark:text-white shrink-0">Komentar pada postingan:</span>
-                            <span class="truncate italic" x-text="selectedThread ? selectedThread.post_snippet : ''"></span>
-                        </div>
-                    </div>
-
-                    {{-- MESSAGES STREAM BODY --}}
-                    <div id="messagesContainer" class="flex-1 p-5 overflow-y-auto space-y-4 min-h-0 bg-[#F9FAFB]/50 dark:bg-black/10">
-
-                        <div class="text-center my-2">
-                            <span class="px-3 py-1 rounded-full text-[11px] font-medium bg-black/5 dark:bg-white/10 text-[#6B7280] dark:text-[#9CA3AF]"
-                                x-text="selectedThread ? selectedThread.date : 'Hari ini'"></span>
-                        </div>
-
-                        <template x-if="selectedThread && selectedThread.messages">
-                            <div class="space-y-3.5">
+                            {{-- COMMENTS STREAM BODY --}}
+                            <div id="messagesContainer" class="flex-1 p-5 overflow-y-auto space-y-4 min-h-0 bg-white dark:bg-[#1C1C1E]">
                                 <template x-for="(msg, idx) in selectedThread.messages" :key="idx">
-                                    <div>
-                                        {{-- Inbound Customer Message --}}
-                                        <template x-if="!msg.is_from_page">
-                                            <div class="flex items-end gap-2.5 max-w-[85%] sm:max-w-[70%]">
-                                                <div class="w-7 h-7 rounded-full bg-slate-300 dark:bg-slate-700 flex items-center justify-center text-[10px] font-bold text-slate-700 dark:text-slate-200 shrink-0 mb-1">
-                                                    <span x-text="getInitials(msg.from_name)"></span>
+                                    <div :class="msg.is_from_page ? 'pl-11' : ''" class="space-y-1">
+                                        <div class="flex items-start justify-between gap-3 group">
+                                            <div class="flex items-start gap-3 min-w-0">
+                                                {{-- Avatar --}}
+                                                <div class="w-8 h-8 rounded-full overflow-hidden bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-[11px] font-bold text-slate-700 dark:text-slate-200 shrink-0 mt-0.5">
+                                                    <template x-if="msg.is_from_page">
+                                                        <img src="{{ asset('assets/image/cooca-icon.png') }}" class="w-full h-full object-cover" alt="Cooca">
+                                                    </template>
+                                                    <template x-if="!msg.is_from_page">
+                                                        <span x-text="getInitials(msg.from_name)"></span>
+                                                    </template>
                                                 </div>
-                                                <div class="space-y-1">
-                                                    <div class="bg-white dark:bg-[#2C2C2E] p-3.5 rounded-[16px] rounded-bl-[4px] border border-[#E5E7EB] dark:border-white/10 shadow-xs">
-                                                        <span class="text-[11px] font-semibold text-[#1877F2] block mb-0.5" x-text="msg.from_name"></span>
-                                                        <p class="text-[13px] text-[#1F2937] dark:text-[#F3F4F6] whitespace-pre-wrap leading-relaxed" x-text="msg.message"></p>
+
+                                                {{-- Comment Content & Actions --}}
+                                                <div class="min-w-0">
+                                                    <div class="text-[13px] text-[#111827] dark:text-white leading-relaxed">
+                                                        <span class="font-bold mr-1.5" x-text="msg.from_name"></span>
+                                                        <span x-text="msg.message"></span>
                                                     </div>
-                                                    <span class="text-[10px] text-[#9CA3AF] px-1 block" x-text="msg.time"></span>
+
+                                                    {{-- Action Subline from Screenshot: [Time] · Balas · Kirim Pesan · ••• --}}
+                                                    <div class="flex items-center gap-2 mt-1 text-[11.5px] text-[#6B7280] dark:text-[#9CA3AF]">
+                                                        <span x-text="msg.time"></span>
+                                                        <span>·</span>
+                                                        <button type="button" @click="startReplyComment(msg)" class="font-semibold text-[#1877F2] hover:underline">
+                                                            Balas
+                                                        </button>
+                                                        <template x-if="!msg.is_from_page">
+                                                            <div class="flex items-center gap-2">
+                                                                <span>·</span>
+                                                                <button type="button" @click="openPrivateDmModal(msg)" class="font-semibold text-[#1877F2] hover:underline flex items-center gap-1">
+                                                                    <span>Kirim Pesan</span>
+                                                                    <i data-lucide="send" class="w-2.5 h-2.5"></i>
+                                                                </button>
+                                                            </div>
+                                                        </template>
+                                                        <span>·</span>
+                                                        <button type="button" class="hover:text-gray-900 dark:hover:text-white">
+                                                            <i data-lucide="more-horizontal" class="w-3.5 h-3.5"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </template>
 
-                                        {{-- Outbound Admin/Official Reply --}}
-                                        <template x-if="msg.is_from_page">
-                                            <div class="flex items-end justify-end gap-2.5 ml-auto max-w-[85%] sm:max-w-[70%]">
-                                                <div class="space-y-1 text-right">
-                                                    <div class="bg-[#1877F2] text-white p-3.5 rounded-[16px] rounded-br-[4px] shadow-xs text-left">
-                                                        <div class="flex items-center gap-1.5 mb-1 text-[11px] font-semibold text-blue-100">
-                                                            <i data-lucide="badge-check" class="w-3.5 h-3.5 text-white"></i>
-                                                            <span>Cooca Official</span>
+                                            {{-- Heart / Like Icon --}}
+                                            <button type="button" @click="msg.liked = !msg.liked" class="text-gray-400 hover:text-red-500 transition-colors p-1 shrink-0">
+                                                <i data-lucide="heart" class="w-4 h-4" :class="msg.liked ? 'fill-red-500 text-red-500' : ''"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+
+                            {{-- BOTTOM COMMENT COMPOSER (MATCHING SCREENSHOT 1) --}}
+                            <div class="p-3.5 bg-white dark:bg-[#1C1C1E] border-t border-[#E5E7EB] dark:border-white/10 shrink-0 space-y-2">
+                                {{-- Active Reply Context Indicator --}}
+                                <div x-show="replyTargetComment" class="px-3 py-1.5 rounded-[8px] bg-[#E7F3FF] dark:bg-[#1877F2]/20 flex items-center justify-between text-[12px] text-[#1877F2]">
+                                    <div class="flex items-center gap-1.5 truncate">
+                                        <i data-lucide="corner-down-right" class="w-3.5 h-3.5"></i>
+                                        <span>Membalas komentar ke <strong x-text="'@' + (replyTargetComment?.from_name || 'pengguna')"></strong></span>
+                                    </div>
+                                    <button type="button" @click="cancelReplyTarget()" class="text-gray-500 hover:text-gray-700 ml-2">
+                                        <i data-lucide="x" class="w-3.5 h-3.5"></i>
+                                    </button>
+                                </div>
+
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full overflow-hidden bg-black shrink-0">
+                                        <img src="{{ asset('assets/image/cooca-icon.png') }}" class="w-full h-full object-cover" alt="Cooca Official">
+                                    </div>
+                                    <div class="flex-1 relative flex items-center">
+                                        <input type="text" x-model="replyText" @keydown.enter.prevent="sendCommentReply()"
+                                               :placeholder="replyTargetComment ? 'Balas ke @' + replyTargetComment.from_name + '...' : 'Tambahkan komentar...'"
+                                               class="w-full h-10 px-3.5 pr-10 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-[#D1D5DB] dark:border-white/15 text-[13px] text-[#111827] dark:text-white placeholder-[#9CA3AF] focus:outline-hidden focus:border-[#1877F2]">
+                                        <button type="button" @click="replyText += ' 😊'" class="absolute right-3 text-[#9CA3AF] hover:text-[#111827] dark:hover:text-white">
+                                            <i data-lucide="smile" class="w-4 h-4"></i>
+                                        </button>
+                                    </div>
+                                    <button type="button" @click="sendCommentReply()" :disabled="!replyText.trim() || isSending"
+                                            class="w-10 h-10 rounded-[10px] bg-[#1877F2] hover:bg-[#166FE5] text-white flex items-center justify-center disabled:opacity-50 transition-colors shrink-0">
+                                        <i data-lucide="send" class="w-4 h-4" :class="isSending ? 'animate-pulse' : ''"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+
+                    {{-- ========================================================================= --}}
+                    {{-- B2. DIRECT MESSAGES VIEW (MESSENGER, INSTAGRAM DM, WA)                   --}}
+                    {{-- ========================================================================= --}}
+                    <template x-if="!isCommentChannel(selectedThread.channel)">
+                        <div class="h-full flex flex-col min-h-0 overflow-hidden">
+                            {{-- DM DETAIL HEADER --}}
+                            <div class="px-5 py-3.5 border-b border-[#E5E7EB] dark:border-white/10 flex items-center justify-between gap-3 bg-white dark:bg-[#1C1C1E] shrink-0">
+                                <div class="flex items-center gap-3 min-w-0">
+                                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#E2E8F0] to-[#CBD5E1] dark:from-[#374151] dark:to-[#1F2937] flex items-center justify-center font-bold text-[14px] text-[#334155] dark:text-[#F1F5F9] shrink-0">
+                                        <span x-text="getInitials(selectedThread.name)"></span>
+                                    </div>
+                                    <div class="min-w-0">
+                                        <div class="flex items-center gap-2">
+                                            <h2 class="text-[14.5px] font-bold text-[#111827] dark:text-white truncate" x-text="selectedThread.name"></h2>
+                                            <span class="px-2 py-0.5 rounded-full text-[10.5px] font-semibold text-white flex items-center gap-1"
+                                                :class="getChannelBadgeClass(selectedThread.channel)">
+                                                <i :data-lucide="getChannelIcon(selectedThread.channel)" class="w-2.5 h-2.5"></i>
+                                                <span x-text="formatChannelName(selectedThread.channel)"></span>
+                                            </span>
+                                        </div>
+                                        <p class="text-[11.5px] text-[#6B7280] dark:text-[#9CA3AF] truncate mt-0.5">
+                                            ID: <span x-text="selectedThread.customer_id"></span>
+                                            • Aktif: <span x-text="selectedThread.date"></span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {{-- ACTIONS BAR --}}
+                                <div class="flex items-center gap-2 shrink-0">
+                                    {{-- Status Switcher Dropdown --}}
+                                    <div class="relative" x-data="{ openStatus: false }">
+                                        <button type="button" @click="openStatus = !openStatus"
+                                            class="h-8 px-2.5 rounded-[8px] border border-[#D1D5DB] dark:border-white/15 bg-white dark:bg-[#2C2C2E] text-[12px] font-medium text-[#374151] dark:text-white hover:bg-[#F9FAFB] flex items-center gap-1.5 transition-colors">
+                                            <span class="w-2 h-2 rounded-full" :class="selectedThread.is_unread ? 'bg-[#1877F2]' : 'bg-[#34C759]'"></span>
+                                            <span x-text="formatStatusLabel(selectedThread.status)"></span>
+                                            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-[#9CA3AF]"></i>
+                                        </button>
+
+                                        <div x-show="openStatus" @click.outside="openStatus = false" x-cloak
+                                            class="absolute right-0 top-9.5 w-44 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-[#E5E7EB] dark:border-white/10 shadow-lg py-1 z-20 text-[12px]">
+                                            <button type="button" @click="updateThreadStatus('unread'); openStatus = false"
+                                                class="w-full text-left px-3 py-1.5 hover:bg-[#F3F4F6] dark:hover:bg-white/5 flex items-center gap-2">
+                                                <span class="w-2 h-2 rounded-full bg-[#1877F2]"></span>
+                                                <span>Tandai Belum Dibaca</span>
+                                            </button>
+                                            <button type="button" @click="updateThreadStatus('read'); openStatus = false"
+                                                class="w-full text-left px-3 py-1.5 hover:bg-[#F3F4F6] dark:hover:bg-white/5 flex items-center gap-2">
+                                                <span class="w-2 h-2 rounded-full bg-[#34C759]"></span>
+                                                <span>Tandai Sudah Dibaca</span>
+                                            </button>
+                                            <button type="button" @click="updateThreadStatus('priority'); openStatus = false"
+                                                class="w-full text-left px-3 py-1.5 hover:bg-[#F3F4F6] dark:hover:bg-white/5 flex items-center gap-2">
+                                                <span class="w-2 h-2 rounded-full bg-[#FF9500]"></span>
+                                                <span>Tandai Prioritas</span>
+                                            </button>
+                                            <button type="button" @click="updateThreadStatus('ad_replies'); openStatus = false"
+                                                class="w-full text-left px-3 py-1.5 hover:bg-[#F3F4F6] dark:hover:bg-white/5 flex items-center gap-2">
+                                                <span class="w-2 h-2 rounded-full bg-[#AF52DE]"></span>
+                                                <span>Balasan Iklan</span>
+                                            </button>
+                                            <button type="button" @click="updateThreadStatus('followup'); openStatus = false"
+                                                class="w-full text-left px-3 py-1.5 hover:bg-[#F3F4F6] dark:hover:bg-white/5 flex items-center gap-2">
+                                                <span class="w-2 h-2 rounded-full bg-[#007AFF]"></span>
+                                                <span>Perlu Tindak Lanjut</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- MESSAGES STREAM BODY --}}
+                            <div id="messagesContainer" class="flex-1 p-5 overflow-y-auto space-y-4 min-h-0 bg-[#F9FAFB]/50 dark:bg-black/10">
+                                <div class="text-center my-2">
+                                    <span class="px-3 py-1 rounded-full text-[11px] font-medium bg-black/5 dark:bg-white/10 text-[#6B7280] dark:text-[#9CA3AF]"
+                                        x-text="selectedThread.date || 'Hari ini'"></span>
+                                </div>
+
+                                <template x-if="selectedThread.messages">
+                                    <div class="space-y-3.5">
+                                        <template x-for="(msg, idx) in selectedThread.messages" :key="idx">
+                                            <div>
+                                                {{-- Inbound Customer Message --}}
+                                                <template x-if="!msg.is_from_page">
+                                                    <div class="flex items-end gap-2.5 max-w-[85%] sm:max-w-[70%]">
+                                                        <div class="w-7 h-7 rounded-full bg-slate-300 dark:bg-slate-700 flex items-center justify-center text-[10px] font-bold text-slate-700 dark:text-slate-200 shrink-0 mb-1">
+                                                            <span x-text="getInitials(msg.from_name)"></span>
                                                         </div>
-                                                        <p class="text-[13px] text-white whitespace-pre-wrap leading-relaxed" x-text="msg.message"></p>
+                                                        <div class="space-y-1">
+                                                            <div class="bg-white dark:bg-[#2C2C2E] p-3.5 rounded-[16px] rounded-bl-[4px] border border-[#E5E7EB] dark:border-white/10 shadow-xs">
+                                                                <span class="text-[11px] font-semibold text-[#1877F2] block mb-0.5" x-text="msg.from_name"></span>
+                                                                <p class="text-[13px] text-[#1F2937] dark:text-[#F3F4F6] whitespace-pre-wrap leading-relaxed" x-text="msg.message"></p>
+                                                            </div>
+                                                            <span class="text-[10px] text-[#9CA3AF] px-1 block" x-text="msg.time"></span>
+                                                        </div>
                                                     </div>
-                                                    <span class="text-[10px] text-[#9CA3AF] px-1 block text-right" x-text="msg.time"></span>
-                                                </div>
+                                                </template>
+
+                                                {{-- Outbound Admin/Official Reply --}}
+                                                <template x-if="msg.is_from_page">
+                                                    <div class="flex items-end justify-end gap-2.5 ml-auto max-w-[85%] sm:max-w-[70%]">
+                                                        <div class="space-y-1 text-right">
+                                                            <div class="bg-[#1877F2] text-white p-3.5 rounded-[16px] rounded-br-[4px] shadow-xs text-left">
+                                                                <div class="flex items-center gap-1.5 mb-1 text-[11px] font-semibold text-blue-100">
+                                                                    <i data-lucide="badge-check" class="w-3.5 h-3.5 text-white"></i>
+                                                                    <span>Cooca Official</span>
+                                                                </div>
+                                                                <p class="text-[13px] text-white whitespace-pre-wrap leading-relaxed" x-text="msg.message"></p>
+                                                            </div>
+                                                            <span class="text-[10px] text-[#9CA3AF] px-1 block text-right" x-text="msg.time"></span>
+                                                        </div>
+                                                    </div>
+                                                </template>
                                             </div>
                                         </template>
                                     </div>
                                 </template>
                             </div>
-                        </template>
 
-                    </div>
+                            {{-- DM REPLY CONSOLE (BOTTOM COMPOSER) --}}
+                            <div class="p-3.5 sm:p-4 bg-white dark:bg-[#1C1C1E] border-t border-[#E5E7EB] dark:border-white/10 shrink-0 space-y-2.5">
+                                {{-- Quick Responses Pills --}}
+                                <div class="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-1">
+                                    <span class="text-[11px] font-semibold text-[#9CA3AF] shrink-0 mr-1">Template:</span>
+                                    <button type="button" @click="insertTemplate('Halo Kak! Terima kasih telah menghubungi kami. Ada yang bisa kami bantu? 😊')"
+                                        class="px-2.5 py-1 rounded-full text-[11px] bg-[#F3F4F6] dark:bg-white/5 hover:bg-[#E5E7EB] text-[#374151] dark:text-[#D1D5DB] transition-colors whitespace-nowrap">
+                                        Sapaan Ramah
+                                    </button>
+                                    <button type="button" @click="insertTemplate('Halo Kak, mohon informasikan nomor handphone / email akun Cooca Anda agar dapat kami cek segera ya.')"
+                                        class="px-2.5 py-1 rounded-full text-[11px] bg-[#F3F4F6] dark:bg-white/5 hover:bg-[#E5E7EB] text-[#374151] dark:text-[#D1D5DB] transition-colors whitespace-nowrap">
+                                        Minta Info Akun
+                                    </button>
+                                    <button type="button" @click="insertTemplate('Terima kasih atas masukannya Kak! Masukan ini telah kami teruskan ke tim teknis Cooca.')"
+                                        class="px-2.5 py-1 rounded-full text-[11px] bg-[#F3F4F6] dark:bg-white/5 hover:bg-[#E5E7EB] text-[#374151] dark:text-[#D1D5DB] transition-colors whitespace-nowrap">
+                                        Respons Masukan
+                                    </button>
+                                </div>
 
-                    {{-- REPLY CONSOLE (BOTTOM COMPOSER) --}}
-                    <div class="p-3.5 sm:p-4 bg-white dark:bg-[#1C1C1E] border-t border-[#E5E7EB] dark:border-white/10 shrink-0 space-y-2.5">
-                        {{-- Quick Responses Pills --}}
-                        <div class="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-1">
-                            <span class="text-[11px] font-semibold text-[#9CA3AF] shrink-0 mr-1">Template:</span>
-                            <button type="button" @click="insertTemplate('Halo Kak! Terima kasih telah menghubungi kami. Ada yang bisa kami bantu? 😊')"
-                                class="px-2.5 py-1 rounded-full text-[11px] bg-[#F3F4F6] dark:bg-white/5 hover:bg-[#E5E7EB] text-[#374151] dark:text-[#D1D5DB] transition-colors whitespace-nowrap">
-                                Sapaan Ramah
-                            </button>
-                            <button type="button" @click="insertTemplate('Halo Kak, mohon informasikan nomor handphone / email akun Cooca Anda agar dapat kami cek segera ya.')"
-                                class="px-2.5 py-1 rounded-full text-[11px] bg-[#F3F4F6] dark:bg-white/5 hover:bg-[#E5E7EB] text-[#374151] dark:text-[#D1D5DB] transition-colors whitespace-nowrap">
-                                Minta Info Akun
-                            </button>
-                            <button type="button" @click="insertTemplate('Terima kasih atas masukannya Kak! Masukan ini telah kami teruskan ke tim teknis Cooca.')"
-                                class="px-2.5 py-1 rounded-full text-[11px] bg-[#F3F4F6] dark:bg-white/5 hover:bg-[#E5E7EB] text-[#374151] dark:text-[#D1D5DB] transition-colors whitespace-nowrap">
-                                Respons Masukan
-                            </button>
-                            <button type="button" @click="insertTemplate('Halo Kak, untuk pendaftaran paket Cooca Pro dan Enterprise silakan kunjungi menu Berlangganan di https://cooca.id/pricing')"
-                                class="px-2.5 py-1 rounded-full text-[11px] bg-[#F3F4F6] dark:bg-white/5 hover:bg-[#E5E7EB] text-[#374151] dark:text-[#D1D5DB] transition-colors whitespace-nowrap">
-                                Info Langganan
-                            </button>
-                        </div>
+                                {{-- Textarea & Send button --}}
+                                <div class="flex items-end gap-2">
+                                    <div class="flex-1 min-w-0 relative">
+                                        <textarea x-model="replyText" @keydown.enter.prevent="if(!$event.shiftKey) sendReply()"
+                                            rows="2"
+                                            placeholder="Tulis balasan resmi sebagai Cooca Official... (Tekan Enter untuk kirim, Shift+Enter untuk baris baru)"
+                                            class="w-full p-2.5 sm:p-3 rounded-[12px] bg-[#F9FAFB] dark:bg-[#2C2C2E] border border-[#D1D5DB] dark:border-white/15 text-[13px] text-[#111827] dark:text-white placeholder-[#9CA3AF] focus:outline-hidden focus:border-[#1877F2] resize-none transition-colors"></textarea>
+                                    </div>
 
-                        {{-- Textarea & Send button --}}
-                        <div class="flex items-end gap-2">
-                            <div class="flex-1 min-w-0 relative">
-                                <textarea x-model="replyText" @keydown.enter.prevent="if(!$event.shiftKey) sendReply()"
-                                    rows="2"
-                                    placeholder="Tulis balasan resmi sebagai Cooca Official... (Tekan Enter untuk kirim, Shift+Enter untuk baris baru)"
-                                    class="w-full p-2.5 sm:p-3 rounded-[12px] bg-[#F9FAFB] dark:bg-[#2C2C2E] border border-[#D1D5DB] dark:border-white/15 text-[13px] text-[#111827] dark:text-white placeholder-[#9CA3AF] focus:outline-hidden focus:border-[#1877F2] resize-none transition-colors"></textarea>
+                                    <button type="button" @click="sendReply()" :disabled="!replyText.trim() || isSending"
+                                        class="h-[46px] px-4 sm:px-5 rounded-[12px] bg-[#1877F2] hover:bg-[#166FE5] disabled:opacity-50 disabled:cursor-not-allowed text-white text-[13px] font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all shrink-0">
+                                        <i data-lucide="send" class="w-4 h-4" :class="isSending ? 'animate-pulse' : ''"></i>
+                                        <span class="hidden sm:inline" x-text="isSending ? 'Mengirim...' : 'Kirim'"></span>
+                                    </button>
+                                </div>
                             </div>
-
-                            <button type="button" @click="sendReply()" :disabled="!replyText.trim() || isSending"
-                                class="h-[46px] px-4 sm:px-5 rounded-[12px] bg-[#1877F2] hover:bg-[#166FE5] disabled:opacity-50 disabled:cursor-not-allowed text-white text-[13px] font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all shrink-0">
-                                <i data-lucide="send" class="w-4 h-4" :class="isSending ? 'animate-pulse' : ''"></i>
-                                <span class="hidden sm:inline" x-text="isSending ? 'Mengirim...' : 'Kirim'"></span>
-                            </button>
                         </div>
-                    </div>
+                    </template>
 
                 </div>
 
             </div>
 
+            {{-- 3. RIGHT COLUMN: POST INSPECTOR (MATCHING USER SCREENSHOT 1 & 2) --}}
+            <div x-show="selectedThread && isCommentChannel(selectedThread.channel)" x-cloak
+                 class="hidden lg:flex w-[320px] xl:w-[350px] shrink-0 border-l border-[#E5E7EB] dark:border-white/10 bg-white dark:bg-[#1C1C1E] flex-col h-full overflow-y-auto">
+                
+                {{-- Post Media Preview Banner --}}
+                <div class="p-4 border-b border-[#E5E7EB] dark:border-white/10 bg-slate-50/50 dark:bg-black/10">
+                    <div class="rounded-[12px] overflow-hidden border border-[#E5E7EB] dark:border-white/10 shadow-xs aspect-video bg-gray-100 dark:bg-gray-800">
+                        <img :src="selectedThread?.post?.media_url || '{{ asset('assets/image/cooca_hero_banner.png') }}'" 
+                             class="w-full h-full object-cover" 
+                             alt="Post Media Banner"
+                             onerror="this.src='{{ asset('assets/image/cooca-logo-square.png') }}'">
+                    </div>
+                </div>
+
+                {{-- Post Details, Metrics & Full Caption --}}
+                <div class="p-4 space-y-3.5 flex-1 text-[12.5px] leading-relaxed">
+                    {{-- Likes & Published Time --}}
+                    <div class="flex items-center justify-between text-[#6B7280] dark:text-[#9CA3AF] text-[12px]">
+                        <span class="font-bold text-[#111827] dark:text-white" x-text="(selectedThread?.post?.likes || 5) + ' suka'"></span>
+                        <span x-text="selectedThread?.post?.published_at || '1 Sep 2026 14.30'"></span>
+                    </div>
+
+                    {{-- Author & Title line --}}
+                    <div class="text-[#111827] dark:text-white leading-normal">
+                        <strong class="font-bold mr-1.5" x-text="selectedThread?.post?.author || 'cooca.indonesia'"></strong>
+                        <span class="font-medium" x-text="selectedThread?.post?.title || ''"></span>
+                    </div>
+
+                    {{-- Full Caption with paragraph breaks --}}
+                    <div class="text-[#4B5563] dark:text-[#D1D5DB] whitespace-pre-line text-[12.5px] leading-relaxed font-normal"
+                         x-text="selectedThread?.post?.caption || ''"></div>
+
+                    {{-- Promo / Free Custom Badge Card --}}
+                    <div class="pt-4 border-t border-[#E5E7EB] dark:border-white/10">
+                        <div class="p-3 rounded-[12px] bg-gradient-to-r from-orange-50 to-amber-50 dark:from-orange-500/10 dark:to-amber-500/10 border border-orange-200 dark:border-orange-500/20 flex items-center justify-between">
+                            <div class="flex items-center gap-2.5">
+                                <span class="w-7 h-7 rounded-lg bg-orange-500 text-white flex items-center justify-center text-[12px] shadow-xs">🎁</span>
+                                <div>
+                                    <span class="font-bold text-[12px] text-orange-950 dark:text-orange-200 uppercase tracking-wide block">Free Custom</span>
+                                    <span class="text-[11px] text-orange-800 dark:text-orange-300">Tersedia untuk pengguna aktif</span>
+                                </div>
+                            </div>
+                            <i data-lucide="sparkles" class="w-4 h-4 text-orange-500"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
+
+    {{-- FLOATING PRIVATE DM POPUP (EXACT MATCHING SCREENSHOT 2) --}}
+    <div x-show="activePrivateDm" x-cloak
+         class="fixed bottom-5 right-6 w-80 sm:w-88 bg-white dark:bg-[#1C1C1E] rounded-2xl shadow-2xl border border-[#E5E7EB] dark:border-white/15 z-50 overflow-hidden transition-all duration-200">
+        
+        {{-- Header: Commenter Avatar, Name, and Close Button --}}
+        <div class="px-4 py-3 bg-[#F9FAFB] dark:bg-[#2C2C2E] border-b border-[#E5E7EB] dark:border-white/10 flex items-center justify-between">
+            <div class="flex items-center gap-2.5 min-w-0">
+                <div class="w-8 h-8 rounded-full overflow-hidden bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-[11px] font-bold text-slate-700 dark:text-slate-200 shrink-0">
+                    <span x-text="activePrivateDm ? getInitials(activePrivateDm.from_name) : 'U'"></span>
+                </div>
+                <div class="min-w-0">
+                    <span class="text-[13px] font-bold text-[#111827] dark:text-white truncate block" x-text="activePrivateDm?.from_name || ''"></span>
+                    <span class="text-[10.5px] text-[#6B7280] dark:text-[#9CA3AF] flex items-center gap-1">
+                        <i :data-lucide="activePrivateDm?.channel === 'facebook_comments' ? 'message-circle' : 'instagram'" class="w-2.5 h-2.5"></i>
+                        <span x-text="activePrivateDm?.channel === 'facebook_comments' ? 'Kirim ke Messenger' : 'Kirim ke Instagram DM'"></span>
+                    </span>
+                </div>
+            </div>
+            <button type="button" @click="activePrivateDm = null" class="text-gray-400 hover:text-gray-600 dark:hover:text-white p-1 rounded-lg">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+        </div>
+
+        {{-- Body & Composer --}}
+        <div class="p-3.5 space-y-3 bg-white dark:bg-[#1C1C1E]">
+            <div class="p-2 rounded-[8px] bg-blue-50/70 dark:bg-[#1877F2]/10 border border-blue-100 dark:border-[#1877F2]/20 text-[11px] text-[#1877F2] leading-tight">
+                Balas komentar ini secara privat lewat DM resmi Meta dan langsung dialihkan ke ruang obrolan DM.
+            </div>
+
+            <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-full overflow-hidden bg-black shrink-0">
+                    <img src="{{ asset('assets/image/cooca-icon.png') }}" class="w-full h-full object-cover" alt="Cooca">
+                </div>
+                <div class="flex-1 relative">
+                    <input type="text" x-model="privateDmText" @keydown.enter.prevent="submitPrivateDm()"
+                           placeholder="Tulis pesan..."
+                           class="w-full h-9.5 px-3 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-[#D1D5DB] dark:border-white/15 text-[12.5px] text-[#111827] dark:text-white placeholder-[#9CA3AF] focus:outline-hidden focus:border-[#1877F2]">
+                </div>
+                <button type="button" @click="submitPrivateDm()" :disabled="!privateDmText.trim() || isSendingDm"
+                        class="w-9.5 h-9.5 rounded-[10px] bg-[#1877F2] hover:bg-[#166FE5] text-white flex items-center justify-center disabled:opacity-50 transition-colors shrink-0">
+                    <i data-lucide="send" class="w-4 h-4" :class="isSendingDm ? 'animate-pulse' : ''"></i>
+                </button>
+            </div>
+
+            <div class="flex items-center justify-between pt-1">
+                <button type="button" @click="directToDmOnly(activePrivateDm)" class="text-[11px] text-[#1877F2] hover:underline flex items-center gap-1 font-medium">
+                    <span>Buka di Ruang DM Langsung</span>
+                    <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                </button>
+            </div>
+        </div>
+    </div>
 
     {{-- MODAL PENGATURAN KREDENSIAL META & WEBHOOK --}}
     <div x-show="openMetaSettings" @keydown.escape.window="openMetaSettings = false" x-cloak
@@ -650,6 +913,10 @@ function adminInboxHub() {
         currentStatus: @json($status ?? 'all'),
         searchKeyword: @json($search ?? ''),
         replyText: '',
+        replyTargetComment: null,
+        activePrivateDm: null,
+        privateDmText: '',
+        isSendingDm: false,
         isSending: false,
         isSyncing: false,
         openMetaSettings: false,
@@ -664,6 +931,10 @@ function adminInboxHub() {
                     window.lucide.createIcons();
                 }
             });
+        },
+
+        isCommentChannel(channel) {
+            return ['facebook_comments', 'instagram_comments', 'facebook'].includes(channel);
         },
 
         setChannel(channel) {
@@ -756,6 +1027,8 @@ function adminInboxHub() {
 
         selectThread(thread) {
             this.selectedThread = thread;
+            this.replyTargetComment = null;
+            this.replyText = '';
             this.$nextTick(() => {
                 this.scrollToBottom();
                 if (window.lucide) {
@@ -843,6 +1116,163 @@ function adminInboxHub() {
             }
         },
 
+        startReplyComment(msg) {
+            this.replyTargetComment = msg;
+            this.$nextTick(() => {
+                const input = document.querySelector('input[placeholder*="komentar"]');
+                if (input) input.focus();
+            });
+        },
+
+        cancelReplyTarget() {
+            this.replyTargetComment = null;
+        },
+
+        openPrivateDmModal(msg) {
+            this.activePrivateDm = {
+                ...msg,
+                channel: this.selectedThread ? this.selectedThread.channel : 'instagram_comments'
+            };
+            this.privateDmText = '';
+            this.$nextTick(() => {
+                if (window.lucide) window.lucide.createIcons();
+                const dmInput = document.querySelector('input[placeholder="Tulis pesan..."]');
+                if (dmInput) dmInput.focus();
+            });
+        },
+
+        async submitPrivateDm() {
+            if (!this.selectedThread || !this.activePrivateDm || !this.privateDmText.trim() || this.isSendingDm) return;
+
+            const commentId = this.activePrivateDm.id || this.selectedThread.id;
+            const message = this.privateDmText.trim();
+            this.isSendingDm = true;
+
+            try {
+                const response = await fetch(`/admin/inbox/send-private-dm/${commentId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify({ message })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    const targetChannel = data.redirect_channel || (this.selectedThread.channel === 'facebook_comments' ? 'messenger' : 'instagram');
+                    const customerId = data.customer_id;
+
+                    // Close floating popup
+                    this.activePrivateDm = null;
+                    this.privateDmText = '';
+
+                    // AUTO DIRECT TO DM CHANNEL
+                    this.setChannel(targetChannel);
+                    this.filterThreads();
+
+                    // Find and select the customer DM thread
+                    let dmThread = this.displayedThreads.find(t => t.customer_id === customerId)
+                                || this.allThreads.find(t => t.customer_id === customerId);
+
+                    if (dmThread) {
+                        this.selectThread(dmThread);
+                    }
+
+                    this.$nextTick(() => {
+                        this.scrollToBottom();
+                        if (window.lucide) window.lucide.createIcons();
+                    });
+                } else {
+                    alert(data.message || 'Gagal mengirim pesan DM.');
+                }
+            } catch (err) {
+                alert('Terjadi kesalahan saat mengirim pesan DM: ' + err.message);
+            } finally {
+                this.isSendingDm = false;
+            }
+        },
+
+        directToDmOnly(activeDm) {
+            if (!activeDm) return;
+            const targetChannel = (activeDm.channel === 'facebook_comments' || this.selectedThread?.channel === 'facebook_comments') ? 'messenger' : 'instagram';
+            const customerId = activeDm.from_id || this.selectedThread?.customer_id;
+
+            this.activePrivateDm = null;
+            this.setChannel(targetChannel);
+            this.filterThreads();
+
+            let dmThread = this.displayedThreads.find(t => t.customer_id === customerId)
+                        || this.allThreads.find(t => t.customer_id === customerId);
+
+            if (dmThread) {
+                this.selectThread(dmThread);
+            }
+        },
+
+        async sendCommentReply() {
+            if (!this.selectedThread || !this.replyText.trim() || this.isSending) return;
+
+            const threadId = this.selectedThread.id;
+            let textToSend = this.replyText.trim();
+            if (this.replyTargetComment && !textToSend.includes('@' + this.replyTargetComment.from_name)) {
+                textToSend = `@${this.replyTargetComment.from_name} ${textToSend}`;
+            }
+
+            this.isSending = true;
+
+            try {
+                const response = await fetch(`/admin/inbox/reply/${threadId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify({ message: textToSend })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    const newReply = data.reply || {
+                        id: Date.now(),
+                        message: textToSend,
+                        created_at: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                        sender: 'Cooca Indonesia',
+                    };
+
+                    this.selectedThread.messages.push({
+                        id: newReply.id,
+                        from_name: 'Cooca Indonesia',
+                        message: newReply.message,
+                        is_from_page: true,
+                        time: 'Baru saja',
+                        date: 'Hari ini',
+                    });
+
+                    this.selectedThread.is_unread = false;
+                    this.selectedThread.status = 'read';
+
+                    this.replyText = '';
+                    this.replyTargetComment = null;
+
+                    this.$nextTick(() => {
+                        this.scrollToBottom();
+                        if (window.lucide) window.lucide.createIcons();
+                    });
+                } else {
+                    alert(data.message || 'Gagal mengirim balasan komentar.');
+                }
+            } catch (err) {
+                alert('Terjadi kesalahan jaringan: ' + err.message);
+            } finally {
+                this.isSending = false;
+            }
+        },
+
         async sendReply() {
             if (!this.selectedThread || !this.replyText.trim() || this.isSending) return;
 
@@ -864,7 +1294,6 @@ function adminInboxHub() {
                 const data = await response.json();
 
                 if (response.ok && data.success) {
-                    // Optimistic append
                     const newReply = data.reply || {
                         id: Date.now(),
                         message: message,

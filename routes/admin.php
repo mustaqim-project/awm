@@ -260,6 +260,7 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
         Route::prefix('inbox')->name('inbox.')->group(function (): void {
             Route::get('/', [AdminInboxController::class, 'index'])->name('index');
             Route::post('/reply/{id}', [AdminInboxController::class, 'reply'])->name('reply');
+            Route::post('/send-private-dm/{id}', [AdminInboxController::class, 'sendPrivateDm'])->name('send-private-dm');
             Route::post('/toggle-status/{id}', [AdminInboxController::class, 'toggleStatus'])->name('toggle-status');
             Route::post('/sync-meta', [AdminInboxController::class, 'syncMeta'])->name('sync-meta');
             Route::post('/settings', [AdminInboxController::class, 'saveSettings'])->name('settings');
