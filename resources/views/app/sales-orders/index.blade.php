@@ -14,7 +14,26 @@
         $currentSearch = request('search', '');
     @endphp
 
-    <div class="max-w-[1360px] mx-auto space-y-6 pb-12">
+    <div class="max-w-[1360px] mx-auto space-y-6 pb-12"
+        x-data="{
+            deleteModalOpen: false,
+            deleteTarget: { url: '', name: '' },
+            openDelete(url, name) {
+                this.deleteTarget = { url, name };
+                this.deleteModalOpen = true;
+            },
+            closeDelete() {
+                this.deleteModalOpen = false;
+                this.deleteTarget = { url: '', name: '' };
+            },
+            submitDelete() {
+                if (this.deleteTarget.url) {
+                    const form = document.getElementById('form-delete-sales-order');
+                    form.action = this.deleteTarget.url;
+                    form.submit();
+                }
+            }
+        }">
 
         <x-module-header
             module="sales"
@@ -188,6 +207,11 @@
                                             class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#FF9500]/12 text-[#B25E00] dark:text-[#FF9F0A]">
                                             <span class="w-1.5 h-1.5 rounded-full bg-[#FF9500]"></span> {{ __('sales.sales_orders.status_partially_fulfilled') }}
                                         </span>
+                                    @elseif($so->status === 'draft')
+                                        <span
+                                            class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-black/5 dark:bg-white/10 text-black/60 dark:text-white/60">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-black/40 dark:bg-white/40"></span> Draf
+                                        </span>
                                     @else
                                         <span
                                             class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#007AFF]/12 text-[#007AFF] dark:text-[#0A84FF]">
@@ -216,6 +240,15 @@
                                             <span>{{ __('sales.sales_orders.btn_detail') }}</span>
                                             <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
                                         </a>
+                                        @if ($so->status === 'draft' && \App\Support\Context::hasPermission('sales.pipeline'))
+                                        <button type="button"
+                                            @click="openDelete('{{ route('sales.orders.destroy', $so) }}', '{{ $so->so_number }}')"
+                                            class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#FF3B30] hover:bg-[#FF3B30]/10 transition-colors inline-flex items-center gap-1 cursor-pointer"
+                                            title="Hapus Pesanan Penjualan">
+                                            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                            <span>Hapus</span>
+                                        </button>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -249,9 +282,8 @@
         <div
             class="sm:hidden rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 overflow-hidden divide-y divide-black/[0.04] dark:divide-white/[0.06]">
             @forelse($salesOrders as $so)
-                <a href="{{ route('sales.orders.show', $so) }}"
-                    class="p-3.5 flex items-center justify-between gap-3 active:bg-black/[0.03] dark:active:bg-white/[0.05] transition-colors">
-                    <div class="min-w-0 flex-1">
+                <div class="p-3.5 flex items-center justify-between gap-3 active:bg-black/[0.03] dark:active:bg-white/[0.05] transition-colors">
+                    <a href="{{ route('sales.orders.show', $so) }}" class="min-w-0 flex-1">
                         <div class="flex items-center gap-2">
                             <p class="text-[15px] font-semibold text-black dark:text-white truncate tabular-nums">
                                 {{ $so->so_number }}</p>
@@ -259,6 +291,8 @@
                                 <span class="w-1.5 h-1.5 rounded-full bg-[#34C759] shrink-0"></span>
                             @elseif($so->status === 'partially_fulfilled')
                                 <span class="w-1.5 h-1.5 rounded-full bg-[#FF9500] shrink-0"></span>
+                            @elseif($so->status === 'draft')
+                                <span class="w-1.5 h-1.5 rounded-full bg-black/40 dark:bg-white/40 shrink-0"></span>
                             @else
                                 <span class="w-1.5 h-1.5 rounded-full bg-[#007AFF] shrink-0"></span>
                             @endif
@@ -268,12 +302,21 @@
                             {{ $so->order_date->format('d M Y') }} &bull; Rp
                             {{ number_format($so->total_amount, 0, ',', '.') }}
                         </p>
+                    </a>
+                    <div class="flex items-center gap-1 shrink-0">
+                        <a href="{{ route('sales.orders.show', $so) }}" class="p-1.5 text-[#007AFF]" title="Detail">
+                            <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                        </a>
+                        @if ($so->status === 'draft' && \App\Support\Context::hasPermission('sales.pipeline'))
+                        <button type="button"
+                            @click="openDelete('{{ route('sales.orders.destroy', $so) }}', '{{ $so->so_number }}')"
+                            class="p-1.5 text-[#FF3B30] hover:bg-[#FF3B30]/10 rounded-md transition-colors cursor-pointer"
+                            title="Hapus Pesanan Penjualan">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        </button>
+                        @endif
                     </div>
-                    <div class="flex items-center gap-1 shrink-0 text-black/30 dark:text-white/30">
-                        <span class="text-[12px] font-medium text-[#007AFF]">{{ __('sales.sales_orders.btn_detail') }}</span>
-                        <i data-lucide="chevron-right" class="w-4 h-4 text-black/30 dark:text-white/30"></i>
-                    </div>
-                </a>
+                </div>
             @empty
                 <div class="p-8 text-center text-black/40 dark:text-white/40 text-[13px]">
                     {{ __('sales.sales_orders.empty_mobile') }}
@@ -299,6 +342,63 @@
                 </div>
             </div>
         @endif
+
+        <!-- Delete Sales Order Modal Dialog (Apple HIG Action Confirmation) -->
+        <template x-teleport="body">
+            <div x-show="deleteModalOpen"
+                 x-cloak
+                 class="fixed inset-0 z-50 overflow-y-auto"
+                 role="dialog"
+                 aria-modal="true"
+                 aria-labelledby="so-delete-dialog-title">
+
+                <div x-show="deleteModalOpen"
+                    x-transition:enter="ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity"
+                    @click="closeDelete()"></div>
+
+                <div class="flex min-h-full items-center justify-center p-4 text-center">
+                    <div x-show="deleteModalOpen"
+                         x-transition:enter="transition ease-out duration-200"
+                         x-transition:enter-start="opacity-0 scale-95"
+                         x-transition:enter-end="opacity-100 scale-100"
+                         x-transition:leave="transition ease-in duration-150"
+                         x-transition:leave-start="opacity-100 scale-100"
+                         x-transition:leave-end="opacity-0 scale-95"
+                         class="w-full max-w-[320px] rounded-[18px] bg-white/90 dark:bg-[#2C2C2E]/90 backdrop-blur-2xl border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden transition-all text-center">
+
+                        <div class="px-4 pt-5 pb-4">
+                            <p id="so-delete-dialog-title" class="text-[17px] font-semibold text-black dark:text-white">Hapus Pesanan Penjualan?</p>
+                            <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
+                                Apakah Anda yakin ingin menghapus draf pesanan <span class="font-medium text-black dark:text-white" x-text="deleteTarget.name"></span>? Tindakan ini tidak dapat dibatalkan.
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
+                            <button type="button" @click="closeDelete()"
+                                    class="min-h-[44px] py-3 text-[#007AFF] border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
+                                Batal
+                            </button>
+                            <button type="button" @click="submitDelete()"
+                                    class="min-h-[44px] py-3 text-[#FF3B30] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
+                                Hapus
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <!-- Hidden Sales Order Delete Form -->
+        <form id="form-delete-sales-order" method="POST" action="" class="hidden">
+            @csrf
+            @method('DELETE')
+        </form>
 
     </div>
 @endsection

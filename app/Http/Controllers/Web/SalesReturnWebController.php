@@ -398,5 +398,24 @@ final class SalesReturnWebController extends Controller
 
         return $pdf->stream($filename);
     }
+
+    /**
+     * Delete a draft sales return.
+     */
+    public function destroy(SalesReturn $return): RedirectResponse
+    {
+        $business = Context::requireBusiness();
+        abort_unless($return->business_id === $business->id, 403);
+
+        if ($return->status !== SalesReturn::STATUS_DRAFT) {
+            return back()->with('error', "Retur Penjualan dengan status [{$return->status}] tidak dapat dihapus. Hanya draf retur yang dapat dihapus.");
+        }
+
+        $number = $return->return_number;
+        $return->delete();
+
+        return redirect()->route('sales.returns.index')
+            ->with('success', "Draf Retur Penjualan {$number} berhasil dihapus.");
+    }
 }
 

@@ -232,4 +232,27 @@ final class SalesOrderWebController extends Controller
 
         return $pdf->stream($filename);
     }
+
+    /**
+     * Delete a draft sales order.
+     */
+    public function destroy(SalesOrder $salesOrder): RedirectResponse
+    {
+        $business = Context::requireBusiness();
+        abort_unless($salesOrder->business_id === $business->id, 403);
+
+        if ($salesOrder->status !== SalesOrder::STATUS_DRAFT) {
+            return back()->with('error', "Pesanan Penjualan dengan status [{$salesOrder->status}] tidak dapat dihapus. Hanya draf pesanan yang dapat dihapus.");
+        }
+
+        if ($salesOrder->invoices()->exists()) {
+            return back()->with('error', 'Pesanan Penjualan yang telah memiliki faktur tidak dapat dihapus.');
+        }
+
+        $soNumber = $salesOrder->so_number;
+        $salesOrder->delete();
+
+        return redirect()->route('sales.orders.index')
+            ->with('success', "Draf Pesanan Penjualan {$soNumber} berhasil dihapus.");
+    }
 }

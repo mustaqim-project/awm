@@ -7,6 +7,7 @@
 @section('content')
 <div class="max-w-[1080px] mx-auto space-y-6 pb-28 lg:pb-12" x-data="{
     convertModalOpen: false,
+    deleteModalOpen: false,
     openConvert() {
         this.convertModalOpen = true;
     },
@@ -15,6 +16,15 @@
     },
     submitConvert() {
         document.getElementById('form-convert-so').submit();
+    },
+    openDelete() {
+        this.deleteModalOpen = true;
+    },
+    closeDelete() {
+        this.deleteModalOpen = false;
+    },
+    submitDelete() {
+        document.getElementById('form-delete-quotation-show').submit();
     }
 }">
     <!-- ===================================================== -->
@@ -96,6 +106,17 @@
                 <i data-lucide="message-circle" class="w-4 h-4"></i>
                 <span>{{ __('sales.quotations.btn_whatsapp') }}</span>
             </a>
+            @endif
+
+            @if($quotation->status === 'draft' && \App\Support\Context::hasPermission('sales.pipeline'))
+            <button type="button" @click="openDelete()" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                <span>Hapus Draf</span>
+            </button>
+            <form id="form-delete-quotation-show" action="{{ route('sales.quotations.destroy', $quotation) }}" method="POST" class="hidden">
+                @csrf
+                @method('DELETE')
+            </form>
             @endif
 
             <a href="{{ route('sales.quotations.index') }}" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center">
@@ -259,6 +280,58 @@
                         </button>
                         <button type="button" @click="submitConvert()" class="min-h-[44px] py-3 text-[#007AFF] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
                             {{ __('sales.quotations.modal_btn_convert') }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Delete Confirmation Modal (Native Apple Dialog) -->
+    <template x-teleport="body">
+        <div x-show="deleteModalOpen"
+             x-cloak
+             class="fixed inset-0 z-[220] overflow-y-auto"
+             @keydown.escape.window="closeDelete()"
+             role="alertdialog"
+             aria-modal="true"
+             aria-labelledby="quotation-delete-dialog-title-show">
+
+            <div x-show="deleteModalOpen"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity"
+                @click="closeDelete()"></div>
+
+            <div class="flex min-h-full items-center justify-center p-4 text-center">
+                <div x-show="deleteModalOpen"
+                     x-transition:enter="transition ease-out duration-200"
+                     x-transition:enter-start="opacity-0 scale-95"
+                     x-transition:enter-end="opacity-100 scale-100"
+                     x-transition:leave="transition ease-in duration-150"
+                     x-transition:leave-start="opacity-100 scale-100"
+                     x-transition:leave-end="opacity-0 scale-95"
+                     class="w-full max-w-[320px] rounded-[18px] bg-white/90 dark:bg-[#2C2C2E]/90 backdrop-blur-2xl border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden transition-all text-center">
+
+                    <div class="px-4 pt-5 pb-4">
+                        <p id="quotation-delete-dialog-title-show" class="text-[17px] font-semibold text-black dark:text-white">Hapus Draf Penawaran?</p>
+                        <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
+                            Apakah Anda yakin ingin menghapus draf surat penawaran <span class="font-medium text-black dark:text-white">{{ $quotation->quotation_number }}</span>? Tindakan ini tidak dapat dibatalkan.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
+                        <button type="button" @click="closeDelete()"
+                                class="min-h-[44px] py-3 text-[#007AFF] border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
+                            Batal
+                        </button>
+                        <button type="button" @click="submitDelete()"
+                                class="min-h-[44px] py-3 text-[#FF3B30] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
+                            Hapus
                         </button>
                     </div>
                 </div>

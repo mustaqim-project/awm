@@ -297,6 +297,7 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         Route::get('/sales/quotations/{quotation}/pdf', [QuotationWebController::class, 'pdf'])->middleware('require.permission:sales.view')->name('sales.quotations.pdf');
         Route::get('/sales/quotations/{quotation}/print', [QuotationWebController::class, 'print'])->middleware('require.permission:sales.view')->name('sales.quotations.print');
         Route::post('/sales/quotations/{quotation}/convert', [QuotationWebController::class, 'convertToSalesOrder'])->middleware('require.permission:sales.pipeline')->name('sales.quotations.convert');
+        Route::delete('/sales/quotations/{quotation}', [QuotationWebController::class, 'destroy'])->middleware('require.permission:sales.pipeline')->name('sales.quotations.destroy');
 
         Route::get('/sales/orders', [SalesOrderWebController::class, 'index'])->middleware('require.permission:sales.view')->name('sales.orders.index');
         Route::get('/sales/orders/create', [SalesOrderWebController::class, 'create'])->middleware('require.permission:sales.pipeline')->name('sales.orders.create');
@@ -307,6 +308,7 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         Route::get('/sales/orders/{salesOrder}/pdf', [SalesOrderWebController::class, 'pdf'])->middleware('require.permission:sales.view')->name('sales.orders.pdf');
         Route::get('/sales/orders/{salesOrder}/print', [SalesOrderWebController::class, 'print'])->middleware('require.permission:sales.view')->name('sales.orders.print');
         Route::post('/sales/orders/{salesOrder}/generate-invoice', [SalesOrderWebController::class, 'generateInvoice'])->middleware('require.permission:sales.pipeline')->name('sales.orders.generate-invoice');
+        Route::delete('/sales/orders/{salesOrder}', [SalesOrderWebController::class, 'destroy'])->middleware('require.permission:sales.pipeline')->name('sales.orders.destroy');
 
         // Invoices Management & Generator (Commerce Billing)
         Route::get('/invoices/create', [InvoiceWebController::class, 'create'])->middleware('require.permission:invoices.create')->name('invoices.create');
@@ -338,6 +340,7 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
             Route::get('/sales/returns/{return}/pdf', [SalesReturnWebController::class, 'pdf'])->name('sales.returns.pdf');
             Route::post('/sales/returns/{return}/approve', [SalesReturnWebController::class, 'approve'])->name('sales.returns.approve');
             Route::post('/sales/returns/{return}/complete', [SalesReturnWebController::class, 'complete'])->name('sales.returns.complete');
+            Route::delete('/sales/returns/{return}', [SalesReturnWebController::class, 'destroy'])->name('sales.returns.destroy');
         });
 
         // Purchase Returns

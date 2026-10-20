@@ -193,4 +193,27 @@ final class QuotationWebController extends Controller
 
         return $pdf->stream($filename);
     }
+
+    /**
+     * Delete a draft quotation.
+     */
+    public function destroy(Quotation $quotation): RedirectResponse
+    {
+        $business = Context::requireBusiness();
+        abort_unless($quotation->business_id === $business->id, 403);
+
+        if ($quotation->status !== Quotation::STATUS_DRAFT) {
+            return back()->with('error', "Surat Penawaran dengan status [{$quotation->status}] tidak dapat dihapus. Hanya draf yang dapat dihapus.");
+        }
+
+        if ($quotation->salesOrder()->exists()) {
+            return back()->with('error', 'Surat Penawaran yang telah dikonversi menjadi Pesanan Penjualan (SO) tidak dapat dihapus.');
+        }
+
+        $number = $quotation->quotation_number;
+        $quotation->delete();
+
+        return redirect()->route('sales.quotations.index')
+            ->with('success', "Draf Surat Penawaran {$number} berhasil dihapus.");
+    }
 }

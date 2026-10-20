@@ -7,12 +7,20 @@
 @section('content')
     <div class="max-w-[1100px] mx-auto space-y-6 pb-28 lg:pb-12" x-data="{
         invoiceModalOpen: false,
+        deleteModalOpen: false,
         promptInvoice() {
             this.invoiceModalOpen = true;
         },
         submitInvoice() {
             this.invoiceModalOpen = false;
             document.getElementById('form-generate-invoice').submit();
+        },
+        promptDelete() {
+            this.deleteModalOpen = true;
+        },
+        submitDelete() {
+            this.deleteModalOpen = false;
+            document.getElementById('form-delete-sales-order-show').submit();
         }
     }">
 
@@ -42,6 +50,11 @@
                         <span
                             class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#FF9500]/12 text-[#B25E00] dark:text-[#FF9F0A]">
                             <span class="w-1.5 h-1.5 rounded-full bg-[#FF9500]"></span> {{ __('sales.sales_orders.status_partially_fulfilled') }}
+                        </span>
+                    @elseif($salesOrder->status === 'draft')
+                        <span
+                            class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-black/5 dark:bg-white/10 text-black/60 dark:text-white/60">
+                            <span class="w-1.5 h-1.5 rounded-full bg-black/40 dark:bg-white/40"></span> Draf
                         </span>
                     @else
                         <span
@@ -82,6 +95,20 @@
                     <i data-lucide="printer" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
                     <span>{{ __('sales.sales_orders.btn_print') }} (PDF)</span>
                 </a>
+
+                <!-- Delete Draft Sales Order Button -->
+                @if ($salesOrder->status === 'draft' && \App\Support\Context::hasPermission('sales.pipeline'))
+                    <button type="button" @click="promptDelete()"
+                        class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.97] transition flex items-center gap-1.5 cursor-pointer">
+                        <i data-lucide="trash-2" class="w-4 h-4 text-[#FF3B30]"></i>
+                        <span>Hapus Draf</span>
+                    </button>
+
+                    <form id="form-delete-sales-order-show" action="{{ route('sales.orders.destroy', $salesOrder) }}" method="POST" class="hidden">
+                        @csrf
+                        @method('DELETE')
+                    </form>
+                @endif
 
                 <!-- Back Link -->
                 <a href="{{ route('sales.orders.index') }}"
@@ -368,6 +395,54 @@
                 </div>
             </div>
         </template>
+
+        <!-- Apple HIG Confirmation Modal: Delete Draft Sales Order -->
+        <template x-teleport="body">
+            <div x-show="deleteModalOpen" x-cloak
+                class="fixed inset-0 z-[220] overflow-y-auto"
+                @keydown.escape.window="deleteModalOpen = false"
+                role="alertdialog"
+                aria-modal="true"
+                aria-labelledby="so-delete-confirm-dialog-title">
+
+                <!-- Backdrop -->
+                <div x-show="deleteModalOpen"
+                    x-transition:enter="ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
+
+                <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="deleteModalOpen = false">
+                    <div class="relative w-[320px] rounded-[18px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-black/5 dark:border-white/10"
+                        @click.away="deleteModalOpen = false"
+                        x-show="deleteModalOpen"
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0 scale-95"
+                        x-transition:enter-end="opacity-100 scale-100"
+                        x-transition:leave="transition ease-in duration-150"
+                        x-transition:leave-start="opacity-100 scale-100"
+                        x-transition:leave-end="opacity-0 scale-95">
+
+                        <div class="px-4 pt-5 pb-4">
+                            <p id="so-delete-confirm-dialog-title" class="text-[17px] font-semibold text-black dark:text-white">Hapus Pesanan Penjualan?</p>
+                            <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
+                                Apakah Anda yakin ingin menghapus draf pesanan <span class="font-medium text-black dark:text-white">{{ $salesOrder->so_number }}</span>? Tindakan ini tidak dapat dibatalkan.
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
+                            <button type="button" @click="deleteModalOpen = false"
+                                class="min-h-[44px] py-3 text-black/60 dark:text-white/60 border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
+                                Batal
+                            </button>
+                            <button type="button" @click="submitDelete()"
+                                class="min-h-[44px] py-3 text-[#FF3B30] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
+                                Hapus
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

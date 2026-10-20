@@ -19,6 +19,14 @@
         submitComplete() {
             this.completeModalOpen = false;
             document.getElementById('complete-form').submit();
+        },
+
+        promptDelete() {
+            this.deleteModalOpen = true;
+        },
+        submitDelete() {
+            this.deleteModalOpen = false;
+            document.getElementById('form-delete-return-show').submit();
         }
     }">
 
@@ -78,6 +86,18 @@
                         <form id="approve-form" method="POST" action="{{ route('sales.returns.approve', $return) }}"
                             class="hidden">
                             @csrf
+                        </form>
+
+                        <!-- Delete Draft Return Button -->
+                        <button type="button" @click="promptDelete()"
+                            class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.97] transition flex items-center gap-1.5 cursor-pointer">
+                            <i data-lucide="trash-2" class="w-4 h-4 text-[#FF3B30]"></i>
+                            <span>Hapus Draf</span>
+                        </button>
+
+                        <form id="form-delete-return-show" action="{{ route('sales.returns.destroy', $return) }}" method="POST" class="hidden">
+                            @csrf
+                            @method('DELETE')
                         </form>
                     @elseif($return->status === 'approved')
                         <button type="button" @click="promptComplete()"
@@ -556,6 +576,58 @@
                             <button type="button" @click="submitComplete()"
                                 class="min-h-[44px] py-3 text-[#34C759] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
                                 {{ __('sales.returns.dialog_complete_btn') }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <!-- Apple HIG Confirmation Modal: Delete Draft Sales Return -->
+        <template x-teleport="body">
+            <div x-show="deleteModalOpen" x-cloak
+                class="fixed inset-0 z-[220] overflow-y-auto"
+                @keydown.escape.window="deleteModalOpen = false"
+                role="alertdialog"
+                aria-modal="true"
+                aria-labelledby="return-delete-confirm-dialog-title">
+
+                <!-- Backdrop -->
+                <div x-show="deleteModalOpen"
+                    x-transition:enter="ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
+
+                <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="deleteModalOpen = false">
+                    <div class="relative w-[320px] rounded-[18px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-black/5 dark:border-white/10"
+                        @click.away="deleteModalOpen = false"
+                        x-show="deleteModalOpen"
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0 scale-95"
+                        x-transition:enter-end="opacity-100 scale-100"
+                        x-transition:leave="transition ease-in duration-150"
+                        x-transition:leave-start="opacity-100 scale-100"
+                        x-transition:leave-end="opacity-0 scale-95">
+
+                        <div class="px-4 pt-5 pb-4">
+                            <p id="return-delete-confirm-dialog-title" class="text-[17px] font-semibold text-black dark:text-white">Hapus Retur Penjualan?</p>
+                            <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
+                                Apakah Anda yakin ingin menghapus draf retur <span class="font-medium text-black dark:text-white">{{ $return->return_number }}</span>? Tindakan ini tidak dapat dibatalkan.
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
+                            <button type="button" @click="deleteModalOpen = false"
+                                class="min-h-[44px] py-3 text-black/60 dark:text-white/60 border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
+                                Batal
+                            </button>
+                            <button type="button" @click="submitDelete()"
+                                class="min-h-[44px] py-3 text-[#FF3B30] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
+                                Hapus
                             </button>
                         </div>
                     </div>

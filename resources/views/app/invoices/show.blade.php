@@ -10,6 +10,7 @@
     showReminderModal: false,
     confirmReleaseModalOpen: false,
     confirmVoidModalOpen: false,
+    confirmDeleteModalOpen: false,
     reminderChannel: 'both',
     reminderNotes: '',
     submitRelease() {
@@ -17,6 +18,9 @@
     },
     submitVoid() {
         document.getElementById('form-confirm-void').submit();
+    },
+    submitDelete() {
+        document.getElementById('form-confirm-delete').submit();
     }
 }">
 
@@ -99,6 +103,18 @@
             </button>
             <form id="form-confirm-void" method="POST" action="{{ route('invoices.void', $invoice->id) }}" class="hidden">
                 @csrf
+            </form>
+            @endif
+
+            {{-- Tombol Hapus Draf (hanya tampil saat status draft dan belum ada pembayaran) --}}
+            @if($invoice->status === 'draft' && (float) $invoice->paid_amount <= 0 && \App\Support\Context::hasPermission('invoices.delete'))
+            <button type="button" @click="confirmDeleteModalOpen = true" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+                <i data-lucide="trash-2" class="w-4 h-4 text-[#FF3B30]"></i>
+                <span>Hapus Draf</span>
+            </button>
+            <form id="form-confirm-delete" method="POST" action="{{ route('invoices.destroy', $invoice->id) }}" class="hidden">
+                @csrf
+                @method('DELETE')
             </form>
             @endif
         </div>
@@ -602,6 +618,61 @@
     @endif
 
     <!-- ===================================================== -->
+    <!-- 5.1 APPLE ALERT DIALOG: HAPUS DRAF FAKTUR             -->
+    <!-- ===================================================== -->
+    @if($invoice->status === 'draft' && \App\Support\Context::hasPermission('invoices.delete'))
+    <template x-teleport="body">
+        <div x-show="confirmDeleteModalOpen"
+            x-cloak
+            class="fixed inset-0 z-[220] overflow-y-auto"
+            @keydown.escape.window="confirmDeleteModalOpen = false"
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby="invoice-delete-dialog-title">
+
+            <!-- Backdrop -->
+            <div x-show="confirmDeleteModalOpen"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
+
+            <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="confirmDeleteModalOpen = false">
+                <div class="relative w-[320px] rounded-[18px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-black/5 dark:border-white/10"
+                    @click.away="confirmDeleteModalOpen = false"
+                    x-show="confirmDeleteModalOpen"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95">
+
+                    <div class="px-4 pt-5 pb-4">
+                        <p id="invoice-delete-dialog-title" class="text-[17px] font-semibold text-black dark:text-white">Hapus Draf Faktur?</p>
+                        <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
+                            Apakah Anda yakin ingin menghapus draf faktur <span class="font-medium text-black dark:text-white">{{ $invoice->invoice_number }}</span>? Tindakan ini tidak dapat dibatalkan.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
+                        <button type="button" @click="confirmDeleteModalOpen = false" class="min-h-[44px] py-3 text-black/70 dark:text-white/70 border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
+                            {{ __('sales.invoices.btn_cancel') }}
+                        </button>
+                        <button type="button" @click="submitDelete()" class="min-h-[44px] py-3 text-[#FF3B30] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
+                            Hapus
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    @endif
+
+    <!-- ===================================================== -->
     <!-- 6. MODAL: KIRIM PENGINGAT TERMIN (WHATSAPP & EMAIL)   -->
     <!-- ===================================================== -->
     <template x-teleport="body">
@@ -731,10 +802,6 @@
                             </button>
                         </div>
                     </form>
-                </div>
-            </div>
-        </div>
-    </template>
                 </div>
             </div>
         </div>
