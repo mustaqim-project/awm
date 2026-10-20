@@ -408,6 +408,9 @@ class AdminInboxController extends Controller
             ?: config('services.meta_whatsapp.phone_number_id')
             ?: '1304859399385592'
         );
+        if (empty($phoneNumberId) || in_array($phoneNumberId, ['10987654321', '1337255202804569'], true)) {
+            $phoneNumberId = '1304859399385592';
+        }
 
         $replyId = (string) Str::uuid();
         $channel = strtolower((string) $comment->platform);
@@ -487,6 +490,25 @@ class AdminInboxController extends Controller
                 // 4. WhatsApp Cloud API
                 elseif ($channel === 'whatsapp') {
                     $rawTarget = (string) $comment->from_id;
+                    if ($comment->is_from_page) {
+                        $threadCustomer = SocialMediaComment::where('is_platform', true)
+                            ->where('platform', 'whatsapp')
+                            ->where('is_from_page', false)
+                            ->where(function ($q) use ($comment) {
+                                if ($comment->parent_comment_id) {
+                                    $q->where('platform_comment_id', $comment->parent_comment_id)
+                                      ->orWhere('id', $comment->parent_comment_id);
+                                }
+                                $q->orWhere('from_id', $comment->from_id);
+                            })
+                            ->latest('created_time')
+                            ->first();
+
+                        if ($threadCustomer && ! empty($threadCustomer->from_id)) {
+                            $rawTarget = (string) $threadCustomer->from_id;
+                        }
+                    }
+
                     $waTarget = preg_replace('/[^0-9]/', '', $rawTarget);
                     if (str_starts_with($waTarget, '0')) {
                         $waTarget = '62' . substr($waTarget, 1);
@@ -498,6 +520,9 @@ class AdminInboxController extends Controller
                         ?: config('services.meta_whatsapp.phone_number_id')
                         ?: '1304859399385592'
                     );
+                    if (empty($targetPhoneId) || in_array($targetPhoneId, ['10987654321', '1337255202804569'], true)) {
+                        $targetPhoneId = '1304859399385592';
+                    }
 
                     if ($targetPhoneId && $waTarget) {
                         if ($imageUrl) {
@@ -533,7 +558,17 @@ class AdminInboxController extends Controller
                         if ($res->successful()) {
                             $replyId = (string) (data_get($res->json(), 'messages.0.id') ?? $replyId);
                         } else {
+                            $errBody = $res->json();
+                            $errMsg = data_get($errBody, 'error.message') ?: $res->body();
                             Log::warning('[AdminInbox] Reply WA failed: ' . $res->body());
+
+                            if ($request->wantsJson()) {
+                                return response()->json([
+                                    'success' => false,
+                                    'message' => 'Gagal mengirim ke WhatsApp (' . $waTarget . '): ' . $errMsg,
+                                ], 422);
+                            }
+                            return back()->with('error', 'Gagal mengirim ke WhatsApp: ' . $errMsg);
                         }
                     }
                 }
@@ -1629,6 +1664,12 @@ class AdminInboxController extends Controller
                     'created_time'         => now()->subMinutes(8),
                 ]
             );
+        }
+
+        // Auto-correct invalid whatsapp_phone_number_id in SystemSetting on production
+        $currentPhoneId = (string) SystemSetting::get('whatsapp_phone_number_id');
+        if (empty($currentPhoneId) || in_array($currentPhoneId, ['10987654321', '1337255202804569'], true)) {
+            SystemSetting::set('whatsapp_phone_number_id', '1304859399385592', 'meta_omnichannel');
         }
     }
 }
