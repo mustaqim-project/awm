@@ -1,0 +1,629 @@
+{{--
+    COOCA Official Website Live Chat Widget
+    Powered by Laravel Broadcasting with Reverb
+    Mandatory Visitor Input: Nama, Nomor HP, Email, Pertanyaan
+--}}
+
+<div id="cooca-live-chat-root" x-data="coocaLiveChatWidget()" x-init="init()" x-cloak class="print:hidden">
+
+    {{-- FLOATING TRIGGER BUTTON & GREETING POPUP --}}
+    <div class="fixed floating-live-chat-fab right-4 sm:right-6 lg:right-6 z-50 flex flex-col items-end gap-2 pointer-events-none">
+        
+        {{-- Floating Greeting Pill / Prompt (Disappears once chat is open) --}}
+        <div x-show="!isOpen && showGreeting && !sessionToken" 
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 translate-y-2 scale-95"
+             x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+             x-transition:leave-end="opacity-0 translate-y-2 scale-95"
+             class="pointer-events-auto bg-white dark:bg-[#1E1B4B] border border-violet-100 dark:border-violet-900/50 shadow-xl rounded-2xl p-3 max-w-[260px] text-left relative cursor-pointer hover:shadow-2xl transition-shadow"
+             @click="toggleChat()">
+            <button type="button" @click.stop="showGreeting = false" class="absolute -top-1.5 -left-1.5 w-5 h-5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 hover:text-gray-700 flex items-center justify-center text-[10px] shadow-xs">
+                ✕
+            </button>
+            <div class="flex items-center gap-2 mb-1">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                <span class="text-[11px] font-bold uppercase tracking-wider text-violet-700 dark:text-violet-300">Live Support Online</span>
+            </div>
+            <p class="text-[12.5px] font-medium text-gray-800 dark:text-gray-100 leading-snug">
+                Ada yang bisa kami bantu seputar sistem <strong class="text-violet-600 dark:text-violet-400">COOCA</strong>? Chat langsung sekarang! 👋
+            </p>
+        </div>
+
+        {{-- Floating Action Button (FAB) --}}
+        <div class="pointer-events-auto relative">
+            {{-- Unread Message Counter Badge --}}
+            <span x-show="unreadCount > 0 && !isOpen" x-text="unreadCount" 
+                  class="absolute -top-1 -right-1 w-5.5 h-5.5 rounded-full bg-rose-600 text-white font-bold text-[11px] flex items-center justify-center shadow-md animate-bounce z-10">
+            </span>
+
+            <button type="button" 
+                    @click="toggleChat()" 
+                    :aria-expanded="isOpen"
+                    aria-label="Buka Live Chat COOCA"
+                    class="group relative w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-tr from-[#6D28D9] via-[#7C3AED] to-[#4F46E5] text-white flex items-center justify-center shadow-[0_10px_35px_rgba(124,58,237,0.5)] hover:shadow-[0_14px_45px_rgba(124,58,237,0.7)] hover:scale-105 active:scale-95 transition-all">
+                
+                {{-- Glowing pulse ring when closed --}}
+                <span x-show="!isOpen" class="absolute -inset-1 rounded-full bg-gradient-to-tr from-[#7C3AED] to-[#4F46E5] opacity-40 blur-xs group-hover:opacity-60 animate-pulse"></span>
+
+                {{-- Online green indicator dot --}}
+                <span class="absolute top-0.5 right-0.5 w-3.5 h-3.5 rounded-full bg-emerald-400 ring-2 ring-white dark:ring-gray-900 z-10"></span>
+
+                {{-- Icon: Chat Bubble (when closed) --}}
+                <svg x-show="!isOpen" class="w-7 h-7 sm:w-8 sm:h-8 relative z-10 transition-transform duration-200 group-hover:rotate-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    <path d="M8 10h.01"></path>
+                    <path d="M12 10h.01"></path>
+                    <path d="M16 10h.01"></path>
+                </svg>
+
+                {{-- Icon: Close (when open) --}}
+                <svg x-show="isOpen" class="w-6 h-6 sm:w-7 sm:h-7 relative z-10 transition-transform duration-200 rotate-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    {{-- EXPANDABLE LIVE CHAT CONTAINER (MODAL / FLOATING POPUP) --}}
+    <div x-show="isOpen" 
+         x-transition:enter="transition ease-out duration-300 transform"
+         x-transition:enter-start="opacity-0 translate-y-6 scale-95"
+         x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+         x-transition:leave="transition ease-in duration-200 transform"
+         x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+         x-transition:leave-end="opacity-0 translate-y-6 scale-95"
+         class="fixed floating-live-chat-window right-2 sm:right-6 lg:right-6 z-50 w-[calc(100vw-1rem)] sm:w-[410px] h-[580px] sm:h-[620px] max-h-[calc(100vh-6rem)] bg-white dark:bg-[#18181B] rounded-[24px] shadow-[0_20px_60px_rgba(0,0,0,0.3)] border border-violet-100 dark:border-white/10 flex flex-col overflow-hidden">
+        
+        {{-- HEADER BAR --}}
+        <div class="px-4 py-3.5 bg-gradient-to-r from-[#6D28D9] via-[#7C3AED] to-[#4F46E5] text-white flex items-center justify-between shadow-xs shrink-0">
+            <div class="flex items-center gap-3 min-w-0">
+                <div class="relative w-10 h-10 rounded-full bg-white/20 p-0.5 backdrop-blur-xs flex items-center justify-center shrink-0 ring-1 ring-white/30">
+                    <img src="{{ asset('assets/image/cooca-icon.png') }}" class="w-8 h-8 rounded-full object-cover" alt="Cooca Support" onerror="this.src='{{ asset('assets/image/cooca-logo-square.png') }}'">
+                    <span class="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-400 ring-2 ring-violet-700"></span>
+                </div>
+                <div class="min-w-0">
+                    <div class="flex items-center gap-1.5">
+                        <h3 class="text-[14.5px] font-bold text-white tracking-tight truncate">Live Chat COOCA</h3>
+                        <span class="px-1.5 py-0.2 rounded-full text-[9.5px] font-semibold bg-emerald-400/25 text-emerald-200 border border-emerald-400/30">Online</span>
+                    </div>
+                    <p class="text-[11.5px] text-violet-100/90 truncate flex items-center gap-1">
+                        <span x-show="sessionToken" class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block"></span>
+                        <span x-text="sessionToken ? (isReverbConnected ? 'Terhubung (Realtime)' : 'Aktif') : 'Tim kami siap membantu Anda'"></span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-1 shrink-0">
+                {{-- Reset / New Chat Option if in session --}}
+                <button type="button" x-show="sessionToken" @click="confirmResetSession()" 
+                        title="Mulai sesi chat baru"
+                        class="w-8 h-8 rounded-full hover:bg-white/20 text-white/80 hover:text-white flex items-center justify-center transition-colors">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                        <path d="M21 3v5h-5"></path>
+                        <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                        <path d="M8 16H3v5"></path>
+                    </svg>
+                </button>
+
+                {{-- Close Button --}}
+                <button type="button" @click="isOpen = false" 
+                        title="Tutup Chat"
+                        class="w-8 h-8 rounded-full hover:bg-white/20 text-white/80 hover:text-white flex items-center justify-center transition-colors">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        {{-- ========================================================================= --}}
+        {{-- VIEW 1: PRE-CHAT MANDATORY FORM (NAMA, NO HP, EMAIL, PERTANYAAN)          --}}
+        {{-- ========================================================================= --}}
+        <div x-show="!sessionToken" class="flex-1 flex flex-col p-5 overflow-y-auto min-h-0 bg-slate-50/50 dark:bg-[#18181B]">
+            
+            <div class="mb-4 text-center">
+                <div class="w-12 h-12 rounded-2xl bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400 mx-auto flex items-center justify-center mb-2 shadow-xs">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                    </svg>
+                </div>
+                <h4 class="text-[15px] font-bold text-gray-900 dark:text-white">Selamat Datang di Support COOCA</h4>
+                <p class="text-[12px] text-gray-500 dark:text-gray-400 mt-1 max-w-[320px] mx-auto leading-relaxed">
+                    Mohon isi data diri Anda di bawah ini agar tim kami dapat memberikan solusi terbaik untuk bisnis Anda.
+                </p>
+            </div>
+
+            {{-- Form Error Alert --}}
+            <div x-show="errorMessage" x-cloak class="mb-3.5 p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/50 text-rose-700 dark:text-rose-300 text-[12px] flex items-start gap-2">
+                <svg class="w-4 h-4 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                <span x-text="errorMessage"></span>
+            </div>
+
+            <form @submit.prevent="startChatSession()" class="space-y-3 flex-1 flex flex-col justify-between">
+                <div class="space-y-3">
+                    {{-- 1. NAMA LENGKAP --}}
+                    <div>
+                        <label class="block text-[12px] font-semibold text-gray-700 dark:text-gray-200 mb-1">
+                            Nama Lengkap <span class="text-rose-500">*</span>
+                        </label>
+                        <div class="relative">
+                            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            </span>
+                            <input type="text" x-model="formData.name" required
+                                   placeholder="Contoh: Budi Santoso"
+                                   class="w-full h-10 pl-9 pr-3 rounded-xl bg-white dark:bg-[#27272A] border border-gray-200 dark:border-white/10 text-[13px] text-gray-900 dark:text-white placeholder-gray-400 focus:outline-hidden focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all">
+                        </div>
+                    </div>
+
+                    {{-- 2. NOMOR HP / WHATSAPP --}}
+                    <div>
+                        <label class="block text-[12px] font-semibold text-gray-700 dark:text-gray-200 mb-1">
+                            Nomor WhatsApp / HP <span class="text-rose-500">*</span>
+                        </label>
+                        <div class="relative">
+                            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            </span>
+                            <input type="tel" x-model="formData.phone" required
+                                   placeholder="Contoh: 081234567890"
+                                   class="w-full h-10 pl-9 pr-3 rounded-xl bg-white dark:bg-[#27272A] border border-gray-200 dark:border-white/10 text-[13px] text-gray-900 dark:text-white placeholder-gray-400 focus:outline-hidden focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all">
+                        </div>
+                    </div>
+
+                    {{-- 3. EMAIL --}}
+                    <div>
+                        <label class="block text-[12px] font-semibold text-gray-700 dark:text-gray-200 mb-1">
+                            Email Aktif <span class="text-rose-500">*</span>
+                        </label>
+                        <div class="relative">
+                            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                            </span>
+                            <input type="email" x-model="formData.email" required
+                                   placeholder="Contoh: budi@bisnisanda.com"
+                                   class="w-full h-10 pl-9 pr-3 rounded-xl bg-white dark:bg-[#27272A] border border-gray-200 dark:border-white/10 text-[13px] text-gray-900 dark:text-white placeholder-gray-400 focus:outline-hidden focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all">
+                        </div>
+                    </div>
+
+                    {{-- 4. PERTANYAAN / PESAN AWAL --}}
+                    <div>
+                        <label class="block text-[12px] font-semibold text-gray-700 dark:text-gray-200 mb-1">
+                            Pertanyaan / Kebutuhan Bisnis <span class="text-rose-500">*</span>
+                        </label>
+                        <textarea x-model="formData.message" required rows="3"
+                                  placeholder="Ceritakan kendala operasional atau modul apa yang ingin Anda tanyakan..."
+                                  class="w-full p-3 rounded-xl bg-white dark:bg-[#27272A] border border-gray-200 dark:border-white/10 text-[13px] text-gray-900 dark:text-white placeholder-gray-400 focus:outline-hidden focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all resize-none"></textarea>
+                    </div>
+                </div>
+
+                <div class="pt-2">
+                    <button type="submit" :disabled="isSubmitting"
+                            class="w-full h-11 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white font-semibold text-[13.5px] shadow-lg shadow-violet-500/25 disabled:opacity-50 flex items-center justify-center gap-2 transition-all">
+                        <svg x-show="isSubmitting" class="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-opacity=".25"></circle><path d="M12 2a10 10 0 0 1 10 10" stroke-opacity=".75"></path></svg>
+                        <span x-text="isSubmitting ? 'Menghubungkan...' : 'Mulai Chat Sekarang'"></span>
+                        <svg x-show="!isSubmitting" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                    </button>
+                    <p class="text-[11px] text-gray-400 text-center mt-2 flex items-center justify-center gap-1">
+                        <svg class="w-3 h-3 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        Data aman dan terenkripsi.
+                    </p>
+                </div>
+            </form>
+        </div>
+
+        {{-- ========================================================================= --}}
+        {{-- VIEW 2: ACTIVE REALTIME CHAT CONVERSATION (REVERB BROADCASTING)           --}}
+        {{-- ========================================================================= --}}
+        <div x-show="sessionToken" class="flex-1 flex flex-col min-h-0 bg-slate-50/70 dark:bg-[#18181B]">
+            
+            {{-- Notification Banner / Lead Summary --}}
+            <div class="px-4 py-2 bg-violet-50/80 dark:bg-violet-950/30 border-b border-violet-100 dark:border-violet-900/40 flex items-center justify-between text-[11.5px] text-violet-800 dark:text-violet-300 shrink-0">
+                <div class="flex items-center gap-1.5 truncate">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span>Chat dengan: <strong x-text="visitorData.name || 'Anda'"></strong></span>
+                </div>
+                <div class="flex items-center gap-1 text-[10.5px] text-violet-600 dark:text-violet-400">
+                    <span x-text="isReverbConnected ? '🟢 Reverb Live' : '🟠 Polling Mode'"></span>
+                </div>
+            </div>
+
+            {{-- Messages Stream Container --}}
+            <div id="coocaLiveChatMessages" class="flex-1 p-4 overflow-y-auto space-y-3 min-h-0 scroll-smooth">
+                
+                {{-- System Welcome Message --}}
+                <div class="p-3 rounded-2xl bg-white dark:bg-[#27272A] border border-gray-100 dark:border-white/5 shadow-xs text-[12px] text-gray-600 dark:text-gray-300 leading-relaxed">
+                    👋 <strong>Halo <span x-text="visitorData.name || 'Bapak/Ibu'"></span>!</strong> Terima kasih telah menghubungi COOCA. Pertanyaan Anda sudah diteruskan langsung ke tim admin kami melalui dashboard omnichannel. Kami akan segera membalasnya di sini.
+                </div>
+
+                {{-- Messages Bubbles --}}
+                <template x-for="msg in messages" :key="msg.id">
+                    <div class="flex flex-col" :class="msg.is_cooca || msg.is_from_page ? 'items-start' : 'items-end'">
+                        
+                        {{-- Sender Name & Time --}}
+                        <div class="flex items-center gap-1.5 mb-1 px-1 text-[10.5px] text-gray-400">
+                            <span class="font-semibold" :class="msg.is_cooca || msg.is_from_page ? 'text-violet-600 dark:text-violet-400' : 'text-gray-600 dark:text-gray-300'" 
+                                  x-text="msg.is_cooca || msg.is_from_page ? 'Cooca Support' : 'Anda'"></span>
+                            <span>•</span>
+                            <span x-text="msg.time"></span>
+                        </div>
+
+                        {{-- Bubble content --}}
+                        <div class="max-w-[85%] rounded-2xl px-3.5 py-2.5 text-[13px] leading-relaxed shadow-xs"
+                             :class="msg.is_cooca || msg.is_from_page 
+                                     ? 'bg-white dark:bg-[#27272A] text-gray-800 dark:text-gray-100 border border-gray-200/80 dark:border-white/10 rounded-tl-xs' 
+                                     : 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white rounded-tr-xs'">
+                            
+                            {{-- Attached Media Image if present --}}
+                            <template x-if="msg.media_url">
+                                <div class="mb-2 rounded-xl overflow-hidden border border-white/20">
+                                    <img :src="msg.media_url" class="max-w-full max-h-48 object-cover cursor-pointer" @click="window.open(msg.media_url, '_blank')">
+                                </div>
+                            </template>
+
+                            <p class="whitespace-pre-wrap" x-text="msg.message"></p>
+                        </div>
+                    </div>
+                </template>
+
+                {{-- Admin Typing indicator simulation when waiting --}}
+                <div x-show="isWaitingReply" class="flex items-center gap-2 p-2 text-violet-600 text-[11px]">
+                    <span class="flex gap-1">
+                        <span class="w-1.5 h-1.5 rounded-full bg-violet-600 animate-bounce"></span>
+                        <span class="w-1.5 h-1.5 rounded-full bg-violet-600 animate-bounce [animation-delay:0.2s]"></span>
+                        <span class="w-1.5 h-1.5 rounded-full bg-violet-600 animate-bounce [animation-delay:0.4s]"></span>
+                    </span>
+                    <span>Menunggu balasan tim support...</span>
+                </div>
+            </div>
+
+            {{-- CHAT INPUT COMPOSER --}}
+            <div class="p-3 bg-white dark:bg-[#1E1E24] border-t border-gray-200 dark:border-white/10 shrink-0">
+                <form @submit.prevent="sendFollowupMessage()" class="flex items-center gap-2">
+                    <input type="text" x-model="newMessage" 
+                           placeholder="Ketik balasan pesan Anda..." 
+                           :disabled="isSending"
+                           class="flex-1 h-10 px-3.5 rounded-xl bg-gray-50 dark:bg-[#27272A] border border-gray-200 dark:border-white/10 text-[13px] text-gray-900 dark:text-white placeholder-gray-400 focus:outline-hidden focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all">
+                    
+                    <button type="submit" 
+                            :disabled="!newMessage.trim() || isSending"
+                            class="w-10 h-10 rounded-xl bg-violet-600 hover:bg-violet-700 text-white flex items-center justify-center disabled:opacity-40 transition-colors shadow-sm shrink-0">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{{-- STYLES FOR SAFE ELEVATION & POSITIONS --}}
+<style>
+    .floating-live-chat-fab {
+        bottom: calc(5.75rem + env(safe-area-inset-bottom, 0px)) !important;
+    }
+    .floating-live-chat-window {
+        bottom: calc(10.5rem + env(safe-area-inset-bottom, 0px)) !important;
+    }
+    @media (min-width: 1024px) {
+        .floating-live-chat-fab {
+            bottom: 1.5rem !important;
+        }
+        .floating-live-chat-window {
+            bottom: 6.25rem !important;
+        }
+        /* Elevate WhatsApp FAB when Live Chat is active on desktop */
+        .floating-wa-fab {
+            bottom: 6rem !important;
+        }
+    }
+    @media (max-width: 1023px) {
+        /* On mobile, elevate WhatsApp FAB above the Live Chat button */
+        .floating-wa-fab {
+            bottom: calc(10.25rem + env(safe-area-inset-bottom, 0px)) !important;
+        }
+    }
+</style>
+
+{{-- LOAD PUSHER CLIENT FOR REVERB BROADCASTING --}}
+<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+
+<script>
+function coocaLiveChatWidget() {
+    return {
+        isOpen: false,
+        showGreeting: true,
+        isSubmitting: false,
+        isSending: false,
+        isWaitingReply: false,
+        isReverbConnected: false,
+        errorMessage: '',
+        sessionToken: localStorage.getItem('cooca_livechat_session') || '',
+        unreadCount: 0,
+        formData: {
+            name: '',
+            phone: '',
+            email: '',
+            message: '',
+        },
+        visitorData: {
+            name: localStorage.getItem('cooca_livechat_name') || '',
+            phone: localStorage.getItem('cooca_livechat_phone') || '',
+            email: localStorage.getItem('cooca_livechat_email') || '',
+        },
+        messages: [],
+        pusherInstance: null,
+        reverbChannel: null,
+        pollInterval: null,
+
+        init() {
+            // If session already exists, restore chat history immediately
+            if (this.sessionToken) {
+                this.loadChatHistory();
+                this.connectReverb();
+            }
+
+            // Fallback polling every 4 seconds for resilience
+            this.pollInterval = setInterval(() => {
+                if (this.sessionToken) {
+                    this.pollMessages();
+                }
+            }, 4000);
+        },
+
+        toggleChat() {
+            this.isOpen = !this.isOpen;
+            if (this.isOpen) {
+                this.unreadCount = 0;
+                this.showGreeting = false;
+                this.$nextTick(() => {
+                    this.scrollToBottom();
+                });
+            }
+        },
+
+        async startChatSession() {
+            this.errorMessage = '';
+            this.isSubmitting = true;
+
+            try {
+                const res = await fetch('/live-chat/start', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify(this.formData)
+                });
+
+                const data = await res.json();
+
+                if (res.ok && data.success) {
+                    this.sessionToken = data.session_token;
+                    this.visitorData = data.visitor;
+                    this.messages = [data.message];
+
+                    // Store in localStorage
+                    localStorage.setItem('cooca_livechat_session', this.sessionToken);
+                    localStorage.setItem('cooca_livechat_name', this.visitorData.name);
+                    localStorage.setItem('cooca_livechat_phone', this.visitorData.phone);
+                    localStorage.setItem('cooca_livechat_email', this.visitorData.email);
+
+                    // Connect Reverb WebSocket for real-time messages
+                    this.connectReverb();
+
+                    this.$nextTick(() => {
+                        this.scrollToBottom();
+                    });
+                } else {
+                    this.errorMessage = data.message || 'Gagal memulai live chat. Silakan periksa kembali input Anda.';
+                }
+            } catch (err) {
+                this.errorMessage = 'Terjadi gangguan jaringan: ' + err.message;
+            } finally {
+                this.isSubmitting = false;
+            }
+        },
+
+        async sendFollowupMessage() {
+            const text = this.newMessage.trim();
+            if (!text || this.isSending || !this.sessionToken) return;
+
+            this.isSending = true;
+            this.newMessage = '';
+
+            try {
+                const res = await fetch('/live-chat/send', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        session_token: this.sessionToken,
+                        message: text
+                    })
+                });
+
+                const data = await res.json();
+
+                if (res.ok && data.success) {
+                    this.messages.push(data.message);
+                    this.isWaitingReply = true;
+                    this.$nextTick(() => {
+                        this.scrollToBottom();
+                    });
+                } else {
+                    alert(data.message || 'Gagal mengirim pesan.');
+                }
+            } catch (err) {
+                alert('Gangguan koneksi: ' + err.message);
+            } finally {
+                this.isSending = false;
+            }
+        },
+
+        async loadChatHistory() {
+            if (!this.sessionToken) return;
+
+            try {
+                const res = await fetch(`/live-chat/history?session_token=${encodeURIComponent(this.sessionToken)}`, {
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.success && Array.isArray(data.messages)) {
+                        this.messages = data.messages;
+                        if (data.visitor && data.visitor.name) {
+                            this.visitorData = data.visitor;
+                        }
+                        this.$nextTick(() => {
+                            this.scrollToBottom();
+                        });
+                    }
+                }
+            } catch (e) {
+                console.warn('[LiveChat] History fetch notice:', e);
+            }
+        },
+
+        async pollMessages() {
+            if (!this.sessionToken || this.isSending || this.isSubmitting) return;
+
+            const lastId = this.messages.length > 0 ? this.messages[this.messages.length - 1].id : '';
+
+            try {
+                const res = await fetch(`/live-chat/poll?session_token=${encodeURIComponent(this.sessionToken)}&after_id=${encodeURIComponent(lastId)}`, {
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.success && Array.isArray(data.messages) && data.messages.length > 0) {
+                        data.messages.forEach(incoming => {
+                            if (!this.messages.some(m => m.id === incoming.id)) {
+                                this.messages.push(incoming);
+                                this.isWaitingReply = false;
+                                if (!this.isOpen && (incoming.is_cooca || incoming.is_from_page)) {
+                                    this.unreadCount++;
+                                    this.playChime();
+                                }
+                            }
+                        });
+                        this.$nextTick(() => {
+                            this.scrollToBottom();
+                        });
+                    }
+                }
+            } catch (e) {}
+        },
+
+        connectReverb() {
+            if (!this.sessionToken || typeof Pusher === 'undefined') return;
+
+            try {
+                const reverbKey = '{{ config('broadcasting.connections.reverb.key') }}' || 'cooca_reverb_key_2026';
+                const reverbHost = '{{ config('broadcasting.connections.reverb.options.host') }}' || window.location.hostname;
+                const reverbPort = {{ (int) (config('broadcasting.connections.reverb.options.port') ?: 8080) }};
+                const reverbScheme = '{{ config('broadcasting.connections.reverb.options.scheme') ?: 'http' }}';
+
+                this.pusherInstance = new Pusher(reverbKey, {
+                    wsHost: reverbHost,
+                    wsPort: reverbPort,
+                    wssPort: reverbPort,
+                    forceTLS: reverbScheme === 'https',
+                    enabledTransports: ['ws', 'wss'],
+                    cluster: 'mt1',
+                });
+
+                this.pusherInstance.connection.bind('connected', () => {
+                    this.isReverbConnected = true;
+                    console.log('[LiveChat] Connected to Laravel Reverb WebSocket.');
+                });
+
+                this.pusherInstance.connection.bind('disconnected', () => {
+                    this.isReverbConnected = false;
+                });
+
+                const channelName = 'livechat.' + this.sessionToken;
+                this.reverbChannel = this.pusherInstance.subscribe(channelName);
+
+                this.reverbChannel.bind('message.sent', (data) => {
+                    console.log('[LiveChat] New message broadcast received:', data);
+                    
+                    // Prevent duplicate if already in array
+                    if (!this.messages.some(m => m.id === data.id)) {
+                        this.messages.push({
+                            id: data.id,
+                            message: data.message,
+                            media_url: data.media_url,
+                            media_type: data.media_type,
+                            from_name: data.from_name,
+                            is_cooca: data.is_cooca,
+                            is_from_page: data.is_from_page,
+                            time: data.time,
+                            date: data.date,
+                        });
+
+                        this.isWaitingReply = false;
+
+                        if (!this.isOpen && (data.is_cooca || data.is_from_page)) {
+                            this.unreadCount++;
+                            this.playChime();
+                        }
+
+                        this.$nextTick(() => {
+                            this.scrollToBottom();
+                        });
+                    }
+                });
+            } catch (err) {
+                console.warn('[LiveChat] Reverb initialization warning:', err);
+            }
+        },
+
+        confirmResetSession() {
+            if (confirm('Apakah Anda ingin mengakhiri sesi chat ini dan memulai chat baru?')) {
+                localStorage.removeItem('cooca_livechat_session');
+                this.sessionToken = '';
+                this.messages = [];
+                this.formData.message = '';
+                if (this.pusherInstance) {
+                    this.pusherInstance.disconnect();
+                }
+            }
+        },
+
+        scrollToBottom() {
+            const el = document.getElementById('coocaLiveChatMessages');
+            if (el) {
+                el.scrollTop = el.scrollHeight;
+            }
+        },
+
+        playChime() {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5
+                osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.1); // A5
+                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.35);
+            } catch (_) {}
+        }
+    }
+}
+</script>

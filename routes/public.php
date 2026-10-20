@@ -301,8 +301,16 @@ Route::get('/apk', function () {
     return redirect()->route('public.download.apk');
 })->name('public.apk.index');
 
+// 14. Website Public Live Chat (Real-time Laravel Reverb Broadcasting)
+Route::prefix('live-chat')->name('public.live-chat.')->group(function (): void {
+    Route::post('/start', \App\Http\Controllers\Web\PublicLiveChatController::class . '@start')->name('start');
+    Route::post('/send', \App\Http\Controllers\Web\PublicLiveChatController::class . '@sendMessage')->name('send');
+    Route::get('/history', \App\Http\Controllers\Web\PublicLiveChatController::class . '@getHistory')->name('history');
+    Route::get('/poll', \App\Http\Controllers\Web\PublicLiveChatController::class . '@poll')->name('poll');
+});
 
 // 15. Public business landing pages using business name as direct URL slug (Must be last)
 Route::get('/{slug}', [PublicStorefrontController::class, 'home'])
-    ->where('slug', '^(?!(pos|admin|api|dashboard|auth|login|register|profile|calculator|settings|billing|customer|public|storage|up|settlements|payments|community)$)[a-z0-9]+(?:-[a-z0-9]+)*$')
+    ->where('slug', '^(?!(pos|admin|api|dashboard|auth|login|register|profile|calculator|settings|billing|customer|public|storage|up|settlements|payments|community|live-chat)$)[a-z0-9]+(?:-[a-z0-9]+)*$')
     ->name('public.business.landing');
+

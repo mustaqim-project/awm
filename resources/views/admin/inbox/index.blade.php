@@ -47,6 +47,14 @@
                 <span x-show="(counts.all || 0) > 0" x-text="counts.all" class="text-[11px] px-1.5 py-0.2 rounded-full bg-black/5 dark:bg-white/10 font-bold"></span>
             </button>
 
+            <button type="button" @click="setChannel('live_chat')"
+                :class="currentChannel === 'live_chat' ? 'bg-[#7C3AED]/15 text-[#7C3AED] font-semibold dark:bg-[#7C3AED]/25 dark:text-[#A78BFA]' : 'text-[#4B5563] dark:text-[#9CA3AF] hover:text-[#111827] dark:hover:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.04]'"
+                class="px-4 py-1.5 rounded-[10px] text-[13.5px] transition-all whitespace-nowrap flex items-center gap-1.5 shrink-0">
+                <span class="w-2 h-2 rounded-full bg-[#10B981] animate-pulse"></span>
+                <span>Live Chat Website</span>
+                <span x-show="(counts.live_chat || 0) > 0" x-text="counts.live_chat" class="text-[11px] px-1.5 py-0.2 rounded-full bg-[#7C3AED]/15 text-[#7C3AED] font-bold"></span>
+            </button>
+
             <button type="button" @click="setChannel('messenger')"
                 :class="currentChannel === 'messenger' ? 'bg-[#E7F3FF] text-[#1877F2] font-semibold dark:bg-[#1877F2]/20 dark:text-[#64D2FF]' : 'text-[#4B5563] dark:text-[#9CA3AF] hover:text-[#111827] dark:hover:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.04]'"
                 class="px-4 py-1.5 rounded-[10px] text-[13.5px] transition-all whitespace-nowrap flex items-center gap-1.5 shrink-0">
@@ -632,10 +640,24 @@
                                                 <span x-text="formatChannelName(selectedThread.channel)"></span>
                                             </span>
                                         </div>
-                                        <p class="text-[11.5px] text-[#6B7280] dark:text-[#9CA3AF] truncate mt-0.5">
-                                            ID: <span x-text="selectedThread.customer_id"></span>
-                                            • Aktif: <span x-text="selectedThread.date"></span>
-                                        </p>
+                                        <div class="text-[11.5px] text-[#6B7280] dark:text-[#9CA3AF] truncate mt-0.5 flex flex-wrap items-center gap-x-2">
+                                            <template x-if="selectedThread.email">
+                                                <span class="inline-flex items-center gap-1 text-slate-700 dark:text-slate-300">
+                                                    <i data-lucide="mail" class="w-3 h-3 text-slate-400"></i>
+                                                    <span x-text="selectedThread.email"></span>
+                                                </span>
+                                            </template>
+                                            <template x-if="selectedThread.phone">
+                                                <a :href="'https://wa.me/' + selectedThread.phone.replace(/[^0-9]/g, '')" target="_blank"
+                                                   class="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400 hover:underline font-medium">
+                                                    <i data-lucide="phone" class="w-3 h-3"></i>
+                                                    <span x-text="selectedThread.phone"></span>
+                                                    <span class="text-[9.5px] bg-emerald-100 dark:bg-emerald-950/60 px-1 py-0.2 rounded font-normal text-emerald-700 dark:text-emerald-300">Chat WA</span>
+                                                </a>
+                                            </template>
+                                            <span>• ID: <span x-text="selectedThread.customer_id"></span></span>
+                                            <span>• Aktif: <span x-text="selectedThread.date"></span></span>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -1195,6 +1217,7 @@
 </div>
 
 @push('scripts')
+<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 <script>
 function adminInboxHub() {
     return {
@@ -1239,6 +1262,37 @@ function adminInboxHub() {
             this.pollTimer = setInterval(() => {
                 this.pollLiveUpdates();
             }, 3500);
+
+            // Connect to Laravel Reverb WebSockets for instant message broadcasting
+            this.initReverbBroadcasting();
+        },
+
+        initReverbBroadcasting() {
+            if (typeof Pusher === 'undefined') return;
+
+            try {
+                const reverbKey = '{{ config('broadcasting.connections.reverb.key') }}' || 'cooca_reverb_key_2026';
+                const reverbHost = '{{ config('broadcasting.connections.reverb.options.host') }}' || window.location.hostname;
+                const reverbPort = {{ (int) (config('broadcasting.connections.reverb.options.port') ?: 8080) }};
+                const reverbScheme = '{{ config('broadcasting.connections.reverb.options.scheme') ?: 'http' }}';
+
+                const pusher = new Pusher(reverbKey, {
+                    wsHost: reverbHost,
+                    wsPort: reverbPort,
+                    wssPort: reverbPort,
+                    forceTLS: reverbScheme === 'https',
+                    enabledTransports: ['ws', 'wss'],
+                    cluster: 'mt1',
+                });
+
+                const adminChannel = pusher.subscribe('admin.inbox');
+                adminChannel.bind('message.sent', (data) => {
+                    console.log('[AdminInbox] Reverb real-time broadcast received:', data);
+                    this.pollLiveUpdates();
+                });
+            } catch (err) {
+                console.warn('[AdminInbox] Reverb listener init notice:', err);
+            }
         },
 
         async pollLiveUpdates() {
@@ -1363,7 +1417,9 @@ function adminInboxHub() {
                 // Channel check
                 let matchChannel = true;
                 if (channel !== 'all') {
-                    if (channel === 'messenger') {
+                    if (channel === 'live_chat') {
+                        matchChannel = (t.channel === 'live_chat');
+                    } else if (channel === 'messenger') {
                         matchChannel = (t.channel === 'messenger');
                     } else if (channel === 'instagram') {
                         matchChannel = ['instagram', 'instagram_dm'].includes(t.channel);
@@ -1454,6 +1510,7 @@ function adminInboxHub() {
 
         getChannelBadgeClass(channel) {
             switch(channel) {
+                case 'live_chat': return 'bg-[#7C3AED]';
                 case 'messenger': return 'bg-[#1877F2]';
                 case 'instagram':
                 case 'instagram_dm':
@@ -1467,6 +1524,7 @@ function adminInboxHub() {
 
         getChannelIcon(channel) {
             switch(channel) {
+                case 'live_chat': return 'message-circle';
                 case 'messenger': return 'message-circle';
                 case 'instagram':
                 case 'instagram_dm': return 'instagram';
@@ -1480,6 +1538,7 @@ function adminInboxHub() {
 
         formatChannelName(channel) {
             switch(channel) {
+                case 'live_chat': return 'Live Chat Website';
                 case 'messenger': return 'Messenger';
                 case 'instagram':
                 case 'instagram_dm': return 'Instagram DM';

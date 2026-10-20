@@ -67,6 +67,7 @@ class AdminInboxController extends Controller
         // Calculate counts per channel & status
         $counts = [
             'all'                => count($threads),
+            'live_chat'          => count(array_filter($threads, fn($t) => $t['channel'] === 'live_chat')),
             'messenger'          => count(array_filter($threads, fn($t) => $t['channel'] === 'messenger')),
             'instagram'          => count(array_filter($threads, fn($t) => in_array($t['channel'], ['instagram', 'instagram_dm']))),
             'whatsapp'           => count(array_filter($threads, fn($t) => $t['channel'] === 'whatsapp')),
@@ -82,6 +83,7 @@ class AdminInboxController extends Controller
         $filteredThreads = array_values(array_filter($threads, function ($t) use ($channel, $status) {
             $matchChannel = match ($channel) {
                 'all' => true,
+                'live_chat' => $t['channel'] === 'live_chat',
                 'messenger' => $t['channel'] === 'messenger',
                 'instagram' => in_array($t['channel'], ['instagram', 'instagram_dm']),
                 'whatsapp' => $t['channel'] === 'whatsapp',
@@ -158,6 +160,7 @@ class AdminInboxController extends Controller
 
         $counts = [
             'all'                => count($threads),
+            'live_chat'          => count(array_filter($threads, fn($t) => $t['channel'] === 'live_chat')),
             'messenger'          => count(array_filter($threads, fn($t) => $t['channel'] === 'messenger')),
             'instagram'          => count(array_filter($threads, fn($t) => in_array($t['channel'], ['instagram', 'instagram_dm']))),
             'whatsapp'           => count(array_filter($threads, fn($t) => $t['channel'] === 'whatsapp')),
@@ -188,35 +191,51 @@ class AdminInboxController extends Controller
         $targetChannel = match ($channel) {
             'facebook', 'facebook_comments', 'messenger' => 'messenger',
             'whatsapp' => 'whatsapp',
+            'live_chat' => 'live_chat',
             default => 'instagram',
         };
 
         $platformPageId = (string) (SystemSetting::get('meta_page_id') ?: SystemSetting::get('social_media_page_id', ''));
         $platformIgId = (string) (SystemSetting::get('meta_instagram_id') ?: SystemSetting::get('instagram_account_id', ''));
 
-        $query = SocialMediaComment::query()
-            ->where('is_platform', true)
-            ->whereIn('platform', [$targetChannel, $targetChannel . '_dm']);
+        if ($targetChannel === 'live_chat') {
+            $query = SocialMediaComment::query()
+                ->where('is_platform', true)
+                ->where('platform', 'live_chat')
+                ->where(function ($q) use ($customerId, $customerName) {
+                    if (! empty($customerId)) {
+                        $q->where('session_token', $customerId)
+                          ->orWhere('from_id', $customerId);
+                    }
+                    if (! empty($customerName)) {
+                        $q->orWhere('from_name', $customerName);
+                    }
+                });
+        } else {
+            $query = SocialMediaComment::query()
+                ->where('is_platform', true)
+                ->whereIn('platform', [$targetChannel, $targetChannel . '_dm']);
 
-        $query->where(function ($q) use ($customerId, $customerName) {
-            $hasCondition = false;
-            if (! empty($customerId)) {
-                $q->where('from_id', $customerId);
-                $hasCondition = true;
-            }
-            if (! empty($customerName)) {
-                if ($hasCondition) {
-                    $q->orWhere('from_name', $customerName);
-                } else {
-                    $q->where('from_name', $customerName);
+            $query->where(function ($q) use ($customerId, $customerName) {
+                $hasCondition = false;
+                if (! empty($customerId)) {
+                    $q->where('from_id', $customerId);
                     $hasCondition = true;
                 }
-            }
-            // Also match if message has customer reference
-            if (! empty($customerId)) {
-                $q->orWhere('parent_comment_id', 'like', "%{$customerId}%");
-            }
-        });
+                if (! empty($customerName)) {
+                    if ($hasCondition) {
+                        $q->orWhere('from_name', $customerName);
+                    } else {
+                        $q->where('from_name', $customerName);
+                        $hasCondition = true;
+                    }
+                }
+                // Also match if message has customer reference
+                if (! empty($customerId)) {
+                    $q->orWhere('parent_comment_id', 'like', "%{$customerId}%");
+                }
+            });
+        }
 
         $messages = $query->orderBy('created_time', 'asc')
             ->orderBy('created_at', 'asc')
@@ -504,6 +523,10 @@ class AdminInboxController extends Controller
             }
 
             // Save reply record into database
+            $replySessionToken = ($channel === 'live_chat')
+                ? ($comment->session_token ?: $comment->from_id)
+                : null;
+
             $reply = SocialMediaComment::create([
                 'business_id'             => null,
                 'is_platform'             => true,
@@ -514,6 +537,9 @@ class AdminInboxController extends Controller
                 'parent_comment_id'       => Str::limit((string) ($comment->platform_comment_id ?: $comment->id), 500, ''),
                 'from_id'                 => Str::limit((string) ($comment->from_id ?: $comment->platform_comment_id), 500, ''),
                 'from_name'               => 'Cooca Indonesia (Admin)',
+                'from_email'              => ($channel === 'live_chat') ? 'support@cooca.id' : null,
+                'from_phone'              => null,
+                'session_token'           => $replySessionToken,
                 'message'                 => $messageText ?: ($imageUrl ? '[Foto]' : ''),
                 'media_url'               => $imageUrl,
                 'media_type'              => $imageUrl ? 'image' : null,
@@ -524,17 +550,32 @@ class AdminInboxController extends Controller
 
             $comment->update(['status' => 'replied']);
 
+            // Real-time WebSocket broadcasting via Laravel Reverb
+            if ($channel === 'live_chat') {
+                try {
+                    event(new \App\Events\LiveChatMessageSent($reply));
+                } catch (\Throwable $e) {
+                    Log::warning('[AdminInbox] LiveChat broadcasting exception: ' . $e->getMessage());
+                }
+            }
+
             if ($request->wantsJson()) {
                 return response()->json([
                     'success' => true,
                     'message' => 'Balasan berhasil dikirimkan sebagai Cooca Official!',
                     'reply'   => [
-                        'id'         => $reply->id,
-                        'message'    => $reply->message,
-                        'media_url'  => $reply->media_url,
-                        'media_type' => $reply->media_type,
-                        'created_at' => now()->format('H:i'),
-                        'sender'     => 'Cooca Indonesia',
+                        'id'           => $reply->id,
+                        'message'      => $reply->message,
+                        'media_url'    => $reply->media_url,
+                        'media_type'   => $reply->media_type,
+                        'created_at'   => now()->format('H:i'),
+                        'time'         => now()->format('H.i'),
+                        'sender'       => 'Cooca Indonesia',
+                        'from_name'    => 'Cooca Indonesia',
+                        'is_from_page' => true,
+                        'is_cooca'     => true,
+                        'role'         => 'cooca',
+                        'date'         => 'Hari ini',
                     ],
                 ]);
             }
@@ -1136,7 +1177,7 @@ class AdminInboxController extends Controller
 
         $directChatItems = $comments->filter(function ($c) {
             $p = strtolower((string) $c->platform);
-            return in_array($p, ['messenger', 'instagram', 'instagram_dm', 'whatsapp'], true);
+            return in_array($p, ['messenger', 'instagram', 'instagram_dm', 'whatsapp', 'live_chat'], true);
         });
 
         // Preload Meta IDs for accurate Cooca Official attribution
@@ -1269,7 +1310,7 @@ class AdminInboxController extends Controller
         $chatGroups = $directChatItems->groupBy(function ($c) {
             $raw = strtolower((string) $c->platform);
             $ch = ($raw === 'instagram_dm' || $raw === 'instagram') ? 'instagram' : $raw;
-            $cid = (string) ($c->from_id ?: $c->platform_comment_id ?: 'customer');
+            $cid = (string) ($c->session_token ?: $c->from_id ?: $c->platform_comment_id ?: 'customer');
             return "{$ch}::{$cid}";
         });
 
@@ -1290,6 +1331,12 @@ class AdminInboxController extends Controller
                 $customerName = $firstNonAdmin ? $firstNonAdmin->from_name : ($customerId ?: 'Pelanggan');
             }
 
+            // Extract contact info for live chat / omnichannel visitors
+            $firstVisitorWithData = $sortedMsgs->first(fn($m) => ! empty($m->from_email) || ! empty($m->from_phone));
+            $visitorEmail = (string) ($firstVisitorWithData?->from_email ?? $sortedMsgs->first(fn($m) => ! empty($m->from_email))?->from_email ?? '');
+            $visitorPhone = (string) ($firstVisitorWithData?->from_phone ?? $sortedMsgs->first(fn($m) => ! empty($m->from_phone))?->from_phone ?? '');
+            $sessionToken = (string) ($groupMessages->first(fn($m) => ! empty($m->session_token))?->session_token ?? ($channel === 'live_chat' ? $customerId : ''));
+
             // Unread if any incoming message is unread
             $hasUnread = $sortedMsgs->contains(function ($m) {
                 return ! $m->is_from_page && $m->status === 'unread';
@@ -1304,12 +1351,16 @@ class AdminInboxController extends Controller
                     'comment_id'   => $m->platform_comment_id,
                     'from_id'      => $m->from_id,
                     'from_name'    => $isFromPage ? 'Cooca Indonesia' : ($m->from_name ?: $customerName),
+                    'from_email'   => $m->from_email,
+                    'from_phone'   => $m->from_phone,
                     'message'      => $m->message,
                     'media_url'    => $m->media_url,
                     'media_type'   => $m->media_type,
                     'is_from_page' => $isFromPage,
                     'is_cooca'     => $isFromPage,
+                    'role'         => $isFromPage ? 'cooca' : 'visitor',
                     'time'         => $m->created_time ? $m->created_time->format('H.i') : $m->created_at->format('H.i'),
+                    'time_exact'   => $m->created_time ? $m->created_time->format('H.i') : $m->created_at->format('H.i'),
                     'date'         => $m->created_time ? $m->created_time->format('d M Y') : $m->created_at->format('d M Y'),
                     'parent_id'    => $m->parent_comment_id,
                 ];
@@ -1318,24 +1369,27 @@ class AdminInboxController extends Controller
             $sortTimestamp = $latestMsg->created_time ? $latestMsg->created_time->timestamp : $latestMsg->created_at->timestamp;
 
             $threads[] = [
-                'id'           => $latestMsg->id,
-                'comment_id'   => $latestMsg->platform_comment_id,
-                'customer_id'  => $customerId,
-                'name'         => $customerName,
-                'channel'      => $channel,
-                'channel_raw'  => $latestMsg->platform,
-                'last_message' => $latestMsg->message,
-                'media_url'    => $latestMsg->media_url,
-                'media_type'   => $latestMsg->media_type,
-                'status'       => $threadStatus,
-                'is_unread'    => $hasUnread,
-                'post_snippet' => '',
-                'time'         => $latestMsg->created_time ? $latestMsg->created_time->format('H.i') : $latestMsg->created_at->format('H.i'),
-                'time_relative'=> $latestMsg->created_time ? $latestMsg->created_time->diffForHumans(null, true) : 'Baru saja',
-                'date'         => $latestMsg->created_time ? $latestMsg->created_time->format('d M Y') : $latestMsg->created_at->format('d M Y'),
-                'sort_time'    => $sortTimestamp,
-                'post'         => null,
-                'messages'     => $formattedMessages,
+                'id'            => $latestMsg->id,
+                'comment_id'    => $latestMsg->platform_comment_id,
+                'customer_id'   => $customerId,
+                'name'          => $customerName,
+                'email'         => $visitorEmail,
+                'phone'         => $visitorPhone,
+                'session_token' => $sessionToken,
+                'channel'       => $channel,
+                'channel_raw'   => $latestMsg->platform,
+                'last_message'  => $latestMsg->message,
+                'media_url'     => $latestMsg->media_url,
+                'media_type'    => $latestMsg->media_type,
+                'status'        => $threadStatus,
+                'is_unread'     => $hasUnread,
+                'post_snippet'  => ($channel === 'live_chat') ? 'Live Chat Website (cooca.id)' : '',
+                'time'          => $latestMsg->created_time ? $latestMsg->created_time->format('H.i') : $latestMsg->created_at->format('H.i'),
+                'time_relative' => $latestMsg->created_time ? $latestMsg->created_time->diffForHumans(null, true) : 'Baru saja',
+                'date'          => $latestMsg->created_time ? $latestMsg->created_time->format('d M Y') : $latestMsg->created_at->format('d M Y'),
+                'sort_time'     => $sortTimestamp,
+                'post'          => null,
+                'messages'      => $formattedMessages,
             ];
         }
 

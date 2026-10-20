@@ -2660,6 +2660,9 @@
         @endif
     @endif
 
+    {{-- Official Live Chat Widget (Laravel Broadcasting with Reverb) --}}
+    @include('public.partials.live_chat_widget')
+
     <!-- AppAlert (Centralized Alert & Confirm System) -->
     <script src="{{ asset('js/app-alert.js') }}"></script>
 
