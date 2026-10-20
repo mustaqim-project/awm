@@ -19,6 +19,6 @@ class PostSeeder extends Seeder
     public function run(): void
     {
         // Call the dedicated artisan import command to load all 100 articles from database/data/articles
-        Artisan::call('blog:import-articles');
+        Artisan::call('blog:import-articles', ['--force' => true]);
     }
 }

@@ -28,71 +28,94 @@ final class ImportUmkmArticlesCommand extends Command
      * Curated category visual metadata and images.
      */
     private const CATEGORY_CONFIG = [
-        'Legalitas' => [
+        'HPP & Harga Jual' => [
+            'color' => '#FF9500',
+            'icon' => 'calculator',
+            'description' => 'Kalkulasi HPP, Food Cost kuliner, markup harga, margin laba, dan strategi diskon UMKM',
+            'images' => [
+                'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1200&q=80',
+                'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&q=80',
+            ],
+        ],
+        'Kasir & POS' => [
             'color' => '#007AFF',
+            'icon' => 'monitor',
+            'description' => 'Panduan aplikasi kasir POS, barcode scanner, printer struk, SOP kasir, dan pembayaran QRIS',
+            'images' => [
+                'https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&w=1200&q=80',
+                'https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?auto=format&fit=crop&w=1200&q=80',
+            ],
+        ],
+        'Inventori & Stok' => [
+            'color' => '#5856D6',
+            'icon' => 'package',
+            'description' => 'Manajemen persediaan barang, stok opname, safety stock, metode FIFO/FEFO, dan multi-gudang',
+            'images' => [
+                'https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=1200&q=80',
+                'https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&w=1200&q=80',
+            ],
+        ],
+        'Keuangan & Pembukuan' => [
+            'color' => '#34C759',
+            'icon' => 'trending-up',
+            'description' => 'Laporan laba rugi, arus kas (cash flow), neraca sederhana, budgeting, dan pemisahan rekening',
+            'images' => [
+                'https://images.unsplash.com/photo-1554224154-26032ffc0d07?auto=format&fit=crop&w=1200&q=80',
+                'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80',
+            ],
+        ],
+        'Pajak & Legalitas' => [
+            'color' => '#FF2D55',
             'icon' => 'shield-check',
-            'description' => 'Panduan izin usaha, NIB, OSS, PIRT, sertifikasi Halal, dan kepatuhan hukum UMKM',
+            'description' => 'Panduan izin NIB OSS, sertifikasi Halal, izin PIRT, NPWP usaha, dan pelaporan pajak UMKM',
+            'images' => [
+                'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80',
+                'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1200&q=80',
+            ],
+        ],
+        'Marketing & WhatsApp' => [
+            'color' => '#25D366',
+            'icon' => 'message-circle',
+            'description' => 'Strategi WhatsApp Business, live TikTok Shop, content calendar, dan optimasi Google Maps',
+            'images' => [
+                'https://images.unsplash.com/photo-1611746872915-64382b5c76da?auto=format&fit=crop&w=1200&q=80',
+                'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1200&q=80',
+            ],
+        ],
+        'CRM & Loyalty' => [
+            'color' => '#AF52DE',
+            'icon' => 'heart',
+            'description' => 'Program poin loyalitas pelanggan, membership tier, penanganan komplain, dan retensi pelanggan',
+            'images' => [
+                'https://images.unsplash.com/photo-1556740758-90de374c12ad?auto=format&fit=crop&w=1200&q=80',
+                'https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1200&q=80',
+            ],
+        ],
+        'Invoice, PO & SO' => [
+            'color' => '#00C4D8',
+            'icon' => 'file-text',
+            'description' => 'Standar invoice profesional, purchase order (PO), sales order (SO), surat jalan, dan tempo net-30',
             'images' => [
                 'https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&q=80',
                 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80',
             ],
         ],
-        'Modal' => [
-            'color' => '#34C759',
-            'icon' => 'coins',
-            'description' => 'Akses permodalan, KUR perbankan, bantuan pemerintah, crowdfunding, dan strategi budgeting',
+        'Solusi Per Industri' => [
+            'color' => '#FF3B30',
+            'icon' => 'store',
+            'description' => 'Solusi operasional spesifik kafe, laundry kiloan, barbershop, salon, bengkel, toko kelontong, dan konveksi',
             'images' => [
-                'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1565514020179-026b92b84bb6?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=1200&q=80',
+                'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1200&q=80',
+                'https://images.unsplash.com/photo-1545173168-9f1947eebb7f?auto=format&fit=crop&w=1200&q=80',
             ],
         ],
-        'Operasional' => [
-            'color' => '#FF9500',
-            'icon' => 'settings',
-            'description' => 'SOP harian warung, shift karyawan, manajemen stok gudang, supplier, dan efisiensi kasir',
-            'images' => [
-                'https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1200&q=80',
-            ],
-        ],
-        'Marketing' => [
-            'color' => '#AF52DE',
-            'icon' => 'trending-up',
-            'description' => 'Strategi video TikTok, reels Instagram, optimasi Google Maps, closing WhatsApp, dan ulasan pelanggan',
-            'images' => [
-                'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1533750349088-cd871a92f312?auto=format&fit=crop&w=1200&q=80',
-            ],
-        ],
-        'Keuangan' => [
-            'color' => '#00C4D8',
-            'icon' => 'calculator',
-            'description' => 'Kalkulasi HPP, Food Cost kuliner, BEP impas, pembukuan kas, PPh Final 0.5%, dan pemisahan rekening',
-            'images' => [
-                'https://images.unsplash.com/photo-1554224154-26032ffc0d07?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1556742049-0a67c5574f73?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1544377193-33dcf4d68fb5?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80',
-            ],
-        ],
-        'Scale-up' => [
-            'color' => '#5856D6',
-            'icon' => 'rocket',
-            'description' => 'Strategi membuka cabang baru, delegasi wewenang owner, sistem multi-outlet, dan utilisasi AI',
+        'Strategi & Operasional' => [
+            'color' => '#5AC8FA',
+            'icon' => 'compass',
+            'description' => 'SOP operasional usaha, jadwal shift karyawan, KPI harian, target omzet, dan Business Operating System',
             'images' => [
                 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80',
+                'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80',
             ],
         ],
     ];
@@ -170,6 +193,7 @@ final class ImportUmkmArticlesCommand extends Command
 
         // 3. Process Each File
         $importedCount = 0;
+        $importedSlugs = [];
         $now = now();
 
         $this->output->progressStart($totalFiles);
@@ -243,12 +267,27 @@ final class ImportUmkmArticlesCommand extends Command
                 ]
             );
 
+            $importedSlugs[] = $parsed['slug'];
             $importedCount++;
             $this->output->progressAdvance();
         }
 
         $this->output->progressFinish();
         $this->info("Successfully imported {$importedCount} / {$totalFiles} articles into the database.");
+
+        if ($this->option('force') && !empty($importedSlugs)) {
+            $deletedStale = Post::whereNotIn('slug', $importedSlugs)->delete();
+            if ($deletedStale > 0) {
+                $this->info("Cleaned up {$deletedStale} stale/deprecated posts.");
+            }
+        }
+
+        try {
+            app(\App\Services\Seo\SitemapService::class)->saveBlogToPublic();
+            $this->info("Regenerated public sitemap_blog.xml successfully.");
+        } catch (\Throwable $e) {
+            $this->warn("Sitemap regeneration notice: " . $e->getMessage());
+        }
 
         return 0;
     }
@@ -260,27 +299,63 @@ final class ImportUmkmArticlesCommand extends Command
     {
         $data = [];
 
-        // Title
+        // 1. Support modern YAML frontmatter (used by cooca-blog-writer)
+        if (preg_match('/^---\s*\r?\n(.*?)\r?\n---\s*\r?\n?(.*)$/s', $content, $fmMatches)) {
+            $frontmatterRaw = $fmMatches[1];
+            $body = trim($fmMatches[2]);
+
+            $yaml = [];
+            foreach (preg_split('/\r?\n/', $frontmatterRaw) as $line) {
+                if (str_contains($line, ':')) {
+                    [$k, $v] = explode(':', $line, 2);
+                    $yaml[trim($k)] = trim(trim($v), "\"'");
+                }
+            }
+
+            $data['title'] = $yaml['title'] ?? '';
+            $data['slug'] = $yaml['slug'] ?? '';
+            $data['category'] = $yaml['category'] ?? 'Umum';
+            $data['cover_image'] = !empty($yaml['cover_image']) ? $yaml['cover_image'] : null;
+            $data['meta_title'] = $yaml['meta_title'] ?? $data['title'];
+            $data['meta_description'] = $yaml['meta_description'] ?? '';
+            $data['author'] = $yaml['author'] ?? 'Tim Edukasi COOCA';
+            $data['excerpt'] = $yaml['meta_description'] ?? '';
+
+            // Convert Markdown body to rich, semantic HTML
+            $data['content'] = Str::markdown($body);
+
+            // Determine cluster (Tutorial / Edukasi)
+            $isTutorial = Str::startsWith($data['title'], 'Cara ')
+                || Str::contains($data['title'], 'SOP')
+                || Str::contains($data['title'], 'Panduan')
+                || in_array($data['category'], ['Kasir & POS', 'Invoice, PO & SO', 'Inventori & Stok', 'HPP & Harga Jual']);
+            $data['cluster_raw'] = $isTutorial ? 'Cluster K - Tutorial Cara' : 'Cluster O - Edukasi Topikal';
+
+            if (empty($data['slug'])) {
+                $base = basename($filename, '.md');
+                $data['slug'] = preg_replace('/^\d+-/', '', $base);
+            }
+
+            return $data;
+        }
+
+        // 2. Legacy fallback format
         if (preg_match('/\*\*Judul Artikel.*?\*\*\s*\r?\n+([^\r\n]+)/u', $content, $m)) {
             $data['title'] = trim($m[1]);
         }
 
-        // Cluster
         if (preg_match('/\*\*Cluster Konten.*?\*\*\s*\r?\n+([^\r\n]+)/u', $content, $m)) {
             $data['cluster_raw'] = trim($m[1]);
         }
 
-        // Category
         if (preg_match('/\*\*Kategori.*?\*\*\s*\r?\n+([^\r\n]+)/u', $content, $m)) {
             $data['category'] = trim($m[1]);
         }
 
-        // Author
         if (preg_match('/\*\*Nama Penulis.*?\*\*\s*\r?\n+([^\r\n]+)/u', $content, $m)) {
             $data['author'] = trim($m[1]);
         }
 
-        // Cover Image
         if (preg_match('/\*\*URL Cover Image.*?\*\*\s*\r?\n+([^\r\n]+)/u', $content, $m)) {
             $val = trim($m[1]);
             if (!str_starts_with($val, '##') && !str_starts_with($val, '**') && !empty($val)) {
@@ -288,32 +363,26 @@ final class ImportUmkmArticlesCommand extends Command
             }
         }
 
-        // Excerpt
         if (preg_match('/## Ringkasan \/ Excerpt\s*\r?\n+(.*?)(?=\r?\n## Konten Lengkap)/us', $content, $m)) {
             $data['excerpt'] = trim($m[1]);
         }
 
-        // Content
         if (preg_match('/## Konten Lengkap.*?\r?\n+(.*?)(?=\r?\n## Pengaturan SEO|$)/us', $content, $m)) {
             $data['content'] = trim($m[1]);
         }
 
-        // Meta Title
         if (preg_match('/\*\*Meta Title.*?\*\*\s*\r?\n+([^\r\n]+)/u', $content, $m)) {
             $data['meta_title'] = trim($m[1]);
         }
 
-        // Meta Description
         if (preg_match('/\*\*Meta Description.*?\*\*\s*\r?\n+([^\r\n]+)/u', $content, $m)) {
             $data['meta_description'] = trim($m[1]);
         }
 
-        // Meta Keyword
         if (preg_match('/\*\*Meta Keyword.*?\*\*\s*\r?\n+([^\r\n]+)/u', $content, $m)) {
             $data['meta_keyword'] = trim($m[1]);
         }
 
-        // Slug derived from filename (remove 001- prefix and .md suffix)
         $base = basename($filename, '.md');
         $data['slug'] = preg_replace('/^\d+-/', '', $base);
 

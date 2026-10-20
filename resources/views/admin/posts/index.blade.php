@@ -213,24 +213,39 @@
                         <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                             @forelse($posts as $post)
                                 <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
-                                    <td class="px-5 py-4 max-w-sm">
-                                        <div class="font-semibold text-black dark:text-white leading-snug line-clamp-2">
-                                            <a href="{{ route('blog.show', $post->slug) }}" target="_blank"
-                                                class="inline-flex items-center gap-1.5 hover:text-[#007AFF] dark:hover:text-[#0A84FF] transition-colors">
-                                                <span>{{ $post->title }}</span>
-                                                <i data-lucide="external-link"
-                                                    class="w-3.5 h-3.5 text-black/35 dark:text-white/35 shrink-0"
-                                                    stroke-width="1.5"></i>
-                                            </a>
-                                        </div>
-                                        <div class="flex items-center gap-2 mt-1.5">
-                                            <span
-                                                class="px-2 py-0.5 rounded-[6px] text-[11px] font-medium bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70">
-                                                {{ $post->postCategory?->name ?? ($post->category ?? 'Umum') }}
-                                            </span>
-                                            <span class="text-[11px] text-black/40 dark:text-white/40">
-                                                oleh {{ $post->author_name }}
-                                            </span>
+                                    <td class="px-5 py-4 max-w-md">
+                                        <div class="flex items-start gap-3">
+                                            @if ($post->cover_image)
+                                                <a href="{{ route('blog.show', $post->slug) }}" target="_blank" class="shrink-0 group">
+                                                    <img src="{{ $post->cover_image }}" alt="{{ $post->title }}"
+                                                        class="w-12 h-12 rounded-[10px] object-cover border border-black/10 dark:border-white/10 group-hover:opacity-90 transition-opacity shadow-sm"
+                                                        loading="lazy">
+                                                </a>
+                                            @else
+                                                <div class="w-12 h-12 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center shrink-0 text-black/30 dark:text-white/30">
+                                                    <i data-lucide="image" class="w-5 h-5"></i>
+                                                </div>
+                                            @endif
+                                            <div class="min-w-0 flex-1">
+                                                <div class="font-semibold text-black dark:text-white leading-snug line-clamp-2">
+                                                    <a href="{{ route('blog.show', $post->slug) }}" target="_blank"
+                                                        class="inline-flex items-center gap-1.5 hover:text-[#007AFF] dark:hover:text-[#0A84FF] transition-colors">
+                                                        <span>{{ $post->title }}</span>
+                                                        <i data-lucide="external-link"
+                                                            class="w-3.5 h-3.5 text-black/35 dark:text-white/35 shrink-0"
+                                                            stroke-width="1.5"></i>
+                                                    </a>
+                                                </div>
+                                                <div class="flex items-center gap-2 mt-1.5 flex-wrap">
+                                                    <span
+                                                        class="px-2 py-0.5 rounded-[6px] text-[11px] font-medium bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70">
+                                                        {{ $post->postCategory?->name ?? ($post->category ?? 'Umum') }}
+                                                    </span>
+                                                    <span class="text-[11px] text-black/40 dark:text-white/40">
+                                                        oleh {{ $post->author_name }}
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </td>
                                     <td class="px-4 py-4 whitespace-nowrap">
