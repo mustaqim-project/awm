@@ -54,9 +54,9 @@ final class SitemapService
      */
     public function getBaseUrl(): string
     {
-        // 1. Explicit canonical URL if configured
+        // 1. Explicit canonical URL if configured (ignore localhost/127.0.0.1)
         $canonical = config('app.canonical_url');
-        if (!empty($canonical)) {
+        if (!empty($canonical) && !str_contains($canonical, '127.0.0.1') && !str_contains($canonical, 'localhost')) {
             return rtrim((string) $canonical, '/');
         }
 

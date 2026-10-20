@@ -118,6 +118,60 @@ final class ImportUmkmArticlesCommand extends Command
                 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80',
             ],
         ],
+        'Legalitas' => [
+            'color' => '#FF2D55',
+            'icon' => 'shield-check',
+            'description' => 'Izin usaha OSS, NIB gratis, sertifikasi Halal self-declare, izin PIRT, dan perlindungan hukum UMKM',
+            'images' => [
+                'https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=1200&q=80',
+                'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1200&q=80',
+            ],
+        ],
+        'Modal' => [
+            'color' => '#FF9500',
+            'icon' => 'coins',
+            'description' => 'Akses permodalan UMKM, simulasi pinjaman KUR 2026, bantuan pemerintah, leasing, dan crowdfunding',
+            'images' => [
+                'https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&fit=crop&w=1200&q=80',
+                'https://images.unsplash.com/photo-1554224154-26032ffc0d07?auto=format&fit=crop&w=1200&q=80',
+            ],
+        ],
+        'Operasional' => [
+            'color' => '#5AC8FA',
+            'icon' => 'settings',
+            'description' => 'Manajemen operasional warung, SOP karyawan, shift kerja, supplier bahan baku, dan efisiensi harian',
+            'images' => [
+                'https://images.unsplash.com/photo-1556740758-90de374c12ad?auto=format&fit=crop&w=1200&q=80',
+                'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80',
+            ],
+        ],
+        'Marketing' => [
+            'color' => '#AF52DE',
+            'icon' => 'megaphone',
+            'description' => 'Strategi video TikTok viral, Instagram Reels, foto produk HP, copywriting WhatsApp, dan Google Maps',
+            'images' => [
+                'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1200&q=80',
+                'https://images.unsplash.com/photo-1611746872915-64382b5c76da?auto=format&fit=crop&w=1200&q=80',
+            ],
+        ],
+        'Keuangan' => [
+            'color' => '#34C759',
+            'icon' => 'trending-up',
+            'description' => 'Kalkulasi HPP kuliner, BEP warung, arus kas, pemisahan rekening, pajak UMKM, dan pembukuan praktis',
+            'images' => [
+                'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&q=80',
+                'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80',
+            ],
+        ],
+        'Scale-up' => [
+            'color' => '#007AFF',
+            'icon' => 'rocket',
+            'description' => 'Strategi ekspansi multi-cabang, implementasi AI UMKM, migrasi cloud software, dan otomatisasi bisnis',
+            'images' => [
+                'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80',
+                'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80',
+            ],
+        ],
     ];
 
     /**
