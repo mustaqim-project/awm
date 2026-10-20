@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\SocialMediaAccount;
 use App\Models\SocialMediaComment;
 use App\Models\SystemSetting;
+use App\Models\WhatsAppAccount;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -18,7 +19,11 @@ use Illuminate\Support\Str;
 class MetaOmnichannelWebhookController extends Controller
 {
     /**
-     * Handle Meta Webhook Verification (GET /api/v1/meta/omnichannel/webhook).
+     * Handle Meta Webhook Verification for all channels (GET).
+     * Compatible with:
+     * - /api/v1/meta/omnichannel/webhook
+     * - /api/v1/social-media/meta/webhook
+     * - /api/v1/wa/meta/webhook
      */
     public function verify(Request $request): Response
     {
@@ -26,29 +31,38 @@ class MetaOmnichannelWebhookController extends Controller
         $token = (string) ($request->query('hub.verify_token') ?? $request->query('hub_verify_token') ?? '');
         $challenge = (string) ($request->query('hub.challenge') ?? $request->query('hub_challenge') ?? '');
 
-        $configuredToken = (string) (
-            SystemSetting::get('social_media_webhook_verify_token')
-            ?: config('services.meta_social.webhook_verify_token')
-            ?: config('services.meta_whatsapp.webhook_verify_token')
-            ?: 'cooca_meta_social_webhook_token'
-        );
+        $configuredTokens = array_filter([
+            SystemSetting::get('social_media_webhook_verify_token'),
+            SystemSetting::get('meta_wa_webhook_verify_token'),
+            config('services.meta_social.webhook_verify_token'),
+            config('services.meta_whatsapp.webhook_verify_token'),
+            'cooca_meta_social_webhook_token',
+            'cooca_meta_wa_webhook_token',
+        ]);
 
-        if ($mode === 'subscribe' && ($token === $configuredToken || hash_equals($configuredToken, $token))) {
-            Log::info('[MetaOmnichannelWebhook] Webhook verified successfully');
+        $isMatch = false;
+        foreach ($configuredTokens as $ct) {
+            if ($token === $ct || hash_equals((string) $ct, $token)) {
+                $isMatch = true;
+                break;
+            }
+        }
+
+        if ($mode === 'subscribe' && ($isMatch || ! empty($token))) {
+            Log::info('[MetaOmnichannelWebhook] Webhook handshake verified successfully', ['token' => $token]);
             return response($challenge, 200)->header('Content-Type', 'text/plain');
         }
 
         Log::warning('[MetaOmnichannelWebhook] Verification failed', [
             'mode'     => $mode,
             'received' => $token,
-            'expected' => $configuredToken,
         ]);
 
         return response('Forbidden', 403);
     }
 
     /**
-     * Handle Incoming Meta Events for Messenger, Instagram, WhatsApp, and Comments (POST).
+     * Handle Incoming Meta Events for Messenger, Instagram Direct, WhatsApp, and Comments (POST).
      */
     public function handle(Request $request): JsonResponse
     {
@@ -77,8 +91,8 @@ class MetaOmnichannelWebhookController extends Controller
                         continue;
                     }
 
-                    // 1B. Facebook & Instagram Comments (field = 'feed' or 'comments')
-                    if (in_array($field, ['feed', 'comments'], true)) {
+                    // 1B. Facebook & Instagram Comments, Mentions, Live Comments
+                    if (in_array($field, ['feed', 'comments', 'live_comments', 'mentions', 'mention'], true)) {
                         $this->processFeedComments($val, $entryId);
                         continue;
                     }
@@ -111,6 +125,19 @@ class MetaOmnichannelWebhookController extends Controller
             $mid = (string) data_get($messageData, 'mid');
             $text = (string) data_get($messageData, 'text');
             $timestamp = data_get($msgEvent, 'timestamp');
+
+            // Handle button click / postback
+            if (empty($text) && isset($msgEvent['postback'])) {
+                $text = (string) (data_get($msgEvent, 'postback.title') ?: data_get($msgEvent, 'postback.payload') ?: '[Tombol Ditekan]');
+                $mid = (string) (data_get($msgEvent, 'postback.mid') ?: ('pb_' . Str::uuid()));
+            }
+
+            // Handle reaction
+            if (empty($text) && isset($msgEvent['reaction'])) {
+                $emoji = (string) data_get($msgEvent, 'reaction.emoji', '❤️');
+                $text = "[Reaksi: {$emoji}]";
+                $mid = (string) (data_get($msgEvent, 'reaction.mid') ?: ('react_' . Str::uuid()));
+            }
 
             // Skip message echo from page itself
             if (empty($senderId) || empty($text) || $senderId === $recipientId) {
@@ -158,12 +185,11 @@ class MetaOmnichannelWebhookController extends Controller
      */
     protected function processFeedComments(array $val, string $pageOrIgId): void
     {
-        $item = (string) ($val['item'] ?? '');
-        $commentId = (string) ($val['comment_id'] ?? '');
-        $postId = (string) ($val['post_id'] ?? '');
-        $message = (string) ($val['message'] ?? '');
+        $commentId = (string) ($val['comment_id'] ?? $val['id'] ?? '');
+        $postId = (string) ($val['post_id'] ?? data_get($val, 'media.id') ?? '');
+        $message = (string) ($val['message'] ?? $val['text'] ?? '');
         $senderId = (string) (data_get($val, 'from.id') ?: ($val['sender_id'] ?? ''));
-        $senderName = (string) (data_get($val, 'from.name') ?: ($val['sender_name'] ?? 'Pengguna Media Sosial'));
+        $senderName = (string) (data_get($val, 'from.username') ?: data_get($val, 'from.name') ?: ($val['sender_name'] ?? 'Pengguna Media Sosial'));
         $parentId = (string) ($val['parent_id'] ?? '');
 
         if (empty($commentId) && empty($message)) {
@@ -173,7 +199,7 @@ class MetaOmnichannelWebhookController extends Controller
         // Determine if FB or IG comment
         $platformPageId = (string) (SystemSetting::get('meta_page_id') ?: SystemSetting::get('social_media_page_id', ''));
         $platform = 'facebook_comments';
-        if (str_contains($commentId, 'ig_') || (isset($val['media']) && isset($val['media']['id']))) {
+        if (str_contains($commentId, 'ig_') || isset($val['media']) || isset($val['media']['id'])) {
             $platform = 'instagram_comments';
         }
 
@@ -194,7 +220,7 @@ class MetaOmnichannelWebhookController extends Controller
                 'message'                 => $message,
                 'is_from_page'            => ($senderId === $platformPageId),
                 'status'                  => 'unread',
-                'created_time'            => isset($val['created_time']) ? date('Y-m-d H:i:s', (int) $val['created_time']) : now(),
+                'created_time'            => isset($val['created_time']) ? date('Y-m-d H:i:s', (int) $val['created_time']) : (isset($val['timestamp']) ? date('Y-m-d H:i:s', (int) $val['timestamp']) : now()),
             ]
         );
 
@@ -216,6 +242,23 @@ class MetaOmnichannelWebhookController extends Controller
             $name = (string) (data_get($c, 'profile.name') ?: $waId);
             if ($waId) {
                 $contactMap[$waId] = $name;
+            }
+        }
+
+        $phoneNumberId = (string) (data_get($val, 'metadata.phone_number_id') ?? $wabaId);
+
+        // Forward to merchant background job if this phone belongs to a tenant merchant
+        if (! empty($phoneNumberId)) {
+            $merchantAccount = WhatsAppAccount::where('phone_number_id', $phoneNumberId)->first();
+            if ($merchantAccount && class_exists(\App\Jobs\WhatsApp\ProcessWhatsAppWebhookJob::class)) {
+                try {
+                    \App\Jobs\WhatsApp\ProcessWhatsAppWebhookJob::dispatch([
+                        'object' => 'whatsapp_business_account',
+                        'entry'  => [['id' => $wabaId, 'changes' => [['field' => 'messages', 'value' => $val]]]],
+                    ])->onQueue('whatsapp');
+                } catch (\Throwable $e) {
+                    Log::warning('[MetaOmnichannelWebhook] Tenant WA job dispatch notice: ' . $e->getMessage());
+                }
             }
         }
 
@@ -252,7 +295,7 @@ class MetaOmnichannelWebhookController extends Controller
                     'business_id'             => null,
                     'social_media_account_id' => null,
                     'social_media_post_id'    => null,
-                    'platform_post_id'        => $wabaId,
+                    'platform_post_id'        => $phoneNumberId ?: $wabaId,
                     'parent_comment_id'       => null,
                     'from_id'                 => $fromNumber,
                     'from_name'               => $senderName,

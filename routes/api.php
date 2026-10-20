@@ -74,9 +74,11 @@ Route::prefix('v1')->middleware('throttle:60,1')->group(function (): void {
     Route::post('/wa/webhook', [\App\Http\Controllers\Api\V1\WhatsAppWebhookController::class, 'handle']);
     Route::post('/wa/admin-webhook', [\App\Http\Controllers\Api\V1\WhatsAppWebhookController::class, 'handle']);
 
-    // Official Meta WhatsApp Cloud API Webhook (Verification & Event Handlers)
-    Route::get('/wa/meta/webhook', [\App\Http\Controllers\Api\V1\WhatsApp\MetaWhatsAppWebhookController::class, 'verify']);
-    Route::post('/wa/meta/webhook', [\App\Http\Controllers\Api\V1\WhatsApp\MetaWhatsAppWebhookController::class, 'handle']);
+    // Official Meta WhatsApp & Page Webhook (Verification & Omnichannel Event Handlers)
+    Route::match(['GET', 'POST'], '/wa/meta/webhook', function (\Illuminate\Http\Request $request) {
+        $ctrl = app(\App\Http\Controllers\Api\V1\SocialMedia\MetaOmnichannelWebhookController::class);
+        return $request->isMethod('GET') ? $ctrl->verify($request) : $ctrl->handle($request);
+    });
 
     // Unified Meta Omnichannel Webhook (Messenger, Instagram DM/Comments, WhatsApp Cloud API, FB Feed/Comments)
     Route::match(['GET', 'POST'], '/meta/omnichannel/webhook', function (\Illuminate\Http\Request $request) {
@@ -106,6 +108,10 @@ Route::prefix('v1')->middleware('throttle:60,1')->group(function (): void {
 
 // Webhook Aliases without v1 prefix
 Route::middleware('throttle:60,1')->group(function (): void {
+    Route::match(['GET', 'POST'], '/wa/meta/webhook', function (\Illuminate\Http\Request $request) {
+        $ctrl = app(\App\Http\Controllers\Api\V1\SocialMedia\MetaOmnichannelWebhookController::class);
+        return $request->isMethod('GET') ? $ctrl->verify($request) : $ctrl->handle($request);
+    });
     Route::match(['GET', 'POST'], '/meta/omnichannel/webhook', function (\Illuminate\Http\Request $request) {
         $ctrl = app(\App\Http\Controllers\Api\V1\SocialMedia\MetaOmnichannelWebhookController::class);
         return $request->isMethod('GET') ? $ctrl->verify($request) : $ctrl->handle($request);
