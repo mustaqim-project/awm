@@ -321,6 +321,11 @@ final class ImportUmkmArticlesCommand extends Command
             $data['author'] = $yaml['author'] ?? 'Tim Edukasi COOCA';
             $data['excerpt'] = $yaml['meta_description'] ?? '';
 
+            // Strip any editorial note / internal link planning / raw JSON-LD block from public article body
+            $body = preg_replace('/\r?\n##\s*Rencana\s+internal\s+link.*$/usi', '', $body);
+            $body = preg_replace('/```json\s*\{.*?@context.*?```\s*$/usi', '', $body);
+            $body = trim($body);
+
             // Convert Markdown body to rich, semantic HTML
             $data['content'] = Str::markdown($body);
 
