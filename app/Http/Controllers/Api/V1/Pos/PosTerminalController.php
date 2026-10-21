@@ -533,7 +533,9 @@ final class PosTerminalController extends Controller
         if (! $canAccessAllLocations && $userPrimaryLocationId) {
             $checkoutLocationId = $userPrimaryLocationId;
         } elseif (empty($checkoutLocationId)) {
-            $checkoutLocationId = $userPrimaryLocationId;
+            $checkoutLocationId = $userPrimaryLocationId
+                ?? Location::where('business_id', $business->id)->where('is_primary', true)->first()?->id
+                ?? Location::where('business_id', $business->id)->first()?->id;
         }
 
         $activeShift = $this->shiftService->getActiveShift($business, $user, $checkoutLocationId);
