@@ -30,7 +30,21 @@ final class PosTableApiController extends Controller
     public function index(Request $request): JsonResponse
     {
         $business = Context::requireBusiness();
+        $user = $request->user();
+
+        $membership = \App\Models\BusinessMembership::where('user_id', $user?->id)
+            ->where('business_id', $business->id)
+            ->first();
+        $userRole = strtolower((string) ($membership?->role ?? ''));
+        $userPrimaryLocationId = $membership?->primary_location_id;
+        $canAccessAllLocations = in_array($userRole, ['owner', 'admin'], true) || empty($userPrimaryLocationId);
+
         $locationId = $request->query('location_id') ?? $request->header('X-Location-ID');
+        if (! $canAccessAllLocations && $userPrimaryLocationId) {
+            $locationId = $userPrimaryLocationId;
+        } elseif (empty($locationId)) {
+            $locationId = $userPrimaryLocationId;
+        }
 
         $tables = $this->tableService->getTables($business, $locationId);
 
@@ -114,6 +128,15 @@ final class PosTableApiController extends Controller
     public function store(Request $request): JsonResponse
     {
         $business = Context::requireBusiness();
+        $user = $request->user();
+
+        $membership = \App\Models\BusinessMembership::where('user_id', $user?->id)
+            ->where('business_id', $business->id)
+            ->first();
+        $userRole = strtolower((string) ($membership?->role ?? ''));
+        $userPrimaryLocationId = $membership?->primary_location_id;
+        $canAccessAllLocations = in_array($userRole, ['owner', 'admin'], true) || empty($userPrimaryLocationId);
+
         $validated = $request->validate([
             'table_number' => ['required', 'string', 'max:50'],
             'name' => ['nullable', 'string', 'max:100'],
@@ -121,6 +144,12 @@ final class PosTableApiController extends Controller
             'location_id' => ['nullable', 'string', 'exists:locations,id'],
             'notes' => ['nullable', 'string', 'max:255'],
         ]);
+
+        if (! $canAccessAllLocations && $userPrimaryLocationId) {
+            $validated['location_id'] = $userPrimaryLocationId;
+        } elseif (empty($validated['location_id'])) {
+            $validated['location_id'] = $userPrimaryLocationId;
+        }
 
         try {
             $table = $this->tableService->createTable($business, $validated);

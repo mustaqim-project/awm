@@ -138,8 +138,44 @@ final class PosOrderService
 
                 $salesChannel = (string) ($attributes['sales_channel'] ?? $attributes['channel'] ?? 'dine_in');
                 if ($product) {
-                    // Server-authoritative pricing: enforce official database selling price / channel pricing, ignore client-side price tampering
-                    $baseUnitPrice = (float) $product->getChannelPrice($salesChannel);
+                    // Check branch-specific availability and pricing
+                    if ($locationId) {
+                        try {
+                            $isBranchDisabled = \App\Models\BranchProductPrice::where('business_id', $business->id)
+                                ->where('location_id', $locationId)
+                                ->where('product_id', $product->id)
+                                ->where('is_available', false)
+                                ->exists();
+                            if ($isBranchDisabled) {
+                                throw new InvalidArgumentException("Produk '{$product->name}' tidak tersedia untuk cabang ini.");
+                            }
+                        } catch (\Throwable $e) {
+                            if ($e instanceof InvalidArgumentException) {
+                                throw $e;
+                            }
+                        }
+                    }
+
+                    $branchPrice = null;
+                    if ($locationId) {
+                        try {
+                            $branchPrice = \App\Models\BranchProductPrice::where('business_id', $business->id)
+                                ->where('location_id', $locationId)
+                                ->where('product_id', $product->id)
+                                ->where('is_available', true)
+                                ->whereNotNull('price')
+                                ->value('price');
+                        } catch (\Throwable) {
+                            $branchPrice = null;
+                        }
+                    }
+
+                    if ($branchPrice !== null) {
+                        $baseUnitPrice = (float) $branchPrice;
+                    } else {
+                        // Server-authoritative pricing: enforce official database selling price / channel pricing, ignore client-side price tampering
+                        $baseUnitPrice = (float) $product->getChannelPrice($salesChannel);
+                    }
                 } else {
                     // Custom non-catalog item
                     $baseUnitPrice = max(0.0, (float) ($row['unit_price'] ?? 0.0));
@@ -1167,10 +1203,11 @@ final class PosOrderService
         User $cashier,
         array $itemsData,
         string $holdLabel,
-        ?PosShift $shift = null
+        ?PosShift $shift = null,
+        ?string $locationId = null
     ): PosOrder {
         $orderNumber = 'HOLD-' . date('His') . '-' . rand(100, 999);
-        $locationId = $shift?->location_id ?? Location::where('business_id', $business->id)->where('is_primary', true)->value('id');
+        $locationId = $locationId ?? $shift?->location_id ?? Location::where('business_id', $business->id)->where('is_primary', true)->value('id');
 
         return DB::transaction(function () use ($business, $cashier, $itemsData, $holdLabel, $orderNumber, $locationId, $shift) {
             $subtotal = 0.0;

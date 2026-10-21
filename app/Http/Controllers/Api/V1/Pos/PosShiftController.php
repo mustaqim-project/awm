@@ -66,7 +66,20 @@ final class PosShiftController extends Controller
     {
         $business = Context::requireBusiness();
         $user = $request->user();
+
+        $membership = \App\Models\BusinessMembership::where('user_id', $user?->id)
+            ->where('business_id', $business->id)
+            ->first();
+        $userRole = strtolower((string) ($membership?->role ?? ''));
+        $userPrimaryLocationId = $membership?->primary_location_id;
+        $canAccessAllLocations = in_array($userRole, ['owner', 'admin'], true) || empty($userPrimaryLocationId);
+
         $locationId = $request->query('location_id');
+        if (! $canAccessAllLocations && $userPrimaryLocationId) {
+            $locationId = $userPrimaryLocationId;
+        } elseif (empty($locationId)) {
+            $locationId = $userPrimaryLocationId;
+        }
 
         $activeShift = $this->shiftService->getActiveShift($business, $user, $locationId);
 
@@ -121,9 +134,19 @@ final class PosShiftController extends Controller
         $openingCash = (float) ($validated['opening_cash'] ?? 0.0);
         $openingDenominations = (array) ($validated['opening_denominations'] ?? []);
 
+        $membership = \App\Models\BusinessMembership::where('user_id', $user?->id)
+            ->where('business_id', $business->id)
+            ->first();
+        $userRole = strtolower((string) ($membership?->role ?? ''));
+        $userPrimaryLocationId = $membership?->primary_location_id;
+        $canAccessAllLocations = in_array($userRole, ['owner', 'admin'], true) || empty($userPrimaryLocationId);
+
         $locationId = $validated['location_id'] ?? null;
-        if (! $locationId) {
-            $locationId = Location::where('business_id', $business->id)->where('is_primary', true)->value('id')
+        if (! $canAccessAllLocations && $userPrimaryLocationId) {
+            $locationId = $userPrimaryLocationId;
+        } elseif (empty($locationId)) {
+            $locationId = $userPrimaryLocationId
+                ?? Location::where('business_id', $business->id)->where('is_primary', true)->value('id')
                 ?? Location::where('business_id', $business->id)->value('id');
         }
 

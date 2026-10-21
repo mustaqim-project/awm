@@ -51,9 +51,50 @@ final class PosTerminalController extends Controller
             ->where('is_active', true)
             ->get();
 
-        $selectedLocationId = $request->query('location_id')
-            ?? $locations->where('is_primary', true)->first()?->id
-            ?? $locations->first()?->id;
+        if ($locations->isEmpty()) {
+            $defaultLocation = Location::firstOrCreate(
+                ['business_id' => $business->id, 'is_primary' => true],
+                [
+                    'name' => 'Outlet Utama',
+                    'type' => 'outlet',
+                    'is_active' => true,
+                    'code' => 'OUT-01',
+                ]
+            );
+            $locations = collect([$defaultLocation]);
+        }
+
+        // Auto-detect user account assigned branch & multi-branch access rights
+        $membership = \App\Models\BusinessMembership::where('user_id', $user?->id)
+            ->where('business_id', $business->id)
+            ->first();
+        $userRole = strtolower((string) ($membership?->role ?? ''));
+        $userPrimaryLocationId = $membership?->primary_location_id;
+
+        // An account can access all branches if:
+        // - They are owner or admin
+        // - OR they do not have a specific assigned primary location (e.g. primary_location_id is null / not set yet)
+        $canAccessAllLocations = in_array($userRole, ['owner', 'admin'], true) || empty($userPrimaryLocationId);
+
+        if (! $canAccessAllLocations && $userPrimaryLocationId) {
+            // Cashier/staff locked to their designated branch
+            $selectedLocationId = $userPrimaryLocationId;
+        } else {
+            // Can access all branches: query param, or fallback to user's assigned branch / primary branch / first branch
+            $reqLocationId = $request->query('location_id');
+            if ($reqLocationId && $locations->contains('id', $reqLocationId)) {
+                $selectedLocationId = $reqLocationId;
+            } else {
+                $selectedLocationId = $userPrimaryLocationId
+                    ?? $locations->where('is_primary', true)->first()?->id
+                    ?? $locations->first()?->id;
+            }
+        }
+
+        if ($selectedLocationId && ! $locations->contains('id', $selectedLocationId)) {
+            $selectedLocationId = $locations->where('is_primary', true)->first()?->id
+                ?? $locations->first()?->id;
+        }
 
         // 2. Active Shift
         $activeShift = $this->shiftService->getActiveShift($business, $user, $selectedLocationId);
@@ -154,9 +195,10 @@ final class PosTerminalController extends Controller
             ->select('id', 'name', 'phone', 'membership_tier', 'points_balance', 'credit_limit', 'current_credit_balance')
             ->get();
 
-        // 6. Held Orders
+        // 6. Held Orders (Scoped to active branch)
         $heldOrders = PosOrder::where('business_id', $business->id)
             ->where('status', PosOrder::STATUS_DRAFT_HELD)
+            ->when($selectedLocationId, fn($q) => $q->where('location_id', $selectedLocationId))
             ->with('items')
             ->latest('held_at')
             ->get();
@@ -271,6 +313,10 @@ final class PosTerminalController extends Controller
                 'id' => $user?->id,
                 'name' => $user?->name,
                 'email' => $user?->email,
+                'role' => $userRole,
+                'primary_location_id' => $userPrimaryLocationId,
+                'primary_location_name' => $locations->firstWhere('id', $userPrimaryLocationId)?->name,
+                'can_access_all_locations' => $canAccessAllLocations,
             ],
             'industry_profile' => $industryProfile,
             'tables' => $tables,
@@ -278,6 +324,8 @@ final class PosTerminalController extends Controller
             'store_edc_terminals' => $edcTerminals,
             'technicians' => $technicians,
             'selected_location_id' => $selectedLocationId,
+            'can_access_all_locations' => $canAccessAllLocations,
+            'user_primary_location_id' => $userPrimaryLocationId,
             'locations' => $locations,
             'active_shift' => $activeShift ? [
                 'id' => $activeShift->id,
@@ -308,27 +356,69 @@ final class PosTerminalController extends Controller
     public function searchProducts(Request $request): JsonResponse
     {
         $business = Context::requireBusiness();
+        $user = $request->user();
         $query = (string) $request->get('q', '');
-        $locationId = (string) $request->get('location_id', '');
+        $reqLocationId = (string) $request->get('location_id', '');
+
+        $membership = \App\Models\BusinessMembership::where('user_id', $user?->id)
+            ->where('business_id', $business->id)
+            ->first();
+        $userRole = strtolower((string) ($membership?->role ?? ''));
+        $userPrimaryLocationId = $membership?->primary_location_id;
+        $canAccessAllLocations = in_array($userRole, ['owner', 'admin'], true) || empty($userPrimaryLocationId);
+
+        if (! $canAccessAllLocations && $userPrimaryLocationId) {
+            $locationId = $userPrimaryLocationId;
+        } else {
+            $locationId = $reqLocationId !== '' ? $reqLocationId : ($userPrimaryLocationId ?? '');
+        }
+
+        $branchPrices = [];
+        $disabledProductIds = [];
+        if ($locationId !== '') {
+            try {
+                $branchPrices = \App\Models\BranchProductPrice::where('business_id', $business->id)
+                    ->where('location_id', $locationId)
+                    ->where('is_available', true)
+                    ->whereNotNull('price')
+                    ->pluck('price', 'product_id')
+                    ->toArray();
+
+                $disabledProductIds = \App\Models\BranchProductPrice::where('business_id', $business->id)
+                    ->where('location_id', $locationId)
+                    ->where('is_available', false)
+                    ->pluck('product_id')
+                    ->toArray();
+            } catch (\Throwable) {
+                $branchPrices = [];
+                $disabledProductIds = [];
+            }
+        }
 
         $products = Product::where('business_id', $business->id)
             ->where('is_active', true)
+            ->when(!empty($disabledProductIds), function ($q) use ($disabledProductIds) {
+                $q->whereNotIn('id', $disabledProductIds);
+            })
             ->when($query !== '', function ($q) use ($query) {
                 $q->where(function ($sub) use ($query) {
                     $sub->where('name', 'like', "%{$query}%")
                         ->orWhere('code', 'like', "%{$query}%");
                 });
             })
-            ->with(['stocks' => function ($q) use ($locationId) {
-                if ($locationId !== '') {
-                    $q->where('location_id', $locationId);
-                }
-            }, 'outputUnit', 'category'])
+            ->with(['outputUnit', 'category'])
             ->limit(50)
             ->get()
-            ->map(function (Product $p) use ($locationId) {
+            ->map(function (Product $p) use ($locationId, $branchPrices) {
                 $isService = $p->isService();
-                $locStock = $p->stocks->first();
+                $sellingPrice = isset($branchPrices[$p->id]) ? (float) $branchPrices[$p->id] : (float) $p->selling_price;
+
+                try {
+                    $effectiveStock = $isService ? null : $p->calculateEffectiveStock($locationId ?: null);
+                } catch (\Throwable) {
+                    $effectiveStock = null;
+                }
+
                 return [
                     'id' => $p->id,
                     'name' => $p->name,
@@ -336,11 +426,11 @@ final class PosTerminalController extends Controller
                     'type' => $p->type ?? Product::TYPE_GOODS,
                     'is_service' => $isService,
                     'track_inventory' => ! $isService,
-                    'selling_price' => (float) $p->selling_price,
+                    'selling_price' => $sellingPrice,
                     'base_cost' => (float) $p->base_cost,
                     'unit_code' => $p->outputUnit?->code ?? ($isService ? 'jasa' : 'pcs'),
                     'category_name' => $p->category?->name,
-                    'stock' => $isService ? null : ($locStock ? (float) $locStock->quantity : 0.0),
+                    'stock' => $effectiveStock,
                     'modifier_groups' => $p->getAvailableModifierGroupsWithStock($locationId ?: null),
                 ];
             });
@@ -432,7 +522,21 @@ final class PosTerminalController extends Controller
             }
         }
 
-        $activeShift = $this->shiftService->getActiveShift($business, $user, $validated['location_id'] ?? null);
+        $membership = \App\Models\BusinessMembership::where('user_id', $user->id)
+            ->where('business_id', $business->id)
+            ->first();
+        $userRole = strtolower((string) ($membership?->role ?? ''));
+        $userPrimaryLocationId = $membership?->primary_location_id;
+        $canAccessAllLocations = in_array($userRole, ['owner', 'admin'], true) || empty($userPrimaryLocationId);
+
+        $checkoutLocationId = $validated['location_id'] ?? null;
+        if (! $canAccessAllLocations && $userPrimaryLocationId) {
+            $checkoutLocationId = $userPrimaryLocationId;
+        } elseif (empty($checkoutLocationId)) {
+            $checkoutLocationId = $userPrimaryLocationId;
+        }
+
+        $activeShift = $this->shiftService->getActiveShift($business, $user, $checkoutLocationId);
 
         $isQrisCheckout = (count($validated['payments']) === 1 && strtolower((string) ($validated['payments'][0]['payment_method'] ?? '')) === 'qris');
 
@@ -458,7 +562,7 @@ final class PosTerminalController extends Controller
                     'discount_value' => (float) ($validated['discount_value'] ?? 0),
                     'voucher_code' => $validated['voucher_code'] ?? null,
                     'notes' => $validated['notes'] ?? null,
-                    'location_id' => $validated['location_id'] ?? null,
+                    'location_id' => $checkoutLocationId,
                     // Multi-Industry
                     'vehicle_license_plate' => $validated['vehicle_license_plate'] ?? null,
                     'vehicle_model' => $validated['vehicle_model'] ?? null,
@@ -587,7 +691,21 @@ final class PosTerminalController extends Controller
             'location_id' => ['nullable', 'string'],
         ]);
 
-        $activeShift = $this->shiftService->getActiveShift($business, $user, $validated['location_id'] ?? null);
+        $membership = \App\Models\BusinessMembership::where('user_id', $user?->id)
+            ->where('business_id', $business->id)
+            ->first();
+        $userRole = strtolower((string) ($membership?->role ?? ''));
+        $userPrimaryLocationId = $membership?->primary_location_id;
+        $canAccessAllLocations = in_array($userRole, ['owner', 'admin'], true) || empty($userPrimaryLocationId);
+
+        $holdLocationId = $validated['location_id'] ?? null;
+        if (! $canAccessAllLocations && $userPrimaryLocationId) {
+            $holdLocationId = $userPrimaryLocationId;
+        } elseif (empty($holdLocationId)) {
+            $holdLocationId = $userPrimaryLocationId;
+        }
+
+        $activeShift = $this->shiftService->getActiveShift($business, $user, $holdLocationId);
 
         try {
             $held = $this->orderService->holdOrder(
@@ -595,7 +713,8 @@ final class PosTerminalController extends Controller
                 cashier: $user,
                 itemsData: $validated['items'],
                 holdLabel: $validated['hold_label'],
-                shift: $activeShift
+                shift: $activeShift,
+                locationId: $holdLocationId
             );
 
             return response()->json([
@@ -615,9 +734,25 @@ final class PosTerminalController extends Controller
     public function getHeldOrders(Request $request): JsonResponse
     {
         $business = Context::requireBusiness();
+        $user = $request->user();
+
+        $membership = \App\Models\BusinessMembership::where('user_id', $user?->id)
+            ->where('business_id', $business->id)
+            ->first();
+        $userRole = strtolower((string) ($membership?->role ?? ''));
+        $userPrimaryLocationId = $membership?->primary_location_id;
+        $canAccessAllLocations = in_array($userRole, ['owner', 'admin'], true) || empty($userPrimaryLocationId);
+
+        $locationId = $request->query('location_id');
+        if (! $canAccessAllLocations && $userPrimaryLocationId) {
+            $locationId = $userPrimaryLocationId;
+        } elseif (empty($locationId)) {
+            $locationId = $userPrimaryLocationId;
+        }
 
         $heldOrders = PosOrder::where('business_id', $business->id)
             ->where('status', PosOrder::STATUS_DRAFT_HELD)
+            ->when($locationId, fn($q) => $q->where('location_id', $locationId))
             ->with('items')
             ->latest('held_at')
             ->get();
@@ -863,7 +998,21 @@ final class PosTerminalController extends Controller
             'notes' => ['nullable', 'string', 'max:255'],
         ]);
 
-        $activeShift = $this->shiftService->getActiveShift($business, $user, $validated['location_id'] ?? null);
+        $membership = \App\Models\BusinessMembership::where('user_id', $user?->id)
+            ->where('business_id', $business->id)
+            ->first();
+        $userRole = strtolower((string) ($membership?->role ?? ''));
+        $userPrimaryLocationId = $membership?->primary_location_id;
+        $canAccessAllLocations = in_array($userRole, ['owner', 'admin'], true) || empty($userPrimaryLocationId);
+
+        $kitchenLocationId = $validated['location_id'] ?? null;
+        if (! $canAccessAllLocations && $userPrimaryLocationId) {
+            $kitchenLocationId = $userPrimaryLocationId;
+        } elseif (empty($kitchenLocationId)) {
+            $kitchenLocationId = $userPrimaryLocationId;
+        }
+
+        $activeShift = $this->shiftService->getActiveShift($business, $user, $kitchenLocationId);
 
         if ($activeShift === null) {
             return response()->json([
@@ -878,7 +1027,7 @@ final class PosTerminalController extends Controller
                 cashier: $user,
                 itemsData: $validated['items'],
                 attributes: [
-                    'location_id' => $validated['location_id'] ?? $activeShift->location_id,
+                    'location_id' => $kitchenLocationId ?? $activeShift->location_id,
                     'pos_table_id' => $validated['pos_table_id'] ?? null,
                     'customer_id' => $validated['customer_id'] ?? null,
                     'customer_name_guest' => $validated['customer_name_guest'] ?? null,
