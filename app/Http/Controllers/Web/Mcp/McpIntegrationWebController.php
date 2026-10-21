@@ -152,6 +152,77 @@ final class McpIntegrationWebController extends Controller
     }
 
     /**
+     * Perbarui konfigurasi & hak akses (abilities) token MCP.
+     */
+    public function updateToken(Request $request, McpAccessToken $token): RedirectResponse
+    {
+        $business = Context::requireBusiness();
+        abort_unless($token->business_id === $business->id, 403);
+
+        $validated = $request->validate([
+            'name'          => ['required', 'string', 'max:100'],
+            'provider_hint' => ['required', 'string', 'in:claude,openai,gemini,cursor,ollama,langchain,dola,all,custom'],
+            'abilities'     => ['required', 'array', 'min:1'],
+            'abilities.*'   => ['string', 'max:50'],
+            'is_active'     => ['nullable', 'boolean'],
+            'expires_in'    => ['nullable', 'string', 'in:keep,never,30_days,90_days,1_year'],
+        ]);
+
+        $oldValues = [
+            'name'          => $token->name,
+            'provider_hint' => $token->provider_hint,
+            'abilities'     => $token->abilities,
+            'is_active'     => $token->is_active,
+            'expires_at'    => $token->expires_at?->toIso8601String(),
+        ];
+
+        $expiresOption = $validated['expires_in'] ?? 'keep';
+        $expiresAt = $token->expires_at;
+
+        if ($expiresOption === 'never') {
+            $expiresAt = null;
+        } elseif ($expiresOption === '30_days') {
+            $expiresAt = now()->addDays(30);
+        } elseif ($expiresOption === '90_days') {
+            $expiresAt = now()->addDays(90);
+        } elseif ($expiresOption === '1_year') {
+            $expiresAt = now()->addYear();
+        }
+
+        $isActive = $request->has('is_active') ? (bool) $request->input('is_active') : $token->is_active;
+
+        $token->update([
+            'name'          => $validated['name'],
+            'provider_hint' => $validated['provider_hint'],
+            'abilities'     => array_values(array_unique($validated['abilities'])),
+            'is_active'     => $isActive,
+            'expires_at'    => $expiresAt,
+        ]);
+
+        AuditLog::create([
+            'business_id'    => $business->id,
+            'user_id'        => auth()->id(),
+            'action'         => 'mcp.token_updated',
+            'auditable_type' => McpAccessToken::class,
+            'auditable_id'   => $token->id,
+            'old_values'     => $oldValues,
+            'new_values'     => [
+                'name'          => $token->name,
+                'provider_hint' => $token->provider_hint,
+                'abilities'     => $token->abilities,
+                'is_active'     => $token->is_active,
+                'expires_at'    => $token->expires_at?->toIso8601String(),
+            ],
+            'ip_address'     => $request->ip(),
+            'user_agent'     => $request->userAgent() ?: 'COOCA-Web',
+        ]);
+
+        return redirect()
+            ->route('settings.integrations.mcp.index')
+            ->with('success', __('mcp.token_updated_success', ['name' => $token->name]));
+    }
+
+    /**
      * Cabut / Hapus token akses MCP.
      */
     public function revokeToken(McpAccessToken $token): RedirectResponse

@@ -406,6 +406,7 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         Route::prefix('settings/integrations/mcp')->name('settings.integrations.mcp.')->middleware(['require.permission:settings.view', 'entitlement:mcp'])->group(function (): void {
             Route::get('/', [\App\Http\Controllers\Web\Mcp\McpIntegrationWebController::class, 'index'])->name('index');
             Route::post('/tokens', [\App\Http\Controllers\Web\Mcp\McpIntegrationWebController::class, 'storeToken'])->middleware('require.permission:settings.edit')->name('tokens.store');
+            Route::put('/tokens/{token}', [\App\Http\Controllers\Web\Mcp\McpIntegrationWebController::class, 'updateToken'])->middleware('require.permission:settings.edit')->name('tokens.update');
             Route::delete('/tokens/{token}', [\App\Http\Controllers\Web\Mcp\McpIntegrationWebController::class, 'revokeToken'])->middleware('require.permission:settings.edit')->name('tokens.revoke');
             Route::post('/toggle', [\App\Http\Controllers\Web\Mcp\McpIntegrationWebController::class, 'toggleMaster'])->middleware('require.permission:settings.edit')->name('toggle');
             Route::get('/logs', [\App\Http\Controllers\Web\Mcp\McpIntegrationWebController::class, 'logs'])->name('logs');
