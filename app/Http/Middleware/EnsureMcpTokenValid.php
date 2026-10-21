@@ -37,10 +37,35 @@ final class EnsureMcpTokenValid
             ?: (string) $request->header('x-mcp-token', '')
             ?: (string) $request->query('token', '');
 
+        // 2. Unauthenticated Discovery & Handshake handling (Spec 2024-11-05 & OpenAI ChatGPT Apps SDK)
         if ($rawToken === '') {
-            return $this->unauthorizedResponse($request, 'MCP Bearer Token is required. Include Authorization: Bearer <token> or ?token=<token> in the URL.');
+            // (a) Public OpenAPI Schema endpoint
+            if ($request->is('*openapi.json') || \Illuminate\Support\Str::endsWith($request->path(), 'openapi.json')) {
+                return $next($request);
+            }
+
+            // (b) SSE stream initiation (GET)
+            if ($request->isMethod('GET')) {
+                return $next($request);
+            }
+
+            // (c) JSON-RPC Discovery methods: initialize, ping, tools/list, notifications, etc.
+            $payload = $request->all();
+            if (empty($payload)) {
+                $raw = (string) $request->getContent();
+                $payload = json_decode($raw, true) ?: [];
+            }
+            $method = (string) ($payload['method'] ?? '');
+
+            if (in_array($method, ['initialize', 'ping', 'tools/list', 'notifications/initialized', 'prompts/list', 'resources/list'], true)) {
+                return $next($request);
+            }
+
+            // (d) Any actual tool execution requires authentication
+            return $this->unauthorizedResponse($request, 'Token autentikasi MCP diperlukan untuk menjalankan aksi ini. Sertakan Authorization: Bearer <token> atau otorisasi via OAuth.');
         }
 
+        // 3. Authenticated Request Handling
         $token = $this->authenticator->authenticate($rawToken);
 
         if ($token === null) {
@@ -57,6 +82,9 @@ final class EnsureMcpTokenValid
                     'Akses gateway MCP memerlukan langganan paket aktif (Standard, Premium, atau Prestige). Silakan tingkatkan paket usaha Anda di https://cooca.id.'
                 );
             }
+
+            // Bind business to Context so all tools can access Context::requireBusiness()
+            \App\Support\Context::setBusiness($business);
         }
 
         if ($requiredAbility !== null && ! $token->hasAbility($requiredAbility)) {

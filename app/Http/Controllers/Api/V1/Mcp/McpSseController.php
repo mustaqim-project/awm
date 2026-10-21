@@ -58,7 +58,8 @@ final class McpSseController extends Controller
         $sessionId = Str::uuid()->toString();
         $tokenQuery = (string) $request->query('token', '');
         $tokenParam = $tokenQuery !== '' ? '&token=' . urlencode($tokenQuery) : '';
-        $messageEndpoint = url("/api/v1/mcp/message?sessionId={$sessionId}{$tokenParam}");
+        $messagePath = $request->is('mcp*') ? '/mcp/message' : '/api/v1/mcp/message';
+        $messageEndpoint = url("{$messagePath}?sessionId={$sessionId}{$tokenParam}");
 
         return response()->stream(function () use ($messageEndpoint): void {
             echo "event: endpoint\n";
@@ -118,7 +119,7 @@ final class McpSseController extends Controller
         $token = $request->attributes->get('mcp_token');
 
         $tools = $this->toolRegistry->getToolsForToken($token);
-        $serverUrl = url('/api/v1/mcp');
+        $serverUrl = $request->is('mcp*') ? url('/mcp') : url('/api/v1/mcp');
 
         $spec = $this->schemaFormatter->toOpenApi3($tools, $serverUrl);
 
@@ -151,7 +152,15 @@ final class McpSseController extends Controller
             ], Response::HTTP_FORBIDDEN);
         }
 
-        $business = Context::requireBusiness();
+        $business = Context::business() ?? $token?->business;
+        if ($business === null) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Konteks bisnis tidak ditemukan untuk token ini.',
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+        Context::setBusiness($business);
+
         $user = Context::user() ?? $token?->user;
         $arguments = $request->all();
 

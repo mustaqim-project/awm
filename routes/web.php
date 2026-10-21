@@ -51,6 +51,7 @@ require __DIR__ . '/public.php';
     \Illuminate\Support\Facades\Route::match(['GET', 'OPTIONS', 'HEAD'], '/oauth/userinfo', [\App\Http\Controllers\Api\V1\Mcp\McpOAuthController::class, 'userinfo']);
 
     // Core MCP Streamable HTTP & SSE Handlers (Direct /mcp)
+    \Illuminate\Support\Facades\Route::match(['GET', 'POST', 'OPTIONS', 'HEAD'], '', [\App\Http\Controllers\Api\V1\Mcp\McpSseController::class, 'handleEndpoint'])->middleware(['mcp.auth', 'throttle:120,1']);
     \Illuminate\Support\Facades\Route::match(['GET', 'POST', 'OPTIONS', 'HEAD'], '/', [\App\Http\Controllers\Api\V1\Mcp\McpSseController::class, 'handleEndpoint'])->middleware(['mcp.auth', 'throttle:120,1']);
     \Illuminate\Support\Facades\Route::match(['GET', 'POST', 'OPTIONS', 'HEAD'], '/sse', [\App\Http\Controllers\Api\V1\Mcp\McpSseController::class, 'handleEndpoint'])->middleware(['mcp.auth', 'throttle:120,1']);
     \Illuminate\Support\Facades\Route::match(['GET', 'POST', 'OPTIONS', 'HEAD'], '/message', [\App\Http\Controllers\Api\V1\Mcp\McpSseController::class, 'message'])->middleware(['mcp.auth', 'throttle:120,1']);

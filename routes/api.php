@@ -154,6 +154,7 @@ Route::prefix('v1')->group(function (): void {
 
         // Core MCP Protocol Endpoints (Protected by mcp.auth)
         Route::middleware(['mcp.auth', 'throttle:120,1'])->group(function (): void {
+            Route::match(['GET', 'POST', 'OPTIONS', 'HEAD'], '', [\App\Http\Controllers\Api\V1\Mcp\McpSseController::class, 'handleEndpoint']);
             Route::match(['GET', 'POST', 'OPTIONS', 'HEAD'], '/', [\App\Http\Controllers\Api\V1\Mcp\McpSseController::class, 'handleEndpoint']);
             Route::match(['GET', 'POST', 'OPTIONS', 'HEAD'], '/sse', [\App\Http\Controllers\Api\V1\Mcp\McpSseController::class, 'handleEndpoint']);
             Route::match(['GET', 'POST', 'OPTIONS', 'HEAD'], '/message', [\App\Http\Controllers\Api\V1\Mcp\McpSseController::class, 'message']);

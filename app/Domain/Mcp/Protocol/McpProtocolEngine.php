@@ -135,7 +135,16 @@ final class McpProtocolEngine
         }
 
         // Multi-tenant bound check
-        $business = Context::requireBusiness();
+        if ($token === null && ! Context::hasBusiness()) {
+            throw new \RuntimeException("Autentikasi token diperlukan untuk menjalankan alat '{$toolName}'. Harap sertakan MCP Bearer Token atau otorisasi via OAuth COOCA.", -32000);
+        }
+
+        $business = Context::business() ?? $token?->business;
+        if ($business === null) {
+            throw new \RuntimeException("Konteks bisnis tidak ditemukan. Harap pastikan MCP Access Token valid dan terikat pada bisnis aktif.", -32000);
+        }
+        Context::setBusiness($business);
+
         /** @var User|null $user */
         $user = Context::user() ?? $token?->user;
 
