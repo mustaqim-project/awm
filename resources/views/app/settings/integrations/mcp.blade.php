@@ -18,6 +18,17 @@ function mcpSettingsHub() {
     const oauthMetadataUrl = @json($oauthMetadataUrl ?? url('/.well-known/oauth-authorization-server'));
 
     return {
+        sseUrl,
+        apiBase,
+        openApiUrl,
+        topLevelMcpUrl,
+        oauthAuthorizeUrl,
+        oauthTokenUrl,
+        oauthRegisterUrl,
+        oauthUserInfoUrl,
+        oauthIssuerUrl,
+        oidcConfigUrl,
+        oauthMetadataUrl,
         openCreateModal: false,
         activeProviderTab: 'claude',
         claudeMode: 'web', // 'web' (Claude.ai Web & Mobile), 'desktop_sse' (Claude Desktop Remote), 'desktop_stdio' (Local CLI)
@@ -1880,12 +1891,12 @@ document.addEventListener('alpine:init', () => {
                                     <tr>
                                         <td class="py-2.5 px-3.5 font-medium">Alamat URL / Host</td>
                                         <td class="py-2.5 px-3.5 font-mono text-[11px] text-neutral-900 dark:text-neutral-100 select-all">
-                                            <span x-text="topLevelMcpUrl"></span>
+                                            <span x-text="topLevelMcpUrl">{{ $topLevelMcpUrl ?? url('/mcp') }}</span>
                                         </td>
                                         <td class="py-2.5 px-3.5 text-right">
                                             <button
                                                 type="button"
-                                                @click="copyText(topLevelMcpUrl, 'URL host MCP tersalin!')"
+                                                @click="copyText(topLevelMcpUrl || '{{ $topLevelMcpUrl ?? url('/mcp') }}', 'URL host MCP tersalin!')"
                                                 class="px-2.5 py-1 rounded-[6px] bg-neutral-900 hover:bg-black text-white dark:bg-white dark:text-neutral-900 text-[11px] font-medium inline-flex items-center gap-1 transition-colors">
                                                 <i data-lucide="copy" class="w-3 h-3"></i>
                                                 <span>{{ __('mcp.btn_copy_short') }}</span>
