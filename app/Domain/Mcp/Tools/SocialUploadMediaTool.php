@@ -149,17 +149,42 @@ final class SocialUploadMediaTool implements McpToolInterface
         } else {
             // Download from external URL
             try {
+                $downloadUrl = $fileUrl;
+
+                // Auto-konversi link Google Drive sharing agar langsung mengunduh biner gambar
+                if (preg_match('#drive\.google\.com/(?:file/d/|open\?id=|uc\?(?:export=download&)?id=)([a-zA-Z0-9_-]+)#i', $fileUrl, $driveMatch)) {
+                    $driveId = $driveMatch[1];
+                    // lh3.googleusercontent.com/d/{id} mengembalikan raw biner gambar publik tanpa redirect HTML
+                    $downloadUrl = "https://lh3.googleusercontent.com/d/{$driveId}";
+                } elseif (preg_match('#dropbox\.com/#i', $fileUrl)) {
+                    // Auto-konversi tautan Dropbox agar langsung mengunduh raw biner
+                    $downloadUrl = preg_replace('/(\?|&)dl=0/i', '', $fileUrl);
+                    $downloadUrl .= (str_contains($downloadUrl, '?') ? '&' : '?') . 'raw=1';
+                }
+
                 $response = Http::timeout(30)->withHeaders([
                     'User-Agent' => 'COOCA-Media-Importer/1.0',
-                ])->get($fileUrl);
+                ])->get($downloadUrl);
+
+                // Fallback untuk Google Drive jika lh3 gagal
+                if (! $response->successful() && isset($driveId)) {
+                    $response = Http::timeout(30)->withHeaders([
+                        'User-Agent' => 'COOCA-Media-Importer/1.0',
+                    ])->get("https://drive.google.com/uc?export=download&id={$driveId}&confirm=t");
+                }
 
                 if (! $response->successful()) {
-                    throw new InvalidArgumentException("Gagal mengunduh berkas dari URL (HTTP {$response->status()}). Pastikan URL publik dapat diakses.");
+                    throw new InvalidArgumentException("Gagal mengunduh berkas dari URL (HTTP {$response->status()}). Pastikan URL dapat diakses publik.");
                 }
 
                 $binaryData = $response->body();
                 if (strlen($binaryData) === 0) {
                     throw new InvalidArgumentException('Berkas yang diunduh dari URL berukuran 0 byte.');
+                }
+
+                // Cek apakah response berupa laman HTML (misal link privat atau halaman login)
+                if (str_starts_with(trim($binaryData), '<!DOCTYPE html') || str_starts_with(trim($binaryData), '<html')) {
+                    throw new InvalidArgumentException('Tautan yang diberikan mengarah ke halaman web login/HTML, bukan berkas gambar langsung. Pastikan akses Google Drive diatur ke "Siapa saja yang memiliki link" (Anyone with the link).');
                 }
 
                 $detectedMime = $response->header('Content-Type');
