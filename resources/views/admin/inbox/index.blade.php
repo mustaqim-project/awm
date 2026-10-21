@@ -156,40 +156,103 @@
                         </div>
                     </div>
 
-                    {{-- QUICK FILTER PILLS ROW --}}
-                    <div class="flex items-center justify-between gap-1 overflow-x-auto scrollbar-none pt-0.5">
-                        <div class="flex items-center gap-1.5 overflow-x-auto scrollbar-none">
+                    {{-- QUICK FILTER PILLS ROW (TAGS & STATUS WITH SOFT COLORS) --}}
+                    <div class="flex items-center justify-between gap-1 overflow-x-auto scrollbar-none pt-0.5 relative" x-data="{ openFilterMore: false }">
+                        <div class="flex items-center gap-1.5 overflow-x-auto scrollbar-none py-0.5">
+                            {{-- Semua --}}
+                            <button type="button" @click="resetFilters()"
+                                :class="(currentStatus === 'all' && currentTag === 'all') ? 'bg-[#1877F2] text-white font-semibold border-[#1877F2] shadow-2xs' : 'bg-white dark:bg-[#2C2C2E] text-[#374151] dark:text-[#D1D5DB] border-[#E5E7EB] dark:border-white/10 hover:bg-[#F3F4F6]'"
+                                class="px-2.5 py-1 rounded-[8px] text-[11.5px] border transition-colors whitespace-nowrap">
+                                Semua
+                            </button>
+
+                            {{-- Belum Dibaca --}}
                             <button type="button" @click="setStatus('unread')"
-                                :class="currentStatus === 'unread' ? 'bg-[#1877F2] text-white font-medium border-[#1877F2]' : 'bg-white dark:bg-[#2C2C2E] text-[#374151] dark:text-[#D1D5DB] border-[#E5E7EB] dark:border-white/10 hover:bg-[#F3F4F6]'"
-                                class="px-2.5 py-1 rounded-[8px] text-[12px] border transition-colors whitespace-nowrap">
-                                Belum Dibaca
+                                :class="currentStatus === 'unread' ? 'bg-[#1877F2] text-white font-semibold border-[#1877F2] shadow-2xs' : 'bg-white dark:bg-[#2C2C2E] text-[#374151] dark:text-[#D1D5DB] border-[#E5E7EB] dark:border-white/10 hover:bg-[#F3F4F6]'"
+                                class="px-2.5 py-1 rounded-[8px] text-[11.5px] border transition-colors whitespace-nowrap flex items-center gap-1">
+                                <span>Belum Dibaca</span>
+                                <template x-if="counts.unread > 0">
+                                    <span class="px-1.5 py-0.2 rounded-full text-[10px] font-bold"
+                                        :class="currentStatus === 'unread' ? 'bg-white text-[#1877F2]' : 'bg-[#1877F2]/10 text-[#1877F2]'"
+                                        x-text="counts.unread"></span>
+                                </template>
                             </button>
 
-                            <button type="button" @click="setStatus('priority')"
-                                :class="currentStatus === 'priority' ? 'bg-[#1877F2] text-white font-medium border-[#1877F2]' : 'bg-white dark:bg-[#2C2C2E] text-[#374151] dark:text-[#D1D5DB] border-[#E5E7EB] dark:border-white/10 hover:bg-[#F3F4F6]'"
-                                class="px-2.5 py-1 rounded-[8px] text-[12px] border transition-colors whitespace-nowrap">
-                                Prioritas
+                            {{-- Tag: Prioritas --}}
+                            <button type="button" @click="setTag('prioritas')"
+                                :class="currentTag === 'prioritas' ? 'bg-amber-100 text-amber-900 border-amber-300 font-semibold dark:bg-amber-900/60 dark:text-amber-200' : 'bg-white dark:bg-[#2C2C2E] text-amber-800 dark:text-amber-300 border-amber-200/70 hover:bg-amber-50/50'"
+                                class="px-2.5 py-1 rounded-[8px] text-[11.5px] border transition-colors whitespace-nowrap flex items-center gap-1">
+                                <span>⭐ Prioritas</span>
+                                <template x-if="counts.tag_prioritas > 0">
+                                    <span class="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-200" x-text="counts.tag_prioritas"></span>
+                                </template>
                             </button>
 
-                            <button type="button" @click="setStatus('ad_replies')"
-                                :class="currentStatus === 'ad_replies' ? 'bg-[#1877F2] text-white font-medium border-[#1877F2]' : 'bg-white dark:bg-[#2C2C2E] text-[#374151] dark:text-[#D1D5DB] border-[#E5E7EB] dark:border-white/10 hover:bg-[#F3F4F6]'"
-                                class="px-2.5 py-1 rounded-[8px] text-[12px] border transition-colors whitespace-nowrap">
-                                Balasan iklan
+                            {{-- Tag: Client --}}
+                            <button type="button" @click="setTag('client')"
+                                :class="currentTag === 'client' ? 'bg-blue-100 text-blue-900 border-blue-300 font-semibold dark:bg-blue-900/60 dark:text-blue-200' : 'bg-white dark:bg-[#2C2C2E] text-blue-800 dark:text-blue-300 border-blue-200/70 hover:bg-blue-50/50'"
+                                class="px-2.5 py-1 rounded-[8px] text-[11.5px] border transition-colors whitespace-nowrap flex items-center gap-1">
+                                <span>👤 Client</span>
+                                <template x-if="counts.tag_client > 0">
+                                    <span class="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-blue-100 dark:bg-blue-900/40 text-blue-800 dark:text-blue-200" x-text="counts.tag_client"></span>
+                                </template>
                             </button>
 
-                            <button type="button" @click="setStatus('followup')"
-                                :class="currentStatus === 'followup' ? 'bg-[#1877F2] text-white font-medium border-[#1877F2]' : 'bg-white dark:bg-[#2C2C2E] text-[#374151] dark:text-[#D1D5DB] border-[#E5E7EB] dark:border-white/10 hover:bg-[#F3F4F6]'"
-                                class="px-2.5 py-1 rounded-[8px] text-[12px] border transition-colors whitespace-nowrap">
-                                Tindak lanjut
+                            {{-- Tag: Prospek --}}
+                            <button type="button" @click="setTag('prospek')"
+                                :class="currentTag === 'prospek' ? 'bg-emerald-100 text-emerald-900 border-emerald-300 font-semibold dark:bg-emerald-900/60 dark:text-emerald-200' : 'bg-white dark:bg-[#2C2C2E] text-emerald-800 dark:text-emerald-300 border-emerald-200/70 hover:bg-emerald-50/50'"
+                                class="px-2.5 py-1 rounded-[8px] text-[11.5px] border transition-colors whitespace-nowrap flex items-center gap-1">
+                                <span>🎯 Prospek</span>
+                                <template x-if="counts.tag_prospek > 0">
+                                    <span class="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-200" x-text="counts.tag_prospek"></span>
+                                </template>
+                            </button>
+
+                            {{-- Tag: Tindak Lanjut --}}
+                            <button type="button" @click="setTag('tindak_lanjut')"
+                                :class="currentTag === 'tindak_lanjut' ? 'bg-indigo-100 text-indigo-900 border-indigo-300 font-semibold dark:bg-indigo-900/60 dark:text-indigo-200' : 'bg-white dark:bg-[#2C2C2E] text-indigo-800 dark:text-indigo-300 border-indigo-200/70 hover:bg-indigo-50/50'"
+                                class="px-2.5 py-1 rounded-[8px] text-[11.5px] border transition-colors whitespace-nowrap flex items-center gap-1">
+                                <span>⏳ Tindak Lanjut</span>
+                                <template x-if="counts.tag_tindak_lanjut > 0">
+                                    <span class="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-indigo-100 dark:bg-indigo-900/40 text-indigo-800 dark:text-indigo-200" x-text="counts.tag_tindak_lanjut"></span>
+                                </template>
                             </button>
                         </div>
 
-                        {{-- Sliders icon filter --}}
-                        <button type="button" @click="toggleStatusFilterDropdown()"
-                            title="Filter Tambahan"
-                            class="w-7 h-7 rounded-[8px] text-[#4B5563] dark:text-[#9CA3AF] hover:text-[#111827] dark:hover:text-white hover:bg-[#F3F4F6] dark:hover:bg-white/5 flex items-center justify-center shrink-0">
-                            <i data-lucide="sliders-horizontal" class="w-3.5 h-3.5"></i>
-                        </button>
+                        {{-- Filter Lanjutan Dropdown Trigger --}}
+                        <div class="relative shrink-0">
+                            <button type="button" @click="openFilterMore = !openFilterMore"
+                                title="Filter Tambahan (Komplain, VIP, Balasan Iklan)"
+                                class="w-7 h-7 rounded-[8px] text-[#4B5563] dark:text-[#9CA3AF] hover:text-[#111827] dark:hover:text-white hover:bg-[#F3F4F6] dark:hover:bg-white/5 border border-transparent hover:border-[#E5E7EB] flex items-center justify-center transition-colors">
+                                <i data-lucide="sliders-horizontal" class="w-3.5 h-3.5"></i>
+                            </button>
+
+                            <div x-show="openFilterMore" @click.outside="openFilterMore = false" x-cloak
+                                class="absolute right-0 top-8.5 w-52 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-[#E5E7EB] dark:border-white/10 shadow-lg p-1.5 z-30 text-[12px] space-y-1">
+                                <div class="px-2 py-1 text-[11px] font-bold text-[#6B7280] uppercase tracking-wider">Filter Tag & Status</div>
+                                <button type="button" @click="setTag('komplain'); openFilterMore = false"
+                                    class="w-full text-left px-2.5 py-1.5 rounded-[8px] hover:bg-rose-50 text-rose-800 flex items-center justify-between">
+                                    <span class="flex items-center gap-2"><span>🚨</span> <span>Komplain</span></span>
+                                    <span class="text-[10.5px] px-1.5 py-0.2 rounded-full bg-rose-100 font-bold" x-text="counts.tag_komplain || 0"></span>
+                                </button>
+                                <button type="button" @click="setTag('vip'); openFilterMore = false"
+                                    class="w-full text-left px-2.5 py-1.5 rounded-[8px] hover:bg-purple-50 text-purple-800 flex items-center justify-between">
+                                    <span class="flex items-center gap-2"><span>💎</span> <span>VIP</span></span>
+                                    <span class="text-[10.5px] px-1.5 py-0.2 rounded-full bg-purple-100 font-bold" x-text="counts.tag_vip || 0"></span>
+                                </button>
+                                <button type="button" @click="setStatus('ad_replies'); openFilterMore = false"
+                                    class="w-full text-left px-2.5 py-1.5 rounded-[8px] hover:bg-sky-50 text-sky-800 flex items-center justify-between">
+                                    <span class="flex items-center gap-2"><span>📢</span> <span>Balasan Iklan</span></span>
+                                    <span class="text-[10.5px] px-1.5 py-0.2 rounded-full bg-sky-100 font-bold" x-text="counts.ad_replies || 0"></span>
+                                </button>
+                                <div class="border-t border-[#E5E7EB] dark:border-white/10 pt-1 mt-1">
+                                    <button type="button" @click="resetFilters(); openFilterMore = false"
+                                        class="w-full text-left px-2.5 py-1.5 rounded-[8px] hover:bg-gray-100 text-gray-700 font-medium">
+                                        Bersihkan Semua Filter
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -269,7 +332,7 @@
                                 <template x-if="isCommentChannel(t.channel)">
                                     <div class="flex items-start gap-3 w-full min-w-0">
                                         {{-- Post Thumbnail with Social Badge Overlay --}}
-                                        <div class="relative shrink-0 w-11 h-11 rounded-[8px] overflow-hidden bg-gray-100 dark:bg-gray-800 border border-[#E5E7EB] dark:border-white/10 flex items-center justify-center">
+                                        <div class="relative shrink-0 w-11 h-11 rounded-[8px] overflow-hidden bg-slate-100 dark:bg-slate-800 border border-[#E5E7EB] dark:border-white/10 flex items-center justify-center">
                                             <template x-if="t.post?.media_url">
                                                 <img :src="t.post.media_url" 
                                                      class="w-full h-full object-cover" 
@@ -277,7 +340,7 @@
                                                      onerror="this.style.display='none'">
                                             </template>
                                             <template x-if="!t.post?.media_url">
-                                                <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900">
+                                                <div class="w-full h-full flex items-center justify-center bg-slate-100 dark:bg-slate-800">
                                                     <i :data-lucide="t.channel === 'instagram_comments' ? 'instagram' : 'facebook'" class="w-5 h-5 text-slate-400"></i>
                                                 </div>
                                             </template>
@@ -300,11 +363,17 @@
                                                 <span class="font-medium text-[#111827] dark:text-gray-200" x-text="t.name"></span> commented
                                             </p>
 
-                                            {{-- Badges row --}}
-                                            <div class="flex items-center gap-1.5 mt-1.5">
-                                                <span class="text-[10px] px-1.5 py-0.2 rounded-md font-medium"
+                                            {{-- Badges row (Status + Tags with Soft Colors) --}}
+                                            <div class="flex flex-wrap items-center gap-1.5 mt-1.5">
+                                                <span class="text-[10px] px-1.5 py-0.5 rounded-[5px] font-medium"
                                                     :class="getStatusBadgeClass(t.status)"
                                                     x-text="formatStatusLabel(t.status)"></span>
+
+                                                <template x-for="tg in (t.tags || [])" :key="tg">
+                                                    <span class="text-[10px] px-1.5 py-0.5 rounded-[5px] font-medium border"
+                                                        :class="getTagBadgeClass(tg)"
+                                                        x-text="formatTagLabel(tg)"></span>
+                                                </template>
                                             </div>
                                         </div>
                                     </div>
@@ -313,9 +382,9 @@
                                 {{-- B. DIRECT MESSAGE THREAD VIEW (MESSENGER, INSTAGRAM DM, WA) --}}
                                 <template x-if="!isCommentChannel(t.channel)">
                                     <div class="flex items-start gap-3 w-full min-w-0">
-                                        {{-- Avatar with Channel Badge --}}
+                                        {{-- Avatar with Channel Badge (Soft flat surface, no gradient) --}}
                                         <div class="relative shrink-0">
-                                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#E2E8F0] to-[#CBD5E1] dark:from-[#374151] dark:to-[#1F2937] flex items-center justify-center font-bold text-[13px] text-[#334155] dark:text-[#F1F5F9]">
+                                            <div class="w-10 h-10 rounded-full bg-[#F1F5F9] dark:bg-[#27272A] border border-[#E2E8F0] dark:border-white/10 flex items-center justify-center font-bold text-[13px] text-[#334155] dark:text-[#F1F5F9]">
                                                 <span x-text="getInitials(t.name)"></span>
                                             </div>
 
@@ -339,11 +408,17 @@
                                                 :class="t.is_unread ? 'font-semibold text-[#111827] dark:text-[#E5E7EB]' : ''"
                                                 x-text="t.last_message"></p>
 
-                                            {{-- Badges row --}}
-                                            <div class="flex items-center gap-1.5 mt-1.5">
-                                                <span class="text-[10px] px-1.5 py-0.2 rounded-md font-medium"
+                                            {{-- Badges row (Status + Tags with Soft Colors) --}}
+                                            <div class="flex flex-wrap items-center gap-1.5 mt-1.5">
+                                                <span class="text-[10px] px-1.5 py-0.5 rounded-[5px] font-medium"
                                                     :class="getStatusBadgeClass(t.status)"
                                                     x-text="formatStatusLabel(t.status)"></span>
+
+                                                <template x-for="tg in (t.tags || [])" :key="tg">
+                                                    <span class="text-[10px] px-1.5 py-0.5 rounded-[5px] font-medium border"
+                                                        :class="getTagBadgeClass(tg)"
+                                                        x-text="formatTagLabel(tg)"></span>
+                                                </template>
                                             </div>
                                         </div>
                                     </div>
@@ -394,7 +469,7 @@
                             {{-- POST HEADER BAR --}}
                             <div class="px-5 py-3 border-b border-[#E5E7EB] dark:border-white/10 flex items-center justify-between gap-3 bg-white dark:bg-[#1C1C1E] shrink-0">
                                 <div class="flex items-center gap-3 min-w-0">
-                                    <div class="w-10 h-10 rounded-[8px] overflow-hidden bg-gray-100 dark:bg-gray-800 border border-[#E5E7EB] dark:border-white/10 shrink-0 flex items-center justify-center">
+                                    <div class="w-10 h-10 rounded-[8px] overflow-hidden bg-slate-100 dark:bg-slate-800 border border-[#E5E7EB] dark:border-white/10 shrink-0 flex items-center justify-center">
                                         <template x-if="selectedThread.post?.media_url">
                                             <img :src="selectedThread.post.media_url" 
                                                  class="w-full h-full object-cover" 
@@ -402,23 +477,37 @@
                                                  onerror="this.style.display='none'">
                                         </template>
                                         <template x-if="!selectedThread.post?.media_url">
-                                            <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900">
+                                            <div class="w-full h-full flex items-center justify-center bg-slate-100 dark:bg-slate-800">
                                                 <i :data-lucide="selectedThread.channel === 'instagram_comments' ? 'instagram' : 'facebook'" class="w-5 h-5 text-slate-400"></i>
                                             </div>
                                         </template>
                                     </div>
                                     <div class="min-w-0">
-                                        <h2 class="text-[13.5px] font-bold text-[#111827] dark:text-white truncate" 
-                                            x-text="selectedThread.post?.title || selectedThread.post_snippet || 'Postingan Media Sosial'"></h2>
-                                        <p class="text-[11.5px] text-[#6B7280] dark:text-[#9CA3AF] truncate mt-0.5">
-                                            <span x-text="(selectedThread.post?.likes || 0) + ' suka'"></span> · 
-                                            <span x-text="(selectedThread.post?.comments_count || 0) + ' komentar'"></span> · 
+                                        <div class="flex items-center gap-2">
+                                            <h2 class="text-[13.5px] font-bold text-[#111827] dark:text-white truncate" 
+                                                x-text="selectedThread.post?.title || selectedThread.post_snippet || 'Postingan Media Sosial'"></h2>
+                                        </div>
+                                        <div class="text-[11.5px] text-[#6B7280] dark:text-[#9CA3AF] truncate mt-0.5 flex flex-wrap items-center gap-x-2">
+                                            <span x-text="(selectedThread.post?.likes || 0) + ' suka'"></span>
+                                            <span>·</span>
+                                            <span x-text="(selectedThread.post?.comments_count || 0) + ' komentar'"></span>
+                                            <span>·</span>
                                             <span x-text="selectedThread.post?.published_at || ''"></span>
-                                        </p>
+                                        </div>
+                                        {{-- Active Tags in Header --}}
+                                        <div x-show="(selectedThread.tags || []).length > 0" class="flex flex-wrap items-center gap-1 mt-1">
+                                            <template x-for="tg in (selectedThread.tags || [])" :key="tg">
+                                                <span class="inline-flex items-center gap-1 text-[10px] px-1.5 py-0.2 rounded-[5px] font-medium border"
+                                                    :class="getTagBadgeClass(tg)">
+                                                    <span x-text="formatTagLabel(tg)"></span>
+                                                    <button type="button" @click.stop="removeThreadTag(selectedThread, tg)" class="hover:opacity-75" title="Hapus tag">×</button>
+                                                </span>
+                                            </template>
+                                        </div>
                                     </div>
                                 </div>
 
-                                {{-- Right Header Actions from Screenshot --}}
+                                {{-- Right Header Actions --}}
                                 <div class="flex items-center gap-1.5 shrink-0">
                                     <template x-if="selectedThread.post?.permalink">
                                         <a :href="selectedThread.post.permalink" target="_blank" rel="noopener noreferrer"
@@ -428,14 +517,59 @@
                                             <span class="hidden sm:inline" x-text="selectedThread.channel === 'instagram_comments' ? 'Buka di IG' : 'Buka di FB'"></span>
                                         </a>
                                     </template>
-                                    <button type="button" disabled class="h-8 px-3 rounded-[8px] bg-[#F3F4F6] dark:bg-white/5 text-[#6B7280] dark:text-[#9CA3AF] text-[12px] font-medium cursor-not-allowed">
-                                        Promosi tidak tersedia
-                                    </button>
-                                    <button type="button" title="Laporkan / Spam" @click="updateThreadStatus('ad_replies')" class="w-8 h-8 rounded-[8px] border border-[#E5E7EB] dark:border-white/10 text-[#4B5563] dark:text-[#9CA3AF] hover:bg-gray-50 dark:hover:bg-white/5 flex items-center justify-center transition-colors">
-                                        <i data-lucide="alert-triangle" class="w-4 h-4"></i>
-                                    </button>
-                                    <button type="button" title="Bintang / Prioritas" @click="updateThreadStatus('priority')" class="w-8 h-8 rounded-[8px] border border-[#E5E7EB] dark:border-white/10 text-[#4B5563] dark:text-[#9CA3AF] hover:bg-gray-50 dark:hover:bg-white/5 flex items-center justify-center transition-colors">
-                                        <i data-lucide="star" class="w-4 h-4" :class="selectedThread.status === 'priority' ? 'fill-amber-400 text-amber-500' : ''"></i>
+
+                                    {{-- Tag Dropdown Button --}}
+                                    <div class="relative" x-data="{ openTagDrop: false, customTagVal: '' }">
+                                        <button type="button" @click="openTagDrop = !openTagDrop"
+                                            title="Kelola Tag & Kategori"
+                                            class="h-8 px-2.5 rounded-[8px] border border-[#E5E7EB] dark:border-white/10 text-[#4B5563] dark:text-[#9CA3AF] hover:bg-gray-50 dark:hover:bg-white/5 text-[12px] font-medium flex items-center gap-1.5 transition-colors">
+                                            <i data-lucide="tag" class="w-3.5 h-3.5 text-[#1877F2]"></i>
+                                            <span class="hidden sm:inline">Tag</span>
+                                            <template x-if="(selectedThread.tags || []).length > 0">
+                                                <span class="px-1.5 py-0.2 rounded-full text-[9.5px] font-bold bg-[#1877F2]/10 text-[#1877F2]" x-text="(selectedThread.tags || []).length"></span>
+                                            </template>
+                                            <i data-lucide="chevron-down" class="w-3 h-3 text-[#9CA3AF]"></i>
+                                        </button>
+
+                                        <div x-show="openTagDrop" @click.outside="openTagDrop = false" x-cloak
+                                            class="absolute right-0 top-9.5 w-56 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-[#E5E7EB] dark:border-white/10 shadow-xl p-2 z-30 text-[12px] space-y-1.5">
+                                            <div class="px-1.5 py-0.5 text-[11px] font-bold text-[#6B7280] uppercase tracking-wider">Tag Percakapan</div>
+                                            <div class="space-y-0.5 max-h-48 overflow-y-auto">
+                                                <template x-for="defTag in availableTags" :key="defTag">
+                                                    <button type="button" @click="toggleThreadTag(selectedThread, defTag)"
+                                                        class="w-full text-left px-2 py-1.5 rounded-[8px] hover:bg-slate-50 dark:hover:bg-white/5 flex items-center justify-between transition-colors">
+                                                        <span class="inline-flex items-center gap-2">
+                                                            <span class="w-2.5 h-2.5 rounded-full" :class="{
+                                                                'bg-amber-400': defTag === 'prioritas',
+                                                                'bg-blue-500': defTag === 'client',
+                                                                'bg-emerald-500': defTag === 'prospek',
+                                                                'bg-indigo-500': defTag === 'tindak_lanjut',
+                                                                'bg-rose-500': defTag === 'komplain',
+                                                                'bg-purple-500': defTag === 'vip'
+                                                            }"></span>
+                                                            <span class="font-medium text-[#111827] dark:text-white" x-text="formatTagLabel(defTag)"></span>
+                                                        </span>
+                                                        <template x-if="(selectedThread.tags || []).includes(defTag)">
+                                                            <i data-lucide="check" class="w-3.5 h-3.5 text-[#1877F2]"></i>
+                                                        </template>
+                                                    </button>
+                                                </template>
+                                            </div>
+
+                                            <div class="pt-2 border-t border-[#E5E7EB] dark:border-white/10 flex items-center gap-1">
+                                                <input type="text" x-model="customTagVal" @keydown.enter.prevent="if(customTagVal.trim()){ addCustomTag(selectedThread, customTagVal.trim()); customTagVal=''; }"
+                                                    placeholder="Tag kustom..."
+                                                    class="flex-1 h-7 px-2 rounded-[6px] bg-slate-100 dark:bg-black/30 border border-slate-200 dark:border-white/10 text-[11px] focus:outline-hidden focus:border-[#1877F2]">
+                                                <button type="button" @click="if(customTagVal.trim()){ addCustomTag(selectedThread, customTagVal.trim()); customTagVal=''; }"
+                                                    class="h-7 px-2 rounded-[6px] bg-[#1877F2] text-white text-[11px] font-bold">
+                                                    +
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button type="button" title="Bintang / Prioritas" @click="toggleThreadTag(selectedThread, 'prioritas')" class="w-8 h-8 rounded-[8px] border border-[#E5E7EB] dark:border-white/10 text-[#4B5563] dark:text-[#9CA3AF] hover:bg-gray-50 dark:hover:bg-white/5 flex items-center justify-center transition-colors">
+                                        <i data-lucide="star" class="w-4 h-4" :class="(selectedThread.tags || []).includes('prioritas') || selectedThread.status === 'priority' ? 'fill-amber-400 text-amber-500' : ''"></i>
                                     </button>
                                     <button type="button" title="Tandai Belum Dibaca" @click="updateThreadStatus('unread')" class="w-8 h-8 rounded-[8px] border border-[#E5E7EB] dark:border-white/10 text-[#4B5563] dark:text-[#9CA3AF] hover:bg-gray-50 dark:hover:bg-white/5 flex items-center justify-center transition-colors">
                                         <i data-lucide="mail" class="w-4 h-4"></i>
@@ -461,8 +595,8 @@
 
                                     <div class="flex items-start justify-between gap-3">
                                         <div class="flex items-start gap-3 min-w-0 flex-1">
-                                            {{-- Visitor Avatar --}}
-                                            <div class="w-9 h-9 rounded-full bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-800 flex items-center justify-center text-[12px] font-bold text-slate-700 dark:text-slate-200 shrink-0 mt-0.5">
+                                            {{-- Visitor Avatar (Soft flat surface, no gradient) --}}
+                                            <div class="w-9 h-9 rounded-full bg-[#F1F5F9] dark:bg-[#27272A] border border-[#E2E8F0] dark:border-white/10 flex items-center justify-center text-[12px] font-bold text-slate-700 dark:text-slate-200 shrink-0 mt-0.5">
                                                 <span x-text="getInitials(getParentComment(selectedThread).from_name)"></span>
                                             </div>
 
@@ -523,9 +657,9 @@
                                     {{-- DAFTAR SUB-BALASAN --}}
                                     <template x-for="(reply, rIdx) in getThreadReplies(selectedThread)" :key="reply.id || rIdx">
                                         <div class="space-y-1">
-                                            {{-- A. SUB BALASAN DARI COOCA OFFICIAL (ADMIN / HALAMAN) --}}
+                                            {{-- A. SUB BALASAN DARI COOCA OFFICIAL (Soft pastel solid, no gradient) --}}
                                             <template x-if="reply.is_cooca || reply.is_from_page">
-                                                <div class="rounded-[16px] bg-gradient-to-r from-blue-50/90 via-sky-50/40 to-white dark:from-[#1877F2]/15 dark:to-transparent border border-blue-200/90 dark:border-[#1877F2]/30 p-3.5 sm:p-4 shadow-xs">
+                                                <div class="rounded-[14px] bg-[#F0F7FF] dark:bg-[#1877F2]/10 border border-[#BAE6FD] dark:border-[#1877F2]/30 p-3.5 sm:p-4 shadow-xs">
                                                     <div class="flex items-start justify-between gap-3">
                                                         <div class="flex items-start gap-3 min-w-0 flex-1">
                                                             {{-- Cooca Official Avatar with Verified Badge --}}
@@ -650,7 +784,7 @@
                             {{-- DM DETAIL HEADER --}}
                             <div class="px-5 py-3.5 border-b border-[#E5E7EB] dark:border-white/10 flex items-center justify-between gap-3 bg-white dark:bg-[#1C1C1E] shrink-0">
                                 <div class="flex items-center gap-3 min-w-0">
-                                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#E2E8F0] to-[#CBD5E1] dark:from-[#374151] dark:to-[#1F2937] flex items-center justify-center font-bold text-[14px] text-[#334155] dark:text-[#F1F5F9] shrink-0">
+                                    <div class="w-10 h-10 rounded-full bg-[#F1F5F9] dark:bg-[#27272A] border border-[#E2E8F0] dark:border-white/10 flex items-center justify-center font-bold text-[14px] text-[#334155] dark:text-[#F1F5F9] shrink-0">
                                         <span x-text="getInitials(selectedThread.name)"></span>
                                     </div>
                                     <div class="min-w-0">
@@ -680,11 +814,72 @@
                                             <span>• ID: <span x-text="selectedThread.customer_id"></span></span>
                                             <span>• Aktif: <span x-text="selectedThread.date"></span></span>
                                         </div>
+
+                                        {{-- Active Tags in Header --}}
+                                        <div x-show="(selectedThread.tags || []).length > 0" class="flex flex-wrap items-center gap-1 mt-1">
+                                            <template x-for="tg in (selectedThread.tags || [])" :key="tg">
+                                                <span class="inline-flex items-center gap-1 text-[10px] px-1.5 py-0.2 rounded-[5px] font-medium border"
+                                                    :class="getTagBadgeClass(tg)">
+                                                    <span x-text="formatTagLabel(tg)"></span>
+                                                    <button type="button" @click.stop="removeThreadTag(selectedThread, tg)" class="hover:opacity-75" title="Hapus tag">×</button>
+                                                </span>
+                                            </template>
+                                        </div>
                                     </div>
                                 </div>
 
                                 {{-- ACTIONS BAR --}}
                                 <div class="flex items-center gap-2 shrink-0">
+                                    {{-- Tag Dropdown Button --}}
+                                    <div class="relative" x-data="{ openDmTagDrop: false, customDmTagVal: '' }">
+                                        <button type="button" @click="openDmTagDrop = !openDmTagDrop"
+                                            title="Kelola Tag & Kategori"
+                                            class="h-8 px-2.5 rounded-[8px] border border-[#D1D5DB] dark:border-white/15 bg-white dark:bg-[#2C2C2E] text-[12px] font-medium text-[#374151] dark:text-white hover:bg-[#F9FAFB] flex items-center gap-1.5 transition-colors">
+                                            <i data-lucide="tag" class="w-3.5 h-3.5 text-[#1877F2]"></i>
+                                            <span class="hidden sm:inline">Tag</span>
+                                            <template x-if="(selectedThread.tags || []).length > 0">
+                                                <span class="px-1.5 py-0.2 rounded-full text-[9.5px] font-bold bg-[#1877F2]/10 text-[#1877F2]" x-text="(selectedThread.tags || []).length"></span>
+                                            </template>
+                                            <i data-lucide="chevron-down" class="w-3 h-3 text-[#9CA3AF]"></i>
+                                        </button>
+
+                                        <div x-show="openDmTagDrop" @click.outside="openDmTagDrop = false" x-cloak
+                                            class="absolute right-0 top-9.5 w-56 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-[#E5E7EB] dark:border-white/10 shadow-xl p-2 z-30 text-[12px] space-y-1.5">
+                                            <div class="px-1.5 py-0.5 text-[11px] font-bold text-[#6B7280] uppercase tracking-wider">Tag Percakapan</div>
+                                            <div class="space-y-0.5 max-h-48 overflow-y-auto">
+                                                <template x-for="defTag in availableTags" :key="defTag">
+                                                    <button type="button" @click="toggleThreadTag(selectedThread, defTag)"
+                                                        class="w-full text-left px-2 py-1.5 rounded-[8px] hover:bg-slate-50 dark:hover:bg-white/5 flex items-center justify-between transition-colors">
+                                                        <span class="inline-flex items-center gap-2">
+                                                            <span class="w-2.5 h-2.5 rounded-full" :class="{
+                                                                'bg-amber-400': defTag === 'prioritas',
+                                                                'bg-blue-500': defTag === 'client',
+                                                                'bg-emerald-500': defTag === 'prospek',
+                                                                'bg-indigo-500': defTag === 'tindak_lanjut',
+                                                                'bg-rose-500': defTag === 'komplain',
+                                                                'bg-purple-500': defTag === 'vip'
+                                                            }"></span>
+                                                            <span class="font-medium text-[#111827] dark:text-white" x-text="formatTagLabel(defTag)"></span>
+                                                        </span>
+                                                        <template x-if="(selectedThread.tags || []).includes(defTag)">
+                                                            <i data-lucide="check" class="w-3.5 h-3.5 text-[#1877F2]"></i>
+                                                        </template>
+                                                    </button>
+                                                </template>
+                                            </div>
+
+                                            <div class="pt-2 border-t border-[#E5E7EB] dark:border-white/10 flex items-center gap-1">
+                                                <input type="text" x-model="customDmTagVal" @keydown.enter.prevent="if(customDmTagVal.trim()){ addCustomTag(selectedThread, customDmTagVal.trim()); customDmTagVal=''; }"
+                                                    placeholder="Tag kustom..."
+                                                    class="flex-1 h-7 px-2 rounded-[6px] bg-slate-100 dark:bg-black/30 border border-slate-200 dark:border-white/10 text-[11px] focus:outline-hidden focus:border-[#1877F2]">
+                                                <button type="button" @click="if(customDmTagVal.trim()){ addCustomTag(selectedThread, customDmTagVal.trim()); customDmTagVal=''; }"
+                                                    class="h-7 px-2 rounded-[6px] bg-[#1877F2] text-white text-[11px] font-bold">
+                                                    +
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     {{-- Status Switcher Dropdown --}}
                                     <div class="relative" x-data="{ openStatus: false }">
                                         <button type="button" @click="openStatus = !openStatus"
@@ -763,12 +958,12 @@
                                                     </div>
                                                 </template>
 
-                                                {{-- Outbound Admin/Official Reply with Channel-specific Bubbles --}}
+                                                {{-- Outbound Admin/Official Reply with Channel-specific Soft Solid Bubbles (No gradients) --}}
                                                 <template x-if="msg.is_from_page">
                                                     <div class="flex items-end justify-end gap-2.5 ml-auto max-w-[85%] sm:max-w-[70%]">
                                                         <div class="space-y-1 text-right">
                                                             <div class="p-3.5 rounded-[16px] rounded-br-[4px] shadow-xs text-left text-white"
-                                                                 :class="selectedThread.channel === 'whatsapp' ? 'bg-gradient-to-r from-[#005C4B] to-[#128C7E]' : (['instagram', 'instagram_dm'].includes(selectedThread.channel) ? 'bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737]' : 'bg-[#1877F2]')">
+                                                                 :class="selectedThread.channel === 'whatsapp' ? 'bg-[#008069]' : (['instagram', 'instagram_dm'].includes(selectedThread.channel) ? 'bg-[#E1306C]' : 'bg-[#1877F2]')">
                                                                 
                                                                 {{-- Official Header with Channel Badge --}}
                                                                 <div class="flex items-center gap-1.5 mb-1.5 text-[11px] font-semibold text-white/90">
@@ -860,13 +1055,14 @@
 
             </div>
 
-            {{-- 3. RIGHT COLUMN: POST INSPECTOR (MATCHING USER SCREENSHOT 1 & 2) --}}
+            {{-- 3. RIGHT COLUMN: POST INSPECTOR (FOR COMMENTS) & CONTACT PROFILE (FOR DIRECT CHAT) --}}
+            {{-- 3A. POST INSPECTOR FOR COMMENT THREADS --}}
             <div x-show="selectedThread && isCommentChannel(selectedThread.channel)" x-cloak
                  class="hidden lg:flex w-[320px] xl:w-[350px] shrink-0 border-l border-[#E5E7EB] dark:border-white/10 bg-white dark:bg-[#1C1C1E] flex-col h-full overflow-y-auto">
                 
-                {{-- Post Media Preview Banner --}}
+                {{-- Post Media Preview Banner (Soft flat surface, no gradient) --}}
                 <div class="p-4 border-b border-[#E5E7EB] dark:border-white/10 bg-slate-50/50 dark:bg-black/10">
-                    <div class="rounded-[12px] overflow-hidden border border-[#E5E7EB] dark:border-white/10 shadow-xs aspect-video bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                    <div class="rounded-[12px] overflow-hidden border border-[#E5E7EB] dark:border-white/10 shadow-xs aspect-video bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
                         <template x-if="selectedThread?.post?.media_url">
                             <img :src="selectedThread?.post?.media_url" 
                                  class="w-full h-full object-cover" 
@@ -874,7 +1070,7 @@
                                  onerror="this.style.display='none'">
                         </template>
                         <template x-if="!selectedThread?.post?.media_url">
-                            <div class="w-full h-full flex flex-col items-center justify-center p-4 bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 text-[#6B7280]">
+                            <div class="w-full h-full flex flex-col items-center justify-center p-4 bg-slate-100 dark:bg-slate-800 text-[#6B7280]">
                                 <i :data-lucide="selectedThread?.channel === 'instagram_comments' ? 'instagram' : 'facebook'" class="w-8 h-8 opacity-60 mb-1"></i>
                                 <span class="text-[11px] font-medium">Postingan Media Sosial</span>
                             </div>
@@ -892,8 +1088,8 @@
                     </template>
                 </div>
 
-                {{-- Post Details, Metrics & Full Caption --}}
-                <div class="p-4 space-y-3.5 flex-1 text-[12.5px] leading-relaxed">
+                {{-- Post Details, Tags & Full Caption --}}
+                <div class="p-4 space-y-4 flex-1 text-[12.5px] leading-relaxed">
                     {{-- Likes & Published Time --}}
                     <div class="flex items-center justify-between text-[#6B7280] dark:text-[#9CA3AF] text-[12px]">
                         <span class="font-bold text-[#111827] dark:text-white" x-text="(selectedThread?.post?.likes || 0) + ' suka'"></span>
@@ -906,21 +1102,142 @@
                         <span class="font-medium" x-text="selectedThread?.post?.title || ''"></span>
                     </div>
 
+                    {{-- TAGS & LABELS CARD --}}
+                    <div class="p-3 rounded-[12px] bg-slate-50 dark:bg-white/[0.03] border border-[#E5E7EB] dark:border-white/10 space-y-2.5">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-[11.5px] text-[#374151] dark:text-[#D1D5DB] uppercase tracking-wider flex items-center gap-1.5">
+                                <i data-lucide="tag" class="w-3.5 h-3.5 text-[#1877F2]"></i>
+                                <span>Label & Tag Thread</span>
+                            </span>
+                        </div>
+
+                        {{-- Tag Badges List --}}
+                        <div class="flex flex-wrap items-center gap-1.5 min-h-6">
+                            <template x-for="tg in (selectedThread.tags || [])" :key="tg">
+                                <span class="inline-flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-[6px] font-medium border"
+                                    :class="getTagBadgeClass(tg)">
+                                    <span x-text="formatTagLabel(tg)"></span>
+                                    <button type="button" @click.stop="removeThreadTag(selectedThread, tg)" class="hover:opacity-75 font-bold" title="Hapus tag">×</button>
+                                </span>
+                            </template>
+                            <span x-show="!(selectedThread.tags || []).length" class="text-[11px] text-[#9CA3AF] italic">Belum ada tag. Pilih tag di bawah:</span>
+                        </div>
+
+                        {{-- Quick Tag Toggle Buttons --}}
+                        <div class="flex flex-wrap items-center gap-1 pt-1 border-t border-[#E5E7EB]/70 dark:border-white/5">
+                            <template x-for="avail in availableTags" :key="avail">
+                                <button type="button" @click="toggleThreadTag(selectedThread, avail)"
+                                    class="text-[10px] px-2 py-0.5 rounded-[5px] border transition-colors flex items-center gap-1"
+                                    :class="(selectedThread.tags || []).includes(avail) ? 'bg-[#1877F2] text-white border-[#1877F2]' : 'bg-white dark:bg-[#2C2C2E] text-slate-700 dark:text-slate-300 border-slate-200 dark:border-white/10 hover:bg-slate-100'">
+                                    <span x-text="(selectedThread.tags || []).includes(avail) ? '✓ ' + formatTagLabel(avail) : '+ ' + formatTagLabel(avail)"></span>
+                                </button>
+                            </template>
+                        </div>
+                    </div>
+
                     {{-- Full Caption with paragraph breaks --}}
                     <div class="text-[#4B5563] dark:text-[#D1D5DB] whitespace-pre-line text-[12.5px] leading-relaxed font-normal"
                          x-text="selectedThread?.post?.caption || ''"></div>
 
-                    {{-- Promo / Free Custom Badge Card --}}
-                    <div class="pt-4 border-t border-[#E5E7EB] dark:border-white/10">
-                        <div class="p-3 rounded-[12px] bg-gradient-to-r from-orange-50 to-amber-50 dark:from-orange-500/10 dark:to-amber-500/10 border border-orange-200 dark:border-orange-500/20 flex items-center justify-between">
+                    {{-- Promo / Free Custom Badge Card (Soft solid surface, no gradient) --}}
+                    <div class="pt-2 border-t border-[#E5E7EB] dark:border-white/10">
+                        <div class="p-3 rounded-[12px] bg-amber-50/80 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-800/40 flex items-center justify-between">
                             <div class="flex items-center gap-2.5">
-                                <span class="w-7 h-7 rounded-lg bg-orange-500 text-white flex items-center justify-center text-[12px] shadow-xs">🎁</span>
+                                <span class="w-7 h-7 rounded-lg bg-amber-500 text-white flex items-center justify-center text-[12px] shadow-xs">🎁</span>
                                 <div>
-                                    <span class="font-bold text-[12px] text-orange-950 dark:text-orange-200 uppercase tracking-wide block">Free Custom</span>
-                                    <span class="text-[11px] text-orange-800 dark:text-orange-300">Tersedia untuk pengguna aktif</span>
+                                    <span class="font-bold text-[12px] text-amber-950 dark:text-amber-200 uppercase tracking-wide block">Free Custom</span>
+                                    <span class="text-[11px] text-amber-800 dark:text-amber-300">Tersedia untuk pengguna aktif</span>
                                 </div>
                             </div>
-                            <i data-lucide="sparkles" class="w-4 h-4 text-orange-500"></i>
+                            <i data-lucide="sparkles" class="w-4 h-4 text-amber-500"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- 3B. CONTACT & THREAD PROFILE FOR DIRECT CHAT (WHATSAPP, MESSENGER, INSTAGRAM DM) --}}
+            <div x-show="selectedThread && !isCommentChannel(selectedThread.channel)" x-cloak
+                 class="hidden lg:flex w-[320px] xl:w-[350px] shrink-0 border-l border-[#E5E7EB] dark:border-white/10 bg-white dark:bg-[#1C1C1E] flex-col h-full overflow-y-auto">
+                
+                {{-- Customer Profile Header Banner --}}
+                <div class="p-5 border-b border-[#E5E7EB] dark:border-white/10 bg-slate-50/50 dark:bg-black/10 text-center flex flex-col items-center">
+                    <div class="w-16 h-16 rounded-full bg-[#F1F5F9] dark:bg-[#27272A] border-2 border-[#E2E8F0] dark:border-white/10 flex items-center justify-center font-bold text-[20px] text-[#334155] dark:text-[#F1F5F9] mb-2.5 shadow-xs">
+                        <span x-text="getInitials(selectedThread.name)"></span>
+                    </div>
+                    <h3 class="text-[15px] font-bold text-[#111827] dark:text-white" x-text="selectedThread.name"></h3>
+                    <div class="mt-1 flex items-center gap-1.5">
+                        <span class="px-2 py-0.5 rounded-full text-[10.5px] font-semibold text-white flex items-center gap-1"
+                            :class="getChannelBadgeClass(selectedThread.channel)">
+                            <i :data-lucide="getChannelIcon(selectedThread.channel)" class="w-2.5 h-2.5"></i>
+                            <span x-text="formatChannelName(selectedThread.channel)"></span>
+                        </span>
+                        <span class="text-[10.5px] px-2 py-0.5 rounded-md font-medium"
+                            :class="getStatusBadgeClass(selectedThread.status)"
+                            x-text="formatStatusLabel(selectedThread.status)"></span>
+                    </div>
+                </div>
+
+                {{-- Customer Info & Tag Management --}}
+                <div class="p-4 space-y-4 flex-1 text-[12.5px]">
+                    {{-- CONTACT DETAIL ITEMS --}}
+                    <div class="p-3 rounded-[12px] bg-slate-50 dark:bg-white/[0.03] border border-[#E5E7EB] dark:border-white/10 space-y-2">
+                        <span class="font-bold text-[11px] text-[#6B7280] uppercase tracking-wider block mb-1">Informasi Kontak</span>
+                        <template x-if="selectedThread.phone">
+                            <div class="flex items-center justify-between py-1 border-b border-slate-200/60 dark:border-white/5">
+                                <span class="text-slate-500">Telepon / WhatsApp</span>
+                                <a :href="'https://wa.me/' + selectedThread.phone.replace(/[^0-9]/g, '')" target="_blank"
+                                   class="font-semibold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1">
+                                    <i data-lucide="phone" class="w-3 h-3"></i>
+                                    <span x-text="selectedThread.phone"></span>
+                                </a>
+                            </div>
+                        </template>
+                        <template x-if="selectedThread.email">
+                            <div class="flex items-center justify-between py-1 border-b border-slate-200/60 dark:border-white/5">
+                                <span class="text-slate-500">Email</span>
+                                <span class="font-medium text-slate-900 dark:text-white" x-text="selectedThread.email"></span>
+                            </div>
+                        </template>
+                        <div class="flex items-center justify-between py-1 border-b border-slate-200/60 dark:border-white/5">
+                            <span class="text-slate-500">Customer ID</span>
+                            <span class="font-mono text-[11.5px] text-slate-700 dark:text-slate-300" x-text="selectedThread.customer_id"></span>
+                        </div>
+                        <div class="flex items-center justify-between py-1">
+                            <span class="text-slate-500">Waktu Terakhir</span>
+                            <span class="text-slate-700 dark:text-slate-300" x-text="selectedThread.time + ' · ' + (selectedThread.date || '')"></span>
+                        </div>
+                    </div>
+
+                    {{-- TAGS & LABELS MANAGER CARD --}}
+                    <div class="p-3 rounded-[12px] bg-slate-50 dark:bg-white/[0.03] border border-[#E5E7EB] dark:border-white/10 space-y-2.5">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-[11.5px] text-[#374151] dark:text-[#D1D5DB] uppercase tracking-wider flex items-center gap-1.5">
+                                <i data-lucide="tag" class="w-3.5 h-3.5 text-[#1877F2]"></i>
+                                <span>Label & Tag Percakapan</span>
+                            </span>
+                        </div>
+
+                        {{-- Active Tag Badges --}}
+                        <div class="flex flex-wrap items-center gap-1.5 min-h-6">
+                            <template x-for="tg in (selectedThread.tags || [])" :key="tg">
+                                <span class="inline-flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-[6px] font-medium border"
+                                    :class="getTagBadgeClass(tg)">
+                                    <span x-text="formatTagLabel(tg)"></span>
+                                    <button type="button" @click.stop="removeThreadTag(selectedThread, tg)" class="hover:opacity-75 font-bold" title="Hapus tag">×</button>
+                                </span>
+                            </template>
+                            <span x-show="!(selectedThread.tags || []).length" class="text-[11px] text-[#9CA3AF] italic">Belum ada tag. Pilih tag di bawah:</span>
+                        </div>
+
+                        {{-- Quick Tag Toggle Buttons --}}
+                        <div class="flex flex-wrap items-center gap-1 pt-1 border-t border-[#E5E7EB]/70 dark:border-white/5">
+                            <template x-for="avail in availableTags" :key="avail">
+                                <button type="button" @click="toggleThreadTag(selectedThread, avail)"
+                                    class="text-[10px] px-2 py-0.5 rounded-[5px] border transition-colors flex items-center gap-1"
+                                    :class="(selectedThread.tags || []).includes(avail) ? 'bg-[#1877F2] text-white border-[#1877F2]' : 'bg-white dark:bg-[#2C2C2E] text-slate-700 dark:text-slate-300 border-slate-200 dark:border-white/10 hover:bg-slate-100'">
+                                    <span x-text="(selectedThread.tags || []).includes(avail) ? '✓ ' + formatTagLabel(avail) : '+ ' + formatTagLabel(avail)"></span>
+                                </button>
+                            </template>
                         </div>
                     </div>
                 </div>
@@ -938,7 +1255,7 @@
             <div class="px-5 py-3.5 bg-[#F9FAFB] dark:bg-[#2C2C2E] border-b border-[#E5E7EB] dark:border-white/10 flex items-center justify-between gap-3 shrink-0">
                 <div class="flex items-center gap-3 min-w-0">
                     <div class="relative shrink-0">
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#E2E8F0] to-[#CBD5E1] dark:from-[#374151] dark:to-[#1F2937] flex items-center justify-center font-bold text-[13px] text-[#334155] dark:text-[#F1F5F9]">
+                        <div class="w-10 h-10 rounded-full bg-[#F1F5F9] dark:bg-[#27272A] border border-[#E2E8F0] dark:border-white/10 flex items-center justify-center font-bold text-[13px] text-[#334155] dark:text-[#F1F5F9]">
                             <span x-text="activePrivateDm ? getInitials(activePrivateDm.customer_name || activePrivateDm.from_name) : 'U'"></span>
                         </div>
                         <span class="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full flex items-center justify-center text-white ring-2 ring-white dark:ring-[#2C2C2E]"
@@ -1046,7 +1363,7 @@
                                 <div class="flex items-end justify-end gap-2.5 ml-auto max-w-[85%] sm:max-w-[75%]">
                                     <div class="space-y-1 text-right">
                                         <div class="text-white p-3 rounded-[16px] rounded-br-[3px] shadow-xs text-left"
-                                             :class="activePrivateDm?.target_channel === 'messenger' ? 'bg-[#1877F2]' : 'bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737]'">
+                                             :class="activePrivateDm?.target_channel === 'messenger' ? 'bg-[#1877F2]' : 'bg-[#E1306C]'">
                                             <div class="flex items-center gap-1.5 mb-1 text-[10.5px] font-semibold text-white/90">
                                                 <i data-lucide="badge-check" class="w-3 h-3 text-white"></i>
                                                 <span>Cooca Official</span>
@@ -1267,6 +1584,11 @@ function adminInboxHub() {
         counts: @json($counts ?? []),
         currentChannel: @json($channel ?? 'all'),
         currentStatus: @json($status ?? 'all'),
+        currentTag: @json($currentTag ?? 'all'),
+        availableTags: ['prioritas', 'client', 'prospek', 'tindak_lanjut', 'komplain', 'vip'],
+        customTagVal: '',
+        customDmTagVal: '',
+        openFilterMore: false,
         searchKeyword: @json($search ?? ''),
         replyText: '',
         replyTargetComment: null,
@@ -1340,7 +1662,7 @@ function adminInboxHub() {
             this.isPolling = true;
 
             try {
-                const url = `/admin/inbox/poll?channel=${this.currentChannel}&status=${this.currentStatus}&search=${encodeURIComponent(this.searchKeyword || '')}`;
+                const url = `/admin/inbox/poll?channel=${this.currentChannel}&status=${this.currentStatus}&tag=${encodeURIComponent(this.currentTag || 'all')}&search=${encodeURIComponent(this.searchKeyword || '')}`;
                 const res = await fetch(url, {
                     headers: { 'Accept': 'application/json' }
                 });
@@ -1433,6 +1755,15 @@ function adminInboxHub() {
             this.filterThreads();
         },
 
+        setTag(tag) {
+            if (this.currentTag === tag) {
+                this.currentTag = 'all';
+            } else {
+                this.currentTag = tag;
+            }
+            this.filterThreads();
+        },
+
         toggleStatusFilterDropdown() {
             // cycle quick statuses
             const states = ['all', 'unread', 'priority', 'ad_replies', 'followup'];
@@ -1444,6 +1775,7 @@ function adminInboxHub() {
         resetFilters() {
             this.currentChannel = 'all';
             this.currentStatus = 'all';
+            this.currentTag = 'all';
             this.searchKeyword = '';
             this.filterThreads();
         },
@@ -1451,6 +1783,7 @@ function adminInboxHub() {
         filterThreads(resetSelection = true) {
             const channel = this.currentChannel;
             const status = this.currentStatus;
+            const tag = this.currentTag;
             const search = (this.searchKeyword || '').toLowerCase().trim();
 
             this.displayedThreads = this.allThreads.filter(t => {
@@ -1482,6 +1815,28 @@ function adminInboxHub() {
                     }
                 }
 
+                // Tag check
+                let matchTag = true;
+                if (tag && tag !== 'all') {
+                    const curTag = String(tag).toLowerCase().trim();
+                    const threadTags = Array.isArray(t.tags) ? t.tags.map(x => String(x).toLowerCase()) : [];
+                    if (curTag === 'prioritas') {
+                        matchTag = threadTags.includes('prioritas') || t.status === 'priority';
+                    } else if (curTag === 'client') {
+                        matchTag = threadTags.includes('client') || threadTags.includes('pelanggan');
+                    } else if (curTag === 'prospek') {
+                        matchTag = threadTags.includes('prospek');
+                    } else if (curTag === 'tindak_lanjut') {
+                        matchTag = threadTags.includes('tindak_lanjut') || t.status === 'followup';
+                    } else if (curTag === 'komplain') {
+                        matchTag = threadTags.includes('komplain');
+                    } else if (curTag === 'vip') {
+                        matchTag = threadTags.includes('vip');
+                    } else {
+                        matchTag = threadTags.includes(curTag);
+                    }
+                }
+
                 // Search check
                 let matchSearch = true;
                 if (search) {
@@ -1490,7 +1845,7 @@ function adminInboxHub() {
                     matchSearch = name.includes(search) || lastMsg.includes(search);
                 }
 
-                return matchChannel && matchStatus && matchSearch;
+                return matchChannel && matchStatus && matchTag && matchSearch;
             });
 
             // Adjust selected thread
@@ -2090,6 +2445,204 @@ function adminInboxHub() {
                 alert('Terjadi kendala saat menyinkronkan data: ' + err.message);
             } finally {
                 this.isSyncing = false;
+            }
+        },
+
+        async toggleThreadTag(thread, tag) {
+            if (!thread || !tag) return;
+            tag = String(tag).toLowerCase().trim();
+            if (!Array.isArray(thread.tags)) {
+                thread.tags = [];
+            }
+            const hasTag = thread.tags.map(t => String(t).toLowerCase()).includes(tag);
+            const action = hasTag ? 'remove' : 'add';
+
+            // Optimistic update locally
+            if (action === 'add') {
+                thread.tags.push(tag);
+                if (tag === 'prioritas') thread.status = 'priority';
+            } else {
+                thread.tags = thread.tags.filter(t => String(t).toLowerCase() !== tag);
+                if (tag === 'prioritas' && thread.status === 'priority') thread.status = 'read';
+            }
+
+            // Sync with all instances in allThreads
+            this.allThreads.forEach(t => {
+                if (t.id === thread.id || (t.customer_id && thread.customer_id && t.customer_id === thread.customer_id)) {
+                    t.tags = [...thread.tags];
+                    if (tag === 'prioritas') t.status = thread.status;
+                }
+            });
+
+            this.recalculateCounts();
+            this.filterThreads(false);
+
+            try {
+                const response = await fetch(`/admin/inbox/tags/${thread.id}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify({ action, tag })
+                });
+                const data = await response.json();
+                if (response.ok && data.success && Array.isArray(data.tags)) {
+                    thread.tags = data.tags;
+                    this.allThreads.forEach(t => {
+                        if (t.id === thread.id || (t.customer_id && thread.customer_id && t.customer_id === thread.customer_id)) {
+                            t.tags = [...data.tags];
+                        }
+                    });
+                    this.recalculateCounts();
+                    this.filterThreads(false);
+                }
+            } catch (err) {
+                console.error('Failed to toggle tag:', err);
+            }
+        },
+
+        async addCustomTag(thread, tag) {
+            if (!thread || !tag) return;
+            tag = String(tag).toLowerCase().trim();
+            if (!tag) return;
+
+            if (!Array.isArray(thread.tags)) {
+                thread.tags = [];
+            }
+            if (!thread.tags.map(t => String(t).toLowerCase()).includes(tag)) {
+                thread.tags.push(tag);
+                this.allThreads.forEach(t => {
+                    if (t.id === thread.id || (t.customer_id && thread.customer_id && t.customer_id === thread.customer_id)) {
+                        t.tags = [...thread.tags];
+                    }
+                });
+                this.recalculateCounts();
+                this.filterThreads(false);
+            }
+
+            try {
+                const response = await fetch(`/admin/inbox/tags/${thread.id}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify({ action: 'add', tag })
+                });
+                const data = await response.json();
+                if (response.ok && data.success && Array.isArray(data.tags)) {
+                    thread.tags = data.tags;
+                    this.allThreads.forEach(t => {
+                        if (t.id === thread.id || (t.customer_id && thread.customer_id && t.customer_id === thread.customer_id)) {
+                            t.tags = [...data.tags];
+                        }
+                    });
+                    this.recalculateCounts();
+                    this.filterThreads(false);
+                }
+            } catch (err) {
+                console.error('Failed to add custom tag:', err);
+            }
+        },
+
+        async removeThreadTag(thread, tag) {
+            if (!thread || !tag) return;
+            tag = String(tag).toLowerCase().trim();
+
+            if (Array.isArray(thread.tags)) {
+                thread.tags = thread.tags.filter(t => String(t).toLowerCase() !== tag);
+                if (tag === 'prioritas' && thread.status === 'priority') {
+                    thread.status = 'read';
+                }
+                this.allThreads.forEach(t => {
+                    if (t.id === thread.id || (t.customer_id && thread.customer_id && t.customer_id === thread.customer_id)) {
+                        t.tags = [...thread.tags];
+                        if (tag === 'prioritas' && t.status === 'priority') t.status = 'read';
+                    }
+                });
+                this.recalculateCounts();
+                this.filterThreads(false);
+            }
+
+            try {
+                const response = await fetch(`/admin/inbox/tags/${thread.id}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify({ action: 'remove', tag })
+                });
+                const data = await response.json();
+                if (response.ok && data.success && Array.isArray(data.tags)) {
+                    thread.tags = data.tags;
+                    this.allThreads.forEach(t => {
+                        if (t.id === thread.id || (t.customer_id && thread.customer_id && t.customer_id === thread.customer_id)) {
+                            t.tags = [...data.tags];
+                        }
+                    });
+                    this.recalculateCounts();
+                    this.filterThreads(false);
+                }
+            } catch (err) {
+                console.error('Failed to remove tag:', err);
+            }
+        },
+
+        recalculateCounts() {
+            const threads = this.allThreads || [];
+            this.counts = {
+                ...this.counts,
+                all: threads.length,
+                unread: threads.filter(t => t.is_unread).length,
+                priority: threads.filter(t => t.status === 'priority' || (Array.isArray(t.tags) && t.tags.includes('prioritas'))).length,
+                tag_prioritas: threads.filter(t => (Array.isArray(t.tags) && t.tags.includes('prioritas')) || t.status === 'priority').length,
+                tag_client: threads.filter(t => Array.isArray(t.tags) && (t.tags.includes('client') || t.tags.includes('pelanggan'))).length,
+                tag_prospek: threads.filter(t => Array.isArray(t.tags) && t.tags.includes('prospek')).length,
+                tag_tindak_lanjut: threads.filter(t => (Array.isArray(t.tags) && t.tags.includes('tindak_lanjut')) || t.status === 'followup').length,
+                tag_komplain: threads.filter(t => Array.isArray(t.tags) && t.tags.includes('komplain')).length,
+                tag_vip: threads.filter(t => Array.isArray(t.tags) && t.tags.includes('vip')).length,
+            };
+        },
+
+        getTagBadgeClass(tag) {
+            const t = String(tag || '').toLowerCase().trim();
+            switch (t) {
+                case 'prioritas':
+                    return 'bg-amber-50 text-amber-800 border-amber-200 dark:bg-amber-950/40 dark:text-amber-200 dark:border-amber-800/50';
+                case 'client':
+                case 'pelanggan':
+                    return 'bg-blue-50 text-blue-800 border-blue-200 dark:bg-blue-950/40 dark:text-blue-200 dark:border-blue-800/50';
+                case 'prospek':
+                    return 'bg-emerald-50 text-emerald-800 border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-200 dark:border-emerald-800/50';
+                case 'tindak_lanjut':
+                    return 'bg-indigo-50 text-indigo-800 border-indigo-200 dark:bg-indigo-950/40 dark:text-indigo-200 dark:border-indigo-800/50';
+                case 'komplain':
+                    return 'bg-rose-50 text-rose-800 border-rose-200 dark:bg-rose-950/40 dark:text-rose-200 dark:border-rose-800/50';
+                case 'vip':
+                    return 'bg-purple-50 text-purple-800 border-purple-200 dark:bg-purple-950/40 dark:text-purple-200 dark:border-purple-800/50';
+                default:
+                    return 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-white/10 dark:text-gray-200 dark:border-white/10';
+            }
+        },
+
+        formatTagLabel(tag) {
+            if (!tag) return '';
+            const t = String(tag).toLowerCase().trim();
+            switch (t) {
+                case 'prioritas': return 'Prioritas';
+                case 'client': return 'Client';
+                case 'pelanggan': return 'Pelanggan';
+                case 'prospek': return 'Prospek';
+                case 'tindak_lanjut': return 'Tindak Lanjut';
+                case 'komplain': return 'Komplain';
+                case 'vip': return 'VIP';
+                default:
+                    return t.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
             }
         }
     }

@@ -36,6 +36,7 @@ class AdminInboxController extends Controller
     {
         $status = (string) $request->query('status', 'all');
         $channel = (string) $request->query('channel', 'all');
+        $tag = (string) $request->query('tag', 'all');
         $search = (string) $request->query('search', '');
 
         // Official platform social accounts (Facebook Page, Instagram, WhatsApp, etc.)
@@ -64,7 +65,7 @@ class AdminInboxController extends Controller
         // Build structured threads
         $threads = $this->buildPlatformThreads($allComments);
 
-        // Calculate counts per channel & status
+        // Calculate counts per channel, status, and tag
         $counts = [
             'all'                => count($threads),
             'live_chat'          => count(array_filter($threads, fn($t) => $t['channel'] === 'live_chat')),
@@ -74,13 +75,19 @@ class AdminInboxController extends Controller
             'facebook_comments'  => count(array_filter($threads, fn($t) => in_array($t['channel'], ['facebook', 'facebook_comments']))),
             'instagram_comments' => count(array_filter($threads, fn($t) => $t['channel'] === 'instagram_comments')),
             'unread'             => count(array_filter($threads, fn($t) => $t['is_unread'])),
-            'priority'           => count(array_filter($threads, fn($t) => $t['status'] === 'priority')),
-            'ad_replies'         => count(array_filter($threads, fn($t) => $t['status'] === 'ad_replies')),
-            'followup'           => count(array_filter($threads, fn($t) => $t['status'] === 'followup')),
+            'priority'           => count(array_filter($threads, fn($t) => $t['status'] === 'priority' || in_array('prioritas', $t['tags'] ?? [], true))),
+            'ad_replies'         => count(array_filter($threads, fn($t) => $t['status'] === 'ad_replies' || in_array('balasan_iklan', $t['tags'] ?? [], true))),
+            'followup'           => count(array_filter($threads, fn($t) => $t['status'] === 'followup' || in_array('tindak_lanjut', $t['tags'] ?? [], true))),
+            'tag_prioritas'      => count(array_filter($threads, fn($t) => in_array('prioritas', $t['tags'] ?? [], true) || ($t['status'] ?? '') === 'priority')),
+            'tag_client'         => count(array_filter($threads, fn($t) => in_array('client', $t['tags'] ?? [], true) || in_array('pelanggan', $t['tags'] ?? [], true))),
+            'tag_prospek'        => count(array_filter($threads, fn($t) => in_array('prospek', $t['tags'] ?? [], true))),
+            'tag_tindak_lanjut'  => count(array_filter($threads, fn($t) => in_array('tindak_lanjut', $t['tags'] ?? [], true) || ($t['status'] ?? '') === 'followup')),
+            'tag_komplain'       => count(array_filter($threads, fn($t) => in_array('komplain', $t['tags'] ?? [], true))),
+            'tag_vip'            => count(array_filter($threads, fn($t) => in_array('vip', $t['tags'] ?? [], true))),
         ];
 
-        // Filter threads according to selected channel and status
-        $filteredThreads = array_values(array_filter($threads, function ($t) use ($channel, $status) {
+        // Filter threads according to selected channel, status, and tag
+        $filteredThreads = array_values(array_filter($threads, function ($t) use ($channel, $status, $tag) {
             $matchChannel = match ($channel) {
                 'all' => true,
                 'live_chat' => $t['channel'] === 'live_chat',
@@ -95,13 +102,24 @@ class AdminInboxController extends Controller
             $matchStatus = match ($status) {
                 'all' => true,
                 'unread' => $t['is_unread'] || $t['status'] === 'unread',
-                'priority' => $t['status'] === 'priority',
-                'ad_replies' => $t['status'] === 'ad_replies',
-                'followup' => $t['status'] === 'followup',
+                'priority' => $t['status'] === 'priority' || in_array('prioritas', $t['tags'] ?? [], true),
+                'ad_replies' => $t['status'] === 'ad_replies' || in_array('balasan_iklan', $t['tags'] ?? [], true),
+                'followup' => $t['status'] === 'followup' || in_array('tindak_lanjut', $t['tags'] ?? [], true),
                 default => true,
             };
 
-            return $matchChannel && $matchStatus;
+            $matchTag = match ($tag) {
+                'all' => true,
+                'prioritas' => in_array('prioritas', $t['tags'] ?? [], true) || ($t['status'] ?? '') === 'priority',
+                'client' => in_array('client', $t['tags'] ?? [], true) || in_array('pelanggan', $t['tags'] ?? [], true),
+                'prospek' => in_array('prospek', $t['tags'] ?? [], true),
+                'tindak_lanjut' => in_array('tindak_lanjut', $t['tags'] ?? [], true) || ($t['status'] ?? '') === 'followup',
+                'komplain' => in_array('komplain', $t['tags'] ?? [], true),
+                'vip' => in_array('vip', $t['tags'] ?? [], true),
+                default => in_array($tag, $t['tags'] ?? [], true),
+            };
+
+            return $matchChannel && $matchStatus && $matchTag;
         }));
 
         // Meta Omnichannel Credentials & Config
@@ -124,6 +142,8 @@ class AdminInboxController extends Controller
             'counts'           => $counts,
             'status'           => $status,
             'channel'          => $channel,
+            'tag'              => $tag,
+            'currentTag'       => $tag,
             'search'           => $search,
             'platformAccounts' => $platformAccounts,
             'platformWaNumber' => $platformWaNumber,
@@ -167,9 +187,15 @@ class AdminInboxController extends Controller
             'facebook_comments'  => count(array_filter($threads, fn($t) => in_array($t['channel'], ['facebook', 'facebook_comments']))),
             'instagram_comments' => count(array_filter($threads, fn($t) => $t['channel'] === 'instagram_comments')),
             'unread'             => count(array_filter($threads, fn($t) => $t['is_unread'])),
-            'priority'           => count(array_filter($threads, fn($t) => $t['status'] === 'priority')),
-            'ad_replies'         => count(array_filter($threads, fn($t) => $t['status'] === 'ad_replies')),
-            'followup'           => count(array_filter($threads, fn($t) => $t['status'] === 'followup')),
+            'priority'           => count(array_filter($threads, fn($t) => $t['status'] === 'priority' || in_array('prioritas', $t['tags'] ?? [], true))),
+            'ad_replies'         => count(array_filter($threads, fn($t) => $t['status'] === 'ad_replies' || in_array('balasan_iklan', $t['tags'] ?? [], true))),
+            'followup'           => count(array_filter($threads, fn($t) => $t['status'] === 'followup' || in_array('tindak_lanjut', $t['tags'] ?? [], true))),
+            'tag_prioritas'      => count(array_filter($threads, fn($t) => in_array('prioritas', $t['tags'] ?? [], true) || ($t['status'] ?? '') === 'priority')),
+            'tag_client'         => count(array_filter($threads, fn($t) => in_array('client', $t['tags'] ?? [], true) || in_array('pelanggan', $t['tags'] ?? [], true))),
+            'tag_prospek'        => count(array_filter($threads, fn($t) => in_array('prospek', $t['tags'] ?? [], true))),
+            'tag_tindak_lanjut'  => count(array_filter($threads, fn($t) => in_array('tindak_lanjut', $t['tags'] ?? [], true) || ($t['status'] ?? '') === 'followup')),
+            'tag_komplain'       => count(array_filter($threads, fn($t) => in_array('komplain', $t['tags'] ?? [], true))),
+            'tag_vip'            => count(array_filter($threads, fn($t) => in_array('vip', $t['tags'] ?? [], true))),
         ];
 
         return response()->json([
@@ -839,18 +865,102 @@ class AdminInboxController extends Controller
 
         $comment = SocialMediaComment::where('is_platform', true)->find($id);
         if ($comment) {
-            $comment->update(['status' => $validated['status']]);
+            $tags = (array) ($comment->tags ?? []);
+            if ($validated['status'] === 'priority' && ! in_array('prioritas', $tags, true)) {
+                $tags[] = 'prioritas';
+            } elseif ($validated['status'] !== 'priority' && in_array('prioritas', $tags, true)) {
+                $tags = array_values(array_filter($tags, fn($t) => $t !== 'prioritas'));
+            }
+            if ($validated['status'] === 'followup' && ! in_array('tindak_lanjut', $tags, true)) {
+                $tags[] = 'tindak_lanjut';
+            }
+            $comment->update([
+                'status' => $validated['status'],
+                'tags'   => array_values(array_unique(array_filter($tags))),
+            ]);
         }
 
         if ($request->wantsJson()) {
             return response()->json([
                 'success' => true,
                 'status'  => $validated['status'],
+                'tags'    => (array) ($comment?->tags ?? []),
                 'message' => 'Status percakapan berhasil diperbarui.',
             ]);
         }
 
         return back()->with('success', 'Status percakapan diperbarui.');
+    }
+
+    /**
+     * AJAX/Post: Update tags on a conversation thread (e.g. prioritas, client, prospek, tindak_lanjut, komplain, vip).
+     */
+    public function updateTags(Request $request, string $id): JsonResponse|RedirectResponse
+    {
+        $validated = $request->validate([
+            'tags'   => ['nullable', 'array'],
+            'tags.*' => ['string', 'max:50'],
+            'tag'    => ['nullable', 'string', 'max:50'],
+            'action' => ['nullable', 'string', 'in:add,remove,set'],
+        ]);
+
+        $comment = SocialMediaComment::where('is_platform', true)->find($id);
+        if (! $comment) {
+            if ($request->wantsJson()) {
+                return response()->json(['success' => false, 'message' => 'Percakapan tidak ditemukan.'], 404);
+            }
+            return back()->with('error', 'Percakapan tidak ditemukan.');
+        }
+
+        $existingTags = (array) ($comment->tags ?? []);
+
+        if (! empty($validated['action']) && ! empty($validated['tag'])) {
+            $tag = strtolower(trim((string) $validated['tag']));
+            if ($validated['action'] === 'add') {
+                if (! in_array($tag, $existingTags, true)) {
+                    $existingTags[] = $tag;
+                }
+            } elseif ($validated['action'] === 'remove') {
+                $existingTags = array_values(array_filter($existingTags, fn($t) => strtolower((string) $t) !== $tag));
+            }
+        } elseif (isset($validated['tags'])) {
+            $existingTags = array_values(array_unique(array_filter(array_map(fn($t) => strtolower(trim((string) $t)), (array) $validated['tags']))));
+        }
+
+        // For direct chat customer thread, update all records for that customer
+        $targetComments = collect([$comment]);
+        if (! in_array(strtolower((string) $comment->platform), ['facebook_comments', 'instagram_comments'], true)) {
+            $customerId = $comment->session_token ?: $comment->from_id;
+            if ($customerId) {
+                $targetComments = SocialMediaComment::where('is_platform', true)
+                    ->where(function ($q) use ($customerId) {
+                        $q->where('from_id', $customerId)
+                          ->orWhere('session_token', $customerId);
+                    })
+                    ->get();
+            }
+        }
+
+        foreach ($targetComments as $c) {
+            $c->tags = $existingTags;
+            // Sync status if prioritas tag is toggled
+            if (in_array('prioritas', $existingTags, true) && $c->status !== 'priority') {
+                $c->status = 'priority';
+            } elseif (! in_array('prioritas', $existingTags, true) && $c->status === 'priority') {
+                $c->status = 'read';
+            }
+            $c->save();
+        }
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'tags'    => $existingTags,
+                'message' => 'Tag percakapan berhasil diperbarui.',
+            ]);
+        }
+
+        return back()->with('success', 'Tag percakapan diperbarui.');
     }
 
     /**
@@ -1369,6 +1479,15 @@ class AdminInboxController extends Controller
 
             $sortTimestamp = $c->created_time ? $c->created_time->timestamp : $c->created_at->timestamp;
 
+            $commentTags = (array) ($c->tags ?? []);
+            if ($c->status === 'flagged' && ! in_array('prioritas', $commentTags, true)) {
+                $commentTags[] = 'prioritas';
+            }
+            if ($c->status === 'snoozed' && ! in_array('tindak_lanjut', $commentTags, true)) {
+                $commentTags[] = 'tindak_lanjut';
+            }
+            $commentTags = array_values(array_unique(array_filter($commentTags)));
+
             $threads[] = [
                 'id'             => $c->id,
                 'comment_id'     => $c->platform_comment_id,
@@ -1381,6 +1500,7 @@ class AdminInboxController extends Controller
                 'media_type'     => $c->media_type,
                 'status'         => $c->status ?: 'unread',
                 'is_unread'      => $c->status === 'unread',
+                'tags'           => $commentTags,
                 'post_snippet'   => Str::limit($postCaption, 60),
                 'time'           => $c->created_time ? $c->created_time->format('H.i') : $c->created_at->format('H.i'),
                 'time_relative'  => $c->created_time ? $c->created_time->diffForHumans(null, true) : '2 jam',
@@ -1476,6 +1596,20 @@ class AdminInboxController extends Controller
 
             $sortTimestamp = $latestMsg->created_time ? $latestMsg->created_time->timestamp : $latestMsg->created_at->timestamp;
 
+            $allGroupTags = [];
+            foreach ($sortedMsgs as $m) {
+                if (! empty($m->tags) && is_array($m->tags)) {
+                    $allGroupTags = array_merge($allGroupTags, $m->tags);
+                }
+            }
+            if ($threadStatus === 'flagged' && ! in_array('prioritas', $allGroupTags, true)) {
+                $allGroupTags[] = 'prioritas';
+            }
+            if ($threadStatus === 'snoozed' && ! in_array('tindak_lanjut', $allGroupTags, true)) {
+                $allGroupTags[] = 'tindak_lanjut';
+            }
+            $groupTags = array_values(array_unique(array_filter($allGroupTags)));
+
             $threads[] = [
                 'id'            => $latestMsg->id,
                 'comment_id'    => $latestMsg->platform_comment_id,
@@ -1491,6 +1625,7 @@ class AdminInboxController extends Controller
                 'media_type'    => $latestMsg->media_type,
                 'status'        => $threadStatus,
                 'is_unread'     => $hasUnread,
+                'tags'          => $groupTags,
                 'post_snippet'  => ($channel === 'live_chat') ? 'Live Chat Website (cooca.id)' : '',
                 'time'          => $latestMsg->created_time ? $latestMsg->created_time->format('H.i') : $latestMsg->created_at->format('H.i'),
                 'time_relative' => $latestMsg->created_time ? $latestMsg->created_time->diffForHumans(null, true) : 'Baru saja',
@@ -1565,6 +1700,7 @@ class AdminInboxController extends Controller
                     'from_id'              => 'agung.mustaqim',
                     'from_name'            => 'agung.mustaqim',
                     'message'              => '🔥🔥🔥',
+                    'tags'                 => ['client'],
                     'is_from_page'         => false,
                     'status'               => 'unread',
                     'created_time'         => now()->subHours(2),
@@ -1605,8 +1741,9 @@ class AdminInboxController extends Controller
                     'from_id'              => 'agung.mustaqim',
                     'from_name'            => 'Agung Mustaqim',
                     'message'              => 'Keren sekali solusinya, mau tanya info harga paketnya min?',
+                    'tags'                 => ['prioritas', 'prospek'],
                     'is_from_page'         => false,
-                    'status'               => 'unread',
+                    'status'               => 'priority',
                     'created_time'         => now()->subHours(3),
                 ]
             );
@@ -1625,6 +1762,7 @@ class AdminInboxController extends Controller
                     'from_id'              => 'dian_sari',
                     'from_name'            => 'dian_sari',
                     'message'              => 'Halo min, apakah akun Instagram ini official Cooca?',
+                    'tags'                 => ['prospek'],
                     'is_from_page'         => false,
                     'status'               => 'unread',
                     'created_time'         => now()->subHours(1),
@@ -1645,8 +1783,9 @@ class AdminInboxController extends Controller
                     'from_id'              => 'budi_santoso_fb',
                     'from_name'            => 'Budi Santoso',
                     'message'              => 'Halo kak, mau tanya fitur laporan keuangan dan integrasi POS di Cooca.',
+                    'tags'                 => ['tindak_lanjut'],
                     'is_from_page'         => false,
-                    'status'               => 'unread',
+                    'status'               => 'followup',
                     'created_time'         => now()->subMinutes(45),
                 ]
             );
@@ -1665,8 +1804,9 @@ class AdminInboxController extends Controller
                     'from_id'              => '6281234567890',
                     'from_name'            => 'Citra Lestari (+6281234567890)',
                     'message'              => 'Halo kak, saya mau tanya harga paket Cooca Enterprise untuk 3 cabang retail.',
+                    'tags'                 => ['prioritas', 'vip'],
                     'is_from_page'         => false,
-                    'status'               => 'unread',
+                    'status'               => 'priority',
                     'created_time'         => now()->subMinutes(20),
                 ]
             );
@@ -1685,6 +1825,7 @@ class AdminInboxController extends Controller
                     'message'              => 'Halo Kak Citra! Berikut kami lampirkan brosur katalog paket Cooca Enterprise untuk kebutuhan retail multi-cabang. Ada yang ingin ditanyakan lagi kak? 😊',
                     'media_url'            => asset('assets/image/cooca_hero_banner.png'),
                     'media_type'           => 'image',
+                    'tags'                 => ['prioritas', 'vip'],
                     'is_from_page'         => true,
                     'status'               => 'replied',
                     'created_time'         => now()->subMinutes(10),
@@ -1707,8 +1848,9 @@ class AdminInboxController extends Controller
                     'from_id'              => '6282114468467',
                     'from_name'            => 'Agung Mustaqim (+6282114468467)',
                     'message'              => 'Halo Cooca, saya ingin cek aktivasi chat WhatsApp dan konsultasi integrasi sistem.',
+                    'tags'                 => ['client', 'prioritas'],
                     'is_from_page'         => false,
-                    'status'               => 'unread',
+                    'status'               => 'priority',
                     'created_time'         => now()->subMinutes(15),
                 ]
             );
@@ -1725,12 +1867,21 @@ class AdminInboxController extends Controller
                     'from_id'              => '6282114468467',
                     'from_name'            => 'Cooca Indonesia (Admin)',
                     'message'              => 'Halo Kak! Ini pesan resmi langsung dari WhatsApp Cooca Indonesia (+62 852-8786-4176). Chat Anda telah terhubung dengan Admin Inbox! 🚀',
+                    'tags'                 => ['client', 'prioritas'],
                     'is_from_page'         => true,
                     'status'               => 'replied',
                     'created_time'         => now()->subMinutes(8),
                 ]
             );
         }
+
+        // Backfill tags for existing demo conversations without tags
+        SocialMediaComment::where('is_platform', true)->whereNull('tags')->where('from_name', 'like', '%Citra%')->update(['tags' => ['prioritas', 'vip']]);
+        SocialMediaComment::where('is_platform', true)->whereNull('tags')->where('from_name', 'like', '%Agung%')->where('platform', 'whatsapp')->update(['tags' => ['client', 'prioritas']]);
+        SocialMediaComment::where('is_platform', true)->whereNull('tags')->where('from_name', 'like', '%Budi%')->update(['tags' => ['tindak_lanjut']]);
+        SocialMediaComment::where('is_platform', true)->whereNull('tags')->where('from_name', 'like', '%dian%')->update(['tags' => ['prospek']]);
+        SocialMediaComment::where('is_platform', true)->whereNull('tags')->where('from_name', 'like', '%agung%')->where('platform', 'facebook_comments')->update(['tags' => ['prioritas', 'prospek']]);
+        SocialMediaComment::where('is_platform', true)->whereNull('tags')->where('from_name', 'like', '%agung%')->where('platform', 'instagram_comments')->update(['tags' => ['client']]);
 
         // Auto-correct and self-heal WhatsApp credentials in SystemSetting on production
         $currentPhoneId = (string) (SystemSetting::get('meta_wa_phone_number_id') ?: SystemSetting::get('whatsapp_phone_number_id'));

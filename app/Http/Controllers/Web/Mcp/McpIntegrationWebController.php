@@ -51,6 +51,16 @@ final class McpIntegrationWebController extends Controller
         $apiBaseUrl = url('/api/v1/mcp');
         $sseEndpoint = url('/api/v1/mcp/sse');
         $openApiEndpoint = url('/api/v1/mcp/openapi.json');
+        $topLevelMcpUrl = url('/mcp');
+
+        // OAuth 2.0 & OIDC Endpoints for ChatGPT Apps SDK / Connectors
+        $oauthAuthorizeUrl = url('/api/v1/mcp/oauth/authorize');
+        $oauthTokenUrl = url('/api/v1/mcp/oauth/token');
+        $oauthRegisterUrl = url('/api/v1/mcp/oauth/register');
+        $oauthUserInfoUrl = url('/api/v1/mcp/oauth/userinfo');
+        $oauthIssuerUrl = url('/');
+        $oidcConfigUrl = url('/.well-known/openid-configuration');
+        $oauthMetadataUrl = url('/.well-known/oauth-authorization-server');
 
         return view('app.settings.integrations.mcp', compact(
             'business',
@@ -62,7 +72,15 @@ final class McpIntegrationWebController extends Controller
             'isMcpActive',
             'apiBaseUrl',
             'sseEndpoint',
-            'openApiEndpoint'
+            'openApiEndpoint',
+            'topLevelMcpUrl',
+            'oauthAuthorizeUrl',
+            'oauthTokenUrl',
+            'oauthRegisterUrl',
+            'oauthUserInfoUrl',
+            'oauthIssuerUrl',
+            'oidcConfigUrl',
+            'oauthMetadataUrl'
         ));
     }
 
@@ -88,7 +106,7 @@ final class McpIntegrationWebController extends Controller
 
         $validated = $request->validate([
             'name'          => ['required', 'string', 'max:100'],
-            'provider_hint' => ['required', 'string', 'in:claude,openai,gemini,cursor,ollama,langchain,all,custom'],
+            'provider_hint' => ['required', 'string', 'in:claude,openai,gemini,cursor,ollama,langchain,dola,all,custom'],
             'abilities'     => ['required', 'array', 'min:1'],
             'abilities.*'   => ['string', 'max:50'],
             'expires_in'    => ['nullable', 'string', 'in:never,30_days,90_days,1_year'],

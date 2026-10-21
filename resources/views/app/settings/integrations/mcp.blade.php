@@ -8,13 +8,25 @@ function mcpSettingsHub() {
     const sseUrl = @json($sseEndpoint);
     const apiBase = @json($apiBaseUrl);
     const openApiUrl = @json($openApiEndpoint);
+    const topLevelMcpUrl = @json($topLevelMcpUrl ?? url('/mcp'));
+    const oauthAuthorizeUrl = @json($oauthAuthorizeUrl ?? url('/mcp/oauth/authorize'));
+    const oauthTokenUrl = @json($oauthTokenUrl ?? url('/mcp/oauth/token'));
+    const oauthRegisterUrl = @json($oauthRegisterUrl ?? url('/mcp/oauth/register'));
+    const oauthUserInfoUrl = @json($oauthUserInfoUrl ?? url('/mcp/oauth/userinfo'));
+    const oauthIssuerUrl = @json($oauthIssuerUrl ?? url('/'));
+    const oidcConfigUrl = @json($oidcConfigUrl ?? url('/.well-known/openid-configuration'));
+    const oauthMetadataUrl = @json($oauthMetadataUrl ?? url('/.well-known/oauth-authorization-server'));
 
     return {
         openCreateModal: false,
         activeProviderTab: 'claude',
         claudeMode: 'web', // 'web' (Claude.ai Web & Mobile), 'desktop_sse' (Claude Desktop Remote), 'desktop_stdio' (Local CLI)
         chatgptMode: 'connector', // 'connector' (ChatGPT Apps SDK / MCP Connector), 'actions' (Custom GPT Actions)
+        chatgptAuthMethod: 'oauth', // 'oauth' (Recommended by ChatGPT Apps SDK), 'none' (Direct Token URL)
+        chatgptClientRegMethod: 'user_defined', // 'user_defined' (Klien OAuth yang Ditentukan Pengguna), 'dcr' (Dynamic Client Registration)
+        chatgptTokenEndpointAuth: 'client_secret_post', // 'client_secret_post', 'none', 'client_secret_basic'
         cursorMode: 'sse', // 'sse', 'stdio'
+        dolaMode: 'http', // 'http' (Remote HTTP / SSE), 'stdio' (Local CLI)
         customToken: @json(session('plain_token') ?? ''),
         activeOs: 'windows',
         toastVisible: false,
@@ -132,8 +144,30 @@ function mcpSettingsHub() {
             return `claude mcp add cooca-erp -- php artisan mcp:serve --token=${this.getToken()}`;
         },
 
+        getChatGptMcpUrl() {
+            if (this.chatgptAuthMethod === 'none') {
+                return `${topLevelMcpUrl}?token=${this.getToken()}`;
+            }
+            return topLevelMcpUrl;
+        },
+
         getChatGptConnectorUrl() {
-            return `${sseUrl}?token=${this.getToken()}`;
+            return this.getChatGptMcpUrl();
+        },
+
+        getChatGptSseUrl() {
+            if (this.chatgptAuthMethod === 'none') {
+                return `${sseUrl}?token=${this.getToken()}`;
+            }
+            return sseUrl;
+        },
+
+        getChatGptClientId() {
+            return this.getToken();
+        },
+
+        getChatGptClientSecret() {
+            return (this.customToken && this.customToken.trim().length > 0) ? this.customToken.trim() : this.getToken();
         },
 
         getChatGptOpenApiUrl() {
@@ -221,6 +255,35 @@ def check_inventory_stock(query: str = "") -> str:
         json={"search_query": query}
     )
     return str(resp.json())`;
+        },
+
+        getDolaConfig() {
+            const config = {
+                "mcpServers": {
+                    "cooca-erp": {
+                        "transport": "http",
+                        "url": topLevelMcpUrl,
+                        "headers": {
+                            "Authorization": "Bearer " + this.getToken()
+                        }
+                    }
+                }
+            };
+            return JSON.stringify(config, null, 2);
+        },
+
+        getDolaStdioConfig() {
+            const config = {
+                "mcpServers": {
+                    "cooca-erp": {
+                        "transport": "stdio",
+                        "command": "php",
+                        "args": ["artisan", "mcp:serve", "--token=" + this.getToken()],
+                        "cwd": "/path/ke/proyek/cooca_core"
+                    }
+                }
+            };
+            return JSON.stringify(config, null, 2);
         }
     };
 }
@@ -567,6 +630,14 @@ document.addEventListener('alpine:init', () => {
                     <i data-lucide="file-code" class="w-4 h-4 text-indigo-500"></i>
                     <span>{{ __('mcp.tab_langchain') }}</span>
                 </button>
+                <button
+                    type="button"
+                    @click="activeProviderTab = 'dola'"
+                    :class="activeProviderTab === 'dola' ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500 hover:text-neutral-900 dark:hover:text-white'"
+                    class="px-3.5 py-2 rounded-[12px] transition-all whitespace-nowrap flex items-center gap-2">
+                    <i data-lucide="calendar-clock" class="w-4 h-4 text-orange-500"></i>
+                    <span>{{ __('mcp.tab_dola') }}</span>
+                </button>
             </div>
 
             {{-- Tab Contents Detail per Provider --}}
@@ -756,11 +827,17 @@ document.addEventListener('alpine:init', () => {
                 </div>
 
                 {{-- 2. ChatGPT Ecosystem (Apps SDK, Web & Custom GPT Actions) --}}
-                <div x-show="activeProviderTab === 'chatgpt'" class="space-y-5" style="display: none;">
+                <div x-show="activeProviderTab === 'chatgpt'" class="space-y-6" style="display: none;">
+                    
+                    {{-- Header & Sub-toggle --}}
                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                         <div class="flex items-center gap-2">
                             <span class="px-2.5 py-1 rounded-[8px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-semibold">
                                 {{ __('mcp.chatgpt_ecosystem_badge') }}
+                            </span>
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-[6px] bg-neutral-100 dark:bg-neutral-800 text-[10px] text-neutral-600 dark:text-neutral-400 font-medium">
+                                <i data-lucide="check" class="w-3 h-3 text-emerald-500"></i>
+                                <span>RFC 8414 & OIDC Ready</span>
                             </span>
                         </div>
 
@@ -770,89 +847,595 @@ document.addEventListener('alpine:init', () => {
                                 type="button"
                                 @click="chatgptMode = 'connector'"
                                 :class="chatgptMode === 'connector' ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500'"
-                                class="px-3 py-1 rounded-[8px] transition-all">
-                                {{ __('mcp.chatgpt_mode_connector') }}
+                                class="px-3 py-1 rounded-[8px] transition-all flex items-center gap-1.5">
+                                <i data-lucide="sparkles" class="w-3.5 h-3.5 text-emerald-500"></i>
+                                <span>{{ __('mcp.chatgpt_mode_connector') }}</span>
                             </button>
                             <button
                                 type="button"
                                 @click="chatgptMode = 'actions'"
                                 :class="chatgptMode === 'actions' ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500'"
-                                class="px-3 py-1 rounded-[8px] transition-all">
-                                {{ __('mcp.chatgpt_mode_actions') }}
+                                class="px-3 py-1 rounded-[8px] transition-all flex items-center gap-1.5">
+                                <i data-lucide="wrench" class="w-3.5 h-3.5 text-neutral-500"></i>
+                                <span>{{ __('mcp.chatgpt_mode_actions') }}</span>
                             </button>
                         </div>
                     </div>
 
                     {{-- Mode 2A: ChatGPT Apps SDK / MCP Connector --}}
-                    <div x-show="chatgptMode === 'connector'" class="space-y-4">
-                        <div class="p-4 rounded-[16px] bg-amber-50/70 dark:bg-amber-950/30 border border-amber-500/20 space-y-1.5 text-xs text-amber-900 dark:text-amber-200">
-                            <div class="flex items-center gap-2 font-semibold">
-                                <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-600 shrink-0"></i>
-                                <span>{{ __('mcp.chatgpt_warning_title') }}</span>
+                    <div x-show="chatgptMode === 'connector'" class="space-y-5">
+                        
+                        {{-- Panduan Resmi OpenAI Help Center Header Banner --}}
+                        <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900/70 border border-neutral-200/80 dark:border-neutral-800 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                            <div>
+                                <h3 class="text-xs font-bold text-neutral-900 dark:text-white flex items-center gap-2">
+                                    <i data-lucide="book-open" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
+                                    <span>{{ __('mcp.chatgpt_setup_guide_title') }}</span>
+                                </h3>
+                                <p class="text-[11px] text-neutral-500 dark:text-neutral-400 mt-0.5">
+                                    {{ __('mcp.chatgpt_setup_guide_sub') }}
+                                </p>
                             </div>
-                            <p class="text-[11px] text-amber-800 dark:text-amber-300 leading-relaxed">
-                                {!! __('mcp.chatgpt_warning_desc') !!}
-                            </p>
+                            <div class="flex items-center gap-2">
+                                <a href="https://help.openai.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[11px] font-medium text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-200 transition-colors">
+                                    <span>{{ __('mcp.chatgpt_help_center_ref') }}</span>
+                                    <i data-lucide="external-link" class="w-3 h-3"></i>
+                                </a>
+                            </div>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-2">
-                                <span class="w-6 h-6 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-xs font-bold flex items-center justify-center">1</span>
-                                <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.chatgpt_name_desc_title') }}</h4>
-                                <div class="space-y-1.5 text-[11px] text-neutral-600 dark:text-neutral-300">
-                                    <div><strong>{{ __('mcp.chatgpt_lbl_name') }}:</strong> <code class="font-mono bg-neutral-200 dark:bg-neutral-800 px-1 py-0.5 rounded">COOCA ID Assistant</code></div>
-                                    <div><strong>{{ __('mcp.chatgpt_lbl_desc') }}:</strong> {{ __('mcp.chatgpt_desc_val') }}</div>
+                        {{-- 4 Steps Layout --}}
+                        <div class="space-y-4">
+
+                            {{-- LANGKAH 1 — Buka menu Plugins atau Apps --}}
+                            <div class="p-4 rounded-[16px] bg-white dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-2.5">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-6 h-6 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-xs font-bold flex items-center justify-center shrink-0">1</span>
+                                        <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.chatgpt_step1_heading') }}</h4>
+                                    </div>
+                                    <a href="https://chatgpt.com/?utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer" class="px-3 py-1 rounded-[8px] bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 text-neutral-800 dark:text-neutral-200 text-xs font-medium inline-flex items-center gap-1.5 transition-colors">
+                                        <span>Buka chatgpt.com</span>
+                                        <i data-lucide="external-link" class="w-3 h-3"></i>
+                                    </a>
                                 </div>
+                                <p class="text-[11px] text-neutral-500 dark:text-neutral-400 leading-relaxed">
+                                    {!! __('mcp.chatgpt_step1_desc') !!}
+                                </p>
                             </div>
 
-                            <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-2">
-                                <span class="w-6 h-6 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-xs font-bold flex items-center justify-center">2</span>
-                                <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.chatgpt_auth_title') }}</h4>
-                                <div class="p-2.5 rounded-[10px] bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800">
-                                    <div class="text-[10px] text-neutral-400 uppercase font-semibold">{{ __('mcp.chatgpt_auth_form_label') }}:</div>
-                                    <div class="font-semibold text-emerald-600 dark:text-emerald-400 mt-0.5 flex items-center gap-1.5">
-                                        <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
-                                        <span>{{ __('mcp.chatgpt_auth_none') }}</span>
+                            {{-- LANGKAH 2 — Tambahkan MCP Server --}}
+                            <div class="p-5 rounded-[16px] bg-white dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-4">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-6 h-6 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-xs font-bold flex items-center justify-center shrink-0">2</span>
+                                    <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.chatgpt_step2_heading') }}</h4>
+                                </div>
+                                <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
+                                    {{ __('mcp.chatgpt_step2_desc') }}
+                                </p>
+
+                                {{-- Form Inputs Grid --}}
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                                    {{-- Nama --}}
+                                    <div class="p-3.5 rounded-[12px] bg-neutral-50 dark:bg-neutral-900/90 border border-neutral-200/70 dark:border-neutral-800 space-y-1.5">
+                                        <div class="flex items-center justify-between text-xs">
+                                            <span class="font-semibold text-neutral-800 dark:text-neutral-200">{{ __('mcp.chatgpt_form_name_label') }}</span>
+                                            <button
+                                                type="button"
+                                                @click="copyText('COOCA MCP', 'Nama server tersalin!')"
+                                                class="text-blue-600 dark:text-blue-400 hover:underline text-[11px] flex items-center gap-1">
+                                                <i data-lucide="copy" class="w-3 h-3"></i>
+                                                <span>{{ __('mcp.btn_copy_short') }}</span>
+                                            </button>
+                                        </div>
+                                        <div class="font-mono text-xs bg-white dark:bg-[#1E1E1E] text-neutral-900 dark:text-white px-3 py-2 rounded-[8px] border border-neutral-200 dark:border-neutral-700">
+                                            COOCA MCP
+                                        </div>
+                                    </div>
+
+                                    {{-- Deskripsi (opsional) --}}
+                                    <div class="p-3.5 rounded-[12px] bg-neutral-50 dark:bg-neutral-900/90 border border-neutral-200/70 dark:border-neutral-800 space-y-1.5">
+                                        <div class="flex items-center justify-between text-xs">
+                                            <span class="font-semibold text-neutral-800 dark:text-neutral-200">{{ __('mcp.chatgpt_form_desc_label') }}</span>
+                                            <button
+                                                type="button"
+                                                @click="copyText('{{ addslashes(__('mcp.chatgpt_form_desc_val')) }}', 'Deskripsi tersalin!')"
+                                                class="text-blue-600 dark:text-blue-400 hover:underline text-[11px] flex items-center gap-1">
+                                                <i data-lucide="copy" class="w-3 h-3"></i>
+                                                <span>{{ __('mcp.btn_copy_short') }}</span>
+                                            </button>
+                                        </div>
+                                        <div class="text-xs text-neutral-700 dark:text-neutral-300 bg-white dark:bg-[#1E1E1E] px-3 py-2 rounded-[8px] border border-neutral-200 dark:border-neutral-700 truncate" title="{{ __('mcp.chatgpt_form_desc_val') }}">
+                                            {{ __('mcp.chatgpt_form_desc_val') }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- Koneksi (URL Endpoint HTTPS) --}}
+                                <div class="p-3.5 rounded-[12px] bg-neutral-50 dark:bg-neutral-900/90 border border-neutral-200/70 dark:border-neutral-800 space-y-2">
+                                    <div class="flex items-center justify-between text-xs">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-semibold text-neutral-800 dark:text-neutral-200">{{ __('mcp.chatgpt_form_conn_label') }}</span>
+                                            <span class="px-2 py-0.5 rounded-[6px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-semibold">HTTPS</span>
+                                        </div>
+                                        <span class="text-[11px] text-neutral-500 dark:text-neutral-400" x-text="chatgptAuthMethod === 'oauth' ? 'Clean Endpoint (Auto-Discovery)' : 'Query Token Parameter'"></span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <input
+                                            type="text"
+                                            readonly
+                                            :value="getChatGptMcpUrl()"
+                                            class="flex-1 font-mono text-xs bg-white dark:bg-[#1E1E1E] text-neutral-900 dark:text-white px-3.5 py-2 rounded-[8px] border border-neutral-200 dark:border-neutral-700 select-all" />
+                                        <button
+                                            type="button"
+                                            @click="copyText(getChatGptMcpUrl(), 'URL endpoint MCP tersalin!')"
+                                            class="px-3.5 py-2 rounded-[8px] bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-xs font-medium flex items-center gap-1.5 transition-colors shrink-0">
+                                            <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                                            <span>{{ __('mcp.btn_copy_url') }}</span>
+                                        </button>
+                                    </div>
+                                    <p class="text-[11px] text-amber-700 dark:text-amber-400 flex items-center gap-1.5">
+                                        <i data-lucide="info" class="w-3.5 h-3.5 shrink-0"></i>
+                                        <span>{{ __('mcp.chatgpt_tunnel_tip') }}</span>
+                                    </p>
+                                </div>
+
+                                {{-- Autentikasi Switcher --}}
+                                <div class="p-3.5 rounded-[12px] bg-neutral-50 dark:bg-neutral-900/90 border border-neutral-200/70 dark:border-neutral-800 space-y-2.5">
+                                    <div class="text-xs font-semibold text-neutral-800 dark:text-neutral-200">{{ __('mcp.chatgpt_form_auth_label') }}</div>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                                        <button
+                                            type="button"
+                                            @click="chatgptAuthMethod = 'oauth'"
+                                            :class="chatgptAuthMethod === 'oauth' ? 'border-emerald-500 bg-emerald-50/50 dark:bg-emerald-950/20 text-neutral-900 dark:text-white ring-1 ring-emerald-500/50' : 'border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#1E1E1E] text-neutral-600 dark:text-neutral-400 hover:border-neutral-300'"
+                                            class="p-3 rounded-[10px] border text-left transition-all">
+                                            <div class="flex items-center justify-between font-semibold">
+                                                <span class="flex items-center gap-1.5">
+                                                    <i data-lucide="shield" class="w-3.5 h-3.5 text-emerald-500"></i>
+                                                    <span>OAuth</span>
+                                                </span>
+                                                <span class="px-1.5 py-0.5 rounded text-[10px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold">Rekomendasi</span>
+                                            </div>
+                                            <p class="text-[11px] text-neutral-500 dark:text-neutral-400 mt-1">
+                                                Apps SDK resmi dengan RFC 8414 Metadata Discovery, PKCE, dan OIDC.
+                                            </p>
+                                        </button>
+
+                                        <button
+                                            type="button"
+                                            @click="chatgptAuthMethod = 'none'"
+                                            :class="chatgptAuthMethod === 'none' ? 'border-emerald-500 bg-emerald-50/50 dark:bg-emerald-950/20 text-neutral-900 dark:text-white ring-1 ring-emerald-500/50' : 'border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#1E1E1E] text-neutral-600 dark:text-neutral-400 hover:border-neutral-300'"
+                                            class="p-3 rounded-[10px] border text-left transition-all">
+                                            <div class="flex items-center justify-between font-semibold">
+                                                <span class="flex items-center gap-1.5">
+                                                    <i data-lucide="zap" class="w-3.5 h-3.5 text-amber-500"></i>
+                                                    <span>None (Tanpa autentikasi)</span>
+                                                </span>
+                                                <span class="px-1.5 py-0.5 rounded text-[10px] bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold">Cepat</span>
+                                            </div>
+                                            <p class="text-[11px] text-neutral-500 dark:text-neutral-400 mt-1">
+                                                Token keamanan langsung disematkan pada parameter URL.
+                                            </p>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                {{-- Pengaturan tingkat lanjut Oauth (Tampil saat OAuth) --}}
+                                <div x-show="chatgptAuthMethod === 'oauth'" class="p-4 sm:p-5 rounded-[14px] bg-neutral-100/70 dark:bg-[#1E1E1E]/70 border border-neutral-200 dark:border-neutral-800 space-y-4">
+                                    <div class="flex items-start justify-between gap-3">
+                                        <div class="space-y-0.5">
+                                            <div class="flex items-center gap-2">
+                                                <i data-lucide="sliders" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
+                                                <h5 class="text-xs font-bold text-neutral-900 dark:text-white uppercase tracking-wider">{{ __('mcp.chatgpt_oauth_advanced_title') }}</h5>
+                                            </div>
+                                            <p class="text-[11px] text-neutral-500 dark:text-neutral-400 leading-relaxed">
+                                                {{ __('mcp.chatgpt_oauth_advanced_sub') }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    {{-- Discovery Status Box --}}
+                                    <div class="p-3 rounded-[10px] bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-500/20 text-xs space-y-1">
+                                        <div class="font-semibold text-emerald-900 dark:text-emerald-200 flex items-center gap-1.5">
+                                            <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0"></i>
+                                            <span>{{ __('mcp.chatgpt_oauth_discovery_active') }}</span>
+                                        </div>
+                                        <p class="text-[11px] text-emerald-800 dark:text-emerald-300 leading-relaxed">
+                                            {!! __('mcp.chatgpt_oauth_discovery_active_desc') !!}
+                                        </p>
+                                    </div>
+
+                                    <div class="text-[11px] text-neutral-600 dark:text-neutral-400 italic">
+                                        {!! __('mcp.chatgpt_oauth_manual_note') !!}
+                                    </div>
+
+                                    {{-- Sub-section 1: Pendaftaran Klien --}}
+                                    <div class="p-4 rounded-[12px] bg-white dark:bg-neutral-900 border border-neutral-200/80 dark:border-neutral-800 space-y-3">
+                                        <div>
+                                            <h6 class="text-xs font-bold text-neutral-900 dark:text-white">{{ __('mcp.chatgpt_client_reg_title') }}</h6>
+                                            <p class="text-[11px] text-neutral-500 dark:text-neutral-400 mt-0.5">
+                                                {!! __('mcp.chatgpt_client_reg_desc') !!}
+                                            </p>
+                                        </div>
+
+                                        {{-- Metode Pendaftaran --}}
+                                        <div class="space-y-1.5 text-xs">
+                                            <div class="font-semibold text-neutral-700 dark:text-neutral-300">{{ __('mcp.chatgpt_reg_method_label') }}</div>
+                                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                                                <div class="p-2.5 rounded-[8px] border border-emerald-500/40 bg-emerald-50/30 dark:bg-emerald-950/20 text-neutral-900 dark:text-white flex items-center gap-2">
+                                                    <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500 shrink-0"></i>
+                                                    <span class="font-medium text-[11px]">{{ __('mcp.chatgpt_reg_method_user') }}</span>
+                                                </div>
+                                                <div class="p-2.5 rounded-[8px] border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/60 text-neutral-500 flex items-center justify-between">
+                                                    <span class="text-[11px]">{{ __('mcp.chatgpt_reg_method_dcr') }}</span>
+                                                    <span class="text-[10px] px-1 rounded bg-neutral-200 dark:bg-neutral-800">RFC 7591</span>
+                                                </div>
+                                                <div class="p-2.5 rounded-[8px] border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/60 text-neutral-400">
+                                                    <span class="text-[11px]">{{ __('mcp.chatgpt_reg_method_cimd') }}</span>
+                                                </div>
+                                            </div>
+                                            <p class="text-[11px] text-neutral-500 mt-1">{{ __('mcp.chatgpt_reg_method_user_help') }}</p>
+                                        </div>
+
+                                        {{-- Client Credentials Inputs --}}
+                                        <div class="space-y-2.5 pt-1">
+                                            {{-- URL Callback --}}
+                                            <div class="space-y-1 text-xs">
+                                                <div class="flex items-center justify-between">
+                                                    <span class="font-semibold text-neutral-700 dark:text-neutral-300">{{ __('mcp.chatgpt_lbl_callback_url') }}</span>
+                                                    <span class="text-[10px] text-neutral-400">{{ __('mcp.chatgpt_val_callback_url_help') }}</span>
+                                                </div>
+                                                <input
+                                                    type="text"
+                                                    readonly
+                                                    value="https://chatgpt.com/aip/.../oauth/callback (Otomatis dari ChatGPT)"
+                                                    class="w-full font-mono text-[11px] bg-neutral-100 dark:bg-[#1E1E1E] text-neutral-600 dark:text-neutral-400 px-3 py-1.5 rounded-[8px] border border-neutral-200 dark:border-neutral-700 italic" />
+                                            </div>
+
+                                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                                {{-- ID Klien --}}
+                                                <div class="space-y-1 text-xs">
+                                                    <div class="flex items-center justify-between">
+                                                        <span class="font-semibold text-neutral-700 dark:text-neutral-300">{{ __('mcp.chatgpt_lbl_client_id') }}</span>
+                                                        <button
+                                                            type="button"
+                                                            @click="copyText(getChatGptClientId(), 'Client ID tersalin!')"
+                                                            class="text-blue-600 dark:text-blue-400 hover:underline text-[11px] flex items-center gap-1">
+                                                            <i data-lucide="copy" class="w-3 h-3"></i>
+                                                            <span>{{ __('mcp.btn_copy_short') }}</span>
+                                                        </button>
+                                                    </div>
+                                                    <input
+                                                        type="text"
+                                                        readonly
+                                                        :value="getChatGptClientId()"
+                                                        class="w-full font-mono text-xs bg-white dark:bg-[#1E1E1E] text-neutral-900 dark:text-white px-3 py-1.5 rounded-[8px] border border-neutral-200 dark:border-neutral-700 select-all" />
+                                                </div>
+
+                                                {{-- Rahasia Klien --}}
+                                                <div class="space-y-1 text-xs">
+                                                    <div class="flex items-center justify-between">
+                                                        <span class="font-semibold text-neutral-700 dark:text-neutral-300">{{ __('mcp.chatgpt_lbl_client_secret') }} <span class="text-neutral-400 font-normal">{{ __('mcp.chatgpt_client_secret_optional') }}</span></span>
+                                                        <button
+                                                            type="button"
+                                                            @click="copyText(getChatGptClientSecret(), 'Client Secret tersalin!')"
+                                                            class="text-blue-600 dark:text-blue-400 hover:underline text-[11px] flex items-center gap-1">
+                                                            <i data-lucide="copy" class="w-3 h-3"></i>
+                                                            <span>{{ __('mcp.btn_copy_short') }}</span>
+                                                        </button>
+                                                    </div>
+                                                    <input
+                                                        type="text"
+                                                        readonly
+                                                        :value="getChatGptClientSecret()"
+                                                        class="w-full font-mono text-xs bg-white dark:bg-[#1E1E1E] text-neutral-900 dark:text-white px-3 py-1.5 rounded-[8px] border border-neutral-200 dark:border-neutral-700 select-all" />
+                                                </div>
+                                            </div>
+
+                                            {{-- Metode autentikasi endpoint token --}}
+                                            <div class="space-y-1 text-xs">
+                                                <div class="flex items-center justify-between">
+                                                    <span class="font-semibold text-neutral-700 dark:text-neutral-300">{{ __('mcp.chatgpt_lbl_token_auth_method') }}</span>
+                                                    <button
+                                                        type="button"
+                                                        @click="copyText('client_secret_post', 'Metode token auth tersalin!')"
+                                                        class="text-blue-600 dark:text-blue-400 hover:underline text-[11px] flex items-center gap-1">
+                                                        <i data-lucide="copy" class="w-3 h-3"></i>
+                                                        <span>{{ __('mcp.btn_copy_short') }}</span>
+                                                    </button>
+                                                </div>
+                                                <div class="flex items-center gap-2">
+                                                    <span class="px-2.5 py-1 rounded-[6px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-mono text-xs font-semibold">client_secret_post</span>
+                                                    <span class="text-[11px] text-neutral-400">(didukung juga: <code class="font-mono">client_secret_basic</code>, <code class="font-mono">none</code>)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{-- Sub-section 2: Cakupan (Scopes) --}}
+                                    <div class="p-4 rounded-[12px] bg-white dark:bg-neutral-900 border border-neutral-200/80 dark:border-neutral-800 space-y-3">
+                                        <div>
+                                            <h6 class="text-xs font-bold text-neutral-900 dark:text-white">{{ __('mcp.chatgpt_scopes_title') }}</h6>
+                                            <p class="text-[11px] text-neutral-500 dark:text-neutral-400 mt-0.5">
+                                                {!! __('mcp.chatgpt_scopes_desc') !!}
+                                            </p>
+                                        </div>
+
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                                            {{-- Cakupan default --}}
+                                            <div class="p-2.5 rounded-[8px] bg-neutral-50 dark:bg-neutral-800/60 border border-neutral-200 dark:border-neutral-700/80 space-y-1">
+                                                <div class="flex items-center justify-between">
+                                                    <span class="font-semibold text-neutral-800 dark:text-neutral-200">{{ __('mcp.chatgpt_lbl_default_scope') }}</span>
+                                                    <button
+                                                        type="button"
+                                                        @click="copyText('mcp:tools', 'Cakupan default tersalin!')"
+                                                        class="text-blue-600 dark:text-blue-400 hover:underline text-[11px]">
+                                                        {{ __('mcp.btn_copy_short') }}
+                                                    </button>
+                                                </div>
+                                                <div class="font-mono text-xs text-neutral-900 dark:text-white font-semibold">mcp:tools</div>
+                                                <p class="text-[10px] text-neutral-500">{{ __('mcp.chatgpt_default_scope_help') }}</p>
+                                            </div>
+
+                                            {{-- Cakupan dasar --}}
+                                            <div class="p-2.5 rounded-[8px] bg-neutral-50 dark:bg-neutral-800/60 border border-neutral-200 dark:border-neutral-700/80 space-y-1">
+                                                <div class="flex items-center justify-between">
+                                                    <span class="font-semibold text-neutral-800 dark:text-neutral-200">{{ __('mcp.chatgpt_lbl_base_scope') }}</span>
+                                                    <button
+                                                        type="button"
+                                                        @click="copyText('mcp:tools', 'Cakupan dasar tersalin!')"
+                                                        class="text-blue-600 dark:text-blue-400 hover:underline text-[11px]">
+                                                        {{ __('mcp.btn_copy_short') }}
+                                                    </button>
+                                                </div>
+                                                <div class="font-mono text-xs text-neutral-900 dark:text-white font-semibold">mcp:tools</div>
+                                                <p class="text-[10px] text-neutral-500">{{ __('mcp.chatgpt_base_scope_help') }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{-- Sub-section 3: Endpoint Oauth --}}
+                                    <div class="p-4 rounded-[12px] bg-white dark:bg-neutral-900 border border-neutral-200/80 dark:border-neutral-800 space-y-3">
+                                        <div>
+                                            <h6 class="text-xs font-bold text-neutral-900 dark:text-white">{{ __('mcp.chatgpt_endpoints_title') }}</h6>
+                                            <p class="text-[11px] text-neutral-500 dark:text-neutral-400 mt-0.5">
+                                                {!! __('mcp.chatgpt_endpoints_desc') !!}
+                                            </p>
+                                        </div>
+
+                                        <div class="space-y-2 text-xs">
+                                            {{-- URL otorisasi --}}
+                                            <div class="flex flex-col sm:flex-row sm:items-center justify-between p-2 rounded-[8px] bg-neutral-50 dark:bg-neutral-800/50 gap-2">
+                                                <span class="font-semibold text-neutral-700 dark:text-neutral-300 w-44 shrink-0">{{ __('mcp.chatgpt_lbl_auth_url') }}</span>
+                                                <div class="flex-1 font-mono text-[11px] text-neutral-900 dark:text-white truncate" title="{{ $oauthAuthorizeUrl }}">
+                                                    {{ $oauthAuthorizeUrl }}
+                                                </div>
+                                                <button
+                                                    type="button"
+                                                    @click="copyText('{{ $oauthAuthorizeUrl }}', 'URL otorisasi tersalin!')"
+                                                    class="text-blue-600 dark:text-blue-400 hover:underline text-[11px] shrink-0">
+                                                    {{ __('mcp.btn_copy_short') }}
+                                                </button>
+                                            </div>
+
+                                            {{-- URL token --}}
+                                            <div class="flex flex-col sm:flex-row sm:items-center justify-between p-2 rounded-[8px] bg-neutral-50 dark:bg-neutral-800/50 gap-2">
+                                                <span class="font-semibold text-neutral-700 dark:text-neutral-300 w-44 shrink-0">{{ __('mcp.chatgpt_lbl_token_url') }}</span>
+                                                <div class="flex-1 font-mono text-[11px] text-neutral-900 dark:text-white truncate" title="{{ $oauthTokenUrl }}">
+                                                    {{ $oauthTokenUrl }}
+                                                </div>
+                                                <button
+                                                    type="button"
+                                                    @click="copyText('{{ $oauthTokenUrl }}', 'URL token tersalin!')"
+                                                    class="text-blue-600 dark:text-blue-400 hover:underline text-[11px] shrink-0">
+                                                    {{ __('mcp.btn_copy_short') }}
+                                                </button>
+                                            </div>
+
+                                            {{-- URL pendaftaran --}}
+                                            <div class="flex flex-col sm:flex-row sm:items-center justify-between p-2 rounded-[8px] bg-neutral-50 dark:bg-neutral-800/50 gap-2">
+                                                <span class="font-semibold text-neutral-700 dark:text-neutral-300 w-44 shrink-0">{{ __('mcp.chatgpt_lbl_reg_url') }}</span>
+                                                <div class="flex-1 font-mono text-[11px] text-neutral-900 dark:text-white truncate" title="{{ $oauthRegisterUrl }}">
+                                                    {{ $oauthRegisterUrl }}
+                                                </div>
+                                                <button
+                                                    type="button"
+                                                    @click="copyText('{{ $oauthRegisterUrl }}', 'URL pendaftaran tersalin!')"
+                                                    class="text-blue-600 dark:text-blue-400 hover:underline text-[11px] shrink-0">
+                                                    {{ __('mcp.btn_copy_short') }}
+                                                </button>
+                                            </div>
+
+                                            {{-- URL dasar server otorisasi --}}
+                                            <div class="flex flex-col sm:flex-row sm:items-center justify-between p-2 rounded-[8px] bg-neutral-50 dark:bg-neutral-800/50 gap-2">
+                                                <span class="font-semibold text-neutral-700 dark:text-neutral-300 w-44 shrink-0">{{ __('mcp.chatgpt_lbl_issuer_url') }}</span>
+                                                <div class="flex-1 font-mono text-[11px] text-neutral-900 dark:text-white truncate" title="{{ $oauthIssuerUrl }}">
+                                                    {{ $oauthIssuerUrl }}
+                                                </div>
+                                                <button
+                                                    type="button"
+                                                    @click="copyText('{{ $oauthIssuerUrl }}', 'URL dasar server tersalin!')"
+                                                    class="text-blue-600 dark:text-blue-400 hover:underline text-[11px] shrink-0">
+                                                    {{ __('mcp.btn_copy_short') }}
+                                                </button>
+                                            </div>
+
+                                            {{-- Sumber daya --}}
+                                            <div class="flex flex-col sm:flex-row sm:items-center justify-between p-2 rounded-[8px] bg-neutral-50 dark:bg-neutral-800/50 gap-2">
+                                                <span class="font-semibold text-neutral-700 dark:text-neutral-300 w-44 shrink-0">{{ __('mcp.chatgpt_lbl_resource') }}</span>
+                                                <div class="flex-1 font-mono text-[11px] text-neutral-900 dark:text-white truncate" title="{{ $topLevelMcpUrl }}">
+                                                    {{ $topLevelMcpUrl }}
+                                                </div>
+                                                <button
+                                                    type="button"
+                                                    @click="copyText('{{ $topLevelMcpUrl }}', 'Sumber daya tersalin!')"
+                                                    class="text-blue-600 dark:text-blue-400 hover:underline text-[11px] shrink-0">
+                                                    {{ __('mcp.btn_copy_short') }}
+                                                </button>
+                                            </div>
+
+                                            {{-- PKCE --}}
+                                            <div class="flex items-center justify-between p-2 rounded-[8px] bg-neutral-50 dark:bg-neutral-800/50">
+                                                <span class="font-semibold text-neutral-700 dark:text-neutral-300 w-44 shrink-0">{{ __('mcp.chatgpt_lbl_pkce') }}</span>
+                                                <div class="flex-1 text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1.5">
+                                                    <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                                                    <span>{{ __('mcp.chatgpt_val_pkce') }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{-- Sub-section 4: Dukungan OpenID (OIDC) --}}
+                                    <div class="p-4 rounded-[12px] bg-white dark:bg-neutral-900 border border-neutral-200/80 dark:border-neutral-800 space-y-3">
+                                        <div>
+                                            <h6 class="text-xs font-bold text-neutral-900 dark:text-white">{{ __('mcp.chatgpt_oidc_title') }}</h6>
+                                            <p class="text-[11px] text-neutral-500 dark:text-neutral-400 mt-0.5">
+                                                {{ __('mcp.chatgpt_oidc_desc') }}
+                                            </p>
+                                        </div>
+
+                                        <div class="space-y-2 text-xs">
+                                            {{-- OIDC Diaktifkan --}}
+                                            <div class="flex items-center justify-between p-2 rounded-[8px] bg-neutral-50 dark:bg-neutral-800/50">
+                                                <span class="font-semibold text-neutral-700 dark:text-neutral-300 w-44 shrink-0">{{ __('mcp.chatgpt_lbl_oidc_enabled') }}</span>
+                                                <div class="flex-1 text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1.5">
+                                                    <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                                                    <span>{{ __('mcp.chatgpt_val_oidc_enabled') }}</span>
+                                                </div>
+                                            </div>
+
+                                            {{-- URL konfigurasi OIDC --}}
+                                            <div class="flex flex-col sm:flex-row sm:items-center justify-between p-2 rounded-[8px] bg-neutral-50 dark:bg-neutral-800/50 gap-2">
+                                                <span class="font-semibold text-neutral-700 dark:text-neutral-300 w-44 shrink-0">{{ __('mcp.chatgpt_lbl_oidc_url') }}</span>
+                                                <div class="flex-1 font-mono text-[11px] text-neutral-900 dark:text-white truncate" title="{{ $oidcConfigUrl }}">
+                                                    {{ $oidcConfigUrl }}
+                                                </div>
+                                                <button
+                                                    type="button"
+                                                    @click="copyText('{{ $oidcConfigUrl }}', 'URL konfigurasi OIDC tersalin!')"
+                                                    class="text-blue-600 dark:text-blue-400 hover:underline text-[11px] shrink-0">
+                                                    {{ __('mcp.btn_copy_short') }}
+                                                </button>
+                                            </div>
+
+                                            {{-- Endpoint userinfo OIDC --}}
+                                            <div class="flex flex-col sm:flex-row sm:items-center justify-between p-2 rounded-[8px] bg-neutral-50 dark:bg-neutral-800/50 gap-2">
+                                                <span class="font-semibold text-neutral-700 dark:text-neutral-300 w-44 shrink-0">{{ __('mcp.chatgpt_lbl_userinfo_url') }}</span>
+                                                <div class="flex-1 font-mono text-[11px] text-neutral-900 dark:text-white truncate" title="{{ $oauthUserInfoUrl }}">
+                                                    {{ $oauthUserInfoUrl }}
+                                                </div>
+                                                <button
+                                                    type="button"
+                                                    @click="copyText('{{ $oauthUserInfoUrl }}', 'Endpoint UserInfo tersalin!')"
+                                                    class="text-blue-600 dark:text-blue-400 hover:underline text-[11px] shrink-0">
+                                                    {{ __('mcp.btn_copy_short') }}
+                                                </button>
+                                            </div>
+
+                                            {{-- Cakupan OIDC yang didukung --}}
+                                            <div class="flex flex-col sm:flex-row sm:items-center justify-between p-2 rounded-[8px] bg-neutral-50 dark:bg-neutral-800/50 gap-2">
+                                                <span class="font-semibold text-neutral-700 dark:text-neutral-300 w-44 shrink-0">{{ __('mcp.chatgpt_lbl_oidc_scopes') }}</span>
+                                                <div class="flex-1 font-mono text-[11px] text-neutral-900 dark:text-white">
+                                                    openid profile email
+                                                </div>
+                                                <button
+                                                    type="button"
+                                                    @click="copyText('openid profile email', 'Cakupan OIDC tersalin!')"
+                                                    class="text-blue-600 dark:text-blue-400 hover:underline text-[11px] shrink-0">
+                                                    {{ __('mcp.btn_copy_short') }}
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-2">
-                            <div class="flex items-center justify-between">
+                            {{-- LANGKAH 3 — Buat dan periksa tools --}}
+                            <div class="p-5 rounded-[16px] bg-white dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-3">
                                 <div class="flex items-center gap-2">
-                                    <span class="w-6 h-6 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-xs font-bold flex items-center justify-center">3</span>
-                                    <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.chatgpt_conn_title') }}</h4>
+                                    <span class="w-6 h-6 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-xs font-bold flex items-center justify-center shrink-0">3</span>
+                                    <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.chatgpt_step3_heading') }}</h4>
                                 </div>
-                                <span class="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">{{ __('mcp.chatgpt_conn_badge') }}</span>
+                                <p class="text-[11px] text-neutral-500 dark:text-neutral-400 leading-relaxed">
+                                    {!! __('mcp.chatgpt_step3_desc', ['count' => count($tools)]) !!}
+                                </p>
+                                <div class="p-3.5 rounded-[12px] bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-500/20 flex flex-wrap items-center gap-2 text-xs">
+                                    <div class="flex items-center gap-1.5 font-semibold text-emerald-800 dark:text-emerald-200">
+                                        <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
+                                        <span>{{ count($tools) }} Tools Bisnis Aktif Terverifikasi:</span>
+                                    </div>
+                                    <span class="px-2 py-0.5 rounded-[6px] bg-white dark:bg-neutral-900 text-[11px] text-neutral-700 dark:text-neutral-300 border border-neutral-200 dark:border-neutral-800">Laporan Laba Rugi</span>
+                                    <span class="px-2 py-0.5 rounded-[6px] bg-white dark:bg-neutral-900 text-[11px] text-neutral-700 dark:text-neutral-300 border border-neutral-200 dark:border-neutral-800">Saldo Kas & Bank</span>
+                                    <span class="px-2 py-0.5 rounded-[6px] bg-white dark:bg-neutral-900 text-[11px] text-neutral-700 dark:text-neutral-300 border border-neutral-200 dark:border-neutral-800">Stok & Mutasi</span>
+                                    <span class="px-2 py-0.5 rounded-[6px] bg-white dark:bg-neutral-900 text-[11px] text-neutral-700 dark:text-neutral-300 border border-neutral-200 dark:border-neutral-800">POS & Penjualan</span>
+                                    <span class="px-2 py-0.5 rounded-[6px] bg-white dark:bg-neutral-900 text-[11px] text-neutral-700 dark:text-neutral-300 border border-neutral-200 dark:border-neutral-800">CRM Pelanggan</span>
+                                </div>
                             </div>
-                            <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
-                                {!! __('mcp.chatgpt_step_url_desc') !!}
-                            </p>
-                            <div class="flex items-center gap-2">
-                                <input
-                                    type="text"
-                                    readonly
-                                    :value="getChatGptConnectorUrl()"
-                                    class="flex-1 font-mono text-xs bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white px-3.5 py-2 rounded-[10px] border border-neutral-200 dark:border-neutral-700 select-all" />
-                                <button
-                                    type="button"
-                                    @click="copyText(getChatGptConnectorUrl(), '{{ addslashes(__('mcp.toast_chatgpt_connector_copied')) }}')"
-                                    class="px-4 py-2 rounded-[10px] bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-xs font-medium flex items-center gap-1.5 transition-colors">
-                                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                                    <span>{{ __('mcp.btn_copy_url') }}</span>
-                                </button>
-                            </div>
-                        </div>
 
-                        <div class="p-4 rounded-[16px] bg-emerald-50/60 dark:bg-emerald-950/30 border border-emerald-500/20 space-y-1">
-                            <div class="flex items-center gap-2 text-emerald-800 dark:text-emerald-200 font-semibold text-xs">
-                                <span class="w-5 h-5 rounded-full bg-emerald-600 text-white text-[10px] flex items-center justify-center font-bold">4</span>
-                                <span>{{ __('mcp.chatgpt_icon_title') }}</span>
+                            {{-- LANGKAH 4 — Uji di percakapan --}}
+                            <div class="p-5 rounded-[16px] bg-white dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-3.5">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-6 h-6 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-xs font-bold flex items-center justify-center shrink-0">4</span>
+                                    <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.chatgpt_step4_heading') }}</h4>
+                                </div>
+                                <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
+                                    {{ __('mcp.chatgpt_step4_desc') }}
+                                </p>
+
+                                {{-- Prompt Cards --}}
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                    {{-- Prompt 1 --}}
+                                    <div class="p-3.5 rounded-[12px] bg-neutral-50 dark:bg-neutral-900/80 border border-neutral-200/70 dark:border-neutral-800 flex flex-col justify-between gap-2.5">
+                                        <div class="space-y-1">
+                                            <div class="text-[10px] text-neutral-400 uppercase font-semibold">Kas & Likuiditas</div>
+                                            <p class="text-xs text-neutral-800 dark:text-neutral-200 italic leading-relaxed">
+                                                "{{ __('mcp.chatgpt_test_prompt_1') }}"
+                                            </p>
+                                        </div>
+                                        <button
+                                            type="button"
+                                            @click="copyText('{{ addslashes(__('mcp.chatgpt_test_prompt_1')) }}', '{{ addslashes(__('mcp.toast_prompt_copied')) }}')"
+                                            class="w-full py-1.5 px-2.5 rounded-[8px] bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white text-[11px] font-medium flex items-center justify-center gap-1.5 transition-colors">
+                                            <i data-lucide="copy" class="w-3 h-3"></i>
+                                            <span>{{ __('mcp.chatgpt_btn_copy_prompt') }}</span>
+                                        </button>
+                                    </div>
+
+                                    {{-- Prompt 2 --}}
+                                    <div class="p-3.5 rounded-[12px] bg-neutral-50 dark:bg-neutral-900/80 border border-neutral-200/70 dark:border-neutral-800 flex flex-col justify-between gap-2.5">
+                                        <div class="space-y-1">
+                                            <div class="text-[10px] text-neutral-400 uppercase font-semibold">Laporan Laba Rugi</div>
+                                            <p class="text-xs text-neutral-800 dark:text-neutral-200 italic leading-relaxed">
+                                                "{{ __('mcp.chatgpt_test_prompt_2') }}"
+                                            </p>
+                                        </div>
+                                        <button
+                                            type="button"
+                                            @click="copyText('{{ addslashes(__('mcp.chatgpt_test_prompt_2')) }}', '{{ addslashes(__('mcp.toast_prompt_copied')) }}')"
+                                            class="w-full py-1.5 px-2.5 rounded-[8px] bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white text-[11px] font-medium flex items-center justify-center gap-1.5 transition-colors">
+                                            <i data-lucide="copy" class="w-3 h-3"></i>
+                                            <span>{{ __('mcp.chatgpt_btn_copy_prompt') }}</span>
+                                        </button>
+                                    </div>
+
+                                    {{-- Prompt 3 --}}
+                                    <div class="p-3.5 rounded-[12px] bg-neutral-50 dark:bg-neutral-900/80 border border-neutral-200/70 dark:border-neutral-800 flex flex-col justify-between gap-2.5">
+                                        <div class="space-y-1">
+                                            <div class="text-[10px] text-neutral-400 uppercase font-semibold">Stok & Inventori</div>
+                                            <p class="text-xs text-neutral-800 dark:text-neutral-200 italic leading-relaxed">
+                                                "{{ __('mcp.chatgpt_test_prompt_3') }}"
+                                            </p>
+                                        </div>
+                                        <button
+                                            type="button"
+                                            @click="copyText('{{ addslashes(__('mcp.chatgpt_test_prompt_3')) }}', '{{ addslashes(__('mcp.toast_prompt_copied')) }}')"
+                                            class="w-full py-1.5 px-2.5 rounded-[8px] bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white text-[11px] font-medium flex items-center justify-center gap-1.5 transition-colors">
+                                            <i data-lucide="copy" class="w-3 h-3"></i>
+                                            <span>{{ __('mcp.chatgpt_btn_copy_prompt') }}</span>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                            <p class="text-[11px] text-emerald-700 dark:text-emerald-300 leading-relaxed">
-                                {!! __('mcp.chatgpt_icon_desc') !!}
-                            </p>
                         </div>
                     </div>
 
@@ -1029,81 +1612,7 @@ document.addEventListener('alpine:init', () => {
                     </div>
                 </div>
 
-                {{-- 4. ChatGPT (Custom Actions) --}}
-                <div x-show="activeProviderTab === 'chatgpt'" class="space-y-5" style="display: none;">
-                    <div class="flex items-center gap-2">
-                        <span class="px-2.5 py-1 rounded-[8px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-semibold">
-                            {{ __('mcp.chatgpt_actions_badge') }}
-                        </span>
-                        <span class="text-xs text-neutral-500 dark:text-neutral-400">{{ __('mcp.chatgpt_support_sub') }}</span>
-                    </div>
 
-                    <div class="space-y-3">
-                        <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-2">
-                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.chatgpt_actions_step1_title') }}</h4>
-                            <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
-                                {!! __('mcp.chatgpt_actions_step1_desc') !!}
-                            </p>
-                        </div>
-
-                        <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-2">
-                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.chatgpt_actions_step2_title') }}</h4>
-                            <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
-                                {!! __('mcp.chatgpt_actions_step2_desc', ['count' => count($tools)]) !!}
-                            </p>
-                            <div class="flex items-center gap-2">
-                                <input
-                                    type="text"
-                                    readonly
-                                    value="{{ $openApiEndpoint }}"
-                                    class="flex-1 font-mono text-xs bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white px-3.5 py-2 rounded-[10px] border border-neutral-200 dark:border-neutral-700 select-all" />
-                                <button
-                                    type="button"
-                                    @click="copyText('{{ $openApiEndpoint }}', '{{ addslashes(__('mcp.toast_openapi_url_copied')) }}')"
-                                    class="px-4 py-2 rounded-[10px] bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-xs font-medium flex items-center gap-1.5 transition-colors">
-                                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                                    <span>{{ __('mcp.btn_copy_url') }}</span>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-2">
-                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.chatgpt_actions_step3_title') }}</h4>
-                            <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
-                                {!! __('mcp.chatgpt_actions_step3_desc') !!}
-                            </p>
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
-                                <div class="p-2.5 rounded-[10px] bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800">
-                                    <div class="text-[10px] text-neutral-400 uppercase">Authentication Type</div>
-                                    <div class="font-semibold text-neutral-900 dark:text-white mt-0.5">API Key</div>
-                                </div>
-                                <div class="p-2.5 rounded-[10px] bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800">
-                                    <div class="text-[10px] text-neutral-400 uppercase">Auth Type</div>
-                                    <div class="font-semibold text-neutral-900 dark:text-white mt-0.5">Bearer</div>
-                                </div>
-                                <div class="p-2.5 rounded-[10px] bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 flex items-center justify-between">
-                                    <div>
-                                        <div class="text-[10px] text-neutral-400 uppercase">API Key Value</div>
-                                        <div class="font-mono text-[11px] text-neutral-900 dark:text-white mt-0.5">{{ __('mcp.chatgpt_your_mcp_token') }}</div>
-                                    </div>
-                                    <button
-                                        type="button"
-                                        @click="copyText(getToken(), '{{ addslashes(__('mcp.toast_token_copied')) }}')"
-                                        class="text-blue-600 dark:text-blue-400 hover:underline text-[11px]">
-                                        {{ __('mcp.btn_copy_short') }}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="p-4 rounded-[16px] bg-emerald-50/60 dark:bg-emerald-950/30 border border-emerald-500/20 space-y-1">
-                            <h4 class="text-xs font-semibold text-emerald-800 dark:text-emerald-200">{{ __('mcp.chatgpt_actions_step4_title') }}</h4>
-                            <p class="text-[11px] text-emerald-700 dark:text-emerald-300">
-                                {!! __('mcp.chatgpt_actions_step4_desc') !!}
-                            </p>
-                        </div>
-                    </div>
-                </div>
 
                 {{-- 5. Google Gemini --}}
                 <div x-show="activeProviderTab === 'gemini'" class="space-y-5" style="display: none;">
@@ -1258,6 +1767,537 @@ document.addEventListener('alpine:init', () => {
                             </button>
                         </div>
                         <pre class="p-4 rounded-b-[16px] bg-neutral-900 text-neutral-100 font-mono text-xs overflow-x-auto leading-relaxed select-all"><code x-text="getLangChainCode()"></code></pre>
+                    </div>
+                </div>
+
+                {{-- 9. Dola AI Assistant --}}
+                <div x-show="activeProviderTab === 'dola'" class="space-y-6" style="display: none;">
+                    {{-- Header & Sub-Toggle --}}
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-3 border-b border-neutral-100 dark:border-neutral-800">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-1 rounded-[8px] bg-orange-500/10 text-orange-600 dark:text-orange-400 text-xs font-semibold">
+                                {{ __('mcp.dola_badge') }}
+                            </span>
+                            <span class="text-xs text-neutral-500 dark:text-neutral-400 hidden sm:inline">
+                                {{ __('mcp.dola_subtitle') }}
+                            </span>
+                        </div>
+
+                        {{-- Sub-toggle: HTTP vs STDIO --}}
+                        <div class="inline-flex p-1 rounded-[12px] bg-neutral-100 dark:bg-neutral-800 text-[11px] font-medium overflow-x-auto shrink-0">
+                            <button
+                                type="button"
+                                @click="dolaMode = 'http'"
+                                :class="dolaMode === 'http' ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500'"
+                                class="px-3 py-1 rounded-[8px] transition-all whitespace-nowrap flex items-center gap-1.5">
+                                <i data-lucide="globe" class="w-3.5 h-3.5 text-blue-500"></i>
+                                <span>{{ __('mcp.dola_mode_http') }}</span>
+                            </button>
+                            <button
+                                type="button"
+                                @click="dolaMode = 'stdio'"
+                                :class="dolaMode === 'stdio' ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500'"
+                                class="px-3 py-1 rounded-[8px] transition-all whitespace-nowrap flex items-center gap-1.5">
+                                <i data-lucide="terminal" class="w-3.5 h-3.5 text-neutral-500"></i>
+                                <span>{{ __('mcp.dola_mode_stdio') }}</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    {{-- Intro Card --}}
+                    <div class="p-4 rounded-[16px] bg-orange-50/60 dark:bg-orange-950/20 border border-orange-200/70 dark:border-orange-800/60 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div class="flex items-start sm:items-center gap-3">
+                            <div class="w-9 h-9 rounded-[12px] bg-orange-500/10 text-orange-600 dark:text-orange-400 flex items-center justify-center shrink-0">
+                                <i data-lucide="sparkles" class="w-4 h-4"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.dola_guide_title') }}</h4>
+                                <p class="text-[11px] text-neutral-600 dark:text-neutral-400 mt-0.5">{{ __('mcp.dola_guide_sub') }}</p>
+                            </div>
+                        </div>
+                        <a href="https://dola.me" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-medium text-orange-600 dark:text-orange-400 hover:underline shrink-0">
+                            <span>Buka Dola AI</span>
+                            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                        </a>
+                    </div>
+
+                    {{-- 1. Informasi Dasar Server MCP --}}
+                    <div class="rounded-[18px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 p-4 sm:p-5 space-y-3.5">
+                        <div class="flex items-center justify-between">
+                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white flex items-center gap-2">
+                                <i data-lucide="server" class="w-4 h-4 text-blue-500"></i>
+                                <span>{{ __('mcp.dola_sec1_title') }}</span>
+                            </h4>
+                            <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-[6px] bg-blue-500/10 text-blue-600 dark:text-blue-400">
+                                Server Specs
+                            </span>
+                        </div>
+
+                        <div class="overflow-x-auto rounded-[12px] border border-neutral-200/80 dark:border-neutral-800 bg-white dark:bg-[#1E1E1E]">
+                            <table class="w-full text-left text-xs">
+                                <thead>
+                                    <tr class="border-b border-neutral-200 dark:border-neutral-800 bg-neutral-50/80 dark:bg-neutral-900/80 text-neutral-600 dark:text-neutral-400">
+                                        <th class="py-2.5 px-3.5 font-semibold w-1/4">Parameter</th>
+                                        <th class="py-2.5 px-3.5 font-semibold w-1/2">Nilai / Rekomendasi COOCA</th>
+                                        <th class="py-2.5 px-3.5 font-semibold text-right w-1/4">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-neutral-100 dark:divide-neutral-800 text-neutral-800 dark:text-neutral-200">
+                                    <tr>
+                                        <td class="py-2.5 px-3.5 font-medium">Nama koneksi</td>
+                                        <td class="py-2.5 px-3.5 font-mono text-[11px] text-neutral-600 dark:text-neutral-300">
+                                            <span class="px-2 py-0.5 rounded-[6px] bg-neutral-100 dark:bg-neutral-800">cooca-erp</span>
+                                            <span class="text-[11px] text-neutral-400 ml-2">(Bebas, misal: sistem-kantor atau cooca-mcp)</span>
+                                        </td>
+                                        <td class="py-2.5 px-3.5 text-right">
+                                            <button
+                                                type="button"
+                                                @click="copyText('cooca-erp', 'Nama koneksi tersalin!')"
+                                                class="px-2.5 py-1 rounded-[6px] bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-300 text-[11px] font-medium inline-flex items-center gap-1 transition-colors">
+                                                <i data-lucide="copy" class="w-3 h-3"></i>
+                                                <span>{{ __('mcp.btn_copy_short') }}</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2.5 px-3.5 font-medium">Tipe koneksi</td>
+                                        <td class="py-2.5 px-3.5">
+                                            <span class="px-2 py-0.5 rounded-[6px] text-[10px] font-bold" :class="dolaMode === 'http' ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300'">HTTP/SSE</span>
+                                            <span class="mx-1 text-neutral-400">atau</span>
+                                            <span class="px-2 py-0.5 rounded-[6px] text-[10px] font-bold" :class="dolaMode === 'stdio' ? 'bg-purple-500/10 text-purple-600 dark:text-purple-400' : 'bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300'">STDIO</span>
+                                            <span class="text-[11px] text-neutral-400 ml-2" x-text="dolaMode === 'http' ? '(Mode aktif: HTTP Remote)' : '(Mode aktif: STDIO Lokal CLI)'"></span>
+                                        </td>
+                                        <td class="py-2.5 px-3.5 text-right">
+                                            <button
+                                                type="button"
+                                                @click="copyText(dolaMode === 'http' ? 'http' : 'stdio', 'Tipe koneksi tersalin!')"
+                                                class="px-2.5 py-1 rounded-[6px] bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-300 text-[11px] font-medium inline-flex items-center gap-1 transition-colors">
+                                                <i data-lucide="copy" class="w-3 h-3"></i>
+                                                <span>{{ __('mcp.btn_copy_short') }}</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2.5 px-3.5 font-medium">Alamat URL / Host</td>
+                                        <td class="py-2.5 px-3.5 font-mono text-[11px] text-neutral-900 dark:text-neutral-100 select-all">
+                                            <span x-text="topLevelMcpUrl"></span>
+                                        </td>
+                                        <td class="py-2.5 px-3.5 text-right">
+                                            <button
+                                                type="button"
+                                                @click="copyText(topLevelMcpUrl, 'URL host MCP tersalin!')"
+                                                class="px-2.5 py-1 rounded-[6px] bg-neutral-900 hover:bg-black text-white dark:bg-white dark:text-neutral-900 text-[11px] font-medium inline-flex items-center gap-1 transition-colors">
+                                                <i data-lucide="copy" class="w-3 h-3"></i>
+                                                <span>{{ __('mcp.btn_copy_short') }}</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2.5 px-3.5 font-medium">Port</td>
+                                        <td class="py-2.5 px-3.5 font-mono text-[11px]">
+                                            <span class="px-2 py-0.5 rounded-[6px] bg-neutral-100 dark:bg-neutral-800">443</span>
+                                            <span class="text-[11px] text-neutral-400 ml-2">(Standar HTTPS) / 8000 untuk pengujian lokal</span>
+                                        </td>
+                                        <td class="py-2.5 px-3.5 text-right">
+                                            <button
+                                                type="button"
+                                                @click="copyText('443', 'Port tersalin!')"
+                                                class="px-2.5 py-1 rounded-[6px] bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-300 text-[11px] font-medium inline-flex items-center gap-1 transition-colors">
+                                                <i data-lucide="copy" class="w-3 h-3"></i>
+                                                <span>{{ __('mcp.btn_copy_short') }}</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2.5 px-3.5 font-medium">Versi protokol</td>
+                                        <td class="py-2.5 px-3.5 font-mono text-[11px]">
+                                            <span class="px-2 py-0.5 rounded-[6px] bg-neutral-100 dark:bg-neutral-800">2024-11-05</span>
+                                            <span class="text-[11px] text-neutral-400 ml-2">(Kompatibel penuh dengan Dola & MCP Client SDK)</span>
+                                        </td>
+                                        <td class="py-2.5 px-3.5 text-right">
+                                            <button
+                                                type="button"
+                                                @click="copyText('2024-11-05', 'Versi protokol tersalin!')"
+                                                class="px-2.5 py-1 rounded-[6px] bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-300 text-[11px] font-medium inline-flex items-center gap-1 transition-colors">
+                                                <i data-lucide="copy" class="w-3 h-3"></i>
+                                                <span>{{ __('mcp.btn_copy_short') }}</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    {{-- 2. Kredensial / Autentikasi --}}
+                    <div class="rounded-[18px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 p-4 sm:p-5 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white flex items-center gap-2">
+                                <i data-lucide="shield-check" class="w-4 h-4 text-emerald-500"></i>
+                                <span>{{ __('mcp.dola_sec2_title') }}</span>
+                            </h4>
+                            <span class="text-[10px] text-neutral-500 dark:text-neutral-400">Pilih metode yang sesuai arsitektur kamu</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                            {{-- Pilihan 1: Token / Kunci API (Rekomendasi Utama Dola) --}}
+                            <div class="p-3.5 rounded-[14px] bg-white dark:bg-[#1E1E1E] border-2 border-emerald-500/50 dark:border-emerald-500/40 space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-6 h-6 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xs">🔑</span>
+                                        <span class="text-xs font-semibold text-neutral-900 dark:text-white">Token / Kunci API (Rekomendasi)</span>
+                                    </div>
+                                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">Aktif</span>
+                                </div>
+                                <p class="text-[11px] text-neutral-500 dark:text-neutral-400 leading-relaxed">
+                                    Gunakan Personal Access Token COOCA. Kirimkan token via header <code>Authorization: Bearer &lt;TOKEN&gt;</code>.
+                                </p>
+                                <div class="flex items-center gap-2 pt-1">
+                                    <input
+                                        type="text"
+                                        readonly
+                                        :value="getToken()"
+                                        class="flex-1 font-mono text-[11px] bg-neutral-50 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 px-2.5 py-1.5 rounded-[8px] border border-neutral-200 dark:border-neutral-700 select-all" />
+                                    <button
+                                        type="button"
+                                        @click="copyText(getToken(), 'Token MCP tersalin!')"
+                                        class="px-2.5 py-1.5 rounded-[8px] bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-[11px] font-medium flex items-center gap-1 shrink-0">
+                                        <i data-lucide="copy" class="w-3 h-3"></i>
+                                        <span>Salin</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            {{-- Pilihan 2: Header Khusus --}}
+                            <div class="p-3.5 rounded-[14px] bg-white dark:bg-[#1E1E1E] border border-neutral-200/80 dark:border-neutral-800 space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-6 h-6 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center text-xs">📋</span>
+                                        <span class="text-xs font-semibold text-neutral-900 dark:text-white">Header Khusus (Custom Headers)</span>
+                                    </div>
+                                    <span class="px-2 py-0.5 rounded-[6px] text-[10px] bg-blue-500/10 text-blue-600 dark:text-blue-400 font-mono">JSON Config</span>
+                                </div>
+                                <p class="text-[11px] text-neutral-500 dark:text-neutral-400 leading-relaxed">
+                                    Tambahkan header pada file JSON Dola agar permintaan HTTP/SSE terotorisasi penuh:
+                                </p>
+                                <div class="flex items-center justify-between bg-neutral-50 dark:bg-neutral-900 p-2 rounded-[8px] border border-neutral-200 dark:border-neutral-700 font-mono text-[11px]">
+                                    <span class="text-neutral-700 dark:text-neutral-300 truncate">Authorization: Bearer <span x-text="getToken()"></span></span>
+                                    <button
+                                        type="button"
+                                        @click="copyText('Authorization: Bearer ' + getToken(), 'Header Authorization tersalin!')"
+                                        class="text-blue-600 dark:text-blue-400 hover:underline shrink-0 ml-2 text-[11px]">
+                                        Salin
+                                    </button>
+                                </div>
+                            </div>
+
+                            {{-- Pilihan 3: OAuth 2.0 (Jika Menggunakan Akun Terpusat) --}}
+                            <div class="p-3.5 rounded-[14px] bg-white dark:bg-[#1E1E1E] border border-neutral-200/80 dark:border-neutral-800 space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-6 h-6 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xs">🔐</span>
+                                        <span class="text-xs font-semibold text-neutral-900 dark:text-white">OAuth 2.0 (Izin Masuk Akun)</span>
+                                    </div>
+                                    <span class="px-2 py-0.5 rounded-[6px] text-[10px] bg-amber-500/10 text-amber-600 dark:text-amber-400 font-mono">RFC 6749</span>
+                                </div>
+                                <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
+                                    Jika Dola meminta kredensial OAuth, gunakan endpoint discovery terdaftar:
+                                </p>
+                                <div class="space-y-1 font-mono text-[11px] text-neutral-600 dark:text-neutral-300">
+                                    <div class="flex justify-between items-center bg-neutral-50 dark:bg-neutral-900 px-2.5 py-1 rounded-[6px]">
+                                        <span>Authorize:</span>
+                                        <button type="button" @click="copyText(oauthAuthorizeUrl, 'URL Authorize tersalin!')" class="text-blue-600 hover:underline">Salin</button>
+                                    </div>
+                                    <div class="flex justify-between items-center bg-neutral-50 dark:bg-neutral-900 px-2.5 py-1 rounded-[6px]">
+                                        <span>Token:</span>
+                                        <button type="button" @click="copyText(oauthTokenUrl, 'URL Token tersalin!')" class="text-blue-600 hover:underline">Salin</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- Pilihan 4: Tanpa Autentikasi / Direct Query (Pengujian) --}}
+                            <div class="p-3.5 rounded-[14px] bg-white dark:bg-[#1E1E1E] border border-neutral-200/80 dark:border-neutral-800 space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-6 h-6 rounded-full bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 flex items-center justify-center text-xs">❌</span>
+                                        <span class="text-xs font-semibold text-neutral-900 dark:text-white">Tanpa Header / Query URL (Dev)</span>
+                                    </div>
+                                    <span class="px-2 py-0.5 rounded-[6px] text-[10px] bg-neutral-100 dark:bg-neutral-800 text-neutral-500 font-mono">Dev Only</span>
+                                </div>
+                                <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
+                                    Khusus jaringan tertutup atau Dola local runner yang menyisipkan token langsung pada URL:
+                                </p>
+                                <div class="flex items-center justify-between bg-neutral-50 dark:bg-neutral-900 p-2 rounded-[8px] border border-neutral-200 dark:border-neutral-700 font-mono text-[10px] text-neutral-600 dark:text-neutral-300 truncate">
+                                    <span class="truncate" x-text="topLevelMcpUrl + '?token=' + getToken()"></span>
+                                    <button
+                                        type="button"
+                                        @click="copyText(topLevelMcpUrl + '?token=' + getToken(), 'URL dengan token tersalin!')"
+                                        class="text-blue-600 dark:text-blue-400 hover:underline shrink-0 ml-2">
+                                        Salin
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- 3. Lingkungan Sistem --}}
+                    <div class="rounded-[18px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 p-4 sm:p-5 space-y-3.5">
+                        <div class="flex items-center justify-between">
+                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white flex items-center gap-2">
+                                <i data-lucide="cpu" class="w-4 h-4 text-purple-500"></i>
+                                <span>{{ __('mcp.dola_sec3_title') }}</span>
+                            </h4>
+                            <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-[6px] bg-purple-500/10 text-purple-600 dark:text-purple-400">
+                                Environment
+                            </span>
+                        </div>
+
+                        <div class="overflow-x-auto rounded-[12px] border border-neutral-200/80 dark:border-neutral-800 bg-white dark:bg-[#1E1E1E]">
+                            <table class="w-full text-left text-xs">
+                                <thead>
+                                    <tr class="border-b border-neutral-200 dark:border-neutral-800 bg-neutral-50/80 dark:bg-neutral-900/80 text-neutral-600 dark:text-neutral-400">
+                                        <th class="py-2.5 px-3.5 font-semibold w-1/4">Kebutuhan</th>
+                                        <th class="py-2.5 px-3.5 font-semibold w-1/2">Keterangan & Rekomendasi</th>
+                                        <th class="py-2.5 px-3.5 font-semibold text-right w-1/4">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-neutral-100 dark:divide-neutral-800 text-neutral-800 dark:text-neutral-200">
+                                    <tr>
+                                        <td class="py-2.5 px-3.5 font-medium">Koneksi jaringan</td>
+                                        <td class="py-2.5 px-3.5 text-neutral-600 dark:text-neutral-300">
+                                            Dola bisa menjangkau server MCP (tidak diblokir firewall). Wajib HTTPS jika server berada di internet publik atau gunakan Cloudflare Tunnel untuk dev lokal.
+                                        </td>
+                                        <td class="py-2.5 px-3.5 text-right">
+                                            <span class="px-2 py-0.5 rounded-[6px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-semibold">Port 443 Terbuka</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2.5 px-3.5 font-medium">Runtime (untuk STDIO)</td>
+                                        <td class="py-2.5 px-3.5 font-mono text-[11px] text-neutral-600 dark:text-neutral-300">
+                                            PHP 8.2+ (Host COOCA) / Node.js 18+ / Python 3.10+ terpasang
+                                        </td>
+                                        <td class="py-2.5 px-3.5 text-right">
+                                            <button
+                                                type="button"
+                                                @click="copyText('php -v', 'Perintah cek PHP tersalin!')"
+                                                class="px-2.5 py-1 rounded-[6px] bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-300 text-[11px] font-medium inline-flex items-center gap-1 transition-colors">
+                                                <i data-lucide="copy" class="w-3 h-3"></i>
+                                                <span>Cek PHP</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2.5 px-3.5 font-medium">File / Perintah (STDIO)</td>
+                                        <td class="py-2.5 px-3.5 font-mono text-[11px] text-neutral-900 dark:text-neutral-100">
+                                            <code>php artisan mcp:serve --token=<span x-text="getToken()"></span></code>
+                                        </td>
+                                        <td class="py-2.5 px-3.5 text-right">
+                                            <button
+                                                type="button"
+                                                @click="copyText('php artisan mcp:serve --token=' + getToken(), 'Perintah STDIO tersalin!')"
+                                                class="px-2.5 py-1 rounded-[6px] bg-neutral-900 hover:bg-black text-white dark:bg-white dark:text-neutral-900 text-[11px] font-medium inline-flex items-center gap-1 transition-colors">
+                                                <i data-lucide="copy" class="w-3 h-3"></i>
+                                                <span>{{ __('mcp.btn_copy_short') }}</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2.5 px-3.5 font-medium">Variabel Lingkungan</td>
+                                        <td class="py-2.5 px-3.5 font-mono text-[11px] text-neutral-600 dark:text-neutral-300">
+                                            <code>COOCA_MCP_TOKEN=<span x-text="getToken()"></span></code>
+                                        </td>
+                                        <td class="py-2.5 px-3.5 text-right">
+                                            <button
+                                                type="button"
+                                                @click="copyText('COOCA_MCP_TOKEN=' + getToken(), 'Variabel env tersalin!')"
+                                                class="px-2.5 py-1 rounded-[6px] bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-300 text-[11px] font-medium inline-flex items-center gap-1 transition-colors">
+                                                <i data-lucide="copy" class="w-3 h-3"></i>
+                                                <span>{{ __('mcp.btn_copy_short') }}</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    {{-- 4. Hak Akses & Batasan --}}
+                    <div class="rounded-[18px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 p-4 sm:p-5 space-y-3.5">
+                        <div class="flex items-center justify-between">
+                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white flex items-center gap-2">
+                                <i data-lucide="lock" class="w-4 h-4 text-rose-500"></i>
+                                <span>{{ __('mcp.dola_sec4_title') }}</span>
+                            </h4>
+                            <span class="text-[10px] text-neutral-500 dark:text-neutral-400">Granular Role-Based Access Control</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <div class="p-3 rounded-[12px] bg-white dark:bg-[#1E1E1E] border border-neutral-200/80 dark:border-neutral-800 space-y-1">
+                                <span class="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">Tingkat Izin</span>
+                                <h5 class="text-xs font-semibold text-neutral-900 dark:text-white">Token Abilities</h5>
+                                <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
+                                    Pilih kemampuan token saat dibuat: <code>read</code> (baca saja), <code>write</code> (buat transaksi), atau <code>tools:*</code> (penuh).
+                                </p>
+                            </div>
+                            <div class="p-3 rounded-[12px] bg-white dark:bg-[#1E1E1E] border border-neutral-200/80 dark:border-neutral-800 space-y-1">
+                                <span class="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">Katalog Alat</span>
+                                <h5 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ count($tools) }} Enterprise Tools</h5>
+                                <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
+                                    Kas/bank, stok, faktur, sales order, hutang piutang, kontak pelanggan, payroll, dan analitik laba rugi.
+                                </p>
+                            </div>
+                            <div class="p-3 rounded-[12px] bg-white dark:bg-[#1E1E1E] border border-neutral-200/80 dark:border-neutral-800 space-y-1">
+                                <span class="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">Audit & Keamanan</span>
+                                <h5 class="text-xs font-semibold text-neutral-900 dark:text-white">Catatan & Log Admin</h5>
+                                <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
+                                    Setiap pemanggilan tools tercatat di audit log. Anda dapat mencabut (revoke) token kapan saja jika terjadi kendala.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- 5. File Konfigurasi (JSON) --}}
+                    <div class="space-y-2.5">
+                        <div class="flex items-center justify-between">
+                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white flex items-center gap-2">
+                                <i data-lucide="code" class="w-4 h-4 text-emerald-500"></i>
+                                <span>{{ __('mcp.dola_sec5_title') }}</span>
+                            </h4>
+                            <span class="text-[11px] font-mono text-neutral-500" x-text="dolaMode === 'http' ? 'Format Dola HTTP / SSE' : 'Format Dola Local STDIO'"></span>
+                        </div>
+
+                        <div class="relative">
+                            <div class="flex items-center justify-between px-4 py-2.5 rounded-t-[16px] bg-neutral-800 text-neutral-300 text-xs font-mono border-b border-neutral-700">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span>
+                                    <span>dola-mcp-config.json</span>
+                                </div>
+                                <button
+                                    type="button"
+                                    @click="copyText(dolaMode === 'http' ? getDolaConfig() : getDolaStdioConfig(), '{{ addslashes(__('mcp.dola_toast_config_copied')) }}')"
+                                    class="px-3 py-1 rounded-[8px] bg-white/10 hover:bg-white/20 text-white text-xs font-medium flex items-center gap-1.5 transition-colors">
+                                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                                    <span>Salin JSON Dola</span>
+                                </button>
+                            </div>
+                            <pre class="p-4 rounded-b-[16px] bg-neutral-900 text-neutral-100 font-mono text-xs overflow-x-auto leading-relaxed select-all"><code x-text="dolaMode === 'http' ? getDolaConfig() : getDolaStdioConfig()"></code></pre>
+                        </div>
+                    </div>
+
+                    {{-- Catatan Keamanan & Cek Siap (2 Kolom) --}}
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {{-- Catatan Keamanan --}}
+                        <div class="p-4 rounded-[16px] bg-amber-50/70 dark:bg-amber-950/20 border border-amber-200/80 dark:border-amber-800/60 space-y-2.5">
+                            <h4 class="text-xs font-semibold text-amber-900 dark:text-amber-200 flex items-center gap-2">
+                                <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-600 dark:text-amber-400"></i>
+                                <span>{{ __('mcp.dola_sec_security_title') }}</span>
+                            </h4>
+                            <ul class="text-[11px] text-amber-800 dark:text-amber-300/90 space-y-1.5 list-disc pl-4 leading-relaxed">
+                                <li>{{ __('mcp.dola_security_tip1') }}</li>
+                                <li>{{ __('mcp.dola_security_tip2') }}</li>
+                                <li>{{ __('mcp.dola_security_tip3') }}</li>
+                            </ul>
+                        </div>
+
+                        {{-- Cek Siap? (Checklist) --}}
+                        <div class="p-4 rounded-[16px] bg-emerald-50/60 dark:bg-emerald-950/20 border border-emerald-200/70 dark:border-emerald-800/60 space-y-2.5">
+                            <h4 class="text-xs font-semibold text-emerald-900 dark:text-emerald-200 flex items-center gap-2">
+                                <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
+                                <span>{{ __('mcp.dola_sec_checklist_title') }}</span>
+                            </h4>
+                            <div class="space-y-1.5 text-[11px] text-emerald-800 dark:text-emerald-300/90">
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i>
+                                    <span>{{ __('mcp.dola_check1') }}</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i>
+                                    <span>{{ __('mcp.dola_check2') }}</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i>
+                                    <span>{{ __('mcp.dola_check3') }}</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i>
+                                    <span>{{ __('mcp.dola_check4') }}</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i>
+                                    <span>{{ __('mcp.dola_check5') }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Contoh Prompt Bisnis Dola AI --}}
+                    <div class="p-4 sm:p-5 rounded-[18px] bg-white dark:bg-[#1E1E1E] border border-neutral-200/80 dark:border-neutral-800 space-y-3.5">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="message-square" class="w-4 h-4 text-orange-500"></i>
+                                <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">Contoh Perintah & Prompt Bisnis untuk Dola AI</h4>
+                            </div>
+                            <span class="text-[11px] text-neutral-400">Siap Digunakan di Chat Dola</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <div class="p-3 rounded-[12px] bg-neutral-50 dark:bg-neutral-900/80 border border-neutral-200/70 dark:border-neutral-800 flex flex-col justify-between gap-2.5">
+                                <div class="space-y-1">
+                                    <div class="flex items-center gap-1.5 text-neutral-500 text-[10px] font-semibold uppercase">
+                                        <i data-lucide="calendar" class="w-3 h-3 text-orange-500"></i>
+                                        <span>Jadwal & Kas</span>
+                                    </div>
+                                    <p class="text-xs text-neutral-800 dark:text-neutral-200 leading-snug">
+                                        "{{ __('mcp.dola_prompt_1') }}"
+                                    </p>
+                                </div>
+                                <button
+                                    type="button"
+                                    @click="copyText('{{ addslashes(__('mcp.dola_prompt_1')) }}', 'Prompt tersalin!')"
+                                    class="w-full py-1.5 rounded-[8px] bg-white dark:bg-[#2C2C2E] border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 text-neutral-700 dark:text-neutral-300 text-[11px] font-medium flex items-center justify-center gap-1.5 transition-colors">
+                                    <i data-lucide="copy" class="w-3 h-3"></i>
+                                    <span>Salin Prompt</span>
+                                </button>
+                            </div>
+
+                            <div class="p-3 rounded-[12px] bg-neutral-50 dark:bg-neutral-900/80 border border-neutral-200/70 dark:border-neutral-800 flex flex-col justify-between gap-2.5">
+                                <div class="space-y-1">
+                                    <div class="flex items-center gap-1.5 text-neutral-500 text-[10px] font-semibold uppercase">
+                                        <i data-lucide="package-search" class="w-3 h-3 text-blue-500"></i>
+                                        <span>Inventori & Pengiriman</span>
+                                    </div>
+                                    <p class="text-xs text-neutral-800 dark:text-neutral-200 leading-snug">
+                                        "{{ __('mcp.dola_prompt_2') }}"
+                                    </p>
+                                </div>
+                                <button
+                                    type="button"
+                                    @click="copyText('{{ addslashes(__('mcp.dola_prompt_2')) }}', 'Prompt tersalin!')"
+                                    class="w-full py-1.5 rounded-[8px] bg-white dark:bg-[#2C2C2E] border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 text-neutral-700 dark:text-neutral-300 text-[11px] font-medium flex items-center justify-center gap-1.5 transition-colors">
+                                    <i data-lucide="copy" class="w-3 h-3"></i>
+                                    <span>Salin Prompt</span>
+                                </button>
+                            </div>
+
+                            <div class="p-3 rounded-[12px] bg-neutral-50 dark:bg-neutral-900/80 border border-neutral-200/70 dark:border-neutral-800 flex flex-col justify-between gap-2.5">
+                                <div class="space-y-1">
+                                    <div class="flex items-center gap-1.5 text-neutral-500 text-[10px] font-semibold uppercase">
+                                        <i data-lucide="bar-chart-3" class="w-3 h-3 text-emerald-500"></i>
+                                        <span>Laporan Keuangan</span>
+                                    </div>
+                                    <p class="text-xs text-neutral-800 dark:text-neutral-200 leading-snug">
+                                        "{{ __('mcp.dola_prompt_3') }}"
+                                    </p>
+                                </div>
+                                <button
+                                    type="button"
+                                    @click="copyText('{{ addslashes(__('mcp.dola_prompt_3')) }}', 'Prompt tersalin!')"
+                                    class="w-full py-1.5 rounded-[8px] bg-white dark:bg-[#2C2C2E] border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 text-neutral-700 dark:text-neutral-300 text-[11px] font-medium flex items-center justify-center gap-1.5 transition-colors">
+                                    <i data-lucide="copy" class="w-3 h-3"></i>
+                                    <span>Salin Prompt</span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -1953,6 +2993,7 @@ document.addEventListener('alpine:init', () => {
                             <option value="gemini">Google Gemini</option>
                             <option value="ollama">Local / Ollama</option>
                             <option value="langchain">LangChain / n8n</option>
+                            <option value="dola">Dola AI (Calendar & Assistant)</option>
                         </select>
                     </div>
 

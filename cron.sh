@@ -44,6 +44,11 @@ fi
 # Ensure storage/logs directory exists
 mkdir -p "$SCRIPT_DIR/storage/logs"
 
+# Auto-pull latest code from origin main if .git is present
+if [ -d "$SCRIPT_DIR/.git" ]; then
+    git -C "$SCRIPT_DIR" pull origin main >> "$SCRIPT_DIR/storage/logs/git_pull.log" 2>&1 || true
+fi
+
 # Auto-purge stale route cache file so newly pulled routes take effect immediately
 if [ -f "$SCRIPT_DIR/bootstrap/cache/routes-v7.php" ]; then
     rm -f "$SCRIPT_DIR/bootstrap/cache/routes-v7.php"

@@ -265,6 +265,7 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
             Route::post('/upload-media', [AdminInboxController::class, 'uploadMedia'])->name('upload-media');
             Route::post('/send-private-dm/{id}', [AdminInboxController::class, 'sendPrivateDm'])->name('send-private-dm');
             Route::post('/toggle-status/{id}', [AdminInboxController::class, 'toggleStatus'])->name('toggle-status');
+            Route::post('/tags/{id}', [AdminInboxController::class, 'updateTags'])->name('tags');
             Route::post('/sync-meta', [AdminInboxController::class, 'syncMeta'])->name('sync-meta');
             Route::post('/settings', [AdminInboxController::class, 'saveSettings'])->name('settings');
         });

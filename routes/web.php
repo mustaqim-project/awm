@@ -36,6 +36,28 @@ require __DIR__ . '/public.php';
 \Illuminate\Support\Facades\Route::match(['GET', 'POST', 'HEAD'], '/payments/tripay/callback', [\App\Http\Controllers\Api\V1\Payment\TripayCallbackController::class, 'handle']);
 \Illuminate\Support\Facades\Route::match(['GET', 'POST', 'HEAD'], '/tripay/callback', [\App\Http\Controllers\Api\V1\Payment\TripayCallbackController::class, 'handle']);
 
+// RFC 8414 & OpenID Connect Discovery for ChatGPT Apps SDK / AI MCP Gateways
+\Illuminate\Support\Facades\Route::match(['GET', 'OPTIONS', 'HEAD'], '/.well-known/oauth-authorization-server', [\App\Http\Controllers\Api\V1\Mcp\McpOAuthController::class, 'wellKnownOAuth']);
+\Illuminate\Support\Facades\Route::match(['GET', 'OPTIONS', 'HEAD'], '/.well-known/openid-configuration', [\App\Http\Controllers\Api\V1\Mcp\McpOAuthController::class, 'wellKnownOpenId']);
+
+// Top-Level Model Context Protocol (MCP) Gateway & OAuth Endpoints (e.g. https://domain.com/mcp)
+\Illuminate\Support\Facades\Route::prefix('mcp')->group(function (): void {
+    \Illuminate\Support\Facades\Route::match(['GET', 'OPTIONS', 'HEAD'], '/.well-known/oauth-authorization-server', [\App\Http\Controllers\Api\V1\Mcp\McpOAuthController::class, 'wellKnownOAuth']);
+    \Illuminate\Support\Facades\Route::match(['GET', 'OPTIONS', 'HEAD'], '/.well-known/openid-configuration', [\App\Http\Controllers\Api\V1\Mcp\McpOAuthController::class, 'wellKnownOpenId']);
+    \Illuminate\Support\Facades\Route::match(['GET', 'OPTIONS', 'HEAD'], '/oauth/authorize', [\App\Http\Controllers\Api\V1\Mcp\McpOAuthController::class, 'authorize']);
+    \Illuminate\Support\Facades\Route::post('/oauth/authorize', [\App\Http\Controllers\Api\V1\Mcp\McpOAuthController::class, 'authorize']);
+    \Illuminate\Support\Facades\Route::match(['POST', 'OPTIONS'], '/oauth/token', [\App\Http\Controllers\Api\V1\Mcp\McpOAuthController::class, 'token']);
+    \Illuminate\Support\Facades\Route::match(['POST', 'OPTIONS'], '/oauth/register', [\App\Http\Controllers\Api\V1\Mcp\McpOAuthController::class, 'register']);
+    \Illuminate\Support\Facades\Route::match(['GET', 'OPTIONS', 'HEAD'], '/oauth/userinfo', [\App\Http\Controllers\Api\V1\Mcp\McpOAuthController::class, 'userinfo']);
+
+    // Core MCP Streamable HTTP & SSE Handlers (Direct /mcp)
+    \Illuminate\Support\Facades\Route::match(['GET', 'POST', 'OPTIONS', 'HEAD'], '/', [\App\Http\Controllers\Api\V1\Mcp\McpSseController::class, 'handleEndpoint'])->middleware(['mcp.auth', 'throttle:120,1']);
+    \Illuminate\Support\Facades\Route::match(['GET', 'POST', 'OPTIONS', 'HEAD'], '/sse', [\App\Http\Controllers\Api\V1\Mcp\McpSseController::class, 'handleEndpoint'])->middleware(['mcp.auth', 'throttle:120,1']);
+    \Illuminate\Support\Facades\Route::match(['GET', 'POST', 'OPTIONS', 'HEAD'], '/message', [\App\Http\Controllers\Api\V1\Mcp\McpSseController::class, 'message'])->middleware(['mcp.auth', 'throttle:120,1']);
+    \Illuminate\Support\Facades\Route::match(['GET', 'OPTIONS', 'HEAD'], '/openapi.json', [\App\Http\Controllers\Api\V1\Mcp\McpSseController::class, 'openapi'])->middleware(['mcp.auth', 'throttle:120,1']);
+    \Illuminate\Support\Facades\Route::match(['POST', 'OPTIONS'], '/tools/{tool}/execute', [\App\Http\Controllers\Api\V1\Mcp\McpSseController::class, 'executeDirect'])->middleware(['mcp.auth', 'throttle:120,1']);
+});
+
 // Catch-all Canonical Redirection: Eliminate any accidental /public prefix
 \Illuminate\Support\Facades\Route::any('/public/{any?}', function (?string $any = null) {
     return redirect('/' . ($any ?? ''), 301);

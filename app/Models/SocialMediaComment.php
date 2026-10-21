@@ -58,6 +58,7 @@ class SocialMediaComment extends Model
         'media_type',
         'is_from_page',
         'status',
+        'tags',
         'created_time',
     ];
 
@@ -69,6 +70,7 @@ class SocialMediaComment extends Model
         return [
             'is_platform'  => 'boolean',
             'is_from_page' => 'boolean',
+            'tags'         => 'array',
             'created_time' => 'datetime',
         ];
     }

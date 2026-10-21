@@ -74,6 +74,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'api/v1/meta/*',
             'api/meta/*',
             'api/v1/mcp/*',
+            'api/mcp/*',
+            'mcp/*',
+            '.well-known/*',
             'webhooks/marketplace/*',
             'live-chat/send',
         ]);
