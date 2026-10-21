@@ -134,6 +134,20 @@ class SocialMediaPost extends Model
         return $query->where('status', 'published');
     }
 
+    public const STATUS_DRAFT = 'draft';
+    public const STATUS_PENDING_REVIEW = 'pending_review';
+    public const STATUS_SCHEDULED = 'scheduled';
+    public const STATUS_PUBLISHING = 'publishing';
+    public const STATUS_PUBLISHED = 'published';
+    public const STATUS_FAILED = 'failed';
+    public const STATUS_PARTIALLY_FAILED = 'partially_failed';
+    public const STATUS_PARTIALLY_PUBLISHED = 'partially_published';
+
+    public function isDraft(): bool
+    {
+        return $this->status === self::STATUS_DRAFT;
+    }
+
     public function isPublished(): bool
     {
         return $this->status === 'published' || $this->status === 'completed';
@@ -186,6 +200,10 @@ class SocialMediaPost extends Model
      */
     public function syncStatusFromTargets(): void
     {
+        if ($this->status === self::STATUS_DRAFT) {
+            return;
+        }
+
         if ($this->approval_status === 'pending_review' || $this->status === 'pending_review') {
             $this->update(['status' => 'pending_review']);
             return;

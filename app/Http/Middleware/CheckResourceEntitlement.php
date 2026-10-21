@@ -29,6 +29,11 @@ final class CheckResourceEntitlement
             return $next($request);
         }
 
+        // Draf posting media sosial tidak memakan kuota posting bulanan
+        if ($resourceType === 'social_post' && ($request->boolean('is_draft') || $request->input('action_type') === 'draft')) {
+            return $next($request);
+        }
+
         $canProceed = match ($resourceType) {
             'product' => $this->entitlementService->canCreateProduct($business),
             'recipe' => $this->entitlementService->canCreateRecipe($business),

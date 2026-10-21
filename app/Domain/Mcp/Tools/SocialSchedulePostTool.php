@@ -80,10 +80,11 @@ final class SocialSchedulePostTool implements McpToolInterface
             throw new InvalidArgumentException('Minimal satu channel media sosial harus dipilih.');
         }
 
-        $publishNow = (bool) ($arguments['publish_now'] ?? false);
-        $scheduledAt = (! empty($arguments['scheduled_at']) && ! $publishNow)
+        $isDraft = (bool) ($arguments['is_draft'] ?? false) || (($arguments['status'] ?? '') === 'draft');
+        $publishNow = (! $isDraft) && (bool) ($arguments['publish_now'] ?? false);
+        $scheduledAt = (! empty($arguments['scheduled_at']) && ! $publishNow && ! $isDraft)
             ? Carbon::parse((string) $arguments['scheduled_at'])
-            : now()->addMinutes(5);
+            : ($isDraft ? null : now()->addMinutes(5));
 
         $mediaUrls = (array) ($arguments['media_urls'] ?? []);
         $mediaType = ! empty($mediaUrls) ? 'image' : 'text';
@@ -92,7 +93,10 @@ final class SocialSchedulePostTool implements McpToolInterface
         $accounts = SocialMediaAccount::where('business_id', $business->id)->get();
         $primaryAccount = $accounts->first();
 
-        $post = DB::transaction(function () use ($business, $user, $caption, $channels, $scheduledAt, $mediaUrls, $mediaType, $primaryAccount, $accounts) {
+        $initialStatus = $isDraft ? 'draft' : ($publishNow ? 'publishing' : 'scheduled');
+        $approvalStatus = $isDraft ? 'draft' : 'approved';
+
+        $post = DB::transaction(function () use ($business, $user, $caption, $channels, $scheduledAt, $mediaUrls, $mediaType, $primaryAccount, $accounts, $initialStatus, $approvalStatus) {
             $newPost = SocialMediaPost::create([
                 'business_id' => $business->id,
                 'user_id' => $user?->id,
@@ -101,8 +105,8 @@ final class SocialSchedulePostTool implements McpToolInterface
                 'content' => $caption,
                 'media_type' => $mediaType,
                 'media_urls' => $mediaUrls,
-                'status' => 'scheduled',
-                'approval_status' => 'approved',
+                'status' => $initialStatus,
+                'approval_status' => $approvalStatus,
                 'scheduled_at' => $scheduledAt,
             ]);
 
@@ -116,7 +120,7 @@ final class SocialSchedulePostTool implements McpToolInterface
                     'channel' => $ch,
                     'content_type' => $mediaType,
                     'custom_caption' => $caption,
-                    'status' => 'scheduled',
+                    'status' => $initialStatus,
                 ]);
             }
 

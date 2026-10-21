@@ -375,6 +375,23 @@ class SocialMediaWebController extends Controller implements HasMiddleware
             });
         }
 
+        $baseCountQuery = SocialMediaPost::where('business_id', $business->id);
+        if ($platform !== 'all') {
+            $baseCountQuery->where(function ($q) use ($platform) {
+                $q->where('platform', $platform)
+                    ->orWhereHas('targets', fn ($t) => $t->where('channel', $platform));
+            });
+        }
+
+        $statusCounts = [
+            'all'            => (clone $baseCountQuery)->count(),
+            'published'      => (clone $baseCountQuery)->where('status', 'published')->count(),
+            'scheduled'      => (clone $baseCountQuery)->where('status', 'scheduled')->count(),
+            'draft'          => (clone $baseCountQuery)->where('status', 'draft')->count(),
+            'pending_review' => (clone $baseCountQuery)->where('status', 'pending_review')->count(),
+            'failed'         => (clone $baseCountQuery)->whereIn('status', ['failed', 'partially_failed'])->count(),
+        ];
+
         $posts = $query->paginate(15);
         $accounts = SocialMediaAccount::where('business_id', $business->id)->where('status', 'active')->get();
 
@@ -385,7 +402,7 @@ class SocialMediaWebController extends Controller implements HasMiddleware
         $socialPostLimit = \App\Domain\Billing\EntitlementService::FREE_SOCIAL_POST_MONTHLY_LIMIT;
 
         return view('app.social_media.posts', compact(
-            'business', 'posts', 'accounts', 'status', 'platform',
+            'business', 'posts', 'accounts', 'status', 'platform', 'statusCounts',
             'canSchedulePost', 'hasSocialAddon', 'postsUsedThisMonth', 'socialPostLimit'
         ));
     }
@@ -396,17 +413,21 @@ class SocialMediaWebController extends Controller implements HasMiddleware
     public function storePost(Request $request): RedirectResponse
     {
         $business = Context::requireBusiness();
+        $isDraft = (bool) $request->boolean('is_draft') || $request->input('action_type') === 'draft';
 
         $entitlement = app(\App\Domain\Billing\EntitlementService::class);
-        if (! $entitlement->canScheduleSocialPostThisMonth($business)) {
+        if (! $isDraft && ! $entitlement->canScheduleSocialPostThisMonth($business)) {
             return redirect()->back()->withInput()->with('error', __('social_media.quota_exceeded', ['used' => 3, 'limit' => 3]));
         }
 
         $validated = $request->validate([
+            'post_id'                  => ['nullable', 'uuid'],
+            'is_draft'                 => ['nullable'],
+            'action_type'              => ['nullable', 'string', 'in:publish,schedule,draft'],
             'social_media_account_id'  => ['nullable', 'uuid'],
             'target_accounts'          => ['nullable', 'array'],
             'target_accounts.*'        => ['uuid'],
-            'content'                  => ['required', 'string', 'max:5000'],
+            'content'                  => [$isDraft ? 'nullable' : 'required', 'string', 'max:5000'],
             'custom_captions'          => ['nullable', 'array'],
             'custom_captions.*'        => ['nullable', 'string', 'max:5000'],
             'content_types'            => ['nullable', 'array'],
@@ -424,6 +445,10 @@ class SocialMediaWebController extends Controller implements HasMiddleware
             'channel_scheduled_at.*'   => ['nullable', 'date'],
             'scheduled_at'             => ['nullable', 'date'],
         ]);
+
+        if ($isDraft && empty(trim((string) ($validated['content'] ?? ''))) && ! $request->hasFile('media_files') && ! $request->hasFile('media_file') && empty($validated['media_url']) && empty($validated['post_id'])) {
+            return redirect()->back()->withInput()->with('error', 'Draf membutuhkan setidaknya teks caption atau berkas media.');
+        }
 
         // Anti-SSRF Validation for external media URLs
         if (! empty($validated['media_url'])) {
@@ -464,6 +489,14 @@ class SocialMediaWebController extends Controller implements HasMiddleware
             ? $validated['target_accounts']
             : (! empty($validated['social_media_account_id']) ? [$validated['social_media_account_id']] : []);
 
+        if (empty($selectedAccountIds) && $isDraft) {
+            $fallbackAccount = SocialMediaAccount::where('business_id', $business->id)->where('status', 'active')->first()
+                ?? SocialMediaAccount::where('business_id', $business->id)->first();
+            if ($fallbackAccount) {
+                $selectedAccountIds = [$fallbackAccount->id];
+            }
+        }
+
         if (empty($selectedAccountIds)) {
             return redirect()->back()->withInput()->with('error', __('social_media.min_one_target_channel_required'));
         }
@@ -479,55 +512,59 @@ class SocialMediaWebController extends Controller implements HasMiddleware
 
         // 1. STRICT COOCA VALIDATION: Caption Length & Max 5 Hashtags (Global & Per-Channel)
         $validator = $this->socialMediaManager->getValidator();
-        $globalHashtagValidation = $validator->validateHashtags($validated['content']);
-        if (! $globalHashtagValidation['is_valid']) {
-            return redirect()->back()->withInput()->with('error', $globalHashtagValidation['error']);
+        if (! empty($validated['content'])) {
+            $globalHashtagValidation = $validator->validateHashtags($validated['content']);
+            if (! $isDraft && ! $globalHashtagValidation['is_valid']) {
+                return redirect()->back()->withInput()->with('error', $globalHashtagValidation['error']);
+            }
         }
 
         // 2. Validate per-channel effective captions (Official API Limits & Separate Caption Support)
-        foreach ($accounts as $account) {
-            $channel = strtolower((string) $account->platform);
-            $customCaption = $validated['custom_captions'][$account->id] ?? null;
-            $effectiveCaption = (! empty($customCaption) && trim($customCaption) !== '')
-                ? trim($customCaption)
-                : trim($validated['content']);
+        if (! $isDraft) {
+            foreach ($accounts as $account) {
+                $channel = strtolower((string) $account->platform);
+                $customCaption = $validated['custom_captions'][$account->id] ?? null;
+                $effectiveCaption = (! empty($customCaption) && trim($customCaption) !== '')
+                    ? trim($customCaption)
+                    : trim($validated['content'] ?? '');
 
-            $captionLength = mb_strlen($effectiveCaption, 'UTF-8');
-            $maxLimit = $validator->getCaptionLimit($channel);
+                $captionLength = mb_strlen($effectiveCaption, 'UTF-8');
+                $maxLimit = $validator->getCaptionLimit($channel);
 
-            // Threads 500 character strict API guardrail
-            if ($channel === 'threads' && $captionLength > 500) {
-                return redirect()->back()->withInput()->with(
-                    'error',
-                    __('social_media.threads_caption_over_limit', ['count' => $captionLength])
-                );
-            }
-
-            // General channel limit guardrail
-            if ($captionLength > $maxLimit) {
-                return redirect()->back()->withInput()->with(
-                    'error',
-                    __('social_media.channel_caption_over_limit', [
-                        'account' => $account->account_name,
-                        'channel' => $channel,
-                        'count'   => $captionLength,
-                        'limit'   => $maxLimit,
-                    ])
-                );
-            }
-
-            // Validate hashtags on custom caption if provided
-            if (! empty($customCaption) && trim($customCaption) !== '') {
-                $customHashtagCheck = $validator->validateHashtags($customCaption);
-                if (! $customHashtagCheck['is_valid']) {
+                // Threads 500 character strict API guardrail
+                if ($channel === 'threads' && $captionLength > 500) {
                     return redirect()->back()->withInput()->with(
                         'error',
-                        __('social_media.custom_caption_error_prefix', [
+                        __('social_media.threads_caption_over_limit', ['count' => $captionLength])
+                    );
+                }
+
+                // General channel limit guardrail
+                if ($captionLength > $maxLimit) {
+                    return redirect()->back()->withInput()->with(
+                        'error',
+                        __('social_media.channel_caption_over_limit', [
                             'account' => $account->account_name,
                             'channel' => $channel,
-                            'error'   => $customHashtagCheck['error'],
+                            'count'   => $captionLength,
+                            'limit'   => $maxLimit,
                         ])
                     );
+                }
+
+                // Validate hashtags on custom caption if provided
+                if (! empty($customCaption) && trim($customCaption) !== '') {
+                    $customHashtagCheck = $validator->validateHashtags($customCaption);
+                    if (! $customHashtagCheck['is_valid']) {
+                        return redirect()->back()->withInput()->with(
+                            'error',
+                            __('social_media.custom_caption_error_prefix', [
+                                'account' => $account->account_name,
+                                'channel' => $channel,
+                                'error'   => $customHashtagCheck['error'],
+                            ])
+                        );
+                    }
                 }
             }
         }
@@ -606,6 +643,24 @@ class SocialMediaWebController extends Controller implements HasMiddleware
             ];
         }
 
+        // Check for existing draft post to update
+        $existingPost = null;
+        if (! empty($validated['post_id'])) {
+            $existingPost = SocialMediaPost::where('business_id', $business->id)->where('id', $validated['post_id'])->first();
+        }
+
+        // If existing post already has media and no new media was uploaded, preserve existing media!
+        if (empty($uploadedMedia) && $existingPost && ! empty($existingPost->media_urls)) {
+            $primaryMediaType = $existingPost->media_type;
+            $uploadedMedia = $existingPost->media()->orderBy('sort_order')->get()->map(fn ($m) => [
+                'sort_order' => $m->sort_order,
+                'media_type' => $m->media_type,
+                'media_url'  => $m->media_url,
+                'local_path' => $m->local_path,
+                'file_size'  => $m->file_size,
+            ])->all();
+        }
+
         // Determine primary media type
         $mediaFormat = $validated['media_format'] ?? null;
         $primaryMediaType = 'text';
@@ -618,7 +673,7 @@ class SocialMediaWebController extends Controller implements HasMiddleware
         $timingMode = (string) ($validated['schedule_mode'] ?? (! empty($validated['scheduled_at']) ? 'all_same' : 'all_now'));
         $channelScheduleModes = (array) ($validated['channel_schedule_modes'] ?? []);
         $channelScheduledAts = (array) ($validated['channel_scheduled_at'] ?? []);
-        $globalScheduledAt = ! empty($validated['scheduled_at']) ? \Illuminate\Support\Carbon::parse($validated['scheduled_at']) : null;
+        $globalScheduledAt = (! $isDraft && ! empty($validated['scheduled_at'])) ? \Illuminate\Support\Carbon::parse($validated['scheduled_at']) : null;
 
         $firstAccount = $accounts->first();
 
@@ -630,56 +685,82 @@ class SocialMediaWebController extends Controller implements HasMiddleware
         $riskFlags = [];
 
         // Heuristic Scan: Rekening Bank Liar
-        $detectedBankAccounts = $this->scanBankAccountsInCaption($validated['content']);
-        if (! empty($detectedBankAccounts)) {
-            $registeredAccounts = array_filter(array_merge(
-                [$business->bank_account_number],
-                \App\Models\CommercePaymentMethod::where('business_id', $business->id)->pluck('account_number')->all()
-            ));
-            $normalizedRegistered = array_filter(array_map(
-                fn ($acc) => preg_replace('/[^0-9]/', '', (string) $acc),
-                $registeredAccounts
-            ));
+        if (! empty($validated['content'])) {
+            $detectedBankAccounts = $this->scanBankAccountsInCaption($validated['content']);
+            if (! empty($detectedBankAccounts)) {
+                $registeredAccounts = array_filter(array_merge(
+                    [$business->bank_account_number],
+                    \App\Models\CommercePaymentMethod::where('business_id', $business->id)->pluck('account_number')->all()
+                ));
+                $normalizedRegistered = array_filter(array_map(
+                    fn ($acc) => preg_replace('/[^0-9]/', '', (string) $acc),
+                    $registeredAccounts
+                ));
 
-            $unauthorized = array_diff($detectedBankAccounts, $normalizedRegistered);
-            if (! empty($unauthorized)) {
-                $riskFlags[] = 'unregistered_bank_account_detected';
+                $unauthorized = array_diff($detectedBankAccounts, $normalizedRegistered);
+                if (! empty($unauthorized)) {
+                    $riskFlags[] = 'unregistered_bank_account_detected';
+                }
             }
         }
 
-        // Determine approval status:
-        // Staf non-owner/manager, ATAU postingan memuat nomor rekening bank tak terdaftar mewajibkan approval
-        $requiresApproval = (! $isOwnerOrManager) || in_array('unregistered_bank_account_detected', $riskFlags, true);
-        $approvalStatus = $requiresApproval ? 'pending_review' : 'approved';
+        // Determine approval and post status
+        if ($isDraft) {
+            $approvalStatus = 'draft';
+            $postStatus = 'draft';
+        } else {
+            $requiresApproval = (! $isOwnerOrManager) || in_array('unregistered_bank_account_detected', $riskFlags, true);
+            $approvalStatus = $requiresApproval ? 'pending_review' : 'approved';
+            $postStatus = ($approvalStatus === 'pending_review') ? 'pending_review' : 'publishing';
+        }
 
-        // 5. Create Parent Social Media Post with Audit Trail
-        $post = SocialMediaPost::create([
+        $postPayload = [
             'business_id'             => $business->id,
             'user_id'                 => $currentUser?->id,
             'social_media_account_id' => $firstAccount->id,
             'platform'                => $firstAccount->platform,
-            'content'                 => $validated['content'],
+            'content'                 => $validated['content'] ?? '',
             'media_type'              => $primaryMediaType,
             'media_urls'              => ! empty($uploadedMedia) ? array_column($uploadedMedia, 'media_url') : null,
             'local_media_paths'       => ! empty($uploadedMedia) ? array_filter(array_column($uploadedMedia, 'local_path')) : null,
-            'status'                  => ($approvalStatus === 'pending_review') ? 'pending_review' : 'publishing',
+            'status'                  => $postStatus,
             'approval_status'         => $approvalStatus,
             'reviewed_by'             => ($approvalStatus === 'approved') ? $currentUser?->id : null,
             'reviewed_at'             => ($approvalStatus === 'approved') ? now() : null,
             'risk_flags'              => ! empty($riskFlags) ? $riskFlags : null,
             'scheduled_at'            => $globalScheduledAt,
-        ]);
+        ];
 
-        // 6. Create Post Media Records
-        foreach ($uploadedMedia as $item) {
-            \App\Models\SocialPostMedia::create([
-                'social_media_post_id' => $post->id,
-                'sort_order'           => $item['sort_order'],
-                'media_type'           => $item['media_type'],
-                'media_url'            => $item['media_url'],
-                'local_path'           => $item['local_path'],
-                'file_size'            => $item['file_size'],
-            ]);
+        // 5. Create or Update Parent Social Media Post
+        if ($existingPost) {
+            $existingPost->update($postPayload);
+            $post = $existingPost;
+            if (! empty($uploadedMedia) && ($request->hasFile('media_files') || $request->hasFile('media_file') || ! empty($validated['media_url']))) {
+                $post->media()->delete();
+                foreach ($uploadedMedia as $item) {
+                    \App\Models\SocialPostMedia::create([
+                        'social_media_post_id' => $post->id,
+                        'sort_order'           => $item['sort_order'],
+                        'media_type'           => $item['media_type'],
+                        'media_url'            => $item['media_url'],
+                        'local_path'           => $item['local_path'],
+                        'file_size'            => $item['file_size'],
+                    ]);
+                }
+            }
+            $post->targets()->delete();
+        } else {
+            $post = SocialMediaPost::create($postPayload);
+            foreach ($uploadedMedia as $item) {
+                \App\Models\SocialPostMedia::create([
+                    'social_media_post_id' => $post->id,
+                    'sort_order'           => $item['sort_order'],
+                    'media_type'           => $item['media_type'],
+                    'media_url'            => $item['media_url'],
+                    'local_path'           => $item['local_path'],
+                    'file_size'            => $item['file_size'],
+                ]);
+            }
         }
 
         // 7. Create Targets for each selected account with independent schedule support
@@ -722,14 +803,18 @@ class SocialMediaWebController extends Controller implements HasMiddleware
                 $targetSchedTime = $globalScheduledAt;
             }
 
-            $isTargetScheduled = ($targetTiming === 'schedule') && $targetSchedTime && $targetSchedTime->isFuture();
+            $isTargetScheduled = (! $isDraft) && ($targetTiming === 'schedule') && $targetSchedTime && $targetSchedTime->isFuture();
             if ($isTargetScheduled) {
                 $hasScheduledTargets = true;
             }
 
-            $targetStatus = ($approvalStatus === 'pending_review')
-                ? 'pending_review'
-                : ($isTargetScheduled ? 'scheduled' : 'pending');
+            if ($isDraft) {
+                $targetStatus = 'draft';
+            } else {
+                $targetStatus = ($approvalStatus === 'pending_review')
+                    ? 'pending_review'
+                    : ($isTargetScheduled ? 'scheduled' : 'pending');
+            }
 
             $target = \App\Models\SocialPostTarget::create([
                 'social_media_post_id'    => $post->id,
@@ -743,9 +828,17 @@ class SocialMediaWebController extends Controller implements HasMiddleware
                 'retry_count'             => 0,
             ]);
 
-            if ($approvalStatus === 'approved' && ! $isTargetScheduled) {
+            if (! $isDraft && $approvalStatus === 'approved' && ! $isTargetScheduled) {
                 $immediateTargets[] = $target;
             }
+        }
+
+        // 8. Early return for Draft saving
+        if ($isDraft) {
+            $post->syncStatusFromTargets();
+
+            return redirect()->route('social-media.posts.index', ['status' => 'draft'])
+                ->with('success', __('social_media.post_saved_as_draft'));
         }
 
         // 8. Handle Maker-Checker Hold
@@ -2057,22 +2150,40 @@ class SocialMediaWebController extends Controller implements HasMiddleware
     {
         $business = Context::requireBusiness();
         abort_unless($post->business_id === $business->id, 404);
-        abort_unless(in_array($post->status, ['scheduled', 'pending', 'failed', 'partially_failed'], true), 422, __('social_media.reschedule_invalid_status'));
+        abort_unless(in_array($post->status, ['draft', 'scheduled', 'pending', 'failed', 'partially_failed'], true), 422, __('social_media.reschedule_invalid_status'));
+
+        $entitlement = app(\App\Domain\Billing\EntitlementService::class);
+        if ($post->status === 'draft' && ! $entitlement->canScheduleSocialPostThisMonth($business)) {
+            return response()->json([
+                'success' => false,
+                'error'   => __('social_media.quota_exceeded', ['used' => 3, 'limit' => 3]),
+            ], 422);
+        }
 
         $validated = $request->validate([
             'scheduled_at' => ['required', 'date', 'after:now'],
         ]);
 
         $newScheduledAt = \Carbon\Carbon::parse($validated['scheduled_at']);
+        $wasDraft = ($post->status === 'draft');
 
         // Update post
-        $post->update(['scheduled_at' => $newScheduledAt, 'status' => 'scheduled']);
+        $post->update([
+            'scheduled_at'    => $newScheduledAt,
+            'status'          => 'scheduled',
+            'approval_status' => 'approved',
+        ]);
 
-        // Update all targets that are still pending/scheduled
-        $post->targets()->whereIn('status', ['scheduled', 'pending', 'failed'])->update([
+        // Update all targets that are still draft/pending/scheduled
+        $post->targets()->whereIn('status', ['draft', 'scheduled', 'pending', 'failed'])->update([
             'scheduled_at' => $newScheduledAt,
             'status'       => 'scheduled',
         ]);
+
+        if ($wasDraft && ! $entitlement->hasActiveSocialMediaSubscription($business)) {
+            $entitlement->incrementMonthlyUsage($business, \App\Models\QuotaMonthlyUsage::TYPE_SOCIAL_POST, \App\Domain\Billing\EntitlementService::FREE_SOCIAL_POST_MONTHLY_LIMIT);
+            $entitlement->clearUsageCache($business);
+        }
 
         return response()->json([
             'success'      => true,
@@ -2088,21 +2199,37 @@ class SocialMediaWebController extends Controller implements HasMiddleware
     {
         $business = Context::requireBusiness();
         abort_unless($post->business_id === $business->id, 404);
-        abort_unless(in_array($post->status, ['scheduled', 'pending', 'failed', 'partially_failed'], true), 422, __('social_media.publish_now_invalid_status'));
+        abort_unless(in_array($post->status, ['draft', 'scheduled', 'pending', 'failed', 'partially_failed'], true), 422, __('social_media.publish_now_invalid_status'));
+
+        $entitlement = app(\App\Domain\Billing\EntitlementService::class);
+        if ($post->status === 'draft' && ! $entitlement->canScheduleSocialPostThisMonth($business)) {
+            return response()->json([
+                'success' => false,
+                'error'   => __('social_media.quota_exceeded', ['used' => 3, 'limit' => 3]),
+            ], 422);
+        }
+
+        $wasDraft = ($post->status === 'draft');
 
         try {
             // Reset schedule and dispatch immediately
             $post->update([
-                'scheduled_at' => null,
-                'status'       => 'publishing',
+                'scheduled_at'    => null,
+                'status'          => 'publishing',
+                'approval_status' => 'approved',
             ]);
 
-            $post->targets()->whereIn('status', ['scheduled', 'pending', 'failed'])->update([
+            $post->targets()->whereIn('status', ['draft', 'scheduled', 'pending', 'failed'])->update([
                 'scheduled_at' => null,
                 'status'       => 'pending',
             ]);
 
             $result = $this->socialService->publishPost($business, $post->fresh(['targets.account', 'account', 'media']));
+
+            if ($wasDraft && ! $entitlement->hasActiveSocialMediaSubscription($business)) {
+                $entitlement->incrementMonthlyUsage($business, \App\Models\QuotaMonthlyUsage::TYPE_SOCIAL_POST, \App\Domain\Billing\EntitlementService::FREE_SOCIAL_POST_MONTHLY_LIMIT);
+                $entitlement->clearUsageCache($business);
+            }
 
             return response()->json([
                 'success' => true,

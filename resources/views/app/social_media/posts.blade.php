@@ -32,7 +32,7 @@
                         <span>{{ __('social_media.create_post_quota_reached') }}</span>
                     </button>
                 @else
-                    <button @click="openComposerModal = true"
+                    <button @click="openFreshComposer()"
                         class="min-h-[44px] sm:min-h-0 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 w-full sm:w-auto shadow-sm cursor-pointer">
                         <i data-lucide="plus-circle" class="w-4 h-4"></i>
                         <span>{{ __('social_media.create_post_btn') }}</span>
@@ -98,23 +98,28 @@
                 <span class="text-[12px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider mr-1">{{ __('social_media.filter_status_label') }}:</span>
                 <a href="{{ route('social-media.posts.index', ['status' => 'all', 'platform' => $platform]) }}"
                     class="min-h-[38px] sm:min-h-0 sm:h-7 px-3.5 sm:px-3 rounded-full text-[12px] font-medium transition-colors flex items-center {{ $status === 'all' ? 'bg-[#007AFF] text-white shadow-sm' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70 hover:bg-black/[0.08]' }}">
-                    {{ __('social_media.filter_status_all') }} ({{ $posts->total() }})
+                    {{ __('social_media.filter_status_all') }} ({{ $statusCounts['all'] ?? $posts->total() }})
                 </a>
                 <a href="{{ route('social-media.posts.index', ['status' => 'published', 'platform' => $platform]) }}"
                     class="min-h-[38px] sm:min-h-0 sm:h-7 px-3.5 sm:px-3 rounded-full text-[12px] font-medium transition-colors flex items-center {{ $status === 'published' ? 'bg-[#34C759] text-white shadow-sm' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70 hover:bg-black/[0.08]' }}">
-                    {{ __('social_media.filter_status_published') }}
+                    {{ __('social_media.filter_status_published') }} ({{ $statusCounts['published'] ?? 0 }})
                 </a>
                 <a href="{{ route('social-media.posts.index', ['status' => 'scheduled', 'platform' => $platform]) }}"
                     class="min-h-[38px] sm:min-h-0 sm:h-7 px-3.5 sm:px-3 rounded-full text-[12px] font-medium transition-colors flex items-center {{ $status === 'scheduled' ? 'bg-[#5856D6] text-white shadow-sm' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70 hover:bg-black/[0.08]' }}">
-                    {{ __('social_media.filter_status_scheduled') }}
+                    {{ __('social_media.filter_status_scheduled') }} ({{ $statusCounts['scheduled'] ?? 0 }})
+                </a>
+                <a href="{{ route('social-media.posts.index', ['status' => 'draft', 'platform' => $platform]) }}"
+                    class="min-h-[38px] sm:min-h-0 sm:h-7 px-3.5 sm:px-3 rounded-full text-[12px] font-medium transition-colors flex items-center gap-1.5 {{ $status === 'draft' ? 'bg-slate-700 dark:bg-slate-300 text-white dark:text-black shadow-sm font-semibold' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70 hover:bg-black/[0.08]' }}">
+                    <i data-lucide="file-edit" class="w-3 h-3"></i>
+                    <span>{{ __('social_media.filter_status_draft') }} ({{ $statusCounts['draft'] ?? 0 }})</span>
                 </a>
                 <a href="{{ route('social-media.posts.index', ['status' => 'pending_review', 'platform' => $platform]) }}"
                     class="min-h-[38px] sm:min-h-0 sm:h-7 px-3.5 sm:px-3 rounded-full text-[12px] font-medium transition-colors flex items-center {{ $status === 'pending_review' ? 'bg-[#FF9500] text-white shadow-sm' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70 hover:bg-black/[0.08]' }}">
-                    {{ __('social_media.filter_status_pending_review') }}
+                    {{ __('social_media.filter_status_pending_review') }} ({{ $statusCounts['pending_review'] ?? 0 }})
                 </a>
                 <a href="{{ route('social-media.posts.index', ['status' => 'failed', 'platform' => $platform]) }}"
                     class="min-h-[38px] sm:min-h-0 sm:h-7 px-3.5 sm:px-3 rounded-full text-[12px] font-medium transition-colors flex items-center {{ $status === 'failed' ? 'bg-[#FF3B30] text-white shadow-sm' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70 hover:bg-black/[0.08]' }}">
-                    {{ __('social_media.filter_status_failed') }}
+                    {{ __('social_media.filter_status_failed') }} ({{ $statusCounts['failed'] ?? 0 }})
                 </a>
             </div>
 
@@ -145,7 +150,7 @@
                     </p>
                 </div>
                 <div>
-                    <button @click="openComposerModal = true"
+                    <button @click="openFreshComposer()"
                         class="min-h-[44px] sm:min-h-0 h-9 px-5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all inline-flex items-center gap-2">
                         <i data-lucide="plus" class="w-4 h-4"></i>
                         <span>{{ __('social_media.write_post_now_btn') }}</span>
@@ -207,6 +212,11 @@
                                         <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158] inline-flex items-center gap-1">
                                             <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]"></span>
                                             <span>{{ __('social_media.filter_status_published') }}</span>
+                                        </span>
+                                    @elseif($post->status === 'draft')
+                                        <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-slate-500/15 text-slate-700 dark:text-slate-300 inline-flex items-center gap-1">
+                                            <i data-lucide="file-edit" class="w-3 h-3"></i>
+                                            <span>{{ __('social_media.status_draft') }}</span>
                                         </span>
                                     @elseif($post->status === 'scheduled')
                                         <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-[#5856D6]/15 text-[#5856D6] inline-flex items-center gap-1">
@@ -377,8 +387,23 @@
                             </div>
 
                             {{-- Quick action buttons for manageable posts --}}
-                            @if(in_array($post->status, ['scheduled', 'pending', 'failed', 'partially_failed']) && \App\Support\Context::hasPermission('social_media.manage'))
+                            @if(in_array($post->status, ['draft', 'scheduled', 'pending', 'failed', 'partially_failed']) && \App\Support\Context::hasPermission('social_media.manage'))
                                 <div class="flex items-center gap-2">
+                                    @if($post->status === 'draft')
+                                        <button type="button"
+                                            @click="editDraft({
+                                                id: '{{ $post->id }}',
+                                                content: {{ Js::from($post->content) }},
+                                                media_type: '{{ $post->media_type }}',
+                                                media_urls: {{ Js::from($post->media_urls ?? []) }},
+                                                target_account_ids: {{ Js::from($post->targets->pluck('social_media_account_id')->all() ?: ($post->social_media_account_id ? [$post->social_media_account_id] : [])) }},
+                                                custom_captions: {{ Js::from($post->targets->pluck('custom_caption', 'social_media_account_id')->filter()->all()) }}
+                                            })"
+                                            class="flex-1 min-h-[44px] sm:min-h-[36px] px-3 rounded-[9px] text-[12px] font-semibold text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-white/10 hover:bg-slate-200 dark:hover:bg-white/15 active:scale-[0.97] transition-all inline-flex items-center justify-center gap-1.5 cursor-pointer">
+                                            <i data-lucide="file-edit" class="w-3.5 h-3.5"></i>
+                                            <span>{{ __('social_media.edit_draft_btn') }}</span>
+                                        </button>
+                                    @endif
                                     {{-- Preview / Kelola button --}}
                                     <button type="button"
                                         @click="openPostManager({
@@ -388,6 +413,8 @@
                                             platform: '{{ $post->platform }}',
                                             media_type: '{{ $post->media_type }}',
                                             media_urls: {{ Js::from($post->media_urls ?? []) }},
+                                            target_account_ids: {{ Js::from($post->targets->pluck('social_media_account_id')->all() ?: ($post->social_media_account_id ? [$post->social_media_account_id] : [])) }},
+                                            custom_captions: {{ Js::from($post->targets->pluck('custom_caption', 'social_media_account_id')->filter()->all()) }},
                                             scheduled_at_raw: '{{ $post->scheduled_at ? $post->scheduled_at->format('Y-m-d\TH:i') : '' }}',
                                             scheduled_at_label: '{{ $post->scheduled_at ? $post->scheduled_at->format('d M Y, H:i') : '-' }}',
                                             account_name: '{{ $post->account ? addslashes($post->account->account_name) : ucfirst($post->platform) }}',
@@ -395,7 +422,7 @@
                                             publish_now_url: '{{ route('social-media.posts.publish-now', $post) }}',
                                             destroy_url: '{{ route('social-media.posts.destroy', $post) }}'
                                         })"
-                                        class="flex-1 min-h-[44px] sm:min-h-[36px] px-3 rounded-[9px] text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 active:scale-[0.97] transition-all inline-flex items-center justify-center gap-1.5">
+                                        class="{{ $post->status === 'draft' ? '' : 'flex-1' }} min-h-[44px] sm:min-h-[36px] px-3 rounded-[9px] text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 active:scale-[0.97] transition-all inline-flex items-center justify-center gap-1.5 cursor-pointer">
                                         <i data-lucide="eye" class="w-3.5 h-3.5"></i>
                                         <span>{{ __('social_media.preview_and_manage') }}</span>
                                     </button>
@@ -439,7 +466,7 @@
                     x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
                     x-transition:leave-end="opacity-0 translate-y-4 sm:scale-95"
                     class="relative w-full max-w-5xl xl:max-w-6xl 2xl:max-w-[1550px] rounded-[26px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl p-6 sm:p-8 space-y-6 my-4 max-h-[94vh] overflow-y-auto z-10"
-                    @click.outside="openComposerModal = false">
+                    @click.outside="closeComposer()">
 
                     {{-- Modal Header --}}
                     <div class="flex items-center justify-between pb-3.5 border-b border-black/5 dark:border-white/10">
@@ -448,20 +475,23 @@
                                 <i data-lucide="feather" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h3 id="composer-modal-title" class="text-[17px] font-bold text-black dark:text-white">{{ __('social_media.composer_title') }}</h3>
-                                <p class="text-[12.5px] text-black/55 dark:text-white/55">{{ __('social_media.composer_subtitle') }}</p>
+                                <h3 id="composer-modal-title" class="text-[17px] font-bold text-black dark:text-white" x-text="editingPostId ? '{{ __('social_media.edit_draft_btn') }}' : '{{ __('social_media.composer_title') }}'"></h3>
+                                <p class="text-[12.5px] text-black/55 dark:text-white/55" x-text="editingPostId ? 'Perbarui konten draf sebelum menjadwalkan atau mempublikasikan' : '{{ __('social_media.composer_subtitle') }}'"></p>
                             </div>
                         </div>
-                        <button type="button" @click="openComposerModal = false" class="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer active:scale-95" aria-label="Tutup modal">
-                        <i data-lucide="x" class="w-5 h-5"></i>
-                    </button>
-                </div>
+                        <button type="button" @click="closeComposer()" class="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer active:scale-95" aria-label="Tutup modal">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
+                    </div>
 
-                {{-- Form Content with Bento 2-Column Architecture --}}
-                <form action="{{ route('social-media.posts.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6" @submit="isSubmitting = true">
-                    @csrf
-                    <input type="hidden" name="media_format" :value="mediaFormat">
-                    <input type="hidden" name="social_media_account_id" :value="selectedAccounts[0] || ''">
+                    {{-- Form Content with Bento 2-Column Architecture --}}
+                    <form action="{{ route('social-media.posts.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6" x-ref="composerForm" @submit="handleSubmit($event)">
+                        @csrf
+                        <input type="hidden" name="is_draft" :value="isDraft ? '1' : '0'">
+                        <input type="hidden" name="action_type" :value="actionType">
+                        <input type="hidden" name="post_id" :value="editingPostId || ''">
+                        <input type="hidden" name="media_format" :value="mediaFormat">
+                        <input type="hidden" name="social_media_account_id" :value="selectedAccounts[0] || ''">
 
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                         {{-- LEFT COLUMN: FORM CONTROLS (Col-span 7) --}}
@@ -1389,21 +1419,36 @@
                     </div>
 
                     {{-- Modal Footer --}}
-                    <div class="pt-4 flex items-center justify-end gap-2.5 border-t border-black/5 dark:border-white/10">
-                        <button type="button" @click="openComposerModal = false"
-                            class="min-h-[44px] sm:min-h-0 h-10 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-black/70 dark:text-white/70 hover:bg-black/[0.05] dark:hover:bg-white/[0.08] transition-colors flex items-center justify-center">
-                            {{ __('social_media.cancel') }}
-                        </button>
-                        <button type="submit" :disabled="isSubmitDisabled"
-                            class="min-h-[44px] sm:min-h-0 h-10 sm:h-9 px-5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] disabled:opacity-50 disabled:pointer-events-none transition-all flex items-center justify-center gap-1.5 shadow-sm cursor-pointer">
-                            <template x-if="!isSubmitting">
-                                <i data-lucide="send" class="w-4 h-4"></i>
-                            </template>
-                            <template x-if="isSubmitting">
-                                <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i>
-                            </template>
-                            <span x-text="isSubmitting ? '{{ __('social_media.uploading_btn') }}' : (scheduleMode !== 'all_now' ? '{{ __('social_media.save_schedule_btn') }}' : '{{ __('social_media.publish_now_btn') }}')"></span>
-                        </button>
+                    <div class="pt-4 flex items-center justify-between gap-2.5 border-t border-black/5 dark:border-white/10">
+                        <div>
+                            {{-- Save as Draft Button --}}
+                            <button type="button" @click="submitAsDraft()" :disabled="isDraftDisabled"
+                                class="min-h-[44px] sm:min-h-0 h-10 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-slate-700 dark:text-slate-200 bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 active:scale-[0.97] disabled:opacity-40 disabled:pointer-events-none transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+                                <template x-if="!isSubmittingDraft">
+                                    <i data-lucide="bookmark" class="w-4 h-4 text-slate-500"></i>
+                                </template>
+                                <template x-if="isSubmittingDraft">
+                                    <i data-lucide="loader-2" class="w-4 h-4 animate-spin text-slate-500"></i>
+                                </template>
+                                <span x-text="isSubmittingDraft ? '{{ __('social_media.saving_draft_btn') }}' : '{{ __('social_media.save_draft_btn') }}'"></span>
+                            </button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button type="button" @click="closeComposer()"
+                                class="min-h-[44px] sm:min-h-0 h-10 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-black/70 dark:text-white/70 hover:bg-black/[0.05] dark:hover:bg-white/[0.08] transition-colors flex items-center justify-center">
+                                {{ __('social_media.cancel') }}
+                            </button>
+                            <button type="submit" :disabled="isSubmitDisabled"
+                                class="min-h-[44px] sm:min-h-0 h-10 sm:h-9 px-5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] disabled:opacity-50 disabled:pointer-events-none transition-all flex items-center justify-center gap-1.5 shadow-sm cursor-pointer">
+                                <template x-if="!isSubmitting">
+                                    <i data-lucide="send" class="w-4 h-4"></i>
+                                </template>
+                                <template x-if="isSubmitting">
+                                    <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i>
+                                </template>
+                                <span x-text="isSubmitting ? '{{ __('social_media.uploading_btn') }}' : (scheduleMode !== 'all_now' ? '{{ __('social_media.save_schedule_btn') }}' : '{{ __('social_media.publish_now_btn') }}')"></span>
+                            </button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -1472,15 +1517,26 @@
                     <div class="flex flex-wrap items-center justify-between gap-2 p-3 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5">
                         <div class="flex items-center gap-2">
                             <span class="text-[11px] font-bold uppercase tracking-wider text-black/40 dark:text-white/40">{{ __('social_media.filter_status_label') }}:</span>
-                            <span x-text="pmPost.status === 'scheduled' ? @js(__('social_media.status_label_scheduled')) : (pmPost.status === 'pending' ? @js(__('social_media.status_label_pending')) : (pmPost.status === 'failed' ? @js(__('social_media.status_label_failed')) : @js(__('social_media.status_label_partially_failed'))))"
+                            <span x-text="pmPost.status === 'draft' ? @js(__('social_media.status_draft')) : (pmPost.status === 'scheduled' ? @js(__('social_media.status_label_scheduled')) : (pmPost.status === 'pending' ? @js(__('social_media.status_label_pending')) : (pmPost.status === 'failed' ? @js(__('social_media.status_label_failed')) : @js(__('social_media.status_label_partially_failed')))))"
                                   class="px-2.5 py-1 rounded-full text-[12px] font-bold"
-                                  :class="pmPost.status === 'scheduled' ? 'bg-[#5856D6]/15 text-[#5856D6]' : (pmPost.status === 'pending' ? 'bg-[#007AFF]/15 text-[#007AFF]' : 'bg-[#FF3B30]/15 text-[#FF3B30]')"></span>
+                                  :class="pmPost.status === 'draft' ? 'bg-slate-500/15 text-slate-700 dark:text-slate-300' : (pmPost.status === 'scheduled' ? 'bg-[#5856D6]/15 text-[#5856D6]' : (pmPost.status === 'pending' ? 'bg-[#007AFF]/15 text-[#007AFF]' : 'bg-[#FF3B30]/15 text-[#FF3B30]'))"></span>
                         </div>
                         <div x-show="pmPost.scheduled_at_label && pmPost.scheduled_at_label !== '-'" class="flex items-center gap-1.5 text-[12px] font-semibold text-black/60 dark:text-white/60">
                             <i data-lucide="clock" class="w-3.5 h-3.5 text-[#5856D6]"></i>
                             <span x-text="pmPost.scheduled_at_label"></span>
                         </div>
                     </div>
+
+                    {{-- Draft Notice Banner --}}
+                    <template x-if="pmPost.status === 'draft'">
+                        <div class="p-3 rounded-[14px] bg-slate-500/10 border border-slate-500/20 text-slate-700 dark:text-slate-300 flex items-center gap-2.5 text-[12px]">
+                            <i data-lucide="file-edit" class="w-4 h-4 text-slate-500 shrink-0"></i>
+                            <div>
+                                <span class="font-bold">{{ __('social_media.draft_notice_title') }}:</span>
+                                <span>{{ __('social_media.draft_notice_desc') }}</span>
+                            </div>
+                        </div>
+                    </template>
 
                     {{-- Media Preview (Image / Video / Carousel) --}}
                     <template x-if="pmPost.media_urls && pmPost.media_urls.length > 0">
@@ -1563,8 +1619,15 @@
                                 :class="pmTab === 'reschedule' ? 'bg-[#5856D6] text-white shadow-xs' : 'bg-[#5856D6]/10 text-[#5856D6] hover:bg-[#5856D6]/20'"
                                 class="min-h-[44px] sm:min-h-0 sm:h-8 px-4 sm:px-3.5 rounded-full text-[12px] font-semibold transition-colors inline-flex items-center justify-center gap-1.5 cursor-pointer">
                             <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
-                            <span>{{ __('social_media.reschedule_tab') }}</span>
+                            <span x-text="pmPost.status === 'draft' ? @js(__('social_media.schedule_draft_tab')) : @js(__('social_media.reschedule_tab'))"></span>
                         </button>
+                        <template x-if="pmPost.status === 'draft'">
+                            <button type="button" @click="editDraftFromManager()"
+                                    class="min-h-[44px] sm:min-h-0 sm:h-8 px-4 sm:px-3.5 rounded-full text-[12px] font-semibold transition-colors bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-white/15 inline-flex items-center justify-center gap-1.5 cursor-pointer">
+                                <i data-lucide="file-edit" class="w-3.5 h-3.5"></i>
+                                <span>{{ __('social_media.edit_draft_btn') }}</span>
+                            </button>
+                        </template>
                     </div>
 
                     {{-- Primary actions --}}
@@ -1577,7 +1640,7 @@
                                 class="flex-1 min-h-[44px] sm:min-h-0 sm:h-10 rounded-[12px] text-[13px] font-bold text-white bg-[#5856D6] hover:bg-[#4F4EC2] active:scale-[0.97] transition-all disabled:opacity-50 inline-flex items-center justify-center gap-2 cursor-pointer shadow-xs">
                             <i data-lucide="loader-2" class="w-4 h-4 animate-spin" x-show="pmLoading" x-cloak></i>
                             <i data-lucide="save" class="w-4 h-4" x-show="!pmLoading"></i>
-                            <span>{{ __('social_media.save_new_schedule_btn') }}</span>
+                            <span x-text="pmPost.status === 'draft' ? @js(__('social_media.save_schedule_btn')) : @js(__('social_media.save_new_schedule_btn'))"></span>
                         </button>
 
                         {{-- Publish Now --}}
@@ -1663,6 +1726,108 @@
                 videoRatio: null,
                 isLandscapeVideo: false,
                 isSubmitting: false,
+                isSubmittingDraft: false,
+                isDraft: false,
+                actionType: 'publish',
+                editingPostId: null,
+
+                get isDraftDisabled() {
+                    if (this.isSubmitting || this.isSubmittingDraft) return true;
+                    const hasContent = Boolean(this.captionText && this.captionText.trim().length > 0);
+                    const hasMedia = Boolean(this.filePreviewUrl || this.carouselItems.length > 0 || this.mediaUrl);
+                    const hasExisting = Boolean(this.editingPostId);
+                    return !(hasContent || hasMedia || hasExisting);
+                },
+
+                submitAsDraft() {
+                    if (this.isDraftDisabled) return;
+                    this.isDraft = true;
+                    this.actionType = 'draft';
+                    this.isSubmittingDraft = true;
+                    this.$nextTick(() => {
+                        this.$refs.composerForm.submit();
+                    });
+                },
+
+                handleSubmit(event) {
+                    if (this.isSubmitting || this.isSubmittingDraft) {
+                        event.preventDefault();
+                        return;
+                    }
+                    if (!this.isDraft) {
+                        this.actionType = (this.scheduleMode !== 'all_now') ? 'schedule' : 'publish';
+                        this.isSubmitting = true;
+                    }
+                },
+
+                closeComposer() {
+                    this.openComposerModal = false;
+                    this.editingPostId = null;
+                    this.isDraft = false;
+                    this.actionType = 'publish';
+                    this.isSubmitting = false;
+                    this.isSubmittingDraft = false;
+                },
+
+                openFreshComposer() {
+                    this.editingPostId = null;
+                    this.isDraft = false;
+                    this.actionType = 'publish';
+                    this.captionText = '';
+                    this.clearFile();
+                    this.carouselItems = [];
+                    this.mediaUrl = '';
+                    this.showOverrides = false;
+                    this.selectedAccounts = [...this.allAccountIds];
+                    this.scheduleMode = 'all_now';
+                    this.globalScheduleTime = '';
+                    this.openComposerModal = true;
+                    this.$nextTick(() => {
+                        if (window.lucide) window.lucide.createIcons();
+                    });
+                },
+
+                editDraft(post) {
+                    this.editingPostId = post.id;
+                    this.isDraft = true;
+                    this.actionType = 'draft';
+                    this.captionText = post.content || '';
+                    if (post.target_account_ids && post.target_account_ids.length > 0) {
+                        this.selectedAccounts = [...post.target_account_ids];
+                    }
+                    if (post.custom_captions) {
+                        Object.keys(post.custom_captions).forEach(accId => {
+                            this.customCaptions[accId] = post.custom_captions[accId];
+                        });
+                        if (Object.values(post.custom_captions).some(c => c && c.trim().length > 0)) {
+                            this.showOverrides = true;
+                        }
+                    }
+                    if (post.media_type) {
+                        this.setMediaFormat(post.media_type);
+                    }
+                    if (post.media_urls && post.media_urls.length > 0) {
+                        if (post.media_type === 'carousel') {
+                            this.carouselItems = post.media_urls.map((url, i) => ({
+                                name: `Slide ${i + 1}`,
+                                mime: 'image/jpeg',
+                                previewUrl: url,
+                            }));
+                        } else {
+                            this.filePreviewUrl = post.media_urls[0];
+                            this.fileName = 'Existing Media';
+                        }
+                    }
+                    this.openComposerModal = true;
+                    this.$nextTick(() => {
+                        if (window.lucide) window.lucide.createIcons();
+                    });
+                },
+
+                editDraftFromManager() {
+                    this.postManagerOpen = false;
+                    this.editDraft(this.pmPost);
+                },
 
                 // Aspect Ratio & Preview Settings
                 previewAspectRatio: '4:5',

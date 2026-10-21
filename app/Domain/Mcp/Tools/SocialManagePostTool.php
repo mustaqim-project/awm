@@ -230,10 +230,11 @@ final class SocialManagePostTool implements McpToolInterface
             $channels = ['instagram'];
         }
 
-        $publishNow = (bool) ($args['publish_now'] ?? false);
-        $scheduledAt = (! empty($args['scheduled_at']) && ! $publishNow)
+        $isDraft = (bool) ($args['is_draft'] ?? false) || (($args['status'] ?? '') === 'draft');
+        $publishNow = (! $isDraft) && (bool) ($args['publish_now'] ?? false);
+        $scheduledAt = (! empty($args['scheduled_at']) && ! $publishNow && ! $isDraft)
             ? Carbon::parse((string) $args['scheduled_at'])
-            : now();
+            : ($isDraft ? null : now());
 
         $mediaUrls = (array) ($args['media_urls'] ?? []);
         $mediaType = ! empty($mediaUrls) ? 'image' : 'text';
@@ -241,7 +242,10 @@ final class SocialManagePostTool implements McpToolInterface
         $accounts = SocialMediaAccount::where('business_id', $business->id)->get();
         $primaryAccount = $accounts->first();
 
-        $post = DB::transaction(function () use ($business, $user, $caption, $channels, $scheduledAt, $mediaUrls, $mediaType, $primaryAccount, $accounts) {
+        $initialStatus = $isDraft ? 'draft' : ($publishNow ? 'publishing' : 'scheduled');
+        $approvalStatus = $isDraft ? 'draft' : 'approved';
+
+        $post = DB::transaction(function () use ($business, $user, $caption, $channels, $scheduledAt, $mediaUrls, $mediaType, $primaryAccount, $accounts, $initialStatus, $approvalStatus) {
             $newPost = SocialMediaPost::create([
                 'business_id'             => $business->id,
                 'user_id'                 => $user?->id,
@@ -250,8 +254,8 @@ final class SocialManagePostTool implements McpToolInterface
                 'content'                 => $caption,
                 'media_type'              => $mediaType,
                 'media_urls'              => $mediaUrls,
-                'status'                  => 'scheduled',
-                'approval_status'         => 'approved',
+                'status'                  => $initialStatus,
+                'approval_status'         => $approvalStatus,
                 'scheduled_at'            => $scheduledAt,
             ]);
 
@@ -265,7 +269,7 @@ final class SocialManagePostTool implements McpToolInterface
                     'channel'                 => $ch,
                     'content_type'            => $mediaType,
                     'custom_caption'          => $caption,
-                    'status'                  => 'scheduled',
+                    'status'                  => $initialStatus,
                 ]);
             }
 
