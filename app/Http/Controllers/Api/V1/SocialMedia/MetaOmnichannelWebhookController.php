@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api\V1\SocialMedia;
 
+use App\Domain\SocialMedia\Clients\MetaSocialMediaClient;
 use App\Http\Controllers\Controller;
 use App\Models\SocialMediaAccount;
 use App\Models\SocialMediaComment;
@@ -400,18 +401,39 @@ class MetaOmnichannelWebhookController extends Controller
             && ! str_contains($parentId, $postId);
         $parentCommentId = $isReply ? Str::limit((string) $parentId, 500, '') : null;
 
-        // Auto-link or auto-create SocialMediaPost so UI displays post details & thumbnail
+        // Auto-link or auto-create SocialMediaPost with REAL post data from Meta Graph API
         $postRecordId = null;
         if (! empty($postId)) {
+            $isIg = ($platform === 'instagram_comments');
+            $targetPlat = $isIg ? 'instagram' : 'facebook';
+
             $linkedPost = SocialMediaPost::where('platform_post_id', $postId)->first();
+            $needsRefresh = ! $linkedPost
+                || empty($linkedPost->content)
+                || in_array($linkedPost->content, ['Postingan Instagram Resmi Cooca', 'Postingan Facebook Halaman Resmi Cooca'], true)
+                || empty($linkedPost->media_urls)
+                || in_array('assets/image/cooca_hero_banner.png', (array) $linkedPost->media_urls, true);
+
+            if ($needsRefresh) {
+                try {
+                    $metaClient = new MetaSocialMediaClient();
+                    $fetched = $metaClient->fetchAndSavePlatformPost($targetPlat, $postId);
+                    if ($fetched) {
+                        $linkedPost = $fetched;
+                    }
+                } catch (\Throwable $e) {
+                    Log::warning("[MetaOmnichannelWebhook] Failed auto-fetching post {$postId}: " . $e->getMessage());
+                }
+            }
+
             if (! $linkedPost) {
                 $linkedPost = SocialMediaPost::create([
                     'is_platform'      => true,
-                    'platform'         => $platform === 'instagram_comments' ? 'instagram' : 'facebook',
+                    'platform'         => $targetPlat,
                     'platform_post_id' => Str::limit($postId, 500, ''),
-                    'content'          => $platform === 'instagram_comments' ? 'Postingan Instagram Resmi Cooca' : 'Postingan Facebook Halaman Resmi Cooca',
+                    'content'          => $isIg ? 'Postingan Instagram' : 'Postingan Facebook',
                     'media_type'       => 'image',
-                    'media_urls'       => ['assets/image/cooca_hero_banner.png'],
+                    'media_urls'       => [],
                     'status'           => 'published',
                     'published_at'     => $createdTime,
                 ]);

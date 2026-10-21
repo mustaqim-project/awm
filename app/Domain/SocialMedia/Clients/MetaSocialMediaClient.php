@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\Domain\SocialMedia\Clients;
 
+use App\Models\SocialMediaPost;
 use App\Models\SystemSetting;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class MetaSocialMediaClient
 {
@@ -933,5 +936,161 @@ class MetaSocialMediaClient
             return [];
         }
     }
+
+    /**
+     * Fetch single Instagram Media object with full caption, media url, permalink, and counts.
+     *
+     * @return array<string, mixed>|null
+     */
+    public function getSingleInstagramMedia(string $mediaId, ?string $token = null): ?array
+    {
+        $token = $token ?: (string) (SystemSetting::get('meta_system_user_token') ?: SystemSetting::get('social_media_system_user_token'));
+        if (empty($token)) {
+            return null;
+        }
+
+        try {
+            $res = Http::timeout(10)->get($this->endpoint($mediaId, $token), [
+                'fields'       => 'id,caption,media_type,media_url,thumbnail_url,permalink,timestamp,like_count,comments_count,username',
+                'access_token' => $token,
+            ]);
+
+            if ($res->successful()) {
+                return (array) $res->json();
+            }
+
+            Log::warning("[MetaSocialMediaClient] getSingleInstagramMedia failed for {$mediaId}: " . $res->body());
+
+            return null;
+        } catch (\Throwable $e) {
+            Log::warning("[MetaSocialMediaClient] getSingleInstagramMedia exception: " . $e->getMessage());
+
+            return null;
+        }
+    }
+
+    /**
+     * Fetch single Facebook Post object with full message/story, image, permalink, and reactions/comments counts.
+     *
+     * @return array<string, mixed>|null
+     */
+    public function getSingleFacebookPost(string $postId, ?string $token = null): ?array
+    {
+        $token = $token ?: (string) (SystemSetting::get('meta_system_user_token') ?: SystemSetting::get('social_media_system_user_token'));
+        if (empty($token)) {
+            return null;
+        }
+
+        // Check if token needs to be Page Access Token
+        $pageId = (string) (SystemSetting::get('meta_page_id') ?: SystemSetting::get('social_media_page_id'));
+        $useToken = $token;
+        if (! empty($pageId)) {
+            $pageToken = $this->getPageAccessToken($pageId, $token);
+            if (! empty($pageToken)) {
+                $useToken = $pageToken;
+            }
+        }
+
+        try {
+            $res = Http::timeout(10)->get($this->endpoint($postId, $useToken), [
+                'fields'       => 'id,message,story,created_time,full_picture,permalink_url,shares,reactions.summary(total_count),comments.summary(total_count),from',
+                'access_token' => $useToken,
+            ]);
+
+            if ($res->successful()) {
+                return (array) $res->json();
+            }
+
+            Log::warning("[MetaSocialMediaClient] getSingleFacebookPost failed for {$postId}: " . $res->body());
+
+            return null;
+        } catch (\Throwable $e) {
+            Log::warning("[MetaSocialMediaClient] getSingleFacebookPost exception: " . $e->getMessage());
+
+            return null;
+        }
+    }
+
+    /**
+     * Fetch real post details from Meta Graph API and persist/update in social_media_posts table.
+     */
+    public function fetchAndSavePlatformPost(string $platform, string $postId, ?string $token = null): ?SocialMediaPost
+    {
+        if (empty($postId) || $postId === 'ig_post_cooca_001') {
+            return null;
+        }
+
+        $isIg = in_array(strtolower($platform), ['instagram', 'instagram_comments'], true);
+
+        try {
+            if ($isIg) {
+                $data = $this->getSingleInstagramMedia($postId, $token);
+                if (! $data || empty($data['id'])) {
+                    return null;
+                }
+
+                $caption = (string) ($data['caption'] ?? '');
+                $mediaUrl = (string) ($data['media_url'] ?? $data['thumbnail_url'] ?? '');
+                $mediaType = strtolower((string) ($data['media_type'] ?? 'image')) === 'video' ? 'video' : 'image';
+                $metrics = [
+                    'likes'     => (int) ($data['like_count'] ?? 0),
+                    'comments'  => (int) ($data['comments_count'] ?? 0),
+                    'permalink' => (string) ($data['permalink'] ?? ''),
+                    'author'    => (string) ($data['username'] ?? 'cooca.indonesia'),
+                ];
+                $publishedAt = ! empty($data['timestamp']) ? Carbon::parse($data['timestamp']) : now();
+
+                return SocialMediaPost::updateOrCreate(
+                    ['platform_post_id' => (string) $data['id']],
+                    [
+                        'is_platform'  => true,
+                        'platform'     => 'instagram',
+                        'content'      => $caption,
+                        'media_type'   => $mediaType,
+                        'media_urls'   => ! empty($mediaUrl) ? [$mediaUrl] : [],
+                        'status'       => 'published',
+                        'metrics'      => $metrics,
+                        'published_at' => $publishedAt,
+                    ]
+                );
+            }
+
+            // Facebook
+            $data = $this->getSingleFacebookPost($postId, $token);
+            if (! $data || empty($data['id'])) {
+                return null;
+            }
+
+            $content = (string) ($data['message'] ?? $data['story'] ?? 'Postingan Halaman Facebook Cooca');
+            $picture = (string) ($data['full_picture'] ?? '');
+            $metrics = [
+                'likes'     => (int) (data_get($data, 'reactions.summary.total_count') ?? 0),
+                'comments'  => (int) (data_get($data, 'comments.summary.total_count') ?? 0),
+                'shares'    => (int) (data_get($data, 'shares.count') ?? 0),
+                'permalink' => (string) ($data['permalink_url'] ?? ''),
+                'author'    => (string) (data_get($data, 'from.name') ?? 'Cooca Indonesia'),
+            ];
+            $publishedAt = ! empty($data['created_time']) ? Carbon::parse($data['created_time']) : now();
+
+            return SocialMediaPost::updateOrCreate(
+                ['platform_post_id' => (string) $data['id']],
+                [
+                    'is_platform'  => true,
+                    'platform'     => 'facebook',
+                    'content'      => $content,
+                    'media_type'   => 'image',
+                    'media_urls'   => ! empty($picture) ? [$picture] : [],
+                    'status'       => 'published',
+                    'metrics'      => $metrics,
+                    'published_at' => $publishedAt,
+                ]
+            );
+        } catch (\Throwable $e) {
+            Log::warning("[MetaSocialMediaClient] fetchAndSavePlatformPost exception for {$postId}: " . $e->getMessage());
+
+            return null;
+        }
+    }
 }
+
 

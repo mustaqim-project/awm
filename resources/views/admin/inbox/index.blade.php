@@ -269,11 +269,18 @@
                                 <template x-if="isCommentChannel(t.channel)">
                                     <div class="flex items-start gap-3 w-full min-w-0">
                                         {{-- Post Thumbnail with Social Badge Overlay --}}
-                                        <div class="relative shrink-0 w-11 h-11 rounded-[8px] overflow-hidden bg-gray-100 dark:bg-gray-800 border border-[#E5E7EB] dark:border-white/10">
-                                            <img :src="t.post?.media_url || '{{ asset('assets/image/cooca_hero_banner.png') }}'" 
-                                                 class="w-full h-full object-cover" 
-                                                 alt="Post thumbnail"
-                                                 onerror="this.src='{{ asset('assets/image/cooca-logo-square.png') }}'">
+                                        <div class="relative shrink-0 w-11 h-11 rounded-[8px] overflow-hidden bg-gray-100 dark:bg-gray-800 border border-[#E5E7EB] dark:border-white/10 flex items-center justify-center">
+                                            <template x-if="t.post?.media_url">
+                                                <img :src="t.post.media_url" 
+                                                     class="w-full h-full object-cover" 
+                                                     alt="Post thumbnail"
+                                                     onerror="this.style.display='none'">
+                                            </template>
+                                            <template x-if="!t.post?.media_url">
+                                                <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900">
+                                                    <i :data-lucide="t.channel === 'instagram_comments' ? 'instagram' : 'facebook'" class="w-5 h-5 text-slate-400"></i>
+                                                </div>
+                                            </template>
                                             <span class="absolute bottom-0 right-0 w-4.5 h-4.5 rounded-tl-[6px] flex items-center justify-center text-white ring-1 ring-white dark:ring-[#1C1C1E]"
                                                   :class="t.channel === 'instagram_comments' ? 'bg-[#E1306C]' : 'bg-[#1877F2]'">
                                                 <i :data-lucide="t.channel === 'instagram_comments' ? 'instagram' : 'facebook'" class="w-2.5 h-2.5"></i>
@@ -387,25 +394,40 @@
                             {{-- POST HEADER BAR --}}
                             <div class="px-5 py-3 border-b border-[#E5E7EB] dark:border-white/10 flex items-center justify-between gap-3 bg-white dark:bg-[#1C1C1E] shrink-0">
                                 <div class="flex items-center gap-3 min-w-0">
-                                    <div class="w-10 h-10 rounded-[8px] overflow-hidden bg-gray-100 dark:bg-gray-800 border border-[#E5E7EB] shrink-0">
-                                        <img :src="selectedThread.post?.media_url || '{{ asset('assets/image/cooca_hero_banner.png') }}'" 
-                                             class="w-full h-full object-cover" 
-                                             alt="Post thumbnail"
-                                             onerror="this.src='{{ asset('assets/image/cooca-logo-square.png') }}'">
+                                    <div class="w-10 h-10 rounded-[8px] overflow-hidden bg-gray-100 dark:bg-gray-800 border border-[#E5E7EB] dark:border-white/10 shrink-0 flex items-center justify-center">
+                                        <template x-if="selectedThread.post?.media_url">
+                                            <img :src="selectedThread.post.media_url" 
+                                                 class="w-full h-full object-cover" 
+                                                 alt="Post thumbnail"
+                                                 onerror="this.style.display='none'">
+                                        </template>
+                                        <template x-if="!selectedThread.post?.media_url">
+                                            <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900">
+                                                <i :data-lucide="selectedThread.channel === 'instagram_comments' ? 'instagram' : 'facebook'" class="w-5 h-5 text-slate-400"></i>
+                                            </div>
+                                        </template>
                                     </div>
                                     <div class="min-w-0">
                                         <h2 class="text-[13.5px] font-bold text-[#111827] dark:text-white truncate" 
                                             x-text="selectedThread.post?.title || selectedThread.post_snippet || 'Postingan Media Sosial'"></h2>
                                         <p class="text-[11.5px] text-[#6B7280] dark:text-[#9CA3AF] truncate mt-0.5">
-                                            <span x-text="(selectedThread.post?.likes || 5) + ' suka'"></span> · 
-                                            <span x-text="(selectedThread.post?.comments_count || 1) + ' komentar'"></span> · 
-                                            <span x-text="selectedThread.post?.published_at || '1 Sep'"></span>
+                                            <span x-text="(selectedThread.post?.likes || 0) + ' suka'"></span> · 
+                                            <span x-text="(selectedThread.post?.comments_count || 0) + ' komentar'"></span> · 
+                                            <span x-text="selectedThread.post?.published_at || ''"></span>
                                         </p>
                                     </div>
                                 </div>
 
                                 {{-- Right Header Actions from Screenshot --}}
                                 <div class="flex items-center gap-1.5 shrink-0">
+                                    <template x-if="selectedThread.post?.permalink">
+                                        <a :href="selectedThread.post.permalink" target="_blank" rel="noopener noreferrer"
+                                           class="h-8 px-2.5 rounded-[8px] bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 text-[#1877F2] dark:text-[#60A5FA] text-[12px] font-medium flex items-center gap-1.5 transition-colors"
+                                           :title="selectedThread.channel === 'instagram_comments' ? 'Buka postingan di Instagram' : 'Buka postingan di Facebook'">
+                                            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                                            <span class="hidden sm:inline" x-text="selectedThread.channel === 'instagram_comments' ? 'Buka di IG' : 'Buka di FB'"></span>
+                                        </a>
+                                    </template>
                                     <button type="button" disabled class="h-8 px-3 rounded-[8px] bg-[#F3F4F6] dark:bg-white/5 text-[#6B7280] dark:text-[#9CA3AF] text-[12px] font-medium cursor-not-allowed">
                                         Promosi tidak tersedia
                                     </button>
@@ -844,25 +866,43 @@
                 
                 {{-- Post Media Preview Banner --}}
                 <div class="p-4 border-b border-[#E5E7EB] dark:border-white/10 bg-slate-50/50 dark:bg-black/10">
-                    <div class="rounded-[12px] overflow-hidden border border-[#E5E7EB] dark:border-white/10 shadow-xs aspect-video bg-gray-100 dark:bg-gray-800">
-                        <img :src="selectedThread?.post?.media_url || '{{ asset('assets/image/cooca_hero_banner.png') }}'" 
-                             class="w-full h-full object-cover" 
-                             alt="Post Media Banner"
-                             onerror="this.src='{{ asset('assets/image/cooca-logo-square.png') }}'">
+                    <div class="rounded-[12px] overflow-hidden border border-[#E5E7EB] dark:border-white/10 shadow-xs aspect-video bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                        <template x-if="selectedThread?.post?.media_url">
+                            <img :src="selectedThread?.post?.media_url" 
+                                 class="w-full h-full object-cover" 
+                                 alt="Post Media Banner"
+                                 onerror="this.style.display='none'">
+                        </template>
+                        <template x-if="!selectedThread?.post?.media_url">
+                            <div class="w-full h-full flex flex-col items-center justify-center p-4 bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 text-[#6B7280]">
+                                <i :data-lucide="selectedThread?.channel === 'instagram_comments' ? 'instagram' : 'facebook'" class="w-8 h-8 opacity-60 mb-1"></i>
+                                <span class="text-[11px] font-medium">Postingan Media Sosial</span>
+                            </div>
+                        </template>
                     </div>
+
+                    {{-- Link to Open Post on Instagram / Facebook --}}
+                    <template x-if="selectedThread?.post?.permalink">
+                        <a :href="selectedThread.post.permalink" target="_blank" rel="noopener noreferrer"
+                           class="mt-3 w-full py-2 px-3 rounded-[10px] bg-[#1877F2]/10 hover:bg-[#1877F2]/20 dark:bg-[#1877F2]/20 dark:hover:bg-[#1877F2]/30 text-[#1877F2] dark:text-[#60A5FA] text-[12px] font-semibold flex items-center justify-center gap-1.5 transition-colors">
+                            <i :data-lucide="selectedThread?.channel === 'instagram_comments' ? 'instagram' : 'facebook'" class="w-4 h-4"></i>
+                            <span x-text="selectedThread?.channel === 'instagram_comments' ? 'Buka di Instagram' : 'Buka di Facebook'"></span>
+                            <i data-lucide="external-link" class="w-3.5 h-3.5 ml-auto"></i>
+                        </a>
+                    </template>
                 </div>
 
                 {{-- Post Details, Metrics & Full Caption --}}
                 <div class="p-4 space-y-3.5 flex-1 text-[12.5px] leading-relaxed">
                     {{-- Likes & Published Time --}}
                     <div class="flex items-center justify-between text-[#6B7280] dark:text-[#9CA3AF] text-[12px]">
-                        <span class="font-bold text-[#111827] dark:text-white" x-text="(selectedThread?.post?.likes || 5) + ' suka'"></span>
-                        <span x-text="selectedThread?.post?.published_at || '1 Sep 2026 14.30'"></span>
+                        <span class="font-bold text-[#111827] dark:text-white" x-text="(selectedThread?.post?.likes || 0) + ' suka'"></span>
+                        <span x-text="selectedThread?.post?.published_at || ''"></span>
                     </div>
 
                     {{-- Author & Title line --}}
                     <div class="text-[#111827] dark:text-white leading-normal">
-                        <strong class="font-bold mr-1.5" x-text="selectedThread?.post?.author || 'cooca.indonesia'"></strong>
+                        <strong class="font-bold mr-1.5" x-text="selectedThread?.post?.author || (selectedThread?.channel === 'facebook_comments' ? 'Cooca Indonesia' : 'cooca.indonesia')"></strong>
                         <span class="font-medium" x-text="selectedThread?.post?.title || ''"></span>
                     </div>
 

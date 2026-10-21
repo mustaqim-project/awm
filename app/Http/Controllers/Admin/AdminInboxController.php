@@ -1272,8 +1272,36 @@ class AdminInboxController extends Controller
             $rawPlatform = strtolower((string) $c->platform);
             $channel = ($rawPlatform === 'facebook' || $rawPlatform === 'facebook_comments') ? 'facebook_comments' : 'instagram_comments';
 
-            // Related post resolution
+            // Related post resolution (dynamically fetch real post from Meta Graph API if missing or outdated)
             $post = $c->post ?? $postsMap->get($c->platform_post_id);
+            $targetPlatId = (string) ($c->platform_post_id ?: '');
+            $isDemoId = empty($targetPlatId) || $targetPlatId === 'ig_post_cooca_001';
+
+            if ($isDemoId) {
+                $fallbackRealId = ($channel === 'facebook_comments')
+                    ? '1340316975827711_122097246627485226'
+                    : '18092956715201792';
+                $post = $postsMap->get($fallbackRealId) ?? SocialMediaPost::where('platform_post_id', $fallbackRealId)->first();
+                if (! $post && $this->metaClient) {
+                    $post = $this->metaClient->fetchAndSavePlatformPost($channel === 'facebook_comments' ? 'facebook' : 'instagram', $fallbackRealId);
+                    if ($post) {
+                        $postsMap->put($fallbackRealId, $post);
+                    }
+                }
+            } elseif (! $post || in_array($post->content, ['Postingan Instagram Resmi Cooca', 'Postingan Facebook Halaman Resmi Cooca'], true) || empty($post->media_urls)) {
+                if ($this->metaClient) {
+                    $fetched = $this->metaClient->fetchAndSavePlatformPost($channel === 'facebook_comments' ? 'facebook' : 'instagram', $targetPlatId);
+                    if ($fetched) {
+                        $post = $fetched;
+                        $postsMap->put($targetPlatId, $post);
+                        if ($c->social_media_post_id !== $post->id) {
+                            $c->social_media_post_id = $post->id;
+                            $c->saveQuietly();
+                        }
+                    }
+                }
+            }
+
             $postMediaUrl = null;
             if ($post) {
                 $mediaUrls = (array) ($post->media_urls ?? []);
@@ -1283,15 +1311,13 @@ class AdminInboxController extends Controller
                     $postMediaUrl = str_starts_with($rawUrl, 'http') ? $rawUrl : asset($rawUrl);
                 }
             }
-            if (! $postMediaUrl) {
-                $postMediaUrl = asset('assets/image/cooca_hero_banner.png');
-            }
 
-            $defaultCaption = "Bisnis bertumbuh, tapi semakin sulit dikendalikan? COOCA adalah software manajemen bisnis yang membantu perusahaan mengelola berbagai proses dalam satu ekosistem.\n\nMulai dari manajemen customer, manajemen persediaan, manajemen keuangan, hingga manajemen SDM dan project.\n\nDengan proses yang lebih terintegrasi, informasi lebih mudah dipantau dan keputusan bisnis dapat dibuat berdasarkan data.";
-            $postCaption = $post?->content ?: $defaultCaption;
-            $postLikes = (int) ($post?->metrics['likes'] ?? 5);
-            $postCommentsCount = (int) ($post?->metrics['comments'] ?? 1);
-            $postPublishedAt = $post?->published_at ? $post->published_at->format('d M Y H.i') : ($c->created_time ? $c->created_time->format('d M Y H.i') : '1 Sep 2026 14.30');
+            $postCaption = $post?->content ?: ($channel === 'facebook_comments' ? 'Postingan Halaman Facebook Cooca' : 'Postingan Media Instagram Cooca');
+            $postLikes = (int) ($post?->metrics['likes'] ?? 0);
+            $postCommentsCount = (int) ($post?->metrics['comments'] ?? 0);
+            $postPermalink = (string) ($post?->metrics['permalink'] ?? '');
+            $postAuthor = (string) ($post?->metrics['author'] ?? ($channel === 'facebook_comments' ? 'Cooca Indonesia' : 'cooca.indonesia'));
+            $postPublishedAt = $post?->published_at ? $post->published_at->format('d M Y H.i') : ($c->created_time ? $c->created_time->format('d M Y H.i') : now()->format('d M Y H.i'));
 
             // Find child replies (Sub-komentar / balasan)
             $threadReplies = $repliesComments->filter(function ($r) use ($c) {
@@ -1368,7 +1394,8 @@ class AdminInboxController extends Controller
                     'likes'          => $postLikes,
                     'comments_count' => $postCommentsCount,
                     'published_at'   => $postPublishedAt,
-                    'author'         => 'cooca.indonesia',
+                    'permalink'      => $postPermalink,
+                    'author'         => $postAuthor,
                 ],
                 'parent_comment' => $parentCommentData,
                 'replies'        => $threadReplies,
@@ -1488,21 +1515,40 @@ class AdminInboxController extends Controller
      */
     protected function ensureInitialPlatformData(): void
     {
-        $post = SocialMediaPost::firstOrCreate(
-            [
-                'is_platform'      => true,
-                'platform'         => 'instagram',
-                'platform_post_id' => 'ig_post_cooca_001',
-            ],
-            [
-                'content'      => "Bisnis bertumbuh, tapi semakin sulit dikendalikan? COOCA adalah software manajemen bisnis yang membantu perusahaan mengelola berbagai proses dalam satu ekosistem.\n\nMulai dari manajemen customer, manajemen persediaan, manajemen keuangan, hingga manajemen SDM dan project.\n\nDengan proses yang lebih terintegrasi, informasi lebih mudah dipantau dan keputusan bisnis dapat dibuat berdasarkan data.",
-                'media_type'   => 'image',
-                'media_urls'   => ['assets/image/cooca_hero_banner.png'],
-                'status'       => 'published',
-                'metrics'      => ['likes' => 5, 'comments' => 1],
-                'published_at' => Carbon::parse('2026-09-01 14:30:00'),
-            ]
-        );
+        // 1. Resolve real Instagram Post & Facebook Post from Meta Graph API if possible
+        $igPost = SocialMediaPost::where('platform', 'instagram')->where('platform_post_id', '18092956715201792')->first();
+        if (! $igPost && $this->metaClient) {
+            $igPost = $this->metaClient->fetchAndSavePlatformPost('instagram', '18092956715201792');
+        }
+
+        $fbPost = SocialMediaPost::where('platform', 'facebook')->where('platform_post_id', '1340316975827711_122097246627485226')->first();
+        if (! $fbPost && $this->metaClient) {
+            $fbPost = $this->metaClient->fetchAndSavePlatformPost('facebook', '1340316975827711_122097246627485226');
+        }
+
+        // Migrate any previous demo comments pointing to ig_post_cooca_001
+        if ($igPost) {
+            SocialMediaComment::where('platform_post_id', 'ig_post_cooca_001')
+                ->where('platform', 'instagram_comments')
+                ->update([
+                    'social_media_post_id' => $igPost->id,
+                    'platform_post_id'     => $igPost->platform_post_id,
+                ]);
+        }
+        if ($fbPost) {
+            SocialMediaComment::where('platform_post_id', 'ig_post_cooca_001')
+                ->whereIn('platform', ['facebook', 'facebook_comments'])
+                ->update([
+                    'social_media_post_id' => $fbPost->id,
+                    'platform_post_id'     => $fbPost->platform_post_id,
+                ]);
+        }
+
+        // Clean up legacy hardcoded dummy demo post if present
+        SocialMediaPost::where('platform_post_id', 'ig_post_cooca_001')->delete();
+
+        $fallbackIgId = $igPost ? $igPost->platform_post_id : '18092956715201792';
+        $fallbackFbId = $fbPost ? $fbPost->platform_post_id : '1340316975827711_122097246627485226';
 
         // 1. Instagram Comments Baseline
         if (SocialMediaComment::where('is_platform', true)->where('platform', 'instagram_comments')->count() === 0) {
@@ -1513,8 +1559,8 @@ class AdminInboxController extends Controller
                     'platform_comment_id' => 'ig_comm_agung_001',
                 ],
                 [
-                    'social_media_post_id' => $post->id,
-                    'platform_post_id'     => $post->platform_post_id,
+                    'social_media_post_id' => $igPost?->id,
+                    'platform_post_id'     => $fallbackIgId,
                     'parent_comment_id'    => null,
                     'from_id'              => 'agung.mustaqim',
                     'from_name'            => 'agung.mustaqim',
@@ -1532,8 +1578,8 @@ class AdminInboxController extends Controller
                     'platform_comment_id' => 'ig_comm_reply_cooca_001',
                 ],
                 [
-                    'social_media_post_id' => $post->id,
-                    'platform_post_id'     => $post->platform_post_id,
+                    'social_media_post_id' => $igPost?->id,
+                    'platform_post_id'     => $fallbackIgId,
                     'parent_comment_id'    => 'ig_comm_agung_001',
                     'from_id'              => 'cooca.indonesia',
                     'from_name'            => 'Cooca Indonesia',
@@ -1554,8 +1600,8 @@ class AdminInboxController extends Controller
                     'platform_comment_id' => 'fb_comm_agung_002',
                 ],
                 [
-                    'social_media_post_id' => $post->id,
-                    'platform_post_id'     => $post->platform_post_id,
+                    'social_media_post_id' => $fbPost?->id,
+                    'platform_post_id'     => $fallbackFbId,
                     'from_id'              => 'agung.mustaqim',
                     'from_name'            => 'Agung Mustaqim',
                     'message'              => 'Keren sekali solusinya, mau tanya info harga paketnya min?',
