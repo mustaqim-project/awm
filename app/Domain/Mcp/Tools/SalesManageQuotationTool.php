@@ -136,7 +136,7 @@ final class SalesManageQuotationTool implements McpToolInterface
     private function handleList(Business $business, array $args): array
     {
         $query = Quotation::where('business_id', $business->id)
-            ->with(['customer:id,name,phone,email', 'items']);
+            ->with(['customer:id,name,phone,email', 'items.product:id,image_path']);
 
         if (! empty($args['status'])) {
             $query->where('status', $args['status']);
@@ -167,7 +167,9 @@ final class SalesManageQuotationTool implements McpToolInterface
                 'items_count' => $q->items->count(),
                 'items' => $q->items->map(fn ($item) => [
                     'id' => $item->id,
+                    'product_id' => $item->product_id,
                     'product_name' => $item->product_name,
+                    'product_image_url' => $item->product?->image_url,
                     'quantity' => (float) $item->quantity,
                     'unit_price' => (float) $item->unit_price,
                     'discount_amount' => (float) $item->discount_amount,

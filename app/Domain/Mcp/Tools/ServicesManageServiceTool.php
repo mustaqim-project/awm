@@ -105,6 +105,10 @@ final class ServicesManageServiceTool implements McpToolInterface
                     'default' => true,
                     'description' => 'Tampilkan layanan saat membuat dokumen penawaran dan Sales Order B2B.',
                 ],
+                'image_url' => [
+                    'type' => 'string',
+                    'description' => 'URL foto/gambar layanan jasa untuk katalog booking, website toko, dan POS.',
+                ],
                 'limit' => [
                     'type' => 'integer',
                     'minimum' => 1,
@@ -138,7 +142,7 @@ final class ServicesManageServiceTool implements McpToolInterface
     {
         $query = Product::services()
             ->where('business_id', $business->id)
-            ->with(['category', 'outputUnit'])
+            ->with(['category', 'outputUnit', 'images'])
             ->latest();
 
         if (! empty($args['search'])) {
@@ -183,6 +187,10 @@ final class ServicesManageServiceTool implements McpToolInterface
                 'base_cost_fmt'       => 'Rp ' . number_format($baseCost, 0, ',', '.'),
                 'margin_amount'       => $margin,
                 'margin_percentage'   => $marginPct . '%',
+                'image_url'           => $service->image_url,
+                'image_path'          => $service->image_path,
+                'has_image'           => ! empty($service->image_url),
+                'images'              => $service->all_images->pluck('url')->all(),
                 'is_active'           => (bool) $service->is_active,
                 'show_in_pos'         => (bool) $service->show_in_pos,
                 'show_in_website'     => (bool) $service->show_in_website,
@@ -265,6 +273,10 @@ final class ServicesManageServiceTool implements McpToolInterface
         $showInPos = isset($args['show_in_pos']) ? (bool) $args['show_in_pos'] : true;
         $showInWebsite = isset($args['show_in_website']) ? (bool) $args['show_in_website'] : true;
         $showInSalesOrder = isset($args['show_in_sales_order']) ? (bool) $args['show_in_sales_order'] : true;
+        $imageUrl = ! empty($args['image_url']) ? trim((string) $args['image_url']) : null;
+        if ($imageUrl === null && ! empty($args['image_path'])) {
+            $imageUrl = trim((string) $args['image_path']);
+        }
 
         $service = DB::transaction(function () use (
             $business,
@@ -279,7 +291,8 @@ final class ServicesManageServiceTool implements McpToolInterface
             $isActive,
             $showInPos,
             $showInWebsite,
-            $showInSalesOrder
+            $showInSalesOrder,
+            $imageUrl
         ) {
             /** @var Product $service */
             $service = Product::create([
@@ -294,6 +307,7 @@ final class ServicesManageServiceTool implements McpToolInterface
                 'selling_price'       => $sellingPrice,
                 'base_cost'           => $baseCost,
                 'min_stock'           => 0,
+                'image_path'          => $imageUrl,
                 'is_active'           => $isActive,
                 'show_in_website'     => $showInWebsite,
                 'show_in_pos'         => $showInPos,
@@ -324,6 +338,7 @@ final class ServicesManageServiceTool implements McpToolInterface
                     'selling_price' => $sellingPrice,
                     'base_cost'     => $baseCost,
                     'category_id'   => $categoryId,
+                    'image_path'    => $imageUrl,
                 ],
             ]);
 
@@ -349,6 +364,10 @@ final class ServicesManageServiceTool implements McpToolInterface
                 'base_cost_fmt'     => 'Rp ' . number_format($baseCost, 0, ',', '.'),
                 'margin_amount'     => $margin,
                 'margin_percentage' => $marginPct . '%',
+                'image_url'         => $service->image_url,
+                'image_path'        => $service->image_path,
+                'has_image'         => ! empty($service->image_url),
+                'images'            => $service->all_images->pluck('url')->all(),
                 'is_active'         => (bool) $service->is_active,
                 'show_in_pos'       => (bool) $service->show_in_pos,
                 'show_in_website'   => (bool) $service->show_in_website,
@@ -450,6 +469,12 @@ final class ServicesManageServiceTool implements McpToolInterface
             $updates['show_in_sales_order'] = (bool) $args['show_in_sales_order'];
         }
 
+        if (array_key_exists('image_url', $args)) {
+            $updates['image_path'] = ! empty($args['image_url']) ? trim((string) $args['image_url']) : null;
+        } elseif (array_key_exists('image_path', $args)) {
+            $updates['image_path'] = ! empty($args['image_path']) ? trim((string) $args['image_path']) : null;
+        }
+
         if (empty($updates)) {
             return [
                 'success' => true,
@@ -476,7 +501,7 @@ final class ServicesManageServiceTool implements McpToolInterface
             ]);
         });
 
-        $service->refresh()->load(['category', 'outputUnit']);
+        $service->refresh()->load(['category', 'outputUnit', 'images']);
         $sellingPrice = (float) $service->selling_price;
         $baseCost = (float) $service->base_cost;
         $margin = $sellingPrice - $baseCost;
@@ -498,6 +523,10 @@ final class ServicesManageServiceTool implements McpToolInterface
                 'base_cost_fmt'     => 'Rp ' . number_format($baseCost, 0, ',', '.'),
                 'margin_amount'     => $margin,
                 'margin_percentage' => $marginPct . '%',
+                'image_url'         => $service->image_url,
+                'image_path'        => $service->image_path,
+                'has_image'         => ! empty($service->image_url),
+                'images'            => $service->all_images->pluck('url')->all(),
                 'is_active'         => (bool) $service->is_active,
                 'show_in_pos'       => (bool) $service->show_in_pos,
                 'show_in_website'   => (bool) $service->show_in_website,

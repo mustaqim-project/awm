@@ -70,6 +70,10 @@ final class InventoryCreateProductTool implements McpToolInterface
                     'default' => 'pcs',
                     'description' => 'Satuan unit (pcs, cup, porsi, botol, box, kg).',
                 ],
+                'image_url' => [
+                    'type' => 'string',
+                    'description' => 'Optional URL atau path foto/gambar produk untuk katalog POS dan toko online.',
+                ],
             ],
             'required' => ['name', 'cost_price', 'selling_price'],
         ];
@@ -86,6 +90,10 @@ final class InventoryCreateProductTool implements McpToolInterface
         $sellingPrice = (float) ($arguments['selling_price'] ?? 0);
         $initialStock = max(0.0, (float) ($arguments['initial_stock'] ?? 0));
         $sku = ! empty($arguments['sku']) ? trim((string) $arguments['sku']) : 'PRD-' . strtoupper(Str::random(6));
+        $imageUrl = ! empty($arguments['image_url']) ? trim((string) $arguments['image_url']) : null;
+        if ($imageUrl === null && ! empty($arguments['image_path'])) {
+            $imageUrl = trim((string) $arguments['image_path']);
+        }
 
         // Resolve or create Category
         $categoryId = null;
@@ -112,7 +120,7 @@ final class InventoryCreateProductTool implements McpToolInterface
                 ]
             );
 
-        $product = DB::transaction(function () use ($business, $user, $name, $sku, $categoryId, $costPrice, $sellingPrice, $unit, $initialStock) {
+        $product = DB::transaction(function () use ($business, $user, $name, $sku, $categoryId, $costPrice, $sellingPrice, $unit, $initialStock, $imageUrl) {
             $prod = Product::create([
                 'business_id' => $business->id,
                 'name' => $name,
@@ -122,6 +130,7 @@ final class InventoryCreateProductTool implements McpToolInterface
                 'selling_price' => $sellingPrice,
                 'output_unit_id' => $unit?->id,
                 'type' => Product::TYPE_GOODS,
+                'image_path' => $imageUrl,
                 'is_active' => true,
                 'show_in_pos' => true,
                 'show_in_website' => true,
@@ -155,6 +164,7 @@ final class InventoryCreateProductTool implements McpToolInterface
                     'cost_price' => $costPrice,
                     'selling_price' => $sellingPrice,
                     'initial_stock' => $initialStock,
+                    'image_path' => $imageUrl,
                 ],
                 'ip_address' => request()->ip(),
                 'user_agent' => request()->userAgent() ?: 'COOCA-MCP-Agent',
@@ -170,6 +180,9 @@ final class InventoryCreateProductTool implements McpToolInterface
             'product_id' => $product->id,
             'name' => $product->name,
             'sku' => $product->code,
+            'image_url' => $product->image_url,
+            'image_path' => $product->image_path,
+            'has_image' => ! empty($product->image_url),
             'cost_price' => $costPrice,
             'selling_price' => $sellingPrice,
             'margin_percent' => "{$marginPercent}%",

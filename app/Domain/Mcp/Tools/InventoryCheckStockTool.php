@@ -47,7 +47,7 @@ final class InventoryCheckStockTool implements McpToolInterface
     {
         $query = Product::where('business_id', $business->id)
             ->where('is_active', true)
-            ->with(['stocks']);
+            ->with(['stocks', 'images']);
 
         if (! empty($arguments['search_query'])) {
             $search = '%' . trim((string) $arguments['search_query']) . '%';
@@ -81,6 +81,10 @@ final class InventoryCheckStockTool implements McpToolInterface
                 'id' => $prod->id,
                 'name' => $prod->name,
                 'sku' => $prod->code,
+                'image_url' => $prod->image_url,
+                'image_path' => $prod->image_path,
+                'has_image' => ! empty($prod->image_url),
+                'images' => $prod->all_images->pluck('url')->all(),
                 'current_stock' => $currentStock,
                 'min_stock' => $minStock,
                 'status' => $status,

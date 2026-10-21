@@ -137,7 +137,7 @@ final class SalesManageOrderTool implements McpToolInterface
     private function handleList(Business $business, array $args): array
     {
         $query = SalesOrder::where('business_id', $business->id)
-            ->with(['customer:id,name,phone,email', 'items']);
+            ->with(['customer:id,name,phone,email', 'items.product:id,image_path']);
 
         if (! empty($args['status'])) {
             $query->where('status', $args['status']);
@@ -168,7 +168,9 @@ final class SalesManageOrderTool implements McpToolInterface
                 'items_count' => $so->items->count(),
                 'items' => $so->items->map(fn ($item) => [
                     'id' => $item->id,
+                    'product_id' => $item->product_id,
                     'product_name' => $item->product_name,
+                    'product_image_url' => $item->product?->image_url,
                     'quantity' => (float) $item->quantity,
                     'fulfilled_quantity' => (float) $item->fulfilled_quantity,
                     'unit_price' => (float) $item->unit_price,

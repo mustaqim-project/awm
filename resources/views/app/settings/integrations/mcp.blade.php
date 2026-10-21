@@ -2761,6 +2761,28 @@ document.addEventListener('alpine:init', () => {
                         </button>
                     </div>
                 </div>
+
+                {{-- Tool 21: Business Get Logo & Identity --}}
+                <div class="p-4 rounded-[16px] bg-neutral-50/70 dark:bg-neutral-900/50 border border-neutral-200/80 dark:border-neutral-800 flex flex-col justify-between space-y-3">
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-mono text-xs font-semibold text-blue-600 dark:text-blue-400">business_get_logo</span>
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400">mcp:business:read</span>
+                        </div>
+                        <p class="text-xs text-neutral-700 dark:text-neutral-300 mt-1.5 leading-relaxed">
+                            {{ __('mcp.tool_21_desc') }}
+                        </p>
+                    </div>
+                    <div class="pt-2 border-t border-neutral-200/60 dark:border-neutral-800 flex items-center justify-between gap-2">
+                        <span class="text-[11px] text-neutral-500 truncate italic">"{{ __('mcp.tool_21_prompt') }}"</span>
+                        <button
+                            type="button"
+                            @click="copyText('{{ addslashes(__('mcp.tool_21_prompt')) }}', '{{ addslashes(__('mcp.toast_prompt_copied')) }}')"
+                            class="px-2.5 py-1 rounded-[8px] bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-[11px] font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 transition-colors shrink-0">
+                            {{ __('mcp.btn_copy_short') }}
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -3082,6 +3104,10 @@ document.addEventListener('alpine:init', () => {
                         <label class="flex items-center gap-2.5 text-xs text-neutral-700 dark:text-neutral-300 cursor-pointer">
                             <input type="checkbox" name="abilities[]" value="mcp:services:manage" checked class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
                             <span>{{ __('mcp.perm_services_manage') }}</span>
+                        </label>
+                        <label class="flex items-center gap-2.5 text-xs text-neutral-700 dark:text-neutral-300 cursor-pointer">
+                            <input type="checkbox" name="abilities[]" value="mcp:business:read" checked class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
+                            <span>{{ __('mcp.perm_business_read') }}</span>
                         </label>
                     </div>
                 </div>
