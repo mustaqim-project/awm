@@ -67,9 +67,13 @@ final class SocialUploadMediaTool implements McpToolInterface
                     'type' => 'integer',
                     'description' => 'Jumlah total potongan data (misal 3 jika dipecah menjadi 3 bagian). Digunakan jika mengunggah dengan metode chunking.',
                 ],
+                'chunk_checksum_sha256' => [
+                    'type' => 'string',
+                    'description' => 'Hash SHA-256 dari teks potongan base64 pada chunk saat ini. Memastikan potongan ini 100% valid sebelum disimpan, sehingga jika terjadi salah ketik/karakter meleset, hanya potongan ini saja yang perlu dikirim ulang.',
+                ],
                 'checksum_sha256' => [
                     'type' => 'string',
-                    'description' => 'Hash SHA-256 (64 karakter heksadesimal) dari berkas biner asli untuk verifikasi integritas 100% tanpa ada karakter yang hilang/rusak.',
+                    'description' => 'Hash SHA-256 (64 karakter heksadesimal) dari berkas biner asli utuh untuk verifikasi final integritas 100% setelah seluruh potongan digabungkan.',
                 ],
             ],
         ];
@@ -87,6 +91,7 @@ final class SocialUploadMediaTool implements McpToolInterface
         $uploadId = trim((string) ($arguments['upload_id'] ?? ''));
         $chunkIndex = isset($arguments['chunk_index']) ? (int) $arguments['chunk_index'] : null;
         $totalChunks = isset($arguments['total_chunks']) ? (int) $arguments['total_chunks'] : null;
+        $chunkChecksum = trim((string) ($arguments['chunk_checksum_sha256'] ?? ''));
         $checksumSha256 = trim((string) ($arguments['checksum_sha256'] ?? ''));
 
         // Handle Chunked Upload
@@ -95,30 +100,44 @@ final class SocialUploadMediaTool implements McpToolInterface
                 throw new InvalidArgumentException('Potongan data file_base64 tidak boleh kosong pada sesi upload bertahap.');
             }
 
+            // Verifikasi integritas potongan saat ini jika chunk_checksum_sha256 disediakan
+            if ($chunkChecksum !== '') {
+                $actualChunkHash = hash('sha256', $base64);
+                if (strtolower($actualChunkHash) !== strtolower($chunkChecksum)) {
+                    throw new InvalidArgumentException("Checksum SHA-256 untuk potongan (chunk) ke-{$chunkIndex} TIDAK COCOK! Server menghitung '{$actualChunkHash}', tetapi Anda mengirim '{$chunkChecksum}'. Ada karakter yang meleset/hilang saat transmisi. Silakan kirim ulang chunk ke-{$chunkIndex} saja tanpa perlu mengulang dari awal.");
+                }
+            }
+
             $cacheKey = "mcp_upload_chunk:{$business->id}:{$uploadId}:{$chunkIndex}";
-            Cache::put($cacheKey, $base64, now()->addMinutes(30));
+            Cache::put($cacheKey, $base64, now()->addHours(2));
 
             // Check if all chunks have been received
-            $allReceived = true;
+            $missingChunks = [];
             $combinedBase64 = '';
             for ($i = 0; $i < $totalChunks; $i++) {
                 $cKey = "mcp_upload_chunk:{$business->id}:{$uploadId}:{$i}";
                 $chunk = Cache::get($cKey);
                 if ($chunk === null) {
-                    $allReceived = false;
-                    break;
+                    $missingChunks[] = $i;
+                } else {
+                    $combinedBase64 .= $chunk;
                 }
-                $combinedBase64 .= $chunk;
             }
 
-            if (! $allReceived) {
+            if (! empty($missingChunks)) {
+                $receivedCount = $totalChunks - count($missingChunks);
+                $missingPreview = implode(', ', array_slice($missingChunks, 0, 8)) . (count($missingChunks) > 8 ? '...' : '');
+
                 return [
-                    'success'      => true,
-                    'status'       => 'chunk_received',
-                    'upload_id'    => $uploadId,
-                    'chunk_index'  => $chunkIndex,
-                    'total_chunks' => $totalChunks,
-                    'message'      => "Potongan ke-{$chunkIndex} dari total {$totalChunks} berhasil diterima di server. Silakan lanjutkan pengiriman chunk berikutnya.",
+                    'success'               => true,
+                    'status'                => 'chunk_verified',
+                    'upload_id'             => $uploadId,
+                    'chunk_index'           => $chunkIndex,
+                    'total_chunks'          => $totalChunks,
+                    'received_chunks_count' => $receivedCount,
+                    'missing_chunks_count'  => count($missingChunks),
+                    'missing_chunks'        => $missingChunks,
+                    'message'               => "Potongan ke-{$chunkIndex} dari total {$totalChunks} berhasil diverifikasi dan tersimpan ({$receivedCount}/{$totalChunks} tersimpan). Sisa " . count($missingChunks) . " potongan yang belum dikirim: [{$missingPreview}].",
                 ];
             }
 

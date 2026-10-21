@@ -55,9 +55,9 @@ final class SocialManagePostTool implements McpToolInterface
                     'type' => 'array',
                     'items' => [
                         'type' => 'string',
-                        'enum' => ['instagram', 'facebook', 'tiktok', 'twitter', 'threads'],
+                        'enum' => ['instagram', 'facebook', 'tiktok', 'x', 'twitter', 'linkedin', 'threads', 'pinterest', 'youtube'],
                     ],
-                    'description' => 'Daftar channel/platform tujuan publikasi (misal: ["instagram", "facebook"]).',
+                    'description' => 'Daftar channel/platform tujuan publikasi: "instagram", "facebook", "tiktok", "x", "twitter", "linkedin", "threads", "pinterest", "youtube".',
                 ],
                 'media_urls' => [
                     'type' => 'array',
@@ -107,6 +107,11 @@ final class SocialManagePostTool implements McpToolInterface
                     'type' => 'boolean',
                     'default' => false,
                     'description' => 'Jika true pada create, sistem langsung menerbitkan postingan ke media sosial detik itu juga tanpa menunggu jadwal.',
+                ],
+                'dry_run' => [
+                    'type' => 'boolean',
+                    'default' => false,
+                    'description' => 'Mode uji coba/pratinjau. Jika true, sistem memvalidasi teks, limit kanal, dan visual preview TANPA menyimpan ke database atau memublikasikan ke akun media sosial.',
                 ],
                 'status' => [
                     'type' => 'string',
@@ -308,6 +313,51 @@ final class SocialManagePostTool implements McpToolInterface
         $accounts = SocialMediaAccount::where('business_id', $business->id)->get();
         $primaryAccount = $accounts->first();
 
+        $dryRun = (bool) ($args['dry_run'] ?? false);
+        if ($dryRun) {
+            $charLimits = [
+                'x'         => 280,
+                'twitter'   => 280,
+                'threads'   => 500,
+                'instagram' => 2200,
+                'tiktok'    => 2200,
+                'linkedin'  => 3000,
+                'facebook'  => 63206,
+                'pinterest' => 500,
+                'youtube'   => 5000,
+            ];
+
+            $captionLen = mb_strlen($caption);
+            $validation = [];
+            foreach ($channels as $ch) {
+                $limit = $charLimits[strtolower($ch)] ?? 2200;
+                $isOk = $captionLen <= $limit;
+                $acc = $accounts->first(fn ($a) => strtolower($a->platform ?? '') === strtolower($ch));
+                $validation[$ch] = [
+                    'account_connected' => $acc !== null,
+                    'account_name'      => $acc?->name ?? 'Belum terhubung',
+                    'token_status'      => ($acc && $acc->token_expires_at && $acc->token_expires_at->isPast()) ? 'expired' : 'active',
+                    'caption_length'    => $captionLen,
+                    'char_limit'        => $limit,
+                    'is_valid'          => $isOk,
+                    'warning'           => (! $isOk) ? "Panjang caption ({$captionLen} karakter) melebihi batas kanal {$ch} ({$limit} karakter)." : null,
+                ];
+            }
+
+            return [
+                'success'          => true,
+                'status'           => 'dry_run_success',
+                'is_dry_run'       => true,
+                'channels'         => $channels,
+                'channel_checks'   => $validation,
+                'media_type'       => $mediaType,
+                'media_urls'       => $mediaUrls,
+                'scheduled_at'     => $scheduledAt?->toIso8601String(),
+                'preview_caption'  => $caption,
+                'message'          => 'Mode pratinjau (dry run) berhasil! Seluruh validasi kanal, limit teks, dan visual preview telah diuji tanpa menyimpan atau memublikasikan postingan ke akun media sosial.',
+            ];
+        }
+
         $initialStatus = $isDraft ? 'draft' : ($publishNow ? 'publishing' : 'scheduled');
         $approvalStatus = $isDraft ? 'draft' : 'approved';
 
@@ -356,7 +406,7 @@ final class SocialManagePostTool implements McpToolInterface
                 'auditable_id'   => $newPost->id,
                 'payload_after'  => [
                     'channels'     => $channels,
-                    'scheduled_at' => $scheduledAt->toIso8601String(),
+                    'scheduled_at' => $scheduledAt?->toIso8601String(),
                 ],
             ]);
 
@@ -389,7 +439,7 @@ final class SocialManagePostTool implements McpToolInterface
             'management_url'   => url('/social-media/posts/' . $post->id),
             'message'          => $post->status === 'published'
                 ? "Konten berhasil diterbitkan langsung ke " . implode(', ', $channels) . "!"
-                : "Konten berhasil dijadwalkan ke " . implode(', ', $channels) . " untuk tayang pada " . $scheduledAt->format('d M Y H:i') . ".",
+                : "Konten berhasil dijadwalkan ke " . implode(', ', $channels) . ($post->scheduled_at ? ' untuk tayang pada ' . $post->scheduled_at->format('d M Y H:i') . '.' : ' sebagai draft.'),
         ];
     }
 
