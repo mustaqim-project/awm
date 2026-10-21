@@ -24,7 +24,7 @@ final class SocialUploadMediaTool implements McpToolInterface
 
     public function getDescription(): string
     {
-        return 'Mengunggah berkas media (gambar atau video) ke cloud storage COOCA untuk mendapatkan URL media publik yang valid. Mendukung upload via data base64 (termasuk chunking bertahap untuk data besar), verifikasi checksum SHA-256 untuk menjamin integritas, atau download otomatis dari URL eksternal (misal Cloudinary/Imgur/CDN). URL yang dihasilkan siap digunakan untuk publikasi media sosial, katalog produk, atau layanan.';
+        return 'Mengunggah berkas media (gambar atau video) langsung ke cloud storage COOCA untuk mendapatkan URL media publik yang valid. Menerima string data base64 utuh sekaligus dalam 1 panggilan (single upload tanpa dipecah) atau unduh otomatis dari URL publik internet (file_url). URL yang dihasilkan siap digunakan untuk postingan media sosial, produk, atau layanan.';
     }
 
     public function getRequiredAbility(): string
@@ -39,11 +39,11 @@ final class SocialUploadMediaTool implements McpToolInterface
             'properties' => [
                 'file_base64' => [
                     'type' => 'string',
-                    'description' => 'String data berkas format Base64 (bisa menyertakan header data URI seperti "data:image/png;base64,..." atau base64 murni). Jika menggunakan chunking, masukkan potongan base64 pada chunk saat ini.',
+                    'description' => 'String data berkas format Base64 utuh sekaligus dalam 1 panggilan (bisa menyertakan header data URI seperti "data:image/png;base64,..." atau base64 murni). JANGAN DIPECAH / JANGAN DI-CHUNK, kirim seluruh data base64 secara utuh sekaligus.',
                 ],
                 'file_url' => [
                     'type' => 'string',
-                    'description' => 'URL berkas gambar/video di internet (misal Cloudinary, Imgur, PostImages, Google Drive, atau CDN) yang ingin diunduh dan disimpan permanen ke server storage COOCA.',
+                    'description' => 'URL berkas gambar/video di internet (misal Cloudinary, Imgur, PostImages, Google Drive direct link, atau CDN) yang ingin diunduh dan disimpan otomatis ke server storage COOCA.',
                 ],
                 'file_name' => [
                     'type' => 'string',
@@ -54,26 +54,6 @@ final class SocialUploadMediaTool implements McpToolInterface
                     'enum' => ['social-media', 'products', 'services', 'general'],
                     'default' => 'social-media',
                     'description' => 'Folder penyimpanan tujuan di tenant bisnis Anda (default: social-media).',
-                ],
-                'upload_id' => [
-                    'type' => 'string',
-                    'description' => 'ID unik sesi upload bertahap (chunking), misal "feed-promo-01". Diperlukan jika mengunggah data base64 besar yang dipecah per bagian.',
-                ],
-                'chunk_index' => [
-                    'type' => 'integer',
-                    'description' => 'Indeks potongan data saat ini (mulai dari 0). Digunakan jika mengunggah dengan metode chunking.',
-                ],
-                'total_chunks' => [
-                    'type' => 'integer',
-                    'description' => 'Jumlah total potongan data (misal 3 jika dipecah menjadi 3 bagian). Digunakan jika mengunggah dengan metode chunking.',
-                ],
-                'chunk_checksum_sha256' => [
-                    'type' => 'string',
-                    'description' => 'Hash SHA-256 dari teks potongan base64 pada chunk saat ini. Memastikan potongan ini 100% valid sebelum disimpan, sehingga jika terjadi salah ketik/karakter meleset, hanya potongan ini saja yang perlu dikirim ulang.',
-                ],
-                'checksum_sha256' => [
-                    'type' => 'string',
-                    'description' => 'Hash SHA-256 (64 karakter heksadesimal) dari berkas biner asli utuh untuk verifikasi final integritas 100% setelah seluruh potongan digabungkan.',
                 ],
             ],
         ];
@@ -91,61 +71,34 @@ final class SocialUploadMediaTool implements McpToolInterface
         $uploadId = trim((string) ($arguments['upload_id'] ?? ''));
         $chunkIndex = isset($arguments['chunk_index']) ? (int) $arguments['chunk_index'] : null;
         $totalChunks = isset($arguments['total_chunks']) ? (int) $arguments['total_chunks'] : null;
-        $chunkChecksum = trim((string) ($arguments['chunk_checksum_sha256'] ?? ''));
-        $checksumSha256 = trim((string) ($arguments['checksum_sha256'] ?? ''));
 
-        // Handle Chunked Upload
+        // Backward-compatibility: jika ada client lama yang masih mengirim chunking
         if ($uploadId !== '' && $chunkIndex !== null && $totalChunks !== null && $totalChunks > 1) {
-            if ($base64 === '') {
-                throw new InvalidArgumentException('Potongan data file_base64 tidak boleh kosong pada sesi upload bertahap.');
-            }
-
-            // Verifikasi integritas potongan saat ini jika chunk_checksum_sha256 disediakan
-            if ($chunkChecksum !== '') {
-                $actualChunkHash = hash('sha256', $base64);
-                if (strtolower($actualChunkHash) !== strtolower($chunkChecksum)) {
-                    throw new InvalidArgumentException("Checksum SHA-256 untuk potongan (chunk) ke-{$chunkIndex} TIDAK COCOK! Server menghitung '{$actualChunkHash}', tetapi Anda mengirim '{$chunkChecksum}'. Ada karakter yang meleset/hilang saat transmisi. Silakan kirim ulang chunk ke-{$chunkIndex} saja tanpa perlu mengulang dari awal.");
+            if ($base64 !== '') {
+                Cache::put("mcp_upload_chunk:{$business->id}:{$uploadId}:{$chunkIndex}", $base64, now()->addHours(2));
+                $allReceived = true;
+                $combined = '';
+                for ($i = 0; $i < $totalChunks; $i++) {
+                    $chk = Cache::get("mcp_upload_chunk:{$business->id}:{$uploadId}:{$i}");
+                    if ($chk === null) {
+                        $allReceived = false;
+                        break;
+                    }
+                    $combined .= $chk;
                 }
-            }
-
-            $cacheKey = "mcp_upload_chunk:{$business->id}:{$uploadId}:{$chunkIndex}";
-            Cache::put($cacheKey, $base64, now()->addHours(2));
-
-            // Check if all chunks have been received
-            $missingChunks = [];
-            $combinedBase64 = '';
-            for ($i = 0; $i < $totalChunks; $i++) {
-                $cKey = "mcp_upload_chunk:{$business->id}:{$uploadId}:{$i}";
-                $chunk = Cache::get($cKey);
-                if ($chunk === null) {
-                    $missingChunks[] = $i;
+                if ($allReceived) {
+                    $base64 = $combined;
                 } else {
-                    $combinedBase64 .= $chunk;
+                    return [
+                        'success'      => true,
+                        'status'       => 'chunk_received',
+                        'upload_id'    => $uploadId,
+                        'chunk_index'  => $chunkIndex,
+                        'total_chunks' => $totalChunks,
+                        'message'      => "Potongan chunk {$chunkIndex}/{$totalChunks} tersimpan.",
+                    ];
                 }
             }
-
-            if (! empty($missingChunks)) {
-                $receivedCount = $totalChunks - count($missingChunks);
-                $missingPreview = implode(', ', array_slice($missingChunks, 0, 8)) . (count($missingChunks) > 8 ? '...' : '');
-
-                return [
-                    'success'               => true,
-                    'status'                => 'chunk_verified',
-                    'upload_id'             => $uploadId,
-                    'chunk_index'           => $chunkIndex,
-                    'total_chunks'          => $totalChunks,
-                    'received_chunks_count' => $receivedCount,
-                    'missing_chunks_count'  => count($missingChunks),
-                    'missing_chunks'        => $missingChunks,
-                    'message'               => "Potongan ke-{$chunkIndex} dari total {$totalChunks} berhasil diverifikasi dan tersimpan ({$receivedCount}/{$totalChunks} tersimpan). Sisa " . count($missingChunks) . " potongan yang belum dikirim: [{$missingPreview}].",
-                ];
-            }
-
-            // All chunks received, clean cache and merge
-            for ($i = 0; $i < $totalChunks; $i++) {
-                Cache::forget("mcp_upload_chunk:{$business->id}:{$uploadId}:{$i}");
-            }
-            $base64 = $combinedBase64;
         }
 
         if ($base64 === '' && $fileUrl === '') {
@@ -157,24 +110,30 @@ final class SocialUploadMediaTool implements McpToolInterface
         $extension = 'jpg';
 
         if ($base64 !== '') {
+            // Bersihkan spasi dan baris baru yang mungkin disisipkan oleh AI
+            $cleanBase64 = preg_replace('/\s+/', '', $base64);
+
             // Check for Data URI prefix: data:image/png;base64,....
-            if (preg_match('/^data:([^;]+);base64,(.+)$/is', $base64, $matches)) {
+            if (preg_match('/^data:([^;]+);base64,(.+)$/is', $cleanBase64, $matches)) {
                 $mimeType = strtolower($matches[1]);
                 $binaryData = base64_decode($matches[2], true);
             } else {
-                $binaryData = base64_decode($base64, true);
+                $binaryData = base64_decode($cleanBase64, true);
             }
 
             if ($binaryData === false || strlen($binaryData) === 0) {
                 throw new InvalidArgumentException('Data file_base64 tidak valid atau gagal didekode.');
             }
 
-            // Verify checksum if supplied
-            if ($checksumSha256 !== '') {
-                $actualSha256 = hash('sha256', $binaryData);
-                if (strtolower($actualSha256) !== strtolower($checksumSha256)) {
-                    throw new InvalidArgumentException("Checksum SHA-256 tidak cocok! Diharapkan {$checksumSha256}, tetapi hasil perhitungan server adalah {$actualSha256}. Berkas kemungkinan rusak atau terpotong saat transmisi.");
+            // Deteksi MIME type riil dari buffer biner
+            try {
+                $finfo = new \finfo(FILEINFO_MIME_TYPE);
+                $detected = $finfo->buffer($binaryData);
+                if (! empty($detected) && $detected !== 'application/octet-stream') {
+                    $mimeType = strtolower($detected);
                 }
+            } catch (\Throwable) {
+                // Gunakan default mimeType
             }
 
             $extension = match ($mimeType) {
@@ -184,6 +143,7 @@ final class SocialUploadMediaTool implements McpToolInterface
                 'image/svg+xml'   => 'svg',
                 'video/mp4'       => 'mp4',
                 'video/quicktime' => 'mov',
+                'video/webm'      => 'webm',
                 default           => 'jpg',
             };
         } else {
