@@ -58,6 +58,40 @@ final class SocialSchedulePostTool implements McpToolInterface
                     'items' => ['type' => 'string'],
                     'description' => 'Daftar URL gambar/video dari cloud storage yang akan diunggah.',
                 ],
+                'generate_visual' => [
+                    'type' => 'boolean',
+                    'default' => false,
+                    'description' => 'Jika true, COOCA akan secara otomatis men-generate gambar visual/banner/video promosi di server dan melampirkannya ke postingan ini.',
+                ],
+                'visual_type' => [
+                    'type' => 'string',
+                    'enum' => ['ai_photo', 'promo_banner', 'hybrid', 'ai_video'],
+                    'description' => 'Jenis visual yang ingin dibuat otomatis: "ai_photo", "promo_banner", "hybrid", atau "ai_video".',
+                ],
+                'visual_prompt' => [
+                    'type' => 'string',
+                    'description' => 'Deskripsi visual jika ingin dibuatkan foto/video produk AI otomatis (misal: "iced latte with espresso swirl on wooden table, warm sunlight, photorealistic 8k").',
+                ],
+                'video_url' => [
+                    'type' => 'string',
+                    'description' => 'URL video MP4 dari AI video generator eksternal untuk diunduh dan diterbitkan sebagai TikTok Video / Instagram Reels.',
+                ],
+                'visual_headline' => [
+                    'type' => 'string',
+                    'description' => 'Judul headline promosi jika ingin dibuatkan banner poster promosi otomatis berlogo resmi bisnis (misal: "PROMO WEEKEND DISKON 30%").',
+                ],
+                'visual_subheadline' => [
+                    'type' => 'string',
+                    'description' => 'Subjudul promo pada banner (misal: "Beli 2 Cup Kopi Gratis 1 Donat").',
+                ],
+                'visual_badge' => [
+                    'type' => 'string',
+                    'description' => 'Badge promo (misal: "DISKON 30%", "PROMO TERBATAS", "MENU BARU").',
+                ],
+                'visual_theme' => [
+                    'type' => 'string',
+                    'description' => 'Tema warna / suasana visual bebas sesuai kebutuhan Anda (misal: "sage green", "kopi susu gula aren", "pastel pink", "oranye ceria", "emas mewah", "monokrom", "ungu lilac", "biru dongker", atau kode HEX #ff5722). Jika dikosongkan, sistem otomatis mencocokkan dengan profil industri & brand toko Anda.',
+                ],
                 'publish_now' => [
                     'type' => 'boolean',
                     'default' => false,
@@ -87,7 +121,40 @@ final class SocialSchedulePostTool implements McpToolInterface
             : ($isDraft ? null : now()->addMinutes(5));
 
         $mediaUrls = (array) ($arguments['media_urls'] ?? []);
-        $mediaType = ! empty($mediaUrls) ? 'image' : 'text';
+        $generatedType = null;
+
+        // Autopilot Visual Generator: Jika media_urls kosong tapi diminta generate visual
+        if (empty($mediaUrls) && (! empty($arguments['generate_visual']) || ! empty($arguments['visual_prompt']) || ! empty($arguments['visual_headline']) || ! empty($arguments['video_url']))) {
+            try {
+                $visualService = app(\App\Domain\SocialMedia\SocialVisualGenerationService::class);
+                $visualRes = $visualService->generateVisual($business, $user, [
+                    'type'        => $arguments['visual_type'] ?? (! empty($arguments['video_url']) ? 'ai_video' : ''),
+                    'prompt'      => $arguments['visual_prompt'] ?? '',
+                    'video_url'   => $arguments['video_url'] ?? '',
+                    'headline'    => $arguments['visual_headline'] ?? '',
+                    'subheadline' => $arguments['visual_subheadline'] ?? '',
+                    'badge'       => $arguments['visual_badge'] ?? '',
+                    'theme'       => $arguments['visual_theme'] ?? '',
+                    'aspect_ratio'=> $arguments['aspect_ratio'] ?? ((! empty($arguments['video_url']) || ($arguments['visual_type'] ?? '') === 'ai_video') ? '9:16' : '4:5'),
+                ]);
+                if (! empty($visualRes['media_url'])) {
+                    $mediaUrls = [$visualRes['media_url']];
+                    $generatedType = $visualRes['media_type'] ?? $visualRes['type'] ?? null;
+                }
+            } catch (\Throwable $e) {
+                // Lanjutkan jika visual gagal agar post teks tetap tersimpan atau lempar exception
+                \Illuminate\Support\Facades\Log::warning('[SocialSchedulePostTool] Gagal generate visual otomatis: ' . $e->getMessage());
+            }
+        }
+
+        $firstMedia = $mediaUrls[0] ?? '';
+        $isMediaVideo = $generatedType === 'video' || (! empty($firstMedia) && (
+            str_ends_with(strtolower((string) parse_url($firstMedia, PHP_URL_PATH)), '.mp4') ||
+            str_ends_with(strtolower((string) parse_url($firstMedia, PHP_URL_PATH)), '.mov') ||
+            str_ends_with(strtolower((string) parse_url($firstMedia, PHP_URL_PATH)), '.webm')
+        ));
+
+        $mediaType = ! empty($mediaUrls) ? ($isMediaVideo ? 'video' : 'image') : 'text';
 
         // Cari akun media sosial terhubung
         $accounts = SocialMediaAccount::where('business_id', $business->id)->get();
@@ -96,7 +163,7 @@ final class SocialSchedulePostTool implements McpToolInterface
         $initialStatus = $isDraft ? 'draft' : ($publishNow ? 'publishing' : 'scheduled');
         $approvalStatus = $isDraft ? 'draft' : 'approved';
 
-        $post = DB::transaction(function () use ($business, $user, $caption, $channels, $scheduledAt, $mediaUrls, $mediaType, $primaryAccount, $accounts, $initialStatus, $approvalStatus) {
+        $post = DB::transaction(function () use ($business, $user, $caption, $channels, $scheduledAt, $mediaUrls, $mediaType, $isMediaVideo, $primaryAccount, $accounts, $initialStatus, $approvalStatus) {
             $newPost = SocialMediaPost::create([
                 'business_id' => $business->id,
                 'user_id' => $user?->id,
@@ -113,12 +180,21 @@ final class SocialSchedulePostTool implements McpToolInterface
             foreach ($channels as $ch) {
                 $targetAcc = $accounts->first(fn ($a) => strtolower($a->platform ?? '') === strtolower($ch));
 
+                $targetContentType = $mediaType;
+                if ($isMediaVideo) {
+                    $targetContentType = match (strtolower($ch)) {
+                        'instagram' => 'reel',
+                        'tiktok', 'facebook', 'threads' => 'video',
+                        default => 'video',
+                    };
+                }
+
                 SocialPostTarget::create([
                     'social_media_post_id' => $newPost->id,
                     'social_media_account_id' => $targetAcc?->id ?? $primaryAccount?->id,
                     'provider' => $ch,
                     'channel' => $ch,
-                    'content_type' => $mediaType,
+                    'content_type' => $targetContentType,
                     'custom_caption' => $caption,
                     'status' => $initialStatus,
                 ]);

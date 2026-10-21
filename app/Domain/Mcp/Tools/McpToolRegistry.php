@@ -38,6 +38,7 @@ final class McpToolRegistry
         $this->register(new ServicesManageServiceTool());
         $this->register(new BusinessGetLogoTool());
         $this->register(new SocialUploadMediaTool());
+        $this->register(new SocialGenerateVisualTool());
         $this->register(new SocialManagePostTool());
         $this->register(new SocialManageChannelsTool());
     }

@@ -64,6 +64,40 @@ final class SocialManagePostTool implements McpToolInterface
                     'items' => ['type' => 'string'],
                     'description' => 'Daftar URL gambar atau video yang akan diunggah (bisa didapatkan dari tool social_upload_media).',
                 ],
+                'generate_visual' => [
+                    'type' => 'boolean',
+                    'default' => false,
+                    'description' => 'Jika true, COOCA akan secara otomatis men-generate gambar visual/banner/video promosi di server dan melampirkannya ke postingan ini.',
+                ],
+                'visual_type' => [
+                    'type' => 'string',
+                    'enum' => ['ai_photo', 'promo_banner', 'hybrid', 'ai_video'],
+                    'description' => 'Jenis visual yang ingin dibuat otomatis: "ai_photo", "promo_banner", "hybrid", atau "ai_video".',
+                ],
+                'visual_prompt' => [
+                    'type' => 'string',
+                    'description' => 'Deskripsi visual jika ingin dibuatkan foto/video produk AI otomatis (misal: "iced latte with espresso swirl on wooden table, warm sunlight, photorealistic 8k").',
+                ],
+                'video_url' => [
+                    'type' => 'string',
+                    'description' => 'URL video MP4 dari AI video generator eksternal untuk diunduh dan diterbitkan sebagai TikTok Video / Instagram Reels.',
+                ],
+                'visual_headline' => [
+                    'type' => 'string',
+                    'description' => 'Judul headline promosi jika ingin dibuatkan banner poster promosi otomatis berlogo resmi bisnis (misal: "PROMO WEEKEND DISKON 30%").',
+                ],
+                'visual_subheadline' => [
+                    'type' => 'string',
+                    'description' => 'Subjudul promo pada banner (misal: "Beli 2 Cup Kopi Gratis 1 Donat").',
+                ],
+                'visual_badge' => [
+                    'type' => 'string',
+                    'description' => 'Badge promo (misal: "DISKON 30%", "PROMO TERBATAS", "MENU BARU").',
+                ],
+                'visual_theme' => [
+                    'type' => 'string',
+                    'description' => 'Tema warna / suasana visual bebas sesuai kebutuhan Anda (misal: "sage green", "kopi susu gula aren", "pastel pink", "oranye ceria", "emas mewah", "monokrom", "ungu lilac", "biru dongker", atau kode HEX #ff5722). Jika dikosongkan, sistem otomatis mencocokkan dengan profil industri & brand toko Anda.',
+                ],
                 'scheduled_at' => [
                     'type' => 'string',
                     'format' => 'date-time',
@@ -237,7 +271,39 @@ final class SocialManagePostTool implements McpToolInterface
             : ($isDraft ? null : now());
 
         $mediaUrls = (array) ($args['media_urls'] ?? []);
-        $mediaType = ! empty($mediaUrls) ? 'image' : 'text';
+
+        $generatedType = null;
+        // Autopilot Visual Generator: Jika media_urls kosong tapi diminta generate visual
+        if (empty($mediaUrls) && (! empty($args['generate_visual']) || ! empty($args['visual_prompt']) || ! empty($args['visual_headline']) || ! empty($args['video_url']))) {
+            try {
+                $visualService = app(\App\Domain\SocialMedia\SocialVisualGenerationService::class);
+                $visualRes = $visualService->generateVisual($business, $user, [
+                    'type'        => $args['visual_type'] ?? (! empty($args['video_url']) ? 'ai_video' : ''),
+                    'prompt'      => $args['visual_prompt'] ?? '',
+                    'video_url'   => $args['video_url'] ?? '',
+                    'headline'    => $args['visual_headline'] ?? '',
+                    'subheadline' => $args['visual_subheadline'] ?? '',
+                    'badge'       => $args['visual_badge'] ?? '',
+                    'theme'       => $args['visual_theme'] ?? '',
+                    'aspect_ratio'=> $args['aspect_ratio'] ?? ((! empty($args['video_url']) || ($args['visual_type'] ?? '') === 'ai_video') ? '9:16' : '4:5'),
+                ]);
+                if (! empty($visualRes['media_url'])) {
+                    $mediaUrls = [$visualRes['media_url']];
+                    $generatedType = $visualRes['media_type'] ?? $visualRes['type'] ?? null;
+                }
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::warning('[SocialManagePostTool] Gagal generate visual otomatis: ' . $e->getMessage());
+            }
+        }
+
+        $firstMedia = $mediaUrls[0] ?? '';
+        $isMediaVideo = $generatedType === 'video' || (! empty($firstMedia) && (
+            str_ends_with(strtolower((string) parse_url($firstMedia, PHP_URL_PATH)), '.mp4') ||
+            str_ends_with(strtolower((string) parse_url($firstMedia, PHP_URL_PATH)), '.mov') ||
+            str_ends_with(strtolower((string) parse_url($firstMedia, PHP_URL_PATH)), '.webm')
+        ));
+
+        $mediaType = ! empty($mediaUrls) ? ($isMediaVideo ? 'video' : 'image') : 'text';
 
         $accounts = SocialMediaAccount::where('business_id', $business->id)->get();
         $primaryAccount = $accounts->first();
@@ -245,7 +311,7 @@ final class SocialManagePostTool implements McpToolInterface
         $initialStatus = $isDraft ? 'draft' : ($publishNow ? 'publishing' : 'scheduled');
         $approvalStatus = $isDraft ? 'draft' : 'approved';
 
-        $post = DB::transaction(function () use ($business, $user, $caption, $channels, $scheduledAt, $mediaUrls, $mediaType, $primaryAccount, $accounts, $initialStatus, $approvalStatus) {
+        $post = DB::transaction(function () use ($business, $user, $caption, $channels, $scheduledAt, $mediaUrls, $mediaType, $isMediaVideo, $primaryAccount, $accounts, $initialStatus, $approvalStatus) {
             $newPost = SocialMediaPost::create([
                 'business_id'             => $business->id,
                 'user_id'                 => $user?->id,
@@ -262,12 +328,21 @@ final class SocialManagePostTool implements McpToolInterface
             foreach ($channels as $ch) {
                 $targetAcc = $accounts->first(fn ($a) => strtolower($a->platform ?? '') === strtolower($ch));
 
+                $targetContentType = $mediaType;
+                if ($isMediaVideo) {
+                    $targetContentType = match (strtolower($ch)) {
+                        'instagram' => 'reel',
+                        'tiktok', 'facebook', 'threads' => 'video',
+                        default => 'video',
+                    };
+                }
+
                 SocialPostTarget::create([
                     'social_media_post_id'    => $newPost->id,
                     'social_media_account_id' => $targetAcc?->id ?? $primaryAccount?->id,
                     'provider'                => $ch,
                     'channel'                 => $ch,
-                    'content_type'            => $mediaType,
+                    'content_type'            => $targetContentType,
                     'custom_caption'          => $caption,
                     'status'                  => $initialStatus,
                 ]);
