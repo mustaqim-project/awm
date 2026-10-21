@@ -2783,6 +2783,72 @@ document.addEventListener('alpine:init', () => {
                         </button>
                     </div>
                 </div>
+
+                {{-- Tool 22: Social Upload Media --}}
+                <div class="p-4 rounded-[16px] bg-neutral-50/70 dark:bg-neutral-900/50 border border-neutral-200/80 dark:border-neutral-800 flex flex-col justify-between space-y-3">
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-mono text-xs font-semibold text-purple-600 dark:text-purple-400">social_upload_media</span>
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400">mcp:social:manage</span>
+                        </div>
+                        <p class="text-xs text-neutral-700 dark:text-neutral-300 mt-1.5 leading-relaxed">
+                            {{ __('mcp.tool_22_desc') }}
+                        </p>
+                    </div>
+                    <div class="pt-2 border-t border-neutral-200/60 dark:border-neutral-800 flex items-center justify-between gap-2">
+                        <span class="text-[11px] text-neutral-500 truncate italic">"{{ __('mcp.tool_22_prompt') }}"</span>
+                        <button
+                            type="button"
+                            @click="copyText('{{ addslashes(__('mcp.tool_22_prompt')) }}', '{{ addslashes(__('mcp.toast_prompt_copied')) }}')"
+                            class="px-2.5 py-1 rounded-[8px] bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-[11px] font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 transition-colors shrink-0">
+                            {{ __('mcp.btn_copy_short') }}
+                        </button>
+                    </div>
+                </div>
+
+                {{-- Tool 23: Social Manage Post --}}
+                <div class="p-4 rounded-[16px] bg-neutral-50/70 dark:bg-neutral-900/50 border border-neutral-200/80 dark:border-neutral-800 flex flex-col justify-between space-y-3">
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-mono text-xs font-semibold text-rose-600 dark:text-rose-400">social_manage_post</span>
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-rose-500/10 text-rose-600 dark:text-rose-400">mcp:social:manage</span>
+                        </div>
+                        <p class="text-xs text-neutral-700 dark:text-neutral-300 mt-1.5 leading-relaxed">
+                            {{ __('mcp.tool_23_desc') }}
+                        </p>
+                    </div>
+                    <div class="pt-2 border-t border-neutral-200/60 dark:border-neutral-800 flex items-center justify-between gap-2">
+                        <span class="text-[11px] text-neutral-500 truncate italic">"{{ __('mcp.tool_23_prompt') }}"</span>
+                        <button
+                            type="button"
+                            @click="copyText('{{ addslashes(__('mcp.tool_23_prompt')) }}', '{{ addslashes(__('mcp.toast_prompt_copied')) }}')"
+                            class="px-2.5 py-1 rounded-[8px] bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-[11px] font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 transition-colors shrink-0">
+                            {{ __('mcp.btn_copy_short') }}
+                        </button>
+                    </div>
+                </div>
+
+                {{-- Tool 24: Social Manage Channels --}}
+                <div class="p-4 rounded-[16px] bg-neutral-50/70 dark:bg-neutral-900/50 border border-neutral-200/80 dark:border-neutral-800 flex flex-col justify-between space-y-3">
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-mono text-xs font-semibold text-sky-600 dark:text-sky-400">social_manage_channels</span>
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-sky-500/10 text-sky-600 dark:text-sky-400">mcp:social:read</span>
+                        </div>
+                        <p class="text-xs text-neutral-700 dark:text-neutral-300 mt-1.5 leading-relaxed">
+                            {{ __('mcp.tool_24_desc') }}
+                        </p>
+                    </div>
+                    <div class="pt-2 border-t border-neutral-200/60 dark:border-neutral-800 flex items-center justify-between gap-2">
+                        <span class="text-[11px] text-neutral-500 truncate italic">"{{ __('mcp.tool_24_prompt') }}"</span>
+                        <button
+                            type="button"
+                            @click="copyText('{{ addslashes(__('mcp.tool_24_prompt')) }}', '{{ addslashes(__('mcp.toast_prompt_copied')) }}')"
+                            class="px-2.5 py-1 rounded-[8px] bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-[11px] font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 transition-colors shrink-0">
+                            {{ __('mcp.btn_copy_short') }}
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 

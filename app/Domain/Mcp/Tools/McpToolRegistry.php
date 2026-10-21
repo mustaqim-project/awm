@@ -37,6 +37,9 @@ final class McpToolRegistry
         $this->register(new WhatsappSendNotificationTool());
         $this->register(new ServicesManageServiceTool());
         $this->register(new BusinessGetLogoTool());
+        $this->register(new SocialUploadMediaTool());
+        $this->register(new SocialManagePostTool());
+        $this->register(new SocialManageChannelsTool());
     }
 
     public function register(McpToolInterface $tool): void

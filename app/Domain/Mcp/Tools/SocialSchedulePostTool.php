@@ -58,6 +58,11 @@ final class SocialSchedulePostTool implements McpToolInterface
                     'items' => ['type' => 'string'],
                     'description' => 'Daftar URL gambar/video dari cloud storage yang akan diunggah.',
                 ],
+                'publish_now' => [
+                    'type' => 'boolean',
+                    'default' => false,
+                    'description' => 'Jika true, konten langsung dipublikasikan seketika tanpa menunggu antrean jadwal.',
+                ],
             ],
             'required' => ['caption', 'channels'],
         ];
@@ -75,7 +80,8 @@ final class SocialSchedulePostTool implements McpToolInterface
             throw new InvalidArgumentException('Minimal satu channel media sosial harus dipilih.');
         }
 
-        $scheduledAt = ! empty($arguments['scheduled_at'])
+        $publishNow = (bool) ($arguments['publish_now'] ?? false);
+        $scheduledAt = (! empty($arguments['scheduled_at']) && ! $publishNow)
             ? Carbon::parse((string) $arguments['scheduled_at'])
             : now()->addMinutes(5);
 
@@ -133,12 +139,31 @@ final class SocialSchedulePostTool implements McpToolInterface
             return $newPost;
         });
 
+        // Trigger immediate publishing if requested
+        if ($publishNow) {
+            try {
+                $service = app(\App\Domain\SocialMedia\SocialMediaService::class);
+                $post = $service->publishPost($business, $post);
+            } catch (\Throwable $e) {
+                $post->update([
+                    'status'        => 'failed',
+                    'error_message' => $e->getMessage(),
+                ]);
+            }
+        }
+
         return [
-            'status' => 'success',
-            'post_id' => $post->id,
-            'channels' => $channels,
-            'scheduled_at' => $scheduledAt->toIso8601String(),
-            'message' => 'Konten promosi berhasil dijadwalkan ke ' . implode(', ', $channels) . ' untuk tayang pada ' . $scheduledAt->format('d M Y H:i') . '.',
+            'status'           => 'success',
+            'post_id'          => $post->id,
+            'is_published'     => $post->status === 'published',
+            'channels'         => $channels,
+            'scheduled_at'     => $post->scheduled_at?->toIso8601String(),
+            'published_at'     => $post->published_at?->toIso8601String(),
+            'platform_post_id' => $post->platform_post_id,
+            'error_message'    => $post->error_message,
+            'message'          => $post->status === 'published'
+                ? 'Konten promosi berhasil diterbitkan langsung ke ' . implode(', ', $channels) . '!'
+                : 'Konten promosi berhasil dijadwalkan ke ' . implode(', ', $channels) . ' untuk tayang pada ' . $scheduledAt->format('d M Y H:i') . '.',
         ];
     }
 }
