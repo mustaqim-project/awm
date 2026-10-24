@@ -29,7 +29,7 @@ final class ExternalReconciliationWebController extends Controller
      */
     public function index(Request $request): View|JsonResponse
     {
-        $business = Context::business();
+        $business = Context::requireBusiness();
         $period = $request->get('period', Carbon::now()->format('Y-m'));
         $locationId = $request->get('location_id');
 
@@ -63,7 +63,7 @@ final class ExternalReconciliationWebController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        $business = Context::business();
+        $business = Context::requireBusiness();
 
         $validated = $request->validate([
             'channel_type'        => 'required|string|max:30',
@@ -107,7 +107,7 @@ final class ExternalReconciliationWebController extends Controller
      */
     public function dashboard(Request $request): JsonResponse
     {
-        $business = Context::business();
+        $business = Context::requireBusiness();
         $period = $request->get('period', Carbon::now()->format('Y-m'));
 
         return response()->json([
@@ -121,7 +121,7 @@ final class ExternalReconciliationWebController extends Controller
      */
     public function discrepancies(Request $request): JsonResponse
     {
-        $business = Context::business();
+        $business = Context::requireBusiness();
         $summary = $this->service->getDiscrepancySummary($business);
 
         return response()->json([

@@ -18,7 +18,7 @@ final class SocialManageChannelsTool implements McpToolInterface
 
     public function getDescription(): string
     {
-        return 'Melihat daftar akun dan kanal media sosial yang terhubung ke COOCA (Instagram Business, Facebook Pages, TikTok, X/Twitter, Threads), status koneksi akun (aktif/kedaluwarsa), dan tautan pengaturan otorisasi kanal.';
+        return 'Melihat daftar akun dan kanal media sosial yang terhubung ke COOCA (Instagram Business, Facebook Pages, TikTok, LinkedIn, X/Twitter, Threads), status koneksi akun (aktif/kedaluwarsa), dan tautan pengaturan otorisasi kanal.';
     }
 
     public function getRequiredAbility(): string
@@ -33,7 +33,7 @@ final class SocialManageChannelsTool implements McpToolInterface
             'properties' => [
                 'platform' => [
                     'type' => 'string',
-                    'description' => 'Opsional: filter platform tertentu (instagram, facebook, tiktok, twitter, threads).',
+                    'description' => 'Opsional: filter platform tertentu (instagram, facebook, tiktok, linkedin, twitter, threads).',
                 ],
             ],
         ];
@@ -60,7 +60,7 @@ final class SocialManageChannelsTool implements McpToolInterface
                 'profile_picture_url' => $acc->profile_picture_url,
                 'status'              => $acc->status,
                 'is_connected'        => $acc->status === 'active',
-                'token_expires_at'    => $acc->token_expires_at?->toIso8601String(),
+                'token_expires_at'    => $acc->token_expires_at?->setTimezone('Asia/Jakarta')->toIso8601String(),
                 'total_posts_created' => $postsCount,
             ];
         })->all();
@@ -70,8 +70,8 @@ final class SocialManageChannelsTool implements McpToolInterface
             'total_channels'          => count($channels),
             'active_channels_count'   => count(array_filter($channels, fn ($c) => $c['is_connected'])),
             'channels'                => $channels,
-            'settings_url'            => url('/social-media/accounts'),
-            'connect_instructions'    => 'Untuk menautkan atau memperbarui izin akun Instagram Business / Facebook Page, kunjungi menu Media Sosial > Pengaturan Akun di dashboard COOCA (https://cooca.id/social-media/accounts).',
+            'settings_url'            => url('/settings?tab=social_media'),
+            'connect_instructions'    => 'Untuk menautkan atau memperbarui otorisasi akun (Instagram Business, Facebook Page, TikTok, LinkedIn), kunjungi menu Pengaturan Usaha > Saluran Media Sosial di dashboard COOCA (https://cooca.id/settings?tab=social_media).',
         ];
     }
 }

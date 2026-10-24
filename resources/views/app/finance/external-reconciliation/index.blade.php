@@ -210,11 +210,13 @@
                 <h2 class="text-[16px] font-bold text-black dark:text-white">{{ __('finance.external_recon_sheet_title') }}</h2>
                 <p class="text-xs text-black/50 dark:text-white/50 mt-0.5">{{ __('finance.external_recon_sheet_subtitle') }}</p>
             </div>
-            <button type="button" @click="showFormModal = true"
-                class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0062CC] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 shrink-0 shadow-sm">
-                <i data-lucide="plus-circle" class="w-4 h-4"></i>
-                <span>{{ __('finance.btn_add_update_sheet') }}</span>
-            </button>
+            @if (\App\Support\Context::hasPermission('finance.cash_bank'))
+                <button type="button" @click="showFormModal = true"
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0062CC] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 shrink-0 shadow-sm">
+                    <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                    <span>{{ __('finance.btn_add_update_sheet') }}</span>
+                </button>
+            @endif
         </div>
 
         {{-- Existing Reconciliation Table --}}
@@ -286,6 +288,7 @@
     {{-- ========================================================== --}}
     {{-- MODAL: INPUT REKONSILIASI BARU (BENTO APPLE HIG XXL SHEET) --}}
     {{-- ========================================================== --}}
+    @if (\App\Support\Context::hasPermission('finance.cash_bank'))
     <template x-teleport="body">
         <div x-show="showFormModal"
             x-cloak
@@ -487,6 +490,7 @@
             </div>
         </div>
     </template>
+    @endif
 
 </div>
 
@@ -549,21 +553,15 @@ function externalReconApp() {
                 });
                 const data = await res.json();
                 if (data.success) {
-                    this.isModalOpen = false;
+                    this.showFormModal = false;
                     if (window.AppAlert) {
                         AppAlert.success(data.message || @json(__('finance.js_recon_recorded_success')));
                     } else {
                         alert(data.message || @json(__('finance.js_recon_recorded_success')));
                     }
-                    this.formData = {
-                        channel_type: '',
-                        channel_label: '',
-                        period_start: '',
-                        period_end: '',
-                        statement_ending_balance: 0,
-                        ledger_balance: 0,
-                        notes: ''
-                    };
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 500);
                 } else {
                     if (window.AppAlert) {
                         AppAlert.error(data.message || @json(__('finance.js_failed_save_recon')));

@@ -128,12 +128,14 @@
                         class="h-11 sm:h-9 px-3 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
                 </div>
             </form>
-            <button type="button" @click="showOpeningModal = true"
-                class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shadow-[0_2px_8px_rgba(0,122,255,0.35)] cursor-pointer"
-                title="{{ __('finance.import_opening_balance_tooltip') }}">
-                <i data-lucide="upload" class="w-4 h-4"></i>
-                <span>{{ __('finance.btn_import_opening_balance') }}</span>
-            </button>
+            @if (\App\Support\Context::hasPermission('accounting.manage'))
+                <button type="button" @click="showOpeningModal = true"
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shadow-[0_2px_8px_rgba(0,122,255,0.35)] cursor-pointer"
+                    title="{{ __('finance.import_opening_balance_tooltip') }}">
+                    <i data-lucide="upload" class="w-4 h-4"></i>
+                    <span>{{ __('finance.btn_import_opening_balance') }}</span>
+                </button>
+            @endif
             <a id="btnBalanceSheetExportExcel" href="{{ route('finance.balance-sheet.export-excel', ['as_of_date' => $asOfDate->toDateString()]) }}"
                 class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shadow-xs"
                 title="Export Neraca Keuangan ke Excel (XLSX)">
@@ -396,6 +398,7 @@
         {{-- ========================================================== --}}
         {{-- MODAL IMPORT SALDO AWAL NERACA (BENTO XXL PRE-COMMIT)      --}}
         {{-- ========================================================== --}}
+        @if (\App\Support\Context::hasPermission('accounting.manage'))
         <template x-teleport="body">
             <div x-show="showOpeningModal"
                 x-cloak
@@ -619,6 +622,7 @@
                 </div>
             </div>
         </template>
+        @endif
 
     </div>
 @endsection

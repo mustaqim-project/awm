@@ -23,7 +23,7 @@ final class SocialSchedulePostTool implements McpToolInterface
 
     public function getDescription(): string
     {
-        return 'Menjadwalkan posting konten promosi ke kanal media sosial (Instagram, TikTok, Facebook Page, X/Twitter).';
+        return 'Menjadwalkan posting konten promosi ke kanal media sosial (Instagram, Facebook Page, TikTok, LinkedIn, Threads, X/Twitter).';
     }
 
     public function getRequiredAbility(): string
@@ -124,8 +124,8 @@ final class SocialSchedulePostTool implements McpToolInterface
         $isDraft = (bool) ($arguments['is_draft'] ?? false) || (($arguments['status'] ?? '') === 'draft');
         $publishNow = (! $isDraft) && (bool) ($arguments['publish_now'] ?? false);
         $scheduledAt = (! empty($arguments['scheduled_at']) && ! $publishNow && ! $isDraft)
-            ? Carbon::parse((string) $arguments['scheduled_at'])
-            : ($isDraft ? null : now()->addMinutes(5));
+            ? Carbon::parse((string) $arguments['scheduled_at'], 'Asia/Jakarta')->setTimezone('Asia/Jakarta')
+            : ($isDraft ? null : now('Asia/Jakarta')->addMinutes(5));
 
         $mediaUrls = (array) ($arguments['media_urls'] ?? []);
         $generatedType = null;
@@ -205,7 +205,7 @@ final class SocialSchedulePostTool implements McpToolInterface
                 'channel_checks'   => $validation,
                 'media_type'       => $mediaType,
                 'media_urls'       => $mediaUrls,
-                'scheduled_at'     => $scheduledAt?->toIso8601String(),
+                'scheduled_at'     => $scheduledAt?->setTimezone('Asia/Jakarta')->toIso8601String(),
                 'preview_caption'  => $caption,
                 'message'          => 'Mode pratinjau (dry run) berhasil! Seluruh validasi kanal, limit teks, dan visual preview telah diuji tanpa menyimpan atau memublikasikan postingan ke akun media sosial.',
             ];
@@ -288,13 +288,13 @@ final class SocialSchedulePostTool implements McpToolInterface
             'post_id'          => $post->id,
             'is_published'     => $post->status === 'published',
             'channels'         => $channels,
-            'scheduled_at'     => $post->scheduled_at?->toIso8601String(),
-            'published_at'     => $post->published_at?->toIso8601String(),
+            'scheduled_at'     => $post->scheduled_at?->setTimezone('Asia/Jakarta')->toIso8601String(),
+            'published_at'     => $post->published_at?->setTimezone('Asia/Jakarta')->toIso8601String(),
             'platform_post_id' => $post->platform_post_id,
             'error_message'    => $post->error_message,
             'message'          => $post->status === 'published'
                 ? 'Konten promosi berhasil diterbitkan langsung ke ' . implode(', ', $channels) . '!'
-                : 'Konten promosi berhasil dijadwalkan ke ' . implode(', ', $channels) . ($post->scheduled_at ? ' untuk tayang pada ' . $post->scheduled_at->format('d M Y H:i') . '.' : ' sebagai draft.'),
+                : 'Konten promosi berhasil dijadwalkan ke ' . implode(', ', $channels) . ($post->scheduled_at ? ' untuk tayang pada ' . $post->scheduled_at->setTimezone('Asia/Jakarta')->format('d M Y H:i') . ' WIB.' : ' sebagai draft.'),
         ];
     }
 }

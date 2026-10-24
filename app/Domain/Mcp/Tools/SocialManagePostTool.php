@@ -24,7 +24,7 @@ final class SocialManagePostTool implements McpToolInterface
 
     public function getDescription(): string
     {
-        return 'Mengelola postingan konten media sosial: melihat daftar postingan (list), cek status & hasil publikasi (get), buat/jadwalkan postingan (create), edit postingan lama (update), hapus/batalkan postingan (delete), dan terbitkan seketika (publish_now) ke Instagram, Facebook Page, TikTok, dan X/Twitter.';
+        return 'Mengelola postingan konten media sosial: melihat daftar postingan (list), cek status & hasil publikasi (get), buat/jadwalkan postingan (create), edit postingan lama (update), hapus/batalkan postingan (delete), dan terbitkan seketika (publish_now) ke Instagram, Facebook Page, TikTok, LinkedIn, Threads, dan X/Twitter.';
     }
 
     public function getRequiredAbility(): string
@@ -237,16 +237,16 @@ final class SocialManagePostTool implements McpToolInterface
             'caption'          => $post->content,
             'media_type'       => $post->media_type,
             'media_urls'       => $post->media_urls ?? [],
-            'scheduled_at'     => $post->scheduled_at?->toIso8601String(),
-            'published_at'     => $post->published_at?->toIso8601String(),
+            'scheduled_at'     => $post->scheduled_at?->setTimezone('Asia/Jakarta')->toIso8601String(),
+            'published_at'     => $post->published_at?->setTimezone('Asia/Jakarta')->toIso8601String(),
             'platform_post_id' => $post->platform_post_id,
             'error_message'    => $post->error_message,
             'metrics'          => $post->metrics ?? [],
             'targets'          => $targets,
             'management_url'   => url('/social-media/posts/' . $post->id),
             'message'          => match ($post->status) {
-                'published'  => "Postingan telah berhasil terbit di {$post->platform} pada " . ($post->published_at?->format('d M Y H:i') ?? '-'),
-                'scheduled'  => "Postingan dijadwalkan untuk tayang pada " . ($post->scheduled_at?->format('d M Y H:i') ?? '-'),
+                'published'  => "Postingan telah berhasil terbit di {$post->platform} pada " . ($post->published_at?->setTimezone('Asia/Jakarta')->format('d M Y H:i') ?? '-') . ' WIB',
+                'scheduled'  => "Postingan dijadwalkan untuk tayang pada " . ($post->scheduled_at?->setTimezone('Asia/Jakarta')->format('d M Y H:i') ?? '-') . ' WIB',
                 'publishing' => 'Postingan sedang dalam antrean pengiriman ke platform media sosial.',
                 'failed'     => 'Publikasi gagal: ' . ($post->error_message ?: 'Terjadi kendala pada akun kanal media sosial.'),
                 default      => 'Status postingan: ' . $post->status,
@@ -272,8 +272,8 @@ final class SocialManagePostTool implements McpToolInterface
         $isDraft = (bool) ($args['is_draft'] ?? false) || (($args['status'] ?? '') === 'draft');
         $publishNow = (! $isDraft) && (bool) ($args['publish_now'] ?? false);
         $scheduledAt = (! empty($args['scheduled_at']) && ! $publishNow && ! $isDraft)
-            ? Carbon::parse((string) $args['scheduled_at'])
-            : ($isDraft ? null : now());
+            ? Carbon::parse((string) $args['scheduled_at'], 'Asia/Jakarta')->setTimezone('Asia/Jakarta')
+            : ($isDraft ? null : now('Asia/Jakarta')->addMinutes(5));
 
         $mediaUrls = (array) ($args['media_urls'] ?? []);
 
@@ -352,7 +352,7 @@ final class SocialManagePostTool implements McpToolInterface
                 'channel_checks'   => $validation,
                 'media_type'       => $mediaType,
                 'media_urls'       => $mediaUrls,
-                'scheduled_at'     => $scheduledAt?->toIso8601String(),
+                'scheduled_at'     => $scheduledAt?->setTimezone('Asia/Jakarta')->toIso8601String(),
                 'preview_caption'  => $caption,
                 'message'          => 'Mode pratinjau (dry run) berhasil! Seluruh validasi kanal, limit teks, dan visual preview telah diuji tanpa menyimpan atau memublikasikan postingan ke akun media sosial.',
             ];
@@ -432,14 +432,14 @@ final class SocialManagePostTool implements McpToolInterface
             'status'           => $post->status,
             'is_published'     => $post->status === 'published',
             'channels'         => $channels,
-            'scheduled_at'     => $post->scheduled_at?->toIso8601String(),
-            'published_at'     => $post->published_at?->toIso8601String(),
+            'scheduled_at'     => $post->scheduled_at?->setTimezone('Asia/Jakarta')->toIso8601String(),
+            'published_at'     => $post->published_at?->setTimezone('Asia/Jakarta')->toIso8601String(),
             'platform_post_id' => $post->platform_post_id,
             'error_message'    => $post->error_message,
             'management_url'   => url('/social-media/posts/' . $post->id),
             'message'          => $post->status === 'published'
                 ? "Konten berhasil diterbitkan langsung ke " . implode(', ', $channels) . "!"
-                : "Konten berhasil dijadwalkan ke " . implode(', ', $channels) . ($post->scheduled_at ? ' untuk tayang pada ' . $post->scheduled_at->format('d M Y H:i') . '.' : ' sebagai draft.'),
+                : "Konten berhasil dijadwalkan ke " . implode(', ', $channels) . ($post->scheduled_at ? ' untuk tayang pada ' . $post->scheduled_at->setTimezone('Asia/Jakarta')->format('d M Y H:i') . ' WIB.' : ' sebagai draft.'),
         ];
     }
 
@@ -468,7 +468,22 @@ final class SocialManagePostTool implements McpToolInterface
         }
 
         if (! empty($args['scheduled_at'])) {
-            $updates['scheduled_at'] = Carbon::parse((string) $args['scheduled_at']);
+            $parsedSched = Carbon::parse((string) $args['scheduled_at'], 'Asia/Jakarta')->setTimezone('Asia/Jakarta');
+            $updates['scheduled_at'] = $parsedSched;
+            if ($post->status === 'draft' && empty($args['is_draft']) && ($args['status'] ?? '') !== 'draft') {
+                $updates['status'] = 'scheduled';
+                $updates['approval_status'] = 'approved';
+            }
+        }
+
+        if (! empty($args['status'])) {
+            $statusVal = trim((string) $args['status']);
+            if (in_array($statusVal, ['draft', 'scheduled', 'pending', 'publishing'], true)) {
+                $updates['status'] = $statusVal;
+                if ($statusVal === 'scheduled') {
+                    $updates['approval_status'] = 'approved';
+                }
+            }
         }
 
         if (isset($args['media_urls'])) {
@@ -478,8 +493,10 @@ final class SocialManagePostTool implements McpToolInterface
         }
 
         if (! empty($args['channels'])) {
-            $channels = (array) $args['channels'];
-            $updates['platform'] = $channels[0] ?? $post->platform;
+            $channels = array_values(array_filter(array_map('strtolower', (array) $args['channels'])));
+            if (! empty($channels)) {
+                $updates['platform'] = $channels[0];
+            }
         }
 
         if (! empty($updates)) {
@@ -495,14 +512,60 @@ final class SocialManagePostTool implements McpToolInterface
             ]);
         }
 
+        // Sinkronisasi target channels
+        $accounts = SocialMediaAccount::where('business_id', $business->id)->get();
+        $primaryAccount = $accounts->first();
+
+        if (! empty($args['channels'])) {
+            $channels = array_values(array_filter(array_map('strtolower', (array) $args['channels'])));
+            // Hapus target lama yang tidak ada di daftar channel baru
+            $post->targets()->whereNotIn('channel', $channels)->delete();
+
+            foreach ($channels as $ch) {
+                $targetAcc = $accounts->first(fn ($a) => strtolower($a->platform ?? '') === $ch);
+                $existingTarget = $post->targets()->where('channel', $ch)->first();
+
+                if ($existingTarget) {
+                    $targetUpdate = [
+                        'status'         => $post->status,
+                        'scheduled_at'   => $post->scheduled_at,
+                    ];
+                    if (! empty($args['caption'])) {
+                        $targetUpdate['custom_caption'] = trim((string) $args['caption']);
+                    }
+                    if ($targetAcc) {
+                        $targetUpdate['social_media_account_id'] = $targetAcc->id;
+                    }
+                    $existingTarget->update($targetUpdate);
+                } else {
+                    SocialPostTarget::create([
+                        'social_media_post_id'    => $post->id,
+                        'social_media_account_id' => $targetAcc?->id ?? $primaryAccount?->id,
+                        'provider'                => $ch,
+                        'channel'                 => $ch,
+                        'content_type'            => $post->media_type ?? 'text',
+                        'custom_caption'          => $post->content,
+                        'status'                  => $post->status,
+                        'scheduled_at'            => $post->scheduled_at,
+                    ]);
+                }
+            }
+        } else {
+            $targetUpdates = ['status' => $post->status, 'scheduled_at' => $post->scheduled_at];
+            if (! empty($args['caption'])) {
+                $targetUpdates['custom_caption'] = trim((string) $args['caption']);
+            }
+            $post->targets()->update($targetUpdates);
+        }
+
         return [
             'success'        => true,
             'post_id'        => (string) $post->id,
             'status'         => $post->status,
             'caption'        => $post->content,
             'media_urls'     => $post->media_urls ?? [],
-            'scheduled_at'   => $post->scheduled_at?->toIso8601String(),
-            'message'        => "Postingan '{$post->id}' berhasil diperbarui.",
+            'scheduled_at'   => $post->scheduled_at?->setTimezone('Asia/Jakarta')->toIso8601String(),
+            'message'        => "Postingan '{$post->id}' berhasil diperbarui ke status '{$post->status}'." . ($post->scheduled_at ? ' Jadwal tayang: ' . $post->scheduled_at->setTimezone('Asia/Jakarta')->format('d M Y H:i') . ' WIB.' : ''),
             'management_url' => url('/social-media/posts/' . $post->id),
         ];
     }

@@ -233,7 +233,7 @@ final class PosFinanceWebController extends Controller
     {
         $business = Context::requireBusiness();
         abort_unless($expense->business_id === $business->id, 403);
-        abort_unless(Context::hasPermission('expenses.manage') || Context::hasPermission('finance.view'), 403);
+        abort_unless(Context::hasPermission('expenses.manage') || Context::hasPermission('finance.view') || Context::hasPermission('expenses.view'), 403);
 
         $path = $expense->receipt_image_path;
         abort_unless($path && Storage::disk('local')->exists($path), 404);

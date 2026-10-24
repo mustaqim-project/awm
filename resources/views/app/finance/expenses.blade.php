@@ -186,7 +186,6 @@
                                     </div>
                                 </td>
                                 <td data-sort-value="{{ strtolower($ex->category . ' ' . $ex->description) }}" class="px-4 py-3.5">
-                                    @php
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#FF9500]/12 text-[#B25E00] dark:text-[#FF9F0A]">
                                         {{ __('finance.categories.' . $ex->category) !== 'finance.categories.' . $ex->category ? __('finance.categories.' . $ex->category) : $ex->category }}
                                     </span>
@@ -327,6 +326,7 @@
         {{-- ========================================================== --}}
         {{-- MODAL - CATAT BIAYA (BENTO APPLE HIG v2.0 XXL CANVAS)      --}}
         {{-- ========================================================== --}}
+        @if (\App\Support\Context::hasPermission('expenses.manage'))
         <template x-teleport="body">
             <div x-show="showCreateModal" x-cloak
                 class="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md"
@@ -718,6 +718,7 @@
             </div>
         </div>
     </template>
+    @endif
 
     </div>
 @endsection

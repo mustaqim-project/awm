@@ -14,11 +14,13 @@
                 <i data-lucide="landmark" class="w-4 h-4 text-[#007AFF]"></i>
                 <span>{{ __('finance.cash_bank_page_title') }}</span>
             </a>
-            <button type="button" @click="uploadModalOpen = true"
-                class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shadow-[0_2px_8px_rgba(0,122,255,0.35)]">
-                <i data-lucide="upload" class="w-4 h-4"></i>
-                <span>{{ __('finance.btn_upload_statement') }}</span>
-            </button>
+            @if (\App\Support\Context::hasPermission('accounting.manage'))
+                <button type="button" @click="uploadModalOpen = true"
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shadow-[0_2px_8px_rgba(0,122,255,0.35)]">
+                    <i data-lucide="upload" class="w-4 h-4"></i>
+                    <span>{{ __('finance.btn_upload_statement') }}</span>
+                </button>
+            @endif
         </x-module-header>
 
         {{-- ========================================================== --}}
@@ -154,21 +156,25 @@
                                             @endif
                                         </td>
                                         <td class="px-4 sm:px-5 py-3.5 text-right">
-                                            @if($line->status === 'reconciled')
-                                                <form method="POST" action="{{ route('finance.reconciliations.unmatch', $line) }}" class="inline">
-                                                    @csrf
-                                                    <button type="submit" class="h-9 px-3.5 rounded-[10px] text-[12.5px] font-medium text-black/60 dark:text-white/60 bg-black/[0.04] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-colors">
-                                                        {{ __('finance.btn_unmatch') }}
-                                                    </button>
-                                                </form>
+                                            @if (\App\Support\Context::hasPermission('accounting.manage'))
+                                                @if($line->status === 'reconciled')
+                                                    <form method="POST" action="{{ route('finance.reconciliations.unmatch', $line) }}" class="inline">
+                                                        @csrf
+                                                        <button type="submit" class="h-9 px-3.5 rounded-[10px] text-[12.5px] font-medium text-black/60 dark:text-white/60 bg-black/[0.04] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-colors">
+                                                            {{ __('finance.btn_unmatch') }}
+                                                        </button>
+                                                    </form>
+                                                @else
+                                                    <form method="POST" action="{{ route('finance.reconciliations.match', $line) }}" class="inline">
+                                                        @csrf
+                                                        <button type="submit" class="h-9 px-4 rounded-[10px] text-[12.5px] font-semibold text-white bg-[#34C759] hover:bg-[#2FB34F] active:scale-[0.98] transition-all shadow-[0_2px_6px_rgba(52,199,89,0.3)] inline-flex items-center gap-1.5">
+                                                            <i data-lucide="check" class="w-4 h-4"></i>
+                                                            <span>{{ __('finance.btn_match') }}</span>
+                                                        </button>
+                                                    </form>
+                                                @endif
                                             @else
-                                                <form method="POST" action="{{ route('finance.reconciliations.match', $line) }}" class="inline">
-                                                    @csrf
-                                                    <button type="submit" class="h-9 px-4 rounded-[10px] text-[12.5px] font-semibold text-white bg-[#34C759] hover:bg-[#2FB34F] active:scale-[0.98] transition-all shadow-[0_2px_6px_rgba(52,199,89,0.3)] inline-flex items-center gap-1.5">
-                                                        <i data-lucide="check" class="w-4 h-4"></i>
-                                                        <span>{{ __('finance.btn_match') }}</span>
-                                                    </button>
-                                                </form>
+                                                <span class="text-xs text-black/30 dark:text-white/30">—</span>
                                             @endif
                                         </td>
                                     </tr>
@@ -190,6 +196,7 @@
         {{-- ========================================================== --}}
         {{-- MODAL UPLOAD BANK STATEMENT (BENTO APPLE HIG XXL SHEET)    --}}
         {{-- ========================================================== --}}
+        @if (\App\Support\Context::hasPermission('accounting.manage'))
         <template x-teleport="body">
             <div x-show="uploadModalOpen" x-cloak
                 class="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md"
@@ -270,6 +277,7 @@
                 </div>
             </div>
         </template>
+        @endif
 
     </div>
 @endsection

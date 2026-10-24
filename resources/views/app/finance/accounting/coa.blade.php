@@ -146,17 +146,19 @@
                 <i data-lucide="download" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
                 <span>{{ __('finance.btn_export_excel') }}</span>
             </a>
-            <button type="button" @click="showImportModal = true"
-                class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
-                title="{{ __('finance.tooltip_import_coa_excel') }}">
-                <i data-lucide="upload" class="w-4 h-4 text-[#007AFF]"></i>
-                <span>{{ __('finance.btn_import_excel') }}</span>
-            </button>
-            <button type="button" @click="createModalOpen = true"
-                class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shadow-[0_2px_8px_rgba(0,122,255,0.35)]">
-                <i data-lucide="plus-circle" class="w-4 h-4"></i>
-                <span>{{ __('finance.btn_add_sub_account') }}</span>
-            </button>
+            @if(\App\Support\Context::hasPermission('accounting.manage'))
+                <button type="button" @click="showImportModal = true"
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                    title="{{ __('finance.tooltip_import_coa_excel') }}">
+                    <i data-lucide="upload" class="w-4 h-4 text-[#007AFF]"></i>
+                    <span>{{ __('finance.btn_import_excel') }}</span>
+                </button>
+                <button type="button" @click="createModalOpen = true"
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shadow-[0_2px_8px_rgba(0,122,255,0.35)]">
+                    <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                    <span>{{ __('finance.btn_add_sub_account') }}</span>
+                </button>
+            @endif
         </x-module-header>
 
         {{-- ========================================================== --}}
@@ -331,28 +333,30 @@
                                             class="w-9 h-9 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-[#007AFF]/12 hover:text-[#007AFF] text-black/60 dark:text-white/60 flex items-center justify-center transition-colors">
                                             <i data-lucide="book-open" class="w-4 h-4"></i>
                                         </a>
-                                        <button type="button"
-                                            @click="openEdit({
-                                                id: '{{ $acc->id }}',
-                                                code: '{{ $acc->code }}',
-                                                name: '{{ addslashes($acc->name) }}',
-                                                type: '{{ $acc->type }}',
-                                                normal_balance: '{{ $acc->normal_balance }}',
-                                                parent_id: '{{ $acc->parent_id ?? '' }}',
-                                                is_active: {{ $acc->is_active ? 'true' : 'false' }},
-                                                is_system: {{ $acc->is_system ? 'true' : 'false' }}
-                                            })"
-                                            title="{{ __('finance.tooltip_edit_account') }}"
-                                            class="w-9 h-9 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black/60 dark:text-white/60 flex items-center justify-center transition-colors">
-                                            <i data-lucide="pencil" class="w-4 h-4"></i>
-                                        </button>
-                                        @if($acc->canBeDeleted())
+                                        @if(\App\Support\Context::hasPermission('accounting.manage'))
                                             <button type="button"
-                                                @click="confirmDelete({ id: '{{ $acc->id }}', code: '{{ $acc->code }}', name: '{{ addslashes($acc->name) }}' }, '{{ route('finance.coa.destroy', $acc) }}')"
-                                                title="{{ __('finance.tooltip_delete_sub_account') }}"
-                                                class="w-9 h-9 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-[#FF3B30]/15 hover:text-[#FF3B30] text-black/45 dark:text-white/45 flex items-center justify-center transition-colors">
-                                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                                @click="openEdit({
+                                                    id: '{{ $acc->id }}',
+                                                    code: '{{ $acc->code }}',
+                                                    name: '{{ addslashes($acc->name) }}',
+                                                    type: '{{ $acc->type }}',
+                                                    normal_balance: '{{ $acc->normal_balance }}',
+                                                    parent_id: '{{ $acc->parent_id ?? '' }}',
+                                                    is_active: {{ $acc->is_active ? 'true' : 'false' }},
+                                                    is_system: {{ $acc->is_system ? 'true' : 'false' }}
+                                                })"
+                                                title="{{ __('finance.tooltip_edit_account') }}"
+                                                class="w-9 h-9 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black/60 dark:text-white/60 flex items-center justify-center transition-colors">
+                                                <i data-lucide="pencil" class="w-4 h-4"></i>
                                             </button>
+                                            @if($acc->canBeDeleted())
+                                                <button type="button"
+                                                    @click="confirmDelete({ id: '{{ $acc->id }}', code: '{{ $acc->code }}', name: '{{ addslashes($acc->name) }}' }, '{{ route('finance.coa.destroy', $acc) }}')"
+                                                    title="{{ __('finance.tooltip_delete_sub_account') }}"
+                                                    class="w-9 h-9 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-[#FF3B30]/15 hover:text-[#FF3B30] text-black/45 dark:text-white/45 flex items-center justify-center transition-colors">
+                                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                                </button>
+                                            @endif
                                         @endif
                                     </div>
                                 </td>
@@ -372,6 +376,7 @@
         {{-- ========================================================== --}}
         {{-- MODAL CREATE SUB-ACCOUNT (BENTO APPLE HIG XXL SHEET)       --}}
         {{-- ========================================================== --}}
+        @if(\App\Support\Context::hasPermission('accounting.manage'))
         <template x-teleport="body">
             <div x-show="createModalOpen" x-cloak
                 class="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md"
@@ -779,6 +784,7 @@
             </div>
         </div>
     </template>
+    @endif
 
     </div>
 @endsection
