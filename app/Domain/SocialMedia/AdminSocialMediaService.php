@@ -424,7 +424,7 @@ class AdminSocialMediaService
                         ->first();
                 }
 
-                if ($account && $account->isConnected()) {
+                if ($account && ($account->isConnected() || ! empty($account->access_token))) {
                     $target->update(['social_media_account_id' => $account->id]);
                     $res = $linkedInProvider->publish($account, $target, $mediaUrls);
                     $platformPostId = (string) ($res['id'] ?? '');
@@ -449,7 +449,7 @@ class AdminSocialMediaService
                         ->first();
                 }
 
-                if ($account && $account->isConnected()) {
+                if ($account && ($account->isConnected() || ! empty($account->access_token))) {
                     $target->update(['social_media_account_id' => $account->id]);
                     $res = $tikTokProvider->publish($account, $target, $mediaUrls);
                     $platformPostId = (string) ($res['id'] ?? '');

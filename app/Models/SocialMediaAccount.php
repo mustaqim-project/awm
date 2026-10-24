@@ -178,6 +178,10 @@ class SocialMediaAccount extends Model
             return false;
         }
 
+        if (empty($this->access_token)) {
+            return false;
+        }
+
         if ($this->token_expires_at !== null && $this->token_expires_at->isPast()) {
             if (! empty($this->refresh_token)) {
                 if ($this->refresh_token_expires_at === null || $this->refresh_token_expires_at->isFuture()) {
@@ -185,7 +189,8 @@ class SocialMediaAccount extends Model
                 }
             }
 
-            return false;
+            // If status is active and access_token is present, allow provider to attempt publish/refresh
+            return true;
         }
 
         return true;
