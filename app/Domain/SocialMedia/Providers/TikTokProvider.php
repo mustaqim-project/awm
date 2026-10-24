@@ -154,11 +154,14 @@ class TikTokProvider implements SocialMediaProviderInterface
                             if ($src) {
                                 $w = imagesx($src);
                                 $h = imagesy($src);
-                                $bg = imagecreatetruecolor($w, $h);
+                                $scale = ($w > 1080 || $h > 1080) ? min(1080 / $w, 1080 / $h) : 1.0;
+                                $newW = (int) round($w * $scale);
+                                $newH = (int) round($h * $scale);
+                                $bg = imagecreatetruecolor($newW, $newH);
                                 $white = imagecolorallocate($bg, 255, 255, 255);
-                                imagefilledrectangle($bg, 0, 0, $w, $h, $white);
-                                imagecopy($bg, $src, 0, 0, 0, 0, $w, $h);
-                                imagejpeg($bg, $localJpg, 95);
+                                imagefilledrectangle($bg, 0, 0, $newW, $newH, $white);
+                                imagecopyresampled($bg, $src, 0, 0, 0, 0, $newW, $newH, $w, $h);
+                                imagejpeg($bg, $localJpg, 92);
                                 imagedestroy($src);
                                 imagedestroy($bg);
                                 $url = $jpgUrl;
@@ -167,6 +170,28 @@ class TikTokProvider implements SocialMediaProviderInterface
                             $url = $jpgUrl;
                         }
                     }
+
+                    // Enforce max 1080px dimension boundary on local JPG to prevent picture_size_check_failed
+                    $parsedPath = parse_url($url, PHP_URL_PATH);
+                    $localJpg = public_path(ltrim((string) $parsedPath, '/'));
+                    if (file_exists($localJpg) && function_exists('imagecreatefromjpeg') && function_exists('imagejpeg')) {
+                        [$w, $h] = @getimagesize($localJpg) ?: [0, 0];
+                        if ($w > 1080 || $h > 1080) {
+                            $scale = min(1080 / $w, 1080 / $h);
+                            $newW = (int) round($w * $scale);
+                            $newH = (int) round($h * $scale);
+                            $src = @imagecreatefromjpeg($localJpg);
+                            if ($src) {
+                                $dst = imagecreatetruecolor($newW, $newH);
+                                imagecopyresampled($dst, $src, 0, 0, 0, 0, $newW, $newH, $w, $h);
+                                imagejpeg($dst, $localJpg, 92);
+                                imagedestroy($src);
+                                imagedestroy($dst);
+                                Log::info("[TikTokProvider] Auto-downscaled image {$localJpg} from {$w}x{$h} to {$newW}x{$newH}");
+                            }
+                        }
+                    }
+
                     $imageUrls[] = $url;
                 }
             }
@@ -180,13 +205,21 @@ class TikTokProvider implements SocialMediaProviderInterface
                 $initData = $this->client->publishPhoto($account->access_token, $caption, $imageUrls, $publishOptions);
             } catch (\Throwable $e) {
                 if (str_contains($e->getMessage(), 'unaudited_client_can_only_post_to_private_accounts')) {
-                    Log::warning("[TikTokProvider] Direct Photo Post restricted by unaudited TikTok client policy. Automatically falling back to TikTok Inbox Mode (MEDIA_UPLOAD)...", [
+                    Log::warning("[TikTokProvider] Direct Photo Post restricted by unaudited TikTok client policy. Retrying DIRECT_POST with SELF_ONLY...", [
                         'account_id'   => $account->id,
                         'account_name' => $account->account_name,
                     ]);
-                    $initData = $this->client->publishPhoto($account->access_token, $caption, $imageUrls, array_merge($publishOptions, [
-                        'post_mode' => 'MEDIA_UPLOAD',
-                    ]));
+                    try {
+                        $initData = $this->client->publishPhoto($account->access_token, $caption, $imageUrls, array_merge($publishOptions, [
+                            'privacy_level' => 'SELF_ONLY',
+                            'post_mode'     => 'DIRECT_POST',
+                        ]));
+                    } catch (\Throwable $e2) {
+                        Log::warning("[TikTokProvider] Direct Photo Post with SELF_ONLY also rejected ({$e2->getMessage()}). Falling back to TikTok Inbox Mode (MEDIA_UPLOAD)...");
+                        $initData = $this->client->publishPhoto($account->access_token, $caption, $imageUrls, array_merge($publishOptions, [
+                            'post_mode' => 'MEDIA_UPLOAD',
+                        ]));
+                    }
                 } else {
                     throw $e;
                 }
@@ -223,13 +256,21 @@ class TikTokProvider implements SocialMediaProviderInterface
             $initData = $this->client->publishVideo($account->access_token, $caption, $videoUrl, $publishOptions);
         } catch (\Throwable $e) {
             if (str_contains($e->getMessage(), 'unaudited_client_can_only_post_to_private_accounts')) {
-                Log::warning("[TikTokProvider] Direct Video Post restricted by unaudited TikTok client policy. Automatically falling back to TikTok Inbox Mode (MEDIA_UPLOAD)...", [
+                Log::warning("[TikTokProvider] Direct Video Post restricted by unaudited TikTok client policy. Retrying DIRECT_POST with SELF_ONLY...", [
                     'account_id'   => $account->id,
                     'account_name' => $account->account_name,
                 ]);
-                $initData = $this->client->publishVideo($account->access_token, $caption, $videoUrl, array_merge($publishOptions, [
-                    'post_mode' => 'MEDIA_UPLOAD',
-                ]));
+                try {
+                    $initData = $this->client->publishVideo($account->access_token, $caption, $videoUrl, array_merge($publishOptions, [
+                        'privacy_level' => 'SELF_ONLY',
+                        'post_mode'     => 'DIRECT_POST',
+                    ]));
+                } catch (\Throwable $e2) {
+                    Log::warning("[TikTokProvider] Direct Video Post with SELF_ONLY also rejected ({$e2->getMessage()}). Falling back to TikTok Inbox Mode (MEDIA_UPLOAD)...");
+                    $initData = $this->client->publishVideo($account->access_token, $caption, $videoUrl, array_merge($publishOptions, [
+                        'post_mode' => 'MEDIA_UPLOAD',
+                    ]));
+                }
             } else {
                 throw $e;
             }

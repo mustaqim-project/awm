@@ -107,11 +107,109 @@ Route::prefix('v1')->middleware('throttle:600,1')->group(function (): void {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
+        $artisanOutput = null;
         if ($request->boolean('trigger')) {
             $format = $request->input('format', 'all');
-            \Illuminate\Support\Facades\Artisan::call('social-media:test-upload-suite', [
-                '--format' => $format,
-            ]);
+            $platform = $request->input('platform', 'all');
+            $accountId = $request->input('account_id');
+            $params = [
+                '--format'   => $format,
+                '--platform' => $platform,
+            ];
+            if (! empty($accountId)) {
+                $params['--account-id'] = $accountId;
+            }
+            \Illuminate\Support\Facades\Artisan::call('social-media:test-upload-suite', $params);
+            $artisanOutput = \Illuminate\Support\Facades\Artisan::output();
+        }
+
+        $tiktokDiagnostic = null;
+        $action = $request->input('action');
+        if ($action === 'tiktok_diagnostic') {
+            try {
+                $acc = \App\Models\SocialMediaAccount::where('platform', 'tiktok')
+                    ->when($request->input('account_id'), fn ($q, $id) => $q->where('id', $id))
+                    ->first();
+                if ($acc) {
+                    $provider = app(\App\Domain\SocialMedia\Providers\TikTokProvider::class);
+                    $client = $provider->getClient();
+                    $token = $provider->checkAndRefreshToken($acc);
+                    $creatorInfo = $client->getCreatorInfo($token);
+                    $userInfo = $client->getUserInfo($token);
+                    $tiktokDiagnostic = [
+                        'account_id'       => $acc->id,
+                        'account_name'     => $acc->account_name,
+                        'username'         => $acc->username,
+                        'token_expires_at' => $acc->token_expires_at?->toIso8601String(),
+                        'creator_info'     => $creatorInfo,
+                        'user_info'        => $userInfo,
+                        'client_key'       => substr($client->getClientKey(), 0, 8) . '...',
+                    ];
+                } else {
+                    $tiktokDiagnostic = ['error' => 'No TikTok account found'];
+                }
+            } catch (\Throwable $e) {
+                $tiktokDiagnostic = ['error' => $e->getMessage()];
+            }
+        } elseif ($action === 'tiktok_direct_publish') {
+            try {
+                $acc = \App\Models\SocialMediaAccount::where('platform', 'tiktok')
+                    ->when($request->input('account_id'), fn ($q, $id) => $q->where('id', $id))
+                    ->first();
+                if (! $acc) {
+                    return response()->json(['error' => 'No TikTok account found'], 404);
+                }
+                $provider = app(\App\Domain\SocialMedia\Providers\TikTokProvider::class);
+                $client = $provider->getClient();
+                $token = $provider->checkAndRefreshToken($acc);
+                $type = $request->input('type', 'video');
+                $privacy = $request->input('privacy', 'SELF_ONLY');
+                $postMode = $request->input('post_mode', 'DIRECT_POST');
+
+                $baseUrl = rtrim(config('app.url') ?: 'https://cooca.id', '/');
+                if (! str_starts_with($baseUrl, 'https://')) {
+                    $baseUrl = preg_replace('#^http://#', 'https://', $baseUrl);
+                }
+
+                if ($type === 'video') {
+                    $videoUrl = "{$baseUrl}/konten-video.mp4";
+                    $caption = "Testing TikTok Video Direct Post [Cooca AI - " . date('d/m H:i') . "]";
+                    $init = $client->publishVideo($token, $caption, $videoUrl, [
+                        'privacy_level' => $privacy,
+                        'post_mode'     => $postMode,
+                    ]);
+                    $wait = $client->waitForPublishFinished($token, $init['publish_id'] ?? '');
+                    return response()->json([
+                        'action'      => 'tiktok_direct_publish',
+                        'type'        => 'video',
+                        'post_mode'   => $postMode,
+                        'privacy'     => $privacy,
+                        'init_result' => $init,
+                        'wait_result' => $wait,
+                    ]);
+                } else {
+                    $photoUrls = ["{$baseUrl}/konten-day-1/F1.jpg"];
+                    $caption = "Testing TikTok Photo Direct Post [Cooca AI - " . date('d/m H:i') . "]";
+                    $init = $client->publishPhoto($token, $caption, $photoUrls, [
+                        'privacy_level' => $privacy,
+                        'post_mode'     => $postMode,
+                    ]);
+                    $wait = $client->waitForPublishFinished($token, $init['publish_id'] ?? '');
+                    return response()->json([
+                        'action'      => 'tiktok_direct_publish',
+                        'type'        => 'photo',
+                        'post_mode'   => $postMode,
+                        'privacy'     => $privacy,
+                        'init_result' => $init,
+                        'wait_result' => $wait,
+                    ]);
+                }
+            } catch (\Throwable $e) {
+                return response()->json([
+                    'action' => 'tiktok_direct_publish',
+                    'error'  => $e->getMessage(),
+                ], 500);
+            }
         }
 
         $summaryFile = storage_path('framework/test_upload_suite_result.json');
@@ -125,6 +223,8 @@ Route::prefix('v1')->middleware('throttle:600,1')->group(function (): void {
 
         return response()->json([
             'status'             => 'ok',
+            'artisan_output'     => $artisanOutput,
+            'tiktok_diagnostic'  => $tiktokDiagnostic,
             'summary'            => $summary,
             'recent_log'         => $recentLog,
             'recent_retry_log'   => $recentRetryLog,
