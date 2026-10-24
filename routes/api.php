@@ -242,17 +242,24 @@ Route::prefix('v1')->middleware('throttle:600,1')->group(function (): void {
             ]);
         } elseif ($action === 'admin_publish_tiktok') {
             try {
-                // 1. Ensure TikTok account is marked as platform account
+                // Deactivate known old expired TikTok account so it never gets picked
+                \Illuminate\Support\Facades\DB::table('social_media_accounts')
+                    ->where('id', '022bbb65-b8ee-4688-a3cc-3893e03b9270')
+                    ->update(['status' => 'inactive', 'is_platform' => false]);
+
+                // 1. Ensure active TikTok account is marked as platform account
                 $acc = \App\Models\SocialMediaAccount::where('platform', 'tiktok')
                     ->when($request->input('account_id'), fn ($q, $id) => $q->where('id', $id))
+                    ->where('status', 'active')
+                    ->latest()
                     ->first();
                 if (! $acc) {
-                    return response()->json(['error' => 'No TikTok account found'], 404);
+                    return response()->json(['error' => 'No active TikTok account found'], 404);
                 }
 
                 \Illuminate\Support\Facades\DB::table('social_media_accounts')
                     ->where('id', $acc->id)
-                    ->update(['is_platform' => true]);
+                    ->update(['is_platform' => true, 'status' => 'active']);
 
                 // 2. Resolve Admin user
                 $admin = \App\Models\Admin::first();

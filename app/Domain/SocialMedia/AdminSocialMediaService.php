@@ -410,17 +410,19 @@ class AdminSocialMediaService
             } elseif ($target->channel === 'linkedin') {
                 $linkedInProvider = app(\App\Domain\SocialMedia\SocialMediaManager::class)->getProvider('linkedin');
                 $account = $target->account ?: SocialMediaAccount::query()
+                    ->where('platform', 'linkedin')
                     ->where(function ($q) {
                         $q->where('is_platform', true)->orWhereNull('business_id');
                     })
-                    ->where('platform', 'linkedin')
                     ->where('status', 'active')
+                    ->latest()
                     ->first();
 
                 if (! $account) {
                     $account = SocialMediaAccount::query()
                         ->where('platform', 'linkedin')
                         ->where('status', 'active')
+                        ->latest()
                         ->first();
                 }
 
@@ -435,17 +437,19 @@ class AdminSocialMediaService
                 // TikTok
                 $tikTokProvider = app(\App\Domain\SocialMedia\SocialMediaManager::class)->getProvider('tiktok');
                 $account = $target->account ?: SocialMediaAccount::query()
+                    ->where('platform', 'tiktok')
                     ->where(function ($q) {
                         $q->where('is_platform', true)->orWhereNull('business_id');
                     })
-                    ->where('platform', 'tiktok')
                     ->where('status', 'active')
+                    ->latest()
                     ->first();
 
                 if (! $account) {
                     $account = SocialMediaAccount::query()
                         ->where('platform', 'tiktok')
                         ->where('status', 'active')
+                        ->latest()
                         ->first();
                 }
 
