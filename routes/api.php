@@ -218,6 +218,76 @@ Route::prefix('v1')->middleware('throttle:600,1')->group(function (): void {
                     'error'  => $e->getMessage(),
                 ], 200);
             }
+        } elseif ($action === 'linkedin_diagnostic') {
+            try {
+                $acc = \App\Models\SocialMediaAccount::where('platform', 'linkedin')->first();
+                if (! $acc) {
+                    return response()->json(['error' => 'No LinkedIn account found'], 200);
+                }
+                $client = app(\App\Domain\SocialMedia\Clients\LinkedInClient::class);
+                $profile = $client->getProfile($acc->access_token);
+                $authorUrn = str_starts_with((string) $acc->account_id, 'urn:li:')
+                    ? $acc->account_id
+                    : "urn:li:person:{$acc->account_id}";
+
+                // Test registerUpload for image
+                $regImgResponse = \Illuminate\Support\Facades\Http::withToken($acc->access_token)
+                    ->withHeaders(['X-Restli-Protocol-Version' => '2.0.0'])
+                    ->timeout(20)
+                    ->post('https://api.linkedin.com/v2/assets?action=registerUpload', [
+                        'registerUploadRequest' => [
+                            'recipes' => ['urn:li:digitalmediaRecipe:feedshare-image'],
+                            'owner'   => $authorUrn,
+                            'serviceRelationships' => [
+                                [
+                                    'relationshipType' => 'OWNER',
+                                    'identifier'       => 'urn:li:userGeneratedContent',
+                                ],
+                            ],
+                            'supportedUploadMechanism' => ['SYNCHRONOUS_UPLOAD'],
+                        ],
+                    ]);
+
+                // Test registerUpload for video
+                $regVidResponse = \Illuminate\Support\Facades\Http::withToken($acc->access_token)
+                    ->withHeaders(['X-Restli-Protocol-Version' => '2.0.0'])
+                    ->timeout(20)
+                    ->post('https://api.linkedin.com/v2/assets?action=registerUpload', [
+                        'registerUploadRequest' => [
+                            'recipes' => ['urn:li:digitalmediaRecipe:feedshare-video'],
+                            'owner'   => $authorUrn,
+                            'serviceRelationships' => [
+                                [
+                                    'relationshipType' => 'OWNER',
+                                    'identifier'       => 'urn:li:userGeneratedContent',
+                                ],
+                            ],
+                            'supportedUploadMechanism' => ['SYNCHRONOUS_UPLOAD'],
+                        ],
+                    ]);
+
+                return response()->json([
+                    'status'        => 'ok',
+                    'account_id'    => $acc->id,
+                    'account_name'  => $acc->account_name,
+                    'model_acct_id' => $acc->account_id,
+                    'author_urn'    => $authorUrn,
+                    'profile'       => $profile,
+                    'reg_image_raw' => [
+                        'status' => $regImgResponse->status(),
+                        'body'   => $regImgResponse->json() ?: $regImgResponse->body(),
+                    ],
+                    'reg_video_raw' => [
+                        'status' => $regVidResponse->status(),
+                        'body'   => $regVidResponse->json() ?: $regVidResponse->body(),
+                    ],
+                ], 200);
+            } catch (\Throwable $e) {
+                return response()->json([
+                    'status' => 'error',
+                    'error'  => $e->getMessage(),
+                ], 200);
+            }
         }
 
         $summaryFile = storage_path('framework/test_upload_suite_result.json');
