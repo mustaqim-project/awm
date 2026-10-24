@@ -214,16 +214,6 @@
             <i data-lucide="search" class="w-4 h-4"></i>
         </button>
 
-        @if ($activeBiz)
-            <!-- Active Currency Pill (Desktop xl+) -->
-            <div
-                class="hidden xl:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/[0.03] dark:bg-white/[0.05] border border-black/5 dark:border-white/5 text-[11px] text-black/60 dark:text-white/60">
-                <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]"></span>
-                <span class="tabular-nums font-medium">{{ $activeBiz->currency_code }}
-                    ({{ $activeBiz->currency_symbol }})</span>
-            </div>
-        @endif
-
 
         <!-- Unified System Controls Capsule (Desktop / Tablet sm+) -->
         <div class="hidden sm:flex items-center p-0.5 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/5 gap-0.5">
