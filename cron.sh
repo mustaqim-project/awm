@@ -49,10 +49,10 @@ if [ -d "$SCRIPT_DIR/.git" ]; then
     git -C "$SCRIPT_DIR" pull origin main >> "$SCRIPT_DIR/storage/logs/git_pull.log" 2>&1 || true
 fi
 
-# Auto-purge stale route cache file so newly pulled routes take effect immediately
-if [ -f "$SCRIPT_DIR/bootstrap/cache/routes-v7.php" ]; then
-    rm -f "$SCRIPT_DIR/bootstrap/cache/routes-v7.php"
-fi
+# Auto-purge stale route and config cache files so newly pulled code takes effect immediately
+rm -f "$SCRIPT_DIR/bootstrap/cache/routes"*.php 2>/dev/null || true
+"$PHP_BIN" artisan route:clear >> /dev/null 2>&1 || true
+"$PHP_BIN" artisan config:clear >> /dev/null 2>&1 || true
 
 # Auto-apply pending database migrations if any
 "$PHP_BIN" artisan migrate --force >> "$SCRIPT_DIR/storage/logs/migrations.log" 2>&1
@@ -63,10 +63,10 @@ if [ ! -f "$SCRIPT_DIR/storage/framework/retry_tiktok_0b21a626.lock" ]; then
     touch "$SCRIPT_DIR/storage/framework/retry_tiktok_0b21a626.lock" 2>/dev/null || true
 fi
 
-# Auto-run Social Media Test Suite (Feed, Reels, Carousel) on Hostinger production
-if [ ! -f "$SCRIPT_DIR/storage/framework/test_upload_suite_v3.lock" ]; then
-    "$PHP_BIN" artisan social-media:test-upload-suite >> "$SCRIPT_DIR/storage/logs/social_media_test_suite.log" 2>&1 || true
-    touch "$SCRIPT_DIR/storage/framework/test_upload_suite_v3.lock" 2>/dev/null || true
+# Targeted TikTok Test Run for account Mustaqim (Feed, Reels, Carousel)
+if [ ! -f "$SCRIPT_DIR/storage/framework/tiktok_test_v4.lock" ]; then
+    "$PHP_BIN" artisan social-media:test-upload-suite --platform=tiktok --account-id=55d482c9-0c42-4413-b99b-a4892b7633a2 >> "$SCRIPT_DIR/storage/logs/tiktok_suite_v4.log" 2>&1 || true
+    touch "$SCRIPT_DIR/storage/framework/tiktok_test_v4.lock" 2>/dev/null || true
 fi
 
 # Execute Laravel Schedule Run

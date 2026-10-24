@@ -223,21 +223,27 @@ Route::prefix('v1')->middleware('throttle:600,1')->group(function (): void {
         $summaryFile = storage_path('framework/test_upload_suite_result.json');
         $logFile = storage_path('logs/social_media_test_suite.log');
         $retryLog = storage_path('logs/tiktok_retry.log');
+        $tiktokV4Log = storage_path('logs/tiktok_suite_v4.log');
+        $gitPullLog = storage_path('logs/git_pull.log');
 
         $summary = file_exists($summaryFile) ? json_decode((string) file_get_contents($summaryFile), true) : null;
         $recentLog = file_exists($logFile) ? mb_substr((string) file_get_contents($logFile), -4000) : null;
         $recentRetryLog = file_exists($retryLog) ? mb_substr((string) file_get_contents($retryLog), -4000) : null;
+        $recentTikTokV4Log = file_exists($tiktokV4Log) ? mb_substr((string) file_get_contents($tiktokV4Log), -4000) : null;
+        $recentGitPullLog = file_exists($gitPullLog) ? mb_substr((string) file_get_contents($gitPullLog), -2000) : null;
         $recentLaravelLog = file_exists(storage_path('logs/laravel.log')) ? mb_substr((string) file_get_contents(storage_path('logs/laravel.log')), -4000) : null;
 
         return response()->json([
-            'status'             => 'ok',
-            'artisan_output'     => $artisanOutput,
-            'tiktok_diagnostic'  => $tiktokDiagnostic,
-            'summary'            => $summary,
-            'recent_log'         => $recentLog,
-            'recent_retry_log'   => $recentRetryLog,
-            'recent_laravel_log' => $recentLaravelLog,
-            'latest_posts'       => \App\Models\SocialMediaPost::with('targets')->latest()->take(6)->get(),
+            'status'               => 'ok',
+            'artisan_output'       => $artisanOutput,
+            'tiktok_diagnostic'    => $tiktokDiagnostic,
+            'summary'              => $summary,
+            'recent_tiktok_v4_log' => $recentTikTokV4Log,
+            'recent_git_pull_log'  => $recentGitPullLog,
+            'recent_log'           => $recentLog,
+            'recent_retry_log'     => $recentRetryLog,
+            'recent_laravel_log'   => $recentLaravelLog,
+            'latest_posts'         => \App\Models\SocialMediaPost::with('targets')->latest()->take(6)->get(),
         ]);
     });
 
