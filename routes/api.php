@@ -219,7 +219,7 @@ Route::prefix('v1')->middleware('throttle:600,1')->group(function (): void {
                 ], 200);
             }
         } elseif ($action === 'inspect_tiktok_raw') {
-            $row = \Illuminate\Support\Facades\DB::table('social_media_accounts')->where('platform', 'tiktok')->first();
+            $row = \Illuminate\Support\Facades\DB::table('social_media_accounts')->where('platform', 'tiktok')->where('status', 'active')->first();
             $rawAt = (string) ($row->access_token ?? '');
             $rawRt = (string) ($row->refresh_token ?? '');
             $decryptedAt = null;
@@ -229,16 +229,29 @@ Route::prefix('v1')->middleware('throttle:600,1')->group(function (): void {
             } catch (\Throwable $e) {
                 $decryptError = $e->getMessage();
             }
+
+            $key = (string) \App\Models\SystemSetting::get('tiktok_client_key', '');
+            $secret = (string) \App\Models\SystemSetting::get('tiktok_client_secret', '');
+            $apiUrl = (string) \App\Models\SystemSetting::get('tiktok_api_url', '');
+            $authUrl = (string) \App\Models\SystemSetting::get('tiktok_auth_url', '');
+
             return response()->json([
                 'id'                  => $row->id ?? null,
                 'account_name'        => $row->account_name ?? null,
+                'status'              => $row->status ?? null,
+                'is_platform'         => (bool) ($row->is_platform ?? false),
                 'token_expires_at'    => $row->token_expires_at ?? null,
-                'raw_at_prefix'       => substr($rawAt, 0, 20),
                 'raw_at_len'          => strlen($rawAt),
                 'decrypt_error'       => $decryptError,
                 'decrypted_at_prefix' => $decryptedAt ? substr($decryptedAt, 0, 10) : null,
-                'raw_rt_len'          => strlen($rawRt),
-                'raw_rt_prefix'       => substr($rawRt, 0, 20),
+                'system_settings'     => [
+                    'tiktok_client_key'          => $key,
+                    'has_tiktok_client_secret'   => ! empty($secret),
+                    'tiktok_client_secret_len'   => strlen($secret),
+                    'tiktok_client_secret_start' => substr($secret, 0, 4) . '...',
+                    'tiktok_api_url'             => $apiUrl,
+                    'tiktok_auth_url'            => $authUrl,
+                ],
             ]);
         } elseif ($action === 'admin_publish_tiktok') {
             try {
