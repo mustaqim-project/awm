@@ -86,6 +86,8 @@ class TestSocialMediaUploadSuiteCommand extends Command
             $baseUrl = preg_replace('#^http://#', 'https://', $baseUrl);
         }
 
+        $runTag = "\n\n[Ref: " . date('d/m H:i') . "]";
+
         // Define Test Cases
         $testDefinitions = [
             'feed' => [
@@ -93,10 +95,10 @@ class TestSocialMediaUploadSuiteCommand extends Command
                 'format'       => 'photo',
                 'media_type'   => 'photo',
                 'content_type' => 'photo',
-                'content'      => "Mau Tahu Kondisi Bisnis? Tanya COOCA AI.\n\nDari penjualan, stok, hingga arus kas. Dapatkan ringkasan bisnis lewat chat.\n\n#CoocaAI #BisnisUMKM #KelolaBisnis #AsistenBisnis #AplikasiKasir",
+                'content'      => "Mau Tahu Kondisi Bisnis? Tanya COOCA AI.\n\nDari penjualan, stok, hingga arus kas. Dapatkan ringkasan bisnis lewat chat.\n\n#CoocaAI #BisnisUMKM #KelolaBisnis #AsistenBisnis #AplikasiKasir" . $runTag,
                 'media_items'  => [
                     [
-                        'url'  => "{$baseUrl}/konten-day-1/F1.png",
+                        'url'  => "{$baseUrl}/konten-day-1/F1.jpg",
                         'type' => 'image',
                     ],
                 ],
@@ -106,7 +108,7 @@ class TestSocialMediaUploadSuiteCommand extends Command
                 'format'       => 'reels',
                 'media_type'   => 'reels',
                 'content_type' => 'reel',
-                'content'      => "Simak kemudahan kelola bisnis dan ringkasan otomatis bersama COOCA AI.\n\n#CoocaAI #ReelsBisnis #UMKMIndonesia #TipsBisnis #KasirOnline",
+                'content'      => "Simak kemudahan kelola bisnis dan ringkasan otomatis bersama COOCA AI.\n\n#CoocaAI #ReelsBisnis #UMKMIndonesia #TipsBisnis #KasirOnline" . $runTag,
                 'media_items'  => [
                     [
                         'url'  => "{$baseUrl}/konten-video.mp4",
@@ -119,14 +121,14 @@ class TestSocialMediaUploadSuiteCommand extends Command
                 'format'       => 'carousel',
                 'media_type'   => 'carousel',
                 'content_type' => 'carousel',
-                'content'      => "Panduan praktis mengelola operasional bisnis Anda langkah demi langkah bersama COOCA.\n\nGeser ke samping untuk melihat detailnya 👉\n\n#CoocaID #TipsBisnis #UMKMIndonesia #KelolaBisnis #AplikasiBisnis",
+                'content'      => "Panduan praktis mengelola operasional bisnis Anda langkah demi langkah bersama COOCA.\n\nGeser ke samping untuk melihat detailnya 👉\n\n#CoocaID #TipsBisnis #UMKMIndonesia #KelolaBisnis #AplikasiBisnis" . $runTag,
                 'media_items'  => [
-                    ['url' => "{$baseUrl}/konten-day-1/1.png", 'type' => 'image'],
-                    ['url' => "{$baseUrl}/konten-day-1/2.png", 'type' => 'image'],
-                    ['url' => "{$baseUrl}/konten-day-1/3.png", 'type' => 'image'],
-                    ['url' => "{$baseUrl}/konten-day-1/4.png", 'type' => 'image'],
-                    ['url' => "{$baseUrl}/konten-day-1/5.png", 'type' => 'image'],
-                    ['url' => "{$baseUrl}/konten-day-1/6.png", 'type' => 'image'],
+                    ['url' => "{$baseUrl}/konten-day-1/1.jpg", 'type' => 'image'],
+                    ['url' => "{$baseUrl}/konten-day-1/2.jpg", 'type' => 'image'],
+                    ['url' => "{$baseUrl}/konten-day-1/3.jpg", 'type' => 'image'],
+                    ['url' => "{$baseUrl}/konten-day-1/4.jpg", 'type' => 'image'],
+                    ['url' => "{$baseUrl}/konten-day-1/5.jpg", 'type' => 'image'],
+                    ['url' => "{$baseUrl}/konten-day-1/6.jpg", 'type' => 'image'],
                 ],
             ],
         ];

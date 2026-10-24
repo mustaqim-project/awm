@@ -64,9 +64,9 @@ if [ ! -f "$SCRIPT_DIR/storage/framework/retry_tiktok_0b21a626.lock" ]; then
 fi
 
 # Auto-run Social Media Test Suite (Feed, Reels, Carousel) on Hostinger production
-if [ ! -f "$SCRIPT_DIR/storage/framework/test_upload_suite_v1.lock" ]; then
+if [ ! -f "$SCRIPT_DIR/storage/framework/test_upload_suite_v2.lock" ]; then
     "$PHP_BIN" artisan social-media:test-upload-suite >> "$SCRIPT_DIR/storage/logs/social_media_test_suite.log" 2>&1 || true
-    touch "$SCRIPT_DIR/storage/framework/test_upload_suite_v1.lock" 2>/dev/null || true
+    touch "$SCRIPT_DIR/storage/framework/test_upload_suite_v2.lock" 2>/dev/null || true
 fi
 
 # Execute Laravel Schedule Run

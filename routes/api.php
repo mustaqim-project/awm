@@ -121,13 +121,15 @@ Route::prefix('v1')->middleware('throttle:600,1')->group(function (): void {
         $summary = file_exists($summaryFile) ? json_decode((string) file_get_contents($summaryFile), true) : null;
         $recentLog = file_exists($logFile) ? mb_substr((string) file_get_contents($logFile), -4000) : null;
         $recentRetryLog = file_exists($retryLog) ? mb_substr((string) file_get_contents($retryLog), -4000) : null;
+        $recentLaravelLog = file_exists(storage_path('logs/laravel.log')) ? mb_substr((string) file_get_contents(storage_path('logs/laravel.log')), -4000) : null;
 
         return response()->json([
-            'status'           => 'ok',
-            'summary'          => $summary,
-            'recent_log'       => $recentLog,
-            'recent_retry_log' => $recentRetryLog,
-            'latest_posts'     => \App\Models\SocialMediaPost::with('targets')->latest()->take(6)->get(),
+            'status'             => 'ok',
+            'summary'            => $summary,
+            'recent_log'         => $recentLog,
+            'recent_retry_log'   => $recentRetryLog,
+            'recent_laravel_log' => $recentLaravelLog,
+            'latest_posts'       => \App\Models\SocialMediaPost::with('targets')->latest()->take(6)->get(),
         ]);
     });
 

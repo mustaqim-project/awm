@@ -139,6 +139,34 @@ class TikTokProvider implements SocialMediaProviderInterface
             foreach ($mediaItems as $m) {
                 $url = is_array($m) ? ($m['media_url'] ?? '') : (string) $m;
                 if (! empty($url)) {
+                    // TikTok Photo API strictly rejects PNG format with file_format_check_failed.
+                    // If a PNG URL is passed, resolve to corresponding .jpg or convert on-the-fly.
+                    if (preg_match('/\.png(\?.*)?$/i', $url)) {
+                        $jpgUrl = preg_replace('/\.png(\?.*)?$/i', '.jpg$1', $url);
+                        $parsedPath = parse_url($url, PHP_URL_PATH);
+                        $localFile = public_path(ltrim((string) $parsedPath, '/'));
+                        $localJpg = preg_replace('/\.png$/i', '.jpg', $localFile);
+
+                        if (file_exists($localJpg)) {
+                            $url = $jpgUrl;
+                        } elseif (file_exists($localFile) && function_exists('imagecreatefrompng') && function_exists('imagejpeg')) {
+                            $src = @imagecreatefrompng($localFile);
+                            if ($src) {
+                                $w = imagesx($src);
+                                $h = imagesy($src);
+                                $bg = imagecreatetruecolor($w, $h);
+                                $white = imagecolorallocate($bg, 255, 255, 255);
+                                imagefilledrectangle($bg, 0, 0, $w, $h, $white);
+                                imagecopy($bg, $src, 0, 0, 0, 0, $w, $h);
+                                imagejpeg($bg, $localJpg, 95);
+                                imagedestroy($src);
+                                imagedestroy($bg);
+                                $url = $jpgUrl;
+                            }
+                        } else {
+                            $url = $jpgUrl;
+                        }
+                    }
                     $imageUrls[] = $url;
                 }
             }
