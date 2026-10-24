@@ -122,22 +122,81 @@ class SocialMediaService
             throw new \InvalidArgumentException('Post does not belong to the active business context.');
         }
 
-        $account = $post->account;
+        $post->loadMissing(['targets.account', 'media', 'account']);
+
+        // 1. Resolve target channel and target model (if multi-target or single-target)
+        $target = $post->targets->first(fn ($t) => ! in_array($t->status, ['published'], true))
+            ?? $post->targets->first();
+
+        $targetPlatform = strtolower((string) ($target?->channel ?: $post->platform));
+
+        // 2. Resolve the matching active account for this target platform
+        $account = $target?->account ?? $post->account;
+
+        if (! $account || strtolower((string) $account->platform) !== $targetPlatform || ! $account->isConnected()) {
+            $matchedAccount = SocialMediaAccount::where('business_id', $business->id)
+                ->where('platform', $targetPlatform)
+                ->where('status', 'active')
+                ->first();
+
+            if ($matchedAccount && $matchedAccount->isConnected()) {
+                $account = $matchedAccount;
+            }
+        }
+
         if (! $account || ! $account->isConnected()) {
+            $err = "Akun media sosial [{$targetPlatform}] tidak aktif atau belum terhubung.";
             $post->update([
                 'status'        => 'failed',
-                'error_message' => 'Akun media sosial tidak aktif atau belum terhubung.',
+                'error_message' => $err,
             ]);
+            if ($target) {
+                $target->update([
+                    'status'        => 'failed',
+                    'error_message' => $err,
+                ]);
+            }
             return $post;
         }
 
         $post->update(['status' => 'publishing']);
+        if ($target) {
+            $target->update(['status' => 'processing']);
+        }
 
         try {
             $firstMediaUrl = ! empty($post->media_urls) ? $post->media_urls[0] : null;
             $mediaType = strtolower((string) ($post->media_type ?: 'text'));
 
-            if ($post->platform === 'facebook') {
+            // Build media items array for providers
+            $mediaItems = [];
+            if ($post->media && $post->media->isNotEmpty()) {
+                foreach ($post->media as $m) {
+                    $mediaItems[] = [
+                        'media_url'  => $m->media_url,
+                        'media_type' => $m->media_type,
+                        'local_path' => $m->local_path,
+                        'sort_order' => $m->sort_order,
+                    ];
+                }
+            } elseif (! empty($post->media_urls)) {
+                foreach ($post->media_urls as $idx => $url) {
+                    $mediaItems[] = [
+                        'media_url'  => $url,
+                        'media_type' => $post->media_type ?: 'image',
+                        'local_path' => $post->local_media_paths[$idx] ?? null,
+                        'sort_order' => $idx + 1,
+                    ];
+                }
+            }
+
+            if (empty($firstMediaUrl) && ! empty($mediaItems[0]['media_url'])) {
+                $firstMediaUrl = $mediaItems[0]['media_url'];
+            }
+
+            $effectiveCaption = $target?->getEffectiveCaption() ?: $post->content;
+
+            if ($targetPlatform === 'facebook') {
                 if ($mediaType === 'video' || $mediaType === 'reels') {
                     if (empty($firstMediaUrl)) {
                         throw new \InvalidArgumentException('Video Facebook mewajibkan berkas video yang valid.');
@@ -145,7 +204,7 @@ class SocialMediaService
                     $res = $this->client->publishFacebookVideo(
                         $account->account_id,
                         $account->access_token,
-                        $post->content,
+                        $effectiveCaption,
                         $firstMediaUrl
                     );
                     $platformPostId = (string) ($res['id'] ?? '');
@@ -153,37 +212,61 @@ class SocialMediaService
                     $res = $this->client->publishFacebookPost(
                         $account->account_id,
                         $account->access_token,
-                        $post->content,
+                        $effectiveCaption,
                         null,
                         $firstMediaUrl
                     );
                     $platformPostId = (string) ($res['id'] ?? $res['post_id'] ?? '');
                 }
-            } elseif ($post->platform === 'instagram') {
+            } elseif ($targetPlatform === 'instagram') {
                 if (empty($firstMediaUrl)) {
                     throw new \InvalidArgumentException('Instagram mewajibkan minimal 1 media (foto/video) untuk dipublikasikan.');
                 }
-                $igType = ($mediaType === 'reels' || $mediaType === 'video') ? 'REELS' : 'IMAGE';
-                $res = $this->client->publishInstagramPost(
-                    $account->account_id,
-                    $account->access_token,
-                    $post->content,
-                    $firstMediaUrl,
-                    $igType
-                );
+                if ($mediaType === 'carousel' || count($mediaItems) > 1) {
+                    $res = $this->client->publishInstagramCarousel(
+                        $account->account_id,
+                        $account->access_token,
+                        $effectiveCaption,
+                        $mediaItems
+                    );
+                } else {
+                    $igType = ($mediaType === 'reels' || $mediaType === 'video') ? 'REELS' : 'IMAGE';
+                    $res = $this->client->publishInstagramPost(
+                        $account->account_id,
+                        $account->access_token,
+                        $effectiveCaption,
+                        $firstMediaUrl,
+                        $igType
+                    );
+                }
                 $platformPostId = (string) ($res['id'] ?? '');
-            } elseif ($post->platform === 'threads') {
+            } elseif ($targetPlatform === 'threads') {
                 $threadsType = ($mediaType === 'video' || $mediaType === 'reels') ? 'VIDEO' : (! empty($firstMediaUrl) ? 'IMAGE' : 'TEXT');
                 $res = $this->client->publishThreadsPost(
                     $account->account_id,
                     $account->access_token,
-                    $post->content,
+                    $effectiveCaption,
                     $firstMediaUrl,
                     $threadsType
                 );
                 $platformPostId = (string) ($res['id'] ?? '');
+            } elseif ($targetPlatform === 'tiktok' || $targetPlatform === 'linkedin') {
+                $provider = $this->socialMediaManager->getProvider($targetPlatform);
+                if (! $target) {
+                    $target = new \App\Models\SocialPostTarget([
+                        'social_media_post_id'    => $post->id,
+                        'social_media_account_id' => $account->id,
+                        'provider'                => $targetPlatform,
+                        'channel'                 => $targetPlatform,
+                        'content_type'            => $mediaType,
+                        'custom_caption'          => null,
+                        'status'                  => 'processing',
+                    ]);
+                }
+                $res = $provider->publish($account, $target, $mediaItems);
+                $platformPostId = (string) ($res['id'] ?? $res['publish_id'] ?? $res['post_id'] ?? '');
             } else {
-                throw new \InvalidArgumentException("Platform [{$post->platform}] tidak didukung.");
+                throw new \InvalidArgumentException("Platform [{$targetPlatform}] tidak didukung.");
             }
 
             // AUTO-DELETE: Purge temporary local files from Cooca server storage
@@ -205,6 +288,15 @@ class SocialMediaService
                 }
             }
 
+            if ($target) {
+                $target->update([
+                    'status'           => 'published',
+                    'platform_post_id' => $platformPostId,
+                    'published_at'     => now(),
+                    'error_message'    => null,
+                ]);
+            }
+
             $post->update([
                 'status'            => 'published',
                 'platform_post_id'  => $platformPostId,
@@ -213,16 +305,27 @@ class SocialMediaService
                 'published_at'      => now(),
                 'error_message'     => null,
             ]);
+
+            $post->syncStatusFromTargets();
         } catch (\Throwable $e) {
             Log::error('SocialMediaService::publishPost error', [
                 'post_id' => $post->id,
                 'error'   => $e->getMessage(),
             ]);
 
+            if ($target) {
+                $target->update([
+                    'status'        => 'failed',
+                    'error_message' => $e->getMessage(),
+                ]);
+            }
+
             $post->update([
                 'status'        => 'failed',
                 'error_message' => $e->getMessage(),
             ]);
+
+            $post->syncStatusFromTargets();
         }
 
         return $post;

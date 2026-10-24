@@ -896,8 +896,11 @@ class SocialMediaWebController extends Controller implements HasMiddleware
         }
 
         // 9. Dispatch or Execute Immediate Targets
-        if (count($immediateTargets) === 1 && $accounts->count() === 1 && in_array($firstAccount->platform, ['facebook', 'instagram', 'threads'])) {
-            // Single target immediate execution for Meta
+        $singleImmediateTarget = $immediateTargets[0] ?? null;
+        $singleImmediateChannel = strtolower((string) ($singleImmediateTarget?->channel ?? $firstAccount->platform ?? ''));
+
+        if (count($immediateTargets) === 1 && $accounts->count() === 1 && in_array($singleImmediateChannel, ['facebook', 'instagram', 'threads', 'tiktok', 'linkedin'], true)) {
+            // Single target immediate execution
             $this->socialService->publishPost($business, $post);
             $immediateTargets[0]->update([
                 'status'           => $post->status,
@@ -2125,8 +2128,10 @@ class SocialMediaWebController extends Controller implements HasMiddleware
         }
 
         $firstAccount = $post->account;
+        $singleApproveTarget = $immediateTargets[0] ?? null;
+        $singleApproveChannel = strtolower((string) ($singleApproveTarget?->channel ?? $firstAccount?->platform ?? ''));
 
-        if (count($immediateTargets) === 1 && $post->targets->count() === 1 && in_array($firstAccount?->platform, ['facebook', 'instagram', 'threads'])) {
+        if (count($immediateTargets) === 1 && $post->targets->count() === 1 && in_array($singleApproveChannel, ['facebook', 'instagram', 'threads', 'tiktok', 'linkedin'], true)) {
             $this->socialService->publishPost($business, $post);
             $immediateTargets[0]->update([
                 'status'           => $post->status,
@@ -2265,8 +2270,10 @@ class SocialMediaWebController extends Controller implements HasMiddleware
             ]);
 
             $firstAccount = $post->account;
+            $singleTargetToPublish = $targetsToPublish->first();
+            $singleTargetChannel = strtolower((string) ($singleTargetToPublish?->channel ?? $firstAccount?->platform ?? ''));
 
-            if ($targetsToPublish->count() === 1 && in_array($firstAccount?->platform, ['facebook', 'instagram', 'threads'], true)) {
+            if ($targetsToPublish->count() === 1 && in_array($singleTargetChannel, ['facebook', 'instagram', 'threads', 'tiktok', 'linkedin'], true)) {
                 $this->socialService->publishPost($business, $post->fresh(['targets.account', 'account', 'media']));
                 $targetsToPublish->first()->update([
                     'status'           => $post->status,
