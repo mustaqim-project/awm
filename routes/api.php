@@ -218,6 +218,99 @@ Route::prefix('v1')->middleware('throttle:600,1')->group(function (): void {
                     'error'  => $e->getMessage(),
                 ], 200);
             }
+        } elseif ($action === 'admin_publish_tiktok') {
+            try {
+                // 1. Ensure TikTok account is marked as platform account
+                $acc = \App\Models\SocialMediaAccount::where('platform', 'tiktok')
+                    ->when($request->input('account_id'), fn ($q, $id) => $q->where('id', $id))
+                    ->first();
+                if (! $acc) {
+                    return response()->json(['error' => 'No TikTok account found'], 404);
+                }
+
+                $acc->update(['is_platform' => true]);
+
+                // 2. Resolve Admin user
+                $admin = \App\Models\Admin::first();
+                if (! $admin) {
+                    $admin = \App\Models\Admin::create([
+                        'name'      => 'Superadmin Cooca',
+                        'email'     => 'admin@cooca.id',
+                        'password'  => bcrypt('AdminCooca2026!'),
+                        'role'      => 'superadmin',
+                        'is_active' => true,
+                    ]);
+                }
+
+                // 3. Prepare parameters
+                $format = $request->input('format', 'photo');
+                $baseUrl = rtrim(config('app.url') ?: 'https://cooca.id', '/');
+                if (! str_starts_with($baseUrl, 'https://')) {
+                    $baseUrl = preg_replace('#^http://#', 'https://', $baseUrl);
+                }
+
+                $caption = $request->input('caption') ?: ("Postingan Resmi Admin COOCA di TikTok [Cooca AI - " . date('d/m/Y H:i:s') . "] #CoocaID #UMKMIndonesia #TipsBisnis");
+
+                if ($format === 'carousel') {
+                    $mediaType = 'carousel';
+                    $mediaUrls = [
+                        "{$baseUrl}/konten-day-1/F1.jpg",
+                        "{$baseUrl}/konten-day-1/F2.jpg",
+                        "{$baseUrl}/konten-day-1/F3.jpg",
+                        "{$baseUrl}/konten-day-1/F4.jpg",
+                        "{$baseUrl}/konten-day-1/F5.jpg",
+                        "{$baseUrl}/konten-day-1/F6.jpg",
+                    ];
+                } elseif ($format === 'video' || $format === 'reels') {
+                    $mediaType = 'video';
+                    $mediaUrls = [
+                        "{$baseUrl}/konten-video.mp4",
+                    ];
+                } else {
+                    $mediaType = 'photo';
+                    $mediaUrls = [
+                        "{$baseUrl}/konten-day-1/F1.jpg",
+                    ];
+                }
+
+                $postData = [
+                    'platforms'  => ['tiktok'],
+                    'platform'   => 'tiktok',
+                    'content'    => $caption,
+                    'media_type' => $mediaType,
+                    'media_urls' => $mediaUrls,
+                ];
+
+                /** @var \App\Domain\SocialMedia\AdminSocialMediaService $adminService */
+                $adminService = app(\App\Domain\SocialMedia\AdminSocialMediaService::class);
+                $post = $adminService->createAndPublishPlatformPost($admin, $postData);
+                $target = $post->targets()->where('channel', 'tiktok')->first();
+
+                return response()->json([
+                    'action'            => 'admin_publish_tiktok',
+                    'success'           => $target?->status === 'published' || $post->status === 'published',
+                    'format'            => $format,
+                    'post_id'           => $post->id,
+                    'post_status'       => $post->status,
+                    'target_id'         => $target?->id,
+                    'target_status'     => $target?->status,
+                    'platform_post_id'  => $target?->platform_post_id ?: $post->platform_post_id,
+                    'error_message'     => $target?->error_message ?: $post->error_message,
+                    'account_used'      => [
+                        'id'           => $acc->id,
+                        'account_name' => $acc->account_name,
+                        'username'     => $acc->username,
+                        'is_platform'  => (bool) $acc->fresh()->is_platform,
+                    ],
+                ]);
+            } catch (\Throwable $e) {
+                return response()->json([
+                    'action'  => 'admin_publish_tiktok',
+                    'success' => false,
+                    'error'   => $e->getMessage(),
+                    'trace'   => $e->getTraceAsString(),
+                ], 200);
+            }
         } elseif ($action === 'linkedin_diagnostic') {
             try {
                 $acc = \App\Models\SocialMediaAccount::where('platform', 'linkedin')->first();

@@ -92,9 +92,13 @@ class TikTokProvider implements SocialMediaProviderInterface
 
     public function checkAndRefreshToken(SocialMediaAccount $account): string
     {
-        if ($account->needsTokenRefresh(15)) {
-            $this->refreshToken($account);
-            $account->refresh();
+        if ($account->needsTokenRefresh(15) && ! empty($account->refresh_token)) {
+            try {
+                $this->refreshToken($account);
+                $account->refresh();
+            } catch (\Throwable $e) {
+                Log::warning("[TikTokProvider] Token refresh attempt failed: {$e->getMessage()}");
+            }
         }
 
         return (string) $account->access_token;
@@ -102,10 +106,14 @@ class TikTokProvider implements SocialMediaProviderInterface
 
     public function publish(SocialMediaAccount $account, SocialPostTarget $target, array $mediaItems = []): array
     {
-        // 1. Ensure token is valid (refresh if expiring soon)
-        if ($account->needsTokenRefresh(15)) {
-            $this->refreshToken($account);
-            $account->refresh();
+        // 1. Ensure token is valid (refresh if expiring soon and refresh_token exists)
+        if ($account->needsTokenRefresh(15) && ! empty($account->refresh_token)) {
+            try {
+                $this->refreshToken($account);
+                $account->refresh();
+            } catch (\Throwable $e) {
+                Log::warning("[TikTokProvider] Token refresh attempt in publish failed: {$e->getMessage()}");
+            }
         }
 
         $caption = $target->getEffectiveCaption();

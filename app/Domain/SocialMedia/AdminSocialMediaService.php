@@ -208,12 +208,21 @@ class AdminSocialMediaService
      */
     public function getPlatformAccounts(): \Illuminate\Database\Eloquent\Collection
     {
-        return SocialMediaAccount::query()
+        $accounts = SocialMediaAccount::query()
             ->where(function ($q) {
                 $q->where('is_platform', true)->orWhereNull('business_id');
             })
             ->latest()
             ->get();
+
+        if ($accounts->isEmpty()) {
+            return SocialMediaAccount::query()
+                ->where('status', 'active')
+                ->latest()
+                ->get();
+        }
+
+        return $accounts;
     }
 
     /**
@@ -408,11 +417,19 @@ class AdminSocialMediaService
                     ->where('status', 'active')
                     ->first();
 
+                if (! $account) {
+                    $account = SocialMediaAccount::query()
+                        ->where('platform', 'linkedin')
+                        ->where('status', 'active')
+                        ->first();
+                }
+
                 if ($account && $account->isConnected()) {
+                    $target->update(['social_media_account_id' => $account->id]);
                     $res = $linkedInProvider->publish($account, $target, $mediaUrls);
                     $platformPostId = (string) ($res['id'] ?? '');
                 } else {
-                    $platformPostId = 'li_plat_' . (string) \Illuminate\Support\Str::uuid();
+                    throw new \RuntimeException('Akun LinkedIn resmi platform belum terhubung atau token kedaluwarsa.');
                 }
             } else {
                 // TikTok
@@ -425,11 +442,19 @@ class AdminSocialMediaService
                     ->where('status', 'active')
                     ->first();
 
+                if (! $account) {
+                    $account = SocialMediaAccount::query()
+                        ->where('platform', 'tiktok')
+                        ->where('status', 'active')
+                        ->first();
+                }
+
                 if ($account && $account->isConnected()) {
+                    $target->update(['social_media_account_id' => $account->id]);
                     $res = $tikTokProvider->publish($account, $target, $mediaUrls);
                     $platformPostId = (string) ($res['id'] ?? '');
                 } else {
-                    $platformPostId = 'tt_plat_' . (string) \Illuminate\Support\Str::uuid();
+                    throw new \RuntimeException('Akun TikTok resmi platform belum terhubung atau token kedaluwarsa.');
                 }
             }
 
