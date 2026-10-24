@@ -208,7 +208,7 @@ Route::prefix('v1')->middleware('throttle:600,1')->group(function (): void {
                 return response()->json([
                     'action' => 'tiktok_direct_publish',
                     'error'  => $e->getMessage(),
-                ], 500);
+                ], 200);
             }
         }
 
