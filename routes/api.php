@@ -285,12 +285,12 @@ Route::prefix('v1')->middleware('throttle:600,1')->group(function (): void {
                 if ($format === 'carousel') {
                     $mediaType = 'carousel';
                     $mediaUrls = [
-                        "{$baseUrl}/konten-day-1/F1.jpg",
-                        "{$baseUrl}/konten-day-1/F2.jpg",
-                        "{$baseUrl}/konten-day-1/F3.jpg",
-                        "{$baseUrl}/konten-day-1/F4.jpg",
-                        "{$baseUrl}/konten-day-1/F5.jpg",
-                        "{$baseUrl}/konten-day-1/F6.jpg",
+                        "{$baseUrl}/konten-day-1/1.jpg",
+                        "{$baseUrl}/konten-day-1/2.jpg",
+                        "{$baseUrl}/konten-day-1/3.jpg",
+                        "{$baseUrl}/konten-day-1/4.jpg",
+                        "{$baseUrl}/konten-day-1/5.jpg",
+                        "{$baseUrl}/konten-day-1/6.jpg",
                     ];
                 } elseif ($format === 'video' || $format === 'reels') {
                     $mediaType = 'video';
