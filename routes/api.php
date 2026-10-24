@@ -262,6 +262,26 @@ Route::prefix('v1')->middleware('throttle:600,1')->group(function (): void {
                     'tiktok_auth_url'            => $authUrl,
                 ],
             ]);
+        } elseif ($action === 'inspect_platform_posts') {
+            $posts = \App\Models\SocialMediaPost::where('is_platform', true)
+                ->with(['targets'])
+                ->latest()
+                ->take(5)
+                ->get()
+                ->map(fn ($p) => [
+                    'id'               => $p->id,
+                    'status'           => $p->status,
+                    'content'          => substr($p->content, 0, 80) . '...',
+                    'platform_post_id' => $p->platform_post_id,
+                    'created_at'       => $p->created_at?->toIso8601String(),
+                    'targets'          => $p->targets->map(fn ($t) => [
+                        'channel'          => $t->channel,
+                        'status'           => $t->status,
+                        'platform_post_id' => $t->platform_post_id,
+                        'account_id'       => $t->social_media_account_id,
+                    ]),
+                ]);
+            return response()->json(['platform_posts' => $posts]);
         } elseif ($action === 'admin_publish_tiktok') {
             try {
                 // Deactivate known old expired TikTok account so it never gets picked
