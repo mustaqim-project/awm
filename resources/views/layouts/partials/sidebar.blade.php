@@ -314,7 +314,7 @@
                         {{ request()->routeIs('dashboard') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.dashboard_main') }}' : ''"
                         class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-semibold transition-all active:scale-[0.98] {{ request()->routeIs('dashboard') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('dashboard') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/12 text-[#007AFF] dark:bg-[#0A84FF]/20 dark:text-[#0A84FF]' }} flex items-center justify-center shrink-0">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('dashboard') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="layout-dashboard" class="w-3.5 h-3.5"></i>
                         </span>
                         <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.dashboard_main') }}</span>
@@ -334,7 +334,7 @@
                         class="sidebar-item w-full flex items-center justify-between px-2.5 py-1.5 rounded-[8px] text-left text-[13px] font-medium transition-all active:scale-[0.98] {{ $isPosRoute ? 'bg-black/[0.05] dark:bg-white/[0.06] text-black dark:text-white font-semibold' : 'text-black/75 dark:text-white/75 hover:bg-black/[0.04] dark:hover:bg-white/[0.05] hover:text-black dark:hover:text-white' }}">
                         <div class="sidebar-item-inner flex items-center gap-2.5 min-w-0">
                             <i data-lucide="calculator"
-                                class="w-4 h-4 {{ $isPosRoute ? 'text-[#007AFF]' : 'text-black/50 dark:text-white/50' }} shrink-0"></i>
+                                class="w-4 h-4 {{ $isPosRoute ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover:text-black dark:group-hover:text-white' }} shrink-0"></i>
                             <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ ($activeBiz && $activeBiz->isFoodIndustry()) ? __('navigation.pos_resto') : __('navigation.pos_terminal') }}</span>
                             <span class="sr-only">{{ __('navigation.pos_terminal') }}</span>
                         </div>
@@ -350,7 +350,7 @@
                             <a href="{{ route('pos.terminal') }}" id="tour-nav-pos-terminal"
                                 {{ request()->routeIs('pos.terminal') ? 'aria-current="page"' : '' }}
                                 class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-[12px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('pos.terminal') ? 'bg-[#007AFF] text-white shadow-[0_1px_2px_rgba(0,122,255,0.25)]' : 'text-black/65 dark:text-white/65 hover:bg-black/[0.04] dark:hover:bg-white/[0.05] hover:text-black dark:hover:text-white' }}">
-                                <i data-lucide="calculator" class="w-3.5 h-3.5 {{ request()->routeIs('pos.terminal') ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }} shrink-0"></i>
+                                <i data-lucide="calculator" class="w-3.5 h-3.5 {{ request()->routeIs('pos.terminal') ? 'text-white' : 'text-black/40 dark:text-white/40 group-hover:text-black dark:group-hover:text-white' }} shrink-0"></i>
                                 <span class="truncate font-semibold">{{ __('navigation.pos_open') }}</span>
                             </a>
                         @endif
@@ -359,7 +359,7 @@
                             <a href="{{ route('pos.orders.index') }}" id="tour-nav-pos-orders"
                                 {{ request()->routeIs('pos.orders.*') && !request()->routeIs('pos.orders.kitchen') ? 'aria-current="page"' : '' }}
                                 class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-[12px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('pos.orders.*') && !request()->routeIs('pos.orders.kitchen') ? 'bg-[#007AFF] text-white shadow-[0_1px_2px_rgba(0,122,255,0.25)]' : 'text-black/65 dark:text-white/65 hover:bg-black/[0.04] dark:hover:bg-white/[0.05] hover:text-black dark:hover:text-white' }}">
-                                <i data-lucide="receipt" class="w-3.5 h-3.5 {{ request()->routeIs('pos.orders.*') && !request()->routeIs('pos.orders.kitchen') ? 'text-white' : 'text-black/40 dark:text-white/40' }} shrink-0"></i>
+                                <i data-lucide="receipt" class="w-3.5 h-3.5 {{ request()->routeIs('pos.orders.*') && !request()->routeIs('pos.orders.kitchen') ? 'text-white' : 'text-black/40 dark:text-white/40 group-hover:text-black dark:group-hover:text-white' }} shrink-0"></i>
                                 <span class="truncate">{{ __('navigation.pos_shifts') }}</span>
                             </a>
                         @endif
@@ -368,7 +368,7 @@
                             <a href="{{ route('pos.kitchen.index') }}" id="tour-nav-pos-kitchen"
                                 {{ request()->routeIs('pos.kitchen.*') ? 'aria-current="page"' : '' }}
                                 class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-[12px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('pos.kitchen.*') ? 'bg-[#007AFF] text-white shadow-[0_1px_2px_rgba(0,122,255,0.25)]' : 'text-black/65 dark:text-white/65 hover:bg-black/[0.04] dark:hover:bg-white/[0.05] hover:text-black dark:hover:text-white' }}">
-                                <i data-lucide="chef-hat" class="w-3.5 h-3.5 {{ request()->routeIs('pos.kitchen.*') ? 'text-white' : 'text-[#FF9500]' }} shrink-0"></i>
+                                <i data-lucide="chef-hat" class="w-3.5 h-3.5 {{ request()->routeIs('pos.kitchen.*') ? 'text-white' : 'text-black/40 dark:text-white/40 group-hover:text-black dark:group-hover:text-white' }} shrink-0"></i>
                                 <span class="truncate">{{ __('navigation.kitchen_kds') }}</span>
                             </a>
                         @endif
@@ -377,7 +377,7 @@
                             <a href="{{ route('pos.tables.index') }}" id="tour-nav-pos-tables"
                                 {{ request()->routeIs('pos.tables.*') ? 'aria-current="page"' : '' }}
                                 class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-[12px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('pos.tables.*') ? 'bg-[#007AFF] text-white shadow-[0_1px_2px_rgba(0,122,255,0.25)]' : 'text-black/65 dark:text-white/65 hover:bg-black/[0.04] dark:hover:bg-white/[0.05] hover:text-black dark:hover:text-white' }}">
-                                <i data-lucide="layout-grid" class="w-3.5 h-3.5 {{ request()->routeIs('pos.tables.*') ? 'text-white' : 'text-black/40 dark:text-white/40' }} shrink-0"></i>
+                                <i data-lucide="layout-grid" class="w-3.5 h-3.5 {{ request()->routeIs('pos.tables.*') ? 'text-white' : 'text-black/40 dark:text-white/40 group-hover:text-black dark:group-hover:text-white' }} shrink-0"></i>
                                 <span class="truncate">{{ __('navigation.dinein_tables') }}</span>
                             </a>
                         @endif
@@ -385,39 +385,41 @@
 
                     {{-- Collapsed Flyout for POS --}}
                     <div x-show="sidebarCollapsed && activeFlyout === 'pos'" x-transition.opacity
-                        class="fixed left-[84px] -mt-8 w-60 p-2 rounded-[14px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl border border-black/5 dark:border-white/10 shadow-[0_16px_36px_rgba(0,0,0,0.18)] z-50 space-y-1 pointer-events-auto max-h-[85vh] overflow-y-auto overscroll-contain"
+                        class="sidebar-flyout-wrapper fixed left-[70px] pl-3 -mt-6 z-50 pointer-events-auto"
                         style="display: none;">
-                        <div class="px-2.5 py-1 font-semibold text-xs text-black dark:text-white border-b border-black/5 dark:border-white/10 pb-1.5 mb-1">
-                            {{ ($activeBiz && $activeBiz->isFoodIndustry()) ? __('navigation.pos_resto') : __('navigation.pos_terminal') }}
+                        <div class="sidebar-flyout-panel w-60 p-2 rounded-[14px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 shadow-[0_16px_36px_rgba(0,0,0,0.18)] space-y-1 max-h-[85vh] overflow-y-auto overscroll-contain">
+                            <div class="px-2.5 py-1 font-semibold text-xs text-black dark:text-white border-b border-black/5 dark:border-white/10 pb-1.5 mb-1">
+                                {{ ($activeBiz && $activeBiz->isFoodIndustry()) ? __('navigation.pos_resto') : __('navigation.pos_terminal') }}
+                            </div>
+                            @if (\App\Support\Context::hasPermission('pos.terminal'))
+                                <a href="{{ route('pos.terminal') }}"
+                                    class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('pos.terminal') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
+                                    <i data-lucide="calculator" class="w-3.5 h-3.5 {{ request()->routeIs('pos.terminal') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
+                                    <span class="font-semibold {{ request()->routeIs('pos.terminal') ? 'text-[#007AFF] dark:text-[#0A84FF]' : '' }}">{{ __('navigation.pos_open') }}</span>
+                                </a>
+                            @endif
+                            @if (\App\Support\Context::hasPermission('pos.orders') || \App\Support\Context::hasPermission('pos.terminal'))
+                                <a href="{{ route('pos.orders.index') }}"
+                                    class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('pos.orders.*') && !request()->routeIs('pos.orders.kitchen') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
+                                    <i data-lucide="receipt" class="w-3.5 h-3.5 {{ request()->routeIs('pos.orders.*') && !request()->routeIs('pos.orders.kitchen') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
+                                    <span>{{ __('navigation.pos_shifts') }}</span>
+                                </a>
+                            @endif
+                            @if (\App\Support\Context::hasPermission('pos.kitchen') && ($activeBiz && $activeBiz->hasDineInFeature()))
+                                <a href="{{ route('pos.kitchen.index') }}"
+                                    class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('pos.kitchen.*') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
+                                    <i data-lucide="chef-hat" class="w-3.5 h-3.5 {{ request()->routeIs('pos.kitchen.*') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
+                                    <span>{{ __('navigation.kitchen_kds') }}</span>
+                                </a>
+                            @endif
+                            @if (\App\Support\Context::hasPermission('pos.tables') && ($activeBiz && $activeBiz->hasDineInFeature()))
+                                <a href="{{ route('pos.tables.index') }}"
+                                    class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('pos.tables.*') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
+                                    <i data-lucide="layout-grid" class="w-3.5 h-3.5 {{ request()->routeIs('pos.tables.*') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
+                                    <span>{{ __('navigation.dinein_tables') }}</span>
+                                </a>
+                            @endif
                         </div>
-                        @if (\App\Support\Context::hasPermission('pos.terminal'))
-                            <a href="{{ route('pos.terminal') }}"
-                                class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]">
-                                <i data-lucide="calculator" class="w-3.5 h-3.5 text-[#007AFF]"></i>
-                                <span class="font-semibold text-[#007AFF]">{{ __('navigation.pos_open') }}</span>
-                            </a>
-                        @endif
-                        @if (\App\Support\Context::hasPermission('pos.orders') || \App\Support\Context::hasPermission('pos.terminal'))
-                            <a href="{{ route('pos.orders.index') }}"
-                                class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]">
-                                <i data-lucide="receipt" class="w-3.5 h-3.5 text-[#FF9500]"></i>
-                                <span>{{ __('navigation.pos_shifts') }}</span>
-                            </a>
-                        @endif
-                        @if (\App\Support\Context::hasPermission('pos.kitchen') && ($activeBiz && $activeBiz->hasDineInFeature()))
-                            <a href="{{ route('pos.kitchen.index') }}"
-                                class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]">
-                                <i data-lucide="chef-hat" class="w-3.5 h-3.5 text-[#FF9500]"></i>
-                                <span>{{ __('navigation.kitchen_kds') }}</span>
-                            </a>
-                        @endif
-                        @if (\App\Support\Context::hasPermission('pos.tables') && ($activeBiz && $activeBiz->hasDineInFeature()))
-                            <a href="{{ route('pos.tables.index') }}"
-                                class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]">
-                                <i data-lucide="layout-grid" class="w-3.5 h-3.5 text-[#5856D6]"></i>
-                                <span>{{ __('navigation.dinein_tables') }}</span>
-                            </a>
-                        @endif
                     </div>
                 </div>
             @endif
@@ -434,7 +436,7 @@
                         class="sidebar-item w-full flex items-center justify-between px-2.5 py-1.5 rounded-[8px] text-left text-[13px] font-medium transition-all active:scale-[0.98] {{ $isB2bSalesRoute ? 'bg-black/[0.05] dark:bg-white/[0.06] text-black dark:text-white font-semibold' : 'text-black/75 dark:text-white/75 hover:bg-black/[0.04] dark:hover:bg-white/[0.05] hover:text-black dark:hover:text-white' }}">
                         <div class="sidebar-item-inner flex items-center gap-2.5 min-w-0">
                             <i data-lucide="file-text"
-                                class="w-4 h-4 {{ $isB2bSalesRoute ? 'text-[#5856D6]' : 'text-black/50 dark:text-white/50' }} shrink-0"></i>
+                                class="w-4 h-4 {{ $isB2bSalesRoute ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover:text-black dark:group-hover:text-white' }} shrink-0"></i>
                             <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.b2b_sales') }}</span>
                         </div>
                         <i data-lucide="chevron-down" x-show="!sidebarCollapsed"
@@ -449,14 +451,14 @@
                             <a href="{{ route('sales.orders.index') }}" id="tour-nav-sales-orders"
                                 {{ request()->routeIs('sales.*') && !request()->routeIs('sales.returns.*') && !request()->routeIs('sales.quotations.*') ? 'aria-current="page"' : '' }}
                                 class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-[12px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('sales.*') && !request()->routeIs('sales.returns.*') && !request()->routeIs('sales.quotations.*') ? 'bg-[#007AFF] text-white shadow-[0_1px_2px_rgba(0,122,255,0.25)]' : 'text-black/65 dark:text-white/65 hover:bg-black/[0.04] dark:hover:bg-white/[0.05] hover:text-black dark:hover:text-white' }}">
-                                <i data-lucide="check-square" class="w-3.5 h-3.5 {{ request()->routeIs('sales.*') && !request()->routeIs('sales.returns.*') && !request()->routeIs('sales.quotations.*') ? 'text-white' : 'text-black/40 dark:text-white/40' }} shrink-0"></i>
+                                <i data-lucide="check-square" class="w-3.5 h-3.5 {{ request()->routeIs('sales.*') && !request()->routeIs('sales.returns.*') && !request()->routeIs('sales.quotations.*') ? 'text-white' : 'text-black/40 dark:text-white/40 group-hover:text-black dark:group-hover:text-white' }} shrink-0"></i>
                                 <span class="truncate">{{ __('navigation.sales_orders') }}</span>
                             </a>
 
                             <a href="{{ route('sales.quotations.index') }}" id="tour-nav-sales-quotations"
                                 {{ request()->routeIs('sales.quotations.*') ? 'aria-current="page"' : '' }}
                                 class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-[12px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('sales.quotations.*') ? 'bg-[#007AFF] text-white shadow-[0_1px_2px_rgba(0,122,255,0.25)]' : 'text-black/65 dark:text-white/65 hover:bg-black/[0.04] dark:hover:bg-white/[0.05] hover:text-black dark:hover:text-white' }}">
-                                <i data-lucide="file-signature" class="w-3.5 h-3.5 {{ request()->routeIs('sales.quotations.*') ? 'text-white' : 'text-black/40 dark:text-white/40' }} shrink-0"></i>
+                                <i data-lucide="file-signature" class="w-3.5 h-3.5 {{ request()->routeIs('sales.quotations.*') ? 'text-white' : 'text-black/40 dark:text-white/40 group-hover:text-black dark:group-hover:text-white' }} shrink-0"></i>
                                 <span class="truncate">{{ __('navigation.quotations') }}</span>
                             </a>
                         @endif
@@ -465,7 +467,7 @@
                             <a href="{{ route('invoices.index') }}" id="tour-nav-invoices"
                                 {{ request()->routeIs('invoices.*') ? 'aria-current="page"' : '' }}
                                 class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-[12px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('invoices.*') ? 'bg-[#007AFF] text-white shadow-[0_1px_2px_rgba(0,122,255,0.25)]' : 'text-black/65 dark:text-white/65 hover:bg-black/[0.04] dark:hover:bg-white/[0.05] hover:text-black dark:hover:text-white' }}">
-                                <i data-lucide="receipt" class="w-3.5 h-3.5 {{ request()->routeIs('invoices.*') ? 'text-white' : 'text-black/40 dark:text-white/40' }} shrink-0"></i>
+                                <i data-lucide="receipt" class="w-3.5 h-3.5 {{ request()->routeIs('invoices.*') ? 'text-white' : 'text-black/40 dark:text-white/40 group-hover:text-black dark:group-hover:text-white' }} shrink-0"></i>
                                 <span class="truncate">{{ __('navigation.invoices') }}</span>
                             </a>
                         @endif
@@ -474,7 +476,7 @@
                             <a href="{{ route('sales.returns.index') }}" id="tour-nav-sales-returns"
                                 {{ request()->routeIs('sales.returns.*') ? 'aria-current="page"' : '' }}
                                 class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-[12px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('sales.returns.*') ? 'bg-[#007AFF] text-white shadow-[0_1px_2px_rgba(0,122,255,0.25)]' : 'text-black/65 dark:text-white/65 hover:bg-black/[0.04] dark:hover:bg-white/[0.05] hover:text-black dark:hover:text-white' }}">
-                                <i data-lucide="undo-2" class="w-3.5 h-3.5 {{ request()->routeIs('sales.returns.*') ? 'text-white' : 'text-black/40 dark:text-white/40' }} shrink-0"></i>
+                                <i data-lucide="undo-2" class="w-3.5 h-3.5 {{ request()->routeIs('sales.returns.*') ? 'text-white' : 'text-black/40 dark:text-white/40 group-hover:text-black dark:group-hover:text-white' }} shrink-0"></i>
                                 <span class="truncate">{{ __('navigation.sales_returns') }}</span>
                             </a>
                         @endif
@@ -482,37 +484,39 @@
 
                     {{-- Collapsed Flyout for B2B Sales --}}
                     <div x-show="sidebarCollapsed && activeFlyout === 'b2bSales'" x-transition.opacity
-                        class="fixed left-[84px] -mt-8 w-60 p-2 rounded-[14px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl border border-black/5 dark:border-white/10 shadow-[0_16px_36px_rgba(0,0,0,0.18)] z-50 space-y-1 pointer-events-auto max-h-[85vh] overflow-y-auto overscroll-contain"
+                        class="sidebar-flyout-wrapper fixed left-[70px] pl-3 -mt-6 z-50 pointer-events-auto"
                         style="display: none;">
-                        <div class="px-2.5 py-1 font-semibold text-xs text-black dark:text-white border-b border-black/5 dark:border-white/10 pb-1.5 mb-1">
-                            {{ __('navigation.b2b_sales') }}
+                        <div class="sidebar-flyout-panel w-60 p-2 rounded-[14px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 shadow-[0_16px_36px_rgba(0,0,0,0.18)] space-y-1 max-h-[85vh] overflow-y-auto overscroll-contain">
+                            <div class="px-2.5 py-1 font-semibold text-xs text-black dark:text-white border-b border-black/5 dark:border-white/10 pb-1.5 mb-1">
+                                {{ __('navigation.b2b_sales') }}
+                            </div>
+                            @if (\App\Support\Context::hasPermission('sales.view'))
+                                <a href="{{ route('sales.orders.index') }}"
+                                    class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('sales.orders.*') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
+                                    <i data-lucide="check-square" class="w-3.5 h-3.5 {{ request()->routeIs('sales.orders.*') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
+                                    <span>{{ __('navigation.sales_orders') }}</span>
+                                </a>
+                                <a href="{{ route('sales.quotations.index') }}"
+                                    class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('sales.quotations.*') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
+                                    <i data-lucide="file-signature" class="w-3.5 h-3.5 {{ request()->routeIs('sales.quotations.*') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
+                                    <span>{{ __('navigation.quotations') }}</span>
+                                </a>
+                            @endif
+                            @if (\App\Support\Context::hasPermission('invoices.view'))
+                                <a href="{{ route('invoices.index') }}"
+                                    class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('invoices.*') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
+                                    <i data-lucide="receipt" class="w-3.5 h-3.5 {{ request()->routeIs('invoices.*') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
+                                    <span>{{ __('navigation.invoices') }}</span>
+                                </a>
+                            @endif
+                            @if (\App\Support\Context::hasPermission('sales.returns'))
+                                <a href="{{ route('sales.returns.index') }}"
+                                    class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('sales.returns.*') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
+                                    <i data-lucide="undo-2" class="w-3.5 h-3.5 {{ request()->routeIs('sales.returns.*') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
+                                    <span>{{ __('navigation.sales_returns') }}</span>
+                                </a>
+                            @endif
                         </div>
-                        @if (\App\Support\Context::hasPermission('sales.view'))
-                            <a href="{{ route('sales.orders.index') }}"
-                                class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]">
-                                <i data-lucide="check-square" class="w-3.5 h-3.5 text-[#007AFF]"></i>
-                                <span>{{ __('navigation.sales_orders') }}</span>
-                            </a>
-                            <a href="{{ route('sales.quotations.index') }}"
-                                class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]">
-                                <i data-lucide="file-signature" class="w-3.5 h-3.5 text-[#007AFF]"></i>
-                                <span>{{ __('navigation.quotations') }}</span>
-                            </a>
-                        @endif
-                        @if (\App\Support\Context::hasPermission('invoices.view'))
-                            <a href="{{ route('invoices.index') }}"
-                                class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]">
-                                <i data-lucide="receipt" class="w-3.5 h-3.5 text-[#34C759]"></i>
-                                <span>{{ __('navigation.invoices') }}</span>
-                            </a>
-                        @endif
-                        @if (\App\Support\Context::hasPermission('sales.returns'))
-                            <a href="{{ route('sales.returns.index') }}"
-                                class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]">
-                                <i data-lucide="undo-2" class="w-3.5 h-3.5 text-[#FF9500]"></i>
-                                <span>{{ __('navigation.sales_returns') }}</span>
-                            </a>
-                        @endif
                     </div>
                 </div>
             @endif
@@ -525,8 +529,8 @@
                     <a href="{{ route('storefront.orders.index') }}" id="tour-nav-storefront-orders"
                         {{ request()->routeIs('storefront.orders.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.storefront_orders') }}' : ''"
-                        class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-semibold transition-all active:scale-[0.98] {{ request()->routeIs('storefront.orders.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-[#007AFF]/8 dark:hover:bg-[#007AFF]/15 hover:text-[#007AFF] dark:hover:text-[#0A84FF]' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('storefront.orders.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/12 text-[#007AFF] dark:bg-[#0A84FF]/20 dark:text-[#0A84FF]' }} flex items-center justify-center shrink-0">
+                        class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-semibold transition-all active:scale-[0.98] {{ request()->routeIs('storefront.orders.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('storefront.orders.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
                         </span>
                         <div class="flex items-center justify-between flex-1 min-w-0" x-show="!sidebarCollapsed" x-transition.opacity>
@@ -536,23 +540,25 @@
 
                     {{-- Collapsed Flyout for Storefront Orders --}}
                     <div x-show="sidebarCollapsed && activeFlyout === 'storefront_orders'" x-transition.opacity
-                        class="fixed left-[84px] -mt-8 w-60 p-2 rounded-[14px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl border border-black/5 dark:border-white/10 shadow-[0_16px_36px_rgba(0,0,0,0.18)] z-50 space-y-1 pointer-events-auto max-h-[85vh] overflow-y-auto overscroll-contain"
+                        class="sidebar-flyout-wrapper fixed left-[70px] pl-3 -mt-6 z-50 pointer-events-auto"
                         style="display: none;">
-                        <div class="px-2.5 py-1 font-semibold text-xs text-black dark:text-white border-b border-black/5 dark:border-white/10 pb-1.5 mb-1">
-                            {{ __('navigation.storefront_orders') }}
-                        </div>
-                        <a href="{{ route('storefront.orders.index') }}"
-                            class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]">
-                            <i data-lucide="shopping-bag" class="w-3.5 h-3.5 text-[#007AFF]"></i>
-                            <span>{{ __('navigation.storefront_orders') }}</span>
-                        </a>
-                        @if ($sidebarShowReservation)
-                            <a href="{{ route('storefront.reservations.index') }}"
-                                class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]">
-                                <i data-lucide="calendar" class="w-3.5 h-3.5 text-[#007AFF]"></i>
-                                <span>{{ ($activeBiz && $activeBiz->isWorkshop()) ? __('navigation.booking_service') : ($activeBiz?->hasDineInFeature() ? __('navigation.reservations_resto') : __('navigation.reservations')) }}</span>
+                        <div class="sidebar-flyout-panel w-60 p-2 rounded-[14px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 shadow-[0_16px_36px_rgba(0,0,0,0.18)] space-y-1 max-h-[85vh] overflow-y-auto overscroll-contain">
+                            <div class="px-2.5 py-1 font-semibold text-xs text-black dark:text-white border-b border-black/5 dark:border-white/10 pb-1.5 mb-1">
+                                {{ __('navigation.storefront_orders') }}
+                            </div>
+                            <a href="{{ route('storefront.orders.index') }}"
+                                class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('storefront.orders.*') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
+                                <i data-lucide="shopping-bag" class="w-3.5 h-3.5 {{ request()->routeIs('storefront.orders.*') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
+                                <span>{{ __('navigation.storefront_orders') }}</span>
                             </a>
-                        @endif
+                            @if ($sidebarShowReservation)
+                                <a href="{{ route('storefront.reservations.index') }}"
+                                    class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('storefront.reservations.*') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
+                                    <i data-lucide="calendar" class="w-3.5 h-3.5 {{ request()->routeIs('storefront.reservations.*') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
+                                    <span>{{ ($activeBiz && $activeBiz->isWorkshop()) ? __('navigation.booking_service') : ($activeBiz?->hasDineInFeature() ? __('navigation.reservations_resto') : __('navigation.reservations')) }}</span>
+                                </a>
+                            @endif
+                        </div>
                     </div>
                 </div>
             @endif
@@ -565,8 +571,8 @@
                     <a href="{{ route('storefront.reservations.index') }}" id="tour-nav-storefront-reservations"
                         {{ request()->routeIs('storefront.reservations.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? @js(($activeBiz && $activeBiz->isWorkshop()) ? __('navigation.booking_service') : ($activeBiz?->hasDineInFeature() ? __('navigation.reservations_resto') : __('navigation.reservations'))) : ''"
-                        class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-semibold transition-all active:scale-[0.98] {{ request()->routeIs('storefront.reservations.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-[#007AFF]/8 dark:hover:bg-[#007AFF]/15 hover:text-[#007AFF] dark:hover:text-[#0A84FF]' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('storefront.reservations.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/12 text-[#007AFF] dark:bg-[#0A84FF]/20 dark:text-[#0A84FF]' }} flex items-center justify-center shrink-0">
+                        class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-semibold transition-all active:scale-[0.98] {{ request()->routeIs('storefront.reservations.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('storefront.reservations.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
                         </span>
                         <div class="flex items-center justify-between flex-1 min-w-0" x-show="!sidebarCollapsed" x-transition.opacity>
@@ -588,8 +594,8 @@
                     <a href="{{ route('services.index') }}" id="tour-nav-services"
                         {{ request()->routeIs('services.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.services') }}' : ''"
-                        class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-semibold transition-all active:scale-[0.98] {{ request()->routeIs('services.*') ? 'bg-[#34C759] text-white shadow-[0_2px_8px_rgba(52,199,89,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-[#34C759]/8 dark:hover:bg-[#34C759]/15 hover:text-[#34C759] dark:hover:text-[#30D158]' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('services.*') ? 'bg-white/20 text-white' : 'bg-[#34C759]/12 text-[#34C759] dark:bg-[#30D158]/20 dark:text-[#30D158]' }} flex items-center justify-center shrink-0">
+                        class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-semibold transition-all active:scale-[0.98] {{ request()->routeIs('services.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('services.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="{{ ($activeBiz && $activeBiz->isWorkshop()) ? 'wrench' : 'briefcase' }}" class="w-3.5 h-3.5"></i>
                         </span>
                         <div class="flex items-center justify-between flex-1 min-w-0" x-show="!sidebarCollapsed" x-transition.opacity>
@@ -599,16 +605,18 @@
 
                     {{-- Collapsed Flyout for Services --}}
                     <div x-show="sidebarCollapsed && activeFlyout === 'services'" x-transition.opacity
-                        class="fixed left-[84px] -mt-8 w-60 p-2 rounded-[14px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl border border-black/5 dark:border-white/10 shadow-[0_16px_36px_rgba(0,0,0,0.18)] z-50 space-y-1 pointer-events-auto max-h-[85vh] overflow-y-auto overscroll-contain"
+                        class="sidebar-flyout-wrapper fixed left-[70px] pl-3 -mt-6 z-50 pointer-events-auto"
                         style="display: none;">
-                        <div class="px-2.5 py-1 font-semibold text-xs text-black dark:text-white border-b border-black/5 dark:border-white/10 pb-1.5 mb-1">
-                            {{ __('navigation.services') }}
+                        <div class="sidebar-flyout-panel w-60 p-2 rounded-[14px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 shadow-[0_16px_36px_rgba(0,0,0,0.18)] space-y-1 max-h-[85vh] overflow-y-auto overscroll-contain">
+                            <div class="px-2.5 py-1 font-semibold text-xs text-black dark:text-white border-b border-black/5 dark:border-white/10 pb-1.5 mb-1">
+                                {{ __('navigation.services') }}
+                            </div>
+                            <a href="{{ route('services.index') }}"
+                                class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('services.*') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
+                                <i data-lucide="{{ ($activeBiz && $activeBiz->isWorkshop()) ? 'wrench' : 'briefcase' }}" class="w-3.5 h-3.5 {{ request()->routeIs('services.*') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
+                                <span>{{ __('navigation.services') }}</span>
+                            </a>
                         </div>
-                        <a href="{{ route('services.index') }}"
-                            class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]">
-                            <i data-lucide="{{ ($activeBiz && $activeBiz->isWorkshop()) ? 'wrench' : 'briefcase' }}" class="w-3.5 h-3.5 text-[#34C759]"></i>
-                            <span>{{ __('navigation.services') }}</span>
-                        </a>
                     </div>
                 </div>
             @endif
@@ -621,8 +629,8 @@
                     <a href="{{ route('cooca-ai.index') }}" id="tour-nav-ai"
                         {{ request()->routeIs('cooca-ai.*') || request()->routeIs('ai.*') || request()->routeIs('pos.ai.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '3D Virtual Office' : ''"
-                        class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-semibold transition-all active:scale-[0.98] {{ request()->routeIs('cooca-ai.*') || request()->routeIs('ai.*') || request()->routeIs('pos.ai.*') ? 'bg-gradient-to-r from-[#AF52DE] to-[#5856D6] text-white shadow-[0_2px_8px_rgba(175,82,222,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-[#AF52DE]/8 dark:hover:bg-[#AF52DE]/15 hover:text-[#AF52DE] dark:hover:text-[#BF5AF2]' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('cooca-ai.*') || request()->routeIs('ai.*') || request()->routeIs('pos.ai.*') ? 'bg-white/20 text-white' : 'bg-[#AF52DE]/15 text-[#AF52DE] dark:bg-[#BF5AF2]/20 dark:text-[#BF5AF2]' }} flex items-center justify-center shrink-0">
+                        class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-semibold transition-all active:scale-[0.98] {{ request()->routeIs('cooca-ai.*') || request()->routeIs('ai.*') || request()->routeIs('pos.ai.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('cooca-ai.*') || request()->routeIs('ai.*') || request()->routeIs('pos.ai.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="box" class="w-3.5 h-3.5"></i>
                         </span>
                         <div class="flex items-center justify-between flex-1 min-w-0" x-show="!sidebarCollapsed" x-transition.opacity>
@@ -633,34 +641,72 @@
                     @if (request()->routeIs('cooca-ai.*') || request()->routeIs('ai.*') || request()->routeIs('pos.ai.*'))
                         <div x-show="!sidebarCollapsed" class="ml-4 pl-3 py-1 space-y-0.5 border-l border-black/10 dark:border-white/10 mt-1 text-[12px]">
                             <a href="{{ route('cooca-ai.index') }}"
-                                class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] font-medium transition-colors {{ (request()->routeIs('cooca-ai.index') || request()->routeIs('cooca-ai.office.*')) && !request()->routeIs('pos.ai.*') && !request()->routeIs('cooca-ai.actions*') && !request()->routeIs('cooca-ai.history*') && !request()->routeIs('cooca-ai.providers*') ? 'bg-black/5 dark:bg-white/10 text-[#AF52DE] dark:text-[#BF5AF2] font-bold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.03] dark:hover:bg-white/[0.04]' }}">
-                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></span>
+                                class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] font-medium transition-colors {{ (request()->routeIs('cooca-ai.index') || request()->routeIs('cooca-ai.office.*')) && !request()->routeIs('pos.ai.*') && !request()->routeIs('cooca-ai.actions*') && !request()->routeIs('cooca-ai.history*') && !request()->routeIs('cooca-ai.providers*') ? 'bg-black/5 dark:bg-white/10 text-[#007AFF] dark:text-[#0A84FF] font-bold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.03] dark:hover:bg-white/[0.04]' }}">
+                                <span class="w-1.5 h-1.5 rounded-full bg-[#007AFF] shrink-0"></span>
                                 <span class="truncate">AI Studio</span>
                             </a>
                             @if ($canAccessPos && Route::has('pos.ai.index'))
                             <a href="{{ route('pos.ai.index') }}"
-                                class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] font-medium transition-colors {{ request()->routeIs('pos.ai.*') ? 'bg-black/5 dark:bg-white/10 text-emerald-600 dark:text-emerald-400 font-bold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.03] dark:hover:bg-white/[0.04]' }}">
-                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></span>
+                                class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] font-medium transition-colors {{ request()->routeIs('pos.ai.*') ? 'bg-black/5 dark:bg-white/10 text-[#007AFF] dark:text-[#0A84FF] font-bold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.03] dark:hover:bg-white/[0.04]' }}">
+                                <span class="w-1.5 h-1.5 rounded-full bg-[#007AFF] shrink-0"></span>
                                 <span class="truncate">AI POS Intelligence</span>
                             </a>
                             @endif
                             <a href="{{ route('cooca-ai.actions') }}"
-                                class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] font-medium transition-colors {{ request()->routeIs('cooca-ai.actions*') ? 'bg-black/5 dark:bg-white/10 text-amber-600 dark:text-amber-400 font-bold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.03] dark:hover:bg-white/[0.04]' }}">
-                                <span class="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0"></span>
+                                class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] font-medium transition-colors {{ request()->routeIs('cooca-ai.actions*') ? 'bg-black/5 dark:bg-white/10 text-[#007AFF] dark:text-[#0A84FF] font-bold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.03] dark:hover:bg-white/[0.04]' }}">
+                                <span class="w-1.5 h-1.5 rounded-full bg-black/40 dark:text-white/40 shrink-0"></span>
                                 <span class="truncate">{{ __('ai.navigation.action_center') }}</span>
                             </a>
                             <a href="{{ route('cooca-ai.history') }}"
-                                class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] font-medium transition-colors {{ request()->routeIs('cooca-ai.history*') ? 'bg-black/5 dark:bg-white/10 text-sky-600 dark:text-sky-400 font-bold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.03] dark:hover:bg-white/[0.04]' }}">
-                                <span class="w-1.5 h-1.5 rounded-full bg-sky-500 shrink-0"></span>
+                                class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] font-medium transition-colors {{ request()->routeIs('cooca-ai.history*') ? 'bg-black/5 dark:bg-white/10 text-[#007AFF] dark:text-[#0A84FF] font-bold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.03] dark:hover:bg-white/[0.04]' }}">
+                                <span class="w-1.5 h-1.5 rounded-full bg-black/40 dark:text-white/40 shrink-0"></span>
                                 <span class="truncate">{{ __('ai.navigation.session_history') }}</span>
                             </a>
                             <a href="{{ route('cooca-ai.providers') }}"
-                                class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] font-medium transition-colors {{ request()->routeIs('cooca-ai.providers*') ? 'bg-black/5 dark:bg-white/10 text-indigo-600 dark:text-indigo-400 font-bold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.03] dark:hover:bg-white/[0.04]' }}">
-                                <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0"></span>
+                                class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] font-medium transition-colors {{ request()->routeIs('cooca-ai.providers*') ? 'bg-black/5 dark:bg-white/10 text-[#007AFF] dark:text-[#0A84FF] font-bold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.03] dark:hover:bg-white/[0.04]' }}">
+                                <span class="w-1.5 h-1.5 rounded-full bg-black/40 dark:text-white/40 shrink-0"></span>
                                 <span class="truncate">{{ __('ai.navigation.settings') }}</span>
                             </a>
                         </div>
                     @endif
+
+                    {{-- Collapsed Flyout for AI Office --}}
+                    <div x-show="sidebarCollapsed && activeFlyout === 'ai'" x-transition.opacity
+                        class="sidebar-flyout-wrapper fixed left-[70px] pl-3 -mt-6 z-50 pointer-events-auto"
+                        style="display: none;">
+                        <div class="sidebar-flyout-panel w-60 p-2 rounded-[14px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 shadow-[0_16px_36px_rgba(0,0,0,0.18)] space-y-1 max-h-[85vh] overflow-y-auto overscroll-contain">
+                            <div class="px-2.5 py-1 font-semibold text-xs text-black dark:text-white border-b border-black/5 dark:border-white/10 pb-1.5 mb-1">
+                                3D Virtual Office
+                            </div>
+                            <a href="{{ route('cooca-ai.index') }}"
+                                class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('cooca-ai.index') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
+                                <i data-lucide="sparkles" class="w-3.5 h-3.5 {{ request()->routeIs('cooca-ai.index') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
+                                <span>AI Studio</span>
+                            </a>
+                            @if ($canAccessPos && Route::has('pos.ai.index'))
+                            <a href="{{ route('pos.ai.index') }}"
+                                class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('pos.ai.*') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
+                                <i data-lucide="calculator" class="w-3.5 h-3.5 {{ request()->routeIs('pos.ai.*') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
+                                <span>AI POS Intelligence</span>
+                            </a>
+                            @endif
+                            <a href="{{ route('cooca-ai.actions') }}"
+                                class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('cooca-ai.actions*') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
+                                <i data-lucide="activity" class="w-3.5 h-3.5 {{ request()->routeIs('cooca-ai.actions*') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
+                                <span>{{ __('ai.navigation.action_center') }}</span>
+                            </a>
+                            <a href="{{ route('cooca-ai.history') }}"
+                                class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('cooca-ai.history*') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
+                                <i data-lucide="history" class="w-3.5 h-3.5 {{ request()->routeIs('cooca-ai.history*') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
+                                <span>{{ __('ai.navigation.session_history') }}</span>
+                            </a>
+                            <a href="{{ route('cooca-ai.providers') }}"
+                                class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('cooca-ai.providers*') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
+                                <i data-lucide="settings-2" class="w-3.5 h-3.5 {{ request()->routeIs('cooca-ai.providers*') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
+                                <span>{{ __('ai.navigation.settings') }}</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             @endif
 
@@ -692,8 +738,8 @@
                 <a href="{{ route('community.index') }}" id="tour-nav-community"
                     {{ request()->routeIs('community.*') ? 'aria-current="page"' : '' }}
                     :title="sidebarCollapsed ? '{{ __('navigation.owner_community') }}' : ''"
-                    class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-semibold transition-all active:scale-[0.98] {{ request()->routeIs('community.*') ? 'bg-[#FF9500] text-white shadow-[0_2px_8px_rgba(255,149,0,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-[#FF9500]/8 dark:hover:bg-[#FF9500]/15 hover:text-[#FF9500] dark:hover:text-[#FF9F0A]' }}">
-                    <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('community.*') ? 'bg-white/20 text-white' : 'bg-[#FF9500]/15 text-[#FF9500] dark:bg-[#FF9F0A]/20 dark:text-[#FF9F0A]' }} flex items-center justify-center shrink-0">
+                    class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-semibold transition-all active:scale-[0.98] {{ request()->routeIs('community.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
+                    <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('community.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                         <i data-lucide="users-round" class="w-3.5 h-3.5"></i>
                     </span>
                     <div class="flex items-center justify-between flex-1 min-w-0" x-show="!sidebarCollapsed" x-transition.opacity>
@@ -727,7 +773,7 @@
                             {{ request()->routeIs('inventory.stocks') ? 'aria-current="page"' : '' }}
                             :title="sidebarCollapsed ? '{{ __('navigation.stocks_warehouse') }}' : ''"
                             class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-semibold transition-all active:scale-[0.98] {{ request()->routeIs('inventory.stocks') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                            <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('inventory.stocks') ? 'bg-white/20 text-white' : 'bg-[#FF9500]/15 text-[#FF9500] dark:bg-[#FF9F0A]/20 dark:text-[#FF9F0A]' }} flex items-center justify-center shrink-0">
+                            <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('inventory.stocks') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                                 <i data-lucide="boxes" class="w-3.5 h-3.5"></i>
                             </span>
                             <span class="truncate tracking-tight font-semibold" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.stocks_warehouse') }}</span>
@@ -744,7 +790,7 @@
                             {{ request()->routeIs('warehouse.*') ? 'aria-current="page"' : '' }}
                             :title="sidebarCollapsed ? '{{ __('navigation.warehouse_locations') }}' : ''"
                             class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('warehouse.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                            <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('warehouse.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/12 text-[#007AFF] dark:bg-[#0A84FF]/20 dark:text-[#0A84FF]' }} flex items-center justify-center shrink-0">
+                            <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('warehouse.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                                 <i data-lucide="warehouse" class="w-3.5 h-3.5"></i>
                             </span>
                             <span class="truncate tracking-tight font-medium" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.warehouse_locations') }}</span>
@@ -760,7 +806,7 @@
                             {{ request()->routeIs('inventory.transfers.*') ? 'aria-current="page"' : '' }}
                             :title="sidebarCollapsed ? '{{ __('navigation.stock_transfers') }}' : ''"
                             class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('inventory.transfers.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                            <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('inventory.transfers.*') ? 'bg-white/20 text-white' : 'bg-[#AF52DE]/15 text-[#AF52DE] dark:bg-[#BF5AF2]/20 dark:text-[#BF5AF2]' }} flex items-center justify-center shrink-0">
+                            <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('inventory.transfers.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                                 <i data-lucide="arrow-left-right" class="w-3.5 h-3.5"></i>
                             </span>
                             <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.stock_transfers') }}</span>
@@ -774,7 +820,7 @@
                             {{ request()->routeIs('inventory.opnames.*') ? 'aria-current="page"' : '' }}
                             :title="sidebarCollapsed ? '{{ __('navigation.stock_opnames') }}' : ''"
                             class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('inventory.opnames.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                            <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('inventory.opnames.*') ? 'bg-white/20 text-white' : 'bg-[#34C759]/15 text-[#34C759] dark:bg-[#30D158]/20 dark:text-[#30D158]' }} flex items-center justify-center shrink-0">
+                            <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('inventory.opnames.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                                 <i data-lucide="clipboard-check" class="w-3.5 h-3.5"></i>
                             </span>
                             <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.stock_opnames') }}</span>
@@ -788,7 +834,7 @@
                             {{ request()->routeIs('inventory.movements') ? 'aria-current="page"' : '' }}
                             :title="sidebarCollapsed ? '{{ __('navigation.stock_movements') }}' : ''"
                             class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('inventory.movements') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                            <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('inventory.movements') ? 'bg-white/20 text-white' : 'bg-[#30B0C7]/15 text-[#30B0C7] dark:bg-[#40C8E0]/20 dark:text-[#40C8E0]' }} flex items-center justify-center shrink-0">
+                            <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('inventory.movements') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                                 <i data-lucide="history" class="w-3.5 h-3.5"></i>
                             </span>
                             <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.stock_movements') }}</span>
@@ -809,7 +855,7 @@
                         class="sidebar-item w-full flex items-center justify-between px-2.5 py-1.5 rounded-[8px] text-left text-[13px] font-medium transition-all active:scale-[0.98] {{ $isPurchasingRoute ? 'bg-black/[0.05] dark:bg-white/[0.06] text-black dark:text-white font-semibold' : 'text-black/75 dark:text-white/75 hover:bg-black/[0.04] dark:hover:bg-white/[0.05] hover:text-black dark:hover:text-white' }}">
                         <div class="sidebar-item-inner flex items-center gap-2.5 min-w-0">
                             <i data-lucide="truck"
-                                class="w-4 h-4 {{ $isPurchasingRoute ? 'text-[#30B0C7]' : 'text-black/50 dark:text-white/50' }} shrink-0"></i>
+                                class="w-4 h-4 {{ $isPurchasingRoute ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover:text-black dark:group-hover:text-white' }} shrink-0"></i>
                             <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.purchasing_group') }}</span>
                         </div>
                         <i data-lucide="chevron-down" x-show="!sidebarCollapsed"
@@ -824,7 +870,7 @@
                             <a href="{{ route('purchase-orders.index') }}" id="tour-nav-purchase-orders"
                                 {{ request()->routeIs('purchase-orders.*') ? 'aria-current="page"' : '' }}
                                 class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-[12px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('purchase-orders.*') ? 'bg-[#007AFF] text-white shadow-[0_1px_2px_rgba(0,122,255,0.25)]' : 'text-black/65 dark:text-white/65 hover:bg-black/[0.04] dark:hover:bg-white/[0.05] hover:text-black dark:hover:text-white' }}">
-                                <i data-lucide="file-text" class="w-3.5 h-3.5 {{ request()->routeIs('purchase-orders.*') ? 'text-white' : 'text-black/40 dark:text-white/40' }} shrink-0"></i>
+                                <i data-lucide="file-text" class="w-3.5 h-3.5 {{ request()->routeIs('purchase-orders.*') ? 'text-white' : 'text-black/40 dark:text-white/40 group-hover:text-black dark:group-hover:text-white' }} shrink-0"></i>
                                 <span class="truncate">{{ __('navigation.purchase_orders') }}</span>
                             </a>
                         @endif
@@ -833,7 +879,7 @@
                             <a href="{{ route('purchasing.bills.index') }}"
                                 {{ request()->routeIs('purchasing.bills.*') ? 'aria-current="page"' : '' }}
                                 class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-[12px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('purchasing.bills.*') ? 'bg-[#007AFF] text-white shadow-[0_1px_2px_rgba(0,122,255,0.25)]' : 'text-black/65 dark:text-white/65 hover:bg-black/[0.04] dark:hover:bg-white/[0.05] hover:text-black dark:hover:text-white' }}">
-                                <i data-lucide="receipt" class="w-3.5 h-3.5 {{ request()->routeIs('purchasing.bills.*') ? 'text-white' : 'text-black/40 dark:text-white/40' }} shrink-0"></i>
+                                <i data-lucide="receipt" class="w-3.5 h-3.5 {{ request()->routeIs('purchasing.bills.*') ? 'text-white' : 'text-black/40 dark:text-white/40 group-hover:text-black dark:group-hover:text-white' }} shrink-0"></i>
                                 <span class="truncate">{{ __('navigation.supplier_bills') }}</span>
                             </a>
                         @endif
@@ -842,7 +888,7 @@
                             <a href="{{ route('purchase.returns.index') }}"
                                 {{ request()->routeIs('purchase.returns.*') ? 'aria-current="page"' : '' }}
                                 class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-[12px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('purchase.returns.*') ? 'bg-[#007AFF] text-white shadow-[0_1px_2px_rgba(0,122,255,0.25)]' : 'text-black/65 dark:text-white/65 hover:bg-black/[0.04] dark:hover:bg-white/[0.05] hover:text-black dark:hover:text-white' }}">
-                                <i data-lucide="undo" class="w-3.5 h-3.5 {{ request()->routeIs('purchase.returns.*') ? 'text-white' : 'text-black/40 dark:text-white/40' }} shrink-0"></i>
+                                <i data-lucide="undo" class="w-3.5 h-3.5 {{ request()->routeIs('purchase.returns.*') ? 'text-white' : 'text-black/40 dark:text-white/40 group-hover:text-black dark:group-hover:text-white' }} shrink-0"></i>
                                 <span class="truncate">{{ __('navigation.purchase_returns') }}</span>
                             </a>
                         @endif
@@ -850,32 +896,34 @@
 
                     {{-- Collapsed Flyout for Purchasing --}}
                     <div x-show="sidebarCollapsed && activeFlyout === 'purchasing'" x-transition.opacity
-                        class="fixed left-[84px] -mt-8 w-60 p-2 rounded-[14px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl border border-black/5 dark:border-white/10 shadow-[0_16px_36px_rgba(0,0,0,0.18)] z-50 space-y-1 pointer-events-auto max-h-[85vh] overflow-y-auto overscroll-contain"
+                        class="sidebar-flyout-wrapper fixed left-[70px] pl-3 -mt-6 z-50 pointer-events-auto"
                         style="display: none;">
-                        <div class="px-2.5 py-1 font-semibold text-xs text-black dark:text-white border-b border-black/5 dark:border-white/10 pb-1.5 mb-1">
-                            {{ __('navigation.purchasing_group') }}
+                        <div class="sidebar-flyout-panel w-60 p-2 rounded-[14px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 shadow-[0_16px_36px_rgba(0,0,0,0.18)] space-y-1 max-h-[85vh] overflow-y-auto overscroll-contain">
+                            <div class="px-2.5 py-1 font-semibold text-xs text-black dark:text-white border-b border-black/5 dark:border-white/10 pb-1.5 mb-1">
+                                {{ __('navigation.purchasing_group') }}
+                            </div>
+                            @if (\App\Support\Context::hasPermission('purchasing.view'))
+                                <a href="{{ route('purchase-orders.index') }}"
+                                    class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('purchase-orders.*') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
+                                    <i data-lucide="file-text" class="w-3.5 h-3.5 {{ request()->routeIs('purchase-orders.*') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
+                                    <span>{{ __('navigation.purchase_orders') }}</span>
+                                </a>
+                            @endif
+                            @if (\App\Support\Context::hasPermission('purchasing.bills'))
+                                <a href="{{ route('purchasing.bills.index') }}"
+                                    class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('purchasing.bills.*') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
+                                    <i data-lucide="receipt" class="w-3.5 h-3.5 {{ request()->routeIs('purchasing.bills.*') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
+                                    <span>{{ __('navigation.supplier_bills') }}</span>
+                                </a>
+                            @endif
+                            @if (\App\Support\Context::hasPermission('purchase.returns'))
+                                <a href="{{ route('purchase.returns.index') }}"
+                                    class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('purchase.returns.*') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
+                                    <i data-lucide="undo" class="w-3.5 h-3.5 {{ request()->routeIs('purchase.returns.*') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
+                                    <span>{{ __('navigation.purchase_returns') }}</span>
+                                </a>
+                            @endif
                         </div>
-                        @if (\App\Support\Context::hasPermission('purchasing.view'))
-                            <a href="{{ route('purchase-orders.index') }}"
-                                class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]">
-                                <i data-lucide="file-text" class="w-3.5 h-3.5 text-[#007AFF]"></i>
-                                <span>{{ __('navigation.purchase_orders') }}</span>
-                            </a>
-                        @endif
-                        @if (\App\Support\Context::hasPermission('purchasing.bills'))
-                            <a href="{{ route('purchasing.bills.index') }}"
-                                class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]">
-                                <i data-lucide="receipt" class="w-3.5 h-3.5 text-[#FF9500]"></i>
-                                <span>{{ __('navigation.supplier_bills') }}</span>
-                            </a>
-                        @endif
-                        @if (\App\Support\Context::hasPermission('purchase.returns'))
-                            <a href="{{ route('purchase.returns.index') }}"
-                                class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]">
-                                <i data-lucide="undo" class="w-3.5 h-3.5 text-[#FF3B30]"></i>
-                                <span>{{ __('navigation.purchase_returns') }}</span>
-                            </a>
-                        @endif
                     </div>
                 </div>
             @endif
@@ -905,7 +953,7 @@
                         {{ request()->routeIs('finance.cash-bank.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.cash_bank') }}' : ''"
                         class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-semibold transition-all active:scale-[0.98] {{ request()->routeIs('finance.cash-bank.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('finance.cash-bank.*') ? 'bg-white/20 text-white' : 'bg-[#34C759]/15 text-[#34C759] dark:bg-[#30D158]/20 dark:text-[#30D158]' }} flex items-center justify-center shrink-0">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('finance.cash-bank.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="landmark" class="w-3.5 h-3.5"></i>
                         </span>
                         <div class="flex items-center justify-between flex-1 min-w-0" x-show="!sidebarCollapsed" x-transition.opacity>
@@ -922,7 +970,7 @@
                         {{ request()->routeIs('finance.expenses.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.expenses') }}' : ''"
                         class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('finance.expenses.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('finance.expenses.*') ? 'bg-white/20 text-white' : 'bg-[#FF3B30]/15 text-[#FF3B30] dark:bg-[#FF453A]/20 dark:text-[#FF453A]' }} flex items-center justify-center shrink-0">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('finance.expenses.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
                         </span>
                         <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.expenses') }}</span>
@@ -936,7 +984,7 @@
                         {{ request()->routeIs('finance.receivables') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.receivables') }}' : ''"
                         class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('finance.receivables') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('finance.receivables') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/12 text-[#007AFF] dark:bg-[#0A84FF]/20 dark:text-[#0A84FF]' }} flex items-center justify-center shrink-0">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('finance.receivables') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="arrow-down-left" class="w-3.5 h-3.5"></i>
                         </span>
                         <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.receivables') }}</span>
@@ -950,7 +998,7 @@
                         {{ request()->routeIs('finance.payables') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.payables') }}' : ''"
                         class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('finance.payables') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('finance.payables') ? 'bg-white/20 text-white' : 'bg-[#FF9500]/15 text-[#FF9500] dark:bg-[#FF9F0A]/20 dark:text-[#FF9F0A]' }} flex items-center justify-center shrink-0">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('finance.payables') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
                         </span>
                         <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.payables') }}</span>
@@ -964,7 +1012,7 @@
                         {{ request()->routeIs('finance.settlements.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.settlements') }}' : ''"
                         class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('finance.settlements.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('finance.settlements.*') ? 'bg-white/20 text-white' : 'bg-[#5856D6]/15 text-[#5856D6] dark:bg-[#5E5CE6]/20 dark:text-[#5E5CE6]' }} flex items-center justify-center shrink-0">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('finance.settlements.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="badge-check" class="w-3.5 h-3.5"></i>
                         </span>
                         <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.settlements') }}</span>
@@ -987,7 +1035,7 @@
                         class="sidebar-item w-full flex items-center justify-between px-2.5 py-1.5 rounded-[8px] text-left text-[13px] font-medium transition-all active:scale-[0.98] {{ (request()->routeIs('finance.coa.*') || request()->routeIs('finance.journals.*') || request()->routeIs('finance.general-ledger') || request()->routeIs('finance.balance-sheet') || request()->routeIs('finance.trial-balance') || request()->routeIs('finance.reconciliations.*')) ? 'bg-black/[0.05] dark:bg-white/[0.06] text-black dark:text-white font-semibold' : 'text-black/75 dark:text-white/75 hover:bg-black/[0.04] dark:hover:bg-white/[0.05] hover:text-black dark:hover:text-white' }}">
                         <div class="sidebar-item-inner flex items-center gap-2.5 min-w-0">
                             <i data-lucide="book-open"
-                                class="w-4 h-4 {{ (request()->routeIs('finance.coa.*') || request()->routeIs('finance.journals.*') || request()->routeIs('finance.general-ledger') || request()->routeIs('finance.balance-sheet') || request()->routeIs('finance.trial-balance') || request()->routeIs('finance.reconciliations.*')) ? 'text-[#007AFF]' : 'text-black/50 dark:text-white/50' }} shrink-0"></i>
+                                class="w-4 h-4 {{ (request()->routeIs('finance.coa.*') || request()->routeIs('finance.journals.*') || request()->routeIs('finance.general-ledger') || request()->routeIs('finance.balance-sheet') || request()->routeIs('finance.trial-balance') || request()->routeIs('finance.reconciliations.*')) ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover:text-black dark:group-hover:text-white' }} shrink-0"></i>
                             <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.accounting_corporate') }}</span>
                         </div>
                         <i data-lucide="chevron-down" x-show="!sidebarCollapsed"
@@ -1001,78 +1049,85 @@
                         <a href="{{ route('finance.coa.index') }}"
                             {{ request()->routeIs('finance.coa.*') ? 'aria-current="page"' : '' }}
                             class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-[12px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('finance.coa.*') ? 'bg-[#007AFF] text-white shadow-[0_1px_2px_rgba(0,122,255,0.25)]' : 'text-black/65 dark:text-white/65 hover:bg-black/[0.04] dark:hover:bg-white/[0.05] hover:text-black dark:hover:text-white' }}">
-                            <i data-lucide="list-tree" class="w-3.5 h-3.5 {{ request()->routeIs('finance.coa.*') ? 'text-white' : 'text-black/40 dark:text-white/40' }} shrink-0"></i>
+                            <i data-lucide="list-tree" class="w-3.5 h-3.5 {{ request()->routeIs('finance.coa.*') ? 'text-white' : 'text-black/40 dark:text-white/40 group-hover:text-black dark:group-hover:text-white' }} shrink-0"></i>
                             <span class="truncate">{{ __('navigation.coa') }}</span>
                         </a>
 
                         <a href="{{ route('finance.journals.index') }}"
                             {{ request()->routeIs('finance.journals.*') ? 'aria-current="page"' : '' }}
                             class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-[12px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('finance.journals.*') ? 'bg-[#007AFF] text-white shadow-[0_1px_2px_rgba(0,122,255,0.25)]' : 'text-black/65 dark:text-white/65 hover:bg-black/[0.04] dark:hover:bg-white/[0.05] hover:text-black dark:hover:text-white' }}">
-                            <i data-lucide="file-text" class="w-3.5 h-3.5 {{ request()->routeIs('finance.journals.*') ? 'text-white' : 'text-black/40 dark:text-white/40' }} shrink-0"></i>
+                            <i data-lucide="file-text" class="w-3.5 h-3.5 {{ request()->routeIs('finance.journals.*') ? 'text-white' : 'text-black/40 dark:text-white/40 group-hover:text-black dark:group-hover:text-white' }} shrink-0"></i>
                             <span class="truncate">{{ __('navigation.journals') }}</span>
                         </a>
 
                         <a href="{{ route('finance.general-ledger') }}"
                             {{ request()->routeIs('finance.general-ledger') ? 'aria-current="page"' : '' }}
                             class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-[12px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('finance.general-ledger') ? 'bg-[#007AFF] text-white shadow-[0_1px_2px_rgba(0,122,255,0.25)]' : 'text-black/65 dark:text-white/65 hover:bg-black/[0.04] dark:hover:bg-white/[0.05] hover:text-black dark:hover:text-white' }}">
-                            <i data-lucide="book-open" class="w-3.5 h-3.5 {{ request()->routeIs('finance.general-ledger') ? 'text-white' : 'text-black/40 dark:text-white/40' }} shrink-0"></i>
+                            <i data-lucide="book-open" class="w-3.5 h-3.5 {{ request()->routeIs('finance.general-ledger') ? 'text-white' : 'text-black/40 dark:text-white/40 group-hover:text-black dark:group-hover:text-white' }} shrink-0"></i>
                             <span class="truncate">{{ __('navigation.general_ledger') }}</span>
                         </a>
 
                         <a href="{{ route('finance.balance-sheet') }}"
                             {{ request()->routeIs('finance.balance-sheet') ? 'aria-current="page"' : '' }}
                             class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-[12px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('finance.balance-sheet') ? 'bg-[#007AFF] text-white shadow-[0_1px_2px_rgba(0,122,255,0.25)]' : 'text-black/65 dark:text-white/65 hover:bg-black/[0.04] dark:hover:bg-white/[0.05] hover:text-black dark:hover:text-white' }}">
-                            <i data-lucide="scale" class="w-3.5 h-3.5 {{ request()->routeIs('finance.balance-sheet') ? 'text-white' : 'text-black/40 dark:text-white/40' }} shrink-0"></i>
+                            <i data-lucide="scale" class="w-3.5 h-3.5 {{ request()->routeIs('finance.balance-sheet') ? 'text-white' : 'text-black/40 dark:text-white/40 group-hover:text-black dark:group-hover:text-white' }} shrink-0"></i>
                             <span class="truncate">{{ __('navigation.balance_sheet') }}</span>
                         </a>
 
                         <a href="{{ route('finance.trial-balance') }}"
                             {{ request()->routeIs('finance.trial-balance') ? 'aria-current="page"' : '' }}
                             class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-[12px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('finance.trial-balance') ? 'bg-[#007AFF] text-white shadow-[0_1px_2px_rgba(0,122,255,0.25)]' : 'text-black/65 dark:text-white/65 hover:bg-black/[0.04] dark:hover:bg-white/[0.05] hover:text-black dark:hover:text-white' }}">
-                            <i data-lucide="table-properties" class="w-3.5 h-3.5 {{ request()->routeIs('finance.trial-balance') ? 'text-white' : 'text-black/40 dark:text-white/40' }} shrink-0"></i>
+                            <i data-lucide="table-properties" class="w-3.5 h-3.5 {{ request()->routeIs('finance.trial-balance') ? 'text-white' : 'text-black/40 dark:text-white/40 group-hover:text-black dark:group-hover:text-white' }} shrink-0"></i>
                             <span class="truncate">{{ __('navigation.trial_balance') }}</span>
                         </a>
 
                         <a href="{{ route('finance.reconciliations.index') }}"
                             {{ request()->routeIs('finance.reconciliations.*') ? 'aria-current="page"' : '' }}
                             class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-[12px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('finance.reconciliations.*') ? 'bg-[#007AFF] text-white shadow-[0_1px_2px_rgba(0,122,255,0.25)]' : 'text-black/65 dark:text-white/65 hover:bg-black/[0.04] dark:hover:bg-white/[0.05] hover:text-black dark:hover:text-white' }}">
-                            <i data-lucide="git-compare" class="w-3.5 h-3.5 {{ request()->routeIs('finance.reconciliations.*') ? 'text-white' : 'text-black/40 dark:text-white/40' }} shrink-0"></i>
+                            <i data-lucide="git-compare" class="w-3.5 h-3.5 {{ request()->routeIs('finance.reconciliations.*') ? 'text-white' : 'text-black/40 dark:text-white/40 group-hover:text-black dark:group-hover:text-white' }} shrink-0"></i>
                             <span class="truncate">{{ __('navigation.bank_reconciliation') }}</span>
                         </a>
                     </div>
 
                     {{-- Collapsed Flyout for Corporate Accounting --}}
                     <div x-show="sidebarCollapsed && activeFlyout === 'accounting'" x-transition.opacity
-                        class="fixed left-[84px] -mt-8 w-60 p-2 rounded-[14px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl border border-black/5 dark:border-white/10 shadow-[0_16px_36px_rgba(0,0,0,0.18)] z-50 space-y-1 pointer-events-auto max-h-[85vh] overflow-y-auto overscroll-contain"
+                        class="sidebar-flyout-wrapper fixed left-[70px] pl-3 -mt-6 z-50 pointer-events-auto"
                         style="display: none;">
-                        <div class="px-2.5 py-1 font-semibold text-xs text-black dark:text-white border-b border-black/5 dark:border-white/10 pb-1.5 mb-1">
-                            {{ __('navigation.accounting_corporate') }}
+                        <div class="sidebar-flyout-panel w-60 p-2 rounded-[14px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 shadow-[0_16px_36px_rgba(0,0,0,0.18)] space-y-1 max-h-[85vh] overflow-y-auto overscroll-contain">
+                            <div class="px-2.5 py-1 font-semibold text-xs text-black dark:text-white border-b border-black/5 dark:border-white/10 pb-1.5 mb-1">
+                                {{ __('navigation.accounting_corporate') }}
+                            </div>
+                            <a href="{{ route('finance.coa.index') }}"
+                                class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('finance.coa.*') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
+                                <i data-lucide="list-tree" class="w-3.5 h-3.5 {{ request()->routeIs('finance.coa.*') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
+                                <span>{{ __('navigation.coa') }}</span>
+                            </a>
+                            <a href="{{ route('finance.journals.index') }}"
+                                class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('finance.journals.*') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
+                                <i data-lucide="file-text" class="w-3.5 h-3.5 {{ request()->routeIs('finance.journals.*') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
+                                <span>{{ __('navigation.journals') }}</span>
+                            </a>
+                            <a href="{{ route('finance.general-ledger') }}"
+                                class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('finance.general-ledger') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
+                                <i data-lucide="book-open" class="w-3.5 h-3.5 {{ request()->routeIs('finance.general-ledger') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
+                                <span>{{ __('navigation.general_ledger') }}</span>
+                            </a>
+                            <a href="{{ route('finance.balance-sheet') }}"
+                                class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('finance.balance-sheet') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
+                                <i data-lucide="scale" class="w-3.5 h-3.5 {{ request()->routeIs('finance.balance-sheet') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
+                                <span>{{ __('navigation.balance_sheet') }}</span>
+                            </a>
+                            <a href="{{ route('finance.trial-balance') }}"
+                                class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('finance.trial-balance') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
+                                <i data-lucide="table-properties" class="w-3.5 h-3.5 {{ request()->routeIs('finance.trial-balance') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
+                                <span>{{ __('navigation.trial_balance') }}</span>
+                            </a>
+                            <a href="{{ route('finance.reconciliations.index') }}"
+                                class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('finance.reconciliations.*') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
+                                <i data-lucide="git-compare" class="w-3.5 h-3.5 {{ request()->routeIs('finance.reconciliations.*') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
+                                <span>{{ __('navigation.bank_reconciliation') }}</span>
+                            </a>
                         </div>
-                        <a href="{{ route('finance.coa.index') }}"
-                            class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]">
-                            <i data-lucide="list-tree" class="w-3.5 h-3.5 text-[#007AFF]"></i>
-                            <span>{{ __('navigation.coa') }}</span>
-                        </a>
-                        <a href="{{ route('finance.journals.index') }}"
-                            class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]">
-                            <i data-lucide="file-text" class="w-3.5 h-3.5 text-[#007AFF]"></i>
-                            <span>{{ __('navigation.journals') }}</span>
-                        </a>
-                        <a href="{{ route('finance.general-ledger') }}"
-                            class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]">
-                            <i data-lucide="book-open" class="w-3.5 h-3.5 text-[#007AFF]"></i>
-                            <span>{{ __('navigation.general_ledger') }}</span>
-                        </a>
-                        <a href="{{ route('finance.balance-sheet') }}"
-                            class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]">
-                            <i data-lucide="scale" class="w-3.5 h-3.5 text-[#007AFF]"></i>
-                            <span>{{ __('navigation.balance_sheet') }}</span>
-                        </a>
-                        <a href="{{ route('finance.reconciliations.index') }}"
-                            class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]">
-                            <i data-lucide="git-compare" class="w-3.5 h-3.5 text-[#007AFF]"></i>
-                            <span>{{ __('navigation.bank_reconciliation') }}</span>
-                        </a>
                     </div>
                 </div>
             @endif
@@ -1089,7 +1144,7 @@
                         class="sidebar-item w-full flex items-center justify-between px-2.5 py-1.5 rounded-[8px] text-left text-[13px] font-medium transition-all active:scale-[0.98] {{ (request()->routeIs('calculator.*') || request()->routeIs('simulator.*') || request()->routeIs('labor-machines.*') || request()->routeIs('profitability.*')) ? 'bg-black/[0.05] dark:bg-white/[0.06] text-black dark:text-white font-semibold' : 'text-black/75 dark:text-white/75 hover:bg-black/[0.04] dark:hover:bg-white/[0.05] hover:text-black dark:hover:text-white' }}">
                         <div class="sidebar-item-inner flex items-center gap-2.5 min-w-0">
                             <i data-lucide="calculator"
-                                class="w-4 h-4 {{ (request()->routeIs('calculator.*') || request()->routeIs('simulator.*') || request()->routeIs('labor-machines.*') || request()->routeIs('profitability.*')) ? 'text-[#007AFF]' : 'text-black/50 dark:text-white/50' }} shrink-0"></i>
+                                class="w-4 h-4 {{ (request()->routeIs('calculator.*') || request()->routeIs('simulator.*') || request()->routeIs('labor-machines.*') || request()->routeIs('profitability.*')) ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover:text-black dark:group-hover:text-white' }} shrink-0"></i>
                             <span class="truncate font-semibold" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.costing_margin') }}</span>
                             <span class="sr-only">{{ __('navigation.hpp_cost_calculator') }}</span>
                         </div>
@@ -1104,14 +1159,14 @@
                         <a href="{{ route('calculator.index') }}"
                             {{ request()->routeIs('calculator.index') ? 'aria-current="page"' : '' }}
                             class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-[12px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('calculator.index') ? 'bg-[#007AFF] text-white shadow-[0_1px_2px_rgba(0,122,255,0.25)]' : 'text-black/65 dark:text-white/65 hover:bg-black/[0.04] dark:hover:bg-white/[0.05] hover:text-black dark:hover:text-white' }}">
-                            <i data-lucide="calculator" class="w-3.5 h-3.5 {{ request()->routeIs('calculator.index') ? 'text-white' : 'text-black/40 dark:text-white/40' }} shrink-0"></i>
+                            <i data-lucide="calculator" class="w-3.5 h-3.5 {{ request()->routeIs('calculator.index') ? 'text-white' : 'text-black/40 dark:text-white/40 group-hover:text-black dark:group-hover:text-white' }} shrink-0"></i>
                             <span class="truncate">{{ __('navigation.calculator_hpp') }}</span>
                         </a>
 
                         <a href="{{ route('simulator.index') }}" id="tour-nav-simulator"
                             {{ request()->routeIs('simulator.*') ? 'aria-current="page"' : '' }}
                             class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-[12px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('simulator.*') ? 'bg-[#007AFF] text-white shadow-[0_1px_2px_rgba(0,122,255,0.25)]' : 'text-black/65 dark:text-white/65 hover:bg-black/[0.04] dark:hover:bg-white/[0.05] hover:text-black dark:hover:text-white' }}">
-                            <i data-lucide="cpu" class="w-3.5 h-3.5 {{ request()->routeIs('simulator.*') ? 'text-white' : 'text-black/40 dark:text-white/40' }} shrink-0"></i>
+                            <i data-lucide="cpu" class="w-3.5 h-3.5 {{ request()->routeIs('simulator.*') ? 'text-white' : 'text-black/40 dark:text-white/40 group-hover:text-black dark:group-hover:text-white' }} shrink-0"></i>
                             <span class="truncate">{{ __('navigation.pricing_simulator') }}</span>
                         </a>
 
@@ -1119,7 +1174,7 @@
                         <a href="{{ route('labor-machines.index') }}" id="tour-nav-labor-machines"
                             {{ request()->routeIs('labor-machines.*') ? 'aria-current="page"' : '' }}
                             class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-[12px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('labor-machines.*') ? 'bg-[#007AFF] text-white shadow-[0_1px_2px_rgba(0,122,255,0.25)]' : 'text-black/65 dark:text-white/65 hover:bg-black/[0.04] dark:hover:bg-white/[0.05] hover:text-black dark:hover:text-white' }}">
-                            <i data-lucide="hammer" class="w-3.5 h-3.5 {{ request()->routeIs('labor-machines.*') ? 'text-white' : 'text-black/40 dark:text-white/40' }} shrink-0"></i>
+                            <i data-lucide="hammer" class="w-3.5 h-3.5 {{ request()->routeIs('labor-machines.*') ? 'text-white' : 'text-black/40 dark:text-white/40 group-hover:text-black dark:group-hover:text-white' }} shrink-0"></i>
                             <span class="truncate">{{ __('navigation.labor_machines') }}</span>
                         </a>
                         @endif
@@ -1127,33 +1182,42 @@
                         <a href="{{ route('profitability.index') }}" id="tour-nav-profitability"
                             {{ request()->routeIs('profitability.*') ? 'aria-current="page"' : '' }}
                             class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-[12px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('profitability.*') ? 'bg-[#007AFF] text-white shadow-[0_1px_2px_rgba(0,122,255,0.25)]' : 'text-black/65 dark:text-white/65 hover:bg-black/[0.04] dark:hover:bg-white/[0.05] hover:text-black dark:hover:text-white' }}">
-                            <i data-lucide="pie-chart" class="w-3.5 h-3.5 {{ request()->routeIs('profitability.*') ? 'text-white' : 'text-black/40 dark:text-white/40' }} shrink-0"></i>
+                            <i data-lucide="pie-chart" class="w-3.5 h-3.5 {{ request()->routeIs('profitability.*') ? 'text-white' : 'text-black/40 dark:text-white/40 group-hover:text-black dark:group-hover:text-white' }} shrink-0"></i>
                             <span class="truncate">{{ __('navigation.profitability_bep') }}</span>
                         </a>
                     </div>
 
                     {{-- Collapsed Flyout for Costing --}}
                     <div x-show="sidebarCollapsed && activeFlyout === 'costing'" x-transition.opacity
-                        class="fixed left-[84px] -mt-8 w-60 p-2 rounded-[14px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl border border-black/5 dark:border-white/10 shadow-[0_16px_36px_rgba(0,0,0,0.18)] z-50 space-y-1 pointer-events-auto max-h-[85vh] overflow-y-auto overscroll-contain"
+                        class="sidebar-flyout-wrapper fixed left-[70px] pl-3 -mt-6 z-50 pointer-events-auto"
                         style="display: none;">
-                        <div class="px-2.5 py-1 font-semibold text-xs text-black dark:text-white border-b border-black/5 dark:border-white/10 pb-1.5 mb-1">
-                            {{ __('navigation.costing_margin') }}
+                        <div class="sidebar-flyout-panel w-60 p-2 rounded-[14px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 shadow-[0_16px_36px_rgba(0,0,0,0.18)] space-y-1 max-h-[85vh] overflow-y-auto overscroll-contain">
+                            <div class="px-2.5 py-1 font-semibold text-xs text-black dark:text-white border-b border-black/5 dark:border-white/10 pb-1.5 mb-1">
+                                {{ __('navigation.costing_margin') }}
+                            </div>
+                            <a href="{{ route('calculator.index') }}"
+                                class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('calculator.index') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
+                                <i data-lucide="calculator" class="w-3.5 h-3.5 {{ request()->routeIs('calculator.index') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
+                                <span>{{ __('navigation.calculator_hpp') }}</span>
+                            </a>
+                            <a href="{{ route('simulator.index') }}"
+                                class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('simulator.*') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
+                                <i data-lucide="cpu" class="w-3.5 h-3.5 {{ request()->routeIs('simulator.*') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
+                                <span>{{ __('navigation.pricing_simulator') }}</span>
+                            </a>
+                            @if (\App\Support\Context::hasPermission('labor_machines.view') && ($activeBiz?->isModuleEnabled(\App\Domain\Template\ModuleRegistry::MODULE_LABOR_MACHINES) ?? true))
+                            <a href="{{ route('labor-machines.index') }}"
+                                class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('labor-machines.*') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
+                                <i data-lucide="hammer" class="w-3.5 h-3.5 {{ request()->routeIs('labor-machines.*') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
+                                <span>{{ __('navigation.labor_machines') }}</span>
+                            </a>
+                            @endif
+                            <a href="{{ route('profitability.index') }}"
+                                class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('profitability.*') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
+                                <i data-lucide="pie-chart" class="w-3.5 h-3.5 {{ request()->routeIs('profitability.*') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
+                                <span>{{ __('navigation.profitability_bep') }}</span>
+                            </a>
                         </div>
-                        <a href="{{ route('calculator.index') }}"
-                            class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]">
-                            <i data-lucide="calculator" class="w-3.5 h-3.5 text-[#007AFF]"></i>
-                            <span>{{ __('navigation.calculator_hpp') }}</span>
-                        </a>
-                        <a href="{{ route('simulator.index') }}"
-                            class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]">
-                            <i data-lucide="cpu" class="w-3.5 h-3.5 text-[#5856D6]"></i>
-                            <span>{{ __('navigation.pricing_simulator') }}</span>
-                        </a>
-                        <a href="{{ route('profitability.index') }}"
-                            class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]">
-                            <i data-lucide="pie-chart" class="w-3.5 h-3.5 text-[#FF9500]"></i>
-                            <span>{{ __('navigation.profitability_bep') }}</span>
-                        </a>
                     </div>
                 </div>
             @endif
@@ -1182,7 +1246,7 @@
                         {{ request()->routeIs('customers.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.customers_data') }}' : ''"
                         class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-semibold transition-all active:scale-[0.98] {{ request()->routeIs('customers.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('customers.*') ? 'bg-white/20 text-white' : 'bg-[#5856D6]/15 text-[#5856D6] dark:bg-[#5E5CE6]/20 dark:text-[#5E5CE6]' }} flex items-center justify-center shrink-0">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('customers.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="users" class="w-3.5 h-3.5"></i>
                         </span>
                         <span class="truncate tracking-tight font-semibold" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.customers_data') }}</span>
@@ -1199,7 +1263,7 @@
                         {{ request()->routeIs('crm.members.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.crm_members') }}' : ''"
                         class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('crm.members.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('crm.members.*') ? 'bg-white/20 text-white' : 'bg-[#FF9500]/15 text-[#FF9500] dark:bg-[#FF9F0A]/20 dark:text-[#FF9F0A]' }} flex items-center justify-center shrink-0">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('crm.members.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="award" class="w-3.5 h-3.5"></i>
                         </span>
                         <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.crm_members') }}</span>
@@ -1214,7 +1278,7 @@
                         {{ request()->routeIs('crm.vouchers.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.crm_vouchers') }}' : ''"
                         class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('crm.vouchers.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('crm.vouchers.*') ? 'bg-white/20 text-white' : 'bg-[#FF2D55]/15 text-[#FF2D55] dark:bg-[#FF375F]/20 dark:text-[#FF375F]' }} flex items-center justify-center shrink-0">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('crm.vouchers.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="ticket" class="w-3.5 h-3.5"></i>
                         </span>
                         <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.crm_vouchers') }}</span>
@@ -1244,8 +1308,8 @@
                 <a href="{{ route('portal') }}" id="tour-nav-portal"
                     {{ request()->routeIs('portal') ? 'aria-current="page"' : '' }}
                     :title="sidebarCollapsed ? '{{ __('navigation.portal_attendance') }}' : ''"
-                    class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-semibold transition-all active:scale-[0.98] {{ request()->routeIs('portal') ? 'bg-[#34C759] text-white shadow-[0_2px_8px_rgba(52,199,89,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-[#34C759]/8 dark:hover:bg-[#34C759]/15 hover:text-[#34C759] dark:hover:text-[#30D158]' }}">
-                    <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('portal') ? 'bg-white/20 text-white' : 'bg-[#34C759]/12 text-[#34C759] dark:bg-[#30D158]/20 dark:text-[#30D158]' }} flex items-center justify-center shrink-0">
+                    class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-semibold transition-all active:scale-[0.98] {{ request()->routeIs('portal') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
+                    <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('portal') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                         <i data-lucide="clock" class="w-3.5 h-3.5"></i>
                     </span>
                     <span class="truncate tracking-tight font-semibold" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.portal_attendance') }}</span>
@@ -1260,7 +1324,7 @@
                     {{ request()->routeIs('hrm.index') || (request()->routeIs('hrm.*') && !request()->routeIs('hrm.payrolls.*')) ? 'aria-current="page"' : '' }}
                     :title="sidebarCollapsed ? '{{ __('navigation.employees_hrm') }}' : ''"
                     class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-semibold transition-all active:scale-[0.98] {{ request()->routeIs('hrm.index') || (request()->routeIs('hrm.*') && !request()->routeIs('hrm.payrolls.*')) ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                    <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('hrm.index') || (request()->routeIs('hrm.*') && !request()->routeIs('hrm.payrolls.*')) ? 'bg-white/20 text-white' : 'bg-[#5856D6]/15 text-[#5856D6] dark:bg-[#5E5CE6]/20 dark:text-[#5E5CE6]' }} flex items-center justify-center shrink-0">
+                    <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('hrm.index') || (request()->routeIs('hrm.*') && !request()->routeIs('hrm.payrolls.*')) ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                         <i data-lucide="users-2" class="w-3.5 h-3.5"></i>
                     </span>
                     <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.employees_hrm') }}</span>
@@ -1275,7 +1339,7 @@
                     {{ request()->routeIs('hrm.payrolls.*') ? 'aria-current="page"' : '' }}
                     :title="sidebarCollapsed ? '{{ __('navigation.hrm_payroll') }}' : ''"
                     class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('hrm.payrolls.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                    <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('hrm.payrolls.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/12 text-[#007AFF] dark:bg-[#0A84FF]/20 dark:text-[#0A84FF]' }} flex items-center justify-center shrink-0">
+                    <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('hrm.payrolls.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                         <i data-lucide="badge-percent" class="w-3.5 h-3.5"></i>
                     </span>
                     <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.hrm_payroll') }}</span>
@@ -1306,7 +1370,7 @@
                         {{ request()->routeIs('landing-page.edit') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.landing_page') }}' : ''"
                         class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('landing-page.edit') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('landing-page.edit') ? 'bg-white/20 text-white' : 'bg-[#34C759]/15 text-[#34C759] dark:bg-[#30D158]/20 dark:text-[#30D158]' }} flex items-center justify-center shrink-0">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('landing-page.edit') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="globe" class="w-3.5 h-3.5"></i>
                         </span>
                         <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.landing_page') }}</span>
@@ -1320,7 +1384,7 @@
                         {{ request()->routeIs('landing-page.popup.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.popup_promo') }}' : ''"
                         class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('landing-page.popup.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('landing-page.popup.*') ? 'bg-white/20 text-white' : 'bg-[#FF9500]/15 text-[#FF9500] dark:bg-[#FF9F0A]/20 dark:text-[#FF9F0A]' }} flex items-center justify-center shrink-0">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('landing-page.popup.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="megaphone" class="w-3.5 h-3.5"></i>
                         </span>
                         <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.popup_promo') }}</span>
@@ -1335,7 +1399,7 @@
                             {{ request()->routeIs('storefront.shipping.*') ? 'aria-current="page"' : '' }}
                             :title="sidebarCollapsed ? '{{ __('navigation.shipping_settings') }}' : ''"
                             class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('storefront.shipping.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                            <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('storefront.shipping.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/12 text-[#007AFF] dark:bg-[#0A84FF]/20 dark:text-[#0A84FF]' }} flex items-center justify-center shrink-0">
+                            <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('storefront.shipping.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                                 <i data-lucide="truck" class="w-3.5 h-3.5"></i>
                             </span>
                             <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.shipping_settings') }}</span>
@@ -1350,7 +1414,7 @@
                         {{ request()->routeIs('storefront.settings.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.storefront_settings') }}' : ''"
                         class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('storefront.settings.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('storefront.settings.*') ? 'bg-white/20 text-white' : 'bg-[#8E8E93]/15 text-[#8E8E93] dark:bg-[#98989D]/20 dark:text-[#98989D]' }} flex items-center justify-center shrink-0">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('storefront.settings.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="store" class="w-3.5 h-3.5"></i>
                         </span>
                         <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.storefront_settings') }}</span>
@@ -1367,7 +1431,7 @@
                         {{ request()->routeIs('whatsapp.index') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.whatsapp_business') }}' : ''"
                         class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('whatsapp.index') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('whatsapp.index') ? 'bg-white/20 text-white' : 'bg-[#34C759]/15 text-[#34C759] dark:bg-[#30D158]/20 dark:text-[#30D158]' }} flex items-center justify-center shrink-0">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('whatsapp.index') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
                         </span>
                         <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.whatsapp_business') }}</span>
@@ -1381,7 +1445,7 @@
                         {{ request()->routeIs('whatsapp.broadcast.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.whatsapp_broadcast') }}' : ''"
                         class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('whatsapp.broadcast.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('whatsapp.broadcast.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/12 text-[#007AFF] dark:bg-[#0A84FF]/20 dark:text-[#0A84FF]' }} flex items-center justify-center shrink-0">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('whatsapp.broadcast.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="send" class="w-3.5 h-3.5"></i>
                         </span>
                         <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.whatsapp_broadcast') }}</span>
@@ -1395,7 +1459,7 @@
                         {{ request()->routeIs('whatsapp.logs.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.whatsapp_logs') }}' : ''"
                         class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('whatsapp.logs.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('whatsapp.logs.*') ? 'bg-white/20 text-white' : 'bg-black/5 text-black/60 dark:bg-white/10 dark:text-white/60' }} flex items-center justify-center shrink-0">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('whatsapp.logs.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="list" class="w-3.5 h-3.5"></i>
                         </span>
                         <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.whatsapp_logs') }}</span>
@@ -1410,7 +1474,7 @@
                         {{ request()->routeIs('social-media.index') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.social_media_omni') }}' : ''"
                         class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('social-media.index') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('social-media.index') ? 'bg-white/20 text-white' : 'bg-[#FF2D55]/15 text-[#FF2D55] dark:bg-[#FF375F]/20 dark:text-[#FF375F]' }} flex items-center justify-center shrink-0">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('social-media.index') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
                         </span>
                         <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.social_media_omni') }}</span>
@@ -1424,7 +1488,7 @@
                         {{ request()->routeIs('social-media.posts.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.social_posts') }}' : ''"
                         class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('social-media.posts.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('social-media.posts.*') ? 'bg-white/20 text-white' : 'bg-[#AF52DE]/15 text-[#AF52DE] dark:bg-[#BF5AF2]/20 dark:text-[#BF5AF2]' }} flex items-center justify-center shrink-0">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('social-media.posts.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
                         </span>
                         <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.social_posts') }}</span>
@@ -1438,7 +1502,7 @@
                         {{ request()->routeIs('social-media.calendar') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.social_calendar') }}' : ''"
                         class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('social-media.calendar') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('social-media.calendar') ? 'bg-white/20 text-white' : 'bg-[#5856D6]/15 text-[#5856D6] dark:bg-[#5E5CE6]/20 dark:text-[#5E5CE6]' }} flex items-center justify-center shrink-0">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('social-media.calendar') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
                         </span>
                         <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.social_calendar') }}</span>
@@ -1452,7 +1516,7 @@
                         {{ request()->routeIs('social-media.inbox.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.social_inbox') }}' : ''"
                         class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('social-media.inbox.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('social-media.inbox.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/12 text-[#007AFF] dark:bg-[#0A84FF]/20 dark:text-[#0A84FF]' }} flex items-center justify-center shrink-0">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('social-media.inbox.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="inbox" class="w-3.5 h-3.5"></i>
                         </span>
                         <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.social_inbox') }}</span>
@@ -1484,7 +1548,7 @@
                     {{ request()->routeIs('reports.index') && !request()->query('tab') ? 'aria-current="page"' : '' }}
                     :title="sidebarCollapsed ? '{{ __('navigation.reports_center') }}' : ''"
                     class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-semibold transition-all active:scale-[0.98] {{ request()->routeIs('reports.index') && !request()->query('tab') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                    <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('reports.index') && !request()->query('tab') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/12 text-[#007AFF] dark:bg-[#0A84FF]/20 dark:text-[#0A84FF]' }} flex items-center justify-center shrink-0">
+                    <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('reports.index') && !request()->query('tab') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                         <i data-lucide="bar-chart-3" class="w-3.5 h-3.5"></i>
                     </span>
                     <span class="truncate tracking-tight font-semibold" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.reports_center') }}</span>
@@ -1499,7 +1563,7 @@
                     {{ request()->routeIs('analytics.*') ? 'aria-current="page"' : '' }}
                     :title="sidebarCollapsed ? '{{ __('navigation.business_analytics') }}' : ''"
                     class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('analytics.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                    <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('analytics.*') ? 'bg-white/20 text-white' : 'bg-[#AF52DE]/15 text-[#AF52DE] dark:bg-[#BF5AF2]/20 dark:text-[#BF5AF2]' }} flex items-center justify-center shrink-0">
+                    <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('analytics.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                         <i data-lucide="line-chart" class="w-3.5 h-3.5"></i>
                     </span>
                     <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.business_analytics') }}</span>
@@ -1514,7 +1578,7 @@
                     {{ request()->fullUrlIs('*tab=income_statement*') ? 'aria-current="page"' : '' }}
                     :title="sidebarCollapsed ? '{{ __('navigation.income_statement') }}' : ''"
                     class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->fullUrlIs('*tab=income_statement*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                    <span class="w-6 h-6 rounded-[7px] {{ request()->fullUrlIs('*tab=income_statement*') ? 'bg-white/20 text-white' : 'bg-[#34C759]/15 text-[#34C759] dark:bg-[#30D158]/20 dark:text-[#30D158]' }} flex items-center justify-center shrink-0">
+                    <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->fullUrlIs('*tab=income_statement*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                         <i data-lucide="trending-up" class="w-3.5 h-3.5"></i>
                     </span>
                     <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.income_statement') }}</span>
@@ -1529,7 +1593,7 @@
                     {{ request()->fullUrlIs('*tab=cash_flow*') ? 'aria-current="page"' : '' }}
                     :title="sidebarCollapsed ? '{{ __('navigation.cash_flow') }}' : ''"
                     class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->fullUrlIs('*tab=cash_flow*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                    <span class="w-6 h-6 rounded-[7px] {{ request()->fullUrlIs('*tab=cash_flow*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/12 text-[#007AFF] dark:bg-[#0A84FF]/20 dark:text-[#0A84FF]' }} flex items-center justify-center shrink-0">
+                    <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->fullUrlIs('*tab=cash_flow*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                         <i data-lucide="activity" class="w-3.5 h-3.5"></i>
                     </span>
                     <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.cash_flow') }}</span>
@@ -1545,7 +1609,7 @@
                         {{ request()->routeIs('pos.reports.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.pos_reports') }}' : ''"
                         class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('pos.reports.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('pos.reports.*') ? 'bg-white/20 text-white' : 'bg-[#FF9500]/15 text-[#FF9500] dark:bg-[#FF9F0A]/20 dark:text-[#FF9F0A]' }} flex items-center justify-center shrink-0">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('pos.reports.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="receipt" class="w-3.5 h-3.5"></i>
                         </span>
                         <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.pos_reports') }}</span>
@@ -1561,7 +1625,7 @@
                     {{ request()->fullUrlIs('*tab=stock*') ? 'aria-current="page"' : '' }}
                     :title="sidebarCollapsed ? '{{ __('navigation.stock_valuation') }}' : ''"
                     class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->fullUrlIs('*tab=stock*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                    <span class="w-6 h-6 rounded-[7px] {{ request()->fullUrlIs('*tab=stock*') ? 'bg-white/20 text-white' : 'bg-[#AF52DE]/15 text-[#AF52DE] dark:bg-[#BF5AF2]/20 dark:text-[#BF5AF2]' }} flex items-center justify-center shrink-0">
+                    <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->fullUrlIs('*tab=stock*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                         <i data-lucide="package" class="w-3.5 h-3.5"></i>
                     </span>
                     <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.stock_valuation') }}</span>
@@ -1577,7 +1641,7 @@
                         {{ request()->routeIs('tax.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.tax_reports') }}' : ''"
                         class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('tax.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('tax.*') ? 'bg-white/20 text-white' : 'bg-[#FF2D55]/15 text-[#FF2D55] dark:bg-[#FF375F]/20 dark:text-[#FF375F]' }} flex items-center justify-center shrink-0">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('tax.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="percent" class="w-3.5 h-3.5"></i>
                         </span>
                         <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.tax_reports') }}</span>
@@ -1610,7 +1674,7 @@
                         {{ request()->routeIs('products.*') || request()->routeIs('pos.modifiers.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.products_catalog') }}' : ''"
                         class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-semibold transition-all active:scale-[0.98] {{ request()->routeIs('products.*') || request()->routeIs('pos.modifiers.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('products.*') || request()->routeIs('pos.modifiers.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/12 text-[#007AFF] dark:bg-[#0A84FF]/20 dark:text-[#0A84FF]' }} flex items-center justify-center shrink-0">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('products.*') || request()->routeIs('pos.modifiers.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="package" class="w-3.5 h-3.5"></i>
                         </span>
                         <div class="flex items-center justify-between flex-1 min-w-0" x-show="!sidebarCollapsed" x-transition.opacity>
@@ -1629,7 +1693,7 @@
                         {{ request()->routeIs('marketplace-hub.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.marketplace_hub') }}' : ''"
                         class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('marketplace-hub.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('marketplace-hub.*') ? 'bg-white/20 text-white' : 'bg-[#FF2D55]/15 text-[#FF2D55] dark:bg-[#FF375F]/20 dark:text-[#FF375F]' }} flex items-center justify-center shrink-0">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('marketplace-hub.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
                         </span>
                         <span class="truncate tracking-tight font-medium" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.marketplace_hub') }}</span>
@@ -1646,7 +1710,7 @@
                         {{ request()->routeIs('materials.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.materials_recipes') }}' : ''"
                         class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('materials.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('materials.*') ? 'bg-white/20 text-white' : 'bg-[#34C759]/15 text-[#34C759] dark:bg-[#30D158]/20 dark:text-[#30D158]' }} flex items-center justify-center shrink-0">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('materials.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="layers" class="w-3.5 h-3.5"></i>
                         </span>
                         <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.materials_recipes') }}</span>
@@ -1662,8 +1726,8 @@
                     <a href="{{ route('suppliers.index') }}" id="tour-nav-suppliers"
                         {{ request()->routeIs('suppliers.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.suppliers') }}' : ''"
-                        class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('suppliers.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.25)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('suppliers.*') ? 'bg-white/20 text-white' : 'bg-[#5856D6]/15 text-[#5856D6] dark:bg-[#5E5CE6]/20 dark:text-[#5E5CE6]' }} flex items-center justify-center shrink-0">
+                        class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('suppliers.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('suppliers.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="building-2" class="w-3.5 h-3.5"></i>
                         </span>
                         <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.suppliers') }}</span>
@@ -1680,7 +1744,7 @@
                         {{ request()->routeIs('product-categories.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.product_categories') }}' : ''"
                         class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('product-categories.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('product-categories.*') ? 'bg-white/20 text-white' : 'bg-[#FF9500]/15 text-[#FF9500] dark:bg-[#FF9F0A]/20 dark:text-[#FF9F0A]' }} flex items-center justify-center shrink-0">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('product-categories.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="tag" class="w-3.5 h-3.5"></i>
                         </span>
                         <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.product_categories') }}</span>
@@ -1697,7 +1761,7 @@
                         {{ request()->routeIs('material-categories.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.material_categories') }}' : ''"
                         class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('material-categories.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('material-categories.*') ? 'bg-white/20 text-white' : 'bg-[#FF2D55]/15 text-[#FF2D55] dark:bg-[#FF375F]/20 dark:text-[#FF375F]' }} flex items-center justify-center shrink-0">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('material-categories.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="tags" class="w-3.5 h-3.5"></i>
                         </span>
                         <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.material_categories') }}</span>
@@ -1714,7 +1778,7 @@
                         {{ request()->routeIs('units.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.measurement_units') }}' : ''"
                         class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('units.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('units.*') ? 'bg-white/20 text-white' : 'bg-[#30B0C7]/15 text-[#30B0C7] dark:bg-[#40C8E0]/20 dark:text-[#40C8E0]' }} flex items-center justify-center shrink-0">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('units.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="scale" class="w-3.5 h-3.5"></i>
                         </span>
                         <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.measurement_units') }}</span>
@@ -1731,7 +1795,7 @@
                         {{ request()->routeIs('import.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.excel_import') }}' : ''"
                         class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('import.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('import.*') ? 'bg-white/20 text-white' : 'bg-[#34C759]/15 text-[#34C759] dark:bg-[#30D158]/20 dark:text-[#30D158]' }} flex items-center justify-center shrink-0">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('import.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="file-spreadsheet" class="w-3.5 h-3.5"></i>
                         </span>
                         <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.excel_import') }}</span>
@@ -1764,7 +1828,7 @@
                         {{ (request()->routeIs('settings.*') && !request()->routeIs('settings.audit-logs.*') && !request()->routeIs('settings.approval-rules.*') && !request()->routeIs('settings.roles.*') && !request()->routeIs('settings.pos.printers.*')) ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.settings_general') }}' : ''"
                         class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-semibold transition-all active:scale-[0.98] {{ (request()->routeIs('settings.*') && !request()->routeIs('settings.audit-logs.*') && !request()->routeIs('settings.approval-rules.*') && !request()->routeIs('settings.roles.*') && !request()->routeIs('settings.pos.printers.*')) ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ (request()->routeIs('settings.*') && !request()->routeIs('settings.audit-logs.*') && !request()->routeIs('settings.approval-rules.*') && !request()->routeIs('settings.roles.*') && !request()->routeIs('settings.pos.printers.*')) ? 'bg-white/20 text-white' : 'bg-black/5 text-black/70 dark:bg-white/10 dark:text-white/70' }} flex items-center justify-center shrink-0">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ (request()->routeIs('settings.*') && !request()->routeIs('settings.audit-logs.*') && !request()->routeIs('settings.approval-rules.*') && !request()->routeIs('settings.roles.*') && !request()->routeIs('settings.pos.printers.*')) ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="sliders" class="w-3.5 h-3.5"></i>
                         </span>
                         <span class="truncate tracking-tight font-semibold" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.settings_general') }}</span>
@@ -1780,7 +1844,7 @@
                     {{ request()->routeIs('profile.edit') ? 'aria-current="page"' : '' }}
                     :title="sidebarCollapsed ? '{{ __('navigation.user_profile') }}' : ''"
                     class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('profile.edit') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                    <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('profile.edit') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/12 text-[#007AFF] dark:bg-[#0A84FF]/20 dark:text-[#0A84FF]' }} flex items-center justify-center shrink-0">
+                    <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('profile.edit') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                         <i data-lucide="user" class="w-3.5 h-3.5"></i>
                     </span>
                     <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.user_profile') }}</span>
@@ -1796,7 +1860,7 @@
                         {{ request()->routeIs('approval-rules.*') || request()->routeIs('settings.approval-rules.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.mar_rules') }}' : ''"
                         class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('approval-rules.*') || request()->routeIs('settings.approval-rules.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('approval-rules.*') || request()->routeIs('settings.approval-rules.*') ? 'bg-white/20 text-white' : 'bg-[#34C759]/15 text-[#34C759] dark:bg-[#30D158]/20 dark:text-[#30D158]' }} flex items-center justify-center shrink-0">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('approval-rules.*') || request()->routeIs('settings.approval-rules.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
                         </span>
                         <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.mar_rules') }}</span>
@@ -1814,7 +1878,7 @@
                         :title="sidebarCollapsed ? '{{ __('navigation.audit_anti_fraud') }}' : ''"
                         class="sidebar-item w-full flex items-center justify-between px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('settings.audit-logs.*') || request()->routeIs('audit-logs.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
                         <div class="flex items-center gap-2.5 min-w-0">
-                            <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('settings.audit-logs.*') || request()->routeIs('audit-logs.*') ? 'bg-white/20 text-white' : 'bg-[#FF3B30]/15 text-[#FF3B30] dark:bg-[#FF453A]/20 dark:text-[#FF453A]' }} flex items-center justify-center shrink-0">
+                            <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('settings.audit-logs.*') || request()->routeIs('audit-logs.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                                 <i data-lucide="shield-alert" class="w-3.5 h-3.5"></i>
                             </span>
                             <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.audit_anti_fraud') }}</span>
@@ -1837,7 +1901,7 @@
                         {{ request()->routeIs('roles.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.roles_permissions') }}' : ''"
                         class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('roles.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('roles.*') ? 'bg-white/20 text-white' : 'bg-[#5856D6]/15 text-[#5856D6] dark:bg-[#5E5CE6]/20 dark:text-[#5E5CE6]' }} flex items-center justify-center shrink-0">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('roles.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="shield" class="w-3.5 h-3.5"></i>
                         </span>
                         <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.roles_permissions') }}</span>
@@ -1854,7 +1918,7 @@
                         {{ request()->routeIs('billing.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.billing_subscription') }}' : ''"
                         class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('billing.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('billing.*') ? 'bg-white/20 text-white' : 'bg-[#FF9500]/15 text-[#FF9500] dark:bg-[#FF9F0A]/20 dark:text-[#FF9F0A]' }} flex items-center justify-center shrink-0">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('billing.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
                         </span>
                         <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.billing_subscription') }}</span>
@@ -1869,7 +1933,7 @@
                 <button type="button" @click="$dispatch('open-storage-pruning-modal')"
                     :title="sidebarCollapsed ? '{{ __('common.storage_pruning_title') }}' : ''"
                     class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white cursor-pointer">
-                    <span class="w-6 h-6 rounded-[7px] bg-[#007AFF]/12 text-[#007AFF] dark:bg-[#0A84FF]/20 dark:text-[#0A84FF] flex items-center justify-center shrink-0">
+                    <span class="sidebar-icon-box w-6 h-6 rounded-[7px] bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white flex items-center justify-center shrink-0">
                         <i data-lucide="database" class="w-3.5 h-3.5"></i>
                     </span>
                     <span class="truncate tracking-tight text-left" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('common.storage_pruning_title') }}</span>
@@ -1884,7 +1948,7 @@
                     {{ request()->routeIs('docs.*') ? 'aria-current="page"' : '' }}
                     :title="sidebarCollapsed ? 'Panduan & Dokumentasi' : ''"
                     class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('docs.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                    <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('docs.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/15 text-[#007AFF] dark:bg-[#0A84FF]/20 dark:text-[#0A84FF]' }} flex items-center justify-center shrink-0">
+                    <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('docs.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                         <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
                     </span>
                     <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>Panduan &amp; Dokumentasi</span>
@@ -1900,7 +1964,7 @@
                         {{ request()->routeIs('feedback.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.help_support') }}' : ''"
                         class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('feedback.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                        <span class="w-6 h-6 rounded-[7px] {{ request()->routeIs('feedback.*') ? 'bg-white/20 text-white' : 'bg-[#FF9500]/15 text-[#FF9500] dark:bg-[#FF9F0A]/20 dark:text-[#FF9F0A]' }} flex items-center justify-center shrink-0">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('feedback.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                             <i data-lucide="life-buoy" class="w-3.5 h-3.5"></i>
                         </span>
                         <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.help_support') }}</span>

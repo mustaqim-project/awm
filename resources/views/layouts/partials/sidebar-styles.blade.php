@@ -329,7 +329,9 @@
         .app-sidebar.is-collapsed .sidebar-item>i:not(.lucide-chevron-down):not([data-lucide="chevron-down"]):not(.sidebar-chevron),
         .app-sidebar.is-collapsed .sidebar-item-inner>svg,
         .app-sidebar.is-collapsed .sidebar-item-inner>i,
-        .app-sidebar.is-collapsed .sidebar-item-inner>div>svg {
+        .app-sidebar.is-collapsed .sidebar-item-inner>div>svg,
+        .app-sidebar.is-collapsed .sidebar-item .sidebar-icon-box>svg,
+        .app-sidebar.is-collapsed .sidebar-item .sidebar-icon-box>i {
             margin: 0 auto !important;
             width: 1.125rem !important;
             /* 18px */
@@ -356,15 +358,29 @@
             opacity: 0 !important;
         }
 
-        /* Strictly hide all text labels and badges in collapsed items */
-        .app-sidebar.is-collapsed .sidebar-item>span,
-        .app-sidebar.is-collapsed .sidebar-item-inner>span,
-        .app-sidebar.is-collapsed .sidebar-item>div:not(.sidebar-item-inner) {
+        /* Strictly hide all text labels and badges in collapsed items, PRESERVING icon boxes */
+        .app-sidebar.is-collapsed .sidebar-item>span:not(.sidebar-icon-box),
+        .app-sidebar.is-collapsed .sidebar-item-inner>span:not(.sidebar-icon-box),
+        .app-sidebar.is-collapsed .sidebar-item>div:not(.sidebar-item-inner):not(.sidebar-icon-box) {
             display: none !important;
             visibility: hidden !important;
             width: 0 !important;
             height: 0 !important;
             overflow: hidden !important;
+        }
+
+        /* Direct link icon box normalization in collapsed rail: clean centered glyph */
+        .app-sidebar.is-collapsed .sidebar-item .sidebar-icon-box {
+            display: flex !important;
+            visibility: visible !important;
+            width: 1.5rem !important;
+            height: 1.5rem !important;
+            margin: 0 auto !important;
+            background: transparent !important;
+            box-shadow: none !important;
+            border-radius: 0 !important;
+            align-items: center !important;
+            justify-content: center !important;
         }
 
         /* Hide section titles and inline submenus in collapsed mode */
@@ -378,7 +394,34 @@
             overflow: hidden !important;
         }
 
-        /* 6. Active Squircle State (macOS Sonoma Selection) */
+        /* 6. Collapsed Flyout Popover: Smooth hover bridge (no 8px dead zone gap) */
+        .app-sidebar.is-collapsed .sidebar-flyout-wrapper {
+            position: fixed !important;
+            left: 70px !important;
+            padding-left: 12px !important;
+            z-index: 100 !important;
+        }
+
+        .app-sidebar.is-collapsed .sidebar-flyout-panel {
+            width: 15.5rem !important;
+            padding: 0.625rem !important;
+            border-radius: 0.875rem !important;
+            background-color: rgba(255, 255, 255, 0.98) !important;
+            border: 1px solid rgba(60, 60, 67, 0.12) !important;
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.14), 0 2px 6px rgba(0, 0, 0, 0.05) !important;
+            backdrop-filter: blur(24px) !important;
+            -webkit-backdrop-filter: blur(24px) !important;
+            max-height: 85vh !important;
+            overflow-y: auto !important;
+        }
+
+        .dark .app-sidebar.is-collapsed .sidebar-flyout-panel {
+            background-color: rgba(28, 28, 30, 0.98) !important;
+            border-color: rgba(255, 255, 255, 0.14) !important;
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45), 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+        }
+
+        /* 7. Active Squircle State (macOS Sonoma Selection) */
         .app-sidebar.is-collapsed .sidebar-item[aria-current="page"] {
             border-radius: 10px !important;
             box-shadow: 0 1px 3px rgba(0, 122, 255, 0.35) !important;
