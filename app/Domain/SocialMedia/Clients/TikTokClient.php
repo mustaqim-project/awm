@@ -64,11 +64,13 @@ class TikTokClient
         $scopeList = implode(',', $scopes ?: $defaultScopes);
 
         $params = [
-            'client_key'    => $this->clientKey,
-            'scope'         => $scopeList,
-            'response_type' => 'code',
-            'redirect_uri'  => $redirectUri,
-            'state'         => $state,
+            'client_key'        => $this->clientKey,
+            'scope'             => $scopeList,
+            'response_type'     => 'code',
+            'redirect_uri'      => $redirectUri,
+            'state'             => $state,
+            'disable_auto_auth' => '1',
+            'prompt'            => 'consent',
         ];
 
         return $this->authUrl . '?' . http_build_query($params);
