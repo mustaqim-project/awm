@@ -107,6 +107,14 @@ Route::prefix('v1')->middleware('throttle:600,1')->group(function (): void {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
+        if ($request->boolean('view_log')) {
+            $lines = file_exists(storage_path('logs/laravel.log')) ? array_slice(file(storage_path('logs/laravel.log')), -50) : [];
+            return response()->json([
+                'status' => 'ok',
+                'log'    => implode('', $lines),
+            ], 200);
+        }
+
         $artisanOutput = null;
         if ($request->boolean('trigger')) {
             $format = $request->input('format', 'all');
