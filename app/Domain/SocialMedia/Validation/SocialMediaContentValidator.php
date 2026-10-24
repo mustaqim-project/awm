@@ -77,7 +77,7 @@ class SocialMediaContentValidator
         'facebook'  => ['feed', 'photo', 'video', 'reel'],
         'instagram' => ['photo', 'carousel', 'reel', 'story'],
         'threads'   => ['text', 'image', 'video'],
-        'tiktok'    => ['video', 'photo'],
+        'tiktok'    => ['video', 'photo', 'carousel'],
         'linkedin'  => ['feed', 'photo', 'video', 'text'],
     ];
 

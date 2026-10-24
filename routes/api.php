@@ -100,6 +100,37 @@ Route::prefix('v1')->middleware('throttle:600,1')->group(function (): void {
         ], 200);
     });
 
+    // Test Suite Diagnostic and Execution Endpoint
+    Route::match(['GET', 'POST'], '/social-media/test-suite/status', function (\Illuminate\Http\Request $request) {
+        $token = $request->query('token') ?? $request->input('token');
+        if ($token !== 'cooca_test_suite_2026') {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        if ($request->boolean('trigger')) {
+            $format = $request->input('format', 'all');
+            \Illuminate\Support\Facades\Artisan::call('social-media:test-upload-suite', [
+                '--format' => $format,
+            ]);
+        }
+
+        $summaryFile = storage_path('framework/test_upload_suite_result.json');
+        $logFile = storage_path('logs/social_media_test_suite.log');
+        $retryLog = storage_path('logs/tiktok_retry.log');
+
+        $summary = file_exists($summaryFile) ? json_decode((string) file_get_contents($summaryFile), true) : null;
+        $recentLog = file_exists($logFile) ? mb_substr((string) file_get_contents($logFile), -4000) : null;
+        $recentRetryLog = file_exists($retryLog) ? mb_substr((string) file_get_contents($retryLog), -4000) : null;
+
+        return response()->json([
+            'status'           => 'ok',
+            'summary'          => $summary,
+            'recent_log'       => $recentLog,
+            'recent_retry_log' => $recentRetryLog,
+            'latest_posts'     => \App\Models\SocialMediaPost::with('targets')->latest()->take(6)->get(),
+        ]);
+    });
+
     // TriPay Payment Gateway Incoming Webhook (Model B) - supports GET/HEAD ping and POST callback
     Route::match(['GET', 'POST', 'HEAD'], '/payments/tripay/callback', [\App\Http\Controllers\Api\V1\Payment\TripayCallbackController::class, 'handle']);
     Route::match(['GET', 'POST', 'HEAD'], '/tripay/callback', [\App\Http\Controllers\Api\V1\Payment\TripayCallbackController::class, 'handle']);

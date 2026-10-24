@@ -134,7 +134,7 @@ class TikTokProvider implements SocialMediaProviderInterface
         ];
 
         // 3. Direct Photo Post (Single photo or Photo carousel mode: 1 to 35 images)
-        if ($contentType === 'photo') {
+        if (in_array($contentType, ['photo', 'carousel', 'feed', 'image'], true)) {
             $imageUrls = [];
             foreach ($mediaItems as $m) {
                 $url = is_array($m) ? ($m['media_url'] ?? '') : (string) $m;
