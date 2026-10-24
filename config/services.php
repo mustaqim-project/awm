@@ -66,11 +66,12 @@ return [
     ],
 
     'tiktok' => [
-        'client_key'    => env('TIKTOK_CLIENT_KEY', ''),
-        'client_secret' => env('TIKTOK_CLIENT_SECRET', ''),
-        'redirect_uri'  => env('TIKTOK_REDIRECT_URI', 'https://cooca.id/social-media/tiktok/callback'),
-        'api_url'       => env('TIKTOK_API_URL', 'https://open.tiktokapis.com/v2/'),
-        'auth_url'      => env('TIKTOK_AUTH_URL', 'https://www.tiktok.com/v2/auth/authorize/'),
+        'client_key'         => env('TIKTOK_CLIENT_KEY', ''),
+        'client_secret'      => env('TIKTOK_CLIENT_SECRET', ''),
+        'redirect_uri'       => env('TIKTOK_REDIRECT_URI', 'https://cooca.id/social-media/tiktok/callback'),
+        'admin_redirect_uri' => env('TIKTOK_ADMIN_REDIRECT_URI', 'https://cooca.id/admin/social-media/tiktok/callback'),
+        'api_url'            => env('TIKTOK_API_URL', 'https://open.tiktokapis.com/v2/'),
+        'auth_url'           => env('TIKTOK_AUTH_URL', 'https://www.tiktok.com/v2/auth/authorize/'),
     ],
 
     'linkedin' => [

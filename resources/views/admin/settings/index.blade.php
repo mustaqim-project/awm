@@ -25,6 +25,7 @@
         copiedCustomer: false,
         copiedWebhook: false,
         copiedTikTokRedirect: false,
+        copiedTikTokAdminRedirect: false,
         copiedLinkedInRedirect: false,
         copiedTripayCallback: false,
         copiedWaWebhook: false,
@@ -83,6 +84,9 @@
                 } else if (type === 'tiktok') {
                     this.copiedTikTokRedirect = true;
                     setTimeout(() => this.copiedTikTokRedirect = false, 2000);
+                } else if (type === 'tiktok_admin') {
+                    this.copiedTikTokAdminRedirect = true;
+                    setTimeout(() => this.copiedTikTokAdminRedirect = false, 2000);
                 } else if (type === 'linkedin') {
                     this.copiedLinkedInRedirect = true;
                     setTimeout(() => this.copiedLinkedInRedirect = false, 2000);

@@ -235,6 +235,15 @@ Route::prefix('v1')->middleware('throttle:600,1')->group(function (): void {
             $apiUrl = (string) \App\Models\SystemSetting::get('tiktok_api_url', '');
             $authUrl = (string) \App\Models\SystemSetting::get('tiktok_auth_url', '');
 
+            if (empty($apiUrl)) {
+                \App\Models\SystemSetting::set('tiktok_api_url', 'https://open.tiktokapis.com/v2/', 'social_media');
+                $apiUrl = 'https://open.tiktokapis.com/v2/';
+            }
+            if (empty($authUrl)) {
+                \App\Models\SystemSetting::set('tiktok_auth_url', 'https://www.tiktok.com/v2/auth/authorize/', 'social_media');
+                $authUrl = 'https://www.tiktok.com/v2/auth/authorize/';
+            }
+
             return response()->json([
                 'id'                  => $row->id ?? null,
                 'account_name'        => $row->account_name ?? null,

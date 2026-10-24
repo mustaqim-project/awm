@@ -629,17 +629,43 @@
                             </div>
                         </div>
 
-                        <!-- Readonly TikTok OAuth Redirect URI Box -->
-                        <div class="p-3.5 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.06] dark:border-white/[0.06] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5">
-                            <div class="space-y-0.5">
-                                <span class="text-[11px] font-semibold text-black/50 dark:text-white/50">TikTok Redirect URI Callback:</span>
-                                <div class="font-mono text-[12px] text-black dark:text-white select-all break-all">{{ $tiktokRedirectUri ?? 'https://cooca.id/social-media/tiktok/callback' }}</div>
+                        <!-- Readonly TikTok OAuth Redirect URIs Box -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div class="p-3.5 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.06] dark:border-white/[0.06] flex flex-col justify-between gap-2.5">
+                                <div class="space-y-0.5">
+                                    <span class="text-[11px] font-semibold text-black/50 dark:text-white/50">TikTok Redirect URI Callback (Merchant / Toko):</span>
+                                    <div class="font-mono text-[12px] text-black dark:text-white select-all break-all">{{ $tiktokRedirectUri ?? 'https://cooca.id/social-media/tiktok/callback' }}</div>
+                                </div>
+                                <button type="button" @click="copyToClipboard('{{ $tiktokRedirectUri ?? 'https://cooca.id/social-media/tiktok/callback' }}', 'tiktok')"
+                                    class="h-8 px-3 rounded-[9px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-[11px] font-bold text-black dark:text-white flex items-center justify-center gap-1.5 self-start sm:self-auto shrink-0 transition-colors cursor-pointer">
+                                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                                    <span x-text="copiedTikTokRedirect ? 'Tersalin!' : 'Salin URI Toko'"></span>
+                                </button>
                             </div>
-                            <button type="button" @click="copyToClipboard('{{ $tiktokRedirectUri ?? 'https://cooca.id/social-media/tiktok/callback' }}', 'tiktok')"
-                                class="h-8 px-3 rounded-[9px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-[11px] font-bold text-black dark:text-white flex items-center gap-1.5 shrink-0 transition-colors cursor-pointer">
-                                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                                <span x-text="copiedTikTokRedirect ? 'Tersalin!' : 'Salin URI'"></span>
-                            </button>
+
+                            <div class="p-3.5 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.06] dark:border-white/[0.06] flex flex-col justify-between gap-2.5">
+                                <div class="space-y-0.5">
+                                    <span class="text-[11px] font-semibold text-black/50 dark:text-white/50">TikTok Redirect URI Callback (Superadmin Platform):</span>
+                                    <div class="font-mono text-[12px] text-black dark:text-white select-all break-all">{{ $tiktokAdminRedirectUri ?? 'https://cooca.id/admin/social-media/tiktok/callback' }}</div>
+                                </div>
+                                <button type="button" @click="copyToClipboard('{{ $tiktokAdminRedirectUri ?? 'https://cooca.id/admin/social-media/tiktok/callback' }}', 'tiktok_admin')"
+                                    class="h-8 px-3 rounded-[9px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-[11px] font-bold text-black dark:text-white flex items-center justify-center gap-1.5 self-start sm:self-auto shrink-0 transition-colors cursor-pointer">
+                                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                                    <span x-text="copiedTikTokAdminRedirect ? 'Tersalin!' : 'Salin URI Admin'"></span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="p-3 rounded-[12px] bg-[#007AFF]/5 border border-[#007AFF]/15 text-[11.5px] text-black/70 dark:text-white/70 space-y-1">
+                            <div class="font-bold text-[#007AFF] flex items-center gap-1.5">
+                                <i data-lucide="info" class="w-3.5 h-3.5"></i>
+                                <span>Petunjuk Konfigurasi di TikTok Developer Portal:</span>
+                            </div>
+                            <p class="text-[11px] text-black/60 dark:text-white/60">
+                                1. Masukkan kedua URL Callback di atas pada menu <strong>App Configuration &gt; Redirect URI</strong>.<br>
+                                2. Daftarkan domain <strong>cooca.id</strong> pada bagian <strong>Redirect Domain</strong>.<br>
+                                3. Pastikan izin/scopes telah diaktifkan: <code class="font-mono text-[10.5px] bg-black/5 dark:bg-white/10 px-1 py-0.5 rounded">user.info.basic</code>, <code class="font-mono text-[10.5px] bg-black/5 dark:bg-white/10 px-1 py-0.5 rounded">video.publish</code>, <code class="font-mono text-[10.5px] bg-black/5 dark:bg-white/10 px-1 py-0.5 rounded">video.upload</code>, <code class="font-mono text-[10.5px] bg-black/5 dark:bg-white/10 px-1 py-0.5 rounded">photo.upload</code>.
+                            </p>
                         </div>
                     </div>
 

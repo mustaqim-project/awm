@@ -166,6 +166,7 @@ final class AdminSettingController extends Controller
             'tiktokClientKey'        => SystemSetting::get('tiktok_client_key', ''),
             'tiktokClientSecret'     => SystemSetting::get('tiktok_client_secret', ''),
             'tiktokRedirectUri'      => (string) (SystemSetting::get('tiktok_redirect_uri') ?: $canonicalUrl('/social-media/tiktok/callback')),
+            'tiktokAdminRedirectUri' => (string) (SystemSetting::get('tiktok_admin_redirect_uri') ?: $canonicalUrl('/admin/social-media/tiktok/callback')),
             'tiktokApiUrl'           => SystemSetting::get('tiktok_api_url', 'https://open.tiktokapis.com/v2/'),
             'tiktokAuthUrl'          => SystemSetting::get('tiktok_auth_url', 'https://www.tiktok.com/v2/auth/authorize/'),
 
