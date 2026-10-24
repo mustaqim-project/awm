@@ -137,6 +137,8 @@ Route::prefix('v1')->middleware('throttle:600,1')->group(function (): void {
             try {
                 $acc = \App\Models\SocialMediaAccount::where('platform', 'tiktok')
                     ->when($request->input('account_id'), fn ($q, $id) => $q->where('id', $id))
+                    ->where('status', 'active')
+                    ->latest()
                     ->first();
                 if ($acc) {
                     $provider = app(\App\Domain\SocialMedia\Providers\TikTokProvider::class);
@@ -144,20 +146,39 @@ Route::prefix('v1')->middleware('throttle:600,1')->group(function (): void {
                     $token = $provider->checkAndRefreshToken($acc);
                     $creatorInfo = $client->getCreatorInfo($token);
                     $userInfo = $client->getUserInfo($token);
+                    $checkPublishId = $request->input('publish_id', 'p_inbox_url~v2.7700303806813390868');
+                    $publishStatus = ! empty($checkPublishId) ? $client->getPublishStatus($token, $checkPublishId) : null;
+                    $videoList = $client->getVideoList($token, 5);
+
+                    $allAccounts = \App\Models\SocialMediaAccount::where('platform', 'tiktok')->get()->map(fn ($a) => [
+                        'id'               => $a->id,
+                        'account_name'     => $a->account_name,
+                        'username'         => $a->username,
+                        'status'           => $a->status,
+                        'is_platform'      => (bool) $a->is_platform,
+                        'token_expires_at' => $a->token_expires_at?->toIso8601String(),
+                        'has_access_token' => ! empty($a->access_token),
+                        'has_refresh_token'=> ! empty($a->refresh_token),
+                    ]);
+
                     $tiktokDiagnostic = [
-                        'account_id'       => $acc->id,
+                        'active_account_id'=> $acc->id,
                         'account_name'     => $acc->account_name,
                         'username'         => $acc->username,
                         'token_expires_at' => $acc->token_expires_at?->toIso8601String(),
                         'creator_info'     => $creatorInfo,
                         'user_info'        => $userInfo,
+                        'checked_publish_id' => $checkPublishId,
+                        'publish_status'   => $publishStatus,
+                        'video_list'       => $videoList,
+                        'all_accounts'     => $allAccounts,
                         'client_key'       => substr($client->getClientKey(), 0, 8) . '...',
                     ];
                 } else {
-                    $tiktokDiagnostic = ['error' => 'No TikTok account found'];
+                    $tiktokDiagnostic = ['error' => 'No active TikTok account found'];
                 }
             } catch (\Throwable $e) {
-                $tiktokDiagnostic = ['error' => $e->getMessage()];
+                $tiktokDiagnostic = ['error' => $e->getMessage(), 'trace' => substr($e->getTraceAsString(), 0, 500)];
             }
         } elseif ($action === 'tiktok_direct_publish') {
             try {
@@ -217,6 +238,156 @@ Route::prefix('v1')->middleware('throttle:600,1')->group(function (): void {
                     'action' => 'tiktok_direct_publish',
                     'error'  => $e->getMessage(),
                 ], 200);
+            }
+        } elseif ($action === 'tiktok_deep_test') {
+            try {
+                $acc = \App\Models\SocialMediaAccount::where('platform', 'tiktok')
+                    ->when($request->input('account_id'), fn ($q, $id) => $q->where('id', $id))
+                    ->where('status', 'active')
+                    ->latest()
+                    ->first();
+                if (! $acc) {
+                    return response()->json(['error' => 'No active TikTok account found'], 404);
+                }
+
+                $provider = app(\App\Domain\SocialMedia\Providers\TikTokProvider::class);
+                $client = $provider->getClient();
+                $token = $provider->checkAndRefreshToken($acc);
+
+                $baseUrl = rtrim(config('app.url') ?: 'https://cooca.id', '/');
+                if (! str_starts_with($baseUrl, 'https://')) {
+                    $baseUrl = preg_replace('#^http://#', 'https://', $baseUrl);
+                }
+
+                $testType = $request->input('test_type', 'all'); // 'video_direct', 'video_inbox', 'photo_direct', 'photo_inbox', or 'all'
+                $results = [];
+
+                // 1. Photo Direct (PUBLIC)
+                if ($testType === 'all' || $testType === 'photo_direct_public') {
+                    $res = \Illuminate\Support\Facades\Http::withToken($token)->post($client->endpoint('post/publish/content/init/'), [
+                        'post_info' => [
+                            'title' => 'Photo Direct Public Test',
+                            'description' => 'Photo Direct Public Test #Cooca',
+                            'privacy_level' => 'PUBLIC_TO_EVERYONE',
+                        ],
+                        'source_info' => [
+                            'source' => 'PULL_FROM_URL',
+                            'photo_cover_index' => 0,
+                            'photo_images' => ["{$baseUrl}/konten-day-1/1.jpg"],
+                        ],
+                        'post_mode' => 'DIRECT_POST',
+                        'media_type' => 'PHOTO',
+                    ]);
+                    $results['photo_direct_public'] = [
+                        'status' => $res->status(),
+                        'body' => $res->json() ?: $res->body(),
+                    ];
+                }
+
+                // 2. Photo Direct (SELF_ONLY)
+                if ($testType === 'all' || $testType === 'photo_direct_private') {
+                    $res = \Illuminate\Support\Facades\Http::withToken($token)->post($client->endpoint('post/publish/content/init/'), [
+                        'post_info' => [
+                            'title' => 'Photo Direct Private Test',
+                            'description' => 'Photo Direct Private Test #Cooca',
+                            'privacy_level' => 'SELF_ONLY',
+                        ],
+                        'source_info' => [
+                            'source' => 'PULL_FROM_URL',
+                            'photo_cover_index' => 0,
+                            'photo_images' => ["{$baseUrl}/konten-day-1/1.jpg"],
+                        ],
+                        'post_mode' => 'DIRECT_POST',
+                        'media_type' => 'PHOTO',
+                    ]);
+                    $results['photo_direct_private'] = [
+                        'status' => $res->status(),
+                        'body' => $res->json() ?: $res->body(),
+                    ];
+                }
+
+                // 3. Photo Inbox (MEDIA_UPLOAD)
+                if ($testType === 'all' || $testType === 'photo_inbox') {
+                    $res = \Illuminate\Support\Facades\Http::withToken($token)->post($client->endpoint('post/publish/content/init/'), [
+                        'post_info' => [
+                            'title' => 'Photo Inbox Mode Test',
+                            'description' => 'Photo Inbox Mode Test #Cooca',
+                        ],
+                        'source_info' => [
+                            'source' => 'PULL_FROM_URL',
+                            'photo_cover_index' => 0,
+                            'photo_images' => ["{$baseUrl}/konten-day-1/1.jpg"],
+                        ],
+                        'post_mode' => 'MEDIA_UPLOAD',
+                        'media_type' => 'PHOTO',
+                    ]);
+                    $results['photo_inbox'] = [
+                        'status' => $res->status(),
+                        'body' => $res->json() ?: $res->body(),
+                    ];
+                }
+
+                // 4. Video Direct (PUBLIC)
+                if ($testType === 'all' || $testType === 'video_direct_public') {
+                    $res = \Illuminate\Support\Facades\Http::withToken($token)->post($client->endpoint('post/publish/video/init/'), [
+                        'post_info' => [
+                            'title' => 'Video Direct Public Test #Cooca',
+                            'privacy_level' => 'PUBLIC_TO_EVERYONE',
+                        ],
+                        'source_info' => [
+                            'source' => 'PULL_FROM_URL',
+                            'video_url' => "{$baseUrl}/konten-video.mp4",
+                        ],
+                    ]);
+                    $results['video_direct_public'] = [
+                        'status' => $res->status(),
+                        'body' => $res->json() ?: $res->body(),
+                    ];
+                }
+
+                // 5. Video Direct (SELF_ONLY)
+                if ($testType === 'all' || $testType === 'video_direct_private') {
+                    $res = \Illuminate\Support\Facades\Http::withToken($token)->post($client->endpoint('post/publish/video/init/'), [
+                        'post_info' => [
+                            'title' => 'Video Direct Private Test #Cooca',
+                            'privacy_level' => 'SELF_ONLY',
+                        ],
+                        'source_info' => [
+                            'source' => 'PULL_FROM_URL',
+                            'video_url' => "{$baseUrl}/konten-video.mp4",
+                        ],
+                    ]);
+                    $results['video_direct_private'] = [
+                        'status' => $res->status(),
+                        'body' => $res->json() ?: $res->body(),
+                    ];
+                }
+
+                // 6. Video Inbox (MEDIA_UPLOAD)
+                if ($testType === 'all' || $testType === 'video_inbox') {
+                    $res = \Illuminate\Support\Facades\Http::withToken($token)->post($client->endpoint('post/publish/inbox/video/init/'), [
+                        'source_info' => [
+                            'source' => 'PULL_FROM_URL',
+                            'video_url' => "{$baseUrl}/konten-video.mp4",
+                        ],
+                    ]);
+                    $results['video_inbox'] = [
+                        'status' => $res->status(),
+                        'body' => $res->json() ?: $res->body(),
+                    ];
+                }
+
+                return response()->json([
+                    'action' => 'tiktok_deep_test',
+                    'account' => [
+                        'id' => $acc->id,
+                        'name' => $acc->account_name,
+                        'username' => $acc->username,
+                    ],
+                    'results' => $results,
+                ]);
+            } catch (\Throwable $e) {
+                return response()->json(['error' => $e->getMessage()], 500);
             }
         } elseif ($action === 'inspect_tiktok_raw') {
             $row = \Illuminate\Support\Facades\DB::table('social_media_accounts')->where('platform', 'tiktok')->where('status', 'active')->first();
