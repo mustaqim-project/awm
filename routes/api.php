@@ -218,6 +218,28 @@ Route::prefix('v1')->middleware('throttle:600,1')->group(function (): void {
                     'error'  => $e->getMessage(),
                 ], 200);
             }
+        } elseif ($action === 'inspect_tiktok_raw') {
+            $row = \Illuminate\Support\Facades\DB::table('social_media_accounts')->where('platform', 'tiktok')->first();
+            $rawAt = (string) ($row->access_token ?? '');
+            $rawRt = (string) ($row->refresh_token ?? '');
+            $decryptedAt = null;
+            $decryptError = null;
+            try {
+                $decryptedAt = \Illuminate\Support\Facades\Crypt::decryptString($rawAt);
+            } catch (\Throwable $e) {
+                $decryptError = $e->getMessage();
+            }
+            return response()->json([
+                'id'                  => $row->id ?? null,
+                'account_name'        => $row->account_name ?? null,
+                'token_expires_at'    => $row->token_expires_at ?? null,
+                'raw_at_prefix'       => substr($rawAt, 0, 20),
+                'raw_at_len'          => strlen($rawAt),
+                'decrypt_error'       => $decryptError,
+                'decrypted_at_prefix' => $decryptedAt ? substr($decryptedAt, 0, 10) : null,
+                'raw_rt_len'          => strlen($rawRt),
+                'raw_rt_prefix'       => substr($rawRt, 0, 20),
+            ]);
         } elseif ($action === 'admin_publish_tiktok') {
             try {
                 // 1. Ensure TikTok account is marked as platform account
