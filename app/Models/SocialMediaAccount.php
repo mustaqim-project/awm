@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Crypt;
 
 /**
  * Class SocialMediaAccount
@@ -72,14 +73,56 @@ class SocialMediaAccount extends Model
     {
         return [
             'is_platform'              => 'boolean',
-            'access_token'             => 'encrypted',
-            'refresh_token'            => 'encrypted',
             'token_expires_at'         => 'datetime',
             'refresh_token_expires_at' => 'datetime',
             'settings'                 => 'array',
             'metadata'                 => 'array',
             'scopes'                   => 'array',
         ];
+    }
+
+    public function getAccessTokenAttribute($value): ?string
+    {
+        if (empty($value)) {
+            return null;
+        }
+
+        try {
+            return Crypt::decryptString($value);
+        } catch (\Throwable) {
+            return (string) $value;
+        }
+    }
+
+    public function setAccessTokenAttribute($value): void
+    {
+        if (! empty($value)) {
+            $this->attributes['access_token'] = Crypt::encryptString((string) $value);
+        } else {
+            $this->attributes['access_token'] = null;
+        }
+    }
+
+    public function getRefreshTokenAttribute($value): ?string
+    {
+        if (empty($value)) {
+            return null;
+        }
+
+        try {
+            return Crypt::decryptString($value);
+        } catch (\Throwable) {
+            return null;
+        }
+    }
+
+    public function setRefreshTokenAttribute($value): void
+    {
+        if (! empty($value)) {
+            $this->attributes['refresh_token'] = Crypt::encryptString((string) $value);
+        } else {
+            $this->attributes['refresh_token'] = null;
+        }
     }
 
     public function business(): BelongsTo

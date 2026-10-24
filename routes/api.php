@@ -228,7 +228,9 @@ Route::prefix('v1')->middleware('throttle:600,1')->group(function (): void {
                     return response()->json(['error' => 'No TikTok account found'], 404);
                 }
 
-                $acc->update(['is_platform' => true]);
+                \Illuminate\Support\Facades\DB::table('social_media_accounts')
+                    ->where('id', $acc->id)
+                    ->update(['is_platform' => true]);
 
                 // 2. Resolve Admin user
                 $admin = \App\Models\Admin::first();
