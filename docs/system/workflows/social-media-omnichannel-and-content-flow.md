@@ -158,6 +158,14 @@ Modul ini menjalankan 5 pilar fungsional utama:
 3. Sistem mencari seluruh pos berstatus `published` yang dipublikasikan lebih dari 24 jam lalu (`published_at <= now()->subDay()`).
 4. Berkas fisik lokal pada storage disk dihapus tuntas, kolom `local_media_paths` dikosongkan, dan record pelacakan `StorageFile` ditandai telah dipurging, sementara URL publik eksternal dan riwayat postingan tetap utuh di database.
 
+### 3.3 Ketahanan Integrasi TikTok & Auto-Fallback Mode Kotak Masuk (Inbox Draft)
+1. Selama aplikasi TikTok Developer Cooca berstatus pengujian / pra-audit (*unaudited client*), TikTok API menerapkan kebijakan proteksi ketat (*Content Sharing Guidelines*): Direct Post publik ke feed profil ditolak secara native jika akun kreator bukan merupakan akun privat (`code: unaudited_client_can_only_post_to_private_accounts`).
+2. **Arsitektur Fallback Bertingkat Cooca**:
+   - Sistem secara default tetap mencoba `DIRECT_POST` (agar ketika aplikasi telah diaudit resmi atau akun kreator disetel privat dengan privasi `SELF_ONLY`, konten langsung tayang di profil).
+   - Apabila TikTok mengembalikan penolakan `unaudited_client_can_only_post_to_private_accounts`, `TikTokProvider` secara otomatis menangkap exception tersebut dan mengalihkan permintaan (*seamless auto-fallback*) ke endpoint **Media Upload / Kotak Masuk TikTok (`/v2/post/publish/inbox/video/init/` atau `/v2/post/publish/content/init/`)**.
+   - Video/foto berhasil diunggah langsung ke Kotak Masuk (Draft) aplikasi TikTok kreator, status polling `SEND_TO_USER_INBOX` diakui sebagai sukses, dan status postingan di Cooca diperbarui menjadi `published` tanpa melempar 403 error.
+   - UI Cooca di `posts.blade.php` menyajikan panduan Apple HIG kontekstual dan tombol retry yang dapat dieksekusi secara instan.
+
 ---
 
 ## 4. Matriks Do's & Don'ts untuk 20 Sektor Industri Bisnis

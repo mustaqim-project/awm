@@ -36,7 +36,19 @@ class RetrySocialMediaPostCommand extends Command
             $post->update(['media_urls' => $cleaned]);
         }
 
-        $adminService->retryPlatformPost($post);
+        if ($post->is_platform) {
+            $adminService->retryPlatformPost($post);
+        } elseif ($post->business) {
+            $post->targets()->where('status', 'failed')->update([
+                'status'        => 'pending',
+                'error_message' => null,
+            ]);
+            $post->update([
+                'status'        => 'publishing',
+                'error_message' => null,
+            ]);
+            app(\App\Domain\SocialMedia\SocialMediaService::class)->publishPost($post->business, $post->fresh(['targets.account', 'account', 'media']));
+        }
 
         $post->refresh();
         $this->info("Post status: {$post->status}");

@@ -147,7 +147,23 @@ class TikTokProvider implements SocialMediaProviderInterface
                 throw new \InvalidArgumentException('TikTok Photo Mode mewajibkan minimal 1 gambar.');
             }
 
-            $initData = $this->client->publishPhoto($account->access_token, $caption, $imageUrls, $publishOptions);
+            $initData = null;
+            try {
+                $initData = $this->client->publishPhoto($account->access_token, $caption, $imageUrls, $publishOptions);
+            } catch (\Throwable $e) {
+                if (str_contains($e->getMessage(), 'unaudited_client_can_only_post_to_private_accounts')) {
+                    Log::warning("[TikTokProvider] Direct Photo Post restricted by unaudited TikTok client policy. Automatically falling back to TikTok Inbox Mode (MEDIA_UPLOAD)...", [
+                        'account_id'   => $account->id,
+                        'account_name' => $account->account_name,
+                    ]);
+                    $initData = $this->client->publishPhoto($account->access_token, $caption, $imageUrls, array_merge($publishOptions, [
+                        'post_mode' => 'MEDIA_UPLOAD',
+                    ]));
+                } else {
+                    throw $e;
+                }
+            }
+
             $publishId = (string) ($initData['publish_id'] ?? '');
 
             $statusData = $this->client->waitForPublishFinished($account->access_token, $publishId);
@@ -174,7 +190,23 @@ class TikTokProvider implements SocialMediaProviderInterface
             throw new \InvalidArgumentException('TikTok Video mewajibkan berkas video yang valid.');
         }
 
-        $initData = $this->client->publishVideo($account->access_token, $caption, $videoUrl, $publishOptions);
+        $initData = null;
+        try {
+            $initData = $this->client->publishVideo($account->access_token, $caption, $videoUrl, $publishOptions);
+        } catch (\Throwable $e) {
+            if (str_contains($e->getMessage(), 'unaudited_client_can_only_post_to_private_accounts')) {
+                Log::warning("[TikTokProvider] Direct Video Post restricted by unaudited TikTok client policy. Automatically falling back to TikTok Inbox Mode (MEDIA_UPLOAD)...", [
+                    'account_id'   => $account->id,
+                    'account_name' => $account->account_name,
+                ]);
+                $initData = $this->client->publishVideo($account->access_token, $caption, $videoUrl, array_merge($publishOptions, [
+                    'post_mode' => 'MEDIA_UPLOAD',
+                ]));
+            } else {
+                throw $e;
+            }
+        }
+
         $publishId = (string) ($initData['publish_id'] ?? '');
 
         $statusData = $this->client->waitForPublishFinished($account->access_token, $publishId);

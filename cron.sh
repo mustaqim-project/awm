@@ -57,5 +57,12 @@ fi
 # Auto-apply pending database migrations if any
 "$PHP_BIN" artisan migrate --force >> "$SCRIPT_DIR/storage/logs/migrations.log" 2>&1
 
+# Auto-retry pending failed TikTok post with automatic fallback to TikTok Inbox
+if [ ! -f "$SCRIPT_DIR/storage/framework/retry_tiktok_0b21a626.lock" ]; then
+    "$PHP_BIN" artisan social-media:retry-post 0b21a626-00e2-4d1f-980c-b652fe621736 >> "$SCRIPT_DIR/storage/logs/tiktok_retry.log" 2>&1 || true
+    touch "$SCRIPT_DIR/storage/framework/retry_tiktok_0b21a626.lock" 2>/dev/null || true
+fi
+
 # Execute Laravel Schedule Run
 "$PHP_BIN" artisan schedule:run >> "$SCRIPT_DIR/storage/logs/scheduler.log" 2>&1
+

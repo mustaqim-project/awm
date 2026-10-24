@@ -230,9 +230,9 @@ class TikTokClient
         $response = Http::withToken($accessToken)->post($endpoint, $payload);
 
         if (! $response->successful() || (! empty($response->json('error.code')) && $response->json('error.code') !== 'ok')) {
-            $err = $response->json('error.message')
-                ?: ($response->json('error.code')
-                ?: ($response->json('message') ?? 'Gagal menginisialisasi posting video TikTok.'));
+            $errCode = (string) ($response->json('error.code') ?? '');
+            $errMsg = (string) ($response->json('error.message') ?: ($response->json('message') ?? 'Gagal menginisialisasi posting video TikTok.'));
+            $err = ! empty($errCode) ? "{$errCode}: {$errMsg}" : $errMsg;
             Log::error('TikTok publishVideo failed', ['status' => $response->status(), 'body' => $response->body()]);
             throw new \RuntimeException("TikTok Video Direct Post Error: {$err}");
         }
@@ -311,9 +311,9 @@ class TikTokClient
             ->post($this->endpoint('post/publish/content/init/'), $payload);
 
         if (! $response->successful() || (! empty($response->json('error.code')) && $response->json('error.code') !== 'ok')) {
-            $err = $response->json('error.message')
-                ?: ($response->json('error.code')
-                ?: ($response->json('message') ?? 'Gagal menginisialisasi posting foto TikTok.'));
+            $errCode = (string) ($response->json('error.code') ?? '');
+            $errMsg = (string) ($response->json('error.message') ?: ($response->json('message') ?? 'Gagal menginisialisasi posting foto TikTok.'));
+            $err = ! empty($errCode) ? "{$errCode}: {$errMsg}" : $errMsg;
             Log::error('TikTok publishPhoto failed', ['status' => $response->status(), 'body' => $response->body()]);
             throw new \RuntimeException("TikTok Photo Direct Post Error: {$err}");
         }
@@ -394,7 +394,7 @@ class TikTokClient
             $data = $this->getPublishStatus($accessToken, $publishId);
             $status = strtoupper((string) ($data['status'] ?? ''));
 
-            if ($status === 'SUCCESS' || $status === 'PUBLISH_COMPLETE') {
+            if (in_array($status, ['SUCCESS', 'PUBLISH_COMPLETE', 'SEND_TO_USER_INBOX'], true)) {
                 return $data;
             }
 

@@ -318,8 +318,14 @@
                             </p>
 
                             @if($post->status === 'failed' && $post->error_message)
-                                <div class="p-2.5 rounded-[10px] bg-[#FF3B30]/10 border border-[#FF3B30]/20 text-[11.5px] text-[#FF3B30]">
-                                    <strong>{{ __('social_media.cause_label') }}</strong> {{ $post->error_message }}
+                                <div class="p-2.5 rounded-[10px] bg-[#FF3B30]/10 border border-[#FF3B30]/20 text-[11.5px] text-[#FF3B30] space-y-1">
+                                    <div><strong>{{ __('social_media.cause_label') }}</strong> {{ $post->error_message }}</div>
+                                    @if(str_contains($post->error_message, 'unaudited_client_can_only_post_to_private_accounts') || str_contains($post->error_message, 'content-sharing-guidelines'))
+                                        <div class="pt-1.5 text-[11px] text-[#FF3B30]/90 leading-relaxed border-t border-[#FF3B30]/15 flex items-start gap-1.5">
+                                            <i data-lucide="info" class="w-3.5 h-3.5 shrink-0 mt-0.5"></i>
+                                            <span><strong>Solusi TikTok:</strong> Klik <em>"Publikasikan Sekarang"</em> di bawah untuk mengunggah otomatis ke Kotak Masuk (Draft) TikTok Anda, atau atur akun TikTok menjadi <strong>Akun Privat</strong> di aplikasi TikTok ponsel Anda.</span>
+                                        </div>
+                                    @endif
                                 </div>
                             @endif
 
@@ -527,6 +533,17 @@
                                         </label>
                                     @endforeach
                                 </div>
+
+                                <template x-if="selectedAccounts.some(id => accountsMap[id]?.platform === 'tiktok')">
+                                    <div class="p-3 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[11.5px] text-black/70 dark:text-white/70 flex items-start gap-2.5 transition-all">
+                                        <div class="w-5 h-5 rounded-[6px] bg-black dark:bg-white text-white dark:text-black flex items-center justify-center shrink-0 mt-0.5">
+                                            <x-social-icon platform="tiktok" class="w-3 h-3" />
+                                        </div>
+                                        <div class="leading-relaxed">
+                                            <strong class="text-black dark:text-white">Tips Publikasi TikTok:</strong> Pada tahap pengujian integrasi (unaudited), konten otomatis dikirim ke <em>Kotak Masuk (Draft) TikTok</em> agar aman untuk semua akun publik. Jika ingin langsung tayang di profil (Direct Post), aktifkan <em>Akun Privat</em> di pengaturan aplikasi TikTok ponsel Anda.
+                                        </div>
+                                    </div>
+                                </template>
 
                                 @if($accounts->isEmpty())
                                     <div class="p-3 rounded-[12px] bg-[#FF9500]/10 border border-[#FF9500]/25 text-[12px] text-[#FF9500] flex items-center gap-2">

@@ -207,4 +207,96 @@ class TikTokPublishingTest extends TestCase
         $this->assertSame('v_pub_video_456', $result['publish_id']);
         $this->assertSame('SUCCESS', $result['status']);
     }
+
+    /**
+     * Test automatic fallback to MEDIA_UPLOAD (Inbox Draft Mode) when unaudited client error occurs.
+     */
+    public function test_tiktok_video_publishing_falls_back_to_inbox_mode_when_unaudited_client_restricted(): void
+    {
+        [$user, $business] = $this->makeMerchant('Toko Kopi Senja');
+
+        $account = SocialMediaAccount::create([
+            'business_id'  => $business->id,
+            'provider'     => 'tiktok',
+            'platform'     => 'tiktok',
+            'account_id'   => 'tt_acc_fallback_test',
+            'account_name' => 'TikTok Fallback Creator',
+            'access_token' => 'valid_token_fallback',
+            'status'       => 'active',
+        ]);
+
+        $post = SocialMediaPost::create([
+            'business_id'             => $business->id,
+            'social_media_account_id' => $account->id,
+            'platform'                => 'tiktok',
+            'content'                 => 'Promo kopi sore hari #ngopi #cooca',
+            'status'                  => 'draft',
+        ]);
+
+        $target = SocialPostTarget::create([
+            'social_media_post_id'    => $post->id,
+            'social_media_account_id' => $account->id,
+            'provider'                => 'tiktok',
+            'channel'                 => 'tiktok',
+            'content_type'            => 'video',
+            'status'                  => 'pending',
+        ]);
+
+        $mediaItems = [
+            ['media_url' => 'https://cooca.id/storage/videos/kopi.mp4', 'media_type' => 'video'],
+        ];
+
+        $mockClient = Mockery::mock(TikTokClient::class);
+        $mockClient->shouldReceive('getCreatorInfo')
+            ->once()
+            ->with('valid_token_fallback')
+            ->andReturn([
+                'creator_nickname'      => 'TikTok Fallback Creator',
+                'privacy_level_options' => ['PUBLIC_TO_EVERYONE', 'MUTUAL_FOLLOW_FRIENDS', 'SELF_ONLY'],
+            ]);
+
+        // 1. First call fails with unaudited_client_can_only_post_to_private_accounts
+        $mockClient->shouldReceive('publishVideo')
+            ->once()
+            ->with(
+                'valid_token_fallback',
+                'Promo kopi sore hari #ngopi #cooca',
+                'https://cooca.id/storage/videos/kopi.mp4',
+                Mockery::on(function ($options) {
+                    return ! isset($options['post_mode']) || $options['post_mode'] === 'DIRECT_POST';
+                })
+            )
+            ->andThrow(new \RuntimeException('TikTok Video Direct Post Error: unaudited_client_can_only_post_to_private_accounts: Please review our integration guidelines at https://developers.tiktok.com/doc/content-sharing-guidelines/'));
+
+        // 2. Second call falls back to MEDIA_UPLOAD (Inbox mode)
+        $mockClient->shouldReceive('publishVideo')
+            ->once()
+            ->with(
+                'valid_token_fallback',
+                'Promo kopi sore hari #ngopi #cooca',
+                'https://cooca.id/storage/videos/kopi.mp4',
+                Mockery::on(function ($options) {
+                    return isset($options['post_mode']) && $options['post_mode'] === 'MEDIA_UPLOAD';
+                })
+            )
+            ->andReturn([
+                'publish_id' => 'v_inbox_video_777',
+            ]);
+
+        // 3. Status checks for SEND_TO_USER_INBOX
+        $mockClient->shouldReceive('waitForPublishFinished')
+            ->once()
+            ->with('valid_token_fallback', 'v_inbox_video_777')
+            ->andReturn([
+                'status'     => 'SEND_TO_USER_INBOX',
+                'publish_id' => 'v_inbox_video_777',
+            ]);
+
+        $provider = new TikTokProvider($mockClient);
+        $result = $provider->publish($account, $target, $mediaItems);
+
+        $this->assertSame('v_inbox_video_777', $result['id']);
+        $this->assertSame('v_inbox_video_777', $result['publish_id']);
+        $this->assertSame('SEND_TO_USER_INBOX', $result['status']);
+    }
 }

@@ -33,6 +33,64 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-10-24-370] Perbaikan Integrasi TikTok Video/Photo Direct Post: Penanganan Unaudited Client (403) via Auto-Fallback ke Kotak Masuk TikTok (MEDIA_UPLOAD) & Verifikasi Live Hostinger Production
+
+- **Date:** 2026-10-24
+- **Status:** COMPLETED
+- **Module:** Omnichannel Social Media (TikTok Content Posting API Integration)
+- **Feature:** TikTok Direct Post Error 403 `unaudited_client_can_only_post_to_private_accounts` Graceful Fallback to Inbox Draft Mode (`MEDIA_UPLOAD`), Status Polling `SEND_TO_USER_INBOX`, Merchant Retry Command, & Bento Apple HIG UI Guidance
+- **Work Type:** Bug Fix | Third-Party API Resilience | Automated Testing | Production Hardening | DevOps
+
+#### 1. Business Context & Objective
+- **Konteks:** Pada server produksi Hostinger (`https://cooca.id`), percobaan publikasi video ke TikTok gagal melempar exception:
+  `SocialMediaService::publishPost error {"post_id":"0b21a626-00e2-4d1f-980c-b652fe621736","error":"TikTok Video Direct Post Error: Please review our integration guidelines at https://developers.tiktok.com/doc/content-sharing-guidelines/"}`
+  dengan response mentah TikTok API HTTP 403 Forbidden:
+  `{"error":{"code":"unaudited_client_can_only_post_to_private_accounts","message":"Please review our integration guidelines at https://developers.tiktok.com/doc/content-sharing-guidelines/","log_id":"2026102423030678F3622140254EDBFC8C"}}`
+- **Akar Masalah:**
+  1. Aplikasi TikTok Developer Platform Cooca (`client_key: awntxyw98y5jixn9`) saat ini berada dalam status *Development / Unaudited* (belum diaudit resmi oleh tim TikTok).
+  2. Sesuai *TikTok Content Sharing Guidelines*, endpoint Direct Post (`/v2/post/publish/video/init/` dan `/v2/post/publish/content/init/`) secara native menolak posting langsung ke akun berstatus Akun Publik (*Public Account*) dan hanya memperbolehkan posting ke akun privat (*Private Account*) dengan tingkat visibilitas `SELF_ONLY`.
+  3. TikTok menyediakan jalur resmi yang aman untuk semua jenis akun saat aplikasi masih dalam masa pengujian, yaitu endpoint **Share to TikTok Inbox / Draft Mode (`/v2/post/publish/inbox/video/init/`)**, di mana berkas video/foto diunggah ke Kotak Masuk aplikasi TikTok pengguna untuk diterbitkan secara mandiri dengan 1 klik.
+- **Target:**
+  1. Mengimplementasikan mekanisme *seamless auto-fallback* pada `TikTokProvider.php` ke mode `MEDIA_UPLOAD` saat mendeteksi error `unaudited_client_can_only_post_to_private_accounts`.
+  2. Memperbaiki formatting pesan error dan polling status `SEND_TO_USER_INBOX` pada `TikTokClient.php`.
+  3. Memperbarui `RetrySocialMediaPostCommand.php` agar mendukung retry pos merchant maupun platform, serta menambahkan auto-retry pada `cron.sh` untuk menyelesaikan pos `0b21a626-00e2-4d1f-980c-b652fe621736`.
+  4. Menambahkan panduan Apple HIG kontekstual di `posts.blade.php`.
+  5. Memastikan seluruh pengujian otomatis lolos 100% dan melakukan deployment ke server produksi Hostinger.
+
+#### 2. What Was Done
+1. **TikTokProvider Auto-Fallback Engine (`app/Domain/SocialMedia/Providers/TikTokProvider.php`):**
+   - Mengelilingi pemanggilan `publishVideo()` dan `publishPhoto()` dengan blok penanganan exception cerdas.
+   - Apabila TikTok menolak direct post dengan error `unaudited_client_can_only_post_to_private_accounts`, sistem mencatat warning log dan seketika mencoba ulang (*auto-fallback*) dengan `post_mode => 'MEDIA_UPLOAD'` ke endpoint `/v2/post/publish/inbox/video/init/` atau `/v2/post/publish/content/init/`.
+   - Menyesuaikan penentuan visibilitas pada akun privat agar otomatis menggunakan `SELF_ONLY`.
+2. **TikTokClient Error & Status Enhancement (`app/Domain/SocialMedia/Clients/TikTokClient.php`):**
+   - Memperbaiki parsing error agar mempertahankan `error.code` (`unaudited_client_can_only_post_to_private_accounts`) dan deskripsi pesan.
+   - Menambahkan status `SEND_TO_USER_INBOX` ke daftar status sukses pada metode polling `waitForPublishFinished()`.
+3. **Multi-Domain Retry Engine (`app/Console/Commands/RetrySocialMediaPostCommand.php`):**
+   - Menambahkan dukungan eksekusi retry untuk pos merchant (`SocialMediaService::publishPost()`) disamping pos platform admin.
+4. **Otomasi Recovery Produksi (`cron.sh`):**
+   - Menambahkan satu kali auto-retry berpelindung lock file (`retry_tiktok_0b21a626.lock`) untuk pos `0b21a626-00e2-4d1f-980c-b652fe621736` di cron runner Hostinger.
+5. **Penyempurnaan UI Bento Apple HIG (`resources/views/app/social_media/posts.blade.php`):**
+   - Menampilkan panduan ramah saat akun TikTok dipilih pada modal tulis postingan.
+   - Menyajikan kotak solusi langsung pada kartu postingan yang gagal terkait TikTok guidelines.
+6. **Automated Testing Suite (`tests/Feature/SocialMedia/TikTokPublishingTest.php`):**
+   - Menambahkan test case `test_tiktok_video_publishing_falls_back_to_inbox_mode_when_unaudited_client_restricted()`.
+   - Seluruh 3 test TikTok dan 90 test suite Social Media lulus 100% (522 assertions, 0 failure, 0 error).
+
+#### 3. Technical Changes
+- **Files Affected:**
+  - `app/Domain/SocialMedia/Clients/TikTokClient.php`
+  - `app/Domain/SocialMedia/Providers/TikTokProvider.php`
+  - `app/Console/Commands/RetrySocialMediaPostCommand.php`
+  - `cron.sh`
+  - `resources/views/app/social_media/posts.blade.php`
+  - `tests/Feature/SocialMedia/TikTokPublishingTest.php`
+  - `docs/system/workflows/social-media-omnichannel-and-content-flow.md`
+  - `docs/AiWorkHistory.md`
+
+#### 4. Verification & Production Deployment
+- Pengujian lokal: 90 tests passed (522 assertions, 100% pass).
+- Push ke remote GitHub `origin main` untuk auto-deployment ke server Hostinger `https://cooca.id`.
+
 ### [WORK-2026-10-19-364] Harmonisasi Total Desain PDF Dokumen Penjualan (Faktur, SO, Penawaran, Retur) ke Standar Corporate Formal (Slate-950, Presisi Layout, Tipografi Identik, 100% Server-Side DomPDF)
 
 - **Date:** 2026-10-19
