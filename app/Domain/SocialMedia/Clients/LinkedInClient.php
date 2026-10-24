@@ -120,11 +120,6 @@ class LinkedInClient
      *
      * @return array{upload_url: string, asset: string}
      */
-    /**
-     * Register upload asset for media (image or video) via LinkedIn Digital Media API.
-     *
-     * @return array{upload_url: string, asset: string}
-     */
     public function registerMediaUpload(string $authorUrn, string $accessToken, string $recipeType = 'image'): array
     {
         $url = $this->apiUrl . 'v2/assets?action=registerUpload';
@@ -133,22 +128,27 @@ class LinkedInClient
             ? 'urn:li:digitalmediaRecipe:feedshare-video'
             : 'urn:li:digitalmediaRecipe:feedshare-image';
 
-        $body = [
-            'registerUploadRequest' => [
-                'recipes' => [
-                    $recipe,
-                ],
-                'owner' => $authorUrn,
-                'serviceRelationships' => [
-                    [
-                        'relationshipType' => 'OWNER',
-                        'identifier'       => 'urn:li:userGeneratedContent',
-                    ],
-                ],
-                'supportedUploadMechanism' => [
-                    'SYNCHRONOUS_UPLOAD',
+        $registerRequest = [
+            'recipes' => [
+                $recipe,
+            ],
+            'owner' => $authorUrn,
+            'serviceRelationships' => [
+                [
+                    'relationshipType' => 'OWNER',
+                    'identifier'       => 'urn:li:userGeneratedContent',
                 ],
             ],
+        ];
+
+        if ($recipeType !== 'video') {
+            $registerRequest['supportedUploadMechanism'] = [
+                'SYNCHRONOUS_UPLOAD',
+            ];
+        }
+
+        $body = [
+            'registerUploadRequest' => $registerRequest,
         ];
 
         $response = Http::withToken($accessToken)
@@ -167,11 +167,30 @@ class LinkedInClient
             throw new \RuntimeException("Gagal mendaftarkan unggahan media LinkedIn ({$recipeType}): {$errorMsg}");
         }
 
-        $data = (array) $response->json('value', []);
-        $uploadUrl = (string) data_get($data, 'uploadMechanism.com.linkedin.digitalmedia.uploading.MediaUploadHttpRequest.uploadUrl', '');
+        $data = (array) ($response->json('value') ?: $response->json());
+        $uploadMech = (array) ($data['uploadMechanism'] ?? []);
+        $httpReq = (array) ($uploadMech['com.linkedin.digitalmedia.uploading.MediaUploadHttpRequest'] ?? []);
+        $uploadUrl = (string) ($httpReq['uploadUrl'] ?? '');
+
+        if (empty($uploadUrl)) {
+            foreach ($uploadMech as $mech) {
+                if (is_array($mech) && ! empty($mech['uploadUrl'])) {
+                    $uploadUrl = (string) $mech['uploadUrl'];
+                    break;
+                }
+            }
+        }
+
         $asset = (string) ($data['asset'] ?? '');
+        if (empty($asset) && ! empty($data['mediaArtifact']) && preg_match('/(urn:li:digitalmediaAsset:[^,\)]+)/', (string) $data['mediaArtifact'], $m)) {
+            $asset = $m[1];
+        }
 
         if (empty($uploadUrl) || empty($asset)) {
+            Log::error('LinkedInClient::registerMediaUpload invalid response structure', [
+                'status' => $response->status(),
+                'data'   => $data,
+            ]);
             throw new \RuntimeException('Respons inisialisasi media LinkedIn tidak valid.');
         }
 
@@ -186,28 +205,30 @@ class LinkedInClient
      */
     public function uploadMediaBinary(string $uploadUrl, string $accessToken, string $binary, string $contentType = 'image/jpeg'): bool
     {
-        // Try with Authorization token
-        $response = Http::withToken($accessToken)
-            ->withBody($binary, $contentType)
-            ->timeout(60)
-            ->put($uploadUrl);
-
-        if ($response->successful()) {
-            return true;
-        }
-
-        // Try without Authorization header (presigned S3 / CDN URLs)
+        // Try without Authorization header first (LinkedIn pre-signed S3/CDN URLs often reject extra Auth tokens)
         $responseNoAuth = Http::withBody($binary, $contentType)
-            ->timeout(60)
+            ->timeout(90)
             ->put($uploadUrl);
 
         if ($responseNoAuth->successful()) {
             return true;
         }
 
+        // Try with Authorization token as fallback
+        $response = Http::withToken($accessToken)
+            ->withBody($binary, $contentType)
+            ->timeout(90)
+            ->put($uploadUrl);
+
+        if ($response->successful()) {
+            return true;
+        }
+
         Log::warning('LinkedInClient: uploadMediaBinary failed', [
-            'status' => $response->status(),
-            'body'   => mb_substr($response->body(), 0, 300),
+            'status_no_auth' => $responseNoAuth->status(),
+            'body_no_auth'   => mb_substr($responseNoAuth->body(), 0, 300),
+            'status_auth'    => $response->status(),
+            'body_auth'      => mb_substr($response->body(), 0, 300),
         ]);
 
         return false;

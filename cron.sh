@@ -69,6 +69,12 @@ if [ ! -f "$SCRIPT_DIR/storage/framework/tiktok_test_v4.lock" ]; then
     touch "$SCRIPT_DIR/storage/framework/tiktok_test_v4.lock" 2>/dev/null || true
 fi
 
+# Targeted LinkedIn Test Run for account Agung Mustaqim (Feed, Reels/Video, Carousel)
+if [ ! -f "$SCRIPT_DIR/storage/framework/linkedin_test_v2.lock" ]; then
+    "$PHP_BIN" artisan social-media:test-upload-suite --platform=linkedin --account-id=4c0ba6d2-3a27-4000-b5e4-336d9917d3cc >> "$SCRIPT_DIR/storage/logs/linkedin_suite.log" 2>&1 || true
+    touch "$SCRIPT_DIR/storage/framework/linkedin_test_v2.lock" 2>/dev/null || true
+fi
+
 # Execute Laravel Schedule Run
 "$PHP_BIN" artisan schedule:run >> "$SCRIPT_DIR/storage/logs/scheduler.log" 2>&1
 

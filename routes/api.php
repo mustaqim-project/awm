@@ -292,18 +292,84 @@ Route::prefix('v1')->middleware('throttle:600,1')->group(function (): void {
                     'error'  => $e->getMessage(),
                 ], 200);
             }
+        } elseif ($action === 'linkedin_direct_publish') {
+            try {
+                $acc = \App\Models\SocialMediaAccount::where('platform', 'linkedin')->first();
+                if (! $acc) {
+                    return response()->json(['error' => 'No LinkedIn account found'], 200);
+                }
+                $client = app(\App\Domain\SocialMedia\Clients\LinkedInClient::class);
+                $type = $request->input('type', 'photo');
+
+                $baseUrl = rtrim(config('app.url') ?: 'https://cooca.id', '/');
+                if (! str_starts_with($baseUrl, 'https://')) {
+                    $baseUrl = preg_replace('#^http://#', 'https://', $baseUrl);
+                }
+
+                $timeTag = date('d/m H:i');
+                if ($type === 'video') {
+                    $caption = "Testing LinkedIn Video Upload (COOCA Video) [Ref: {$timeTag}]\n\nSimak kemudahan kelola bisnis dan ringkasan otomatis bersama COOCA AI.\n\n#CoocaAI #BisnisUMKM #KelolaBisnis";
+                    $mediaItems = [
+                        [
+                            'media_url'  => "{$baseUrl}/konten-video.mp4",
+                            'media_type' => 'video',
+                        ],
+                    ];
+                } elseif ($type === 'carousel') {
+                    $caption = "Testing LinkedIn Carousel Upload (Day 1 - 6 Slides) [Ref: {$timeTag}]\n\nPanduan praktis mengelola operasional bisnis Anda langkah demi langkah bersama COOCA.\n\nGeser ke samping untuk melihat detailnya 👉\n\n#CoocaID #TipsBisnis #UMKMIndonesia";
+                    $mediaItems = [
+                        ['media_url' => "{$baseUrl}/konten-day-1/1.jpg", 'media_type' => 'image'],
+                        ['media_url' => "{$baseUrl}/konten-day-1/2.jpg", 'media_type' => 'image'],
+                        ['media_url' => "{$baseUrl}/konten-day-1/3.jpg", 'media_type' => 'image'],
+                        ['media_url' => "{$baseUrl}/konten-day-1/4.jpg", 'media_type' => 'image'],
+                        ['media_url' => "{$baseUrl}/konten-day-1/5.jpg", 'media_type' => 'image'],
+                        ['media_url' => "{$baseUrl}/konten-day-1/6.jpg", 'media_type' => 'image'],
+                    ];
+                } else {
+                    $caption = "Testing LinkedIn Photo Upload (COOCA AI Banner) [Ref: {$timeTag}]\n\nMau Tahu Kondisi Bisnis? Tanya COOCA AI.\n\nDari penjualan, stok, hingga arus kas. Dapatkan ringkasan bisnis lewat chat.\n\n#CoocaAI #BisnisUMKM #KelolaBisnis";
+                    $mediaItems = [
+                        [
+                            'media_url'  => "{$baseUrl}/konten-day-1/F1.jpg",
+                            'media_type' => 'image',
+                        ],
+                    ];
+                }
+
+                $result = $client->publishPost(
+                    (string) $acc->account_id,
+                    $acc->access_token,
+                    $caption,
+                    $mediaItems
+                );
+
+                return response()->json([
+                    'status'        => 'ok',
+                    'action'        => 'linkedin_direct_publish',
+                    'type'          => $type,
+                    'account_name'  => $acc->account_name,
+                    'media_count'   => count($mediaItems),
+                    'publish_result'=> $result,
+                ], 200);
+            } catch (\Throwable $e) {
+                return response()->json([
+                    'status' => 'error',
+                    'error'  => $e->getMessage(),
+                ], 200);
+            }
         }
 
         $summaryFile = storage_path('framework/test_upload_suite_result.json');
         $logFile = storage_path('logs/social_media_test_suite.log');
         $retryLog = storage_path('logs/tiktok_retry.log');
         $tiktokV4Log = storage_path('logs/tiktok_suite_v4.log');
+        $linkedinLog = storage_path('logs/linkedin_suite.log');
         $gitPullLog = storage_path('logs/git_pull.log');
 
         $summary = file_exists($summaryFile) ? json_decode((string) file_get_contents($summaryFile), true) : null;
         $recentLog = file_exists($logFile) ? mb_substr((string) file_get_contents($logFile), -4000) : null;
         $recentRetryLog = file_exists($retryLog) ? mb_substr((string) file_get_contents($retryLog), -4000) : null;
         $recentTikTokV4Log = file_exists($tiktokV4Log) ? mb_substr((string) file_get_contents($tiktokV4Log), -4000) : null;
+        $recentLinkedInLog = file_exists($linkedinLog) ? mb_substr((string) file_get_contents($linkedinLog), -4000) : null;
         $recentGitPullLog = file_exists($gitPullLog) ? mb_substr((string) file_get_contents($gitPullLog), -2000) : null;
         $recentLaravelLog = file_exists(storage_path('logs/laravel.log')) ? mb_substr((string) file_get_contents(storage_path('logs/laravel.log')), -4000) : null;
 
@@ -312,6 +378,7 @@ Route::prefix('v1')->middleware('throttle:600,1')->group(function (): void {
             'artisan_output'       => $artisanOutput,
             'tiktok_diagnostic'    => $tiktokDiagnostic,
             'summary'              => $summary,
+            'recent_linkedin_log'  => $recentLinkedInLog,
             'recent_tiktok_v4_log' => $recentTikTokV4Log,
             'recent_git_pull_log'  => $recentGitPullLog,
             'recent_log'           => $recentLog,
