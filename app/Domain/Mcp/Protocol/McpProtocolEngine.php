@@ -180,11 +180,8 @@ final class McpProtocolEngine
         } finally {
             $durationMs = (int) round((microtime(true) - $startTime) * 1000);
 
-            // Sanitize sensitive arguments for audit log
-            $sanitizedArgs = $arguments;
-            if (isset($sanitizedArgs['receipt_image_base64'])) {
-                $sanitizedArgs['receipt_image_base64'] = '[BASE64_IMAGE_STRIPPED (' . strlen((string) $arguments['receipt_image_base64']) . ' bytes)]';
-            }
+            // Sanitize sensitive arguments for audit log (strip large binary/base64 & secrets)
+            $sanitizedArgs = $this->sanitizeArguments($arguments);
 
             McpActivityLog::create([
                 'business_id'       => $business->id,
@@ -198,5 +195,41 @@ final class McpProtocolEngine
                 'error_message'     => $errorMessage,
             ]);
         }
+    }
+
+    /**
+     * Sanitize arguments before persisting to McpActivityLog database table.
+     * Prevents database bloat, max_allowed_packet crash, or secret leakage.
+     *
+     * @param  array<string, mixed>  $args
+     * @return array<string, mixed>
+     */
+    private function sanitizeArguments(array $args): array
+    {
+        $sanitized = [];
+
+        foreach ($args as $key => $val) {
+            $lowerKey = strtolower((string) $key);
+
+            if (is_array($val)) {
+                $sanitized[$key] = $this->sanitizeArguments($val);
+            } elseif (is_string($val)) {
+                if (
+                    str_contains($lowerKey, 'base64') ||
+                    str_starts_with($val, 'data:') ||
+                    strlen($val) > 1500
+                ) {
+                    $sanitized[$key] = '[BINARY_OR_BASE64_STRIPPED (' . strlen($val) . ' bytes)]';
+                } elseif (str_contains($lowerKey, 'secret') || str_contains($lowerKey, 'password')) {
+                    $sanitized[$key] = '[REDACTED]';
+                } else {
+                    $sanitized[$key] = $val;
+                }
+            } else {
+                $sanitized[$key] = $val;
+            }
+        }
+
+        return $sanitized;
     }
 }

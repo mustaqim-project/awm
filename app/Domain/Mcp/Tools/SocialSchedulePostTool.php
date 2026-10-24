@@ -56,7 +56,7 @@ final class SocialSchedulePostTool implements McpToolInterface
                 'media_urls' => [
                     'type' => 'array',
                     'items' => ['type' => 'string'],
-                    'description' => 'Daftar URL gambar/video dari cloud storage yang akan diunggah.',
+                    'description' => 'Daftar URL gambar/video publik (misal hasil kembalian dari tool social_upload_media atau social_generate_visual). Untuk postingan Feed Instagram disarankan rasio 1:1 atau 4:5, sedangkan untuk Reels/TikTok gunakan rasio vertikal 9:16.',
                 ],
                 'generate_visual' => [
                     'type' => 'boolean',

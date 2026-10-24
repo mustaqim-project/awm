@@ -207,6 +207,7 @@ class SocialMediaService
                 'status'            => 'published',
                 'platform_post_id'  => $platformPostId,
                 'local_media_paths' => null,
+                'media_urls'        => null,
                 'published_at'      => now(),
                 'error_message'     => null,
             ]);
@@ -509,39 +510,53 @@ class SocialMediaService
      */
     public function purgePostLocalMedia(SocialMediaPost $post): void
     {
-        $disk = Storage::disk('public');
         $trackingService = app(StorageTrackingService::class);
 
         // 1. Purge from post media relation
         $post->loadMissing('media');
         foreach ($post->media as $media) {
-            if (! empty($media->local_path) && $disk->exists($media->local_path)) {
-                try {
-                    $trackingService->recordDeletion($media->local_path);
-                    $disk->delete($media->local_path);
-                    $media->update(['local_path' => null]);
-                    Log::info("[SocialMediaService] Purged local media file: {$media->local_path}");
-                } catch (\Throwable $e) {
-                    Log::warning("[SocialMediaService] Could not delete local media: {$e->getMessage()}");
-                }
+            if (! empty($media->local_path)) {
+                $this->deletePhysicalMediaFile($media->local_path, $trackingService);
+                $media->update(['local_path' => null]);
             }
         }
 
         // 2. Purge from legacy local_media_paths
         if (! empty($post->local_media_paths) && is_array($post->local_media_paths)) {
             foreach ($post->local_media_paths as $localPath) {
-                if (! empty($localPath) && $disk->exists($localPath)) {
-                    try {
-                        $trackingService->recordDeletion($localPath);
-                        $disk->delete($localPath);
-                        Log::info("[SocialMediaService] Purged legacy local path: {$localPath}");
-                    } catch (\Throwable $e) {
-                        Log::warning("[SocialMediaService] Could not delete legacy local path: {$e->getMessage()}");
-                    }
+                if (! empty($localPath)) {
+                    $this->deletePhysicalMediaFile($localPath, $trackingService);
                 }
             }
             $post->update(['local_media_paths' => null]);
         }
+
+        $post->update(['media_urls' => null]);
+    }
+
+    /**
+     * Delete physical media file from public and local storage disks, and record quota reclamation.
+     */
+    private function deletePhysicalMediaFile(string $filePath, StorageTrackingService $trackingService): int
+    {
+        $size = 0;
+        try {
+            if (Storage::disk('public')->exists($filePath)) {
+                $size = (int) Storage::disk('public')->size($filePath);
+                Storage::disk('public')->delete($filePath);
+            } elseif (Storage::disk('local')->exists($filePath)) {
+                $size = (int) Storage::disk('local')->size($filePath);
+                Storage::disk('local')->delete($filePath);
+            }
+
+            $trackingService->recordDeletion($filePath, 'public');
+            \App\Models\StorageFile::where('file_path', $filePath)->delete();
+            Log::info("[SocialMediaService] Successfully purged published media file from storage: {$filePath} ({$size} bytes)");
+        } catch (\Throwable $e) {
+            Log::warning("[SocialMediaService] Could not delete physical media file {$filePath}: {$e->getMessage()}");
+        }
+
+        return $size;
     }
 
     /**

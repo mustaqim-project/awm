@@ -48,6 +48,17 @@ class PublishSocialMediaTargetJob implements ShouldQueue
             return;
         }
 
+        // Atomic transition to processing prevents duplicate publishing from concurrent queue workers
+        $locked = SocialPostTarget::where('id', $target->id)
+            ->whereIn('status', ['pending', 'scheduled', 'failed'])
+            ->update(['status' => 'processing']);
+
+        if ($locked === 0 && $target->status === 'processing') {
+            Log::info("[PublishSocialMediaTargetJob] Target {$this->targetId} is already being processed concurrently.");
+            return;
+        }
+        $target->status = 'processing';
+
         $post = $target->post;
         if (! $post) {
             $target->update([
@@ -66,8 +77,6 @@ class PublishSocialMediaTargetJob implements ShouldQueue
             $this->updateParentPostStatus($post);
             return;
         }
-
-        $target->update(['status' => 'processing']);
 
         // Prepare media items
         $mediaItems = [];

@@ -46,7 +46,7 @@ class AdminSocialMediaSettingsTest extends TestCase
         $response = $this->actingAs($admin, 'admin')->get(route('admin.settings.index', ['tab' => 'social']));
 
         $response->assertOk();
-        $response->assertSee('Pusat Konfigurasi Media Sosial Terpadu (Meta &amp; TikTok)', false);
+        $response->assertSee('Pusat Konfigurasi Media Sosial Terpadu', false);
         $response->assertSee('Meta Platform (Facebook, Instagram &amp; Threads)', false);
         $response->assertSee('TikTok Developer Platform (Content Posting API)', false);
         $response->assertSee('TikTok Client Key');

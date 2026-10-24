@@ -1715,7 +1715,17 @@
                 },
 
                 async deleteCustomRule(rule) {
-                    if (!confirm('Apakah Anda yakin ingin menghapus aturan ini?')) return;
+                    let confirmed = false;
+                    if (window.AppAlert) {
+                        confirmed = await AppAlert['confirm']({
+                            title: 'Hapus Aturan AI',
+                            message: 'Apakah Anda yakin ingin menghapus aturan ini?',
+                            type: 'danger',
+                            confirmText: 'Hapus',
+                            cancelText: 'Batal'
+                        });
+                    }
+                    if (!confirmed) return;
 
                     try {
                         const url = "{{ url('social-media/inbox/ai-rules') }}/" + rule.id;

@@ -77,7 +77,7 @@ class PublishScheduledSocialMediaPostsCommand extends Command
                 // If post has targets that were not yet scheduled individually
                 if ($post->targets->count() === 1 && ! $post->is_platform && $post->business) {
                     $target = $post->targets->first();
-                    if ($target->status !== 'published') {
+                    if (in_array($target->status, ['scheduled', 'draft'], true)) {
                         $target->update(['status' => 'publishing']);
                         $post->update(['status' => 'publishing']);
                         try {
@@ -102,7 +102,7 @@ class PublishScheduledSocialMediaPostsCommand extends Command
                     }
                 } elseif ($post->targets->isNotEmpty()) {
                     foreach ($post->targets as $target) {
-                        if ($target->status !== 'published') {
+                        if (in_array($target->status, ['scheduled', 'draft'], true)) {
                             if ($target->scheduled_at === null || $target->scheduled_at->isPast() || ($post->scheduled_at && $post->scheduled_at->isPast())) {
                                 if ($post->is_platform) {
                                     $adminSocialMediaService->executePlatformPublishTarget($target);
@@ -141,10 +141,31 @@ class PublishScheduledSocialMediaPostsCommand extends Command
             }
         }
 
-        if ($dispatchedCount === 0) {
+        // 3. Auto-Purge Storage Media for Published Posts
+        $publishedPostsWithMedia = SocialMediaPost::where('status', 'published')
+            ->where(function ($query) {
+                $query->whereNotNull('local_media_paths')
+                    ->orWhereNotNull('media_urls')
+                    ->orWhereHas('media', function ($q) {
+                        $q->whereNotNull('local_path');
+                    });
+            })
+            ->with('media')
+            ->get();
+
+        $purgedMediaPostsCount = 0;
+        if ($publishedPostsWithMedia->isNotEmpty()) {
+            foreach ($publishedPostsWithMedia as $pubPost) {
+                $socialMediaService->purgePostLocalMedia($pubPost);
+                $purgedMediaPostsCount++;
+            }
+            $this->info("Auto-purged storage media files for {$purgedMediaPostsCount} published post(s).");
+        }
+
+        if ($dispatchedCount === 0 && $purgedMediaPostsCount === 0) {
             $this->info('No scheduled social media posts or targets ready for publication.');
         } else {
-            $this->info("Scheduled publication processing complete. Total targets/posts processed: {$dispatchedCount}.");
+            $this->info("Scheduled publication processing complete. Total targets/posts processed: {$dispatchedCount}. Purged media posts: {$purgedMediaPostsCount}.");
         }
 
         return self::SUCCESS;

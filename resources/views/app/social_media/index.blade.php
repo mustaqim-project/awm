@@ -427,15 +427,13 @@
                 async disconnect(accountId) {
                     let confirmed = false;
                     if (window.AppAlert) {
-                        confirmed = await AppAlert.confirm({
+                        confirmed = await AppAlert['confirm']({
                             title: @js(__('social_media.disconnect_confirm_title')),
                             message: @js(__('social_media.disconnect_confirm_msg')),
                             type: 'danger',
                             confirmText: @js(__('social_media.disconnect_confirm_btn')),
                             cancelText: @js(__('social_media.cancel'))
                         });
-                    } else {
-                        confirmed = confirm(@js(__('social_media.disconnect_confirm_msg')));
                     }
                     if (!confirmed) return;
 

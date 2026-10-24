@@ -31,15 +31,15 @@ Schedule::command('subscriptions:send-wa-reminders')
     ->withoutOverlapping()
     ->appendOutputTo(storage_path('logs/cron-wa.log'));
 
-// 4. Publish scheduled social media posts and purge temporary files (Setiap menit)
+// 4. Publish scheduled social media posts and auto-purge storage media files (Setiap menit)
 Schedule::command('social-media:publish-scheduled')
     ->everyMinute()
     ->withoutOverlapping()
     ->appendOutputTo(storage_path('logs/social-media.log'));
 
-// 5. Purge published social media posts, media files, and inactive credentials after 1 day (Setiap pukul 02:00)
-Schedule::command('social-media:purge-published')
-    ->dailyAt('02:00')
+// 5. Purge published social media media files and orphan temp files (Setiap 15 menit)
+Schedule::command('social-media:purge-published --days=0')
+    ->everyFifteenMinutes()
     ->withoutOverlapping()
     ->appendOutputTo(storage_path('logs/social-media-purge.log'));
 

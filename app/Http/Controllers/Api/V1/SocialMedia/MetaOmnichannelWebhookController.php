@@ -50,7 +50,7 @@ class MetaOmnichannelWebhookController extends Controller
             }
         }
 
-        if ($mode === 'subscribe' && ($isMatch || ! empty($token))) {
+        if ($mode === 'subscribe' && $isMatch) {
             Log::channel('daily')->info('[MetaOmnichannelWebhook] Webhook handshake verified successfully', ['token' => $token]);
             return response($challenge, 200)->header('Content-Type', 'text/plain');
         }

@@ -85,9 +85,9 @@ Route::prefix('v1')->middleware('throttle:600,1')->group(function (): void {
         return $request->isMethod('GET') ? $ctrl->verify($request) : $ctrl->handle($request);
     });
 
-    // Official Meta Social Media Webhook (Fallback & backward-compatible alias to Omnichannel)
+    // Official Meta Social Media Webhook
     Route::match(['GET', 'POST'], '/social-media/meta/webhook', function (\Illuminate\Http\Request $request) {
-        $ctrl = app(\App\Http\Controllers\Api\V1\SocialMedia\MetaOmnichannelWebhookController::class);
+        $ctrl = app(\App\Http\Controllers\Api\V1\SocialMedia\MetaSocialMediaWebhookController::class);
         return $request->isMethod('GET') ? $ctrl->verify($request) : $ctrl->handle($request);
     });
 
@@ -116,7 +116,7 @@ Route::middleware('throttle:600,1')->group(function (): void {
         return $request->isMethod('GET') ? $ctrl->verify($request) : $ctrl->handle($request);
     });
     Route::match(['GET', 'POST'], '/social-media/meta/webhook', function (\Illuminate\Http\Request $request) {
-        $ctrl = app(\App\Http\Controllers\Api\V1\SocialMedia\MetaOmnichannelWebhookController::class);
+        $ctrl = app(\App\Http\Controllers\Api\V1\SocialMedia\MetaSocialMediaWebhookController::class);
         return $request->isMethod('GET') ? $ctrl->verify($request) : $ctrl->handle($request);
     });
     Route::match(['GET', 'POST', 'HEAD'], '/payments/tripay/callback', [\App\Http\Controllers\Api\V1\Payment\TripayCallbackController::class, 'handle']);

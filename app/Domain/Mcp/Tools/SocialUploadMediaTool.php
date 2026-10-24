@@ -147,9 +147,12 @@ final class SocialUploadMediaTool implements McpToolInterface
                 default           => 'jpg',
             };
         } else {
-            // Download from external URL
+            // Download from external URL dengan proteksi SSRF ketat
             try {
                 $downloadUrl = $fileUrl;
+
+                // 1. Validasi URL sumber awal bebas dari SSRF (loopback/private IP/metadata IP)
+                $this->assertSafePublicUrl($fileUrl);
 
                 // Auto-konversi link Google Drive sharing agar langsung mengunduh biner gambar
                 if (preg_match('#drive\.google\.com/(?:file/d/|open\?id=|uc\?(?:export=download&)?id=)([a-zA-Z0-9_-]+)#i', $fileUrl, $driveMatch)) {
@@ -162,15 +165,36 @@ final class SocialUploadMediaTool implements McpToolInterface
                     $downloadUrl .= (str_contains($downloadUrl, '?') ? '&' : '?') . 'raw=1';
                 }
 
-                $response = Http::timeout(30)->withHeaders([
-                    'User-Agent' => 'COOCA-Media-Importer/1.0',
-                ])->get($downloadUrl);
+                // 2. Validasi URL hasil konversi jika berbeda
+                if ($downloadUrl !== $fileUrl) {
+                    $this->assertSafePublicUrl($downloadUrl);
+                }
+
+                $response = Http::timeout(30)
+                    ->withOptions([
+                        'allow_redirects' => [
+                            'max'       => 5,
+                            'protocols' => ['http', 'https'],
+                        ],
+                    ])
+                    ->withHeaders([
+                        'User-Agent' => 'COOCA-Media-Importer/1.0',
+                    ])
+                    ->get($downloadUrl);
 
                 // Fallback untuk Google Drive jika lh3 gagal
                 if (! $response->successful() && isset($driveId)) {
-                    $response = Http::timeout(30)->withHeaders([
-                        'User-Agent' => 'COOCA-Media-Importer/1.0',
-                    ])->get("https://drive.google.com/uc?export=download&id={$driveId}&confirm=t");
+                    $fallbackDriveUrl = "https://drive.google.com/uc?export=download&id={$driveId}&confirm=t";
+                    $this->assertSafePublicUrl($fallbackDriveUrl);
+
+                    $response = Http::timeout(30)
+                        ->withOptions([
+                            'allow_redirects' => ['max' => 5, 'protocols' => ['http', 'https']],
+                        ])
+                        ->withHeaders([
+                            'User-Agent' => 'COOCA-Media-Importer/1.0',
+                        ])
+                        ->get($fallbackDriveUrl);
                 }
 
                 if (! $response->successful()) {
@@ -215,6 +239,42 @@ final class SocialUploadMediaTool implements McpToolInterface
         $fileSize = strlen($binaryData);
         if ($fileSize > 26214400) {
             throw new InvalidArgumentException('Ukuran berkas melebihi batas maksimal 25 MB.');
+        }
+
+        // Analisis dimensi dan rasio aspek gambar untuk panduan media sosial (Instagram/Facebook)
+        $width = null;
+        $height = null;
+        $aspectRatioLabel = null;
+        $isInstagramFeedReady = true;
+        $socialAdvisory = null;
+
+        if (str_starts_with($mimeType, 'image/')) {
+            $imgInfo = @getimagesizefromstring($binaryData);
+            if ($imgInfo !== false && ! empty($imgInfo[0]) && ! empty($imgInfo[1])) {
+                $width = (int) $imgInfo[0];
+                $height = (int) $imgInfo[1];
+                $ratio = round($width / $height, 2);
+
+                if (abs($ratio - 1.0) <= 0.05) {
+                    $aspectRatioLabel = '1:1 (Square)';
+                } elseif (abs($ratio - 0.8) <= 0.05) {
+                    $aspectRatioLabel = '4:5 (Portrait Feed)';
+                } elseif (abs($ratio - 0.56) <= 0.05) {
+                    $aspectRatioLabel = '9:16 (Stories / Reels)';
+                } elseif (abs($ratio - 1.78) <= 0.05) {
+                    $aspectRatioLabel = '16:9 (Landscape)';
+                } elseif (abs($ratio - 1.91) <= 0.05) {
+                    $aspectRatioLabel = '1.91:1 (Landscape Feed)';
+                } else {
+                    $aspectRatioLabel = "{$ratio}:1";
+                }
+
+                // Standar Meta Instagram Feed: 4:5 (0.8) s/d 1.91:1 (1.91)
+                if ($ratio < 0.79 || $ratio > 1.93) {
+                    $isInstagramFeedReady = false;
+                    $socialAdvisory = "Rasio {$aspectRatioLabel} berada di luar batas Feed Instagram (4:5 s/d 1.91:1). Jika ingin diposting ke Feed, disarankan rasio 1:1 atau 4:5. Untuk Stories/Reels cocok 9:16.";
+                }
+            }
         }
 
         // Generate filename
@@ -268,12 +328,15 @@ final class SocialUploadMediaTool implements McpToolInterface
             'auditable_id'   => $business->id,
             'old_values'     => null,
             'new_values'     => [
-                'file_name'  => $fileName,
-                'file_path'  => $relativePath,
-                'public_url' => $publicUrl,
-                'file_size'  => $fileSize,
-                'mime_type'  => $mimeType,
-                'folder'     => $folder,
+                'file_name'    => $fileName,
+                'file_path'    => $relativePath,
+                'public_url'   => $publicUrl,
+                'file_size'    => $fileSize,
+                'mime_type'    => $mimeType,
+                'folder'       => $folder,
+                'width'        => $width,
+                'height'       => $height,
+                'aspect_ratio' => $aspectRatioLabel,
             ],
             'ip_address'     => request()->ip(),
             'user_agent'     => request()->userAgent() ?: 'COOCA-MCP-Agent',
@@ -283,16 +346,102 @@ final class SocialUploadMediaTool implements McpToolInterface
             ? round($fileSize / 1048576, 2) . ' MB'
             : round($fileSize / 1024, 1) . ' KB';
 
-        return [
-            'success'        => true,
-            'media_url'      => $publicUrl,
-            'media_path'     => $relativePath,
-            'file_name'      => $fileName,
-            'mime_type'      => $mimeType,
-            'file_size'      => $fileSize,
-            'size_formatted' => $formattedSize,
-            'folder'         => $folder,
-            'message'        => "Berkas media '{$fileName}' ({$formattedSize}) berhasil diunggah ke storage COOCA. URL media publik siap digunakan untuk postingan media sosial, produk, atau layanan.",
+        $output = [
+            'success'               => true,
+            'media_url'             => $publicUrl,
+            'media_path'            => $relativePath,
+            'file_name'             => $fileName,
+            'mime_type'             => $mimeType,
+            'file_size'             => $fileSize,
+            'size_formatted'        => $formattedSize,
+            'width'                 => $width,
+            'height'                => $height,
+            'aspect_ratio'          => $aspectRatioLabel,
+            'is_instagram_ready'    => $isInstagramFeedReady,
+            'social_advisory'       => $socialAdvisory,
+            'folder'                => $folder,
+            'message'               => "Berkas media '{$fileName}' ({$formattedSize}) berhasil diunggah ke storage COOCA. URL media publik siap digunakan untuk postingan media sosial, produk, atau layanan.",
         ];
+
+        return array_filter($output, fn ($val) => $val !== null);
+    }
+
+    /**
+     * Validasi URL eksternal agar aman dari serangan Server-Side Request Forgery (SSRF).
+     * Mencegah akses ke localhost, private IP, cloud metadata IP, dan skema selain http/https.
+     *
+     * @throws InvalidArgumentException
+     */
+    private function assertSafePublicUrl(string $url): void
+    {
+        $parts = parse_url($url);
+        if ($parts === false || empty($parts['scheme']) || empty($parts['host'])) {
+            throw new InvalidArgumentException('Format tautan file_url tidak valid.');
+        }
+
+        $scheme = strtolower((string) $parts['scheme']);
+        if (! in_array($scheme, ['http', 'https'], true)) {
+            throw new InvalidArgumentException("Skema protokol '{$scheme}' tidak diizinkan. Hanya http dan https yang didukung.");
+        }
+
+        $host = strtolower((string) $parts['host']);
+
+        // Blokir hostname lokal/internal secara ketat
+        $blockedHosts = ['localhost', '127.0.0.1', '::1', '0.0.0.0', 'metadata.google.internal'];
+        if (in_array($host, $blockedHosts, true)
+            || str_ends_with($host, '.localhost')
+            || str_ends_with($host, '.test')
+            || str_ends_with($host, '.local')
+            || str_ends_with($host, '.internal')
+        ) {
+            throw new InvalidArgumentException('Tautan ke host lokal atau jaringan privat dilarang demi keamanan sistem (SSRF Protection).');
+        }
+
+        // Dapatkan resolusi IP dari host
+        $resolvedIps = [];
+
+        if (filter_var($host, FILTER_VALIDATE_IP)) {
+            $resolvedIps[] = $host;
+        } else {
+            $dnsRecords = @dns_get_record($host, DNS_A + DNS_AAAA);
+            if (is_array($dnsRecords) && ! empty($dnsRecords)) {
+                foreach ($dnsRecords as $rec) {
+                    if (! empty($rec['ip'])) {
+                        $resolvedIps[] = $rec['ip'];
+                    } elseif (! empty($rec['ipv6'])) {
+                        $resolvedIps[] = $rec['ipv6'];
+                    }
+                }
+            }
+
+            if (empty($resolvedIps)) {
+                $fallbackIp = @gethostbyname($host);
+                if (! empty($fallbackIp) && $fallbackIp !== $host) {
+                    $resolvedIps[] = $fallbackIp;
+                }
+            }
+        }
+
+        if (empty($resolvedIps)) {
+            throw new InvalidArgumentException("Host '{$host}' tidak dapat dihubungi atau tidak memiliki catatan DNS publik yang valid.");
+        }
+
+        foreach ($resolvedIps as $ip) {
+            // Validasi apakah IP berada pada rentang private / reserved
+            $isPublic = filter_var(
+                $ip,
+                FILTER_VALIDATE_IP,
+                FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE
+            );
+
+            if ($isPublic === false) {
+                throw new InvalidArgumentException("Alamat IP target ({$ip}) mengarah ke jaringan privat/lokal dan diblokir demi keamanan (SSRF Protection).");
+            }
+
+            // Blokir eksplisit cloud metadata IP (169.254.169.254) dan loopback
+            if (str_starts_with($ip, '127.') || str_starts_with($ip, '169.254.') || $ip === '0.0.0.0' || $ip === '::1') {
+                throw new InvalidArgumentException("Alamat IP target ({$ip}) diblokir demi keamanan server.");
+            }
+        }
     }
 }

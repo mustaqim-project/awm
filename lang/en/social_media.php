@@ -601,5 +601,10 @@ return [
     'day_short_fri' => 'Fri',
     'day_short_sat' => 'Sat',
     'day_short_sun' => 'Sun',
+    'schedule_time_required' => 'Scheduled publishing time is required when selecting simultaneous schedule.',
+    'schedule_time_must_be_future' => 'Scheduled publishing time must be in the future (at least 1 minute from now).',
+    'channel_schedule_time_required' => 'Publishing time for channel :channel is required.',
+    'channel_schedule_time_must_be_future' => 'Publishing time for channel :channel must be in the future.',
+    'carousel_min_two_items' => 'Instagram Carousel requires at least 2 media items (photos/videos).',
 ];
 

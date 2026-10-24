@@ -675,6 +675,42 @@ class SocialMediaWebController extends Controller implements HasMiddleware
         $channelScheduledAts = (array) ($validated['channel_scheduled_at'] ?? []);
         $globalScheduledAt = (! $isDraft && ! empty($validated['scheduled_at'])) ? \Illuminate\Support\Carbon::parse($validated['scheduled_at']) : null;
 
+        // Validation guardrails when publishing or scheduling
+        if (! $isDraft) {
+            if ($mediaFormat === 'carousel' && count($uploadedMedia) < 2) {
+                return redirect()->back()->withInput()->with('error', __('social_media.carousel_min_two_items'));
+            }
+
+            if ($timingMode === 'all_same') {
+                if (empty($validated['scheduled_at'])) {
+                    return redirect()->back()->withInput()->with('error', __('social_media.schedule_time_required'));
+                }
+                if (! $globalScheduledAt || ! $globalScheduledAt->isFuture()) {
+                    return redirect()->back()->withInput()->with('error', __('social_media.schedule_time_must_be_future'));
+                }
+            } elseif ($timingMode === 'per_channel') {
+                foreach ($accounts as $account) {
+                    $mode = $channelScheduleModes[$account->id] ?? 'now';
+                    if ($mode === 'schedule') {
+                        $schedStr = $channelScheduledAts[$account->id] ?? null;
+                        if (empty($schedStr)) {
+                            return redirect()->back()->withInput()->with(
+                                'error',
+                                __('social_media.channel_schedule_time_required', ['channel' => $account->account_name])
+                            );
+                        }
+                        $schedCarbon = \Illuminate\Support\Carbon::parse($schedStr);
+                        if (! $schedCarbon->isFuture()) {
+                            return redirect()->back()->withInput()->with(
+                                'error',
+                                __('social_media.channel_schedule_time_must_be_future', ['channel' => $account->account_name])
+                            );
+                        }
+                    }
+                }
+            }
+        }
+
         $firstAccount = $accounts->first();
 
         // 4. Maker-Checker & Bank Phishing Heuristic Evaluation
@@ -948,10 +984,12 @@ class SocialMediaWebController extends Controller implements HasMiddleware
         $endDate = $startDate->copy()->endOfMonth();
 
         $posts = SocialMediaPost::where('business_id', $business->id)
-            ->whereNotNull('scheduled_at')
-            ->whereBetween('scheduled_at', [$startDate, $endDate])
-            ->with(['targets.account', 'account'])
-            ->orderBy('scheduled_at')
+            ->where(function ($q) use ($startDate, $endDate) {
+                $q->whereBetween('scheduled_at', [$startDate, $endDate])
+                    ->orWhereBetween('published_at', [$startDate, $endDate]);
+            })
+            ->with(['targets.account', 'account', 'media'])
+            ->orderByRaw('COALESCE(scheduled_at, published_at) asc')
             ->get();
 
         return view('app.social_media.calendar', compact('business', 'posts', 'startDate', 'month', 'year'));
@@ -2219,12 +2257,32 @@ class SocialMediaWebController extends Controller implements HasMiddleware
                 'approval_status' => 'approved',
             ]);
 
+            $targetsToPublish = $post->targets()->whereIn('status', ['draft', 'scheduled', 'pending', 'failed'])->get();
+
             $post->targets()->whereIn('status', ['draft', 'scheduled', 'pending', 'failed'])->update([
                 'scheduled_at' => null,
                 'status'       => 'pending',
             ]);
 
-            $result = $this->socialService->publishPost($business, $post->fresh(['targets.account', 'account', 'media']));
+            $firstAccount = $post->account;
+
+            if ($targetsToPublish->count() === 1 && in_array($firstAccount?->platform, ['facebook', 'instagram', 'threads'], true)) {
+                $this->socialService->publishPost($business, $post->fresh(['targets.account', 'account', 'media']));
+                $targetsToPublish->first()->update([
+                    'status'           => $post->status,
+                    'platform_post_id' => $post->platform_post_id,
+                    'published_at'     => $post->published_at,
+                    'error_message'    => $post->error_message,
+                ]);
+            } elseif ($targetsToPublish->isNotEmpty()) {
+                foreach ($targetsToPublish as $target) {
+                    \App\Jobs\SocialMedia\PublishSocialMediaTargetJob::dispatch($target->id);
+                }
+            } else {
+                $this->socialService->publishPost($business, $post->fresh(['targets.account', 'account', 'media']));
+            }
+
+            $post->syncStatusFromTargets();
 
             if ($wasDraft && ! $entitlement->hasActiveSocialMediaSubscription($business)) {
                 $entitlement->incrementMonthlyUsage($business, \App\Models\QuotaMonthlyUsage::TYPE_SOCIAL_POST, \App\Domain\Billing\EntitlementService::FREE_SOCIAL_POST_MONTHLY_LIMIT);
@@ -2234,7 +2292,7 @@ class SocialMediaWebController extends Controller implements HasMiddleware
             return response()->json([
                 'success' => true,
                 'message' => __('social_media.publish_now_dispatched'),
-                'status'  => $result->status,
+                'status'  => $post->fresh()->status,
             ]);
         } catch (\Throwable $e) {
             \Illuminate\Support\Facades\Log::error("publishNow failed for post {$post->id}: " . $e->getMessage());

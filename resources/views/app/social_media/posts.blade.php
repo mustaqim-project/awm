@@ -1744,6 +1744,7 @@
                     this.isDraft = true;
                     this.actionType = 'draft';
                     this.isSubmittingDraft = true;
+                    this.syncCarouselInputFiles();
                     this.$nextTick(() => {
                         this.$refs.composerForm.submit();
                     });
@@ -1754,6 +1755,7 @@
                         event.preventDefault();
                         return;
                     }
+                    this.syncCarouselInputFiles();
                     if (!this.isDraft) {
                         this.actionType = (this.scheduleMode !== 'all_now') ? 'schedule' : 'publish';
                         this.isSubmitting = true;
@@ -1895,15 +1897,13 @@
                 async doPublishNow() {
                     let confirmed = false;
                     if (window.AppAlert) {
-                        confirmed = await AppAlert.confirm({
+                        confirmed = await AppAlert['confirm']({
                             title: @js(__('social_media.confirm_publish_now_title')),
                             message: @js(__('social_media.confirm_publish_now_msg')),
                             type: 'info',
                             confirmText: @js(__('social_media.publish_now_btn')),
                             cancelText: @js(__('social_media.cancel')),
                         });
-                    } else {
-                        confirmed = confirm(@js(__('social_media.confirm_publish_now_msg')));
                     }
                     if (!confirmed) return;
 
@@ -1937,15 +1937,13 @@
                 async doDelete() {
                     let confirmed = false;
                     if (window.AppAlert) {
-                        confirmed = await AppAlert.confirm({
+                        confirmed = await AppAlert['confirm']({
                             title: @js(__('social_media.confirm_delete_post_title')),
                             message: @js(__('social_media.confirm_delete_post_msg')),
                             type: 'danger',
                             confirmText: @js(__('social_media.delete_post_btn')),
                             cancelText: @js(__('social_media.cancel')),
                         });
-                    } else {
-                        confirmed = confirm(@js(__('social_media.confirm_delete_post_msg')));
                     }
                     if (!confirmed) return;
 
@@ -2083,6 +2081,23 @@
                     if (this.hashtagCount > 5) return true;
                     if (this.hasAnyChannelOverLimit) return true;
                     if (this.isSubmitting) return true;
+                    if (!this.isDraft) {
+                        if (this.mediaFormat === 'carousel' && this.carouselItems.length < 2 && !this.editingPostId) return true;
+                        if (this.scheduleMode === 'all_same') {
+                            if (!this.globalScheduleTime) return true;
+                            const schedDate = new Date(this.globalScheduleTime);
+                            if (isNaN(schedDate.getTime()) || schedDate <= new Date()) return true;
+                        } else if (this.scheduleMode === 'per_channel') {
+                            for (const accId of this.selectedAccounts) {
+                                if (this.channelTiming[accId] === 'schedule') {
+                                    const t = this.channelScheduledAts[accId];
+                                    if (!t) return true;
+                                    const schedDate = new Date(t);
+                                    if (isNaN(schedDate.getTime()) || schedDate <= new Date()) return true;
+                                }
+                            }
+                        }
+                    }
                     return false;
                 },
 
@@ -2260,6 +2275,26 @@
                     });
                 },
 
+                syncCarouselInputFiles() {
+                    if (this.mediaFormat === 'carousel' && this.$refs.carouselInput && window.DataTransfer) {
+                        try {
+                            const dt = new DataTransfer();
+                            let hasFiles = false;
+                            for (const item of this.carouselItems) {
+                                if (item.file instanceof File) {
+                                    dt.items.add(item.file);
+                                    hasFiles = true;
+                                }
+                            }
+                            if (hasFiles) {
+                                this.$refs.carouselInput.files = dt.files;
+                            }
+                        } catch (e) {
+                            console.warn('DataTransfer sync warning:', e);
+                        }
+                    }
+                },
+
                 handleCarouselFilesSelect(event) {
                     const files = Array.from(event.target.files);
                     if (!files.length) return;
@@ -2274,6 +2309,8 @@
                         });
                     }
 
+                    this.syncCarouselInputFiles();
+
                     this.$nextTick(() => {
                         if (window.lucide) window.lucide.createIcons();
                     });
@@ -2285,6 +2322,7 @@
                     const temp = this.carouselItems[index];
                     this.carouselItems[index] = this.carouselItems[targetIndex];
                     this.carouselItems[targetIndex] = temp;
+                    this.syncCarouselInputFiles();
                 },
 
                 removeCarouselItem(index) {
@@ -2296,6 +2334,7 @@
                     if (this.activePreviewSlide >= this.carouselItems.length) {
                         this.activePreviewSlide = Math.max(0, this.carouselItems.length - 1);
                     }
+                    this.syncCarouselInputFiles();
                 },
 
                 clearFile() {

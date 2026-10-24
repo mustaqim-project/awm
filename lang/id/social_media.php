@@ -601,5 +601,10 @@ return [
     'day_short_fri' => 'Jum',
     'day_short_sat' => 'Sab',
     'day_short_sun' => 'Min',
+    'schedule_time_required' => 'Waktu publikasi terjadwal wajib diisi saat memilih jadwal serentak.',
+    'schedule_time_must_be_future' => 'Waktu publikasi terjadwal harus di masa mendatang (minimal 1 menit dari sekarang).',
+    'channel_schedule_time_required' => 'Waktu publikasi untuk saluran :channel wajib diisi.',
+    'channel_schedule_time_must_be_future' => 'Waktu publikasi untuk saluran :channel harus di masa mendatang.',
+    'carousel_min_two_items' => 'Instagram Carousel membutuhkan minimal 2 berkas media (foto/video).',
 ];
 

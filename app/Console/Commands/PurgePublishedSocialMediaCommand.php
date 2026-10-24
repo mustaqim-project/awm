@@ -20,14 +20,16 @@ class PurgePublishedSocialMediaCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'social-media:purge-published {--days=1 : Number of days after publish to purge}';
+    protected $signature = 'social-media:purge-published 
+                            {--days=0 : Number of days after publish to purge (default 0: all published posts)}
+                            {--delete-records : Also delete database records of posts older than specified days}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Purge published social media posts, server media files, and inactive credentials 1 day after publication.';
+    protected $description = 'Purge physical media files from storage for published social media posts and clean orphan temp files.';
 
     /**
      * Execute the console command.
@@ -35,31 +37,37 @@ class PurgePublishedSocialMediaCommand extends Command
     public function handle(StorageTrackingService $trackingService): int
     {
         $days = (int) $this->option('days');
-        if ($days <= 0) {
-            $days = 1;
+        if ($days < 0) {
+            $days = 0;
         }
 
-        $cutoff = Carbon::now()->subDays($days);
-        $this->info("Menjalankan pembersihan media sosial yang terpublikasi sebelum {$cutoff->toDateTimeString()} ({$days} hari lalu)...");
+        $deleteRecords = (bool) $this->option('delete-records');
+        $cutoff = $days > 0 ? Carbon::now()->subDays($days) : Carbon::now();
+
+        if ($days === 0) {
+            $this->info("Menjalankan pembersihan berkas media storage untuk seluruh postingan yang telah terpublikasi (Zero-Retention Storage)...");
+        } else {
+            $this->info("Menjalankan pembersihan media sosial yang terpublikasi sebelum {$cutoff->toDateTimeString()} ({$days} hari lalu)...");
+        }
 
         $purgedPostsCount = 0;
         $deletedFilesCount = 0;
         $reclaimedBytes = 0;
 
-        // 1. Ambil seluruh postingan yang sudah published >= 1 hari lalu
-        $posts = SocialMediaPost::where('status', 'published')
-            ->where(function ($query) use ($cutoff) {
-                $query->where('published_at', '<=', $cutoff)
+        // 1. Ambil seluruh postingan yang berstatus published
+        $query = SocialMediaPost::where('status', 'published');
+        if ($days > 0) {
+            $query->where(function ($q) use ($cutoff) {
+                $q->where('published_at', '<=', $cutoff)
                     ->orWhere(function ($q2) use ($cutoff) {
                         $q2->whereNull('published_at')->where('created_at', '<=', $cutoff);
                     });
-            })
-            ->with(['media', 'targets', 'comments'])
-            ->get();
+            });
+        }
+
+        $posts = $query->with(['media', 'targets', 'comments'])->get();
 
         foreach ($posts as $post) {
-            $this->line("Memproses pembersihan Konten ID: {$post->id} (Publikasi: " . ($post->published_at?->toDateTimeString() ?? $post->created_at->toDateTimeString()) . ")");
-
             // A. Hapus file fisik dari SocialPostMedia
             foreach ($post->media as $media) {
                 if (! empty($media->local_path)) {
@@ -68,6 +76,7 @@ class PurgePublishedSocialMediaCommand extends Command
                         $deletedFilesCount++;
                         $reclaimedBytes += $size;
                     }
+                    $media->update(['local_path' => null]);
                 }
             }
 
@@ -84,34 +93,45 @@ class PurgePublishedSocialMediaCommand extends Command
                 }
             }
 
-            // C. Hapus data anak & induk postingan
-            try {
-                $post->media()->delete();
-                $post->targets()->delete();
-                $post->comments()->delete();
-                $post->delete();
-                $purgedPostsCount++;
-            } catch (\Throwable $e) {
-                Log::warning("[PurgeSocialMedia] Gagal menghapus record post {$post->id}: {$e->getMessage()}");
+            // Pastikan local_media_paths dan media_urls dikosongkan agar UI menampilkan badge server bersih tanpa 404
+            $post->update([
+                'local_media_paths' => null,
+                'media_urls'        => null,
+            ]);
+
+            // C. Hapus data record di database hanya jika opsi --delete-records aktif dan $days > 0
+            if ($deleteRecords && $days > 0) {
+                try {
+                    $post->media()->delete();
+                    $post->targets()->delete();
+                    $post->comments()->delete();
+                    $post->delete();
+                } catch (\Throwable $e) {
+                    Log::warning("[PurgeSocialMedia] Gagal menghapus record post {$post->id}: {$e->getMessage()}");
+                }
             }
+
+            $purgedPostsCount++;
         }
 
         // 2. Bersihkan berkas sementara orphan di direktori social-media/temp
-        $tempCleaned = $this->purgeOrphanTempFiles($cutoff);
+        $tempCutoff = $days > 0 ? $cutoff : Carbon::now()->subMinutes(15);
+        $tempCleaned = $this->purgeOrphanTempFiles($tempCutoff);
         $deletedFilesCount += $tempCleaned['count'];
         $reclaimedBytes += $tempCleaned['bytes'];
 
-        // 3. Bersihkan kredensial akun media sosial yang disconnected / expired > 1 hari
-        $credentialsPurged = $this->purgeInactiveCredentials($cutoff);
+        // 3. Bersihkan kredensial akun media sosial yang disconnected / expired
+        $credCutoff = $days > 0 ? $cutoff : Carbon::now()->subDay();
+        $credentialsPurged = $this->purgeInactiveCredentials($credCutoff);
 
         $reclaimedMb = round($reclaimedBytes / 1048576, 2);
 
         $this->info("Pembersihan selesai:");
-        $this->line("- Postingan terpublikasi dihapus: {$purgedPostsCount}");
-        $this->line("- Berkas fisik media dihapus: {$deletedFilesCount} (Menghemat: {$reclaimedMb} MB)");
+        $this->line("- Postingan terpublikasi diproses: {$purgedPostsCount}");
+        $this->line("- Berkas fisik media dihapus dari storage: {$deletedFilesCount} (Menghemat: {$reclaimedMb} MB)");
         $this->line("- Kredensial tidak aktif dibersihkan: {$credentialsPurged}");
 
-        Log::info("[PurgeSocialMedia] Selesai. Posts: {$purgedPostsCount}, Berkas: {$deletedFilesCount} ({$reclaimedMb} MB), Kredensial: {$credentialsPurged}");
+        Log::info("[PurgeSocialMedia] Selesai. Posts: {$purgedPostsCount}, Berkas dihapus: {$deletedFilesCount} ({$reclaimedMb} MB), Kredensial: {$credentialsPurged}");
 
         return self::SUCCESS;
     }

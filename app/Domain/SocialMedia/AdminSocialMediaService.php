@@ -460,6 +460,9 @@ class AdminSocialMediaService
         }
 
         $post->syncStatusFromTargets();
+        if ($post->status === 'published') {
+            app(SocialMediaService::class)->purgePostLocalMedia($post);
+        }
 
         return $target;
     }
@@ -543,6 +546,8 @@ class AdminSocialMediaService
                 'published_at'     => now(),
                 'error_message'    => null,
             ]);
+
+            app(SocialMediaService::class)->purgePostLocalMedia($post);
         } catch (\Throwable $e) {
             \Illuminate\Support\Facades\Log::error('AdminSocialMediaService::executePlatformPublish error', [
                 'post_id' => $post->id,

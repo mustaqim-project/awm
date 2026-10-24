@@ -8,12 +8,14 @@ use App\Domain\Mcp\Auth\McpTokenAuthenticator;
 use App\Http\Controllers\Controller;
 use App\Models\Business;
 use App\Models\McpAccessToken;
+use App\Models\User;
 use App\Support\Context;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
@@ -317,9 +319,24 @@ final class McpOAuthController extends Controller
             Cache::forget($cacheKey);
 
             $accessToken = $codeData['plain_token'];
-            $refreshToken = 'cooca_mcp_ref_' . Str::random(40);
 
-            // Store refresh token in cache for 180 days
+            // Buat refresh token terenkripsi secara kriptografis (tahan banting meski Cache di-clear)
+            $refreshTokenPayload = [
+                'token_id'    => (string) $codeData['token_id'],
+                'user_id'     => (string) $codeData['user_id'],
+                'business_id' => (string) $codeData['business_id'],
+                'scopes'      => (string) ($codeData['scopes'] ?? 'mcp:tools openid profile email'),
+                'created_at'  => time(),
+            ];
+
+            try {
+                $encryptedRef = Crypt::encryptString(json_encode($refreshTokenPayload, JSON_THROW_ON_ERROR));
+                $refreshToken = 'cooca_ref_' . rtrim(strtr(base64_encode($encryptedRef), '+/', '-_'), '=');
+            } catch (\Throwable) {
+                $refreshToken = 'cooca_mcp_ref_' . Str::random(40);
+            }
+
+            // Simpan ke Cache untuk fast lookup (180 hari)
             Cache::put("mcp_refresh_token_{$refreshToken}", [
                 'token_id'    => $codeData['token_id'],
                 'user_id'     => $codeData['user_id'],
@@ -388,13 +405,60 @@ final class McpOAuthController extends Controller
             $refData = Cache::get("mcp_refresh_token_{$refreshToken}");
 
             if ($refData && is_array($refData) && ! empty($refData['plain_token'])) {
-                return response()->json([
-                    'access_token'  => $refData['plain_token'],
-                    'token_type'    => 'Bearer',
-                    'expires_in'    => 31536000,
-                    'scope'         => 'mcp:tools openid profile email',
-                    'refresh_token' => $refreshToken,
-                ], Response::HTTP_OK, self::corsHeaders());
+                // Pastikan token akses masih aktif di database
+                $existingToken = McpAccessToken::find($refData['token_id'] ?? '');
+                if ($existingToken && $existingToken->isValid()) {
+                    return response()->json([
+                        'access_token'  => $refData['plain_token'],
+                        'token_type'    => 'Bearer',
+                        'expires_in'    => 31536000,
+                        'scope'         => 'mcp:tools openid profile email',
+                        'refresh_token' => $refreshToken,
+                    ], Response::HTTP_OK, self::corsHeaders());
+                }
+            }
+
+            // Fallback: Jika cache terhapus (php artisan cache:clear), dekripsi token refresh kriptografis
+            if (str_starts_with($refreshToken, 'cooca_ref_')) {
+                try {
+                    $rawEncrypted = base64_decode(strtr(substr($refreshToken, 10), '-_', '+/'));
+                    $decryptedJson = Crypt::decryptString($rawEncrypted);
+                    $meta = json_decode($decryptedJson, true, 512, JSON_THROW_ON_ERROR);
+
+                    $existingToken = McpAccessToken::find($meta['token_id'] ?? '');
+                    $business = Business::find($meta['business_id'] ?? '');
+                    $user = User::find($meta['user_id'] ?? '');
+
+                    if ($existingToken && $existingToken->is_active && $business && $user) {
+                        // Terbitkan token akses baru untuk menggantikan yang terhapus di cache
+                        $renewed = McpAccessToken::generateToken(
+                            $business,
+                            $user,
+                            'ChatGPT MCP Connector (Renewed via Refresh Token)',
+                            ['*'],
+                            'openai',
+                            now()->addYear()
+                        );
+
+                        // Simpan kembali ke Cache
+                        Cache::put("mcp_refresh_token_{$refreshToken}", [
+                            'token_id'    => $renewed['model']->id,
+                            'user_id'     => $user->id,
+                            'business_id' => $business->id,
+                            'plain_token' => $renewed['token'],
+                        ], now()->addDays(180));
+
+                        return response()->json([
+                            'access_token'  => $renewed['token'],
+                            'token_type'    => 'Bearer',
+                            'expires_in'    => 31536000,
+                            'scope'         => $meta['scopes'] ?? 'mcp:tools openid profile email',
+                            'refresh_token' => $refreshToken,
+                        ], Response::HTTP_OK, self::corsHeaders());
+                    }
+                } catch (\Throwable) {
+                    // Gagal dekripsi atau token dicabut
+                }
             }
 
             return response()->json([

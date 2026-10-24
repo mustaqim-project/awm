@@ -15,11 +15,12 @@
         $daysInMonth = $startDate->daysInMonth;
         $today = now()->format('Y-m-d');
 
-        // Group posts by day: 'YYYY-MM-DD'
+        // Group posts by day: 'YYYY-MM-DD' (supports scheduled and published posts)
         $postsByDate = [];
         foreach ($posts as $p) {
-            if ($p->scheduled_at) {
-                $d = $p->scheduled_at->format('Y-m-d');
+            $postDate = $p->scheduled_at ?? $p->published_at;
+            if ($postDate) {
+                $d = $postDate->format('Y-m-d');
                 $postsByDate[$d][] = $p;
             }
         }
@@ -123,7 +124,7 @@
                         <div class="space-y-1.5 overflow-y-auto max-h-[110px] pr-0.5 custom-scrollbar">
                             @foreach ($dayPosts as $post)
                                 @php
-                                    $time = $post->scheduled_at ? $post->scheduled_at->format('H:i') : '';
+                                    $time = ($post->scheduled_at ?? $post->published_at)?->format('H:i') ?? '';
                                     $statusColor = match($post->status) {
                                         'published' => 'bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] border-[#34C759]/20',
                                         'failed' => 'bg-[#FF3B30]/10 text-[#FF3B30] border-[#FF3B30]/20',
@@ -220,7 +221,7 @@
                         <div class="space-y-2">
                             @foreach ($dayPosts as $post)
                                 @php
-                                    $time = $post->scheduled_at ? $post->scheduled_at->format('H:i') : '';
+                                    $time = ($post->scheduled_at ?? $post->published_at)?->format('H:i') ?? '';
                                     $statusColor = match($post->status) {
                                         'published' => 'bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] border-[#34C759]/20',
                                         'failed' => 'bg-[#FF3B30]/10 text-[#FF3B30] border-[#FF3B30]/20',
