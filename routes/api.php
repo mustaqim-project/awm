@@ -266,21 +266,25 @@ Route::prefix('v1')->middleware('throttle:600,1')->group(function (): void {
                         ],
                     ]);
 
+                $imgVal = $regImgResponse->json('value') ?? [];
+                $vidVal = $regVidResponse->json('value') ?? [];
+
                 return response()->json([
                     'status'        => 'ok',
                     'account_id'    => $acc->id,
                     'account_name'  => $acc->account_name,
-                    'model_acct_id' => $acc->account_id,
                     'author_urn'    => $authorUrn,
-                    'profile'       => $profile,
-                    'reg_image_raw' => [
-                        'status' => $regImgResponse->status(),
-                        'body'   => $regImgResponse->json() ?: $regImgResponse->body(),
-                    ],
-                    'reg_video_raw' => [
-                        'status' => $regVidResponse->status(),
-                        'body'   => $regVidResponse->json() ?: $regVidResponse->body(),
-                    ],
+                    'img_status'    => $regImgResponse->status(),
+                    'img_keys'      => array_keys($imgVal),
+                    'img_asset'     => $imgVal['asset'] ?? null,
+                    'img_artifact'  => $imgVal['mediaArtifact'] ?? null,
+                    'img_upload_url'=> ! empty(data_get($imgVal, 'uploadMechanism.com.linkedin.digitalmedia.uploading.MediaUploadHttpRequest.uploadUrl')),
+                    'vid_status'    => $regVidResponse->status(),
+                    'vid_keys'      => array_keys($vidVal),
+                    'vid_asset'     => $vidVal['asset'] ?? null,
+                    'vid_artifact'  => $vidVal['mediaArtifact'] ?? null,
+                    'vid_upload_url'=> ! empty(data_get($vidVal, 'uploadMechanism.com.linkedin.digitalmedia.uploading.MediaUploadHttpRequest.uploadUrl')),
+                    'vid_error'     => $regVidResponse->failed() ? ($regVidResponse->json() ?: $regVidResponse->body()) : null,
                 ], 200);
             } catch (\Throwable $e) {
                 return response()->json([
