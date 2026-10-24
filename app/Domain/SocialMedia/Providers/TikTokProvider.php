@@ -111,7 +111,29 @@ class TikTokProvider implements SocialMediaProviderInterface
         $caption = $target->getEffectiveCaption();
         $contentType = strtolower($target->content_type);
 
-        // 2. Direct Photo Post (Photo album mode)
+        // 2. Resolve allowed privacy level via Creator Info (prevents rejection if app is unaudited or restricted)
+        $privacyLevel = 'PUBLIC_TO_EVERYONE';
+        try {
+            $creatorInfo = $this->client->getCreatorInfo($account->access_token);
+            $optionsList = $creatorInfo['privacy_level_options'] ?? [];
+            if (! empty($optionsList) && is_array($optionsList)) {
+                if (in_array('PUBLIC_TO_EVERYONE', $optionsList, true)) {
+                    $privacyLevel = 'PUBLIC_TO_EVERYONE';
+                } else {
+                    // Fallback to highest permitted level (e.g. SELF_ONLY for unaudited apps)
+                    $privacyLevel = (string) ($optionsList[0] ?? 'SELF_ONLY');
+                    Log::info("[TikTokProvider] Creator {$account->account_name} restricts public posting. Using permitted privacy level: {$privacyLevel}");
+                }
+            }
+        } catch (\Throwable $e) {
+            Log::warning("[TikTokProvider] Could not query creator_info privacy options: {$e->getMessage()}");
+        }
+
+        $publishOptions = [
+            'privacy_level' => $privacyLevel,
+        ];
+
+        // 3. Direct Photo Post (Single photo or Photo carousel mode: 1 to 35 images)
         if ($contentType === 'photo') {
             $imageUrls = [];
             foreach ($mediaItems as $m) {
@@ -121,11 +143,11 @@ class TikTokProvider implements SocialMediaProviderInterface
                 }
             }
 
-            if (count($imageUrls) < 2) {
-                throw new \InvalidArgumentException('TikTok Photo Mode mewajibkan minimal 2 gambar.');
+            if (count($imageUrls) < 1) {
+                throw new \InvalidArgumentException('TikTok Photo Mode mewajibkan minimal 1 gambar.');
             }
 
-            $initData = $this->client->publishPhoto($account->access_token, $caption, $imageUrls);
+            $initData = $this->client->publishPhoto($account->access_token, $caption, $imageUrls, $publishOptions);
             $publishId = (string) ($initData['publish_id'] ?? '');
 
             $statusData = $this->client->waitForPublishFinished($account->access_token, $publishId);
@@ -138,7 +160,7 @@ class TikTokProvider implements SocialMediaProviderInterface
             ];
         }
 
-        // 3. Direct Video Post
+        // 4. Direct Video Post
         $videoUrl = '';
         foreach ($mediaItems as $m) {
             $url = is_array($m) ? ($m['media_url'] ?? '') : (string) $m;
@@ -152,7 +174,7 @@ class TikTokProvider implements SocialMediaProviderInterface
             throw new \InvalidArgumentException('TikTok Video mewajibkan berkas video yang valid.');
         }
 
-        $initData = $this->client->publishVideo($account->access_token, $caption, $videoUrl);
+        $initData = $this->client->publishVideo($account->access_token, $caption, $videoUrl, $publishOptions);
         $publishId = (string) ($initData['publish_id'] ?? '');
 
         $statusData = $this->client->waitForPublishFinished($account->access_token, $publishId);
@@ -177,13 +199,36 @@ class TikTokProvider implements SocialMediaProviderInterface
 
     public function syncMetrics(SocialMediaAccount $account, string $platformPostId): array
     {
-        // Default baseline metrics for TikTok post
-        return [
+        if ($account->needsTokenRefresh(15)) {
+            $this->refreshToken($account);
+            $account->refresh();
+        }
+
+        $metrics = [
             'impressions' => 0,
             'reach'       => 0,
             'likes'       => 0,
             'comments'    => 0,
             'shares'      => 0,
         ];
+
+        try {
+            $videoListData = $this->client->getVideoList($account->access_token, 20);
+            $videos = $videoListData['videos'] ?? [];
+            foreach ($videos as $v) {
+                if (($v['id'] ?? '') === $platformPostId) {
+                    $metrics['likes'] = (int) ($v['like_count'] ?? 0);
+                    $metrics['comments'] = (int) ($v['comment_count'] ?? 0);
+                    $metrics['shares'] = (int) ($v['share_count'] ?? 0);
+                    $metrics['reach'] = (int) ($v['view_count'] ?? 0);
+                    $metrics['impressions'] = (int) ($v['view_count'] ?? 0);
+                    break;
+                }
+            }
+        } catch (\Throwable $e) {
+            Log::warning("[TikTokProvider] syncMetrics failed: {$e->getMessage()}");
+        }
+
+        return $metrics;
     }
 }

@@ -26,7 +26,7 @@ class MetaSocialMediaClient
     ) {
         $this->appId = $appId ?? (string) (SystemSetting::get('social_media_app_id') ?: config('services.meta_social.app_id', ''));
         $this->appSecret = $appSecret ?? (string) (SystemSetting::get('social_media_app_secret') ?: config('services.meta_social.app_secret', ''));
-        $this->graphVersion = $graphVersion ?? (string) (SystemSetting::get('social_media_graph_version') ?: config('services.meta_social.graph_version', 'v26.0'));
+        $this->graphVersion = $graphVersion ?? (string) (SystemSetting::get('social_media_graph_version') ?: config('services.meta_social.graph_version', 'v21.0'));
         $this->graphUrl = rtrim($graphUrl ?? (string) (SystemSetting::get('social_media_graph_url') ?: config('services.meta_social.graph_url', 'https://graph.facebook.com')), '/');
     }
 
@@ -225,7 +225,7 @@ class MetaSocialMediaClient
     /**
      * Wait for an Instagram media container to finish processing before publishing.
      */
-    public function waitForMediaContainerReady(string $containerId, string $pageToken, int $maxAttempts = 8, int $sleepSeconds = 2): void
+    public function waitForMediaContainerReady(string $containerId, string $pageToken, int $maxAttempts = 15, int $sleepSeconds = 2): void
     {
         for ($attempt = 1; $attempt <= $maxAttempts; $attempt++) {
             $res = Http::get($this->endpoint($containerId, $pageToken), [
@@ -239,7 +239,8 @@ class MetaSocialMediaClient
                     return;
                 }
                 if ($statusCode === 'ERROR' || $statusCode === 'EXPIRED') {
-                    throw new \RuntimeException('Gagal memproses media di Instagram: ' . ($res->json('status') ?? $statusCode));
+                    $statusDetail = $res->json('status') ?? ($res->json('error.message') ?? $statusCode);
+                    throw new \RuntimeException("Gagal memproses media di Instagram: {$statusDetail}");
                 }
             }
 
@@ -247,6 +248,8 @@ class MetaSocialMediaClient
                 sleep($sleepSeconds);
             }
         }
+
+        throw new \RuntimeException("Kontainer media Instagram ({$containerId}) memakan waktu terlalu lama (timeout) saat memproses media. Pastikan berkas video/gambar valid dan server media responsif.");
     }
 
     /**

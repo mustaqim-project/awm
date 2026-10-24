@@ -58,6 +58,7 @@ class TikTokClient
             'user.info.stats',
             'video.publish',
             'video.upload',
+            'video.list',
         ];
 
         $scopeList = implode(',', $scopes ?: $defaultScopes);
@@ -195,26 +196,44 @@ class TikTokClient
      */
     public function publishVideo(string $accessToken, string $caption, string $videoUrl, array $options = []): array
     {
-        $payload = [
-            'post_info' => [
-                'title'           => $caption,
-                'privacy_level'   => $options['privacy_level'] ?? 'PUBLIC_TO_EVERYONE',
-                'disable_duet'    => (bool) ($options['disable_duet'] ?? false),
-                'disable_stitch'  => (bool) ($options['disable_stitch'] ?? false),
-                'disable_comment' => (bool) ($options['disable_comment'] ?? false),
-            ],
-            'source_info' => [
-                'source'    => 'PULL_FROM_URL',
-                'video_url' => $videoUrl,
-            ],
-        ];
+        $postMode = strtoupper((string) ($options['post_mode'] ?? 'DIRECT_POST'));
+        $title = mb_substr($caption, 0, 2200, 'UTF-8');
 
-        $response = Http::withToken($accessToken)
-            ->post($this->endpoint('post/publish/video/init/'), $payload);
+        if ($postMode === 'MEDIA_UPLOAD') {
+            $endpoint = $this->endpoint('post/publish/inbox/video/init/');
+            $payload = [
+                'source_info' => [
+                    'source'    => 'PULL_FROM_URL',
+                    'video_url' => $videoUrl,
+                ],
+            ];
+        } else {
+            $endpoint = $this->endpoint('post/publish/video/init/');
+            $payload = [
+                'post_info' => [
+                    'title'                => $title,
+                    'privacy_level'        => $options['privacy_level'] ?? 'PUBLIC_TO_EVERYONE',
+                    'disable_duet'         => (bool) ($options['disable_duet'] ?? false),
+                    'disable_stitch'       => (bool) ($options['disable_stitch'] ?? false),
+                    'disable_comment'      => (bool) ($options['disable_comment'] ?? false),
+                    'brand_content_toggle' => (bool) ($options['brand_content_toggle'] ?? false),
+                    'brand_organic_toggle' => (bool) ($options['brand_organic_toggle'] ?? false),
+                    'is_aigc'              => (bool) ($options['is_aigc'] ?? false),
+                ],
+                'source_info' => [
+                    'source'    => 'PULL_FROM_URL',
+                    'video_url' => $videoUrl,
+                ],
+            ];
+        }
 
-        if (! $response->successful() || ! empty($response->json('error'))) {
-            $err = $response->json('error.message') ?: ($response->json('message') ?? 'Gagal menginisialisasi posting video TikTok.');
-            Log::error('TikTok publishVideo failed', ['body' => $response->body()]);
+        $response = Http::withToken($accessToken)->post($endpoint, $payload);
+
+        if (! $response->successful() || (! empty($response->json('error.code')) && $response->json('error.code') !== 'ok')) {
+            $err = $response->json('error.message')
+                ?: ($response->json('error.code')
+                ?: ($response->json('message') ?? 'Gagal menginisialisasi posting video TikTok.'));
+            Log::error('TikTok publishVideo failed', ['status' => $response->status(), 'body' => $response->body()]);
             throw new \RuntimeException("TikTok Video Direct Post Error: {$err}");
         }
 
@@ -230,6 +249,7 @@ class TikTokClient
 
     /**
      * Direct Post: Publish Photo Album Mode to TikTok using PULL_FROM_URL.
+     * Supports single photo (1 image) or photo carousel (2 to 35 images).
      *
      * @param  list<string>          $imageUrls
      * @param  array<string, mixed>  $options
@@ -237,33 +257,64 @@ class TikTokClient
      */
     public function publishPhoto(string $accessToken, string $caption, array $imageUrls, array $options = []): array
     {
-        if (count($imageUrls) < 2) {
-            throw new \InvalidArgumentException('TikTok Photo Mode membutuhkan minimal 2 gambar.');
+        if (count($imageUrls) < 1) {
+            throw new \InvalidArgumentException('TikTok Photo Mode membutuhkan minimal 1 gambar.');
+        }
+
+        if (count($imageUrls) > 35) {
+            throw new \InvalidArgumentException('TikTok Photo Mode mendukung maksimal 35 gambar.');
+        }
+
+        // TikTok Photo API requirements:
+        // - title: max 90 UTF-16 characters
+        // - description: max 4,000 UTF-16 characters
+        $cleanTitle = trim((string) preg_replace('/\s+/', ' ', strip_tags($caption)));
+        $title = $options['title'] ?? (mb_substr($cleanTitle, 0, 85, 'UTF-8') ?: 'Postingan Foto');
+        $description = $options['description'] ?? mb_substr($caption, 0, 4000, 'UTF-8');
+
+        $coverIndex = (int) ($options['photo_cover_index'] ?? 0);
+        if ($coverIndex < 0 || $coverIndex >= count($imageUrls)) {
+            $coverIndex = 0;
+        }
+
+        $postMode = strtoupper((string) ($options['post_mode'] ?? 'DIRECT_POST'));
+        if (! in_array($postMode, ['DIRECT_POST', 'MEDIA_UPLOAD'], true)) {
+            $postMode = 'DIRECT_POST';
+        }
+
+        $postInfo = [
+            'title'                => $title,
+            'description'          => $description,
+            'disable_comment'      => (bool) ($options['disable_comment'] ?? false),
+            'auto_add_music'       => (bool) ($options['auto_add_music'] ?? true),
+            'brand_content_toggle' => (bool) ($options['brand_content_toggle'] ?? false),
+            'brand_organic_toggle' => (bool) ($options['brand_organic_toggle'] ?? false),
+            'is_aigc'              => (bool) ($options['is_aigc'] ?? false),
+        ];
+
+        if ($postMode === 'DIRECT_POST') {
+            $postInfo['privacy_level'] = $options['privacy_level'] ?? 'PUBLIC_TO_EVERYONE';
         }
 
         $payload = [
-            'post_info' => [
-                'title'           => $caption,
-                'description'     => $caption,
-                'privacy_level'   => $options['privacy_level'] ?? 'PUBLIC_TO_EVERYONE',
-                'disable_comment' => (bool) ($options['disable_comment'] ?? false),
-                'auto_add_music'  => true,
-            ],
+            'post_info'   => $postInfo,
             'source_info' => [
                 'source'            => 'PULL_FROM_URL',
-                'photo_cover_index' => 1,
+                'photo_cover_index' => $coverIndex,
                 'photo_images'      => array_values($imageUrls),
             ],
-            'post_mode'  => 'DIRECT_POST',
+            'post_mode'  => $postMode,
             'media_type' => 'PHOTO',
         ];
 
         $response = Http::withToken($accessToken)
             ->post($this->endpoint('post/publish/content/init/'), $payload);
 
-        if (! $response->successful() || ! empty($response->json('error'))) {
-            $err = $response->json('error.message') ?: ($response->json('message') ?? 'Gagal menginisialisasi posting foto TikTok.');
-            Log::error('TikTok publishPhoto failed', ['body' => $response->body()]);
+        if (! $response->successful() || (! empty($response->json('error.code')) && $response->json('error.code') !== 'ok')) {
+            $err = $response->json('error.message')
+                ?: ($response->json('error.code')
+                ?: ($response->json('message') ?? 'Gagal menginisialisasi posting foto TikTok.'));
+            Log::error('TikTok publishPhoto failed', ['status' => $response->status(), 'body' => $response->body()]);
             throw new \RuntimeException("TikTok Photo Direct Post Error: {$err}");
         }
 
@@ -275,6 +326,36 @@ class TikTokClient
         }
 
         return $data;
+    }
+
+    /**
+     * Fetch list of public videos from authorized user's TikTok profile.
+     * Requires scope: video.list
+     *
+     * @return array<string, mixed>
+     */
+    public function getVideoList(string $accessToken, int $maxCount = 20, ?string $cursor = null): array
+    {
+        $payload = [
+            'max_count' => min(max($maxCount, 1), 20),
+        ];
+
+        if (! empty($cursor)) {
+            $payload['cursor'] = (int) $cursor;
+        }
+
+        $fields = 'id,title,video_description,duration,cover_image_url,embed_link,like_count,comment_count,share_count,view_count';
+
+        $response = Http::withToken($accessToken)
+            ->post($this->endpoint("video/list/?fields={$fields}"), $payload);
+
+        if (! $response->successful()) {
+            Log::warning('TikTok getVideoList failed', ['status' => $response->status(), 'body' => $response->body()]);
+
+            return [];
+        }
+
+        return $response->json('data') ?: [];
     }
 
     /**

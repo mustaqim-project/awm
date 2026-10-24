@@ -165,20 +165,33 @@ class SocialMediaContentValidatorTest extends TestCase
     }
 
     /**
-     * Test TikTok photo mode count constraints (min 2 items).
+     * Test TikTok photo mode count constraints (1 to 35 items).
      */
     public function test_tiktok_photo_mode_media_count_rules(): void
     {
+        // 0 images should fail
+        $noImages = [];
+        $resultZero = $this->validator->validateForChannel('tiktok', 'photo', 'Caption', $noImages);
+        $this->assertFalse($resultZero['is_valid']);
+        $this->assertStringContainsString('TikTok Photo Mode membutuhkan minimal 1 gambar', $resultZero['errors'][0]);
+
+        // Single image (1 item) is valid
         $singleImage = [
             ['media_type' => 'image', 'media_url' => 'https://example.com/1.jpg'],
         ];
         $resultSingle = $this->validator->validateForChannel('tiktok', 'photo', 'Caption', $singleImage);
-        $this->assertFalse($resultSingle['is_valid']);
-        $this->assertStringContainsString('TikTok Photo Mode membutuhkan minimal 2 gambar', $resultSingle['errors'][0]);
+        $this->assertTrue($resultSingle['is_valid']);
 
+        // Multiple images (3 items) is valid (carousel)
         $threeImages = array_fill(0, 3, ['media_type' => 'image', 'media_url' => 'https://example.com/img.jpg']);
         $resultThree = $this->validator->validateForChannel('tiktok', 'photo', 'Caption', $threeImages);
         $this->assertTrue($resultThree['is_valid']);
+
+        // More than 35 images should fail
+        $thirtySixImages = array_fill(0, 36, ['media_type' => 'image', 'media_url' => 'https://example.com/img.jpg']);
+        $resultOverLimit = $this->validator->validateForChannel('tiktok', 'photo', 'Caption', $thirtySixImages);
+        $this->assertFalse($resultOverLimit['is_valid']);
+        $this->assertStringContainsString('TikTok Photo Mode mendukung maksimal 35 gambar', $resultOverLimit['errors'][0]);
     }
 
     /**

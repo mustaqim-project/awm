@@ -180,8 +180,8 @@ class SocialMediaContentValidator
             }
         } elseif ($contentType === 'photo') {
             if ($channel === 'tiktok') {
-                if ($mediaCount < 2) {
-                    $errors[] = 'TikTok Photo Mode membutuhkan minimal 2 gambar.';
+                if ($mediaCount < 1) {
+                    $errors[] = 'TikTok Photo Mode membutuhkan minimal 1 gambar.';
                 }
                 if ($mediaCount > 35) {
                     $errors[] = 'TikTok Photo Mode mendukung maksimal 35 gambar.';

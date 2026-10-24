@@ -60,6 +60,7 @@ class SocialMediaService
                         'account_id'  => $pageId,
                     ],
                     [
+                        'provider'            => 'meta',
                         'account_name'        => $pageName,
                         'username'            => null,
                         'profile_picture_url' => $profilePic ?: null,
@@ -90,6 +91,7 @@ class SocialMediaService
                             'account_id'  => $igId,
                         ],
                         [
+                            'provider'            => 'meta',
                             'account_name'        => $igName,
                             'username'            => $igUsername ? "@{$igUsername}" : null,
                             'profile_picture_url' => $igPic ?: null,
