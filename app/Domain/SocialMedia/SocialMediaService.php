@@ -144,6 +144,17 @@ class SocialMediaService
             }
         }
 
+        if ($account && ($account->needsTokenRefresh(15) || ($account->token_expires_at !== null && $account->token_expires_at->isPast()))) {
+            if ($account->isTikTok() || $account->provider === 'tiktok') {
+                try {
+                    $this->socialMediaManager->getProvider('tiktok')->refreshToken($account);
+                    $account->refresh();
+                } catch (\Throwable $e) {
+                    \Illuminate\Support\Facades\Log::warning("SocialMediaService: Auto-refreshing TikTok token failed for account {$account->id}: {$e->getMessage()}");
+                }
+            }
+        }
+
         if (! $account || ! $account->isConnected()) {
             $err = "Akun media sosial [{$targetPlatform}] tidak aktif atau belum terhubung.";
             $post->update([

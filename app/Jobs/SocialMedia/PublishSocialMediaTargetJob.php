@@ -69,6 +69,17 @@ class PublishSocialMediaTargetJob implements ShouldQueue
         }
 
         $account = $target->account;
+        if ($account && ($account->needsTokenRefresh(15) || ($account->token_expires_at !== null && $account->token_expires_at->isPast()))) {
+            if ($account->isTikTok() || $account->provider === 'tiktok') {
+                try {
+                    $socialMediaManager->getProvider('tiktok')->refreshToken($account);
+                    $account->refresh();
+                } catch (\Throwable $e) {
+                    Log::warning("PublishSocialMediaTargetJob: Auto-refreshing TikTok token failed for account {$account->id}: {$e->getMessage()}");
+                }
+            }
+        }
+
         if (! $account || ! $account->isConnected()) {
             $target->update([
                 'status'        => 'failed',

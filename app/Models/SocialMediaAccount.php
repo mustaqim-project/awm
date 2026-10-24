@@ -136,6 +136,12 @@ class SocialMediaAccount extends Model
         }
 
         if ($this->token_expires_at !== null && $this->token_expires_at->isPast()) {
+            if (! empty($this->refresh_token)) {
+                if ($this->refresh_token_expires_at === null || $this->refresh_token_expires_at->isFuture()) {
+                    return true;
+                }
+            }
+
             return false;
         }
 
