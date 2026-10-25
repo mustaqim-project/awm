@@ -1,118 +1,7 @@
 @extends('layouts.app', ['title' => __('finance.balance_sheet_page_title')])
 
 @section('content')
-<div class="max-w-[1360px] mx-auto space-y-5 pb-28 lg:pb-12" x-data="{
-    showOpeningModal: false,
-    openingDate: '{{ date('Y-01-01') }}',
-    openingFile: null,
-    openingFileName: '',
-    openingLoading: false,
-    openingPreview: null,
-    openingFilter: 'all',
-    openingExecuting: false,
-
-    formatCurrency(num) {
-        return new Intl.NumberFormat(window.COOCA_LOCALE === 'en' ? 'en-US' : 'id-ID').format(num || 0);
-    },
-
-    handleOpeningFileSelect(event) {
-        const file = event.target.files[0];
-        if (file) {
-            this.openingFile = file;
-            this.openingFileName = file.name;
-            this.uploadAndPreviewOpening();
-        }
-    },
-
-    uploadAndPreviewOpening() {
-        if (!this.openingFile) return;
-        this.openingLoading = true;
-        const formData = new FormData();
-        formData.append('file', this.openingFile);
-        formData.append('as_of_date', this.openingDate);
-        formData.append('_token', '{{ csrf_token() }}');
-
-        fetch('{{ route('finance.balance-sheet.opening-preview') }}', {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'Accept': 'application/json'
-            }
-        })
-        .then(res => {
-            if (!res.ok) {
-                return res.json().then(err => { throw new Error(err.message || @json(__('finance.js_failed_process_excel'))); });
-            }
-            return res.json();
-        })
-        .then(res => {
-            this.openingLoading = false;
-            if (res.success) {
-                this.openingPreview = res.data;
-            } else {
-                alert(res.message || @json(__('finance.js_failed_analyze_opening')));
-            }
-        })
-        .catch(err => {
-            this.openingLoading = false;
-            alert(err.message || @json(__('finance.js_upload_error')));
-        });
-    },
-
-    async executeOpeningImport() {
-        if (!this.openingPreview || !this.openingPreview.rows || this.openingPreview.rows.length === 0) {
-            return;
-        }
-
-        if (!this.openingPreview.is_balanced) {
-            alert(@json(__('finance.js_cannot_commit_unbalanced')) + this.formatCurrency(Math.abs(this.openingPreview.difference)));
-            return;
-        }
-
-        if (!confirm(@json(__('finance.js_confirm_commit_opening')))) {
-            return;
-        }
-
-        this.openingExecuting = true;
-        fetch('{{ route('finance.balance-sheet.opening-execute') }}', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                'X-Requested-With': 'XMLHttpRequest',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-                as_of_date: this.openingDate,
-                rows: this.openingPreview.rows
-            })
-        })
-        .then(res => res.json())
-        .then(res => {
-            this.openingExecuting = false;
-            if (res.success) {
-                alert(res.message);
-                window.location.reload();
-            } else {
-                alert(res.message || @json(__('finance.js_failed_book_opening')));
-            }
-        })
-        .catch(err => {
-            this.openingExecuting = false;
-            alert(err.message || @json(__('finance.js_system_error_booking')));
-        });
-    },
-
-    resetOpening() {
-        this.openingFile = null;
-        this.openingFileName = '';
-        this.openingPreview = null;
-        this.openingFilter = 'all';
-        this.openingLoading = false;
-        this.openingExecuting = false;
-    }
-}">
+<div class="max-w-[1360px] mx-auto space-y-5 pb-28 lg:pb-12" x-data="balanceSheetManager()">
 
         {{-- ========================================================== --}}
         {{-- TOOLBAR / PAGE HEADER                                      --}}
@@ -625,4 +514,121 @@
         @endif
 
     </div>
+
+<script>
+function balanceSheetManager() {
+    return {
+        showOpeningModal: false,
+        openingDate: '{{ date('Y-01-01') }}',
+        openingFile: null,
+        openingFileName: '',
+        openingLoading: false,
+        openingPreview: null,
+        openingFilter: 'all',
+        openingExecuting: false,
+
+        formatCurrency(num) {
+            return new Intl.NumberFormat(window.COOCA_LOCALE === 'en' ? 'en-US' : 'id-ID').format(num || 0);
+        },
+
+        handleOpeningFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                this.openingFile = file;
+                this.openingFileName = file.name;
+                this.uploadAndPreviewOpening();
+            }
+        },
+
+        uploadAndPreviewOpening() {
+            if (!this.openingFile) return;
+            this.openingLoading = true;
+            const formData = new FormData();
+            formData.append('file', this.openingFile);
+            formData.append('as_of_date', this.openingDate);
+            formData.append('_token', '{{ csrf_token() }}');
+
+            fetch('{{ route('finance.balance-sheet.opening-preview') }}', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(res => {
+                if (!res.ok) {
+                    return res.json().then(err => { throw new Error(err.message || @json(__('finance.js_failed_process_excel'))); });
+                }
+                return res.json();
+            })
+            .then(res => {
+                this.openingLoading = false;
+                if (res.success) {
+                    this.openingPreview = res.data;
+                } else {
+                    alert(res.message || @json(__('finance.js_failed_analyze_opening')));
+                }
+            })
+            .catch(err => {
+                this.openingLoading = false;
+                alert(err.message || @json(__('finance.js_upload_error')));
+            });
+        },
+
+        async executeOpeningImport() {
+            if (!this.openingPreview || !this.openingPreview.rows || this.openingPreview.rows.length === 0) {
+                return;
+            }
+
+            if (!this.openingPreview.is_balanced) {
+                alert(@json(__('finance.js_cannot_commit_unbalanced')) + this.formatCurrency(Math.abs(this.openingPreview.difference)));
+                return;
+            }
+
+            if (!confirm(@json(__('finance.js_confirm_commit_opening')))) {
+                return;
+            }
+
+            this.openingExecuting = true;
+            fetch('{{ route('finance.balance-sheet.opening-execute') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    as_of_date: this.openingDate,
+                    rows: this.openingPreview.rows
+                })
+            })
+            .then(res => res.json())
+            .then(res => {
+                this.openingExecuting = false;
+                if (res.success) {
+                    alert(res.message);
+                    window.location.reload();
+                } else {
+                    alert(res.message || @json(__('finance.js_failed_book_opening')));
+                }
+            })
+            .catch(err => {
+                this.openingExecuting = false;
+                alert(err.message || @json(__('finance.js_system_error_booking')));
+            });
+        },
+
+        resetOpening() {
+            this.openingFile = null;
+            this.openingFileName = '';
+            this.openingPreview = null;
+            this.openingFilter = 'all';
+            this.openingLoading = false;
+            this.openingExecuting = false;
+        }
+    };
+}
+</script>
 @endsection

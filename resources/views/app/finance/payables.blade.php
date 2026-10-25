@@ -1,122 +1,7 @@
 @extends('layouts.app', ['title' => __('finance.payables_page_title')])
 
 @section('content')
-<div class="max-w-[1360px] mx-auto space-y-5 pb-28 lg:pb-12" x-data="{
-    showImportModal: false,
-    importFile: null,
-    importFileName: '',
-    importLoading: false,
-    importPreview: null,
-    importFilter: 'all',
-    importDuplicateStrategy: 'skip',
-    importExecuting: false,
-
-    formatCurrency(num) {
-        return new Intl.NumberFormat(window.COOCA_LOCALE === 'en' ? 'en-US' : 'id-ID').format(num || 0);
-    },
-
-    handleImportFileSelect(event) {
-        const file = event.target.files[0];
-        if (file) {
-            this.importFile = file;
-            this.importFileName = file.name;
-            this.uploadAndPreviewPayables();
-        }
-    },
-
-    uploadAndPreviewPayables() {
-        if (!this.importFile) return;
-        this.importLoading = true;
-        const formData = new FormData();
-        formData.append('file', this.importFile);
-        formData.append('_token', '{{ csrf_token() }}');
-
-        fetch('{{ route('finance.payables.import-preview') }}', {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'Accept': 'application/json'
-            }
-        })
-        .then(res => {
-            if (!res.ok) {
-                return res.json().then(err => { throw new Error(err.message || @json(__('finance.js_failed_process_excel'))); });
-            }
-            return res.json();
-        })
-        .then(res => {
-            this.importLoading = false;
-            if (res.success) {
-                this.importPreview = res.data;
-            } else {
-                alert(res.message || @json(__('finance.js_failed_analyze_payables')));
-            }
-        })
-        .catch(err => {
-            this.importLoading = false;
-            alert(err.message || @json(__('finance.js_upload_error')));
-        });
-    },
-
-    async executePayablesImport() {
-        if (!this.importPreview || !this.importPreview.rows || this.importPreview.rows.length === 0) {
-            return;
-        }
-
-        const totalToProcess = this.importDuplicateStrategy === 'skip' 
-            ? this.importPreview.valid_count 
-            : (this.importPreview.valid_count + this.importPreview.duplicate_count);
-
-        if (totalToProcess <= 0) {
-            alert(@json(__('finance.js_no_payables_to_import')));
-            return;
-        }
-
-        if (!confirm(@json(__('finance.js_confirm_import_payables', ['count' => ''])).replace(':count', totalToProcess))) {
-            return;
-        }
-
-        this.importExecuting = true;
-        fetch('{{ route('finance.payables.import-execute') }}', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                'X-Requested-With': 'XMLHttpRequest',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-                rows: this.importPreview.rows,
-                duplicate_strategy: this.importDuplicateStrategy
-            })
-        })
-        .then(res => res.json())
-        .then(res => {
-            this.importExecuting = false;
-            if (res.success) {
-                alert(res.message);
-                window.location.reload();
-            } else {
-                alert(res.message || @json(__('finance.js_failed_execute_import_payables')));
-            }
-        })
-        .catch(err => {
-            this.importExecuting = false;
-            alert(err.message || @json(__('finance.js_system_error_import')));
-        });
-    },
-
-    resetImport() {
-        this.importFile = null;
-        this.importFileName = '';
-        this.importPreview = null;
-        this.importFilter = 'all';
-        this.importDuplicateStrategy = 'skip';
-        this.importLoading = false;
-        this.importExecuting = false;
-    }
-}">
+<div class="max-w-[1360px] mx-auto space-y-5 pb-28 lg:pb-12" x-data="payablesManager()">
 
     {{-- ========================================================== --}}
     {{-- TOOLBAR / PAGE HEADER                                      --}}
@@ -674,4 +559,125 @@
 </template>
 
 </div>
+
+<script>
+function payablesManager() {
+    return {
+        showImportModal: false,
+        importFile: null,
+        importFileName: '',
+        importLoading: false,
+        importPreview: null,
+        importFilter: 'all',
+        importDuplicateStrategy: 'skip',
+        importExecuting: false,
+
+        formatCurrency(num) {
+            return new Intl.NumberFormat(window.COOCA_LOCALE === 'en' ? 'en-US' : 'id-ID').format(num || 0);
+        },
+
+        handleImportFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                this.importFile = file;
+                this.importFileName = file.name;
+                this.uploadAndPreviewPayables();
+            }
+        },
+
+        uploadAndPreviewPayables() {
+            if (!this.importFile) return;
+            this.importLoading = true;
+            const formData = new FormData();
+            formData.append('file', this.importFile);
+            formData.append('_token', '{{ csrf_token() }}');
+
+            fetch('{{ route('finance.payables.import-preview') }}', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(res => {
+                if (!res.ok) {
+                    return res.json().then(err => { throw new Error(err.message || @json(__('finance.js_failed_process_excel'))); });
+                }
+                return res.json();
+            })
+            .then(res => {
+                this.importLoading = false;
+                if (res.success) {
+                    this.importPreview = res.data;
+                } else {
+                    alert(res.message || @json(__('finance.js_failed_analyze_payables')));
+                }
+            })
+            .catch(err => {
+                this.importLoading = false;
+                alert(err.message || @json(__('finance.js_upload_error')));
+            });
+        },
+
+        async executePayablesImport() {
+            if (!this.importPreview || !this.importPreview.rows || this.importPreview.rows.length === 0) {
+                return;
+            }
+
+            const totalToProcess = this.importDuplicateStrategy === 'skip' 
+                ? this.importPreview.valid_count 
+                : (this.importPreview.valid_count + this.importPreview.duplicate_count);
+
+            if (totalToProcess <= 0) {
+                alert(@json(__('finance.js_no_payables_to_import')));
+                return;
+            }
+
+            if (!confirm(@json(__('finance.js_confirm_import_payables', ['count' => ''])).replace(':count', totalToProcess))) {
+                return;
+            }
+
+            this.importExecuting = true;
+            fetch('{{ route('finance.payables.import-execute') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    rows: this.importPreview.rows,
+                    duplicate_strategy: this.importDuplicateStrategy
+                })
+            })
+            .then(res => res.json())
+            .then(res => {
+                this.importExecuting = false;
+                if (res.success) {
+                    alert(res.message);
+                    window.location.reload();
+                } else {
+                    alert(res.message || @json(__('finance.js_failed_execute_import_payables')));
+                }
+            })
+            .catch(err => {
+                this.importExecuting = false;
+                alert(err.message || @json(__('finance.js_system_error_import')));
+            });
+        },
+
+        resetImport() {
+            this.importFile = null;
+            this.importFileName = '';
+            this.importPreview = null;
+            this.importFilter = 'all';
+            this.importDuplicateStrategy = 'skip';
+            this.importLoading = false;
+            this.importExecuting = false;
+        }
+    };
+}
+</script>
 @endsection

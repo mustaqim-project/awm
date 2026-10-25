@@ -33,6 +33,59 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-10-25-372] Perbaikan Kebocoran Sintaks JavaScript ke UI pada Modul Keuangan (Piutang & Utang Usaha): Ekstraksi Inline Alpine x-data ke Script Block & Perbaikan Label Ekspor
+
+- **Date:** 2026-10-25
+- **Status:** COMPLETED
+- **Module:** Finance & Accounting (Receivables, Payables, COA, Balance Sheet, Expenses)
+- **Feature:** Alpine.js Attribute Parsing Protection: Ekstraksi Object Manager State & Metodologi Asinkron dari Atribut HTML `x-data="{ ... }"` ke Dedicated `<script>` Blocks (`receivablesManager`, `payablesManager`, `coaManager`, `balanceSheetManager`, `createExpenseModalManager`), Pencegahan Quote Escaping Collision dari Directive `@json`, dan Sinkronisasi Translation Key `common.export_excel` / `finance.btn_export_excel`.
+- **Work Type:** Bug Fix | Frontend Architecture | HTML/Blade Security & Robustness
+
+#### 1. Business Context & Objective
+- **Konteks:** Pada halaman Piutang Usaha (`/finance/receivables`) dan Utang Usaha (`/finance/payables`), pengguna melihat teks potongan kode JavaScript mentah (`{ this.importLoading = false; ... }`) bocor dan muncul di bagian paling atas konten UI tepat di bawah header. Selain itu, tombol ekspor menampilkan teks mentah `common.export_excel`.
+- **Akar Masalah:**
+  1. Komponen Alpine.js untuk fitur import Excel ditulis secara inline langsung di dalam atribut HTML: `<div ... x-data="{ ... alert(res.message || @json(__('finance.js_err_import_analyze'))); ... }">`.
+  2. Directive Blade `@json(...)` menghasilkan kutip ganda (`"`), misalnya `"Gagal menganalisis..."`.
+  3. Ketika browser mem-parsing HTML, tanda kutip ganda dari `@json` dianggap sebagai penutup atribut `x-data="..."`, sehingga seluruh kode JavaScript setelahnya diperlakukan sebagai teks biasa dan dicetak langsung ke layar (HTML text node leak).
+  4. Tombol ekspor pada `receivables.blade.php` merujuk ke key `__('common.export_excel')` yang belum terdaftar pada berkas bahasa `lang/id/common.php`.
+- **Target & Standar:**
+  1. Mengekstrak seluruh logika JavaScript dan state Alpine.js dari inline HTML attribute ke fungsi script terpisah (`receivablesManager()`, `payablesManager()`, `coaManager()`, `balanceSheetManager()`, `createExpenseModalManager()`).
+  2. Menjadikan atribut HTML bersih dan ringkas: `x-data="receivablesManager()"`.
+  3. Memastikan directive `@json(...)` dievaluasi di dalam tag `<script>` JavaScript yang sah sehingga tidak pernah bersinggungan dengan pembatas atribut HTML.
+  4. Mendaftarkan key `export_excel` dan `import_excel` pada kamus bahasa `common.php` dan memperbaiki tombol ekspor ke `finance.btn_export_excel`.
+
+#### 2. What Was Done
+1. **Perbaikan Halaman Piutang (`finance/receivables.blade.php`):**
+   - Mengubah deklarasi `<div x-data="{ ... }">` menjadi `<div x-data="receivablesManager()">`.
+   - Memindahkan seluruh state import, upload file, preview, dan eksekusi ke fungsi `receivablesManager()` di dalam blok `<script>`.
+   - Mengganti pemanggilan teks tombol ekspor dari `{{ __('common.export_excel') }}` menjadi `{{ __('finance.btn_export_excel') }}`.
+2. **Perbaikan Halaman Utang (`finance/payables.blade.php`):**
+   - Mengubah deklarasi `<div x-data="{ ... }">` menjadi `<div x-data="payablesManager()">`.
+   - Memindahkan seluruh state import dan eksekusi utang ke fungsi `payablesManager()` di dalam `<script>`.
+3. **Pembersihan Preventif Modul Akuntansi Terkait:**
+   - `finance/accounting/coa.blade.php`: Mengekstrak `coaManager()` ke `<script>`.
+   - `finance/accounting/balance-sheet.blade.php`: Mengekstrak `balanceSheetManager()` ke `<script>`.
+   - `finance/expenses.blade.php`: Mengekstrak `createExpenseModalManager()` ke `<script>`.
+4. **Pembaruan Kamus Bahasa:**
+   - Menambahkan `'export_excel' => 'Ekspor Excel'` dan `'import_excel' => 'Impor Excel'` pada `lang/id/common.php`.
+   - Menambahkan `'export_excel' => 'Export Excel'` dan `'import_excel' => 'Import Excel'` pada `lang/en/common.php`.
+5. **Verifikasi Sistem:**
+   - Menguji 0 sisa pemanggilan `@json` di dalam atribut inline `x-data` di seluruh codebase `resources/views/app/`.
+   - Menjalankan `php -l` pada semua berkas terdampak (0 syntax error).
+   - Menjalankan `php artisan view:clear` dan `php artisan view:cache` (100% template terkompilasi sukses).
+
+#### 3. Technical Changes
+- **Files Affected:**
+  - `lang/id/common.php`
+  - `lang/en/common.php`
+  - `resources/views/app/finance/receivables.blade.php`
+  - `resources/views/app/finance/payables.blade.php`
+  - `resources/views/app/finance/accounting/coa.blade.php`
+  - `resources/views/app/finance/accounting/balance-sheet.blade.php`
+  - `resources/views/app/finance/expenses.blade.php`
+  - `docs/AiWorkHistory.md`
+- **Database Changes:** Tidak ada.
+
 ### [WORK-2026-10-25-371] Standardisasi Data Table List View Lintas Modul: Frozen Sticky Action Column & Icon-Only Action Buttons dengan Accessible Tooltips
 
 - **Date:** 2026-10-25

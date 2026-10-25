@@ -1,123 +1,7 @@
 @extends('layouts.app', ['title' => __('finance.receivables_page_title')])
 
 @section('content')
-<div class="max-w-[1360px] mx-auto space-y-5 pb-28 lg:pb-12" x-data="{
-    showImportModal: false,
-    importFile: null,
-    importFileName: '',
-    importLoading: false,
-    importPreview: null,
-    importFilter: 'all',
-    importDuplicateStrategy: 'skip',
-    importExecuting: false,
-
-    formatCurrency(num) {
-        return new Intl.NumberFormat(window.COOCA_LOCALE === 'en' ? 'en-US' : 'id-ID').format(num || 0);
-    },
-
-    handleImportFileSelect(event) {
-        const file = event.target.files[0];
-        if (file) {
-            this.importFile = file;
-            this.importFileName = file.name;
-            this.uploadAndPreviewReceivables();
-        }
-    },
-
-    uploadAndPreviewReceivables() {
-        if (!this.importFile) return;
-        this.importLoading = true;
-        const formData = new FormData();
-        formData.append('file', this.importFile);
-        formData.append('_token', '{{ csrf_token() }}');
-
-        fetch('{{ route('finance.receivables.import-preview') }}', {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'Accept': 'application/json'
-            }
-        })
-        .then(res => {
-            if (!res.ok) {
-                return res.json().then(err => { throw new Error(err.message || @json(__('finance.js_err_import_process'))); });
-            }
-            return res.json();
-        })
-        .then(res => {
-            this.importLoading = false;
-            if (res.success) {
-                this.importPreview = res.data;
-            } else {
-                alert(res.message || @json(__('finance.js_err_import_analyze')));
-            }
-        })
-        .catch(err => {
-            this.importLoading = false;
-            alert(err.message || @json(__('finance.js_err_import_upload')));
-        });
-    },
-
-    async executeReceivablesImport() {
-        if (!this.importPreview || !this.importPreview.rows || this.importPreview.rows.length === 0) {
-            return;
-        }
-
-        const totalToProcess = this.importDuplicateStrategy === 'skip' 
-            ? this.importPreview.valid_count 
-            : (this.importPreview.valid_count + this.importPreview.duplicate_count);
-
-        if (totalToProcess <= 0) {
-            alert(@json(__('finance.js_err_import_no_rows')));
-            return;
-        }
-
-        const confirmMsg = @json(__('finance.js_confirm_import_receivables')).replace(':count', totalToProcess);
-        if (!confirm(confirmMsg)) {
-            return;
-        }
-
-        this.importExecuting = true;
-        fetch('{{ route('finance.receivables.import-execute') }}', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                'X-Requested-With': 'XMLHttpRequest',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-                rows: this.importPreview.rows,
-                duplicate_strategy: this.importDuplicateStrategy
-            })
-        })
-        .then(res => res.json())
-        .then(res => {
-            this.importExecuting = false;
-            if (res.success) {
-                alert(res.message);
-                window.location.reload();
-            } else {
-                alert(res.message || @json(__('finance.js_err_import_execute')));
-            }
-        })
-        .catch(err => {
-            this.importExecuting = false;
-            alert(err.message || @json(__('finance.js_err_import_system')));
-        });
-    },
-
-    resetImport() {
-        this.importFile = null;
-        this.importFileName = '';
-        this.importPreview = null;
-        this.importFilter = 'all';
-        this.importDuplicateStrategy = 'skip';
-        this.importLoading = false;
-        this.importExecuting = false;
-    }
-}">
+<div class="max-w-[1360px] mx-auto space-y-5 pb-28 lg:pb-12" x-data="receivablesManager()">
 
     {{-- ========================================================== --}}
     {{-- TOOLBAR / PAGE HEADER                                      --}}
@@ -129,7 +13,7 @@
            class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
            title="{{ __('finance.receivables_export_tooltip') }}">
             <i data-lucide="download" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
-            <span>{{ __('common.export_excel') }}</span>
+            <span>{{ __('finance.btn_export_excel') }}</span>
         </a>
 
         <button type="button" @click="showImportModal = true"
@@ -732,4 +616,126 @@
 </template>
 
 </div>
+
+<script>
+function receivablesManager() {
+    return {
+        showImportModal: false,
+        importFile: null,
+        importFileName: '',
+        importLoading: false,
+        importPreview: null,
+        importFilter: 'all',
+        importDuplicateStrategy: 'skip',
+        importExecuting: false,
+
+        formatCurrency(num) {
+            return new Intl.NumberFormat(window.COOCA_LOCALE === 'en' ? 'en-US' : 'id-ID').format(num || 0);
+        },
+
+        handleImportFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                this.importFile = file;
+                this.importFileName = file.name;
+                this.uploadAndPreviewReceivables();
+            }
+        },
+
+        uploadAndPreviewReceivables() {
+            if (!this.importFile) return;
+            this.importLoading = true;
+            const formData = new FormData();
+            formData.append('file', this.importFile);
+            formData.append('_token', '{{ csrf_token() }}');
+
+            fetch('{{ route('finance.receivables.import-preview') }}', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(res => {
+                if (!res.ok) {
+                    return res.json().then(err => { throw new Error(err.message || @json(__('finance.js_err_import_process'))); });
+                }
+                return res.json();
+            })
+            .then(res => {
+                this.importLoading = false;
+                if (res.success) {
+                    this.importPreview = res.data;
+                } else {
+                    alert(res.message || @json(__('finance.js_err_import_analyze')));
+                }
+            })
+            .catch(err => {
+                this.importLoading = false;
+                alert(err.message || @json(__('finance.js_err_import_upload')));
+            });
+        },
+
+        async executeReceivablesImport() {
+            if (!this.importPreview || !this.importPreview.rows || this.importPreview.rows.length === 0) {
+                return;
+            }
+
+            const totalToProcess = this.importDuplicateStrategy === 'skip' 
+                ? this.importPreview.valid_count 
+                : (this.importPreview.valid_count + this.importPreview.duplicate_count);
+
+            if (totalToProcess <= 0) {
+                alert(@json(__('finance.js_err_import_no_rows')));
+                return;
+            }
+
+            const confirmMsg = @json(__('finance.js_confirm_import_receivables')).replace(':count', totalToProcess);
+            if (!confirm(confirmMsg)) {
+                return;
+            }
+
+            this.importExecuting = true;
+            fetch('{{ route('finance.receivables.import-execute') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    rows: this.importPreview.rows,
+                    duplicate_strategy: this.importDuplicateStrategy
+                })
+            })
+            .then(res => res.json())
+            .then(res => {
+                this.importExecuting = false;
+                if (res.success) {
+                    alert(res.message);
+                    window.location.reload();
+                } else {
+                    alert(res.message || @json(__('finance.js_err_import_execute')));
+                }
+            })
+            .catch(err => {
+                this.importExecuting = false;
+                alert(err.message || @json(__('finance.js_err_import_system')));
+            });
+        },
+
+        resetImport() {
+            this.importFile = null;
+            this.importFileName = '';
+            this.importPreview = null;
+            this.importFilter = 'all';
+            this.importDuplicateStrategy = 'skip';
+            this.importLoading = false;
+            this.importExecuting = false;
+        }
+    };
+}
+</script>
 @endsection

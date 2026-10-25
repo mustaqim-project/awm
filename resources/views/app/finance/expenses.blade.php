@@ -343,35 +343,7 @@
                 x-transition:leave="transition ease-in duration-150"
                 x-transition:leave-start="opacity-100 scale-100 translate-y-0"
                 x-transition:leave-end="opacity-0 scale-95 translate-y-2"
-                x-data="{
-                    isSubmitting: false,
-                    category: 'operational',
-                    amount: '',
-                    payment_method: 'cash',
-                    cash_account_id: '{{ $cashAccounts->first()?->id ?? '' }}',
-                    account_id: '',
-                    location_id: '',
-                    description: '',
-                    otherDescription: '',
-                    receiptPreview: null,
-                    setQuickAmount(val) {
-                        this.amount = val;
-                    },
-                    handleFileSelect(e) {
-                        const file = e.target.files[0];
-                        if (file && file.type.startsWith('image/')) {
-                            const reader = new FileReader();
-                            reader.onload = (evt) => { this.receiptPreview = evt.target.result; };
-                            reader.readAsDataURL(file);
-                        } else {
-                            this.receiptPreview = null;
-                        }
-                    },
-                    get categoryLabel() {
-                        const map = @json(__('finance.categories'));
-                        return (map && map[this.category]) ? map[this.category] : '{{ __('finance.categories.operational') }}';
-                    }
-                }">
+                x-data="createExpenseModalManager()">
 
                 {{-- Modal Header --}}
                 <div class="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-black/5 dark:border-white/10 bg-black/[0.01] dark:bg-white/[0.02]">
@@ -721,5 +693,39 @@
     @endif
 
     </div>
+
+<script>
+function createExpenseModalManager() {
+    return {
+        isSubmitting: false,
+        category: 'operational',
+        amount: '',
+        payment_method: 'cash',
+        cash_account_id: '{{ $cashAccounts->first()?->id ?? '' }}',
+        account_id: '',
+        location_id: '',
+        description: '',
+        otherDescription: '',
+        receiptPreview: null,
+        setQuickAmount(val) {
+            this.amount = val;
+        },
+        handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = (evt) => { this.receiptPreview = evt.target.result; };
+                reader.readAsDataURL(file);
+            } else {
+                this.receiptPreview = null;
+            }
+        },
+        get categoryLabel() {
+            const map = @json(__('finance.categories'));
+            return (map && map[this.category]) ? map[this.category] : '{{ __('finance.categories.operational') }}';
+        }
+    };
+}
+</script>
 @endsection
 
