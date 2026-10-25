@@ -2054,65 +2054,65 @@
                     <tbody class="divide-y divide-slate-100 dark:divide-slate-800/60 font-sans">
                         <!-- Entitas Bisnis -->
                         <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
-                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">Entitas Bisnis (Multi-Company)</td>
-                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">1 Bisnis</td>
-                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">1 Bisnis</td>
-                            <td class="py-3 px-3 text-center font-mono font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50/30 dark:bg-indigo-950/20">3 Bisnis</td>
-                            <td class="py-3 px-3 text-center font-mono font-bold text-purple-700 dark:text-purple-300 bg-purple-50/30 dark:bg-purple-950/20">∞ Unlimited</td>
+                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">{{ __('billing.matrix_multi_company') }}</td>
+                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">1 {{ __('billing.unit_businesses') }}</td>
+                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">1 {{ __('billing.unit_businesses') }}</td>
+                            <td class="py-3 px-3 text-center font-mono font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50/30 dark:bg-indigo-950/20">3 {{ __('billing.unit_businesses') }}</td>
+                            <td class="py-3 px-3 text-center font-mono font-bold text-purple-700 dark:text-purple-300 bg-purple-50/30 dark:bg-purple-950/20">{{ __('billing.unlimited') }}</td>
                         </tr>
                         <!-- Katalog Produk -->
                         <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
-                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">Katalog Produk &amp; SKU Varian</td>
-                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">10 Item</td>
-                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">100 Item</td>
-                            <td class="py-3 px-3 text-center font-mono font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50/30 dark:bg-indigo-950/20">∞ Unlimited</td>
-                            <td class="py-3 px-3 text-center font-mono font-bold text-purple-700 dark:text-purple-300 bg-purple-50/30 dark:bg-purple-950/20">∞ Unlimited</td>
+                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">{{ __('billing.matrix_products_sku') }}</td>
+                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">10 {{ __('billing.unit_items') }}</td>
+                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">100 {{ __('billing.unit_items') }}</td>
+                            <td class="py-3 px-3 text-center font-mono font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50/30 dark:bg-indigo-950/20">{{ __('billing.unlimited') }}</td>
+                            <td class="py-3 px-3 text-center font-mono font-bold text-purple-700 dark:text-purple-300 bg-purple-50/30 dark:bg-purple-950/20">{{ __('billing.unlimited') }}</td>
                         </tr>
                         <!-- Resep BOM -->
                         <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
-                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">Resep HPP / Bill of Materials (BOM)</td>
-                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">3 Resep</td>
-                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">20 Resep</td>
-                            <td class="py-3 px-3 text-center font-mono font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50/30 dark:bg-indigo-950/20">∞ Unlimited</td>
-                            <td class="py-3 px-3 text-center font-mono font-bold text-purple-700 dark:text-purple-300 bg-purple-50/30 dark:bg-purple-950/20">∞ Unlimited</td>
+                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">{{ __('billing.matrix_recipe_bom') }}</td>
+                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">3 {{ __('billing.unit_recipes') }}</td>
+                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">20 {{ __('billing.unit_recipes') }}</td>
+                            <td class="py-3 px-3 text-center font-mono font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50/30 dark:bg-indigo-950/20">{{ __('billing.unlimited') }}</td>
+                            <td class="py-3 px-3 text-center font-mono font-bold text-purple-700 dark:text-purple-300 bg-purple-50/30 dark:bg-purple-950/20">{{ __('billing.unlimited') }}</td>
                         </tr>
                         <!-- Transaksi Kasir POS -->
                         <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
-                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">Transaksi Kasir POS Per Bulan</td>
+                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">{{ __('billing.matrix_pos_monthly') }}</td>
                             <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">30 / bln</td>
                             <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">1.000 / bln</td>
-                            <td class="py-3 px-3 text-center font-mono font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50/30 dark:bg-indigo-950/20">∞ Unlimited</td>
-                            <td class="py-3 px-3 text-center font-mono font-bold text-purple-700 dark:text-purple-300 bg-purple-50/30 dark:bg-purple-950/20">∞ Unlimited</td>
+                            <td class="py-3 px-3 text-center font-mono font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50/30 dark:bg-indigo-950/20">{{ __('billing.unlimited') }}</td>
+                            <td class="py-3 px-3 text-center font-mono font-bold text-purple-700 dark:text-purple-300 bg-purple-50/30 dark:bg-purple-950/20">{{ __('billing.unlimited') }}</td>
                         </tr>
                         <!-- Outlet & Gudang -->
                         <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
-                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">Outlet &amp; Gudang Terpisah</td>
-                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">1 Toko + 1 Gudang</td>
-                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">2 Lokasi</td>
-                            <td class="py-3 px-3 text-center font-mono font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50/30 dark:bg-indigo-950/20">5 Lokasi</td>
-                            <td class="py-3 px-3 text-center font-mono font-bold text-purple-700 dark:text-purple-300 bg-purple-50/30 dark:bg-purple-950/20">∞ Unlimited</td>
+                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">{{ __('billing.matrix_outlets_warehouses') }}</td>
+                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">{{ __('billing.one_store_one_warehouse') }}</td>
+                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">{{ __('billing.locations_count', ['count' => 2]) }}</td>
+                            <td class="py-3 px-3 text-center font-mono font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50/30 dark:bg-indigo-950/20">{{ __('billing.locations_count', ['count' => 5]) }}</td>
+                            <td class="py-3 px-3 text-center font-mono font-bold text-purple-700 dark:text-purple-300 bg-purple-50/30 dark:bg-purple-950/20">{{ __('billing.unlimited') }}</td>
                         </tr>
                         <!-- Karyawan / Staf -->
                         <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
-                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">Karyawan / Staf Terdaftar</td>
-                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">1 (Solo Owner)</td>
-                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">3 Staf</td>
-                            <td class="py-3 px-3 text-center font-mono font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50/30 dark:bg-indigo-950/20">10 Staf</td>
-                            <td class="py-3 px-3 text-center font-mono font-bold text-purple-700 dark:text-purple-300 bg-purple-50/30 dark:bg-purple-950/20">∞ Unlimited</td>
+                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">{{ __('billing.matrix_registered_staff') }}</td>
+                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">{{ __('billing.solo_owner') }}</td>
+                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">3 {{ __('billing.unit_staff') }}</td>
+                            <td class="py-3 px-3 text-center font-mono font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50/30 dark:bg-indigo-950/20">10 {{ __('billing.unit_staff') }}</td>
+                            <td class="py-3 px-3 text-center font-mono font-bold text-purple-700 dark:text-purple-300 bg-purple-50/30 dark:bg-purple-950/20">{{ __('billing.unlimited') }}</td>
                         </tr>
                         @if($business->hasDineInFeature())
                         <!-- Meja Dine-in -->
                         <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
-                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">Meja Kasir POS (Dine-In)</td>
+                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">{{ __('billing.matrix_dinein_tables') }}</td>
                             <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600 font-mono">-</td>
-                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">5 Meja</td>
-                            <td class="py-3 px-3 text-center font-mono font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50/30 dark:bg-indigo-950/20">∞ Unlimited</td>
-                            <td class="py-3 px-3 text-center font-mono font-bold text-purple-700 dark:text-purple-300 bg-purple-50/30 dark:bg-purple-950/20">∞ Unlimited</td>
+                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">5 {{ __('billing.unit_tables') }}</td>
+                            <td class="py-3 px-3 text-center font-mono font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50/30 dark:bg-indigo-950/20">{{ __('billing.unlimited') }}</td>
+                            <td class="py-3 px-3 text-center font-mono font-bold text-purple-700 dark:text-purple-300 bg-purple-50/30 dark:bg-purple-950/20">{{ __('billing.unlimited') }}</td>
                         </tr>
                         @endif
                         <!-- Transfer Stok Multi-Gudang -->
                         <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
-                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">Transfer Stok Multi-Gudang / Cabang</td>
+                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">{{ __('billing.matrix_stock_transfer') }}</td>
                             <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600"><i data-lucide="minus" class="w-4 h-4 mx-auto text-slate-400"></i></td>
                             <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600"><i data-lucide="minus" class="w-4 h-4 mx-auto text-slate-400"></i></td>
                             <td class="py-3 px-3 text-center text-indigo-600 dark:text-indigo-400 bg-indigo-50/30 dark:bg-indigo-950/20"><i data-lucide="check" class="w-4 h-4 mx-auto font-black"></i></td>
@@ -2120,7 +2120,7 @@
                         </tr>
                         <!-- Kitchen Display System (KDS) -->
                         <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
-                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">Kitchen Display System (KDS Dapur)</td>
+                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">{{ __('billing.matrix_kds') }}</td>
                             <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600"><i data-lucide="minus" class="w-4 h-4 mx-auto text-slate-400"></i></td>
                             <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600"><i data-lucide="minus" class="w-4 h-4 mx-auto text-slate-400"></i></td>
                             <td class="py-3 px-3 text-center text-indigo-600 dark:text-indigo-400 bg-indigo-50/30 dark:bg-indigo-950/20"><i data-lucide="check" class="w-4 h-4 mx-auto font-black"></i></td>
@@ -2128,7 +2128,7 @@
                         </tr>
                         <!-- Multi-Pricing Produk Cabang -->
                         <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
-                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">Multi-Pricing Produk per Cabang</td>
+                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">{{ __('billing.matrix_multipricing') }}</td>
                             <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600"><i data-lucide="minus" class="w-4 h-4 mx-auto text-slate-400"></i></td>
                             <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600"><i data-lucide="minus" class="w-4 h-4 mx-auto text-slate-400"></i></td>
                             <td class="py-3 px-3 text-center text-indigo-600 dark:text-indigo-400 bg-indigo-50/30 dark:bg-indigo-950/20"><i data-lucide="check" class="w-4 h-4 mx-auto font-black"></i></td>
@@ -2136,7 +2136,7 @@
                         </tr>
                         <!-- HRM: Komisi & Kasbon -->
                         <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
-                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">HRM: Komisi Staf &amp; Kasbon Cicilan</td>
+                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">{{ __('billing.matrix_hrm_commission') }}</td>
                             <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600"><i data-lucide="minus" class="w-4 h-4 mx-auto text-slate-400"></i></td>
                             <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600"><i data-lucide="minus" class="w-4 h-4 mx-auto text-slate-400"></i></td>
                             <td class="py-3 px-3 text-center text-indigo-600 dark:text-indigo-400 bg-indigo-50/30 dark:bg-indigo-950/20"><i data-lucide="check" class="w-4 h-4 mx-auto font-black"></i></td>
@@ -2144,7 +2144,7 @@
                         </tr>
                         <!-- HRM: Pekerja Harian & BPJS/THR -->
                         <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
-                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">HRM: Pekerja Harian, BPJS &amp; THR</td>
+                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">{{ __('billing.matrix_hrm_bpjs') }}</td>
                             <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600"><i data-lucide="minus" class="w-4 h-4 mx-auto text-slate-400"></i></td>
                             <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600"><i data-lucide="minus" class="w-4 h-4 mx-auto text-slate-400"></i></td>
                             <td class="py-3 px-3 text-center text-indigo-600 dark:text-indigo-400 bg-indigo-50/30 dark:bg-indigo-950/20"><i data-lucide="check" class="w-4 h-4 mx-auto font-black"></i></td>
@@ -2152,7 +2152,7 @@
                         </tr>
                         <!-- Tax PPh 21 TER -->
                         <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
-                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">Tax Engine: PPh 21 TER (PP 58/2023) &amp; Rekonsiliasi</td>
+                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">{{ __('billing.matrix_tax_pph21') }}</td>
                             <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600"><i data-lucide="minus" class="w-4 h-4 mx-auto text-slate-400"></i></td>
                             <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600"><i data-lucide="minus" class="w-4 h-4 mx-auto text-slate-400"></i></td>
                             <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600 bg-indigo-50/30 dark:bg-indigo-950/20"><i data-lucide="minus" class="w-4 h-4 mx-auto text-slate-400"></i></td>
@@ -2160,7 +2160,7 @@
                         </tr>
                         <!-- Auto Slip Gaji WA -->
                         <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
-                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">Auto Kirim Slip Gaji via WhatsApp</td>
+                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">{{ __('billing.matrix_auto_payslip_wa') }}</td>
                             <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600"><i data-lucide="minus" class="w-4 h-4 mx-auto text-slate-400"></i></td>
                             <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600"><i data-lucide="minus" class="w-4 h-4 mx-auto text-slate-400"></i></td>
                             <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600 bg-indigo-50/30 dark:bg-indigo-950/20"><i data-lucide="minus" class="w-4 h-4 mx-auto text-slate-400"></i></td>
@@ -2168,7 +2168,7 @@
                         </tr>
                         <!-- Ekspor Impor Excel -->
                         <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
-                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">Ekspor / Impor Massal Excel Lengkap</td>
+                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">{{ __('billing.matrix_excel_export_import') }}</td>
                             <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600"><i data-lucide="minus" class="w-4 h-4 mx-auto text-slate-400"></i></td>
                             <td class="py-3 px-3 text-center text-emerald-600 dark:text-emerald-400"><i data-lucide="check" class="w-4 h-4 mx-auto font-black"></i></td>
                             <td class="py-3 px-3 text-center text-indigo-600 dark:text-indigo-400 bg-indigo-50/30 dark:bg-indigo-950/20"><i data-lucide="check" class="w-4 h-4 mx-auto font-black"></i></td>
@@ -2176,47 +2176,47 @@
                         </tr>
                         <!-- WhatsApp Kuota -->
                         <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
-                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">Notifikasi WhatsApp Gateway / Bulan</td>
-                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">10 Pesan</td>
-                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">50 Pesan</td>
-                            <td class="py-3 px-3 text-center font-mono font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50/30 dark:bg-indigo-950/20">200 Pesan</td>
-                            <td class="py-3 px-3 text-center font-mono font-bold text-purple-700 dark:text-purple-300 bg-purple-50/30 dark:bg-purple-950/20">1.000 Pesan</td>
+                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">{{ __('billing.matrix_wa_gateway_monthly') }}</td>
+                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">10 {{ __('billing.quota_unit_messages') }}</td>
+                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">50 {{ __('billing.quota_unit_messages') }}</td>
+                            <td class="py-3 px-3 text-center font-mono font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50/30 dark:bg-indigo-950/20">200 {{ __('billing.quota_unit_messages') }}</td>
+                            <td class="py-3 px-3 text-center font-mono font-bold text-purple-700 dark:text-purple-300 bg-purple-50/30 dark:bg-purple-950/20">1.000 {{ __('billing.quota_unit_messages') }}</td>
                         </tr>
                     </tbody>
                     <tfoot class="bg-slate-50/70 dark:bg-slate-950/60 border-t border-slate-200 dark:border-slate-800">
                         <tr>
-                            <td class="py-3 px-4 font-bold text-slate-700 dark:text-slate-300">Pilih Paket Bisnis</td>
+                            <td class="py-3 px-4 font-bold text-slate-700 dark:text-slate-300">{{ __('billing.choose_business_plan') }}</td>
                             <td class="py-3 px-3 text-center">
                                 @if($tier === 'free')
-                                    <span class="px-2.5 py-1 rounded-[8px] bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-semibold text-[11px] font-mono">Aktif</span>
+                                    <span class="px-2.5 py-1 rounded-[8px] bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-semibold text-[11px] font-mono">{{ __('billing.current_active_plan') }}</span>
                                 @else
                                     <span class="text-slate-400 text-xs font-mono">-</span>
                                 @endif
                             </td>
                             <td class="py-3 px-3 text-center">
                                 @if($tier === 'standard')
-                                    <span class="px-2.5 py-1 rounded-[8px] bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 font-semibold text-[11px] font-mono">Paket Aktif</span>
+                                    <span class="px-2.5 py-1 rounded-[8px] bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 font-semibold text-[11px] font-mono">{{ __('billing.current_active_plan') }}</span>
                                 @else
-                                    <a :href="'{{ route('billing.checkout', ['tier' => 'standard']) }}&cycle=' + pricingCycle" class="px-3 py-1.5 rounded-[10px] text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-500 shadow-2xs inline-flex items-center gap-1">
-                                        <span>Pilih Standard</span>
+                                    <a :href="'{{ route('billing.checkout', ['tier' => 'standard']) }}&cycle=' + pricingCycle" class="min-h-[44px] px-3.5 py-2 rounded-[10px] text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-500 shadow-2xs inline-flex items-center gap-1">
+                                        <span>{{ __('billing.tier_choose_standard') }}</span>
                                     </a>
                                 @endif
                             </td>
                             <td class="py-3 px-3 text-center bg-indigo-50/40 dark:bg-indigo-950/30">
                                 @if($tier === 'premium')
-                                    <span class="px-2.5 py-1 rounded-[8px] bg-indigo-100 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-400 font-semibold text-[11px] font-mono">Paket Aktif</span>
+                                    <span class="px-2.5 py-1 rounded-[8px] bg-indigo-100 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-400 font-semibold text-[11px] font-mono">{{ __('billing.current_active_plan') }}</span>
                                 @else
-                                    <a :href="'{{ route('billing.checkout', ['tier' => 'premium']) }}&cycle=' + pricingCycle" class="px-3 py-1.5 rounded-[10px] text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 shadow-2xs inline-flex items-center gap-1">
-                                        <span>Pilih Premium</span>
+                                    <a :href="'{{ route('billing.checkout', ['tier' => 'premium']) }}&cycle=' + pricingCycle" class="min-h-[44px] px-3.5 py-2 rounded-[10px] text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 shadow-2xs inline-flex items-center gap-1">
+                                        <span>{{ __('billing.tier_choose_premium') }}</span>
                                     </a>
                                 @endif
                             </td>
                             <td class="py-3 px-3 text-center bg-purple-50/40 dark:bg-purple-950/30">
                                 @if($tier === 'prestige')
-                                    <span class="px-2.5 py-1 rounded-[8px] bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-400 font-semibold text-[11px] font-mono">Paket Aktif</span>
+                                    <span class="px-2.5 py-1 rounded-[8px] bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-400 font-semibold text-[11px] font-mono">{{ __('billing.current_active_plan') }}</span>
                                 @else
-                                    <a :href="'{{ route('billing.checkout', ['tier' => 'prestige']) }}&cycle=' + pricingCycle" class="px-3 py-1.5 rounded-[10px] text-xs font-bold text-white bg-purple-600 hover:bg-purple-500 shadow-2xs inline-flex items-center gap-1">
-                                        <span>Pilih Prestige</span>
+                                    <a :href="'{{ route('billing.checkout', ['tier' => 'prestige']) }}&cycle=' + pricingCycle" class="min-h-[44px] px-3.5 py-2 rounded-[10px] text-xs font-bold text-white bg-purple-600 hover:bg-purple-500 shadow-2xs inline-flex items-center gap-1">
+                                        <span>{{ __('billing.tier_choose_prestige') }}</span>
                                     </a>
                                 @endif
                             </td>
@@ -2305,14 +2305,14 @@
                         <select x-model="selectedCategory" @change="fetchFiles(1)"
                             class="w-full px-3 py-2 text-base sm:text-xs rounded-[12px] bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500">
                             <option value="all">{{ __('billing.modal_all_categories') }}</option>
-                            <option value="product_image">Foto Produk</option>
-                            <option value="business_logo">Logo Bisnis</option>
-                            <option value="landing_page_image">Landing Page</option>
-                            <option value="qris_image">QRIS Toko</option>
-                            <option value="expense_receipt">Bukti Pengeluaran</option>
-                            <option value="community_image">Foto Komunitas</option>
-                            <option value="owner_avatar">Foto Profil</option>
-                            <option value="feedback_attachment">Lampiran Masukan</option>
+                            <option value="product_image">{{ __('billing.category_product_image') }}</option>
+                            <option value="business_logo">{{ __('billing.category_business_logo') }}</option>
+                            <option value="landing_page_image">{{ __('billing.category_landing_page_image') }}</option>
+                            <option value="qris_image">{{ __('billing.category_qris_image') }}</option>
+                            <option value="expense_receipt">{{ __('billing.category_expense_receipt') }}</option>
+                            <option value="community_image">{{ __('billing.category_community_image') }}</option>
+                            <option value="owner_avatar">{{ __('billing.category_owner_avatar') }}</option>
+                            <option value="feedback_attachment">{{ __('billing.category_feedback_attachment') }}</option>
                         </select>
                     </div>
                 </div>
@@ -2356,7 +2356,7 @@
                                         <td class="py-2.5 text-right text-slate-500 dark:text-slate-400 font-mono tabular-nums" x-text="f.uploaded_at"></td>
                                         <td class="py-2.5 text-center whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                             <div class="flex items-center justify-center">
-                                                <button type="button" @click="confirmDelete(f)" title="Hapus Berkas & Reclaim Kuota" aria-label="Hapus Berkas & Reclaim Kuota"
+                                                <button type="button" @click="confirmDelete(f)" title="{{ __('billing.storage_delete_title') }}" aria-label="{{ __('billing.storage_delete_title') }}"
                                                     class="w-8 h-8 rounded-[8px] flex items-center justify-center text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition cursor-pointer shrink-0">
                                                     <i data-lucide="trash-2" class="w-4 h-4"></i>
                                                 </button>
@@ -2385,9 +2385,9 @@
                                 </div>
                                 <div class="pt-1 flex justify-end">
                                     <button type="button" @click="confirmDelete(f)"
-                                        class="text-[11px] font-bold text-rose-600 dark:text-rose-400 hover:underline flex items-center gap-1 cursor-pointer">
-                                        <i data-lucide="trash-2" class="w-3 h-3"></i>
-                                        <span>Hapus Berkas</span>
+                                        class="min-h-[44px] text-[11px] font-bold text-rose-600 dark:text-rose-400 hover:underline inline-flex items-center gap-1.5 cursor-pointer">
+                                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                        <span>{{ __('billing.action_delete_file') }}</span>
                                     </button>
                                 </div>
                             </div>
@@ -2582,14 +2582,14 @@
                         this.totalFiles = Math.max(0, this.totalFiles - 1);
                         this.confirmDeleteModal = false;
                         this.targetFile = null;
-                        this.showToast(data.message || 'Berkas berhasil dihapus.');
+                        this.showToast(data.message || @js(__('billing.storage_file_deleted')));
                     } else {
                         const errData = await res.json().catch(() => ({}));
-                        this.showToast(errData.message || 'Gagal menghapus berkas. Pastikan Anda memiliki izin.');
+                        this.showToast(errData.message || @js(__('billing.storage_file_delete_failed')));
                     }
                 } catch (err) {
                     console.error('Error saat menghapus berkas:', err);
-                    this.showToast('Terjadi kesalahan jaringan.');
+                    this.showToast(@js(__('billing.network_error_toast')));
                 } finally {
                     this.deletingFile = false;
                 }
