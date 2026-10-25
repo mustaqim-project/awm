@@ -3265,28 +3265,28 @@ final class DataExchangeService
         foreach ($memberships as $idx => $m) {
             $user = $m->user;
             $sheet->setCellValue("A{$rowNum}", $idx + 1);
-            $sheet->setCellValue("B{$rowNum}", $user?->name ?: '-');
-            $sheet->setCellValue("C{$rowNum}", $user?->email ?: '-');
-            $sheet->setCellValue("D{$rowNum}", $m->whatsapp_number ?: ($user?->phone ?: '-'));
-            $sheet->setCellValue("E{$rowNum}", $m->job_title ?: '-');
+            $sheet->setCellValue("B{$rowNum}", CsvSanitizer::sanitize((string) ($user?->name ?: '-')));
+            $sheet->setCellValue("C{$rowNum}", CsvSanitizer::sanitize((string) ($user?->email ?: '-')));
+            $sheet->setCellValue("D{$rowNum}", CsvSanitizer::sanitize((string) ($m->whatsapp_number ?: ($user?->phone ?: '-'))));
+            $sheet->setCellValue("E{$rowNum}", CsvSanitizer::sanitize((string) ($m->job_title ?: '-')));
             $sheet->setCellValue("F{$rowNum}", strtoupper($m->employment_type ?: 'permanent'));
-            $sheet->setCellValue("G{$rowNum}", $m->customRole?->name ?: ($m->role ?: 'Staff'));
+            $sheet->setCellValue("G{$rowNum}", CsvSanitizer::sanitize((string) ($m->customRole?->name ?: ($m->role ?: 'Staff'))));
             $sheet->setCellValue("H{$rowNum}", $m->tax_ptkp_status ?: 'TK/0');
             $sheet->setCellValue("I{$rowNum}", $m->join_date ? Carbon::parse($m->join_date)->format('Y-m-d') : '-');
             $sheet->setCellValue("J{$rowNum}", (float) $m->base_salary);
             $sheet->setCellValue("K{$rowNum}", (float) $m->daily_rate);
             $sheet->setCellValue("L{$rowNum}", (float) $m->fixed_allowances);
             $sheet->setCellValue("M{$rowNum}", (float) $m->variable_allowances);
-            $sheet->setCellValue("N{$rowNum}", $m->nik_ktp ?: '-');
-            $sheet->setCellValue("O{$rowNum}", $m->npwp ?: '-');
+            $sheet->setCellValue("N{$rowNum}", CsvSanitizer::sanitize((string) ($m->nik_ktp ?: '-')));
+            $sheet->setCellValue("O{$rowNum}", CsvSanitizer::sanitize((string) ($m->npwp ?: '-')));
             $sheet->setCellValue("P{$rowNum}", $m->bpjs_tk_enabled ? 'Aktif' : 'Non-Aktif');
-            $sheet->setCellValue("Q{$rowNum}", $m->bpjs_tk_number ?: '-');
+            $sheet->setCellValue("Q{$rowNum}", CsvSanitizer::sanitize((string) ($m->bpjs_tk_number ?: '-')));
             $sheet->setCellValue("R{$rowNum}", $m->bpjs_kes_enabled ? 'Aktif' : 'Non-Aktif');
-            $sheet->setCellValue("S{$rowNum}", $m->bpjs_kes_number ?: '-');
-            $sheet->setCellValue("T{$rowNum}", $m->bank_name ?: '-');
-            $sheet->setCellValue("U{$rowNum}", $m->bank_account_number ?: '-');
-            $sheet->setCellValue("V{$rowNum}", $m->bank_account_holder ?: '-');
-            $sheet->setCellValue("W{$rowNum}", $m->location?->name ?: '-');
+            $sheet->setCellValue("S{$rowNum}", CsvSanitizer::sanitize((string) ($m->bpjs_kes_number ?: '-')));
+            $sheet->setCellValue("T{$rowNum}", CsvSanitizer::sanitize((string) ($m->bank_name ?: '-')));
+            $sheet->setCellValue("U{$rowNum}", CsvSanitizer::sanitize((string) ($m->bank_account_number ?: '-')));
+            $sheet->setCellValue("V{$rowNum}", CsvSanitizer::sanitize((string) ($m->bank_account_holder ?: '-')));
+            $sheet->setCellValue("W{$rowNum}", CsvSanitizer::sanitize((string) ($m->location?->name ?: '-')));
 
             $this->applyDataRowStyle($sheet, "A{$rowNum}:W{$rowNum}", $rowNum % 2 === 0);
             $sheet->getStyle("J{$rowNum}:M{$rowNum}")->getNumberFormat()->setFormatCode('#,##0');
@@ -3704,9 +3704,9 @@ final class DataExchangeService
         $rowNum = 2;
         foreach ($attendances as $att) {
             $sheet->setCellValue("A{$rowNum}", $att->date ? Carbon::parse($att->date)->format('Y-m-d') : '-');
-            $sheet->setCellValue("B{$rowNum}", $att->user?->name ?: '-');
-            $sheet->setCellValue("C{$rowNum}", $att->user?->email ?: '-');
-            $sheet->setCellValue("D{$rowNum}", $att->shift_name ?: ($att->workShift?->name ?: 'Normal'));
+            $sheet->setCellValue("B{$rowNum}", CsvSanitizer::sanitize((string) ($att->user?->name ?: '-')));
+            $sheet->setCellValue("C{$rowNum}", CsvSanitizer::sanitize((string) ($att->user?->email ?: '-')));
+            $sheet->setCellValue("D{$rowNum}", CsvSanitizer::sanitize((string) ($att->shift_name ?: ($att->workShift?->name ?: 'Normal'))));
             $sheet->setCellValue("E{$rowNum}", $att->clock_in_at ? Carbon::parse($att->clock_in_at)->format('H:i:s') : '-');
             $sheet->setCellValue("F{$rowNum}", $att->clock_out_at ? Carbon::parse($att->clock_out_at)->format('H:i:s') : '-');
             $sheet->setCellValue("G{$rowNum}", (int) $att->work_duration_minutes);
@@ -3714,7 +3714,7 @@ final class DataExchangeService
             $sheet->setCellValue("I{$rowNum}", (int) $att->overtime_minutes);
             $sheet->setCellValue("J{$rowNum}", strtoupper($att->status));
             $sheet->setCellValue("K{$rowNum}", $att->is_geofenced ? 'Geofenced GPS' : 'Mesin / Bebas');
-            $sheet->setCellValue("L{$rowNum}", $att->clock_in_notes ?: '-');
+            $sheet->setCellValue("L{$rowNum}", CsvSanitizer::sanitize((string) ($att->clock_in_notes ?: '-')));
 
             $this->applyDataRowStyle($sheet, "A{$rowNum}:L{$rowNum}", $rowNum % 2 === 0);
             $rowNum++;

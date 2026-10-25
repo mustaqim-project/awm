@@ -10,6 +10,13 @@
                 Monitoring seluruh dokumen penawaran harga pra-transaksi B2B, batas masa berlaku, dan konversi ke Pesanan Penjualan (SO).
             </p>
         </div>
+        @if(Auth::guard('admin')->user()?->hasPermission('admin.b2b.create'))
+            <button type="button" @click="showCreateQuotationModal = true"
+                class="h-9 px-3.5 rounded-[11px] bg-[#6366f1] hover:bg-[#4f46e5] active:scale-[0.98] text-white text-[12px] font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer shrink-0">
+                <i data-lucide="plus" class="w-4 h-4"></i>
+                <span>+ Buat Penawaran</span>
+            </button>
+        @endif
     </div>
 
     <div class="overflow-x-auto">
@@ -141,6 +148,21 @@
                                     <span>PDF</span>
                                 </a>
 
+                                {{-- Ubah Penawaran --}}
+                                @if(Auth::guard('admin')->user()?->hasPermission('admin.b2b.edit'))
+                                    <button type="button" @click="openEdit('quotation', {
+                                        number: '{{ $q->quotation_number }}',
+                                        status: '{{ $q->status }}',
+                                        date: '{{ \Carbon\Carbon::parse($q->date)->format('Y-m-d') }}',
+                                        expiry_date: '{{ $q->expiry_date ? \Carbon\Carbon::parse($q->expiry_date)->format('Y-m-d') : '' }}',
+                                        notes: '{{ addslashes($q->notes ?? '') }}'
+                                    }, '{{ route('admin.b2b.quotations.update', $q) }}')"
+                                        class="h-8 w-8 rounded-[9px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-[#6366f1]/15 hover:text-[#6366f1] text-black/70 dark:text-white/70 transition-all inline-flex items-center justify-center cursor-pointer"
+                                        title="Ubah Penawaran">
+                                        <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                                    </button>
+                                @endif
+
                                 {{-- Konversi ke SO jika belum konversi --}}
                                 @if(!$q->salesOrder && Auth::guard('admin')->user()?->hasPermission('admin.b2b.manage'))
                                     <form action="{{ route('admin.b2b.quotations.convert', $q) }}" method="POST" class="inline"
@@ -151,6 +173,20 @@
                                             title="Konversi ke Pesanan Penjualan">
                                             <i data-lucide="arrow-right-circle" class="w-3.5 h-3.5"></i>
                                             <span>Jadikan SO</span>
+                                        </button>
+                                    </form>
+                                @endif
+
+                                {{-- Hapus Penawaran jika belum konversi --}}
+                                @if(!$q->salesOrder && Auth::guard('admin')->user()?->hasPermission('admin.b2b.delete'))
+                                    <form action="{{ route('admin.b2b.quotations.destroy', $q) }}" method="POST" class="inline"
+                                        onsubmit="return confirm('Hapus Surat Penawaran {{ $q->quotation_number }}?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="h-8 w-8 rounded-[9px] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 text-[#FF3B30] transition-all inline-flex items-center justify-center cursor-pointer"
+                                            title="Hapus Penawaran">
+                                            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                                         </button>
                                     </form>
                                 @endif

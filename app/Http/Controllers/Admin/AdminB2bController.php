@@ -9,13 +9,20 @@ use App\Domain\Commerce\SalesReturnService;
 use App\Domain\Sales\SalesPipelineService;
 use App\Http\Controllers\Controller;
 use App\Models\Business;
+use App\Models\Customer;
 use App\Models\Invoice;
+use App\Models\InvoiceItem;
+use App\Models\Location;
 use App\Models\PaymentAccount;
+use App\Models\Product;
 use App\Models\Quotation;
 use App\Models\SalesOrder;
 use App\Models\SalesReturn;
+use App\Models\SalesReturnItem;
+use App\Models\Unit;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -41,7 +48,17 @@ final class AdminB2bController extends Controller implements HasMiddleware
     {
         return [
             new Middleware('require.admin.permission:admin.b2b.view', only: [
-                'index', 'pdfQuotation', 'pdfSalesOrder', 'pdfInvoice', 'pdfSalesReturn',
+                'index', 'pdfQuotation', 'pdfSalesOrder', 'pdfInvoice', 'pdfSalesReturn', 'businessResources',
+            ]),
+            new Middleware('require.admin.permission:admin.b2b.create', only: [
+                'storeQuotation', 'storeSalesOrder', 'storeInvoice', 'storeSalesReturn',
+            ]),
+            new Middleware('require.admin.permission:admin.b2b.edit', only: [
+                'updateQuotation', 'updateSalesOrder', 'updateInvoice', 'voidInvoice',
+                'updateSalesReturn', 'rejectSalesReturn',
+            ]),
+            new Middleware('require.admin.permission:admin.b2b.delete', only: [
+                'destroyQuotation', 'destroySalesOrder', 'destroyInvoice', 'destroySalesReturn',
             ]),
             new Middleware('require.admin.permission:admin.b2b.manage', only: [
                 'convertQuotation', 'generateInvoiceFromOrder', 'recordInvoicePayment',
@@ -171,6 +188,16 @@ final class AdminB2bController extends Controller implements HasMiddleware
         $businesses = Business::select('id', 'name', 'email', 'phone')->orderBy('name')->get();
         $paymentAccounts = PaymentAccount::where('is_active', true)->get();
 
+        $customers = $businessId
+            ? Customer::where('business_id', $businessId)->select('id', 'business_id', 'name', 'company_name', 'phone')->orderBy('name')->get()
+            : Customer::select('id', 'business_id', 'name', 'company_name', 'phone')->orderBy('name')->limit(50)->get();
+        $products = $businessId
+            ? Product::where('business_id', $businessId)->where('is_active', true)->select('id', 'business_id', 'name', 'code', 'selling_price', 'output_unit_id')->orderBy('name')->get()
+            : Product::where('is_active', true)->select('id', 'business_id', 'name', 'code', 'selling_price', 'output_unit_id')->orderBy('name')->limit(50)->get();
+        $locations = $businessId
+            ? Location::where('business_id', $businessId)->where('is_active', true)->select('id', 'business_id', 'name')->orderBy('name')->get()
+            : Location::where('is_active', true)->select('id', 'business_id', 'name')->orderBy('name')->limit(50)->get();
+
         return view('admin.b2b.index', compact(
             'activeTab',
             'businessId',
@@ -184,7 +211,10 @@ final class AdminB2bController extends Controller implements HasMiddleware
             'invoices',
             'returns',
             'businesses',
-            'paymentAccounts'
+            'paymentAccounts',
+            'customers',
+            'products',
+            'locations'
         ));
     }
 
@@ -419,5 +449,436 @@ final class AdminB2bController extends Controller implements HasMiddleware
             'Content-Type' => 'text/csv; charset=UTF-8',
             'Content-Disposition' => "attachment; filename=\"{$filename}\"",
         ]);
+    }
+
+    /**
+     * Provide JSON master data for active business (dynamic modals).
+     */
+    public function businessResources(Request $request): JsonResponse
+    {
+        $businessId = $request->query('business_id');
+        if (!$businessId) {
+            return response()->json([
+                'customers' => [],
+                'products' => [],
+                'locations' => [],
+            ]);
+        }
+
+        $customers = Customer::where('business_id', $businessId)->select('id', 'name', 'company_name', 'phone')->orderBy('name')->get();
+        $products = Product::where('business_id', $businessId)->where('is_active', true)->select('id', 'name', 'code', 'selling_price', 'output_unit_id')->orderBy('name')->get();
+        $locations = Location::where('business_id', $businessId)->where('is_active', true)->select('id', 'name')->orderBy('name')->get();
+
+        return response()->json([
+            'customers' => $customers,
+            'products'  => $products,
+            'locations' => $locations,
+        ]);
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // 1. QUOTATIONS CRUD
+    // ─────────────────────────────────────────────────────────────────────────
+
+    public function storeQuotation(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'business_id'             => ['required', 'uuid', 'exists:businesses,id'],
+            'customer_id'             => ['required', 'uuid', 'exists:customers,id'],
+            'quotation_number'        => ['nullable', 'string', 'max:64'],
+            'date'                    => ['required', 'date'],
+            'expiry_date'             => ['nullable', 'date', 'after_or_equal:date'],
+            'sender_name'             => ['nullable', 'string', 'max:150'],
+            'recipient_name'          => ['nullable', 'string', 'max:150'],
+            'discount_amount'         => ['nullable', 'numeric', 'min:0'],
+            'tax_percentage'          => ['nullable', 'numeric', 'min:0', 'max:100'],
+            'notes'                   => ['nullable', 'string', 'max:1000'],
+            'items'                   => ['required', 'array', 'min:1'],
+            'items.*.product_id'      => ['nullable', 'uuid'],
+            'items.*.product_name'    => ['required', 'string', 'max:255'],
+            'items.*.unit_price'      => ['required', 'numeric', 'min:0'],
+            'items.*.quantity'        => ['required', 'numeric', 'min:0.01'],
+            'items.*.discount_amount' => ['nullable', 'numeric', 'min:0'],
+        ]);
+
+        $business = Business::findOrFail($validated['business_id']);
+        $validated['attachment_info'] = '-';
+        $validated['created_by'] = null;
+
+        $quotation = $this->pipelineService->createQuotation($business, $validated);
+
+        return redirect()->route('admin.b2b.index', ['tab' => 'quotations', 'business_id' => $business->id])
+            ->with('success', "Surat Penawaran {$quotation->quotation_number} berhasil diterbitkan via Admin Console.");
+    }
+
+    public function updateQuotation(Request $request, Quotation $quotation): RedirectResponse
+    {
+        $validated = $request->validate([
+            'status'         => ['required', 'string', 'in:draft,sent,accepted,rejected,cancelled'],
+            'date'           => ['required', 'date'],
+            'expiry_date'    => ['nullable', 'date'],
+            'sender_name'    => ['nullable', 'string', 'max:150'],
+            'recipient_name' => ['nullable', 'string', 'max:150'],
+            'notes'          => ['nullable', 'string', 'max:1000'],
+        ]);
+
+        $quotation->update($validated);
+
+        return redirect()->route('admin.b2b.index', ['tab' => 'quotations', 'business_id' => $quotation->business_id])
+            ->with('success', "Surat Penawaran {$quotation->quotation_number} berhasil diperbarui.");
+    }
+
+    public function destroyQuotation(Quotation $quotation): RedirectResponse
+    {
+        if ($quotation->salesOrder()->exists()) {
+            return back()->with('error', "Surat Penawaran {$quotation->quotation_number} telah dikonversi menjadi Pesanan Penjualan dan tidak dapat dihapus.");
+        }
+
+        $num = $quotation->quotation_number;
+        $businessId = $quotation->business_id;
+        $quotation->items()->delete();
+        $quotation->delete();
+
+        return redirect()->route('admin.b2b.index', ['tab' => 'quotations', 'business_id' => $businessId])
+            ->with('success', "Surat Penawaran {$num} berhasil dihapus.");
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // 2. SALES ORDERS CRUD
+    // ─────────────────────────────────────────────────────────────────────────
+
+    public function storeSalesOrder(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'business_id'             => ['required', 'uuid', 'exists:businesses,id'],
+            'customer_id'             => ['required', 'uuid', 'exists:customers,id'],
+            'so_number'               => ['nullable', 'string', 'max:64'],
+            'order_date'              => ['required', 'date'],
+            'expected_delivery_date'  => ['nullable', 'date', 'after_or_equal:order_date'],
+            'shipping_address'        => ['nullable', 'string', 'max:500'],
+            'sender_name'             => ['nullable', 'string', 'max:150'],
+            'recipient_name'          => ['nullable', 'string', 'max:150'],
+            'discount_amount'         => ['nullable', 'numeric', 'min:0'],
+            'tax_percentage'          => ['nullable', 'numeric', 'min:0', 'max:100'],
+            'notes'                   => ['nullable', 'string', 'max:1000'],
+            'items'                   => ['required', 'array', 'min:1'],
+            'items.*.product_id'      => ['nullable', 'uuid'],
+            'items.*.product_name'    => ['required', 'string', 'max:255'],
+            'items.*.unit_price'      => ['required', 'numeric', 'min:0'],
+            'items.*.quantity'        => ['required', 'numeric', 'min:0.01'],
+            'items.*.discount_amount' => ['nullable', 'numeric', 'min:0'],
+        ]);
+
+        $business = Business::findOrFail($validated['business_id']);
+        $validated['attachment_info'] = '-';
+        $validated['created_by'] = null;
+
+        $order = $this->pipelineService->createSalesOrder($business, $validated);
+
+        return redirect()->route('admin.b2b.index', ['tab' => 'orders', 'business_id' => $business->id])
+            ->with('success', "Pesanan Penjualan {$order->so_number} berhasil dibuat via Admin Console.");
+    }
+
+    public function updateSalesOrder(Request $request, SalesOrder $salesOrder): RedirectResponse
+    {
+        $validated = $request->validate([
+            'status'                 => ['required', 'string', 'in:draft,confirmed,partially_fulfilled,fulfilled,cancelled'],
+            'expected_delivery_date' => ['nullable', 'date'],
+            'shipping_address'       => ['nullable', 'string', 'max:500'],
+            'notes'                  => ['nullable', 'string', 'max:1000'],
+        ]);
+
+        $salesOrder->update($validated);
+
+        return redirect()->route('admin.b2b.index', ['tab' => 'orders', 'business_id' => $salesOrder->business_id])
+            ->with('success', "Pesanan Penjualan {$salesOrder->so_number} berhasil diperbarui.");
+    }
+
+    public function destroySalesOrder(SalesOrder $salesOrder): RedirectResponse
+    {
+        if ($salesOrder->invoices()->where('status', '!=', Invoice::STATUS_VOID)->exists()) {
+            return back()->with('error', "Pesanan Penjualan {$salesOrder->so_number} telah memiliki Faktur aktif dan tidak dapat dihapus.");
+        }
+
+        $num = $salesOrder->so_number;
+        $businessId = $salesOrder->business_id;
+        $salesOrder->items()->delete();
+        $salesOrder->delete();
+
+        return redirect()->route('admin.b2b.index', ['tab' => 'orders', 'business_id' => $businessId])
+            ->with('success', "Pesanan Penjualan {$num} berhasil dihapus.");
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // 3. INVOICES CRUD
+    // ─────────────────────────────────────────────────────────────────────────
+
+    public function storeInvoice(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'business_id'            => ['required', 'uuid', 'exists:businesses,id'],
+            'customer_id'            => ['required', 'uuid', 'exists:customers,id'],
+            'invoice_number'         => ['nullable', 'string', 'max:64'],
+            'invoice_date'           => ['required', 'date'],
+            'due_date'               => ['required', 'date', 'after_or_equal:invoice_date'],
+            'payment_terms'          => ['nullable', 'string', 'max:50'],
+            'sender_name'            => ['nullable', 'string', 'max:150'],
+            'recipient_name'         => ['nullable', 'string', 'max:150'],
+            'discount_amount'        => ['nullable', 'numeric', 'min:0'],
+            'tax_percentage'         => ['nullable', 'numeric', 'min:0', 'max:100'],
+            'notes'                  => ['nullable', 'string', 'max:1000'],
+            'items'                  => ['required', 'array', 'min:1'],
+            'items.*.product_id'     => ['nullable', 'uuid'],
+            'items.*.item_name'      => ['required', 'string', 'max:255'],
+            'items.*.quantity'       => ['required', 'numeric', 'min:0.01'],
+            'items.*.unit_price'     => ['required', 'numeric', 'min:0'],
+            'items.*.unit_id'        => ['nullable', 'uuid'],
+        ]);
+
+        $business = Business::findOrFail($validated['business_id']);
+
+        $invNumber = $validated['invoice_number'] ?? null;
+        if (!$invNumber) {
+            $prefix = 'INV-' . date('Ym') . '-';
+            $latest = Invoice::where('business_id', $business->id)
+                ->where('invoice_number', 'LIKE', $prefix . '%')
+                ->orderByDesc('invoice_number')
+                ->value('invoice_number');
+            $seq = 1;
+            if ($latest && preg_match('/-(\d+)$/', $latest, $m)) {
+                $seq = ((int) $m[1]) + 1;
+            }
+            $invNumber = $prefix . str_pad((string) $seq, 4, '0', STR_PAD_LEFT);
+        }
+
+        $subtotal = 0.0;
+        foreach ($validated['items'] as $item) {
+            $subtotal += ((float) $item['quantity'] * (float) $item['unit_price']);
+        }
+
+        $discount = (float) ($validated['discount_amount'] ?? 0);
+        $taxPercentage = (float) ($validated['tax_percentage'] ?? 0);
+        $taxable = max(0.0, $subtotal - $discount);
+        $taxAmount = ($taxPercentage / 100.0) * $taxable;
+        $total = $taxable + $taxAmount;
+
+        $invoice = Invoice::create([
+            'business_id'         => $business->id,
+            'customer_id'         => $validated['customer_id'],
+            'invoice_number'      => $invNumber,
+            'invoice_date'        => $validated['invoice_date'],
+            'due_date'            => $validated['due_date'],
+            'payment_terms'       => $validated['payment_terms'] ?? 'Net 30',
+            'sender_name'         => $validated['sender_name'] ?? $business->name,
+            'recipient_name'      => $validated['recipient_name'] ?? null,
+            'attachment_info'     => '-',
+            'subtotal'            => $subtotal,
+            'discount_type'       => 'fixed',
+            'discount_value'      => $discount,
+            'discount_amount'     => $discount,
+            'tax_percentage'      => $taxPercentage,
+            'tax_amount'          => $taxAmount,
+            'total_amount'        => $total,
+            'paid_amount'         => 0,
+            'balance_due'         => $total,
+            'total_hpp_cost'      => 0,
+            'total_gross_profit'  => $taxable,
+            'status'              => Invoice::STATUS_UNPAID,
+            'notes'               => $validated['notes'] ?? null,
+            'created_by'          => null,
+        ]);
+
+        $defaultUnitId = Unit::where('business_id', $business->id)->first()?->id;
+
+        foreach ($validated['items'] as $item) {
+            $qty = (float) $item['quantity'];
+            $price = (float) $item['unit_price'];
+            $lineSubtotal = $qty * $price;
+
+            $product = !empty($item['product_id']) ? Product::find($item['product_id']) : null;
+            $unitId = $item['unit_id'] ?? $product?->output_unit_id ?? $defaultUnitId;
+
+            InvoiceItem::create([
+                'invoice_id'   => $invoice->id,
+                'product_id'   => $product?->id,
+                'unit_id'      => $unitId,
+                'item_name'    => $item['item_name'],
+                'unit_price'   => $price,
+                'quantity'     => $qty,
+                'unit_hpp'     => $product ? (float) $product->base_cost : 0.0,
+                'subtotal'     => $lineSubtotal,
+                'total_hpp'    => $product ? ((float) $product->base_cost * $qty) : 0.0,
+                'gross_profit' => $lineSubtotal - ($product ? ((float) $product->base_cost * $qty) : 0.0),
+            ]);
+        }
+
+        $invoice->recalculateTotals();
+
+        return redirect()->route('admin.b2b.index', ['tab' => 'invoices', 'business_id' => $business->id])
+            ->with('success', "Faktur Komersial {$invoice->invoice_number} berhasil diterbitkan via Admin Console.");
+    }
+
+    public function updateInvoice(Request $request, Invoice $invoice): RedirectResponse
+    {
+        $validated = $request->validate([
+            'due_date'      => ['required', 'date'],
+            'payment_terms' => ['nullable', 'string', 'max:50'],
+            'notes'         => ['nullable', 'string', 'max:1000'],
+        ]);
+
+        $invoice->update($validated);
+
+        return redirect()->route('admin.b2b.index', ['tab' => 'invoices', 'business_id' => $invoice->business_id])
+            ->with('success', "Faktur {$invoice->invoice_number} berhasil diperbarui.");
+    }
+
+    public function voidInvoice(Invoice $invoice): RedirectResponse
+    {
+        if ($invoice->paid_amount > 0) {
+            return back()->with('error', "Faktur {$invoice->invoice_number} telah memiliki pembayaran tercatat dan tidak dapat dibatalkan (void).");
+        }
+
+        $invoice->update(['status' => Invoice::STATUS_VOID]);
+
+        return redirect()->route('admin.b2b.index', ['tab' => 'invoices', 'business_id' => $invoice->business_id])
+            ->with('success', "Faktur {$invoice->invoice_number} berhasil dibatalkan (void).");
+    }
+
+    public function destroyInvoice(Invoice $invoice): RedirectResponse
+    {
+        if ($invoice->paid_amount > 0) {
+            return back()->with('error', "Faktur {$invoice->invoice_number} memiliki transaksi pembayaran dan tidak dapat dihapus.");
+        }
+
+        $num = $invoice->invoice_number;
+        $businessId = $invoice->business_id;
+        $invoice->items()->delete();
+        $invoice->delete();
+
+        return redirect()->route('admin.b2b.index', ['tab' => 'invoices', 'business_id' => $businessId])
+            ->with('success', "Faktur {$num} berhasil dihapus.");
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // 4. SALES RETURNS CRUD
+    // ─────────────────────────────────────────────────────────────────────────
+
+    public function storeSalesReturn(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'business_id'          => ['required', 'uuid', 'exists:businesses,id'],
+            'customer_id'          => ['required', 'uuid', 'exists:customers,id'],
+            'invoice_id'           => ['nullable', 'uuid', 'exists:invoices,id'],
+            'location_id'          => ['nullable', 'uuid', 'exists:locations,id'],
+            'return_number'        => ['nullable', 'string', 'max:64'],
+            'return_date'          => ['required', 'date'],
+            'reason'               => ['required', 'string', 'max:500'],
+            'refund_method'        => ['required', 'string', 'in:credit_note,cash,bank_transfer'],
+            'items'                => ['required', 'array', 'min:1'],
+            'items.*.product_id'   => ['nullable', 'uuid'],
+            'items.*.item_name'    => ['required', 'string', 'max:255'],
+            'items.*.quantity'     => ['required', 'numeric', 'min:0.01'],
+            'items.*.unit_price'   => ['required', 'numeric', 'min:0'],
+            'items.*.reason'       => ['nullable', 'string', 'max:255'],
+        ]);
+
+        $business = Business::findOrFail($validated['business_id']);
+
+        $retNumber = $validated['return_number'] ?? null;
+        if (!$retNumber) {
+            $prefix = 'RET-' . date('Ym') . '-';
+            $latest = SalesReturn::where('business_id', $business->id)
+                ->where('return_number', 'LIKE', $prefix . '%')
+                ->orderByDesc('return_number')
+                ->value('return_number');
+            $seq = 1;
+            if ($latest && preg_match('/-(\d+)$/', $latest, $m)) {
+                $seq = ((int) $m[1]) + 1;
+            }
+            $retNumber = $prefix . str_pad((string) $seq, 4, '0', STR_PAD_LEFT);
+        }
+
+        $totalAmount = 0.0;
+        foreach ($validated['items'] as $item) {
+            $totalAmount += ((float) $item['quantity'] * (float) $item['unit_price']);
+        }
+
+        $locationId = $validated['location_id'] ?? Location::where('business_id', $business->id)->value('id');
+
+        $salesReturn = SalesReturn::create([
+            'business_id'   => $business->id,
+            'customer_id'   => $validated['customer_id'],
+            'invoice_id'    => $validated['invoice_id'] ?? null,
+            'location_id'   => $locationId,
+            'return_number' => $retNumber,
+            'return_date'   => $validated['return_date'],
+            'reason'        => $validated['reason'],
+            'total_amount'  => $totalAmount,
+            'status'        => SalesReturn::STATUS_DRAFT,
+            'refund_method' => $validated['refund_method'],
+            'created_by'    => null,
+        ]);
+
+        foreach ($validated['items'] as $item) {
+            $qty = (float) $item['quantity'];
+            $price = (float) $item['unit_price'];
+
+            SalesReturnItem::create([
+                'sales_return_id' => $salesReturn->id,
+                'product_id'      => $item['product_id'] ?? null,
+                'item_name'       => $item['item_name'],
+                'quantity'        => $qty,
+                'unit_price'      => $price,
+                'subtotal'        => $qty * $price,
+                'reason'          => $item['reason'] ?? $validated['reason'],
+            ]);
+        }
+
+        return redirect()->route('admin.b2b.index', ['tab' => 'returns', 'business_id' => $business->id])
+            ->with('success', "Klaim Retur Penjualan {$salesReturn->return_number} berhasil dibuat via Admin Console.");
+    }
+
+    public function updateSalesReturn(Request $request, SalesReturn $salesReturn): RedirectResponse
+    {
+        $validated = $request->validate([
+            'reason'        => ['required', 'string', 'max:500'],
+            'refund_method' => ['required', 'string', 'in:credit_note,cash,bank_transfer'],
+        ]);
+
+        $salesReturn->update($validated);
+
+        return redirect()->route('admin.b2b.index', ['tab' => 'returns', 'business_id' => $salesReturn->business_id])
+            ->with('success', "Retur Penjualan {$salesReturn->return_number} berhasil diperbarui.");
+    }
+
+    public function rejectSalesReturn(Request $request, SalesReturn $salesReturn): RedirectResponse
+    {
+        if ($salesReturn->status === SalesReturn::STATUS_COMPLETED) {
+            return back()->with('error', "Retur yang telah selesai dan direstock tidak dapat ditolak.");
+        }
+
+        $reason = $request->input('rejection_reason', 'Ditolak oleh Administrator');
+        $salesReturn->update([
+            'status' => 'rejected',
+            'reason' => trim("{$salesReturn->reason} [Penolakan: {$reason}]"),
+        ]);
+
+        return redirect()->route('admin.b2b.index', ['tab' => 'returns', 'business_id' => $salesReturn->business_id])
+            ->with('success', "Retur Penjualan {$salesReturn->return_number} ditolak.");
+    }
+
+    public function destroySalesReturn(SalesReturn $salesReturn): RedirectResponse
+    {
+        if ($salesReturn->status === SalesReturn::STATUS_COMPLETED) {
+            return back()->with('error', "Retur yang telah selesai dan direstock tidak dapat dihapus.");
+        }
+
+        $num = $salesReturn->return_number;
+        $businessId = $salesReturn->business_id;
+        $salesReturn->items()->delete();
+        $salesReturn->delete();
+
+        return redirect()->route('admin.b2b.index', ['tab' => 'returns', 'business_id' => $businessId])
+            ->with('success', "Retur Penjualan {$num} berhasil dihapus.");
     }
 }

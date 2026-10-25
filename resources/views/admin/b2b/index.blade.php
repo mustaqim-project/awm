@@ -11,6 +11,24 @@
     selectedInvoice: null,
     paymentActionUrl: '',
 
+    showCreateQuotationModal: false,
+    showCreateOrderModal: false,
+    showCreateInvoiceModal: false,
+    showCreateReturnModal: false,
+
+    showEditModal: false,
+    editDocType: '',
+    editDocUrl: '',
+    editDoc: null,
+
+    openEdit(type, doc, url) {
+        this.editDocType = type;
+        this.editDoc = doc;
+        this.editDocUrl = url;
+        this.showEditModal = true;
+        this.$nextTick(() => { if (window.lucide) lucide.createIcons(); });
+    },
+
     openPayment(inv) {
         this.selectedInvoice = inv;
         this.paymentActionUrl = '/admin/b2b/invoices/' + inv.id + '/payments';
@@ -36,6 +54,38 @@
         </div>
 
         <div class="flex items-center gap-2.5 w-full sm:w-auto shrink-0 flex-wrap">
+            {{-- Tombol Buat Dokumen Baru --}}
+            @if(Auth::guard('admin')->user()?->hasPermission('admin.b2b.create'))
+                <template x-if="activeTab === 'quotations'">
+                    <button type="button" @click="showCreateQuotationModal = true"
+                        class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-white bg-[#6366f1] hover:bg-[#4f46e5] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-xs cursor-pointer">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                        <span>+ Terbitkan Penawaran</span>
+                    </button>
+                </template>
+                <template x-if="activeTab === 'orders'">
+                    <button type="button" @click="showCreateOrderModal = true"
+                        class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-white bg-[#2563eb] hover:bg-[#1d4ed8] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-xs cursor-pointer">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                        <span>+ Buat Pesanan (SO)</span>
+                    </button>
+                </template>
+                <template x-if="activeTab === 'invoices'">
+                    <button type="button" @click="showCreateInvoiceModal = true"
+                        class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-white bg-[#0284c7] hover:bg-[#0369a1] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-xs cursor-pointer">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                        <span>+ Terbitkan Faktur Langsung</span>
+                    </button>
+                </template>
+                <template x-if="activeTab === 'returns'">
+                    <button type="button" @click="showCreateReturnModal = true"
+                        class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-white bg-[#d97706] hover:bg-[#b45309] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-xs cursor-pointer">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                        <span>+ Buat Pengajuan Retur</span>
+                    </button>
+                </template>
+            @endif
+
             {{-- Tombol Ekspor CSV --}}
             @if(Auth::guard('admin')->user()?->hasPermission('admin.b2b.export'))
                 <a href="{{ route('admin.b2b.export', array_merge(request()->query(), ['tab' => $activeTab])) }}"
@@ -268,6 +318,11 @@
 
     {{-- MODALS --}}
     @include('admin.b2b.modals.modal-record-payment')
+    @include('admin.b2b.modals.modal-create-quotation')
+    @include('admin.b2b.modals.modal-create-order')
+    @include('admin.b2b.modals.modal-create-invoice')
+    @include('admin.b2b.modals.modal-create-return')
+    @include('admin.b2b.modals.modal-edit-document')
 
 </div>
 @endsection

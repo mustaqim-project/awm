@@ -10,6 +10,13 @@
                 Pengawasan retur pengembalian barang, verifikasi nota kredit pemotong tagihan (*credit note*), dan pemulihan stok inventori gudang.
             </p>
         </div>
+        @if(Auth::guard('admin')->user()?->hasPermission('admin.b2b.create'))
+            <button type="button" @click="showCreateReturnModal = true"
+                class="h-9 px-3.5 rounded-[11px] bg-[#d97706] hover:bg-[#b45309] active:scale-[0.98] text-white text-[12px] font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer shrink-0">
+                <i data-lucide="plus" class="w-4 h-4"></i>
+                <span>+ Buat Pengajuan Retur</span>
+            </button>
+        @endif
     </div>
 
     <div class="overflow-x-auto">
@@ -117,9 +124,22 @@
                                     <span>PDF</span>
                                 </a>
 
+                                {{-- Ubah Retur --}}
+                                @if(Auth::guard('admin')->user()?->hasPermission('admin.b2b.edit'))
+                                    <button type="button" @click="openEdit('return', {
+                                        number: '{{ $r->return_number }}',
+                                        reason: '{{ addslashes($r->reason ?? '') }}',
+                                        refund_method: '{{ $r->refund_method }}'
+                                    }, '{{ route('admin.b2b.returns.update', $r) }}')"
+                                        class="h-8 w-8 rounded-[9px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-[#d97706]/15 hover:text-[#d97706] text-black/70 dark:text-white/70 transition-all inline-flex items-center justify-center cursor-pointer"
+                                        title="Ubah Retur">
+                                        <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                                    </button>
+                                @endif
+
                                 {{-- Otorisasi Approve / Complete --}}
                                 @if(Auth::guard('admin')->user()?->hasPermission('admin.b2b.manage'))
-                                    @if($r->status === 'draft')
+                                    @if($r->status === 'draft' || $r->status === 'pending')
                                         <form action="{{ route('admin.b2b.returns.approve', $r) }}" method="POST" class="inline"
                                             onsubmit="return confirm('Setujui (Approve) retur penjualan {{ $r->return_number }}?');">
                                             @csrf
@@ -142,6 +162,33 @@
                                             </button>
                                         </form>
                                     @endif
+                                @endif
+
+                                {{-- Tolak Retur jika belum selesai --}}
+                                @if($r->status !== 'completed' && $r->status !== 'rejected' && Auth::guard('admin')->user()?->hasPermission('admin.b2b.edit'))
+                                    <form action="{{ route('admin.b2b.returns.reject', $r) }}" method="POST" class="inline"
+                                        onsubmit="return confirm('Tolak klaim retur {{ $r->return_number }}?');">
+                                        @csrf
+                                        <button type="submit"
+                                            class="h-8 w-8 rounded-[9px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#B25E00] dark:text-[#FF9F0A] transition-all inline-flex items-center justify-center cursor-pointer"
+                                            title="Tolak Retur">
+                                            <i data-lucide="x-circle" class="w-3.5 h-3.5"></i>
+                                        </button>
+                                    </form>
+                                @endif
+
+                                {{-- Hapus Retur jika belum selesai --}}
+                                @if($r->status !== 'completed' && Auth::guard('admin')->user()?->hasPermission('admin.b2b.delete'))
+                                    <form action="{{ route('admin.b2b.returns.destroy', $r) }}" method="POST" class="inline"
+                                        onsubmit="return confirm('Hapus klaim retur {{ $r->return_number }}?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="h-8 w-8 rounded-[9px] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 text-[#FF3B30] transition-all inline-flex items-center justify-center cursor-pointer"
+                                            title="Hapus Retur">
+                                            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                        </button>
+                                    </form>
                                 @endif
                             </div>
                         </td>

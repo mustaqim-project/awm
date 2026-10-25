@@ -89,6 +89,9 @@ final class AdminRbacSeeder extends Seeder
 
             // ─── 12B. Penjualan B2B & Faktur Platform ──────────────────
             'admin.b2b.view'                       => ['Lihat Penjualan B2B & Faktur', 'admin_finance', 'Melihat surat penawaran, pesanan penjualan, faktur komersial, retur, dan mengunduh PDF.'],
+            'admin.b2b.create'                     => ['Buat Dokumen B2B & Faktur', 'admin_finance', 'Membuat surat penawaran, pesanan penjualan (SO), faktur langsung, dan klaim retur baru.'],
+            'admin.b2b.edit'                       => ['Edit Dokumen B2B & Faktur', 'admin_finance', 'Mengubah data, tanggal, catatan, diskon, atau item pada penawaran, pesanan, faktur, dan retur.'],
+            'admin.b2b.delete'                     => ['Hapus / Batalkan Dokumen B2B', 'admin_finance', 'Menghapus draf penawaran, membatalkan pesanan penjualan, atau membatalkan (void) faktur komersial.'],
             'admin.b2b.manage'                     => ['Kelola Transaksi B2B & Faktur', 'admin_finance', 'Menerbitkan penawaran, konversi ke SO, penerbitan faktur, catat pembayaran, dan otorisasi retur.'],
             'admin.b2b.export'                     => ['Export Data Penjualan B2B', 'admin_finance', 'Mengekspor laporan pipeline B2B, faktur, dan retur ke file CSV.'],
 
@@ -204,6 +207,9 @@ final class AdminRbacSeeder extends Seeder
                     'admin.feedback.view',
                     'admin.feedback.manage',
                     'admin.b2b.view',
+                    'admin.b2b.create',
+                    'admin.b2b.edit',
+                    'admin.b2b.delete',
                     'admin.b2b.manage',
                     'admin.leads.view',
                     'admin.leads.export',
@@ -239,6 +245,9 @@ final class AdminRbacSeeder extends Seeder
                     'admin.finance.export',
                     'admin.finance.sync',
                     'admin.b2b.view',
+                    'admin.b2b.create',
+                    'admin.b2b.edit',
+                    'admin.b2b.delete',
                     'admin.b2b.manage',
                     'admin.b2b.export',
                     'admin.profile.manage',

@@ -1585,7 +1585,7 @@
                     <div class="flex items-end pt-5">
                         <button type="submit"
                             class="h-11 sm:h-9 px-4.5 rounded-[10px] sm:rounded-[9px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white text-[13.5px] sm:text-[12.5px] font-bold transition cursor-pointer">
-                            Filter
+                            {{ __('common.filter') }}
                         </button>
                     </div>
                 </div>
@@ -3340,12 +3340,12 @@
                     <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label class="block text-[11px] font-semibold text-black/60 dark:text-white/60 mb-1">Latitude</label>
-                            <input type="number" step="any" id="add_loc_lat" name="latitude" required placeholder="-6.2088"
+                            <input type="number" step="any" id="add_loc_lat" name="latitude" required placeholder="{{ __('hrm.placeholder_lat') }}"
                                 class="w-full h-11 sm:h-10 px-3 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[16px] sm:text-[12.5px] font-mono font-bold text-black dark:text-white">
                         </div>
                         <div>
                             <label class="block text-[11px] font-semibold text-black/60 dark:text-white/60 mb-1">Longitude</label>
-                            <input type="number" step="any" id="add_loc_lng" name="longitude" required placeholder="106.8456"
+                            <input type="number" step="any" id="add_loc_lng" name="longitude" required placeholder="{{ __('hrm.placeholder_lng') }}"
                                 class="w-full h-11 sm:h-10 px-3 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[16px] sm:text-[12.5px] font-mono font-bold text-black dark:text-white">
                         </div>
                     </div>
@@ -3611,12 +3611,12 @@
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     <div>
                                         <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_email_login') }} <span class="text-[#FF3B30]">*</span></label>
-                                        <input type="email" name="email" required placeholder="rian@bisnis.id"
+                                        <input type="email" name="email" required placeholder="{{ __('hrm.placeholder_email') }}"
                                             class="w-full h-11 sm:h-10.5 px-3.5 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[16px] sm:text-[13px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/40 focus:border-[#007AFF] transition">
                                     </div>
                                     <div>
                                         <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_wa_number') }}</label>
-                                        <input type="text" name="whatsapp_number" placeholder="0812xxxxxxxx"
+                                        <input type="text" name="whatsapp_number" placeholder="{{ __('hrm.placeholder_wa') }}"
                                             class="w-full h-11 sm:h-10.5 px-3.5 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[16px] sm:text-[13px] font-semibold text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/40 focus:border-[#007AFF] transition">
                                     </div>
                                 </div>
@@ -3624,12 +3624,12 @@
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     <div>
                                         <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_nik_ktp') }}</label>
-                                        <input type="text" name="nik_ktp" placeholder="3271xxxxxxxxxxxx" maxlength="16"
+                                        <input type="text" name="nik_ktp" placeholder="{{ __('hrm.placeholder_nik') }}" maxlength="16"
                                             class="w-full h-11 sm:h-10.5 px-3.5 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[16px] sm:text-[12.5px] font-mono font-semibold text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/40 focus:border-[#007AFF] transition">
                                     </div>
                                     <div>
                                         <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_npwp') }}</label>
-                                        <input type="text" name="npwp" placeholder="09.xxx.xxx.x-xxx.xxx"
+                                        <input type="text" name="npwp" placeholder="{{ __('hrm.placeholder_npwp') }}"
                                             class="w-full h-11 sm:h-10.5 px-3.5 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[16px] sm:text-[12.5px] font-mono font-semibold text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/40 focus:border-[#007AFF] transition">
                                     </div>
                                 </div>
@@ -3652,12 +3652,12 @@
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     <div>
                                         <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_base_salary') }}</label>
-                                        <input type="number" name="base_salary" step="1000" placeholder="5000000"
+                                        <input type="number" name="base_salary" step="1000" placeholder="{{ __('hrm.placeholder_salary') }}"
                                             class="w-full h-11 sm:h-10.5 px-3.5 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[16px] sm:text-[13px] font-semibold text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#34C759]/40 focus:border-[#34C759] transition">
                                     </div>
                                     <div>
                                         <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_daily_rate') }}</label>
-                                        <input type="number" name="daily_rate" step="1000" placeholder="150000"
+                                        <input type="number" name="daily_rate" step="1000" placeholder="{{ __('hrm.placeholder_daily_rate') }}"
                                             class="w-full h-11 sm:h-10.5 px-3.5 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[16px] sm:text-[13px] font-semibold text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#34C759]/40 focus:border-[#34C759] transition">
                                     </div>
                                 </div>
@@ -3665,7 +3665,7 @@
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     <div>
                                         <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_bank_name') }}</label>
-                                        <input type="text" name="bank_name" placeholder="BCA / Mandiri / BRI / BNI"
+                                        <input type="text" name="bank_name" placeholder="{{ __('hrm.placeholder_bank_name') }}"
                                             class="w-full h-11 sm:h-10.5 px-3.5 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[16px] sm:text-[13px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#34C759]/40 focus:border-[#34C759] transition">
                                     </div>
                                     <div>
@@ -3940,19 +3940,19 @@
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     <div>
                                         <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_wa_number') }}</label>
-                                        <input type="text" name="whatsapp_number" :value="selectedEmployee?.whatsapp_number || ''" placeholder="0812xxxxxxxx"
+                                        <input type="text" name="whatsapp_number" :value="selectedEmployee?.whatsapp_number || ''" placeholder="{{ __('hrm.placeholder_wa') }}"
                                             class="w-full h-11 sm:h-10.5 px-3.5 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[16px] sm:text-[13px] font-semibold text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/40 focus:border-[#007AFF] transition">
                                     </div>
                                     <div>
                                         <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_npwp') }}</label>
-                                        <input type="text" name="npwp" :value="selectedEmployee?.npwp || ''" placeholder="09.xxx.xxx.x-xxx.xxx"
+                                        <input type="text" name="npwp" :value="selectedEmployee?.npwp || ''" placeholder="{{ __('hrm.placeholder_npwp') }}"
                                             class="w-full h-11 sm:h-10.5 px-3.5 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[16px] sm:text-[12.5px] font-mono font-semibold text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/40 focus:border-[#007AFF] transition">
                                     </div>
                                 </div>
 
                                 <div>
                                     <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_nik_ktp') }}</label>
-                                    <input type="text" name="nik_ktp" :value="selectedEmployee?.nik_ktp || ''" placeholder="3271xxxxxxxxxxxx" maxlength="16"
+                                    <input type="text" name="nik_ktp" :value="selectedEmployee?.nik_ktp || ''" placeholder="{{ __('hrm.placeholder_nik') }}" maxlength="16"
                                         class="w-full h-11 sm:h-10.5 px-3.5 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[16px] sm:text-[12.5px] font-mono font-semibold text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/40 focus:border-[#007AFF] transition">
                                 </div>
                             </div>
@@ -3987,7 +3987,7 @@
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     <div>
                                         <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_bank_name') }}</label>
-                                        <input type="text" name="bank_name" :value="selectedEmployee?.bank_name || ''" placeholder="BCA / Mandiri / BRI / BNI"
+                                        <input type="text" name="bank_name" :value="selectedEmployee?.bank_name || ''" placeholder="{{ __('hrm.placeholder_bank_name') }}"
                                             class="w-full h-11 sm:h-10.5 px-3.5 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[16px] sm:text-[13px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#34C759]/40 focus:border-[#34C759] transition">
                                     </div>
                                     <div>

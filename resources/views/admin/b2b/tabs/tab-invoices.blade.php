@@ -10,6 +10,13 @@
                 Pengawasan penagihan komersial, termin pembayaran (TOP), rekonsiliasi kas masuk, dan pencatatan pembayaran cicilan dengan bukti transfer.
             </p>
         </div>
+        @if(Auth::guard('admin')->user()?->hasPermission('admin.b2b.create'))
+            <button type="button" @click="showCreateInvoiceModal = true"
+                class="h-9 px-3.5 rounded-[11px] bg-[#0284c7] hover:bg-[#0369a1] active:scale-[0.98] text-white text-[12px] font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer shrink-0">
+                <i data-lucide="plus" class="w-4 h-4"></i>
+                <span>+ Terbitkan Faktur</span>
+            </button>
+        @endif
     </div>
 
     <div class="overflow-x-auto">
@@ -141,6 +148,20 @@
                                     <span>PDF</span>
                                 </a>
 
+                                {{-- Ubah Faktur --}}
+                                @if(Auth::guard('admin')->user()?->hasPermission('admin.b2b.edit'))
+                                    <button type="button" @click="openEdit('invoice', {
+                                        number: '{{ $inv->invoice_number }}',
+                                        due_date: '{{ \Carbon\Carbon::parse($inv->due_date)->format('Y-m-d') }}',
+                                        payment_terms: '{{ addslashes($inv->payment_terms ?? '') }}',
+                                        notes: '{{ addslashes($inv->notes ?? '') }}'
+                                    }, '{{ route('admin.b2b.invoices.update', $inv) }}')"
+                                        class="h-8 w-8 rounded-[9px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-[#0284c7]/15 hover:text-[#0284c7] text-black/70 dark:text-white/70 transition-all inline-flex items-center justify-center cursor-pointer"
+                                        title="Ubah Faktur">
+                                        <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                                    </button>
+                                @endif
+
                                 {{-- Catat Pembayaran jika belum lunas --}}
                                 @if((float) $inv->balance_due > 0.01 && Auth::guard('admin')->user()?->hasPermission('admin.b2b.manage'))
                                     <button type="button" @click="openPayment({{ json_encode($inv) }})"
@@ -149,6 +170,33 @@
                                         <i data-lucide="credit-card" class="w-3.5 h-3.5"></i>
                                         <span>Catat Bayar</span>
                                     </button>
+                                @endif
+
+                                {{-- Void Faktur jika belum ada pembayaran dan belum void --}}
+                                @if($inv->status !== 'void' && (float) $inv->paid_amount < 0.01 && Auth::guard('admin')->user()?->hasPermission('admin.b2b.edit'))
+                                    <form action="{{ route('admin.b2b.invoices.void', $inv) }}" method="POST" class="inline"
+                                        onsubmit="return confirm('Batalkan (Void) Faktur {{ $inv->invoice_number }}?');">
+                                        @csrf
+                                        <button type="submit"
+                                            class="h-8 w-8 rounded-[9px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#B25E00] dark:text-[#FF9F0A] transition-all inline-flex items-center justify-center cursor-pointer"
+                                            title="Batalkan (Void) Faktur">
+                                            <i data-lucide="ban" class="w-3.5 h-3.5"></i>
+                                        </button>
+                                    </form>
+                                @endif
+
+                                {{-- Hapus Faktur jika tidak ada pembayaran --}}
+                                @if((float) $inv->paid_amount < 0.01 && Auth::guard('admin')->user()?->hasPermission('admin.b2b.delete'))
+                                    <form action="{{ route('admin.b2b.invoices.destroy', $inv) }}" method="POST" class="inline"
+                                        onsubmit="return confirm('Hapus Faktur {{ $inv->invoice_number }}?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="h-8 w-8 rounded-[9px] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 text-[#FF3B30] transition-all inline-flex items-center justify-center cursor-pointer"
+                                            title="Hapus Faktur">
+                                            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                        </button>
+                                    </form>
                                 @endif
                             </div>
                         </td>

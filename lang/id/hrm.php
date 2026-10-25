@@ -882,4 +882,14 @@ return [
     'filter_all_shifts' => 'Semua Shift',
     'tab_shifts' => 'Shift Kerja',
     'tab_schedules' => 'Jadwal Roster',
+    'placeholder_lat' => '-6.2088',
+    'placeholder_lng' => '106.8456',
+    'placeholder_email' => 'rian@bisnis.id',
+    'placeholder_wa' => '0812xxxxxxxx',
+    'placeholder_nik' => '3271xxxxxxxxxxxx',
+    'placeholder_npwp' => '09.xxx.xxx.x-xxx.xxx',
+    'placeholder_salary' => '5000000',
+    'placeholder_daily_rate' => '150000',
+    'placeholder_bank_name' => 'BCA / Mandiri / BRI / BNI',
 ];
+

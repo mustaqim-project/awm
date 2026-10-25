@@ -10,6 +10,13 @@
                 Konfirmasi perjanjian pemenuhan pesanan B2B resmi, rujukan nomor penawaran, reservasi stok, dan penerbitan faktur penagihan komersial.
             </p>
         </div>
+        @if(Auth::guard('admin')->user()?->hasPermission('admin.b2b.create'))
+            <button type="button" @click="showCreateOrderModal = true"
+                class="h-9 px-3.5 rounded-[11px] bg-[#2563eb] hover:bg-[#1d4ed8] active:scale-[0.98] text-white text-[12px] font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer shrink-0">
+                <i data-lucide="plus" class="w-4 h-4"></i>
+                <span>+ Buat Pesanan (SO)</span>
+            </button>
+        @endif
     </div>
 
     <div class="overflow-x-auto">
@@ -135,6 +142,21 @@
                                     <span>PDF</span>
                                 </a>
 
+                                {{-- Ubah Pesanan --}}
+                                @if(Auth::guard('admin')->user()?->hasPermission('admin.b2b.edit'))
+                                    <button type="button" @click="openEdit('order', {
+                                        number: '{{ $o->so_number }}',
+                                        status: '{{ $o->status }}',
+                                        expected_delivery_date: '{{ $o->expected_delivery_date ? \Carbon\Carbon::parse($o->expected_delivery_date)->format('Y-m-d') : '' }}',
+                                        shipping_address: '{{ addslashes($o->shipping_address ?? '') }}',
+                                        notes: '{{ addslashes($o->notes ?? '') }}'
+                                    }, '{{ route('admin.b2b.orders.update', $o) }}')"
+                                        class="h-8 w-8 rounded-[9px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-[#2563eb]/15 hover:text-[#2563eb] text-black/70 dark:text-white/70 transition-all inline-flex items-center justify-center cursor-pointer"
+                                        title="Ubah Pesanan">
+                                        <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                                    </button>
+                                @endif
+
                                 {{-- Terbitkan Faktur dari SO --}}
                                 @if(Auth::guard('admin')->user()?->hasPermission('admin.b2b.manage'))
                                     <form action="{{ route('admin.b2b.orders.generate-invoice', $o) }}" method="POST" class="inline"
@@ -145,6 +167,20 @@
                                             title="Terbitkan Faktur Penagihan Komersial">
                                             <i data-lucide="receipt" class="w-3.5 h-3.5"></i>
                                             <span>Buat Faktur</span>
+                                        </button>
+                                    </form>
+                                @endif
+
+                                {{-- Hapus Pesanan jika belum ada faktur aktif --}}
+                                @if(!$o->invoices()->where('status', '!=', 'void')->exists() && Auth::guard('admin')->user()?->hasPermission('admin.b2b.delete'))
+                                    <form action="{{ route('admin.b2b.orders.destroy', $o) }}" method="POST" class="inline"
+                                        onsubmit="return confirm('Hapus Pesanan Penjualan {{ $o->so_number }}?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="h-8 w-8 rounded-[9px] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 text-[#FF3B30] transition-all inline-flex items-center justify-center cursor-pointer"
+                                            title="Hapus Pesanan">
+                                            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                                         </button>
                                     </form>
                                 @endif

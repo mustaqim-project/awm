@@ -14,6 +14,7 @@ use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use App\Support\Security\CsvSanitizer;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -317,9 +318,9 @@ class PayrollTwoPartExcelExport
                 : 'Tunai / Kasir';
 
             $sheet->setCellValue("A{$r}", $idx++);
-            $sheet->setCellValue("B{$r}", $item->employee_name);
-            $sheet->setCellValue("C{$r}", $nikOrNpwp);
-            $sheet->setCellValue("D{$r}", $item->job_title ?: 'Staf');
+            $sheet->setCellValue("B{$r}", CsvSanitizer::sanitize((string) $item->employee_name));
+            $sheet->setCellValue("C{$r}", CsvSanitizer::sanitize((string) $nikOrNpwp));
+            $sheet->setCellValue("D{$r}", CsvSanitizer::sanitize((string) ($item->job_title ?: 'Staf')));
             $sheet->setCellValue("E{$r}", $empTypeStr);
             $sheet->setCellValue("F{$r}", $item->tax_ptkp_status ?: 'TK/0');
             $sheet->setCellValue("G{$r}", (int) $item->days_worked);
@@ -356,7 +357,7 @@ class PayrollTwoPartExcelExport
             // Total Company Cost Formula: Gross (O) + BPJS TK Comp (W) + BPJS Kes Comp (X)
             $sheet->setCellValue("Y{$r}", "=O{$r}+W{$r}+X{$r}");
 
-            $sheet->setCellValue("Z{$r}", $bankStr);
+            $sheet->setCellValue("Z{$r}", CsvSanitizer::sanitize((string) $bankStr));
 
             // Row Formatting & Alignment
             $sheet->getStyle("A{$r}")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);

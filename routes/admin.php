@@ -159,20 +159,35 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
         Route::prefix('b2b')->name('b2b.')->group(function (): void {
             Route::get('/', [\App\Http\Controllers\Admin\AdminB2bController::class, 'index'])->name('index');
             Route::get('/export', [\App\Http\Controllers\Admin\AdminB2bController::class, 'export'])->name('export');
+            Route::get('/business-resources', [\App\Http\Controllers\Admin\AdminB2bController::class, 'businessResources'])->name('business-resources');
 
-            // Quotations
+            // Quotations CRUD & Actions
+            Route::post('/quotations', [\App\Http\Controllers\Admin\AdminB2bController::class, 'storeQuotation'])->name('quotations.store');
+            Route::put('/quotations/{quotation}', [\App\Http\Controllers\Admin\AdminB2bController::class, 'updateQuotation'])->name('quotations.update');
+            Route::delete('/quotations/{quotation}', [\App\Http\Controllers\Admin\AdminB2bController::class, 'destroyQuotation'])->name('quotations.destroy');
             Route::post('/quotations/{quotation}/convert', [\App\Http\Controllers\Admin\AdminB2bController::class, 'convertQuotation'])->name('quotations.convert');
             Route::get('/quotations/{quotation}/pdf', [\App\Http\Controllers\Admin\AdminB2bController::class, 'pdfQuotation'])->name('quotations.pdf');
 
-            // Sales Orders
+            // Sales Orders CRUD & Actions
+            Route::post('/orders', [\App\Http\Controllers\Admin\AdminB2bController::class, 'storeSalesOrder'])->name('orders.store');
+            Route::put('/orders/{salesOrder}', [\App\Http\Controllers\Admin\AdminB2bController::class, 'updateSalesOrder'])->name('orders.update');
+            Route::delete('/orders/{salesOrder}', [\App\Http\Controllers\Admin\AdminB2bController::class, 'destroySalesOrder'])->name('orders.destroy');
             Route::post('/orders/{salesOrder}/generate-invoice', [\App\Http\Controllers\Admin\AdminB2bController::class, 'generateInvoiceFromOrder'])->name('orders.generate-invoice');
             Route::get('/orders/{salesOrder}/pdf', [\App\Http\Controllers\Admin\AdminB2bController::class, 'pdfSalesOrder'])->name('orders.pdf');
 
-            // Invoices & Payments
+            // Invoices CRUD & Actions
+            Route::post('/invoices', [\App\Http\Controllers\Admin\AdminB2bController::class, 'storeInvoice'])->name('invoices.store');
+            Route::put('/invoices/{invoice}', [\App\Http\Controllers\Admin\AdminB2bController::class, 'updateInvoice'])->name('invoices.update');
+            Route::post('/invoices/{invoice}/void', [\App\Http\Controllers\Admin\AdminB2bController::class, 'voidInvoice'])->name('invoices.void');
+            Route::delete('/invoices/{invoice}', [\App\Http\Controllers\Admin\AdminB2bController::class, 'destroyInvoice'])->name('invoices.destroy');
             Route::post('/invoices/{invoice}/payments', [\App\Http\Controllers\Admin\AdminB2bController::class, 'recordInvoicePayment'])->name('invoices.payments.store');
             Route::get('/invoices/{invoice}/pdf', [\App\Http\Controllers\Admin\AdminB2bController::class, 'pdfInvoice'])->name('invoices.pdf');
 
-            // Sales Returns
+            // Sales Returns CRUD & Actions
+            Route::post('/returns', [\App\Http\Controllers\Admin\AdminB2bController::class, 'storeSalesReturn'])->name('returns.store');
+            Route::put('/returns/{salesReturn}', [\App\Http\Controllers\Admin\AdminB2bController::class, 'updateSalesReturn'])->name('returns.update');
+            Route::post('/returns/{salesReturn}/reject', [\App\Http\Controllers\Admin\AdminB2bController::class, 'rejectSalesReturn'])->name('returns.reject');
+            Route::delete('/returns/{salesReturn}', [\App\Http\Controllers\Admin\AdminB2bController::class, 'destroySalesReturn'])->name('returns.destroy');
             Route::post('/returns/{salesReturn}/approve', [\App\Http\Controllers\Admin\AdminB2bController::class, 'approveSalesReturn'])->name('returns.approve');
             Route::post('/returns/{salesReturn}/complete', [\App\Http\Controllers\Admin\AdminB2bController::class, 'completeSalesReturn'])->name('returns.complete');
             Route::get('/returns/{salesReturn}/pdf', [\App\Http\Controllers\Admin\AdminB2bController::class, 'pdfSalesReturn'])->name('returns.pdf');

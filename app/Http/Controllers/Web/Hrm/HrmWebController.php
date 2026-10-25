@@ -33,10 +33,60 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use App\Domain\Import\DataExchangeService;
+use App\Models\AuditLog;
+use App\Support\Security\CsvSanitizer;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-final class HrmWebController extends Controller
+final class HrmWebController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.permission:users.view', only: [
+                'index',
+                'showPayroll',
+                'showPayslip',
+                'exportPayrollExcel',
+                'exportPayrollCsv',
+                'exportPayrollBankCsv',
+            ]),
+            new Middleware('require.permission:users.manage', only: [
+                'storeEmployee',
+                'updateEmployee',
+                'destroyEmployee',
+                'storeLoan',
+                'cancelLoan',
+                'createPayroll',
+                'storePayroll',
+                'approvePayroll',
+                'payPayroll',
+                'destroyPayroll',
+                'approveCorrection',
+                'rejectCorrection',
+                'registerEmployeeFace',
+                'storeLocation',
+                'updateLocation',
+                'destroyLocation',
+                'storeShift',
+                'updateShift',
+                'destroyShift',
+                'storeSchedule',
+                'updateSchedule',
+                'destroySchedule',
+                'exportEmployees',
+                'employeeTemplate',
+                'previewEmployeeImport',
+                'executeEmployeeImport',
+                'exportAttendance',
+                'attendanceTemplate',
+                'previewAttendanceImport',
+                'executeAttendanceImport',
+            ]),
+        ];
+    }
+
     public function __construct(
         private readonly PayrollRunService $payrollRunService,
         private readonly EntitlementService $entitlementService,
@@ -343,6 +393,18 @@ final class HrmWebController extends Controller
             }
         }
 
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => auth()->id(),
+            'auditable_type' => BusinessMembership::class,
+            'auditable_id' => $membership->id,
+            'action' => 'hrm.employee_created',
+            'notes' => "Pendaftaran staf baru: {$user->name} ({$membership->role})",
+            'risk_level' => AuditLog::RISK_LOW,
+            'ip_address' => request()->ip(),
+            'created_at' => now(),
+        ]);
+
         return redirect()->route('hrm.index', ['tab' => 'employees'])
             ->with('success', "Data karyawan {$validated['name']} berhasil disimpan dengan profil HRM lengkap.");
     }
@@ -437,6 +499,18 @@ final class HrmWebController extends Controller
             }
         }
 
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => auth()->id(),
+            'auditable_type' => BusinessMembership::class,
+            'auditable_id' => $membership->id,
+            'action' => 'hrm.employee_updated',
+            'notes' => "Perubahan data staf & kompensasi: {$membership->user?->name}",
+            'risk_level' => AuditLog::RISK_LOW,
+            'ip_address' => request()->ip(),
+            'created_at' => now(),
+        ]);
+
         return redirect()->route('hrm.index', ['tab' => 'employees'])
             ->with('success', "Profil HRM {$validated['name']} berhasil diperbarui.");
     }
@@ -459,6 +533,18 @@ final class HrmWebController extends Controller
 
         $empName = $membership->user?->name ?? 'Karyawan';
         $membership->delete();
+
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => auth()->id(),
+            'auditable_type' => BusinessMembership::class,
+            'auditable_id' => $membership->id,
+            'action' => 'hrm.employee_deleted',
+            'notes' => "Penghapusan staf dari workspace: {$empName}",
+            'risk_level' => AuditLog::RISK_MEDIUM,
+            'ip_address' => request()->ip(),
+            'created_at' => now(),
+        ]);
 
         return redirect()->route('hrm.index', ['tab' => 'employees'])
             ->with('success', "Keanggotaan {$empName} berhasil dihapus dari workspace.");
@@ -486,7 +572,7 @@ final class HrmWebController extends Controller
 
         $loanNumber = 'LN-' . date('Ym') . '-' . strtoupper(Str::random(5));
 
-        EmployeeLoan::create([
+        $loan = EmployeeLoan::create([
             'id' => (string) Str::uuid(),
             'business_id' => $business->id,
             'user_id' => $validated['user_id'],
@@ -499,6 +585,18 @@ final class HrmWebController extends Controller
             'status' => EmployeeLoan::STATUS_ACTIVE,
             'purpose' => $validated['purpose'] ?? 'Kasbon Operasional',
             'approved_by' => auth()->id(),
+        ]);
+
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => auth()->id(),
+            'auditable_type' => EmployeeLoan::class,
+            'auditable_id' => $loan->id,
+            'action' => 'hrm.loan_created',
+            'notes' => "Pencatatan kasbon staf {$loanNumber} sebesar Rp " . number_format($amount, 0, ',', '.'),
+            'risk_level' => AuditLog::RISK_LOW,
+            'ip_address' => request()->ip(),
+            'created_at' => now(),
         ]);
 
         return redirect()->route('hrm.index', ['tab' => 'loans'])
@@ -518,6 +616,18 @@ final class HrmWebController extends Controller
         }
 
         $loan->update(['status' => EmployeeLoan::STATUS_CANCELLED]);
+
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => auth()->id(),
+            'auditable_type' => EmployeeLoan::class,
+            'auditable_id' => $loan->id,
+            'action' => 'hrm.loan_cancelled',
+            'notes' => "Pembatalan kasbon staf: {$loan->loan_number}",
+            'risk_level' => AuditLog::RISK_LOW,
+            'ip_address' => request()->ip(),
+            'created_at' => now(),
+        ]);
 
         return redirect()->route('hrm.index', ['tab' => 'loans'])
             ->with('success', "Pinjaman {$loan->loan_number} berhasil dibatalkan.");
@@ -593,6 +703,18 @@ final class HrmWebController extends Controller
             notes: $validated['notes'] ?? null
         );
 
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => auth()->id(),
+            'auditable_type' => Payroll::class,
+            'auditable_id' => $payroll->id,
+            'action' => 'hrm.payroll_created',
+            'notes' => "Pembuatan draf penggajian: {$payroll->title} ({$payroll->payroll_number})",
+            'risk_level' => AuditLog::RISK_LOW,
+            'ip_address' => request()->ip(),
+            'created_at' => now(),
+        ]);
+
         return redirect()->route('hrm.payrolls.show', $payroll->id)
             ->with('success', "Batch {$payroll->title} berhasil dikalkulasi dan disimpan sebagai draf.");
     }
@@ -626,6 +748,18 @@ final class HrmWebController extends Controller
 
         $this->payrollRunService->approvePayroll($payroll, auth()->user());
 
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => auth()->id(),
+            'auditable_type' => Payroll::class,
+            'auditable_id' => $payroll->id,
+            'action' => 'hrm.payroll_approved',
+            'notes' => "Persetujuan draf penggajian: {$payroll->title}",
+            'risk_level' => AuditLog::RISK_MEDIUM,
+            'ip_address' => request()->ip(),
+            'created_at' => now(),
+        ]);
+
         return back()->with('success', "Penggajian {$payroll->title} telah disetujui.");
     }
 
@@ -653,6 +787,18 @@ final class HrmWebController extends Controller
             operator: auth()->user()
         );
 
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => auth()->id(),
+            'auditable_type' => Payroll::class,
+            'auditable_id' => $payroll->id,
+            'action' => 'hrm.payroll_paid',
+            'notes' => "Pembayaran penggajian: {$payroll->title} via {$validated['payment_method']}",
+            'risk_level' => AuditLog::RISK_MEDIUM,
+            'ip_address' => request()->ip(),
+            'created_at' => now(),
+        ]);
+
         return back()->with('success', "Penggajian {$payroll->title} telah ditandai DIBAYAR. Potongan kasbon dan beban keuangan telah terupdate otomatis.");
     }
 
@@ -670,6 +816,18 @@ final class HrmWebController extends Controller
 
         $title = $payroll->title;
         $this->payrollRunService->deleteDraft($payroll);
+
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => auth()->id(),
+            'auditable_type' => Payroll::class,
+            'auditable_id' => $payroll->id,
+            'action' => 'hrm.payroll_deleted',
+            'notes' => "Penghapusan draf penggajian: {$title}",
+            'risk_level' => AuditLog::RISK_MEDIUM,
+            'ip_address' => request()->ip(),
+            'created_at' => now(),
+        ]);
 
         return redirect()->route('hrm.index', ['tab' => 'payrolls'])
             ->with('success', "Draf {$title} berhasil dihapus.");
@@ -780,11 +938,11 @@ final class HrmWebController extends Controller
             foreach ($payroll->items as $item) {
                 fputcsv($handle, [
                     $idx++,
-                    $item->employee_name,
-                    $item->user?->nik ?? $item->user?->npwp ?? '-',
-                    $item->job_title ?: 'Staf',
+                    CsvSanitizer::sanitize((string) $item->employee_name),
+                    CsvSanitizer::sanitize((string) ($item->user?->nik ?? $item->user?->npwp ?? '-')),
+                    CsvSanitizer::sanitize((string) ($item->job_title ?: 'Staf')),
                     $item->employment_type === 'daily_worker' ? 'Pekerja Harian' : 'Karyawan',
-                    $item->tax_ptkp_status ?: 'TK/0',
+                    CsvSanitizer::sanitize((string) ($item->tax_ptkp_status ?: 'TK/0')),
                     (int) ($item->employment_type === 'daily_worker' ? ($item->daily_rate * $item->days_worked) : $item->base_salary),
                     (int) $item->fixed_allowances,
                     (int) $item->variable_allowances,
@@ -876,12 +1034,12 @@ final class HrmWebController extends Controller
                 $desc = "Gaji {$payroll->formatted_period} - {$business->name}";
 
                 fputcsv($handle, [
-                    $bankAccount,
-                    $item->employee_name,
-                    $bankName,
+                    CsvSanitizer::sanitize((string) $bankAccount),
+                    CsvSanitizer::sanitize((string) $item->employee_name),
+                    CsvSanitizer::sanitize((string) $bankName),
                     (int) $item->take_home_pay,
-                    $desc,
-                    $item->user?->email ?? '',
+                    CsvSanitizer::sanitize((string) $desc),
+                    CsvSanitizer::sanitize((string) ($item->user?->email ?? '-')),
                 ]);
             }
 
