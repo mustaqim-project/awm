@@ -64,7 +64,7 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
    - Tombol aksi icon-only dilengkapi atribut aksesibilitas `title` dan `aria-label`.
    - Menambahkan method `deletePostDirect(post)` ke Alpine.js store `socialPostsManager()` untuk eksekusi hapus instan dari baris tabel dengan konfirmasi `AppAlert` dan animasi penghapusan elemen DOM.
 3. **Lokalisasi Kamus Bahasa:**
-   - Mendaftarkan key `table_header_content`, `table_header_channel`, `table_header_status`, `table_header_metrics`, dan `table_header_time` ke `lang/id/social_media.php` dan `lang/en/social_media.php`.
+   - Mendaftarkan key `table_header_post`, `table_header_caption`, `table_header_channel`, `table_header_status`, `table_header_metrics`, dan `table_header_time` ke `lang/id/social_media.php` dan `lang/en/social_media.php`.
 
 #### 3. Technical Changes
 - **Files Affected:**

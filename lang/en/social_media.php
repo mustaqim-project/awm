@@ -33,8 +33,10 @@ return [
     'tab_insights' => 'Analytics & Insights',
 
     // Table Headers
+    'table_header_post' => 'Post',
+    'table_header_caption' => 'Caption',
     'table_header_content' => 'Media & Content',
-    'table_header_channel' => 'Channel & Account',
+    'table_header_channel' => 'Channel',
     'table_header_status' => 'Status',
     'table_header_metrics' => 'Metrics',
     'table_header_time' => 'Time',

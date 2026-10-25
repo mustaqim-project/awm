@@ -33,8 +33,10 @@ return [
     'tab_insights' => 'Analitik & Performa',
 
     // Table Headers
+    'table_header_post' => 'Postingan',
+    'table_header_caption' => 'Caption',
     'table_header_content' => 'Media & Konten',
-    'table_header_channel' => 'Saluran & Akun',
+    'table_header_channel' => 'Saluran',
     'table_header_status' => 'Status',
     'table_header_metrics' => 'Metrik',
     'table_header_time' => 'Waktu',

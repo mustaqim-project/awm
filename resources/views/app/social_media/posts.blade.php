@@ -93,40 +93,52 @@
         @endif
 
         {{-- 3. FILTERS & SEARCH BAR --}}
-        <div class="rounded-[18px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 p-4 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div class="flex flex-wrap items-center gap-2">
-                <span class="text-[12px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider mr-1">{{ __('social_media.filter_status_label') }}:</span>
+        <div class="rounded-[18px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 p-3 sm:p-4 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3">
+            <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
+                <span class="text-[11.5px] font-bold text-black/40 dark:text-white/40 uppercase tracking-wider shrink-0 mr-1 flex items-center gap-1">
+                    <i data-lucide="sliders-horizontal" class="w-3.5 h-3.5"></i>
+                    <span>Status:</span>
+                </span>
                 <a href="{{ route('social-media.posts.index', ['status' => 'all', 'platform' => $platform]) }}"
-                    class="min-h-[38px] sm:min-h-0 sm:h-7 px-3.5 sm:px-3 rounded-full text-[12px] font-medium transition-colors flex items-center {{ $status === 'all' ? 'bg-[#007AFF] text-white shadow-sm' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70 hover:bg-black/[0.08]' }}">
-                    {{ __('social_media.filter_status_all') }} ({{ $statusCounts['all'] ?? $posts->total() }})
+                    class="h-7 px-3 rounded-full text-[12px] font-medium transition-colors flex items-center shrink-0 {{ $status === 'all' ? 'bg-[#007AFF] text-white shadow-xs' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70 hover:bg-black/[0.08] dark:hover:bg-white/10' }}">
+                    <span>{{ __('social_media.filter_status_all') }}</span>
+                    <span class="ml-1.5 px-1.5 py-0.2 rounded-full text-[10.5px] {{ $status === 'all' ? 'bg-white/20 text-white' : 'bg-black/5 dark:bg-white/10 text-black/50 dark:text-white/50' }}">{{ $statusCounts['all'] ?? $posts->total() }}</span>
                 </a>
                 <a href="{{ route('social-media.posts.index', ['status' => 'published', 'platform' => $platform]) }}"
-                    class="min-h-[38px] sm:min-h-0 sm:h-7 px-3.5 sm:px-3 rounded-full text-[12px] font-medium transition-colors flex items-center {{ $status === 'published' ? 'bg-[#34C759] text-white shadow-sm' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70 hover:bg-black/[0.08]' }}">
-                    {{ __('social_media.filter_status_published') }} ({{ $statusCounts['published'] ?? 0 }})
+                    class="h-7 px-3 rounded-full text-[12px] font-medium transition-colors flex items-center shrink-0 {{ $status === 'published' ? 'bg-[#34C759] text-white shadow-xs' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70 hover:bg-black/[0.08] dark:hover:bg-white/10' }}">
+                    <span>{{ __('social_media.filter_status_published') }}</span>
+                    <span class="ml-1.5 px-1.5 py-0.2 rounded-full text-[10.5px] {{ $status === 'published' ? 'bg-white/20 text-white' : 'bg-black/5 dark:bg-white/10 text-black/50 dark:text-white/50' }}">{{ $statusCounts['published'] ?? 0 }}</span>
                 </a>
                 <a href="{{ route('social-media.posts.index', ['status' => 'scheduled', 'platform' => $platform]) }}"
-                    class="min-h-[38px] sm:min-h-0 sm:h-7 px-3.5 sm:px-3 rounded-full text-[12px] font-medium transition-colors flex items-center {{ $status === 'scheduled' ? 'bg-[#5856D6] text-white shadow-sm' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70 hover:bg-black/[0.08]' }}">
-                    {{ __('social_media.filter_status_scheduled') }} ({{ $statusCounts['scheduled'] ?? 0 }})
+                    class="h-7 px-3 rounded-full text-[12px] font-medium transition-colors flex items-center shrink-0 {{ $status === 'scheduled' ? 'bg-[#5856D6] text-white shadow-xs' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70 hover:bg-black/[0.08] dark:hover:bg-white/10' }}">
+                    <span>{{ __('social_media.filter_status_scheduled') }}</span>
+                    <span class="ml-1.5 px-1.5 py-0.2 rounded-full text-[10.5px] {{ $status === 'scheduled' ? 'bg-white/20 text-white' : 'bg-black/5 dark:bg-white/10 text-black/50 dark:text-white/50' }}">{{ $statusCounts['scheduled'] ?? 0 }}</span>
                 </a>
                 <a href="{{ route('social-media.posts.index', ['status' => 'draft', 'platform' => $platform]) }}"
-                    class="min-h-[38px] sm:min-h-0 sm:h-7 px-3.5 sm:px-3 rounded-full text-[12px] font-medium transition-colors flex items-center gap-1.5 {{ $status === 'draft' ? 'bg-slate-700 dark:bg-slate-300 text-white dark:text-black shadow-sm font-semibold' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70 hover:bg-black/[0.08]' }}">
+                    class="h-7 px-3 rounded-full text-[12px] font-medium transition-colors flex items-center gap-1 shrink-0 {{ $status === 'draft' ? 'bg-slate-700 dark:bg-slate-300 text-white dark:text-black shadow-xs font-semibold' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70 hover:bg-black/[0.08] dark:hover:bg-white/10' }}">
                     <i data-lucide="file-edit" class="w-3 h-3"></i>
-                    <span>{{ __('social_media.filter_status_draft') }} ({{ $statusCounts['draft'] ?? 0 }})</span>
+                    <span>{{ __('social_media.filter_status_draft') }}</span>
+                    <span class="ml-1 px-1.5 py-0.2 rounded-full text-[10.5px] {{ $status === 'draft' ? 'bg-white/20 dark:bg-black/20 text-white dark:text-black' : 'bg-black/5 dark:bg-white/10 text-black/50 dark:text-white/50' }}">{{ $statusCounts['draft'] ?? 0 }}</span>
                 </a>
                 <a href="{{ route('social-media.posts.index', ['status' => 'pending_review', 'platform' => $platform]) }}"
-                    class="min-h-[38px] sm:min-h-0 sm:h-7 px-3.5 sm:px-3 rounded-full text-[12px] font-medium transition-colors flex items-center {{ $status === 'pending_review' ? 'bg-[#FF9500] text-white shadow-sm' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70 hover:bg-black/[0.08]' }}">
-                    {{ __('social_media.filter_status_pending_review') }} ({{ $statusCounts['pending_review'] ?? 0 }})
+                    class="h-7 px-3 rounded-full text-[12px] font-medium transition-colors flex items-center shrink-0 {{ $status === 'pending_review' ? 'bg-[#FF9500] text-white shadow-xs' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70 hover:bg-black/[0.08] dark:hover:bg-white/10' }}">
+                    <span>{{ __('social_media.filter_status_pending_review') }}</span>
+                    <span class="ml-1.5 px-1.5 py-0.2 rounded-full text-[10.5px] {{ $status === 'pending_review' ? 'bg-white/20 text-white' : 'bg-black/5 dark:bg-white/10 text-black/50 dark:text-white/50' }}">{{ $statusCounts['pending_review'] ?? 0 }}</span>
                 </a>
                 <a href="{{ route('social-media.posts.index', ['status' => 'failed', 'platform' => $platform]) }}"
-                    class="min-h-[38px] sm:min-h-0 sm:h-7 px-3.5 sm:px-3 rounded-full text-[12px] font-medium transition-colors flex items-center {{ $status === 'failed' ? 'bg-[#FF3B30] text-white shadow-sm' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70 hover:bg-black/[0.08]' }}">
-                    {{ __('social_media.filter_status_failed') }} ({{ $statusCounts['failed'] ?? 0 }})
+                    class="h-7 px-3 rounded-full text-[12px] font-medium transition-colors flex items-center shrink-0 {{ $status === 'failed' ? 'bg-[#FF3B30] text-white shadow-xs' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70 hover:bg-black/[0.08] dark:hover:bg-white/10' }}">
+                    <span>{{ __('social_media.filter_status_failed') }}</span>
+                    <span class="ml-1.5 px-1.5 py-0.2 rounded-full text-[10.5px] {{ $status === 'failed' ? 'bg-white/20 text-white' : 'bg-black/5 dark:bg-white/10 text-black/50 dark:text-white/50' }}">{{ $statusCounts['failed'] ?? 0 }}</span>
                 </a>
             </div>
 
-            <div class="flex items-center gap-2">
-                <span class="text-[12px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">{{ __('social_media.filter_platform_label') }}:</span>
+            <div class="flex items-center gap-2 shrink-0">
+                <span class="text-[11.5px] font-bold text-black/40 dark:text-white/40 uppercase tracking-wider flex items-center gap-1">
+                    <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+                    <span>Platform:</span>
+                </span>
                 <select onchange="window.location.href=this.value"
-                    class="min-h-[44px] sm:min-h-0 sm:h-8 px-3 rounded-[10px] text-[12.5px] font-medium bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
+                    class="h-8 px-3 rounded-[10px] text-[12px] font-medium bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#007AFF] cursor-pointer">
                     <option value="{{ route('social-media.posts.index', ['status' => $status, 'platform' => 'all']) }}" {{ $platform === 'all' ? 'selected' : '' }}>{{ __('social_media.filter_platform_all') }}</option>
                     <option value="{{ route('social-media.posts.index', ['status' => $status, 'platform' => 'facebook']) }}" {{ $platform === 'facebook' ? 'selected' : '' }}>Facebook</option>
                     <option value="{{ route('social-media.posts.index', ['status' => $status, 'platform' => 'instagram']) }}" {{ $platform === 'instagram' ? 'selected' : '' }}>Instagram</option>
@@ -162,11 +174,12 @@
                 <table class="w-full text-left text-[13px] border-collapse">
                     <thead>
                         <tr class="border-b border-black/5 dark:border-white/10 bg-[#F9F9FA] dark:bg-[#1E1E20] text-black/50 dark:text-white/50 text-[11.5px] font-semibold uppercase tracking-wider">
-                            <th class="px-4 py-3.5 min-w-[280px] max-w-[420px]">{{ __('social_media.table_header_content') ?? 'Media & Konten' }}</th>
-                            <th class="px-4 py-3.5 min-w-[170px]">{{ __('social_media.table_header_channel') ?? 'Saluran & Akun' }}</th>
-                            <th class="px-4 py-3.5 min-w-[130px] whitespace-nowrap">{{ __('social_media.table_header_status') ?? 'Status' }}</th>
-                            <th class="px-4 py-3.5 min-w-[140px] whitespace-nowrap">{{ __('social_media.table_header_metrics') ?? 'Metrik' }}</th>
-                            <th class="px-4 py-3.5 min-w-[130px] whitespace-nowrap">{{ __('social_media.table_header_time') ?? 'Waktu' }}</th>
+                            <th class="px-4 py-3.5 w-[110px] min-w-[100px] whitespace-nowrap">{{ __('social_media.table_header_post') }}</th>
+                            <th class="px-4 py-3.5 min-w-[240px] max-w-[420px]">{{ __('social_media.table_header_caption') }}</th>
+                            <th class="px-4 py-3.5 min-w-[160px]">{{ __('social_media.table_header_channel') }}</th>
+                            <th class="px-4 py-3.5 min-w-[130px] whitespace-nowrap">{{ __('social_media.table_header_status') }}</th>
+                            <th class="px-4 py-3.5 min-w-[140px] whitespace-nowrap">{{ __('social_media.table_header_metrics') }}</th>
+                            <th class="px-4 py-3.5 min-w-[130px] whitespace-nowrap">{{ __('social_media.table_header_time') }}</th>
                             <th class="text-right px-4 py-3.5 whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">Aksi</th>
                         </tr>
                     </thead>
@@ -191,17 +204,17 @@
                                 ];
                             @endphp
                             <tr id="post-card-{{ $post->id }}" class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors group">
-                                {{-- 1. Media & Konten --}}
-                                <td class="px-4 py-3.5 align-top min-w-[280px] max-w-[420px]">
-                                    <div class="flex items-start gap-3">
-                                        {{-- Thumbnail / Media Icon --}}
+                                {{-- 1. Postingan (Media Thumbnail & Tipe Format) --}}
+                                <td class="px-4 py-3.5 align-top w-[110px] min-w-[100px]">
+                                    <div class="flex flex-col items-start gap-1.5">
+                                        {{-- Thumbnail / Media Preview --}}
                                         @if(!empty($post->media_urls) && count($post->media_urls) > 0)
                                             <div class="relative w-12 h-12 rounded-[10px] overflow-hidden bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 shrink-0 cursor-pointer group/thumb shadow-xs"
                                                 @click="openPostManager({{ Js::from($postPayload) }})"
                                                 title="{{ __('social_media.preview_and_manage') }}">
                                                 @if(in_array($post->media_type, ['video', 'reels']))
                                                     <video src="{{ $post->media_urls[0] }}" preload="metadata" class="w-full h-full object-cover"></video>
-                                                    <div class="absolute inset-0 bg-black/25 flex items-center justify-center text-white">
+                                                    <div class="absolute inset-0 bg-black/30 flex items-center justify-center text-white">
                                                         <i data-lucide="play" class="w-3.5 h-3.5 fill-current"></i>
                                                     </div>
                                                 @else
@@ -209,133 +222,141 @@
                                                          onerror="this.onerror=null; this.src='https://placehold.co/120x120/1C1C1E/FFF?text=Media';">
                                                 @endif
                                                 @if(count($post->media_urls) > 1)
-                                                    <span class="absolute bottom-0.5 right-0.5 px-1 rounded-[3px] bg-black/75 text-[8.5px] font-bold text-white leading-tight">
+                                                    <span class="absolute bottom-0.5 right-0.5 px-1 rounded-[3px] bg-black/80 backdrop-blur-xs text-[8.5px] font-bold text-white leading-tight">
                                                         {{ count($post->media_urls) }}
                                                     </span>
                                                 @endif
                                             </div>
                                         @else
-                                            <div class="w-12 h-12 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 text-black/40 dark:text-white/40 flex items-center justify-center shrink-0">
+                                            <div class="w-12 h-12 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 text-black/40 dark:text-white/40 flex items-center justify-center shrink-0 cursor-pointer hover:bg-black/5 dark:hover:bg-white/8 transition-colors"
+                                                @click="openPostManager({{ Js::from($postPayload) }})"
+                                                title="{{ __('social_media.preview_and_manage') }}">
                                                 <i data-lucide="{{ $post->media_type === 'reels' ? 'film' : ($post->media_type === 'video' ? 'video' : ($post->media_type === 'image' ? 'image' : 'align-left')) }}" class="w-5 h-5"></i>
                                             </div>
                                         @endif
 
-                                        {{-- Caption & Format info --}}
-                                        <div class="min-w-0 flex-1 space-y-1">
-                                            <div class="flex items-center gap-1.5 flex-wrap">
-                                                @if($post->media_type === 'carousel')
-                                                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FF9500]/15 text-[#FF9500] inline-flex items-center gap-1">
-                                                        <i data-lucide="layers" class="w-2.5 h-2.5"></i>
-                                                        <span>{{ __('social_media.format_carousel') }}</span>
-                                                    </span>
-                                                @elseif($post->media_type === 'reels')
-                                                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#AF52DE]/15 text-[#AF52DE] inline-flex items-center gap-1">
-                                                        <i data-lucide="film" class="w-2.5 h-2.5"></i>
-                                                        <span>{{ __('social_media.format_reels') }}</span>
-                                                    </span>
-                                                @elseif($post->media_type === 'video')
-                                                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#007AFF]/15 text-[#007AFF] inline-flex items-center gap-1">
-                                                        <i data-lucide="video" class="w-2.5 h-2.5"></i>
-                                                        <span>{{ __('social_media.format_video') }}</span>
-                                                    </span>
-                                                @elseif($post->media_type === 'image')
-                                                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158] inline-flex items-center gap-1">
-                                                        <i data-lucide="image" class="w-2.5 h-2.5"></i>
-                                                        <span>{{ __('social_media.format_photo') }}</span>
-                                                    </span>
-                                                @else
-                                                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-black/5 dark:bg-white/10 text-black/60 dark:text-white/60 inline-flex items-center gap-1">
-                                                        <i data-lucide="align-left" class="w-2.5 h-2.5"></i>
-                                                        <span>{{ __('social_media.format_text') }}</span>
-                                                    </span>
-                                                @endif
-
-                                                @if(in_array($post->media_type, ['video', 'reels', 'image']) && $post->status === 'published' && empty($post->media_urls))
-                                                    <span class="px-1.5 py-0.5 rounded-full text-[9.5px] font-semibold bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] inline-flex items-center gap-0.5" title="{{ __('social_media.media_published_meta') }}">
-                                                        <i data-lucide="shield-check" class="w-2.5 h-2.5"></i>
-                                                        <span>{{ __('social_media.server_clean_badge') }}</span>
-                                                    </span>
-                                                @endif
-                                            </div>
-
-                                            <p class="text-[12.5px] font-medium text-black/85 dark:text-white/85 line-clamp-2 leading-snug whitespace-pre-wrap cursor-pointer hover:text-[#007AFF] transition-colors"
-                                                @click="openPostManager({{ Js::from($postPayload) }})">
-                                                {{ $post->content ?: '-' }}
-                                            </p>
-
-                                            @if($post->status === 'failed' && $post->error_message)
-                                                <div class="text-[11px] text-[#FF3B30] flex items-center gap-1 line-clamp-1" title="{{ $post->error_message }}">
-                                                    <i data-lucide="alert-triangle" class="w-3 h-3 shrink-0"></i>
-                                                    <span class="truncate">{{ $post->error_message }}</span>
-                                                </div>
+                                        {{-- Format Badge --}}
+                                        <div class="flex items-center gap-1 flex-wrap">
+                                            @if($post->media_type === 'carousel')
+                                                <span class="px-1.5 py-0.5 rounded-[5px] text-[10px] font-bold bg-[#FF9500]/15 text-[#FF9500] inline-flex items-center gap-1">
+                                                    <i data-lucide="layers" class="w-2.5 h-2.5"></i>
+                                                    <span>Carousel</span>
+                                                </span>
+                                            @elseif($post->media_type === 'reels')
+                                                <span class="px-1.5 py-0.5 rounded-[5px] text-[10px] font-bold bg-[#AF52DE]/15 text-[#AF52DE] inline-flex items-center gap-1">
+                                                    <i data-lucide="film" class="w-2.5 h-2.5"></i>
+                                                    <span>Reels</span>
+                                                </span>
+                                            @elseif($post->media_type === 'video')
+                                                <span class="px-1.5 py-0.5 rounded-[5px] text-[10px] font-bold bg-[#007AFF]/15 text-[#007AFF] inline-flex items-center gap-1">
+                                                    <i data-lucide="video" class="w-2.5 h-2.5"></i>
+                                                    <span>Video</span>
+                                                </span>
+                                            @elseif($post->media_type === 'image')
+                                                <span class="px-1.5 py-0.5 rounded-[5px] text-[10px] font-bold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158] inline-flex items-center gap-1">
+                                                    <i data-lucide="image" class="w-2.5 h-2.5"></i>
+                                                    <span>Foto</span>
+                                                </span>
+                                            @else
+                                                <span class="px-1.5 py-0.5 rounded-[5px] text-[10px] font-bold bg-black/5 dark:bg-white/10 text-black/60 dark:text-white/60 inline-flex items-center gap-1">
+                                                    <i data-lucide="align-left" class="w-2.5 h-2.5"></i>
+                                                    <span>Teks</span>
+                                                </span>
                                             @endif
 
-                                            @if(!empty($post->risk_flags) && in_array('unregistered_bank_account_detected', $post->risk_flags, true))
-                                                <div class="text-[11px] text-[#FF9500] flex items-center gap-1 line-clamp-1">
-                                                    <i data-lucide="shield-alert" class="w-3 h-3 shrink-0"></i>
-                                                    <span>{{ __('social_media.anti_fraud_warning_bank') }}</span>
-                                                </div>
-                                            @endif
-
-                                            @if(($post->approval_status === 'rejected' || $post->status === 'rejected') && $post->rejection_reason)
-                                                <div class="text-[11px] text-[#FF3B30] flex items-center gap-1 line-clamp-1" title="{{ $post->rejection_reason }}">
-                                                    <i data-lucide="x-circle" class="w-3 h-3 shrink-0"></i>
-                                                    <span class="truncate">{{ $post->rejection_reason }}</span>
-                                                </div>
+                                            @if(in_array($post->media_type, ['video', 'reels', 'image']) && $post->status === 'published' && empty($post->media_urls))
+                                                <span class="px-1 py-0.5 rounded-[4px] text-[9px] font-semibold bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] inline-flex items-center gap-0.5" title="{{ __('social_media.media_published_meta') }}">
+                                                    <i data-lucide="shield-check" class="w-2.5 h-2.5"></i>
+                                                    <span>Clean</span>
+                                                </span>
                                             @endif
                                         </div>
                                     </div>
                                 </td>
 
-                                {{-- 2. Saluran & Akun --}}
-                                <td class="px-4 py-3.5 align-top min-w-[170px]">
-                                    <div class="flex items-center gap-2">
-                                        <div class="w-6 h-6 rounded-full flex items-center justify-center text-white text-[10px] font-bold shrink-0 shadow-xs
-                                            {{ $post->platform === 'facebook' ? 'bg-[#1877F2]' : ($post->platform === 'instagram' ? 'bg-gradient-to-tr from-[#F58529] via-[#DD2A7B] to-[#8134AF]' : ($post->platform === 'tiktok' ? 'bg-black dark:bg-white dark:text-black' : ($post->platform === 'linkedin' ? 'bg-[#0A66C2]' : 'bg-black/10 text-black dark:text-white'))) }}">
-                                            <x-social-icon :platform="$post->platform" class="w-3.5 h-3.5" />
-                                        </div>
-                                        <div class="min-w-0">
-                                            <div class="text-[12.5px] font-semibold text-black dark:text-white truncate">
-                                                {{ $post->account ? $post->account->account_name : ucfirst($post->platform) }}
+                                {{-- 2. Caption (Teks & Catatan/Alert) --}}
+                                <td class="px-4 py-3.5 align-top min-w-[240px] max-w-[420px]">
+                                    <div class="space-y-1.5">
+                                        <p class="text-[13px] font-medium text-black/90 dark:text-white/90 line-clamp-3 leading-relaxed whitespace-pre-wrap cursor-pointer hover:text-[#007AFF] transition-colors"
+                                            @click="openPostManager({{ Js::from($postPayload) }})"
+                                            title="{{ __('social_media.preview_and_manage') }}">
+                                            {{ $post->content ?: '-' }}
+                                        </p>
+
+                                        @if($post->status === 'failed' && $post->error_message)
+                                            <div class="inline-flex items-center gap-1 px-2 py-0.5 rounded-[5px] bg-[#FF3B30]/10 text-[11px] font-medium text-[#FF3B30] max-w-full" title="{{ $post->error_message }}">
+                                                <i data-lucide="alert-triangle" class="w-3 h-3 shrink-0"></i>
+                                                <span class="truncate">{{ $post->error_message }}</span>
                                             </div>
-                                            <div class="text-[10.5px] text-black/40 dark:text-white/40 capitalize">
-                                                {{ $post->platform }}
+                                        @endif
+
+                                        @if(!empty($post->risk_flags) && in_array('unregistered_bank_account_detected', $post->risk_flags, true))
+                                            <div class="inline-flex items-center gap-1 px-2 py-0.5 rounded-[5px] bg-[#FF9500]/10 text-[11px] font-medium text-[#FF9500] max-w-full">
+                                                <i data-lucide="shield-alert" class="w-3 h-3 shrink-0"></i>
+                                                <span>{{ __('social_media.anti_fraud_warning_bank') }}</span>
                                             </div>
-                                        </div>
+                                        @endif
+
+                                        @if(($post->approval_status === 'rejected' || $post->status === 'rejected') && $post->rejection_reason)
+                                            <div class="inline-flex items-center gap-1 px-2 py-0.5 rounded-[5px] bg-[#FF3B30]/10 text-[11px] font-medium text-[#FF3B30] max-w-full" title="{{ $post->rejection_reason }}">
+                                                <i data-lucide="x-circle" class="w-3 h-3 shrink-0"></i>
+                                                <span class="truncate">{{ $post->rejection_reason }}</span>
+                                            </div>
+                                        @endif
                                     </div>
-
-                                    @if($post->targets->isNotEmpty())
-                                        <div class="flex flex-wrap gap-1 mt-2">
-                                            @foreach($post->targets as $target)
-                                                <div class="px-1.5 py-0.5 rounded-[5px] text-[10px] font-semibold flex items-center gap-1 border
-                                                    {{ $target->status === 'published' ? 'bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] border-[#34C759]/20' : ($target->status === 'failed' ? 'bg-[#FF3B30]/10 text-[#FF3B30] border-[#FF3B30]/20' : ($target->status === 'processing' ? 'bg-[#007AFF]/10 text-[#007AFF] border-[#007AFF]/20' : 'bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 border-black/10')) }}">
-                                                    <span class="capitalize">{{ $target->channel }}</span>
-                                                    @if($target->status === 'published')
-                                                        <i data-lucide="check" class="w-2.5 h-2.5 text-[#34C759]"></i>
-                                                    @elseif($target->status === 'failed')
-                                                        <form method="POST" action="{{ route('social-media.targets.retry', $target) }}" class="inline" x-data="{ isSubmitting: false }" @submit="if(isSubmitting) { $event.preventDefault(); return false; } isSubmitting = true">
-                                                            @csrf
-                                                            <button type="submit" :disabled="isSubmitting" class="text-[#FF3B30] hover:underline cursor-pointer inline-flex items-center" title="{{ __('social_media.retry_target_title') }}">
-                                                                <i data-lucide="refresh-cw" class="w-2.5 h-2.5" :class="{ 'animate-spin': isSubmitting }"></i>
-                                                            </button>
-                                                        </form>
-                                                    @elseif($target->status === 'processing')
-                                                        <i data-lucide="loader-2" class="w-2.5 h-2.5 animate-spin"></i>
-                                                    @endif
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    @endif
-
-                                    @if($post->isPartiallyFailed())
-                                        <div class="mt-1 text-[10.5px] font-semibold text-[#FF9500] flex items-center gap-1">
-                                            <i data-lucide="alert-circle" class="w-3 h-3 shrink-0"></i>
-                                            <span>{{ __('social_media.status_partially_failed') }}</span>
-                                        </div>
-                                    @endif
                                 </td>
 
-                                {{-- 3. Status --}}
+                                {{-- 3. Saluran & Akun --}}
+                                <td class="px-4 py-3.5 align-top min-w-[160px]">
+                                    <div class="space-y-1.5">
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-6 h-6 rounded-full flex items-center justify-center text-white text-[10px] font-bold shrink-0 shadow-xs
+                                                {{ $post->platform === 'facebook' ? 'bg-[#1877F2]' : ($post->platform === 'instagram' ? 'bg-gradient-to-tr from-[#F58529] via-[#DD2A7B] to-[#8134AF]' : ($post->platform === 'tiktok' ? 'bg-black dark:bg-white dark:text-black' : ($post->platform === 'linkedin' ? 'bg-[#0A66C2]' : 'bg-black/10 text-black dark:text-white'))) }}">
+                                                <x-social-icon :platform="$post->platform" class="w-3.5 h-3.5" />
+                                            </div>
+                                            <div class="min-w-0">
+                                                <div class="text-[12.5px] font-semibold text-black dark:text-white truncate">
+                                                    {{ $post->account ? $post->account->account_name : ucfirst($post->platform) }}
+                                                </div>
+                                                <div class="text-[10.5px] text-black/40 dark:text-white/40 capitalize leading-none mt-0.5">
+                                                    {{ $post->platform }}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        @if($post->targets->isNotEmpty())
+                                            <div class="flex flex-wrap gap-1">
+                                                @foreach($post->targets as $target)
+                                                    <div class="px-1.5 py-0.5 rounded-[5px] text-[10px] font-semibold flex items-center gap-1 border
+                                                        {{ $target->status === 'published' ? 'bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] border-[#34C759]/20' : ($target->status === 'failed' ? 'bg-[#FF3B30]/10 text-[#FF3B30] border-[#FF3B30]/20' : ($target->status === 'processing' ? 'bg-[#007AFF]/10 text-[#007AFF] border-[#007AFF]/20' : 'bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 border-black/10')) }}">
+                                                        <span class="capitalize">{{ $target->channel }}</span>
+                                                        @if($target->status === 'published')
+                                                            <i data-lucide="check" class="w-2.5 h-2.5 text-[#34C759]"></i>
+                                                        @elseif($target->status === 'failed')
+                                                            <form method="POST" action="{{ route('social-media.targets.retry', $target) }}" class="inline" x-data="{ isSubmitting: false }" @submit="if(isSubmitting) { $event.preventDefault(); return false; } isSubmitting = true">
+                                                                @csrf
+                                                                <button type="submit" :disabled="isSubmitting" class="text-[#FF3B30] hover:underline cursor-pointer inline-flex items-center" title="{{ __('social_media.retry_target_title') }}">
+                                                                    <i data-lucide="refresh-cw" class="w-2.5 h-2.5" :class="{ 'animate-spin': isSubmitting }"></i>
+                                                                </button>
+                                                            </form>
+                                                        @elseif($target->status === 'processing')
+                                                            <i data-lucide="loader-2" class="w-2.5 h-2.5 animate-spin"></i>
+                                                        @endif
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        @endif
+
+                                        @if($post->isPartiallyFailed())
+                                            <div class="text-[10.5px] font-semibold text-[#FF9500] flex items-center gap-1">
+                                                <i data-lucide="alert-circle" class="w-3 h-3 shrink-0"></i>
+                                                <span>{{ __('social_media.status_partially_failed') }}</span>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </td>
+
+                                {{-- 4. Status --}}
                                 <td class="px-4 py-3.5 align-top whitespace-nowrap min-w-[130px]">
                                     @if($post->status === 'published')
                                         <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158] inline-flex items-center gap-1.5">
@@ -379,9 +400,9 @@
                                     @endif
                                 </td>
 
-                                {{-- 4. Metrik Performa --}}
+                                {{-- 5. Metrik Performa --}}
                                 <td class="px-4 py-3.5 align-top whitespace-nowrap min-w-[140px]">
-                                    <div class="flex items-center gap-3 text-[12px] font-semibold text-black/70 dark:text-white/70 tabular-nums">
+                                    <div class="flex items-center gap-3 text-[12px] font-semibold text-black/75 dark:text-white/75 tabular-nums">
                                         <span class="inline-flex items-center gap-1" title="{{ __('social_media.impressions_tooltip') }}">
                                             <i data-lucide="eye" class="w-3.5 h-3.5 text-black/40 dark:text-white/40"></i>
                                             <span>{{ number_format($post->getMetric('impressions')) }}</span>
@@ -397,7 +418,7 @@
                                     </div>
                                 </td>
 
-                                {{-- 5. Waktu --}}
+                                {{-- 6. Waktu --}}
                                 <td class="px-4 py-3.5 align-top whitespace-nowrap min-w-[130px]">
                                     <div class="text-[12.5px] font-medium text-black dark:text-white">
                                         @if($post->status === 'scheduled' && $post->scheduled_at)
@@ -413,7 +434,7 @@
                                     </div>
                                 </td>
 
-                                {{-- 6. Aksi (Sticky Frozen Right Column) --}}
+                                {{-- 7. Aksi (Sticky Frozen Right Column) --}}
                                 <td class="px-4 py-3.5 align-top text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)] transition-colors">
                                     <div class="flex items-center justify-end gap-1.5">
                                         {{-- Maker-Checker Approve & Reject --}}
