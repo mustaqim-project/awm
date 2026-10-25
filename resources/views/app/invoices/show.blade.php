@@ -40,7 +40,7 @@
                 <span>{{ __('sales.invoices.btn_list') }}</span>
             </a>
 
-            {{-- Tombol Edit Faktur (tampil saat belum lunas dan belum ada pembayaran, bukan void) --}}
+            {{-- Tombol Edit Faktur (kondisi: bukan paid/void & paid_amount <= 0) --}}
             @if(!in_array($invoice->status, ['paid', 'void'], true) && (float) $invoice->paid_amount <= 0 && (\App\Support\Context::hasPermission('invoices.edit') || \App\Support\Context::hasPermission('invoices.create')))
             <a href="{{ route('invoices.edit', $invoice->id) }}" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-[#FF9500] dark:text-[#FF9F0A] bg-[#FF9500]/10 dark:bg-[#FF9500]/20 hover:bg-[#FF9500]/15 dark:hover:bg-[#FF9500]/30 active:scale-[0.97] transition-all flex items-center justify-center gap-1.5">
                 <i data-lucide="edit-3" class="w-4 h-4"></i>
@@ -95,7 +95,7 @@
                 <span>{{ __('sales.invoices.btn_print_a4') }}</span>
             </a>
 
-            {{-- Tombol Void (hanya tampil saat bukan draft/void dan belum ada pembayaran) --}}
+            {{-- Tombol Void (kondisi: bukan draft/void & paid_amount == 0) --}}
             @if(!in_array($invoice->status, ['draft','void']) && $invoice->paid_amount == 0 && (\App\Support\Context::hasPermission('invoices.delete') || \App\Support\Context::hasPermission('invoices.edit')))
             <button type="button" @click="confirmVoidModalOpen = true" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5">
                 <i data-lucide="ban" class="w-4 h-4"></i>
@@ -106,7 +106,7 @@
             </form>
             @endif
 
-            {{-- Tombol Hapus Draf (hanya tampil saat status draft dan belum ada pembayaran) --}}
+            {{-- Tombol Hapus Draf (kondisi: status draft & paid_amount <= 0) --}}
             @if($invoice->status === 'draft' && (float) $invoice->paid_amount <= 0 && \App\Support\Context::hasPermission('invoices.delete'))
             <button type="button" @click="confirmDeleteModalOpen = true" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5 cursor-pointer">
                 <i data-lucide="trash-2" class="w-4 h-4 text-[#FF3B30]"></i>
@@ -663,7 +663,7 @@
                             {{ __('sales.invoices.btn_cancel') }}
                         </button>
                         <button type="button" @click="submitDelete()" class="min-h-[44px] py-3 text-[#FF3B30] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
-                            Hapus
+                            {{ __('sales.invoices.btn_delete') }}
                         </button>
                     </div>
                 </div>

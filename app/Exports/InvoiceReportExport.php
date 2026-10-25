@@ -6,6 +6,7 @@ namespace App\Exports;
 
 use App\Models\Business;
 use App\Models\Invoice;
+use App\Support\Security\CsvSanitizer;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -200,12 +201,12 @@ final class InvoiceReportExport
         $dataStartRow = $r;
         foreach ($invoices as $idx => $inv) {
             $sheet->setCellValue("B{$r}", $idx + 1);
-            $sheet->setCellValue("C{$r}", $inv->invoice_number);
+            $sheet->setCellValue("C{$r}", CsvSanitizer::sanitize((string) $inv->invoice_number));
             $sheet->setCellValue("D{$r}", $inv->invoice_date?->format('Y-m-d') ?? '-');
             $sheet->setCellValue("E{$r}", $inv->due_date?->format('Y-m-d') ?? '-');
-            $sheet->setCellValue("F{$r}", $inv->customer?->name ?? ($inv->recipient_name ?: '-'));
-            $sheet->setCellValue("G{$r}", $inv->customer?->company_name ?? '-');
-            $sheet->setCellValue("H{$r}", $inv->purchaseOrder?->po_number ?? '-');
+            $sheet->setCellValue("F{$r}", CsvSanitizer::sanitize((string) ($inv->customer?->name ?? ($inv->recipient_name ?: '-'))));
+            $sheet->setCellValue("G{$r}", CsvSanitizer::sanitize((string) ($inv->customer?->company_name ?? '-')));
+            $sheet->setCellValue("H{$r}", CsvSanitizer::sanitize((string) ($inv->purchaseOrder?->po_number ?? '-')));
             $sheet->setCellValue("I{$r}", strtoupper((string) $inv->status));
             $sheet->setCellValue("J{$r}", (float) $inv->subtotal);
             $sheet->setCellValue("K{$r}", (float) $inv->discount_amount);
@@ -216,7 +217,7 @@ final class InvoiceReportExport
             $sheet->setCellValue("P{$r}", (float) $inv->balance_due);
             $sheet->setCellValue("Q{$r}", (float) $inv->total_hpp_cost);
             $sheet->setCellValue("R{$r}", (float) $inv->total_gross_profit);
-            $sheet->setCellValue("S{$r}", $inv->payment_terms ?? '-');
+            $sheet->setCellValue("S{$r}", CsvSanitizer::sanitize((string) ($inv->payment_terms ?? '-')));
 
             $sheet->getStyle("J{$r}:R{$r}")->getNumberFormat()->setFormatCode('Rp #,##0');
             $sheet->getStyle("B{$r}:E{$r}")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);

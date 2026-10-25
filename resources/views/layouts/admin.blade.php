@@ -832,13 +832,12 @@
 
         <!-- Admin Profile Footer Bento Inset -->
         <div class="p-3 border-t border-black/[0.04] dark:border-white/[0.06]">
-            <div
-                class="flex items-center justify-between gap-2 p-2 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.04] dark:border-white/[0.06]">
-                <a href="{{ route('admin.profile.index') }}"
-                    class="flex items-center gap-2.5 flex-1 min-w-0 rounded-[10px] hover:bg-black/5 dark:hover:bg-white/10 p-1 transition-colors group"
-                    title="Kelola Profil & Ganti Kata Sandi">
+            <a href="{{ route('admin.profile.index') }}"
+                class="flex items-center justify-between gap-2.5 p-2 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.04] dark:border-white/[0.06] hover:bg-black/5 dark:hover:bg-white/10 active:scale-[0.99] transition-all group"
+                title="Kelola Profil & Ganti Kata Sandi">
+                <div class="flex items-center gap-2.5 min-w-0 flex-1">
                     <div
-                        class="w-8 h-8 rounded-[9px] bg-gradient-to-br from-[#007AFF] to-[#5856D6] text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-xs">
+                        class="w-8 h-8 rounded-[9px] bg-[#007AFF]/15 text-[#007AFF] dark:text-[#0A84FF] font-bold text-xs flex items-center justify-center shrink-0 shadow-xs group-hover:scale-105 transition-transform">
                         {{ strtoupper(substr(Auth::guard('admin')->user()->name ?? 'A', 0, 1)) }}
                     </div>
                     <div class="truncate flex-1 min-w-0 text-left">
@@ -849,16 +848,9 @@
                             {{ Auth::guard('admin')->user()->email ?? '' }}
                         </div>
                     </div>
-                </a>
-
-                <form method="POST" action="{{ route('admin.logout') }}">
-                    @csrf
-                    <button type="submit" title="Keluar dari Admin Console"
-                        class="w-8 h-8 rounded-[9px] text-black/40 dark:text-white/40 hover:text-[#FF3B30] hover:bg-[#FF3B30]/10 active:scale-95 transition-all flex items-center justify-center shrink-0">
-                        <i data-lucide="log-out" class="w-4 h-4" stroke-width="2"></i>
-                    </button>
-                </form>
-            </div>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-black/30 dark:text-white/30 group-hover:text-[#007AFF] group-hover:translate-x-0.5 transition-all shrink-0"></i>
+            </a>
         </div>
     </aside>
 
@@ -958,6 +950,17 @@
                 <i data-lucide="external-link" class="w-4 h-4" stroke-width="2"></i>
                 <span class="hidden lg:inline">Website Publik</span>
             </a>
+
+            <!-- Logout Button (Pindah dari Sidebar ke Topbar) -->
+            <form method="POST" action="{{ route('admin.logout') }}" class="inline">
+                @csrf
+                <button type="submit" title="Keluar dari Admin Console"
+                    class="h-10 px-3 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.04] dark:border-white/[0.06] text-[13px] font-semibold text-black/70 dark:text-white/70 hover:text-[#FF3B30] dark:hover:text-[#FF453A] hover:bg-[#FF3B30]/10 dark:hover:bg-[#FF3B30]/15 hover:border-[#FF3B30]/20 active:scale-95 transition-all flex items-center gap-1.5"
+                    aria-label="Keluar">
+                    <i data-lucide="log-out" class="w-4 h-4" stroke-width="1.8"></i>
+                    <span class="hidden sm:inline">Keluar</span>
+                </button>
+            </form>
         </div>
     </header>
 

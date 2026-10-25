@@ -8,6 +8,7 @@ use App\Domain\Commerce\InvoiceNumberGenerator;
 use App\Domain\Commerce\InvoiceService;
 use App\Exports\InvoiceReportExport;
 use App\Http\Controllers\Controller;
+use App\Models\AuditLog;
 use App\Models\Customer;
 use App\Models\Invoice;
 use App\Models\InvoicePayment;
@@ -15,14 +16,49 @@ use App\Models\Product;
 use App\Models\PurchaseOrder;
 use App\Models\Unit;
 use App\Support\Context;
+use App\Support\Security\CsvSanitizer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-final class InvoiceWebController extends Controller
+final class InvoiceWebController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.permission:invoices.view', only: [
+                'index',
+                'show',
+                'print',
+                'pdf',
+                'sendTermReminder',
+            ]),
+            new Middleware('require.permission:invoices.create', only: [
+                'create',
+                'store',
+                'confirm',
+            ]),
+            new Middleware('require.permission:invoices.edit', only: [
+                'edit',
+                'update',
+                'void',
+            ]),
+            new Middleware('require.permission:invoices.record_payment', only: [
+                'recordPayment',
+            ]),
+            new Middleware('require.permission:invoices.export', only: [
+                'exportExcel',
+            ]),
+            new Middleware('require.permission:invoices.delete', only: [
+                'destroy',
+            ]),
+        ];
+    }
+
     public function __construct(
         private readonly InvoiceService $invoiceService = new InvoiceService,
         private readonly InvoiceNumberGenerator $numberGenerator = new InvoiceNumberGenerator
@@ -167,6 +203,25 @@ final class InvoiceWebController extends Controller
 
         $invoice = $this->invoiceService->createFromProducts($business, $customer, $validated['items'], $validated);
 
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => auth()->id(),
+            'auditable_type' => Invoice::class,
+            'auditable_id' => $invoice->id,
+            'action' => 'invoices.invoice_created',
+            'risk_level' => AuditLog::RISK_LOW,
+            'notes' => "Menerbitkan faktur {$invoice->invoice_number} senilai " . number_format((float) $invoice->total_amount, 0, ',', '.'),
+            'new_values' => [
+                'invoice_number' => $invoice->invoice_number,
+                'total_amount' => (float) $invoice->total_amount,
+                'customer_id' => $invoice->customer_id,
+                'status' => $invoice->status,
+            ],
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'created_at' => now(),
+        ]);
+
         return redirect()->route('invoices.show', $invoice->id)->with('success', "Faktur {$invoice->invoice_number} berhasil diterbitkan.");
     }
 
@@ -253,6 +308,24 @@ final class InvoiceWebController extends Controller
 
         $this->invoiceService->updateDraft($invoice, $customer, $validated['items'], $validated);
 
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => auth()->id(),
+            'auditable_type' => Invoice::class,
+            'auditable_id' => $invoice->id,
+            'action' => 'invoices.invoice_updated',
+            'risk_level' => AuditLog::RISK_LOW,
+            'notes' => "Memperbarui draf faktur {$invoice->invoice_number}",
+            'new_values' => [
+                'invoice_number' => $invoice->invoice_number,
+                'total_amount' => (float) $invoice->total_amount,
+                'customer_id' => $invoice->customer_id,
+            ],
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'created_at' => now(),
+        ]);
+
         return redirect()->route('invoices.show', $invoice->id)->with('success', "Draf Faktur {$invoice->invoice_number} berhasil diperbarui.");
     }
 
@@ -296,6 +369,25 @@ final class InvoiceWebController extends Controller
                 'created_by' => auth()->id(),
             ]
         );
+
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => auth()->id(),
+            'auditable_type' => Invoice::class,
+            'auditable_id' => $invoice->id,
+            'action' => 'invoices.payment_recorded',
+            'risk_level' => AuditLog::RISK_MEDIUM,
+            'notes' => "Penerimaan pembayaran faktur {$invoice->invoice_number} sebesar Rp " . number_format((float) $validated['amount'], 0, ',', '.') . " via {$validated['payment_method']}",
+            'new_values' => [
+                'amount' => (float) $validated['amount'],
+                'payment_method' => $validated['payment_method'],
+                'reference_number' => $validated['reference_number'] ?? null,
+                'payment_date' => $validated['payment_date'],
+            ],
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'created_at' => now(),
+        ]);
 
         return back()->with('success', "Pembayaran sebesar Rp " . number_format((float) $validated['amount'], 0, ',', '.') . " berhasil dicatat.");
     }
@@ -389,7 +481,7 @@ final class InvoiceWebController extends Controller
 
             $no = 1;
             foreach ($invoices as $inv) {
-                fputcsv($file, [
+                fputcsv($file, CsvSanitizer::sanitizeRow([
                     $no++,
                     $inv->invoice_number,
                     $inv->sender_name ?: $business->name,
@@ -410,7 +502,7 @@ final class InvoiceWebController extends Controller
                     round((float) $inv->total_hpp_cost),
                     round((float) $inv->total_gross_profit),
                     $inv->payment_terms ?? '-',
-                ]);
+                ]));
             }
 
             fclose($file);
@@ -436,6 +528,26 @@ final class InvoiceWebController extends Controller
         }
 
         $invNumber = $invoice->invoice_number;
+        $invId = $invoice->id;
+        $totalAmt = (float) $invoice->total_amount;
+
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => auth()->id(),
+            'auditable_type' => Invoice::class,
+            'auditable_id' => $invId,
+            'action' => 'invoices.invoice_deleted',
+            'risk_level' => AuditLog::RISK_HIGH,
+            'notes' => "Menghapus draf faktur {$invNumber}",
+            'old_values' => [
+                'invoice_number' => $invNumber,
+                'total_amount' => $totalAmt,
+            ],
+            'ip_address' => request()->ip(),
+            'user_agent' => request()->userAgent(),
+            'created_at' => now(),
+        ]);
+
         $invoice->delete();
 
         return redirect()->route('invoices.index')->with('success', "Draf Faktur {$invNumber} berhasil dihapus.");
@@ -453,6 +565,23 @@ final class InvoiceWebController extends Controller
 
         try {
             $this->invoiceService->confirmAndRelease($invoice, $locationId);
+
+            AuditLog::create([
+                'business_id' => $business->id,
+                'user_id' => auth()->id(),
+                'auditable_type' => Invoice::class,
+                'auditable_id' => $invoice->id,
+                'action' => 'invoices.invoice_confirmed',
+                'risk_level' => AuditLog::RISK_MEDIUM,
+                'notes' => "Konfirmasi dan rilis faktur {$invoice->invoice_number}. Pengurangan stok dan pencatatan jurnal piutang.",
+                'new_values' => [
+                    'status' => $invoice->status,
+                    'location_id' => $locationId,
+                ],
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+                'created_at' => now(),
+            ]);
 
             return back()->with('success', "Faktur {$invoice->invoice_number} berhasil dikonfirmasi & dirilis. Stok barang otomatis terpotong dan jurnal piutang telah tercatat.");
         } catch (\App\Domain\Inventory\Exceptions\InsufficientStockException $e) {
@@ -476,6 +605,23 @@ final class InvoiceWebController extends Controller
 
         try {
             $this->invoiceService->voidInvoice($invoice, $reason);
+
+            AuditLog::create([
+                'business_id' => $business->id,
+                'user_id' => auth()->id(),
+                'auditable_type' => Invoice::class,
+                'auditable_id' => $invoice->id,
+                'action' => 'invoices.invoice_voided',
+                'risk_level' => AuditLog::RISK_HIGH,
+                'notes' => "Membatalkan faktur {$invoice->invoice_number}. Alasan: " . ($reason ?: 'Tidak ada keterangan'),
+                'new_values' => [
+                    'status' => Invoice::STATUS_VOID,
+                    'void_reason' => $reason,
+                ],
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+                'created_at' => now(),
+            ]);
 
             return back()->with('success', "Faktur {$invoice->invoice_number} telah dibatalkan (VOID) dan stok barang telah dikembalikan.");
         } catch (\Throwable $e) {
