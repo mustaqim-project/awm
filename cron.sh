@@ -49,10 +49,11 @@ if [ -d "$SCRIPT_DIR/.git" ]; then
     git -C "$SCRIPT_DIR" pull origin main >> "$SCRIPT_DIR/storage/logs/git_pull.log" 2>&1 || true
 fi
 
-# Auto-purge stale route and config cache files so newly pulled code takes effect immediately
+# Auto-purge stale route, config, and view cache files so newly pulled code takes effect immediately
 rm -f "$SCRIPT_DIR/bootstrap/cache/routes"*.php 2>/dev/null || true
 "$PHP_BIN" artisan route:clear >> /dev/null 2>&1 || true
 "$PHP_BIN" artisan config:clear >> /dev/null 2>&1 || true
+"$PHP_BIN" artisan view:clear >> /dev/null 2>&1 || true
 
 # Auto-apply pending database migrations if any
 "$PHP_BIN" artisan migrate --force >> "$SCRIPT_DIR/storage/logs/migrations.log" 2>&1
