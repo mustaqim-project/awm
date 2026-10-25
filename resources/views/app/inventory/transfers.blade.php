@@ -106,12 +106,12 @@
                         <x-table-sort-th :col="3" type="string" title="Pengirim / Penerima" />
                         <x-table-sort-th :col="4" type="number" title="Item" align="center" />
                         <x-table-sort-th :col="5" type="string" title="Status" align="center" />
-                        <th class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 text-right">Aksi</th>
+                        <th class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('common.actions') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                     @forelse($transfers as $tr)
-                    <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
+                    <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors group">
                         <td class="py-3.5 px-4" data-sort-value="{{ $tr->transfer_number }}">
                             <div class="font-bold text-black dark:text-white tabular-nums text-[13px]">#{{ $tr->transfer_number }}</div>
                             <div class="text-[11px] text-black/45 dark:text-white/45 mt-0.5">{{ $tr->notes ?? 'Mutasi internal' }}</div>
@@ -144,19 +144,23 @@
                                 </span>
                             @endif
                         </td>
-                        <td class="py-3.5 px-4 text-right">
-                            @if($tr->status !== 'received')
-                                @if(\App\Support\Context::hasPermission('inventory.manage'))
-                                <button type="button" @click="openReceive('{{ $tr->id }}', '{{ $tr->transfer_number }}')" class="min-h-[44px] sm:min-h-0 h-8 px-3 rounded-lg text-[12px] font-semibold text-white bg-[#007AFF] hover:bg-[#0062CC] active:scale-[0.98] transition-all cursor-pointer">
-                                    Konfirmasi Terima
-                                </button>
-                                <form id="form-receive-{{ $tr->id }}" action="{{ route('inventory.transfers.receive', $tr->id) }}" method="POST" class="hidden">
-                                    @csrf
-                                </form>
+                        <td class="py-3.5 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                            <div class="flex items-center justify-end gap-1">
+                                @if($tr->status !== 'received')
+                                    @if(\App\Support\Context::hasPermission('inventory.manage'))
+                                    <button type="button" @click="openReceive('{{ $tr->id }}', '{{ $tr->transfer_number }}')" class="w-8 h-8 rounded-[8px] bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="Konfirmasi Terima" aria-label="Konfirmasi Terima">
+                                        <i data-lucide="check" class="w-4 h-4"></i>
+                                    </button>
+                                    <form id="form-receive-{{ $tr->id }}" action="{{ route('inventory.transfers.receive', $tr->id) }}" method="POST" class="hidden">
+                                        @csrf
+                                    </form>
+                                    @endif
+                                @else
+                                    <span class="inline-flex items-center justify-center w-8 h-8 rounded-[8px] text-[#34C759] bg-[#34C759]/10" title="Selesai">
+                                        <i data-lucide="check-check" class="w-4 h-4"></i>
+                                    </span>
                                 @endif
-                            @else
-                                <span class="text-black/40 dark:text-white/40 text-[12px]">Selesai</span>
-                            @endif
+                            </div>
                         </td>
                     </tr>
                     @empty

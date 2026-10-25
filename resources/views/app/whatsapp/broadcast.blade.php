@@ -146,12 +146,12 @@
                                 <th class="px-4 py-3 text-center">{{ __('whatsapp.col_sent') }}</th>
                                 <th class="px-4 py-3 text-center">{{ __('whatsapp.status_label') }}</th>
                                 <th class="px-4 py-3">{{ __('whatsapp.sent_date') }}</th>
-                                <th class="px-5 py-3 text-right">{{ __('whatsapp.action_label') }}</th>
+                                <th class="px-5 py-3 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('whatsapp.action_label') }}</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                             @foreach ($campaigns as $campaign)
-                                <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
+                                <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors group">
                                     <td class="px-5 py-3.5">
                                         <div class="font-bold text-black dark:text-white">{{ $campaign->title }}</div>
                                         <div class="text-black/50 dark:text-white/50 truncate max-w-xs mt-0.5 text-[12px]">
@@ -215,12 +215,15 @@
                                         class="px-4 py-3.5 text-black/50 dark:text-white/50 text-[12px] tabular-nums whitespace-nowrap">
                                         {{ $campaign->created_at->format('d/m/Y H:i') }}
                                     </td>
-                                    <td class="px-5 py-3.5 text-right">
-                                        <a href="{{ route('whatsapp.broadcast.show', $campaign) }}"
-                                            class="min-h-[36px] sm:min-h-[32px] px-3.5 rounded-[8px] text-[12px] font-semibold text-[#007AFF] hover:bg-[#007AFF]/10 transition-colors inline-flex items-center gap-1">
-                                            <span>{{ __('whatsapp.view_detail_action') }}</span>
-                                            <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-                                        </a>
+                                    <td class="px-5 py-3.5 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                                        <div class="flex items-center justify-end">
+                                            <a href="{{ route('whatsapp.broadcast.show', $campaign) }}"
+                                                class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#007AFF] hover:bg-[#007AFF]/10 dark:hover:bg-[#007AFF]/20 transition-all cursor-pointer shrink-0"
+                                                title="{{ __('whatsapp.view_detail_action') }}"
+                                                aria-label="{{ __('whatsapp.view_detail_action') }}">
+                                                <i data-lucide="eye" class="w-4 h-4"></i>
+                                            </a>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

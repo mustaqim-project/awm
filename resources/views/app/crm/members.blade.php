@@ -242,7 +242,7 @@
                                 <x-table-sort-th :col="2" type="number" :title="__('crm.table_points_balance')" align="center" class="py-3.5 px-4" />
                                 <x-table-sort-th :col="3" type="number" :title="__('crm.table_total_spent')" align="right" class="py-3.5 px-4" />
                                 <x-table-sort-th :col="4" type="number" :title="__('crm.table_credit_debt')" align="right" class="py-3.5 px-4" />
-                                <th class="py-3.5 px-4 text-right pr-6">{{ __('crm.table_action') }}</th>
+                                <th class="py-3.5 px-4 text-right pr-6 whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('crm.table_action') }}</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-black/[0.05] dark:divide-white/[0.06]">
@@ -257,7 +257,7 @@
                                     ];
                                     $tConfig = $tierMap[$tierRaw] ?? ['label' => ucfirst($tierRaw), 'class' => 'bg-black/5 text-black/60 border-black/10'];
                                 @endphp
-                                <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors">
+                                <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors group">
                                     <!-- Member Name -->
                                     <td data-sort-value="{{ strtolower($m->name) }}" class="py-4 px-4 sm:px-6">
                                         <div class="flex items-center gap-3">
@@ -358,21 +358,22 @@
                                         @endif
                                     </td>
 
-                                    <!-- Action Buttons -->
-                                    <td class="py-4 px-4 text-right pr-6">
-                                        <div class="flex items-center justify-end gap-1.5">
+                                    <!-- Action Buttons (Sticky Desktop & Icon-Only) -->
+                                    <td class="py-4 px-4 text-right pr-6 whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                                        <div class="flex items-center justify-end gap-1">
                                             @if ($m->current_credit_balance > 0 && \App\Support\Context::hasPermission('crm.manage'))
                                                 <button type="button" @click="openCreditModal(@js($m))"
-                                                    class="h-8 px-2.5 rounded-[8px] text-[12px] font-semibold bg-[#34C759]/10 text-[#34C759] hover:bg-[#34C759]/20 transition cursor-pointer flex items-center gap-1">
-                                                    <i data-lucide="hand-coins" class="w-3.5 h-3.5"></i>
-                                                    <span>{{ __('crm.btn_settlement') }}</span>
+                                                    class="w-8 h-8 rounded-[8px] bg-[#34C759]/10 text-[#34C759] hover:bg-[#34C759]/20 transition cursor-pointer flex items-center justify-center shrink-0"
+                                                    title="{{ __('crm.btn_settlement') }}"
+                                                    aria-label="{{ __('crm.btn_settlement') }}">
+                                                    <i data-lucide="hand-coins" class="w-4 h-4"></i>
                                                 </button>
                                             @endif
                                             <a href="{{ route('customers.index', ['search' => $m->name]) }}"
-                                                class="h-8 px-2.5 rounded-[8px] text-[12px] font-semibold bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/70 dark:text-white/70 transition cursor-pointer flex items-center gap-1"
-                                                title="{{ __('crm.view_full_profile') }}">
-                                                <i data-lucide="eye" class="w-3.5 h-3.5"></i>
-                                                <span>{{ __('crm.btn_profile') }}</span>
+                                                class="w-8 h-8 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/70 dark:text-white/70 transition cursor-pointer flex items-center justify-center shrink-0"
+                                                title="{{ __('crm.view_full_profile') }}"
+                                                aria-label="{{ __('crm.view_full_profile') }}">
+                                                <i data-lucide="eye" class="w-4 h-4"></i>
                                             </a>
                                         </div>
                                     </td>

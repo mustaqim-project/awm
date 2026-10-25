@@ -1347,12 +1347,12 @@
                                         <th scope="col" class="py-2.5 text-left font-semibold">{{ __('billing.table_category') }}</th>
                                         <th scope="col" class="py-2.5 text-right font-semibold">{{ __('billing.table_size') }}</th>
                                         <th scope="col" class="py-2.5 text-right font-semibold">{{ __('billing.table_uploaded') }}</th>
-                                        <th scope="col" class="py-2.5 text-center font-semibold w-16">{{ __('billing.table_action') }}</th>
+                                        <th scope="col" class="py-2.5 text-center font-semibold whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('billing.table_action') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-slate-100 dark:divide-slate-800/60">
                                     @foreach ($storageDetails['largest_files'] as $lf)
-                                        <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
+                                        <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors group">
                                             <td class="py-2.5 pr-3 font-medium text-slate-800 dark:text-slate-200 truncate max-w-[180px]"
                                                 title="{{ $lf['file_name'] }}">
                                                 {{ $lf['file_name'] }}
@@ -1371,15 +1371,15 @@
                                                 {{ $lf['formatted_size'] }}</td>
                                             <td class="py-2.5 text-right text-slate-500 dark:text-slate-400 font-mono tabular-nums">
                                                 {{ $lf['uploaded_at'] }}</td>
-                                            <td class="py-2.5 text-center">
+                                            <td class="py-2.5 text-center whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                                 @if (\App\Support\Context::hasPermission('billing.manage'))
-                                                    <form method="POST" action="{{ route('billing.storage.files.destroy', $lf['id']) }}" class="inline"
+                                                    <form method="POST" action="{{ route('billing.storage.files.destroy', $lf['id']) }}" class="inline-flex items-center justify-center"
                                                         onsubmit="return confirm('Hapus berkas \'{{ addslashes($lf['file_name']) }}\' secara permanen dari server untuk mengurangi kuota storage?')">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" title="{{ __('billing.delete_file_tooltip') }}"
-                                                            class="p-1 rounded-[6px] text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition cursor-pointer">
-                                                            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                                        <button type="submit" title="{{ __('billing.delete_file_tooltip') }}" aria-label="{{ __('billing.delete_file_tooltip') }}"
+                                                            class="w-8 h-8 rounded-[8px] flex items-center justify-center text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition cursor-pointer shrink-0">
+                                                            <i data-lucide="trash-2" class="w-4 h-4"></i>
                                                         </button>
                                                     </form>
                                                 @endif
@@ -2355,12 +2355,12 @@
                                     <th class="py-2.5 text-left font-semibold">{{ __('billing.table_category') }}</th>
                                     <th class="py-2.5 text-right font-semibold">{{ __('billing.table_size') }}</th>
                                     <th class="py-2.5 text-right font-semibold">{{ __('billing.table_uploaded') }}</th>
-                                    <th class="py-2.5 text-center font-semibold w-20">{{ __('billing.table_action') }}</th>
+                                    <th class="py-2.5 text-center font-semibold whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('billing.table_action') }}</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-100 dark:divide-slate-800/60">
                                 <template x-for="f in files" :key="f.id">
-                                    <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
+                                    <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors group">
                                         <td class="py-2.5 pr-3 font-medium text-slate-800 dark:text-slate-200 truncate max-w-[220px]" :title="f.file_name" x-text="f.file_name"></td>
                                         <td class="py-2.5 pr-3 text-slate-600 dark:text-slate-400 truncate max-w-[140px]" x-text="f.business_name"></td>
                                         <td class="py-2.5 pr-3">
@@ -2368,12 +2368,13 @@
                                         </td>
                                         <td class="py-2.5 text-right font-mono font-bold text-slate-800 dark:text-slate-200 tabular-nums" x-text="f.formatted_size"></td>
                                         <td class="py-2.5 text-right text-slate-500 dark:text-slate-400 font-mono tabular-nums" x-text="f.uploaded_at"></td>
-                                        <td class="py-2.5 text-center">
-                                            <button type="button" @click="confirmDelete(f)" title="Hapus Berkas & Reclaim Kuota"
-                                                class="px-2 py-1 rounded-[8px] text-[10px] font-bold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition cursor-pointer flex items-center justify-center gap-1 mx-auto">
-                                                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                                                <span>Hapus</span>
-                                            </button>
+                                        <td class="py-2.5 text-center whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                                            <div class="flex items-center justify-center">
+                                                <button type="button" @click="confirmDelete(f)" title="Hapus Berkas & Reclaim Kuota" aria-label="Hapus Berkas & Reclaim Kuota"
+                                                    class="w-8 h-8 rounded-[8px] flex items-center justify-center text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition cursor-pointer shrink-0">
+                                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 </template>

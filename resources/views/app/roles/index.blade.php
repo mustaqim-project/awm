@@ -506,7 +506,7 @@
                                         \App\Support\Context::hasPermission('users.edit') ||
                                             \App\Support\Context::hasPermission('users.delete') ||
                                             \App\Support\Context::hasPermission('users.manage'))
-                                        <th class="py-2.5 px-4 text-right">{{ __('roles.th_action') }}</th>
+                                        <th class="py-2.5 px-4 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('roles.th_action') }}</th>
                                     @endif
                                 </tr>
                             </thead>
@@ -516,7 +516,7 @@
                                         $memberRoleId =
                                             $member->role_id ?? ($roles->firstWhere('slug', $member->role)?->id ?? '');
                                     @endphp
-                                    <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
+                                    <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors group">
                                         <td class="py-3 px-4">
                                             <div class="flex items-center gap-3">
                                                 <div
@@ -545,23 +545,26 @@
                                             \App\Support\Context::hasPermission('users.edit') ||
                                                 \App\Support\Context::hasPermission('users.delete') ||
                                                 \App\Support\Context::hasPermission('users.manage'))
-                                            <td class="py-3 px-4 text-right">
+                                            <td class="py-3 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                                 @if ($member->role !== 'owner')
-                                                    <div class="flex items-center justify-end gap-1.5">
+                                                    <div class="flex items-center justify-end gap-1">
                                                         @if (\App\Support\Context::hasPermission('users.edit') || \App\Support\Context::hasPermission('users.manage'))
-                                                             <button type="button"
+                                                            <button type="button"
                                                                 @click="openChangeMemberRoleModal({{ Js::from($member) }}, '{{ route('roles.members.role', $member) }}', '{{ $memberRoleId }}')"
-                                                                class="h-7 px-2.5 rounded-[6px] text-[12px] font-medium text-[#007AFF] hover:bg-[#007AFF]/8 transition-colors flex items-center gap-1">
-                                                                <span>{{ __('roles.btn_change_role') }}</span>
+                                                                class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#007AFF] hover:bg-[#007AFF]/10 dark:hover:bg-[#007AFF]/20 transition-all cursor-pointer shrink-0"
+                                                                title="{{ __('roles.btn_change_role') }}"
+                                                                aria-label="{{ __('roles.btn_change_role') }}">
+                                                                <i data-lucide="shield-alert" class="w-4 h-4"></i>
                                                             </button>
                                                         @endif
 
                                                         @if (\App\Support\Context::hasPermission('users.delete') || \App\Support\Context::hasPermission('users.manage'))
                                                             <button type="button"
                                                                 @click="openDeleteMember({{ $member->id }}, '{{ addslashes($member->user?->name ?? 'Karyawan') }}')"
-                                                                class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#FF3B30] hover:bg-[#FF3B30]/8 transition-colors flex items-center"
-                                                                title="{{ __('roles.title_remove_member') }}">
-                                                                {{ __('roles.btn_remove_member') }}
+                                                                class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#FF3B30] hover:bg-[#FF3B30]/10 dark:hover:bg-[#FF3B30]/20 transition-all cursor-pointer shrink-0"
+                                                                title="{{ __('roles.title_remove_member') }}"
+                                                                aria-label="{{ __('roles.btn_remove_member') }}">
+                                                                <i data-lucide="trash-2" class="w-4 h-4"></i>
                                                             </button>
 
                                                             <form id="form-delete-member-{{ $member->id }}"

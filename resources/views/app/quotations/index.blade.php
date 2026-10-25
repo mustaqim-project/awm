@@ -127,12 +127,12 @@
                         <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40">{{ __('sales.quotations.col_expiry_date') }}</th>
                         <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right">{{ __('sales.quotations.col_total_amount') }}</th>
                         <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-center">{{ __('sales.quotations.col_status') }}</th>
-                        <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right">{{ __('sales.quotations.col_actions') }}</th>
+                        <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('sales.quotations.col_actions') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                     @forelse($quotations as $q)
-                    <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
+                    <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors group">
                         <td class="px-4 py-3">
                             <a href="{{ route('sales.quotations.show', $q) }}" class="font-medium text-[#007AFF] hover:underline">
                                 {{ $q->quotation_number }}
@@ -169,32 +169,34 @@
                                 </span>
                             @endif
                         </td>
-                        <td class="px-4 py-3 text-right whitespace-nowrap">
+                        <td class="px-4 py-3 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                             <div class="flex items-center justify-end gap-1">
                                 <a href="{{ route('sales.quotations.pdf', $q) }}" target="_blank"
-                                    class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition-colors inline-flex items-center gap-1"
-                                    title="Unduh PDF">
-                                    <i data-lucide="printer" class="w-3.5 h-3.5 text-black/50 dark:text-white/50"></i>
-                                    <span>PDF</span>
+                                    class="w-8 h-8 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/70 dark:text-white/70 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
+                                    title="Unduh PDF"
+                                    aria-label="Unduh PDF">
+                                    <i data-lucide="printer" class="w-4 h-4"></i>
                                 </a>
                                 @if (\App\Support\Context::hasPermission('sales.pipeline') || \App\Support\Context::hasPermission('sales.view'))
                                 <a href="{{ route('sales.quotations.edit', $q) }}"
-                                    class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition-colors inline-flex items-center gap-1"
-                                    title="Edit Penawaran">
-                                    <i data-lucide="edit-3" class="w-3.5 h-3.5 text-black/50 dark:text-white/50"></i>
-                                    <span>Edit</span>
+                                    class="w-8 h-8 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/70 dark:text-white/70 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
+                                    title="Edit Penawaran"
+                                    aria-label="Edit Penawaran">
+                                    <i data-lucide="pencil" class="w-4 h-4"></i>
                                 </a>
                                 @endif
-                                <a href="{{ route('sales.quotations.show', $q) }}" class="h-7 px-2.5 rounded-[6px] text-[12px] font-medium text-[#007AFF] hover:bg-[#007AFF]/8 transition-colors inline-flex items-center gap-1">
-                                    <span>{{ __('sales.quotations.btn_detail') }}</span>
-                                    <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                                <a href="{{ route('sales.quotations.show', $q) }}"
+                                    class="w-8 h-8 rounded-[8px] bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
+                                    title="{{ __('sales.quotations.btn_detail') }}"
+                                    aria-label="{{ __('sales.quotations.btn_detail') }}">
+                                    <i data-lucide="eye" class="w-4 h-4"></i>
                                 </a>
                                 @if($q->status === 'draft' && \App\Support\Context::hasPermission('sales.pipeline'))
                                 <button type="button" @click="openDelete('{{ route('sales.quotations.destroy', $q) }}', '{{ addslashes($q->quotation_number) }}')"
-                                    class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#FF3B30] hover:bg-[#FF3B30]/8 transition-colors inline-flex items-center gap-1"
-                                    title="Hapus Penawaran">
-                                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                                    <span>Hapus</span>
+                                    class="w-8 h-8 rounded-[8px] text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
+                                    title="Hapus Penawaran"
+                                    aria-label="Hapus Penawaran">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
                                 </button>
                                 @endif
                             </div>

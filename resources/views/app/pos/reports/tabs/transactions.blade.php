@@ -25,7 +25,7 @@
                     <th class="py-3 px-4 text-right">{{ __('pos.reports_col_final_total') }}</th>
                     <th class="py-3 px-4 text-right">{{ __('pos.reports_col_gross_profit') }}</th>
                     <th class="py-3 px-4 text-center">{{ __('pos.reports_col_status') }}</th>
-                    <th class="py-3 px-4 text-center">{{ __('pos.reports_col_action') }}</th>
+                    <th class="py-3 px-4 text-center whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('pos.reports_col_action') }}</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-black/5 dark:divide-white/5">
@@ -57,7 +57,7 @@
                         ];
                         $chInfo = $channelMeta[$channel] ?? ['name' => ucfirst($channel), 'bg' => '#8E8E93', 'tag' => 'POS'];
                     @endphp
-                    <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.015] transition-colors">
+                    <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.015] transition-colors group">
                         {{-- No. Nota & Channel Badge --}}
                         <td class="py-3 px-4">
                             <div class="flex items-center gap-2">
@@ -189,13 +189,16 @@
                         </td>
 
                         {{-- Aksi Quick-View --}}
-                        <td class="py-3 px-4 text-center">
-                            <button type="button"
-                                    @click="$dispatch('open-pos-order-detail', { orderId: '{{ $order->id }}' })"
-                                    class="inline-flex items-center justify-center p-1.5 rounded-[8px] hover:bg-black/[0.06] dark:hover:bg-white/[0.08] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-all cursor-pointer"
-                                    title="{{ __('pos.reports_trx_quick_view_title') }}">
-                                <i data-lucide="eye" class="w-4 h-4"></i>
-                            </button>
+                        <td class="py-3 px-4 text-center whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                            <div class="flex items-center justify-center">
+                                <button type="button"
+                                        @click="$dispatch('open-pos-order-detail', { orderId: '{{ $order->id }}' })"
+                                        class="w-8 h-8 rounded-[8px] hover:bg-black/[0.06] dark:hover:bg-white/[0.08] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-all flex items-center justify-center shrink-0 cursor-pointer"
+                                        title="{{ __('pos.reports_trx_quick_view_title') }}"
+                                        aria-label="{{ __('pos.reports_trx_quick_view_title') }}">
+                                    <i data-lucide="eye" class="w-4 h-4"></i>
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 @empty

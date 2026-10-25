@@ -511,7 +511,7 @@
                                     </button>
                                 </th>
                                 @if (\App\Support\Context::hasPermission('inventory.manage'))
-                                    <th class="px-4 py-3 text-right">{{ __('warehouse.stock_table.col_actions') }}</th>
+                                    <th class="px-4 py-3 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('warehouse.stock_table.col_actions') }}</th>
                                 @endif
                             </tr>
                         </thead>
@@ -533,7 +533,7 @@
                                     data-sort-5="{{ (float) $valuation }}"
                                     data-sort-6="{{ $isLow ? 1 : ($stock->quantity <= 0 ? 0 : 2) }}"
                                     x-show="!searchStock || '{{ strtolower($stock->product?->name . ' ' . $stock->product?->code . ' ' . ($stock->product?->category?->name ?? '')) }}'.includes(searchStock.toLowerCase())"
-                                    class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors {{ $isLow ? 'bg-[#FF9500]/5' : '' }}">
+                                    class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors group {{ $isLow ? 'bg-[#FF9500]/5' : '' }}">
                                     <td class="px-4 py-3.5">
                                         <div class="font-bold text-slate-900 dark:text-white">
                                             {{ $stock->product?->name ?? '-' }}
@@ -578,19 +578,23 @@
                                         @endif
                                     </td>
                                     @if (\App\Support\Context::hasPermission('inventory.manage'))
-                                        <td class="px-4 py-3.5 text-right">
-                                            <button type="button"
-                                                @click="openAdjust(@js([
-                                                    'id' => $stock->id,
-                                                    'product_id' => $stock->product_id,
-                                                    'location_id' => $stock->location_id,
-                                                    'product_name' => $stock->product?->name ?? '',
-                                                    'quantity' => $stock->quantity,
-                                                    'last_cost' => $stock->last_cost,
-                                                ]))"
-                                                class="min-h-[44px] sm:min-h-[32px] px-2.5 rounded-[6px] text-xs font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.98] transition-all cursor-pointer inline-flex items-center">
-                                                {{ __('warehouse.actions.quick_adjust') }}
-                                            </button>
+                                        <td class="px-4 py-3.5 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                                            <div class="flex items-center justify-end gap-1">
+                                                <button type="button"
+                                                    @click="openAdjust(@js([
+                                                        'id' => $stock->id,
+                                                        'product_id' => $stock->product_id,
+                                                        'location_id' => $stock->location_id,
+                                                        'product_name' => $stock->product?->name ?? '',
+                                                        'quantity' => $stock->quantity,
+                                                        'last_cost' => $stock->last_cost,
+                                                    ]))"
+                                                    class="w-8 h-8 rounded-[8px] text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
+                                                    title="{{ __('warehouse.actions.quick_adjust') }}"
+                                                    aria-label="{{ __('warehouse.actions.quick_adjust') }}">
+                                                    <i data-lucide="sliders-horizontal" class="w-4 h-4"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     @endif
                                 </tr>

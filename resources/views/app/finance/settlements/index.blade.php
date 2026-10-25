@@ -288,12 +288,12 @@
                         <x-table-sort-th :col="5" type="number" :title="__('finance.col_fee_mdr')" align="right" />
                         <x-table-sort-th :col="6" type="number" :title="__('finance.col_net_bank')" align="right" />
                         <x-table-sort-th :col="7" type="string" :title="__('common.status')" align="center" />
-                        <th class="py-3 px-5 text-right">{{ __('finance.col_proof_and_actions') }}</th>
+                        <th class="py-3 px-5 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('finance.col_proof_and_actions') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-black/5 dark:divide-white/5 text-black/80 dark:text-white/80">
                     @forelse($settlements as $settlement)
-                        <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition">
+                        <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition group">
                             <td data-sort-value="{{ strtolower($settlement->settlement_number) }}" class="py-3.5 px-5 font-mono font-bold text-black dark:text-white">
                                 {{ $settlement->settlement_number }}
                             </td>
@@ -338,25 +338,27 @@
                                     </span>
                                 @endif
                             </td>
-                            <td class="py-3.5 px-5 text-right">
-                                <div class="flex items-center justify-end gap-1.5">
+                            <td class="py-3.5 px-5 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                                <div class="flex items-center justify-end gap-1">
                                     @if($settlement->proof_image_path)
                                         <button type="button"
                                             @click="openProofModal('{{ $settlement->proof_image_url }}', '{{ $settlement->settlement_number }}', '{{ number_format($settlement->net_amount, 0, ',', '.') }}', '{{ $settlement->destination_bank }}', '{{ $settlement->transferred_at ? $settlement->transferred_at->translatedFormat('d M Y H:i') : '-' }}', '{{ addslashes($settlement->admin_notes ?? '') }}')"
-                                            class="h-8 px-2.5 rounded-[8px] text-[11px] font-semibold text-[#34C759] bg-[#34C759]/10 hover:bg-[#34C759]/20 transition flex items-center gap-1 shadow-xs">
-                                            <i data-lucide="image" class="w-3.5 h-3.5"></i>
-                                            <span>{{ __('finance.btn_payment_proof') }}</span>
+                                            class="w-8 h-8 rounded-[8px] text-[#34C759] bg-[#34C759]/10 hover:bg-[#34C759]/20 transition flex items-center justify-center shrink-0 cursor-pointer shadow-xs"
+                                            title="{{ __('finance.btn_payment_proof') }}"
+                                            aria-label="{{ __('finance.btn_payment_proof') }}">
+                                            <i data-lucide="image" class="w-4 h-4"></i>
                                         </button>
                                     @elseif($settlement->status === 'pending')
-                                        <span class="px-2 py-0.5 rounded text-[10px] font-medium text-[#FF9500] bg-[#FF9500]/10">
-                                            {{ __('finance.status_waiting_proof') }}
+                                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-[8px] text-[#FF9500] bg-[#FF9500]/10" title="{{ __('finance.status_waiting_proof') }}">
+                                            <i data-lucide="clock" class="w-4 h-4"></i>
                                         </span>
                                     @endif
 
                                     <a href="{{ route('finance.settlements.show', $settlement) }}"
-                                        class="h-8 px-2.5 rounded-[8px] text-[11px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 transition inline-flex items-center gap-1">
-                                        <span>{{ __('common.detail') }}</span>
-                                        <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                                        class="w-8 h-8 rounded-[8px] text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 transition flex items-center justify-center shrink-0 cursor-pointer"
+                                        title="{{ __('common.detail') }}"
+                                        aria-label="{{ __('common.detail') }}">
+                                        <i data-lucide="eye" class="w-4 h-4"></i>
                                     </a>
                                 </div>
                             </td>

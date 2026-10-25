@@ -33,6 +33,136 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-10-25-371] Standardisasi Data Table List View Lintas Modul: Frozen Sticky Action Column & Icon-Only Action Buttons dengan Accessible Tooltips
+
+- **Date:** 2026-10-25
+- **Status:** COMPLETED
+- **Module:** Universal UI/UX Ecosystem (App Views across 7 Core Business Domains)
+- **Feature:** Data Table Modernization: Desktop Frozen/Sticky Right Action Column (`sticky right-0` dengan Opaque Background & Elevation Separator), Icon-Only Action Button Standard (`w-8 h-8 rounded-[8px]`), Accessible Tooltips (`title` & `aria-label`), Non-Destructive Layout Preservation
+- **Work Type:** UI/UX | Frontend Architecture | Accessibility | Performance & Standardization
+
+#### 1. Business Context & Objective
+- **Konteks:** Seluruh tampilan daftar data (*data table list views*) pada sistem COOCA digunakan secara intensif oleh pemilik bisnis, kasir, admin gudang, akuntan, dan staf operasional. Saat tabel memiliki banyak kolom dan mengalami *horizontal scrolling* pada desktop/laptop atau tablet landscape, kolom aksi (seperti Edit, Hapus, Detail, Cetak, Sinkronisasi) kerap tergeser keluar viewport layar, memaksa pengguna menggulir bolak-balik hanya untuk mengeksekusi tindakan pada baris data terkait. Selain itu, tombol aksi yang masih memuat label teks panjang (misal: "Lihat Detail", "Ubah Data", "Hapus") memakan ruang horizontal secara berlebihan dan membuat tampilan visual terasa padat dan tidak seragam antar modul.
+- **Akar Masalah:**
+  1. Header dan sel kolom aksi pada tabel belum dilengkapi properti CSS positioning sticky (`sticky right-0`), sehingga kolom aksi tidak tetap terlihat (*freeze*) saat tabel digulir secara horizontal.
+  2. Sebagian sel aksi menggunakan background transparan atau default, yang berisiko menyebabkan teks kolom lain tembus pandang (*bleed-through*) saat digulir di bawah kolom aksi.
+  3. Format tombol aksi belum konsisten; sebagian modul menggunakan tombol berlabel teks, sebagian ikon dengan teks, dan sebagian ikon tanpa tooltip aksesibilitas (`title` dan `aria-label`).
+- **Target & Standar:**
+  1. Menjadikan kolom aksi di seluruh tabel data terkunci di sisi kanan desktop (*freeze sticky action column*) dengan class: `sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]` pada `<th>` dan `sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]` pada `<td>`.
+  2. Menghapus teks pada tombol aksi di tabel, mengubahnya menjadi ikon murni yang ringkas (`w-8 h-8 rounded-[8px]` atau `w-7 h-7`), dengan tooltip eksplisit dan atribut `aria-label` yang lengkap untuk aksesibilitas screen reader.
+  3. Memastikan seluruh business logic, formulir, modal Alpine.js, atribut ID DOM (misal pada modul media sosial dan integrasi), serta gate otorisasi Spatie RBAC tetap utuh 100%.
+
+#### 2. What Was Done
+1. **Audit Menyeluruh Codebase (Fase 0):** Memetakan 60+ tabel data di 44 berkas Blade pada direktori `resources/views/app/` menggunakan skrip inventarisasi mendalam untuk mendeteksi struktur tabel, selektor JavaScript, dan penanganan aksi.
+2. **Standardisasi Fase 1: Commerce & Penjualan (8 views):**
+   - `customers/index.blade.php`: Kolom aksi detail, edit, hapus dijadikan sticky + icon-only dengan tooltip.
+   - `crm/members.blade.php`: Tindakan keanggotaan dan riwayat poin dijadikan sticky + icon-only.
+   - `invoices/index.blade.php`: Tombol cetak, unduh PDF, detail, dan opsi pembayaran dijadikan sticky + icon-only.
+   - `sales-orders/index.blade.php`: Aksi order penjualan (proses, cetak, batal) distandardisasi.
+   - `quotations/index.blade.php`: Tindakan approval penawaran harga dan konversi ke sales order distandardisasi.
+   - `sales/returns/index.blade.php`: Kolom aksi retur penjualan dikunci di kanan dengan hover state solid.
+   - `storefront/orders/index.blade.php`: Aksi pesanan toko online distandardisasi.
+   - `storefront/reservations/index.blade.php`: Aksi konfirmasi dan detail reservasi distandardisasi.
+3. **Standardisasi Fase 2: Katalog Produk, Bahan Baku & Pembelian (9 views):**
+   - `products/index.blade.php`: Aksi katalog barang (barcode, edit, varian, hapus) distandardisasi.
+   - `products/modifiers.blade.php`: Aksi modifier dan opsi tambahan distandardisasi.
+   - `products/bom.blade.php`: Aksi resep Bill of Materials (BOM) distandardisasi.
+   - `services/index.blade.php`: Aksi daftar layanan / jasa distandardisasi.
+   - `materials/index.blade.php`: Aksi bahan baku (adjust stok, edit, hapus) distandardisasi.
+   - `suppliers/index.blade.php`: Aksi supplier / vendor distandardisasi.
+   - `purchase-orders/index.blade.php`: Aksi PO (terima barang, cetak, detail) distandardisasi.
+   - `purchasing/bills/index.blade.php`: Aksi tagihan pembelian dan pelunasan distandardisasi.
+   - `purchasing/returns/index.blade.php`: Aksi retur pembelian vendor distandardisasi.
+4. **Standardisasi Fase 3: Inventori & Gudang (4 views):**
+   - `inventory/stocks.blade.php`: Aksi penyesuaian stok dan kartu stok distandardisasi.
+   - `inventory/transfers.blade.php`: Aksi mutasi / transfer antar gudang distandardisasi.
+   - `inventory/opname.blade.php`: Aksi stock opname dan approval audit fisik distandardisasi.
+   - `warehouse/show.blade.php`: Aksi inventori per gudang spesifik distandardisasi.
+5. **Standardisasi Fase 4: POS & Kasir (4 views):**
+   - `pos/orders.blade.php`: Aksi riwayat transaksi kasir (cetak struk, cetak ulang, void) distandardisasi.
+   - `pos/shifts.blade.php`: Aksi buka/tutup shift kasir dan ringkasan kas laci distandardisasi.
+   - `pos/printers/index.blade.php`: Aksi konfigurasi thermal printer kasir distandardisasi.
+   - `pos/reports/tabs/transactions.blade.php`: Aksi detail transaksi pada tab laporan POS distandardisasi.
+6. **Standardisasi Fase 5: Keuangan & Akuntansi (5 views):**
+   - `finance/payables.blade.php`: Aksi utang usaha (bayar, detail invoice) distandardisasi.
+   - `finance/receivables.blade.php`: Aksi piutang usaha (tagih WA, terima pembayaran) distandardisasi.
+   - `finance/accounting/coa.blade.php`: Aksi bagan akun (Chart of Accounts) distandardisasi.
+   - `finance/accounting/reconciliation.blade.php`: Aksi rekonsiliasi bank dan mutasi kas distandardisasi.
+   - `finance/settlements/index.blade.php`: Aksi penyelesaian settlement marketplace & EDC distandardisasi.
+7. **Standardisasi Fase 6: HRM & Penggajian (2 views, 8 tabel):**
+   - `hrm/index.blade.php`: Menstandardisasi 7 tabel terpisah (Karyawan, Koreksi Absensi, Lokasi/Outlet, Shift Kerja, Jadwal/Roster, Penggajian Bulanan, Pinjaman/Kasbon).
+   - `hrm/payroll/show.blade.php`: Menstandardisasi tabel rincian slip gaji, tombol kalkulator drilldown, slip digital, dan tombol kirim WhatsApp.
+8. **Standardisasi Fase 7: Admin, Integrasi, Omnichannel & Master Data (11 views):**
+   - `roles/index.blade.php`: Aksi manajemen peran RBAC dan mutasi anggota distandardisasi.
+   - `security/audit-logs/index.blade.php`: Tombol komparasi git-diff perubahan data audit distandardisasi.
+   - `marketplace/products.blade.php`: Aksi mapping produk marketplace omnichannel distandardisasi.
+   - `whatsapp/broadcast.blade.php`: Aksi inspeksi status broadcast WhatsApp distandardisasi.
+   - `whatsapp/logs.blade.php`: Aksi inspeksi payload pesan WhatsApp distandardisasi.
+   - `social_media/insights.blade.php`: Aksi sinkronisasi pos media sosial distandardisasi dengan menjaga integritas ID DOM (`sync-btn-{{ $post->id }}` dan `icon-sync-{{ $post->id }}`).
+   - `social_media/inbox.blade.php`: Aksi aturan custom AI (DO & DON'T) distandardisasi.
+   - `settings/index.blade.php`: Aksi jadwal cabang dan jam operasional distandardisasi.
+   - `labor-machines/index.blade.php`: Standardisasi 2 tabel (Tarif Tenaga Kerja & Mesin Produksi).
+   - `master-data/index.blade.php`: Standardisasi 2 tabel (Satuan/Kategori & Konversi Satuan).
+   - `billing/history.blade.php`: Aksi cetak invoice langganan dan detail cepat distandardisasi.
+   - `billing/limits.blade.php`: Standardisasi 2 tabel (File Terbesar & Modal Manajer Berkas).
+9. **Verifikasi Sistem Menyeluruh:**
+   - Menjalankan `php -l` pada setiap 44 berkas Blade yang dimodifikasi (100% lolos tanpa syntax error).
+   - Menjalankan `php artisan view:clear` dan `php artisan view:cache` yang berhasil meng-compile 100% template Blade proyek tanpa error apapun.
+   - Membersihkan seluruh berkas skrip audit dari direktori scratch.
+
+#### 3. Technical Changes
+- **Files Affected:**
+  - `resources/views/app/billing/history.blade.php`
+  - `resources/views/app/billing/limits.blade.php`
+  - `resources/views/app/crm/members.blade.php`
+  - `resources/views/app/customers/index.blade.php`
+  - `resources/views/app/finance/accounting/coa.blade.php`
+  - `resources/views/app/finance/accounting/reconciliation.blade.php`
+  - `resources/views/app/finance/payables.blade.php`
+  - `resources/views/app/finance/receivables.blade.php`
+  - `resources/views/app/finance/settlements/index.blade.php`
+  - `resources/views/app/hrm/index.blade.php`
+  - `resources/views/app/hrm/payroll/show.blade.php`
+  - `resources/views/app/inventory/opname.blade.php`
+  - `resources/views/app/inventory/stocks.blade.php`
+  - `resources/views/app/inventory/transfers.blade.php`
+  - `resources/views/app/invoices/index.blade.php`
+  - `resources/views/app/labor-machines/index.blade.php`
+  - `resources/views/app/marketplace/products.blade.php`
+  - `resources/views/app/master-data/index.blade.php`
+  - `resources/views/app/materials/index.blade.php`
+  - `resources/views/app/pos/orders.blade.php`
+  - `resources/views/app/pos/printers/index.blade.php`
+  - `resources/views/app/pos/reports/tabs/transactions.blade.php`
+  - `resources/views/app/pos/shifts.blade.php`
+  - `resources/views/app/products/bom.blade.php`
+  - `resources/views/app/products/index.blade.php`
+  - `resources/views/app/products/modifiers.blade.php`
+  - `resources/views/app/purchase-orders/index.blade.php`
+  - `resources/views/app/purchasing/bills/index.blade.php`
+  - `resources/views/app/purchasing/returns/index.blade.php`
+  - `resources/views/app/quotations/index.blade.php`
+  - `resources/views/app/roles/index.blade.php`
+  - `resources/views/app/sales-orders/index.blade.php`
+  - `resources/views/app/sales/returns/index.blade.php`
+  - `resources/views/app/security/audit-logs/index.blade.php`
+  - `resources/views/app/services/index.blade.php`
+  - `resources/views/app/settings/index.blade.php`
+  - `resources/views/app/social_media/inbox.blade.php`
+  - `resources/views/app/social_media/insights.blade.php`
+  - `resources/views/app/storefront/orders/index.blade.php`
+  - `resources/views/app/storefront/reservations/index.blade.php`
+  - `resources/views/app/suppliers/index.blade.php`
+  - `resources/views/app/warehouse/show.blade.php`
+  - `resources/views/app/whatsapp/broadcast.blade.php`
+  - `resources/views/app/whatsapp/logs.blade.php`
+- **Database Changes:** Tidak ada (perubahan murni pada arsitektur presentasi frontend Blade template).
+- **CSS Architecture Implemented:**
+  - Sticky Th: `sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]`
+  - Sticky Row: `<tr class="... group">`
+  - Sticky Td: `sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]`
+  - Icon-only Actions: `w-8 h-8 rounded-[8px] flex items-center justify-center transition-colors` dengan atribut `title="..."` dan `aria-label="..."`.
+
 ### [WORK-2026-10-24-370] Perbaikan Integrasi TikTok Video/Photo Direct Post: Penanganan Unaudited Client (403) via Auto-Fallback ke Kotak Masuk TikTok (MEDIA_UPLOAD) & Verifikasi Live Hostinger Production
 
 - **Date:** 2026-10-24

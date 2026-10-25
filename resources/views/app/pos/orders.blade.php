@@ -190,12 +190,12 @@
                         <x-table-sort-th :col="4" type="number" :title="__('pos.cogs_modal')" align="right" />
                         <x-table-sort-th :col="5" type="number" :title="__('pos.gross_profit')" align="right" />
                         <x-table-sort-th :col="6" type="string" :title="__('pos.status')" align="center" />
-                        <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right">{{ __('pos.actions') }}</th>
+                        <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('pos.actions') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                     @forelse($orders as $o)
-                    <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
+                    <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors group">
                         <td data-sort-value="{{ strtolower($o->order_number) }}" class="px-4 py-3">
                             <div class="flex items-center gap-1.5 flex-wrap">
                                 <span class="font-semibold text-black dark:text-white tabular-nums">#{{ $o->order_number }}</span>
@@ -273,36 +273,45 @@
                                 @endif
                             </div>
                         </td>
-                        <td class="px-4 py-3 text-right">
+                        <td class="px-4 py-3 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                             <div class="flex items-center justify-end gap-1">
                                 @if(($o->print_count ?? 0) > 0)
                                     <button type="button"
                                         @click="confirmReprint('{{ route('pos.receipt', $o->id) }}?reprint=1', {{ (int)$o->print_count }})"
                                         title="{{ __('pos.reprint_badge_count', ['count' => $o->print_count]) }}"
-                                        class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#FF9500] hover:bg-[#FF9500]/10 transition-colors flex items-center">
-                                        {{ __('pos.reprint_action') }}
+                                        aria-label="{{ __('pos.reprint_badge_count', ['count' => $o->print_count]) }}"
+                                        class="w-8 h-8 rounded-[8px] bg-[#FF9500]/10 text-[#FF9500] hover:bg-[#FF9500]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer">
+                                        <i data-lucide="printer" class="w-4 h-4"></i>
                                     </button>
                                 @else
                                     <a href="{{ route('pos.receipt', $o->id) }}" target="_blank"
-                                        class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition-colors flex items-center">
-                                        {{ __('pos.receipt_action') }}
+                                        title="{{ __('pos.receipt_action') }}"
+                                        aria-label="{{ __('pos.receipt_action') }}"
+                                        class="w-8 h-8 rounded-[8px] text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition-colors flex items-center justify-center shrink-0 cursor-pointer">
+                                        <i data-lucide="printer" class="w-4 h-4"></i>
                                     </a>
                                 @endif
                                 <button type="button" @click="viewDetail('{{ $o->id }}')"
-                                    class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#007AFF] hover:bg-[#007AFF]/8 transition-colors flex items-center">
-                                    {{ __('pos.detail_action') }}
+                                    title="{{ __('pos.detail_action') }}"
+                                    aria-label="{{ __('pos.detail_action') }}"
+                                    class="w-8 h-8 rounded-[8px] bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer">
+                                    <i data-lucide="eye" class="w-4 h-4"></i>
                                 </button>
                                 @if($o->status === 'completed')
                                     @if(\App\Support\Context::hasPermission('pos.supervisor_pin') || \App\Support\Context::hasPermission('pos.orders'))
                                     <button type="button" @click="openVoid('{{ $o->id }}')"
-                                        class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#FF3B30] hover:bg-[#FF3B30]/8 transition-colors flex items-center">
-                                        {{ __('pos.void_action') }}
+                                        title="{{ __('pos.void_action') }}"
+                                        aria-label="{{ __('pos.void_action') }}"
+                                        class="w-8 h-8 rounded-[8px] text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer">
+                                        <i data-lucide="ban" class="w-4 h-4"></i>
                                     </button>
                                     @endif
                                     @if(\App\Support\Context::hasPermission('sales.returns') || \App\Support\Context::hasPermission('pos.orders'))
                                     <button type="button" @click="openRefund('{{ $o->id }}')"
-                                        class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#FF9500] hover:bg-[#FF9500]/8 transition-colors flex items-center">
-                                        {{ __('pos.refund_action') }}
+                                        title="{{ __('pos.refund_action') }}"
+                                        aria-label="{{ __('pos.refund_action') }}"
+                                        class="w-8 h-8 rounded-[8px] text-[#FF9500] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer">
+                                        <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
                                     </button>
                                     @endif
                                 @endif

@@ -288,7 +288,7 @@
                         <x-table-sort-th :col="4" type="number" :title="__('finance.col_total_bill')" align="right" />
                         <x-table-sort-th :col="5" type="number" :title="__('finance.col_remaining_debt')" align="right" />
                         <x-table-sort-th :col="6" type="number" :title="__('finance.col_debt_age')" align="center" />
-                        <th class="px-4 py-3 text-[11px] font-semibold uppercase tracking-wider text-black/45 dark:text-white/45 text-right">{{ __('common.actions') }}</th>
+                        <th class="px-4 py-3 text-[11px] font-semibold uppercase tracking-wider text-black/45 dark:text-white/45 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('common.actions') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
@@ -298,7 +298,7 @@
                         $isOverdue = $daysDiff < 0;
                         $daysOverdue = abs($daysDiff);
                     @endphp
-                    <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
+                    <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors group">
                         <td data-sort-value="{{ strtolower($invoice->invoice_number ?? $invoice->bill_number ?? '') }}" class="px-4 py-3 tabular-nums font-mono font-semibold text-black dark:text-white">
                             {{ $invoice->invoice_number ?? $invoice->bill_number ?? '-' }}
                         </td>
@@ -329,13 +329,14 @@
                                 </span>
                             @endif
                         </td>
-                        <td class="px-4 py-3 text-right">
-                            @if(\App\Support\Context::hasPermission('purchasing.bills') || \App\Support\Context::hasPermission('purchasing.manage') || \App\Support\Context::hasPermission('invoices.record_payment'))
-                            <a href="{{ route('purchasing.bills.index') }}" class="h-8 px-3 rounded-[8px] text-[12px] font-semibold text-[#FF9500] bg-[#FF9500]/10 hover:bg-[#FF9500]/15 active:scale-[0.97] transition-all inline-flex items-center gap-1 shadow-xs">
-                                <i data-lucide="credit-card" class="w-3.5 h-3.5"></i>
-                                <span>{{ __('finance.btn_pay') }}</span>
-                            </a>
-                            @endif
+                        <td class="px-4 py-3 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                            <div class="flex items-center justify-end gap-1">
+                                @if(\App\Support\Context::hasPermission('purchasing.bills') || \App\Support\Context::hasPermission('purchasing.manage') || \App\Support\Context::hasPermission('invoices.record_payment'))
+                                <a href="{{ route('purchasing.bills.index') }}" class="w-8 h-8 rounded-[8px] text-[#FF9500] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('finance.btn_pay') }}" aria-label="{{ __('finance.btn_pay') }}">
+                                    <i data-lucide="credit-card" class="w-4 h-4"></i>
+                                </a>
+                                @endif
+                            </div>
                         </td>
                     </tr>
                     @empty

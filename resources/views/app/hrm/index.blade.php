@@ -1052,7 +1052,7 @@
                             <x-table-sort-th :col="4" type="string" :title="__('hrm.th_bpjs_social')" />
                             <x-table-sort-th :col="5" type="string" :title="__('hrm.th_biometric_face')" />
                             <x-table-sort-th :col="6" type="string" :title="__('hrm.th_bank_account')" />
-                            <th class="py-3.5 px-4 text-right">{{ __('hrm.th_actions') }}</th>
+                            <th class="py-3.5 px-4 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('hrm.th_actions') }}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-black/5 dark:divide-white/5">
@@ -1063,7 +1063,7 @@
                                 $hasFace = $m->hasFaceRegistered();
                                 $salaryVal = (float)($m->employment_type === 'daily_worker' ? $m->daily_rate : $m->base_salary);
                             @endphp
-                            <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors">
+                            <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors group">
                                 <!-- Karyawan -->
                                 <td data-sort-value="{{ strtolower($u->name ?? 'User') }}" class="py-3.5 px-4 sm:px-5">
                                     <div class="flex items-center gap-3">
@@ -1199,13 +1199,14 @@
                                 </td>
 
                                 <!-- Aksi -->
-                                <td class="py-3.5 px-4 text-right">
-                                    <div class="flex items-center justify-end gap-1.5">
+                                <td class="py-3.5 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                                    <div class="flex items-center justify-end gap-1">
                                         <button type="button"
                                             @click="openEditEmployee({{ Js::from($m) }}, '{{ route('hrm.employees.update', $m->id) }}')"
-                                            class="h-9 px-3 rounded-[10px] text-[12px] font-bold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.97] transition-all flex items-center gap-1.5 cursor-pointer">
-                                            <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
-                                            <span>{{ __('hrm.btn_edit') }}</span>
+                                            class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#007AFF] hover:bg-[#007AFF]/10 dark:hover:bg-[#007AFF]/20 transition-all cursor-pointer shrink-0"
+                                            title="{{ __('hrm.btn_edit') }}"
+                                            aria-label="{{ __('hrm.btn_edit') }}">
+                                            <i data-lucide="pencil" class="w-4 h-4"></i>
                                         </button>
 
                                         @if(! $isOwner)
@@ -1214,10 +1215,10 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
-                                                    class="h-9 w-9 rounded-[10px] text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.97] transition-all flex items-center justify-center cursor-pointer"
+                                                    class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#FF3B30] hover:bg-[#FF3B30]/10 dark:hover:bg-[#FF3B30]/20 transition-all cursor-pointer shrink-0"
                                                     title="{{ __('hrm.tooltip_delete_employee') }}"
                                                     aria-label="{{ __('hrm.tooltip_delete_employee') }}">
-                                                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
                                                 </button>
                                             </form>
                                         @endif
@@ -1830,12 +1831,12 @@
                             <th class="py-3.5 px-3">{{ __('hrm.th_proposed_hours') }}</th>
                             <th class="py-3.5 px-3">{{ __('hrm.col_reason_evidence') }}</th>
                             <th class="py-3.5 px-3">{{ __('hrm.col_status') }}</th>
-                            <th class="py-3.5 px-4 text-right">{{ __('hrm.col_action') }}</th>
+                            <th class="py-3.5 px-4 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('hrm.col_action') }}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-black/5 dark:divide-white/5">
                         @forelse($corrections as $cor)
-                            <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors">
+                            <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors group">
                                 <td class="py-3.5 px-4 sm:px-5 font-bold text-black dark:text-white tabular-nums">
                                     {{ $cor->correction_number }}
                                 </td>
@@ -1874,11 +1875,15 @@
                                         </span>
                                     @endif
                                 </td>
-                                <td class="py-3.5 px-4 text-right">
-                                    <button type="button" @click="openReviewCorrection({{ json_encode($cor) }})"
-                                        class="h-9 px-3.5 rounded-[10px] text-[12px] font-bold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#0071E3] hover:text-white active:scale-[0.97] transition-all cursor-pointer">
-                                        {{ $cor->status === 'pending' ? __('hrm.review_and_approve') : __('hrm.view_details') }}
-                                    </button>
+                                <td class="py-3.5 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                                    <div class="flex items-center justify-end">
+                                        <button type="button" @click="openReviewCorrection({{ json_encode($cor) }})"
+                                            class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#007AFF] hover:bg-[#007AFF]/10 dark:hover:bg-[#007AFF]/20 transition-all cursor-pointer shrink-0"
+                                            title="{{ $cor->status === 'pending' ? __('hrm.review_and_approve') : __('hrm.view_details') }}"
+                                            aria-label="{{ $cor->status === 'pending' ? __('hrm.review_and_approve') : __('hrm.view_details') }}">
+                                            <i data-lucide="{{ $cor->status === 'pending' ? 'clipboard-check' : 'eye' }}" class="w-4 h-4"></i>
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                         @empty
@@ -2009,12 +2014,12 @@
                             <th class="py-3.5 px-3">{{ __('hrm.col_gps_coords') }}</th>
                             <th class="py-3.5 px-3">{{ __('hrm.col_geofence_radius') }}</th>
                             <th class="py-3.5 px-3">{{ __('hrm.col_primary_status') }}</th>
-                            <th class="py-3.5 px-4 text-right">{{ __('hrm.col_action') }}</th>
+                            <th class="py-3.5 px-4 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('hrm.col_action') }}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-black/5 dark:divide-white/5">
                         @forelse($allLocations as $loc)
-                            <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors">
+                            <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors group">
                                 <td class="py-3.5 px-4 sm:px-5 font-bold text-black dark:text-white">
                                     <div class="flex items-center gap-2">
                                         <span>{{ $loc->name }}</span>
@@ -2049,13 +2054,14 @@
                                         </span>
                                     @endif
                                 </td>
-                                <td class="py-3.5 px-4 text-right">
-                                    <div class="flex items-center justify-end gap-1.5">
+                                <td class="py-3.5 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                                    <div class="flex items-center justify-end gap-1">
                                         <button type="button"
                                             @click="openEditLocation({{ Js::from($loc) }}, '{{ route('hrm.locations.update', $loc->id) }}')"
-                                            class="h-9 px-3 rounded-[10px] text-[12px] font-bold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#0071E3] hover:text-white active:scale-[0.97] transition-all flex items-center gap-1.5 cursor-pointer">
-                                            <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
-                                            <span>{{ __('hrm.btn_edit') }}</span>
+                                            class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#007AFF] hover:bg-[#007AFF]/10 dark:hover:bg-[#007AFF]/20 transition-all cursor-pointer shrink-0"
+                                            title="{{ __('hrm.btn_edit') }}"
+                                            aria-label="{{ __('hrm.btn_edit') }}">
+                                            <i data-lucide="pencil" class="w-4 h-4"></i>
                                         </button>
 
                                         @if(! $loc->is_primary && $allLocations->count() > 1)
@@ -2064,10 +2070,10 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
-                                                    class="h-9 w-9 rounded-[10px] text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.97] transition-all flex items-center justify-center cursor-pointer"
+                                                    class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#FF3B30] hover:bg-[#FF3B30]/10 dark:hover:bg-[#FF3B30]/20 transition-all cursor-pointer shrink-0"
                                                     title="{{ __('hrm.tooltip_delete_location') }}"
                                                     aria-label="{{ __('hrm.tooltip_delete_location') }}">
-                                                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
                                                 </button>
                                             </form>
                                         @endif
@@ -2193,12 +2199,12 @@
                             <th class="py-3.5 px-3">{{ __('hrm.th_grace_period') }}</th>
                             <th class="py-3.5 px-3">{{ __('hrm.th_branch_coverage') }}</th>
                             <th class="py-3.5 px-3">{{ __('hrm.th_status') }}</th>
-                            <th class="py-3.5 px-4 text-right">{{ __('hrm.th_action') }}</th>
+                            <th class="py-3.5 px-4 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('hrm.th_action') }}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-black/5 dark:divide-white/5">
                         @forelse($workShifts as $ws)
-                            <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors">
+                            <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors group">
                                 <td class="py-3.5 px-4 sm:px-5 font-bold text-black dark:text-white">
                                     <div class="flex items-center gap-2.5">
                                         <span class="w-3 h-3 rounded-full shrink-0" style="background-color: {{ $ws->color ?: '#30B0C7' }}"></span>
@@ -2253,20 +2259,24 @@
                                         </span>
                                     @endif
                                 </td>
-                                <td class="py-3.5 px-4 text-right">
-                                    <div class="flex items-center justify-end gap-1.5">
+                                <td class="py-3.5 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                                    <div class="flex items-center justify-end gap-1">
                                         <button type="button"
                                             @click="openEditShift({{ Js::from($ws) }}, '{{ route('hrm.shifts.update', $ws->id) }}')"
-                                            class="h-8.5 px-3 rounded-[9px] text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#0071E3] hover:text-white transition active:scale-[0.98] cursor-pointer">
-                                            {{ __('hrm.btn_edit') }}
+                                            class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#007AFF] hover:bg-[#007AFF]/10 dark:hover:bg-[#007AFF]/20 transition-all cursor-pointer shrink-0"
+                                            title="{{ __('hrm.btn_edit') }}"
+                                            aria-label="{{ __('hrm.btn_edit') }}">
+                                            <i data-lucide="pencil" class="w-4 h-4"></i>
                                         </button>
                                         <form method="POST" action="{{ route('hrm.shifts.destroy', $ws->id) }}"
                                             onsubmit="return confirm('{{ addslashes(__('hrm.confirm_delete_shift')) }}')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
-                                                class="h-8.5 w-8.5 rounded-[9px] text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.98] transition flex items-center justify-center cursor-pointer">
-                                                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                                class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#FF3B30] hover:bg-[#FF3B30]/10 dark:hover:bg-[#FF3B30]/20 transition-all cursor-pointer shrink-0"
+                                                title="{{ __('hrm.tooltip_delete_shift') ?? 'Hapus Shift' }}"
+                                                aria-label="{{ __('hrm.tooltip_delete_shift') ?? 'Hapus Shift' }}">
+                                                <i data-lucide="trash-2" class="w-4 h-4"></i>
                                             </button>
                                         </form>
                                     </div>
@@ -2424,12 +2434,12 @@
                             <th class="py-3.5 px-3">{{ __('hrm.th_valid_period') }}</th>
                             <th class="py-3.5 px-3">{{ __('hrm.th_branch_location') }}</th>
                             <th class="py-3.5 px-3">{{ __('hrm.th_notes') }}</th>
-                            <th class="py-3.5 px-4 text-right">{{ __('hrm.th_action') }}</th>
+                            <th class="py-3.5 px-4 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('hrm.th_action') }}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-black/5 dark:divide-white/5">
                         @forelse($employeeSchedules as $sch)
-                            <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors">
+                            <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors group">
                                 <td class="py-3.5 px-4 sm:px-5 font-bold text-black dark:text-white">
                                     {{ $sch->user?->name ?? __('hrm.default_employee_name') }}
                                     <div class="text-[11px] text-black/50 dark:text-white/50 font-normal">{{ $sch->user?->email }}</div>
@@ -2480,20 +2490,24 @@
                                 <td class="py-3.5 px-3 text-[11.5px] text-black/60 dark:text-white/60 max-w-xs truncate">
                                     {{ $sch->notes ?: '-' }}
                                 </td>
-                                <td class="py-3.5 px-4 text-right">
-                                    <div class="flex items-center justify-end gap-1.5">
+                                <td class="py-3.5 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                                    <div class="flex items-center justify-end gap-1">
                                         <button type="button"
                                             @click="openEditSchedule({{ Js::from($sch) }}, '{{ route('hrm.schedules.update', $sch->id) }}')"
-                                            class="h-8.5 px-3 rounded-[9px] text-[12px] font-semibold text-[#5856D6] bg-[#5856D6]/10 hover:bg-[#5856D6] hover:text-white transition active:scale-[0.98] cursor-pointer">
-                                            {{ __('hrm.btn_edit') }}
+                                            class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#5856D6] hover:bg-[#5856D6]/10 dark:hover:bg-[#5856D6]/20 transition-all cursor-pointer shrink-0"
+                                            title="{{ __('hrm.btn_edit') }}"
+                                            aria-label="{{ __('hrm.btn_edit') }}">
+                                            <i data-lucide="pencil" class="w-4 h-4"></i>
                                         </button>
                                         <form method="POST" action="{{ route('hrm.schedules.destroy', $sch->id) }}"
                                             onsubmit="return confirm('{{ __('hrm.confirm_delete_schedule') }}')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
-                                                class="h-8.5 w-8.5 rounded-[9px] text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.98] transition flex items-center justify-center cursor-pointer">
-                                                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                                class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#FF3B30] hover:bg-[#FF3B30]/10 dark:hover:bg-[#FF3B30]/20 transition-all cursor-pointer shrink-0"
+                                                title="{{ __('hrm.tooltip_delete_schedule') ?? 'Hapus Jadwal' }}"
+                                                aria-label="{{ __('hrm.tooltip_delete_schedule') ?? 'Hapus Jadwal' }}">
+                                                <i data-lucide="trash-2" class="w-4 h-4"></i>
                                             </button>
                                         </form>
                                     </div>
@@ -2596,12 +2610,12 @@
                             <th class="py-3.5 px-3">{{ __('hrm.col_take_home_pay') }}</th>
                             <th class="py-3.5 px-3">{{ __('hrm.col_company_burden') }}</th>
                             <th class="py-3.5 px-3">{{ __('hrm.col_status') }}</th>
-                            <th class="py-3.5 px-4 text-right">{{ __('hrm.col_action') }}</th>
+                            <th class="py-3.5 px-4 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('hrm.col_action') }}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-black/5 dark:divide-white/5">
                         @forelse($payrolls as $p)
-                            <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors">
+                            <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors group">
                                 <td class="py-3.5 px-4 sm:px-5 font-bold text-black dark:text-white">
                                     <a href="{{ route('hrm.payrolls.show', $p->id) }}" class="hover:text-[#007AFF] transition">
                                         {{ $p->title }}
@@ -2643,12 +2657,13 @@
                                         </span>
                                     @endif
                                 </td>
-                                <td class="py-3.5 px-4 text-right">
-                                    <div class="flex items-center justify-end gap-1.5">
+                                <td class="py-3.5 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                                    <div class="flex items-center justify-end gap-1">
                                         <a href="{{ route('hrm.payrolls.show', $p->id) }}"
-                                            class="h-9 px-3.5 rounded-[10px] text-[12px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all flex items-center gap-1 cursor-pointer">
-                                            <span>{{ __('hrm.detail_and_slip') }}</span>
-                                            <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                                            class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#007AFF] hover:bg-[#007AFF]/10 dark:hover:bg-[#007AFF]/20 transition-all cursor-pointer shrink-0"
+                                            title="{{ __('hrm.detail_and_slip') }}"
+                                            aria-label="{{ __('hrm.detail_and_slip') }}">
+                                            <i data-lucide="eye" class="w-4 h-4"></i>
                                         </a>
 
                                         @if($p->status === 'draft')
@@ -2657,10 +2672,10 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
-                                                    class="h-9 w-9 rounded-[10px] text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.97] transition-all flex items-center justify-center cursor-pointer"
+                                                    class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#FF3B30] hover:bg-[#FF3B30]/10 dark:hover:bg-[#FF3B30]/20 transition-all cursor-pointer shrink-0"
                                                     title="{{ __('hrm.tooltip_delete_draft') }}"
                                                     aria-label="{{ __('hrm.tooltip_delete_draft') }}">
-                                                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
                                                 </button>
                                             </form>
                                         @endif
@@ -2796,12 +2811,12 @@
                             <th class="py-3.5 px-3">{{ __('hrm.installment_per_month') }}</th>
                             <th class="py-3.5 px-3">{{ __('hrm.remaining_balance_label') }}</th>
                             <th class="py-3.5 px-3">{{ __('hrm.col_status') }}</th>
-                            <th class="py-3.5 px-4 text-right">{{ __('hrm.col_action') }}</th>
+                            <th class="py-3.5 px-4 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('hrm.col_action') }}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-black/5 dark:divide-white/5">
                         @forelse($loans as $loan)
-                            <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors">
+                            <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors group">
                                 <td class="py-3.5 px-4 sm:px-5 font-bold text-black dark:text-white tabular-nums">
                                     {{ $loan->loan_number }}
                                 </td>
@@ -2838,19 +2853,23 @@
                                         </span>
                                     @endif
                                 </td>
-                                <td class="py-3.5 px-4 text-right">
-                                    @if($loan->status === 'active' && $loan->remaining_balance > 0)
-                                        <form method="POST" action="{{ route('hrm.loans.cancel', $loan->id) }}"
-                                            onsubmit="return confirm('{{ addslashes(__('hrm.confirm_cancel_loan')) }}')">
-                                            @csrf
-                                            <button type="submit"
-                                                class="h-9 px-3.5 rounded-[10px] text-[12px] font-bold text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.97] transition-all cursor-pointer">
-                                                {{ __('hrm.btn_cancel') }}
-                                            </button>
-                                        </form>
-                                    @else
-                                        <span class="text-[11px] text-black/40 dark:text-white/40">-</span>
-                                    @endif
+                                <td class="py-3.5 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                                    <div class="flex items-center justify-end">
+                                        @if($loan->status === 'active' && $loan->remaining_balance > 0)
+                                            <form method="POST" action="{{ route('hrm.loans.cancel', $loan->id) }}"
+                                                onsubmit="return confirm('{{ addslashes(__('hrm.confirm_cancel_loan')) }}')">
+                                                @csrf
+                                                <button type="submit"
+                                                    class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#FF3B30] hover:bg-[#FF3B30]/10 dark:hover:bg-[#FF3B30]/20 transition-all cursor-pointer shrink-0"
+                                                    title="{{ __('hrm.btn_cancel') }}"
+                                                    aria-label="{{ __('hrm.btn_cancel') }}">
+                                                    <i data-lucide="ban" class="w-4 h-4"></i>
+                                                </button>
+                                            </form>
+                                        @else
+                                            <span class="text-[11px] text-black/40 dark:text-white/40">-</span>
+                                        @endif
+                                    </div>
                                 </td>
                             </tr>
                         @empty

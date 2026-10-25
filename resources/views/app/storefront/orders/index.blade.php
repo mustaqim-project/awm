@@ -295,12 +295,12 @@
                             <th class="py-3.5 px-4 font-semibold">{{ __('storefront.backoffice.orders.col_items_bill') }}</th>
                             <th class="py-3.5 px-4 font-semibold">{{ __('storefront.backoffice.orders.col_status_label') }}</th>
                             <th class="py-3.5 px-4 font-semibold">{{ __('storefront.backoffice.orders.col_time') }}</th>
-                            <th class="py-3.5 px-4 font-semibold text-right">{{ __('storefront.backoffice.orders.col_action_label') }}</th>
+                            <th class="py-3.5 px-4 font-semibold text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('storefront.backoffice.orders.col_action_label') }}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-black/5 dark:divide-white/5">
                         @forelse($orders as $order)
-                            <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition">
+                            <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors group">
                                 <td class="py-3.5 px-4 font-mono font-semibold text-black dark:text-white">
                                     <div class="flex items-center gap-2">
                                         <a href="{{ route('storefront.orders.show', $order) }}"
@@ -384,12 +384,15 @@
                                     class="py-3.5 px-4 text-[12px] text-black/55 dark:text-white/55 whitespace-nowrap tabular-nums">
                                     {{ $order->created_at->format('d/m/Y H:i') }}
                                 </td>
-                                <td class="py-3.5 px-4 text-right">
-                                    <a href="{{ route('storefront.orders.show', $order) }}"
-                                        class="inline-flex items-center gap-1 h-8 px-3 rounded-[10px] bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 text-black/80 dark:text-white/80 text-[12px] font-semibold transition active:scale-[0.98]">
-                                        <span>{{ __('storefront.backoffice.orders.btn_view') }}</span>
-                                        <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-                                    </a>
+                                <td class="py-3.5 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                                    <div class="flex items-center justify-end">
+                                        <a href="{{ route('storefront.orders.show', $order) }}"
+                                            class="w-8 h-8 rounded-[8px] bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 text-black/80 dark:text-white/80 transition active:scale-[0.98] flex items-center justify-center shrink-0 cursor-pointer"
+                                            title="{{ __('storefront.backoffice.orders.btn_view') }}"
+                                            aria-label="{{ __('storefront.backoffice.orders.btn_view') }}">
+                                            <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                         @empty

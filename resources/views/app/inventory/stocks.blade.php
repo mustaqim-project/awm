@@ -188,7 +188,7 @@
                         <x-table-sort-th :col="4" type="number" title="HPP / Unit" align="right" />
                         <x-table-sort-th :col="5" type="number" title="Total Nilai" align="right" />
                         <x-table-sort-th :col="6" type="number" title="Status" align="center" />
-                        <th class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 text-right">Aksi</th>
+                        <th class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('common.actions') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
@@ -198,7 +198,7 @@
                         $val = $st->quantity * ($st->last_cost > 0 ? $st->last_cost : ($st->product->base_cost ?? 0));
                         $statusCode = $st->quantity <= 0 ? 0 : ($isLow ? 1 : 2);
                     @endphp
-                    <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
+                    <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors group">
                         <td class="py-3.5 px-4" data-sort-value="{{ strtolower($st->product->name ?? '') }}">
                             <div class="font-semibold text-black dark:text-white text-[13px]">{{ $st->product->name ?? 'Produk' }}</div>
                             <div class="text-[11px] text-black/45 dark:text-white/45 tabular-nums font-mono">{{ $st->product->code ?? '-' }}</div>
@@ -235,12 +235,14 @@
                                 </span>
                             @endif
                         </td>
-                        <td class="py-3.5 px-4 text-right">
-                            @if (\App\Support\Context::hasPermission('inventory.manage'))
-                            <button type="button" @click="openAdjust('{{ $st->id }}')" class="min-h-[44px] sm:min-h-0 h-8 px-3 rounded-lg text-[12px] font-semibold text-[#007AFF] hover:bg-[#007AFF]/10 active:scale-[0.97] transition-all cursor-pointer">
-                                Sesuaikan
-                            </button>
-                            @endif
+                        <td class="py-3.5 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                            <div class="flex items-center justify-end gap-1">
+                                @if (\App\Support\Context::hasPermission('inventory.manage'))
+                                <button type="button" @click="openAdjust('{{ $st->id }}')" class="w-8 h-8 rounded-[8px] bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('warehouse.quick_adjust') }}" aria-label="{{ __('warehouse.quick_adjust') }}">
+                                    <i data-lucide="sliders-horizontal" class="w-4 h-4"></i>
+                                </button>
+                                @endif
+                            </div>
                         </td>
                     </tr>
                     @empty

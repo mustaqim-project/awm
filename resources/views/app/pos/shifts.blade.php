@@ -220,12 +220,12 @@
                         <x-table-sort-th :col="4" type="number" :title="__('pos.closing_cash_actual')" align="right" />
                         <x-table-sort-th :col="5" type="number" :title="__('pos.cash_difference')" align="right" />
                         <x-table-sort-th :col="6" type="string" :title="__('pos.status')" align="center" />
-                        <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-center">{{ __('pos.actions') }}</th>
+                        <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-center whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('pos.actions') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                     @forelse($shifts as $shift)
-                    <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
+                    <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors group">
                         <td data-sort-value="{{ strtolower($shift->user->name ?? 'Kasir') }}" class="px-4 py-3">
                             <div class="font-medium text-black dark:text-white">{{ $shift->user->name ?? 'Kasir' }}</div>
                             <div class="text-[11px] text-black/45 dark:text-white/45 flex items-center gap-1.5 mt-0.5">
@@ -277,13 +277,13 @@
                                 </span>
                             @endif
                         </td>
-                        <td class="px-4 py-3 text-center">
-                            <div class="flex items-center justify-center gap-1.5">
-                                <button type="button" @click="printShiftReport('{{ $shift->id }}')" title="Cetak Struk Shift (ESC/POS)" class="p-1.5 rounded-[8px] hover:bg-black/[0.06] dark:hover:bg-white/[0.08] text-black/60 dark:text-white/60 transition-colors">
+                        <td class="px-4 py-3 text-center whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                            <div class="flex items-center justify-center gap-1">
+                                <button type="button" @click="printShiftReport('{{ $shift->id }}')" title="Cetak Struk Shift (ESC/POS)" aria-label="Cetak Struk Shift (ESC/POS)" class="w-8 h-8 rounded-[8px] hover:bg-black/[0.06] dark:hover:bg-white/[0.08] text-black/60 dark:text-white/60 transition-colors flex items-center justify-center shrink-0 cursor-pointer">
                                     <i data-lucide="printer" class="w-4 h-4"></i>
                                 </button>
                                 @if($shift->status === 'open')
-                                <button type="button" @click="openCloseModal('{{ $shift->id }}', {{ (float) ($shift->opening_cash + $shift->total_cash_sales + $shift->total_cash_in - $shift->total_cash_out) }})" title="Tutup Shift" class="p-1.5 rounded-[8px] hover:bg-[#FF3B30]/10 text-[#FF3B30] transition-colors">
+                                <button type="button" @click="openCloseModal('{{ $shift->id }}', {{ (float) ($shift->opening_cash + $shift->total_cash_sales + $shift->total_cash_in - $shift->total_cash_out) }})" title="Tutup Shift" aria-label="Tutup Shift" class="w-8 h-8 rounded-[8px] text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer">
                                     <i data-lucide="lock" class="w-4 h-4"></i>
                                 </button>
                                 @endif

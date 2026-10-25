@@ -373,13 +373,13 @@
                                         Slug</th>
                                 @endif
                                 <th
-                                    class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right whitespace-nowrap">
+                                    class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                     Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                             @forelse($items as $item)
-                                <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors"
+                                <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors group"
                                     x-show="matchesSearch('{{ addslashes($item->code ?? '') }}', '{{ addslashes($item->name ?? '') }}', '{{ addslashes($item->category ?? '') }}', '{{ addslashes($item->description ?? '') }}', '{{ addslashes($item->marketplace_category_name ?? '') }}') && matchesSource({{ $item->business_id ? 'true' : 'false' }})">
                                     @if ($type === 'units')
                                         <td class="py-3 px-4 font-semibold text-black dark:text-white tabular-nums">
@@ -444,20 +444,20 @@
                                         <td class="py-3 px-4 text-black/40 dark:text-white/40 tabular-nums text-[12px]">
                                             {{ $item->slug ?? '-' }}</td>
                                     @endif
-                                    <td class="py-3 px-4 text-right">
+                                    <td class="py-3 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                         @if (
                                             ($item->business_id || !in_array($type, ['units'], true)) &&
                                                 \App\Support\Context::hasPermission($managePermission))
                                             <div class="flex items-center justify-end gap-1">
-                                                <button type="button" title="Edit"
+                                                <button type="button" title="Edit" aria-label="Edit"
                                                     @click.stop="openEdit(@js(['id' => $item->id, 'code' => $item->code ?? '', 'name' => $item->name ?? '', 'category' => $item->category ?? 'quantity', 'description' => $item->description ?? '', 'marketplace_category_id' => $item->marketplace_category_id ?? '', 'marketplace_category_name' => $item->marketplace_category_name ?? '']))"
-                                                    class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#007AFF] hover:bg-[#007AFF]/8 transition-colors flex items-center cursor-pointer">
-                                                    Edit
+                                                    class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#007AFF] hover:bg-[#007AFF]/10 dark:hover:bg-[#007AFF]/20 transition-all cursor-pointer shrink-0">
+                                                    <i data-lucide="pencil" class="w-4 h-4"></i>
                                                 </button>
-                                                <button type="button" title="Hapus"
+                                                <button type="button" title="Hapus" aria-label="Hapus"
                                                     @click.stop="openDelete('{{ route($type . '.destroy', $item->id) }}', '{{ addslashes($item->name ?? $item->code) }}')"
-                                                    class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#FF3B30] hover:bg-[#FF3B30]/8 transition-colors flex items-center cursor-pointer">
-                                                    Hapus
+                                                    class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#FF3B30] hover:bg-[#FF3B30]/10 dark:hover:bg-[#FF3B30]/20 transition-all cursor-pointer shrink-0">
+                                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
                                                 </button>
                                             </div>
                                         @else
@@ -628,13 +628,13 @@
                                         class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40">
                                         Faktor Pengali</th>
                                     <th
-                                        class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right">
+                                        class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                         Aksi</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                                 @forelse($unitConversions as $conversion)
-                                    <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
+                                    <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors group">
                                         <td class="py-3 px-4 font-semibold text-black dark:text-white">
                                             {{ $conversion->fromUnit?->code }}
                                             <span
@@ -651,13 +651,15 @@
                                             {{ number_format((float) $conversion->factor, 6, '.', '') }}
                                             {{ $conversion->toUnit?->code }}
                                         </td>
-                                        <td class="py-3 px-4 text-right">
+                                        <td class="py-3 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                             @if (\App\Support\Context::hasPermission('master_data.units.manage'))
-                                                <button type="button"
-                                                    @click="openDelete('{{ route('unit-conversions.destroy', $conversion->id) }}', 'Konversi 1 {{ $conversion->fromUnit?->code }} ke {{ $conversion->toUnit?->code }}')"
-                                                    class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#FF3B30] hover:bg-[#FF3B30]/8 transition-colors">
-                                                    Hapus
-                                                </button>
+                                                <div class="flex items-center justify-end">
+                                                    <button type="button" title="Hapus" aria-label="Hapus"
+                                                        @click="openDelete('{{ route('unit-conversions.destroy', $conversion->id) }}', 'Konversi 1 {{ $conversion->fromUnit?->code }} ke {{ $conversion->toUnit?->code }}')"
+                                                        class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#FF3B30] hover:bg-[#FF3B30]/10 dark:hover:bg-[#FF3B30]/20 transition-all cursor-pointer shrink-0">
+                                                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                                    </button>
+                                                </div>
                                             @else
                                                 <span class="text-black/30 dark:text-white/30 text-[12px]">-</span>
                                             @endif

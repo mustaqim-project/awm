@@ -232,7 +232,7 @@
                         <th class="py-3.5 px-3">{{ __('hrm.th_bpjs_tax') }}</th>
                         <th class="py-3.5 px-3">{{ __('hrm.th_loan_deductions') }}</th>
                         <th class="py-3.5 px-3">{{ __('hrm.th_take_home_pay') }}</th>
-                        <th class="py-3.5 px-4 text-right">{{ __('hrm.th_actions') }}</th>
+                        <th class="py-3.5 px-4 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('hrm.th_actions') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-black/5 dark:divide-white/5">
@@ -245,7 +245,7 @@
                             $service = app(\App\Domain\HRM\PayrollRunService::class);
                             $waText = urlencode($service->buildWhatsAppSlipMessage($item));
                         @endphp
-                        <tr class="hover:bg-black/[0.01] dark:hover:bg-white/[0.015] transition">
+                        <tr class="hover:bg-black/[0.01] dark:hover:bg-white/[0.015] transition group">
                             <td class="py-3.5 px-4 sm:px-5">
                                 <div class="font-bold text-black dark:text-white text-[13.5px]">{{ $item->employee_name }}</div>
                                 <div class="text-[11.5px] text-black/60 dark:text-white/60 font-medium">{{ $item->job_title ?: __('hrm.staff_label') }}</div>
@@ -284,34 +284,31 @@
                             <td class="py-3.5 px-3 tabular-nums font-extrabold text-[#34C759] text-[14px]">
                                 Rp {{ number_format((float)$item->take_home_pay, 0, ',', '.') }}
                             </td>
-                            <td class="py-3.5 px-4 text-right">
-                                <div class="flex items-center justify-end gap-1.5">
+                            <td class="py-3.5 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                                <div class="flex items-center justify-end gap-1">
                                     <!-- Interactive Drill-Down Trigger -->
                                     <button type="button" @click="selectedItem = {{ Js::from($item) }}; showDrillDownModal = true"
-                                        class="h-8 px-2.5 rounded-[9px] text-[11.5px] font-bold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.97] transition flex items-center gap-1.5 cursor-pointer"
+                                        class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#007AFF] hover:bg-[#007AFF]/10 dark:hover:bg-[#007AFF]/20 transition-all cursor-pointer shrink-0"
                                         title="{{ __('hrm.tooltip_drilldown') }}"
                                         aria-label="{{ __('hrm.tooltip_drilldown') }}">
-                                        <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
-                                        <span>{{ __('hrm.detail_btn') }}</span>
+                                        <i data-lucide="calculator" class="w-4 h-4"></i>
                                     </button>
 
                                     <!-- Tombol Slip Digital -->
                                     <a href="{{ route('hrm.payslips.show', $item->id) }}"
-                                        class="h-8 px-2.5 rounded-[9px] text-[11.5px] font-bold text-black/70 dark:text-white/70 bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 active:scale-[0.97] transition flex items-center gap-1.5 cursor-pointer"
+                                        class="w-8 h-8 rounded-[8px] flex items-center justify-center text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/10 transition-all cursor-pointer shrink-0"
                                         title="{{ __('hrm.tooltip_view_digital_slip') }}"
                                         aria-label="{{ __('hrm.tooltip_view_digital_slip') }}">
-                                        <i data-lucide="receipt" class="w-3.5 h-3.5"></i>
-                                        <span>{{ __('hrm.slip_btn') }}</span>
+                                        <i data-lucide="receipt" class="w-4 h-4"></i>
                                     </a>
 
                                     <!-- Tombol WhatsApp -->
                                     @if($wa)
                                         <a href="https://wa.me/{{ $wa }}?text={{ $waText }}" target="_blank"
-                                            class="h-8 px-2.5 rounded-[9px] text-[11.5px] font-bold text-[#25D366] bg-[#25D366]/10 hover:bg-[#25D366]/15 active:scale-[0.97] transition flex items-center gap-1.5 cursor-pointer"
+                                            class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#25D366] hover:bg-[#25D366]/10 dark:hover:bg-[#25D366]/20 transition-all cursor-pointer shrink-0"
                                             title="{{ __('hrm.tooltip_send_wa_slip') }}"
                                             aria-label="{{ __('hrm.tooltip_send_wa_slip') }}">
-                                            <i data-lucide="send" class="w-3.5 h-3.5"></i>
-                                            <span>{{ __('hrm.wa_btn') }}</span>
+                                            <i data-lucide="send" class="w-4 h-4"></i>
                                         </a>
                                     @endif
                                 </div>

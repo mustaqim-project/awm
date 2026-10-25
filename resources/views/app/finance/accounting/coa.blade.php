@@ -283,12 +283,12 @@
                             <x-table-sort-th :col="2" type="string" :title="__('finance.col_category_type')" />
                             <x-table-sort-th :col="3" type="string" :title="__('finance.col_normal_balance')" />
                             <x-table-sort-th :col="4" type="string" :title="__('common.status')" />
-                            <th class="px-4 sm:px-5 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-black/45 dark:text-white/45 text-right">{{ __('common.actions') }}</th>
+                            <th class="px-4 sm:px-5 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-black/45 dark:text-white/45 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('common.actions') }}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                         @forelse($accounts as $acc)
-                            <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
+                            <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors group">
                                 <td data-sort-value="{{ $acc->code }}" class="px-4 sm:px-5 py-3.5 tabular-nums text-[13.5px] sm:text-[14px] font-mono font-bold {{ $acc->is_system ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-[#34C759] dark:text-[#30D158]' }}">
                                     @if($acc->parent_id)
                                         <span class="text-black/35 dark:text-white/35 mr-1 font-mono">↳</span>
@@ -326,11 +326,12 @@
                                         @endif
                                     </div>
                                 </td>
-                                <td class="px-4 sm:px-5 py-3.5 text-right">
-                                    <div class="flex items-center justify-end gap-1.5">
+                                <td class="px-4 sm:px-5 py-3.5 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                                    <div class="flex items-center justify-end gap-1">
                                         <a href="{{ route('finance.general-ledger', ['account_id' => $acc->id]) }}"
                                             title="{{ __('finance.tooltip_general_ledger_account') }}"
-                                            class="w-9 h-9 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-[#007AFF]/12 hover:text-[#007AFF] text-black/60 dark:text-white/60 flex items-center justify-center transition-colors">
+                                            aria-label="{{ __('finance.tooltip_general_ledger_account') }}"
+                                            class="w-8 h-8 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-[#007AFF]/12 hover:text-[#007AFF] text-black/60 dark:text-white/60 flex items-center justify-center shrink-0 cursor-pointer transition-colors">
                                             <i data-lucide="book-open" class="w-4 h-4"></i>
                                         </a>
                                         @if(\App\Support\Context::hasPermission('accounting.manage'))
@@ -346,14 +347,16 @@
                                                     is_system: {{ $acc->is_system ? 'true' : 'false' }}
                                                 })"
                                                 title="{{ __('finance.tooltip_edit_account') }}"
-                                                class="w-9 h-9 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black/60 dark:text-white/60 flex items-center justify-center transition-colors">
+                                                aria-label="{{ __('finance.tooltip_edit_account') }}"
+                                                class="w-8 h-8 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black/60 dark:text-white/60 flex items-center justify-center shrink-0 cursor-pointer transition-colors">
                                                 <i data-lucide="pencil" class="w-4 h-4"></i>
                                             </button>
                                             @if($acc->canBeDeleted())
                                                 <button type="button"
                                                     @click="confirmDelete({ id: '{{ $acc->id }}', code: '{{ $acc->code }}', name: '{{ addslashes($acc->name) }}' }, '{{ route('finance.coa.destroy', $acc) }}')"
                                                     title="{{ __('finance.tooltip_delete_sub_account') }}"
-                                                    class="w-9 h-9 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-[#FF3B30]/15 hover:text-[#FF3B30] text-black/45 dark:text-white/45 flex items-center justify-center transition-colors">
+                                                    aria-label="{{ __('finance.tooltip_delete_sub_account') }}"
+                                                    class="w-8 h-8 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-[#FF3B30]/15 hover:text-[#FF3B30] text-[#FF3B30] flex items-center justify-center shrink-0 cursor-pointer transition-colors">
                                                     <i data-lucide="trash-2" class="w-4 h-4"></i>
                                                 </button>
                                             @endif

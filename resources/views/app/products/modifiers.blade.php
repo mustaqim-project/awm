@@ -120,12 +120,12 @@
                             <th class="py-3 px-4">{{ __('products.th_price_delta') }}</th>
                             <th class="py-3 px-4">{{ __('products.th_material_consumption') }}</th>
                             <th class="py-3 px-4">{{ __('products.th_status') }}</th>
-                            <th class="py-3 px-5 text-right">{{ __('products.th_actions') }}</th>
+                            <th class="py-3 px-5 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('products.th_actions') }}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                         @forelse($group->options as $opt)
-                        <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.025] transition-colors">
+                        <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.025] transition-colors group">
                             <td class="py-3.5 px-5 font-semibold text-black dark:text-white text-[13.5px]">
                                 {{ $opt->name }}
                             </td>
@@ -164,16 +164,22 @@
                                     </span>
                                 @endif
                             </td>
-                            <td class="py-3.5 px-5 text-right whitespace-nowrap">
+                            <td class="py-3.5 px-5 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                 @if(\App\Support\Context::hasPermission('pos.modifiers'))
-                                <button type="button" @click="openEditOption({{ json_encode($group) }}, {{ json_encode($opt) }})"
-                                    class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium text-[#007AFF] hover:bg-[#007AFF]/10 transition-colors mr-1 min-w-[44px]">
-                                    {{ __('products.btn_edit') }}
-                                </button>
-                                <button type="button" @click="openDeleteOption('{{ $opt->id }}', '{{ addslashes($opt->name) }}')"
-                                    class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium text-[#FF3B30] hover:bg-[#FF3B30]/10 transition-colors min-w-[44px]">
-                                    {{ __('products.btn_delete') }}
-                                </button>
+                                <div class="flex items-center justify-end gap-1">
+                                    <button type="button" @click="openEditOption({{ json_encode($group) }}, {{ json_encode($opt) }})"
+                                        class="w-8 h-8 rounded-[8px] bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
+                                        title="{{ __('products.btn_edit') }}"
+                                        aria-label="{{ __('products.btn_edit') }}">
+                                        <i data-lucide="pencil" class="w-4 h-4"></i>
+                                    </button>
+                                    <button type="button" @click="openDeleteOption('{{ $opt->id }}', '{{ addslashes($opt->name) }}')"
+                                        class="w-8 h-8 rounded-[8px] text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
+                                        title="{{ __('products.btn_delete') }}"
+                                        aria-label="{{ __('products.btn_delete') }}">
+                                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
                                 <form id="form-delete-option-{{ $opt->id }}" method="POST" action="{{ route('pos.modifiers.options.destroy', $opt->id) }}" class="hidden">
                                     @csrf
                                     @method('DELETE')

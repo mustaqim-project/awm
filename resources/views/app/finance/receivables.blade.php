@@ -289,7 +289,7 @@
                         <x-table-sort-th :col="4" type="number" :title="__('finance.col_total_invoice')" align="right" />
                         <x-table-sort-th :col="5" type="number" :title="__('finance.col_remaining_receivable')" align="right" />
                         <x-table-sort-th :col="6" type="number" :title="__('finance.col_receivable_age')" align="center" />
-                        <th class="px-4 py-3 text-[11px] font-semibold uppercase tracking-wide text-black/45 dark:text-white/45 text-right">{{ __('finance.col_action') }}</th>
+                        <th class="px-4 py-3 text-[11px] font-semibold uppercase tracking-wide text-black/45 dark:text-white/45 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('finance.col_action') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
@@ -299,7 +299,7 @@
                         $isOverdue = $daysDiff < 0;
                         $daysOverdue = abs($daysDiff);
                     @endphp
-                    <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
+                    <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors group">
                         <td data-sort-value="{{ strtolower($invoice->invoice_number) }}" class="px-4 py-3.5">
                             @if(\App\Support\Context::hasPermission('invoices.view'))
                             <a href="{{ route('invoices.show', $invoice) }}" class="tabular-nums font-bold text-[#007AFF] dark:text-[#0A84FF] hover:underline">
@@ -336,13 +336,14 @@
                                 </span>
                             @endif
                         </td>
-                        <td class="px-4 py-3.5 text-right">
-                            @if(\App\Support\Context::hasPermission('invoices.view'))
-                            <a href="{{ route('invoices.show', $invoice) }}" class="h-8 px-3 rounded-[8px] text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 transition-colors inline-flex items-center gap-1.5">
-                                <i data-lucide="eye" class="w-3.5 h-3.5"></i>
-                                <span>{{ __('common.detail') }}</span>
-                            </a>
-                            @endif
+                        <td class="px-4 py-3.5 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                            <div class="flex items-center justify-end gap-1">
+                                @if(\App\Support\Context::hasPermission('invoices.view'))
+                                <a href="{{ route('invoices.show', $invoice) }}" class="w-8 h-8 rounded-[8px] text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('common.detail') }}" aria-label="{{ __('common.detail') }}">
+                                    <i data-lucide="eye" class="w-4 h-4"></i>
+                                </a>
+                                @endif
+                            </div>
                         </td>
                     </tr>
                     @empty

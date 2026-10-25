@@ -125,12 +125,12 @@
                         <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right">{{ __('purchasing.bills.col_total_amount') }}</th>
                         <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right">{{ __('purchasing.bills.col_balance_due') }}</th>
                         <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-center">{{ __('purchasing.bills.col_status') }}</th>
-                        <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right">{{ __('purchasing.bills.col_actions') }}</th>
+                        <th class="px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('purchasing.bills.col_actions') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                     @forelse($invoices as $invoice)
-                    <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
+                    <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors group">
                         <td class="px-4 py-3">
                             <a href="{{ route('purchasing.bills.show', $invoice) }}" class="font-medium text-[#007AFF] hover:underline">
                                 {{ $invoice->invoice_number }}
@@ -172,10 +172,12 @@
                                 </span>
                             @endif
                         </td>
-                        <td class="px-4 py-3 text-right">
-                            <a href="{{ route('purchasing.bills.show', $invoice) }}" class="min-h-[44px] sm:min-h-0 h-10 sm:h-7 px-3 sm:px-2.5 rounded-[8px] sm:rounded-[6px] text-[12px] font-medium text-[#007AFF] hover:bg-[#007AFF]/8 transition-colors inline-flex items-center justify-center">
-                                {{ __('purchasing.bills.action_detail') }}
-                            </a>
+                        <td class="px-4 py-3 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                            <div class="flex items-center justify-end gap-1">
+                                <a href="{{ route('purchasing.bills.show', $invoice) }}" class="w-8 h-8 rounded-[8px] bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('purchasing.bills.action_detail') }}" aria-label="{{ __('purchasing.bills.action_detail') }}">
+                                    <i data-lucide="eye" class="w-4 h-4"></i>
+                                </a>
+                            </div>
                         </td>
                     </tr>
                     @empty

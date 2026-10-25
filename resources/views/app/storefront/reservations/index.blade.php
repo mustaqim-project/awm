@@ -160,12 +160,12 @@
                                 <th class="py-3.5 px-4">{{ __('storefront.backoffice.reservations.col_guests') }}</th>
                                 <th class="py-3.5 px-4">{{ __('storefront.backoffice.reservations.col_table_service') }}</th>
                                 <th class="py-3.5 px-4">{{ __('storefront.backoffice.reservations.col_status') }}</th>
-                                <th class="py-3.5 px-4 text-right">{{ __('storefront.backoffice.reservations.col_action') }}</th>
+                                <th class="py-3.5 px-4 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('storefront.backoffice.reservations.col_action') }}</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-black/5 dark:divide-white/5">
                             @foreach ($reservations as $rsv)
-                                <tr class="hover:bg-black/[0.01] dark:hover:bg-white/[0.01] transition-colors">
+                                <tr class="hover:bg-black/[0.01] dark:hover:bg-white/[0.01] transition-colors group">
                                     <td class="py-4 px-4 align-top">
                                         <span
                                             class="font-bold text-black dark:text-white font-mono text-[13px] block">{{ $rsv->reservation_code }}</span>
@@ -251,16 +251,18 @@
                                         @endif
                                     </td>
 
-                                    <td class="py-4 px-4 align-top text-right">
-                                        <div class="flex items-center justify-end gap-1.5" x-data="{ openMenu: false }">
+                                    <td class="py-4 px-4 align-top text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                                        <div class="flex items-center justify-end gap-1" x-data="{ openMenu: false }">
                                             @if ($rsv->status === 'pending_confirmation')
                                                 <form action="{{ route('storefront.reservations.status', $rsv) }}"
                                                     method="POST" class="inline">
                                                     @csrf
                                                     <input type="hidden" name="status" value="confirmed">
                                                     <button type="submit"
-                                                        class="px-2.5 py-1 rounded-[8px] bg-[#34C759] hover:bg-[#2EB04E] text-white font-bold text-[11px] transition">
-                                                        {{ __('storefront.backoffice.reservations.action_confirm') }}
+                                                        class="w-8 h-8 rounded-[8px] bg-[#34C759] hover:bg-[#2EB04E] text-white transition flex items-center justify-center shrink-0 cursor-pointer"
+                                                        title="{{ __('storefront.backoffice.reservations.action_confirm') }}"
+                                                        aria-label="{{ __('storefront.backoffice.reservations.action_confirm') }}">
+                                                        <i data-lucide="check" class="w-4 h-4"></i>
                                                     </button>
                                                 </form>
                                             @elseif($rsv->status === 'confirmed')
@@ -269,8 +271,10 @@
                                                     @csrf
                                                     <input type="hidden" name="status" value="seated">
                                                     <button type="submit"
-                                                        class="px-2.5 py-1 rounded-[8px] bg-[#5856D6] hover:bg-[#4745B8] text-white font-bold text-[11px] transition">
-                                                        {{ __('storefront.backoffice.reservations.action_seat') }}
+                                                        class="w-8 h-8 rounded-[8px] bg-[#5856D6] hover:bg-[#4745B8] text-white transition flex items-center justify-center shrink-0 cursor-pointer"
+                                                        title="{{ __('storefront.backoffice.reservations.action_seat') }}"
+                                                        aria-label="{{ __('storefront.backoffice.reservations.action_seat') }}">
+                                                        <i data-lucide="user-check" class="w-4 h-4"></i>
                                                     </button>
                                                 </form>
                                             @elseif($rsv->status === 'seated')
@@ -279,25 +283,29 @@
                                                     @csrf
                                                     <input type="hidden" name="status" value="completed">
                                                     <button type="submit"
-                                                        class="px-2.5 py-1 rounded-[8px] bg-black dark:bg-white text-white dark:text-black font-bold text-[11px] transition">
-                                                        {{ __('storefront.backoffice.reservations.action_complete') }}
+                                                        class="w-8 h-8 rounded-[8px] bg-black dark:bg-white text-white dark:text-black transition flex items-center justify-center shrink-0 cursor-pointer"
+                                                        title="{{ __('storefront.backoffice.reservations.action_complete') }}"
+                                                        aria-label="{{ __('storefront.backoffice.reservations.action_complete') }}">
+                                                        <i data-lucide="check-check" class="w-4 h-4"></i>
                                                     </button>
                                                 </form>
                                             @endif
 
                                             @if ($rsv->pos_table_id)
                                                 <a href="{{ route('pos.terminal', ['table_id' => $rsv->pos_table_id, 'reservation_id' => $rsv->id]) }}"
-                                                    class="px-2.5 py-1 rounded-[8px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-[#007AFF] font-bold text-[11px] transition flex items-center gap-1"
-                                                    title="Buka Meja ini di Terminal POS Kasir">
-                                                    <i data-lucide="calculator" class="w-3 h-3"></i>
-                                                    <span>{{ __('storefront.backoffice.reservations.btn_open_pos') }}</span>
+                                                    class="w-8 h-8 rounded-[8px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-[#007AFF] transition flex items-center justify-center shrink-0 cursor-pointer"
+                                                    title="{{ __('storefront.backoffice.reservations.btn_open_pos') }}"
+                                                    aria-label="{{ __('storefront.backoffice.reservations.btn_open_pos') }}">
+                                                    <i data-lucide="calculator" class="w-4 h-4"></i>
                                                 </a>
                                             @endif
 
                                             {{-- Dropdown for other actions --}}
                                             <div class="relative">
                                                 <button type="button" @click="openMenu = !openMenu"
-                                                    class="p-1 rounded hover:bg-black/5 dark:hover:bg-white/10 text-black/50">
+                                                    class="w-8 h-8 rounded-[8px] flex items-center justify-center hover:bg-black/5 dark:hover:bg-white/10 text-black/50 dark:text-white/50 cursor-pointer shrink-0"
+                                                    title="{{ __('common.actions') }}"
+                                                    aria-label="{{ __('common.actions') }}">
                                                     <i data-lucide="more-vertical" class="w-4 h-4"></i>
                                                 </button>
                                                 <div x-show="openMenu" @click.away="openMenu = false" x-transition

@@ -1013,7 +1013,7 @@
 
                             {{-- Dynamic Table List --}}
                             <div x-show="!isLoadingRules && customRules.length > 0"
-                                class="rounded-[18px] border border-black/10 dark:border-white/10 overflow-hidden shadow-2xs">
+                                class="rounded-[18px] border border-black/10 dark:border-white/10 overflow-x-auto shadow-2xs">
                                 <table class="w-full text-left text-xs border-collapse">
                                     <thead>
                                         <tr class="bg-black/[0.03] dark:bg-white/[0.04] border-b border-black/10 dark:border-white/10 text-[10.5px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60">
@@ -1021,12 +1021,12 @@
                                             <th class="p-3 w-32">Lingkup</th>
                                             <th class="p-3">Instruksi Aturan</th>
                                             <th class="p-3 w-20 text-center">Status</th>
-                                            <th class="p-3 w-16 text-center">Aksi</th>
+                                            <th class="p-3 w-16 text-center whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-black/5 dark:divide-white/5 text-[11.5px] leading-relaxed">
                                         <template x-for="rule in customRules" :key="rule.id">
-                                            <tr class="hover:bg-black/[0.01] dark:hover:bg-white/[0.01] transition-colors" :class="{'opacity-50 bg-black/[0.02]': !rule.is_active}">
+                                            <tr class="hover:bg-black/[0.01] dark:hover:bg-white/[0.01] transition-colors group" :class="{'opacity-50 bg-black/[0.02]': !rule.is_active}">
                                                 {{-- Jenis Badge --}}
                                                 <td class="p-3 align-middle">
                                                     <span x-show="rule.type === 'do'"
@@ -1065,10 +1065,11 @@
                                                 </td>
 
                                                 {{-- Tombol Hapus --}}
-                                                <td class="p-3 align-middle text-center">
+                                                <td class="p-3 align-middle text-center whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                                     <button type="button" @click="deleteCustomRule(rule)"
                                                         class="w-7 h-7 rounded-[8px] flex items-center justify-center text-rose-500 hover:bg-rose-500/10 transition cursor-pointer mx-auto"
-                                                        title="Hapus aturan ini">
+                                                        title="Hapus aturan ini"
+                                                        aria-label="Hapus aturan ini">
                                                         <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                                                     </button>
                                                 </td>

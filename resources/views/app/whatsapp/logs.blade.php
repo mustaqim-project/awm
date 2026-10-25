@@ -113,7 +113,7 @@
                                 <th class="px-4 py-3">{{ __('whatsapp.col_message_preview') }}</th>
                                 <th class="px-4 py-3 text-center">{{ __('whatsapp.col_status') }}</th>
                                 <th class="px-4 py-3">{{ __('whatsapp.col_created_at') }}</th>
-                                <th class="px-5 py-3 text-right">{{ __('whatsapp.action_label') }}</th>
+                                <th class="px-5 py-3 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('whatsapp.action_label') }}</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
@@ -145,7 +145,7 @@
                                         'sent_at' => $log->created_at->format('d F Y, H:i:s') . ' WIB',
                                     ];
                                 @endphp
-                                <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors cursor-pointer"
+                                <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors cursor-pointer group"
                                     x-show="filterType === 'all' || filterType === '{{ $log->type }}'"
                                     @click="inspectLog(@json($logJson))">
                                     <td class="px-5 py-3.5">
@@ -198,12 +198,15 @@
                                     <td class="px-4 py-3.5 text-black/50 dark:text-white/50 tabular-nums text-[12px] whitespace-nowrap">
                                         {{ $log->created_at->format('d/m/Y H:i') }}
                                     </td>
-                                    <td class="px-5 py-3.5 text-right">
-                                        <button type="button" @click.stop="inspectLog(@json($logJson))"
-                                            class="min-h-[44px] px-3.5 rounded-[12px] text-[12.5px] font-bold text-[#007AFF] hover:bg-[#007AFF]/10 transition-colors inline-flex items-center gap-1.5">
-                                            <span>{{ __('whatsapp.view_detail_log') }}</span>
-                                            <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-                                        </button>
+                                    <td class="px-5 py-3.5 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                                        <div class="flex items-center justify-end">
+                                            <button type="button" @click.stop="inspectLog(@json($logJson))"
+                                                class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#007AFF] hover:bg-[#007AFF]/10 dark:hover:bg-[#007AFF]/20 transition-all cursor-pointer shrink-0"
+                                                title="{{ __('whatsapp.view_detail_log') }}"
+                                                aria-label="{{ __('whatsapp.view_detail_log') }}">
+                                                <i data-lucide="eye" class="w-4 h-4"></i>
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

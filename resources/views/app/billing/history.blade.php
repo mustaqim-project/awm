@@ -219,7 +219,7 @@
                                 <th scope="col" class="py-3.5 px-4 text-right">{{ __('billing.total_payable') }}</th>
                                 <th scope="col" class="py-3.5 px-4 text-center">{{ __('billing.status') }}</th>
                                 <th scope="col" class="py-3.5 px-4">{{ __('billing.order_date') }}</th>
-                                <th scope="col" class="py-3.5 px-5 text-right">{{ __('billing.actions') }}</th>
+                                <th scope="col" class="py-3.5 px-5 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('billing.actions') }}</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.04] font-sans">
@@ -236,7 +236,7 @@
                                                 : 'Top-Up Kuota'));
                                 @endphp
                                 <tr x-show="matchesFilter('{{ $p->order_number }}', '{{ $pPackageName }}', '{{ $p->status }}')"
-                                    class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors">
+                                    class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors group">
                                     <!-- Order Number -->
                                     <td class="py-3.5 px-5">
                                         <div
@@ -295,19 +295,21 @@
                                     </td>
 
                                     <!-- Action CTA -->
-                                    <td class="py-3.5 px-5 text-right whitespace-nowrap">
-                                        <div class="flex items-center justify-end gap-1.5">
+                                    <td class="py-3.5 px-5 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                                        <div class="flex items-center justify-end gap-1">
                                             <a href="{{ route('billing.payment.invoice', $p) }}" target="_blank"
                                                 title="{{ __('billing.print_receipt') }}"
-                                                class="min-w-[36px] min-h-[36px] rounded-[10px] text-gray-500 hover:text-black dark:hover:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.06] active:scale-[0.98] transition cursor-pointer flex items-center justify-center">
+                                                aria-label="{{ __('billing.print_receipt') }}"
+                                                class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#007AFF] hover:bg-[#007AFF]/10 dark:hover:bg-[#007AFF]/20 transition-all cursor-pointer shrink-0">
                                                 <i data-lucide="printer"
-                                                    class="w-4 h-4 text-[#007AFF]"
+                                                    class="w-4 h-4"
                                                     aria-hidden="true"></i>
                                             </a>
                                             <a href="{{ route('billing.payment.show', $p) }}"
-                                                class="min-h-[36px] px-3.5 rounded-[10px] text-xs font-semibold text-gray-700 dark:text-gray-300 bg-black/[0.03] hover:bg-black/[0.06] dark:bg-white/[0.06] dark:hover:bg-white/[0.1] active:scale-[0.98] transition cursor-pointer inline-flex items-center gap-1.5">
-                                                <span>{{ __('billing.quick_detail') }}</span>
-                                                <i data-lucide="chevron-right" class="w-3.5 h-3.5"
+                                                title="{{ __('billing.quick_detail') }}"
+                                                aria-label="{{ __('billing.quick_detail') }}"
+                                                class="w-8 h-8 rounded-[8px] flex items-center justify-center text-gray-700 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/10 transition-all cursor-pointer shrink-0">
+                                                <i data-lucide="eye" class="w-4 h-4"
                                                     aria-hidden="true"></i>
                                             </a>
                                         </div>

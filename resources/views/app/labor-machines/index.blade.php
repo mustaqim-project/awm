@@ -372,7 +372,7 @@
                                     class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right whitespace-nowrap">
                                     Setara per Jam</th>
                                 <th
-                                    class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right whitespace-nowrap">
+                                    class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                     Aksi</th>
                             </tr>
                         </thead>
@@ -381,7 +381,7 @@
                                 @php
                                     $hourly = $laborService->hourlyRateEquivalent($lr);
                                 @endphp
-                                <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors"
+                                <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors group"
                                     x-show="matchesSearch('{{ addslashes($lr->name) }}', '{{ addslashes($lr->basis) }}')">
                                     <td class="py-3 px-4">
                                         <div class="font-medium text-black dark:text-white">{{ $lr->name }}</div>
@@ -409,10 +409,10 @@
                                         {{ $business->currency_symbol }}
                                         {{ number_format((float) $hourly, 0, ',', '.') }}/jam
                                     </td>
-                                    <td class="py-3 px-4 text-right">
+                                    <td class="py-3 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                         @if (\App\Support\Context::hasPermission('costing.manage'))
                                             <div class="flex items-center justify-end gap-1">
-                                                <button type="button" title="Edit tarif"
+                                                <button type="button" title="Edit tarif" aria-label="Edit tarif"
                                                     @click="openEditLabor(@js([
     'id' => $lr->id,
     'name' => $lr->name,
@@ -423,13 +423,13 @@
     'utilization_rate' => $lr->utilization_rate,
     'is_subcontractor' => $lr->is_subcontractor,
 ]))"
-                                                    class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#007AFF] hover:bg-[#007AFF]/8 transition-colors flex items-center">
-                                                    Edit
+                                                    class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#007AFF] hover:bg-[#007AFF]/10 dark:hover:bg-[#007AFF]/20 transition-all cursor-pointer shrink-0">
+                                                    <i data-lucide="pencil" class="w-4 h-4"></i>
                                                 </button>
-                                                <button type="button" title="Hapus tarif"
+                                                <button type="button" title="Hapus tarif" aria-label="Hapus tarif"
                                                     @click="openDelete('{{ route('labor-rates.destroy', $lr->id) }}', '{{ addslashes($lr->name) }}')"
-                                                    class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#FF3B30] hover:bg-[#FF3B30]/8 transition-colors flex items-center">
-                                                    Hapus
+                                                    class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#FF3B30] hover:bg-[#FF3B30]/10 dark:hover:bg-[#FF3B30]/20 transition-all cursor-pointer shrink-0">
+                                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
                                                 </button>
                                             </div>
                                         @else
@@ -576,7 +576,7 @@
                                     class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right whitespace-nowrap">
                                     Total Biaya / Jam</th>
                                 <th
-                                    class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right whitespace-nowrap">
+                                    class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                     Aksi</th>
                             </tr>
                         </thead>
@@ -590,7 +590,7 @@
                                     $maintCost = (float) ($m->maintenance_cost_per_hour ?? 0);
                                     $totalHourly = $deprec + $elecCost + $maintCost;
                                 @endphp
-                                <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors"
+                                <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors group"
                                     x-show="matchesSearch('{{ addslashes($m->name) }}', '{{ addslashes($m->code ?? '') }}')">
                                     <td class="py-3 px-4">
                                         <div class="font-medium text-black dark:text-white">{{ $m->name }}</div>
@@ -618,10 +618,10 @@
                                         {{ $business->currency_symbol }}
                                         {{ number_format((float) $totalHourly, 0, ',', '.') }}/jam
                                     </td>
-                                    <td class="py-3 px-4 text-right">
+                                    <td class="py-3 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                         @if (\App\Support\Context::hasPermission('costing.manage'))
                                             <div class="flex items-center justify-end gap-1">
-                                                <button type="button" title="Edit mesin"
+                                                <button type="button" title="Edit mesin" aria-label="Edit mesin"
                                                     @click="openEditMachine(@js([
     'id' => $m->id,
     'name' => $m->name,
@@ -632,13 +632,13 @@
     'electricity_cost_per_kwh' => 1500,
     'maintenance_cost_per_hour' => $m->maintenance_cost_per_hour,
 ]))"
-                                                    class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#007AFF] hover:bg-[#007AFF]/8 transition-colors flex items-center">
-                                                    Edit
+                                                    class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#007AFF] hover:bg-[#007AFF]/10 dark:hover:bg-[#007AFF]/20 transition-all cursor-pointer shrink-0">
+                                                    <i data-lucide="pencil" class="w-4 h-4"></i>
                                                 </button>
-                                                <button type="button" title="Hapus mesin"
+                                                <button type="button" title="Hapus mesin" aria-label="Hapus mesin"
                                                     @click="openDelete('{{ route('machines.destroy', $m->id) }}', '{{ addslashes($m->name) }}')"
-                                                    class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#FF3B30] hover:bg-[#FF3B30]/8 transition-colors flex items-center">
-                                                    Hapus
+                                                    class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#FF3B30] hover:bg-[#FF3B30]/10 dark:hover:bg-[#FF3B30]/20 transition-all cursor-pointer shrink-0">
+                                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
                                                 </button>
                                             </div>
                                         @else

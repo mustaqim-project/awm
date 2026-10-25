@@ -962,7 +962,7 @@
                                 <th class="py-3 px-3 text-right">{{ __('social_media.th_comments') }}</th>
                                 <th class="py-3 px-3 text-right">{{ __('social_media.th_shares') }}</th>
                                 <th class="py-3 px-3 text-right">{{ __('social_media.th_engagement_rate') }}</th>
-                                <th class="py-3 px-3 text-center">{{ __('social_media.th_actions') }}</th>
+                                <th class="py-3 px-3 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('social_media.th_actions') }}</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
@@ -976,7 +976,7 @@
                                     $pTotalEng = $pLikes + $pComments + $pShares;
                                     $pRate = $pReach > 0 ? round(($pTotalEng / $pReach) * 100, 1) : 0.0;
                                 @endphp
-                                <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.015] transition-colors"
+                                <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.015] transition-colors group"
                                     x-show="matchesSearch('{{ addslashes(strtolower($post->content)) }}')">
                                     <td class="py-3 px-3 max-w-[260px]">
                                         <div class="flex items-center gap-2.5">
@@ -1031,13 +1031,16 @@
                                     <td class="py-3 px-3 text-right tabular-nums text-emerald-600 dark:text-emerald-400 font-bold" id="metric-rate-{{ $post->id }}">
                                         {{ number_format($pRate, 1) }}%
                                     </td>
-                                    <td class="py-3 px-3 text-center">
-                                        <button type="button" @click="syncPostInsights('{{ $post->id }}')"
-                                            id="sync-btn-{{ $post->id }}"
-                                            class="min-h-[36px] px-2.5 py-1 rounded-[8px] text-[11px] font-semibold bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] active:scale-95 transition-all text-black/70 dark:text-white/70 inline-flex items-center gap-1 cursor-pointer">
-                                            <i data-lucide="refresh-cw" class="w-3 h-3" id="icon-sync-{{ $post->id }}"></i>
-                                            <span>{{ __('social_media.fetch_live_btn') }}</span>
-                                        </button>
+                                    <td class="py-3 px-3 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                                        <div class="flex items-center justify-end">
+                                            <button type="button" @click="syncPostInsights('{{ $post->id }}')"
+                                                id="sync-btn-{{ $post->id }}"
+                                                class="w-8 h-8 rounded-[8px] flex items-center justify-center text-black/70 dark:text-white/70 hover:bg-black/[0.06] dark:hover:bg-white/[0.1] active:scale-95 transition-all cursor-pointer shrink-0"
+                                                title="{{ __('social_media.fetch_live_btn') }}"
+                                                aria-label="{{ __('social_media.fetch_live_btn') }}">
+                                                <i data-lucide="refresh-cw" class="w-4 h-4" id="icon-sync-{{ $post->id }}"></i>
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

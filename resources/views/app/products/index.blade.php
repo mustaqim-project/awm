@@ -920,7 +920,7 @@
                                 class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 text-center whitespace-nowrap min-w-[340px]">
                                 {{ __('products.th_channels_status') }}</th>
                             <th
-                                class="py-3 px-5 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 text-right whitespace-nowrap min-w-[150px]">
+                                class="py-3 px-5 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 text-right whitespace-nowrap min-w-[150px] sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                 {{ __('products.th_actions') }}</th>
                         </tr>
                     </thead>
@@ -933,7 +933,7 @@
                                     ? (float) $latestVer->hpp_per_unit
                                     : (float) $prod->base_cost;
                             @endphp
-                            <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.025] transition-colors">
+                            <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.025] transition-colors group">
                                 <td data-sort-value="{{ strtolower($prod->name) }}" class="py-3.5 px-5 font-medium text-black dark:text-white">
                                     <div class="flex items-center gap-3">
                                         <div
@@ -1087,32 +1087,35 @@
                                         @endif
                                     </div>
                                 </td>
-                                <td class="py-3.5 px-5 text-right whitespace-nowrap">
-                                    <div class="flex items-center justify-end gap-1.5 flex-nowrap shrink-0">
+                                <td class="py-3.5 px-5 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                                    <div class="flex items-center justify-end gap-1 flex-nowrap shrink-0">
                                         @if (
                                             \App\Support\Context::hasPermission('products.view') ||
                                                 \App\Support\Context::hasPermission('products.manage') ||
                                                 \App\Support\Context::hasPermission('costing.manage'))
                                             <a href="{{ route('products.bom', $prod->slug) }}"
-                                                class="h-8 px-2.5 rounded-[8px] text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 transition-colors flex items-center gap-1 min-w-[44px] justify-center">
-                                                <span>{{ __('products.btn_bom') }}</span>
+                                                class="w-8 h-8 rounded-[8px] text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
+                                                title="{{ __('products.btn_bom') }}"
+                                                aria-label="{{ __('products.btn_bom') }}">
+                                                <i data-lucide="layers" class="w-4 h-4"></i>
                                             </a>
                                         @endif
 
                                         @if (\App\Support\Context::hasPermission('costing.manage') || \App\Support\Context::hasPermission('costing.view_margin'))
                                             <a href="{{ route('calculator.index', ['product_id' => $prod->id, 'tab' => 'advanced']) }}"
-                                                class="h-8 px-2.5 rounded-[8px] text-[12px] font-semibold text-[#AF52DE] bg-[#AF52DE]/10 hover:bg-[#AF52DE]/15 transition-colors flex items-center gap-1 min-w-[44px] justify-center"
-                                                title="Hitung HPP & tetapkan margin harga jual di Kalkulator">
-                                                <span>{{ __('products.btn_calculation') }}</span>
+                                                class="w-8 h-8 rounded-[8px] text-[#AF52DE] bg-[#AF52DE]/10 hover:bg-[#AF52DE]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
+                                                title="{{ __('products.btn_calculation') }} - Hitung HPP & Margin"
+                                                aria-label="{{ __('products.btn_calculation') }}">
+                                                <i data-lucide="calculator" class="w-4 h-4"></i>
                                             </a>
                                         @endif
 
                                         @if (\App\Support\Context::hasPermission('products.edit') || \App\Support\Context::hasPermission('products.manage'))
                                             <button type="button" @click="openBranchPricesModal('{{ $prod->id }}')"
-                                                class="h-8 px-2.5 rounded-[8px] text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 transition-colors flex items-center gap-1 min-w-[44px] justify-center"
-                                                title="Atur Harga Khusus per Cabang">
-                                                <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
-                                                <span>{{ __('products.btn_branch') }}</span>
+                                                class="w-8 h-8 rounded-[8px] text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
+                                                title="{{ __('products.btn_branch') }} - Atur Harga Khusus per Cabang"
+                                                aria-label="{{ __('products.btn_branch') }}">
+                                                <i data-lucide="map-pin" class="w-4 h-4"></i>
                                             </button>
                                         @endif
 
@@ -1147,18 +1150,20 @@
                                     channel_prices: {{ Js::from($prod->channelPrices->pluck('price', 'channel')) }},
                                     images: {{ Js::from($prod->images->map(fn($img) => ['id' => $img->id, 'image_url' => $img->image_url, 'caption' => $img->caption])) }}
                                 })"
-                                                class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition-colors flex items-center min-w-[44px] justify-center"
-                                                title="Edit Produk">
-                                                {{ __('products.btn_edit') }}
+                                                class="w-8 h-8 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/70 dark:text-white/70 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
+                                                title="{{ __('products.btn_edit') }}"
+                                                aria-label="{{ __('products.btn_edit') }}">
+                                                <i data-lucide="pencil" class="w-4 h-4"></i>
                                             </button>
                                         @endif
 
                                         @if (\App\Support\Context::hasPermission('products.delete') || \App\Support\Context::hasPermission('products.manage'))
                                             <button type="button"
                                                 @click="openDelete('{{ $prod->id }}', {{ Js::from($prod->name) }})"
-                                                class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium text-[#FF3B30] hover:bg-[#FF3B30]/8 transition-colors flex items-center min-w-[44px] justify-center"
-                                                title="Hapus Produk">
-                                                {{ __('products.btn_delete') }}
+                                                class="w-8 h-8 rounded-[8px] text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
+                                                title="{{ __('products.btn_delete') }}"
+                                                aria-label="{{ __('products.btn_delete') }}">
+                                                <i data-lucide="trash-2" class="w-4 h-4"></i>
                                             </button>
                                             <form id="form-delete-{{ $prod->id }}" method="POST"
                                                 action="{{ route('products.destroy', $prod->id) }}" class="hidden">

@@ -132,12 +132,12 @@
                             <th class="py-2.5 px-4">{{ __('sales.returns.col_compensation_type') }}</th>
                             <th class="py-2.5 px-4 text-right">{{ __('sales.returns.col_total_amount') }}</th>
                             <th class="py-2.5 px-4 text-center">{{ __('sales.returns.col_status') }}</th>
-                            <th class="py-2.5 px-4 text-right">{{ __('sales.returns.col_actions') }}</th>
+                            <th class="py-2.5 px-4 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('sales.returns.col_actions') }}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                         @forelse($returns as $return)
-                            <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
+                            <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors group">
                                 <td class="py-3 px-4 font-semibold whitespace-nowrap">
                                     <a href="{{ route('sales.returns.show', $return) }}"
                                         class="text-[#007AFF] hover:underline tabular-nums">
@@ -211,34 +211,35 @@
                                         </span>
                                     @endif
                                 </td>
-                                <td class="py-3 px-4 text-right whitespace-nowrap">
+                                <td class="py-3 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                     <div class="flex items-center justify-end gap-1">
                                         <a href="{{ route('sales.returns.pdf', $return) }}" target="_blank"
-                                            class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition-colors inline-flex items-center gap-1"
-                                            title="Unduh PDF">
-                                            <i data-lucide="printer" class="w-3.5 h-3.5 text-black/50 dark:text-white/50"></i>
-                                            <span>PDF</span>
+                                            class="w-8 h-8 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/70 dark:text-white/70 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
+                                            title="Unduh PDF"
+                                            aria-label="Unduh PDF">
+                                            <i data-lucide="printer" class="w-4 h-4"></i>
                                         </a>
                                         @if ($return->status === 'draft' && (\App\Support\Context::hasPermission('sales.returns') || \App\Support\Context::hasPermission('sales.pipeline')))
                                         <a href="{{ route('sales.returns.edit', $return) }}"
-                                            class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition-colors inline-flex items-center gap-1"
-                                            title="Edit Retur">
-                                            <i data-lucide="edit-3" class="w-3.5 h-3.5 text-black/50 dark:text-white/50"></i>
-                                            <span>Edit</span>
+                                            class="w-8 h-8 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/70 dark:text-white/70 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
+                                            title="Edit Retur"
+                                            aria-label="Edit Retur">
+                                            <i data-lucide="pencil" class="w-4 h-4"></i>
                                         </a>
                                         @endif
                                         <a href="{{ route('sales.returns.show', $return) }}"
-                                            class="h-7 px-2.5 rounded-[6px] text-[12px] font-medium text-[#007AFF] hover:bg-[#007AFF]/8 transition-colors inline-flex items-center gap-1">
-                                            <span>{{ __('sales.returns.btn_detail') }}</span>
-                                            <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                                            class="w-8 h-8 rounded-[8px] bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
+                                            title="{{ __('sales.returns.btn_detail') }}"
+                                            aria-label="{{ __('sales.returns.btn_detail') }}">
+                                            <i data-lucide="eye" class="w-4 h-4"></i>
                                         </a>
                                         @if ($return->status === 'draft' && (\App\Support\Context::hasPermission('sales.returns') || \App\Support\Context::hasPermission('sales.pipeline')))
                                         <button type="button"
                                             @click="openDelete('{{ route('sales.returns.destroy', $return) }}', '{{ $return->return_number }}')"
-                                            class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#FF3B30] hover:bg-[#FF3B30]/10 transition-colors inline-flex items-center gap-1 cursor-pointer"
-                                            title="Hapus Retur Penjualan">
-                                            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                                            <span>Hapus</span>
+                                            class="w-8 h-8 rounded-[8px] text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
+                                            title="Hapus Retur Penjualan"
+                                            aria-label="Hapus Retur Penjualan">
+                                            <i data-lucide="trash-2" class="w-4 h-4"></i>
                                         </button>
                                         @endif
                                     </div>

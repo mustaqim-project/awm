@@ -271,13 +271,13 @@
                                 class="py-3 px-4 text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D] text-center whitespace-nowrap">
                                 {{ __('services.table.col_channels') }}</th>
                             <th
-                                class="py-3 px-4 text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D] text-right whitespace-nowrap">
+                                class="py-3 px-4 text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D] text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                 {{ __('services.table.col_actions') }}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                         @forelse($services as $item)
-                            <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
+                            <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors group">
                                 <td data-sort-value="{{ strtolower($item->name) }}" class="py-3.5 px-4 font-medium text-[#1C1C1E] dark:text-[#F2F2F7]">
                                     <div class="font-semibold text-[13.5px]">{{ $item->name }}</div>
                                     <div class="text-[11px] text-[#8E8E93] dark:text-[#98989D] tabular-nums mt-0.5">
@@ -320,16 +320,20 @@
                                         </span>
                                     </div>
                                 </td>
-                                <td class="py-3.5 px-4 text-right whitespace-nowrap">
-                                    <div class="flex items-center justify-end gap-1.5">
+                                <td class="py-3.5 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                                    <div class="flex items-center justify-end gap-1">
                                         <button type="button" @click="openEdit({{ Js::from($item) }})"
-                                            class="min-h-[36px] px-3 rounded-[8px] text-[12px] font-medium text-[#1C1C1E] dark:text-[#F2F2F7] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] active:scale-[0.97] transition-all cursor-pointer">
-                                            {{ __('services.actions.edit') }}
+                                            class="w-8 h-8 rounded-[8px] text-black/70 dark:text-white/70 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] active:scale-[0.97] transition-all flex items-center justify-center shrink-0 cursor-pointer"
+                                            title="{{ __('services.actions.edit') }}"
+                                            aria-label="{{ __('services.actions.edit') }}">
+                                            <i data-lucide="pencil" class="w-4 h-4"></i>
                                         </button>
                                         <button type="button"
                                             @click="openDelete('{{ $item->id }}', {{ Js::from($item->name) }})"
-                                            class="min-h-[36px] px-3 rounded-[8px] text-[12px] font-medium text-[#FF3B30] hover:bg-[#FF3B30]/10 active:scale-[0.97] transition-all cursor-pointer">
-                                            {{ __('services.actions.delete') }}
+                                            class="w-8 h-8 rounded-[8px] text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 active:scale-[0.97] transition-all flex items-center justify-center shrink-0 cursor-pointer"
+                                            title="{{ __('services.actions.delete') }}"
+                                            aria-label="{{ __('services.actions.delete') }}">
+                                            <i data-lucide="trash-2" class="w-4 h-4"></i>
                                         </button>
                                         <form id="form-delete-{{ $item->id }}"
                                             action="{{ route('services.destroy', $item) }}" method="POST"

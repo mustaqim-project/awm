@@ -341,7 +341,7 @@
                                 <span>Tokopedia</span>
                             </span>
                         </th>
-                        <th class="py-3 px-4 sm:px-6 text-right w-[9%]">{{ __('marketplace.th_action') }}</th>
+                        <th class="py-3 px-4 sm:px-6 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('marketplace.th_action') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
@@ -365,7 +365,7 @@
                             $isServiceItem    = $product->isService();
                             $thumbUrl         = $product->image_url ?? $product->images->first()?->image_url;
                         @endphp
-                        <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.015] transition-colors">
+                        <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.015] transition-colors group">
                             <!-- Column 1: Product Name, Thumbnail, SKU & Stock -->
                             <td class="py-3.5 px-4 sm:px-6">
                                 <div class="flex items-center gap-3">
@@ -671,7 +671,7 @@
                             </td>
 
                             <!-- Column 6: Sync & Management Actions -->
-                            <td class="py-3.5 px-4 sm:px-6 text-right">
+                            <td class="py-3.5 px-4 sm:px-6 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                 @if($isRestrictedDrug || $isServiceItem)
                                     <span class="text-[11px] text-black/35 dark:text-white/35 italic font-medium">
                                         {{ $isRestrictedDrug ? __('marketplace.status_restricted') : __('marketplace.offline_service') }}
@@ -679,16 +679,18 @@
                                 @else
                                     <div class="flex items-center justify-end gap-1 relative" x-data="{ openMenu: false }" @click.outside="openMenu = false">
                                         <button type="button" @click="openMapping('{{ $product->id }}', 'shopee')"
-                                            class="h-7 px-2.5 rounded-[8px] text-[11.5px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 transition-all inline-flex items-center gap-1 cursor-pointer shadow-2xs">
-                                            <i data-lucide="sliders" class="w-3 h-3"></i>
-                                            <span>{{ __('marketplace.manage') }}</span>
+                                            class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#007AFF] hover:bg-[#007AFF]/10 dark:hover:bg-[#007AFF]/20 transition-all cursor-pointer shrink-0"
+                                            title="{{ __('marketplace.manage') }}"
+                                            aria-label="{{ __('marketplace.manage') }}">
+                                            <i data-lucide="sliders" class="w-4 h-4"></i>
                                         </button>
 
                                         @if($hasAnyMapping)
                                             <button type="button" @click="openMenu = !openMenu"
-                                                class="w-7 h-7 rounded-[8px] flex items-center justify-center text-black/50 dark:text-white/50 hover:bg-black/[0.06] dark:hover:bg-white/[0.08] transition-colors cursor-pointer"
-                                                title="{{ __('marketplace.menu_additional_actions') }}">
-                                                <i data-lucide="more-horizontal" class="w-3.5 h-3.5"></i>
+                                                class="w-8 h-8 rounded-[8px] flex items-center justify-center text-black/50 dark:text-white/50 hover:bg-black/[0.06] dark:hover:bg-white/[0.08] transition-colors cursor-pointer shrink-0"
+                                                title="{{ __('marketplace.menu_additional_actions') }}"
+                                                aria-label="{{ __('marketplace.menu_additional_actions') }}">
+                                                <i data-lucide="more-horizontal" class="w-4 h-4"></i>
                                             </button>
 
                                             <!-- Dropdown Menu -->

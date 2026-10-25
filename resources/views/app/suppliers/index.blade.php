@@ -380,12 +380,12 @@
                             <x-table-sort-th :col="3" type="string" :title="__('purchasing.supplier.table.bank_account')" />
                             <x-table-sort-th :col="4" type="string" :title="__('purchasing.supplier.table.email_address')" />
                             <x-table-sort-th :col="5" type="number" :title="__('purchasing.supplier.table.raw_materials')" align="center" />
-                            <th class="px-4 py-3 text-right">{{ __('purchasing.supplier.table.action') }}</th>
+                            <th class="px-4 py-3 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('purchasing.supplier.table.action') }}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                         @forelse($suppliers as $supplier)
-                            <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors">
+                            <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors group">
                                 {{-- Nama & Catatan --}}
                                 <td data-sort-value="{{ strtolower($supplier->name) }}" class="px-4 py-3.5">
                                     <div class="font-bold text-slate-900 dark:text-white">
@@ -473,20 +473,22 @@
                                 </td>
 
                                 {{-- Action Buttons --}}
-                                <td class="px-4 py-3.5 text-right">
-                                    <div class="flex items-center justify-end gap-1.5">
+                                <td class="px-4 py-3.5 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                                    <div class="flex items-center justify-end gap-1">
                                         @if (\App\Support\Context::hasPermission('master_data.suppliers.manage') || \App\Support\Context::isAdminOrOwner())
                                             <button type="button"
                                                 @click="openEditModal(@js($supplier))"
-                                                class="min-h-[44px] sm:min-h-0 h-8 px-3 rounded-[8px] text-xs font-semibold text-[#007AFF] hover:bg-[#007AFF]/10 transition-colors flex items-center gap-1 cursor-pointer">
-                                                <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
-                                                <span>{{ __('purchasing.supplier.actions.edit_supplier') }}</span>
+                                                class="w-8 h-8 rounded-[8px] bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
+                                                title="{{ __('purchasing.supplier.actions.edit_supplier') }}"
+                                                aria-label="{{ __('purchasing.supplier.actions.edit_supplier') }}">
+                                                <i data-lucide="pencil" class="w-4 h-4"></i>
                                             </button>
                                             <button type="button"
                                                 @click="openDelete(@js($supplier->id), @js($supplier->name))"
-                                                class="min-h-[44px] sm:min-h-0 h-8 px-3 rounded-[8px] text-xs font-semibold text-[#FF3B30] hover:bg-[#FF3B30]/10 transition-colors flex items-center gap-1 cursor-pointer">
-                                                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                                                <span>{{ __('purchasing.supplier.actions.delete_supplier') }}</span>
+                                                class="w-8 h-8 rounded-[8px] text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
+                                                title="{{ __('purchasing.supplier.actions.delete_supplier') }}"
+                                                aria-label="{{ __('purchasing.supplier.actions.delete_supplier') }}">
+                                                <i data-lucide="trash-2" class="w-4 h-4"></i>
                                             </button>
                                             <form id="form-delete-supplier-{{ $supplier->id }}" method="POST"
                                                 action="{{ route('suppliers.destroy', $supplier->id) }}" class="hidden">

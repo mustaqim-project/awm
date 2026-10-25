@@ -355,12 +355,12 @@
                         <th class="pb-3">{{ __('pos.purpose_routing_header') }}</th>
                         <th class="pb-3">{{ __('pos.paper_width_header') }}</th>
                         <th class="pb-3">{{ __('pos.status_header') }}</th>
-                        <th class="pb-3 text-right pr-1">{{ __('pos.actions_diagnostics_header') }}</th>
+                        <th class="pb-3 text-right pr-1 whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('pos.actions_diagnostics_header') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.04]">
                     @foreach($printers as $p)
-                    <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition">
+                    <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition group">
                         <td class="py-3.5 pl-1">
                             <div class="flex items-center gap-2.5">
                                 <div class="w-8 h-8 rounded-xl bg-black/[0.05] dark:bg-white/[0.08] flex items-center justify-center shrink-0">
@@ -420,44 +420,46 @@
                             </span>
                             @endif
                         </td>
-                        <td class="py-3.5 text-right pr-1">
-                            <div class="flex items-center justify-end gap-1.5">
+                        <td class="py-3.5 text-right pr-1 whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                            <div class="flex items-center justify-end gap-1">
                                 <!-- Test Print -->
                                 <button type="button" @click="runTestPrint('{{ $p->id }}')" :disabled="isTesting"
-                                    class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] text-black/80 dark:text-white/80 active:scale-[0.97] transition flex items-center gap-1"
-                                    title="{{ __('pos.test_print') }}">
-                                    <i data-lucide="printer" class="w-3.5 h-3.5 text-[#007AFF]"></i>
-                                    <span>{{ __('pos.test_print_short') }}</span>
+                                    class="w-8 h-8 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] text-[#007AFF] active:scale-[0.97] transition flex items-center justify-center shrink-0 cursor-pointer"
+                                    title="{{ __('pos.test_print') }}"
+                                    aria-label="{{ __('pos.test_print') }}">
+                                    <i data-lucide="printer" class="w-4 h-4 text-[#007AFF]"></i>
                                 </button>
 
                                 <!-- Test Drawer (if supported) -->
                                 @if($p->hasCapability('cash_drawer'))
                                 <button type="button" @click="runTestDrawer('{{ $p->id }}')" :disabled="isTesting"
-                                    class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] text-black/80 dark:text-white/80 active:scale-[0.97] transition flex items-center gap-1"
-                                    title="{{ __('pos.test_drawer') }}">
-                                    <i data-lucide="inbox" class="w-3.5 h-3.5 text-[#34C759]"></i>
-                                    <span>{{ __('pos.test_drawer_short') }}</span>
+                                    class="w-8 h-8 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] text-[#34C759] active:scale-[0.97] transition flex items-center justify-center shrink-0 cursor-pointer"
+                                    title="{{ __('pos.test_drawer') }}"
+                                    aria-label="{{ __('pos.test_drawer') }}">
+                                    <i data-lucide="inbox" class="w-4 h-4 text-[#34C759]"></i>
                                 </button>
                                 <button type="button" @click="openManualDrawer({{ json_encode($p) }})"
-                                    class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] text-black/80 dark:text-white/80 active:scale-[0.97] transition flex items-center gap-1"
-                                    title="{{ __('pos.manual_drawer_title') }}">
-                                    <i data-lucide="key" class="w-3.5 h-3.5 text-[#FF9500]"></i>
-                                    <span>{{ __('pos.manual_pop_short') }}</span>
+                                    class="w-8 h-8 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] text-[#FF9500] active:scale-[0.97] transition flex items-center justify-center shrink-0 cursor-pointer"
+                                    title="{{ __('pos.manual_drawer_title') }}"
+                                    aria-label="{{ __('pos.manual_drawer_title') }}">
+                                    <i data-lucide="key" class="w-4 h-4 text-[#FF9500]"></i>
                                 </button>
                                 @endif
 
                                 <!-- Ping Diagnostic -->
                                 <button type="button" @click="runDiagnose('{{ $p->id }}')" :disabled="isTesting"
-                                    class="h-8 w-8 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] text-black/70 dark:text-white/70 flex items-center justify-center transition"
-                                    title="{{ __('pos.diagnose_printer') }}">
-                                    <i data-lucide="activity" class="w-3.5 h-3.5"></i>
+                                    class="w-8 h-8 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] text-black/70 dark:text-white/70 flex items-center justify-center shrink-0 cursor-pointer transition"
+                                    title="{{ __('pos.diagnose_printer') }}"
+                                    aria-label="{{ __('pos.diagnose_printer') }}">
+                                    <i data-lucide="activity" class="w-4 h-4"></i>
                                 </button>
 
                                 <!-- Edit -->
                                 <button type="button" @click="openEdit({{ json_encode($p) }})"
-                                    class="h-8 w-8 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] text-black/70 dark:text-white/70 flex items-center justify-center transition"
-                                    title="{{ __('pos.edit_printer') }}">
-                                    <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                                    class="w-8 h-8 rounded-[8px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-[#007AFF] flex items-center justify-center shrink-0 cursor-pointer transition"
+                                    title="{{ __('pos.edit_printer') }}"
+                                    aria-label="{{ __('pos.edit_printer') }}">
+                                    <i data-lucide="pencil" class="w-4 h-4"></i>
                                 </button>
 
                                 <!-- Delete -->
@@ -465,8 +467,8 @@
                                     onsubmit="return typeof AppAlert !== 'undefined' ? AppAlert.confirmSubmit(event, this, 'Hapus printer \'{{ addslashes($p->name) }}\'?', 'Hapus Printer?', 'danger') : true">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="h-8 w-8 rounded-[8px] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 text-[#FF3B30] flex items-center justify-center transition" title="{{ __('pos.delete_printer') }}">
-                                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                    <button type="submit" class="w-8 h-8 rounded-[8px] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 text-[#FF3B30] flex items-center justify-center shrink-0 cursor-pointer transition" title="{{ __('pos.delete_printer') }}" aria-label="{{ __('pos.delete_printer') }}">
+                                        <i data-lucide="trash-2" class="w-4 h-4"></i>
                                     </button>
                                 </form>
                             </div>

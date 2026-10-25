@@ -929,12 +929,12 @@
                                     <th class="py-2.5 px-4">{{ __('settings.branch_type') }}</th>
                                     <th class="py-2.5 px-4">{{ __('settings.branch_timezone') }}</th>
                                     <th class="py-2.5 px-4">{{ __('settings.branch_schedule_mode') }}</th>
-                                    <th class="py-2.5 pl-4 text-right">{{ __('settings.action') }}</th>
+                                    <th class="py-2.5 px-4 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('settings.action') }}</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-black/5 dark:divide-white/5">
                                 @forelse ($locations as $loc)
-                                    <tr>
+                                    <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors group">
                                         <td class="py-3 pr-4 font-semibold text-black dark:text-white">
                                             {{ $loc->name }}
                                             @if ($loc->is_primary)
@@ -967,20 +967,26 @@
                                                 </span>
                                             @endif
                                         </td>
-                                        <td class="py-3 pl-4 text-right">
-                                            @if (\App\Support\Context::hasPermission('warehouse.manage') || \App\Support\Context::isAdminOrOwner())
-                                                <a href="{{ route('warehouse.edit', $loc) }}"
-                                                    class="inline-flex items-center justify-center px-3 py-1.5 rounded-[8px] text-[12px] font-medium text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 transition min-h-[36px]">
-                                                    {{ __('settings.change_schedule') }}
-                                                </a>
-                                            @elseif (\App\Support\Context::hasPermission('warehouse.view'))
-                                                <a href="{{ route('warehouse.show', $loc) }}"
-                                                    class="inline-flex items-center justify-center px-3 py-1.5 rounded-[8px] text-[12px] font-medium text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 transition min-h-[36px]">
-                                                    {{ __('settings.view_details') }}
-                                                </a>
-                                            @else
-                                                <span class="text-[12px] text-black/40 dark:text-white/40">-</span>
-                                            @endif
+                                        <td class="py-3 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                                            <div class="flex items-center justify-end">
+                                                @if (\App\Support\Context::hasPermission('warehouse.manage') || \App\Support\Context::isAdminOrOwner())
+                                                    <a href="{{ route('warehouse.edit', $loc) }}"
+                                                        class="w-8 h-8 rounded-[8px] flex items-center justify-center text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/10 transition-all cursor-pointer shrink-0"
+                                                        title="{{ __('settings.change_schedule') }}"
+                                                        aria-label="{{ __('settings.change_schedule') }}">
+                                                        <i data-lucide="pencil" class="w-4 h-4"></i>
+                                                    </a>
+                                                @elseif (\App\Support\Context::hasPermission('warehouse.view'))
+                                                    <a href="{{ route('warehouse.show', $loc) }}"
+                                                        class="w-8 h-8 rounded-[8px] flex items-center justify-center text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/10 transition-all cursor-pointer shrink-0"
+                                                        title="{{ __('settings.view_details') }}"
+                                                        aria-label="{{ __('settings.view_details') }}">
+                                                        <i data-lucide="eye" class="w-4 h-4"></i>
+                                                    </a>
+                                                @else
+                                                    <span class="text-[12px] text-black/40 dark:text-white/40">-</span>
+                                                @endif
+                                            </div>
                                         </td>
                                     </tr>
                                 @empty

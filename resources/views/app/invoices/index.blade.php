@@ -172,12 +172,12 @@
                         <x-table-sort-th :col="4" type="number" :title="__('sales.invoices.col_total_amount')" align="right" class="whitespace-nowrap" />
                         <x-table-sort-th :col="5" type="number" :title="__('sales.invoices.col_balance_due')" align="right" class="whitespace-nowrap" />
                         <x-table-sort-th :col="6" type="number" :title="__('sales.invoices.col_gross_profit')" align="right" class="whitespace-nowrap" />
-                        <th class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right whitespace-nowrap">{{ __('sales.invoices.col_actions') }}</th>
+                        <th class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('sales.invoices.col_actions') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                     @forelse($invoices as $inv)
-                    <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
+                    <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors group">
                         <td data-sort-value="{{ strtolower($inv->invoice_number) }}" class="py-3 px-4">
                             <a href="{{ route('invoices.show', $inv->id) }}" class="font-semibold text-black dark:text-white hover:text-[#007AFF] transition-colors tabular-nums">
                                 {{ $inv->invoice_number }}
@@ -230,34 +230,34 @@
                         <td data-sort-value="{{ (float) $inv->total_gross_profit }}" class="py-3 px-4 text-right tabular-nums text-[#34C759] dark:text-[#30D158] font-medium">
                             {{ $business->currency_symbol }} {{ number_format((float) $inv->total_gross_profit, 0, ',', '.') }}
                         </td>
-                        <td class="py-3 px-4 text-right whitespace-nowrap">
+                        <td class="py-3 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                             <div class="flex items-center justify-end gap-1">
                                 <a href="{{ route('invoices.pdf', $inv->id) }}" target="_blank"
-                                    class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition-colors inline-flex items-center gap-1"
-                                    title="{{ __('sales.invoices.btn_download_pdf') }}">
-                                    <i data-lucide="printer" class="w-3.5 h-3.5 text-black/50 dark:text-white/50"></i>
-                                    <span>PDF</span>
+                                    class="w-8 h-8 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/70 dark:text-white/70 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
+                                    title="{{ __('sales.invoices.btn_download_pdf') }}"
+                                    aria-label="{{ __('sales.invoices.btn_download_pdf') }}">
+                                    <i data-lucide="printer" class="w-4 h-4"></i>
                                 </a>
                                 @if(!in_array($inv->status, ['paid', 'void'], true) && (float) $inv->paid_amount <= 0 && (\App\Support\Context::hasPermission('invoices.edit') || \App\Support\Context::hasPermission('invoices.create')))
                                 <a href="{{ route('invoices.edit', $inv->id) }}"
-                                    class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition-colors inline-flex items-center gap-1"
-                                    title="{{ __('sales.invoices.btn_edit_invoice') }}">
-                                    <i data-lucide="edit-3" class="w-3.5 h-3.5 text-black/50 dark:text-white/50"></i>
-                                    <span>Edit</span>
+                                    class="w-8 h-8 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/70 dark:text-white/70 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
+                                    title="{{ __('sales.invoices.btn_edit_invoice') }}"
+                                    aria-label="{{ __('sales.invoices.btn_edit_invoice') }}">
+                                    <i data-lucide="pencil" class="w-4 h-4"></i>
                                 </a>
                                 @endif
                                 <a href="{{ route('invoices.show', $inv->id) }}"
-                                    class="h-7 px-2.5 rounded-[6px] text-[12px] font-medium text-[#007AFF] hover:bg-[#007AFF]/8 transition-colors inline-flex items-center gap-1"
-                                    title="{{ __('sales.invoices.btn_detail') }}">
-                                    <span>{{ __('sales.invoices.btn_detail') }}</span>
-                                    <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                                    class="w-8 h-8 rounded-[8px] bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
+                                    title="{{ __('sales.invoices.btn_detail') }}"
+                                    aria-label="{{ __('sales.invoices.btn_detail') }}">
+                                    <i data-lucide="eye" class="w-4 h-4"></i>
                                 </a>
                                 @if($inv->status === 'draft' && \App\Support\Context::hasPermission('invoices.delete'))
                                     <button type="button" @click="openDelete('{{ route('invoices.destroy', $inv->id) }}', '{{ addslashes($inv->invoice_number) }}')"
-                                        class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#FF3B30] hover:bg-[#FF3B30]/8 transition-colors inline-flex items-center gap-1"
-                                        title="{{ __('sales.invoices.btn_delete') }}">
-                                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                                        <span>{{ __('sales.invoices.btn_delete') }}</span>
+                                        class="w-8 h-8 rounded-[8px] text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
+                                        title="{{ __('sales.invoices.btn_delete') }}"
+                                        aria-label="{{ __('sales.invoices.btn_delete') }}">
+                                        <i data-lucide="trash-2" class="w-4 h-4"></i>
                                     </button>
                                 @endif
                             </div>

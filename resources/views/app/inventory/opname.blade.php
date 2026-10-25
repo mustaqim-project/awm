@@ -256,14 +256,14 @@
                         <x-table-sort-th :col="2" type="string" :title="__('inventory.th_conductor')" />
                         <x-table-sort-th :col="3" type="number" :title="__('inventory.th_item_count')" align="center" />
                         <x-table-sort-th :col="4" type="string" :title="__('inventory.th_status')" align="center" />
-                        <th class="py-3 px-4 text-[11px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50 text-right">
+                        <th class="py-3 px-4 text-[11px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                             {{ __('inventory.th_actions') }}
                         </th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                     @forelse($opnames as $op)
-                    <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
+                    <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors group">
                         <td data-sort-value="{{ $op->opname_number }}" class="py-3.5 px-4">
                             <div class="font-semibold text-black dark:text-white tabular-nums">#{{ $op->opname_number }}</div>
                             <div class="text-[11px] text-black/45 dark:text-white/45 mt-0.5">{{ $op->notes ?? __('inventory.default_opname_notes') }}</div>
@@ -291,19 +291,23 @@
                                 </span>
                             @endif
                         </td>
-                        <td class="py-3.5 px-4 text-right">
-                            @if($op->status !== 'reconciled')
-                                @if(\App\Support\Context::hasPermission('inventory.manage'))
-                                <button type="button" @click="openReconcile('{{ $op->id }}', '{{ $op->opname_number }}')" class="h-8 px-3 rounded-[8px] text-[12px] font-semibold text-white bg-[#34C759] hover:bg-[#2FB350] active:scale-[0.97] transition-all shadow-xs cursor-pointer">
-                                    {{ __('inventory.btn_reconcile') }}
-                                </button>
-                                <form id="form-reconcile-{{ $op->id }}" action="{{ route('inventory.opnames.reconcile', $op->id) }}" method="POST" class="hidden">
-                                    @csrf
-                                </form>
+                        <td class="py-3.5 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                            <div class="flex items-center justify-end gap-1">
+                                @if($op->status !== 'reconciled')
+                                    @if(\App\Support\Context::hasPermission('inventory.manage'))
+                                    <button type="button" @click="openReconcile('{{ $op->id }}', '{{ $op->opname_number }}')" class="w-8 h-8 rounded-[8px] bg-[#34C759]/10 text-[#34C759] hover:bg-[#34C759]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('inventory.btn_reconcile') }}" aria-label="{{ __('inventory.btn_reconcile') }}">
+                                        <i data-lucide="check" class="w-4 h-4"></i>
+                                    </button>
+                                    <form id="form-reconcile-{{ $op->id }}" action="{{ route('inventory.opnames.reconcile', $op->id) }}" method="POST" class="hidden">
+                                        @csrf
+                                    </form>
+                                    @endif
+                                @else
+                                    <span class="inline-flex items-center justify-center w-8 h-8 rounded-[8px] text-[#34C759] bg-[#34C759]/10" title="{{ __('inventory.status_done') }}">
+                                        <i data-lucide="check-check" class="w-4 h-4"></i>
+                                    </span>
                                 @endif
-                            @else
-                                <span class="text-black/40 dark:text-white/40 text-[12px] font-medium">{{ __('inventory.status_done') }}</span>
-                            @endif
+                            </div>
                         </td>
                     </tr>
                     @empty

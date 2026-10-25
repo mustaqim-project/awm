@@ -249,12 +249,12 @@
                         <th class="py-3 px-5">{{ __('audit.th_activity_module') }}</th>
                         <th class="py-3 px-5 w-[200px]">{{ __('audit.th_actor') }}</th>
                         <th class="py-3 px-5 w-[160px]">{{ __('audit.th_risk_level') }}</th>
-                        <th class="py-3 px-5 w-[110px] text-right">{{ __('audit.th_action') }}</th>
+                        <th class="py-3 px-5 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('audit.th_action') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-black/5 dark:divide-white/10 text-[13px]">
                     @forelse($logs as $log)
-                    <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors {{ $log->isHighRisk() ? 'bg-red-500/[0.015]' : '' }}">
+                    <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors group {{ $log->isHighRisk() ? 'bg-red-500/[0.015]' : '' }}">
                         
                         <!-- Kolom 1: Waktu & IP -->
                         <td class="py-3.5 px-5 align-top whitespace-nowrap">
@@ -352,12 +352,15 @@
                         </td>
 
                         <!-- Kolom 5: Aksi -->
-                        <td class="py-3.5 px-5 align-top text-right whitespace-nowrap">
-                            <button type="button" @click="openDiffModal('{{ $log->id }}')"
-                                    class="min-h-[36px] px-3 rounded-[10px] text-[12.5px] font-semibold text-black/75 dark:text-white/80 bg-black/[0.03] dark:bg-white/[0.06] hover:bg-[#007AFF]/10 hover:text-[#007AFF] dark:hover:bg-[#0A84FF]/15 dark:hover:text-[#0A84FF] active:scale-95 transition-all inline-flex items-center gap-1.5 border border-black/5 dark:border-white/10">
-                                <i data-lucide="git-compare" class="w-3.5 h-3.5"></i>
-                                <span>{{ __('audit.btn_detail') }}</span>
-                            </button>
+                        <td class="py-3.5 px-5 align-top text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                            <div class="flex items-center justify-end">
+                                <button type="button" @click="openDiffModal('{{ $log->id }}')"
+                                    class="w-8 h-8 rounded-[8px] flex items-center justify-center text-black/75 dark:text-white/80 hover:bg-[#007AFF]/10 hover:text-[#007AFF] dark:hover:bg-[#0A84FF]/15 dark:hover:text-[#0A84FF] transition-all cursor-pointer shrink-0"
+                                    title="{{ __('audit.btn_detail') }}"
+                                    aria-label="{{ __('audit.btn_detail') }}">
+                                    <i data-lucide="git-compare" class="w-4 h-4"></i>
+                                </button>
+                            </div>
                         </td>
                     </tr>
                     @empty

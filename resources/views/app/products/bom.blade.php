@@ -155,7 +155,7 @@
                         <th class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 text-right">{{ __('products.th_effective_material_cost') }}</th>
                         <th class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 text-center">{{ __('products.th_waste_percentage') }}</th>
                         <th class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 text-right">{{ __('products.th_cost_subtotal') }}</th>
-                        <th class="py-3 px-5 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 text-right">{{ __('products.th_actions') }}</th>
+                        <th class="py-3 px-5 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('products.th_actions') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
@@ -165,7 +165,7 @@
                             $price = $mat?->prices->first()?->effective_cost ?? 0;
                             $itemSubtotal = $price * $item->quantity * (1 + $item->waste_percentage / 100);
                         @endphp
-                        <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.025] transition-colors">
+                        <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.025] transition-colors group">
                             <td class="py-3.5 px-5 font-medium text-black dark:text-white">
                                 <div class="font-semibold text-[13.5px]">{{ $mat?->name ?? 'Sub-BOM' }}</div>
                                 <div class="text-[11px] text-black/45 dark:text-white/45 tabular-nums">
@@ -195,13 +195,17 @@
                             <td class="py-3.5 px-4 text-right tabular-nums font-bold text-[#34C759] dark:text-[#30D158]">
                                 {{ $business->currency_symbol }} {{ number_format((float) $itemSubtotal, 0, ',', '.') }}
                             </td>
-                            <td class="py-3.5 px-5 text-right whitespace-nowrap">
+                            <td class="py-3.5 px-5 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                 @if (\App\Support\Context::hasPermission('products.edit'))
-                                    <button type="button"
-                                        @click="openDelete('{{ $item->id }}', '{{ addslashes($mat?->name ?? 'Komponen Resep') }}')"
-                                        class="h-8 px-3 rounded-[8px] text-[12px] font-medium text-[#FF3B30] hover:bg-[#FF3B30]/8 transition-colors inline-flex items-center min-w-[44px] justify-center">
-                                        {{ __('products.btn_delete') }}
-                                    </button>
+                                    <div class="flex items-center justify-end">
+                                        <button type="button"
+                                            @click="openDelete('{{ $item->id }}', '{{ addslashes($mat?->name ?? 'Komponen Resep') }}')"
+                                            class="w-8 h-8 rounded-[8px] text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
+                                            title="{{ __('products.btn_delete') }}"
+                                            aria-label="{{ __('products.btn_delete') }}">
+                                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                        </button>
+                                    </div>
                                     <form id="form-delete-{{ $item->id }}" method="POST"
                                         action="{{ route('bom.items.destroy', $item->id) }}" class="hidden">
                                         @csrf

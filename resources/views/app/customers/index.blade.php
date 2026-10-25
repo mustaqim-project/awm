@@ -424,12 +424,12 @@
                                     <x-table-sort-th :col="2" type="number" :title="__('customers.table_terms')" align="center" class="py-3.5 px-4" />
                                 @endif
                                 <x-table-sort-th :col="$canB2b ? 3 : 2" type="number" :title="__('customers.table_transactions')" align="center" class="py-3.5 px-4" />
-                                <th class="py-3.5 px-4 text-right pr-6">{{ __('customers.table_quick_actions') }}</th>
+                                <th class="py-3.5 px-4 text-right pr-6 whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('customers.table_quick_actions') }}</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-black/[0.05] dark:divide-white/[0.06]">
                             @foreach ($customers as $c)
-                                <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors">
+                                <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors group">
                                     <!-- Customer Identity -->
                                     <td data-sort-value="{{ strtolower($c->name) }}" class="py-4 px-4 sm:px-6">
                                         <div class="flex items-center gap-3">
@@ -458,7 +458,7 @@
                                                         <i data-lucide="wrench" class="w-3 h-3"></i>
                                                         <span class="font-bold">{{ $c->vehicle_license_plate }}</span>
                                                         @if ($c->vehicle_model)
-                                                            <span class="text-black/50 dark:text-white/50 font-sans">({{ $c->vehicle_model }})</span>
+                                                             <span class="text-black/50 dark:text-white/50 font-sans">({{ $c->vehicle_model }})</span>
                                                         @endif
                                                     </div>
                                                 @endif
@@ -511,31 +511,34 @@
                                         </div>
                                     </td>
 
-                                    <!-- Action Buttons -->
-                                    <td class="py-4 px-4 text-right pr-6">
-                                        <div class="flex items-center justify-end gap-1.5">
+                                    <!-- Action Buttons (Sticky Desktop & Icon-Only) -->
+                                    <td class="py-4 px-4 text-right pr-6 whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                                        <div class="flex items-center justify-end gap-1">
                                             <button type="button" @click="openDetailModal('{{ $c->id }}')"
-                                                class="h-8 px-2.5 rounded-[8px] text-[12px] font-semibold bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/70 dark:text-white/70 transition cursor-pointer flex items-center gap-1">
-                                                <i data-lucide="eye" class="w-3.5 h-3.5"></i>
-                                                <span>{{ __('customers.btn_profile') }}</span>
+                                                class="w-8 h-8 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/70 dark:text-white/70 transition cursor-pointer flex items-center justify-center shrink-0"
+                                                title="{{ __('customers.btn_profile') }}"
+                                                aria-label="{{ __('customers.btn_profile') }}">
+                                                <i data-lucide="eye" class="w-4 h-4"></i>
                                             </button>
 
                                             @if (\App\Support\Context::hasPermission('customers.edit'))
                                                 <button type="button" @click="openEditModal('{{ $c->id }}')"
-                                                    class="h-8 px-2.5 rounded-[8px] text-[12px] font-semibold bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF]/20 transition cursor-pointer flex items-center gap-1">
-                                                    <i data-lucide="edit-2" class="w-3.5 h-3.5"></i>
-                                                    <span>{{ __('common.edit') }}</span>
+                                                    class="w-8 h-8 rounded-[8px] bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF]/20 transition cursor-pointer flex items-center justify-center shrink-0"
+                                                    title="{{ __('common.edit') }}"
+                                                    aria-label="{{ __('common.edit') }}">
+                                                    <i data-lucide="edit-2" class="w-4 h-4"></i>
                                                 </button>
                                             @endif
 
                                             @if (\App\Support\Context::hasPermission('customers.delete'))
                                                 <form method="POST" action="{{ route('customers.destroy', $c->slug) }}"
-                                                    onsubmit="return confirm('{{ addslashes(__('customers.delete_confirm_dialog')) }}')">
+                                                    onsubmit="return confirm('{{ addslashes(__('customers.delete_confirm_dialog')) }}')" class="inline-block">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit"
-                                                        class="h-8 w-8 rounded-[8px] text-black/40 hover:text-[#FF3B30] hover:bg-[#FF3B30]/10 transition flex items-center justify-center cursor-pointer"
-                                                        title="{{ __('common.delete') }}">
+                                                        class="w-8 h-8 rounded-[8px] text-black/40 hover:text-[#FF3B30] hover:bg-[#FF3B30]/10 transition flex items-center justify-center cursor-pointer shrink-0"
+                                                        title="{{ __('common.delete') }}"
+                                                        aria-label="{{ __('common.delete') }}">
                                                         <i data-lucide="trash-2" class="w-4 h-4"></i>
                                                     </button>
                                                 </form>

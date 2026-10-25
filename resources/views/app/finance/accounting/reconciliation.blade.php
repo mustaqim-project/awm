@@ -116,12 +116,12 @@
                                     <th class="px-4 sm:px-5 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-black/45 dark:text-white/45">{{ __('finance.col_bank_description') }}</th>
                                     <th class="px-4 sm:px-5 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-black/45 dark:text-white/45 text-right">{{ __('finance.col_nominal') }}</th>
                                     <th class="px-4 sm:px-5 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-black/45 dark:text-white/45">{{ __('finance.col_status_system_notes') }}</th>
-                                    <th class="px-4 sm:px-5 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-black/45 dark:text-white/45 text-right">{{ __('common.actions') }}</th>
+                                    <th class="px-4 sm:px-5 py-3.5 text-[11px] font-semibold uppercase tracking-wider text-black/45 dark:text-white/45 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('common.actions') }}</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                                 @forelse($lines as $line)
-                                    <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
+                                    <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors group">
                                         <td class="px-4 sm:px-5 py-3.5 tabular-nums text-[13px] sm:text-[13.5px] font-medium text-black/75 dark:text-white/75">
                                             {{ $line->transaction_date->translatedFormat('d M Y') }}
                                         </td>
@@ -155,27 +155,28 @@
                                                 </span>
                                             @endif
                                         </td>
-                                        <td class="px-4 sm:px-5 py-3.5 text-right">
-                                            @if (\App\Support\Context::hasPermission('accounting.manage'))
-                                                @if($line->status === 'reconciled')
-                                                    <form method="POST" action="{{ route('finance.reconciliations.unmatch', $line) }}" class="inline">
-                                                        @csrf
-                                                        <button type="submit" class="h-9 px-3.5 rounded-[10px] text-[12.5px] font-medium text-black/60 dark:text-white/60 bg-black/[0.04] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-colors">
-                                                            {{ __('finance.btn_unmatch') }}
-                                                        </button>
-                                                    </form>
+                                        <td class="px-4 sm:px-5 py-3.5 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                                            <div class="flex items-center justify-end gap-1">
+                                                @if (\App\Support\Context::hasPermission('accounting.manage'))
+                                                    @if($line->status === 'reconciled')
+                                                        <form method="POST" action="{{ route('finance.reconciliations.unmatch', $line) }}" class="inline">
+                                                            @csrf
+                                                            <button type="submit" class="w-8 h-8 rounded-[8px] text-black/60 dark:text-white/60 bg-black/[0.04] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('finance.btn_unmatch') }}" aria-label="{{ __('finance.btn_unmatch') }}">
+                                                                <i data-lucide="undo" class="w-4 h-4"></i>
+                                                            </button>
+                                                        </form>
+                                                    @else
+                                                        <form method="POST" action="{{ route('finance.reconciliations.match', $line) }}" class="inline">
+                                                            @csrf
+                                                            <button type="submit" class="w-8 h-8 rounded-[8px] bg-[#34C759]/10 text-[#34C759] hover:bg-[#34C759]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('finance.btn_match') }}" aria-label="{{ __('finance.btn_match') }}">
+                                                                <i data-lucide="check" class="w-4 h-4"></i>
+                                                            </button>
+                                                        </form>
+                                                    @endif
                                                 @else
-                                                    <form method="POST" action="{{ route('finance.reconciliations.match', $line) }}" class="inline">
-                                                        @csrf
-                                                        <button type="submit" class="h-9 px-4 rounded-[10px] text-[12.5px] font-semibold text-white bg-[#34C759] hover:bg-[#2FB34F] active:scale-[0.98] transition-all shadow-[0_2px_6px_rgba(52,199,89,0.3)] inline-flex items-center gap-1.5">
-                                                            <i data-lucide="check" class="w-4 h-4"></i>
-                                                            <span>{{ __('finance.btn_match') }}</span>
-                                                        </button>
-                                                    </form>
+                                                    <span class="text-xs text-black/30 dark:text-white/30">—</span>
                                                 @endif
-                                            @else
-                                                <span class="text-xs text-black/30 dark:text-white/30">—</span>
-                                            @endif
+                                            </div>
                                         </td>
                                     </tr>
                                 @empty
