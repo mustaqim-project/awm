@@ -274,7 +274,7 @@
 
                 <div>
                     <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">{{ __('sales.invoices.payment_terms_col_label') }}</label>
-                    <input type="text" name="payment_terms" x-model="paymentTerms" placeholder="Net 30 / COD" class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                    <input type="text" name="payment_terms" x-model="paymentTerms" placeholder="{{ __('sales.invoices.payment_terms_placeholder_short') }}" class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                 </div>
 
                 <div>
@@ -306,9 +306,9 @@
                 <!-- Lampiran Faktur -->
                 <div class="sm:col-span-2 lg:col-span-4">
                     <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">
-                        Lampiran <span class="text-black/40 dark:text-white/40 font-normal">(Default: -)</span>
+                        {{ __('sales.invoices.attachment_info_label') }} <span class="text-black/40 dark:text-white/40 font-normal">{{ __('sales.invoices.attachment_info_default') }}</span>
                     </label>
-                    <input type="text" name="attachment_info" x-model="attachmentInfo" placeholder="Contoh: - atau 1 Berkas / Surat Jalan" class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                    <input type="text" name="attachment_info" x-model="attachmentInfo" placeholder="{{ __('sales.invoices.attachment_info_placeholder') }}" class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                 </div>
             </div>
         </div>
@@ -463,7 +463,7 @@
 
                     <div class="flex items-center justify-between gap-2">
                         <span class="text-black/60 dark:text-white/60">{{ __('sales.invoices.tax_vat_label') }}</span>
-                        <input type="number" step="any" min="0" max="100" name="tax_percentage" x-model="taxPercentage" placeholder="11" class="w-20 h-7 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[6px] px-2 text-[12px] tabular-nums text-right text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                        <input type="number" step="any" min="0" max="100" name="tax_percentage" x-model="taxPercentage" placeholder="{{ __('sales.invoices.tax_percentage_placeholder') }}" class="w-20 h-7 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[6px] px-2 text-[12px] tabular-nums text-right text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                     </div>
 
                     <div class="flex items-center justify-between gap-2">

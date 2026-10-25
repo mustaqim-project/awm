@@ -314,40 +314,38 @@
     }
 
     $allModules = [
-        // Ikhtisar & Workspace
-        ['perm' => 'admin.dashboard.view', 'title' => 'Dashboard Beranda', 'desc' => 'Ringkasan performa & metrik finansial platform', 'url' => route('admin.dashboard'), 'icon' => 'layout-dashboard', 'cat' => 'Ikhtisar'],
-        ['perm' => 'admin.businesses.view', 'title' => 'Bisnis & Tenant UMKM', 'desc' => 'Daftar workspace UMKM & status akun tenant', 'url' => route('admin.businesses.index'), 'icon' => 'building-2', 'cat' => 'Ikhtisar'],
-        ['perm' => 'admin.users.view', 'title' => 'Basis Pengguna', 'desc' => 'Akun terdaftar, pemilik usaha & staf kasir', 'url' => route('admin.users.index'), 'icon' => 'users', 'cat' => 'Ikhtisar'],
+        // Ringkasan & Tenant
+        ['perm' => 'admin.dashboard.view', 'title' => 'Dashboard Beranda', 'desc' => 'Ringkasan performa & metrik platform', 'url' => route('admin.dashboard'), 'icon' => 'layout-dashboard', 'cat' => 'Tenant'],
+        ['perm' => 'admin.businesses.view', 'title' => 'Bisnis & Tenant UMKM', 'desc' => 'Daftar workspace UMKM & status akun tenant', 'url' => route('admin.businesses.index'), 'icon' => 'building-2', 'cat' => 'Tenant'],
+        ['perm' => 'admin.users.view', 'title' => 'Basis Pengguna', 'desc' => 'Akun terdaftar, pemilik usaha & staf kasir', 'url' => route('admin.users.index'), 'icon' => 'users', 'cat' => 'Tenant'],
+        ['perm' => 'admin.account_recoveries.view', 'title' => 'Pemulihan Akun Bisnis', 'desc' => 'Verifikasi identitas & reset akses tenant', 'url' => route('admin.account-recoveries.index'), 'icon' => 'shield-alert', 'cat' => 'Tenant'],
 
-        // Finansial & Komersial
-        ['perm' => 'admin.finance.view', 'title' => 'Buku Kas & Keuangan', 'desc' => 'Arus kas platform, laba rugi & rekonsiliasi', 'url' => route('admin.finance.index'), 'icon' => 'wallet', 'cat' => 'Finansial'],
-        ['perm' => 'admin.b2b.view', 'title' => 'Penjualan B2B & Faktur', 'desc' => 'Penawaran, SO, faktur komersial, retur & cetak PDF', 'url' => route('admin.b2b.index'), 'icon' => 'briefcase', 'cat' => 'Finansial'],
-        ['perm' => 'admin.subscriptions.view', 'title' => 'Langganan & Billing', 'desc' => 'Approval bukti bayar paket langganan SaaS', 'url' => route('admin.subscriptions.index'), 'icon' => 'receipt', 'cat' => 'Finansial'],
-        ['perm' => 'admin.settlements.view', 'title' => 'Pencairan Merchant', 'desc' => 'Verifikasi transfer settlement saldo merchant', 'url' => route('admin.settlements.index'), 'icon' => 'arrow-down-to-dot', 'cat' => 'Finansial'],
-        ['perm' => 'admin.billing_packages.view', 'title' => 'Paket Langganan & Harga', 'desc' => 'Katalog tier berlangganan & kuota AI', 'url' => route('admin.billing-packages.index'), 'icon' => 'layers-3', 'cat' => 'Finansial'],
-        ['perm' => 'admin.promos.view', 'title' => 'Kode Promo & Voucher', 'desc' => 'Kupon diskon langganan & voucher promosi', 'url' => \Illuminate\Support\Facades\Route::has('admin.promos.index') ? route('admin.promos.index') : url('/admin/promos'), 'icon' => 'ticket-percent', 'cat' => 'Finansial'],
-        ['perm' => 'admin.payment_accounts.view', 'title' => 'Rekening Bank Platform', 'desc' => 'Rekening tujuan pembayaran resmi Cooca', 'url' => route('admin.payment-accounts.index'), 'icon' => 'credit-card', 'cat' => 'Finansial'],
+        // Keuangan & Penjualan
+        ['perm' => 'admin.finance.view', 'title' => 'Buku Kas & Keuangan', 'desc' => 'Arus kas platform, laba rugi & rekonsiliasi', 'url' => route('admin.finance.index'), 'icon' => 'wallet', 'cat' => 'Keuangan'],
+        ['perm' => 'admin.b2b.view', 'title' => 'Penjualan B2B & Faktur', 'desc' => 'Penawaran, SO, faktur komersial, retur & cetak PDF', 'url' => route('admin.b2b.index'), 'icon' => 'briefcase', 'cat' => 'Keuangan'],
+        ['perm' => 'admin.subscriptions.view', 'title' => 'Langganan & Billing', 'desc' => 'Approval bukti bayar paket langganan SaaS', 'url' => route('admin.subscriptions.index'), 'icon' => 'receipt', 'cat' => 'Keuangan'],
+        ['perm' => 'admin.settlements.view', 'title' => 'Pencairan Merchant', 'desc' => 'Verifikasi transfer settlement saldo merchant', 'url' => route('admin.settlements.index'), 'icon' => 'arrow-down-to-dot', 'cat' => 'Keuangan'],
+        ['perm' => 'admin.billing_packages.view', 'title' => 'Paket & Harga', 'desc' => 'Katalog tier berlangganan & kuota AI', 'url' => route('admin.billing-packages.index'), 'icon' => 'layers-3', 'cat' => 'Keuangan'],
+        ['perm' => 'admin.promos.view', 'title' => 'Kode Promo & Voucher', 'desc' => 'Kupon diskon langganan & voucher promosi', 'url' => \Illuminate\Support\Facades\Route::has('admin.promos.index') ? route('admin.promos.index') : url('/admin/promos'), 'icon' => 'ticket-percent', 'cat' => 'Keuangan'],
+        ['perm' => 'admin.payment_accounts.view', 'title' => 'Rekening Platform', 'desc' => 'Rekening tujuan pembayaran resmi Cooca', 'url' => route('admin.payment-accounts.index'), 'icon' => 'credit-card', 'cat' => 'Keuangan'],
 
-        // Layanan & Dukungan
+        // Komunikasi & Layanan
         ['perm' => 'admin.inbox.view', 'title' => 'Kotak Masuk (Inbox)', 'desc' => 'Omnichannel WhatsApp, Instagram & komentar', 'url' => route('admin.inbox.index'), 'icon' => 'inbox', 'cat' => 'Layanan'],
-        ['perm' => 'admin.account_recoveries.view', 'title' => 'Pemulihan Akun Bisnis', 'desc' => 'Verifikasi identitas & persetujuan reset', 'url' => route('admin.account-recoveries.index'), 'icon' => 'shield-alert', 'cat' => 'Layanan'],
-        ['perm' => 'admin.feedback.view', 'title' => 'Feedback & Laporan Bug', 'desc' => 'Laporan kendala & ide fitur dari tenant', 'url' => route('admin.feedback.bugs.index'), 'icon' => 'messages-square', 'cat' => 'Layanan'],
+        ['perm' => 'admin.whatsapp.view', 'title' => 'WhatsApp Gateway', 'desc' => 'Status server WhatsApp OTP & notifikasi resmi', 'url' => route('admin.whatsapp.index'), 'icon' => 'message-circle', 'cat' => 'Layanan'],
+        ['perm' => 'admin.social_media.view', 'title' => 'Media Sosial Platform', 'desc' => 'Konfigurasi integrasi Meta & TikTok', 'url' => route('admin.social-media.index'), 'icon' => 'share-2', 'cat' => 'Layanan'],
+        ['perm' => 'admin.feedback.view', 'title' => 'Feedback & Bug', 'desc' => 'Laporan kendala & ide fitur dari tenant', 'url' => route('admin.feedback.bugs.index'), 'icon' => 'messages-square', 'cat' => 'Layanan'],
 
-        // Integrasi & Gateway
-        ['perm' => 'admin.whatsapp.view', 'title' => 'WhatsApp Gateway', 'desc' => 'Status server WhatsApp OTP & notifikasi resmi', 'url' => route('admin.whatsapp.index'), 'icon' => 'message-circle', 'cat' => 'Integrasi'],
-        ['perm' => 'admin.social_media.view', 'title' => 'Media Sosial Platform', 'desc' => 'Konfigurasi integrasi Meta & TikTok', 'url' => route('admin.social-media.index'), 'icon' => 'share-2', 'cat' => 'Integrasi'],
-        ['perm' => 'admin.ai_tokens.view', 'title' => 'Monitoring Token AI', 'desc' => 'Pantau konsumsi kuota Gemini AI token', 'url' => route('admin.ai-tokens.index'), 'icon' => 'sparkles', 'cat' => 'Integrasi'],
+        // Pemasaran & Konten
+        ['perm' => 'admin.leads.view', 'title' => 'Database Leads Prospek', 'desc' => 'Database prospek & kontak calon merchant', 'url' => route('admin.leads.index'), 'icon' => 'users-round', 'cat' => 'Pemasaran'],
+        ['perm' => 'admin.events.view', 'title' => 'Event Komunitas UMKM', 'desc' => 'Meetup, seminar, workshop & absensi peserta', 'url' => route('admin.events.index'), 'icon' => 'calendar', 'cat' => 'Pemasaran'],
+        ['perm' => 'admin.posts.view', 'title' => 'Artikel Blog & Edukasi', 'desc' => 'CMS artikel publikasi & edukasi bisnis', 'url' => route('admin.posts.index'), 'icon' => 'file-text', 'cat' => 'Pemasaran'],
+        ['perm' => 'admin.templates.view', 'title' => 'Template Excel Master', 'desc' => 'Katalog spreadsheet akuntansi & stok UMKM', 'url' => route('admin.templates.index'), 'icon' => 'file-spreadsheet', 'cat' => 'Pemasaran'],
+        ['perm' => 'admin.word_filters.view', 'title' => 'Moderasi Kata Terlarang', 'desc' => 'Filter kata judi online, scam & konten terlarang', 'url' => route('admin.word-filters.index'), 'icon' => 'shield-ban', 'cat' => 'Pemasaran'],
+        ['perm' => 'admin.legal_pages.view', 'title' => 'Kebijakan & Legalitas', 'desc' => 'CMS Kebijakan Privasi & Syarat Ketentuan', 'url' => route('admin.legal-pages.index'), 'icon' => 'scale', 'cat' => 'Pemasaran'],
 
-        // Pertumbuhan & Konten
-        ['perm' => 'admin.leads.view', 'title' => 'Database Leads Prospek', 'desc' => 'Database prospek & kontak calon merchant', 'url' => route('admin.leads.index'), 'icon' => 'users-round', 'cat' => 'Pertumbuhan'],
-        ['perm' => 'admin.events.view', 'title' => 'Event Komunitas UMKM', 'desc' => 'Meetup, seminar, workshop & absensi peserta', 'url' => route('admin.events.index'), 'icon' => 'calendar', 'cat' => 'Pertumbuhan'],
-        ['perm' => 'admin.posts.view', 'title' => 'Artikel Blog & Edukasi', 'desc' => 'CMS artikel publikasi & edukasi bisnis', 'url' => route('admin.posts.index'), 'icon' => 'file-text', 'cat' => 'Pertumbuhan'],
-        ['perm' => 'admin.templates.view', 'title' => 'Template Excel Master', 'desc' => 'Katalog spreadsheet akuntansi & stok UMKM', 'url' => route('admin.templates.index'), 'icon' => 'file-spreadsheet', 'cat' => 'Pertumbuhan'],
-        ['perm' => 'admin.word_filters.view', 'title' => 'Moderasi Kata Terlarang', 'desc' => 'Filter kata judi online, scam & konten terlarang', 'url' => route('admin.word-filters.index'), 'icon' => 'shield-ban', 'cat' => 'Pertumbuhan'],
-        ['perm' => 'admin.legal_pages.view', 'title' => 'Kebijakan & Legalitas', 'desc' => 'CMS Kebijakan Privasi & Syarat Ketentuan', 'url' => route('admin.legal-pages.index'), 'icon' => 'scale', 'cat' => 'Pertumbuhan'],
-
-        // Sistem & Governansi
+        // Sistem & Keamanan
         ['perm' => 'admin.roles.view', 'title' => 'Hak Akses & Peran (RBAC)', 'desc' => 'Peran administrator, matriks izin & staf', 'url' => route('admin.roles.index'), 'icon' => 'shield-check', 'cat' => 'Sistem'],
+        ['perm' => 'admin.ai_tokens.view', 'title' => 'Monitoring Token AI', 'desc' => 'Pantau konsumsi kuota Gemini AI token', 'url' => route('admin.ai-tokens.index'), 'icon' => 'sparkles', 'cat' => 'Sistem'],
         ['perm' => 'admin.settings.view', 'title' => 'Pengaturan Sistem', 'desc' => 'Konfigurasi Google OAuth, TriPay & SMTP', 'url' => route('admin.settings.index'), 'icon' => 'sliders', 'cat' => 'Sistem'],
         ['perm' => 'admin.error_logs.view', 'title' => 'Log Error & Diagnostik', 'desc' => 'Pemantauan runtime exception & debug log', 'url' => route('admin.error-logs.index'), 'icon' => 'terminal', 'cat' => 'Sistem'],
         ['perm' => 'admin.profile.view', 'title' => 'Profil Administrator', 'desc' => 'Kelola identitas akun & ubah kata sandi', 'url' => route('admin.profile.index'), 'icon' => 'key-round', 'cat' => 'Sistem'],
@@ -434,18 +432,18 @@
                 </button>
             </div>
 
-            <!-- Navigation Links (Apple HIG 6-Group Source List Architecture) -->
+            <!-- Navigation Links (Apple HIG 5-Pillar Clean Architecture - Uniform Blue Monochromatic Icons) -->
             <nav class="space-y-0.5 pt-2.5">
                 @php
                     $currentAdmin = Auth::guard('admin')->user();
                 @endphp
 
                 <!-- ========================================== -->
-                <!-- Group 1: Ikhtisar & Workspace              -->
+                <!-- Group 1: Ringkasan & Tenant                -->
                 <!-- ========================================== -->
-                @if ($currentAdmin?->hasAnyPermission(['admin.dashboard.view', 'admin.businesses.view', 'admin.users.view']))
+                @if ($currentAdmin?->hasAnyPermission(['admin.dashboard.view', 'admin.businesses.view', 'admin.users.view', 'admin.account_recoveries.view']))
                     <div class="px-3 pt-2 pb-1 text-[10.5px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D]">
-                        Ikhtisar &amp; Workspace
+                        Ringkasan &amp; Tenant
                     </div>
 
                     @if ($currentAdmin?->hasPermission('admin.dashboard.view'))
@@ -453,8 +451,8 @@
                         <a href="{{ route('admin.dashboard') }}"
                             class="group flex items-center justify-between px-2.5 h-[38px] rounded-[11px] transition-all duration-150 {{ $isActive ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25 font-semibold' : 'text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
                             <div class="flex items-center gap-2.5 min-w-0 flex-1">
-                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:scale-105' }}">
-                                    <i data-lucide="layout-dashboard" class="w-4 h-4 shrink-0" stroke-width="2"></i>
+                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
+                                    <i data-lucide="layout-dashboard" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
                                 </div>
                                 <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Dashboard Beranda</span>
                             </div>
@@ -466,8 +464,8 @@
                         <a href="{{ route('admin.businesses.index') }}"
                             class="group flex items-center justify-between px-2.5 h-[38px] rounded-[11px] transition-all duration-150 {{ $isActive ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25 font-semibold' : 'text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
                             <div class="flex items-center gap-2.5 min-w-0 flex-1">
-                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#5856D6]/10 text-[#5856D6] dark:bg-[#5856D6]/20 dark:text-[#5E5CE6] group-hover:scale-105' }}">
-                                    <i data-lucide="building-2" class="w-4 h-4 shrink-0" stroke-width="2"></i>
+                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
+                                    <i data-lucide="building-2" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
                                 </div>
                                 <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Bisnis &amp; Tenant UMKM</span>
                             </div>
@@ -479,21 +477,39 @@
                         <a href="{{ route('admin.users.index') }}"
                             class="group flex items-center justify-between px-2.5 h-[38px] rounded-[11px] transition-all duration-150 {{ $isActive ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25 font-semibold' : 'text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
                             <div class="flex items-center gap-2.5 min-w-0 flex-1">
-                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#30B0C7]/10 text-[#30B0C7] dark:bg-[#30B0C7]/20 dark:text-[#40C8E0] group-hover:scale-105' }}">
-                                    <i data-lucide="users" class="w-4 h-4 shrink-0" stroke-width="2"></i>
+                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
+                                    <i data-lucide="users" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
                                 </div>
                                 <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Basis Pengguna</span>
                             </div>
                         </a>
                     @endif
+
+                    @if ($currentAdmin?->hasPermission('admin.account_recoveries.view'))
+                        @php $isActive = request()->routeIs('admin.account-recoveries.*'); @endphp
+                        <a href="{{ route('admin.account-recoveries.index') }}"
+                            class="group flex items-center justify-between px-2.5 h-[38px] rounded-[11px] transition-all duration-150 {{ $isActive ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25 font-semibold' : 'text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
+                            <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
+                                    <i data-lucide="shield-alert" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
+                                </div>
+                                <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Pemulihan Akun</span>
+                            </div>
+                            @if ($pendingRecoveriesCount > 0)
+                                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold shadow-xs tabular-nums shrink-0 ml-2 {{ $isActive ? 'bg-white text-[#007AFF]' : 'bg-[#FF9500] text-white' }}">
+                                    {{ $pendingRecoveriesCount }}
+                                </span>
+                            @endif
+                        </a>
+                    @endif
                 @endif
 
                 <!-- ========================================== -->
-                <!-- Group 2: Finansial & Komersial             -->
+                <!-- Group 2: Keuangan & Penjualan              -->
                 <!-- ========================================== -->
                 @if ($currentAdmin?->hasAnyPermission(['admin.finance.view', 'admin.b2b.view', 'admin.subscriptions.view', 'admin.settlements.view', 'admin.billing_packages.view', 'admin.promos.view', 'admin.payment_accounts.view']))
                     <div class="px-3 pt-3.5 pb-1 text-[10.5px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D]">
-                        Finansial &amp; Komersial
+                        Keuangan &amp; Penjualan
                     </div>
 
                     @if ($currentAdmin?->hasPermission('admin.finance.view'))
@@ -501,8 +517,8 @@
                         <a href="{{ route('admin.finance.index') }}"
                             class="group flex items-center justify-between px-2.5 h-[38px] rounded-[11px] transition-all duration-150 {{ $isActive ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25 font-semibold' : 'text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
                             <div class="flex items-center gap-2.5 min-w-0 flex-1">
-                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#34C759]/10 text-[#34C759] dark:bg-[#34C759]/20 dark:text-[#30D158] group-hover:scale-105' }}">
-                                    <i data-lucide="wallet" class="w-4 h-4 shrink-0" stroke-width="2"></i>
+                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
+                                    <i data-lucide="wallet" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
                                 </div>
                                 <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Buku Kas &amp; Keuangan</span>
                             </div>
@@ -514,8 +530,8 @@
                         <a href="{{ route('admin.b2b.index') }}"
                             class="group flex items-center justify-between px-2.5 h-[38px] rounded-[11px] transition-all duration-150 {{ $isActive ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25 font-semibold' : 'text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
                             <div class="flex items-center gap-2.5 min-w-0 flex-1">
-                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#0284c7]/10 text-[#0284c7] dark:bg-[#0284c7]/20 dark:text-[#38bdf8] group-hover:scale-105' }}">
-                                    <i data-lucide="briefcase" class="w-4 h-4 shrink-0" stroke-width="2"></i>
+                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
+                                    <i data-lucide="briefcase" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
                                 </div>
                                 <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Penjualan B2B &amp; Faktur</span>
                             </div>
@@ -527,8 +543,8 @@
                         <a href="{{ route('admin.subscriptions.index') }}"
                             class="group flex items-center justify-between px-2.5 h-[38px] rounded-[11px] transition-all duration-150 {{ $isActive ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25 font-semibold' : 'text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
                             <div class="flex items-center gap-2.5 min-w-0 flex-1">
-                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#AF52DE]/10 text-[#AF52DE] dark:bg-[#AF52DE]/20 dark:text-[#BF5AF2] group-hover:scale-105' }}">
-                                    <i data-lucide="receipt" class="w-4 h-4 shrink-0" stroke-width="2"></i>
+                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
+                                    <i data-lucide="receipt" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
                                 </div>
                                 <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Langganan &amp; Billing</span>
                             </div>
@@ -545,8 +561,8 @@
                         <a href="{{ route('admin.settlements.index') }}"
                             class="group flex items-center justify-between px-2.5 h-[38px] rounded-[11px] transition-all duration-150 {{ $isActive ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25 font-semibold' : 'text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
                             <div class="flex items-center gap-2.5 min-w-0 flex-1">
-                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#FF9500]/10 text-[#FF9500] dark:bg-[#FF9500]/20 dark:text-[#FF9F0A] group-hover:scale-105' }}">
-                                    <i data-lucide="arrow-down-to-dot" class="w-4 h-4 shrink-0" stroke-width="2"></i>
+                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
+                                    <i data-lucide="arrow-down-to-dot" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
                                 </div>
                                 <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Pencairan Merchant</span>
                             </div>
@@ -563,8 +579,8 @@
                         <a href="{{ route('admin.billing-packages.index') }}"
                             class="group flex items-center justify-between px-2.5 h-[38px] rounded-[11px] transition-all duration-150 {{ $isActive ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25 font-semibold' : 'text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
                             <div class="flex items-center gap-2.5 min-w-0 flex-1">
-                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:scale-105' }}">
-                                    <i data-lucide="layers-3" class="w-4 h-4 shrink-0" stroke-width="2"></i>
+                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
+                                    <i data-lucide="layers-3" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
                                 </div>
                                 <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Paket &amp; Harga</span>
                             </div>
@@ -576,8 +592,8 @@
                         <a href="{{ \Illuminate\Support\Facades\Route::has('admin.promos.index') ? route('admin.promos.index') : url('/admin/promos') }}"
                             class="group flex items-center justify-between px-2.5 h-[38px] rounded-[11px] transition-all duration-150 {{ $isActive ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25 font-semibold' : 'text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
                             <div class="flex items-center gap-2.5 min-w-0 flex-1">
-                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#E11D48]/10 text-[#E11D48] dark:bg-[#E11D48]/20 dark:text-[#FB7185] group-hover:scale-105' }}">
-                                    <i data-lucide="ticket-percent" class="w-4 h-4 shrink-0" stroke-width="2"></i>
+                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
+                                    <i data-lucide="ticket-percent" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
                                 </div>
                                 <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Kode Promo &amp; Voucher</span>
                             </div>
@@ -589,8 +605,8 @@
                         <a href="{{ route('admin.payment-accounts.index') }}"
                             class="group flex items-center justify-between px-2.5 h-[38px] rounded-[11px] transition-all duration-150 {{ $isActive ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25 font-semibold' : 'text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
                             <div class="flex items-center gap-2.5 min-w-0 flex-1">
-                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-black/5 text-[#8E8E93] dark:bg-white/10 dark:text-[#98989D] group-hover:scale-105' }}">
-                                    <i data-lucide="credit-card" class="w-4 h-4 shrink-0" stroke-width="2"></i>
+                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
+                                    <i data-lucide="credit-card" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
                                 </div>
                                 <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Rekening Platform</span>
                             </div>
@@ -599,11 +615,11 @@
                 @endif
 
                 <!-- ========================================== -->
-                <!-- Group 3: Layanan & Dukungan                -->
+                <!-- Group 3: Komunikasi & Layanan              -->
                 <!-- ========================================== -->
-                @if ($currentAdmin?->hasAnyPermission(['admin.inbox.view', 'admin.account_recoveries.view', 'admin.feedback.view']))
+                @if ($currentAdmin?->hasAnyPermission(['admin.inbox.view', 'admin.whatsapp.view', 'admin.social_media.view', 'admin.feedback.view']))
                     <div class="px-3 pt-3.5 pb-1 text-[10.5px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D]">
-                        Layanan &amp; Dukungan
+                        Komunikasi &amp; Layanan
                     </div>
 
                     @if ($currentAdmin?->hasPermission('admin.inbox.view'))
@@ -611,8 +627,8 @@
                         <a href="{{ route('admin.inbox.index') }}"
                             class="group flex items-center justify-between px-2.5 h-[38px] rounded-[11px] transition-all duration-150 {{ $isActive ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25 font-semibold' : 'text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
                             <div class="flex items-center gap-2.5 min-w-0 flex-1">
-                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:scale-105' }}">
-                                    <i data-lucide="inbox" class="w-4 h-4 shrink-0" stroke-width="2"></i>
+                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
+                                    <i data-lucide="inbox" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
                                 </div>
                                 <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Kotak Masuk (Inbox)</span>
                             </div>
@@ -624,53 +640,13 @@
                         </a>
                     @endif
 
-                    @if ($currentAdmin?->hasPermission('admin.account_recoveries.view'))
-                        @php $isActive = request()->routeIs('admin.account-recoveries.*'); @endphp
-                        <a href="{{ route('admin.account-recoveries.index') }}"
-                            class="group flex items-center justify-between px-2.5 h-[38px] rounded-[11px] transition-all duration-150 {{ $isActive ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25 font-semibold' : 'text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                            <div class="flex items-center gap-2.5 min-w-0 flex-1">
-                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#FF9500]/10 text-[#FF9500] dark:bg-[#FF9500]/20 dark:text-[#FF9F0A] group-hover:scale-105' }}">
-                                    <i data-lucide="shield-alert" class="w-4 h-4 shrink-0" stroke-width="2"></i>
-                                </div>
-                                <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Pemulihan Akun</span>
-                            </div>
-                            @if ($pendingRecoveriesCount > 0)
-                                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold shadow-xs tabular-nums shrink-0 ml-2 {{ $isActive ? 'bg-white text-[#007AFF]' : 'bg-[#FF9500] text-white' }}">
-                                    {{ $pendingRecoveriesCount }}
-                                </span>
-                            @endif
-                        </a>
-                    @endif
-
-                    @if ($currentAdmin?->hasPermission('admin.feedback.view'))
-                        @php $isActive = request()->routeIs('admin.feedback.*'); @endphp
-                        <a href="{{ route('admin.feedback.bugs.index') }}"
-                            class="group flex items-center justify-between px-2.5 h-[38px] rounded-[11px] transition-all duration-150 {{ $isActive ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25 font-semibold' : 'text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
-                            <div class="flex items-center gap-2.5 min-w-0 flex-1">
-                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#F59E0B]/10 text-[#F59E0B] dark:bg-[#F59E0B]/20 dark:text-[#FBBF24] group-hover:scale-105' }}">
-                                    <i data-lucide="messages-square" class="w-4 h-4 shrink-0" stroke-width="2"></i>
-                                </div>
-                                <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Feedback &amp; Bug</span>
-                            </div>
-                        </a>
-                    @endif
-                @endif
-
-                <!-- ========================================== -->
-                <!-- Group 4: Integrasi & Gateway               -->
-                <!-- ========================================== -->
-                @if ($currentAdmin?->hasAnyPermission(['admin.whatsapp.view', 'admin.social_media.view', 'admin.ai_tokens.view']))
-                    <div class="px-3 pt-3.5 pb-1 text-[10.5px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D]">
-                        Integrasi &amp; Gateway
-                    </div>
-
                     @if ($currentAdmin?->hasPermission('admin.whatsapp.view'))
                         @php $isActive = request()->routeIs('admin.whatsapp.*'); @endphp
                         <a href="{{ route('admin.whatsapp.index') }}"
                             class="group flex items-center justify-between px-2.5 h-[38px] rounded-[11px] transition-all duration-150 {{ $isActive ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25 font-semibold' : 'text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
                             <div class="flex items-center gap-2.5 min-w-0 flex-1">
-                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#25D366]/12 text-[#25D366] dark:bg-[#25D366]/20 group-hover:scale-105' }}">
-                                    <i data-lucide="message-circle" class="w-4 h-4 shrink-0" stroke-width="2"></i>
+                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
+                                    <i data-lucide="message-circle" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
                                 </div>
                                 <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">WhatsApp Gateway</span>
                             </div>
@@ -682,34 +658,34 @@
                         <a href="{{ route('admin.social-media.index') }}"
                             class="group flex items-center justify-between px-2.5 h-[38px] rounded-[11px] transition-all duration-150 {{ $isActive ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25 font-semibold' : 'text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
                             <div class="flex items-center gap-2.5 min-w-0 flex-1">
-                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#1877F2]/10 text-[#1877F2] dark:bg-[#1877F2]/20 dark:text-[#38BDF8] group-hover:scale-105' }}">
-                                    <i data-lucide="share-2" class="w-4 h-4 shrink-0" stroke-width="2"></i>
+                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
+                                    <i data-lucide="share-2" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
                                 </div>
                                 <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Media Sosial Platform</span>
                             </div>
                         </a>
                     @endif
 
-                    @if ($currentAdmin?->hasPermission('admin.ai_tokens.view'))
-                        @php $isActive = request()->routeIs('admin.ai-tokens.*'); @endphp
-                        <a href="{{ route('admin.ai-tokens.index') }}"
+                    @if ($currentAdmin?->hasPermission('admin.feedback.view'))
+                        @php $isActive = request()->routeIs('admin.feedback.*'); @endphp
+                        <a href="{{ route('admin.feedback.bugs.index') }}"
                             class="group flex items-center justify-between px-2.5 h-[38px] rounded-[11px] transition-all duration-150 {{ $isActive ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25 font-semibold' : 'text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
                             <div class="flex items-center gap-2.5 min-w-0 flex-1">
-                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#AF52DE]/10 text-[#AF52DE] dark:bg-[#AF52DE]/20 dark:text-[#BF5AF2] group-hover:scale-105' }}">
-                                    <i data-lucide="sparkles" class="w-4 h-4 shrink-0" stroke-width="2"></i>
+                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
+                                    <i data-lucide="messages-square" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
                                 </div>
-                                <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Monitoring Token AI</span>
+                                <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Feedback &amp; Bug</span>
                             </div>
                         </a>
                     @endif
                 @endif
 
                 <!-- ========================================== -->
-                <!-- Group 5: Pertumbuhan & Konten              -->
+                <!-- Group 4: Pemasaran & Konten                -->
                 <!-- ========================================== -->
                 @if ($currentAdmin?->hasAnyPermission(['admin.leads.view', 'admin.events.view', 'admin.posts.view', 'admin.templates.view', 'admin.word_filters.view', 'admin.legal_pages.view']))
                     <div class="px-3 pt-3.5 pb-1 text-[10.5px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D]">
-                        Pertumbuhan &amp; Konten
+                        Pemasaran &amp; Konten
                     </div>
 
                     @if ($currentAdmin?->hasPermission('admin.leads.view'))
@@ -717,8 +693,8 @@
                         <a href="{{ route('admin.leads.index') }}"
                             class="group flex items-center justify-between px-2.5 h-[38px] rounded-[11px] transition-all duration-150 {{ $isActive ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25 font-semibold' : 'text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
                             <div class="flex items-center gap-2.5 min-w-0 flex-1">
-                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:scale-105' }}">
-                                    <i data-lucide="users-round" class="w-4 h-4 shrink-0" stroke-width="2"></i>
+                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
+                                    <i data-lucide="users-round" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
                                 </div>
                                 <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Database Leads Prospek</span>
                             </div>
@@ -730,8 +706,8 @@
                         <a href="{{ route('admin.events.index') }}"
                             class="group flex items-center justify-between px-2.5 h-[38px] rounded-[11px] transition-all duration-150 {{ $isActive ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25 font-semibold' : 'text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
                             <div class="flex items-center gap-2.5 min-w-0 flex-1">
-                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#FF9500]/10 text-[#FF9500] dark:bg-[#FF9500]/20 dark:text-[#FF9F0A] group-hover:scale-105' }}">
-                                    <i data-lucide="calendar" class="w-4 h-4 shrink-0" stroke-width="2"></i>
+                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
+                                    <i data-lucide="calendar" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
                                 </div>
                                 <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Event Komunitas UMKM</span>
                             </div>
@@ -743,8 +719,8 @@
                         <a href="{{ route('admin.posts.index') }}"
                             class="group flex items-center justify-between px-2.5 h-[38px] rounded-[11px] transition-all duration-150 {{ $isActive ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25 font-semibold' : 'text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
                             <div class="flex items-center gap-2.5 min-w-0 flex-1">
-                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#30B0C7]/10 text-[#30B0C7] dark:bg-[#30B0C7]/20 dark:text-[#40C8E0] group-hover:scale-105' }}">
-                                    <i data-lucide="file-text" class="w-4 h-4 shrink-0" stroke-width="2"></i>
+                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
+                                    <i data-lucide="file-text" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
                                 </div>
                                 <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Artikel Blog &amp; Edukasi</span>
                             </div>
@@ -756,8 +732,8 @@
                         <a href="{{ route('admin.templates.index') }}"
                             class="group flex items-center justify-between px-2.5 h-[38px] rounded-[11px] transition-all duration-150 {{ $isActive ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25 font-semibold' : 'text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
                             <div class="flex items-center gap-2.5 min-w-0 flex-1">
-                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#34C759]/10 text-[#34C759] dark:bg-[#34C759]/20 dark:text-[#30D158] group-hover:scale-105' }}">
-                                    <i data-lucide="file-spreadsheet" class="w-4 h-4 shrink-0" stroke-width="2"></i>
+                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
+                                    <i data-lucide="file-spreadsheet" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
                                 </div>
                                 <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Template Excel Master</span>
                             </div>
@@ -769,8 +745,8 @@
                         <a href="{{ route('admin.word-filters.index') }}"
                             class="group flex items-center justify-between px-2.5 h-[38px] rounded-[11px] transition-all duration-150 {{ $isActive ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25 font-semibold' : 'text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
                             <div class="flex items-center gap-2.5 min-w-0 flex-1">
-                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#FF3B30]/10 text-[#FF3B30] dark:bg-[#FF3B30]/20 dark:text-[#FF453A] group-hover:scale-105' }}">
-                                    <i data-lucide="shield-ban" class="w-4 h-4 shrink-0" stroke-width="2"></i>
+                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
+                                    <i data-lucide="shield-ban" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
                                 </div>
                                 <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Moderasi Kata Terlarang</span>
                             </div>
@@ -782,8 +758,8 @@
                         <a href="{{ route('admin.legal-pages.index') }}"
                             class="group flex items-center justify-between px-2.5 h-[38px] rounded-[11px] transition-all duration-150 {{ $isActive ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25 font-semibold' : 'text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
                             <div class="flex items-center gap-2.5 min-w-0 flex-1">
-                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-black/5 text-[#8E8E93] dark:bg-white/10 dark:text-[#98989D] group-hover:scale-105' }}">
-                                    <i data-lucide="scale" class="w-4 h-4 shrink-0" stroke-width="2"></i>
+                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
+                                    <i data-lucide="scale" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
                                 </div>
                                 <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Kebijakan &amp; Legalitas</span>
                             </div>
@@ -792,11 +768,11 @@
                 @endif
 
                 <!-- ========================================== -->
-                <!-- Group 6: Sistem & Governansi               -->
+                <!-- Group 5: Sistem & Keamanan                 -->
                 <!-- ========================================== -->
-                @if ($currentAdmin?->hasAnyPermission(['admin.roles.view', 'admin.settings.view', 'admin.smtp.view', 'admin.error_logs.view']))
+                @if ($currentAdmin?->hasAnyPermission(['admin.roles.view', 'admin.ai_tokens.view', 'admin.settings.view', 'admin.smtp.view', 'admin.error_logs.view']))
                     <div class="px-3 pt-3.5 pb-1 text-[10.5px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D]">
-                        Sistem &amp; Governansi
+                        Sistem &amp; Keamanan
                     </div>
 
                     @if ($currentAdmin?->hasPermission('admin.roles.view'))
@@ -804,10 +780,23 @@
                         <a href="{{ route('admin.roles.index') }}"
                             class="group flex items-center justify-between px-2.5 h-[38px] rounded-[11px] transition-all duration-150 {{ $isActive ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25 font-semibold' : 'text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
                             <div class="flex items-center gap-2.5 min-w-0 flex-1">
-                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#34C759]/10 text-[#34C759] dark:bg-[#34C759]/20 dark:text-[#30D158] group-hover:scale-105' }}">
-                                    <i data-lucide="shield-check" class="w-4 h-4 shrink-0" stroke-width="2"></i>
+                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
+                                    <i data-lucide="shield-check" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
                                 </div>
                                 <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Hak Akses &amp; Peran</span>
+                            </div>
+                        </a>
+                    @endif
+
+                    @if ($currentAdmin?->hasPermission('admin.ai_tokens.view'))
+                        @php $isActive = request()->routeIs('admin.ai-tokens.*'); @endphp
+                        <a href="{{ route('admin.ai-tokens.index') }}"
+                            class="group flex items-center justify-between px-2.5 h-[38px] rounded-[11px] transition-all duration-150 {{ $isActive ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25 font-semibold' : 'text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
+                            <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
+                                    <i data-lucide="sparkles" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
+                                </div>
+                                <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Monitoring Token AI</span>
                             </div>
                         </a>
                     @endif
@@ -817,8 +806,8 @@
                         <a href="{{ route('admin.settings.index') }}"
                             class="group flex items-center justify-between px-2.5 h-[38px] rounded-[11px] transition-all duration-150 {{ $isActive ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25 font-semibold' : 'text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
                             <div class="flex items-center gap-2.5 min-w-0 flex-1">
-                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:scale-105' }}">
-                                    <i data-lucide="sliders" class="w-4 h-4 shrink-0" stroke-width="2"></i>
+                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
+                                    <i data-lucide="sliders" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
                                 </div>
                                 <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Pengaturan Sistem</span>
                             </div>
@@ -830,8 +819,8 @@
                         <a href="{{ route('admin.error-logs.index') }}"
                             class="group flex items-center justify-between px-2.5 h-[38px] rounded-[11px] transition-all duration-150 {{ $isActive ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25 font-semibold' : 'text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
                             <div class="flex items-center gap-2.5 min-w-0 flex-1">
-                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-black/5 text-[#8E8E93] dark:bg-white/10 dark:text-[#98989D] group-hover:scale-105' }}">
-                                    <i data-lucide="terminal" class="w-4 h-4 shrink-0" stroke-width="2"></i>
+                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
+                                    <i data-lucide="terminal" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
                                 </div>
                                 <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Log Error &amp; Diagnostik</span>
                             </div>
@@ -1012,7 +1001,7 @@
                             <a :href="item.url"
                                 class="flex items-center gap-3 px-3 py-2.5 rounded-[12px] hover:bg-[#007AFF]/10 dark:hover:bg-[#007AFF]/15 text-black dark:text-white group transition-colors">
                                 <div
-                                    class="w-8 h-8 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60 group-hover:bg-[#007AFF] group-hover:text-white flex items-center justify-center transition-colors shrink-0">
+                                    class="w-8 h-8 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF] group-hover:text-white flex items-center justify-center transition-colors shrink-0">
                                     <i :data-lucide="item.icon" class="w-4 h-4" stroke-width="1.8"></i>
                                 </div>
                                 <div class="flex-1 min-w-0">
