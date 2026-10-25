@@ -361,16 +361,76 @@
             <div
                 class="rounded-[22px] sm:rounded-[24px] bg-white/90 dark:bg-[#1C1C1E]/90 backdrop-blur-md border border-black/[0.08] dark:border-white/[0.08] shadow-sm p-5 sm:p-7 space-y-5">
                 <div
-                    class="flex items-center justify-between gap-4 pb-4 border-b border-black/[0.06] dark:border-white/[0.08]">
+                    class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-black/[0.06] dark:border-white/[0.08]">
                     <div>
                         <h3 class="text-[16px] sm:text-[17px] font-bold text-black dark:text-white tracking-tight">Riwayat
                             Postingan Resmi Platform</h3>
                         <p class="text-[12px] sm:text-[12.5px] text-black/50 dark:text-white/50 mt-0.5">Daftar konten yang
                             dipublikasikan atau dijadwalkan oleh Administrator untuk akun Cooca</p>
                     </div>
-                    <span class="text-[12px] text-black/45 dark:text-white/45 tabular-nums">Total
-                        {{ $platformPosts->total() }} Postingan</span>
+                    <div class="flex items-center gap-3">
+                        <span class="text-[12px] text-black/45 dark:text-white/45 tabular-nums">Total
+                            {{ $platformPosts->total() }} Postingan</span>
+                        <button type="button" @click="openCreatePostModal = true"
+                            class="min-h-[34px] px-3.5 rounded-[10px] text-[12px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all inline-flex items-center gap-1.5 shadow-sm">
+                            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                            <span>Buat Postingan</span>
+                        </button>
+                    </div>
                 </div>
+
+                {{-- FILTER TOOLBAR --}}
+                <form method="GET" action="{{ route('admin.social-media.index') }}" class="grid grid-cols-1 sm:grid-cols-12 gap-3 p-3.5 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.05]">
+                    <input type="hidden" name="tab" value="posts">
+                    
+                    {{-- Search Input --}}
+                    <div class="sm:col-span-5 relative">
+                        <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40"></i>
+                        <input type="text" name="search" value="{{ $filters['search'] ?? '' }}"
+                            placeholder="Cari teks caption atau ID..."
+                            class="w-full h-[36px] pl-9 pr-3 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[12.5px] text-black dark:text-white placeholder-black/40 dark:placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/30 transition-all">
+                    </div>
+
+                    {{-- Status Filter --}}
+                    <div class="sm:col-span-3">
+                        <select name="status" onchange="this.form.submit()"
+                            class="w-full h-[36px] px-3 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[12.5px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/30 transition-all">
+                            <option value="all" {{ ($filters['status'] ?? 'all') === 'all' ? 'selected' : '' }}>Semua Status</option>
+                            <option value="published" {{ ($filters['status'] ?? '') === 'published' ? 'selected' : '' }}>Tayang (Published)</option>
+                            <option value="scheduled" {{ ($filters['status'] ?? '') === 'scheduled' ? 'selected' : '' }}>Terjadwal (Scheduled)</option>
+                            <option value="publishing" {{ ($filters['status'] ?? '') === 'publishing' ? 'selected' : '' }}>Memproses (Publishing)</option>
+                            <option value="failed" {{ ($filters['status'] ?? '') === 'failed' ? 'selected' : '' }}>Gagal (Failed)</option>
+                            <option value="draft" {{ ($filters['status'] ?? '') === 'draft' ? 'selected' : '' }}>Draf (Draft)</option>
+                        </select>
+                    </div>
+
+                    {{-- Channel Filter --}}
+                    <div class="sm:col-span-3">
+                        <select name="channel" onchange="this.form.submit()"
+                            class="w-full h-[36px] px-3 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[12.5px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/30 transition-all">
+                            <option value="all" {{ ($filters['channel'] ?? 'all') === 'all' ? 'selected' : '' }}>Semua Saluran</option>
+                            <option value="tiktok" {{ ($filters['channel'] ?? '') === 'tiktok' ? 'selected' : '' }}>TikTok</option>
+                            <option value="instagram" {{ ($filters['channel'] ?? '') === 'instagram' ? 'selected' : '' }}>Instagram</option>
+                            <option value="facebook" {{ ($filters['channel'] ?? '') === 'facebook' ? 'selected' : '' }}>Facebook</option>
+                            <option value="linkedin" {{ ($filters['channel'] ?? '') === 'linkedin' ? 'selected' : '' }}>LinkedIn</option>
+                            <option value="threads" {{ ($filters['channel'] ?? '') === 'threads' ? 'selected' : '' }}>Threads</option>
+                        </select>
+                    </div>
+
+                    {{-- Action Filter Buttons (Icon Only) --}}
+                    <div class="sm:col-span-1 flex items-center gap-1.5 justify-end">
+                        <button type="submit" title="Terapkan Filter"
+                            class="w-[36px] h-[36px] rounded-[10px] bg-black dark:bg-white text-white dark:text-black flex items-center justify-center hover:opacity-90 active:scale-95 transition-all shadow-sm shrink-0">
+                            <i data-lucide="filter" class="w-3.5 h-3.5"></i>
+                        </button>
+                        @if(!empty($filters['search']) || (!empty($filters['status']) && $filters['status'] !== 'all') || (!empty($filters['channel']) && $filters['channel'] !== 'all'))
+                            <a href="{{ route('admin.social-media.index', ['tab' => 'posts']) }}" title="Reset Filter"
+                                class="w-[36px] h-[36px] rounded-[10px] bg-black/[0.05] dark:bg-white/[0.08] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center hover:bg-black/10 dark:hover:bg-white/15 active:scale-95 transition-all shrink-0">
+                                <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+                            </a>
+                        @endif
+                    </div>
+                </form>
 
                 @if ($platformPosts->count() > 0)
                     <div class="overflow-x-auto">
@@ -393,9 +453,12 @@
                                             <div class="flex items-start gap-3">
                                                 @if (!empty($p->media_urls) && is_array($p->media_urls) && count($p->media_urls) > 0)
                                                     <div
-                                                        class="w-12 h-12 rounded-[10px] overflow-hidden bg-black/5 shrink-0 border border-black/10 dark:border-white/10">
+                                                        class="w-12 h-12 rounded-[10px] overflow-hidden bg-black/5 shrink-0 border border-black/10 dark:border-white/10 relative">
                                                         <img src="{{ $p->media_urls[0] }}" alt="Media thumbnail"
                                                             class="w-full h-full object-cover">
+                                                        @if(count($p->media_urls) > 1)
+                                                            <span class="absolute bottom-0.5 right-0.5 px-1 py-0.2 bg-black/70 text-white text-[9px] rounded font-mono font-bold">{{ count($p->media_urls) }}</span>
+                                                        @endif
                                                     </div>
                                                 @else
                                                     <div
@@ -461,42 +524,10 @@
                                                     @endforeach
                                                 </div>
                                             @else
-                                                @if ($p->platform === 'instagram')
-                                                    <span
-                                                        class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#E1306C]/10 text-[#E1306C]">
-                                                        <i data-lucide="instagram" class="w-3.5 h-3.5"></i>
-                                                        <span>Instagram</span>
-                                                    </span>
-                                                @elseif($p->platform === 'facebook')
-                                                    <span
-                                                        class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#1877F2]/10 text-[#1877F2]">
-                                                        <i data-lucide="facebook" class="w-3.5 h-3.5"></i>
-                                                        <span>Facebook</span>
-                                                    </span>
-                                                @elseif($p->platform === 'threads')
-                                                    <span
-                                                        class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-black/10 dark:bg-white/15 text-black dark:text-white border border-black/10 dark:border-white/10">
-                                                        <i data-lucide="at-sign" class="w-3.5 h-3.5"></i>
-                                                        <span>Threads</span>
-                                                    </span>
-                                                @elseif($p->platform === 'tiktok')
-                                                    <span
-                                                        class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-black/10 dark:bg-white/10 text-black dark:text-white">
-                                                        <i data-lucide="video" class="w-3.5 h-3.5"></i>
-                                                        <span>TikTok</span>
-                                                    </span>
-                                                @elseif($p->platform === 'linkedin')
-                                                    <span
-                                                        class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#0A66C2]/10 text-[#0A66C2]">
-                                                        <i data-lucide="linkedin" class="w-3.5 h-3.5"></i>
-                                                        <span>LinkedIn</span>
-                                                    </span>
-                                                @else
-                                                    <span
-                                                        class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-black/5 text-black dark:text-white">
-                                                        <span>{{ ucfirst($p->platform) }}</span>
-                                                    </span>
-                                                @endif
+                                                <span
+                                                    class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-black/5 text-black dark:text-white">
+                                                    <span>{{ ucfirst($p->platform ?: 'General') }}</span>
+                                                </span>
                                             @endif
                                         </td>
                                         <td class="px-4 py-3.5 text-center">
@@ -514,6 +545,11 @@
                                                 <span
                                                     class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#FF9500]/12 text-[#FF9500]">
                                                     Memproses
+                                                </span>
+                                            @elseif($p->status === 'draft')
+                                                <span
+                                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-black/10 dark:bg-white/10 text-black/70 dark:text-white/70">
+                                                    Draf
                                                 </span>
                                             @else
                                                 <span
@@ -535,25 +571,81 @@
                                                 {{ $p->created_at->format('d M Y, H:i') }} WIB
                                             @endif
                                         </td>
+                                        {{-- KOLOM AKSI (HANYA MENGGUNAKAN ICON SAJA) --}}
                                         <td class="px-4 py-3.5 text-right">
-                                            <div class="flex items-center justify-end gap-1.5">
-                                                @if ($p->status === 'failed')
+                                            <div class="flex items-center justify-end gap-1">
+                                                {{-- 1. Tombol Detail / Preview (Icon Eye) --}}
+                                                <button type="button"
+                                                    @click="openPreviewModal({{ json_encode([
+                                                        'id' => $p->id,
+                                                        'content' => $p->content,
+                                                        'media_urls' => $p->media_urls,
+                                                        'media_type' => $p->media_type,
+                                                        'status' => $p->status,
+                                                        'error_message' => $p->error_message,
+                                                        'created_at' => $p->created_at->format('d M Y, H:i') . ' WIB',
+                                                        'published_at' => $p->published_at?->format('d M Y, H:i') . ' WIB',
+                                                        'scheduled_at' => $p->scheduled_at?->format('d M Y, H:i') . ' WIB',
+                                                        'targets' => $p->targets->map(fn($t) => [
+                                                            'channel' => $t->channel,
+                                                            'status' => $t->status,
+                                                            'platform_post_id' => $t->platform_post_id,
+                                                            'error_message' => $t->error_message,
+                                                        ])
+                                                    ]) }})"
+                                                    title="Lihat Detail Postingan"
+                                                    class="w-8 h-8 rounded-[8px] flex items-center justify-center text-black/65 dark:text-white/65 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 active:scale-95 transition-all">
+                                                    <i data-lucide="eye" class="w-4 h-4"></i>
+                                                </button>
+
+                                                {{-- 2. Tombol Edit (Icon Pencil) --}}
+                                                <button type="button"
+                                                    @click="openEditModal({{ json_encode([
+                                                        'id' => $p->id,
+                                                        'content' => $p->content,
+                                                        'scheduled_at' => $p->scheduled_at?->format('Y-m-d\TH:i') ?? '',
+                                                    ]) }}, '{{ route('admin.social-media.posts.update', $p) }}')"
+                                                    title="Edit Postingan"
+                                                    class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#007AFF] hover:bg-[#007AFF]/10 active:scale-95 transition-all">
+                                                    <i data-lucide="pencil" class="w-4 h-4"></i>
+                                                </button>
+
+                                                {{-- 3. Tombol Publish Sekarang (Icon Send) untuk Terjadwal / Draf --}}
+                                                @if ($p->status === 'scheduled' || $p->status === 'draft')
                                                     <form method="POST"
-                                                        action="{{ route('admin.social-media.posts.retry', $p) }}">
+                                                        action="{{ route('admin.social-media.posts.publish', $p) }}"
+                                                        onsubmit="return confirm('Terbitkan postingan ini ke media sosial sekarang?');"
+                                                        class="inline">
                                                         @csrf
-                                                        <button type="submit" title="Coba kirim ulang"
-                                                            class="p-1.5 rounded-[8px] text-[#007AFF] hover:bg-[#007AFF]/10 transition-colors">
+                                                        <button type="submit" title="Terbitkan Sekarang"
+                                                            class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#34C759] hover:bg-[#34C759]/10 active:scale-95 transition-all">
+                                                            <i data-lucide="send" class="w-4 h-4"></i>
+                                                        </button>
+                                                    </form>
+                                                @endif
+
+                                                {{-- 4. Tombol Retry / Coba Kirim Ulang (Icon Rotate-CW) untuk yang Gagal --}}
+                                                @if ($p->status === 'failed' || $p->status === 'partially_failed')
+                                                    <form method="POST"
+                                                        action="{{ route('admin.social-media.posts.retry', $p) }}"
+                                                        class="inline">
+                                                        @csrf
+                                                        <button type="submit" title="Coba Kirim Ulang"
+                                                            class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#FF9500] hover:bg-[#FF9500]/10 active:scale-95 transition-all">
                                                             <i data-lucide="rotate-cw" class="w-4 h-4"></i>
                                                         </button>
                                                     </form>
                                                 @endif
+
+                                                {{-- 5. Tombol Hapus (Icon Trash) --}}
                                                 <form method="POST"
                                                     action="{{ route('admin.social-media.posts.destroy', $p) }}"
-                                                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus postingan platform ini?');">
+                                                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus postingan platform ini? Berkas media terkait di storage juga akan dibersihkan.');"
+                                                    class="inline">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" title="Hapus postingan"
-                                                        class="p-1.5 rounded-[8px] text-[#FF3B30] hover:bg-[#FF3B30]/10 transition-colors">
+                                                    <button type="submit" title="Hapus Postingan"
+                                                        class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#FF3B30] hover:bg-[#FF3B30]/10 active:scale-95 transition-all">
                                                         <i data-lucide="trash-2" class="w-4 h-4"></i>
                                                     </button>
                                                 </form>
@@ -566,7 +658,7 @@
                     </div>
 
                     <div class="pt-2">
-                        {{ $platformPosts->appends(['tab' => 'posts'])->links() }}
+                        {{ $platformPosts->appends(array_merge(['tab' => 'posts'], $filters))->links() }}
                     </div>
                 @else
                     <div
@@ -2307,6 +2399,207 @@
                         </button>
                     </div>
                 </form>
+                </div>
+            </div>
+        </template>
+
+        {{-- MODAL EDIT POSTINGAN PLATFORM --}}
+        <template x-teleport="body">
+            <div x-show="editModalOpen"
+                class="fixed inset-0 z-[200] overflow-y-auto"
+                x-cloak style="display: none;"
+                role="dialog" aria-modal="true"
+                @keydown.escape.window="editModalOpen = false">
+                <!-- Backdrop -->
+                <div class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    @click="editModalOpen = false"
+                    aria-hidden="true"></div>
+
+                <!-- Centering Wrapper -->
+                <div class="relative z-10 min-h-full flex items-center justify-center p-4 pointer-events-none">
+                    <div class="bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[24px] shadow-2xl max-w-lg w-full p-6 space-y-4 pointer-events-auto"
+                        @click.stop>
+
+                        <div class="flex items-center justify-between pb-3 border-b border-black/[0.06] dark:border-white/[0.08]">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-9 h-9 rounded-[12px] bg-[#007AFF]/15 text-[#007AFF] flex items-center justify-center">
+                                    <i data-lucide="pencil" class="w-4 h-4"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-[16px] font-bold text-black dark:text-white">Edit Konten Postingan</h3>
+                                    <p class="text-[12px] text-black/50 dark:text-white/50">Perbarui teks narasi atau jadwal penayangan</p>
+                                </div>
+                            </div>
+                            <button type="button" @click="editModalOpen = false"
+                                class="text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white transition-colors">
+                                <i data-lucide="x" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+
+                        <form method="POST" :action="editPost.update_url" class="space-y-4">
+                            @csrf
+                            @method('PUT')
+                            
+                            <div>
+                                <label class="block text-[11px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50 mb-1.5">
+                                    Teks Caption / Konten
+                                </label>
+                                <textarea name="content" rows="4" required maxlength="5000"
+                                    x-model="editPost.content"
+                                    placeholder="Tuliskan teks caption postingan..."
+                                    class="w-full bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/15 rounded-[12px] p-3 text-[13px] text-black dark:text-white placeholder-black/35 dark:placeholder-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40 transition-all"></textarea>
+                            </div>
+
+                            <div>
+                                <label class="block text-[11px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50 mb-1.5">
+                                    Waktu Penayangan Terjadwal (Opsional)
+                                </label>
+                                <input type="datetime-local" name="scheduled_at"
+                                    x-model="editPost.scheduled_at"
+                                    class="w-full h-[40px] px-3 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/15 rounded-[12px] text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40 transition-all">
+                                <span class="text-[11px] text-black/45 dark:text-white/45 mt-1 block">Biarkan kosong jika tidak ingin mengubah jadwal penayangan.</span>
+                            </div>
+
+                            <div class="p-3 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.05] text-[11.5px] text-black/55 dark:text-white/55">
+                                <i data-lucide="info" class="w-3.5 h-3.5 inline mr-1 text-[#007AFF]"></i>
+                                Catatan: Pengeditan teks di sini memperbarui arsip sistem Cooca dan target postingan yang belum terkirim.
+                            </div>
+
+                            <div class="pt-2 flex items-center justify-end gap-3 border-t border-black/[0.06] dark:border-white/[0.08]">
+                                <button type="button" @click="editModalOpen = false"
+                                    class="min-h-[40px] px-4 rounded-[11px] text-[12.5px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+                                    Batal
+                                </button>
+                                <button type="submit"
+                                    class="min-h-[40px] px-5 rounded-[11px] text-[12.5px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all inline-flex items-center gap-1.5 shadow-sm">
+                                    <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                                    <span>Simpan Perubahan</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        {{-- MODAL PREVIEW DETAIL POSTINGAN PLATFORM --}}
+        <template x-teleport="body">
+            <div x-show="previewModalOpen && previewPost"
+                class="fixed inset-0 z-[200] overflow-y-auto"
+                x-cloak style="display: none;"
+                role="dialog" aria-modal="true"
+                @keydown.escape.window="previewModalOpen = false">
+                <!-- Backdrop -->
+                <div class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    @click="previewModalOpen = false"
+                    aria-hidden="true"></div>
+
+                <!-- Centering Wrapper -->
+                <div class="relative z-10 min-h-full flex items-center justify-center p-4 pointer-events-none">
+                    <div class="bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[24px] shadow-2xl max-w-xl w-full p-6 space-y-4 pointer-events-auto"
+                        @click.stop>
+
+                        <div class="flex items-center justify-between pb-3 border-b border-black/[0.06] dark:border-white/[0.08]">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-9 h-9 rounded-[12px] bg-[#34C759]/15 text-[#34C759] flex items-center justify-center">
+                                    <i data-lucide="eye" class="w-4 h-4"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-[16px] font-bold text-black dark:text-white">Detail Postingan Platform</h3>
+                                    <p class="text-[12px] text-black/50 dark:text-white/50" x-text="'ID: #' + (previewPost?.id || '')"></p>
+                                </div>
+                            </div>
+                            <button type="button" @click="previewModalOpen = false"
+                                class="text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white transition-colors">
+                                <i data-lucide="x" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+
+                        <div class="space-y-4 max-h-[70vh] overflow-y-auto pr-1">
+                            {{-- Status & Meta Badges --}}
+                            <div class="flex items-center justify-between flex-wrap gap-2 p-3 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.05]">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-black/40 dark:text-white/40">Status:</span>
+                                    <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold"
+                                        :class="{
+                                            'bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]': previewPost?.status === 'published',
+                                            'bg-[#007AFF]/15 text-[#007AFF]': previewPost?.status === 'scheduled',
+                                            'bg-[#FF9500]/15 text-[#FF9500]': previewPost?.status === 'publishing',
+                                            'bg-[#FF3B30]/15 text-[#FF3B30]': previewPost?.status === 'failed',
+                                            'bg-black/10 dark:bg-white/10 text-black/70 dark:text-white/70': previewPost?.status === 'draft'
+                                        }"
+                                        x-text="previewPost?.status?.toUpperCase()"></span>
+                                </div>
+                                <span class="text-[11.5px] text-black/50 dark:text-white/50" x-text="previewPost?.published_at ? ('Tayang: ' + previewPost.published_at) : (previewPost?.scheduled_at ? ('Jadwal: ' + previewPost.scheduled_at) : ('Dibuat: ' + (previewPost?.created_at || '')))"></span>
+                            </div>
+
+                            {{-- Media Thumbnail / Carousel --}}
+                            <template x-if="previewPost?.media_urls && previewPost.media_urls.length > 0">
+                                <div class="space-y-2">
+                                    <label class="block text-[11px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50">Media Terlampir</label>
+                                    <div class="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                                        <template x-for="(url, idx) in previewPost.media_urls" :key="idx">
+                                            <a :href="url" target="_blank" class="block aspect-square rounded-[12px] overflow-hidden bg-black/5 border border-black/10 dark:border-white/10 relative group">
+                                                <img :src="url" alt="Media preview" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200">
+                                            </a>
+                                        </template>
+                                    </div>
+                                </div>
+                            </template>
+
+                            {{-- Caption Content --}}
+                            <div>
+                                <label class="block text-[11px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50 mb-1">Isi Caption</label>
+                                <div class="p-3.5 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.05] dark:border-white/[0.06] text-[13px] text-black dark:text-white whitespace-pre-wrap font-sans leading-relaxed"
+                                    x-text="previewPost?.content"></div>
+                            </div>
+
+                            {{-- Error Message if any --}}
+                            <template x-if="previewPost?.error_message">
+                                <div class="p-3.5 rounded-[14px] bg-[#FF3B30]/10 border border-[#FF3B30]/20 text-[#FF3B30] text-[12px] space-y-1">
+                                    <div class="font-bold flex items-center gap-1.5">
+                                        <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+                                        <span>Catatan Masalah / Error:</span>
+                                    </div>
+                                    <p class="font-mono text-[11.5px] leading-relaxed" x-text="previewPost.error_message"></p>
+                                </div>
+                            </template>
+
+                            {{-- Target Channels Status List --}}
+                            <div class="space-y-2">
+                                <label class="block text-[11px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50">Status Per Saluran Media Sosial</label>
+                                <div class="space-y-2">
+                                    <template x-for="target in previewPost?.targets || []" :key="target.channel">
+                                        <div class="p-3 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.05] flex items-center justify-between gap-3 text-[12.5px]">
+                                            <div class="flex items-center gap-2">
+                                                <span class="font-bold capitalize text-black dark:text-white" x-text="target.channel"></span>
+                                                <template x-if="target.platform_post_id">
+                                                    <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-black/5 dark:bg-white/10 text-black/60 dark:text-white/60" x-text="'ID: ' + target.platform_post_id"></span>
+                                                </template>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <span class="px-2 py-0.5 rounded-full text-[10.5px] font-semibold"
+                                                    :class="{
+                                                        'bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]': target.status === 'published',
+                                                        'bg-[#007AFF]/15 text-[#007AFF]': target.status === 'scheduled',
+                                                        'bg-[#FF9500]/15 text-[#FF9500]': target.status === 'publishing',
+                                                        'bg-[#FF3B30]/15 text-[#FF3B30]': target.status === 'failed',
+                                                        'bg-black/10 dark:bg-white/10 text-black/70 dark:text-white/70': target.status === 'pending'
+                                                    }"
+                                                    x-text="target.status"></span>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-2 flex items-center justify-end border-t border-black/[0.06] dark:border-white/[0.08]">
+                            <button type="button" @click="previewModalOpen = false"
+                                class="min-h-[40px] px-5 rounded-[11px] text-[12.5px] font-semibold text-black dark:text-white bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 transition-colors">
+                                Tutup
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2322,6 +2615,10 @@
                 activeTab: '{{ $tab }}',
                 openCreatePostModal: false,
                 replyModalOpen: false,
+                editModalOpen: false,
+                editPost: { id: null, content: '', scheduled_at: '', update_url: '' },
+                previewModalOpen: false,
+                previewPost: null,
                 activeCommentId: null,
                 activeAuthor: '',
                 activeCommentText: '',
@@ -2631,6 +2928,27 @@
                     this.replyModalOpen = true;
                 },
 
+                openEditModal(post, updateUrl) {
+                    this.editPost = {
+                        id: post.id,
+                        content: post.content || '',
+                        scheduled_at: post.scheduled_at || '',
+                        update_url: updateUrl
+                    };
+                    this.editModalOpen = true;
+                    this.$nextTick(() => {
+                        if (window.lucide) window.lucide.createIcons();
+                    });
+                },
+
+                openPreviewModal(post) {
+                    this.previewPost = post;
+                    this.previewModalOpen = true;
+                    this.$nextTick(() => {
+                        if (window.lucide) window.lucide.createIcons();
+                    });
+                },
+
                 init() {
                     const urlParams = new URLSearchParams(window.location.search);
                     const tabParam = urlParams.get('tab');
@@ -2638,6 +2956,20 @@
                         this.activeTab = tabParam;
                     }
                     this.$watch('openCreatePostModal', (val) => {
+                        if (val) {
+                            this.$nextTick(() => {
+                                if (window.lucide) window.lucide.createIcons();
+                            });
+                        }
+                    });
+                    this.$watch('editModalOpen', (val) => {
+                        if (val) {
+                            this.$nextTick(() => {
+                                if (window.lucide) window.lucide.createIcons();
+                            });
+                        }
+                    });
+                    this.$watch('previewModalOpen', (val) => {
                         if (val) {
                             this.$nextTick(() => {
                                 if (window.lucide) window.lucide.createIcons();

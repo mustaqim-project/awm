@@ -251,6 +251,8 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
             Route::post('/accounts/{account}/disconnect', [AdminSocialMediaController::class, 'disconnectAccount'])->name('accounts.disconnect');
             Route::post('/config', [AdminSocialMediaController::class, 'updateConfig'])->name('config');
             Route::post('/posts', [AdminSocialMediaController::class, 'storePost'])->name('posts.store');
+            Route::put('/posts/{post}', [AdminSocialMediaController::class, 'updatePost'])->name('posts.update');
+            Route::post('/posts/{post}/publish', [AdminSocialMediaController::class, 'publishNow'])->name('posts.publish');
             Route::post('/posts/{post}/retry', [AdminSocialMediaController::class, 'retryPost'])->name('posts.retry');
             Route::delete('/posts/{post}', [AdminSocialMediaController::class, 'destroyPost'])->name('posts.destroy');
             Route::post('/comments/{comment}/reply', [AdminSocialMediaController::class, 'replyComment'])->name('comments.reply');

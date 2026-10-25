@@ -248,15 +248,44 @@ class AdminSocialMediaService
     }
 
     /**
-     * Get paginated platform posts for superadmin cockpit.
+     * Get paginated platform posts for superadmin cockpit with optional filters.
      */
-    public function getPlatformPosts(int $perPage = 12)
+    public function getPlatformPosts(int $perPage = 12, array $filters = [])
     {
         return SocialMediaPost::query()
             ->where(function ($q) {
                 $q->where('is_platform', true)->orWhereNull('business_id');
             })
-            ->with(['admin', 'media', 'comments'])
+            ->when(! empty($filters['status']) && $filters['status'] !== 'all', function ($q) use ($filters) {
+                $status = $filters['status'];
+                if ($status === 'published') {
+                    $q->where('status', 'published');
+                } elseif ($status === 'scheduled') {
+                    $q->where('status', 'scheduled');
+                } elseif ($status === 'failed') {
+                    $q->whereIn('status', ['failed', 'partially_failed']);
+                } elseif ($status === 'draft') {
+                    $q->where('status', 'draft');
+                } elseif ($status === 'publishing') {
+                    $q->where('status', 'publishing');
+                }
+            })
+            ->when(! empty($filters['channel']) && $filters['channel'] !== 'all', function ($q) use ($filters) {
+                $channel = $filters['channel'];
+                $q->where(function ($sq) use ($channel) {
+                    $sq->where('platform', $channel)
+                       ->orWhereHas('targets', fn ($tq) => $tq->where('channel', $channel));
+                });
+            })
+            ->when(! empty($filters['search']), function ($q) use ($filters) {
+                $search = trim($filters['search']);
+                $q->where(function ($sq) use ($search) {
+                    $sq->where('content', 'like', "%{$search}%")
+                       ->orWhere('id', 'like', "%{$search}%")
+                       ->orWhere('platform_post_id', 'like', "%{$search}%");
+                });
+            })
+            ->with(['admin', 'media', 'comments', 'targets'])
             ->latest()
             ->paginate($perPage, ['*'], 'posts_page');
     }
@@ -619,6 +648,12 @@ class AdminSocialMediaService
      */
     public function deletePlatformPost(SocialMediaPost $post): bool
     {
+        try {
+            app(\App\Domain\SocialMedia\SocialMediaService::class)->purgePostLocalMedia($post);
+        } catch (\Throwable) {
+            // Non-fatal, continue with direct storage cleanup
+        }
+
         if (is_array($post->local_media_paths)) {
             foreach ($post->local_media_paths as $localPath) {
                 if (! empty($localPath)) {
@@ -629,7 +664,23 @@ class AdminSocialMediaService
             \App\Domain\Storage\AdminStorage::deletePublicFile($post->local_media_paths);
         }
 
-        return (bool) $post->delete();
+        foreach ($post->media as $media) {
+            if (! empty($media->file_path)) {
+                \App\Domain\Storage\AdminStorage::deletePublicFile($media->file_path);
+            }
+            if (! empty($media->local_path)) {
+                \App\Domain\Storage\AdminStorage::deletePublicFile($media->local_path);
+            }
+        }
+
+        \Illuminate\Support\Facades\DB::transaction(function () use ($post) {
+            $post->comments()->delete();
+            $post->targets()->delete();
+            $post->media()->delete();
+            $post->delete();
+        });
+
+        return true;
     }
 
     /**

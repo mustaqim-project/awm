@@ -27,15 +27,21 @@ class AdminSocialMediaController extends Controller
             $tab = 'posts';
         }
 
+        $filters = [
+            'status'  => (string) $request->query('status', 'all'),
+            'channel' => (string) $request->query('channel', 'all'),
+            'search'  => (string) $request->query('search', ''),
+        ];
+
         $platform = $this->adminService->getPlatformSettings();
         $summary = $this->adminService->getPlatformSummary();
         $merchants = $this->adminService->getConnectedMerchantsList(20);
-        $platformPosts = $this->adminService->getPlatformPosts(12);
+        $platformPosts = $this->adminService->getPlatformPosts(12, $filters);
         $platformComments = $this->adminService->getPlatformComments(20);
         $platformAccounts = $this->adminService->getPlatformAccounts();
         $analytics = $this->adminService->getPlatformAnalytics($request->boolean('refresh_analytics', false));
 
-        return view('admin.social_media.index', compact('tab', 'platform', 'summary', 'merchants', 'platformPosts', 'platformComments', 'platformAccounts', 'analytics'));
+        return view('admin.social_media.index', compact('tab', 'filters', 'platform', 'summary', 'merchants', 'platformPosts', 'platformComments', 'platformAccounts', 'analytics'));
     }
 
     /**
@@ -152,32 +158,45 @@ class AdminSocialMediaController extends Controller
     /**
      * Retry publishing a failed platform post.
      */
-    public function retryPost(\App\Models\SocialMediaPost $post): RedirectResponse
+    public function retryPost(Request $request, \App\Models\SocialMediaPost $post): RedirectResponse
     {
-        $this->adminService->retryPlatformPost($post);
-
-        if ($post->status === 'published') {
-            return redirect()->route('admin.social-media.index', ['tab' => 'posts'])
-                ->with('success', 'Postingan platform berhasil dipublikasikan ulang!');
+        $admin = auth('admin')->user();
+        if (! $admin) {
+            abort(403);
         }
 
-        $targetErr = $post->targets()->whereNotNull('error_message')->value('error_message');
-        $errMsg = $targetErr ?: ($post->error_message ?? 'Periksa kredensial.');
+        try {
+            $this->adminService->retryPlatformPost($post);
 
-        return redirect()->route('admin.social-media.index', ['tab' => 'posts'])
-            ->with('error', 'Gagal mempublikasikan ulang postingan: ' . $errMsg);
+            return redirect()->route('admin.social-media.index', array_merge(['tab' => 'posts'], $request->only('status', 'channel', 'search')))
+                ->with('success', 'Percobaan kirim ulang postingan platform selesai dijalankan.');
+        } catch (\Throwable $e) {
+            return redirect()->route('admin.social-media.index', array_merge(['tab' => 'posts'], $request->only('status', 'channel', 'search')))
+                ->with('error', 'Gagal mencoba kirim ulang postingan: ' . $e->getMessage());
+        }
     }
 
     /**
      * Delete a platform post.
      */
-    public function destroyPost(\App\Models\SocialMediaPost $post): RedirectResponse
+    public function destroyPost(Request $request, \App\Models\SocialMediaPost $post): RedirectResponse
     {
-        $this->adminService->deletePlatformPost($post);
+        $admin = auth('admin')->user();
+        if (! $admin) {
+            abort(403);
+        }
 
-        return redirect()->route('admin.social-media.index', ['tab' => 'posts'])
-            ->with('success', 'Postingan platform berhasil dihapus.');
+        try {
+            $this->adminService->deletePlatformPost($post);
+
+            return redirect()->route('admin.social-media.index', array_merge(['tab' => 'posts'], $request->only('status', 'channel', 'search')))
+                ->with('success', 'Postingan platform dan berkas fisik terkait berhasil dihapus dari sistem.');
+        } catch (\Throwable $e) {
+            return redirect()->route('admin.social-media.index', array_merge(['tab' => 'posts'], $request->only('status', 'channel', 'search')))
+                ->with('error', 'Gagal menghapus postingan: ' . $e->getMessage());
+        }
     }
+
 
     /**
      * Reply to a comment on a platform post.
@@ -436,33 +455,42 @@ class AdminSocialMediaController extends Controller
     }
 
     /**
-     * Retry publishing a failed platform post.
+     * Update an existing platform post (edit caption, timing, etc.).
      */
-    public function retryPost(Request $request, \App\Models\SocialMediaPost $post): RedirectResponse
+    public function updatePost(Request $request, \App\Models\SocialMediaPost $post): RedirectResponse
     {
         $admin = auth('admin')->user();
         if (! $admin) {
             abort(403);
         }
 
-        try {
-            foreach ($post->targets()->whereIn('status', ['failed', 'pending'])->get() as $target) {
-                $this->adminService->executePlatformPublishTarget($target);
-            }
-            $post->syncStatusFromTargets();
+        $validated = $request->validate([
+            'content'      => ['required', 'string', 'max:5000'],
+            'scheduled_at' => ['nullable', 'date'],
+        ]);
 
-            return redirect()->route('admin.social-media.index', ['tab' => 'posts'])
-                ->with('success', 'Percobaan kirim ulang postingan platform selesai dijalankan.');
-        } catch (\Throwable $e) {
-            return redirect()->route('admin.social-media.index', ['tab' => 'posts'])
-                ->with('error', 'Gagal mencoba kirim ulang postingan: ' . $e->getMessage());
+        $post->update([
+            'content'      => $validated['content'],
+            'scheduled_at' => ! empty($validated['scheduled_at']) ? \Illuminate\Support\Carbon::parse($validated['scheduled_at']) : $post->scheduled_at,
+        ]);
+
+        // Update target captions and schedules
+        foreach ($post->targets as $target) {
+            if (empty($target->custom_caption)) {
+                $target->update([
+                    'scheduled_at' => $post->scheduled_at,
+                ]);
+            }
         }
+
+        return redirect()->route('admin.social-media.index', array_merge(['tab' => 'posts'], $request->only('status', 'channel', 'search')))
+            ->with('success', 'Postingan platform berhasil diperbarui.');
     }
 
     /**
-     * Delete a platform social media post (draft, failed, or cleanup).
+     * Immediately publish a scheduled or draft post.
      */
-    public function destroyPost(Request $request, \App\Models\SocialMediaPost $post): RedirectResponse
+    public function publishNow(Request $request, \App\Models\SocialMediaPost $post): RedirectResponse
     {
         $admin = auth('admin')->user();
         if (! $admin) {
@@ -470,42 +498,18 @@ class AdminSocialMediaController extends Controller
         }
 
         try {
-            // 1. Purge physical media files from storage disks and reclaim quota
-            try {
-                app(\App\Domain\SocialMedia\SocialMediaService::class)->purgePostLocalMedia($post);
-            } catch (\Throwable) {
-                // Non-fatal, continue with direct storage cleanup
-            }
-
-            // 2. Direct AdminStorage purge for local paths
-            if (! empty($post->local_media_paths) && is_array($post->local_media_paths)) {
-                foreach ($post->local_media_paths as $p) {
-                    \App\Domain\Storage\AdminStorage::deletePublicFile($p);
+            foreach ($post->targets as $target) {
+                if ($target->status !== 'published') {
+                    $this->adminService->executePlatformPublishTarget($target);
                 }
             }
+            $post->syncStatusFromTargets();
 
-            // 3. Direct AdminStorage purge for media relation
-            foreach ($post->media as $media) {
-                if (! empty($media->file_path)) {
-                    \App\Domain\Storage\AdminStorage::deletePublicFile($media->file_path);
-                }
-                if (! empty($media->local_path)) {
-                    \App\Domain\Storage\AdminStorage::deletePublicFile($media->local_path);
-                }
-            }
-
-            \Illuminate\Support\Facades\DB::transaction(function () use ($post) {
-                $post->comments()->delete();
-                $post->targets()->delete();
-                $post->media()->delete();
-                $post->delete();
-            });
-
-            return redirect()->route('admin.social-media.index', ['tab' => 'posts'])
-                ->with('success', 'Postingan platform berhasil dihapus dari sistem.');
+            return redirect()->route('admin.social-media.index', array_merge(['tab' => 'posts'], $request->only('status', 'channel', 'search')))
+                ->with('success', 'Postingan platform berhasil dipublikasikan.');
         } catch (\Throwable $e) {
-            return redirect()->route('admin.social-media.index', ['tab' => 'posts'])
-                ->with('error', 'Gagal menghapus postingan: ' . $e->getMessage());
+            return redirect()->route('admin.social-media.index', array_merge(['tab' => 'posts'], $request->only('status', 'channel', 'search')))
+                ->with('error', 'Gagal mempublikasikan postingan: ' . $e->getMessage());
         }
     }
 }
