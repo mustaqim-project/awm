@@ -361,6 +361,43 @@
         sidebarOpen: false,
         quickActionOpen: false,
         spotlightOpen: false,
+        profileDropdownOpen: false,
+        themeDropdownOpen: false,
+        isFullscreen: false,
+        theme: localStorage.getItem('cooca-admin-theme') || localStorage.getItem('cooca-theme') || 'light',
+        applyTheme(value) {
+            this.theme = value;
+            localStorage.setItem('cooca-admin-theme', value);
+            localStorage.setItem('cooca-theme', value);
+            const dark = value === 'dark' || (value === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            document.documentElement.classList.toggle('dark', dark);
+            document.documentElement.dataset.theme = value;
+            this.themeDropdownOpen = false;
+        },
+        toggleFullscreen() {
+            if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.mozFullScreenElement && !document.msFullscreenElement) {
+                const docEl = document.documentElement;
+                if (docEl.requestFullscreen) {
+                    docEl.requestFullscreen().catch(() => {});
+                } else if (docEl.webkitRequestFullscreen) {
+                    docEl.webkitRequestFullscreen();
+                } else if (docEl.mozRequestFullScreen) {
+                    docEl.mozRequestFullScreen();
+                } else if (docEl.msRequestFullscreen) {
+                    docEl.msRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen().catch(() => {});
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            }
+        },
         searchQuery: '',
         modules: {{ \Illuminate\Support\Js::from($allowedSpotlightModules) }},
         get filteredModules() {
@@ -377,13 +414,25 @@
             });
         },
         init() {
+            const handleFs = () => {
+                this.isFullscreen = !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement);
+            };
+            document.addEventListener('fullscreenchange', handleFs);
+            document.addEventListener('webkitfullscreenchange', handleFs);
+            document.addEventListener('mozfullscreenchange', handleFs);
+            document.addEventListener('MSFullscreenChange', handleFs);
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                if (this.theme === 'system') {
+                    document.documentElement.classList.toggle('dark', e.matches);
+                }
+            });
             this.$watch('searchQuery', () => {
                 this.$nextTick(() => lucide.createIcons());
             });
         }
     }" @keydown.window.cmd.k.prevent="openSpotlight()"
     @keydown.window.ctrl.k.prevent="openSpotlight()"
-    @keydown.escape.window="spotlightOpen = false; quickActionOpen = false">
+    @keydown.escape.window="spotlightOpen = false; quickActionOpen = false; profileDropdownOpen = false; themeDropdownOpen = false">
 
     <!-- Mobile Sidebar Backdrop -->
     <div x-show="sidebarOpen" @click="sidebarOpen = false"
@@ -859,108 +908,206 @@
     <!-- Must be OUTSIDE any overflow container to function correctly -->
     <!-- ============================================================ -->
     <header
-        class="fixed top-0 left-0 right-0 lg:left-72 z-30 toolbar-material border-b border-black/[0.06] dark:border-white/[0.08] px-3.5 sm:px-8 h-[64px] sm:h-[72px] py-2 flex items-center justify-between gap-3 sm:gap-4 min-w-0">
-        <div class="flex items-center gap-3.5 min-w-0 py-1">
+        class="fixed top-0 left-0 right-0 lg:left-72 z-30 toolbar-material border-b border-black/[0.06] dark:border-white/[0.08] px-3.5 sm:px-6 h-[64px] sm:h-[70px] py-2 flex items-center justify-between gap-3 sm:gap-4 min-w-0">
+        <!-- Left Cluster: Mobile Menu Trigger + Title & Subtitle -->
+        <div class="flex items-center gap-3 min-w-0 py-1">
             <button @click="sidebarOpen = true"
-                class="lg:hidden w-11 h-11 -ml-2 rounded-[12px] text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/10 active:scale-95 transition-all flex items-center justify-center"
+                class="lg:hidden w-10 h-10 -ml-1 rounded-[10px] text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/10 active:scale-95 transition-all flex items-center justify-center shrink-0 cursor-pointer"
                 aria-label="Buka navigasi">
                 <i data-lucide="menu" class="w-5 h-5" stroke-width="2"></i>
             </button>
             <div class="min-w-0 flex flex-col justify-center">
                 <h1
-                    class="text-[18px] sm:text-[20px] font-extrabold text-[#1C1C1E] dark:text-[#F2F2F7] tracking-tight truncate leading-snug">
+                    class="text-[17px] sm:text-[18px] font-extrabold text-[#1C1C1E] dark:text-[#F2F2F7] tracking-tight truncate leading-snug">
                     {{ $headerTitle ?? 'Admin Console' }}
                 </h1>
-                <p class="text-[12px] text-black/50 dark:text-white/50 truncate hidden md:block leading-none mt-0.5">
+                <p class="text-[11px] text-black/50 dark:text-white/50 truncate hidden md:block leading-none mt-0.5">
                     {{ $headerSubtitle ?? 'Pusat Manajemen Sistem Cooca (cooca.id)' }}
                 </p>
             </div>
         </div>
 
-        <div class="flex items-center gap-2.5 shrink-0">
-            <!-- Spotlight Quick Navigator Button (macOS Sonoma Style Cmd+K) -->
+        <!-- Right Cluster: Search Pill + Control Capsule (No Multi-Lang) + Divider + User Profile Dropdown -->
+        <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+            <!-- Global Spotlight Search Trigger Pill (Desktop & Tablet) -->
             <button type="button" @click="openSpotlight()"
-                class="h-10 px-3 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.04] dark:border-white/[0.06] text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/10 active:scale-95 transition-all hidden sm:flex items-center gap-2 text-[12px] font-medium"
-                aria-label="Pencarian & Navigasi Modul Admin" title="Pencarian Cepat Modul (Ctrl+K / ⌘K)">
-                <i data-lucide="search" class="w-3.5 h-3.5 text-black/40 dark:text-white/40" stroke-width="2"></i>
-                <span class="text-black/45 dark:text-white/45 hidden md:inline">Cari modul...</span>
-                <kbd
-                    class="px-1.5 py-0.5 rounded-[6px] text-[10px] font-mono font-bold bg-black/[0.06] dark:bg-white/[0.1] text-black/60 dark:text-white/60 border border-black/[0.06] dark:border-white/[0.08]">⌘K</kbd>
+                class="hidden md:flex items-center justify-between gap-2 px-3.5 h-9 w-64 lg:w-80 rounded-full bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.07] dark:hover:bg-white/[0.1] border border-black/5 dark:border-white/10 text-black/55 dark:text-white/55 hover:text-black dark:hover:text-white transition-all cursor-pointer text-[12.5px] group">
+                <div class="flex items-center gap-2 truncate">
+                    <i data-lucide="search" class="w-3.5 h-3.5 text-black/40 dark:text-white/40 group-hover:text-[#007AFF] dark:group-hover:text-[#0A84FF] transition-colors shrink-0"></i>
+                    <span class="truncate text-black/55 dark:text-white/55 text-[12px]">Cari menu, produk, atau transaksi (Ctrl+K)...</span>
+                </div>
+                <kbd class="ml-1.5 inline-flex items-center px-1.5 py-0.5 rounded-[5px] bg-black/[0.06] dark:bg-white/[0.1] text-[10px] font-semibold text-black/60 dark:text-white/60 font-mono tracking-tight shrink-0 shadow-2xs">
+                    Ctrl K
+                </kbd>
             </button>
 
-            <!-- Segmented Theme Pill Control -->
-            <div x-data="{
-                theme: localStorage.getItem('cooca-admin-theme') || 'light',
-                open: false,
-                apply(value) {
-                    this.theme = value;
-                    localStorage.setItem('cooca-admin-theme', value);
-                    localStorage.setItem('cooca-theme', value);
-                    const dark = value === 'dark' || (value === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-                    document.documentElement.classList.toggle('dark', dark);
-                    document.documentElement.dataset.theme = value;
-                    this.open = false;
-                }
-            }" class="relative" @click.outside="open = false">
-                <button type="button" @click="open = !open"
-                    class="h-10 px-3 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.04] dark:border-white/[0.06] text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/10 active:scale-95 transition-all flex items-center justify-center gap-2"
-                    aria-label="Pilih tema" title="Pilih tema tampilan">
-                    <i x-show="theme === 'light'" data-lucide="sun" class="w-4 h-4 text-[#FF9500]"
-                        stroke-width="2"></i>
-                    <i x-show="theme === 'dark'" data-lucide="moon" class="w-4 h-4 text-[#5856D6]" stroke-width="2"
-                        style="display: none;"></i>
-                    <i x-show="theme === 'system'" data-lucide="monitor" class="w-4 h-4 text-[#007AFF]"
-                        stroke-width="2" style="display: none;"></i>
-                    <span class="hidden sm:inline text-[12px] font-bold"
-                        x-text="theme === 'dark' ? 'Gelap' : (theme === 'system' ? 'Sistem' : 'Terang')"></span>
-                    <i data-lucide="chevron-down"
-                        class="hidden sm:block w-3.5 h-3.5 text-black/35 dark:text-white/35"></i>
+            <!-- Mobile Search Trigger Button (< md) -->
+            <button type="button" @click="openSpotlight()"
+                class="md:hidden w-9 h-9 rounded-full text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/[0.05] dark:hover:bg-white/[0.06] active:scale-95 flex items-center justify-center transition-all cursor-pointer shrink-0"
+                title="Cari menu, produk, atau transaksi (Ctrl+K)" aria-label="Cari">
+                <i data-lucide="search" class="w-4 h-4"></i>
+            </button>
+
+            <!-- Unified System Controls Capsule (Desktop / Tablet sm+) - STRICTLY NO MULTI-LANGUAGE -->
+            <div class="hidden sm:flex items-center p-0.5 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 gap-0.5">
+                <!-- Fullscreen Toggle Button -->
+                <button type="button" @click="toggleFullscreen()"
+                    :title="isFullscreen ? 'Keluar Layar Penuh' : 'Layar Penuh'"
+                    aria-label="Toggle Fullscreen"
+                    class="flex h-7 w-7 rounded-[6px] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-white/70 dark:hover:bg-white/10 transition-all items-center justify-center shrink-0 active:scale-95 cursor-pointer">
+                    <i x-show="!isFullscreen" data-lucide="maximize" class="w-3.5 h-3.5"></i>
+                    <i x-show="isFullscreen" data-lucide="minimize" class="w-3.5 h-3.5 text-[#007AFF]" style="display: none;"></i>
                 </button>
-                <div x-show="open" x-transition
-                    class="absolute right-0 top-full mt-2 w-36 rounded-[16px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-black/[0.06] dark:border-white/10 shadow-2xl p-1 z-50"
-                    style="display: none;">
-                    <button type="button" @click="apply('light')"
-                        class="w-full h-9 px-3 rounded-[10px] flex items-center gap-2 text-left text-[13px] font-semibold text-black/75 dark:text-white/75 hover:bg-black/5 dark:hover:bg-white/10">
-                        <i data-lucide="sun" class="w-4 h-4 text-[#FF9500]"></i><span>Terang</span>
+
+                <!-- Theme Switcher (Light / Dark / System) -->
+                <div class="relative" @click.outside="themeDropdownOpen = false" @keydown.esc.window="themeDropdownOpen = false">
+                    <button type="button" @click="themeDropdownOpen = !themeDropdownOpen"
+                        :aria-expanded="themeDropdownOpen ? 'true' : 'false'" aria-haspopup="menu"
+                        :title="'Ganti Tema: ' + (theme === 'dark' ? 'Gelap' : (theme === 'system' ? 'Sistem' : 'Terang'))"
+                        aria-label="Ganti Tema"
+                        class="h-7 w-7 rounded-[6px] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-white/70 dark:hover:bg-white/10 transition-all flex items-center justify-center shrink-0 active:scale-95 cursor-pointer">
+                        <span x-show="theme === 'light'">
+                            <i data-lucide="sun" class="w-3.5 h-3.5 text-[#FF9500]"></i>
+                        </span>
+                        <span x-show="theme === 'dark'" style="display: none;">
+                            <i data-lucide="moon" class="w-3.5 h-3.5 text-[#5856D6]"></i>
+                        </span>
+                        <span x-show="theme === 'system'" style="display: none;">
+                            <i data-lucide="monitor" class="w-3.5 h-3.5 text-[#007AFF]"></i>
+                        </span>
                     </button>
-                    <button type="button" @click="apply('dark')"
-                        class="w-full h-9 px-3 rounded-[10px] flex items-center gap-2 text-left text-[13px] font-semibold text-black/75 dark:text-white/75 hover:bg-black/5 dark:hover:bg-white/10">
-                        <i data-lucide="moon" class="w-4 h-4 text-[#5856D6]"></i><span>Gelap</span>
-                    </button>
-                    <button type="button" @click="apply('system')"
-                        class="w-full h-9 px-3 rounded-[10px] flex items-center gap-2 text-left text-[13px] font-semibold text-black/75 dark:text-white/75 hover:bg-black/5 dark:hover:bg-white/10">
-                        <i data-lucide="monitor" class="w-4 h-4 text-[#007AFF]"></i><span>Sistem</span>
-                    </button>
+
+                    <!-- Theme Dropdown Menu (Apple Glass Squircle) -->
+                    <div x-show="themeDropdownOpen" x-transition role="menu"
+                        class="absolute right-0 mt-2 w-36 rounded-[12px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-black/5 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.15)] p-1 z-50 space-y-0.5 text-[13px]"
+                        style="display: none;">
+                        <button type="button" @click="applyTheme('light')" role="menuitem"
+                            class="w-full px-2.5 py-1.5 rounded-[7px] flex items-center justify-between gap-2 text-left font-medium transition active:scale-98 cursor-pointer"
+                            :class="theme === 'light' ? 'bg-[#FF9500]/10 text-[#FF9500] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]'">
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="sun" class="w-3.5 h-3.5 text-[#FF9500]"></i>
+                                <span>Terang</span>
+                            </div>
+                            <span x-show="theme === 'light'"><i data-lucide="check" class="w-3.5 h-3.5"></i></span>
+                        </button>
+                        <button type="button" @click="applyTheme('dark')" role="menuitem"
+                            class="w-full px-2.5 py-1.5 rounded-[7px] flex items-center justify-between gap-2 text-left font-medium transition active:scale-98 cursor-pointer"
+                            :class="theme === 'dark' ? 'bg-[#5856D6]/10 text-[#5856D6] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]'">
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="moon" class="w-3.5 h-3.5 text-[#5856D6]"></i>
+                                <span>Gelap</span>
+                            </div>
+                            <span x-show="theme === 'dark'"><i data-lucide="check" class="w-3.5 h-3.5"></i></span>
+                        </button>
+                        <button type="button" @click="applyTheme('system')" role="menuitem"
+                            class="w-full px-2.5 py-1.5 rounded-[7px] flex items-center justify-between gap-2 text-left font-medium transition active:scale-98 cursor-pointer"
+                            :class="theme === 'system' ? 'bg-[#007AFF]/10 text-[#007AFF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]'">
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="monitor" class="w-3.5 h-3.5 text-[#007AFF]"></i>
+                                <span>Sistem</span>
+                            </div>
+                            <span x-show="theme === 'system'"><i data-lucide="check" class="w-3.5 h-3.5"></i></span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
             <!-- Hairline Vertical Separator -->
-            <div class="h-5 w-[1px] bg-black/[0.08] dark:bg-white/[0.1] hidden sm:block"></div>
+            <div class="h-4 w-px bg-black/10 dark:bg-white/10 hidden sm:block"></div>
 
-            <a href="{{ route('admin.profile.index') }}"
-                class="h-10 px-3 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.04] dark:border-white/[0.06] text-[13px] font-semibold text-black/75 dark:text-white/75 hover:bg-black/5 dark:hover:bg-white/10 active:scale-95 transition-all flex items-center gap-1.5"
-                title="Profil & Ganti Kata Sandi">
-                <i data-lucide="key-round" class="w-4 h-4 text-[#007AFF] dark:text-[#0A84FF]" stroke-width="1.8"></i>
-                <span class="hidden md:inline">Profil Admin</span>
-            </a>
-
-            <a href="{{ route('landing') }}" target="_blank"
-                class="h-10 px-3.5 rounded-[12px] bg-[#007AFF] text-[13px] font-bold text-white hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center gap-1.5 shadow-sm shadow-[#007AFF]/25"
-                title="Buka Website Publik Cooca (Tab Baru)">
-                <i data-lucide="external-link" class="w-4 h-4" stroke-width="2"></i>
-                <span class="hidden lg:inline">Website Publik</span>
-            </a>
-
-            <!-- Logout Button (Pindah dari Sidebar ke Topbar) -->
-            <form method="POST" action="{{ route('admin.logout') }}" class="inline">
-                @csrf
-                <button type="submit" title="Keluar dari Admin Console"
-                    class="h-10 px-3 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.04] dark:border-white/[0.06] text-[13px] font-semibold text-black/70 dark:text-white/70 hover:text-[#FF3B30] dark:hover:text-[#FF453A] hover:bg-[#FF3B30]/10 dark:hover:bg-[#FF3B30]/15 hover:border-[#FF3B30]/20 active:scale-95 transition-all flex items-center gap-1.5"
-                    aria-label="Keluar">
-                    <i data-lucide="log-out" class="w-4 h-4" stroke-width="1.8"></i>
-                    <span class="hidden sm:inline">Keluar</span>
+            <!-- User Profile Dropdown Pill (Apple macOS / iOS Account Menu) -->
+            <div class="relative" @click.outside="profileDropdownOpen = false" @keydown.esc.window="profileDropdownOpen = false">
+                <button type="button" @click="profileDropdownOpen = !profileDropdownOpen"
+                    :aria-expanded="profileDropdownOpen ? 'true' : 'false'" aria-haspopup="menu"
+                    class="flex items-center gap-2 p-0.5 sm:p-1 sm:pl-1 sm:pr-2.5 rounded-full hover:bg-black/[0.04] dark:hover:bg-white/[0.05] transition-all active:scale-95 cursor-pointer"
+                    title="Menu Administrator: {{ Auth::guard('admin')->user()->name ?? 'Agung Mustaqim' }}">
+                    <!-- Squircle Avatar -->
+                    <div class="w-8 h-8 rounded-full bg-[#007AFF]/15 border border-[#007AFF]/30 text-[#007AFF] dark:text-[#0A84FF] font-bold text-xs flex items-center justify-center shrink-0 shadow-2xs">
+                        {{ substr(Auth::guard('admin')->user()->name ?? 'Ag', 0, 2) }}
+                    </div>
+                    <div class="text-left hidden md:block max-w-[140px]">
+                        <div class="text-[13px] font-bold text-black dark:text-white truncate leading-tight">
+                            {{ Auth::guard('admin')->user()->name ?? 'Agung Mustaqim' }}
+                        </div>
+                        <div class="text-[11px] font-medium text-black/50 dark:text-white/50 truncate leading-tight">
+                            Cooca Indonesia
+                        </div>
+                    </div>
+                    <i data-lucide="chevron-down"
+                        class="w-3.5 h-3.5 text-black/40 dark:text-white/40 transition-transform duration-200 shrink-0 hidden sm:block"
+                        :class="profileDropdownOpen ? 'rotate-180' : ''"></i>
                 </button>
-            </form>
+
+                <!-- Profile Popover Sheet (macOS Sonoma / Apple HIG Style) -->
+                <div x-show="profileDropdownOpen" x-transition:enter="transition ease-out duration-150"
+                    x-transition:enter-start="opacity-0 scale-95 -translate-y-1"
+                    x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                    x-transition:leave="transition ease-in duration-100"
+                    x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                    x-transition:leave-end="opacity-0 scale-95 -translate-y-1"
+                    role="menu"
+                    class="absolute right-0 mt-2 w-64 rounded-[16px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-black/5 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.18)] p-2 z-50 space-y-1 text-[13px]"
+                    style="display: none;">
+
+                    <!-- Admin Details Header -->
+                    <div class="p-2.5 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 flex items-center gap-2.5">
+                        <div class="w-9 h-9 rounded-full bg-[#007AFF]/15 border border-[#007AFF]/30 text-[#007AFF] dark:text-[#0A84FF] font-bold text-sm flex items-center justify-center shrink-0">
+                            {{ substr(Auth::guard('admin')->user()->name ?? 'Ag', 0, 2) }}
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <p class="font-bold text-black dark:text-white truncate text-[13px]">
+                                {{ Auth::guard('admin')->user()->name ?? 'Agung Mustaqim' }}
+                            </p>
+                            <p class="text-[11px] text-black/50 dark:text-white/50 truncate">
+                                {{ Auth::guard('admin')->user()->email ?? 'admin@cooca.id' }}
+                            </p>
+                            <div class="mt-1 flex items-center gap-1.5">
+                                <span class="inline-flex items-center px-1.5 py-0.5 rounded-[4px] text-[10px] font-bold bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF]">
+                                    {{ Auth::guard('admin')->user()?->roles?->pluck('name')->first() ?? 'Administrator' }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Links -->
+                    <div class="space-y-0.5 pt-1">
+                        <a href="{{ route('admin.profile.index') }}" @click="profileDropdownOpen = false"
+                            class="w-full px-2.5 py-2 rounded-[8px] text-black/75 dark:text-white/75 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white flex items-center gap-2.5 transition active:scale-[0.98]">
+                            <i data-lucide="user" class="w-4 h-4 text-[#007AFF] shrink-0"></i>
+                            <span class="font-medium">Profil Administrator</span>
+                        </a>
+
+                        @if (Auth::guard('admin')->user()?->hasPermission('admin.settings.view'))
+                            <a href="{{ route('admin.settings.index') }}" @click="profileDropdownOpen = false"
+                                class="w-full px-2.5 py-2 rounded-[8px] text-black/75 dark:text-white/75 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white flex items-center gap-2.5 transition active:scale-[0.98]">
+                                <i data-lucide="sliders" class="w-4 h-4 text-[#007AFF] shrink-0"></i>
+                                <span class="font-medium">Pengaturan Sistem</span>
+                            </a>
+                        @endif
+
+                        <a href="{{ route('landing') }}" target="_blank" @click="profileDropdownOpen = false"
+                            class="w-full px-2.5 py-2 rounded-[8px] text-black/75 dark:text-white/75 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white flex items-center justify-between gap-2.5 transition active:scale-[0.98]">
+                            <div class="flex items-center gap-2.5 min-w-0">
+                                <i data-lucide="external-link" class="w-4 h-4 text-[#007AFF] shrink-0"></i>
+                                <span class="font-medium truncate">Website Publik</span>
+                            </div>
+                            <span class="text-[10px] text-black/40 dark:text-white/40">Tab Baru</span>
+                        </a>
+                    </div>
+
+                    <div class="h-px bg-black/5 dark:bg-white/10 my-1"></div>
+
+                    <!-- Logout Action Button -->
+                    <form method="POST" action="{{ route('admin.logout') }}" class="w-full">
+                        @csrf
+                        <button type="submit"
+                            class="w-full px-2.5 py-2 rounded-[8px] text-[#FF3B30] dark:text-[#FF453A] hover:bg-[#FF3B30]/10 dark:hover:bg-[#FF3B30]/15 flex items-center gap-2.5 transition active:scale-[0.98] font-semibold text-left cursor-pointer">
+                            <i data-lucide="log-out" class="w-4 h-4 shrink-0"></i>
+                            <span>Keluar (Logout)</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
     </header>
 
