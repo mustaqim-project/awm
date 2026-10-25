@@ -82,8 +82,9 @@ final class AdminStorage
         self::ensureAdminDirectories();
 
         $cleanCategory = trim($category, '/');
+        $safeExt = strtolower($file->guessExtension() ?: $file->getClientOriginalExtension() ?: 'bin');
         $filename = $customFilename
-            ?: (string) Str::uuid() . '.' . strtolower($file->getClientOriginalExtension());
+            ?: (string) Str::uuid() . '.' . $safeExt;
 
         $subDir = "admin/{$cleanCategory}";
 
@@ -119,8 +120,9 @@ final class AdminStorage
         ?string $customFilename = null
     ): string {
         $cleanCategory = trim($category, '/');
+        $safeExt = strtolower($file->guessExtension() ?: $file->getClientOriginalExtension() ?: 'bin');
         $filename = $customFilename
-            ?: (string) Str::uuid() . '.' . strtolower($file->getClientOriginalExtension());
+            ?: (string) Str::uuid() . '.' . $safeExt;
 
         return $file->storeAs($cleanCategory, $filename, self::DISK_PRIVATE);
     }

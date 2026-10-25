@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\TemplateLead;
+use App\Support\Security\CsvSanitizer;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -66,11 +67,11 @@ final class AdminLeadController extends Controller
             foreach ($leads as $lead) {
                 fputcsv($handle, [
                     $lead->id,
-                    $lead->name,
-                    $lead->phone,
-                    $lead->email ?? '-',
-                    $lead->business_name ?? '-',
-                    $lead->template_name,
+                    CsvSanitizer::sanitize($lead->name),
+                    CsvSanitizer::sanitize($lead->phone),
+                    CsvSanitizer::sanitize($lead->email ?? '-'),
+                    CsvSanitizer::sanitize($lead->business_name ?? '-'),
+                    CsvSanitizer::sanitize($lead->template_name),
                     $lead->created_at->format('Y-m-d H:i:s'),
                 ]);
             }

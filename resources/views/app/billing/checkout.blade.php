@@ -18,19 +18,19 @@
                 }
                 if (!isset($durationTiers[$days])) {
                     if ($days <= 31) {
-                        $label = '1 Bulan';
+                        $label = __('billing.duration_month_count', ['count' => 1]);
                     } elseif ($days <= 62) {
-                        $label = '2 Bulan';
+                        $label = __('billing.duration_month_count', ['count' => 2]);
                     } elseif ($days <= 95) {
-                        $label = '3 Bulan';
+                        $label = __('billing.duration_month_count', ['count' => 3]);
                     } elseif ($days <= 185) {
-                        $label = '6 Bulan';
+                        $label = __('billing.duration_month_count', ['count' => 6]);
                     } elseif ($days <= 370) {
-                        $label = '1 Tahun';
+                        $label = __('billing.duration_year_count', ['count' => 1]);
                     } elseif ($days <= 740) {
-                        $label = '2 Tahun';
+                        $label = __('billing.duration_year_count', ['count' => 2]);
                     } else {
-                        $label = $days . ' Hari';
+                        $label = $days . ' ' . __('billing.days_unit');
                     }
 
                     $durationTiers[$days] = [
@@ -53,12 +53,12 @@
             $durationTiers = [
                 [
                     'days' => 30,
-                    'label' => '1 Bulan',
+                    'label' => __('billing.duration_month_count', ['count' => 1]),
                     'price' => (float) $monthlyPrice,
                 ],
                 [
                     'days' => 365,
-                    'label' => '1 Tahun',
+                    'label' => __('billing.duration_year_count', ['count' => 1]),
                     'price' => (float) $annualPrice,
                 ],
             ];
@@ -108,37 +108,70 @@
                 key: 'standard',
                 name: 'Standard Plan',
                 label: 'Standard',
-                badge: 'UMKM Pemula',
+                badge: @js(__('billing.tier_solo_owner')),
                 badgeColor: 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800',
                 monthly: {{ (float) ($allTierPrices['standard']['monthly'] ?? 29000) }},
                 annual: {{ (float) ($allTierPrices['standard']['annual'] ?? 290000) }},
                 popular: false,
-                desc: 'Cocok untuk 1 usaha rintisan dengan 100 produk dan kasir POS digital.',
-                features: ['1 Bisnis Cooca', '100 Produk & 20 Formula Resep', '1.000 Transaksi Kasir/bln', '2 Lokasi (Toko & Gudang)', '3 Akun Staf / Karyawan', '5 Meja Kasir Dine-in', 'POS Kasir Digital & Offline Sync', 'Ekspor / Impor Excel', '50 Notifikasi WhatsApp/bln']
+                desc: @js(__('billing.tier_standard_desc')),
+                features: [
+                    @js(__('billing.feat_standard_1')),
+                    @js(__('billing.feat_standard_2')),
+                    @js(__('billing.feat_standard_3')),
+                    @js(__('billing.feat_standard_4')),
+                    @js(__('billing.feat_standard_5')),
+                    @js(__('billing.feat_standard_6')),
+                    @js(__('billing.feat_standard_7')),
+                    @js(__('billing.feat_standard_8')),
+                    @js(__('billing.feat_standard_9')),
+                    @js(__('billing.feat_standard_10'))
+                ]
             },
             premium: {
                 key: 'premium',
                 name: 'Premium Plan',
                 label: 'Premium',
-                badge: 'Paling Populer',
+                badge: @js(__('billing.tier_startup_umkm')),
                 badgeColor: 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950/50 dark:text-indigo-400 border-indigo-200 dark:border-indigo-800',
                 monthly: {{ (float) ($allTierPrices['premium']['monthly'] ?? 89000) }},
                 annual: {{ (float) ($allTierPrices['premium']['annual'] ?? 890000) }},
                 popular: true,
-                desc: 'Solusi lengkap multi-cabang, resep & kasir unlimited, KDS, dan otomasi stok.',
-                features: ['3 Bisnis (Kelola 3 Brand)', 'Produk & Resep Unlimited', 'Transaksi Kasir Unlimited', '5 Cabang & Meja Unlimited', '10 Akun Staf / Karyawan', 'Kitchen Display System (KDS)', 'Transfer Antar Cabang & Multi-Price', 'Komisi Kasir & Kasbon', '200 Notifikasi WhatsApp/bln']
+                desc: @js(__('billing.tier_premium_desc')),
+                features: [
+                    @js(__('billing.feat_premium_1')),
+                    @js(__('billing.feat_premium_2')),
+                    @js(__('billing.feat_premium_3')),
+                    @js(__('billing.feat_premium_4')),
+                    @js(__('billing.feat_premium_5')),
+                    @js(__('billing.feat_premium_6')),
+                    @js(__('billing.feat_premium_7')),
+                    @js(__('billing.feat_premium_8')),
+                    @js(__('billing.feat_premium_9')),
+                    @js(__('billing.feat_premium_10'))
+                ]
             },
             prestige: {
                 key: 'prestige',
                 name: 'Prestige Plan',
                 label: 'Prestige',
-                badge: 'Enterprise UMKM',
+                badge: @js(__('billing.tier_enterprise_umkm')),
                 badgeColor: 'bg-purple-50 text-purple-700 dark:bg-purple-950/50 dark:text-purple-400 border-purple-200 dark:border-purple-800',
                 monthly: {{ (float) ($allTierPrices['prestige']['monthly'] ?? 199000) }},
                 annual: {{ (float) ($allTierPrices['prestige']['annual'] ?? 1990000) }},
                 popular: false,
-                desc: 'Kapasitas penuh enterprise tanpa batas, pajak PPh 21 TER, dan slip gaji WhatsApp.',
-                features: ['Bisnis & Cabang Unlimited', 'Semua Fitur Tanpa Batas', 'Karyawan / Staf Unlimited', 'Modul Pajak PPh 21 TER (PP 58/2023)', 'Auto Slip Gaji via WhatsApp', 'Akuntansi Jurnal Otomatis Terpadu', '1.000 Notifikasi WhatsApp/bln', 'Prioritas Dukungan Teknis 24/7']
+                desc: @js(__('billing.tier_prestige_desc')),
+                features: [
+                    @js(__('billing.feat_prestige_1')),
+                    @js(__('billing.feat_prestige_2')),
+                    @js(__('billing.feat_prestige_3')),
+                    @js(__('billing.feat_prestige_4')),
+                    @js(__('billing.feat_prestige_5')),
+                    @js(__('billing.feat_prestige_6')),
+                    @js(__('billing.feat_prestige_7')),
+                    @js(__('billing.feat_prestige_8')),
+                    @js(__('billing.feat_prestige_9')),
+                    @js(__('billing.feat_prestige_10'))
+                ]
             }
         },
         selectedDurationDays: {{ $defaultDurationDays }},
@@ -167,7 +200,7 @@
         async validateAndApplyPromo() {
             const code = this.promoCodeInput.trim().toUpperCase();
             if (!code) {
-                this.promoError = 'Silakan masukkan kode promo / voucher.';
+                this.promoError = @js(__('billing.promo_empty_alert'));
                 return;
             }
             this.promoLoading = true;
@@ -196,11 +229,11 @@
                     this.promoSuccessMessage = data.message;
                 } else {
                     this.appliedPromo = null;
-                    this.promoError = data.message || 'Kode promo tidak dapat digunakan.';
+                    this.promoError = data.message || @js(__('billing.promo_invalid_alert'));
                 }
             } catch (err) {
                 this.appliedPromo = null;
-                this.promoError = 'Gagal memeriksa promo. Periksa koneksi Anda.';
+                this.promoError = @js(__('billing.promo_error_alert'));
             } finally {
                 this.promoLoading = false;
             }
@@ -293,12 +326,12 @@
         >
             <x-slot:actions>
                 <a href="{{ route('billing.limits') }}"
-                    class="h-10 px-4 rounded-[12px] text-xs font-semibold text-slate-700 dark:text-slate-300 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] active:scale-[0.98] transition flex items-center gap-2">
+                    class="min-h-[44px] h-11 sm:h-10 px-3.5 sm:px-4 rounded-[12px] text-xs font-semibold text-slate-700 dark:text-slate-300 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] active:scale-[0.98] transition flex items-center gap-2">
                     <i data-lucide="arrow-left" class="w-4 h-4"></i>
                     <span>{{ __('billing.back') }}</span>
                 </a>
                 <a href="{{ route('billing.history') }}"
-                    class="h-10 px-4 rounded-[12px] text-xs font-semibold text-slate-700 dark:text-slate-300 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] active:scale-[0.98] transition flex items-center gap-2">
+                    class="min-h-[44px] h-11 sm:h-10 px-3.5 sm:px-4 rounded-[12px] text-xs font-semibold text-slate-700 dark:text-slate-300 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] active:scale-[0.98] transition flex items-center gap-2">
                     <i data-lucide="receipt" class="w-4 h-4 text-[#007AFF]"></i>
                     <span>{{ __('billing.action_history') }}</span>
                 </a>
@@ -411,7 +444,7 @@
                                                 </div>
                                                 <div>
                                                     <h4 class="text-base font-bold text-black dark:text-white">{{ $promoPkg->name }}</h4>
-                                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{{ $promoPkg->description ?: 'Akses seluruh fitur Pro tanpa biaya.' }}</p>
+                                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{{ $promoPkg->description ?: __('billing.access_pro_features_free') }}</p>
                                                 </div>
                                                 <div class="pt-2 border-t border-black/[0.06] dark:border-white/[0.08] flex items-baseline justify-between">
                                                     <div class="text-lg font-bold font-mono tabular-nums text-[#34C759]">{{ __('billing.free_rp_zero') }}</div>
@@ -426,7 +459,7 @@
 
                         <!-- 3-Tier Bento Selection Cards -->
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4" role="radiogroup"
-                            aria-label="Pilih Paket Langganan">
+                            aria-label="{{ __('billing.tier_selection_heading') }}">
                             <!-- Standard Tier -->
                             <div role="radio" tabindex="0"
                                 :aria-checked="selectedTier === 'standard' ? 'true' : 'false'"
@@ -440,7 +473,7 @@
                                     <div class="flex items-center justify-between">
                                         <span
                                             class="px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono tracking-wider border uppercase bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800">
-                                            UMKM Pemula
+                                            {{ __('billing.tier_solo_owner') }}
                                         </span>
                                         <div class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center shrink-0 transition"
                                             :class="selectedTier === 'standard' ? 'border-[#007AFF] bg-[#007AFF] text-white' :
@@ -451,44 +484,34 @@
                                     </div>
                                     <div>
                                         <h4 class="text-base font-bold text-black dark:text-white">Standard Plan</h4>
-                                        <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">Untuk 1
-                                            usaha rintisan dengan kasir POS digital.</p>
+                                        <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">{{ __('billing.standard_plan_target_desc') }}</p>
                                     </div>
                                     <div class="pt-2 border-t border-black/[0.06] dark:border-white/[0.08]">
                                         <div class="text-xl font-bold font-mono tabular-nums text-black dark:text-white"
                                             x-text="'Rp ' + formatRupiah(cycle === 'annual' ? tierPlans.standard.annual : tierPlans.standard.monthly)"></div>
                                         <div class="text-[10px] text-gray-500 dark:text-gray-400 font-mono mt-0.5"
-                                            x-text="cycle === 'annual' ? 'per tahun (≈ Rp ' + formatRupiah(Math.round(tierPlans.standard.annual / 12)) + '/bln)' : 'per bulan (tagihan fleksibel)'">
+                                            x-text="cycle === 'annual' ? ('{{ __('billing.per_year_approx', ['price' => '__P__']) }}'.replace('__P__', formatRupiah(Math.round(tierPlans.standard.annual / 12)))) : '{{ __('billing.per_month_flexible') }}'">
                                         </div>
                                     </div>
                                     <ul class="space-y-1.5 pt-2 text-[11px] text-gray-600 dark:text-gray-300">
                                         <li class="flex items-center gap-1.5"><i data-lucide="check"
-                                                class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>1 Bisnis
-                                                Cooca</span></li>
+                                                class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>{{ __('billing.feat_standard_1') }}</span></li>
                                         <li class="flex items-center gap-1.5"><i data-lucide="check"
-                                                class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>100 Produk &amp; 20
-                                                Formula Resep</span></li>
+                                                class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>{{ __('billing.feat_standard_5') }}</span></li>
                                         <li class="flex items-center gap-1.5"><i data-lucide="check"
-                                                class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>1.000 Transaksi
-                                                Kasir/bln</span></li>
+                                                class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>{{ __('billing.feat_standard_4') }}</span></li>
                                         <li class="flex items-center gap-1.5"><i data-lucide="check"
-                                                class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>2 Lokasi
-                                                (Toko &amp; Gudang)</span></li>
+                                                class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>{{ __('billing.feat_standard_2') }}</span></li>
                                         <li class="flex items-center gap-1.5"><i data-lucide="check"
-                                                class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>3 Akun Staf /
-                                                Karyawan</span></li>
+                                                class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>{{ __('billing.feat_standard_3') }}</span></li>
                                         <li class="flex items-center gap-1.5"><i data-lucide="check"
-                                                class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>5 Meja Kasir
-                                                Dine-in</span></li>
+                                                class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>{{ __('billing.unlimited_dinein_tables') }}</span></li>
                                         <li class="flex items-center gap-1.5"><i data-lucide="check"
-                                                class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>POS Kasir &amp;
-                                                Offline Sync</span></li>
+                                                class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>{{ __('billing.feat_standard_9') }}</span></li>
                                         <li class="flex items-center gap-1.5"><i data-lucide="check"
-                                                class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>Ekspor / Impor
-                                                Excel</span></li>
+                                                class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>{{ __('billing.feat_standard_10') }}</span></li>
                                         <li class="flex items-center gap-1.5"><i data-lucide="check"
-                                                class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>50 Notifikasi WA /
-                                                bln</span></li>
+                                                class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>{{ __('billing.feat_standard_7') }}</span></li>
                                     </ul>
                                 </div>
                             </div>
@@ -504,13 +527,13 @@
                                 class="cursor-pointer rounded-[18px] border p-4 sm:p-5 transition-all relative flex flex-col justify-between group active:scale-[0.98] focus-visible:outline-none">
                                 <div
                                     class="absolute -top-3 left-1/2 -translate-x-1/2 px-2.5 py-0.5 bg-[#007AFF] text-white text-[9px] font-bold uppercase tracking-wider rounded-full shadow-xs">
-                                    Paling Populer
+                                    {{ __('billing.tier_startup_umkm') }}
                                 </div>
                                 <div class="space-y-3">
                                     <div class="flex items-center justify-between mt-1">
                                         <span
                                             class="px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono tracking-wider border uppercase bg-indigo-50 text-indigo-700 dark:bg-indigo-950/50 dark:text-indigo-400 border-indigo-200 dark:border-indigo-800">
-                                            Scale-Up UMKM
+                                            {{ __('billing.tier_scaleup_umkm') }}
                                         </span>
                                         <div class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center shrink-0 transition"
                                             :class="selectedTier === 'premium' ? 'border-[#007AFF] bg-[#007AFF] text-white' :
@@ -521,44 +544,32 @@
                                     </div>
                                     <div>
                                         <h4 class="text-base font-bold text-black dark:text-white">Premium Plan</h4>
-                                        <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">
-                                            Multi-cabang, KDS dapur, transfer stok, komisi kasir.</p>
+                                        <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">{{ __('billing.tier_premium_desc') }}</p>
                                     </div>
                                     <div class="pt-2 border-t border-black/[0.06] dark:border-white/[0.08]">
                                         <div class="text-xl font-bold font-mono tabular-nums text-[#007AFF] dark:text-[#0A84FF]"
                                             x-text="'Rp ' + formatRupiah(cycle === 'annual' ? tierPlans.premium.annual : tierPlans.premium.monthly)"></div>
                                         <div class="text-[10px] text-gray-500 dark:text-gray-400 font-mono mt-0.5"
-                                            x-text="cycle === 'annual' ? 'per tahun (≈ Rp ' + formatRupiah(Math.round(tierPlans.premium.annual / 12)) + '/bln)' : 'per bulan (tagihan fleksibel)'">
+                                            x-text="cycle === 'annual' ? ('{{ __('billing.per_year_approx', ['price' => '__P__']) }}'.replace('__P__', formatRupiah(Math.round(tierPlans.premium.annual / 12)))) : '{{ __('billing.per_month_flexible') }}'">
                                         </div>
                                     </div>
                                     <ul class="space-y-1.5 pt-2 text-[11px] text-gray-600 dark:text-gray-300">
                                         <li class="flex items-center gap-1.5"><i data-lucide="check"
-                                                class="w-3.5 h-3.5 text-[#007AFF] shrink-0"></i><span><strong>3
-                                                     Bisnis</strong> (Kelola 3 Brand)</span></li>
+                                                class="w-3.5 h-3.5 text-[#007AFF] shrink-0"></i><span><strong>{{ __('billing.feat_premium_1') }}</strong></span></li>
                                         <li class="flex items-center gap-1.5"><i data-lucide="check"
-                                                class="w-3.5 h-3.5 text-[#007AFF] shrink-0"></i><span>Produk &amp; Resep
-                                                <strong>Unlimited</strong></span></li>
+                                                class="w-3.5 h-3.5 text-[#007AFF] shrink-0"></i><span>{{ __('billing.feat_premium_4') }}</span></li>
                                         <li class="flex items-center gap-1.5"><i data-lucide="check"
-                                                class="w-3.5 h-3.5 text-[#007AFF] shrink-0"></i><span>Transaksi Kasir
-                                                <strong>Unlimited</strong></span></li>
+                                                class="w-3.5 h-3.5 text-[#007AFF] shrink-0"></i><span>{{ __('billing.feat_premium_2') }}</span></li>
                                         <li class="flex items-center gap-1.5"><i data-lucide="check"
-                                                class="w-3.5 h-3.5 text-[#007AFF] shrink-0"></i><span>5 Cabang &amp; Meja
-                                                Unlimited</span></li>
+                                                class="w-3.5 h-3.5 text-[#007AFF] shrink-0"></i><span>{{ __('billing.feat_premium_3') }}</span></li>
                                         <li class="flex items-center gap-1.5"><i data-lucide="check"
-                                                class="w-3.5 h-3.5 text-[#007AFF] shrink-0"></i><span>10 Akun Staf /
-                                                Karyawan</span></li>
+                                                class="w-3.5 h-3.5 text-[#007AFF] shrink-0"></i><span>{{ __('billing.feat_premium_8') }}</span></li>
                                         <li class="flex items-center gap-1.5"><i data-lucide="check"
-                                                class="w-3.5 h-3.5 text-[#007AFF] shrink-0"></i><span>Kitchen Display System
-                                                (KDS)</span></li>
+                                                class="w-3.5 h-3.5 text-[#007AFF] shrink-0"></i><span>{{ __('billing.feat_premium_9') }}</span></li>
                                         <li class="flex items-center gap-1.5"><i data-lucide="check"
-                                                class="w-3.5 h-3.5 text-[#007AFF] shrink-0"></i><span>Transfer Antar Gudang
-                                                &amp; Multi-Price</span></li>
+                                                class="w-3.5 h-3.5 text-[#007AFF] shrink-0"></i><span>{{ __('billing.feat_premium_10') }}</span></li>
                                         <li class="flex items-center gap-1.5"><i data-lucide="check"
-                                                class="w-3.5 h-3.5 text-[#007AFF] shrink-0"></i><span>Komisi Kasir &amp;
-                                                Kasbon</span></li>
-                                        <li class="flex items-center gap-1.5"><i data-lucide="check"
-                                                class="w-3.5 h-3.5 text-[#007AFF] shrink-0"></i><span>200 Notifikasi WA /
-                                                bln</span></li>
+                                                class="w-3.5 h-3.5 text-[#007AFF] shrink-0"></i><span>{{ __('billing.feat_premium_6') }}</span></li>
                                     </ul>
                                 </div>
                             </div>
@@ -576,7 +587,7 @@
                                     <div class="flex items-center justify-between">
                                         <span
                                             class="px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono tracking-wider border uppercase bg-purple-50 text-purple-700 dark:bg-purple-950/50 dark:text-purple-400 border-purple-200 dark:border-purple-800">
-                                            Enterprise UMKM
+                                            {{ __('billing.tier_enterprise_umkm') }}
                                         </span>
                                         <div class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center shrink-0 transition"
                                             :class="selectedTier === 'prestige' ? 'border-[#007AFF] bg-[#007AFF] text-white' :
@@ -587,38 +598,34 @@
                                     </div>
                                     <div>
                                         <h4 class="text-base font-bold text-black dark:text-white">Prestige Plan</h4>
-                                        <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">
-                                            Kapasitas unlimited penuh, pajak PPh 21 TER, &amp; slip WA.</p>
+                                        <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">{{ __('billing.tier_prestige_desc') }}</p>
                                     </div>
                                     <div class="pt-2 border-t border-black/[0.06] dark:border-white/[0.08]">
                                         <div class="text-xl font-bold font-mono tabular-nums text-purple-600 dark:text-purple-400"
                                             x-text="'Rp ' + formatRupiah(cycle === 'annual' ? tierPlans.prestige.annual : tierPlans.prestige.monthly)"></div>
                                         <div class="text-[10px] text-gray-500 dark:text-gray-400 font-mono mt-0.5"
-                                            x-text="cycle === 'annual' ? 'per tahun (≈ Rp ' + formatRupiah(Math.round(tierPlans.prestige.annual / 12)) + '/bln)' : 'per bulan (tagihan fleksibel)'">
+                                            x-text="cycle === 'annual' ? ('{{ __('billing.per_year_approx', ['price' => '__P__']) }}'.replace('__P__', formatRupiah(Math.round(tierPlans.prestige.annual / 12)))) : '{{ __('billing.per_month_flexible') }}'">
                                         </div>
                                     </div>
                                     <ul class="space-y-1.5 pt-2 text-[11px] text-gray-600 dark:text-gray-300">
                                         <li class="flex items-center gap-1.5"><i data-lucide="check"
-                                                class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span><strong>Bisnis &amp;
-                                                     Cabang Unlimited</strong></span></li>
+                                                class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span><strong>{{ __('billing.feat_prestige_1') }}</strong></span></li>
                                         <li class="flex items-center gap-1.5"><i data-lucide="check"
-                                                class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>Karyawan / Staf
-                                                <strong>Unlimited</strong></span></li>
+                                                class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>{{ __('billing.feat_prestige_2') }}</span></li>
                                         <li class="flex items-center gap-1.5"><i data-lucide="check"
-                                                class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>Pajak PPh 21 TER (PP
-                                                58/2023)</span></li>
+                                                class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>{{ __('billing.feat_prestige_3') }}</span></li>
                                         <li class="flex items-center gap-1.5"><i data-lucide="check"
-                                                class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>Auto Kirim Slip Gaji
-                                                WhatsApp</span></li>
+                                                class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>{{ __('billing.feat_prestige_4') }}</span></li>
                                         <li class="flex items-center gap-1.5"><i data-lucide="check"
-                                                class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>Akuntansi Jurnal
-                                                Otomatis</span></li>
+                                                class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>{{ __('billing.feat_prestige_7') }}</span></li>
                                         <li class="flex items-center gap-1.5"><i data-lucide="check"
-                                                class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>1.000 Notifikasi
-                                                WhatsApp/bln</span></li>
+                                                class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>{{ __('billing.feat_prestige_8') }}</span></li>
                                         <li class="flex items-center gap-1.5"><i data-lucide="check"
-                                                class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>Prioritas Dukungan
-                                                Teknis 24/7</span></li>
+                                                class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>{{ __('billing.feat_prestige_9') }}</span></li>
+                                        <li class="flex items-center gap-1.5"><i data-lucide="check"
+                                                class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>{{ __('billing.feat_prestige_5') }}</span></li>
+                                        <li class="flex items-center gap-1.5"><i data-lucide="check"
+                                                class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>{{ __('billing.feat_prestige_10') }}</span></li>
                                     </ul>
                                 </div>
                             </div>
@@ -630,10 +637,7 @@
                             <i data-lucide="shield-check" class="w-4 h-4 text-[#007AFF] shrink-0 mt-0.5"
                                 aria-hidden="true"></i>
                             <div class="leading-relaxed text-gray-700 dark:text-gray-300">
-                                <strong class="text-black dark:text-white">Jaminan Keamanan Cooca:</strong> Pembayaran
-                                diproses langsung oleh TriPay Payment Gateway resmi terlisensi BI. Jika masa aktif berakhir,
-                                akun memasuki masa tenggang (Grace Period 3 hari) di mana kasir POS tetap aktif, dan data
-                                bisnis Anda tidak pernah dihapus (<em>No Data Punishment</em>).
+                                <strong class="text-black dark:text-white">{{ __('billing.cooca_security_guarantee_title') }}</strong> {{ __('billing.cooca_security_guarantee_desc') }}
                             </div>
                         </div>
                     </section>
@@ -654,17 +658,17 @@
                                             class="text-sm sm:text-base font-bold text-black dark:text-white flex items-center gap-2">
                                             <i data-lucide="package" class="w-4 h-4 text-[#007AFF]"
                                                 aria-hidden="true"></i>
-                                            <span>Pilih Paket Cloud Storage</span>
+                                            <span>{{ __('billing.choose_cloud_storage_package') }}</span>
                                         </h3>
                                         <p class="text-[11px] sm:text-xs text-gray-500 dark:text-gray-400 mt-0.5">
-                                            Paket isi ulang kuota penyimpanan cloud bisnis Cooca.
+                                            {{ __('billing.step_choose_package_subtitle') }}
                                         </p>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5" role="radiogroup"
-                                aria-label="Pilihan Paket">
+                                aria-label="{{ __('billing.step_choose_package') }}">
                                 @foreach ($packages as $package)
                                     <div role="radio" tabindex="0"
                                         :aria-checked="packageId === '{{ $package->id }}' ? 'true' : 'false'"
@@ -674,7 +678,7 @@
                                         :class="packageId === '{{ $package->id }}' ?
                                             'border-[#007AFF] bg-blue-50/40 dark:bg-blue-900/20 ring-1 ring-[#007AFF]' :
                                             'border-black/[0.06] dark:border-white/[0.08] bg-black/[0.01] dark:bg-white/[0.02] hover:border-black/[0.12] dark:hover:border-white/[0.14]'"
-                                        class="cursor-pointer text-left rounded-[16px] border p-4 sm:p-5 transition-all relative overflow-hidden flex flex-col justify-between group active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-[#007AFF] focus-visible:outline-none">
+                                        class="cursor-pointer text-left rounded-[16px] border p-4 sm:p-5 transition-all relative overflow-hidden flex flex-col justify-between group active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-[#007AFF] focus-visible:outline-none min-h-[44px]">
                                         <div>
                                             <div class="flex items-start justify-between gap-2">
                                                 <span
@@ -699,7 +703,7 @@
                                                 <i data-lucide="hard-drive" class="w-3.5 h-3.5"
                                                     aria-hidden="true"></i>
                                                 <span>{{ number_format(($package->storage_bytes ?? 0) / 1073741824, 2, ',', '.') }}
-                                                    GB Permanen</span>
+                                                    {{ __('billing.gb_permanent') }}</span>
                                             </span>
                                         </div>
                                     </div>
@@ -753,7 +757,7 @@
                     </div>
 
                     <!-- Payment Accounts Gateway List -->
-                    <div x-show="currentPrice > 0" class="space-y-3" role="radiogroup" aria-label="Metode Pembayaran">
+                    <div x-show="currentPrice > 0" class="space-y-3" role="radiogroup" aria-label="{{ __('billing.step_choose_payment') }}">
                         @forelse($paymentAccounts as $account)
                             <div role="radio" tabindex="0"
                                 :aria-checked="paymentMethod === '{{ $account->bank_code }}' ? 'true' : 'false'"
@@ -802,7 +806,7 @@
                                             <span>{{ $account->bank_name }}</span>
                                             @if ($account->type === \App\Models\PaymentAccount::TYPE_QRIS || $account->bank_code === 'qris')
                                                 <span class="text-[11px] font-semibold text-[#34C759]">
-                                                    Standar Bank Indonesia
+                                                    {{ __('billing.bank_indonesia_standard') }}
                                                 </span>
                                             @else
                                                 <span
@@ -849,7 +853,7 @@
                         <span
                             class="text-[10px] font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 font-mono">{{ __('billing.order_summary') }}</span>
                         <h4 class="text-base sm:text-lg font-bold text-black dark:text-white mt-1"
-                            x-text="orderType === 'subscription' ? (tierPlans[selectedTier]?.name || 'Cooca Subscription') : 'Top Up Kuota Cooca'">
+                            x-text="orderType === 'subscription' ? (tierPlans[selectedTier]?.name || 'Cooca Subscription') : {{ json_encode(__('billing.topup_business_quota')) }}">
                         </h4>
                         <p class="text-xs text-[#007AFF] font-medium mt-0.5 flex items-center gap-1.5">
                             <i data-lucide="store" class="w-3.5 h-3.5" aria-hidden="true"></i>
@@ -916,11 +920,11 @@
                         <div class="flex items-center justify-between">
                             <label class="text-[11px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 font-mono flex items-center gap-1.5">
                                 <i data-lucide="ticket-percent" class="w-3.5 h-3.5 text-[#007AFF]"></i>
-                                <span>Kupon Promo / Diskon</span>
+                                <span>{{ __('billing.promo_discount_coupon') }}</span>
                             </label>
                             <template x-if="appliedPromo">
-                                <button type="button" @click="removePromo()" class="text-[11px] font-semibold text-red-500 hover:underline">
-                                    Hapus Kupon
+                                <button type="button" @click="removePromo()" class="text-[11px] font-semibold text-red-500 hover:underline min-h-[44px] flex items-center">
+                                    {{ __('billing.promo_remove_coupon') }}
                                 </button>
                             </template>
                         </div>
@@ -934,7 +938,7 @@
                                     </div>
                                     <div>
                                         <div class="text-[12.5px] font-bold font-mono text-black dark:text-white" x-text="appliedPromo.promo.code"></div>
-                                        <div class="text-[11px] text-[#34C759] dark:text-[#30D158] font-semibold" x-text="appliedPromo.promo.formatted_discount + ' berhasil diterapkan'"></div>
+                                        <div class="text-[11px] text-[#34C759] dark:text-[#30D158] font-semibold" x-text="appliedPromo.promo.formatted_discount + ' ' + @js(__('billing.promo_applied_success'))"></div>
                                     </div>
                                 </div>
                                 <span class="text-[12px] font-extrabold font-mono text-[#34C759] tabular-nums" x-text="'- Rp ' + formatRupiah(discountAmount)"></span>
@@ -947,14 +951,14 @@
                                 <div class="flex items-center gap-2">
                                     <div class="relative flex-1">
                                         <input type="text" x-model="promoCodeInput" @keydown.enter.prevent="validateAndApplyPromo()"
-                                            placeholder="Masukkan kode promo..."
-                                            class="w-full h-10 pl-8 pr-3 rounded-[12px] text-[12.5px] uppercase font-mono font-bold bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-black dark:text-white placeholder-black/35 dark:placeholder-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
-                                        <i data-lucide="tag" class="w-3.5 h-3.5 absolute left-2.5 top-3.5 text-black/40 dark:text-white/40"></i>
+                                            placeholder="{{ __('billing.promo_input_placeholder') }}"
+                                            class="w-full h-11 pl-8 pr-3 rounded-[12px] text-[12.5px] uppercase font-mono font-bold bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-black dark:text-white placeholder-black/35 dark:placeholder-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                        <i data-lucide="tag" class="w-3.5 h-3.5 absolute left-2.5 top-4 text-black/40 dark:text-white/40"></i>
                                     </div>
                                     <button type="button" @click="validateAndApplyPromo()" :disabled="promoLoading || !promoCodeInput.trim()"
-                                        class="h-10 px-3.5 rounded-[12px] text-[12.5px] font-semibold bg-black/[0.05] dark:bg-white/[0.08] hover:bg-[#007AFF] hover:text-white text-black dark:text-white transition-all disabled:opacity-40 disabled:pointer-events-none flex items-center gap-1.5 shrink-0">
+                                        class="h-11 px-3.5 rounded-[12px] text-[12.5px] font-semibold bg-black/[0.05] dark:bg-white/[0.08] hover:bg-[#007AFF] hover:text-white text-black dark:text-white transition-all disabled:opacity-40 disabled:pointer-events-none flex items-center gap-1.5 shrink-0 min-h-[44px]">
                                         <span x-show="promoLoading" class="animate-spin w-3.5 h-3.5 border-2 border-current border-t-transparent rounded-full"></span>
-                                        <span x-text="promoLoading ? 'Cek...' : 'Terapkan'"></span>
+                                        <span x-text="promoLoading ? @js(__('billing.promo_check_btn')) : @js(__('billing.promo_apply_btn'))"></span>
                                     </button>
                                 </div>
                                 <p x-show="promoError" x-text="promoError" class="text-[11px] text-red-500 font-medium mt-1.5 pl-1"></p>
@@ -975,7 +979,7 @@
                         <div x-show="discountAmount > 0" class="flex items-center justify-between text-[#34C759] dark:text-[#30D158] font-semibold">
                             <span class="flex items-center gap-1">
                                 <i data-lucide="ticket" class="w-3.5 h-3.5"></i>
-                                <span x-text="'Potongan Promo (' + (appliedPromo?.promo?.code || '') + '):'"></span>
+                                <span x-text="@js(__('billing.promo_discount_cut')) + ' (' + (appliedPromo?.promo?.code || '') + '):'"></span>
                             </span>
                             <span class="font-mono tabular-nums font-bold" x-text="'- Rp ' + formatRupiah(discountAmount)"></span>
                         </div>
@@ -990,14 +994,14 @@
                             <span class="font-bold text-black dark:text-white text-sm">{{ __('billing.total_pay') }}:</span>
                             <span
                                 class="font-bold text-xl sm:text-2xl text-[#007AFF] dark:text-[#0A84FF] font-mono tabular-nums"
-                                x-text="totalPayable <= 0 ? 'Rp 0 (Gratis Promo)' : ('Rp ' + formatRupiah(totalPayable))"></span>
+                                x-text="totalPayable <= 0 ? ('Rp 0 (' + @js(__('billing.free_promo_badge')) + ')') : ('Rp ' + formatRupiah(totalPayable))"></span>
                         </div>
                     </div>
 
                     <!-- Submit Button with Double-Submit Prevention -->
                     @if (\App\Support\Context::hasPermission('billing.manage'))
                         <button type="submit" :disabled="isSubmitting"
-                            class="w-full h-12 rounded-[14px] text-[15px] font-semibold shadow-sm transition-all flex items-center justify-center gap-2 group cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-[#007AFF] focus-visible:outline-none"
+                            class="w-full h-12 rounded-[14px] text-[15px] font-semibold shadow-sm transition-all flex items-center justify-center gap-2 group cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-[#007AFF] focus-visible:outline-none min-h-[48px]"
                             :class="totalPayable <= 0 ? 'bg-[#34C759] hover:bg-[#30D158] text-white shadow-[#34C759]/25' :
                                 'bg-[#007AFF] hover:bg-[#0071E3] text-white shadow-[#007AFF]/25'">
                             <span x-show="isSubmitting"
@@ -1006,7 +1010,7 @@
                             <i data-lucide="sparkles" class="w-4 h-4" x-show="!isSubmitting && totalPayable <= 0"
                                 aria-hidden="true"></i>
                             <span
-                                x-text="isSubmitting ? '{{ __('billing.process_order') }}' : (totalPayable <= 0 ? 'Aktifkan Paket dengan Voucher Promo' : '{{ __('billing.proceed_payment_tripay') }}')"></span>
+                                x-text="isSubmitting ? '{{ __('billing.process_order') }}' : (totalPayable <= 0 ? @js(__('billing.promo_activate_with_voucher')) : '{{ __('billing.proceed_payment_tripay') }}')"></span>
                             <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"
                                 x-show="!isSubmitting && totalPayable > 0" aria-hidden="true"></i>
                         </button>

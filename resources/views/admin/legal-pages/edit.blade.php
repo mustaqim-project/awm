@@ -225,7 +225,7 @@
 </div>
 
 {{-- TinyMCE Free CDN Script --}}
-<script src="https://cdn.tiny.cloud/1/2a7oruubgvqukc1gach4pq8j3pm4q12ooot480ieevdxu15m/tinymce/8/tinymce.min.js" referrerpolicy="origin" crossorigin="anonymous"></script>
+<script src="https://cdn.tiny.cloud/1/{{ config('services.tinymce.key', 'no-api-key') }}/tinymce/8/tinymce.min.js" referrerpolicy="origin" crossorigin="anonymous"></script>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         if (typeof tinymce !== 'undefined') {

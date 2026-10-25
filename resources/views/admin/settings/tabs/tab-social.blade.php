@@ -475,9 +475,9 @@
                                         <span x-text="showFbPageToken ? 'Sembunyikan' : 'Tampilkan'"></span>
                                     </button>
                                 </div>
-                                <input :type="showFbPageToken ? 'text' : 'password'" name="social_media_page_token" value="{{ old('social_media_page_token', $socialMediaPageToken ?? '') }}"
-                                    placeholder="{{ !empty($socialMediaPageToken) ? '••••••••••••••••••••••••' : 'EAAU...' }}"
-                                    class="w-full h-11 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[13px] text-black dark:text-white font-mono placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#1877F2]/50 transition">
+                                <input :type="showFbPageToken ? 'text' : 'password'" name="social_media_page_token" value="{{ old('social_media_page_token', '') }}" autocomplete="new-password"
+                                    placeholder="{{ !empty($socialMediaPageToken) ? '•••••••••••••••••••••••• (Token Facebook tersimpan aman - kosongkan jika tidak diubah)' : 'EAAU...' }}"
+                                    class="w-full h-11 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[13px] text-black dark:text-white font-mono placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#1877F2]/50 transition">
                                 <p class="text-[11px] text-black/50 dark:text-white/50 mt-1">
                                     Gunakan Page Access Token resmi yang memiliki izin <code>pages_manage_posts</code> dan <code>pages_read_engagement</code>.
                                 </p>
@@ -555,9 +555,9 @@
                                         <span x-text="showThreadsToken ? 'Sembunyikan' : 'Tampilkan'"></span>
                                     </button>
                                 </div>
-                                <input :type="showThreadsToken ? 'text' : 'password'" name="threads_access_token" value="{{ old('threads_access_token', $threadsAccessToken ?? '') }}"
-                                    placeholder="{{ !empty($threadsAccessToken) ? '••••••••••••••••••••••••' : 'TH...' }}"
-                                    class="w-full h-11 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[13px] text-black dark:text-white font-mono placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-black/30 dark:focus:ring-white/30 transition">
+                                <input :type="showThreadsToken ? 'text' : 'password'" name="threads_access_token" value="{{ old('threads_access_token', '') }}" autocomplete="new-password"
+                                    placeholder="{{ !empty($threadsAccessToken) ? '•••••••••••••••••••••••• (Token Threads tersimpan aman - kosongkan jika tidak diubah)' : 'TH...' }}"
+                                    class="w-full h-11 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[13px] text-black dark:text-white font-mono placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-black/30 dark:focus:ring-white/30 transition">
                             </div>
                         </div>
                     </div>

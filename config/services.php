@@ -122,5 +122,9 @@ return [
         'redirect_uri'  => env('TOKOPEDIA_REDIRECT_URI', 'https://cooca.id/integrations/tokopedia/callback'),
     ],
 
+    'tinymce' => [
+        'key' => env('TINYMCE_API_KEY', '2a7oruubgvqukc1gach4pq8j3pm4q12ooot480ieevdxu15m'),
+    ],
+
 ];
 

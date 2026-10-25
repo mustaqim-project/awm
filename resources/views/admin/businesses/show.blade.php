@@ -5,7 +5,7 @@
 ])
 
 @section('content')
-    <div class="space-y-6">
+    <div class="space-y-6" x-data="{ showSuspendModal: false, suspendReason: '' }">
 
         <!-- Top Navigation & Actions Bar -->
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -14,23 +14,23 @@
                 <i data-lucide="arrow-left" class="w-4 h-4" stroke-width="2"></i>
                 <span>Kembali ke Daftar Bisnis</span>
             </a>
-            <form method="POST" action="{{ route('admin.businesses.toggle-status', $business->id) }}"
-                onsubmit="return AppAlert.confirmSubmit(event, this, 'Apakah Anda yakin ingin mengubah status aktif bisnis ini?', 'Ubah Status Bisnis?', 'warning')">
-                @csrf
-                @if ($business->is_active)
+            @if ($business->is_active)
+                <button type="button" @click="showSuspendModal = true"
+                    class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#FF3B30] hover:bg-[#E0352B] active:scale-[0.98] transition-all flex items-center gap-2 shadow-sm cursor-pointer">
+                    <i data-lucide="ban" class="w-4 h-4" stroke-width="2"></i>
+                    <span>Tangguhkan Workspace (Suspend)</span>
+                </button>
+            @else
+                <form method="POST" action="{{ route('admin.businesses.toggle-status', $business->id) }}"
+                    onsubmit="return AppAlert.confirmSubmit(event, this, 'Apakah Anda yakin ingin mengaktifkan kembali bisnis {{ addslashes($business->name) }}?', 'Aktifkan Workspace?', 'info')">
+                    @csrf
                     <button type="submit"
-                        class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#FF3B30] hover:bg-[#E0352B] active:scale-[0.98] transition-all flex items-center gap-2 shadow-sm">
-                        <i data-lucide="ban" class="w-4 h-4" stroke-width="2"></i>
-                        <span>Tangguhkan Workspace (Suspend)</span>
-                    </button>
-                @else
-                    <button type="submit"
-                        class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center gap-2 shadow-md shadow-[#007AFF]/25">
+                        class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center gap-2 shadow-md shadow-[#007AFF]/25 cursor-pointer">
                         <i data-lucide="check-circle" class="w-4 h-4" stroke-width="2"></i>
                         <span>Aktifkan Kembali Workspace</span>
                     </button>
-                @endif
-            </form>
+                </form>
+            @endif
         </div>
 
         <!-- Bento Hero Workspace Identity Card -->
@@ -277,5 +277,46 @@
             </div>
 
         </div>
+
+        <!-- SUSPEND MODAL (Double Confirmation Dialog) -->
+        <div x-show="showSuspendModal" x-cloak class="fixed inset-0 z-50 overflow-y-auto" role="dialog" aria-modal="true">
+            <div class="fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity" @click="showSuspendModal = false"></div>
+            <div class="flex min-h-full items-center justify-center p-4">
+                <div class="relative w-full max-w-md rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.12] p-6 shadow-2xl space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-[#FF3B30]/15 text-[#FF3B30] flex items-center justify-center shrink-0">
+                            <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-[16px] font-bold text-black dark:text-white">Tangguhkan Bisnis?</h3>
+                            <p class="text-[12px] text-black/50 dark:text-white/50">Operasional POS, toko online, dan akses staf akan dibekukan sementara.</p>
+                        </div>
+                    </div>
+
+                    <form method="POST" action="{{ route('admin.businesses.toggle-status', $business->id) }}" class="space-y-4">
+                        @csrf
+                        <div>
+                            <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
+                                Alasan Penangguhan <span class="text-[#FF3B30]">*</span>
+                            </label>
+                            <textarea name="reason" rows="3" required placeholder="Contoh: Terdeteksi pelanggaran syarat & ketentuan penggunaan platform..."
+                                class="w-full px-3.5 py-2.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF3B30]/40"></textarea>
+                        </div>
+
+                        <div class="flex items-center justify-end gap-2.5 pt-2 border-t border-black/[0.04] dark:border-white/[0.06]">
+                            <button type="button" @click="showSuspendModal = false"
+                                class="h-10 px-4 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition">
+                                Batal
+                            </button>
+                            <button type="submit"
+                                class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#FF3B30] hover:bg-[#E0352B] transition shadow-sm">
+                                Konfirmasi Suspend
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
     </div>
 @endsection

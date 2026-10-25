@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\LegalPage;
+use App\Support\Security\HtmlSanitizer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -49,6 +50,9 @@ class AdminLegalPageController extends Controller
         ]);
 
         $validated['is_published'] = $request->boolean('is_published');
+        $validated['content_general'] = HtmlSanitizer::clean($validated['content_general'] ?? null);
+        $validated['content_owner'] = HtmlSanitizer::clean($validated['content_owner'] ?? null);
+        $validated['content_customer'] = HtmlSanitizer::clean($validated['content_customer'] ?? null);
 
         $legalPage->update($validated);
 

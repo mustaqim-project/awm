@@ -130,8 +130,9 @@
                                 </button>
                             </div>
                             <input :type="showPassword ? 'text' : 'password'" name="mail_password"
-                                value="{{ old('mail_password', $mailPassword ?? '') }}" placeholder="••••••••••••••••"
-                                class="w-full h-11 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[13px] font-mono text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                value="{{ old('mail_password', '') }}" autocomplete="new-password"
+                                placeholder="{{ !empty($mailPassword) ? '•••••••••••••••• (Sandi tersimpan aman - kosongkan jika tidak diubah)' : 'Masukkan kata sandi SMTP' }}"
+                                class="w-full h-11 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[13px] font-mono text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                         </div>
                     </div>
 

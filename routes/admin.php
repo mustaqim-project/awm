@@ -56,7 +56,7 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
     });
 
     // 2. Authenticated Admin Workspace
-    Route::middleware('auth:admin')->group(function (): void {
+    Route::middleware(['auth:admin', \App\Http\Middleware\EnsureAdminIsActive::class])->group(function (): void {
         Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
         Route::get('/profile', [AdminProfileController::class, 'index'])->name('profile.index');
         Route::put('/profile', [AdminProfileController::class, 'updateProfile'])->name('profile.update');

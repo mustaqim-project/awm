@@ -506,8 +506,8 @@
         $durationText = $payment->package_duration_days
             ? __('billing.active_duration_days', ['days' => $payment->package_duration_days])
             : ($payment->cycle === 'annual'
-                ? '365 ' . (app()->getLocale() === 'id' ? 'Hari (1 Tahun)' : 'Days (1 Year)')
-                : '30 ' . (app()->getLocale() === 'id' ? 'Hari (1 Bulan)' : 'Days (1 Month)'));
+                ? __('billing.duration_annual')
+                : __('billing.duration_monthly'));
         $methodDetails = $payment->getPaymentMethodDetails();
 
         $createdAtWib = $payment->created_at?->copy()->timezone('Asia/Jakarta');
@@ -550,14 +550,14 @@
 
             <div class="grid grid-cols-3 sm:flex sm:items-center gap-2 sm:gap-2.5 w-full sm:w-auto shrink-0">
                 <a href="{{ route('billing.payment.show', $payment) }}"
-                    class="h-9 sm:h-10 px-3 sm:px-4 rounded-[10px] sm:rounded-[12px] bg-black/[0.04] hover:bg-black/[0.08] dark:bg-white/[0.06] dark:hover:bg-white/[0.1] text-xs font-semibold active:scale-[0.98] transition-all text-gray-700 dark:text-gray-300 border border-black/[0.06] dark:border-white/[0.08] cursor-pointer flex items-center justify-center gap-1.5 whitespace-nowrap">
+                    class="min-h-[44px] h-11 sm:h-10 px-3.5 sm:px-4 rounded-[12px] bg-black/[0.04] hover:bg-black/[0.08] dark:bg-white/[0.06] dark:hover:bg-white/[0.1] text-xs font-semibold active:scale-[0.98] transition-all text-gray-700 dark:text-gray-300 border border-black/[0.06] dark:border-white/[0.08] cursor-pointer flex items-center justify-center gap-1.5 whitespace-nowrap">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M19 12H5M12 19l-7-7 7-7"/>
                     </svg>
                     <span>{{ __('billing.back') }}</span>
                 </a>
                 <button type="button" onclick="window.print()"
-                    class="h-9 sm:h-10 px-3 sm:px-4 rounded-[10px] sm:rounded-[12px] bg-black/[0.04] hover:bg-black/[0.08] dark:bg-white/[0.06] dark:hover:bg-white/[0.1] text-gray-700 dark:text-gray-300 text-xs font-semibold flex items-center justify-center gap-1.5 active:scale-[0.98] transition-all border border-black/[0.06] dark:border-white/[0.08] cursor-pointer whitespace-nowrap">
+                    class="min-h-[44px] h-11 sm:h-10 px-3.5 sm:px-4 rounded-[12px] bg-black/[0.04] hover:bg-black/[0.08] dark:bg-white/[0.06] dark:hover:bg-white/[0.1] text-gray-700 dark:text-gray-300 text-xs font-semibold flex items-center justify-center gap-1.5 active:scale-[0.98] transition-all border border-black/[0.06] dark:border-white/[0.08] cursor-pointer whitespace-nowrap">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-500 dark:text-gray-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
                         <path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6" />
@@ -566,7 +566,7 @@
                     <span>{{ __('billing.action_print_printer') }}</span>
                 </button>
                 <button id="btnDownloadPdf" type="button" onclick="downloadPDF()"
-                    class="h-9 sm:h-10 px-3 sm:px-4 rounded-[10px] sm:rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-xs font-bold shadow-xs flex items-center justify-center gap-1.5 active:scale-[0.98] transition-all cursor-pointer whitespace-nowrap">
+                    class="min-h-[44px] h-11 sm:h-10 px-3.5 sm:px-4 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-xs font-bold shadow-xs flex items-center justify-center gap-1.5 active:scale-[0.98] transition-all cursor-pointer whitespace-nowrap">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                         <polyline points="7 10 12 15 17 10" />
@@ -699,14 +699,14 @@
                             <tr style="border-bottom: 1px solid #e2e8f0; vertical-align: top;">
                                 <td class="col-no" style="font-family: monospace; color: #64748b;">2</td>
                                 <td class="col-desc">
-                                    <div style="font-weight: 800; color: #16a34a; line-height: 1.25;">Voucher Promo Diskon ({{ $payment->promo_code }})</div>
-                                    <div style="font-size: 10px; color: #64748b; font-family: monospace; margin-top: 2px;">KODE: {{ $payment->promo_code }}</div>
+                                    <div style="font-weight: 800; color: #16a34a; line-height: 1.25;">{{ __('billing.promo_discount_voucher', ['code' => $payment->promo_code]) }}</div>
+                                    <div style="font-size: 10px; color: #64748b; font-family: monospace; margin-top: 2px;">{{ __('billing.code_label') }}: {{ $payment->promo_code }}</div>
                                     <div style="font-size: 10px; color: #475569; margin-top: 4px; line-height: 1.4;">
-                                        Insentif subsidi promo langganan resmi Cooca.
+                                        {{ __('billing.promo_subsidy_note') }}
                                     </div>
                                 </td>
                                 <td class="col-durasi" style="font-family: monospace; color: #334155; text-transform: uppercase;">
-                                    Voucher
+                                    {{ __('billing.voucher_label') }}
                                 </td>
                                 <td class="col-qty" style="font-family: monospace; font-weight: 600; color: #000000;">
                                     1
@@ -757,21 +757,21 @@
                         <div style="padding: 12px 14px; background-color: #f8fafc; border-radius: 0 10px 10px 0; border: 1px solid #e2e8f0; border-left: 3px solid #0f172a;">
                             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 6px; margin-bottom: 8px;">
                                 <div style="font-weight: 800; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: #0f172a;">
-                                    Informasi Transaksi &amp; Pembayaran
+                                    {{ __('billing.transaction_payment_info') }}
                                 </div>
                             </div>
 
                             <table style="width: 100%; border-collapse: collapse; font-size: 11px; line-height: 1.55;">
                                 <tbody>
                                     <tr>
-                                        <td style="width: 105px; color: #64748b; padding: 2px 0; font-weight: 500;">Metode Bayar</td>
+                                        <td style="width: 105px; color: #64748b; padding: 2px 0; font-weight: 500;">{{ __('billing.payment_method_label') }}</td>
                                         <td style="width: 10px; color: #94a3b8; padding: 2px 0;">:</td>
                                         <td style="color: #0f172a; padding: 2px 0; font-weight: 700;">
                                             {{ $methodDetails['name'] ?? strtoupper($payment->payment_method) }}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style="color: #64748b; padding: 2px 0; font-weight: 500;">No. Referensi</td>
+                                        <td style="color: #64748b; padding: 2px 0; font-weight: 500;">{{ __('billing.reference_number_label') }}</td>
                                         <td style="color: #94a3b8; padding: 2px 0;">:</td>
                                         <td style="color: #0f172a; padding: 2px 0; font-family: monospace; font-weight: 700; word-break: break-all;">
                                             {{ $payment->gateway_reference ?: ($payment->tripay_reference ?: $payment->order_number) }}
@@ -779,7 +779,7 @@
                                     </tr>
                                     @if ($payment->gateway_pay_code)
                                         <tr>
-                                            <td style="color: #64748b; padding: 2px 0; font-weight: 500;">Kode / No. VA</td>
+                                            <td style="color: #64748b; padding: 2px 0; font-weight: 500;">{{ __('billing.va_number_label') }}</td>
                                             <td style="color: #94a3b8; padding: 2px 0;">:</td>
                                             <td style="color: #0f172a; padding: 2px 0; font-family: monospace; font-weight: 700; letter-spacing: 0.05em; word-break: break-all;">
                                                 {{ $payment->gateway_pay_code }}
@@ -787,22 +787,22 @@
                                         </tr>
                                     @endif
                                     <tr>
-                                        <td style="color: #64748b; padding: 2px 0; font-weight: 500;">Status Bayar</td>
+                                        <td style="color: #64748b; padding: 2px 0; font-weight: 500;">{{ __('billing.payment_status_label') }}</td>
                                         <td style="color: #94a3b8; padding: 2px 0;">:</td>
                                         <td style="padding: 2px 0; font-weight: 800; color: {{ $isApproved ? '#16a34a' : ($payment->isRejected() ? '#dc2626' : '#d97706') }};">
                                             @if ($isApproved)
-                                                LUNAS (Terverifikasi Otomatis)
+                                                {{ __('billing.status_paid_auto') }}
                                             @elseif ($payment->status === 'cancelled')
-                                                DIBATALKAN / KEDALUWARSA
+                                                {{ __('billing.status_cancelled_expired') }}
                                             @elseif ($payment->status === 'rejected')
-                                                DITOLAK
+                                                {{ __('billing.status_rejected_label') }}
                                             @else
-                                                MENUNGGU PEMBAYARAN
+                                                {{ __('billing.status_waiting_payment') }}
                                             @endif
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style="color: #64748b; padding: 2px 0; font-weight: 500;">Waktu Transaksi</td>
+                                        <td style="color: #64748b; padding: 2px 0; font-weight: 500;">{{ __('billing.transaction_time_label') }}</td>
                                         <td style="color: #94a3b8; padding: 2px 0;">:</td>
                                         <td style="color: #334155; padding: 2px 0; font-family: monospace;">
                                             {{ $approvedAtWib ? $approvedAtWib->translatedFormat('d F Y, H:i') . ' WIB' : ($createdAtWib ? $createdAtWib->translatedFormat('d F Y, H:i') . ' WIB' : '-') }}
@@ -813,10 +813,10 @@
 
                             @if ($payment->isManual() && $payment->sender_account_name)
                                 <div style="margin-top: 8px; padding-top: 6px; border-top: 1px solid #e2e8f0; font-size: 11px; color: #475569;">
-                                    <div><span style="color: #64748b;">Pengirim:</span> <strong>{{ $payment->sender_account_name }} ({{ $payment->sender_bank ?? '-' }})</strong></div>
+                                    <div><span style="color: #64748b;">{{ __('billing.sender_label') }}:</span> <strong>{{ $payment->sender_account_name }} ({{ $payment->sender_bank ?? '-' }})</strong></div>
                                     @if ($proofUploadedAtWib)
                                         <div style="font-size: 10px; color: #64748b; font-family: monospace; margin-top: 2px;">
-                                            Struk dikirim: {{ $proofUploadedAtWib->translatedFormat('d F Y, H:i') }} WIB
+                                            {{ __('billing.receipt_sent_label') }}: {{ $proofUploadedAtWib->translatedFormat('d F Y, H:i') }} WIB
                                         </div>
                                     @endif
                                 </div>
@@ -847,7 +847,7 @@
                                 </tr>
                                 @if ($payment->hasDiscount())
                                     <tr>
-                                        <td style="color: #16a34a; font-weight: 500; padding: 3px 0;">Diskon Promo ({{ $payment->promo_code }})</td>
+                                        <td style="color: #16a34a; font-weight: 500; padding: 3px 0;">{{ __('billing.promo_discount_voucher', ['code' => $payment->promo_code]) }}</td>
                                         <td style="text-align: right; font-family: monospace; font-weight: 600; color: #16a34a; padding: 3px 0;">
                                             -Rp {{ number_format((float) $payment->discount_amount, 0, ',', '.') }}
                                         </td>

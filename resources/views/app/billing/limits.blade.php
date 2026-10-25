@@ -1,7 +1,7 @@
 @extends('layouts.app', [
-    'title' => 'Paket Langganan & Kuota Penggunaan - Cooca',
-    'headerTitle' => 'Paket Langganan & Kuota Bisnis',
-    'headerSubtitle' => 'Pantau kapasitas sumber daya, kelola kuota transaksi, dan nikmati fitur tanpa batas',
+    'title' => __('billing.meta_title_limits'),
+    'headerTitle' => __('billing.title'),
+    'headerSubtitle' => __('billing.subtitle'),
 ])
 
 @section('content')
@@ -10,10 +10,10 @@
         @php
             $tier = $usage['tier'] ?? 'free';
             $tierBadge = match($tier) {
-                'prestige' => ['label' => 'Prestige Plan', 'bg' => 'bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-400 border-purple-200/90 dark:border-purple-800/90', 'dot' => 'bg-purple-500'],
-                'premium' => ['label' => 'Premium Plan', 'bg' => 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-400 border-indigo-200/90 dark:border-indigo-800/90', 'dot' => 'bg-indigo-500'],
-                'standard' => ['label' => 'Standard Plan', 'bg' => 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 border-emerald-200/90 dark:border-emerald-800/90', 'dot' => 'bg-emerald-500'],
-                default => ['label' => 'Free Solo', 'bg' => 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700', 'dot' => 'bg-slate-400'],
+                'prestige' => ['label' => __('billing.tier_prestige_label'), 'bg' => 'bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-400 border-purple-200/90 dark:border-purple-800/90', 'dot' => 'bg-purple-500'],
+                'premium' => ['label' => __('billing.tier_premium_label'), 'bg' => 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-400 border-indigo-200/90 dark:border-indigo-800/90', 'dot' => 'bg-indigo-500'],
+                'standard' => ['label' => __('billing.tier_standard_label'), 'bg' => 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 border-emerald-200/90 dark:border-emerald-800/90', 'dot' => 'bg-emerald-500'],
+                default => ['label' => __('billing.tier_free_label'), 'bg' => 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700', 'dot' => 'bg-slate-400'],
             };
 
             $providerNames = [
@@ -38,13 +38,13 @@
         >
             <x-slot:actions>
                 <a href="{{ route('billing.history') }}"
-                    class="h-10 px-4 rounded-[12px] text-xs font-semibold text-slate-700 dark:text-slate-300 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] active:scale-[0.98] transition flex items-center gap-2">
+                    class="min-h-[44px] h-11 sm:h-10 px-3.5 sm:px-4 rounded-[12px] text-xs font-semibold text-slate-700 dark:text-slate-300 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] active:scale-[0.98] transition flex items-center gap-2">
                     <i data-lucide="receipt" class="w-4 h-4 text-[#007AFF]"></i>
                     <span>{{ __('billing.action_history') }}</span>
                 </a>
                 @if (\App\Support\Context::hasPermission('billing.manage'))
                     <a href="{{ route('billing.checkout') }}"
-                        class="h-10 px-4 rounded-[12px] text-xs font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] shadow-sm active:scale-[0.98] transition flex items-center gap-2">
+                        class="min-h-[44px] h-11 sm:h-10 px-3.5 sm:px-4 rounded-[12px] text-xs font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] shadow-sm active:scale-[0.98] transition flex items-center gap-2">
                         <i data-lucide="{{ $usage['is_core'] ? 'refresh-cw' : 'sparkles' }}" class="w-4 h-4"></i>
                         <span>{{ $usage['is_core'] ? __('billing.action_renew_change') : __('billing.action_choose_plan') }}</span>
                     </a>
@@ -318,19 +318,19 @@
                     <div class="space-y-3">
                         <div class="flex items-center justify-between">
                             <span class="rounded-[8px] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider font-mono bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700">
-                                Solo Owner
+                                {{ __('billing.tier_solo_owner') }}
                             </span>
                             @if($tier === 'free')
-                                <span class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 font-mono">Aktif</span>
+                                <span class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 font-mono">{{ __('billing.plan_active_badge') }}</span>
                             @endif
                         </div>
                         <div>
-                            <h3 class="text-base font-black text-slate-900 dark:text-white">Free</h3>
-                            <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Untuk usaha mikro rumahan dan pedagang solo tanpa biaya.</p>
+                            <h3 class="text-base font-black text-slate-900 dark:text-white">{{ __('billing.plan_free') }}</h3>
+                            <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">{{ __('billing.plan_free_desc') }}</p>
                         </div>
                         <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
                             <div class="text-2xl font-black font-mono tabular-nums text-slate-900 dark:text-white">Rp 0</div>
-                            <div class="text-[10px] text-slate-400 font-mono">Gratis selamanya</div>
+                            <div class="text-[10px] text-slate-400 font-mono">{{ __('billing.plan_free_forever') }}</div>
                         </div>
 
                         <!-- Ringkasan Kapasitas Inti -->
@@ -364,12 +364,12 @@
                     </div>
                     <div class="mt-5 pt-3 border-t border-slate-100 dark:border-slate-800">
                         @if($tier === 'free')
-                            <div class="w-full py-2.5 rounded-[12px] text-xs font-bold text-center bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 font-mono">
-                                Paket Aktif Saat Ini
+                            <div class="w-full min-h-[44px] py-2.5 rounded-[12px] text-xs font-bold text-center bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 font-mono flex items-center justify-center">
+                                {{ __('billing.plan_current_active') }}
                             </div>
                         @else
-                            <div class="w-full py-2.5 rounded-[12px] text-xs font-medium text-center text-slate-400 font-mono">
-                                Tingkat Dasar
+                            <div class="w-full min-h-[44px] py-2.5 rounded-[12px] text-xs font-medium text-center text-slate-400 font-mono flex items-center justify-center">
+                                {{ __('billing.plan_baseline_tier') }}
                             </div>
                         @endif
                     </div>
@@ -380,21 +380,21 @@
                     <div class="space-y-3">
                         <div class="flex items-center justify-between">
                             <span class="rounded-[8px] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider font-mono bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
-                                UMKM Pemula
+                                {{ __('billing.tier_umkm_pemula') }}
                             </span>
                             @if($tier === 'standard')
-                                <span class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 font-mono">Aktif</span>
+                                <span class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 font-mono">{{ __('billing.plan_active_badge') }}</span>
                             @endif
                         </div>
                         <div>
-                            <h3 class="text-base font-black text-slate-900 dark:text-white">Standard</h3>
-                            <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Cocok untuk usaha rintisan dengan kasir POS aktif &amp; 1–3 staf.</p>
+                            <h3 class="text-base font-black text-slate-900 dark:text-white">{{ __('billing.plan_standard') }}</h3>
+                            <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">{{ __('billing.plan_standard_desc') }}</p>
                         </div>
                         <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
                             <div class="text-2xl font-black font-mono tabular-nums text-slate-900 dark:text-white"
                                 x-text="pricingCycle === 'annual' ? 'Rp 290.000' : 'Rp 29.000'"></div>
                             <div class="text-[10px] text-slate-500 font-mono"
-                                x-text="pricingCycle === 'annual' ? 'per tahun (≈ Rp 24.167/bln)' : 'per bulan (fleksibel)'"></div>
+                                x-text="pricingCycle === 'annual' ? '{{ __('billing.plan_per_year_approx', ['price' => '24.167']) }}' : '{{ __('billing.plan_per_month_flexible') }}'"></div>
                         </div>
 
                         <!-- Ringkasan Kapasitas Inti -->
@@ -429,13 +429,13 @@
                     </div>
                     <div class="mt-5 pt-3 border-t border-slate-100 dark:border-slate-800">
                         @if($tier === 'standard')
-                            <div class="w-full py-2.5 rounded-[12px] text-xs font-bold text-center bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-700 font-mono">
-                                Paket Aktif
+                            <div class="w-full min-h-[44px] py-2.5 rounded-[12px] text-xs font-bold text-center bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-700 font-mono flex items-center justify-center">
+                                {{ __('billing.plan_current_active') }}
                             </div>
                         @else
                             <a :href="'{{ route('billing.checkout', ['tier' => 'standard']) }}&cycle=' + pricingCycle"
-                                class="w-full py-2.5 rounded-[12px] text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-500 shadow-sm shadow-emerald-600/20 active:scale-[0.98] transition cursor-pointer flex items-center justify-center gap-1.5">
-                                <span>Pilih Standard</span>
+                                class="w-full min-h-[44px] h-11 py-2.5 rounded-[12px] text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-500 shadow-sm shadow-emerald-600/20 active:scale-[0.98] transition cursor-pointer flex items-center justify-center gap-1.5">
+                                <span>{{ __('billing.btn_choose_standard') }}</span>
                                 <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                             </a>
                         @endif
@@ -450,21 +450,21 @@
                     <div class="space-y-3 mt-1">
                         <div class="flex items-center justify-between">
                             <span class="rounded-[8px] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider font-mono bg-indigo-50 dark:bg-indigo-950/50 text-indigo-700 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800">
-                                Scale-Up UMKM
+                                {{ __('billing.tier_scaleup_umkm') }}
                             </span>
                             @if($tier === 'premium')
-                                <span class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 font-mono">Aktif</span>
+                                <span class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 font-mono">{{ __('billing.plan_active_badge') }}</span>
                             @endif
                         </div>
                         <div>
-                            <h3 class="text-base font-black text-slate-900 dark:text-white">Premium</h3>
-                            <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Solusi lengkap multi-cabang, KDS dapur, komisi kasir &amp; resep.</p>
+                            <h3 class="text-base font-black text-slate-900 dark:text-white">{{ __('billing.plan_premium') }}</h3>
+                            <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">{{ __('billing.plan_premium_desc') }}</p>
                         </div>
                         <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
                             <div class="text-2xl font-black font-mono tabular-nums text-indigo-600 dark:text-indigo-400"
                                 x-text="pricingCycle === 'annual' ? 'Rp 890.000' : 'Rp 89.000'"></div>
                             <div class="text-[10px] text-slate-500 font-mono"
-                                x-text="pricingCycle === 'annual' ? 'per tahun (≈ Rp 74.167/bln)' : 'per bulan (fleksibel)'"></div>
+                                x-text="pricingCycle === 'annual' ? '{{ __('billing.plan_per_year_approx', ['price' => '74.167']) }}' : '{{ __('billing.plan_per_month_flexible') }}'"></div>
                         </div>
 
                         <!-- Ringkasan Kapasitas Inti -->
@@ -484,28 +484,28 @@
                         </div>
 
                         <ul class="space-y-1.5 pt-1 text-[11px] text-slate-600 dark:text-slate-300">
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-indigo-600 shrink-0"></i><span><strong>3 Bisnis</strong> (Kelola 3 Brand Toko)</span></li>
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-indigo-600 shrink-0"></i><span>Produk, Resep &amp; Bahan <strong>Unlimited</strong></span></li>
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-indigo-600 shrink-0"></i><span>Transaksi Kasir <strong>Unlimited</strong></span></li>
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-indigo-600 shrink-0"></i><span>Faktur &amp; PO <strong>Unlimited</strong></span></li>
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-indigo-600 shrink-0"></i><span>Meja Kasir Dine-In <strong>Unlimited</strong></span></li>
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-indigo-600 shrink-0"></i><span>KDS Dapur &amp; Transfer Cabang</span></li>
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-indigo-600 shrink-0"></i><span>Multi-Pricing per Cabang Toko</span></li>
-                            <li class="flex items-center gap-1.5 text-indigo-700 dark:text-indigo-300 font-semibold"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-600 shrink-0"></i><span>Full Cooca AI Suite &amp; MCP (Multi-Client)</span></li>
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-indigo-600 shrink-0"></i><span>Komisi Kasir, Kasbon, BPJS/THR</span></li>
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-indigo-600 shrink-0"></i><span>Jurnal Akuntansi &amp; Laba Rugi Cabang</span></li>
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-indigo-600 shrink-0"></i><span>200 Notifikasi WA &amp; 30 Post Medsos/bln</span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-indigo-600 shrink-0"></i><span><strong>3 Bisnis</strong> ({{ __('billing.premium_three_businesses') }})</span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-indigo-600 shrink-0"></i><span>{{ __('billing.premium_unlimited_catalog') }}</span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-indigo-600 shrink-0"></i><span>{{ __('billing.premium_unlimited_pos') }}</span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-indigo-600 shrink-0"></i><span>{{ __('billing.premium_unlimited_invoices') }}</span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-indigo-600 shrink-0"></i><span>{{ __('billing.premium_unlimited_tables') }}</span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-indigo-600 shrink-0"></i><span>{{ __('billing.premium_kds_transfer') }}</span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-indigo-600 shrink-0"></i><span>{{ __('billing.premium_multipricing') }}</span></li>
+                            <li class="flex items-center gap-1.5 text-indigo-700 dark:text-indigo-300 font-semibold"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-600 shrink-0"></i><span>{{ __('billing.premium_ai_suite') }}</span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-indigo-600 shrink-0"></i><span>{{ __('billing.premium_payroll_features') }}</span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-indigo-600 shrink-0"></i><span>{{ __('billing.premium_accounting_branch') }}</span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-indigo-600 shrink-0"></i><span>{{ __('billing.premium_wa_social') }}</span></li>
                         </ul>
                     </div>
                     <div class="mt-5 pt-3 border-t border-slate-100 dark:border-slate-800">
                         @if($tier === 'premium')
-                            <div class="w-full py-2.5 rounded-[12px] text-xs font-bold text-center bg-indigo-100 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-400 border border-indigo-300 dark:border-indigo-700 font-mono">
-                                Paket Aktif
+                            <div class="w-full min-h-[44px] py-2.5 rounded-[12px] text-xs font-bold text-center bg-indigo-100 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-400 border border-indigo-300 dark:border-indigo-700 font-mono flex items-center justify-center">
+                                {{ __('billing.plan_current_active') }}
                             </div>
                         @else
                             <a :href="'{{ route('billing.checkout', ['tier' => 'premium']) }}&cycle=' + pricingCycle"
-                                class="w-full py-2.5 rounded-[12px] text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 shadow-sm shadow-indigo-600/20 active:scale-[0.98] transition cursor-pointer flex items-center justify-center gap-1.5">
-                                <span>Pilih Premium</span>
+                                class="w-full min-h-[44px] h-11 py-2.5 rounded-[12px] text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 shadow-sm shadow-indigo-600/20 active:scale-[0.98] transition cursor-pointer flex items-center justify-center gap-1.5">
+                                <span>{{ __('billing.btn_choose_premium') }}</span>
                                 <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                             </a>
                         @endif
@@ -517,21 +517,21 @@
                     <div class="space-y-3">
                         <div class="flex items-center justify-between">
                             <span class="rounded-[8px] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider font-mono bg-purple-50 dark:bg-purple-950/50 text-purple-700 dark:text-purple-400 border border-purple-200 dark:border-purple-800">
-                                Enterprise UMKM
+                                {{ __('billing.tier_enterprise_umkm') }}
                             </span>
                             @if($tier === 'prestige')
-                                <span class="text-[10px] font-bold text-purple-600 dark:text-purple-400 font-mono">Aktif</span>
+                                <span class="text-[10px] font-bold text-purple-600 dark:text-purple-400 font-mono">{{ __('billing.plan_active_badge') }}</span>
                             @endif
                         </div>
                         <div>
-                            <h3 class="text-base font-black text-slate-900 dark:text-white">Prestige</h3>
-                            <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Kapasitas unlimited penuh, pajak PPh 21 TER, &amp; slip gaji WA.</p>
+                            <h3 class="text-base font-black text-slate-900 dark:text-white">{{ __('billing.plan_prestige') }}</h3>
+                            <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">{{ __('billing.plan_prestige_desc') }}</p>
                         </div>
                         <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
                             <div class="text-2xl font-black font-mono tabular-nums text-purple-600 dark:text-purple-400"
                                 x-text="pricingCycle === 'annual' ? 'Rp 1.990.000' : 'Rp 199.000'"></div>
                             <div class="text-[10px] text-slate-500 font-mono"
-                                x-text="pricingCycle === 'annual' ? 'per tahun (≈ Rp 165.833/bln)' : 'per bulan (fleksibel)'"></div>
+                                x-text="pricingCycle === 'annual' ? '{{ __('billing.plan_per_year_approx', ['price' => '165.833']) }}' : '{{ __('billing.plan_per_month_flexible') }}'"></div>
                         </div>
 
                         <!-- Ringkasan Kapasitas Inti -->
@@ -542,38 +542,38 @@
                             </div>
                             <div>
                                 <div class="text-purple-600/70 dark:text-purple-400/70 text-[9px] uppercase">Staf</div>
-                                <div class="font-bold text-purple-800 dark:text-purple-300">∞ Bebas</div>
+                                <div class="font-bold text-purple-800 dark:text-purple-300">{{ __('billing.unlimited_free') }}</div>
                             </div>
                             <div>
                                 <div class="text-purple-600/70 dark:text-purple-400/70 text-[9px] uppercase">Lokasi</div>
-                                <div class="font-bold text-purple-800 dark:text-purple-300">∞ Bebas</div>
+                                <div class="font-bold text-purple-800 dark:text-purple-300">{{ __('billing.unlimited_free') }}</div>
                             </div>
                         </div>
 
                         <ul class="space-y-1.5 pt-1 text-[11px] text-slate-600 dark:text-slate-300">
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span><strong>Bisnis Unlimited</strong> (Multi-Company)</span></li>
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>Cabang &amp; Gudang <strong>Unlimited</strong></span></li>
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>Karyawan / Staf <strong>Unlimited</strong></span></li>
-                            <li class="flex items-center gap-1.5 text-purple-700 dark:text-purple-300 font-semibold"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>Tax PPh 21 TER (PP 58/2023) Lengkap</span></li>
-                            <li class="flex items-center gap-1.5 text-purple-700 dark:text-purple-300 font-semibold"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>Auto Kirim Slip Gaji via WhatsApp</span></li>
-                            <li class="flex items-center gap-1.5 text-purple-700 dark:text-purple-300 font-semibold"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>Full AI Suite &amp; MCP Dedicated Unlimited</span></li>
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>Modul BPJS Lengkap &amp; Auto-THR WA</span></li>
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>Laporan SPT Pajak e-Bupot DJP</span></li>
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>Konsolidasi Laba Rugi Multi-Bisnis</span></li>
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span><strong>1.000 Notifikasi WA / bln</strong></span></li>
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>Posting Media Sosial Unlimited</span></li>
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>Prioritas Dukungan Teknis 24/7 CS</span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span><strong>{{ __('billing.prestige_unlimited_business') }}</strong></span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>{{ __('billing.prestige_unlimited_branches') }}</span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>{{ __('billing.prestige_unlimited_staff') }}</span></li>
+                            <li class="flex items-center gap-1.5 text-purple-700 dark:text-purple-300 font-semibold"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>{{ __('billing.prestige_tax_pph21') }}</span></li>
+                            <li class="flex items-center gap-1.5 text-purple-700 dark:text-purple-300 font-semibold"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>{{ __('billing.prestige_payslip_wa') }}</span></li>
+                            <li class="flex items-center gap-1.5 text-purple-700 dark:text-purple-300 font-semibold"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>{{ __('billing.prestige_ai_mcp_unlimited') }}</span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>{{ __('billing.prestige_bpjs_thr') }}</span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>{{ __('billing.prestige_spt_pajak') }}</span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>{{ __('billing.prestige_consolidation') }}</span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>{{ __('billing.prestige_wa_notifications') }}</span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>{{ __('billing.prestige_social_unlimited') }}</span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>{{ __('billing.prestige_priority_support') }}</span></li>
                         </ul>
                     </div>
                     <div class="mt-5 pt-3 border-t border-slate-100 dark:border-slate-800">
                         @if($tier === 'prestige')
-                            <div class="w-full py-2.5 rounded-[12px] text-xs font-bold text-center bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-400 border border-purple-300 dark:border-purple-700 font-mono">
-                                Paket Aktif
+                            <div class="w-full min-h-[44px] py-2.5 rounded-[12px] text-xs font-bold text-center bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-400 border border-purple-300 dark:border-purple-700 font-mono flex items-center justify-center">
+                                {{ __('billing.plan_current_active') }}
                             </div>
                         @else
                             <a :href="'{{ route('billing.checkout', ['tier' => 'prestige']) }}&cycle=' + pricingCycle"
-                                class="w-full py-2.5 rounded-[12px] text-xs font-bold text-white bg-purple-600 hover:bg-purple-500 shadow-sm shadow-purple-600/20 active:scale-[0.98] transition cursor-pointer flex items-center justify-center gap-1.5">
-                                <span>Pilih Prestige</span>
+                                class="w-full min-h-[44px] h-11 py-2.5 rounded-[12px] text-xs font-bold text-white bg-purple-600 hover:bg-purple-500 shadow-sm shadow-purple-600/20 active:scale-[0.98] transition cursor-pointer flex items-center justify-center gap-1.5">
+                                <span>{{ __('billing.btn_choose_prestige') }}</span>
                                 <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                             </a>
                         @endif
@@ -589,19 +589,19 @@
                     </div>
                     <div class="space-y-1">
                         <div class="flex items-center gap-2">
-                            <h4 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">Ketentuan Akses Fitur Asisten &amp; Prediksi AI (Cooca AI)</h4>
-                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/60 dark:text-indigo-300 font-mono">Model BYOAI</span>
+                            <h4 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">{{ __('billing.byoai_callout_title') }}</h4>
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/60 dark:text-indigo-300 font-mono">{{ __('billing.byoai_badge_model') }}</span>
                         </div>
                         <p class="text-[12px] text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
-                            Fitur AI (Lobby AI Office, Prediksi Penjualan Kasir POS 14 Hari, Deteksi Anomali/Fraud, BCG Menu Matrix, serta Draf Balasan CS di Kotak Masuk Terpadu) <strong>tersedia pada Paket Standard, Premium, dan Prestige</strong>. Cooca mengusung model <em>Bring Your Own AI (BYOAI)</em>: Anda dapat menghubungkan API Key resmi milik Anda sendiri (misal: Google Gemini gratis, OpenAI ChatGPT, Anthropic Claude, Groq) secara langsung tanpa mark-up biaya komputasi token platform.
+                            {!! __('billing.byoai_callout_desc') !!}
                         </p>
                     </div>
                 </div>
                 <div class="shrink-0 flex items-center gap-2">
                     <a href="{{ route('cooca-ai.providers') }}"
-                        class="px-4 py-2.5 rounded-[12px] text-xs font-bold text-slate-800 dark:text-white bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 shadow-2xs transition flex items-center gap-1.5 whitespace-nowrap">
+                        class="min-h-[44px] h-11 sm:h-10 px-4 py-2.5 rounded-[12px] text-xs font-bold text-slate-800 dark:text-white bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 shadow-2xs transition flex items-center gap-1.5 whitespace-nowrap">
                         <i data-lucide="settings-2" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i>
-                        <span>Kelola Provider AI</span>
+                        <span>{{ __('billing.manage_ai_providers') }}</span>
                     </a>
                 </div>
             </div>
@@ -612,15 +612,15 @@
                     <div>
                         <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
                             <i data-lucide="layers" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i>
-                            <span>Tabel Matriks Perbandingan Detail Seluruh Fitur &amp; Limitasi</span>
+                            <span>{{ __('billing.matrix_table_title') }}</span>
                         </h3>
                         <p class="text-[11.5px] text-slate-500 dark:text-slate-400 mt-0.5">
-                            Rincian komparasi kapasitas kuota, fasilitas multi-cabang, HRM, perpajakan, dan kecerdasan buatan antar paket.
+                            {{ __('billing.matrix_table_subtitle') }}
                         </p>
                     </div>
                     <button type="button" @click="expandedMatrix = !expandedMatrix"
-                        class="px-3 py-1.5 rounded-[10px] text-xs font-semibold text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition flex items-center gap-1.5 self-start sm:self-auto cursor-pointer">
-                        <span x-text="expandedMatrix ? 'Sembunyikan Matriks' : 'Buka Matriks Lengkap'"></span>
+                        class="min-h-[44px] sm:min-h-0 px-3.5 py-2 rounded-[10px] text-xs font-semibold text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition flex items-center gap-1.5 self-start sm:self-auto cursor-pointer">
+                        <span x-text="expandedMatrix ? '{{ __('billing.hide_matrix') }}' : '{{ __('billing.open_matrix_full') }}'"></span>
                         <i data-lucide="chevron-down" class="w-3.5 h-3.5 transition-transform" :class="expandedMatrix ? 'rotate-180' : ''"></i>
                     </button>
                 </div>
@@ -630,7 +630,7 @@
                         <table class="w-full text-left text-xs border-collapse">
                             <thead>
                                 <tr class="border-b border-slate-200 dark:border-slate-800 bg-slate-100/70 dark:bg-slate-800/70 text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                                    <th class="py-3 px-4 w-[36%] font-bold">Fitur / Sumber Daya</th>
+                                    <th class="py-3 px-4 w-[36%] font-bold">{{ __('billing.matrix_col_feature') }}</th>
                                     <th class="py-3 px-3 text-center w-[16%]">Free (Rp 0)</th>
                                     <th class="py-3 px-3 text-center w-[16%] text-emerald-700 dark:text-emerald-400">Standard (Rp 29k)</th>
                                     <th class="py-3 px-3 text-center w-[16%] text-indigo-700 dark:text-indigo-400 font-bold bg-indigo-50/50 dark:bg-indigo-950/20">Premium (Rp 89k)</th>
@@ -643,7 +643,7 @@
                                 <tr class="bg-indigo-50/30 dark:bg-indigo-950/10 font-bold text-slate-900 dark:text-white">
                                     <td colspan="5" class="py-2.5 px-4 text-[11.5px] uppercase tracking-wider font-mono flex items-center gap-2">
                                         <i data-lucide="bot" class="w-3.5 h-3.5 text-indigo-600"></i>
-                                        <span>1. Fitur Kecerdasan Buatan (Cooca AI Suite)</span>
+                                        <span>{{ __('billing.matrix_grp_ai') }}</span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -700,7 +700,7 @@
                                 <tr class="bg-slate-50/80 dark:bg-slate-800/40 font-bold text-slate-900 dark:text-white">
                                     <td colspan="5" class="py-2.5 px-4 text-[11.5px] uppercase tracking-wider font-mono flex items-center gap-2">
                                         <i data-lucide="building" class="w-3.5 h-3.5 text-cyan-600"></i>
-                                        <span>2. Kapasitas Akun Owner &amp; Cloud Storage</span>
+                                        <span>{{ __('billing.matrix_grp_capacity') }}</span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -1019,11 +1019,10 @@
                     <i data-lucide="cpu" class="w-4 h-4 text-cyan-600 dark:text-cyan-400" aria-hidden="true"></i>
                     <h2 id="infra-hub-heading"
                         class="text-xs sm:text-sm font-black text-slate-900 dark:text-white uppercase tracking-wider">
-                        Infrastruktur Cloud &amp; Intelegensi AI
+                        {{ __('billing.infra_cloud_ai_heading') }}
                     </h2>
                 </div>
-                <span class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-mono">Daya komputasi &amp;
-                    penyimpanan dokumen terproteksi</span>
+                <span class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-mono">{{ __('billing.infra_cloud_ai_sub') }}</span>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
@@ -1038,11 +1037,11 @@
                                     aria-hidden="true">
                                     <i data-lucide="hard-drive" class="w-4 h-4"></i>
                                 </div>
-                                <span>Penyimpanan Cloud Bisnis</span>
+                                <span>{{ __('billing.business_cloud_storage') }}</span>
                             </div>
                             <span
                                 class="rounded-[8px] px-2 py-0.5 text-[10px] font-bold border inline-flex items-center gap-1 bg-cyan-50 dark:bg-cyan-950/60 text-cyan-700 dark:text-cyan-400 border-cyan-200/90 dark:border-cyan-800/90 font-mono">
-                                TERPROTEKSI
+                                {{ __('billing.protected_badge') }}
                             </span>
                         </div>
 
@@ -1052,42 +1051,40 @@
                                     class="text-sm sm:text-base font-bold text-slate-500 dark:text-slate-400">MB</span>
                             </span>
                             <span class="text-xs text-slate-500 dark:text-slate-400 font-mono tabular-nums">
-                                / {{ number_format($usage['storage']['limit_gb'] ?? 1, 1, ',', '.') }} GB Kapasitas
+                                / {{ number_format($usage['storage']['limit_gb'] ?? 1, 1, ',', '.') }} GB {{ __('billing.capacity_label') }}
                             </span>
                         </div>
 
                         <!-- Storage Progress Bar with ARIA -->
                         @php $storagePercent = min(100, max(0, (int)($usage['storage']['percentage'] ?? 0))); @endphp
                         <div class="space-y-1.5" role="progressbar" aria-valuenow="{{ $storagePercent }}"
-                            aria-valuemin="0" aria-valuemax="100" aria-label="Persentase Pemakaian Storage">
+                            aria-valuemin="0" aria-valuemax="100" aria-label="{{ __('billing.storage_usage_percentage_aria') }}">
                             <div
                                 class="w-full bg-slate-100 dark:bg-slate-950 rounded-full h-2.5 overflow-hidden p-0.5 border border-slate-200 dark:border-slate-800">
                                 <div class="h-full rounded-full transition-all duration-500 {{ $storagePercent >= 90 ? 'bg-rose-500' : ($storagePercent >= 75 ? 'bg-amber-400' : 'bg-cyan-500') }}"
                                     style="width: {{ $storagePercent }}%"></div>
                             </div>
                             <div class="flex justify-between text-[11px] text-slate-500 dark:text-slate-400 font-mono">
-                                <span>Terpakai: <strong
+                                <span>{{ __('billing.storage_used_label') }}: <strong
                                         class="text-slate-800 dark:text-slate-200 font-bold tabular-nums">{{ $storagePercent }}%</strong></span>
-                                <span>Sisa: <strong
+                                <span>{{ __('billing.storage_remaining_label') }}: <strong
                                         class="text-slate-800 dark:text-slate-200 font-bold tabular-nums">{{ max(0, 100 - $storagePercent) }}%</strong></span>
                             </div>
                         </div>
 
                         <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                            Kapasitas penyimpanan aman untuk foto katalog produk, dokumen faktur digital, dan lampiran struk
-                            transfer bank.
+                            {{ __('billing.storage_safe_desc') }}
                         </p>
                     </div>
 
                     @if (\App\Support\Context::hasPermission('billing.manage'))
                         <div
                             class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
-                            <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">Tambah kuota
-                                permanen</span>
+                            <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">{{ __('billing.add_permanent_quota') }}</span>
                             <a href="{{ route('billing.checkout', ['type' => 'storage']) }}"
-                                class="px-3.5 py-2 rounded-[12px] text-xs font-bold text-white bg-cyan-600 hover:bg-cyan-500 shadow-sm shadow-cyan-600/20 active:scale-[0.98] transition cursor-pointer flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-cyan-500">
+                                class="min-h-[44px] h-11 sm:h-10 px-4 py-2 rounded-[12px] text-xs font-bold text-white bg-cyan-600 hover:bg-cyan-500 shadow-sm shadow-cyan-600/20 active:scale-[0.98] transition cursor-pointer flex items-center justify-center gap-1.5 focus-visible:ring-2 focus-visible:ring-cyan-500">
                                 <i data-lucide="plus" class="w-3.5 h-3.5" aria-hidden="true"></i>
-                                <span>Top Up Storage</span>
+                                <span>{{ __('billing.topup_storage') }}</span>
                             </a>
                         </div>
                     @endif
@@ -1130,28 +1127,28 @@
                                     <span class="text-xs text-emerald-600 dark:text-emerald-400 font-mono font-bold">{{ __('billing.ai_byoai_active') }}</span>
                                 </div>
                                 <div class="text-xs text-slate-500 dark:text-slate-400 font-mono">
-                                    Model Utama: <strong class="text-slate-800 dark:text-slate-200">{{ $activeAiConfig->model ?: 'Auto-selected' }}</strong>
+                                    {{ __('billing.main_model_label') }}: <strong class="text-slate-800 dark:text-slate-200">{{ $activeAiConfig->model ?: 'Auto-selected' }}</strong>
                                 </div>
                             </div>
 
                             <!-- BYOAI Spec Grid Apple HIG -->
                             <div class="rounded-[14px] bg-slate-50 dark:bg-slate-950/50 border border-slate-200/80 dark:border-slate-800/80 p-3.5 space-y-2 text-xs">
                                 <div class="flex items-center justify-between">
-                                    <span class="text-slate-500 dark:text-slate-400">Kuota Komputasi Platform:</span>
+                                    <span class="text-slate-500 dark:text-slate-400">{{ __('billing.platform_compute_quota') }}:</span>
                                     <span class="font-bold text-emerald-600 dark:text-emerald-400 font-mono flex items-center gap-1">
                                         <i data-lucide="infinity" class="w-3.5 h-3.5"></i>
-                                        <span>Tanpa Batas (Unlimited)</span>
+                                        <span>{{ __('billing.unlimited_no_limit') }}</span>
                                     </span>
                                 </div>
                                 <div class="flex items-center justify-between">
-                                    <span class="text-slate-500 dark:text-slate-400">Model Biaya Token:</span>
-                                    <span class="font-semibold text-slate-800 dark:text-slate-200 font-mono text-[11px]">Direct-to-Provider (0% Markup)</span>
+                                    <span class="text-slate-500 dark:text-slate-400">{{ __('billing.token_cost_model') }}:</span>
+                                    <span class="font-semibold text-slate-800 dark:text-slate-200 font-mono text-[11px]">{{ __('billing.direct_to_provider') }}</span>
                                 </div>
                                 <div class="flex items-center justify-between">
-                                    <span class="text-slate-500 dark:text-slate-400">Keamanan API Key:</span>
+                                    <span class="text-slate-500 dark:text-slate-400">{{ __('billing.api_key_security') }}:</span>
                                     <span class="font-mono text-slate-700 dark:text-slate-300 text-[11px] flex items-center gap-1">
                                         <i data-lucide="lock" class="w-3 h-3 text-emerald-500"></i>
-                                        <span>AES-256 GCM Terenkripsi</span>
+                                        <span>{{ __('billing.aes_encrypted') }}</span>
                                     </span>
                                 </div>
                             </div>
@@ -1163,7 +1160,7 @@
                                     </span>
                                 </div>
                                 <div class="text-xs text-amber-600 dark:text-amber-400 font-mono font-medium">
-                                    Hubungkan API Key untuk mengaktifkan AI Assistant &amp; Analytics
+                                    {{ __('billing.connect_key_to_activate') }}
                                 </div>
                             </div>
 
@@ -1171,10 +1168,10 @@
                             <div class="rounded-[14px] bg-amber-50/60 dark:bg-amber-950/20 border border-amber-200/80 dark:border-amber-800/60 p-3.5 space-y-1.5 text-xs text-amber-950 dark:text-amber-200">
                                 <div class="font-bold flex items-center gap-1.5">
                                     <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-600 dark:text-amber-400"></i>
-                                    <span>Gunakan Provider AI Pilihan Anda</span>
+                                    <span>{{ __('billing.use_preferred_provider') }}</span>
                                 </div>
                                 <p class="text-[11.5px] text-amber-800 dark:text-amber-300 leading-relaxed">
-                                    Mendukung Google Gemini, OpenAI, Anthropic Claude, dan OpenRouter. Cooca tidak memungut biaya atau menjual kuota token komputasi.
+                                    {{ __('billing.byoai_support_desc') }}
                                 </p>
                             </div>
                         @endif
@@ -1186,9 +1183,9 @@
 
                     <div
                         class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
-                        <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">Model AI Mandiri (BYOAI)</span>
+                        <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">{{ __('billing.byoai_self_model') }}</span>
                         <a href="{{ route('cooca-ai.providers') }}"
-                            class="px-3.5 py-2 rounded-[12px] text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 active:scale-[0.98] transition cursor-pointer flex items-center gap-1.5 shadow-xs focus-visible:ring-2 focus-visible:ring-slate-500">
+                            class="min-h-[44px] h-11 sm:h-10 px-4 py-2 rounded-[12px] text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 active:scale-[0.98] transition cursor-pointer flex items-center justify-center gap-1.5 shadow-xs focus-visible:ring-2 focus-visible:ring-slate-500">
                             <i data-lucide="settings" class="w-3.5 h-3.5" aria-hidden="true"></i>
                             <span>{{ __('billing.ai_byoai_manage') }}</span>
                         </a>
@@ -1222,8 +1219,8 @@
                         </span>
                         <!-- Kelola Semua Berkas Modal Trigger -->
                         <button type="button" @click="openModal()"
-                            class="px-2.5 py-1.5 rounded-[8px] text-[10px] font-bold text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/80 active:scale-[0.98] transition cursor-pointer flex items-center gap-1.5 shadow-2xs focus-visible:ring-2 focus-visible:ring-cyan-500">
-                            <i data-lucide="folder" class="w-3 h-3 text-cyan-600 dark:text-cyan-400" aria-hidden="true"></i>
+                            class="min-h-[44px] sm:min-h-0 px-3 py-2 rounded-[10px] text-[11px] sm:text-[10px] font-bold text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/80 active:scale-[0.98] transition cursor-pointer flex items-center gap-1.5 shadow-2xs focus-visible:ring-2 focus-visible:ring-cyan-500">
+                            <i data-lucide="folder" class="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" aria-hidden="true"></i>
                             <span>{{ __('billing.manage_all_files') }}</span>
                         </button>
                         <!-- Recalculate Button -->
@@ -1231,9 +1228,9 @@
                             <form method="POST" action="{{ route('billing.storage.recalculate') }}" class="inline">
                                 @csrf
                                 <button type="submit"
-                                    onclick="return confirm('Recalculate akan memindai ulang seluruh file di disk dan menyinkronkan database untuk bisnis ini. Lanjutkan?')"
-                                    class="px-2.5 py-1.5 rounded-[8px] text-[10px] font-bold text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/80 active:scale-[0.98] transition cursor-pointer flex items-center gap-1.5 shadow-2xs focus-visible:ring-2 focus-visible:ring-cyan-500">
-                                    <i data-lucide="refresh-cw" class="w-3 h-3 text-cyan-600 dark:text-cyan-400"
+                                    onclick="return confirm(@js(__('billing.storage_recalculate_confirm')))"
+                                    class="min-h-[44px] sm:min-h-0 px-3 py-2 rounded-[10px] text-[11px] sm:text-[10px] font-bold text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/80 active:scale-[0.98] transition cursor-pointer flex items-center gap-1.5 shadow-2xs focus-visible:ring-2 focus-visible:ring-cyan-500">
+                                    <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400"
                                         aria-hidden="true"></i>
                                     <span>Recalculate</span>
                                 </button>
@@ -1271,7 +1268,7 @@
                                                 </span>
                                                 @if (!empty($biz['is_current']))
                                                     <span class="px-1.5 py-0.2 rounded-[6px] text-[9px] font-bold bg-cyan-50 dark:bg-cyan-950/60 text-cyan-700 dark:text-cyan-300 border border-cyan-200/80 dark:border-cyan-800/80 shrink-0 font-mono">
-                                                        Bisnis Aktif
+                                                        {{ __('billing.active_business') }}
                                                     </span>
                                                 @endif
                                             </div>
@@ -1338,7 +1335,7 @@
 
                         <!-- Desktop Table View -->
                         <div class="hidden md:block overflow-x-auto -mx-5 px-5">
-                            <table class="w-full text-xs min-w-[540px]" aria-label="Tabel 10 File Terbesar">
+                            <table class="w-full text-xs min-w-[540px]" aria-label="{{ __('billing.largest_files_heading') }}">
                                 <thead>
                                     <tr
                                         class="text-[10px] uppercase tracking-wider font-bold text-slate-500 dark:text-slate-400 border-b border-slate-100 dark:border-slate-800">
@@ -1374,11 +1371,11 @@
                                             <td class="py-2.5 text-center whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                                 @if (\App\Support\Context::hasPermission('billing.manage'))
                                                     <form method="POST" action="{{ route('billing.storage.files.destroy', $lf['id']) }}" class="inline-flex items-center justify-center"
-                                                        onsubmit="return confirm('Hapus berkas \'{{ addslashes($lf['file_name']) }}\' secara permanen dari server untuk mengurangi kuota storage?')">
+                                                        onsubmit="return confirm({{ json_encode(__('billing.storage_delete_confirm_named', ['name' => $lf['file_name']])) }})">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" title="{{ __('billing.delete_file_tooltip') }}" aria-label="{{ __('billing.delete_file_tooltip') }}"
-                                                            class="w-8 h-8 rounded-[8px] flex items-center justify-center text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition cursor-pointer shrink-0">
+                                                            class="w-9 h-9 min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 sm:w-8 sm:h-8 rounded-[8px] flex items-center justify-center text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition cursor-pointer shrink-0">
                                                             <i data-lucide="trash-2" class="w-4 h-4"></i>
                                                         </button>
                                                     </form>
@@ -1413,12 +1410,12 @@
                                             <span class="font-mono tabular-nums">{{ $lf['uploaded_at'] }}</span>
                                             @if (\App\Support\Context::hasPermission('billing.manage'))
                                                 <form method="POST" action="{{ route('billing.storage.files.destroy', $lf['id']) }}" class="inline"
-                                                    onsubmit="return confirm('Hapus berkas \'{{ addslashes($lf['file_name']) }}\' secara permanen dari server untuk mengurangi kuota storage?')">
+                                                    onsubmit="return confirm({{ json_encode(__('billing.storage_delete_confirm_named', ['name' => $lf['file_name']])) }})">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" title="{{ __('billing.delete_file_tooltip') }}"
-                                                        class="text-slate-400 hover:text-rose-600 transition cursor-pointer p-0.5">
-                                                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                                    <button type="submit" title="{{ __('billing.delete_file_tooltip') }}" aria-label="{{ __('billing.delete_file_tooltip') }}"
+                                                        class="min-h-[44px] min-w-[44px] flex items-center justify-center text-slate-400 hover:text-rose-600 transition cursor-pointer p-1">
+                                                        <i data-lucide="trash-2" class="w-4 h-4"></i>
                                                     </button>
                                                 </form>
                                             @endif
@@ -1436,17 +1433,8 @@
                         <i data-lucide="alert-triangle" class="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0 mt-0.5"
                             aria-hidden="true"></i>
                         <div>
-                            <strong class="text-rose-800 dark:text-rose-300">Storage melebihi batas!</strong>
-                            <span class="text-rose-700 dark:text-rose-400 ml-1">Anda telah menggunakan
-                                {{ $storageDetails['used_mb'] }} MB dari kuota {{ $storageDetails['limit_gb'] }} GB.
-                                Upload baru akan diblokir.@if (\App\Support\Context::hasPermission('billing.manage'))
-                                    Silakan
-                                    <a href="{{ route('billing.checkout', ['type' => 'storage']) }}"
-                                        class="underline font-bold hover:text-rose-900 dark:hover:text-rose-200">Top Up
-                                        Storage</a>
-                                    untuk melanjutkan.
-                                @endif
-                            </span>
+                            <strong class="text-rose-800 dark:text-rose-300">{{ __('billing.storage_over_limit_title') }}</strong>
+                            <span class="text-rose-700 dark:text-rose-400 ml-1">{{ __('billing.storage_over_limit_desc', ['used' => $storageDetails['used_mb'], 'limit' => $storageDetails['limit_gb']]) }}@if (\App\Support\Context::hasPermission('billing.manage')) {!! __('billing.storage_exceeded_cta', ['link' => '<a href="' . route('billing.checkout', ['type' => 'storage']) . '" class="underline font-bold hover:text-rose-900 dark:hover:text-rose-200">' . __('billing.topup_storage') . '</a>']) !!}@endif</span>
                         </div>
                     </div>
                 @endif
@@ -1499,7 +1487,7 @@
 
                         <div class="w-full bg-slate-100 dark:bg-slate-950 rounded-full h-2 overflow-hidden mt-3 border border-slate-200 dark:border-slate-800"
                             role="progressbar" aria-valuenow="{{ $posPercent }}" aria-valuemin="0"
-                            aria-valuemax="100" aria-label="Kuota Transaksi Kasir POS">
+                            aria-valuemax="100" aria-label="{{ __('billing.pos_transactions') }}">
                             <div class="h-full rounded-full transition-all duration-500 {{ $posReached ? 'bg-rose-500' : ($posPercent >= 80 ? 'bg-amber-400' : 'bg-emerald-500') }}"
                                 style="width: {{ $posPercent }}%"></div>
                         </div>
@@ -1508,11 +1496,10 @@
                     <div
                         class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-[11px]">
                         <span
-                            class="text-slate-500 dark:text-slate-400">{{ $usage['is_core'] ? 'Bebas transaksi kasir' : 'Maks. 30 struk/bln (Free)' }}</span>
+                            class="text-slate-500 dark:text-slate-400">{{ $usage['is_core'] ? __('billing.unlimited_pos_tx') : __('billing.limit_free_receipts') }}</span>
                         @if ($posReached)
                             <span
-                                class="rounded-[6px] px-2 py-0.5 text-[10px] font-bold border inline-flex items-center gap-1 bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-400 border-rose-200/90 dark:border-rose-800/90">Batas
-                                Tercapai</span>
+                                class="rounded-[6px] px-2 py-0.5 text-[10px] font-bold border inline-flex items-center gap-1 bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-400 border-rose-200/90 dark:border-rose-800/90">{{ __('billing.limit_reached_badge') }}</span>
                         @elseif($usage['is_core'])
                             <span class="text-emerald-600 dark:text-emerald-400 font-bold font-mono">UNLIMITED</span>
                         @endif
@@ -1543,13 +1530,13 @@
                             </span>
                             <span class="text-xs text-slate-500 dark:text-slate-400 font-mono">
                                 /
-                                {{ $inv['limit'] ? number_format($inv['limit'], 0, ',', '.') . ' faktur' : '∞ Unlimited' }}
+                                {{ $inv['limit'] ? number_format($inv['limit'], 0, ',', '.') . ' ' . __('billing.invoices_unit') : __('billing.unlimited') }}
                             </span>
                         </div>
 
                         <div class="w-full bg-slate-100 dark:bg-slate-950 rounded-full h-2 overflow-hidden mt-3 border border-slate-200 dark:border-slate-800"
                             role="progressbar" aria-valuenow="{{ $invPercent }}" aria-valuemin="0"
-                            aria-valuemax="100" aria-label="Kuota Faktur Penjualan B2B">
+                            aria-valuemax="100" aria-label="{{ __('billing.b2b_invoices') }}">
                             <div class="h-full rounded-full transition-all duration-500 {{ $invReached ? 'bg-rose-500' : ($invPercent >= 80 ? 'bg-amber-400' : 'bg-purple-500') }}"
                                 style="width: {{ $invPercent }}%"></div>
                         </div>
@@ -1558,11 +1545,10 @@
                     <div
                         class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-[11px]">
                         <span
-                            class="text-slate-500 dark:text-slate-400">{{ $usage['is_core'] ? 'Bebas cetak faktur digital' : 'Maks. 3 faktur/bln (Free)' }}</span>
+                            class="text-slate-500 dark:text-slate-400">{{ $usage['is_core'] ? __('billing.unlimited_digital_invoices') : __('billing.limit_free_invoices') }}</span>
                         @if ($invReached)
                             <span
-                                class="rounded-[6px] px-2 py-0.5 text-[10px] font-bold border inline-flex items-center gap-1 bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-400 border-rose-200/90 dark:border-rose-800/90">Batas
-                                Tercapai</span>
+                                class="rounded-[6px] px-2 py-0.5 text-[10px] font-bold border inline-flex items-center gap-1 bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-400 border-rose-200/90 dark:border-rose-800/90">{{ __('billing.limit_reached_badge') }}</span>
                         @elseif($usage['is_core'])
                             <span class="text-purple-600 dark:text-purple-400 font-bold font-mono">UNLIMITED</span>
                         @endif
@@ -1592,13 +1578,13 @@
                                 {{ number_format($po['used'] ?? 0, 0, ',', '.') }}
                             </span>
                             <span class="text-xs text-slate-500 dark:text-slate-400 font-mono">
-                                / {{ $po['limit'] ? number_format($po['limit'], 0, ',', '.') . ' PO' : '∞ Unlimited' }}
+                                / {{ $po['limit'] ? number_format($po['limit'], 0, ',', '.') . ' PO' : __('billing.unlimited') }}
                             </span>
                         </div>
 
                         <div class="w-full bg-slate-100 dark:bg-slate-950 rounded-full h-2 overflow-hidden mt-3 border border-slate-200 dark:border-slate-800"
                             role="progressbar" aria-valuenow="{{ $poPercent }}" aria-valuemin="0"
-                            aria-valuemax="100" aria-label="Kuota Purchase Order Supplier">
+                            aria-valuemax="100" aria-label="{{ __('billing.purchase_orders') }}">
                             <div class="h-full rounded-full transition-all duration-500 {{ $poReached ? 'bg-rose-500' : ($poPercent >= 80 ? 'bg-amber-400' : 'bg-cyan-500') }}"
                                 style="width: {{ $poPercent }}%"></div>
                         </div>
@@ -1607,11 +1593,10 @@
                     <div
                         class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-[11px]">
                         <span
-                            class="text-slate-500 dark:text-slate-400">{{ $usage['is_core'] ? 'Bebas order supplier' : 'Maks. 3 PO/bln (Free)' }}</span>
+                            class="text-slate-500 dark:text-slate-400">{{ $usage['is_core'] ? __('billing.unlimited_supplier_po') : __('billing.limit_free_po') }}</span>
                         @if ($poReached)
                             <span
-                                class="rounded-[6px] px-2 py-0.5 text-[10px] font-bold border inline-flex items-center gap-1 bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-400 border-rose-200/90 dark:border-rose-800/90">Batas
-                                Tercapai</span>
+                                class="rounded-[6px] px-2 py-0.5 text-[10px] font-bold border inline-flex items-center gap-1 bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-400 border-rose-200/90 dark:border-rose-800/90">{{ __('billing.limit_reached_badge') }}</span>
                         @elseif($usage['is_core'])
                             <span class="text-cyan-600 dark:text-cyan-400 font-bold font-mono">UNLIMITED</span>
                         @endif
@@ -1642,13 +1627,13 @@
                                 {{ number_format($soc['used'] ?? 0, 0, ',', '.') }}
                             </span>
                             <span class="text-xs text-slate-500 dark:text-slate-400 font-mono">
-                                / {{ $soc['limit'] ? number_format($soc['limit'], 0, ',', '.') . ' posting' : '∞ Unlimited' }}
+                                / {{ $soc['limit'] ? number_format($soc['limit'], 0, ',', '.') . ' ' . __('billing.quota_unit_posts') : __('billing.unlimited') }}
                             </span>
                         </div>
 
                         <div class="w-full bg-slate-100 dark:bg-slate-950 rounded-full h-2 overflow-hidden mt-3 border border-slate-200 dark:border-slate-800"
                             role="progressbar" aria-valuenow="{{ $socPercent }}" aria-valuemin="0"
-                            aria-valuemax="100" aria-label="Kuota Posting Media Sosial">
+                            aria-valuemax="100" aria-label="{{ __('billing.social_media') }}">
                             <div class="h-full rounded-full transition-all duration-500 {{ $socReached ? 'bg-rose-500' : ($socPercent >= 80 ? 'bg-amber-400' : 'bg-pink-500') }}"
                                 style="width: {{ $socPercent }}%"></div>
                         </div>
@@ -1657,23 +1642,23 @@
                     <div
                         class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-[11px]">
                         <span
-                            class="text-slate-500 dark:text-slate-400">{{ $hasSocAddon ? 'Add-On Aktif' : 'Maks. 3 konten/bln (Free)' }}</span>
+                            class="text-slate-500 dark:text-slate-400">{{ $hasSocAddon ? __('billing.addon_active_badge') : __('billing.limit_free_content') }}</span>
                         @if ($socReached)
                             <button type="button"
                                 @click="window.dispatchEvent(new CustomEvent('open-quota-modal', {
                                     detail: {
-                                        title: 'Kuota Posting Media Sosial Habis',
-                                        desc: 'Anda telah mencapai batas 3 posting gratis bulan ini. Kuota akan otomatis di-reset pada tanggal 1 awal bulan berikutnya atau aktifkan Add-On untuk posting tanpa batas.',
+                                        title: @js(__('billing.quota_modal_social_title')),
+                                        desc: @js(__('billing.quota_modal_social_desc')),
                                         used: {{ $soc['used'] ?? 0 }},
                                         limit: 3,
-                                        unit: 'posting',
+                                        unit: @js(__('billing.quota_unit_posts')),
                                         upgradeUrl: '{{ route('billing.checkout') }}',
                                         upgradeFee: 'Rp 89.000/bln',
                                         isAddon: true
                                     }
                                 }))"
-                                class="rounded-[6px] px-2 py-0.5 text-[10px] font-bold border inline-flex items-center gap-1 bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-400 border-rose-200/90 dark:border-rose-800/90 cursor-pointer hover:bg-rose-100 transition">
-                                Batas Tercapai
+                                class="rounded-[6px] px-2 py-1 text-[10px] font-bold border inline-flex items-center gap-1 bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-400 border-rose-200/90 dark:border-rose-800/90 cursor-pointer hover:bg-rose-100 transition min-h-[44px]">
+                                {{ __('billing.limit_reached_badge') }}
                             </button>
                         @elseif($hasSocAddon)
                             <span class="text-pink-600 dark:text-pink-400 font-bold font-mono">UNLIMITED</span>
@@ -1704,13 +1689,13 @@
                                 {{ number_format($wa['used'] ?? 0, 0, ',', '.') }}
                             </span>
                             <span class="text-xs text-slate-500 dark:text-slate-400 font-mono">
-                                / {{ $wa['limit'] ? number_format($wa['limit'], 0, ',', '.') . ' pesan' : '∞ Unlimited' }}
+                                / {{ $wa['limit'] ? number_format($wa['limit'], 0, ',', '.') . ' ' . __('billing.quota_unit_messages') : __('billing.unlimited') }}
                             </span>
                         </div>
 
                         <div class="w-full bg-slate-100 dark:bg-slate-950 rounded-full h-2 overflow-hidden mt-3 border border-slate-200 dark:border-slate-800"
                             role="progressbar" aria-valuenow="{{ $waPercent }}" aria-valuemin="0"
-                            aria-valuemax="100" aria-label="Kuota Pesan WhatsApp Gateway">
+                            aria-valuemax="100" aria-label="{{ __('billing.whatsapp_gateway') }}">
                             <div class="h-full rounded-full transition-all duration-500 {{ $waReached ? 'bg-rose-500' : ($waPercent >= 80 ? 'bg-amber-400' : 'bg-emerald-500') }}"
                                 style="width: {{ $waPercent }}%"></div>
                         </div>
@@ -1719,22 +1704,22 @@
                     <div
                         class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-[11px]">
                         <span
-                            class="text-slate-500 dark:text-slate-400">{{ $usage['is_core'] ? 'Bebas notifikasi & struk' : 'Maks. 10 pesan/bln (Free)' }}</span>
+                            class="text-slate-500 dark:text-slate-400">{{ $usage['is_core'] ? __('billing.unlimited_wa_notifications') : __('billing.limit_free_wa') }}</span>
                         @if ($waReached)
                             <button type="button"
                                 @click="window.dispatchEvent(new CustomEvent('open-quota-modal', {
                                     detail: {
-                                        title: 'Kuota Pesan WhatsApp Habis',
-                                        desc: 'Anda telah mencapai batas 10 pesan WhatsApp gratis bulan ini. Kuota akan otomatis di-reset pada awal bulan berikutnya atau upgrade ke Cooca Core.',
+                                        title: @js(__('billing.quota_modal_wa_title')),
+                                        desc: @js(__('billing.quota_modal_wa_desc')),
                                         used: {{ $wa['used'] ?? 0 }},
                                         limit: 10,
-                                        unit: 'pesan',
+                                        unit: @js(__('billing.quota_unit_messages')),
                                         upgradeUrl: '{{ route('billing.checkout') }}',
                                         upgradeFee: 'Rp 49.000/bln'
                                     }
                                 }))"
-                                class="rounded-[6px] px-2 py-0.5 text-[10px] font-bold border inline-flex items-center gap-1 bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-400 border-rose-200/90 dark:border-rose-800/90 cursor-pointer hover:bg-rose-100 transition">
-                                Batas Tercapai
+                                class="rounded-[6px] px-2 py-1 text-[10px] font-bold border inline-flex items-center gap-1 bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-400 border-rose-200/90 dark:border-rose-800/90 cursor-pointer hover:bg-rose-100 transition min-h-[44px]">
+                                {{ __('billing.limit_reached_badge') }}
                             </button>
                         @elseif($usage['is_core'])
                             <span class="text-emerald-600 dark:text-emerald-400 font-bold font-mono">UNLIMITED</span>
@@ -1774,18 +1759,18 @@
                             <span
                                 class="text-2xl font-black font-mono tabular-nums {{ $prd['is_reached'] ?? false ? 'text-rose-600 dark:text-rose-400' : 'text-slate-900 dark:text-white' }}">{{ $prd['used'] ?? 0 }}</span>
                             <span class="text-xs text-slate-500 dark:text-slate-400 font-mono">/
-                                {{ $prd['limit'] ? $prd['limit'] . ' item' : '∞ Unlimited' }}</span>
+                                {{ $prd['limit'] ? $prd['limit'] . ' ' . __('billing.unit_items') : __('billing.unlimited') }}</span>
                         </div>
                         <div class="w-full bg-slate-100 dark:bg-slate-950 rounded-full h-1.5 overflow-hidden mt-2 border border-slate-200 dark:border-slate-800"
                             role="progressbar"
                             aria-valuenow="{{ $usage['is_core'] ? 100 : min(100, $prd['percent'] ?? 0) }}"
-                            aria-valuemin="0" aria-valuemax="100" aria-label="Kapasitas Produk">
+                            aria-valuemin="0" aria-valuemax="100" aria-label="{{ __('billing.resource_products') }}">
                             <div class="h-full rounded-full transition-all duration-500 {{ $prd['is_reached'] ?? false ? 'bg-rose-500' : 'bg-emerald-500' }}"
                                 style="width: {{ $usage['is_core'] ? 100 : min(100, $prd['percent'] ?? 0) }}%"></div>
                         </div>
                     </div>
                     <div class="text-[11px] text-slate-500 dark:text-slate-400 pt-1 font-mono">
-                        {{ $usage['is_core'] ? 'Katalog tanpa batas' : 'Maks. 10 produk (Free)' }}</div>
+                        {{ $usage['is_core'] ? __('billing.unlimited_product_catalog') : __('billing.limit_free_products') }}</div>
                 </div>
 
                 <!-- 2. Bahan Baku -->
@@ -1803,18 +1788,18 @@
                             <span
                                 class="text-2xl font-black font-mono tabular-nums {{ $mat['is_reached'] ?? false ? 'text-rose-600 dark:text-rose-400' : 'text-slate-900 dark:text-white' }}">{{ $mat['used'] ?? 0 }}</span>
                             <span class="text-xs text-slate-500 dark:text-slate-400 font-mono">/
-                                {{ $mat['limit'] ? $mat['limit'] . ' item' : '∞ Unlimited' }}</span>
+                                {{ $mat['limit'] ? $mat['limit'] . ' ' . __('billing.unit_items') : __('billing.unlimited') }}</span>
                         </div>
                         <div class="w-full bg-slate-100 dark:bg-slate-950 rounded-full h-1.5 overflow-hidden mt-2 border border-slate-200 dark:border-slate-800"
                             role="progressbar"
                             aria-valuenow="{{ $usage['is_core'] ? 100 : min(100, $mat['percent'] ?? 0) }}"
-                            aria-valuemin="0" aria-valuemax="100" aria-label="Kapasitas Bahan Baku">
+                            aria-valuemin="0" aria-valuemax="100" aria-label="{{ __('billing.resource_materials') }}">
                             <div class="h-full rounded-full transition-all duration-500 {{ $mat['is_reached'] ?? false ? 'bg-rose-500' : 'bg-cyan-500' }}"
                                 style="width: {{ $usage['is_core'] ? 100 : min(100, $mat['percent'] ?? 0) }}%"></div>
                         </div>
                     </div>
                     <div class="text-[11px] text-slate-500 dark:text-slate-400 pt-1 font-mono">
-                        {{ $usage['is_core'] ? 'Bahan baku tanpa batas' : 'Maks. 10 bahan baku (Free)' }}</div>
+                        {{ $usage['is_core'] ? __('billing.unlimited_raw_materials') : __('billing.limit_free_materials') }}</div>
                 </div>
                 @endif
 
@@ -1833,18 +1818,18 @@
                             <span
                                 class="text-2xl font-black font-mono tabular-nums {{ $rcp['is_reached'] ?? false ? 'text-rose-600 dark:text-rose-400' : 'text-slate-900 dark:text-white' }}">{{ $rcp['used'] ?? 0 }}</span>
                             <span class="text-xs text-slate-500 dark:text-slate-400 font-mono">/
-                                {{ $rcp['limit'] ? $rcp['limit'] . ' resep' : '∞ Unlimited' }}</span>
+                                {{ $rcp['limit'] ? $rcp['limit'] . ' ' . __('billing.unit_recipes') : __('billing.unlimited') }}</span>
                         </div>
                         <div class="w-full bg-slate-100 dark:bg-slate-950 rounded-full h-1.5 overflow-hidden mt-2 border border-slate-200 dark:border-slate-800"
                             role="progressbar"
                             aria-valuenow="{{ $usage['is_core'] ? 100 : min(100, $rcp['percent'] ?? 0) }}"
-                            aria-valuemin="0" aria-valuemax="100" aria-label="Kapasitas Resep">
+                            aria-valuemin="0" aria-valuemax="100" aria-label="{{ __('billing.resource_recipes') }}">
                             <div class="h-full rounded-full transition-all duration-500 {{ $rcp['is_reached'] ?? false ? 'bg-rose-500' : 'bg-amber-500' }}"
                                 style="width: {{ $usage['is_core'] ? 100 : min(100, $rcp['percent'] ?? 0) }}%"></div>
                         </div>
                     </div>
                     <div class="text-[11px] text-slate-500 dark:text-slate-400 pt-1 font-mono">
-                        {{ $usage['is_core'] ? 'Resep tanpa batas' : 'Maks. 3 resep (Free)' }}</div>
+                        {{ $usage['is_core'] ? __('billing.unlimited_recipes') : __('billing.limit_free_recipes') }}</div>
                 </div>
                 @endif
 
@@ -1862,18 +1847,18 @@
                             <span
                                 class="text-2xl font-black font-mono tabular-nums {{ $cst['is_reached'] ?? false ? 'text-rose-600 dark:text-rose-400' : 'text-slate-900 dark:text-white' }}">{{ $cst['used'] ?? 0 }}</span>
                             <span class="text-xs text-slate-500 dark:text-slate-400 font-mono">/
-                                {{ $cst['limit'] ? $cst['limit'] . ' kontak' : '∞ Unlimited' }}</span>
+                                {{ $cst['limit'] ? $cst['limit'] . ' ' . __('billing.unit_contacts') : __('billing.unlimited') }}</span>
                         </div>
                         <div class="w-full bg-slate-100 dark:bg-slate-950 rounded-full h-1.5 overflow-hidden mt-2 border border-slate-200 dark:border-slate-800"
                             role="progressbar"
                             aria-valuenow="{{ $usage['is_core'] ? 100 : min(100, $cst['percent'] ?? 0) }}"
-                            aria-valuemin="0" aria-valuemax="100" aria-label="Kapasitas Pelanggan">
+                            aria-valuemin="0" aria-valuemax="100" aria-label="{{ __('billing.resource_customers') }}">
                             <div class="h-full rounded-full transition-all duration-500 {{ $cst['is_reached'] ?? false ? 'bg-rose-500' : 'bg-indigo-500' }}"
                                 style="width: {{ $usage['is_core'] ? 100 : min(100, $cst['percent'] ?? 0) }}%"></div>
                         </div>
                     </div>
                     <div class="text-[11px] text-slate-500 dark:text-slate-400 pt-1 font-mono">
-                        {{ $usage['is_core'] ? 'Database kontak unlimited' : 'Maks. 10 kontak (Free)' }}</div>
+                        {{ $usage['is_core'] ? __('billing.unlimited_contacts_db') : __('billing.limit_free_contacts') }}</div>
                 </div>
 
                 <!-- 5. Pemasok / Supplier -->
@@ -1890,18 +1875,18 @@
                             <span
                                 class="text-2xl font-black font-mono tabular-nums {{ $sup['is_reached'] ?? false ? 'text-rose-600 dark:text-rose-400' : 'text-slate-900 dark:text-white' }}">{{ $sup['used'] ?? 0 }}</span>
                             <span class="text-xs text-slate-500 dark:text-slate-400 font-mono">/
-                                {{ $sup['limit'] ? $sup['limit'] . ' vendor' : '∞ Unlimited' }}</span>
+                                {{ $sup['limit'] ? $sup['limit'] . ' ' . __('billing.unit_vendors') : __('billing.unlimited') }}</span>
                         </div>
                         <div class="w-full bg-slate-100 dark:bg-slate-950 rounded-full h-1.5 overflow-hidden mt-2 border border-slate-200 dark:border-slate-800"
                             role="progressbar"
                             aria-valuenow="{{ $usage['is_core'] ? 100 : min(100, $sup['percent'] ?? 0) }}"
-                            aria-valuemin="0" aria-valuemax="100" aria-label="Kapasitas Supplier">
+                            aria-valuemin="0" aria-valuemax="100" aria-label="{{ __('billing.resource_suppliers') }}">
                             <div class="h-full rounded-full transition-all duration-500 {{ $sup['is_reached'] ?? false ? 'bg-rose-500' : 'bg-rose-500' }}"
                                 style="width: {{ $usage['is_core'] ? 100 : min(100, $sup['percent'] ?? 0) }}%"></div>
                         </div>
                     </div>
                     <div class="text-[11px] text-slate-500 dark:text-slate-400 pt-1 font-mono">
-                        {{ $usage['is_core'] ? 'Daftar vendor tanpa batas' : 'Maks. 2 vendor (Free)' }}</div>
+                        {{ $usage['is_core'] ? __('billing.unlimited_vendors_list') : __('billing.limit_free_vendors') }}</div>
                 </div>
 
                 <!-- 6. Outlet & Gudang -->
@@ -1917,19 +1902,19 @@
                             <span
                                 class="text-2xl font-black font-mono tabular-nums text-slate-900 dark:text-white">{{ ($usage['outlets']['used'] ?? 0) + ($usage['warehouses']['used'] ?? 0) }}</span>
                             <span class="text-xs text-slate-500 dark:text-slate-400 font-mono">/
-                                {{ $usage['is_core'] ? '∞ Unlimited' : '1 Toko + 1 Gudang' }}</span>
+                                {{ $usage['is_core'] ? __('billing.unlimited') : __('billing.one_store_one_warehouse') }}</span>
                         </div>
                         <div class="w-full bg-slate-100 dark:bg-slate-950 rounded-full h-1.5 overflow-hidden mt-2 border border-slate-200 dark:border-slate-800"
                             role="progressbar"
                             aria-valuenow="{{ $usage['is_core'] ? 100 : min(100, $usage['outlets']['percent'] ?? 0) }}"
-                            aria-valuemin="0" aria-valuemax="100" aria-label="Kapasitas Outlet dan Gudang">
+                            aria-valuemin="0" aria-valuemax="100" aria-label="{{ __('billing.resource_outlets') }}">
                             <div class="h-full rounded-full bg-teal-500 transition-all duration-500"
                                 style="width: {{ $usage['is_core'] ? 100 : min(100, $usage['outlets']['percent'] ?? 0) }}%">
                             </div>
                         </div>
                     </div>
                     <div class="text-[11px] text-slate-500 dark:text-slate-400 pt-1 font-mono">
-                        {{ $usage['outlets']['limit'] ? 'Maks. ' . $usage['outlets']['limit'] . ' cabang/gudang' : 'Multi-cabang & multi-gudang (Unlimited)' }}</div>
+                        {{ $usage['outlets']['limit'] ? __('billing.max_branches_format', ['limit' => $usage['outlets']['limit']]) : __('billing.unlimited_branches_warehouses') }}</div>
                 </div>
 
                 <!-- 7. Pengguna / Karyawan -->
@@ -1945,19 +1930,19 @@
                             <span
                                 class="text-2xl font-black font-mono tabular-nums text-slate-900 dark:text-white">{{ $usage['users']['used'] ?? 0 }}</span>
                             <span class="text-xs text-slate-500 dark:text-slate-400 font-mono">/
-                                {{ $usage['users']['limit'] ? $usage['users']['limit'] . ' staf' : '∞ Unlimited' }}</span>
+                                {{ $usage['users']['limit'] ? $usage['users']['limit'] . ' ' . __('billing.unit_staff') : __('billing.unlimited') }}</span>
                         </div>
                         <div class="w-full bg-slate-100 dark:bg-slate-950 rounded-full h-1.5 overflow-hidden mt-2 border border-slate-200 dark:border-slate-800"
                             role="progressbar"
                             aria-valuenow="{{ min(100, $usage['users']['percent'] ?? 0) }}"
-                            aria-valuemin="0" aria-valuemax="100" aria-label="Kapasitas Karyawan Staf">
+                            aria-valuemin="0" aria-valuemax="100" aria-label="{{ __('billing.resource_staff') }}">
                             <div class="h-full rounded-full bg-blue-500 transition-all duration-500"
                                 style="width: {{ min(100, $usage['users']['percent'] ?? 0) }}%">
                             </div>
                         </div>
                     </div>
                     <div class="text-[11px] text-slate-500 dark:text-slate-400 pt-1 font-mono">
-                        {{ $usage['users']['limit'] ? 'Maks. ' . $usage['users']['limit'] . ' staf tim' : 'Multi-user staf tim (Unlimited)' }}</div>
+                        {{ $usage['users']['limit'] ? __('billing.max_staff_format', ['limit' => $usage['users']['limit']]) : __('billing.unlimited_team_staff') }}</div>
                 </div>
 
                 <!-- 8. Entitas Bisnis -->
@@ -1973,19 +1958,19 @@
                             <span
                                 class="text-2xl font-black font-mono tabular-nums text-slate-900 dark:text-white">{{ $usage['businesses']['used'] ?? 1 }}</span>
                             <span class="text-xs text-slate-500 dark:text-slate-400 font-mono">/
-                                {{ $usage['businesses']['limit'] ? $usage['businesses']['limit'] . ' Bisnis' : '∞ Unlimited' }}</span>
+                                {{ $usage['businesses']['limit'] ? $usage['businesses']['limit'] . ' ' . __('billing.unit_businesses') : __('billing.unlimited') }}</span>
                         </div>
                         <div class="w-full bg-slate-100 dark:bg-slate-950 rounded-full h-1.5 overflow-hidden mt-2 border border-slate-200 dark:border-slate-800"
                             role="progressbar"
                             aria-valuenow="{{ min(100, $usage['businesses']['percent'] ?? 0) }}"
-                            aria-valuemin="0" aria-valuemax="100" aria-label="Kapasitas Entitas Bisnis">
+                            aria-valuemin="0" aria-valuemax="100" aria-label="{{ __('billing.resource_businesses') }}">
                             <div class="h-full rounded-full bg-violet-500 transition-all duration-500"
                                 style="width: {{ min(100, $usage['businesses']['percent'] ?? 0) }}%">
                             </div>
                         </div>
                     </div>
                     <div class="text-[11px] text-slate-500 dark:text-slate-400 pt-1 font-mono">
-                        {{ $usage['businesses']['limit'] ? 'Maks. ' . $usage['businesses']['limit'] . ' bisnis dalam 1 akun' : 'Multi-bisnis tanpa batas (Prestige)' }}</div>
+                        {{ $usage['businesses']['limit'] ? __('billing.max_businesses_format', ['limit' => $usage['businesses']['limit']]) : __('billing.unlimited_multi_business') }}</div>
                 </div>
 
                 <!-- 9. Meja Kasir POS (Dine-In) -->
@@ -2003,20 +1988,21 @@
                             <span
                                 class="text-2xl font-black font-mono tabular-nums {{ $tbl['is_reached'] ?? false ? 'text-rose-600 dark:text-rose-400' : 'text-slate-900 dark:text-white' }}">{{ $tbl['used'] ?? 0 }}</span>
                             <span class="text-xs text-slate-500 dark:text-slate-400 font-mono">/
-                                {{ $tbl['limit'] ? $tbl['limit'] . ' meja' : ($usage['is_core'] ? '∞ Unlimited' : '0 Meja') }}</span>
+                                {{ $tbl['limit'] ? $tbl['limit'] . ' ' . __('billing.unit_tables') : ($usage['is_core'] ? __('billing.unlimited') : __('billing.zero_tables')) }}</span>
                         </div>
                         <div class="w-full bg-slate-100 dark:bg-slate-950 rounded-full h-1.5 overflow-hidden mt-2 border border-slate-200 dark:border-slate-800"
                             role="progressbar"
                             aria-valuenow="{{ min(100, $tbl['percent'] ?? 0) }}"
-                            aria-valuemin="0" aria-valuemax="100" aria-label="Kapasitas Meja Kasir">
+                            aria-valuemin="0" aria-valuemax="100" aria-label="{{ __('billing.resource_tables') }}">
                             <div class="h-full rounded-full transition-all duration-500 {{ $tbl['is_reached'] ?? false ? 'bg-rose-500' : 'bg-emerald-500' }}"
                                 style="width: {{ min(100, $tbl['percent'] ?? 0) }}%"></div>
                         </div>
                     </div>
                     <div class="text-[11px] text-slate-500 dark:text-slate-400 pt-1 font-mono">
-                        {{ $tbl['limit'] ? 'Maks. ' . $tbl['limit'] . ' meja (Standard: 5)' : ($usage['is_core'] ? 'Meja dine-in tanpa batas' : 'Fitur berbayar (Standard/Premium)') }}</div>
+                        {{ $tbl['limit'] ? __('billing.max_tables_format', ['limit' => $tbl['limit']]) : ($usage['is_core'] ? __('billing.unlimited_dinein_tables') : __('billing.paid_feature_standard_premium')) }}</div>
                 </div>
                 @endif
+            </div>
             </div>
         </section>
 
@@ -2048,11 +2034,11 @@
             <!-- Matrix Table Container with Horizontal Scroll Notice on Mobile -->
             <div class="relative overflow-x-auto -mx-5 sm:mx-0 px-5 sm:px-0">
                 <table class="w-full text-left text-xs min-w-[780px] border-collapse"
-                    aria-label="Tabel Matriks Perbandingan Fitur 4 Paket">
+                    aria-label="{{ __('billing.feature_matrix_heading') }}">
                     <thead
                         class="bg-slate-50/80 dark:bg-slate-950/60 text-slate-500 dark:text-slate-400 font-mono uppercase text-[10px] font-bold border-b border-slate-200 dark:border-slate-800 whitespace-nowrap">
                         <tr>
-                            <th scope="col" class="py-3.5 px-4 w-1/3">Fitur &amp; Kemampuan Utama</th>
+                            <th scope="col" class="py-3.5 px-4 w-1/3">{{ __('billing.matrix_col_feature') }}</th>
                             <th scope="col" class="py-3.5 px-3 text-center">Free (Rp 0)</th>
                             <th scope="col" class="py-3.5 px-3 text-center">Standard (Rp 29k/bln)</th>
                             <th scope="col"

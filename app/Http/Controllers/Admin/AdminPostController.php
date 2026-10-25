@@ -9,6 +9,7 @@ use App\Models\Post;
 use App\Models\PostCategory;
 use App\Models\PostCluster;
 use App\Services\Seo\SitemapService;
+use App\Support\Security\HtmlSanitizer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -157,6 +158,7 @@ final class AdminPostController extends Controller
             $validated['category'] = 'Umum';
         }
 
+        $validated['content'] = HtmlSanitizer::clean($validated['content']);
         $validated['slug'] = !empty($validated['slug']) ? Str::slug($validated['slug']) : Str::slug($validated['title']);
         $validated['is_published'] = $request->boolean('is_published');
         $validated['published_at'] = $validated['is_published'] ? now() : null;
@@ -239,6 +241,7 @@ final class AdminPostController extends Controller
             $validated['category_id'] = $categoryModel->id;
         }
 
+        $validated['content'] = HtmlSanitizer::clean($validated['content']);
         $validated['slug'] = Str::slug($validated['slug']);
         $validated['is_published'] = $request->boolean('is_published');
 
@@ -344,6 +347,7 @@ final class AdminPostController extends Controller
             'sort_order' => 'nullable|integer',
         ]);
 
+        $validated['content'] = HtmlSanitizer::clean($validated['content']);
         $validated['slug'] = Str::slug($validated['slug']);
         $validated['is_active'] = $request->boolean('is_active', true);
         $validated['sort_order'] = (int) ($validated['sort_order'] ?? 0);
@@ -417,6 +421,7 @@ final class AdminPostController extends Controller
         ]);
 
         $validated['code'] = Str::lower(trim($validated['code']));
+        $validated['content'] = HtmlSanitizer::clean($validated['content']);
         $validated['slug'] = Str::slug($validated['slug']);
         $validated['is_active'] = $request->boolean('is_active', true);
         $validated['sort_order'] = (int) ($validated['sort_order'] ?? 0);

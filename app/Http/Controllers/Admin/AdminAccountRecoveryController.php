@@ -116,28 +116,38 @@ final class AdminAccountRecoveryController extends Controller
             return back()->with('warning', 'Pengajuan ini telah diproses sebelumnya.');
         }
 
+        // Temukan user terkait & validasi pra-syarat integritas
+        $user = $recovery->user ?: User::where('email', $recovery->old_email)->first();
+        if (! $user) {
+            return back()->with('error', 'Akun pengguna asli tidak ditemukan di sistem.');
+        }
+
+        // Pastikan alamat email baru tidak bentrok dengan akun user lain
+        $emailInUse = User::where('email', $recovery->new_email)
+            ->where('id', '!=', $user->id)
+            ->exists();
+
+        if ($emailInUse) {
+            return back()->with('error', "Gagal menyetujui: Alamat email baru ({$recovery->new_email}) sudah terdaftar pada akun pengguna lain.");
+        }
+
         $validated = $request->validate([
             'admin_notes' => ['nullable', 'string', 'max:500'],
         ]);
 
-        DB::transaction(function () use ($request, $recovery, $admin, $validated) {
-            // Temukan user terkait
-            $user = $recovery->user ?: User::where('email', $recovery->old_email)->first();
+        DB::transaction(function () use ($request, $recovery, $admin, $validated, $user) {
+            $phoneChanged = $user->phone !== $recovery->new_phone;
+            $user->email = $recovery->new_email;
+            $user->phone = $recovery->new_phone;
+            $user->email_verified_at = now();
+            if ($phoneChanged) {
+                $user->phone_verified_at = null;
+            }
+            $user->save();
 
-            if ($user) {
-                $phoneChanged = $user->phone !== $recovery->new_phone;
-                $user->email = $recovery->new_email;
-                $user->phone = $recovery->new_phone;
-                $user->email_verified_at = now();
-                if ($phoneChanged) {
-                    $user->phone_verified_at = null;
-                }
-                $user->save();
-
-                // Sinkronkan nomor pada profil bisnis aktif jika diperlukan
-                if ($user->activeBusiness && (empty($user->activeBusiness->phone) || $user->activeBusiness->phone === $recovery->old_phone)) {
-                    $user->activeBusiness->update(['phone' => $recovery->new_phone]);
-                }
+            // Sinkronkan nomor pada profil bisnis aktif jika diperlukan
+            if ($user->activeBusiness && (empty($user->activeBusiness->phone) || $user->activeBusiness->phone === $recovery->old_phone)) {
+                $user->activeBusiness->update(['phone' => $recovery->new_phone]);
             }
 
             $recovery->update([

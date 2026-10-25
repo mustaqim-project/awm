@@ -378,7 +378,8 @@ class AdminInboxController extends Controller
         ]);
 
         $file = $request->file('image');
-        $filename = 'inbox_' . Str::uuid() . '.' . $file->getClientOriginalExtension();
+        $ext = strtolower($file->guessExtension() ?: 'png');
+        $filename = 'inbox_' . Str::uuid() . '.' . $ext;
         $path = $file->storeAs('inbox_media', $filename, 'public');
         $publicUrl = asset('storage/' . $path);
 

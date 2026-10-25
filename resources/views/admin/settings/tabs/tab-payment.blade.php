@@ -145,9 +145,9 @@
                                     </button>
                                 </div>
                                 <input :type="showTripayPrivateKey ? 'text' : 'password'" name="tripay_private_key"
-                                    value="{{ old('tripay_private_key', $tripayPrivateKey ?? '') }}"
-                                    placeholder="{{ !empty($tripayPrivateKey) ? '••••••••••••••••••••••••••••••••' : 'Masukkan Private Key TriPay' }}"
-                                    class="w-full h-11 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[13px] text-black dark:text-white font-mono placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                    value="{{ old('tripay_private_key', '') }}" autocomplete="new-password"
+                                    placeholder="{{ !empty($tripayPrivateKey) ? '•••••••••••••••••••••••••••••••• (Kunci tersimpan aman - kosongkan jika tidak diubah)' : 'Masukkan Private Key TriPay' }}"
+                                    class="w-full h-11 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[13px] text-black dark:text-white font-mono placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                                 <p class="text-[11px] text-black/45 dark:text-white/45 mt-1">
                                     Kunci rahasia untuk memvalidasi callback webhook masuk secara kriptografis. Disimpan terenkripsi AES-256 pada database.
                                 </p>

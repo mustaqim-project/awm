@@ -434,11 +434,11 @@
                             </div>
                             <div class="text-xs text-red-500 dark:text-red-400 mt-1 flex items-center gap-1.5" x-show="isCancelled || isExpired">
                                 <i data-lucide="x-circle" class="w-3.5 h-3.5 text-[#FF3B30]" aria-hidden="true"></i>
-                                <span>{{ __('billing.order_expired_badge') }} ({{ $expiresAtWib ? $expiresAtWib->format('d M Y, H:i') . ' WIB' : '15 Menit' }})</span>
+                                <span>{{ __('billing.order_expired_badge') }} ({{ $expiresAtWib ? $expiresAtWib->format('d M Y, H:i') . ' WIB' : __('billing.countdown_fifteen_minutes') }})</span>
                             </div>
                             <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 flex items-center gap-1.5" x-show="!isCancelled && !isExpired">
                                 <i data-lucide="clock" class="w-3.5 h-3.5 text-[#007AFF]" aria-hidden="true"></i>
-                                <span>{{ __('billing.payment_deadline_until', ['time' => $expiresAtWib ? $expiresAtWib->format('d M Y, H:i') . ' WIB' : '15 Menit']) }}</span>
+                                <span>{{ __('billing.payment_deadline_until', ['time' => $expiresAtWib ? $expiresAtWib->format('d M Y, H:i') . ' WIB' : __('billing.countdown_fifteen_minutes')]) }}</span>
                             </div>
                         </div>
 
@@ -470,7 +470,7 @@
                             <div class="flex items-center justify-between text-xs text-[#34C759] dark:text-[#30D158]">
                                 <span class="font-sans flex items-center gap-1 font-semibold">
                                     <i data-lucide="ticket" class="w-3.5 h-3.5"></i>
-                                    <span>Diskon Promo ({{ $payment->promo_code }}):</span>
+                                    <span>{{ __('billing.promo_discount_voucher', ['code' => $payment->promo_code]) }}:</span>
                                 </span>
                                 <span class="font-bold tabular-nums">- Rp {{ number_format($payment->discount_amount, 0, ',', '.') }}</span>
                             </div>
@@ -590,18 +590,18 @@
                             </div>
 
                             <div class="p-3.5 rounded-[14px] bg-white/80 dark:bg-white/5 border border-red-200/60 dark:border-red-900/30 flex items-center justify-between max-w-sm mx-auto text-xs">
-                                <span class="text-gray-500 font-medium">Tagihan Dibatalkan:</span>
+                                <span class="text-gray-500 font-medium">{{ __('billing.bill_cancelled_label') }}:</span>
                                 <span class="font-bold text-gray-500 line-through font-mono">Rp {{ number_format((float) $payment->total_payable, 0, ',', '.') }}</span>
                             </div>
 
                             <div class="pt-2 max-w-sm mx-auto space-y-2">
                                 <a :href="reorderUrl"
-                                    class="w-full h-11 px-5 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition shadow-sm cursor-pointer">
+                                    class="w-full min-h-[44px] h-11 px-5 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition shadow-sm cursor-pointer">
                                     <i data-lucide="refresh-cw" class="w-4 h-4"></i>
                                     <span>{{ __('billing.action_reorder') }}</span>
                                 </a>
                                 <a href="{{ url('/patungan') }}"
-                                    class="w-full h-9 px-4 rounded-[10px] text-xs font-semibold text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white flex items-center justify-center gap-1.5 transition">
+                                    class="w-full min-h-[44px] h-11 px-4 rounded-[12px] text-xs font-semibold text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white flex items-center justify-center gap-1.5 transition">
                                     <span>{{ __('billing.explore_other_plans') }}</span>
                                     <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                                 </a>
@@ -682,7 +682,7 @@
                             <!-- Countdown Timer & Auto Polling Notice (concept from menu.blade.php) -->
                             <div class="space-y-1.5 text-xs text-center max-w-sm mx-auto pt-1" x-show="!isPaid">
                                 <div class="flex items-center justify-center gap-1.5 text-black/70 dark:text-white/70 font-semibold">
-                                    <span>Sisa Waktu Bayar:</span>
+                                    <span>{{ __('billing.remaining_payment_time') }}:</span>
                                     <span class="font-mono text-[#FF9500] font-extrabold text-sm tabular-nums" x-text="qrisCountdownFormatted">15:00</span>
                                 </div>
                                 <p class="text-[11px] text-black/45 dark:text-white/45 leading-relaxed">
@@ -694,12 +694,12 @@
                             <div class="pt-2 flex flex-col sm:flex-row gap-2 max-w-sm mx-auto" x-show="!isPaid">
                                 <a :href="qrUrl || '{{ $qrSrc }}'" download="qris-cooca-{{ $payment->order_number }}.png" target="_blank"
                                     x-show="qrUrl || '{{ $qrSrc }}'"
-                                    class="flex-1 h-10 rounded-[12px] bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 text-black dark:text-white font-semibold text-xs flex items-center justify-center gap-1.5 transition active:scale-[0.98]">
+                                    class="flex-1 min-h-[44px] h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 text-black dark:text-white font-semibold text-xs flex items-center justify-center gap-1.5 transition active:scale-[0.98]">
                                     <i data-lucide="download" class="w-3.5 h-3.5"></i>
                                     <span>{{ __('billing.action_download_qr') }}</span>
                                 </a>
                                 <button type="button" @click="checkPaymentStatus()" :disabled="checkingStatus"
-                                    class="flex-1 h-10 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-xs flex items-center justify-center gap-1.5 transition active:scale-[0.98] disabled:opacity-60 cursor-pointer">
+                                    class="flex-1 min-h-[44px] h-11 px-3.5 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-xs flex items-center justify-center gap-1.5 transition active:scale-[0.98] disabled:opacity-60 cursor-pointer">
                                     <i data-lucide="refresh-cw" class="w-3.5 h-3.5" :class="checkingStatus ? 'animate-spin' : ''"></i>
                                     <span>{{ __('billing.action_check_status_now') }}</span>
                                 </button>
@@ -732,9 +732,9 @@
                     <div
                         class="pt-2 border-t border-black/[0.06] dark:border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
                         <span class="text-gray-500 dark:text-gray-400">{{ __('billing.payment_issues_question') }}</span>
-                        <a href="https://wa.me/?text=Halo%20Admin%20Cooca,%20saya%20butuh%20konfirmasi%20pembayaran%20pesanan%20nomor%20{{ $payment->order_number }}"
+                        <a href="https://wa.me/?text={{ rawurlencode(__('billing.wa_payment_confirm_template', ['order' => $payment->order_number])) }}"
                             target="_blank"
-                            class="inline-flex items-center gap-1.5 text-[#007AFF] hover:underline font-semibold transition">
+                            class="inline-flex items-center gap-1.5 min-h-[44px] py-2 text-[#007AFF] hover:underline font-semibold transition">
                             <i data-lucide="message-circle" class="w-4 h-4" aria-hidden="true"></i>
                             <span>{{ __('billing.contact_wa_billing') }}</span>
                         </a>
@@ -799,7 +799,7 @@
                             <div class="flex items-center justify-between">
                                 <span class="text-gray-500 dark:text-gray-400 font-sans">{{ __('billing.payment_deadline') }}</span>
                                 <span class="font-mono text-amber-600 dark:text-amber-400 font-semibold" :class="(isCancelled || isExpired) ? 'text-[#FF3B30] line-through' : ''">
-                                    {{ $expiresAtWib ? $expiresAtWib->format('d M Y, H:i') . ' WIB' : '15 Menit' }}
+                                    {{ $expiresAtWib ? $expiresAtWib->format('d M Y, H:i') . ' WIB' : __('billing.countdown_fifteen_minutes') }}
                                 </span>
                             </div>
                         </div>
@@ -835,7 +835,7 @@
                             </div>
                             <div class="font-bold text-xs text-red-900 dark:text-red-200">{{ __('billing.order_expired_title') }}</div>
                             <p class="text-[11px] text-red-700 dark:text-red-300 leading-relaxed">{{ __('billing.order_expired_desc') }}</p>
-                            <a :href="reorderUrl" class="w-full h-9 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-xs inline-flex items-center justify-center gap-1.5 transition">
+                            <a :href="reorderUrl" class="w-full min-h-[44px] h-11 px-4 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-xs inline-flex items-center justify-center gap-1.5 transition">
                                 <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
                                 <span>{{ __('billing.action_reorder') }}</span>
                             </a>
@@ -885,8 +885,8 @@
                                 <i data-lucide="shield-check" class="w-3.5 h-3.5 text-[#34C759]"></i>
                                 <span>PCI-DSS &amp; BI Compliant</span>
                             </span>
-                            <a href="https://wa.me/?text=Halo%20Admin%20Cooca,%20saya%20butuh%20bantuan%20pembayaran%20TriPay%20pesanan%20nomor%20{{ $payment->order_number }}"
-                                target="_blank" class="text-[#007AFF] hover:underline font-semibold flex items-center gap-1">
+                            <a href="https://wa.me/?text={{ rawurlencode(__('billing.wa_payment_help_template', ['order' => $payment->order_number])) }}"
+                                target="_blank" class="text-[#007AFF] hover:underline font-semibold flex items-center gap-1 min-h-[44px] py-2">
                                 <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
                                 <span>{{ __('billing.wa_help') }}</span>
                             </a>

@@ -57,11 +57,11 @@
         <!-- Submodule Navigation Tabs -->
         <x-module-tabs module="billing" class="mt-2 mb-2" />
 
-        <!-- 2. 4 Command Pillars KPI Cards (Bento Metric Grid) -->
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
+        <!-- 2. 4 Command Pillars KPI Cards (Bento Metric Grid / Mobile Snap Slider) -->
+        <div class="flex gap-3 overflow-x-auto snap-x snap-mandatory no-scrollbar -mx-4 px-4 pb-2 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible sm:mx-0 sm:px-0 sm:gap-4 lg:gap-5">
             <!-- Pillar 1: Total Transaksi -->
             <div
-                class="bg-white dark:bg-[#1C1C1E] p-4 sm:p-5 rounded-[20px] border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.04)] flex flex-col justify-between group hover:border-[#007AFF]/40 transition-all">
+                class="min-w-[240px] sm:min-w-0 snap-start flex-1 shrink-0 sm:shrink bg-white dark:bg-[#1C1C1E] p-4 sm:p-5 rounded-[20px] border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.04)] flex flex-col justify-between group hover:border-[#007AFF]/40 transition-all">
                 <div>
                     <div class="flex items-center justify-between mb-2.5">
                         <span class="text-[11px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider font-mono">{{ __('billing.total_transactions') }}</span>
@@ -84,7 +84,7 @@
 
             <!-- Pillar 2: Status Langganan -->
             <div
-                class="bg-white dark:bg-[#1C1C1E] p-4 sm:p-5 rounded-[20px] border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.04)] flex flex-col justify-between group hover:border-[#34C759]/40 transition-all">
+                class="min-w-[240px] sm:min-w-0 snap-start flex-1 shrink-0 sm:shrink bg-white dark:bg-[#1C1C1E] p-4 sm:p-5 rounded-[20px] border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.04)] flex flex-col justify-between group hover:border-[#34C759]/40 transition-all">
                 <div>
                     <div class="flex items-center justify-between mb-2.5">
                         <span class="text-[11px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider font-mono">{{ __('billing.pillar_plan_status') }}</span>
@@ -95,7 +95,7 @@
                     </div>
                     <div
                         class="text-xl sm:text-2xl font-bold text-black dark:text-white tracking-tight truncate">
-                        {{ $business->subscription?->isActive() ? 'Aktif' : __('billing.plan_free') }}
+                        {{ $business->subscription?->isActive() ? __('billing.active_status_label') : __('billing.plan_free') }}
                     </div>
                 </div>
                 <div
@@ -108,7 +108,7 @@
 
             <!-- Pillar 3: Outlet / Bisnis -->
             <div
-                class="bg-white dark:bg-[#1C1C1E] p-4 sm:p-5 rounded-[20px] border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.04)] flex flex-col justify-between group hover:border-[#5856D6]/40 transition-all">
+                class="min-w-[240px] sm:min-w-0 snap-start flex-1 shrink-0 sm:shrink bg-white dark:bg-[#1C1C1E] p-4 sm:p-5 rounded-[20px] border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.04)] flex flex-col justify-between group hover:border-[#5856D6]/40 transition-all">
                 <div>
                     <div class="flex items-center justify-between mb-2.5">
                         <span
@@ -131,7 +131,7 @@
 
             <!-- Pillar 4: Saluran Gateway -->
             <div
-                class="bg-white dark:bg-[#1C1C1E] p-4 sm:p-5 rounded-[20px] border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.04)] flex flex-col justify-between group hover:border-[#FF9500]/40 transition-all">
+                class="min-w-[240px] sm:min-w-0 snap-start flex-1 shrink-0 sm:shrink bg-white dark:bg-[#1C1C1E] p-4 sm:p-5 rounded-[20px] border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.04)] flex flex-col justify-between group hover:border-[#FF9500]/40 transition-all">
                 <div>
                     <div class="flex items-center justify-between mb-2.5">
                         <span
@@ -167,7 +167,7 @@
 
                 <!-- Status Filter: Segmented Control -->
                 <div class="inline-flex p-1 bg-black/[0.04] dark:bg-white/[0.06] rounded-[12px] border border-black/[0.04] dark:border-white/[0.06] overflow-x-auto max-w-full gap-1"
-                    role="tablist" aria-label="Filter Status Tagihan">
+                    role="tablist" aria-label="{{ __('billing.filter_status_aria') }}">
                     <button type="button" @click="setStatus('all')"
                         class="min-h-[38px] px-3.5 py-2 rounded-[9px] text-xs font-semibold transition cursor-pointer shrink-0 active:scale-[0.98] flex items-center"
                         :class="statusFilter === 'all' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs' :
@@ -209,7 +209,7 @@
             @if ($payments->count() > 0)
                 <!-- Desktop & Tablet View: High Density Responsive Table -->
                 <div class="hidden md:block overflow-x-auto">
-                    <table class="w-full text-left text-xs border-collapse" aria-label="Tabel Riwayat Pembayaran Tagihan">
+                    <table class="w-full text-left text-xs border-collapse" aria-label="{{ __('billing.history_table_aria') }}">
                         <thead
                             class="bg-black/[0.02] dark:bg-white/[0.02] text-gray-500 dark:text-gray-400 font-mono uppercase text-[10px] font-semibold border-b border-black/[0.06] dark:border-white/[0.08] tracking-wider whitespace-nowrap">
                             <tr>
@@ -230,10 +230,10 @@
                                     $pPackageName =
                                         $p->package_name ??
                                         ($p->cycle === 'annual'
-                                            ? 'Cooca Tahunan'
+                                            ? __('billing.plan_yearly_label')
                                             : ($p->cycle === 'monthly'
-                                                ? 'Cooca Bulanan'
-                                                : 'Top-Up Kuota'));
+                                                ? __('billing.plan_monthly_label')
+                                                : __('billing.topup_quota_label')));
                                 @endphp
                                 <tr x-show="matchesFilter('{{ $p->order_number }}', '{{ $pPackageName }}', '{{ $p->status }}')"
                                     class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors group">
@@ -274,7 +274,7 @@
                                         @if ($p->unique_code > 0)
                                             <div
                                                 class="text-[10px] text-[#FF9500] font-mono font-semibold tabular-nums">
-                                                Kode unik: +{{ str_pad((string) $p->unique_code, 3, '0', STR_PAD_LEFT) }}
+                                                {{ __('billing.unique_code_label') }}: +{{ str_pad((string) $p->unique_code, 3, '0', STR_PAD_LEFT) }}
                                             </div>
                                         @endif
                                     </td>
@@ -296,11 +296,11 @@
 
                                     <!-- Action CTA -->
                                     <td class="py-3.5 px-5 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
-                                        <div class="flex items-center justify-end gap-1">
+                                        <div class="flex items-center justify-end gap-1.5">
                                             <a href="{{ route('billing.payment.invoice', $p) }}" target="_blank"
                                                 title="{{ __('billing.print_receipt') }}"
                                                 aria-label="{{ __('billing.print_receipt') }}"
-                                                class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#007AFF] hover:bg-[#007AFF]/10 dark:hover:bg-[#007AFF]/20 transition-all cursor-pointer shrink-0">
+                                                class="w-9 h-9 rounded-[10px] flex items-center justify-center text-[#007AFF] hover:bg-[#007AFF]/10 dark:hover:bg-[#007AFF]/20 transition-all cursor-pointer shrink-0">
                                                 <i data-lucide="printer"
                                                     class="w-4 h-4"
                                                     aria-hidden="true"></i>
@@ -308,7 +308,7 @@
                                             <a href="{{ route('billing.payment.show', $p) }}"
                                                 title="{{ __('billing.quick_detail') }}"
                                                 aria-label="{{ __('billing.quick_detail') }}"
-                                                class="w-8 h-8 rounded-[8px] flex items-center justify-center text-gray-700 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/10 transition-all cursor-pointer shrink-0">
+                                                class="w-9 h-9 rounded-[10px] flex items-center justify-center text-gray-700 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/10 transition-all cursor-pointer shrink-0">
                                                 <i data-lucide="eye" class="w-4 h-4"
                                                     aria-hidden="true"></i>
                                             </a>
@@ -329,10 +329,10 @@
                             $pPackageName =
                                 $p->package_name ??
                                 ($p->cycle === 'annual'
-                                    ? 'Cooca Tahunan'
+                                    ? __('billing.plan_yearly_label')
                                     : ($p->cycle === 'monthly'
-                                        ? 'Cooca Bulanan'
-                                        : 'Top-Up Kuota'));
+                                        ? __('billing.plan_monthly_label')
+                                        : __('billing.topup_quota_label')));
                         @endphp
                         <div x-show="matchesFilter('{{ $p->order_number }}', '{{ $pPackageName }}', '{{ $p->status }}')"
                             class="p-4 sm:p-5 space-y-3 hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition">

@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Support\Security\CsvSanitizer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -69,9 +70,9 @@ final class AdminUserController extends Controller
             foreach ($users as $user) {
                 fputcsv($file, [
                     $user->id,
-                    $user->name,
-                    $user->email,
-                    $user->activeBusiness?->name ?? 'Belum Diatur',
+                    CsvSanitizer::sanitize($user->name),
+                    CsvSanitizer::sanitize($user->email),
+                    CsvSanitizer::sanitize($user->activeBusiness?->name ?? 'Belum Diatur'),
                     $user->google_id ? 'Google OAuth' : 'Email/Password',
                     $user->created_at?->format('Y-m-d H:i:s') ?? '-',
                 ]);

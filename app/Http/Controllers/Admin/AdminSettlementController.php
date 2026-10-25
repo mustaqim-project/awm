@@ -154,7 +154,8 @@ final class AdminSettlementController extends Controller
 
         try {
             $file = $request->file('proof_image');
-            $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
+            $ext = strtolower($file->guessExtension() ?: 'jpg');
+            $filename = (string) Str::uuid() . '.' . $ext;
             $path = AdminStorage::storePrivateFile($file, AdminStorage::FOLDER_SETTLEMENT_PROOFS, $filename);
 
             $admin = auth('admin')->user();

@@ -2322,13 +2322,15 @@
                         }
                     },
 
-                    metaToken: @json($metaCreds['token'] ?? ''),
+                    hasMetaToken: {{ !empty($metaCreds['token']) ? 'true' : 'false' }},
+                    metaToken: '',
                     metaPhoneId: @json($metaCreds['phone_number_id'] ?? ''),
                     metaWabaId: @json($metaCreds['waba_id'] ?? ''),
                     metaAppId: @json($platformApp['app_id'] ?? ''),
-                    metaAppSecret: @json($platformApp['app_secret'] ?? ''),
+                    hasMetaAppSecret: {{ !empty($platformApp['app_secret']) ? 'true' : 'false' }},
+                    metaAppSecret: '',
                     metaConfigId: @json($platformApp['config_id'] ?? ''),
-                    metaWebhookVerifyToken: @json($platformApp['webhook_verify_token'] ?? ''),
+                    metaWebhookVerifyToken: '',
                     metaGraphVersion: @json($platformApp['graph_version'] ?? 'v26.0'),
                     metaGraphUrl: @json($platformApp['graph_url'] ?? 'https://graph.facebook.com'),
                     showMetaToken: false,
@@ -2362,9 +2364,15 @@
                     },
 
                     async verifyMetaCredentials() {
-                        if (!this.metaToken.trim() || !this.metaPhoneId.trim()) {
+                        if (!this.hasMetaToken && !this.metaToken.trim()) {
                             this.metaVerifyError =
-                                'Silakan isi Meta Permanent Access Token dan Phone Number ID terlebih dahulu.';
+                                'Silakan isi Meta Permanent Access Token terlebih dahulu.';
+                            this.metaVerifyResult = null;
+                            return;
+                        }
+                        if (!this.metaPhoneId.trim()) {
+                            this.metaVerifyError =
+                                'Phone Number ID Meta wajib diisi terlebih dahulu.';
                             this.metaVerifyResult = null;
                             return;
                         }
@@ -2380,7 +2388,7 @@
                                     'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]')?.content || ''
                                 },
                                 body: JSON.stringify({
-                                    token: this.metaToken.trim(),
+                                    token: this.metaToken.trim() || undefined,
                                     phone_number_id: this.metaPhoneId.trim()
                                 })
                             });

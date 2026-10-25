@@ -10,6 +10,7 @@ use App\Domain\Storage\AdminStorage;
 use App\Http\Controllers\Controller;
 use App\Models\CommunityEvent;
 use App\Models\CommunityEventRegistration;
+use App\Support\Security\CsvSanitizer;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -317,7 +318,7 @@ final class AdminCommunityEventController extends Controller
         $rows[] = implode(',', array_map(fn ($h) => '"' . str_replace('"', '""', $h) . '"', $csvHeader));
 
         foreach ($participants as $idx => $reg) {
-            $rows[] = implode(',', array_map(fn ($val) => '"' . str_replace('"', '""', (string) $val) . '"', [
+            $rows[] = implode(',', array_map(fn ($val) => '"' . str_replace('"', '""', CsvSanitizer::sanitize((string) $val)) . '"', [
                 $idx + 1,
                 $reg->ticket_code,
                 $reg->user->name ?? '-',

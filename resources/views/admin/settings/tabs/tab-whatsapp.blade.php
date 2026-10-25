@@ -220,9 +220,9 @@
                                     </button>
                                 </div>
                                 <input :type="showWaSecret ? 'text' : 'password'" name="meta_wa_app_secret"
-                                    value="{{ old('meta_wa_app_secret', $metaWaAppSecret ?? '') }}"
-                                    placeholder="{{ !empty($metaWaAppSecret) ? '••••••••••••••••••••••••••••••••' : 'App Secret' }}"
-                                    class="w-full h-11 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[13px] text-black dark:text-white font-mono placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#25D366]/50 transition">
+                                    value="{{ old('meta_wa_app_secret', '') }}" autocomplete="new-password"
+                                    placeholder="{{ !empty($metaWaAppSecret) ? '•••••••••••••••••••••••••••••••• (App Secret tersimpan aman - kosongkan jika tidak diubah)' : 'Masukkan Meta App Secret' }}"
+                                    class="w-full h-11 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[13px] text-black dark:text-white font-mono placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#25D366]/50 transition">
                             </div>
 
                             <!-- Phone Number ID -->
@@ -276,9 +276,9 @@
                                     </button>
                                 </div>
                                 <input :type="showWaToken ? 'text' : 'password'" name="meta_wa_token"
-                                    value="{{ old('meta_wa_token', $metaWaToken ?? '') }}"
-                                    placeholder="{{ !empty($metaWaToken) ? '••••••••••••••••••••••••••••••••' : 'EAAU...' }}"
-                                    class="w-full h-11 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[13px] text-black dark:text-white font-mono placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#25D366]/50 transition">
+                                    value="{{ old('meta_wa_token', '') }}" autocomplete="new-password"
+                                    placeholder="{{ !empty($metaWaToken) ? '•••••••••••••••••••••••••••••••• (Token permanen tersimpan aman - kosongkan jika tidak diubah)' : 'EAAU...' }}"
+                                    class="w-full h-11 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[13px] text-black dark:text-white font-mono placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#25D366]/50 transition">
                                 <p class="text-[11px] text-black/45 dark:text-white/45 mt-1">
                                     Token akses System User dari Meta Business Manager. Disimpan terenkripsi AES-256 pada database.
                                 </p>

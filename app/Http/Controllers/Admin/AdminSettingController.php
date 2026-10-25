@@ -646,8 +646,8 @@ final class AdminSettingController extends Controller
         }
 
         // Save Biteship Logistics Settings
-        if (array_key_exists('biteship_api_key', $validated)) {
-            SystemSetting::set('biteship_api_key', trim((string) $validated['biteship_api_key']), 'shipping');
+        if (! empty($validated['biteship_api_key'])) {
+            SystemSetting::set('biteship_api_key', trim((string) $validated['biteship_api_key']), 'shipping', true);
         }
         if (array_key_exists('biteship_base_url', $validated)) {
             SystemSetting::set('biteship_base_url', trim((string) $validated['biteship_base_url']), 'shipping');

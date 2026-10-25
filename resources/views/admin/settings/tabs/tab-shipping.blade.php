@@ -122,10 +122,10 @@
                             </div>
                             <div class="relative">
                                 <input :type="showBiteshipKey ? 'text' : 'password'" name="biteship_api_key"
-                                    value="{{ old('biteship_api_key', $biteshipApiKey) }}"
-                                    placeholder="biteship_live.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-                                    required
-                                    class="w-full h-11 pl-4 pr-12 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/[0.1] text-[16px] sm:text-[13px] font-mono text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF9500]/50 transition-all">
+                                    value="{{ old('biteship_api_key', '') }}" autocomplete="new-password"
+                                    placeholder="{{ !empty($biteshipApiKey) ? '•••••••••••••••••••••••••••••••• (API Key tersimpan aman - kosongkan jika tidak diubah)' : 'biteship_live.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...' }}"
+                                    {{ empty($biteshipApiKey) ? 'required' : '' }}
+                                    class="w-full h-11 pl-4 pr-12 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/[0.1] text-[16px] sm:text-[13px] font-mono text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#FF9500]/50 transition-all">
                                 <button type="button" @click="showBiteshipKey = !showBiteshipKey"
                                     class="absolute right-3.5 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white transition-colors cursor-pointer">
                                     <i data-lucide="eye" class="w-4 h-4" x-show="!showBiteshipKey"></i>

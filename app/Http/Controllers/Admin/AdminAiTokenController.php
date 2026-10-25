@@ -8,8 +8,10 @@ use App\Http\Controllers\Controller;
 use App\Models\AiTokenUsage;
 use App\Models\Business;
 use Carbon\Carbon;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 
 final class AdminAiTokenController extends Controller
@@ -78,20 +80,32 @@ final class AdminAiTokenController extends Controller
     }
 
     /**
-     * Manually grant / top-up AI tokens to a business.
+     * Manually grant / top-up AI tokens to a business with strict upper limit & audit trail.
      */
-    public function grant(Request $request, Business $business)
+    public function grant(Request $request, Business $business): RedirectResponse
     {
-        $request->validate([
-            'tokens' => 'required|integer|min:100000',
-            'reason' => 'nullable|string|max:255',
+        $validated = $request->validate([
+            'tokens' => ['required', 'integer', 'min:10000', 'max:10000000'],
+            'reason' => ['required', 'string', 'min:5', 'max:255'],
+        ], [
+            'tokens.required' => 'Jumlah token AI wajib ditentukan.',
+            'tokens.min'      => 'Pemberian token minimal 10.000 token.',
+            'tokens.max'      => 'Pemberian token manual dibatasi maksimal 10.000.000 token per aksi demi keamanan biaya.',
+            'reason.required' => 'Wajib mencantumkan alasan pemberian token sebagai jejak audit.',
+            'reason.min'      => 'Alasan pemberian token minimal 5 karakter.',
         ]);
 
         $sub = $business->subscription;
-        if ($sub) {
-            $sub->increment('ai_tokens_remaining', (int) $request->tokens);
+        if (! $sub) {
+            return back()->with('error', "Gagal: Bisnis {$business->name} belum memiliki paket langganan aktif.");
         }
 
-        return back()->with('success', "Berhasil menambahkan " . number_format((int)$request->tokens) . " token AI ke bisnis {$business->name}.");
+        $tokens = (int) $validated['tokens'];
+        $sub->increment('ai_tokens_remaining', $tokens);
+
+        $adminName = auth('admin')->user()?->name ?? 'System Superadmin';
+        Log::info("AUDIT: Admin [{$adminName}] memberikan {$tokens} token AI ke bisnis [{$business->name}] (ID: {$business->id}). Alasan: {$validated['reason']}");
+
+        return back()->with('success', "Berhasil menambahkan " . number_format($tokens, 0, ',', '.') . " token AI ke bisnis {$business->name}.");
     }
 }
