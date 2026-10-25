@@ -438,6 +438,15 @@ class AdminWhatsAppService
                 continue;
             }
 
+            // Hapus & abaikan template selain Bahasa Indonesia (id) dan Bahasa Inggris (en)
+            if (! self::isAllowedLanguage($language)) {
+                \App\Models\WhatsAppMessageTemplate::where('waba_id', $waba)
+                    ->where('name', $name)
+                    ->where('language', $language)
+                    ->delete();
+                continue;
+            }
+
             $existing = \App\Models\WhatsAppMessageTemplate::where('waba_id', $waba)
                 ->where('name', $name)
                 ->where('language', $language)
@@ -464,6 +473,9 @@ class AdminWhatsAppService
                 $created++;
             }
         }
+
+        // Pastikan tidak ada template non-ID/EN yang tertinggal
+        $this->cleanNonIdEnLocalTemplates();
 
         Log::info("[AdminWA] Template sync completed: {$created} created, {$updated} updated from WABA {$waba}");
 
@@ -575,6 +587,13 @@ class AdminWhatsAppService
         $category = strtoupper($input['category'] ?? 'MARKETING');
         $language = $input['language'] ?? 'id';
 
+        if (! self::isAllowedLanguage($language)) {
+            return [
+                'success' => false,
+                'error'   => 'Bahasa template hanya boleh Bahasa Indonesia (id) atau English (en_US / en_GB).',
+            ];
+        }
+
         $payload = [
             'name'                  => $name,
             'category'              => $category,
@@ -646,6 +665,73 @@ class AdminWhatsAppService
     }
 
     /**
+     * Periksa apakah kode bahasa termasuk yang diizinkan (Bahasa Indonesia atau English).
+     */
+    public static function isAllowedLanguage(string $language): bool
+    {
+        $lang = strtolower(trim($language));
+        return str_starts_with($lang, 'id') || str_starts_with($lang, 'en');
+    }
+
+    /**
+     * Bersihkan template di database lokal yang bukan Bahasa Indonesia atau Bahasa Inggris.
+     */
+    public function cleanNonIdEnLocalTemplates(): int
+    {
+        try {
+            return \App\Models\WhatsAppMessageTemplate::where(function ($q) {
+                $q->whereRaw("LOWER(language) NOT LIKE 'id%' AND LOWER(language) NOT LIKE 'en%'");
+            })->delete();
+        } catch (\Throwable $e) {
+            Log::warning('[AdminWA] Gagal membersihkan template non-ID/EN: ' . $e->getMessage());
+            return 0;
+        }
+    }
+
+    /**
+     * Hapus seluruh template non-Indonesia & non-Inggris baik dari Meta WABA maupun database lokal.
+     *
+     * @return array{success: bool, purged_count: int, meta_deleted: int, message: string}
+     */
+    public function purgeNonIdEnTemplates(): array
+    {
+        $templatesToPurge = \App\Models\WhatsAppMessageTemplate::where(function ($q) {
+            $q->whereRaw("LOWER(language) NOT LIKE 'id%' AND LOWER(language) NOT LIKE 'en%'");
+        })->get();
+
+        $client = \App\Domain\WhatsApp\CloudApi\WhatsAppClient::forPlatform();
+        $metaDeleted = 0;
+
+        foreach ($templatesToPurge as $tpl) {
+            if ($client && !empty($tpl->waba_id) && !empty($tpl->name)) {
+                try {
+                    $res = $client->deleteMessageTemplate($tpl->waba_id, $tpl->name);
+                    if ($res['success'] ?? false) {
+                        $metaDeleted++;
+                    }
+                } catch (\Throwable $e) {
+                    Log::warning("[AdminWA] Exception deleting template '{$tpl->name}' from Meta: " . $e->getMessage());
+                }
+            }
+            $tpl->delete();
+        }
+
+        $count = $templatesToPurge->count();
+
+        // Bersihkan sisa jika ada
+        $this->cleanNonIdEnLocalTemplates();
+
+        return [
+            'success'      => true,
+            'purged_count' => $count,
+            'meta_deleted' => $metaDeleted,
+            'message'      => $count > 0
+                ? "Berhasil menghapus {$count} template selain Bahasa Indonesia dan Bahasa Inggris."
+                : 'Seluruh template sudah sesuai standar (hanya Bahasa Indonesia dan Bahasa Inggris).',
+        ];
+    }
+
+    /**
      * Ambil semua template dari database lokal untuk WABA platform atau template sistem.
      *
      * @return \Illuminate\Database\Eloquent\Collection
@@ -660,11 +746,17 @@ class AdminWhatsAppService
             \App\Domain\WhatsApp\CloudApi\Templates\CoocaStandardTemplates::seedLocalTemplates($waba ?: 'platform_default');
         }
 
+        // Hapus otomatis template selain Bahasa Indonesia & Bahasa Inggris
+        $this->cleanNonIdEnLocalTemplates();
+
         return \App\Models\WhatsAppMessageTemplate::where(function ($query) use ($waba) {
             $query->whereNull('business_id');
             if (! empty($waba)) {
                 $query->orWhere('waba_id', $waba);
             }
+        })
+        ->where(function ($langQ) {
+            $langQ->whereRaw("LOWER(language) LIKE 'id%' OR LOWER(language) LIKE 'en%'");
         })
         ->orderByRaw("CASE status WHEN 'APPROVED' THEN 1 WHEN 'PENDING' THEN 2 WHEN 'REJECTED' THEN 3 WHEN 'PAUSED' THEN 4 WHEN 'DISABLED' THEN 5 ELSE 6 END")
         ->orderBy('name')

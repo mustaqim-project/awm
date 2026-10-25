@@ -29,6 +29,7 @@ final class AdminWhatsAppController extends Controller implements HasMiddleware
             new Middleware('require.admin.permission:admin.whatsapp.templates', only: [
                 'syncMetaTemplates', 'createMetaTemplate', 'deleteMetaTemplate',
                 'deployStandardTemplates', 'seedStandardTemplates', 'updateTemplates',
+                'purgeNonIdEnTemplates',
             ]),
             new Middleware('require.admin.permission:admin.whatsapp.config', only: ['verifyMetaCredentials', 'updateGatewayConfig', 'startSession', 'disconnect']),
         ];
@@ -416,7 +417,11 @@ final class AdminWhatsAppController extends Controller implements HasMiddleware
         $validated = $request->validate([
             'name'         => ['required', 'string', 'max:512', 'regex:/^[a-z0-9_]+$/'],
             'category'     => ['required', 'string', 'in:AUTHENTICATION,MARKETING,UTILITY'],
-            'language'     => ['required', 'string', 'max:15'],
+            'language'     => ['required', 'string', 'max:15', function ($attribute, $value, $fail) {
+                if (! AdminWhatsAppService::isAllowedLanguage((string) $value)) {
+                    $fail('Bahasa template hanya boleh Bahasa Indonesia (id) atau English (en_US / en_GB).');
+                }
+            }],
             'body_text'    => ['required', 'string'],
             'header_type'  => ['nullable', 'string', 'in:TEXT'],
             'header_text'  => ['nullable', 'string', 'max:60'],
@@ -443,6 +448,22 @@ final class AdminWhatsAppController extends Controller implements HasMiddleware
             'success' => false,
             'message' => $result['error'] ?? 'Gagal membuat template di Meta.',
         ], 422);
+    }
+
+    /**
+     * AJAX: Hapus seluruh template pesan selain Bahasa Indonesia dan Bahasa Inggris.
+     */
+    public function purgeNonIdEnTemplates(): JsonResponse
+    {
+        $result = $this->adminWa->purgeNonIdEnTemplates();
+
+        return response()->json([
+            'success'      => $result['success'],
+            'message'      => $result['message'],
+            'purged_count' => $result['purged_count'],
+            'meta_deleted' => $result['meta_deleted'],
+            'templates'    => $this->adminWa->getLocalTemplates(),
+        ]);
     }
 
     /**

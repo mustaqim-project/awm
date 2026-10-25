@@ -1359,6 +1359,13 @@
                         </button>
                         @if(Auth::guard('admin')->user()?->hasPermission('admin.whatsapp.templates'))
 
+                        <button type="button" @click="purgeNonIdEnTemplates()" :disabled="purgingNonIdEn"
+                            class="min-h-[42px] px-3.5 rounded-[12px] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 text-[#FF3B30] dark:text-[#FF453A] border border-[#FF3B30]/20 text-[13px] font-semibold inline-flex items-center gap-1.5 transition-all disabled:opacity-50"
+                            title="Hapus seluruh template selain Bahasa Indonesia (id) dan Bahasa Inggris (en)">
+                            <i data-lucide="trash-2" class="w-4 h-4" :class="{ 'animate-pulse': purgingNonIdEn }"></i>
+                            <span x-text="purgingNonIdEn ? 'Membersihkan...' : 'Hapus Selain ID & EN'">Hapus Selain ID & EN</span>
+                        </button>
+
                         <button type="button" @click="openCreateTemplateModal()"
                             class="min-h-[42px] px-4 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-bold inline-flex items-center gap-2 shadow-sm active:scale-[0.98] transition-all">
                             <i data-lucide="plus" class="w-4 h-4"></i>
@@ -1637,10 +1644,42 @@
                     </div>
                 </div>
 
+                {{-- Language Filter Segmented Pill & Guard Notice (Hanya ID & EN) --}}
+                <div x-show="(metaTemplates || []).length > 0" class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
+                    <div class="flex items-center gap-1 bg-black/[0.04] dark:bg-white/[0.06] p-1 rounded-[12px] border border-black/5 dark:border-white/5 w-fit">
+                        <button type="button" @click="selectedLangFilter = 'all'"
+                            :class="selectedLangFilter === 'all' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white font-medium'"
+                            class="px-3 py-1.5 rounded-[8px] text-[12px] transition-all flex items-center gap-1.5 cursor-pointer">
+                            <span>Semua Template</span>
+                            <span class="px-1.5 py-0.2 rounded-full text-[10.5px] font-mono bg-black/10 dark:bg-white/10"
+                                x-text="(filteredTemplates || []).length"></span>
+                        </button>
+                        <button type="button" @click="selectedLangFilter = 'id'"
+                            :class="selectedLangFilter === 'id' ? 'bg-white dark:bg-[#2C2C2E] text-[#007AFF] shadow-xs font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white font-medium'"
+                            class="px-3 py-1.5 rounded-[8px] text-[12px] transition-all flex items-center gap-1.5 cursor-pointer">
+                            <span>🇮🇩 Bahasa Indonesia (id)</span>
+                            <span class="px-1.5 py-0.2 rounded-full text-[10.5px] font-mono bg-black/10 dark:bg-white/10"
+                                x-text="(metaTemplates || []).filter(t => (t.language || '').toLowerCase().startsWith('id')).length"></span>
+                        </button>
+                        <button type="button" @click="selectedLangFilter = 'en'"
+                            :class="selectedLangFilter === 'en' ? 'bg-white dark:bg-[#2C2C2E] text-[#007AFF] shadow-xs font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white font-medium'"
+                            class="px-3 py-1.5 rounded-[8px] text-[12px] transition-all flex items-center gap-1.5 cursor-pointer">
+                            <span>🇬🇧 English (en)</span>
+                            <span class="px-1.5 py-0.2 rounded-full text-[10.5px] font-mono bg-black/10 dark:bg-white/10"
+                                x-text="(metaTemplates || []).filter(t => (t.language || '').toLowerCase().startsWith('en')).length"></span>
+                        </button>
+                    </div>
+
+                    <div class="text-[12px] text-black/50 dark:text-white/50 flex items-center gap-1.5">
+                        <i data-lucide="shield-check" class="w-3.5 h-3.5 text-[#34C759]"></i>
+                        <span>Standar Bahasa: Hanya <strong>Bahasa Indonesia</strong> & <strong>Bahasa Inggris</strong></span>
+                    </div>
+                </div>
+
                 {{-- Template Card Grid --}}
-                <div x-show="(metaTemplates || []).length > 0"
+                <div x-show="(filteredTemplates || []).length > 0"
                     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-                    <template x-for="tpl in metaTemplates" :key="tpl.id">
+                    <template x-for="tpl in filteredTemplates" :key="tpl.id">
                         <div
                             class="rounded-[20px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] p-4 sm:p-5 flex flex-col justify-between space-y-4 hover:border-black/15 dark:hover:border-white/20 transition-all">
 
@@ -1869,6 +1908,7 @@
                                         class="w-full bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 py-2.5 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40">
                                         <option value="id">Bahasa Indonesia (id)</option>
                                         <option value="en_US">English - US (en_US)</option>
+                                        <option value="en_GB">English - UK (en_GB)</option>
                                     </select>
                                 </div>
                             </div>
@@ -2533,6 +2573,21 @@
                     },
 
                     metaTemplates: @json($metaTemplates ?? []),
+                    selectedLangFilter: 'all',
+                    purgingNonIdEn: false,
+                    get filteredTemplates() {
+                        const list = (this.metaTemplates || []).filter(t => {
+                            const lang = (t.language || '').toLowerCase();
+                            return lang.startsWith('id') || lang.startsWith('en');
+                        });
+                        if (this.selectedLangFilter === 'id') {
+                            return list.filter(t => (t.language || '').toLowerCase().startsWith('id'));
+                        }
+                        if (this.selectedLangFilter === 'en') {
+                            return list.filter(t => (t.language || '').toLowerCase().startsWith('en'));
+                        }
+                        return list;
+                    },
                     standardTemplatesCatalog: @json($standardTemplatesCatalog ?? []),
                     standardsDeploying: false,
                     standardsSeeding: false,
@@ -2784,6 +2839,41 @@
                             alert('Terjadi kesalahan jaringan saat mengajukan template ke Meta.');
                         } finally {
                             this.templateCreating = false;
+                            this.refreshIcons();
+                        }
+                    },
+
+                    async purgeNonIdEnTemplates() {
+                        if (!confirm('Hapus seluruh template selain Bahasa Indonesia dan Bahasa Inggris dari database dan Meta WABA?')) {
+                            return;
+                        }
+                        this.purgingNonIdEn = true;
+                        try {
+                            const response = await fetch('{{ route('admin.whatsapp.meta-templates.purge-non-id-en') }}', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Accept': 'application/json',
+                                    'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]')?.content || ''
+                                }
+                            });
+                            const data = await response.json();
+                            if (response.ok && data.success) {
+                                if (data.templates) {
+                                    this.metaTemplates = data.templates;
+                                }
+                                this.copyToastMessage = data.message || 'Template non ID/EN berhasil dihapus.';
+                                this.copyToast = true;
+                                setTimeout(() => {
+                                    this.copyToast = false;
+                                }, 3500);
+                            } else {
+                                alert(data.message || 'Gagal menghapus template non ID/EN.');
+                            }
+                        } catch (err) {
+                            alert('Terjadi kesalahan jaringan saat menghapus template non ID/EN.');
+                        } finally {
+                            this.purgingNonIdEn = false;
                             this.refreshIcons();
                         }
                     },

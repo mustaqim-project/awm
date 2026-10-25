@@ -296,6 +296,7 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
             Route::post('/meta-templates/create', [AdminWhatsAppController::class, 'createMetaTemplate'])->name('meta-templates.create');
             Route::post('/meta-templates/deploy-standards', [AdminWhatsAppController::class, 'deployStandardTemplates'])->name('meta-templates.deploy-standards');
             Route::post('/meta-templates/seed-standards', [AdminWhatsAppController::class, 'seedStandardTemplates'])->name('meta-templates.seed-standards');
+            Route::post('/meta-templates/purge-non-id-en', [AdminWhatsAppController::class, 'purgeNonIdEnTemplates'])->name('meta-templates.purge-non-id-en');
             Route::delete('/meta-templates/{template}', [AdminWhatsAppController::class, 'deleteMetaTemplate'])->name('meta-templates.delete');
 
             // Legacy stubs for graceful fallback
