@@ -33,6 +33,48 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-10-25-373] Transformasi Halaman Postingan Media Sosial dari Card Grid ke Data Table Standar Apple HIG dengan Kolom Aksi Sticky
+
+- **Date:** 2026-10-25
+- **Status:** COMPLETED
+- **Module:** Social Media & Content Marketing (`/social-media/posts`)
+- **Feature:** Konversi Tampilan Daftar Postingan Feed dari Grid 3-Kolom Menjadi Data Table Interaktif Terpadu: Kolom Media & Konten (Thumbnail Preview, Line-clamp Caption, Badges Format & Risk Warning), Saluran/Akun Multi-Channel Pills, Status Badges, Metrik Performa Tabular (Impressions, Likes, Comments), Timestamp, dan Frozen Sticky Right-0 Action Column dengan Icon-Only Buttons (Preview/Manage, Edit Draft, Maker-Checker Approve/Reject, Direct Delete/Cancel).
+- **Work Type:** UI/UX | Frontend Modernization | Design System Standardization
+
+#### 1. Business Context & Objective
+- **Konteks:** Sesuai instruksi pengguna *"buat jadi data table bukan grid, tambahkan btn action"*, halaman `/social-media/posts` sebelumnya menampilkan postingan dalam bentuk grid 3-kolom kartu (`grid-cols-1 md:grid-cols-2 lg:grid-cols-3`). Tampilan grid menyulitkan pengguna dalam membandingkan status postingan, metrik engagement antar channel, dan melakukan tindakan cepat (batch/inline review).
+- **Target & Standar:**
+  1. Mengubah struktur feed postingan dari card grid ke responsif Data Table Apple HIG berbingkai `rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 shadow-sm`.
+  2. Menyediakan 6 kolom informasi esensial: Media & Konten, Saluran & Akun, Status, Metrik Performa, Waktu, dan Kolom Aksi Beku (Sticky Right-0).
+  3. Mengimplementasikan tombol aksi icon-only standar (`w-8 h-8 rounded-[8px]`):
+     - `eye` (Preview & Kelola): Membuka Bento Post Manager Sheet modal dengan pratinjau multi-saluran, reschedule, atau publish now.
+     - `file-edit` (Edit Draf): Memuat kembali konten draf ke Unified Composer Modal untuk diedit.
+     - `check` & `x` (Maker-Checker Approve/Reject): Tersedia jika postingan berstatus `pending_review` dan user memiliki izin.
+     - `trash-2` (Hapus/Batal): Konfirmasi hapus langsung menggunakan `AppAlert` tanpa harus membuka modal detail.
+  4. Menjaga kompatibilitas penuh dengan modal Unified Composer, modal Post Manager, filter status & saluran, serta pagination `$posts->links()`.
+
+#### 2. What Was Done
+1. **Penyusunan Data Table Terpadu:**
+   - Menghapus pembungkus `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">` dan menggantinya dengan tabel HTML modern berkelas `w-full text-left text-[13px] border-collapse` di dalam wrapper `overflow-x-auto`.
+   - Mengintegrasikan preview thumbnail media (video dengan indikator play & aspect ratio, gambar carousel dengan badge jumlah slide, atau icon tipe format).
+   - Menampilkan snippet caption dengan pemotong teks elegan (`line-clamp-2`), badge tipe format media, dan alert kesalahan/risiko jika status postingan `failed` atau `partially_failed`.
+   - Menampilkan badge saluran target (`$post->targets`) lengkap dengan icon platform (Facebook, Instagram, Threads, TikTok, LinkedIn) dan tombol retry instan jika channel gagal terkirim.
+2. **Kolom Aksi Sticky Frozen Right-0:**
+   - Header dan cell aksi menggunakan `sticky right-0` dengan warna latar solid opak (`bg-white dark:bg-[#1C1C1E]` dan `group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528]`) serta pembatas bayangan `shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]` agar konten tabel yang scroll horizontal di bawahnya tidak tembus pandang.
+   - Tombol aksi icon-only dilengkapi atribut aksesibilitas `title` dan `aria-label`.
+   - Menambahkan method `deletePostDirect(post)` ke Alpine.js store `socialPostsManager()` untuk eksekusi hapus instan dari baris tabel dengan konfirmasi `AppAlert` dan animasi penghapusan elemen DOM.
+3. **Lokalisasi Kamus Bahasa:**
+   - Mendaftarkan key `table_header_content`, `table_header_channel`, `table_header_status`, `table_header_metrics`, dan `table_header_time` ke `lang/id/social_media.php` dan `lang/en/social_media.php`.
+
+#### 3. Technical Changes
+- **Files Affected:**
+  - `resources/views/app/social_media/posts.blade.php`: Transformasi card grid ke Data Table dengan sticky action column dan integrasi helper `deletePostDirect()`.
+  - `lang/id/social_media.php`: Penambahan string terjemahan header tabel bahasa Indonesia.
+  - `lang/en/social_media.php`: Penambahan string terjemahan header tabel bahasa Inggris.
+  - `docs/AiWorkHistory.md`: Pencatatan entri pekerjaan `[WORK-2026-10-25-373]`.
+- **Database Changes:** None.
+- **Verification:** `php -l` lulus 100% tanpa error sintaks; `php artisan view:clear` & `php artisan view:cache` lulus dengan kompilasi Blade 100% sukses.
+
 ### [WORK-2026-10-25-372] Perbaikan Kebocoran Sintaks JavaScript ke UI pada Modul Keuangan (Piutang & Utang Usaha): Ekstraksi Inline Alpine x-data ke Script Block & Perbaikan Label Ekspor
 
 - **Date:** 2026-10-25

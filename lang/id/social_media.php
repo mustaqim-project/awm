@@ -32,6 +32,13 @@ return [
     'tab_inbox' => 'Kotak Masuk & Komentar',
     'tab_insights' => 'Analitik & Performa',
 
+    // Table Headers
+    'table_header_content' => 'Media & Konten',
+    'table_header_channel' => 'Saluran & Akun',
+    'table_header_status' => 'Status',
+    'table_header_metrics' => 'Metrik',
+    'table_header_time' => 'Waktu',
+
     // Onboarding & Connected Accounts
     'connected_accounts' => 'Akun Media Sosial Toko',
     'connected_accounts_sub' => 'Facebook Page, Instagram Bisnis, Threads, TikTok & LinkedIn',

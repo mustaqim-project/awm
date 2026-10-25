@@ -32,6 +32,13 @@ return [
     'tab_inbox' => 'Inbox & Comments',
     'tab_insights' => 'Analytics & Insights',
 
+    // Table Headers
+    'table_header_content' => 'Media & Content',
+    'table_header_channel' => 'Channel & Account',
+    'table_header_status' => 'Status',
+    'table_header_metrics' => 'Metrics',
+    'table_header_time' => 'Time',
+
     // Onboarding & Connected Accounts
     'connected_accounts' => 'Store Social Media Accounts',
     'connected_accounts_sub' => 'Facebook Page, Instagram Business, Threads, TikTok & LinkedIn',
