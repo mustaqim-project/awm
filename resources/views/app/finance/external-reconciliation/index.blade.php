@@ -56,7 +56,7 @@
     <div class="rounded-[18px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 shadow-sm overflow-hidden">
         <div class="px-5 sm:px-6 py-4 border-b border-black/5 dark:border-white/10 bg-gradient-to-r from-[#007AFF]/5 to-[#5856D6]/5 dark:from-[#007AFF]/10 dark:to-[#5856D6]/10">
             <h2 class="text-[16px] font-bold text-black dark:text-white flex items-center gap-2">
-                <span class="text-lg">🏦</span>
+                <i data-lucide="landmark" class="w-5 h-5 text-[#007AFF]"></i>
                 {{ __('finance.where_the_money_lives_title') }}
             </h2>
             <p class="text-xs text-black/50 dark:text-white/50 mt-0.5">{{ __('finance.section_where_money_lives_desc', ['period' => \Carbon\Carbon::parse($period . '-01')->translatedFormat('F Y')]) }}</p>

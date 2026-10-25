@@ -771,16 +771,16 @@
                                     <div class="p-5 rounded-[20px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] space-y-3.5">
                                         <label class="block text-[13px] font-bold text-black/80 dark:text-white/80">{{ __('finance.amount_in_label') }}</label>
                                         <div class="relative">
-                                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40 font-bold text-lg sm:text-xl">Rp</span>
+                                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40 font-bold text-lg sm:text-xl">{{ $business->currency_symbol ?? 'Rp' }}</span>
                                             <input name="amount" type="number" min="1" step="any" x-model="amount" required placeholder="0"
                                                 class="w-full h-14 pl-14 pr-4 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[14px] text-2xl sm:text-3xl font-extrabold tabular-nums text-black dark:text-white placeholder:text-black/20 dark:placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-[#34C759] transition-all shadow-inner">
                                         </div>
                                         <div class="flex flex-wrap items-center gap-2 pt-1">
                                             <span class="text-[11.5px] text-black/45 dark:text-white/45 font-medium">{{ __('finance.quick_amount') }}</span>
-                                            <button type="button" @click="setQuickAmount(100000)" class="px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">Rp 100 rb</button>
-                                            <button type="button" @click="setQuickAmount(500000)" class="px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">Rp 500 rb</button>
-                                            <button type="button" @click="setQuickAmount(1000000)" class="px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">Rp 1 jt</button>
-                                            <button type="button" @click="setQuickAmount(5000000)" class="px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">Rp 5 jt</button>
+                                            <button type="button" @click="setQuickAmount(100000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 100.000</button>
+                                            <button type="button" @click="setQuickAmount(500000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 500.000</button>
+                                            <button type="button" @click="setQuickAmount(1000000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 1.000.000</button>
+                                            <button type="button" @click="setQuickAmount(5000000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 5.000.000</button>
                                         </div>
                                     </div>
                                 </div>
@@ -900,17 +900,17 @@
                                     <div class="p-5 rounded-[20px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] space-y-3.5">
                                         <label class="block text-[13px] font-bold text-black/80 dark:text-white/80">{{ __('finance.amount_out_label') }}</label>
                                         <div class="relative">
-                                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40 font-bold text-lg sm:text-xl">Rp</span>
+                                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40 font-bold text-lg sm:text-xl">{{ $business->currency_symbol ?? 'Rp' }}</span>
                                             <input name="amount" type="number" min="1" step="any" x-model="amount" required placeholder="0"
                                                 class="w-full h-14 pl-14 pr-4 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[14px] text-2xl sm:text-3xl font-extrabold tabular-nums text-black dark:text-white placeholder:text-black/20 dark:placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-[#FF3B30] transition-all shadow-inner">
                                         </div>
                                         <div class="flex flex-wrap items-center gap-2 pt-1">
                                             <span class="text-[11.5px] text-black/45 dark:text-white/45 font-medium">{{ __('finance.quick_amount') }}</span>
-                                            <button type="button" @click="setQuickAmount(50000)" class="px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">Rp 50 rb</button>
-                                            <button type="button" @click="setQuickAmount(100000)" class="px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">Rp 100 rb</button>
-                                            <button type="button" @click="setQuickAmount(250000)" class="px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">Rp 250 rb</button>
-                                            <button type="button" @click="setQuickAmount(500000)" class="px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">Rp 500 rb</button>
-                                            <button type="button" @click="setQuickAmount(1000000)" class="px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">Rp 1 jt</button>
+                                            <button type="button" @click="setQuickAmount(50000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 50.000</button>
+                                            <button type="button" @click="setQuickAmount(100000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 100.000</button>
+                                            <button type="button" @click="setQuickAmount(250000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 250.000</button>
+                                            <button type="button" @click="setQuickAmount(500000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 500.000</button>
+                                            <button type="button" @click="setQuickAmount(1000000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 1.000.000</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1015,16 +1015,16 @@
                                     <div class="p-5 rounded-[20px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] space-y-3.5">
                                         <label class="block text-[13px] font-bold text-black/80 dark:text-white/80">{{ __('finance.field_transfer_amount_required') }}</label>
                                         <div class="relative">
-                                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40 font-bold text-lg sm:text-xl">Rp</span>
+                                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40 font-bold text-lg sm:text-xl">{{ $business->currency_symbol ?? 'Rp' }}</span>
                                             <input name="amount" type="number" min="1" step="any" x-model="amount" required placeholder="0"
                                                 class="w-full h-14 pl-14 pr-4 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[14px] text-2xl sm:text-3xl font-extrabold tabular-nums text-black dark:text-white placeholder:text-black/20 dark:placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition-all shadow-inner">
                                         </div>
                                         <div class="flex flex-wrap items-center gap-2 pt-1">
                                             <span class="text-[11.5px] text-black/45 dark:text-white/45 font-medium">{{ __('finance.quick_amount') }}</span>
-                                            <button type="button" @click="setQuickAmount(500000)" class="px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">Rp 500 rb</button>
-                                            <button type="button" @click="setQuickAmount(1000000)" class="px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">Rp 1 jt</button>
-                                            <button type="button" @click="setQuickAmount(2500000)" class="px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">Rp 2.5 jt</button>
-                                            <button type="button" @click="setQuickAmount(5000000)" class="px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">Rp 5 jt</button>
+                                            <button type="button" @click="setQuickAmount(500000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 500.000</button>
+                                            <button type="button" @click="setQuickAmount(1000000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 1.000.000</button>
+                                            <button type="button" @click="setQuickAmount(2500000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 2.500.000</button>
+                                            <button type="button" @click="setQuickAmount(5000000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 5.000.000</button>
                                         </div>
                                     </div>
                                 </div>

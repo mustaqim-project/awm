@@ -930,4 +930,12 @@ return [
     'import_executing_state' => 'Sedang Memproses...',
     'btn_commit_import_template' => 'Komit Import (:count Faktur)',
     'ledger_title' => 'Buku Kas',
+    'expense_date_label' => 'Tanggal Transaksi *',
+    'branch_outlet' => 'Outlet / Cabang',
+    'main_outlet' => 'Outlet Utama (Pusat)',
+    'supported_receipt_formats' => 'JPG, PNG, WEBP, atau PDF',
+    'csv_paste_placeholder' => "2026-09-20, Setoran QRIS Gerai, 150000, credit\n2026-09-20, Biaya Admin Bank, 5000, debit",
+    'export_balance_sheet_tooltip' => 'Export Neraca Keuangan ke Excel (XLSX)',
+    'export_trial_balance_tooltip' => 'Export Neraca Saldo ke Excel (XLSX)',
+    'export_general_ledger_tooltip' => 'Export Buku Besar ke Excel (XLSX)',
 ];

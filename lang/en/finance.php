@@ -930,4 +930,12 @@ return [
     'import_executing_state' => 'Processing...',
     'btn_commit_import_template' => 'Commit Import (:count Invoices)',
     'ledger_title' => 'Ledger',
+    'expense_date_label' => 'Transaction Date *',
+    'branch_outlet' => 'Outlet / Branch',
+    'main_outlet' => 'Main Outlet (Headquarters)',
+    'supported_receipt_formats' => 'JPG, PNG, WEBP, or PDF',
+    'csv_paste_placeholder' => "2026-09-20, Store QRIS Settlement, 150000, credit\n2026-09-20, Bank Admin Fee, 5000, debit",
+    'export_balance_sheet_tooltip' => 'Export Balance Sheet to Excel (XLSX)',
+    'export_trial_balance_tooltip' => 'Export Trial Balance to Excel (XLSX)',
+    'export_general_ledger_tooltip' => 'Export General Ledger to Excel (XLSX)',
 ];

@@ -155,6 +155,29 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
             Route::post('/payables/{payable}/payments', [AdminFinanceController::class, 'recordPayablePayment'])->name('payables.payments.store');
         });
 
+        // Penjualan B2B & Faktur Platform (Quotations, Sales Orders, Invoices, Sales Returns & Official PDF)
+        Route::prefix('b2b')->name('b2b.')->group(function (): void {
+            Route::get('/', [\App\Http\Controllers\Admin\AdminB2bController::class, 'index'])->name('index');
+            Route::get('/export', [\App\Http\Controllers\Admin\AdminB2bController::class, 'export'])->name('export');
+
+            // Quotations
+            Route::post('/quotations/{quotation}/convert', [\App\Http\Controllers\Admin\AdminB2bController::class, 'convertQuotation'])->name('quotations.convert');
+            Route::get('/quotations/{quotation}/pdf', [\App\Http\Controllers\Admin\AdminB2bController::class, 'pdfQuotation'])->name('quotations.pdf');
+
+            // Sales Orders
+            Route::post('/orders/{salesOrder}/generate-invoice', [\App\Http\Controllers\Admin\AdminB2bController::class, 'generateInvoiceFromOrder'])->name('orders.generate-invoice');
+            Route::get('/orders/{salesOrder}/pdf', [\App\Http\Controllers\Admin\AdminB2bController::class, 'pdfSalesOrder'])->name('orders.pdf');
+
+            // Invoices & Payments
+            Route::post('/invoices/{invoice}/payments', [\App\Http\Controllers\Admin\AdminB2bController::class, 'recordInvoicePayment'])->name('invoices.payments.store');
+            Route::get('/invoices/{invoice}/pdf', [\App\Http\Controllers\Admin\AdminB2bController::class, 'pdfInvoice'])->name('invoices.pdf');
+
+            // Sales Returns
+            Route::post('/returns/{salesReturn}/approve', [\App\Http\Controllers\Admin\AdminB2bController::class, 'approveSalesReturn'])->name('returns.approve');
+            Route::post('/returns/{salesReturn}/complete', [\App\Http\Controllers\Admin\AdminB2bController::class, 'completeSalesReturn'])->name('returns.complete');
+            Route::get('/returns/{salesReturn}/pdf', [\App\Http\Controllers\Admin\AdminB2bController::class, 'pdfSalesReturn'])->name('returns.pdf');
+        });
+
         // Feedback: Bug Reports & Feature Requests
         Route::get('/feedback/bugs', [AdminFeedbackController::class, 'bugs'])->name('feedback.bugs.index');
         Route::get('/feedback/bugs/{bugReport}', [AdminFeedbackController::class, 'showBug'])->name('feedback.bugs.show');

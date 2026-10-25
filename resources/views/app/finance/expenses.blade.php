@@ -497,10 +497,10 @@
 
                             {{-- Bento Card: Nominal Pengeluaran XXL --}}
                             <div class="p-5 rounded-[20px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] space-y-3.5">
-                                <label class="block text-[13px] font-bold text-black/80 dark:text-white/80">Nominal Pengeluaran (Rp) *</label>
+                                <label class="block text-[13px] font-bold text-black/80 dark:text-white/80">{{ __('finance.amount_out_label') }}</label>
                                 <div class="relative">
                                     <div class="absolute left-4 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40 font-bold text-lg sm:text-xl">
-                                        Rp
+                                        {{ $business->currency_symbol ?? 'Rp' }}
                                     </div>
                                     <input type="number" name="amount" x-model="amount" required min="1" step="any" placeholder="0"
                                         class="w-full h-14 pl-14 pr-4 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[14px] text-2xl sm:text-3xl font-extrabold tabular-nums text-black dark:text-white placeholder:text-black/20 dark:placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition-all shadow-inner">
@@ -508,27 +508,27 @@
 
                                 {{-- Quick Suggestion Pills --}}
                                 <div class="flex flex-wrap items-center gap-2 pt-1">
-                                    <span class="text-[11.5px] text-black/45 dark:text-white/45 font-medium">Nominal Cepat:</span>
-                                    <button type="button" @click="setQuickAmount(50000)" class="px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">Rp 50 rb</button>
-                                    <button type="button" @click="setQuickAmount(100000)" class="px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">Rp 100 rb</button>
-                                    <button type="button" @click="setQuickAmount(250000)" class="px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">Rp 250 rb</button>
-                                    <button type="button" @click="setQuickAmount(500000)" class="px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">Rp 500 rb</button>
-                                    <button type="button" @click="setQuickAmount(1000000)" class="px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">Rp 1 jt</button>
+                                    <span class="text-[11.5px] text-black/45 dark:text-white/45 font-medium">{{ __('finance.quick_amount') }}</span>
+                                    <button type="button" @click="setQuickAmount(50000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 50.000</button>
+                                    <button type="button" @click="setQuickAmount(100000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 100.000</button>
+                                    <button type="button" @click="setQuickAmount(250000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 250.000</button>
+                                    <button type="button" @click="setQuickAmount(500000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 500.000</button>
+                                    <button type="button" @click="setQuickAmount(1000000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 1.000.000</button>
                                 </div>
                             </div>
 
                             {{-- Tanggal & Outlet --}}
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div class="space-y-1.5">
-                                    <label class="block text-[13px] font-semibold text-black/75 dark:text-white/75">Tanggal Transaksi *</label>
+                                    <label class="block text-[13px] font-semibold text-black/75 dark:text-white/75">{{ __('finance.expense_date_label') }}</label>
                                     <input type="date" name="expense_date" value="{{ date('Y-m-d') }}" required
                                         class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                                 </div>
                                 <div class="space-y-1.5">
-                                    <label class="block text-[13px] font-semibold text-black/75 dark:text-white/75">Outlet / Cabang</label>
+                                    <label class="block text-[13px] font-semibold text-black/75 dark:text-white/75">{{ __('finance.branch_outlet') }}</label>
                                     <select name="location_id" x-model="location_id"
                                         class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
-                                        <option value="">Outlet Utama (Pusat)</option>
+                                        <option value="">{{ __('finance.main_outlet') }}</option>
                                         @foreach ($locations as $loc)
                                             <option value="{{ $loc->id }}">{{ $loc->name }}</option>
                                         @endforeach
@@ -591,7 +591,7 @@
                                         @endforeach
                                     </select>
                                     <p class="text-[11px] text-black/45 dark:text-white/45">
-                                        Fleksibel: pengeluaran tetap dapat dicatat walau saldo 0 (menjadi saldo minus / talangan kas).
+                                        {{ __('finance.outflow_flexible_zero_balance_hint') }}
                                     </p>
                                 </div>
 
@@ -625,7 +625,7 @@
                                                 <i data-lucide="upload-cloud" class="w-5 h-5"></i>
                                             </div>
                                             <p class="text-[12.5px] font-medium text-black/75 dark:text-white/75">{{ __('finance.drag_receipt_or_browse') }}</p>
-                                            <p class="text-[11px] text-black/40 dark:text-white/40">JPG, PNG, WEBP, atau PDF</p>
+                                            <p class="text-[11px] text-black/40 dark:text-white/40">{{ __('finance.supported_receipt_formats') }}</p>
                                         </div>
                                     </template>
 
@@ -652,11 +652,11 @@
                                 <div class="text-[11.5px] space-y-1 text-black/75 dark:text-white/75 font-mono">
                                     <div class="flex justify-between">
                                         <span>(D) Beban: <strong class="font-sans" x-text="categoryLabel"></strong></span>
-                                        <span class="font-bold text-black dark:text-white" x-text="amount ? 'Rp ' + Number(amount).toLocaleString('id-ID') : 'Rp 0'"></span>
+                                        <span class="font-bold text-black dark:text-white" x-text="amount ? '{{ $business->currency_symbol ?? 'Rp' }} ' + Number(amount).toLocaleString('id-ID') : '{{ $business->currency_symbol ?? 'Rp' }} 0'"></span>
                                     </div>
                                     <div class="flex justify-between text-black/60 dark:text-white/60 pl-3">
                                         <span>(K) Kas/Bank (<span class="capitalize" x-text="payment_method"></span>)</span>
-                                        <span class="font-bold text-black dark:text-white" x-text="amount ? 'Rp ' + Number(amount).toLocaleString('id-ID') : 'Rp 0'"></span>
+                                        <span class="font-bold text-black dark:text-white" x-text="amount ? '{{ $business->currency_symbol ?? 'Rp' }} ' + Number(amount).toLocaleString('id-ID') : '{{ $business->currency_symbol ?? 'Rp' }} 0'"></span>
                                     </div>
                                 </div>
                             </div>

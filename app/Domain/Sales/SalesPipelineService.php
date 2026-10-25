@@ -103,7 +103,7 @@ final class SalesPipelineService
                 'sender_name' => $data['sender_name'] ?? null,
                 'recipient_name' => $data['recipient_name'] ?? null,
                 'attachment_info' => $data['attachment_info'] ?? '-',
-                'created_by' => $data['created_by'] ?? auth()->id(),
+                'created_by' => $data['created_by'] ?? (auth('web')->check() ? auth('web')->id() : null),
                 'notes' => $data['notes'] ?? null,
                 'terms_and_conditions' => $data['terms_and_conditions'] ?? null,
             ]);
@@ -219,6 +219,10 @@ final class SalesPipelineService
             $business = $quotation->business;
             $soNumber = $this->generateSalesOrderNumber($business);
 
+            $taxPercentage = ($quotation->subtotal > 0 && (float) $quotation->tax_amount > 0)
+                ? round(((float) $quotation->tax_amount / max(1, (float) $quotation->subtotal - (float) ($quotation->discount_amount ?? 0))) * 100, 2)
+                : 0.0;
+
             $salesOrder = SalesOrder::create([
                 'business_id' => $business->id,
                 'customer_id' => $quotation->customer_id,
@@ -227,14 +231,15 @@ final class SalesPipelineService
                 'order_date' => Carbon::today()->toDateString(),
                 'expected_delivery_date' => Carbon::today()->addDays(3)->toDateString(),
                 'subtotal' => $quotation->subtotal,
-                'discount_amount' => $quotation->discount_amount,
-                'tax_amount' => $quotation->tax_amount,
+                'discount_amount' => $quotation->discount_amount ?? 0,
+                'tax_percentage' => $taxPercentage,
+                'tax_amount' => $quotation->tax_amount ?? 0,
                 'total_amount' => $quotation->total_amount,
                 'status' => SalesOrder::STATUS_CONFIRMED,
                 'sender_name' => $quotation->sender_name,
                 'recipient_name' => $quotation->recipient_name,
                 'attachment_info' => $quotation->attachment_info ?? '-',
-                'created_by' => auth()->id() ?? $quotation->created_by,
+                'created_by' => (auth('web')->check() ? auth('web')->id() : $quotation->created_by),
                 'notes' => "Dikonversi dari Penawaran: {$quotation->quotation_number}",
             ]);
 
@@ -299,7 +304,7 @@ final class SalesPipelineService
                 'sender_name' => $data['sender_name'] ?? null,
                 'recipient_name' => $data['recipient_name'] ?? null,
                 'attachment_info' => $data['attachment_info'] ?? '-',
-                'created_by' => $data['created_by'] ?? auth()->id(),
+                'created_by' => $data['created_by'] ?? (auth('web')->check() ? auth('web')->id() : null),
                 'notes' => $data['notes'] ?? null,
             ]);
 
@@ -475,6 +480,7 @@ final class SalesPipelineService
 
             $discount = (float) $salesOrder->discount_amount;
             $tax = (float) $salesOrder->tax_amount;
+            $taxPercentage = $salesOrder->tax_percentage ?? ($subtotal > 0 && $tax > 0 ? round(($tax / max(1, $subtotal - $discount)) * 100, 2) : 0.0);
             $total = max(0, ($subtotal - $discount) + $tax);
             $grossProfit = ($subtotal - $discount) - $totalHpp;
 
@@ -490,6 +496,7 @@ final class SalesPipelineService
                 'discount_type' => 'fixed',
                 'discount_value' => $discount,
                 'discount_amount' => $discount,
+                'tax_percentage' => $taxPercentage,
                 'tax_amount' => $tax,
                 'total_amount' => $total,
                 'paid_amount' => 0,
@@ -500,7 +507,7 @@ final class SalesPipelineService
                 'sender_name' => $salesOrder->sender_name,
                 'recipient_name' => $salesOrder->recipient_name,
                 'attachment_info' => $salesOrder->attachment_info ?? '-',
-                'created_by' => auth()->id() ?? $salesOrder->created_by,
+                'created_by' => (auth('web')->check() ? auth('web')->id() : $salesOrder->created_by),
                 'notes' => "Diterbitkan dari Pesanan Penjualan: {$salesOrder->so_number}",
             ]);
 

@@ -223,7 +223,7 @@
                         <td class="px-4 py-3.5 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                             <div class="flex items-center justify-end gap-1">
                                 @if(\App\Support\Context::hasPermission('invoices.view'))
-                                <a href="{{ route('invoices.show', $invoice) }}" class="w-8 h-8 rounded-[8px] text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('common.detail') }}" aria-label="{{ __('common.detail') }}">
+                                <a href="{{ route('invoices.show', $invoice) }}" class="min-w-[36px] min-h-[36px] sm:min-w-[40px] sm:min-h-[40px] rounded-[10px] text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('common.detail') }}" aria-label="{{ __('common.detail') }}">
                                     <i data-lucide="eye" class="w-4 h-4"></i>
                                 </a>
                                 @endif

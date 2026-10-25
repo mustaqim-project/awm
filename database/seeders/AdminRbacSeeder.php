@@ -87,6 +87,11 @@ final class AdminRbacSeeder extends Seeder
             'admin.finance.export'                 => ['Export Laporan Keuangan', 'admin_finance', 'Mengekspor data transaksi buku kas dan laporan laba rugi ke file CSV.'],
             'admin.finance.sync'                   => ['Sinkronisasi Billing & Settlement', 'admin_finance', 'Menyinkronkan transaksi otomatis dari tagihan langganan dan pencairan saldo merchant.'],
 
+            // ─── 12B. Penjualan B2B & Faktur Platform ──────────────────
+            'admin.b2b.view'                       => ['Lihat Penjualan B2B & Faktur', 'admin_finance', 'Melihat surat penawaran, pesanan penjualan, faktur komersial, retur, dan mengunduh PDF.'],
+            'admin.b2b.manage'                     => ['Kelola Transaksi B2B & Faktur', 'admin_finance', 'Menerbitkan penawaran, konversi ke SO, penerbitan faktur, catat pembayaran, dan otorisasi retur.'],
+            'admin.b2b.export'                     => ['Export Data Penjualan B2B', 'admin_finance', 'Mengekspor laporan pipeline B2B, faktur, dan retur ke file CSV.'],
+
             // ─── 13. WhatsApp Gateway Platform ────────────────────────
             'admin.whatsapp.view'                  => ['Lihat WhatsApp Gateway', 'admin_system', 'Melihat status koneksi Meta WhatsApp API dan sesi aktif.'],
             'admin.whatsapp.blast'                 => ['Kirim Blast & Pengingat WA', 'admin_support', 'Mengirim pesan broadcast pengumuman atau reminder tagihan ke tenant.'],
@@ -198,6 +203,8 @@ final class AdminRbacSeeder extends Seeder
                     'admin.account_recoveries.reject',
                     'admin.feedback.view',
                     'admin.feedback.manage',
+                    'admin.b2b.view',
+                    'admin.b2b.manage',
                     'admin.leads.view',
                     'admin.leads.export',
                     'admin.profile.manage',
@@ -231,6 +238,9 @@ final class AdminRbacSeeder extends Seeder
                     'admin.finance.manage',
                     'admin.finance.export',
                     'admin.finance.sync',
+                    'admin.b2b.view',
+                    'admin.b2b.manage',
+                    'admin.b2b.export',
                     'admin.profile.manage',
                 ],
             ],

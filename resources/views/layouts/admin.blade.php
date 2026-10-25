@@ -314,6 +314,7 @@
         ['perm' => 'admin.subscriptions.view', 'title' => 'Langganan & Billing', 'desc' => 'Approval bukti bayar paket langganan', 'url' => route('admin.subscriptions.index'), 'icon' => 'receipt', 'cat' => 'Monetisasi'],
         ['perm' => 'admin.settlements.view', 'title' => 'Pencairan Merchant', 'desc' => 'Verifikasi transfer settlement saldo merchant', 'url' => route('admin.settlements.index'), 'icon' => 'arrow-down-to-dot', 'cat' => 'Monetisasi'],
         ['perm' => 'admin.finance.view', 'title' => 'Buku Kas & Keuangan', 'desc' => 'Arus kas platform, laba rugi, dan rekonsiliasi billing & settlement', 'url' => route('admin.finance.index'), 'icon' => 'wallet', 'cat' => 'Monetisasi'],
+        ['perm' => 'admin.b2b.view', 'title' => 'Penjualan B2B & Faktur', 'desc' => 'Surat penawaran, pesanan penjualan (SO), faktur komersial, retur & cetak PDF', 'url' => route('admin.b2b.index'), 'icon' => 'briefcase', 'cat' => 'Monetisasi'],
         ['perm' => 'admin.billing_packages.view', 'title' => 'Paket & Harga', 'desc' => 'Katalog paket 4-tier & kuota token', 'url' => route('admin.billing-packages.index'), 'icon' => 'layers-3', 'cat' => 'Monetisasi'],
         ['perm' => 'admin.payment_accounts.view', 'title' => 'Rekening Bank', 'desc' => 'CMS rekening pembayaran resmi Cooca', 'url' => route('admin.payment-accounts.index'), 'icon' => 'credit-card', 'cat' => 'Monetisasi'],
         ['perm' => 'admin.whatsapp.view', 'title' => 'WhatsApp Gateway', 'desc' => 'Status gateway OTP & notifikasi resmi', 'url' => route('admin.whatsapp.index'), 'icon' => 'message-circle', 'cat' => 'Integrasi'],
@@ -501,11 +502,19 @@
                 @endif
 
                 <!-- Group 3: Monetisasi & Finansial -->
-                @if ($currentAdmin?->hasAnyPermission(['admin.subscriptions.view', 'admin.settlements.view', 'admin.finance.view', 'admin.billing_packages.view', 'admin.promos.view', 'admin.payment_accounts.view']))
+                @if ($currentAdmin?->hasAnyPermission(['admin.subscriptions.view', 'admin.settlements.view', 'admin.finance.view', 'admin.b2b.view', 'admin.billing_packages.view', 'admin.promos.view', 'admin.payment_accounts.view']))
                     <div
                         class="px-3 pt-4 pb-1 text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D]">
                         Monetisasi &amp; Finansial
                     </div>
+
+                    @if ($currentAdmin?->hasPermission('admin.b2b.view'))
+                        <a href="{{ route('admin.b2b.index') }}"
+                            class="flex items-center gap-2.5 px-3 h-10 rounded-[12px] transition-all {{ request()->routeIs('admin.b2b.*') ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25 font-semibold' : 'text-[#3C3C43]/80 dark:text-[#EBEBF5]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
+                            <i data-lucide="briefcase" class="w-4.5 h-4.5 shrink-0" stroke-width="1.8"></i>
+                            <span class="whitespace-nowrap truncate min-w-0 flex-1">Penjualan B2B &amp; Faktur</span>
+                        </a>
+                    @endif
 
                     @if ($currentAdmin?->hasPermission('admin.finance.view'))
                         <a href="{{ route('admin.finance.index') }}"
@@ -1088,6 +1097,20 @@
                         <div>
                             <div class="text-[13px] font-bold text-black dark:text-white">Approval Billing</div>
                             <div class="text-[10px] text-black/50 dark:text-white/50">Verifikasi bukti transfer</div>
+                        </div>
+                    </a>
+                    @endif
+
+                    @if($currentAdmin?->hasPermission('admin.b2b.view'))
+                    <a href="{{ route('admin.b2b.index') }}"
+                        class="p-3.5 rounded-[16px] bg-black/[0.03] dark:bg-white/[0.04] hover:bg-black/[0.06] dark:hover:bg-white/[0.08] active:scale-[0.98] transition-all flex flex-col gap-2 min-h-[52px]">
+                        <div
+                            class="w-8 h-8 rounded-[10px] bg-[#007AFF]/15 text-[#007AFF] flex items-center justify-center">
+                            <i data-lucide="briefcase" class="w-4.5 h-4.5" stroke-width="1.8"></i>
+                        </div>
+                        <div>
+                            <div class="text-[13px] font-bold text-black dark:text-white">Penjualan B2B</div>
+                            <div class="text-[10px] text-black/50 dark:text-white/50">Penawaran, SO &amp; Faktur</div>
                         </div>
                     </a>
                     @endif

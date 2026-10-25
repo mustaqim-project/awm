@@ -1,6 +1,6 @@
 {
   "module": "finance",
-  "baseline_commit": "38cdcdf",
+  "baseline_commit": "0c62884",
   "created": "2026-10-25",
   "mode": "audit+fix",
   "gate_status": "PASSED",
@@ -32,22 +32,25 @@
   "findings": {
     "Critical": 0,
     "High": 2,
-    "Medium": 1,
-    "Low": 1,
-    "Informational": 0
+    "Medium": 2,
+    "Low": 3,
+    "Informational": 1
   },
   "tasks": {
     "Pending": 0,
     "In Progress": 0,
     "Blocked": 0,
-    "Verified": 12
+    "Verified": 16
   },
   "unverifiable": [],
   "notes": [
     "Controller-Level RBAC HasMiddleware implemented across all 7 Finance web controllers with granular permissions.",
     "Spreadsheet Formula Injection (CWE-1236) sanitized in DataExchangeService using CsvSanitizer::sanitize for COA, receivables, and payables exports.",
     "Integrated AuditLog::create for accounting.coa_created, finance.cash_account_created, and finance.expense_created.",
-    "All 42 tests across 5 test suites passed 100% with 339 assertions.",
+    "Zero Unicode Emoji compliance: replaced bank emoji in external-reconciliation with Lucide landmark icon.",
+    "Apple HIG Touch Target hardening: upgraded all sub-44px table action buttons in payables, receivables, reconciliation, edc-terminals, and payout-accounts.",
+    "100% i18n compliance: localized all 16 views with 1113 i18n calls and zero issues verified via scan_i18n.py.",
+    "All automated test suites passed 100% (FinanceAndAccountingNavigationTest, FinanceModuleAuditTest, CashLedgerIntegrationTest, CorporateAccountingMultiLedgerTest).",
     "41 internal links verified across 3 user guides with 0 problems."
   ]
 }

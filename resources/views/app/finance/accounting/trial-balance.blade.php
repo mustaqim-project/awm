@@ -22,9 +22,9 @@
             </form>
             <a id="btnTrialBalanceExportExcel" href="{{ route('finance.trial-balance.export-excel', ['start_date' => $startDate->toDateString(), 'end_date' => $endDate->toDateString()]) }}"
                 class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shadow-xs"
-                title="Export Neraca Saldo ke Excel (XLSX)">
+                title="{{ __('finance.export_trial_balance_tooltip') }}">
                 <i data-lucide="file-spreadsheet" class="w-4 h-4 text-[#34C759]"></i>
-                <span>Export Excel</span>
+                <span>{{ __('common.export_excel') }}</span>
             </a>
             <button type="button" onclick="window.print()"
                 class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center gap-1.5">

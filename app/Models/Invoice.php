@@ -158,7 +158,9 @@ class Invoice extends Model
             }
 
             $taxableAmount = max(0.0, $subtotal - $discountAmount);
-            $taxAmount = ($this->tax_percentage / 100.0) * $taxableAmount;
+            $taxAmount = ($this->tax_percentage !== null && (float) $this->tax_percentage > 0)
+                ? (($this->tax_percentage / 100.0) * $taxableAmount)
+                : (float) $this->tax_amount;
             $totalAmount = $taxableAmount + $taxAmount + (float) $this->shipping_cost;
         } else {
             $subtotal = (float) $this->subtotal;

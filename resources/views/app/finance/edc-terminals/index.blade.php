@@ -130,7 +130,7 @@
                     <form action="{{ route('finance.edc-terminals.toggle', $term->id) }}" method="POST">
                         @csrf
                         @method('PATCH')
-                        <button type="submit" class="h-8 px-2.5 rounded-[8px] text-[11px] font-medium {{ $term->is_active ? 'text-[#FF9500] hover:bg-[#FF9500]/10' : 'text-[#34C759] hover:bg-[#34C759]/10' }} transition">
+                        <button type="submit" class="min-h-[36px] sm:min-h-[38px] px-3 rounded-[10px] text-[12px] font-medium {{ $term->is_active ? 'text-[#FF9500] hover:bg-[#FF9500]/10' : 'text-[#34C759] hover:bg-[#34C759]/10' }} transition cursor-pointer">
                             {{ $term->is_active ? __('finance.btn_deactivate') : __('finance.btn_activate_terminal') }}
                         </button>
                     </form>
@@ -139,7 +139,7 @@
                         onsubmit="return confirm('{{ __('finance.confirm_delete_edc') }}')">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="w-8 h-8 rounded-[8px] text-[#FF3B30] hover:bg-[#FF3B30]/10 flex items-center justify-center transition">
+                        <button type="submit" class="min-w-[36px] min-h-[36px] sm:min-w-[40px] sm:min-h-[40px] rounded-[10px] text-[#FF3B30] hover:bg-[#FF3B30]/10 flex items-center justify-center transition cursor-pointer">
                             <i data-lucide="trash-2" class="w-4 h-4"></i>
                         </button>
                     </form>

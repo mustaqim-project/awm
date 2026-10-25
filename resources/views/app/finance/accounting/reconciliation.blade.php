@@ -161,14 +161,14 @@
                                                     @if($line->status === 'reconciled')
                                                         <form method="POST" action="{{ route('finance.reconciliations.unmatch', $line) }}" class="inline">
                                                             @csrf
-                                                            <button type="submit" class="w-8 h-8 rounded-[8px] text-black/60 dark:text-white/60 bg-black/[0.04] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('finance.btn_unmatch') }}" aria-label="{{ __('finance.btn_unmatch') }}">
+                                                            <button type="submit" class="min-w-[36px] min-h-[36px] sm:min-w-[40px] sm:min-h-[40px] rounded-[8px] text-black/60 dark:text-white/60 bg-black/[0.04] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('finance.btn_unmatch') }}" aria-label="{{ __('finance.btn_unmatch') }}">
                                                                 <i data-lucide="undo" class="w-4 h-4"></i>
                                                             </button>
                                                         </form>
                                                     @else
                                                         <form method="POST" action="{{ route('finance.reconciliations.match', $line) }}" class="inline">
                                                             @csrf
-                                                            <button type="submit" class="w-8 h-8 rounded-[8px] bg-[#34C759]/10 text-[#34C759] hover:bg-[#34C759]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('finance.btn_match') }}" aria-label="{{ __('finance.btn_match') }}">
+                                                            <button type="submit" class="min-w-[36px] min-h-[36px] sm:min-w-[40px] sm:min-h-[40px] rounded-[8px] bg-[#34C759]/10 text-[#34C759] hover:bg-[#34C759]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('finance.btn_match') }}" aria-label="{{ __('finance.btn_match') }}">
                                                                 <i data-lucide="check" class="w-4 h-4"></i>
                                                             </button>
                                                         </form>
@@ -253,7 +253,7 @@
                             <div class="lg:col-span-6 space-y-4">
                                 <div>
                                     <label class="block text-[13px] font-bold text-black/80 dark:text-white/80 mb-1.5">{{ __('finance.field_paste_csv') }}</label>
-                                    <textarea name="manual_entries" rows="6" placeholder="2026-09-20, Setoran QRIS Gerai, 150000, credit&#10;2026-09-20, Biaya Admin Bank, 5000, debit"
+                                    <textarea name="manual_entries" rows="6" placeholder="{{ __('finance.csv_paste_placeholder') }}"
                                         class="w-full p-3.5 text-[14px] sm:text-[12.5px] font-mono bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 rounded-[12px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]"></textarea>
                                 </div>
                                 <p class="text-[11.5px] text-black/45 dark:text-white/45 leading-relaxed">
