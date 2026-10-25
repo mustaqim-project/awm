@@ -470,10 +470,27 @@ class AdminSocialMediaController extends Controller
         }
 
         try {
-            // Purge local media if stored
+            // 1. Purge physical media files from storage disks and reclaim quota
+            try {
+                app(\App\Domain\SocialMedia\SocialMediaService::class)->purgePostLocalMedia($post);
+            } catch (\Throwable) {
+                // Non-fatal, continue with direct storage cleanup
+            }
+
+            // 2. Direct AdminStorage purge for local paths
             if (! empty($post->local_media_paths) && is_array($post->local_media_paths)) {
                 foreach ($post->local_media_paths as $p) {
                     \App\Domain\Storage\AdminStorage::deletePublicFile($p);
+                }
+            }
+
+            // 3. Direct AdminStorage purge for media relation
+            foreach ($post->media as $media) {
+                if (! empty($media->file_path)) {
+                    \App\Domain\Storage\AdminStorage::deletePublicFile($media->file_path);
+                }
+                if (! empty($media->local_path)) {
+                    \App\Domain\Storage\AdminStorage::deletePublicFile($media->local_path);
                 }
             }
 
