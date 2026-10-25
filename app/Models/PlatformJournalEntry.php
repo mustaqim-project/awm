@@ -16,10 +16,14 @@ class PlatformJournalEntry extends Model
 {
     use HasFactory, HasUuid, SoftDeletes;
 
-    public const REF_SUBSCRIPTION = 'subscription_payment';
-    public const REF_SETTLEMENT   = 'payment_settlement';
-    public const REF_TRANSACTION  = 'platform_transaction';
-    public const REF_MANUAL       = 'manual_journal';
+    public const REF_SUBSCRIPTION       = 'subscription_payment';
+    public const REF_SETTLEMENT         = 'payment_settlement';
+    public const REF_TRANSACTION        = 'platform_transaction';
+    public const REF_MANUAL             = 'manual_journal';
+    public const REF_RECEIVABLE_INVOICE = 'receivable_invoice';
+    public const REF_RECEIVABLE_PAYMENT = 'receivable_payment';
+    public const REF_PAYABLE_BILL       = 'payable_bill';
+    public const REF_PAYABLE_PAYMENT    = 'payable_payment';
 
     protected $table = 'platform_journal_entries';
 

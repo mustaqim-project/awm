@@ -17,6 +17,17 @@
     modalImageUrl: '',
     modalImageTitle: '',
 
+    // AR & AP modal state
+    showCreateArModal: false,
+    showPayArModal: false,
+    selectedAr: null,
+    payArActionUrl: '',
+
+    showCreateApModal: false,
+    showPayApModal: false,
+    selectedAp: null,
+    payApActionUrl: '',
+
     // Edit transaction form state
     editTrx: null,
     editActionUrl: '',
@@ -36,6 +47,30 @@
         this.modalImageUrl = url;
         this.modalImageTitle = title || 'Lampiran Bukti Transaksi';
         this.showImageModal = true;
+        this.$nextTick(() => { if (window.lucide) lucide.createIcons(); });
+    },
+
+    openCreateAr() {
+        this.showCreateArModal = true;
+        this.$nextTick(() => { if (window.lucide) lucide.createIcons(); });
+    },
+
+    openPayAr(ar) {
+        this.selectedAr = ar;
+        this.payArActionUrl = '/admin/finance/receivables/' + ar.id + '/payments';
+        this.showPayArModal = true;
+        this.$nextTick(() => { if (window.lucide) lucide.createIcons(); });
+    },
+
+    openCreateAp() {
+        this.showCreateApModal = true;
+        this.$nextTick(() => { if (window.lucide) lucide.createIcons(); });
+    },
+
+    openPayAp(ap) {
+        this.selectedAp = ap;
+        this.payApActionUrl = '/admin/finance/payables/' + ap.id + '/payments';
+        this.showPayApModal = true;
         this.$nextTick(() => { if (window.lucide) lucide.createIcons(); });
     },
 
@@ -410,6 +445,32 @@
                 <i data-lucide="refresh-cw" class="w-4 h-4 text-[#007AFF]"></i>
                 <span>Integrasi Billing</span>
             </button>
+
+            {{-- Tab 8: Accounts Receivable (AR / Piutang) --}}
+            <button type="button" @click="activeTab = 'ar'; $nextTick(() => { if (window.lucide) lucide.createIcons(); })"
+                :class="activeTab === 'ar' ?
+                    'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-bold' :
+                    'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
+                class="px-3.5 py-1.5 rounded-[10px] transition-all flex items-center gap-1.5 cursor-pointer">
+                <i data-lucide="receipt" class="w-4 h-4 text-[#007AFF]"></i>
+                <span>Piutang (AR)</span>
+                @if(($arAging['counts']['unpaid'] + $arAging['counts']['partial']) > 0)
+                    <span class="px-1.5 py-0.2 rounded-full text-[10.5px] font-bold bg-[#007AFF]/12 text-[#007AFF] tabular-nums">{{ $arAging['counts']['unpaid'] + $arAging['counts']['partial'] }}</span>
+                @endif
+            </button>
+
+            {{-- Tab 9: Accounts Payable (AP / Hutang) --}}
+            <button type="button" @click="activeTab = 'ap'; $nextTick(() => { if (window.lucide) lucide.createIcons(); })"
+                :class="activeTab === 'ap' ?
+                    'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-bold' :
+                    'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
+                class="px-3.5 py-1.5 rounded-[10px] transition-all flex items-center gap-1.5 cursor-pointer">
+                <i data-lucide="file-check" class="w-4 h-4 text-[#FF3B30]"></i>
+                <span>Hutang (AP)</span>
+                @if(($apAging['counts']['unpaid'] + $apAging['counts']['partial']) > 0)
+                    <span class="px-1.5 py-0.2 rounded-full text-[10.5px] font-bold bg-[#FF3B30]/12 text-[#C41E17] dark:text-[#FF453A] tabular-nums">{{ $apAging['counts']['unpaid'] + $apAging['counts']['partial'] }}</span>
+                @endif
+            </button>
         </div>
     </div>
 
@@ -421,12 +482,18 @@
     @include('admin.finance.tabs.tab-balance-sheet')
     @include('admin.finance.tabs.tab-coa')
     @include('admin.finance.tabs.tab-sync')
+    @include('admin.finance.tabs.tab-ar')
+    @include('admin.finance.tabs.tab-ap')
 
     {{-- MODALS --}}
     @include('admin.finance.modals.modal-create-transaction')
     @include('admin.finance.modals.modal-create-journal')
     @include('admin.finance.modals.modal-coa')
     @include('admin.finance.modals.modal-lightbox')
+    @include('admin.finance.modals.modal-create-ar')
+    @include('admin.finance.modals.modal-pay-ar')
+    @include('admin.finance.modals.modal-create-ap')
+    @include('admin.finance.modals.modal-pay-ap')
 
     {{-- MODAL EDIT TRANSAKSI KAS --}}
     <div x-show="showEditModal" x-cloak

@@ -5,11 +5,16 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Business;
 use App\Models\PaymentAccount;
 use App\Models\PaymentSettlement;
 use App\Models\PlatformChartOfAccount;
 use App\Models\PlatformJournalEntry;
 use App\Models\PlatformJournalEntryLine;
+use App\Models\PlatformPayable;
+use App\Models\PlatformPayablePayment;
+use App\Models\PlatformReceivable;
+use App\Models\PlatformReceivablePayment;
 use App\Models\PlatformTransaction;
 use App\Models\SubscriptionPayment;
 use App\Services\PlatformAccountingService;
@@ -39,7 +44,8 @@ final class AdminFinanceController extends Controller implements HasMiddleware
         return [
             new Middleware('require.admin.permission:admin.finance.view', only: ['index']),
             new Middleware('require.admin.permission:admin.finance.manage', only: [
-                'store', 'update', 'destroy', 'storeJournal', 'storeAccount', 'updateAccount', 'toggleAccount'
+                'store', 'update', 'destroy', 'storeJournal', 'storeAccount', 'updateAccount', 'toggleAccount',
+                'storeReceivable', 'recordReceivablePayment', 'storePayable', 'recordPayablePayment',
             ]),
             new Middleware('require.admin.permission:admin.finance.sync', only: ['sync']),
             new Middleware('require.admin.permission:admin.finance.export', only: ['export']),
@@ -162,6 +168,47 @@ final class AdminFinanceController extends Controller implements HasMiddleware
             ->get()
             ->groupBy('type');
 
+        // Accounts Receivable (Piutang Usaha)
+        $receivableQuery = PlatformReceivable::with(['payments.account', 'business', 'admin']);
+        if ($search && $activeTab === 'ar') {
+            $receivableQuery->where(function ($q) use ($search): void {
+                $q->where('invoice_number', 'like', "%{$search}%")
+                    ->orWhere('client_name', 'like', "%{$search}%")
+                    ->orWhere('title', 'like', "%{$search}%");
+            });
+        }
+        $receivables = $receivableQuery->orderBy('due_date', 'asc')->paginate(20, ['*'], 'ar_page')->withQueryString();
+        $arAging = $this->accountingService->getReceivableAging();
+
+        // Accounts Payable (Hutang Usaha & Tagihan Vendor)
+        $payableQuery = PlatformPayable::with(['payments.account', 'expenseAccount', 'admin']);
+        if ($search && $activeTab === 'ap') {
+            $payableQuery->where(function ($q) use ($search): void {
+                $q->where('bill_number', 'like', "%{$search}%")
+                    ->orWhere('vendor_name', 'like', "%{$search}%")
+                    ->orWhere('title', 'like', "%{$search}%")
+                    ->orWhere('reference_number', 'like', "%{$search}%");
+            });
+        }
+        $payables = $payableQuery->orderBy('due_date', 'asc')->paginate(20, ['*'], 'ap_page')->withQueryString();
+        $apAging = $this->accountingService->getPayableAging();
+
+        // Tenant businesses for AR creation
+        $businesses = Business::select('id', 'name', 'email', 'phone')->orderBy('name')->get();
+
+        // Cash & Bank Accounts for payment recording
+        $cashBankAccounts = PlatformChartOfAccount::where('type', PlatformChartOfAccount::TYPE_ASSET)
+            ->where('category_group', 'kas_bank')
+            ->where('is_active', true)
+            ->orderBy('code')
+            ->get();
+
+        // Expense Accounts for AP recording
+        $expenseAccounts = PlatformChartOfAccount::where('type', PlatformChartOfAccount::TYPE_EXPENSE)
+            ->where('is_active', true)
+            ->orderBy('code')
+            ->get();
+
         // Active Platform Payment Accounts (Bank CMS)
         $platformAccounts = PaymentAccount::where('is_active', true)->get();
         $categoryLabels = PlatformTransaction::categoryLabels();
@@ -192,7 +239,14 @@ final class AdminFinanceController extends Controller implements HasMiddleware
             'unsyncedSubscriptionsCount',
             'unsyncedSettlementsCount',
             'platformAccounts',
-            'categoryLabels'
+            'categoryLabels',
+            'receivables',
+            'arAging',
+            'payables',
+            'apAging',
+            'businesses',
+            'cashBankAccounts',
+            'expenseAccounts'
         ));
     }
 
@@ -579,5 +633,213 @@ final class AdminFinanceController extends Controller implements HasMiddleware
             'Content-Type' => 'text/csv; charset=UTF-8',
             'Content-Disposition' => "attachment; filename=\"{$filename}\"",
         ]);
+    }
+
+    /**
+     * Create a new Accounts Receivable invoice (Tagihan Piutang Tenant).
+     */
+    public function storeReceivable(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'client_name'   => ['required', 'string', 'max:150'],
+            'client_email'  => ['nullable', 'email', 'max:150'],
+            'client_phone'  => ['nullable', 'string', 'max:50'],
+            'business_id'   => ['nullable', 'exists:businesses,id'],
+            'title'         => ['required', 'string', 'max:255'],
+            'category'      => ['required', 'string', 'in:subscription,custom_setup,enterprise_annual,consulting,other'],
+            'subtotal'      => ['required', 'numeric', 'min:0.01'],
+            'tax_amount'    => ['nullable', 'numeric', 'min:0'],
+            'invoice_date'  => ['required', 'date'],
+            'due_date'      => ['required', 'date', 'after_or_equal:invoice_date'],
+            'notes'         => ['nullable', 'string', 'max:1000'],
+            'attachment'    => ['nullable', 'file', 'mimes:jpeg,jpg,png,webp,pdf', 'max:5120'],
+        ]);
+
+        $attachmentPath = null;
+        if ($request->hasFile('attachment')) {
+            $attachmentPath = $request->file('attachment')->store('finance/receivables', 'public');
+        }
+
+        $datePrefix = Carbon::parse($validated['invoice_date'])->format('Ym');
+        $count = PlatformReceivable::where('invoice_number', 'like', "INV-AR-{$datePrefix}-%")->count() + 1;
+        $invNumber = sprintf('INV-AR-%s-%04d', $datePrefix, $count);
+
+        $subtotal = (float) $validated['subtotal'];
+        $tax = (float) ($validated['tax_amount'] ?? 0.0);
+        $total = $subtotal + $tax;
+
+        $receivable = PlatformReceivable::create([
+            'invoice_number'  => $invNumber,
+            'client_name'     => $validated['client_name'],
+            'client_email'    => $validated['client_email'] ?? null,
+            'client_phone'    => $validated['client_phone'] ?? null,
+            'business_id'     => $validated['business_id'] ?? null,
+            'invoice_date'    => $validated['invoice_date'],
+            'due_date'        => $validated['due_date'],
+            'subtotal'        => $subtotal,
+            'tax_amount'      => $tax,
+            'total_amount'    => $total,
+            'paid_amount'     => 0.00,
+            'balance_due'     => $total,
+            'status'          => PlatformReceivable::STATUS_UNPAID,
+            'category'        => $validated['category'],
+            'title'           => $validated['title'],
+            'notes'           => $validated['notes'] ?? null,
+            'attachment_path' => $attachmentPath,
+            'admin_id'        => Auth::guard('admin')->id(),
+        ]);
+
+        // Auto post double-entry journal for Accounts Receivable
+        $this->accountingService->syncReceivableInvoiceJournal($receivable);
+
+        return redirect()->route('admin.finance.index', ['tab' => 'ar'])
+            ->with('status', "Invoice piutang {$receivable->invoice_number} berhasil diterbitkan dan dijurnal otomatis ke Piutang Usaha!");
+    }
+
+    /**
+     * Record a payment against an Accounts Receivable invoice.
+     */
+    public function recordReceivablePayment(Request $request, PlatformReceivable $receivable): RedirectResponse
+    {
+        $validated = $request->validate([
+            'amount'           => ['required', 'numeric', 'min:1', 'max:' . $receivable->balance_due],
+            'payment_date'     => ['required', 'date'],
+            'payment_method'   => ['required', 'string', 'max:50'],
+            'account_id'       => ['required', 'exists:platform_chart_of_accounts,id'],
+            'reference_number' => ['nullable', 'string', 'max:100'],
+            'notes'            => ['nullable', 'string', 'max:1000'],
+            'attachment'       => ['nullable', 'file', 'mimes:jpeg,jpg,png,webp,pdf', 'max:5120'],
+        ]);
+
+        $attachmentPath = null;
+        if ($request->hasFile('attachment')) {
+            $attachmentPath = $request->file('attachment')->store('finance/receivable_payments', 'public');
+        }
+
+        $datePrefix = Carbon::parse($validated['payment_date'])->format('Ym');
+        $count = PlatformReceivablePayment::where('payment_number', 'like', "PAY-AR-{$datePrefix}-%")->count() + 1;
+        $payNumber = sprintf('PAY-AR-%s-%04d', $datePrefix, $count);
+
+        $payment = PlatformReceivablePayment::create([
+            'receivable_id'    => $receivable->id,
+            'payment_number'   => $payNumber,
+            'payment_date'     => $validated['payment_date'],
+            'amount'           => (float) $validated['amount'],
+            'payment_method'   => $validated['payment_method'],
+            'account_id'       => $validated['account_id'],
+            'attachment_path'  => $attachmentPath,
+            'reference_number' => $validated['reference_number'] ?? null,
+            'notes'            => $validated['notes'] ?? null,
+            'admin_id'         => Auth::guard('admin')->id(),
+        ]);
+
+        // Auto post double-entry journal (Debit: Kas/Bank, Credit: Piutang)
+        $this->accountingService->syncReceivablePaymentJournal($payment);
+
+        return redirect()->route('admin.finance.index', ['tab' => 'ar'])
+            ->with('status', "Pembayaran piutang {$payment->payment_number} sebesar Rp " . number_format((float) $payment->amount, 0, ',', '.') . " berhasil dicatat dan dijurnal otomatis!");
+    }
+
+    /**
+     * Create a new Accounts Payable bill (Tagihan Hutang Vendor Platform).
+     */
+    public function storePayable(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'vendor_name'        => ['required', 'string', 'max:150'],
+            'vendor_category'    => ['required', 'string', 'in:infrastructure,ai_api,whatsapp_gateway,office_rent,legal_tax,salary,marketing,other'],
+            'reference_number'   => ['nullable', 'string', 'max:100'],
+            'title'              => ['required', 'string', 'max:255'],
+            'expense_account_id' => ['nullable', 'exists:platform_chart_of_accounts,id'],
+            'subtotal'           => ['required', 'numeric', 'min:0.01'],
+            'tax_amount'         => ['nullable', 'numeric', 'min:0'],
+            'bill_date'          => ['required', 'date'],
+            'due_date'           => ['required', 'date', 'after_or_equal:bill_date'],
+            'notes'              => ['nullable', 'string', 'max:1000'],
+            'attachment'         => ['nullable', 'file', 'mimes:jpeg,jpg,png,webp,pdf', 'max:5120'],
+        ]);
+
+        $attachmentPath = null;
+        if ($request->hasFile('attachment')) {
+            $attachmentPath = $request->file('attachment')->store('finance/payables', 'public');
+        }
+
+        $datePrefix = Carbon::parse($validated['bill_date'])->format('Ym');
+        $count = PlatformPayable::where('bill_number', 'like', "BILL-AP-{$datePrefix}-%")->count() + 1;
+        $billNumber = sprintf('BILL-AP-%s-%04d', $datePrefix, $count);
+
+        $subtotal = (float) $validated['subtotal'];
+        $tax = (float) ($validated['tax_amount'] ?? 0.0);
+        $total = $subtotal + $tax;
+
+        $payable = PlatformPayable::create([
+            'bill_number'        => $billNumber,
+            'vendor_name'        => $validated['vendor_name'],
+            'vendor_category'    => $validated['vendor_category'],
+            'reference_number'   => $validated['reference_number'] ?? null,
+            'bill_date'          => $validated['bill_date'],
+            'due_date'           => $validated['due_date'],
+            'subtotal'           => $subtotal,
+            'tax_amount'         => $tax,
+            'total_amount'       => $total,
+            'paid_amount'        => 0.00,
+            'balance_due'        => $total,
+            'status'             => PlatformPayable::STATUS_UNPAID,
+            'title'              => $validated['title'],
+            'expense_account_id' => $validated['expense_account_id'] ?? null,
+            'notes'              => $validated['notes'] ?? null,
+            'attachment_path'    => $attachmentPath,
+            'admin_id'           => Auth::guard('admin')->id(),
+        ]);
+
+        // Auto post double-entry journal for Accounts Payable (Debit: Beban, Credit: Hutang Usaha)
+        $this->accountingService->syncPayableBillJournal($payable);
+
+        return redirect()->route('admin.finance.index', ['tab' => 'ap'])
+            ->with('status', "Tagihan vendor {$payable->bill_number} berhasil dicatat dan dijurnal otomatis ke Hutang Usaha!");
+    }
+
+    /**
+     * Record a payment against an Accounts Payable bill.
+     */
+    public function recordPayablePayment(Request $request, PlatformPayable $payable): RedirectResponse
+    {
+        $validated = $request->validate([
+            'amount'           => ['required', 'numeric', 'min:1', 'max:' . $payable->balance_due],
+            'payment_date'     => ['required', 'date'],
+            'payment_method'   => ['required', 'string', 'max:50'],
+            'account_id'       => ['required', 'exists:platform_chart_of_accounts,id'],
+            'reference_number' => ['nullable', 'string', 'max:100'],
+            'notes'            => ['nullable', 'string', 'max:1000'],
+            'attachment'       => ['nullable', 'file', 'mimes:jpeg,jpg,png,webp,pdf', 'max:5120'],
+        ]);
+
+        $attachmentPath = null;
+        if ($request->hasFile('attachment')) {
+            $attachmentPath = $request->file('attachment')->store('finance/payable_payments', 'public');
+        }
+
+        $datePrefix = Carbon::parse($validated['payment_date'])->format('Ym');
+        $count = PlatformPayablePayment::where('payment_number', 'like', "PAY-AP-{$datePrefix}-%")->count() + 1;
+        $payNumber = sprintf('PAY-AP-%s-%04d', $datePrefix, $count);
+
+        $payment = PlatformPayablePayment::create([
+            'payable_id'       => $payable->id,
+            'payment_number'   => $payNumber,
+            'payment_date'     => $validated['payment_date'],
+            'amount'           => (float) $validated['amount'],
+            'payment_method'   => $validated['payment_method'],
+            'account_id'       => $validated['account_id'],
+            'attachment_path'  => $attachmentPath,
+            'reference_number' => $validated['reference_number'] ?? null,
+            'notes'            => $validated['notes'] ?? null,
+            'admin_id'         => Auth::guard('admin')->id(),
+        ]);
+
+        // Auto post double-entry journal (Debit: Hutang Usaha, Credit: Kas/Bank)
+        $this->accountingService->syncPayablePaymentJournal($payment);
+
+        return redirect()->route('admin.finance.index', ['tab' => 'ap'])
+            ->with('status', "Pelunasan hutang vendor {$payment->payment_number} sebesar Rp " . number_format((float) $payment->amount, 0, ',', '.') . " berhasil dicatat dan dijurnal otomatis!");
     }
 }

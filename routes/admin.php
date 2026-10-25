@@ -147,6 +147,12 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
             Route::post('/accounts', [AdminFinanceController::class, 'storeAccount'])->name('accounts.store');
             Route::put('/accounts/{account}', [AdminFinanceController::class, 'updateAccount'])->name('accounts.update');
             Route::post('/accounts/{account}/toggle', [AdminFinanceController::class, 'toggleAccount'])->name('accounts.toggle');
+
+            // Accounts Receivable (AR) & Accounts Payable (AP)
+            Route::post('/receivables', [AdminFinanceController::class, 'storeReceivable'])->name('receivables.store');
+            Route::post('/receivables/{receivable}/payments', [AdminFinanceController::class, 'recordReceivablePayment'])->name('receivables.payments.store');
+            Route::post('/payables', [AdminFinanceController::class, 'storePayable'])->name('payables.store');
+            Route::post('/payables/{payable}/payments', [AdminFinanceController::class, 'recordPayablePayment'])->name('payables.payments.store');
         });
 
         // Feedback: Bug Reports & Feature Requests

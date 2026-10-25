@@ -7,6 +7,10 @@ namespace App\Services;
 use App\Models\PlatformChartOfAccount;
 use App\Models\PlatformJournalEntry;
 use App\Models\PlatformJournalEntryLine;
+use App\Models\PlatformPayable;
+use App\Models\PlatformPayablePayment;
+use App\Models\PlatformReceivable;
+use App\Models\PlatformReceivablePayment;
 use App\Models\PlatformTransaction;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -396,6 +400,423 @@ class PlatformAccountingService
             'totalExpense' => $totalExpense,
             'netProfit' => $netProfit,
             'profitMargin' => $profitMargin,
+        ];
+    }
+
+    /**
+     * Generate double-entry journal for a newly issued Platform Receivable (Invoice Piutang).
+     * Debit: 1150 (Piutang Usaha & Tagihan Tenant)
+     * Credit: 4110 / 4130 / 4190 (Pendapatan Usaha)
+     */
+    public function syncReceivableInvoiceJournal(PlatformReceivable $receivable): PlatformJournalEntry
+    {
+        return DB::transaction(function () use ($receivable): PlatformJournalEntry {
+            if ($receivable->journal_entry_id) {
+                $existing = PlatformJournalEntry::find($receivable->journal_entry_id);
+                if ($existing) {
+                    $existing->lines()->delete();
+                    $existing->delete();
+                }
+            }
+
+            $arAccount = PlatformChartOfAccount::where('code', '1150')->firstOrFail();
+
+            $revenueCode = match ($receivable->category) {
+                PlatformReceivable::CAT_SUBSCRIPTION, PlatformReceivable::CAT_ENTERPRISE_ANNUAL => '4110',
+                PlatformReceivable::CAT_CUSTOM_SETUP, PlatformReceivable::CAT_CONSULTING => '4130',
+                default => '4190',
+            };
+            $revenueAccount = PlatformChartOfAccount::where('code', $revenueCode)->first()
+                ?? PlatformChartOfAccount::where('type', PlatformChartOfAccount::TYPE_REVENUE)->firstOrFail();
+
+            $amount = (float) $receivable->total_amount;
+
+            $journal = PlatformJournalEntry::create([
+                'entry_date' => $receivable->invoice_date,
+                'reference_type' => PlatformJournalEntry::REF_RECEIVABLE_INVOICE,
+                'reference_id' => (string) $receivable->id,
+                'description' => "Pengakuan Piutang: {$receivable->invoice_number} - {$receivable->client_name} ({$receivable->title})",
+                'total_debit' => $amount,
+                'total_credit' => $amount,
+                'is_balanced' => true,
+                'admin_id' => $receivable->admin_id,
+            ]);
+
+            // Debit: Piutang Usaha
+            PlatformJournalEntryLine::create([
+                'journal_entry_id' => $journal->id,
+                'account_id' => $arAccount->id,
+                'type' => PlatformJournalEntryLine::TYPE_DEBIT,
+                'amount' => $amount,
+                'notes' => 'Tagihan invoice piutang kepada ' . $receivable->client_name,
+            ]);
+
+            // Credit: Pendapatan Usaha
+            PlatformJournalEntryLine::create([
+                'journal_entry_id' => $journal->id,
+                'account_id' => $revenueAccount->id,
+                'type' => PlatformJournalEntryLine::TYPE_CREDIT,
+                'amount' => $amount,
+                'notes' => $revenueAccount->name,
+            ]);
+
+            $journal->verifyBalance();
+            $receivable->updateQuietly(['journal_entry_id' => $journal->id]);
+
+            return $journal;
+        });
+    }
+
+    /**
+     * Generate double-entry journal for a received Platform Receivable Payment.
+     * Debit: 1120 / 1110 (Kas & Bank)
+     * Credit: 1150 (Piutang Usaha & Tagihan Tenant)
+     */
+    public function syncReceivablePaymentJournal(PlatformReceivablePayment $payment): PlatformJournalEntry
+    {
+        return DB::transaction(function () use ($payment): PlatformJournalEntry {
+            if ($payment->journal_entry_id) {
+                $existing = PlatformJournalEntry::find($payment->journal_entry_id);
+                if ($existing) {
+                    $existing->lines()->delete();
+                    $existing->delete();
+                }
+            }
+
+            $cashAccount = $payment->account
+                ?? PlatformChartOfAccount::where('code', '1120')->first()
+                ?? PlatformChartOfAccount::where('type', PlatformChartOfAccount::TYPE_ASSET)->firstOrFail();
+
+            $arAccount = PlatformChartOfAccount::where('code', '1150')->firstOrFail();
+
+            $amount = (float) $payment->amount;
+            $receivable = $payment->receivable;
+
+            $journal = PlatformJournalEntry::create([
+                'entry_date' => $payment->payment_date,
+                'reference_type' => PlatformJournalEntry::REF_RECEIVABLE_PAYMENT,
+                'reference_id' => (string) $payment->id,
+                'description' => "Penerimaan Piutang: {$payment->payment_number} ({$receivable?->invoice_number} - {$receivable?->client_name})",
+                'total_debit' => $amount,
+                'total_credit' => $amount,
+                'is_balanced' => true,
+                'admin_id' => $payment->admin_id,
+            ]);
+
+            // Debit: Kas & Bank
+            PlatformJournalEntryLine::create([
+                'journal_entry_id' => $journal->id,
+                'account_id' => $cashAccount->id,
+                'type' => PlatformJournalEntryLine::TYPE_DEBIT,
+                'amount' => $amount,
+                'notes' => 'Penerimaan pembayaran piutang via ' . $cashAccount->name,
+            ]);
+
+            // Credit: Piutang Usaha
+            PlatformJournalEntryLine::create([
+                'journal_entry_id' => $journal->id,
+                'account_id' => $arAccount->id,
+                'type' => PlatformJournalEntryLine::TYPE_CREDIT,
+                'amount' => $amount,
+                'notes' => 'Pengurangan piutang invoice ' . ($receivable?->invoice_number ?? '-'),
+            ]);
+
+            $journal->verifyBalance();
+            $payment->updateQuietly(['journal_entry_id' => $journal->id]);
+
+            return $journal;
+        });
+    }
+
+    /**
+     * Generate double-entry journal for a recorded Platform Payable (Tagihan Vendor).
+     * Debit: 5110 / 5120 / 5130 / 52xx (Beban Operasional Terkait)
+     * Credit: 2130 (Hutang Biaya Operasional & Vendor)
+     */
+    public function syncPayableBillJournal(PlatformPayable $payable): PlatformJournalEntry
+    {
+        return DB::transaction(function () use ($payable): PlatformJournalEntry {
+            if ($payable->journal_entry_id) {
+                $existing = PlatformJournalEntry::find($payable->journal_entry_id);
+                if ($existing) {
+                    $existing->lines()->delete();
+                    $existing->delete();
+                }
+            }
+
+            $apAccount = PlatformChartOfAccount::where('code', '2130')->firstOrFail();
+
+            $expenseAccount = $payable->expenseAccount;
+            if (! $expenseAccount) {
+                $expenseCode = match ($payable->vendor_category) {
+                    PlatformPayable::CAT_INFRASTRUCTURE => '5110',
+                    PlatformPayable::CAT_AI_API => '5120',
+                    PlatformPayable::CAT_WHATSAPP_GATEWAY => '5130',
+                    PlatformPayable::CAT_SALARY => '5210',
+                    PlatformPayable::CAT_MARKETING => '5220',
+                    PlatformPayable::CAT_OFFICE_RENT, PlatformPayable::CAT_LEGAL_TAX => '5230',
+                    default => '5290',
+                };
+                $expenseAccount = PlatformChartOfAccount::where('code', $expenseCode)->first()
+                    ?? PlatformChartOfAccount::where('type', PlatformChartOfAccount::TYPE_EXPENSE)->firstOrFail();
+            }
+
+            $amount = (float) $payable->total_amount;
+
+            $journal = PlatformJournalEntry::create([
+                'entry_date' => $payable->bill_date,
+                'reference_type' => PlatformJournalEntry::REF_PAYABLE_BILL,
+                'reference_id' => (string) $payable->id,
+                'description' => "Pengakuan Hutang: {$payable->bill_number} - {$payable->vendor_name} ({$payable->title})",
+                'total_debit' => $amount,
+                'total_credit' => $amount,
+                'is_balanced' => true,
+                'admin_id' => $payable->admin_id,
+            ]);
+
+            // Debit: Beban Operasional Terkait
+            PlatformJournalEntryLine::create([
+                'journal_entry_id' => $journal->id,
+                'account_id' => $expenseAccount->id,
+                'type' => PlatformJournalEntryLine::TYPE_DEBIT,
+                'amount' => $amount,
+                'notes' => $expenseAccount->name . ' - ' . $payable->vendor_name,
+            ]);
+
+            // Credit: Hutang Usaha / Hutang Vendor
+            PlatformJournalEntryLine::create([
+                'journal_entry_id' => $journal->id,
+                'account_id' => $apAccount->id,
+                'type' => PlatformJournalEntryLine::TYPE_CREDIT,
+                'amount' => $amount,
+                'notes' => 'Kewajiban hutang tagihan vendor ' . $payable->vendor_name,
+            ]);
+
+            $journal->verifyBalance();
+            $payable->updateQuietly(['journal_entry_id' => $journal->id]);
+
+            return $journal;
+        });
+    }
+
+    /**
+     * Generate double-entry journal for a recorded Platform Payable Payment (Pelunasan Vendor).
+     * Debit: 2130 (Hutang Biaya Operasional & Vendor)
+     * Credit: 1120 / 1110 (Kas & Bank)
+     */
+    public function syncPayablePaymentJournal(PlatformPayablePayment $payment): PlatformJournalEntry
+    {
+        return DB::transaction(function () use ($payment): PlatformJournalEntry {
+            if ($payment->journal_entry_id) {
+                $existing = PlatformJournalEntry::find($payment->journal_entry_id);
+                if ($existing) {
+                    $existing->lines()->delete();
+                    $existing->delete();
+                }
+            }
+
+            $apAccount = PlatformChartOfAccount::where('code', '2130')->firstOrFail();
+
+            $cashAccount = $payment->account
+                ?? PlatformChartOfAccount::where('code', '1120')->first()
+                ?? PlatformChartOfAccount::where('type', PlatformChartOfAccount::TYPE_ASSET)->firstOrFail();
+
+            $amount = (float) $payment->amount;
+            $payable = $payment->payable;
+
+            $journal = PlatformJournalEntry::create([
+                'entry_date' => $payment->payment_date,
+                'reference_type' => PlatformJournalEntry::REF_PAYABLE_PAYMENT,
+                'reference_id' => (string) $payment->id,
+                'description' => "Pelunasan Hutang Vendor: {$payment->payment_number} ({$payable?->bill_number} - {$payable?->vendor_name})",
+                'total_debit' => $amount,
+                'total_credit' => $amount,
+                'is_balanced' => true,
+                'admin_id' => $payment->admin_id,
+            ]);
+
+            // Debit: Hutang Usaha / Vendor
+            PlatformJournalEntryLine::create([
+                'journal_entry_id' => $journal->id,
+                'account_id' => $apAccount->id,
+                'type' => PlatformJournalEntryLine::TYPE_DEBIT,
+                'amount' => $amount,
+                'notes' => 'Pelunasan kewajiban hutang kepada ' . ($payable?->vendor_name ?? '-'),
+            ]);
+
+            // Credit: Kas & Bank
+            PlatformJournalEntryLine::create([
+                'journal_entry_id' => $journal->id,
+                'account_id' => $cashAccount->id,
+                'type' => PlatformJournalEntryLine::TYPE_CREDIT,
+                'amount' => $amount,
+                'notes' => 'Pengeluaran kas/bank via ' . $cashAccount->name,
+            ]);
+
+            $journal->verifyBalance();
+            $payment->updateQuietly(['journal_entry_id' => $journal->id]);
+
+            return $journal;
+        });
+    }
+
+    /**
+     * Compute Accounts Receivable Aging Summary.
+     */
+    public function getReceivableAging(): array
+    {
+        $receivables = PlatformReceivable::all();
+
+        $totalInvoiced = 0.0;
+        $totalPaid = 0.0;
+        $totalBalance = 0.0;
+
+        $buckets = [
+            'current' => 0.0,
+            '1_30'    => 0.0,
+            '31_60'   => 0.0,
+            '61_90'   => 0.0,
+            'over_90' => 0.0,
+        ];
+
+        $counts = [
+            'total'     => $receivables->count(),
+            'paid'      => 0,
+            'partial'   => 0,
+            'unpaid'    => 0,
+            'overdue'   => 0,
+        ];
+
+        $today = Carbon::now()->startOfDay();
+
+        foreach ($receivables as $ar) {
+            $totalInvoiced += (float) $ar->total_amount;
+            $totalPaid += (float) $ar->paid_amount;
+            $balance = (float) $ar->balance_due;
+            $totalBalance += $balance;
+
+            if ($ar->status === PlatformReceivable::STATUS_PAID || $balance <= 0.01) {
+                $counts['paid']++;
+                continue;
+            }
+
+            if ($ar->paid_amount > 0) {
+                $counts['partial']++;
+            } else {
+                $counts['unpaid']++;
+            }
+
+            $dueDate = Carbon::parse($ar->due_date)->startOfDay();
+
+            if ($dueDate->gte($today)) {
+                $buckets['current'] += $balance;
+            } else {
+                $counts['overdue']++;
+                $days = $dueDate->diffInDays($today);
+
+                if ($days <= 30) {
+                    $buckets['1_30'] += $balance;
+                } elseif ($days <= 60) {
+                    $buckets['31_60'] += $balance;
+                } elseif ($days <= 90) {
+                    $buckets['61_90'] += $balance;
+                } else {
+                    $buckets['over_90'] += $balance;
+                }
+            }
+        }
+
+        $totalOverdue = $buckets['1_30'] + $buckets['31_60'] + $buckets['61_90'] + $buckets['over_90'];
+        $collectionRate = $totalInvoiced > 0 ? round(($totalPaid / $totalInvoiced) * 100, 1) : 0;
+
+        return [
+            'totalInvoiced'  => $totalInvoiced,
+            'totalPaid'      => $totalPaid,
+            'totalBalance'   => $totalBalance,
+            'totalOverdue'   => $totalOverdue,
+            'collectionRate' => $collectionRate,
+            'buckets'        => $buckets,
+            'counts'         => $counts,
+        ];
+    }
+
+    /**
+     * Compute Accounts Payable Aging Summary.
+     */
+    public function getPayableAging(): array
+    {
+        $payables = PlatformPayable::all();
+
+        $totalBilled = 0.0;
+        $totalPaid = 0.0;
+        $totalBalance = 0.0;
+
+        $buckets = [
+            'current' => 0.0,
+            '1_30'    => 0.0,
+            '31_60'   => 0.0,
+            '61_90'   => 0.0,
+            'over_90' => 0.0,
+        ];
+
+        $counts = [
+            'total'     => $payables->count(),
+            'paid'      => 0,
+            'partial'   => 0,
+            'unpaid'    => 0,
+            'overdue'   => 0,
+        ];
+
+        $today = Carbon::now()->startOfDay();
+
+        foreach ($payables as $ap) {
+            $totalBilled += (float) $ap->total_amount;
+            $totalPaid += (float) $ap->paid_amount;
+            $balance = (float) $ap->balance_due;
+            $totalBalance += $balance;
+
+            if ($ap->status === PlatformPayable::STATUS_PAID || $balance <= 0.01) {
+                $counts['paid']++;
+                continue;
+            }
+
+            if ($ap->paid_amount > 0) {
+                $counts['partial']++;
+            } else {
+                $counts['unpaid']++;
+            }
+
+            $dueDate = Carbon::parse($ap->due_date)->startOfDay();
+
+            if ($dueDate->gte($today)) {
+                $buckets['current'] += $balance;
+            } else {
+                $counts['overdue']++;
+                $days = $dueDate->diffInDays($today);
+
+                if ($days <= 30) {
+                    $buckets['1_30'] += $balance;
+                } elseif ($days <= 60) {
+                    $buckets['31_60'] += $balance;
+                } elseif ($days <= 90) {
+                    $buckets['61_90'] += $balance;
+                } else {
+                    $buckets['over_90'] += $balance;
+                }
+            }
+        }
+
+        $totalOverdue = $buckets['1_30'] + $buckets['31_60'] + $buckets['61_90'] + $buckets['over_90'];
+        $paymentRate = $totalBilled > 0 ? round(($totalPaid / $totalBilled) * 100, 1) : 0;
+
+        return [
+            'totalBilled'  => $totalBilled,
+            'totalPaid'    => $totalPaid,
+            'totalBalance' => $totalBalance,
+            'totalOverdue' => $totalOverdue,
+            'paymentRate'  => $paymentRate,
+            'buckets'      => $buckets,
+            'counts'       => $counts,
         ];
     }
 }

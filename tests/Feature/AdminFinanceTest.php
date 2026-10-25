@@ -10,6 +10,10 @@ use App\Models\Business;
 use App\Models\PaymentSettlement;
 use App\Models\PlatformChartOfAccount;
 use App\Models\PlatformJournalEntry;
+use App\Models\PlatformPayable;
+use App\Models\PlatformPayablePayment;
+use App\Models\PlatformReceivable;
+use App\Models\PlatformReceivablePayment;
 use App\Models\PlatformTransaction;
 use App\Models\SubscriptionPayment;
 use App\Models\User;
@@ -443,5 +447,187 @@ class AdminFinanceTest extends TestCase
 
         $responseTb->assertStatus(200);
         $this->assertStringContainsString('text/csv', $responseTb->headers->get('Content-Type') ?? '');
+    }
+
+    public function test_can_access_ar_and_ap_tabs_with_aging_breakdown(): void
+    {
+        $financeAdmin = $this->createAdmin('finance_admin');
+
+        // Access AR Tab
+        $responseAr = $this->actingAs($financeAdmin, 'admin')
+            ->get(route('admin.finance.index', ['tab' => 'ar']));
+
+        $responseAr->assertStatus(200);
+        $responseAr->assertSee('Daftar Piutang Usaha &amp; Tagihan Tenant', false);
+        $responseAr->assertSee('Total Piutang Berjalan', false);
+
+        // Access AP Tab
+        $responseAp = $this->actingAs($financeAdmin, 'admin')
+            ->get(route('admin.finance.index', ['tab' => 'ap']));
+
+        $responseAp->assertStatus(200);
+        $responseAp->assertSee('Daftar Hutang Usaha &amp; Tagihan Vendor', false);
+        $responseAp->assertSee('Total Hutang Vendor', false);
+    }
+
+    public function test_can_create_accounts_receivable_and_record_payment_with_auto_journals_and_aging(): void
+    {
+        $financeAdmin = $this->createAdmin('finance_admin');
+        $bca = PlatformChartOfAccount::where('code', '1120')->firstOrFail();
+        $piutang = PlatformChartOfAccount::where('code', '1150')->firstOrFail();
+        $pendapatan = PlatformChartOfAccount::where('code', '4110')->firstOrFail();
+
+        // 1. Create AR Invoice
+        $responseCreate = $this->actingAs($financeAdmin, 'admin')
+            ->post(route('admin.finance.receivables.store'), [
+                'client_name' => 'PT Maju Bersama Digital',
+                'client_email' => 'finance@majubersama.com',
+                'client_phone' => '081234567890',
+                'title' => 'Paket Enterprise 12 Bulan',
+                'category' => 'enterprise_annual',
+                'subtotal' => 10000000,
+                'tax_amount' => 1100000,
+                'invoice_date' => '2026-10-01',
+                'due_date' => '2026-10-15',
+                'notes' => 'Termin 14 hari',
+            ]);
+
+        $responseCreate->assertRedirect(route('admin.finance.index', ['tab' => 'ar']));
+        $responseCreate->assertSessionHas('status');
+
+        $receivable = PlatformReceivable::where('client_name', 'PT Maju Bersama Digital')->firstOrFail();
+        $this->assertEquals(11100000.00, (float) $receivable->total_amount);
+        $this->assertEquals(11100000.00, (float) $receivable->balance_due);
+        $this->assertEquals(0.00, (float) $receivable->paid_amount);
+        $this->assertEquals(PlatformReceivable::STATUS_UNPAID, $receivable->status);
+        $this->assertNotNull($receivable->journal_entry_id);
+
+        // Verify Journal for AR Creation: Debit 1150, Credit 4110
+        $journal = $receivable->journalEntry;
+        $this->assertTrue($journal->is_balanced);
+        $this->assertEquals(11100000.00, (float) $journal->total_debit);
+        $this->assertEquals(11100000.00, (float) $journal->total_credit);
+
+        $debitLine = $journal->lines()->where('type', 'debit')->first();
+        $creditLine = $journal->lines()->where('type', 'credit')->first();
+        $this->assertEquals($piutang->id, $debitLine->account_id);
+        $this->assertEquals($pendapatan->id, $creditLine->account_id);
+
+        // 2. Record Partial Payment (5,000,000) with Image Attachment
+        $file = UploadedFile::fake()->image('bukti_transfer_piutang.png', 500, 500);
+        $responsePay = $this->actingAs($financeAdmin, 'admin')
+            ->post(route('admin.finance.receivables.payments.store', $receivable), [
+                'amount' => 5000000,
+                'payment_date' => '2026-10-05',
+                'payment_method' => 'bank_transfer',
+                'account_id' => $bca->id,
+                'reference_number' => 'TRF-BCA-5544',
+                'notes' => 'Pembayaran DP Termin 1',
+                'attachment' => $file,
+            ]);
+
+        $responsePay->assertRedirect(route('admin.finance.index', ['tab' => 'ar']));
+        $responsePay->assertSessionHas('status');
+
+        $receivable->refresh();
+        $this->assertEquals(5000000.00, (float) $receivable->paid_amount);
+        $this->assertEquals(6100000.00, (float) $receivable->balance_due);
+        $this->assertEquals(PlatformReceivable::STATUS_PARTIALLY_PAID, $receivable->status);
+
+        $payment = $receivable->payments()->first();
+        $this->assertNotNull($payment);
+        $this->assertNotNull($payment->attachment_path);
+        Storage::disk('public')->assertExists($payment->attachment_path);
+
+        // Verify Journal for AR Payment: Debit 1120 (BCA), Credit 1150 (Piutang)
+        $payJournal = $payment->journalEntry;
+        $this->assertTrue($payJournal->is_balanced);
+        $this->assertEquals(5000000.00, (float) $payJournal->total_debit);
+        $this->assertEquals(5000000.00, (float) $payJournal->total_credit);
+
+        $payDebit = $payJournal->lines()->where('type', 'debit')->first();
+        $payCredit = $payJournal->lines()->where('type', 'credit')->first();
+        $this->assertEquals($bca->id, $payDebit->account_id);
+        $this->assertEquals($piutang->id, $payCredit->account_id);
+    }
+
+    public function test_can_create_accounts_payable_and_record_payment_with_auto_journals_and_aging(): void
+    {
+        $financeAdmin = $this->createAdmin('finance_admin');
+        $bca = PlatformChartOfAccount::where('code', '1120')->firstOrFail();
+        $hutang = PlatformChartOfAccount::where('code', '2130')->firstOrFail();
+        $bebanServer = PlatformChartOfAccount::where('code', '5110')->firstOrFail();
+
+        // 1. Create AP Bill (Vendor Hostinger)
+        $responseCreate = $this->actingAs($financeAdmin, 'admin')
+            ->post(route('admin.finance.payables.store'), [
+                'vendor_name' => 'Hostinger International',
+                'vendor_category' => 'infrastructure',
+                'reference_number' => 'HST-INV-2026-88',
+                'title' => 'Cloud VPS Server Enterprise',
+                'expense_account_id' => $bebanServer->id,
+                'subtotal' => 2000000,
+                'tax_amount' => 220000,
+                'bill_date' => '2026-10-10',
+                'due_date' => '2026-11-10',
+                'notes' => 'Server node cooca',
+            ]);
+
+        $responseCreate->assertRedirect(route('admin.finance.index', ['tab' => 'ap']));
+        $responseCreate->assertSessionHas('status');
+
+        $payable = PlatformPayable::where('vendor_name', 'Hostinger International')->firstOrFail();
+        $this->assertEquals(2220000.00, (float) $payable->total_amount);
+        $this->assertEquals(2220000.00, (float) $payable->balance_due);
+        $this->assertEquals(0.00, (float) $payable->paid_amount);
+        $this->assertEquals(PlatformPayable::STATUS_UNPAID, $payable->status);
+        $this->assertNotNull($payable->journal_entry_id);
+
+        // Verify Journal for AP Bill: Debit 5110 (Beban Server), Credit 2130 (Hutang)
+        $journal = $payable->journalEntry;
+        $this->assertTrue($journal->is_balanced);
+        $this->assertEquals(2220000.00, (float) $journal->total_debit);
+        $this->assertEquals(2220000.00, (float) $journal->total_credit);
+
+        $debitLine = $journal->lines()->where('type', 'debit')->first();
+        $creditLine = $journal->lines()->where('type', 'credit')->first();
+        $this->assertEquals($bebanServer->id, $debitLine->account_id);
+        $this->assertEquals($hutang->id, $creditLine->account_id);
+
+        // 2. Record Full Payment (2,220,000)
+        $file = UploadedFile::fake()->image('struk_transfer_vendor.png', 400, 400);
+        $responsePay = $this->actingAs($financeAdmin, 'admin')
+            ->post(route('admin.finance.payables.payments.store', $payable), [
+                'amount' => 2220000,
+                'payment_date' => '2026-10-15',
+                'payment_method' => 'bank_transfer',
+                'account_id' => $bca->id,
+                'reference_number' => 'TRF-OUT-991',
+                'notes' => 'Pelunasan invoice hostinger via klikBCA',
+                'attachment' => $file,
+            ]);
+
+        $responsePay->assertRedirect(route('admin.finance.index', ['tab' => 'ap']));
+        $responsePay->assertSessionHas('status');
+
+        $payable->refresh();
+        $this->assertEquals(2220000.00, (float) $payable->paid_amount);
+        $this->assertEquals(0.00, (float) $payable->balance_due);
+        $this->assertEquals(PlatformPayable::STATUS_PAID, $payable->status);
+
+        $payment = $payable->payments()->first();
+        $this->assertNotNull($payment);
+        Storage::disk('public')->assertExists($payment->attachment_path);
+
+        // Verify Journal for AP Payment: Debit 2130 (Hutang), Credit 1120 (BCA)
+        $payJournal = $payment->journalEntry;
+        $this->assertTrue($payJournal->is_balanced);
+        $this->assertEquals(2220000.00, (float) $payJournal->total_debit);
+        $this->assertEquals(2220000.00, (float) $payJournal->total_credit);
+
+        $payDebit = $payJournal->lines()->where('type', 'debit')->first();
+        $payCredit = $payJournal->lines()->where('type', 'credit')->first();
+        $this->assertEquals($hutang->id, $payDebit->account_id);
+        $this->assertEquals($bca->id, $payCredit->account_id);
     }
 }
