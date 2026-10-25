@@ -133,7 +133,7 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
             Route::post('/{settlement}/reject', [AdminSettlementController::class, 'reject'])->name('reject');
         });
 
-        // Platform Finance & Accounting Hub (Buku Kas, Laba Rugi, Lampiran Bukti & Rekonsiliasi)
+        // Platform Finance & Corporate Accounting Hub (Buku Kas, Jurnal Umum, Buku Besar, Neraca Saldo, Neraca, COA)
         Route::prefix('finance')->name('finance.')->group(function (): void {
             Route::get('/', [AdminFinanceController::class, 'index'])->name('index');
             Route::post('/', [AdminFinanceController::class, 'store'])->name('store');
@@ -141,6 +141,12 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
             Route::delete('/{transaction}', [AdminFinanceController::class, 'destroy'])->name('destroy');
             Route::post('/sync', [AdminFinanceController::class, 'sync'])->name('sync');
             Route::get('/export', [AdminFinanceController::class, 'export'])->name('export');
+
+            // Double-Entry Journals & Chart of Accounts
+            Route::post('/journals', [AdminFinanceController::class, 'storeJournal'])->name('journals.store');
+            Route::post('/accounts', [AdminFinanceController::class, 'storeAccount'])->name('accounts.store');
+            Route::put('/accounts/{account}', [AdminFinanceController::class, 'updateAccount'])->name('accounts.update');
+            Route::post('/accounts/{account}/toggle', [AdminFinanceController::class, 'toggleAccount'])->name('accounts.toggle');
         });
 
         // Feedback: Bug Reports & Feature Requests

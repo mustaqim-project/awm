@@ -29,6 +29,7 @@ $PHP_BIN artisan migrate --force
 echo "Seeding core defaults & RBAC matrix..."
 $PHP_BIN artisan db:seed --class=RbacSeeder --force
 $PHP_BIN artisan db:seed --class=AdminRbacSeeder --force
+$PHP_BIN artisan db:seed --class=PlatformCoaSeeder --force
 $PHP_BIN artisan db:seed --class=DefaultUnitSeeder --force
 $PHP_BIN artisan db:seed --class=DefaultCostCategorySeeder --force
 $PHP_BIN artisan db:seed --class=BusinessTemplateSeeder --force

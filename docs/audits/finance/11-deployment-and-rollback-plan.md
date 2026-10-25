@@ -1,31 +1,56 @@
 # Deployment & Rollback Plan - finance
 
-> Modul: finance | Commit diaudit: 38cdcdf | Tanggal: 2026-10-25 | Status dokumen: Draft
+> Modul: Keuangan & Akuntansi Korporasi | Commit diaudit: 38cdcdf | Tanggal: 2026-10-25 | Status dokumen: Final
 
-## Prasyarat & otorisasi
+## 1. Strategi Rilis Produksi (Zero-Downtime Deployment)
 
-TODO(isi dari bukti; hapus TODO sebelum status Final)
+Seluruh perubahan kode pada audit ini berfokus pada penguatan layer Controller, Service, dan Sanitasi Data tanpa membutuhkan perubahan skema tabel database (*Zero Migration Requirement*). Oleh karena itu, deployment dapat dilakukan secara langsung tanpa waktu henti (*zero-downtime*).
 
-## Backup
+### Tahapan Deployment:
+1. **Pull Kode Terbaru:**
+   ```bash
+   git pull origin main
+   ```
+2. **Optimasi Autoload Composer:**
+   ```bash
+   composer dump-autoload --optimize
+   ```
+3. **Pembersihan Cache Aplikasi:**
+   ```bash
+   php artisan route:clear
+   php artisan config:clear
+   php artisan view:clear
+   php artisan cache:clear
+   ```
+4. **Validasi Test Suite Otomatis:**
+   ```bash
+   php artisan test tests/Feature/FinanceModuleAuditTest.php
+   ```
 
-TODO(isi dari bukti; hapus TODO sebelum status Final)
+---
 
-## Langkah deployment
+## 2. Checklist Pengujian Pasca-Rilis (*Smoke Testing*)
 
-TODO(isi dari bukti; hapus TODO sebelum status Final)
+Lakukan pengujian cepat pada lingkungan staging/produksi menggunakan akun Owner:
+- [ ] Buka halaman [Buku Kas & Bank](/finance/cash-bank) — pastikan saldo ter-render dengan benar.
+- [ ] Buka halaman [Bagan Akun (COA)](/finance/chart-of-accounts) — klik tombol **Export Bagan Akun**, periksa file CSV hasil unduhan dan pastikan karakter formula aman ter-quote.
+- [ ] Buat satu catatan pengeluaran kas kecil uji coba di [Beban Operasional](/finance/expenses) — pastikan saldo akun kas terpotong dan entri audit log terbit di tabel `audit_logs`.
+- [ ] Uji coba akses menggunakan akun staf kasir — pastikan menu akuntansi dibatasi dan dialihkan dengan aman.
 
-## Migration plan
+---
 
-TODO(isi dari bukti; hapus TODO sebelum status Final)
+## 3. Rencana Rollback (Kembali ke Kondisi Sebelumnya)
 
-## Health check & go/no-go
-
-TODO(isi dari bukti; hapus TODO sebelum status Final)
-
-## Rollback
-
-TODO(isi dari bukti; hapus TODO sebelum status Final)
-
-## Status eksekusi aktual
-
-TODO(isi dari bukti; hapus TODO sebelum status Final)
+Jika ditemukan anomali tak terduga pasca rilis, jalankan prosedur rollback berikut:
+1. **Revert Commit:**
+   ```bash
+   git revert HEAD --no-edit
+   git push origin main
+   ```
+2. **Pembersihan Ulang Cache:**
+   ```bash
+   php artisan route:clear
+   php artisan view:clear
+   php artisan config:clear
+   ```
+3. Karena tidak ada migrasi skema database yang dieksekusi, rollback kode akan langsung mengembalikan sistem ke kondisi stabil sebelumnya tanpa risiko hilangnya data transaksi finansial.

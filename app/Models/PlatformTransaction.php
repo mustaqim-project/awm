@@ -47,6 +47,7 @@ class PlatformTransaction extends Model
         'source_type',
         'source_id',
         'admin_id',
+        'journal_entry_id',
     ];
 
     /**
@@ -153,5 +154,13 @@ class PlatformTransaction extends Model
     public function paymentSettlement(): BelongsTo
     {
         return $this->belongsTo(PaymentSettlement::class, 'source_id');
+    }
+
+    /**
+     * Associated double-entry journal entry.
+     */
+    public function journalEntry(): BelongsTo
+    {
+        return $this->belongsTo(PlatformJournalEntry::class, 'journal_entry_id');
     }
 }

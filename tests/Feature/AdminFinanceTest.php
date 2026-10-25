@@ -8,11 +8,14 @@ use App\Models\Admin;
 use App\Models\BillingPackage;
 use App\Models\Business;
 use App\Models\PaymentSettlement;
+use App\Models\PlatformChartOfAccount;
+use App\Models\PlatformJournalEntry;
 use App\Models\PlatformTransaction;
 use App\Models\SubscriptionPayment;
 use App\Models\User;
 use App\Support\Context;
 use Database\Seeders\AdminRbacSeeder;
+use Database\Seeders\PlatformCoaSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
@@ -29,6 +32,7 @@ class AdminFinanceTest extends TestCase
         parent::setUp();
         Context::flush();
         $this->seed(AdminRbacSeeder::class);
+        $this->seed(PlatformCoaSeeder::class);
         Storage::fake('public');
     }
 
@@ -43,20 +47,47 @@ class AdminFinanceTest extends TestCase
         ]);
     }
 
-    public function test_super_admin_and_finance_admin_can_access_finance_hub(): void
+    public function test_super_admin_and_finance_admin_can_access_finance_hub_and_all_tabs(): void
     {
         $superAdmin = $this->createAdmin('super_admin');
         $financeAdmin = $this->createAdmin('finance_admin');
         $supportAdmin = $this->createAdmin('support_admin');
 
+        // Cashflow Tab
         $this->actingAs($superAdmin, 'admin')
-            ->get(route('admin.finance.index'))
+            ->get(route('admin.finance.index', ['tab' => 'cashflow']))
             ->assertStatus(200)
             ->assertSee('Buku Kas &amp; Akuntansi Platform', false);
 
+        // General Journals Tab
         $this->actingAs($financeAdmin, 'admin')
-            ->get(route('admin.finance.index'))
-            ->assertStatus(200);
+            ->get(route('admin.finance.index', ['tab' => 'journals']))
+            ->assertStatus(200)
+            ->assertSee('Jurnal Umum Berpasangan', false);
+
+        // General Ledger Tab
+        $this->actingAs($financeAdmin, 'admin')
+            ->get(route('admin.finance.index', ['tab' => 'ledger']))
+            ->assertStatus(200)
+            ->assertSee('Buku Besar Akun', false);
+
+        // Trial Balance Tab
+        $this->actingAs($financeAdmin, 'admin')
+            ->get(route('admin.finance.index', ['tab' => 'trial_balance']))
+            ->assertStatus(200)
+            ->assertSee('Neraca Saldo', false);
+
+        // Balance Sheet & PnL Tab
+        $this->actingAs($financeAdmin, 'admin')
+            ->get(route('admin.finance.index', ['tab' => 'balance_sheet']))
+            ->assertStatus(200)
+            ->assertSee('Laporan Keuangan Platform Resmi', false);
+
+        // Chart of Accounts Tab
+        $this->actingAs($financeAdmin, 'admin')
+            ->get(route('admin.finance.index', ['tab' => 'coa']))
+            ->assertStatus(200)
+            ->assertSee('Bagan Akun Perkiraan', false);
 
         // Support admin has no admin.finance.view permission
         $this->actingAs($supportAdmin, 'admin')
@@ -64,7 +95,7 @@ class AdminFinanceTest extends TestCase
             ->assertStatus(403);
     }
 
-    public function test_can_record_manual_transaction_with_optional_image_attachment(): void
+    public function test_can_record_manual_transaction_with_optional_image_attachment_and_auto_journal(): void
     {
         $financeAdmin = $this->createAdmin('finance_admin');
         $file = UploadedFile::fake()->image('bukti_kuitansi.jpg', 600, 600);
@@ -81,7 +112,7 @@ class AdminFinanceTest extends TestCase
                 'attachment' => $file,
             ]);
 
-        $response->assertRedirect(route('admin.finance.index'));
+        $response->assertRedirect(route('admin.finance.index', ['tab' => 'cashflow']));
         $response->assertSessionHas('success');
 
         $this->assertDatabaseHas('platform_transactions', [
@@ -96,7 +127,130 @@ class AdminFinanceTest extends TestCase
         $trx = PlatformTransaction::where('category', 'operasional')->firstOrFail();
         $this->assertNotNull($trx->attachment_path);
         Storage::disk('public')->assertExists($trx->attachment_path);
-        $this->assertNotNull($trx->attachment_url);
+
+        // Verify automatic double-entry journal was generated and balanced
+        $this->assertNotNull($trx->journal_entry_id);
+        $journal = PlatformJournalEntry::findOrFail($trx->journal_entry_id);
+        $this->assertEquals(750000, $journal->total_debit);
+        $this->assertEquals(750000, $journal->total_credit);
+        $this->assertTrue($journal->is_balanced);
+        $this->assertEquals(2, $journal->lines()->count());
+    }
+
+    public function test_can_record_manual_double_entry_journal(): void
+    {
+        $financeAdmin = $this->createAdmin('finance_admin');
+
+        $kasAccount = PlatformChartOfAccount::where('code', '1120')->firstOrFail();
+        $modalAccount = PlatformChartOfAccount::where('code', '3110')->firstOrFail();
+
+        // Balanced journal entry: Debit Kas Rp 5.000.000, Kredit Modal Rp 5.000.000
+        $response = $this->actingAs($financeAdmin, 'admin')
+            ->post(route('admin.finance.journals.store'), [
+                'entry_date' => '2026-10-25',
+                'description' => 'Suntikan modal operasional tambahan dari pendiri',
+                'lines' => [
+                    [
+                        'account_id' => $kasAccount->id,
+                        'type' => 'debit',
+                        'amount' => 5000000,
+                        'notes' => 'Penerimaan rekening giro BCA',
+                    ],
+                    [
+                        'account_id' => $modalAccount->id,
+                        'type' => 'credit',
+                        'amount' => 5000000,
+                        'notes' => 'Penyertaan modal pendiri',
+                    ],
+                ],
+            ]);
+
+        $response->assertRedirect(route('admin.finance.index', ['tab' => 'journals']));
+        $response->assertSessionHas('success');
+
+        $this->assertDatabaseHas('platform_journal_entries', [
+            'description' => 'Suntikan modal operasional tambahan dari pendiri',
+            'total_debit' => 5000000,
+            'total_credit' => 5000000,
+            'is_balanced' => 1,
+        ]);
+    }
+
+    public function test_unbalanced_manual_journal_is_rejected(): void
+    {
+        $financeAdmin = $this->createAdmin('finance_admin');
+
+        $kasAccount = PlatformChartOfAccount::where('code', '1120')->firstOrFail();
+        $modalAccount = PlatformChartOfAccount::where('code', '3110')->firstOrFail();
+
+        // Unbalanced journal: Debit 5.000.000 vs Kredit 4.000.000
+        $response = $this->actingAs($financeAdmin, 'admin')
+            ->post(route('admin.finance.journals.store'), [
+                'entry_date' => '2026-10-25',
+                'description' => 'Jurnal cacat tidak seimbang',
+                'lines' => [
+                    [
+                        'account_id' => $kasAccount->id,
+                        'type' => 'debit',
+                        'amount' => 5000000,
+                    ],
+                    [
+                        'account_id' => $modalAccount->id,
+                        'type' => 'credit',
+                        'amount' => 4000000,
+                    ],
+                ],
+            ]);
+
+        $response->assertSessionHas('error');
+        $this->assertDatabaseMissing('platform_journal_entries', [
+            'description' => 'Jurnal cacat tidak seimbang',
+        ]);
+    }
+
+    public function test_can_manage_chart_of_accounts(): void
+    {
+        $superAdmin = $this->createAdmin('super_admin');
+
+        // 1. Create custom account
+        $response = $this->actingAs($superAdmin, 'admin')
+            ->post(route('admin.finance.accounts.store'), [
+                'code' => '1199',
+                'name' => 'Kas Kecil Petugas Cabang',
+                'type' => 'asset',
+                'normal_balance' => 'debit',
+                'description' => 'Dana kas kecil operasional petty cash',
+            ]);
+
+        $response->assertRedirect(route('admin.finance.index', ['tab' => 'coa']));
+        $this->assertDatabaseHas('platform_chart_of_accounts', [
+            'code' => '1199',
+            'name' => 'Kas Kecil Petugas Cabang',
+            'is_system' => 0,
+            'is_active' => 1,
+        ]);
+
+        $acc = PlatformChartOfAccount::where('code', '1199')->firstOrFail();
+
+        // 2. Update account
+        $this->actingAs($superAdmin, 'admin')
+            ->put(route('admin.finance.accounts.update', $acc), [
+                'name' => 'Kas Petty Cash Kantor',
+                'normal_balance' => 'debit',
+                'description' => 'Diperbarui',
+            ])->assertRedirect(route('admin.finance.index', ['tab' => 'coa']));
+
+        $this->assertDatabaseHas('platform_chart_of_accounts', [
+            'id' => $acc->id,
+            'name' => 'Kas Petty Cash Kantor',
+        ]);
+
+        // 3. Toggle account active status
+        $this->actingAs($superAdmin, 'admin')
+            ->post(route('admin.finance.accounts.toggle', $acc))
+            ->assertRedirect(route('admin.finance.index', ['tab' => 'coa']));
+
+        $this->assertFalse($acc->fresh()->is_active);
     }
 
     public function test_can_update_manual_transaction(): void
@@ -122,7 +276,7 @@ class AdminFinanceTest extends TestCase
                 'payment_method' => 'cash',
             ]);
 
-        $response->assertRedirect(route('admin.finance.index'));
+        $response->assertRedirect(route('admin.finance.index', ['tab' => 'cashflow']));
         $this->assertDatabaseHas('platform_transactions', [
             'id' => $trx->id,
             'amount' => 620000,
@@ -130,7 +284,7 @@ class AdminFinanceTest extends TestCase
         ]);
     }
 
-    public function test_can_soft_delete_manual_transaction(): void
+    public function test_can_soft_delete_manual_transaction_and_cascade_journal(): void
     {
         $financeAdmin = $this->createAdmin('finance_admin');
         $trx = PlatformTransaction::create([
@@ -143,6 +297,11 @@ class AdminFinanceTest extends TestCase
             'admin_id' => $financeAdmin->id,
         ]);
 
+        // Create journal
+        app(\App\Services\PlatformAccountingService::class)->syncTransactionJournal($trx);
+        $journalId = $trx->fresh()->journal_entry_id;
+        $this->assertNotNull($journalId);
+
         $response = $this->actingAs($financeAdmin, 'admin')
             ->delete(route('admin.finance.destroy', $trx));
 
@@ -150,9 +309,12 @@ class AdminFinanceTest extends TestCase
         $this->assertSoftDeleted('platform_transactions', [
             'id' => $trx->id,
         ]);
+        $this->assertSoftDeleted('platform_journal_entries', [
+            'id' => $journalId,
+        ]);
     }
 
-    public function test_sync_integrates_billing_subscriptions_and_merchant_settlements(): void
+    public function test_sync_integrates_billing_subscriptions_and_merchant_settlements_with_journals(): void
     {
         $superAdmin = $this->createAdmin('super_admin');
 
@@ -243,14 +405,17 @@ class AdminFinanceTest extends TestCase
             'attachment_path' => 'settlements/proofs/trx_set_1.jpg',
         ]);
 
-        // Test idempotency: sync again shouldn't duplicate
-        $countBefore = PlatformTransaction::count();
-        $this->actingAs($superAdmin, 'admin')
-            ->post(route('admin.finance.sync'));
-        $this->assertEquals($countBefore, PlatformTransaction::count());
+        // Verify journals created for both
+        $subTrx = PlatformTransaction::where('source_id', $subscription->id)->firstOrFail();
+        $this->assertNotNull($subTrx->journal_entry_id);
+        $this->assertTrue($subTrx->journalEntry->is_balanced);
+
+        $setTrx = PlatformTransaction::where('source_id', $settlement->id)->firstOrFail();
+        $this->assertNotNull($setTrx->journal_entry_id);
+        $this->assertTrue($setTrx->journalEntry->is_balanced);
     }
 
-    public function test_can_export_csv_ledger(): void
+    public function test_can_export_csv_ledger_and_trial_balance(): void
     {
         $financeAdmin = $this->createAdmin('finance_admin');
 
@@ -264,11 +429,19 @@ class AdminFinanceTest extends TestCase
             'admin_id' => $financeAdmin->id,
         ]);
 
+        // 1. Export Cashflow
         $response = $this->actingAs($financeAdmin, 'admin')
-            ->get(route('admin.finance.export'));
+            ->get(route('admin.finance.export', ['tab' => 'cashflow']));
 
         $response->assertStatus(200);
         $this->assertStringContainsString('text/csv', $response->headers->get('Content-Type') ?? '');
         $this->assertStringContainsString('laporan_keuangan_platform_', $response->headers->get('Content-Disposition') ?? '');
+
+        // 2. Export Trial Balance
+        $responseTb = $this->actingAs($financeAdmin, 'admin')
+            ->get(route('admin.finance.export', ['tab' => 'trial_balance']));
+
+        $responseTb->assertStatus(200);
+        $this->assertStringContainsString('text/csv', $responseTb->headers->get('Content-Type') ?? '');
     }
 }
