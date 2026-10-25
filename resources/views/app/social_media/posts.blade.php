@@ -180,7 +180,7 @@
                             <th class="px-4 py-3.5 min-w-[130px] whitespace-nowrap">{{ __('social_media.table_header_status') }}</th>
                             <th class="px-4 py-3.5 min-w-[140px] whitespace-nowrap">{{ __('social_media.table_header_metrics') }}</th>
                             <th class="px-4 py-3.5 min-w-[130px] whitespace-nowrap">{{ __('social_media.table_header_time') }}</th>
-                            <th class="text-right px-4 py-3.5 whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">Aksi</th>
+                            <th class="text-right px-4 py-3.5 whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)] w-[120px]">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.04]">
@@ -197,6 +197,7 @@
                                     'custom_captions' => $post->targets->pluck('custom_caption', 'social_media_account_id')->filter()->all(),
                                     'scheduled_at_raw' => $post->scheduled_at ? $post->scheduled_at->format('Y-m-d\TH:i') : '',
                                     'scheduled_at_label' => $post->scheduled_at ? $post->scheduled_at->format('d M Y, H:i') : '-',
+                                    'published_at_label' => $post->published_at ? $post->published_at->format('d M Y, H:i') : ($post->created_at ? $post->created_at->format('d M Y, H:i') : '-'),
                                     'account_name' => $post->account ? $post->account->account_name : ucfirst($post->platform),
                                     'reschedule_url' => route('social-media.posts.reschedule', $post),
                                     'publish_now_url' => route('social-media.posts.publish-now', $post),
@@ -435,63 +436,76 @@
                                 </td>
 
                                 {{-- 7. Aksi (Sticky Frozen Right Column) --}}
-                                <td class="px-4 py-3.5 align-top text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)] transition-colors">
+                                <td class="px-4 py-3.5 align-middle text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)] transition-colors">
                                     <div class="flex items-center justify-end gap-1.5">
-                                        {{-- Maker-Checker Approve & Reject --}}
-                                        @if(($post->approval_status === 'pending_review' || $post->status === 'pending_review') && (\App\Support\Context::isAdminOrOwner() || \App\Support\Context::hasPermission('social_media.manage')))
-                                            <form method="POST" action="{{ route('social-media.posts.approve', $post) }}" class="inline" x-data="{ isSubmitting: false }"
-                                                @submit="if(isSubmitting) { $event.preventDefault(); return false; } if(typeof AppAlert !== 'undefined') { if(!AppAlert.confirmSubmit($event, $el, '{{ __('social_media.confirm_approve_msg') }}', '{{ __('social_media.confirm_approve_title') }}', 'info')) return false; } isSubmitting = true">
-                                                @csrf
-                                                <button type="submit" :disabled="isSubmitting"
-                                                    class="w-8 h-8 rounded-[8px] flex items-center justify-center bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] hover:bg-[#34C759] hover:text-white active:scale-95 transition-all shadow-xs cursor-pointer disabled:opacity-50"
-                                                    title="{{ __('social_media.approve_and_publish_btn') }}"
-                                                    aria-label="{{ __('social_media.approve_and_publish_btn') }}">
-                                                    <i data-lucide="check" class="w-4 h-4" :class="{ 'hidden': isSubmitting }"></i>
-                                                    <i data-lucide="loader-2" class="w-4 h-4 animate-spin" :class="{ 'hidden': !isSubmitting }"></i>
-                                                </button>
-                                            </form>
-                                            <form method="POST" action="{{ route('social-media.posts.reject', $post) }}" class="inline" x-data="{ isSubmitting: false }"
-                                                @submit="if(isSubmitting) { $event.preventDefault(); return false; } if(typeof AppAlert !== 'undefined') { if(!AppAlert.confirmSubmit($event, $el, '{{ __('social_media.confirm_reject_msg') }}', '{{ __('social_media.confirm_reject_title') }}', 'danger')) return false; } isSubmitting = true">
-                                                @csrf
-                                                <button type="submit" :disabled="isSubmitting"
-                                                    class="w-8 h-8 rounded-[8px] flex items-center justify-center bg-[#FF3B30]/10 text-[#FF3B30] hover:bg-[#FF3B30] hover:text-white active:scale-95 transition-all shadow-xs cursor-pointer disabled:opacity-50"
-                                                    title="{{ __('social_media.reject_post_btn') }}"
-                                                    aria-label="{{ __('social_media.reject_post_btn') }}">
-                                                    <i data-lucide="x" class="w-4 h-4" :class="{ 'hidden': isSubmitting }"></i>
-                                                    <i data-lucide="loader-2" class="w-4 h-4 animate-spin" :class="{ 'hidden': !isSubmitting }"></i>
-                                                </button>
-                                            </form>
-                                        @endif
-
-                                        {{-- Edit Draft button --}}
-                                        @if($post->status === 'draft' && \App\Support\Context::hasPermission('social_media.manage'))
+                                        @if($post->status === 'published')
+                                            {{-- Postingan sudah terpublikasi: Tampilan tombol Pratinjau rapi & elegan --}}
                                             <button type="button"
-                                                @click="editDraft({{ Js::from($postPayload) }})"
-                                                class="w-8 h-8 rounded-[8px] flex items-center justify-center bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-white/15 active:scale-95 transition-all shadow-xs cursor-pointer"
-                                                title="{{ __('social_media.edit_draft_btn') }}"
-                                                aria-label="{{ __('social_media.edit_draft_btn') }}">
-                                                <i data-lucide="file-edit" class="w-4 h-4"></i>
+                                                @click="openPostManager({{ Js::from($postPayload) }})"
+                                                class="inline-flex items-center gap-1.5 h-8 px-3 rounded-[9px] text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF] hover:text-white active:scale-95 transition-all shadow-xs cursor-pointer"
+                                                title="{{ __('social_media.preview_and_manage') }}"
+                                                aria-label="{{ __('social_media.preview_and_manage') }}">
+                                                <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                                                <span>Pratinjau</span>
                                             </button>
-                                        @endif
+                                        @else
+                                            {{-- Maker-Checker Approve & Reject --}}
+                                            @if(($post->approval_status === 'pending_review' || $post->status === 'pending_review') && (\App\Support\Context::isAdminOrOwner() || \App\Support\Context::hasPermission('social_media.manage')))
+                                                <form method="POST" action="{{ route('social-media.posts.approve', $post) }}" class="inline" x-data="{ isSubmitting: false }"
+                                                    @submit="if(isSubmitting) { $event.preventDefault(); return false; } if(typeof AppAlert !== 'undefined') { if(!AppAlert.confirmSubmit($event, $el, '{{ __('social_media.confirm_approve_msg') }}', '{{ __('social_media.confirm_approve_title') }}', 'info')) return false; } isSubmitting = true">
+                                                    @csrf
+                                                    <button type="submit" :disabled="isSubmitting"
+                                                        class="w-8 h-8 rounded-[9px] flex items-center justify-center bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] hover:bg-[#34C759] hover:text-white active:scale-95 transition-all shadow-xs cursor-pointer disabled:opacity-50"
+                                                        title="{{ __('social_media.approve_and_publish_btn') }}"
+                                                        aria-label="{{ __('social_media.approve_and_publish_btn') }}">
+                                                        <i data-lucide="check" class="w-3.5 h-3.5" :class="{ 'hidden': isSubmitting }"></i>
+                                                        <i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin" :class="{ 'hidden': !isSubmitting }"></i>
+                                                    </button>
+                                                </form>
+                                                <form method="POST" action="{{ route('social-media.posts.reject', $post) }}" class="inline" x-data="{ isSubmitting: false }"
+                                                    @submit="if(isSubmitting) { $event.preventDefault(); return false; } if(typeof AppAlert !== 'undefined') { if(!AppAlert.confirmSubmit($event, $el, '{{ __('social_media.confirm_reject_msg') }}', '{{ __('social_media.confirm_reject_title') }}', 'danger')) return false; } isSubmitting = true">
+                                                    @csrf
+                                                    <button type="submit" :disabled="isSubmitting"
+                                                        class="w-8 h-8 rounded-[9px] flex items-center justify-center bg-[#FF3B30]/10 text-[#FF3B30] hover:bg-[#FF3B30] hover:text-white active:scale-95 transition-all shadow-xs cursor-pointer disabled:opacity-50"
+                                                        title="{{ __('social_media.reject_post_btn') }}"
+                                                        aria-label="{{ __('social_media.reject_post_btn') }}">
+                                                        <i data-lucide="x" class="w-3.5 h-3.5" :class="{ 'hidden': isSubmitting }"></i>
+                                                        <i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin" :class="{ 'hidden': !isSubmitting }"></i>
+                                                    </button>
+                                                </form>
+                                            @endif
 
-                                        {{-- Preview & Manage Modal button --}}
-                                        <button type="button"
-                                            @click="openPostManager({{ Js::from($postPayload) }})"
-                                            class="w-8 h-8 rounded-[8px] flex items-center justify-center bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF] hover:text-white active:scale-95 transition-all shadow-xs cursor-pointer"
-                                            title="{{ __('social_media.preview_and_manage') }}"
-                                            aria-label="{{ __('social_media.preview_and_manage') }}">
-                                            <i data-lucide="eye" class="w-4 h-4"></i>
-                                        </button>
+                                            {{-- Edit Draft button --}}
+                                            @if($post->status === 'draft' && \App\Support\Context::hasPermission('social_media.manage'))
+                                                <button type="button"
+                                                    @click="editDraft({{ Js::from($postPayload) }})"
+                                                    class="inline-flex items-center gap-1.5 h-8 px-2.5 rounded-[9px] text-[12px] font-semibold bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-white/15 active:scale-95 transition-all shadow-xs cursor-pointer"
+                                                    title="{{ __('social_media.edit_draft_btn') }}"
+                                                    aria-label="{{ __('social_media.edit_draft_btn') }}">
+                                                    <i data-lucide="file-edit" class="w-3.5 h-3.5"></i>
+                                                    <span>Edit</span>
+                                                </button>
+                                            @endif
 
-                                        {{-- Delete / Cancel action for draft/failed/scheduled posts --}}
-                                        @if(!in_array($post->status, ['published', 'publishing'], true) && \App\Support\Context::hasPermission('social_media.manage'))
+                                            {{-- Preview & Manage Modal button --}}
                                             <button type="button"
-                                                @click="deletePostDirect({{ Js::from($postPayload) }})"
-                                                class="w-8 h-8 rounded-[8px] flex items-center justify-center bg-[#FF3B30]/10 text-[#FF3B30] hover:bg-[#FF3B30] hover:text-white active:scale-95 transition-all shadow-xs cursor-pointer"
-                                                title="{{ __('social_media.delete_post_btn') }}"
-                                                aria-label="{{ __('social_media.delete_post_btn') }}">
-                                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                                @click="openPostManager({{ Js::from($postPayload) }})"
+                                                class="w-8 h-8 rounded-[9px] flex items-center justify-center bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF] hover:text-white active:scale-95 transition-all shadow-xs cursor-pointer"
+                                                title="{{ __('social_media.preview_and_manage') }}"
+                                                aria-label="{{ __('social_media.preview_and_manage') }}">
+                                                <i data-lucide="eye" class="w-4 h-4"></i>
                                             </button>
+
+                                            {{-- Delete / Cancel action for draft/failed/scheduled posts --}}
+                                            @if(!in_array($post->status, ['published', 'publishing'], true) && \App\Support\Context::hasPermission('social_media.manage'))
+                                                <button type="button"
+                                                    @click="deletePostDirect({{ Js::from($postPayload) }})"
+                                                    class="w-8 h-8 rounded-[9px] flex items-center justify-center bg-[#FF3B30]/10 text-[#FF3B30] hover:bg-[#FF3B30] hover:text-white active:scale-95 transition-all shadow-xs cursor-pointer"
+                                                    title="{{ __('social_media.delete_post_btn') }}"
+                                                    aria-label="{{ __('social_media.delete_post_btn') }}">
+                                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                                </button>
+                                            @endif
                                         @endif
                                     </div>
                                 </td>
@@ -1572,15 +1586,19 @@
                 {{-- Modal Header --}}
                 <div class="flex items-center justify-between px-6 py-4 border-b border-black/5 dark:border-white/10">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-[14px] bg-[#5856D6]/10 text-[#5856D6] flex items-center justify-center shrink-0">
-                            <i data-lucide="calendar-clock" class="w-5 h-5"></i>
+                        <div class="w-10 h-10 rounded-[14px] flex items-center justify-center shrink-0"
+                             :class="pmPost.status === 'published' ? 'bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158]' : 'bg-[#5856D6]/10 text-[#5856D6]'">
+                            <i :data-lucide="pmPost.status === 'published' ? 'check-circle-2' : 'calendar-clock'" class="w-5 h-5"></i>
                         </div>
                         <div>
-                            <h3 id="post-manager-modal-title" class="text-[16px] font-bold text-black dark:text-white">{{ __('social_media.preview_manage_title') }}</h3>
+                            <h3 id="post-manager-modal-title" class="text-[16px] font-bold text-black dark:text-white"
+                                x-text="pmPost.status === 'published' ? 'Pratinjau Postingan' : '{{ __('social_media.preview_manage_title') }}'"></h3>
                             <div class="flex items-center gap-2 mt-0.5">
                                 <span class="text-[12px] text-black/50 dark:text-white/50" x-text="@js(__('social_media.account_prefix')) + ': ' + (pmPost.account_name || '-')"></span>
                                 <span class="text-black/30 dark:text-white/30">•</span>
-                                <span class="text-[11.5px] uppercase font-bold text-[#5856D6]" x-text="pmPost.platform || '-'"></span>
+                                <span class="text-[11.5px] uppercase font-bold"
+                                      :class="pmPost.status === 'published' ? 'text-[#248A3D] dark:text-[#30D158]' : 'text-[#5856D6]'"
+                                      x-text="pmPost.platform || '-'"></span>
                             </div>
                         </div>
                     </div>
@@ -1592,15 +1610,19 @@
                 {{-- Modal Body --}}
                 <div class="overflow-y-auto flex-1 p-6 space-y-5">
 
-                    {{-- Status Banner & Scheduled Time --}}
+                    {{-- Status Banner & Scheduled/Published Time --}}
                     <div class="flex flex-wrap items-center justify-between gap-2 p-3 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5">
                         <div class="flex items-center gap-2">
                             <span class="text-[11px] font-bold uppercase tracking-wider text-black/40 dark:text-white/40">{{ __('social_media.filter_status_label') }}:</span>
-                            <span x-text="pmPost.status === 'draft' ? @js(__('social_media.status_draft')) : (pmPost.status === 'scheduled' ? @js(__('social_media.status_label_scheduled')) : (pmPost.status === 'pending' ? @js(__('social_media.status_label_pending')) : (pmPost.status === 'failed' ? @js(__('social_media.status_label_failed')) : @js(__('social_media.status_label_partially_failed')))))"
-                                  class="px-2.5 py-1 rounded-full text-[12px] font-bold"
-                                  :class="pmPost.status === 'draft' ? 'bg-slate-500/15 text-slate-700 dark:text-slate-300' : (pmPost.status === 'scheduled' ? 'bg-[#5856D6]/15 text-[#5856D6]' : (pmPost.status === 'pending' ? 'bg-[#007AFF]/15 text-[#007AFF]' : 'bg-[#FF3B30]/15 text-[#FF3B30]'))"></span>
+                            <span x-text="pmPost.status === 'published' ? @js(__('social_media.filter_status_published')) : (pmPost.status === 'draft' ? @js(__('social_media.status_draft')) : (pmPost.status === 'scheduled' ? @js(__('social_media.status_label_scheduled')) : (pmPost.status === 'pending' || pmPost.status === 'pending_review' ? @js(__('social_media.status_label_pending')) : (pmPost.status === 'failed' ? @js(__('social_media.status_label_failed')) : @js(__('social_media.status_label_partially_failed'))))))"
+                                  class="px-2.5 py-1 rounded-full text-[12px] font-bold inline-flex items-center gap-1.5"
+                                  :class="pmPost.status === 'published' ? 'bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]' : (pmPost.status === 'draft' ? 'bg-slate-500/15 text-slate-700 dark:text-slate-300' : (pmPost.status === 'scheduled' ? 'bg-[#5856D6]/15 text-[#5856D6]' : (pmPost.status === 'pending' || pmPost.status === 'pending_review' ? 'bg-[#FF9500]/15 text-[#FF9500]' : 'bg-[#FF3B30]/15 text-[#FF3B30]')))"></span>
                         </div>
-                        <div x-show="pmPost.scheduled_at_label && pmPost.scheduled_at_label !== '-'" class="flex items-center gap-1.5 text-[12px] font-semibold text-black/60 dark:text-white/60">
+                        <div x-show="pmPost.status === 'published' && pmPost.published_at_label && pmPost.published_at_label !== '-'" class="flex items-center gap-1.5 text-[12px] font-semibold text-[#248A3D] dark:text-[#30D158]">
+                            <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-[#34C759]"></i>
+                            <span x-text="'Dipublikasikan: ' + pmPost.published_at_label"></span>
+                        </div>
+                        <div x-show="pmPost.status !== 'published' && pmPost.scheduled_at_label && pmPost.scheduled_at_label !== '-'" class="flex items-center gap-1.5 text-[12px] font-semibold text-black/60 dark:text-white/60">
                             <i data-lucide="clock" class="w-3.5 h-3.5 text-[#5856D6]"></i>
                             <span x-text="pmPost.scheduled_at_label"></span>
                         </div>
@@ -1687,59 +1709,73 @@
                 </div>
 
                 {{-- Action Tabs + Buttons --}}
-                <div class="border-t border-black/5 dark:border-white/10 px-6 py-4 space-y-3 bg-white dark:bg-[#1C1C1E] rounded-b-[26px]">
+                <div class="border-t border-black/5 dark:border-white/10 px-6 py-4 bg-white dark:bg-[#1C1C1E] rounded-b-[26px]">
 
-                    {{-- Tab switcher --}}
-                    <div class="flex items-center gap-2">
-                        <button type="button" @click="pmTab = 'preview'"
-                                :class="pmTab === 'preview' ? 'bg-black text-white dark:bg-white dark:text-black shadow-xs' : 'bg-black/5 dark:bg-white/10 text-black/70 dark:text-white/70 hover:bg-black/10'"
-                                class="min-h-[44px] sm:min-h-0 sm:h-8 px-4 sm:px-3.5 rounded-full text-[12px] font-semibold transition-colors cursor-pointer inline-flex items-center justify-center">{{ __('social_media.preview_content_tab') }}</button>
-                        <button type="button" @click="pmTab = 'reschedule'"
-                                :class="pmTab === 'reschedule' ? 'bg-[#5856D6] text-white shadow-xs' : 'bg-[#5856D6]/10 text-[#5856D6] hover:bg-[#5856D6]/20'"
-                                class="min-h-[44px] sm:min-h-0 sm:h-8 px-4 sm:px-3.5 rounded-full text-[12px] font-semibold transition-colors inline-flex items-center justify-center gap-1.5 cursor-pointer">
-                            <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
-                            <span x-text="pmPost.status === 'draft' ? @js(__('social_media.schedule_draft_tab')) : @js(__('social_media.reschedule_tab'))"></span>
+                    {{-- 1. SUDAH TERPUBLIKASI (Read-only Preview: TIDAK ADA HAPUS, EDIT, JADWAL ULANG, PUBLIKASIKAN LAGI) --}}
+                    <div x-show="pmPost.status === 'published'" class="flex items-center justify-between gap-3">
+                        <div class="flex items-center gap-2 text-[12.5px] font-semibold text-[#248A3D] dark:text-[#30D158]">
+                            <span class="w-2 h-2 rounded-full bg-[#34C759] inline-block"></span>
+                            <span>Konten telah terpublikasi (read-only)</span>
+                        </div>
+                        <button type="button" @click="postManagerOpen = false"
+                                class="min-h-[44px] sm:min-h-0 sm:h-9 px-5 rounded-[12px] text-[13px] font-semibold text-black/75 dark:text-white/75 bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 active:scale-95 transition-all cursor-pointer">
+                            <span>Tutup</span>
                         </button>
-                        <template x-if="pmPost.status === 'draft'">
-                            <button type="button" @click="editDraftFromManager()"
-                                    class="min-h-[44px] sm:min-h-0 sm:h-8 px-4 sm:px-3.5 rounded-full text-[12px] font-semibold transition-colors bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-white/15 inline-flex items-center justify-center gap-1.5 cursor-pointer">
-                                <i data-lucide="file-edit" class="w-3.5 h-3.5"></i>
-                                <span>{{ __('social_media.edit_draft_btn') }}</span>
-                            </button>
-                        </template>
                     </div>
 
-                    {{-- Primary actions --}}
-                    <div class="flex items-center gap-2">
+                    {{-- 2. BELUM TERPUBLIKASI (Draft, Scheduled, Pending Review, Failed) --}}
+                    <div x-show="pmPost.status !== 'published'" class="space-y-3">
+                        {{-- Tab switcher --}}
+                        <div class="flex items-center gap-2">
+                            <button type="button" @click="pmTab = 'preview'"
+                                    :class="pmTab === 'preview' ? 'bg-black text-white dark:bg-white dark:text-black shadow-xs' : 'bg-black/5 dark:bg-white/10 text-black/70 dark:text-white/70 hover:bg-black/10'"
+                                    class="min-h-[44px] sm:min-h-0 sm:h-8 px-4 sm:px-3.5 rounded-full text-[12px] font-semibold transition-colors cursor-pointer inline-flex items-center justify-center">{{ __('social_media.preview_content_tab') }}</button>
+                            <button type="button" @click="pmTab = 'reschedule'"
+                                    :class="pmTab === 'reschedule' ? 'bg-[#5856D6] text-white shadow-xs' : 'bg-[#5856D6]/10 text-[#5856D6] hover:bg-[#5856D6]/20'"
+                                    class="min-h-[44px] sm:min-h-0 sm:h-8 px-4 sm:px-3.5 rounded-full text-[12px] font-semibold transition-colors inline-flex items-center justify-center gap-1.5 cursor-pointer">
+                                <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
+                                <span x-text="pmPost.status === 'draft' ? @js(__('social_media.schedule_draft_tab')) : @js(__('social_media.reschedule_tab'))"></span>
+                            </button>
+                            <template x-if="pmPost.status === 'draft'">
+                                <button type="button" @click="editDraftFromManager()"
+                                        class="min-h-[44px] sm:min-h-0 sm:h-8 px-4 sm:px-3.5 rounded-full text-[12px] font-semibold transition-colors bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-white/15 inline-flex items-center justify-center gap-1.5 cursor-pointer">
+                                    <i data-lucide="file-edit" class="w-3.5 h-3.5"></i>
+                                    <span>{{ __('social_media.edit_draft_btn') }}</span>
+                                </button>
+                            </template>
+                        </div>
 
-                        {{-- Reschedule confirm (only when on reschedule tab) --}}
-                        <button type="button" x-show="pmTab === 'reschedule'" x-cloak
-                                @click="doReschedule()"
-                                :disabled="pmLoading || !pmNewScheduledAt"
-                                class="flex-1 min-h-[44px] sm:min-h-0 sm:h-10 rounded-[12px] text-[13px] font-bold text-white bg-[#5856D6] hover:bg-[#4F4EC2] active:scale-[0.97] transition-all disabled:opacity-50 inline-flex items-center justify-center gap-2 cursor-pointer shadow-xs">
-                            <i data-lucide="loader-2" class="w-4 h-4 animate-spin" x-show="pmLoading" x-cloak></i>
-                            <i data-lucide="save" class="w-4 h-4" x-show="!pmLoading"></i>
-                            <span x-text="pmPost.status === 'draft' ? @js(__('social_media.save_schedule_btn')) : @js(__('social_media.save_new_schedule_btn'))"></span>
-                        </button>
+                        {{-- Primary actions --}}
+                        <div class="flex items-center gap-2">
+                            {{-- Reschedule confirm (only when on reschedule tab) --}}
+                            <button type="button" x-show="pmTab === 'reschedule'" x-cloak
+                                    @click="doReschedule()"
+                                    :disabled="pmLoading || !pmNewScheduledAt"
+                                    class="flex-1 min-h-[44px] sm:min-h-0 sm:h-10 rounded-[12px] text-[13px] font-bold text-white bg-[#5856D6] hover:bg-[#4F4EC2] active:scale-[0.97] transition-all disabled:opacity-50 inline-flex items-center justify-center gap-2 cursor-pointer shadow-xs">
+                                <i data-lucide="loader-2" class="w-4 h-4 animate-spin" x-show="pmLoading" x-cloak></i>
+                                <i data-lucide="save" class="w-4 h-4" x-show="!pmLoading"></i>
+                                <span x-text="pmPost.status === 'draft' ? @js(__('social_media.save_schedule_btn')) : @js(__('social_media.save_new_schedule_btn'))"></span>
+                            </button>
 
-                        {{-- Publish Now --}}
-                        <button type="button" x-show="pmTab === 'preview'" x-cloak
-                                @click="doPublishNow()"
-                                :disabled="pmLoading"
-                                class="flex-1 min-h-[44px] sm:min-h-0 sm:h-10 rounded-[12px] text-[13px] font-bold text-white bg-[#34C759] hover:bg-[#2FB34F] active:scale-[0.97] transition-all disabled:opacity-50 inline-flex items-center justify-center gap-2 cursor-pointer shadow-xs">
-                            <i data-lucide="loader-2" class="w-4 h-4 animate-spin" x-show="pmLoading" x-cloak></i>
-                            <i data-lucide="send" class="w-4 h-4" x-show="!pmLoading"></i>
-                            <span>{{ __('social_media.publish_now_btn') }}</span>
-                        </button>
+                            {{-- Publish Now --}}
+                            <button type="button" x-show="pmTab === 'preview'" x-cloak
+                                    @click="doPublishNow()"
+                                    :disabled="pmLoading"
+                                    class="flex-1 min-h-[44px] sm:min-h-0 sm:h-10 rounded-[12px] text-[13px] font-bold text-white bg-[#34C759] hover:bg-[#2FB34F] active:scale-[0.97] transition-all disabled:opacity-50 inline-flex items-center justify-center gap-2 cursor-pointer shadow-xs">
+                                <i data-lucide="loader-2" class="w-4 h-4 animate-spin" x-show="pmLoading" x-cloak></i>
+                                <i data-lucide="send" class="w-4 h-4" x-show="!pmLoading"></i>
+                                <span>{{ __('social_media.publish_now_btn') }}</span>
+                            </button>
 
-                        {{-- Delete --}}
-                        <button type="button" x-show="pmTab === 'preview'" x-cloak
-                                @click="doDelete()"
-                                :disabled="pmLoading"
-                                class="min-h-[44px] sm:min-h-0 sm:h-10 px-4 rounded-[12px] text-[13px] font-bold text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 active:scale-[0.97] transition-all disabled:opacity-50 inline-flex items-center justify-center gap-2 cursor-pointer">
-                            <i data-lucide="trash-2" class="w-4 h-4"></i>
-                            <span>{{ __('social_media.delete_post_btn') }}</span>
-                        </button>
+                            {{-- Delete --}}
+                            <button type="button" x-show="pmTab === 'preview'" x-cloak
+                                    @click="doDelete()"
+                                    :disabled="pmLoading"
+                                    class="min-h-[44px] sm:min-h-0 sm:h-10 px-4 rounded-[12px] text-[13px] font-bold text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 active:scale-[0.97] transition-all disabled:opacity-50 inline-flex items-center justify-center gap-2 cursor-pointer">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                <span>{{ __('social_media.delete_post_btn') }}</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1869,6 +1905,7 @@
                 },
 
                 editDraft(post) {
+                    if (!post || post.status === 'published') return;
                     this.editingPostId = post.id;
                     this.isDraft = true;
                     this.actionType = 'draft';
@@ -1906,6 +1943,7 @@
                 },
 
                 editDraftFromManager() {
+                    if (!this.pmPost || this.pmPost.status === 'published') return;
                     this.postManagerOpen = false;
                     this.editDraft(this.pmPost);
                 },
@@ -1943,7 +1981,7 @@
                 },
 
                 async doReschedule() {
-                    if (!this.pmNewScheduledAt) return;
+                    if (!this.pmNewScheduledAt || !this.pmPost || this.pmPost.status === 'published') return;
                     this.pmLoading = true;
                     this.pmMessage = '';
                     try {
@@ -1974,6 +2012,7 @@
                 },
 
                 async doPublishNow() {
+                    if (!this.pmPost || this.pmPost.status === 'published') return;
                     let confirmed = false;
                     if (window.AppAlert) {
                         confirmed = await AppAlert['confirm']({
@@ -2014,11 +2053,13 @@
                 },
 
                 async deletePostDirect(post) {
+                    if (!post || post.status === 'published' || post.status === 'publishing') return;
                     this.pmPost = post;
                     await this.doDelete();
                 },
 
                 async doDelete() {
+                    if (!this.pmPost || this.pmPost.status === 'published' || this.pmPost.status === 'publishing') return;
                     let confirmed = false;
                     if (window.AppAlert) {
                         confirmed = await AppAlert['confirm']({

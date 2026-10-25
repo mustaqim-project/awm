@@ -33,6 +33,39 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-10-25-374] Penyempurnaan Tampilan Tombol Aksi Tabel Postingan dan Isolasi Read-Only Modal Pratinjau untuk Postingan Terpublikasi
+
+- **Date:** 2026-10-25
+- **Status:** COMPLETED
+- **Module:** Social Media & Content Marketing (`/social-media/posts`)
+- **Feature:** Merapikan tampilan tombol aksi pada tabel postingan dengan pill button `Pratinjau` yang rapi dan terpusat vertikal (`align-middle`). Menghilangkan tombol Hapus, Edit Draf, Jadwal Ulang, dan Publikasikan Sekarang pada modal pratinjau jika status postingan sudah `published` (terpublikasi) agar bersifat read-only murni sesuai spesifikasi bisnis.
+- **Work Type:** UI/UX | Frontend Refinement | Logic Hardening
+
+#### 1. Business Context & Objective
+- **Konteks:** Postingan yang telah terpublikasi (`status = 'published'`) di akun media sosial (TikTok, Instagram, Facebook, Threads, LinkedIn) bersifat permanen. Menampilkan opsi edit, hapus, jadwal ulang, atau publikasikan ulang di modal pratinjau membingungkan pengguna dan berpotensi memicu error 422 di backend. Selain itu, tombol aksi pada kolom tabel tampak seperti kotak ikon tunggal yang mengambang di pojok kanan atas cell.
+- **Target & Standar:**
+  1. Merapikan tombol aksi pada kolom `Aksi` tabel: jika postingan berstatus `published`, tampilkan tombol berlabel `Pratinjau` berdesain Apple HIG pill (`inline-flex items-center gap-1.5 h-8 px-3 rounded-[9px] bg-[#007AFF]/10 text-[#007AFF]`) yang sejajar vertikal di tengah cell (`align-middle`).
+  2. Mengisolasi modal preview (`postManagerOpen`): jika `status === 'published'`, hilangkan tab switcher ("Jadwal Ulang", "Edit Draf"), tombol "Publikasikan Sekarang", dan tombol "Hapus Postingan".
+  3. Menyediakan status footer informatif beraksen hijau dengan indikator "Konten telah terpublikasi (read-only)" dan tombol "Tutup" yang bersih.
+  4. Menambahkan guard safety di Alpine.js (`doReschedule`, `doPublishNow`, `doDelete`, `editDraft`, `editDraftFromManager`, `deletePostDirect`) agar tidak dapat mengeksekusi mutasi pada postingan berstatus `published`.
+
+#### 2. What Was Done
+1. **Penataan Tombol Aksi Tabel:**
+   - Menambahkan lebar tetap `w-[120px]` pada header kolom aksi sticky right.
+   - Mengubah perataan vertikal baris aksi dari `align-top` menjadi `align-middle`.
+   - Mengganti icon-only button menjadi pill button profesional `[👁 Pratinjau]` untuk postingan terpublikasi, serta merapikan perataan tombol status lainnya.
+2. **Isolasi Modal Pratinjau Postingan Terpublikasi:**
+   - Memperbaiki badge status modal agar menampilkan status `Terpublikasi` berlatar hijau (`bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]`) dan menampilkan waktu publikasi (`published_at_label`).
+   - Memisahkan tampilan footer modal: jika `pmPost.status === 'published'`, hanya menampilkan keterangan status dan tombol `Tutup`.
+   - Mencegah render tab switcher jadwal ulang dan tombol hapus/publikasi ulang pada postingan yang sudah terpublikasi.
+3. **Guard Safety Alpine Store:**
+   - Menambahkan validasi `if (!this.pmPost || this.pmPost.status === 'published') return;` pada handler fungsi aksi modal.
+
+#### 3. Technical Changes
+- **Files Affected:**
+  - `resources/views/app/social_media/posts.blade.php`: Penyesuaian kolom aksi tabel, pemisahan footer modal pratinjau, dan penambahan guard status `published`.
+- **Database Changes:** Tidak ada.
+
 ### [WORK-2026-10-25-373] Transformasi Halaman Postingan Media Sosial dari Card Grid ke Data Table Standar Apple HIG dengan Kolom Aksi Sticky
 
 - **Date:** 2026-10-25
