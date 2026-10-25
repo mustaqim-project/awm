@@ -24,7 +24,7 @@
             subtitle="{{ __('crm.vouchers_subtitle') }}">
             @if (\App\Support\Context::hasPermission('crm.manage'))
                 <button type="button" @click="showVoucherModal = true"
-                    class="h-10 px-4 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-semibold shadow-sm shadow-[#007AFF]/25 active:scale-[0.97] transition flex items-center justify-center gap-2 cursor-pointer">
+                    class="h-11 min-h-[44px] px-4 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-semibold shadow-sm shadow-[#007AFF]/25 active:scale-[0.97] transition flex items-center justify-center gap-2 cursor-pointer">
                     <i data-lucide="plus" class="w-4 h-4"></i>
                     <span>{{ __('crm.create_voucher') }}</span>
                 </button>
@@ -200,8 +200,8 @@
                                     <form method="POST" action="{{ route('crm.vouchers.toggle', $v->id) }}">
                                         @csrf
                                         <button type="submit"
-                                            class="w-full h-9 rounded-[10px] text-[12px] font-semibold transition cursor-pointer flex items-center justify-center gap-1.5 {{ $v->is_active ? 'bg-[#FF3B30]/10 text-[#FF3B30] hover:bg-[#FF3B30]/20' : 'bg-[#34C759]/10 text-[#34C759] hover:bg-[#34C759]/20' }}">
-                                            <i data-lucide="{{ $v->is_active ? 'power-off' : 'power' }}" class="w-3.5 h-3.5"></i>
+                                            class="w-full h-11 min-h-[44px] sm:h-10 rounded-[12px] text-[13px] sm:text-[12px] font-semibold transition cursor-pointer flex items-center justify-center gap-1.5 {{ $v->is_active ? 'bg-[#FF3B30]/10 text-[#FF3B30] hover:bg-[#FF3B30]/20' : 'bg-[#34C759]/10 text-[#34C759] hover:bg-[#34C759]/20' }}">
+                                            <i data-lucide="{{ $v->is_active ? 'power-off' : 'power' }}" class="w-4 h-4"></i>
                                             <span>{{ $v->is_active ? __('crm.deactivate_voucher') : __('crm.activate_voucher') }}</span>
                                         </button>
                                     </form>

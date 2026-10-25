@@ -13,16 +13,28 @@ use App\Models\Location;
 use App\Models\PosOrder;
 use App\Models\PosOrderItem;
 use App\Models\PosOrderPayment;
-use App\Models\Product;
 use App\Support\Context;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use Throwable;
 
-final class AnalyticsWebController extends Controller
+final class AnalyticsWebController extends Controller implements HasMiddleware
 {
+    /**
+     * Daftarkan Controller-Level RBAC Middleware.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.permission:reports.view', only: ['index']),
+        ];
+    }
+
     /**
      * Tampilkan Halaman Dedicated Suite Analitik & Tren Bisnis.
      */
@@ -30,7 +42,7 @@ final class AnalyticsWebController extends Controller
     {
         $business = Context::requireBusiness();
 
-        // 1. Lokasi / Cabang Filter
+        // 1. Lokasi / Cabang Filter (Validasi Kepemilikan Tenant)
         $locations = Location::where('business_id', $business->id)->where('is_active', true)->get();
         $selectedLocationId = $request->query('location_id');
         if ($selectedLocationId && ! $locations->contains('id', $selectedLocationId)) {
@@ -63,13 +75,13 @@ final class AnalyticsWebController extends Controller
         // 5. Tren Waktu (Time Series)
         $trendSeries = $this->buildTrendSeries($business, $period, $from, $to, $selectedLocationId);
 
-        // 6. Jam Sibuk Kasir (Hourly Peak Hours Heatmap)
+        // 6. Jam Sibuk Kasir (Hourly Peak Hours Heatmap 07:00-23:00)
         $hourlyHeatmap = $this->buildHourlyHeatmap($business, $from, $to, $selectedLocationId);
 
-        // 7. Top 10 Produk Terlaris & Margin
+        // 7. Top 10 Produk Terlaris & Margin (Direct JOIN Optimized)
         $topProducts = $this->buildTopProducts($business, $from, $to, $selectedLocationId);
 
-        // 8. Distribusi Metode Pembayaran
+        // 8. Distribusi Metode Pembayaran (Direct JOIN Optimized)
         $paymentMethods = $this->buildPaymentMethods($business, $from, $to, $selectedLocationId);
 
         // 9. Performa Cabang (Jika Multi-Cabang)
@@ -111,7 +123,7 @@ final class AnalyticsWebController extends Controller
         $fromStr = $from->toDateString();
         $toStr = $to->toDateString();
 
-        // POS
+        // 1. POS Orders
         $posQuery = PosOrder::where('business_id', $business->id)
             ->where(function ($q) {
                 $q->where('status', PosOrder::STATUS_COMPLETED)
@@ -138,7 +150,7 @@ final class AnalyticsWebController extends Controller
             COUNT(*) as cnt
         ')->first();
 
-        // Invoice B2B
+        // 2. Invoice B2B
         $invQuery = Invoice::where('business_id', $business->id)
             ->whereIn('status', [Invoice::STATUS_PAID, Invoice::STATUS_PARTIALLY_PAID])
             ->whereDate('invoice_date', '>=', $fromStr)
@@ -155,7 +167,7 @@ final class AnalyticsWebController extends Controller
             COUNT(*) as cnt
         ')->first();
 
-        // Toko Online
+        // 3. Toko Online (Commerce Orders)
         $onlineQuery = CommerceOrder::where('business_id', $business->id)
             ->whereIn('status', [
                 CommerceOrder::STATUS_PAID,
@@ -166,6 +178,10 @@ final class AnalyticsWebController extends Controller
             ])
             ->whereDate('created_at', '>=', $fromStr)
             ->whereDate('created_at', '<=', $toStr);
+
+        if ($locationId) {
+            $onlineQuery->where('location_id', $locationId);
+        }
 
         $onlineAgg = $onlineQuery->selectRaw('
             COALESCE(SUM(total_amount), 0) as revenue,
@@ -193,7 +209,7 @@ final class AnalyticsWebController extends Controller
         $avgOrderValue = $totalOrders > 0 ? round($totalRevenue / $totalOrders, 0) : 0.0;
         $grossMarginPct = $totalRevenue > 0 ? round(($grossProfit / $totalRevenue) * 100, 1) : 0.0;
 
-        // Beban Operasional
+        // 4. Beban Operasional
         $expenseQuery = Expense::where('business_id', $business->id)
             ->whereDate('expense_date', '>=', $fromStr)
             ->whereDate('expense_date', '<=', $toStr);
@@ -226,7 +242,11 @@ final class AnalyticsWebController extends Controller
     private function calculateGrowth(float $current, float $previous): ?float
     {
         if ($previous == 0.0) {
-            return $current > 0 ? 100.0 : 0.0;
+            if ($current > 0) {
+                return 100.0;
+            }
+
+            return $current < 0 ? -100.0 : 0.0;
         }
 
         return round((($current - $previous) / abs($previous)) * 100, 1);
@@ -260,15 +280,28 @@ final class AnalyticsWebController extends Controller
                 break;
             case 'custom':
                 if (! empty($fromInput) && ! empty($toInput)) {
-                    $from = Carbon::parse($fromInput)->startOfDay();
-                    $to = Carbon::parse($toInput)->endOfDay();
+                    try {
+                        $parsedFrom = Carbon::parse($fromInput)->startOfDay();
+                        $parsedTo = Carbon::parse($toInput)->endOfDay();
+                        if ($parsedFrom->gt($parsedTo)) {
+                            // Auto-swap jika tanggal awal lebih besar dari tanggal akhir
+                            $from = $parsedTo->copy()->startOfDay();
+                            $to = $parsedFrom->copy()->endOfDay();
+                        } else {
+                            $from = $parsedFrom;
+                            $to = $parsedTo;
+                        }
+                    } catch (Throwable) {
+                        $from = $today->copy()->startOfMonth();
+                        $to = $today->copy()->endOfMonth();
+                    }
                 } else {
                     $from = $today->copy()->startOfMonth();
                     $to = $today->copy()->endOfMonth();
                 }
-                $days = $from->diffInDays($to) + 1;
-                $prevFrom = $from->copy()->subDays($days);
-                $prevTo = $to->copy()->subDays($days);
+                $days = max(1, $from->diffInDays($to) + 1);
+                $prevFrom = $from->copy()->subDays((int) $days);
+                $prevTo = $to->copy()->subDays((int) $days);
                 break;
             case 'month':
             default:
@@ -292,22 +325,29 @@ final class AnalyticsWebController extends Controller
         $profitData = [];
 
         if ($period === 'today') {
-            // Jam per jam
+            // Jam per jam (07:00 - 23:00)
             $driver = DB::connection()->getDriverName();
-            $hourBucketExpr = $driver === 'sqlite' ? "strftime('%H:00', created_at)" : "DATE_FORMAT(created_at, '%H:00')";
+            $hourBucketExpr = match ($driver) {
+                'sqlite' => "strftime('%H:00', created_at)",
+                'pgsql' => "to_char(created_at, 'HH24:00')",
+                default => "DATE_FORMAT(created_at, '%H:00')",
+            };
+
             $posTrend = PosOrder::where('business_id', $business->id)
                 ->where('status', PosOrder::STATUS_COMPLETED)
                 ->whereDate('order_date', $from->toDateString())
                 ->when($locationId, fn ($q) => $q->where('location_id', $locationId))
                 ->selectRaw("{$hourBucketExpr} as bucket, SUM(total_amount) as revenue, SUM(total_gross_profit) as profit")
                 ->groupBy('bucket')
-                ->pluck('revenue', 'bucket')
-                ->toArray();
+                ->get()
+                ->keyBy('bucket');
 
-            for ($h = 8; $h <= 22; $h++) {
+            for ($h = 7; $h <= 23; $h++) {
                 $bucket = sprintf('%02d:00', $h);
                 $labels[] = $bucket;
-                $revenueData[] = (float) ($posTrend[$bucket] ?? 0);
+                $row = $posTrend->get($bucket);
+                $revenueData[] = (float) ($row?->revenue ?? 0);
+                $profitData[] = (float) ($row?->profit ?? 0);
             }
         } else {
             // Harian
@@ -320,13 +360,14 @@ final class AnalyticsWebController extends Controller
                 ->selectRaw('order_date as bucket, SUM(total_amount) as revenue, SUM(total_gross_profit) as profit')
                 ->groupBy('bucket')
                 ->get()
-                ->keyBy('bucket');
+                ->keyBy(fn ($item) => Carbon::parse((string) $item->bucket)->toDateString());
 
             while ($current->lte($to)) {
                 $dtStr = $current->toDateString();
                 $labels[] = $current->format('d M');
-                $rev = (float) ($posQuery[$dtStr]->revenue ?? 0);
-                $prof = (float) ($posQuery[$dtStr]->profit ?? 0);
+                $row = $posQuery->get($dtStr);
+                $rev = (float) ($row?->revenue ?? 0);
+                $prof = (float) ($row?->profit ?? 0);
                 $revenueData[] = $rev;
                 $profitData[] = $prof;
                 $current->addDay();
@@ -341,12 +382,16 @@ final class AnalyticsWebController extends Controller
     }
 
     /**
-     * Analisis jam sibuk kasir (08:00 - 23:00).
+     * Analisis jam sibuk kasir (07:00 - 23:00).
      */
     private function buildHourlyHeatmap(Business $business, Carbon $from, Carbon $to, ?string $locationId = null): array
     {
         $driver = DB::connection()->getDriverName();
-        $hourExpr = $driver === 'sqlite' ? "CAST(strftime('%H', created_at) AS INTEGER)" : "HOUR(created_at)";
+        $hourExpr = match ($driver) {
+            'sqlite' => "CAST(strftime('%H', created_at) AS INTEGER)",
+            'pgsql' => "CAST(to_char(created_at, 'HH24') AS INTEGER)",
+            default => "HOUR(created_at)",
+        };
 
         $hourly = PosOrder::where('business_id', $business->id)
             ->where('status', PosOrder::STATUS_COMPLETED)
@@ -372,22 +417,22 @@ final class AnalyticsWebController extends Controller
     }
 
     /**
-     * Top 10 produk dengan kuantitas dan margin tertinggi.
+     * Top 10 produk dengan kuantitas dan margin tertinggi (Direct JOIN Optimized).
      */
     private function buildTopProducts(Business $business, Carbon $from, Carbon $to, ?string $locationId = null): array
     {
-        $items = PosOrderItem::whereHas('order', function ($q) use ($business, $from, $to, $locationId) {
-            $q->where('business_id', $business->id)
-                ->where('status', PosOrder::STATUS_COMPLETED)
-                ->whereDate('order_date', '>=', $from->toDateString())
-                ->whereDate('order_date', '<=', $to->toDateString())
-                ->when($locationId, fn ($sub) => $sub->where('location_id', $locationId));
-        })
-        ->selectRaw('product_name, SUM(quantity) as qty, SUM(subtotal) as total_sales, SUM(subtotal - COALESCE(unit_cost_hpp * quantity, 0)) as gross_profit')
-        ->groupBy('product_name')
-        ->orderByDesc('qty')
-        ->limit(10)
-        ->get();
+        $items = PosOrderItem::query()
+            ->join('pos_orders', 'pos_orders.id', '=', 'pos_order_items.pos_order_id')
+            ->where('pos_orders.business_id', $business->id)
+            ->where('pos_orders.status', PosOrder::STATUS_COMPLETED)
+            ->whereDate('pos_orders.order_date', '>=', $from->toDateString())
+            ->whereDate('pos_orders.order_date', '<=', $to->toDateString())
+            ->when($locationId, fn ($q) => $q->where('pos_orders.location_id', $locationId))
+            ->selectRaw('pos_order_items.product_name, SUM(pos_order_items.quantity) as qty, SUM(pos_order_items.subtotal) as total_sales, SUM(pos_order_items.subtotal - COALESCE(pos_order_items.unit_cost_hpp * pos_order_items.quantity, 0)) as gross_profit')
+            ->groupBy('pos_order_items.product_name')
+            ->orderByDesc('qty')
+            ->limit(10)
+            ->get();
 
         return $items->map(function ($item) {
             $sales = (float) $item->total_sales;
@@ -405,21 +450,21 @@ final class AnalyticsWebController extends Controller
     }
 
     /**
-     * Distribusi metode pembayaran.
+     * Distribusi metode pembayaran (Direct JOIN Optimized).
      */
     private function buildPaymentMethods(Business $business, Carbon $from, Carbon $to, ?string $locationId = null): array
     {
-        $methods = PosOrderPayment::whereHas('order', function ($q) use ($business, $from, $to, $locationId) {
-            $q->where('business_id', $business->id)
-                ->where('status', PosOrder::STATUS_COMPLETED)
-                ->whereDate('order_date', '>=', $from->toDateString())
-                ->whereDate('order_date', '<=', $to->toDateString())
-                ->when($locationId, fn ($sub) => $sub->where('location_id', $locationId));
-        })
-        ->where('status', 'paid')
-        ->selectRaw('payment_method, COUNT(*) as cnt, SUM(amount) as total')
-        ->groupBy('payment_method')
-        ->get();
+        $methods = PosOrderPayment::query()
+            ->join('pos_orders', 'pos_orders.id', '=', 'pos_order_payments.pos_order_id')
+            ->where('pos_orders.business_id', $business->id)
+            ->where('pos_orders.status', PosOrder::STATUS_COMPLETED)
+            ->whereDate('pos_orders.order_date', '>=', $from->toDateString())
+            ->whereDate('pos_orders.order_date', '<=', $to->toDateString())
+            ->when($locationId, fn ($q) => $q->where('pos_orders.location_id', $locationId))
+            ->where('pos_order_payments.status', 'paid')
+            ->selectRaw('pos_order_payments.payment_method, COUNT(*) as cnt, SUM(pos_order_payments.amount) as total')
+            ->groupBy('pos_order_payments.payment_method')
+            ->get();
 
         $labels = [
             'cash' => 'Tunai (Cash)',
@@ -478,11 +523,11 @@ final class AnalyticsWebController extends Controller
     private function getPeriodLabel(string $period): string
     {
         return match ($period) {
-            'today' => 'Hari Ini',
-            'week' => 'Minggu Ini',
-            'year' => 'Tahun Ini',
-            'custom' => 'Kustom Rentang',
-            default => 'Bulan Ini',
+            'today' => __('analytics.periods.today'),
+            'week' => __('analytics.periods.week'),
+            'year' => __('analytics.periods.year'),
+            'custom' => __('analytics.periods.custom'),
+            default => __('analytics.periods.month'),
         };
     }
 }

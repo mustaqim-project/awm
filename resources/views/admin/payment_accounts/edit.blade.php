@@ -245,14 +245,17 @@
                     <i data-lucide="arrow-left" class="w-4 h-4" stroke-width="2"></i>
                     <span>Batal</span>
                 </a>
+                @if(Auth::guard('admin')->user()?->hasPermission('admin.payment_accounts.edit'))
                 <button type="submit"
                     class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition flex items-center gap-2 shadow-[0_2px_8px_rgba(0,122,255,0.25)]">
                     <i data-lucide="save" class="w-4 h-4" stroke-width="2"></i>
                     <span>Simpan Perubahan</span>
                 </button>
+                @endif
             </div>
         </form>
 
+        @if(Auth::guard('admin')->user()?->hasPermission('admin.payment_accounts.delete'))
         <!-- Reassurance & Danger Zone -->
         <div class="rounded-[20px] p-5 border border-[#FF3B30]/20 bg-[#FF3B30]/6 dark:bg-[#FF3B30]/10 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
             <div class="flex items-start gap-3">
@@ -278,6 +281,7 @@
                 </button>
             </form>
         </div>
+        @endif
 
     </div>
 @endsection

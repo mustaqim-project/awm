@@ -138,6 +138,8 @@
                     </div>
 
                     <div class="flex items-center gap-2">
+                        @if(Auth::guard('admin')->user()?->hasPermission('admin.legal_pages.toggle'))
+
                         <form method="POST" action="{{ route('admin.legal-pages.toggle', $page) }}">
                             @csrf
                             <button type="submit"
@@ -147,11 +149,19 @@
                             </button>
                         </form>
 
+                        @endif
+
+                        @if(Auth::guard('admin')->user()?->hasPermission('admin.legal_pages.edit'))
+
+
                         <a href="{{ route('admin.legal-pages.edit', $page) }}"
                             class="h-9 px-4 rounded-[10px] text-[12px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-95 transition-all inline-flex items-center gap-1.5 shadow-sm shadow-[#007AFF]/25 cursor-pointer">
                             <i data-lucide="edit-3" class="w-3.5 h-3.5" stroke-width="2"></i>
                             <span>Edit Dokumen</span>
                         </a>
+
+
+                        @endif
                     </div>
                 </div>
             </div>

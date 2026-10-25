@@ -440,11 +440,13 @@
                         class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[13px] tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40 transition">
                 </div>
 
+                @if(Auth::guard('admin')->user()?->hasPermission('admin.billing_packages.create'))
                 <button type="submit"
                     class="w-full h-11 rounded-[14px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all inline-flex items-center justify-center gap-2 shadow-sm shadow-[#007AFF]/25">
                     <i data-lucide="plus" class="w-4 h-4" stroke-width="2"></i>
                     <span>Simpan Paket Baru</span>
                 </button>
+                @endif
             </form>
 
             <!-- Package Cards List Bento -->
@@ -480,6 +482,7 @@
                                     {{ $package->code }}</div>
                             </div>
 
+                            @if(Auth::guard('admin')->user()?->hasPermission('admin.billing_packages.toggle'))
                             <form method="POST" action="{{ route('admin.billing-packages.toggle', $package) }}">
                                 @csrf
                                 <button type="submit"
@@ -489,6 +492,12 @@
                                     <span>{{ $package->is_active ? 'Nonaktifkan' : 'Aktifkan' }}</span>
                                 </button>
                             </form>
+                            @else
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold {{ $package->is_active ? 'bg-[#34C759]/15 text-[#34C759] dark:text-[#30D158]' : 'bg-black/10 dark:bg-white/10 text-black/50 dark:text-white/50' }}">
+                                <span class="w-1.5 h-1.5 rounded-full {{ $package->is_active ? 'bg-[#34C759]' : 'bg-black/40 dark:bg-white/40' }}"></span>
+                                {{ $package->is_active ? 'Aktif' : 'Nonaktif' }}
+                            </span>
+                            @endif
                         </div>
 
                         <!-- Package Metrics Bento Grid -->
@@ -576,6 +585,7 @@
                         </div>
 
                         <!-- Card Actions -->
+                        @if(Auth::guard('admin')->user()?->hasPermission('admin.billing_packages.edit'))
                         <div
                             class="border-t border-black/[0.04] dark:border-white/[0.06] pt-3.5 mt-4 flex items-center justify-end gap-2">
                             <button type="button" @click="openEdit('{{ $package->id }}')"
@@ -584,6 +594,7 @@
                                 <span>Edit Paket</span>
                             </button>
                         </div>
+                        @endif
                     </div>
                 @empty
                     <div

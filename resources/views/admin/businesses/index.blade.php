@@ -194,20 +194,34 @@
                                 </td>
                                 <td class="px-5 py-4 text-right">
                                     <div class="flex items-center justify-end gap-2">
+                                        @if(Auth::guard('admin')->user()?->hasPermission('admin.businesses.view'))
                                         <a href="{{ route('admin.businesses.show', $biz->id) }}"
                                             class="h-8 px-3 rounded-[10px] text-[12px] font-bold text-[#007AFF] dark:text-[#0A84FF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-95 transition-all inline-flex items-center gap-1">
                                             <span>Detail</span>
                                             <i data-lucide="arrow-right" class="w-3 h-3" stroke-width="2"></i>
                                         </a>
+                                        @endif
+                                        @if($biz->is_active && Auth::guard('admin')->user()?->hasPermission('admin.businesses.suspend'))
                                         <form method="POST"
                                             action="{{ route('admin.businesses.toggle-status', $biz->id) }}"
-                                            onsubmit="return AppAlert.confirmSubmit(event, this, 'Apakah Anda yakin ingin mengubah status aktif bisnis {{ addslashes($biz->name) }}?', 'Ubah Status Bisnis?', 'warning')">
+                                            onsubmit="return AppAlert.confirmSubmit(event, this, 'Apakah Anda yakin ingin menangguhkan status bisnis {{ addslashes($biz->name) }}?', 'Tangguhkan Bisnis?', 'warning')">
                                             @csrf
                                             <button type="submit"
-                                                class="h-8 px-2.5 rounded-[10px] text-[12px] font-bold transition-all inline-flex items-center gap-1 {{ $biz->is_active ? 'text-[#FF3B30] hover:bg-[#FF3B30]/10' : 'text-[#34C759] hover:bg-[#34C759]/10' }} active:scale-95">
-                                                {{ $biz->is_active ? 'Suspend' : 'Aktifkan' }}
+                                                class="h-8 px-2.5 rounded-[10px] text-[12px] font-bold transition-all inline-flex items-center gap-1 text-[#FF3B30] hover:bg-[#FF3B30]/10 active:scale-95">
+                                                Suspend
                                             </button>
                                         </form>
+                                        @elseif(! $biz->is_active && Auth::guard('admin')->user()?->hasPermission('admin.businesses.activate'))
+                                        <form method="POST"
+                                            action="{{ route('admin.businesses.toggle-status', $biz->id) }}"
+                                            onsubmit="return AppAlert.confirmSubmit(event, this, 'Apakah Anda yakin ingin mengaktifkan kembali bisnis {{ addslashes($biz->name) }}?', 'Aktifkan Bisnis?', 'info')">
+                                            @csrf
+                                            <button type="submit"
+                                                class="h-8 px-2.5 rounded-[10px] text-[12px] font-bold transition-all inline-flex items-center gap-1 text-[#34C759] hover:bg-[#34C759]/10 active:scale-95">
+                                                Aktifkan
+                                            </button>
+                                        </form>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>

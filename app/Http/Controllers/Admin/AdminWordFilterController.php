@@ -10,10 +10,24 @@ use App\Models\CommunityWordFilter;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\View\View;
 
-final class AdminWordFilterController extends Controller
+final class AdminWordFilterController extends Controller implements HasMiddleware
 {
+    /**
+     * Get the middleware that should be assigned to the controller.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.admin.permission:admin.word_filters.view', only: ['index']),
+            new Middleware('require.admin.permission:admin.word_filters.create', only: ['store', 'bulkStore', 'seedDefaults']),
+            new Middleware('require.admin.permission:admin.word_filters.toggle', only: ['update', 'toggle']),
+            new Middleware('require.admin.permission:admin.word_filters.delete', only: ['destroy']),
+        ];
+    }
     public function __construct(
         private readonly ContentModerationService $moderationService = new ContentModerationService
     ) {}

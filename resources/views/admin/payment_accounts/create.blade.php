@@ -228,11 +228,13 @@
                     <i data-lucide="arrow-left" class="w-4 h-4" stroke-width="2"></i>
                     <span>Batal</span>
                 </a>
+                @if(Auth::guard('admin')->user()?->hasPermission('admin.payment_accounts.create'))
                 <button type="submit"
                     class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition flex items-center gap-2 shadow-[0_2px_8px_rgba(0,122,255,0.25)]">
                     <i data-lucide="save" class="w-4 h-4" stroke-width="2"></i>
                     <span>Simpan Rekening</span>
                 </button>
+                @endif
             </div>
         </form>
 

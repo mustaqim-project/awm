@@ -61,11 +61,13 @@
         </div>
         <div class="flex items-center gap-2 w-full sm:w-auto shrink-0">
             @if(isset($pendingSubscriptions) && $pendingSubscriptions->isNotEmpty())
+            @if(Auth::guard('admin')->user()?->hasPermission('admin.subscriptions.approve'))
             <button type="button" @click="openApproval(@js($pendingSubscriptions->first()))"
                 class="flex-1 sm:flex-none h-12 sm:h-10 px-4 rounded-[12px] bg-[#FF9500] hover:bg-[#E08500] active:scale-[0.98] text-white text-[13px] font-bold transition-all flex items-center justify-center gap-2 shadow-xs cursor-pointer">
                 <i data-lucide="zap" class="w-4 h-4" stroke-width="2"></i>
                 <span>Review Bukti Instan</span>
             </button>
+            @endif
             @endif
             <a href="{{ route('admin.subscriptions.index') }}"
                 class="flex-1 sm:flex-none h-12 sm:h-10 px-4 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white text-[13px] font-bold transition-all flex items-center justify-center gap-2 whitespace-nowrap shadow-md shadow-[#007AFF]/25">
@@ -96,11 +98,13 @@
                         Pemohon: {{ $payment->user->name ?? '-' }} · Total: <strong class="text-black dark:text-white tabular-nums">Rp {{ number_format($payment->total_payable ?? $payment->total_amount ?? 0, 0, ',', '.') }}</strong>
                     </div>
                 </div>
+                @if(Auth::guard('admin')->user()?->hasPermission('admin.subscriptions.approve'))
                 <button type="button" @click="openApproval(@js($payment))"
                     class="h-9 px-3.5 rounded-[10px] bg-[#FF9500]/15 hover:bg-[#FF9500]/25 active:scale-95 text-[#B25E00] dark:text-[#FF9F0A] text-[12px] font-bold transition-all flex items-center gap-1.5 shrink-0 cursor-pointer">
                     <i data-lucide="eye" class="w-3.5 h-3.5" stroke-width="2"></i>
                     <span>Tinjau</span>
                 </button>
+                @endif
             </div>
             @endforeach
         </div>
@@ -1196,7 +1200,8 @@
                     </div>
 
                     <!-- Tab 1: Action Approval Form Direct 1-Click with Optional Notes -->
-                    <form x-show="approvalTab === 'approve'" :action="'/admin/subscriptions/' + selectedPayment?.id + '/approve'" method="POST" class="pt-1 space-y-3">
+                    @if(Auth::guard(\'admin\')->user()?->hasPermission(\'admin.subscriptions.approve\'))
+                    <form x-show="approvalTab === \'approve\'" :action="'/admin/subscriptions/' + selectedPayment?.id + '/approve'" method="POST" class="pt-1 space-y-3">
                         @csrf
                         <div>
                             <label class="block text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D] mb-1">
@@ -1221,9 +1226,11 @@
                             </a>
                         </div>
                     </form>
+                    @endif
 
                     <!-- Tab 2: Action Rejection Form Direct with Required Reason -->
-                    <form x-show="approvalTab === 'reject'" :action="'/admin/subscriptions/' + selectedPayment?.id + '/reject'" method="POST" class="pt-1 space-y-3">
+                    @if(Auth::guard(\'admin\')->user()?->hasPermission(\'admin.subscriptions.reject\'))
+                    <form x-show="approvalTab === \'reject\'" :action="'/admin/subscriptions/' + selectedPayment?.id + '/reject'" method="POST" class="pt-1 space-y-3">
                         @csrf
                         <div>
                             <label class="block text-[11px] font-bold uppercase tracking-wider text-[#FF3B30] dark:text-[#FF453A] mb-1">
@@ -1249,6 +1256,7 @@
                             </a>
                         </div>
                     </form>
+                    @endif
 
                     <!-- Microcopy Reassurance -->
                     <div class="p-2.5 rounded-[10px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.04] dark:border-white/[0.06] text-[11px] text-black/50 dark:text-white/50 flex items-center gap-2">

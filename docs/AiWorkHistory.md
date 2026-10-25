@@ -33,6 +33,235 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-10-25-364] Audit Komprehensif Modul Platform Feedback & Bug Support (Penguatan Controller-Level RBAC Role Owner, AuditLog Logging, Apple HIG Touch Target, dan 100% Pass 11 Automated Tests)
+
+- **Date:** 2026-10-25
+- **Status:** COMPLETED
+- **Module:** Platform Feedback & Bug Support (`resources/views/app/feedback`, `FeedbackWebController.php`, `BugReport.php`, `FeatureRequest.php`)
+- **Feature:** Audit komprehensif modul Feedback, implementasi Controller-Level RBAC `HasMiddleware` (`require.role:owner`), integrasi pencatatan `AuditLog::create` pada pelaporan bug dan permintaan fitur, penyesuaian ergonomi touch target Apple HIG minimal 44px (`h-11 min-h-[44px]`), penulisan 13 dokumen audit dan 3 panduan pengguna resmi dengan tautan rute terverifikasi, serta pembuatan test suite audit dedicated dengan 100% kelulusan.
+- **Work Type:** Audit | Security Hardening | RBAC | Audit Trail | Automated Testing | UX Refinement | Documentation
+
+#### 1. Business Context & Objective
+- **Konteks:** Menjalankan audit menyeluruh berbasis bukti nyata (code-first) pada modul Platform Feedback & Bug Support (`resources/views/app/feedback`) menggunakan skill `/laravel-module-audit` untuk memastikan keandalan otorisasi peran pemilik usaha (Owner), akuntabilitas jejak audit pelaporan, kepatuhan batas kuota penyimpanan berkas, pencegahan eksploitasi lampiran berbahaya, dan kesiapan rilis produksi (*production readiness*).
+- **Masalah/Target:**
+  1. Menerapkan Controller-Level RBAC secara mandiri (`implements HasMiddleware`) pada `FeedbackWebController` dengan proteksi `require.role:owner` untuk menjamin hanya akun pemilik usaha yang berhak mengakses dan mengirimkan feedback sistem.
+  2. Mengintegrasikan pencatatan jejak audit resmi (`AuditLog::create`) pada saat pelaporan bug (`feedback.bug_reported`) dan pengajuan ide fitur (`feedback.feature_requested`) untuk transparansi tata kelola bisnis.
+  3. Memastikan kepatuhan ergonomi Apple HIG touch target minimal 44px (`h-11 min-h-[44px]`) pada tombol aksi utama di `index.blade.php` dan `show.blade.php`.
+  4. Memvalidasi sistem keamanan berkas unggahan agar secara ketat membatasi tipe berkas (`jpg,jpeg,png,pdf` max 5MB) dan memblokir berkas script berbahaya (.php/.exe).
+  5. Membangun test suite audit komprehensif `tests/Feature/FeedbackModuleAuditTest.php` dan memastikan 100% test lulus bersama suite baseline `FeedbackWorkflowTest.php`.
+  6. Menyusun 13 dokumen audit di `docs/audits/feedback/` dan 3 dokumen panduan pengguna di `docs/user-guides/feedback/` dengan tautan rute internal terverifikasi 100% via `verify_links.py`.
+
+#### 2. What Was Done
+- **Baseline Test Execution:**
+  - Menjalankan `php artisan test tests/Feature/FeedbackWorkflowTest.php` dengan hasil 4 passed, 41 assertions (100% Pass).
+- **Controller Hardening & Controller-Level RBAC:**
+  - Mengimplementasikan interface `Illuminate\Routing\Controllers\HasMiddleware` pada `app/Http/Controllers/Web/FeedbackWebController.php`.
+  - Mendeklarasikan method statis `middleware()` dengan mengembalikan `[new Middleware('require.role:owner')]`.
+- **Integrasi Audit Trail:**
+  - Menambahkan `AuditLog::create` pada metode `storeBug` dengan action `feedback.bug_reported`, record ID dari bug report, dan detail severity.
+  - Menambahkan `AuditLog::create` pada metode `storeFeature` dengan action `feedback.feature_requested` dan record ID dari feature request.
+- **UI & Apple HIG Ergonomics Hardening:**
+  - Mengoptimalkan tombol aksi buat tiket pada `resources/views/app/feedback/index.blade.php` dengan `h-11 min-h-[44px]`.
+  - Mengoptimalkan tombol kembali dan tombol aksi pada `resources/views/app/feedback/show.blade.php` dengan `h-11 min-h-[44px]`.
+- **Dedicated Feature Test Suite & Verification:**
+  - Membuat `tests/Feature/FeedbackModuleAuditTest.php` mencakup 7 pengujian:
+    1. Pengalihan guest ke rute login.
+    2. Pemblokiran peran non-owner dengan HTTP 403 Forbidden.
+    3. Akses index laporan bug dan ide fitur oleh owner.
+    4. Pembuatan laporan bug dan verifikasi pencatatan `AuditLog`.
+    5. Pembuatan permintaan fitur dan verifikasi pencatatan `AuditLog`.
+    6. Isolasi data multi-tenant dan proteksi IDOR antar bisnis.
+    7. Penolakan berkas unggahan script berbahaya (.php).
+  - Menjalankan kedua test suite dengan hasil 11 passed, 64 assertions (100% Pass).
+- **Documentation & User Guides:**
+  - Menyusun 13 dokumen audit di `docs/audits/feedback/` (`00-executive-summary.md` s/d `12-residual-risks.md`).
+  - Mengupdate `docs/audits/feedback/audit-state.json` dengan status `PASSED`.
+  - Menyusun 3 dokumen panduan pengguna POV Business Owner di `docs/user-guides/feedback/` (`index.md`, `troubleshooting.md`, `faq.md`).
+  - Memverifikasi 15 internal links pada panduan pengguna dengan `verify_links.py` (0 error).
+
+#### 3. Technical Changes
+- **Files Affected:**
+  - `app/Http/Controllers/Web/FeedbackWebController.php` (HasMiddleware, AuditLog integration)
+  - `resources/views/app/feedback/index.blade.php` (Touch target Apple HIG >= 44px)
+  - `resources/views/app/feedback/show.blade.php` (Touch target Apple HIG >= 44px)
+  - `tests/Feature/FeedbackModuleAuditTest.php` (Suite test audit komprehensif)
+  - `docs/audits/feedback/*` (13 dokumen audit teknis + audit-state.json)
+  - `docs/user-guides/feedback/*` (3 dokumen panduan pengguna)
+- **Database Changes:** Tidak ada perubahan skema tabel fisik baru (menggunakan tabel `bug_reports`, `feature_requests`, `feedback_updates`, `audit_logs`, dan `storage_files` yang sudah ada).
+
+### [WORK-2026-10-25-363] Audit Komprehensif Modul Master Data Pelanggan (Penguatan Controller-Level RBAC, Deletion Guard Saldo Kasbon, Sanitasi Formula Injection CWE-1236, dan 100% Pass 12 Automated Tests)
+
+- **Date:** 2026-10-25
+- **Status:** COMPLETED
+- **Module:** Master Data Pelanggan (`resources/views/app/customers`, `CustomerWebController.php`, `DataExchangeService.php`)
+- **Feature:** Audit komprehensif modul Master Data Pelanggan, implementasi Controller-Level RBAC `HasMiddleware` (`customers.view`, `customers.create`, `customers.edit`, `customers.delete`, `entitlement:customer`), penambahan Deletion Guard piutang kasbon pada aksi `destroy`, sanitasi Formula / CSV Injection (CWE-1236) pada ekspor Excel (`CsvSanitizer`), penulisan 13 dokumen audit dan 3 panduan pengguna resmi dengan tautan rute terverifikasi, serta penyusunan test suite audit dedicated dengan 100% kelulusan.
+- **Work Type:** Audit | Security Hardening | RBAC | Automated Testing | UX Refinement | Documentation
+
+#### 1. Business Context & Objective
+- **Konteks:** Menjalankan audit menyeluruh berbasis bukti nyata (code-first) pada modul Master Data Pelanggan (`resources/views/app/customers`) menggunakan skill `/laravel-module-audit` untuk memastikan keandalan otorisasi RBAC, integritas buku besar piutang usaha, pencegahan eksploitasi berkas spreadsheet, dan kesiapan rilis produksi (*production readiness*).
+- **Masalah/Target:**
+  1. Menerapkan Controller-Level RBAC secara mandiri (`implements HasMiddleware`) pada `CustomerWebController` untuk seluruh aksi CRUD pelanggan (`customers.view`, `customers.create`, `customers.edit`, `customers.delete`) dan kuota pelanggan (`entitlement:customer`).
+  2. Menerapkan Deletion Guard pada penghapusan pelanggan (`destroy`) agar pelanggan yang masih memiliki sisa saldo kasbon atau piutang berjalan (`current_credit_balance > 0`) dilarang keras dihapus sebelum melunasi kewajibannya.
+  3. Mencegah potensi Formula / CSV Injection (CWE-1236) pada ekspor berkas Excel pelanggan di `DataExchangeService` menggunakan sanitasi `CsvSanitizer`.
+  4. Memverifikasi struktur tampilan Apple HIG, Bento Hero Metrics, dan 4 modal interaktif yang telah menggunakan `<template x-teleport="body">` di `z-[200]`.
+  5. Membangun test suite audit komprehensif `tests/Feature/CustomerModuleAuditTest.php` dan memastikan 100% test lulus bersama suite baseline `CustomerWebFeatureTest.php`.
+  6. Menyusun 13 dokumen audit di `docs/audits/customers/` dan 3 dokumen panduan pengguna di `docs/user-guides/customers/` dengan tautan rute internal terverifikasi 100% via `verify_links.py`.
+
+#### 2. What Was Done
+- **Baseline Test Execution:**
+  - Menjalankan `php artisan test tests/Feature/CustomerWebFeatureTest.php` dengan hasil 5 passed, 25 assertions (100% Pass).
+- **Controller Hardening & Controller-Level RBAC:**
+  - Mengimplementasikan interface `Illuminate\Routing\Controllers\HasMiddleware` pada `app/Http/Controllers/Web/CustomerWebController.php`.
+  - Mendaftarkan middleware `require.permission:customers.view` untuk method `index`, `export`, `downloadTemplate`.
+  - Mendaftarkan middleware `require.permission:customers.create` untuk method `store`, `previewImport`, `executeImport`.
+  - Mendaftarkan middleware `require.permission:customers.edit` untuk method `update`.
+  - Mendaftarkan middleware `require.permission:customers.delete` untuk method `destroy`.
+  - Mendaftarkan middleware kuota `entitlement:customer` untuk method `store` dan `executeImport`.
+  - Menerapkan Deletion Guard pada method `destroy`: memblokir penghapusan pelanggan dengan status HTTP 422 jika `current_credit_balance > 0`.
+  - Mendukung respons ganda (JSON dan Redirect) pada method `destroy`.
+- **Spreadsheet Security Hardening (Formula Injection CWE-1236):**
+  - Menerapkan sanitasi `\App\Support\Security\CsvSanitizer::sanitize` pada `DataExchangeService::exportCustomers` untuk atribut teks pelanggan (`name`, `company_name`, `city`, `address`).
+- **Dedicated Automated Test Suite:**
+  - Membuat `tests/Feature/CustomerModuleAuditTest.php` dengan 7 skenario pengujian komprehensif: redirect guest, permission gating web dan JSON API, isolasi multi-tenant IDOR (404/403), Deletion Guard penolakan hapus pelanggan berhutang (422), keunikan kode pelanggan per bisnis, rekam jejak `AuditLog` via `Auditable` trait, dan verifikasi Formula Injection sanitization pada ekspor Excel.
+  - Menjalankan seluruh test Customer: 12 tests, 53 assertions, 100% passed (0 failure, 0 error).
+- **Dokumentasi & Verifikasi Tautan Rute:**
+  - Menyusun 13 berkas audit komprehensif di `docs/audits/customers/` (`00-executive-summary.md` hingga `12-residual-risks.md` serta `audit-state.json` dengan status gate `PASSED`).
+  - Menyusun 3 dokumen panduan pengguna di `docs/user-guides/customers/` (`index.md`, `troubleshooting.md`, `faq.md`).
+  - Menjalankan `verify_links.py` terhadap `routes.json`: 28 internal links terverifikasi 100% valid dengan 0 kesalahan.
+
+#### 3. Technical Changes
+- **Files Modified:**
+  - `app/Http/Controllers/Web/CustomerWebController.php` (HasMiddleware, Controller-Level RBAC, Deletion Guard)
+  - `app/Domain/Import/DataExchangeService.php` (CsvSanitizer formula injection protection)
+- **Files Created:**
+  - `tests/Feature/CustomerModuleAuditTest.php`
+  - `docs/audits/customers/00-executive-summary.md` s/d `12-residual-risks.md` & `audit-state.json`
+  - `docs/user-guides/customers/index.md`, `troubleshooting.md`, `faq.md`
+
+#### 4. Verification & Testing
+- `php artisan test tests/Feature/CustomerWebFeatureTest.php` -> 5 passed, 25 assertions.
+- `php artisan test tests/Feature/CustomerModuleAuditTest.php` -> 7 passed, 28 assertions.
+- Total: 12 passed, 53 assertions, 0 errors, 0 failures.
+- `verify_links.py docs/user-guides/customers --routes routes.json` -> 28 links verified, 0 problems.
+
+---
+
+### [WORK-2026-10-25-362] Audit Komprehensif Modul CRM & Loyalty (Penguatan Controller-Level RBAC, Integrasi Audit Trail Voucher, Proteksi Anti-Lapping Kasbon, Standardisasi Touch Target Apple HIG, dan 100% Pass 14 Automated Tests)
+
+- **Date:** 2026-10-25
+- **Status:** COMPLETED
+- **Module:** CRM & Loyalty (`resources/views/app/crm`, `CrmWebController.php`, `LoyaltyService.php`)
+- **Feature:** Audit komprehensif modul CRM & Loyalty, implementasi Controller-Level RBAC `HasMiddleware`, integrasi perekaman `AuditLog` pada siklus hidup voucher (`storeVoucher` dan `toggleVoucher`), verifikasi proteksi anti-lapping kasbon dan isolasi IDOR multi-tenant, perbaikan ergonomi sentuh Apple HIG (>= 44px), penulisan 13 dokumen audit dan 3 panduan pengguna resmi dengan tautan rute terverifikasi, serta penyusunan test suite audit dedicated dengan 100% kelulusan.
+- **Work Type:** Audit | Security Hardening | RBAC | Automated Testing | UX Refinement | Documentation
+
+#### 1. Business Context & Objective
+- **Konteks:** Menjalankan audit menyeluruh berbasis bukti nyata (code-first) pada modul CRM & Loyalty (`resources/views/app/crm`) menggunakan skill `/laravel-module-audit` guna memastikan kepatuhan multi-tenant, pemisahan peran karyawan (RBAC), pencegahan fraud kasir, dan kesiapan rilis produksi (*production readiness*).
+- **Masalah/Target:**
+  1. Memastikan otorisasi Controller-Level RBAC diterapkan secara mandiri (`implements HasMiddleware`) pada `CrmWebController` untuk hak akses `crm.view` dan `crm.manage`.
+  2. Menerapkan jejak audit anti-fraud (`AuditLog`) pada penerbitan voucher diskon baru dan perubahan status aktif/nonaktif kupon.
+  3. Memvalidasi proteksi anti-fraud kasir (Anti-Lapping Shield) pada pencatatan pelunasan kasbon pelanggan (`recordCreditPayment`), di mana penerimaan kas wajib terhubung secara atomik dengan akun kas (`CashAccount`), mutasi kas masuk (`CashTransaction`), dan pembatasan tidak boleh membayar melebihi sisa kasbon.
+  4. Memperbaiki ukuran target sentuh tombol pemicu modal pembuatan voucher dan tombol toggle status pada kartu voucher agar memenuhi standar Apple HIG (>= 44px).
+  5. Membangun test suite audit komprehensif `tests/Feature/CrmModuleAuditTest.php` dan memastikan 100% test lulus bersama suite baseline `CrmWebFeatureTest.php`.
+  6. Menyusun 13 dokumen audit di `docs/audits/crm/` dan 3 dokumen panduan pengguna di `docs/user-guides/crm/` dengan tautan rute internal terverifikasi 100% via `verify_links.py`.
+
+#### 2. What Was Done
+- **Baseline Test Execution:**
+  - Menjalankan `php artisan test tests/Feature/CrmWebFeatureTest.php` dengan hasil 6 passed, 25 assertions (100% Pass).
+- **Controller Hardening & Controller-Level RBAC:**
+  - Mengimplementasikan interface `Illuminate\Routing\Controllers\HasMiddleware` pada `app/Http/Controllers/Web/Crm/CrmWebController.php`.
+  - Mendaftarkan middleware `require.permission:crm.view` untuk method `members`, `pointHistories`, `vouchers`.
+  - Mendaftarkan middleware `require.permission:crm.manage` untuk method `recordCreditPayment`, `storeVoucher`, `toggleVoucher`.
+  - Menambahkan dependency `Request $request` pada signature method `toggleVoucher`.
+  - Mengintegrasikan perekaman `AuditLog::create` pada `storeVoucher` (`voucher.created`) dan `toggleVoucher` (`voucher.status_toggled`).
+- **UI & Ergonomics Polish (Apple HIG Standard):**
+  - Mengubah tombol pemicu modal "Buat Voucher Baru" pada `resources/views/app/crm/vouchers.blade.php` menjadi `h-11 min-h-[44px]`.
+  - Mengubah tombol status aktif/nonaktif pada kartu voucher menjadi `w-full h-11 min-h-[44px] sm:h-10 rounded-[12px]`.
+- **Dedicated Automated Test Suite:**
+  - Membuat `tests/Feature/CrmModuleAuditTest.php` dengan 8 skenario pengujian komprehensif: redirect guest, permission gating web dan JSON API, isolasi multi-tenant IDOR (404/403), audit trail pelunasan kasbon & voucher, batasan saldo kasbon, dan keunikan kode voucher per bisnis.
+  - Menjalankan seluruh test CRM: 14 tests, 52 assertions, 100% passed (0 failure, 0 error).
+- **Dokumentasi & Verifikasi Tautan Rute:**
+  - Menyusun 13 berkas audit komprehensif di `docs/audits/crm/` (`00-executive-summary.md` hingga `12-residual-risks.md` serta `audit-state.json` dengan status gate `PASSED`).
+  - Menyusun 3 dokumen panduan pengguna di `docs/user-guides/crm/` (`index.md`, `troubleshooting.md`, `faq.md`).
+  - Menjalankan `verify_links.py` terhadap `routes.json`: 18 internal links terverifikasi 100% valid dengan 0 kesalahan.
+
+#### 3. Technical Changes
+- **Files Modified:**
+  - `app/Http/Controllers/Web/Crm/CrmWebController.php` (HasMiddleware, RBAC, AuditLog)
+  - `resources/views/app/crm/vouchers.blade.php` (Touch target >= 44px)
+- **Files Created:**
+  - `tests/Feature/CrmModuleAuditTest.php`
+  - `docs/audits/crm/00-executive-summary.md` s/d `12-residual-risks.md` & `audit-state.json`
+  - `docs/user-guides/crm/index.md`, `troubleshooting.md`, `faq.md`
+
+#### 4. Verification & Testing
+- `php artisan test tests/Feature/CrmWebFeatureTest.php` -> 6 passed, 25 assertions.
+- `php artisan test tests/Feature/CrmModuleAuditTest.php` -> 8 passed, 27 assertions.
+- Total: 14 passed, 52 assertions, 0 errors, 0 failures.
+- `verify_links.py docs/user-guides/crm --routes routes.json` -> 18 links verified, 0 problems.
+
+---
+
+### [WORK-2026-10-25-361] Audit Komprehensif Modul Komunitas & Networking UMKM (Penutupan Celah Finansial Simulasi Bayar, Audit Logging Anti-Fraud, Gating Subscription, dan 100% Pass 48 Automated Tests)
+
+- **Date:** 2026-10-25
+- **Status:** COMPLETED
+- **Module:** Community & Networking UMKM (`resources/views/app/community`)
+- **Feature:** Audit modul komprehensif, mitigasi bypass pembayaran tiket event, penambahan audit log registrasi & pembatalan event, proteksi penghapusan postingan, implementasi Controller-Level RBAC `HasMiddleware`, penguatan UX Apple HIG, dan pembuatan dedicated test suite audit.
+- **Work Type:** Audit | Security Hardening | RBAC | Automated Testing | UX Refinement | Documentation
+
+#### 1. Business Context & Objective
+- **Konteks:** Menjalankan audit menyeluruh berbasis bukti nyata (code-first) pada modul Komunitas dan Event Bisnis UMKM (`resources/views/app/community`) menggunakan skill `/laravel-module-audit` untuk memastikan kesiapan produksi (*production readiness*).
+- **Masalah/Target:**
+  1. Menutup celah finansial kritis pada endpoint simulasi pembayaran QRIS event (`simulateEventPayment`) agar tidak dapat disalahgunakan di lingkungan produksi untuk melunasi tiket berbayar secara cuma-cuma.
+  2. Menerapkan jejak audit anti-fraud (`AuditLog`) pada setiap transaksi registrasi event, pembatalan pendaftaran tiket, simulasi bayar, dan penghapusan postingan komunitas.
+  3. Memastikan keselarasan RBAC Controller-Level (`HasMiddleware`) Laravel 11 dan memvalidasi isolasi IDOR antar penyewa.
+  4. Memperbaiki baseline fixture test admin pada `EnsureAdminIsActive` middleware dan membangun dedicated test suite audit `tests/Feature/CommunityModuleAuditTest.php`.
+  5. Menyusun 13 dokumen audit lengkap di `docs/audits/community/`, 3 panduan pengguna POV Business Owner di `docs/user-guides/community/`, serta memverifikasi seluruh tautan internal dengan zero error.
+
+#### 2. What Was Done
+1. **Penutupan Celah Keamanan Finansial:**
+   - Menambahkan guard ketat `abort_unless(app()->environment('local', 'testing'), 403)` pada `CommunityWebController::simulateEventPayment`.
+   - Mengondisikan tombol form simulasi pembayaran QRIS di `event_payment.blade.php` agar dibungkus `@if(app()->environment('local', 'testing'))`.
+2. **Penguatan Jejak Audit & RBAC Controller:**
+   - Menerapkan kontrak `implements HasMiddleware` pada `CommunityWebController`.
+   - Menambahkan `AuditLog::create` pada registrasi event (`community.event.registered`), pembatalan tiket (`community.event.registration_cancelled`), dan penghapusan postingan (`community.post.deleted`).
+3. **Penyempurnaan Ergonomi UI & Human Error Prevention:**
+   - Memperjelas pesan konfirmasi pembatalan pendaftaran event berbayar pada `events.blade.php` agar memberi peringatan eksplisit bahwa tiket berbayar yang dibatalkan tidak otomatis di-refund.
+4. **Perbaikan Fixture Admin & Pembuatan Test Suite Audit:**
+   - Memperbaiki `setUp()` pada `CommunityWordFilterTest` dan `CommunityEventFeatureTest` agar membuat akun admin aktif dengan peran `super_admin`.
+   - Membuat `tests/Feature/CommunityModuleAuditTest.php` (9 tests, 27 assertions) yang memvalidasi pengalihan guest, audit logging, proteksi IDOR, pembatasan environment, dan moderasi kata.
+   - Menjalankan 5 test suite modul Community secara simultan (48 tests, 224 assertions) dengan hasil 100% Pass.
+5. **Dokumentasi & Verifikasi Tautan:**
+   - Mengisi 13 dokumen audit di `docs/audits/community/` (`00-executive-summary.md` hingga `12-residual-risks.md`) dan memperbarui `audit-state.json` ke status `READY FOR PRODUCTION`.
+   - Menulis panduan pengguna POV Business Owner di `docs/user-guides/community/` (`index.md`, `troubleshooting.md`, `faq.md`).
+   - Memverifikasi 14 tautan internal menggunakan `verify_links.py` terhadap route riil dengan hasil 0 masalah (0 broken links).
+
+#### 3. Technical Changes
+- **Files Modified:**
+  - `app/Http/Controllers/Web/CommunityWebController.php`
+  - `resources/views/app/community/event_payment.blade.php`
+  - `resources/views/app/community/events.blade.php`
+  - `tests/Feature/CommunityEventFeatureTest.php`
+  - `tests/Feature/CommunityWordFilterTest.php`
+- **Files Created:**
+  - `tests/Feature/CommunityModuleAuditTest.php`
+  - `docs/audits/community/00-executive-summary.md` s/d `12-residual-risks.md`
+  - `docs/audits/community/audit-state.json`
+  - `docs/user-guides/community/index.md`, `troubleshooting.md`, `faq.md`
+
+#### 4. Verification & Automated Test Results
+- **Automated Tests Executed:**
+  - `tests/Feature/CommunityEventFeatureTest.php`: 13 passed (71 assertions)
+  - `tests/Feature/CommunityEventPaymentTest.php`: 10 passed (51 assertions)
+  - `tests/Feature/CommunityFeatureTest.php`: 12 passed (51 assertions)
+  - `tests/Feature/CommunityWordFilterTest.php`: 4 passed (24 assertions)
+  - `tests/Feature/CommunityModuleAuditTest.php`: 9 passed (27 assertions)
+  - **Total Suite:** 48 passed, 224 assertions, 0 failures, 0 errors, duration: 28.65s.
+- **Link Verification:**
+  - `python verify_links.py docs/user-guides/community`: 14 internal links checked, 0 problems.
+
+---
+
 ### [WORK-2026-10-25-374] Penyempurnaan Tampilan Tombol Aksi Tabel Postingan dan Isolasi Read-Only Modal Pratinjau untuk Postingan Terpublikasi
 
 - **Date:** 2026-10-25
@@ -22709,6 +22938,110 @@ Business Owner / Merchant UMKM COOCA memerlukan satu pusat pengelolaan (_Single 
      - Menambahkan checkpoint audit ke-5 *Audit Modal Teleportation & Zero Topbar Gap* lintas 3 panel (Admin, Owner Backoffice, Customer Storefront).
 - **Work Type:** UI/UX Standard Architecture | Design System Hardening | Skill Customization Update
 
+---
 
+### [WORK-2026-10-25-358] Audit Komprehensif Modul Analytics dengan Skill /laravel-module-audit (Controller-Level RBAC, Time-Series Fix, Input Resilience, Bento HIG, i18n & 100% Automated Tests)
 
+- **Date:** 2026-10-25
+- **Status:** COMPLETED
+- **Module:** Analytics & Reporting (`app/Http/Controllers/Web/AnalyticsWebController.php`, `resources/views/app/analytics/index.blade.php`, `routes/owner.php`, `lang/id/analytics.php`, `lang/en/analytics.php`, `tests/Feature/AnalyticsWebTest.php`, `docs/audits/analytics/`, `docs/user-guides/analytics/`)
+- **Feature:** Audit komprehensif 13 aspek modul Analitik Bisnis & Tren Pertumbuhan, perbaikan keandalan time-series laba kotor, resilience tanggal kustom, proteksi Controller-Level RBAC, optimasi kueri direct join, kepatuhan Bento Apple HIG anti-pill, dukungan penuh i18n ID/EN, dan pembuatan panduan pengguna ber-route terverifikasi.
+- **Work Type:** Comprehensive Audit | RBAC Security | Business Logic Remediation | UI/UX Apple HIG | i18n | Automated Testing | Documentation
+
+#### 1. Business Context & Objective
+- Mengaudit modul Analytics (`/analytics`) secara menyeluruh dari kode sumber sampai kesiapan rilis produksi (*production readiness*) menggunakan orkestrasi bundle skill spesialis (`laravel-permission-audit`, `ui-simplify-layout`, `responsive-ui-ux`, `reports-and-dashboard-audit`, `business-owner-doc-generator`, `cooca-agent-directive`).
+- Menjamin integritas perhitungan finansial omzet omnichannel (POS, Invoice, Toko Online), kelengkapan kurva laba kotor, dan kemudahan bagi pemilik bisnis UMKM dalam memantau jam sibuk kasir dan 10 produk terlaris.
+
+#### 2. Key Findings & Remediation (11 Findings Fixed)
+1. **F-ANA-001 (Controller-Level RBAC):** Mengimplementasikan `Illuminate\Routing\Controllers\HasMiddleware` pada `AnalyticsWebController` dengan `new Middleware('require.permission:reports.view', only: ['index'])`, memindahkan deklarasi dari route ke controller sesuai standar RBAC enterprise COOCA.
+2. **F-ANA-002 (Input Resilience & Error 500 Prevention):** Membungkus parser tanggal `Carbon::parse()` dalam blok `try/catch (\Throwable)` dengan fallback aman ke awal/akhir bulan berjalan, serta auto-swap jika tanggal awal lebih besar dari tanggal akhir (`from > to`).
+3. **F-ANA-003 (Time-Series Profit Integrity & Peak Hours Synchronization):** Memperbaiki loop per-jam grafik "Hari Ini" pada `buildTrendSeries()` agar `$profitData` terisi penuh sinkron dengan `$revenueData` dan menyelaraskan rentang waktu jam operasional 07:00–23:00 (17 data point).
+4. **F-ANA-004 (Multi-Database SQL Compatibility):** Menstandarisasi fungsi ekspresi waktu (`strftime` untuk SQLite, `to_char` untuk PostgreSQL, dan `DATE_FORMAT`/`HOUR` untuk MySQL).
+5. **F-ANA-005 (Multi-Outlet Isolation on Commerce Orders):** Menambahkan filter `where('location_id', $locationId)` pada kueri `CommerceOrder` di `calculateMetrics()` agar pesanan online antar-cabang tidak saling bercampur.
+6. **F-ANA-006 (Query Performance & Anti-Bottleneck):** Mengganti correlated subqueries `whereHas` pada `buildTopProducts` dan `buildPaymentMethods` dengan direct `JOIN` pada foreign key `pos_order_id`.
+7. **F-ANA-007 (Bento Apple HIG Anti-Pill Mandate):** Menghapus badge pill `rounded-full` pada angka persentase margin produk dan menggantinya dengan tipografi semantik murni `tabular-nums font-semibold text-[#34C759]`.
+8. **F-ANA-008 (Mobile Ergonomics & Horizontal Scroll 360px):** Menaikkan touch target tombol segmented control menjadi minimum 36–38px dan membungkusnya dalam kontainer `overflow-x-auto no-scrollbar`.
+9. **F-ANA-009 (Zero Hardcoded Text i18n):** Membuat kamus bahasa resmi `lang/id/analytics.php` dan `lang/en/analytics.php` serta mengintegrasikan `__('analytics....')` di seluruh tampilan view dan controller.
+10. **F-ANA-010 (Automated Test Suite Expansion):** Mengembangkan 9 test cases komprehensif pada `tests/Feature/AnalyticsWebTest.php` mencakup penolakan 403, isolasi multi-tenant, kelengkapan time-series laba, sanitasi input tanggal, dan penyaringan cabang.
+11. **F-ANA-011 (Executive Print / Export Action):** Menambahkan tombol *Cetak Laporan* (`window.print()`) dan styling media print bersih tanpa elemen navigasi.
+
+#### 3. Verification & Test Results
+- `php artisan test tests/Feature/AnalyticsWebTest.php` → **9 passed, 37 assertions (100% Success)**.
+- `php artisan route:list --name=analytics` → **Verified intact**.
+- `python verify_links.py docs/user-guides/analytics` → **11 internal links checked, 0 problems (100% Verified)**.
+- Production Readiness Gate: **READY WITH ACCEPTED RISKS**.
+
+---
+
+### [WORK-2026-10-25-359] Approvals Module Comprehensive Audit & Production Readiness Hardening
+- **Timestamp:** 2026-10-25T17:55:00+07:00
+- **Audited Target:** `resources/views/app/approvals/` (`inbox.blade.php`, `history.blade.php`, `rules.blade.php`), `ApprovalWebController.php`, `ApprovalWorkflowService.php`, `ApprovalRequest.php`, `ApprovalRule.php`, `ApprovalLog.php`
+- **Work Type:** Comprehensive Audit | Controller-Level RBAC | Multi-Tenant IDOR Hardening | Anti-Fraud Audit Trail | Query Optimization | Bento Apple HIG | Documentation | Automated Testing
+
+#### 1. Business Context & Objective
+- Mengaudit modul Approvals (Pusat Otorisasi Dokumen MAR - Maker, Approver, Releaser) secara menyeluruh berbasis kode nyata (*code-first*) sampai tingkat kesiapan rilis produksi (*production readiness*) menggunakan panduan skill `/laravel-module-audit` dan orkestrasi direktif `cooca-agent-directive`.
+- Memastikan pemisahan peran (*Segregation of Duties*), pencegahan fraud pengadaan/biaya, keandalan multi-tenant isolation, serta efisiensi beban komputasi server.
+
+#### 2. Key Findings & Remediation (Audit Findings Fixed)
+1. **F-APP-001 (Baseline Fix in PurchaseOrderWebController):** Mengoreksi `AuditLog::create` pada konfirmasi PO (`action: po.confirmed`) yang sebelumnya menggunakan field non-fillable `record_type`/`record_id` menjadi `auditable_type` dan `auditable_id`. Memperbaiki kegagalan SQLite `NOT NULL constraint failed: audit_logs.auditable_type`.
+2. **F-APP-002 (Controller-Level RBAC HasMiddleware):** Mengimplementasikan interface `Illuminate\Routing\Controllers\HasMiddleware` pada `ApprovalWebController` dengan deklarasi statis method `middleware()`:
+   - `require.permission:approvals.view` pada `['inbox', 'history']`.
+   - `require.permission:approvals.manage` pada `['approve', 'reject', 'rulesIndex', 'rulesStore', 'rulesUpdate', 'rulesDestroy']`.
+3. **F-APP-003 (Inbox Database Performance & N+1 Elimination):** Merefaktor metode `ApprovalWebController::inbox()` dari yang semula melakukan 5 kali kueri SQL berulang untuk menghitung badge tab filter, menjadi 1 kali kueri tunggal via In-Memory Collection Filtering (`$allPending->where(...)`).
+4. **F-APP-004 (Anti-Fraud Audit Logging on Decision & Policy Mutate):** Menambahkan pencatatan `AuditLog::create` otomatis pada aksi:
+   - `approval.approved`: Pencatatan siapa, level berapa, IP, user-agent, dan timestamp.
+   - `approval.rejected`: Pencatatan alasan penolakan, kategori risiko Medium, dan referensi dokumen.
+   - `approval_rule.created`, `approval_rule.updated`, `approval_rule.deleted`: Pelacakan audit trail terhadap perubahan plafon dan wewenang otorisasi.
+5. **F-APP-005 (Robust Request Validation on Rules):** Menambahkan aturan validasi eksplisit untuk `approver_role_level_1`, `approver_role_level_2`, dan `approver_role_level_3` pada `rulesStore` dan `rulesUpdate`.
+6. **F-APP-006 (Strict Multi-Tenant Scoping & Anti-IDOR):** Memastikan verifikasi `abort_unless(model->business_id === $business->id, 404)` pada tiket dokumen maupun aturan otorisasi.
+7. **F-APP-007 (Bento Apple HIG & Teleported Modals):** Memverifikasi kepatuhan dialog modal pada `<template x-teleport="body">` dengan `z-[200]` s/d `z-[220]`, touch targets >= 44px, grab bar lembar modal seluler, dan ketiadaan emotikon teks (100% Lucide SVG icons).
+8. **F-APP-008 (Complete Documentation & Guides):**
+   - Menghasilkan 13 dokumen audit teknis lengkap di `docs/audits/approvals/` (`00-executive-summary.md` s/d `12-residual-risks.md` dan `audit-state.json`).
+   - Menghasilkan 3 panduan pengguna ramah UMKM di `docs/user-guides/approvals/` (`index.md`, `troubleshooting.md`, `faq.md`).
+   - Verifikasi 17 internal link route menggunakan `verify_links.py` dengan 0 problem.
+
+#### 3. Verification & Test Results
+- `php artisan test tests/Feature/DocumentApprovalWorkflowTest.php` → **9 passed, 54 assertions (100% Success)**.
+- `php artisan test tests/Feature/ApprovalModuleAuditTest.php` → **7 passed, 29 assertions (100% Success)**.
+- Total Pengujian: **16 tests, 83 assertions (100% Passed)**.
+- `python verify_links.py docs/user-guides/approvals --routes routes.json` → **17 internal links checked, 0 problems (100% Verified)**.
+- Production Readiness Gate: **PASSED (Production Ready)**.
+
+---
+
+### [WORK-2026-10-25-360] Billing & Subscription Module Comprehensive Audit & Production Readiness Hardening
+- **Timestamp:** 2026-10-25T18:20:00+07:00
+- **Audited Target:** `resources/views/app/billing/` (`limits.blade.php`, `checkout.blade.php`, `payment.blade.php`, `invoice.blade.php`, `history.blade.php`), `BillingAndLimitWebController.php`, `SubscriptionCheckoutWebController.php`, `EntitlementService.php`, `StorageTrackingService.php`, `routes/owner.php`
+- **Work Type:** Comprehensive Audit | Controller-Level RBAC | Anti-Fraud Audit Trail | Multi-Tenant IDOR Hardening | Dynamic Industry Auto-Hiding | Bento Apple HIG | Documentation | Automated Testing
+
+#### 1. Business Context & Objective
+- Mengaudit modul Billing & Subscription (Dasbor kuota 10 pilar, perpanjangan langganan SaaS, gateway TriPay QRIS/VA, manajemen berkas cloud storage, dan faktur digital) secara menyeluruh berbasis kode nyata (*code-first*) sampai tingkat kesiapan rilis produksi (*production readiness*) menggunakan panduan skill `/laravel-module-audit` dan orkestrasi direktif `cooca-agent-directive`.
+- Memastikan pemenuhan Controller-Level RBAC, pencatatan jejak audit finansial anti-fraud, isolasi multi-tenant anti-IDOR, dan kenyamanan antarmuka bagi pemilik UMKM Indonesia dari 20 sektor industri.
+
+#### 2. Key Findings & Remediation (Audit Findings Fixed)
+1. **F-BIL-001 (Dynamic Context-Aware Industry Auto-Hiding & Test Robustness):** Mengoreksi kebocoran teks Meja Kasir Dine-In pada tampilan ritel dan non-F&B dengan membungkus elemen terkait pada `@if($business->hasDineInFeature())`. Memperbaiki penargetan assertion test pada atribut DOM spesifik `aria-label` agar tidak terjadi false-positive akibat dump translasi JavaScript global `window.__translations.billing` di layout `layouts/app.blade.php`.
+2. **F-BIL-002 (Controller-Level RBAC HasMiddleware):** Mengimplementasikan interface `Illuminate\Routing\Controllers\HasMiddleware` pada:
+   - `BillingAndLimitWebController`:
+     - `require.permission:billing.view` pada `['index', 'listFiles']`.
+     - `require.permission:billing.manage` pada `['upgrade', 'recalculateStorage', 'destroyStorageFile']`.
+   - `SubscriptionCheckoutWebController`:
+     - `require.permission:billing.view` pada `['payment', 'checkStatus', 'invoice', 'viewProof', 'history']`.
+     - `require.permission:billing.manage` pada `['checkout', 'validatePromo', 'store', 'uploadProof']`.
+3. **F-BIL-003 (Anti-Fraud Audit Logging on Financial & Quota Actions):** Mengintegrasikan pencatatan `AuditLog::create` otomatis pada:
+   - `billing.storage.recalculated`: Pelacakan saat kuota disk dipindai dan dihitung ulang.
+   - `billing.storage.file_deleted`: Pelacakan saat berkas penyimpanan cloud dihapus untuk mereklaim kuota, lengkap dengan ukuran berkas, path, dan nama file.
+   - `billing.order.created`: Pelacakan pembuatan pesanan langganan baru lengkap dengan nomor tagihan, tier langganan, metode pembayaran, nominal, dan kode voucher promo.
+4. **F-BIL-004 (Strict Multi-Tenant Scoping & Anti-IDOR):** Memvalidasi kepemilikan tenant pada parameter entitas model `SubscriptionPayment` dan `StorageFile` (`abort_unless($model->business_id === $business->id, 403)`), mencegah akses atau manipulasi berkas/faktur antar-tenant.
+5. **F-BIL-005 (Bento Apple HIG & Teleported Modals):** Memverifikasi kepatuhan dialog modal pada `<template x-teleport="body">` dengan `z-[220]`, touch targets >= 44px, tipografi monospaced tabular pada angka kapasitas, dan ketiadaan pill badge pada nilai persentase pemakaian.
+6. **F-BIL-006 (Complete Documentation & Guides):**
+   - Menghasilkan 13 dokumen audit teknis lengkap di `docs/audits/billing/` (`00-executive-summary.md` s/d `12-residual-risks.md` dan `audit-state.json`).
+   - Menghasilkan 3 panduan pengguna ramah UMKM di `docs/user-guides/billing/` (`index.md`, `troubleshooting.md`, `faq.md`).
+   - Verifikasi 11 internal link route menggunakan `verify_links.py` dengan 0 problem.
+
+#### 3. Verification & Test Results
+- `php artisan test tests/Feature/BillingSubmoduleSecurityAndErgonomicsTest.php` → **9 passed, 45 assertions (100% Success)**.
+- `php artisan test tests/Feature/BillingModuleAuditTest.php` → **8 passed, 19 assertions (100% Success)**.
+- Total Pengujian: **17 tests, 64 assertions (100% Passed, 0 Failures)**.
+- `python verify_links.py docs/user-guides/billing --routes routes.json` → **11 internal links checked, 0 problems (100% Verified)**.
+- Production Readiness Gate: **READY FOR PRODUCTION (Siap Rilis)**.
 

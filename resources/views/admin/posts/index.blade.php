@@ -264,6 +264,7 @@
                                         @endif
                                     </td>
                                     <td class="px-4 py-4 whitespace-nowrap">
+                                        @if(Auth::guard('admin')->user()?->hasPermission('admin.posts.publish'))
                                         <form action="{{ route('admin.posts.toggle-status', $post) }}" method="POST"
                                             class="inline">
                                             @csrf
@@ -274,6 +275,9 @@
                                                 <span>{{ $post->is_published ? 'Published' : 'Draft' }}</span>
                                             </button>
                                         </form>
+                                        @else
+                                        <span class=\"inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold {{ $post->is_published ? 'bg-[#34C759]/15 text-[#34C759] dark:text-[#30D158]' : 'bg-black/10 dark:bg-white/10 text-black/50 dark:text-white/50' }}\"><span class=\"w-1.5 h-1.5 rounded-full {{ $post->is_published ? 'bg-[#34C759]' : 'bg-black/40 dark:bg-white/40' }}\"></span>{{ $post->is_published ? 'Terbit' : 'Draf' }}</span>
+                                        @endif
                                     </td>
                                     <td
                                         class="px-4 py-4 text-right tabular-nums whitespace-nowrap font-medium text-black/70 dark:text-white/70">
@@ -290,6 +294,7 @@
                                                 <i data-lucide="pencil" class="w-3.5 h-3.5" stroke-width="1.5"></i>
                                                 <span>Edit</span>
                                             </a>
+                                            @if(Auth::guard('admin')->user()?->hasPermission('admin.posts.delete'))
                                             <form action="{{ route('admin.posts.destroy', $post) }}" method="POST"
                                                 onsubmit="return AppAlert.confirmSubmit(event, this, 'Hapus artikel ini secara permanen? Data yang sudah dihapus tidak dapat dipulihkan.', 'Hapus Artikel?', 'danger')">
                                                 @csrf
@@ -300,6 +305,7 @@
                                                     <span>Hapus</span>
                                                 </button>
                                             </form>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>

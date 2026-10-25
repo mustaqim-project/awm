@@ -14,22 +14,24 @@
                 <i data-lucide="arrow-left" class="w-4 h-4" stroke-width="2"></i>
                 <span>Kembali ke Daftar Bisnis</span>
             </a>
-            @if ($business->is_active)
-                <button type="button" @click="showSuspendModal = true"
-                    class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#FF3B30] hover:bg-[#E0352B] active:scale-[0.98] transition-all flex items-center gap-2 shadow-sm cursor-pointer">
-                    <i data-lucide="ban" class="w-4 h-4" stroke-width="2"></i>
-                    <span>Tangguhkan Workspace (Suspend)</span>
-                </button>
-            @else
-                <form method="POST" action="{{ route('admin.businesses.toggle-status', $business->id) }}"
-                    onsubmit="return AppAlert.confirmSubmit(event, this, 'Apakah Anda yakin ingin mengaktifkan kembali bisnis {{ addslashes($business->name) }}?', 'Aktifkan Workspace?', 'info')">
-                    @csrf
-                    <button type="submit"
-                        class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center gap-2 shadow-md shadow-[#007AFF]/25 cursor-pointer">
-                        <i data-lucide="check-circle" class="w-4 h-4" stroke-width="2"></i>
-                        <span>Aktifkan Kembali Workspace</span>
+            @if (Auth::guard('admin')->user()?->hasPermission('admin.businesses.toggle_status'))
+                @if ($business->is_active)
+                    <button type="button" @click="showSuspendModal = true"
+                        class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#FF3B30] hover:bg-[#E0352B] active:scale-[0.98] transition-all flex items-center gap-2 shadow-sm cursor-pointer">
+                        <i data-lucide="ban" class="w-4 h-4" stroke-width="2"></i>
+                        <span>Tangguhkan Workspace (Suspend)</span>
                     </button>
-                </form>
+                @else
+                    <form method="POST" action="{{ route('admin.businesses.toggle-status', $business->id) }}"
+                        onsubmit="return AppAlert.confirmSubmit(event, this, 'Apakah Anda yakin ingin mengaktifkan kembali bisnis {{ addslashes($business->name) }}?', 'Aktifkan Workspace?', 'info')">
+                        @csrf
+                        <button type="submit"
+                            class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center gap-2 shadow-md shadow-[#007AFF]/25 cursor-pointer">
+                            <i data-lucide="check-circle" class="w-4 h-4" stroke-width="2"></i>
+                            <span>Aktifkan Kembali Workspace</span>
+                        </button>
+                    </form>
+                @endif
             @endif
         </div>
 

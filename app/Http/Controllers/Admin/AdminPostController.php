@@ -13,11 +13,28 @@ use App\Support\Security\HtmlSanitizer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
-final class AdminPostController extends Controller
+final class AdminPostController extends Controller implements HasMiddleware
 {
+    /**
+     * Get the middleware that should be assigned to the controller.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.admin.permission:admin.posts.view', only: ['index']),
+            new Middleware('require.admin.permission:admin.posts.create', only: ['create', 'store']),
+            new Middleware('require.admin.permission:admin.posts.edit', only: ['edit', 'update', 'destroy', 'toggleStatus']),
+            new Middleware('require.admin.permission:admin.posts.categories', only: [
+                'storeCategory', 'updateCategory', 'destroyCategory',
+                'storeCluster', 'updateCluster', 'destroyCluster',
+            ]),
+        ];
+    }
     /**
      * Display listing of blog posts, categories, and clusters.
      */

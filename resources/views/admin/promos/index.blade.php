@@ -60,7 +60,8 @@
                 </div>
             </div>
             <div class="flex flex-wrap items-center gap-2.5">
-                <form action="{{ route('admin.promos.seed-defaults') }}" method="POST" onsubmit="return confirm('Muat skema promo subscription unggulan ke katalog?')">
+                @if(Auth::guard('admin')->user()?->hasPermission('admin.promos.create'))
+            <form action="{{ route('admin.promos.seed-defaults') }}" method="POST" onsubmit="return confirm('Muat skema promo subscription unggulan ke katalog?')">
                     @csrf
                     <button type="submit" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-[12px] text-[13px] font-semibold bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.10] text-black/75 dark:text-white/80 border border-black/[0.06] dark:border-white/[0.08] transition-all">
                         <i data-lucide="sparkles" class="w-4 h-4 text-[#AF52DE]" stroke-width="1.8"></i>
@@ -71,6 +72,7 @@
                     <i data-lucide="plus" class="w-4 h-4" stroke-width="2"></i>
                     <span>Terbitkan Promo Baru</span>
                 </button>
+            @endif
             </div>
         </div>
 
@@ -271,6 +273,7 @@
                                         @endif
                                     </td>
                                     <td class="py-4 px-4 text-center">
+                                        @if(Auth::guard('admin')->user()?->hasPermission('admin.promos.toggle'))
                                         <form action="{{ route('admin.promos.toggle', $promo) }}" method="POST">
                                             @csrf
                                             <button type="submit" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold transition-all {{ $promo->is_active ? 'bg-[#34C759]/15 text-[#34C759] dark:text-[#30D158] hover:bg-[#34C759]/25' : 'bg-black/10 dark:bg-white/10 text-black/50 dark:text-white/50 hover:bg-black/15' }}">
@@ -278,12 +281,18 @@
                                                 {{ $promo->is_active ? 'Aktif' : 'Nonaktif' }}
                                             </button>
                                         </form>
+                                        @else
+                                        <span class=\"inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold {{ $promo->is_active ? 'bg-[#34C759]/15 text-[#34C759] dark:text-[#30D158]' : 'bg-black/10 dark:bg-white/10 text-black/50 dark:text-white/50' }}\"><span class=\"w-1.5 h-1.5 rounded-full {{ $promo->is_active ? 'bg-[#34C759]' : 'bg-black/40 dark:bg-white/40' }}\"></span>{{ $promo->is_active ? 'Aktif' : 'Nonaktif' }}</span>
+                                        @endif
                                     </td>
                                     <td class="py-4 px-4 sm:px-6 text-right">
                                         <div class="inline-flex items-center gap-1">
+                                            @if(Auth::guard('admin')->user()?->hasPermission('admin.promos.edit'))
                                             <button type="button" @click="openEdit({{ \Illuminate\Support\Js::from($promo) }})" class="p-1.5 rounded-[8px] hover:bg-black/5 dark:hover:bg-white/10 text-[#007AFF] transition-colors" title="Edit Promo">
                                                 <i data-lucide="edit-3" class="w-4 h-4" stroke-width="1.8"></i>
                                             </button>
+                                            @endif
+                                            @if(Auth::guard('admin')->user()?->hasPermission('admin.promos.delete'))
                                             <form action="{{ route('admin.promos.destroy', $promo) }}" method="POST" onsubmit="return confirm('Hapus permanen kode promo {{ $promo->code }}?')">
                                                 @csrf
                                                 @method('DELETE')
@@ -291,6 +300,7 @@
                                                     <i data-lucide="trash-2" class="w-4 h-4" stroke-width="1.8"></i>
                                                 </button>
                                             </form>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>

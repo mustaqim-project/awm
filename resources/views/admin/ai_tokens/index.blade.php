@@ -8,6 +8,7 @@
     <div class="space-y-6" x-data="{ grantModalOpen: false, selectedBizId: '', tokenAmount: 10000000, reasonText: '' }">
 
         <!-- Top Action Bar -->
+        @if(Auth::guard('admin')->user()?->hasPermission('admin.ai_tokens.grant'))
         <div class="flex justify-end">
             <button type="button" @click="grantModalOpen = true"
                 class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#AF52DE] hover:bg-[#9A45C6] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-2 shadow-[0_1px_2px_rgba(175,82,222,0.3)]">
@@ -15,6 +16,7 @@
                 <span>Top-Up / Grant Token AI Manual</span>
             </button>
         </div>
+        @endif
 
         <!-- KPI Metric Cards Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
@@ -203,6 +205,7 @@
             </div>
         </div>
 
+        @if(Auth::guard('admin')->user()?->hasPermission('admin.ai_tokens.grant'))
         <!-- Grant Token Modal (Sheet) -->
         <template x-teleport="body">
             <div x-show="grantModalOpen" x-cloak
@@ -261,5 +264,6 @@
                 </div>
             </div>
         </template>
+        @endif
     </div>
 @endsection

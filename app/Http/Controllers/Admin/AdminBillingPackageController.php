@@ -9,12 +9,26 @@ use App\Models\BillingPackage;
 use App\Models\SystemSetting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
-final class AdminBillingPackageController extends Controller
+final class AdminBillingPackageController extends Controller implements HasMiddleware
 {
+    /**
+     * Get the middleware that should be assigned to the controller.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.admin.permission:admin.billing_packages.view', only: ['index']),
+            new Middleware('require.admin.permission:admin.billing_packages.create', only: ['store']),
+            new Middleware('require.admin.permission:admin.billing_packages.edit', only: ['update']),
+            new Middleware('require.admin.permission:admin.billing_packages.toggle', only: ['toggle']),
+        ];
+    }
     public function index(string $type = BillingPackage::TYPE_SUBSCRIPTION): View
     {
         abort_unless(in_array($type, BillingPackage::TYPES, true), 404);

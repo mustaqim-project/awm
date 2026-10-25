@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\AdminCommunityEventController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminErrorLogController;
 use App\Http\Controllers\Admin\AdminFeedbackController;
+use App\Http\Controllers\Admin\AdminFinanceController;
 use App\Http\Controllers\Admin\AdminInboxController;
 use App\Http\Controllers\Admin\AdminLeadController;
 use App\Http\Controllers\Admin\AdminLegalPageController;
@@ -18,6 +19,7 @@ use App\Http\Controllers\Admin\AdminPasswordResetController;
 use App\Http\Controllers\Admin\AdminPaymentAccountController;
 use App\Http\Controllers\Admin\AdminPostController;
 use App\Http\Controllers\Admin\AdminProfileController;
+use App\Http\Controllers\Admin\AdminRoleController;
 use App\Http\Controllers\Admin\AdminSettlementController;
 use App\Http\Controllers\Admin\AdminSettingController;
 use App\Http\Controllers\Admin\AdminSmtpController;
@@ -129,6 +131,16 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
             Route::get('/{settlement}', [AdminSettlementController::class, 'show'])->name('show');
             Route::post('/{settlement}/approve', [AdminSettlementController::class, 'approve'])->name('approve');
             Route::post('/{settlement}/reject', [AdminSettlementController::class, 'reject'])->name('reject');
+        });
+
+        // Platform Finance & Accounting Hub (Buku Kas, Laba Rugi, Lampiran Bukti & Rekonsiliasi)
+        Route::prefix('finance')->name('finance.')->group(function (): void {
+            Route::get('/', [AdminFinanceController::class, 'index'])->name('index');
+            Route::post('/', [AdminFinanceController::class, 'store'])->name('store');
+            Route::put('/{transaction}', [AdminFinanceController::class, 'update'])->name('update');
+            Route::delete('/{transaction}', [AdminFinanceController::class, 'destroy'])->name('destroy');
+            Route::post('/sync', [AdminFinanceController::class, 'sync'])->name('sync');
+            Route::get('/export', [AdminFinanceController::class, 'export'])->name('export');
         });
 
         // Feedback: Bug Reports & Feature Requests
@@ -277,6 +289,15 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
             Route::get('/', [AdminErrorLogController::class, 'index'])->name('index');
             Route::get('/download', [AdminErrorLogController::class, 'download'])->name('download');
             Route::delete('/clear', [AdminErrorLogController::class, 'clear'])->name('clear');
+        });
+
+        // Platform Admin Roles & Permissions Management Hub
+        Route::prefix('roles')->name('roles.')->group(function (): void {
+            Route::get('/', [AdminRoleController::class, 'index'])->name('index');
+            Route::post('/', [AdminRoleController::class, 'store'])->name('store');
+            Route::put('/{role}', [AdminRoleController::class, 'update'])->name('update');
+            Route::delete('/{role}', [AdminRoleController::class, 'destroy'])->name('destroy');
+            Route::put('/admins/{admin}/role', [AdminRoleController::class, 'updateAdminRole'])->name('admins.role');
         });
     });
 });

@@ -24,7 +24,7 @@
         :subtitle="$type === 'bugs' ? __('feedback.subtitle_bugs') : __('feedback.subtitle_features')"
         :breadcrumbs="$breadcrumbs">
         <a href="{{ route($type === 'bugs' ? 'feedback.bugs.create' : 'feedback.features.create') }}"
-            class="h-10 px-4 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-semibold shadow-sm shadow-[#007AFF]/25 active:scale-[0.97] transition flex items-center justify-center gap-2 cursor-pointer w-full sm:w-auto">
+            class="h-11 min-h-[44px] px-4 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-semibold shadow-sm shadow-[#007AFF]/25 active:scale-[0.97] transition flex items-center justify-center gap-2 cursor-pointer w-full sm:w-auto">
             <i data-lucide="{{ $type === 'bugs' ? 'bug' : 'sparkles' }}" class="w-4 h-4"></i>
             <span>{{ $type === 'bugs' ? __('feedback.create_bug') : __('feedback.create_feature') }}</span>
         </a>

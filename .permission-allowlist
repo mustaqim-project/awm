@@ -1,0 +1,10 @@
+# RBAC Controller Guard Allowlist
+# Format: Target# Reason
+
+App\Http\Controllers\Admin\AdminAuthController@showLogin# Route publik: Form login platform administrator
+App\Http\Controllers\Admin\AdminAuthController@login# Route publik: Proses otentikasi login administrator
+App\Http\Controllers\Admin\AdminAuthController@logout# Route auth: Keluar dari sesi administrator
+App\Http\Controllers\Admin\AdminPasswordResetController@showForgot# Route publik: Form permohonan reset password administrator
+App\Http\Controllers\Admin\AdminPasswordResetController@sendResetLink# Route publik: Pengiriman link token reset password via email
+App\Http\Controllers\Admin\AdminPasswordResetController@showReset# Route publik: Form input kata sandi baru berbasis token
+App\Http\Controllers\Admin\AdminPasswordResetController@reset# Route publik: Eksekusi pembaruan kata sandi baru administrator

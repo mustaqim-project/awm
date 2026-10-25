@@ -12,11 +12,20 @@ use App\Support\Context;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\View\View;
 use Throwable;
 
-final class StoreEdcTerminalWebController extends Controller
+final class StoreEdcTerminalWebController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.permission:finance.cash_bank'),
+        ];
+    }
+
     public function __construct(
         private readonly StoreEdcTerminalService $service = new StoreEdcTerminalService
     ) {}

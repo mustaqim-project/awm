@@ -8,13 +8,26 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-final class AdminErrorLogController extends Controller
+final class AdminErrorLogController extends Controller implements HasMiddleware
 {
+    /**
+     * Get the middleware that should be assigned to the controller.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.admin.permission:admin.error_logs.view', only: ['index']),
+            new Middleware('require.admin.permission:admin.error_logs.download', only: ['download']),
+            new Middleware('require.admin.permission:admin.error_logs.clear', only: ['clear']),
+        ];
+    }
     /**
      * Display the error logs view with parsed diagnostic records.
      */

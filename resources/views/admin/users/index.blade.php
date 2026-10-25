@@ -21,11 +21,13 @@
                 </div>
             </form>
 
-            <a href="{{ route('admin.users.export') }}"
-                class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5 shrink-0">
-                <i data-lucide="file-spreadsheet" class="w-4 h-4 text-[#007AFF] dark:text-[#0A84FF]" stroke-width="1.5"></i>
-                <span>Ekspor CSV (Email & Nama)</span>
-            </a>
+            @if (Auth::guard('admin')->user()?->hasPermission('admin.users.export'))
+                <a href="{{ route('admin.users.export') }}"
+                    class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5 shrink-0">
+                    <i data-lucide="file-spreadsheet" class="w-4 h-4 text-[#007AFF] dark:text-[#0A84FF]" stroke-width="1.5"></i>
+                    <span>Ekspor CSV (Email & Nama)</span>
+                </a>
+            @endif
         </div>
 
         <!-- Users Table -->
@@ -89,16 +91,20 @@
                                 <td class="px-4 py-3 text-[12px] text-black/50 dark:text-white/50 tabular-nums">
                                     {{ $user->created_at?->format('d M Y, H:i') }}</td>
                                 <td class="px-4 py-3 text-right">
-                                    <form method="POST" action="{{ route('admin.users.destroy', $user) }}"
-                                        onsubmit="return AppAlert.confirmSubmit(event, this, 'Apakah Anda yakin ingin menghapus pengguna {{ addslashes($user->name) }}?', 'Hapus Pengguna?', 'danger')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                            class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#FF3B30] hover:bg-[#FF3B30]/8 active:scale-[0.97] active:opacity-80 transition-all inline-flex items-center gap-1"
-                                            title="Hapus User">
-                                            <i data-lucide="trash-2" class="w-3.5 h-3.5" stroke-width="1.5"></i> Hapus
-                                        </button>
-                                    </form>
+                                    @if (Auth::guard('admin')->user()?->hasPermission('admin.users.delete'))
+                                        <form method="POST" action="{{ route('admin.users.destroy', $user) }}"
+                                            onsubmit="return AppAlert.confirmSubmit(event, this, 'Apakah Anda yakin ingin menghapus pengguna {{ addslashes($user->name) }}?', 'Hapus Pengguna?', 'danger')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#FF3B30] hover:bg-[#FF3B30]/8 active:scale-[0.97] active:opacity-80 transition-all inline-flex items-center gap-1"
+                                                title="Hapus User">
+                                                <i data-lucide="trash-2" class="w-3.5 h-3.5" stroke-width="1.5"></i> Hapus
+                                            </button>
+                                        </form>
+                                    @else
+                                        <span class="text-[12px] text-black/30 dark:text-white/30">-</span>
+                                    @endif
                                 </td>
                             </tr>
                         @empty

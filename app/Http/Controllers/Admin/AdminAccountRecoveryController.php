@@ -10,11 +10,25 @@ use App\Models\AccountRecoveryRequest;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
-final class AdminAccountRecoveryController extends Controller
+final class AdminAccountRecoveryController extends Controller implements HasMiddleware
 {
+    /**
+     * Get the middleware that should be assigned to the controller.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.admin.permission:admin.account_recoveries.view', only: ['index', 'show']),
+            new Middleware('require.admin.permission:admin.account_recoveries.view_document', only: ['document']),
+            new Middleware('require.admin.permission:admin.account_recoveries.approve', only: ['approve']),
+            new Middleware('require.admin.permission:admin.account_recoveries.reject', only: ['reject']),
+        ];
+    }
     /**
      * Tampilkan antrean permohonan pemulihan akun bagi Administrator.
      */

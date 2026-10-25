@@ -12,13 +12,26 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Throwable;
 
-final class AdminSettlementController extends Controller
+final class AdminSettlementController extends Controller implements HasMiddleware
 {
+    /**
+     * Get the middleware that should be assigned to the controller.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.admin.permission:admin.settlements.view', only: ['index', 'show']),
+            new Middleware('require.admin.permission:admin.settlements.approve', only: ['approve']),
+            new Middleware('require.admin.permission:admin.settlements.reject', only: ['reject']),
+        ];
+    }
     public function __construct(
         private readonly PaymentSettlementService $settlementService = new PaymentSettlementService
     ) {}

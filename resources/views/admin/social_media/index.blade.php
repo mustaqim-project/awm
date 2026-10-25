@@ -286,10 +286,14 @@
                             <div class="pt-2 border-t border-black/[0.04] dark:border-white/[0.06] flex items-center justify-between text-[11px]">
                                 @if ($ttPlatformAcc && $ttPlatformAcc->isConnected())
                                     <span class="text-black/50 dark:text-white/50 truncate max-w-[100px]">{{ $ttPlatformAcc->username ? '@'.$ttPlatformAcc->username : 'Akun Resmi' }}</span>
+                                    @if(Auth::guard('admin')->user()?->hasPermission('admin.social_media.connect'))
+
                                     <form method="POST" action="{{ route('admin.social-media.accounts.disconnect', $ttPlatformAcc) }}" onsubmit="return confirm('Putus koneksi akun TikTok platform ini?');">
                                         @csrf
                                         <button type="submit" class="text-[#FF3B30] font-bold hover:underline">Putus</button>
                                     </form>
+
+                                    @endif
                                 @elseif (!empty($platform['tiktok_client_key']))
                                     <a href="{{ route('admin.social-media.tiktok.connect') }}" class="w-full min-h-[30px] rounded-[8px] bg-black dark:bg-white text-white dark:text-black font-bold text-[11.5px] inline-flex items-center justify-center gap-1.5 hover:opacity-90 active:scale-[0.98] transition-all">
                                         <i data-lucide="link" class="w-3.5 h-3.5"></i>
@@ -336,10 +340,14 @@
                             <div class="pt-2 border-t border-black/[0.04] dark:border-white/[0.06] flex items-center justify-between text-[11px]">
                                 @if ($liPlatformAcc && $liPlatformAcc->isConnected())
                                     <span class="text-black/50 dark:text-white/50 truncate max-w-[100px]">{{ $liPlatformAcc->username ? '@'.$liPlatformAcc->username : 'Member Cooca' }}</span>
+                                    @if(Auth::guard('admin')->user()?->hasPermission('admin.social_media.connect'))
+
                                     <form method="POST" action="{{ route('admin.social-media.accounts.disconnect', $liPlatformAcc) }}" onsubmit="return confirm('Putus koneksi akun LinkedIn platform ini?');">
                                         @csrf
                                         <button type="submit" class="text-[#FF3B30] font-bold hover:underline">Putus</button>
                                     </form>
+
+                                    @endif
                                 @elseif (!empty($platform['linkedin_client_id']))
                                     <a href="{{ route('admin.social-media.linkedin.connect') }}" class="w-full min-h-[30px] rounded-[8px] bg-[#0A66C2] text-white font-bold text-[11.5px] inline-flex items-center justify-center gap-1.5 hover:bg-[#084e96] active:scale-[0.98] transition-all shadow-xs">
                                         <i data-lucide="link" class="w-3.5 h-3.5"></i>
@@ -1533,6 +1541,9 @@
                             </button>
                         </div>
 
+                        @if(Auth::guard('admin')->user()?->hasPermission('admin.social_media.post'))
+
+
                         <form method="POST" action="{{ route('admin.social-media.posts.store') }}"
                             enctype="multipart/form-data" class="space-y-6" @submit="isSubmitting = true">
                             @csrf
@@ -2328,6 +2339,7 @@
                                 </button>
                             </div>
                         </form>
+@endif
                     </div>
                 </div>
             </div>
@@ -2375,6 +2387,9 @@
                     <p class="text-[12.5px] text-black dark:text-white" x-text="activeCommentText"></p>
                 </div>
 
+                @if(Auth::guard('admin')->user()?->hasPermission('admin.social_media.reply'))
+
+
                 <form method="POST" :action="replyActionUrl" class="space-y-4">
                     @csrf
                     <div>
@@ -2399,6 +2414,7 @@
                         </button>
                     </div>
                 </form>
+        @endif
                 </div>
             </div>
         </template>
@@ -2435,6 +2451,9 @@
                                 <i data-lucide="x" class="w-5 h-5"></i>
                             </button>
                         </div>
+
+                        @if(Auth::guard('admin')->user()?->hasPermission('admin.social_media.post'))
+
 
                         <form method="POST" :action="editPost.update_url" class="space-y-4">
                             @csrf
@@ -2477,6 +2496,7 @@
                                 </button>
                             </div>
                         </form>
+        @endif
                     </div>
                 </div>
             </div>

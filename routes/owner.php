@@ -379,7 +379,7 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         });
 
         // Reports & Analytics Suite
-        Route::get('/analytics', [AnalyticsWebController::class, 'index'])->middleware('require.permission:reports.view')->name('analytics.index');
+        Route::get('/analytics', [AnalyticsWebController::class, 'index'])->name('analytics.index');
         Route::get('/reports', [ReportWebController::class, 'index'])->middleware('require.permission:reports.view')->name('reports.index');
         Route::get('/reports/export-excel', [ReportWebController::class, 'exportExcel'])->middleware(['require.permission:reports.export', 'entitlement:export'])->name('reports.export-excel');
 

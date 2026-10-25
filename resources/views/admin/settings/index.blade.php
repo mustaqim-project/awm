@@ -480,13 +480,15 @@
             </div>
 
             <!-- Shortcut to Pricing & Billing Catalog -->
-            <a href="{{ route('admin.billing-packages.index', 'subscription') }}"
+            @if(Auth::guard('admin')->user()?->hasPermission('admin.billing_packages.view'))
+<a href="{{ route('admin.billing-packages.index', 'subscription') }}"
                 class="h-10 px-4 rounded-[14px] text-[12.5px] font-bold text-[#34C759] dark:text-[#30D158] hover:bg-[#34C759]/10 active:scale-98 transition-all flex items-center gap-1.5 self-start sm:self-auto shrink-0 cursor-pointer">
                 <i data-lucide="layers-3" class="w-4 h-4" stroke-width="1.8"></i>
                 <span>Harga &amp; Paket Billing</span>
                 <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 text-black/35 dark:text-white/35"
                     stroke-width="2"></i>
             </a>
+@endif
         </div>
 
 

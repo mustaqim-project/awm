@@ -8,9 +8,20 @@ use App\Domain\Marketplace\MarketplaceManagerService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class AdminMarketplaceSettingController extends Controller
+class AdminMarketplaceSettingController extends Controller implements HasMiddleware
 {
+    /**
+     * Get the middleware that should be assigned to the controller.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.admin.permission:admin.settings.test'),
+        ];
+    }
     public function __construct(protected MarketplaceManagerService $manager) {}
 
     /**

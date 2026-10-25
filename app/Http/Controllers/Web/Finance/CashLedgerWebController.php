@@ -12,18 +12,51 @@ use App\Models\Invoice;
 use App\Models\PosOrder;
 use App\Models\PosOrderPayment;
 use App\Models\SupplierInvoice;
+use App\Models\AuditLog;
 use App\Domain\Import\DataExchangeService;
 use App\Support\Context;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-final class CashLedgerWebController extends Controller
+final class CashLedgerWebController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.permission:finance.cash_bank', only: [
+                'index',
+                'ledger',
+                'storeAccount',
+                'updateAccount',
+                'toggleAccount',
+                'storeInflow',
+                'storeOutflow',
+                'transfer',
+            ]),
+            new Middleware('require.permission:finance.receivables', only: [
+                'receivables',
+                'exportReceivables',
+                'receivablesTemplate',
+                'previewReceivables',
+                'executeReceivables',
+            ]),
+            new Middleware('require.permission:finance.payables', only: [
+                'payables',
+                'exportPayables',
+                'payablesTemplate',
+                'previewPayables',
+                'executePayables',
+            ]),
+        ];
+    }
+
     public function __construct(private readonly CashLedgerService $service = new CashLedgerService) {}
 
     public function index(Request $request): View
@@ -334,7 +367,7 @@ final class CashLedgerWebController extends Controller
 
         $openingBalance = (float) ($validated['opening_balance'] ?? 0);
 
-        DB::transaction(function () use ($business, $validated, $openingBalance): void {
+        DB::transaction(function () use ($business, $validated, $openingBalance, $request): void {
             $account = CashAccount::create([
                 'business_id' => $business->id,
                 'name' => trim($validated['name']),
@@ -357,6 +390,18 @@ final class CashLedgerWebController extends Controller
                     $account
                 );
             }
+
+            AuditLog::create([
+                'business_id' => $business->id,
+                'user_id' => auth()->id(),
+                'auditable_type' => CashAccount::class,
+                'auditable_id' => $account->id,
+                'action' => 'finance.cash_account_created',
+                'notes' => "Tambah akun kas/bank: {$account->name} ({$account->type})",
+                'risk_level' => AuditLog::RISK_LOW,
+                'ip_address' => request()->ip(),
+                'created_at' => now(),
+            ]);
         });
 
         return back()->with('success', "Akun Rekening/Kas '{$validated['name']}' berhasil ditambahkan.");
@@ -384,6 +429,18 @@ final class CashLedgerWebController extends Controller
             'is_active' => $request->boolean('is_active', true),
         ]);
 
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => auth()->id(),
+            'auditable_type' => CashAccount::class,
+            'auditable_id' => $account->id,
+            'action' => 'finance.cash_account_updated',
+            'notes' => "Perbarui akun kas/bank: {$account->name}",
+            'risk_level' => AuditLog::RISK_LOW,
+            'ip_address' => request()->ip(),
+            'created_at' => now(),
+        ]);
+
         return back()->with('success', "Akun Rekening/Kas '{$account->name}' berhasil diperbarui.");
     }
 
@@ -399,6 +456,18 @@ final class CashLedgerWebController extends Controller
 
         $account->update(['is_active' => ! $account->is_active]);
         $status = $account->is_active ? 'diaktifkan' : 'dinonaktifkan';
+
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => auth()->id(),
+            'auditable_type' => CashAccount::class,
+            'auditable_id' => $account->id,
+            'action' => 'finance.cash_account_toggled',
+            'notes' => "Akun kas/bank {$account->name} {$status}",
+            'risk_level' => AuditLog::RISK_LOW,
+            'ip_address' => request()->ip(),
+            'created_at' => now(),
+        ]);
 
         return back()->with('success', "Akun Rekening/Kas '{$account->name}' berhasil {$status}.");
     }

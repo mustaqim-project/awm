@@ -51,6 +51,8 @@ class CommunityWordFilterTest extends TestCase
             'name' => 'Super Admin Cooca',
             'email' => 'admin@cooca.test',
             'password' => 'password',
+            'role' => 'super_admin',
+            'is_active' => true,
         ]);
 
         // Seed default words

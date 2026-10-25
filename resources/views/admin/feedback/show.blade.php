@@ -198,11 +198,13 @@
                 </div>
             @endif
 
+            @if(Auth::guard('admin')->user()?->hasPermission('admin.feedback.update'))
             <button type="submit"
                 class="w-full h-11 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white text-[13px] font-bold transition-all flex items-center justify-center gap-2 shadow-md shadow-[#007AFF]/25">
                 <i data-lucide="save" class="w-4 h-4" stroke-width="2"></i>
                 <span>Simpan Tindak Lanjut</span>
             </button>
+            @endif
         </form>
 
     </div>

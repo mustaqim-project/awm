@@ -17,10 +17,25 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\View\View;
 
-final class AdminCommunityEventController extends Controller
+final class AdminCommunityEventController extends Controller implements HasMiddleware
 {
+    /**
+     * Get the middleware that should be assigned to the controller.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.admin.permission:admin.events.view', only: ['index', 'show']),
+            new Middleware('require.admin.permission:admin.events.create', only: ['create', 'store']),
+            new Middleware('require.admin.permission:admin.events.edit', only: ['edit', 'update', 'destroy']),
+            new Middleware('require.admin.permission:admin.events.checkin', only: ['checkin']),
+            new Middleware('require.admin.permission:admin.events.export', only: ['export']),
+        ];
+    }
     public function __construct(
         private readonly EventCheckinService $checkinService = new EventCheckinService,
         private readonly EventTicketService $ticketService = new EventTicketService,

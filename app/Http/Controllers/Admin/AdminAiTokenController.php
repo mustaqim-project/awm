@@ -10,12 +10,24 @@ use App\Models\Business;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 
-final class AdminAiTokenController extends Controller
+final class AdminAiTokenController extends Controller implements HasMiddleware
 {
+    /**
+     * Get the middleware that should be assigned to the controller.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.admin.permission:admin.ai_tokens.view', only: ['index']),
+            new Middleware('require.admin.permission:admin.ai_tokens.grant', only: ['grant']),
+        ];
+    }
     /**
      * Display AI token monitoring dashboard and usage metrics.
      */

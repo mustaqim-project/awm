@@ -29,12 +29,12 @@
         :breadcrumbs="$breadcrumbs">
         <div class="flex items-center gap-2 w-full sm:w-auto flex-wrap sm:flex-nowrap">
             <a href="{{ route($type === 'bugs' ? 'feedback.bugs.index' : 'feedback.features.index') }}"
-                class="h-10 px-4 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-[13px] font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer w-full sm:w-auto">
+                class="h-11 min-h-[44px] px-4 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-[13px] font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer w-full sm:w-auto">
                 <i data-lucide="arrow-left" class="w-4 h-4"></i>
                 <span>{{ __('feedback.back_to_list') }}</span>
             </a>
             <a href="{{ route($type === 'bugs' ? 'feedback.bugs.create' : 'feedback.features.create') }}"
-                class="h-10 px-4 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-semibold shadow-sm shadow-[#007AFF]/25 active:scale-[0.97] transition-all flex items-center justify-center gap-2 cursor-pointer w-full sm:w-auto">
+                class="h-11 min-h-[44px] px-4 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-semibold shadow-sm shadow-[#007AFF]/25 active:scale-[0.97] transition-all flex items-center justify-center gap-2 cursor-pointer w-full sm:w-auto">
                 <i data-lucide="plus" class="w-4 h-4"></i>
                 <span>{{ $type === 'bugs' ? __('feedback.create_bug') : __('feedback.create_feature') }}</span>
             </a>

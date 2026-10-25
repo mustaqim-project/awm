@@ -121,11 +121,13 @@
             </form>
 
             <!-- Primary Action Button -->
+            @if(Auth::guard('admin')->user()?->hasPermission('admin.payment_accounts.create'))
             <a href="{{ route('admin.payment-accounts.create') }}"
                 class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-2 shadow-[0_2px_8px_rgba(0,122,255,0.25)] shrink-0">
                 <i data-lucide="plus-circle" class="w-4 h-4" stroke-width="2"></i>
                 <span>Tambah Rekening Baru</span>
             </a>
+            @endif
         </div>
 
         <!-- Bento Accounts Table Container -->
@@ -235,6 +237,7 @@
 
                                 <!-- Status Toggle -->
                                 <td class="px-5 py-3.5 text-center">
+                                    @if(Auth::guard('admin')->user()?->hasPermission('admin.payment_accounts.toggle'))
                                     <form method="POST" action="{{ route('admin.payment-accounts.toggle-status', $account) }}">
                                         @csrf
                                         <button type="submit"
@@ -244,18 +247,27 @@
                                             <span>{{ $account->is_active ? 'Aktif' : 'Nonaktif' }}</span>
                                         </button>
                                     </form>
+                                    @else
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold border {{ $account->is_active ? 'bg-[#34C759]/12 border-[#34C759]/30 text-[#248A3D] dark:text-[#30D158]' : 'bg-black/[0.04] dark:bg-white/[0.06] border-black/[0.08] dark:border-white/[0.1] text-black/50 dark:text-white/50' }}">
+                                        <span class="w-2 h-2 rounded-full {{ $account->is_active ? 'bg-[#34C759]' : 'bg-black/35 dark:bg-white/35' }}"></span>
+                                        <span>{{ $account->is_active ? 'Aktif' : 'Nonaktif' }}</span>
+                                    </span>
+                                    @endif
                                 </td>
 
                                 <!-- Aksi -->
                                 <td class="px-5 py-3.5 text-right">
                                     <div class="flex items-center justify-end gap-1.5">
+                                        @if(Auth::guard('admin')->user()?->hasPermission('admin.payment_accounts.edit'))
                                         <a href="{{ route('admin.payment-accounts.edit', $account) }}"
                                             title="Edit Rekening"
                                             class="h-8 px-2.5 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70 hover:bg-black/[0.08] dark:hover:bg-white/[0.1] active:scale-[0.97] transition-all inline-flex items-center gap-1 text-[12px] font-semibold">
                                             <i data-lucide="edit-3" class="w-3.5 h-3.5" stroke-width="2"></i>
                                             <span class="hidden sm:inline">Edit</span>
                                         </a>
+                                        @endif
 
+                                        @if(Auth::guard('admin')->user()?->hasPermission('admin.payment_accounts.delete'))
                                         <form method="POST"
                                             action="{{ route('admin.payment-accounts.destroy', $account) }}"
                                             onsubmit="return AppAlert.confirmSubmit(event, this, 'Apakah Anda yakin ingin menghapus rekening {{ addslashes($account->bank_name) }}? Tindakan ini tidak dapat dibatalkan.', 'Hapus Rekening Pembayaran?', 'danger')">
@@ -266,6 +278,7 @@
                                                 <i data-lucide="trash-2" class="w-3.5 h-3.5" stroke-width="2"></i>
                                             </button>
                                         </form>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -292,6 +305,7 @@
                                         <p class="text-[13px] text-black/50 dark:text-white/50 mt-1 max-w-md mx-auto">
                                             Daftarkan rekening bank tujuan transfer atau kode QRIS pertama Anda agar tenant UMKM dapat membayar langganan.
                                         </p>
+                                        @if(Auth::guard('admin')->user()?->hasPermission('admin.payment_accounts.create'))
                                         <div class="mt-4">
                                             <a href="{{ route('admin.payment-accounts.create') }}"
                                                 class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] transition inline-flex items-center gap-1.5 shadow-sm">
@@ -299,6 +313,7 @@
                                                 <span>Tambah Rekening Baru</span>
                                             </a>
                                         </div>
+                                        @endif
                                     @endif
                                 </td>
                             </tr>

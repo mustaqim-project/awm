@@ -250,10 +250,12 @@
                     class="px-4 py-2.5 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 hover:bg-black/[0.05] dark:hover:bg-white/[0.08] transition">
                     Batal
                 </a>
-                <button type="submit"
+                @if(Auth::guard('admin')->user()?->hasPermission('admin.events.edit'))
+<button type="submit"
                     class="px-6 py-2.5 rounded-[12px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0062CC] shadow-sm shadow-[#007AFF]/25 transition cursor-pointer active:scale-[0.98]">
                     Simpan Perubahan
                 </button>
+@endif
             </div>
         </form>
     </div>

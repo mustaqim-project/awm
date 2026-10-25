@@ -179,11 +179,15 @@
 
                     <!-- Submit Button -->
                     <div class="pt-4 flex justify-end">
+                        @if(Auth::guard('admin')->user()?->hasPermission('admin.smtp.update'))
+
                         <button type="submit" aria-label="Simpan Pengaturan SMTP"
                             class="w-full sm:w-auto h-12 sm:h-10 px-6 rounded-[12px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-md shadow-[#007AFF]/25 cursor-pointer">
                             <i data-lucide="save" class="w-4 h-4" stroke-width="2"></i>
                             <span>Simpan Pengaturan SMTP</span>
                         </button>
+
+                        @endif
                     </div>
                 </form>
             </div>
@@ -217,11 +221,15 @@
                                 value="{{ auth('admin')->user()->email ?? '' }}" placeholder="emailanda@gmail.com"
                                 class="w-full h-11 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#34C759]/50 transition">
                         </div>
+                        @if(Auth::guard('admin')->user()?->hasPermission('admin.smtp.update'))
+
                         <button type="submit" aria-label="Kirim Email Uji Coba"
                             class="w-full h-12 sm:h-10 rounded-[12px] text-[13px] font-bold text-white bg-[#34C759] hover:bg-[#2FB84C] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-sm shadow-[#34C759]/25 cursor-pointer">
                             <i data-lucide="zap" class="w-4 h-4" stroke-width="2"></i>
                             <span>Kirim</span>
                         </button>
+
+                        @endif
                     </form>
                 </div>
 

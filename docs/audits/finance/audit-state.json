@@ -1,0 +1,47 @@
+{
+  "module": "finance",
+  "baseline_commit": "38cdcdf",
+  "created": "2026-10-25",
+  "mode": "TODO(audit-only|audit+fix|full)",
+  "gate_status": "NOT READY",
+  "phases": {
+    "A-discovery": "pending",
+    "B-audit": "pending",
+    "C-documentation": "pending",
+    "D-plan-and-tasks": "pending",
+    "E-implementation": "pending",
+    "F-verification": "pending",
+    "G-user-guide": "pending",
+    "H-gate-and-deployment": "pending"
+  },
+  "aspects": {
+    "architecture": "pending",
+    "security": "pending",
+    "workflow": "pending",
+    "functional": "pending",
+    "ui_ux": "pending",
+    "human_error_prevention": "pending",
+    "database": "pending",
+    "performance": "pending",
+    "integration": "pending",
+    "testing": "pending",
+    "operations": "pending",
+    "compliance_data_governance": "pending",
+    "documentation": "pending"
+  },
+  "findings": {
+    "Critical": 0,
+    "High": 0,
+    "Medium": 0,
+    "Low": 0,
+    "Informational": 0
+  },
+  "tasks": {
+    "Pending": 0,
+    "In Progress": 0,
+    "Blocked": 0,
+    "Verified": 0
+  },
+  "unverifiable": [],
+  "notes": []
+}

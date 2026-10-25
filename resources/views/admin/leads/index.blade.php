@@ -122,11 +122,13 @@
             </form>
 
             <!-- Export CSV Button -->
+            @if(Auth::guard('admin')->user()?->hasPermission('admin.leads.export'))
             <a href="{{ route('admin.leads.export') }}"
                 class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-2 shrink-0 border border-black/[0.04] dark:border-white/[0.06]">
                 <i data-lucide="file-spreadsheet" class="w-4 h-4 text-[#34C759] dark:text-[#30D158]" stroke-width="2"></i>
                 <span>Ekspor Spreadsheet (CSV)</span>
             </a>
+            @endif
         </div>
 
         <!-- Bento Leads Table Container -->

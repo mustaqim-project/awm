@@ -118,8 +118,12 @@
     {{-- ========================================================== --}}
     {{-- APPROVE / REJECT ACTION SECTION (only for pending)         --}}
     {{-- ========================================================== --}}
-    @if($settlement->status === 'pending')
-        <div class="rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 shadow-sm overflow-hidden" x-data="{ activeTab: 'approve' }">
+    @php
+        $canApproveSettlement = Auth::guard('admin')->user()?->hasPermission('admin.settlements.approve');
+        $canRejectSettlement = Auth::guard('admin')->user()?->hasPermission('admin.settlements.reject');
+    @endphp
+    @if($settlement->status === 'pending' && ($canApproveSettlement || $canRejectSettlement))
+        <div class="rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 shadow-sm overflow-hidden" x-data="{ activeTab: '{{ $canApproveSettlement ? 'approve' : 'reject' }}' }">
             <div class="px-5 py-4 border-b border-black/5 dark:border-white/10 flex items-center gap-3">
                 <div class="w-8 h-8 rounded-full bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center">
                     <i data-lucide="banknote" class="w-4 h-4"></i>
@@ -131,6 +135,7 @@
             </div>
 
             {{-- Tab switcher --}}
+            @if($canApproveSettlement && $canRejectSettlement)
             <div class="flex border-b border-black/5 dark:border-white/10">
                 <button @click="activeTab = 'approve'"
                     :class="activeTab === 'approve' ? 'text-[#34C759] border-[#34C759]' : 'text-black/50 dark:text-white/50 border-transparent'"
@@ -143,8 +148,10 @@
                     ❌ Tolak Pencairan
                 </button>
             </div>
+            @endif
 
             {{-- Approve Form --}}
+            @if($canApproveSettlement)
             <div x-show="activeTab === 'approve'" class="p-5 space-y-4">
                 <form action="{{ route('admin.settlements.approve', $settlement) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
                     @csrf
@@ -171,8 +178,10 @@
                     </div>
                 </form>
             </div>
+            @endif
 
             {{-- Reject Form --}}
+            @if($canRejectSettlement)
             <div x-show="activeTab === 'reject'" x-cloak class="p-5 space-y-4">
                 <form action="{{ route('admin.settlements.reject', $settlement) }}" method="POST" class="space-y-4">
                     @csrf
@@ -193,6 +202,7 @@
                     </div>
                 </form>
             </div>
+            @endif
         </div>
     @endif
 

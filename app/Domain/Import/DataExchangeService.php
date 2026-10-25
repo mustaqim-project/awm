@@ -44,6 +44,7 @@ use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use App\Support\Security\CsvSanitizer;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 final class DataExchangeService
@@ -878,15 +879,15 @@ final class DataExchangeService
         $rowIdx = 2;
         foreach ($customers as $idx => $c) {
             $sheet->setCellValue("A{$rowIdx}", $idx + 1);
-            $sheet->setCellValue("B{$rowIdx}", $c->name);
+            $sheet->setCellValue("B{$rowIdx}", \App\Support\Security\CsvSanitizer::sanitize((string) $c->name));
             $sheet->setCellValue("C{$rowIdx}", $c->phone ?: '-');
             $sheet->setCellValue("D{$rowIdx}", $c->email ?: '-');
-            $sheet->setCellValue("E{$rowIdx}", $c->company_name ?: '-');
+            $sheet->setCellValue("E{$rowIdx}", \App\Support\Security\CsvSanitizer::sanitize((string) ($c->company_name ?: '-')));
             $sheet->setCellValue("F{$rowIdx}", (float) ($c->credit_limit ?? 0));
             $sheet->setCellValue("G{$rowIdx}", (float) ($c->current_credit_balance ?? 0));
             $sheet->setCellValue("H{$rowIdx}", (int) ($c->points_balance ?? 0));
-            $sheet->setCellValue("I{$rowIdx}", $c->city ?: '-');
-            $sheet->setCellValue("J{$rowIdx}", $c->address ?: '-');
+            $sheet->setCellValue("I{$rowIdx}", \App\Support\Security\CsvSanitizer::sanitize((string) ($c->city ?: '-')));
+            $sheet->setCellValue("J{$rowIdx}", \App\Support\Security\CsvSanitizer::sanitize((string) ($c->address ?: '-')));
 
             $this->applyDataRowStyle($sheet, "A{$rowIdx}:J{$rowIdx}", $rowIdx % 2 === 0);
             $sheet->getRowDimension($rowIdx)->setRowHeight(22);
@@ -1873,10 +1874,10 @@ final class DataExchangeService
 
         $rowNum = 2;
         foreach ($accounts as $acc) {
-            $sheet->setCellValue("A{$rowNum}", $acc->code);
-            $sheet->setCellValue("B{$rowNum}", ($acc->parent_id ? '  ' : '') . $acc->name);
+            $sheet->setCellValue("A{$rowNum}", CsvSanitizer::sanitize($acc->code));
+            $sheet->setCellValue("B{$rowNum}", CsvSanitizer::sanitize(($acc->parent_id ? '  ' : '') . $acc->name));
             $sheet->setCellValue("C{$rowNum}", $acc->getTypeLabel());
-            $sheet->setCellValue("D{$rowNum}", $acc->parent ? "[{$acc->parent->code}] {$acc->parent->name}" : '-');
+            $sheet->setCellValue("D{$rowNum}", $acc->parent ? CsvSanitizer::sanitize("[{$acc->parent->code}] {$acc->parent->name}") : '-');
             $sheet->setCellValue("E{$rowNum}", strtoupper($acc->normal_balance));
             $sheet->setCellValue("F{$rowNum}", $acc->is_system ? 'Sistem' : 'Kustom');
             $sheet->setCellValue("G{$rowNum}", $acc->is_active ? 'Aktif' : 'Non-Aktif');
@@ -2525,8 +2526,8 @@ final class DataExchangeService
 
         $rowNum = 2;
         foreach ($invoices as $inv) {
-            $sheet->setCellValue("A{$rowNum}", $inv->invoice_number);
-            $sheet->setCellValue("B{$rowNum}", $inv->customer?->name ?: ($inv->recipient_name ?: '-'));
+            $sheet->setCellValue("A{$rowNum}", CsvSanitizer::sanitize($inv->invoice_number));
+            $sheet->setCellValue("B{$rowNum}", CsvSanitizer::sanitize($inv->customer?->name ?: ($inv->recipient_name ?: '-')));
             $sheet->setCellValue("C{$rowNum}", $inv->invoice_date ? Carbon::parse($inv->invoice_date)->format('Y-m-d') : '-');
             $sheet->setCellValue("D{$rowNum}", $inv->due_date ? Carbon::parse($inv->due_date)->format('Y-m-d') : '-');
             $sheet->setCellValue("E{$rowNum}", (float) $inv->total_amount);
@@ -2838,8 +2839,8 @@ final class DataExchangeService
 
         $rowNum = 2;
         foreach ($invoices as $inv) {
-            $sheet->setCellValue("A{$rowNum}", $inv->invoice_number);
-            $sheet->setCellValue("B{$rowNum}", $inv->supplier?->name ?: '-');
+            $sheet->setCellValue("A{$rowNum}", CsvSanitizer::sanitize($inv->invoice_number));
+            $sheet->setCellValue("B{$rowNum}", CsvSanitizer::sanitize($inv->supplier?->name ?: '-'));
             $sheet->setCellValue("C{$rowNum}", $inv->invoice_date ? Carbon::parse($inv->invoice_date)->format('Y-m-d') : '-');
             $sheet->setCellValue("D{$rowNum}", $inv->due_date ? Carbon::parse($inv->due_date)->format('Y-m-d') : '-');
             $sheet->setCellValue("E{$rowNum}", (float) $inv->total_amount);

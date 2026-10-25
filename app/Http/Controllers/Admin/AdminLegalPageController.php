@@ -9,10 +9,23 @@ use App\Models\LegalPage;
 use App\Support\Security\HtmlSanitizer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\View\View;
 
-class AdminLegalPageController extends Controller
+class AdminLegalPageController extends Controller implements HasMiddleware
 {
+    /**
+     * Get the middleware that should be assigned to the controller.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.admin.permission:admin.legal_pages.view', only: ['index']),
+            new Middleware('require.admin.permission:admin.legal_pages.edit', only: ['edit', 'update']),
+            new Middleware('require.admin.permission:admin.legal_pages.toggle', only: ['toggle']),
+        ];
+    }
     /**
      * Display a listing of legal pages in Admin CMS.
      */

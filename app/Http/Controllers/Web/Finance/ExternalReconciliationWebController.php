@@ -12,14 +12,23 @@ use App\Support\Context;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\View\View;
 
 /**
  * Web controller for External Account Reconciliation ("Lembar Rekonsiliasi")
  * and the "Where The Money Lives" Liquidity Dashboard.
  */
-final class ExternalReconciliationWebController extends Controller
+final class ExternalReconciliationWebController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.permission:finance.cash_bank'),
+        ];
+    }
+
     public function __construct(
         private readonly ExternalReconciliationService $service = new ExternalReconciliationService
     ) {}

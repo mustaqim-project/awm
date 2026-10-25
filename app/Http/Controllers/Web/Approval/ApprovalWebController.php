@@ -8,37 +8,63 @@ use App\Domain\Approval\ApprovalWorkflowService;
 use App\Http\Controllers\Controller;
 use App\Models\ApprovalRequest;
 use App\Models\ApprovalRule;
+use App\Models\AuditLog;
 use App\Models\Business;
 use App\Models\Role;
 use App\Support\Context;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\View\View;
 
-final class ApprovalWebController extends Controller
+final class ApprovalWebController extends Controller implements HasMiddleware
 {
+    /**
+     * Daftarkan Controller-Level RBAC Middleware.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.permission:approvals.view', only: ['inbox', 'history']),
+            new Middleware('require.permission:approvals.manage', only: [
+                'approve',
+                'reject',
+                'rulesIndex',
+                'rulesStore',
+                'rulesUpdate',
+                'rulesDestroy',
+            ]),
+        ];
+    }
+
     public function __construct(
         private readonly ApprovalWorkflowService $workflowService
     ) {}
 
     /**
      * Display pending approvals inbox.
+     * Menggunakan single-query collection filter untuk efisiensi N+1.
      */
     public function inbox(Request $request): View
     {
         $business = Context::requireBusiness();
         $user = Context::user();
 
-        $filterType = $request->query('type');
-        $pendingTickets = $this->workflowService->getPendingRequestsForUser($business, $user, $filterType);
+        $filterType = (string) $request->query('type', '');
+        $allPending = $this->workflowService->getPendingRequestsForUser($business, $user);
 
         $counts = [
-            'all' => $this->workflowService->getPendingRequestsForUser($business, $user)->count(),
-            'purchase_order' => $this->workflowService->getPendingRequestsForUser($business, $user, ApprovalRule::DOC_PURCHASE_ORDER)->count(),
-            'expense' => $this->workflowService->getPendingRequestsForUser($business, $user, ApprovalRule::DOC_EXPENSE)->count(),
-            'supplier_invoice' => $this->workflowService->getPendingRequestsForUser($business, $user, ApprovalRule::DOC_SUPPLIER_INVOICE)->count(),
-            'stock_adjustment' => $this->workflowService->getPendingRequestsForUser($business, $user, ApprovalRule::DOC_STOCK_ADJUSTMENT)->count(),
+            'all' => $allPending->count(),
+            'purchase_order' => $allPending->where('document_type', ApprovalRule::DOC_PURCHASE_ORDER)->count(),
+            'expense' => $allPending->where('document_type', ApprovalRule::DOC_EXPENSE)->count(),
+            'supplier_invoice' => $allPending->where('document_type', ApprovalRule::DOC_SUPPLIER_INVOICE)->count(),
+            'stock_adjustment' => $allPending->where('document_type', ApprovalRule::DOC_STOCK_ADJUSTMENT)->count(),
         ];
+
+        $pendingTickets = ! empty($filterType)
+            ? $allPending->where('document_type', $filterType)->values()
+            : $allPending;
 
         return view('app.approvals.inbox', compact('business', 'pendingTickets', 'filterType', 'counts'));
     }
@@ -73,6 +99,19 @@ final class ApprovalWebController extends Controller
         try {
             $updated = $this->workflowService->approve($approvalRequest, $user, $notes);
 
+            // Audit log untuk rekam jejak anti-fraud
+            AuditLog::create([
+                'business_id' => $business->id,
+                'user_id' => $user?->id,
+                'auditable_type' => ApprovalRequest::class,
+                'auditable_id' => $approvalRequest->id,
+                'action' => 'approval.approved',
+                'notes' => "Disetujui Level {$approvalRequest->current_level} ({$approvalRequest->document_type} #{$approvalRequest->document_id})",
+                'ip_address' => request()->ip(),
+                'user_agent' => request()->userAgent(),
+                'created_at' => now(),
+            ]);
+
             $statusMsg = $updated->isApproved()
                 ? 'Dokumen telah disetujui sepenuhnya pada seluruh tingkat otorisasi (Siap Dicairkan/Dieksekusi).'
                 : "Persetujuan Level {$approvalRequest->current_level} berhasil dicatat. Dokumen berlanjut ke Level {$updated->current_level}.";
@@ -103,6 +142,21 @@ final class ApprovalWebController extends Controller
 
         try {
             $this->workflowService->reject($approvalRequest, $user, (string) $reason);
+
+            // Audit log penolakan (Risk Medium)
+            AuditLog::create([
+                'business_id' => $business->id,
+                'user_id' => $user?->id,
+                'auditable_type' => ApprovalRequest::class,
+                'auditable_id' => $approvalRequest->id,
+                'action' => 'approval.rejected',
+                'risk_level' => AuditLog::RISK_MEDIUM,
+                'risk_reason' => 'Penolakan dokumen transaksi pengadaan/biaya',
+                'notes' => "Ditolak: {$reason}",
+                'ip_address' => request()->ip(),
+                'user_agent' => request()->userAgent(),
+                'created_at' => now(),
+            ]);
 
             return back()->with('success', 'Dokumen berhasil ditolak. Pembuat draf (Maker) telah dinotifikasi dengan catatan penolakan.');
         } catch (\Throwable $e) {
@@ -141,6 +195,12 @@ final class ApprovalWebController extends Controller
             'min_amount' => ['required', 'numeric', 'gte:0'],
             'max_amount' => ['nullable', 'numeric', 'gte:min_amount'],
             'required_levels' => ['required', 'integer', 'between:1,3'],
+            'approver_role_level_1' => ['nullable', 'string', 'max:50'],
+            'approver_role_level_2' => ['nullable', 'string', 'max:50'],
+            'approver_role_level_3' => ['nullable', 'string', 'max:50'],
+            'level_1_role' => ['nullable', 'string', 'max:50'],
+            'level_2_role' => ['nullable', 'string', 'max:50'],
+            'level_3_role' => ['nullable', 'string', 'max:50'],
             'is_active' => ['nullable', 'boolean'],
         ]);
 
@@ -154,9 +214,21 @@ final class ApprovalWebController extends Controller
         $validated['approver_role_level_3'] = $levels >= 3 ? (string) ($request->input('approver_role_level_3') ?? $request->input('level_3_role') ?? 'owner') : null;
         $validated['is_active'] = $request->boolean('is_active', true);
 
-        ApprovalRule::create($validated);
+        $rule = ApprovalRule::create($validated);
 
-        return back()->with('success', 'Aturan otorisasi dokumen berhasil ditambahkan.');
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => Context::user()?->id,
+            'auditable_type' => ApprovalRule::class,
+            'auditable_id' => $rule->id,
+            'action' => 'approval_rule.created',
+            'notes' => "Aturan baru: {$rule->name} ({$rule->document_type})",
+            'ip_address' => request()->ip(),
+            'user_agent' => request()->userAgent(),
+            'created_at' => now(),
+        ]);
+
+        return redirect()->route('approval-rules.index')->with('success', 'Aturan otorisasi dokumen berhasil ditambahkan.');
     }
 
     /**
@@ -173,6 +245,12 @@ final class ApprovalWebController extends Controller
             'min_amount' => ['required', 'numeric', 'gte:0'],
             'max_amount' => ['nullable', 'numeric', 'gte:min_amount'],
             'required_levels' => ['required', 'integer', 'between:1,3'],
+            'approver_role_level_1' => ['nullable', 'string', 'max:50'],
+            'approver_role_level_2' => ['nullable', 'string', 'max:50'],
+            'approver_role_level_3' => ['nullable', 'string', 'max:50'],
+            'level_1_role' => ['nullable', 'string', 'max:50'],
+            'level_2_role' => ['nullable', 'string', 'max:50'],
+            'level_3_role' => ['nullable', 'string', 'max:50'],
             'is_active' => ['nullable', 'boolean'],
         ]);
 
@@ -189,7 +267,19 @@ final class ApprovalWebController extends Controller
 
         $approvalRule->update($validated);
 
-        return back()->with('success', 'Aturan otorisasi dokumen berhasil diperbarui.');
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => Context::user()?->id,
+            'auditable_type' => ApprovalRule::class,
+            'auditable_id' => $approvalRule->id,
+            'action' => 'approval_rule.updated',
+            'notes' => "Pembaruan aturan: {$approvalRule->name}",
+            'ip_address' => request()->ip(),
+            'user_agent' => request()->userAgent(),
+            'created_at' => now(),
+        ]);
+
+        return redirect()->route('approval-rules.index')->with('success', 'Aturan otorisasi dokumen berhasil diperbarui.');
     }
 
     /**
@@ -200,8 +290,23 @@ final class ApprovalWebController extends Controller
         $business = Context::requireBusiness();
         abort_unless($approvalRule->business_id === $business->id, 404);
 
+        $ruleId = $approvalRule->id;
+        $ruleName = $approvalRule->name;
+
         $approvalRule->delete();
 
-        return back()->with('success', 'Aturan otorisasi dokumen berhasil dihapus.');
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => Context::user()?->id,
+            'auditable_type' => ApprovalRule::class,
+            'auditable_id' => $ruleId,
+            'action' => 'approval_rule.deleted',
+            'notes' => "Penghapusan aturan: {$ruleName}",
+            'ip_address' => request()->ip(),
+            'user_agent' => request()->userAgent(),
+            'created_at' => now(),
+        ]);
+
+        return redirect()->route('approval-rules.index')->with('success', 'Aturan otorisasi dokumen berhasil dihapus.');
     }
 }

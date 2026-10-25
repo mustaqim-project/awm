@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Web\Billing;
 use App\Domain\Billing\EntitlementService;
 use App\Domain\Payment\TripayService;
 use App\Http\Controllers\Controller;
+use App\Models\AuditLog;
 use App\Models\BusinessSubscription;
 use App\Models\PaymentAccount;
 use App\Models\BillingPackage;
@@ -18,11 +19,24 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 
-final class SubscriptionCheckoutWebController extends Controller
+final class SubscriptionCheckoutWebController extends Controller implements HasMiddleware
 {
+    /**
+     * Daftarkan Controller-Level RBAC Middleware.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.permission:billing.view', only: ['payment', 'checkStatus', 'invoice', 'viewProof', 'history']),
+            new Middleware('require.permission:billing.manage', only: ['checkout', 'validatePromo', 'store', 'uploadProof']),
+        ];
+    }
+
     public function __construct(
         private readonly EntitlementService $entitlementService = new EntitlementService(),
         private readonly TripayService $tripayService = new TripayService()
@@ -286,6 +300,27 @@ final class SubscriptionCheckoutWebController extends Controller
                     $validated['tier'] ?? $request->input('tier', BusinessSubscription::TIER_STANDARD),
                     $promo
                 )));
+
+        // Log order creation for fraud prevention and financial audit trail
+        AuditLog::create([
+            'business_id'    => $business->id,
+            'user_id'        => $user->id,
+            'action'         => 'billing.order.created',
+            'auditable_type' => SubscriptionPayment::class,
+            'auditable_id'   => $payment->id,
+            'risk_level'     => AuditLog::RISK_MEDIUM,
+            'notes'          => "Subscription order created: {$payment->order_number} for tier {$payment->subscription_tier} via {$paymentMethod}",
+            'new_values'     => [
+                'order_number'   => $payment->order_number,
+                'amount'         => $payment->amount,
+                'tier'           => $payment->subscription_tier,
+                'payment_method' => $paymentMethod,
+                'promo_code'     => $promo?->code,
+            ],
+            'ip_address'     => $request->ip(),
+            'user_agent'     => $request->userAgent(),
+            'created_at'     => now(),
+        ]);
 
         // If payment is already approved (e.g., 100% discount promo voucher)
         if ($payment->status === SubscriptionPayment::STATUS_APPROVED) {

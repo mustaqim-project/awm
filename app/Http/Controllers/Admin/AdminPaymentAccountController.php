@@ -9,13 +9,27 @@ use App\Http\Controllers\Controller;
 use App\Models\PaymentAccount;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
-final class AdminPaymentAccountController extends Controller
+final class AdminPaymentAccountController extends Controller implements HasMiddleware
 {
+    /**
+     * Get the middleware that should be assigned to the controller.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.admin.permission:admin.payment_accounts.view', only: ['index']),
+            new Middleware('require.admin.permission:admin.payment_accounts.create', only: ['create', 'store']),
+            new Middleware('require.admin.permission:admin.payment_accounts.edit', only: ['edit', 'update', 'toggleStatus']),
+            new Middleware('require.admin.permission:admin.payment_accounts.delete', only: ['destroy']),
+        ];
+    }
     /**
      * Display a listing of platform payment & bank accounts.
      */

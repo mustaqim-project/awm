@@ -10,10 +10,22 @@ use App\Models\Business;
 use App\Models\BusinessSubscription;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\View\View;
 
-final class AdminBusinessController extends Controller
+final class AdminBusinessController extends Controller implements HasMiddleware
 {
+    /**
+     * Get the middleware that should be assigned to the controller.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.admin.permission:admin.businesses.view', only: ['index', 'show']),
+            new Middleware('require.admin.permission:admin.businesses.toggle_status', only: ['toggleStatus']),
+        ];
+    }
     /**
      * Display a listing of all tenant businesses.
      */

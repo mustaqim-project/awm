@@ -399,7 +399,7 @@
                                     </button>
                                 @endif
                                 @if(! $reg->isCheckedIn())
-                                    <form method="POST" action="{{ route('community.events.cancel', $reg->event) }}" onsubmit="return confirm('Batalkan pendaftaran event ini?')">
+                                    <form method="POST" action="{{ route('community.events.cancel', $reg->event) }}" onsubmit="return confirm('{{ $reg->isPaid() ? 'Batalkan pendaftaran event ini? Tiket berbayar yang sudah dibatalkan tidak otomatis di-refund.' : 'Batalkan pendaftaran event ini?' }}')">
                                         @csrf
                                         <button type="submit" class="px-3 py-2 rounded-xl text-xs font-semibold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition cursor-pointer">
                                             Batal

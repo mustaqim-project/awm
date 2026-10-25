@@ -258,6 +258,7 @@
                                         title="Edit Event">
                                         <i data-lucide="pencil" class="w-4 h-4"></i>
                                     </a>
+                                    @if(Auth::guard('admin')->user()?->hasPermission('admin.events.delete'))
                                     <form method="POST" action="{{ route('admin.events.destroy', $event) }}"
                                         onsubmit="return confirm('Apakah Anda yakin ingin menghapus event ini?')" class="inline">
                                         @csrf
@@ -268,6 +269,7 @@
                                             <i data-lucide="trash-2" class="w-4 h-4"></i>
                                         </button>
                                     </form>
+                                    @endif
                                 </div>
                             </td>
                         </tr>

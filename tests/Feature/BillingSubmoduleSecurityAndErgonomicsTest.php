@@ -128,7 +128,7 @@ class BillingSubmoduleSecurityAndErgonomicsTest extends TestCase
             ->withSession(['active_business_id' => $this->businessA->id])
             ->get(route('billing.limits'));
         $responseRetail->assertStatus(200);
-        $responseRetail->assertDontSee(__('billing.resource_tables'));
+        $responseRetail->assertDontSee('aria-label="' . __('billing.resource_tables') . '"', false);
 
         // 2. F&B Resto business with pos_dinein enabled should display Meja Kasir
         $this->businessA->update([
@@ -142,7 +142,7 @@ class BillingSubmoduleSecurityAndErgonomicsTest extends TestCase
             ->withSession(['active_business_id' => $this->businessA->id])
             ->get(route('billing.limits'));
         $responseFnb->assertStatus(200);
-        $responseFnb->assertSee(__('billing.resource_tables'));
+        $responseFnb->assertSee('aria-label="' . __('billing.resource_tables') . '"', false);
     }
 
     public function test_storage_file_deletion_is_isolated_to_tenant(): void

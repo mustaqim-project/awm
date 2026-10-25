@@ -55,6 +55,8 @@ class CommunityEventFeatureTest extends TestCase
             'name' => 'Super Admin Cooca',
             'email' => 'superadmin@cooca.test',
             'password' => 'password',
+            'role' => 'super_admin',
+            'is_active' => true,
         ]);
     }
 

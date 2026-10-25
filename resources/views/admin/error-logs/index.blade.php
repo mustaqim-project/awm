@@ -121,20 +121,24 @@
             </button>
 
             <!-- Download Raw Log Button -->
+            @if(Auth::guard('admin')->user()?->hasPermission('admin.error_logs.download'))
             <a href="{{ route('admin.error-logs.download', ['file' => $selectedFile]) }}"
                 class="h-10 px-3.5 rounded-[12px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-[#007AFF] dark:text-[#0A84FF] text-[12.5px] font-bold flex items-center gap-1.5 transition-all active:scale-[0.98]"
                 title="Unduh berkas mentah {{ $selectedFile }}">
                 <i data-lucide="download" class="w-4 h-4" stroke-width="2"></i>
                 <span>Unduh Log</span>
             </a>
+            @endif
 
             <!-- Clear Log Button (Triggers Apple Modal Sheet) -->
+            @if(Auth::guard('admin')->user()?->hasPermission('admin.error_logs.clear'))
             <button type="button" @click="showClearModal = true"
                 class="h-10 px-3.5 rounded-[12px] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 text-[#FF3B30] dark:text-[#FF453A] text-[12.5px] font-bold flex items-center gap-1.5 transition-all active:scale-[0.98] cursor-pointer"
                 title="Kosongkan isi berkas log ini">
                 <i data-lucide="trash-2" class="w-4 h-4" stroke-width="2"></i>
                 <span>Bersihkan</span>
             </button>
+            @endif
         </div>
     </div>
 
@@ -376,6 +380,7 @@
         @endforelse
     </div>
 
+    @if(Auth::guard('admin')->user()?->hasPermission('admin.error_logs.clear'))
     <!-- MODAL SHEET: Konfirmasi Bersihkan Log (Pop-Up First Apple HIG) -->
     <template x-teleport="body">
         <div x-show="showClearModal" x-cloak class="fixed inset-0 z-[220] overflow-y-auto" aria-labelledby="clear-modal-title" role="dialog" aria-modal="true" @keydown.escape.window="showClearModal = false">
@@ -468,6 +473,7 @@
             </div>
         </div>
     </template>
+    @endif
 
 </div>
 @endsection

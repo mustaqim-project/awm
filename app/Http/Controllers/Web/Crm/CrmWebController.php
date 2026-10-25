@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Web\Crm;
 
 use App\Domain\Crm\LoyaltyService;
 use App\Http\Controllers\Controller;
+use App\Models\AuditLog;
 use App\Models\Customer;
 use App\Models\CustomerPointHistory;
 use App\Models\Voucher;
@@ -13,11 +14,24 @@ use App\Support\Context;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
-final class CrmWebController extends Controller
+final class CrmWebController extends Controller implements HasMiddleware
 {
+    /**
+     * Daftarkan Controller-Level RBAC & Middleware.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.permission:crm.view', only: ['members', 'pointHistories', 'vouchers']),
+            new Middleware('require.permission:crm.manage', only: ['recordCreditPayment', 'storeVoucher', 'toggleVoucher']),
+        ];
+    }
+
     public function __construct(
         private readonly LoyaltyService $loyaltyService = new LoyaltyService
     ) {}
@@ -166,7 +180,7 @@ final class CrmWebController extends Controller
             'tier_eligibility' => ['nullable', 'string'],
         ]);
 
-        Voucher::create([
+        $voucher = Voucher::create([
             'business_id' => $business->id,
             'code' => strtoupper($validated['code']),
             'name' => $validated['name'],
@@ -181,19 +195,46 @@ final class CrmWebController extends Controller
             'is_active' => true,
         ]);
 
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => auth()->id(),
+            'action' => 'voucher.created',
+            'auditable_type' => Voucher::class,
+            'auditable_id' => $voucher->id,
+            'risk_level' => AuditLog::RISK_LOW,
+            'notes' => "Membuat voucher promo: {$voucher->code} ({$voucher->name})",
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'created_at' => now(),
+        ]);
+
         return redirect()->back()->with('success', "Voucher {$validated['code']} berhasil ditambahkan.");
     }
 
     /**
      * Toggle voucher status.
      */
-    public function toggleVoucher(Voucher $voucher): RedirectResponse
+    public function toggleVoucher(Request $request, Voucher $voucher): RedirectResponse
     {
         $business = Context::requireBusiness();
         abort_unless($voucher->business_id === $business->id, 403);
 
         $voucher->update(['is_active' => ! $voucher->is_active]);
         $status = $voucher->is_active ? 'diaktifkan' : 'dinonaktifkan';
+
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => auth()->id(),
+            'action' => 'voucher.status_toggled',
+            'auditable_type' => Voucher::class,
+            'auditable_id' => $voucher->id,
+            'risk_level' => AuditLog::RISK_LOW,
+            'notes' => "Status voucher {$voucher->code} {$status}",
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'created_at' => now(),
+        ]);
+
         return redirect()->back()->with('success', "Voucher {$voucher->code} berhasil {$status}.");
     }
 }

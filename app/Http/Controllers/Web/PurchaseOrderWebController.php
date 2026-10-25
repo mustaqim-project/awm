@@ -267,13 +267,13 @@ final class PurchaseOrderWebController extends Controller
         AuditLog::create([
             'business_id' => $business->id,
             'user_id' => Context::user()?->id,
+            'auditable_type' => PurchaseOrder::class,
+            'auditable_id' => $purchaseOrder->id,
             'action' => 'po.confirmed',
-            'module' => 'Purchasing',
-            'record_type' => PurchaseOrder::class,
-            'record_id' => $purchaseOrder->id,
-            'reason_notes' => "Pesanan {$purchaseOrder->po_number} dikonfirmasi siap proses.",
+            'notes' => "Pesanan {$purchaseOrder->po_number} dikonfirmasi siap proses.",
             'ip_address' => request()->ip(),
             'user_agent' => request()->userAgent(),
+            'created_at' => now(),
         ]);
 
         return back()->with('success', __('purchasing.messages.confirmed', ['number' => $purchaseOrder->po_number]));

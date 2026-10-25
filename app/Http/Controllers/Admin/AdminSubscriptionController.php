@@ -9,10 +9,23 @@ use App\Http\Controllers\Controller;
 use App\Models\SubscriptionPayment;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\View\View;
 
-final class AdminSubscriptionController extends Controller
+final class AdminSubscriptionController extends Controller implements HasMiddleware
 {
+    /**
+     * Get the middleware that should be assigned to the controller.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.admin.permission:admin.subscriptions.view', only: ['index', 'show']),
+            new Middleware('require.admin.permission:admin.subscriptions.approve', only: ['approve']),
+            new Middleware('require.admin.permission:admin.subscriptions.reject', only: ['reject']),
+        ];
+    }
     public function __construct(
         private readonly EntitlementService $entitlementService = new EntitlementService
     ) {}

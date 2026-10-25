@@ -10,11 +10,27 @@ use App\Support\Context;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
-final class CustomerWebController extends Controller
+final class CustomerWebController extends Controller implements HasMiddleware
 {
+    /**
+     * Controller-level RBAC & entitlement middleware declarations.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.permission:customers.view', only: ['index', 'export', 'downloadTemplate']),
+            new Middleware('require.permission:customers.create', only: ['store', 'previewImport', 'executeImport']),
+            new Middleware('require.permission:customers.edit', only: ['update']),
+            new Middleware('require.permission:customers.delete', only: ['destroy']),
+            new Middleware('entitlement:customer', only: ['store', 'executeImport']),
+        ];
+    }
+
     /**
      * Display a unified listing of customers with deep-linking to CRM member & voucher submodules.
      */
@@ -257,14 +273,36 @@ final class CustomerWebController extends Controller
     /**
      * Delete a customer.
      */
-    public function destroy(Customer $customer): RedirectResponse
+    public function destroy(Customer $customer): RedirectResponse|JsonResponse
     {
         $business = Context::requireBusiness();
         abort_unless($customer->business_id === $business->id, 403);
 
+        // Deletion Guard: Check if customer still has outstanding credit balance
+        if ((float) ($customer->current_credit_balance ?? 0) > 0) {
+            $formattedAmount = number_format((float) $customer->current_credit_balance, 0, ',', '.');
+            $msg = "Tidak dapat menghapus pelanggan yang masih memiliki saldo piutang/kasbon berjalan sebesar Rp {$formattedAmount}. Selesaikan pelunasan terlebih dahulu.";
+
+            if (request()->wantsJson() || request()->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $msg,
+                ], 422);
+            }
+
+            return back()->with('error', $msg);
+        }
+
         $customer->delete();
 
-        return redirect()->route('customers.index')->with('success', 'Pelanggan berhasil dihapus.');
+        if (request()->wantsJson() || request()->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => "Pelanggan '{$customer->name}' berhasil dihapus.",
+            ]);
+        }
+
+        return redirect()->route('customers.index')->with('success', "Pelanggan '{$customer->name}' berhasil dihapus.");
     }
 }
 

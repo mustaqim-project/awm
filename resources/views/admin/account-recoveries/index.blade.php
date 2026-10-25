@@ -743,6 +743,8 @@
                                                         class="text-black dark:text-white"
                                                         x-text="selectedRecovery?.new_phone"></strong>.
                                                 </p>
+                                                @if(Auth::guard('admin')->user()?->hasPermission('admin.account_recoveries.approve'))
+
                                                 <form :action="selectedRecovery?.approve_url" method="POST" class="space-y-3">
                                                     @csrf
                                                     <div>
@@ -759,6 +761,7 @@
                                                         <span>Setujui &amp; Perbarui Akses Akun</span>
                                                     </button>
                                                 </form>
+@endif
                                             </div>
 
                                             <!-- Panel Tolak Permohonan -->
@@ -771,6 +774,8 @@
                                                 <p class="text-[11px] text-black/70 dark:text-white/70 leading-relaxed">
                                                     Alasan penolakan akan dikirimkan otomatis ke nomor WhatsApp pemohon.
                                                 </p>
+                                                @if(Auth::guard('admin')->user()?->hasPermission('admin.account_recoveries.reject'))
+
                                                 <form :action="selectedRecovery?.reject_url" method="POST" class="space-y-3">
                                                     @csrf
                                                     <div>
@@ -786,6 +791,7 @@
                                                         <span>Tolak Permohonan</span>
                                                     </button>
                                                 </form>
+                        @endif
                                             </div>
                                         </div>
                                     </div>

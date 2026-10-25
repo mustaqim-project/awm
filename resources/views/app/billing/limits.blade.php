@@ -420,7 +420,9 @@
                             <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>100 Pelanggan &amp; 5 Pemasok</span></li>
                             <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span><strong>1.000 Kasir POS / bln</strong></span></li>
                             <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>15 Faktur &amp; 15 PO / bln</span></li>
+                            @if($business->hasDineInFeature())
                             <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>5 Meja Kasir POS (Dine-In)</span></li>
+                            @endif
                             <li class="flex items-center gap-1.5 text-emerald-700 dark:text-emerald-300 font-semibold"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>Akses Fitur AI &amp; Gateway MCP (1 Token)</span></li>
                             <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>Otorisasi PIN Kasir &amp; Laci Kas</span></li>
                             <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>Ekspor / Impor Massal Excel</span></li>
@@ -846,6 +848,7 @@
                                     <td class="py-2.5 px-3 text-center text-indigo-600 font-bold bg-indigo-50/30 dark:bg-indigo-950/10"><i data-lucide="check" class="w-4 h-4 inline"></i> Beda Harga</td>
                                     <td class="py-2.5 px-3 text-center text-purple-600 font-bold"><i data-lucide="check" class="w-4 h-4 inline"></i> Beda Harga</td>
                                 </tr>
+                                @if($business->hasDineInFeature())
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Denah Meja Kasir POS (Dine-In)</td>
                                     <td class="py-2.5 px-3 text-center text-slate-400">0 Meja</td>
@@ -867,6 +870,7 @@
                                     <td class="py-2.5 px-3 text-center text-indigo-600 font-bold bg-indigo-50/30 dark:bg-indigo-950/10"><i data-lucide="check" class="w-4 h-4 inline"></i> Aktif</td>
                                     <td class="py-2.5 px-3 text-center text-purple-600 font-bold"><i data-lucide="check" class="w-4 h-4 inline"></i> Aktif</td>
                                 </tr>
+                                @endif
 
                                 <!-- GRUP 6: HRM & PENGGAJIAN -->
                                 <tr class="bg-slate-50/80 dark:bg-slate-800/40 font-bold text-slate-900 dark:text-white">

@@ -10,10 +10,22 @@ use App\Models\BugReport;
 use App\Models\FeatureRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\View\View;
 
-final class AdminFeedbackController extends Controller
+final class AdminFeedbackController extends Controller implements HasMiddleware
 {
+    /**
+     * Get the middleware that should be assigned to the controller.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.admin.permission:admin.feedback.view', only: ['bugs', 'showBug', 'features', 'showFeature']),
+            new Middleware('require.admin.permission:admin.feedback.manage', only: ['updateBug', 'updateFeature']),
+        ];
+    }
     public function bugs(Request $request): View
     {
         $status = $request->get('status', 'all');

@@ -46,6 +46,7 @@
                 </div>
             </div>
             <div class="flex flex-wrap items-center gap-2.5">
+                @if(Auth::guard('admin')->user()?->hasPermission('admin.word_filters.create'))
                 <form action="{{ route('admin.word-filters.seed-defaults') }}" method="POST" onsubmit="return confirm('Muat ulang kata bawaan standar Cooca?')">
                     @csrf
                     <button type="submit" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-[12px] text-[13px] font-semibold bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.10] text-black/75 dark:text-white/80 border border-black/[0.06] dark:border-white/[0.08] transition-all cursor-pointer">
@@ -63,6 +64,7 @@
                     <i data-lucide="plus" class="w-4 h-4" stroke-width="2"></i>
                     <span>Tambah Kata Baru</span>
                 </button>
+                @endif
             </div>
         </div>
 
@@ -240,6 +242,7 @@
 
                                 <!-- Status Toggle -->
                                 <td class="py-3.5 px-4">
+                                    @if(Auth::guard('admin')->user()?->hasPermission('admin.word_filters.toggle'))
                                     <form method="POST" action="{{ route('admin.word-filters.toggle', $filter) }}" class="inline">
                                         @csrf
                                         <button type="submit"
@@ -248,6 +251,9 @@
                                             <span>{{ $filter->is_active ? 'Aktif' : 'Nonaktif' }}</span>
                                         </button>
                                     </form>
+                                    @else
+                                    <span class=\"inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold {{ $filter->is_active ? 'bg-[#34C759]/15 text-[#34C759] dark:text-[#30D158]' : 'bg-black/10 dark:bg-white/10 text-black/50 dark:text-white/50' }}\"><span class=\"w-1.5 h-1.5 rounded-full {{ $filter->is_active ? 'bg-[#34C759]' : 'bg-black/40 dark:bg-white/40' }}\"></span>{{ $filter->is_active ? 'Aktif' : 'Nonaktif' }}</span>
+                                    @endif
                                 </td>
 
                                 <!-- Description / Notes -->
@@ -264,8 +270,9 @@
                                             <i data-lucide="pencil" class="w-4 h-4"></i>
                                         </button>
 
+                                        @if(Auth::guard('admin')->user()?->hasPermission('admin.word_filters.delete'))
                                         <form method="POST" action="{{ route('admin.word-filters.destroy', $filter) }}"
-                                            onsubmit="return confirm('Hapus kata \'{{ $filter->word }}\' dari filter moderasi?')">
+                                            onsubmit="return confirm('Hapus kata '{{ $filter->word }}' dari filter moderasi?')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
@@ -274,6 +281,7 @@
                                                 <i data-lucide="trash-2" class="w-4 h-4"></i>
                                             </button>
                                         </form>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>

@@ -359,18 +359,22 @@
 
                         <div class="space-y-3">
                             <!-- Approve Action Button (Min 50px Touch Target) -->
+                            @if(Auth::guard('admin')->user()?->hasPermission('admin.account_recoveries.approve'))
                             <button type="button" @click="showApproveModal = true"
                                 class="w-full min-h-[50px] py-3.5 px-4 rounded-[14px] bg-[#34C759] hover:bg-[#28A745] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-sm transition-all active:scale-[0.98]">
                                 <i data-lucide="check-circle" class="w-4 h-4"></i>
                                 <span>Setujui &amp; Perbarui Akses Akun</span>
                             </button>
+                            @endif
 
                             <!-- Reject Action Button (Min 48px Touch Target) -->
+                            @if(Auth::guard('admin')->user()?->hasPermission('admin.account_recoveries.reject'))
                             <button type="button" @click="showRejectModal = true"
                                 class="w-full min-h-[48px] py-3 px-4 rounded-[14px] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 text-[#FF3B30] dark:text-[#FF453A] font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all active:scale-[0.98]">
                                 <i data-lucide="x-circle" class="w-4 h-4"></i>
                                 <span>Tolak Permohonan</span>
                             </button>
+                            @endif
                         </div>
                     @elseif ($recovery->status === \App\Models\AccountRecoveryRequest::STATUS_APPROVED)
                         <!-- Approved Info Card -->
@@ -441,6 +445,7 @@
             </div>
         </div>
 
+        @if(Auth::guard('admin')->user()?->hasPermission('admin.account_recoveries.approve'))
         <!-- ═══ MODAL APPROVE (Apple Inset Dialog) ═══ -->
         <template x-teleport="body">
             <div x-show="showApproveModal"
@@ -508,7 +513,9 @@
                 </div>
             </div>
         </template>
+        @endif
 
+        @if(Auth::guard('admin')->user()?->hasPermission('admin.account_recoveries.reject'))
         <!-- ═══ MODAL REJECT (Apple Inset Dialog) ═══ -->
         <template x-teleport="body">
             <div x-show="showRejectModal"
@@ -569,6 +576,7 @@
                 </div>
             </div>
         </template>
+        @endif
 
         <!-- ═══ IMAGE LIGHTBOX MODAL ═══ -->
         <template x-teleport="body">

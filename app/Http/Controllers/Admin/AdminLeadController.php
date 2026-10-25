@@ -8,11 +8,23 @@ use App\Http\Controllers\Controller;
 use App\Models\TemplateLead;
 use App\Support\Security\CsvSanitizer;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-final class AdminLeadController extends Controller
+final class AdminLeadController extends Controller implements HasMiddleware
 {
+    /**
+     * Get the middleware that should be assigned to the controller.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.admin.permission:admin.leads.view', only: ['index']),
+            new Middleware('require.admin.permission:admin.leads.export', only: ['export']),
+        ];
+    }
     /**
      * Display listing of template download leads.
      */

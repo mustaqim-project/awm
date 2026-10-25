@@ -91,11 +91,13 @@
                     </div>
 
                     <div class="pt-2 flex justify-end">
+                        @if(Auth::guard('admin')->user()?->hasPermission('admin.profile.update'))
                         <button type="submit"
                             class="w-full sm:w-auto h-12 sm:h-10 px-5 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white text-[13px] font-bold transition-all flex items-center justify-center gap-2 shadow-md shadow-[#007AFF]/25 cursor-pointer">
                             <i data-lucide="save" class="w-4 h-4" stroke-width="2"></i>
                             <span>Simpan Profil</span>
                         </button>
+                        @endif
                     </div>
                 </form>
             </div>
@@ -166,11 +168,13 @@
                     </div>
 
                     <div class="pt-2 flex justify-end">
+                        @if(Auth::guard('admin')->user()?->hasPermission('admin.profile.update'))
                         <button type="submit"
                             class="w-full sm:w-auto h-12 sm:h-10 px-5 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white text-[13px] font-bold transition-all flex items-center justify-center gap-2 shadow-md shadow-[#007AFF]/25 cursor-pointer">
                             <i data-lucide="shield-check" class="w-4 h-4" stroke-width="2"></i>
                             <span>Ubah Kata Sandi</span>
                         </button>
+                        @endif
                     </div>
                 </form>
             </div>

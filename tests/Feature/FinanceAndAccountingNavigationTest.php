@@ -133,7 +133,7 @@ final class FinanceAndAccountingNavigationTest extends TestCase
         $response = $this->actingAs($this->owner, 'web')->get(route('finance.settlements.index'));
 
         $response->assertOk();
-        $response->assertSee('Rekonsiliasi &amp; Settlement Gateway', false);
+        $response->assertSee(__('finance.payout_hub_page_title'));
         $this->assertFinanceTabsPresent($response);
     }
 
@@ -173,7 +173,7 @@ final class FinanceAndAccountingNavigationTest extends TestCase
         $response = $this->actingAs($this->owner, 'web')->get(route('finance.balance-sheet'));
 
         $response->assertOk();
-        $response->assertSee('Laporan Posisi Keuangan (Neraca)');
+        $response->assertSee(__('finance.balance_sheet_page_title'));
         $this->assertAccountingTabsPresent($response);
     }
 
@@ -210,7 +210,7 @@ final class FinanceAndAccountingNavigationTest extends TestCase
         $response->assertSee('Hutang (AP)');
         $response->assertSee(route('finance.payables'));
 
-        $response->assertSee('Settlement Gateway');
+        $response->assertSee('Payout Hub');
         $response->assertSee(route('finance.settlements.index'));
     }
 

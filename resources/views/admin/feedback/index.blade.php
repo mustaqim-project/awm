@@ -80,8 +80,10 @@
                         <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
                             <td class="px-5 py-4">
                                 <div class="font-bold text-black dark:text-white text-[14px]">
-                                    <a href="{{ route($type === 'bugs' ? 'admin.feedback.bugs.show' : 'admin.feedback.features.show', $item) }}"
+                                    @if(Auth::guard('admin')->user()?->hasPermission('admin.feedback.view'))
+<a href="{{ route($type === 'bugs' ? 'admin.feedback.bugs.show' : 'admin.feedback.features.show', $item) }}"
                                         class="hover:text-[#007AFF] dark:hover:text-[#0A84FF] transition-colors">{{ $item->title }}</a>
+@endif
                                 </div>
                                 <div class="flex items-center gap-2 mt-1">
                                     @php
@@ -132,11 +134,13 @@
                                 </div>
                             </td>
                             <td class="px-5 py-4 text-right">
-                                <a href="{{ route($type === 'bugs' ? 'admin.feedback.bugs.show' : 'admin.feedback.features.show', $item) }}"
+                                @if(Auth::guard('admin')->user()?->hasPermission('admin.feedback.view'))
+<a href="{{ route($type === 'bugs' ? 'admin.feedback.bugs.show' : 'admin.feedback.features.show', $item) }}"
                                     class="h-8 px-3 rounded-[10px] text-[12px] font-bold text-[#007AFF] dark:text-[#0A84FF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-95 transition-all inline-flex items-center gap-1">
                                     <span>Kelola</span>
                                     <i data-lucide="arrow-right" class="w-3 h-3" stroke-width="2"></i>
                                 </a>
+@endif
                             </td>
                         </tr>
                     @empty

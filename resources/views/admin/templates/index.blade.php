@@ -173,6 +173,7 @@
                             </div>
 
                             <!-- Status Toggle Badge (Lifecycle State Only) -->
+                            @if(Auth::guard('admin')->user()?->hasPermission('admin.templates.edit'))
                             <form action="{{ route('admin.templates.toggle', $template) }}" method="POST" class="shrink-0">
                                 @csrf
                                 <button type="submit"
@@ -181,6 +182,7 @@
                                     <span>{{ $template->is_active ? 'Aktif' : 'Draft' }}</span>
                                 </button>
                             </form>
+                            @endif
                         </div>
 
                         <!-- Slug & Public Link -->
@@ -219,6 +221,7 @@
                                 <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
                                 <span>Edit</span>
                             </a>
+                            @if(Auth::guard('admin')->user()?->hasPermission('admin.templates.delete'))
                             <form action="{{ route('admin.templates.destroy', $template) }}" method="POST"
                                 onsubmit="return confirm('Hapus template ini beserta file fisiknya?')"
                                 class="inline">
@@ -230,6 +233,7 @@
                                     <i data-lucide="trash-2" class="w-4 h-4"></i>
                                 </button>
                             </form>
+                            @endif
                         </div>
                     </div>
                 @empty

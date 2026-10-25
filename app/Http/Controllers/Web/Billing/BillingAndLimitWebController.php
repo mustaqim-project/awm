@@ -7,14 +7,30 @@ namespace App\Http\Controllers\Web\Billing;
 use App\Domain\Billing\EntitlementService;
 use App\Domain\Storage\StorageTrackingService;
 use App\Http\Controllers\Controller;
+use App\Models\AuditLog;
+use App\Models\Business;
+use App\Models\StorageFile;
 use App\Models\SystemSetting;
 use App\Support\Context;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\View\View;
 
-final class BillingAndLimitWebController extends Controller
+final class BillingAndLimitWebController extends Controller implements HasMiddleware
 {
+    /**
+     * Daftarkan Controller-Level RBAC Middleware.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.permission:billing.view', only: ['index', 'listFiles']),
+            new Middleware('require.permission:billing.manage', only: ['upgrade', 'recalculateStorage', 'destroyStorageFile']),
+        ];
+    }
+
     public function __construct(
         private readonly EntitlementService $entitlementService = new EntitlementService,
         private readonly StorageTrackingService $storageTrackingService = new StorageTrackingService
@@ -108,6 +124,21 @@ final class BillingAndLimitWebController extends Controller
         $this->entitlementService->clearUsageCache($business);
 
         $bizMb = $result['business_used_mb'] ?? $result['total_used_mb'];
+
+        // Audit log entry for recalculating storage
+        AuditLog::create([
+            'business_id'    => $business->id,
+            'user_id'        => auth()->id(),
+            'action'         => 'billing.storage.recalculated',
+            'auditable_type' => Business::class,
+            'auditable_id'   => $business->id,
+            'risk_level'     => AuditLog::RISK_LOW,
+            'notes'          => "Storage quota recalculated: scanned {$result['scanned_files']} files, {$bizMb} MB used",
+            'ip_address'     => request()->ip(),
+            'user_agent'     => request()->userAgent(),
+            'created_at'     => now(),
+        ]);
+
         $message = __('billing.storage_recalculated_success', [
             'business' => $business->name,
             'scanned'  => $result['scanned_files'],
@@ -124,7 +155,7 @@ final class BillingAndLimitWebController extends Controller
      * Delete an uploaded storage file by the business owner to reclaim cloud quota.
      * Strictly isolated by business_id to prevent any cross-tenant IDOR access.
      */
-    public function destroyStorageFile(Request $request, \App\Models\StorageFile $storageFile): RedirectResponse|\Illuminate\Http\JsonResponse
+    public function destroyStorageFile(Request $request, StorageFile $storageFile): RedirectResponse|\Illuminate\Http\JsonResponse
     {
         $business = Context::requireBusiness();
         $isOwner = Context::isOwner();
@@ -147,6 +178,26 @@ final class BillingAndLimitWebController extends Controller
 
         // Clear quota and entitlement cache
         $this->entitlementService->clearUsageCache($business);
+
+        // Audit log entry for deleting storage file
+        AuditLog::create([
+            'business_id'    => $business->id,
+            'user_id'        => auth()->id(),
+            'action'         => 'billing.storage.file_deleted',
+            'auditable_type' => StorageFile::class,
+            'auditable_id'   => $storageFile->id,
+            'risk_level'     => AuditLog::RISK_MEDIUM,
+            'notes'          => "Reclaimed storage file: {$fileName} ({$fileSizeMb} MB)",
+            'old_values'     => [
+                'file_name' => $fileName,
+                'file_size' => $storageFile->file_size,
+                'file_path' => $storageFile->file_path,
+                'disk'      => $storageFile->disk,
+            ],
+            'ip_address'     => $request->ip(),
+            'user_agent'     => $request->userAgent(),
+            'created_at'     => now(),
+        ]);
 
         $successMessage = __('billing.storage_file_deleted_named', [
             'name' => $fileName,

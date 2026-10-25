@@ -17,11 +17,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
-class AdminInboxController extends Controller
+class AdminInboxController extends Controller implements HasMiddleware
 {
+    /**
+     * Get the middleware that should be assigned to the controller.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.admin.permission:admin.inbox.view', only: ['index', 'poll', 'customerHistory']),
+            new Middleware('require.admin.permission:admin.inbox.reply', only: ['reply', 'sendPrivateDm', 'uploadMedia']),
+            new Middleware('require.admin.permission:admin.inbox.manage', only: ['toggleStatus', 'updateTags', 'saveSettings', 'syncMeta']),
+        ];
+    }
     public function __construct(
         protected AdminSocialMediaService $adminService,
         protected ?MetaSocialMediaClient $metaClient = null

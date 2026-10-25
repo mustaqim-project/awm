@@ -188,6 +188,7 @@
                         </button>
 
                         <!-- Simulasi Bayar untuk Pengujian Instan / Sandbox -->
+                        @if(app()->environment('local', 'testing'))
                         <form method="POST" action="{{ route('community.events.payment.simulate', $registration) }}" class="w-full sm:w-auto">
                             @csrf
                             <button type="submit"
@@ -196,6 +197,7 @@
                                 <span>Simulasi Bayar QRIS Sukses</span>
                             </button>
                         </form>
+                        @endif
                     </div>
                 </div>
 

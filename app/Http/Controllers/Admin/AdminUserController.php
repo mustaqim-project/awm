@@ -9,11 +9,24 @@ use App\Models\User;
 use App\Support\Security\CsvSanitizer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-final class AdminUserController extends Controller
+final class AdminUserController extends Controller implements HasMiddleware
 {
+    /**
+     * Get the middleware that should be assigned to the controller.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.admin.permission:admin.users.view', only: ['index']),
+            new Middleware('require.admin.permission:admin.users.export', only: ['export']),
+            new Middleware('require.admin.permission:admin.users.delete', only: ['destroy']),
+        ];
+    }
     /**
      * Display a listing of registered users.
      */

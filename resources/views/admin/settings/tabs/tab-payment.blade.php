@@ -182,11 +182,17 @@
                             <span x-text="testingTripay ? 'Menguji Koneksi...' : 'Uji Koneksi Gateway'"></span>
                         </button>
 
+                        @if(Auth::guard('admin')->user()?->hasPermission('admin.settings.billing'))
+
+
                         <button type="submit"
                             class="w-full sm:w-auto h-11 px-6 rounded-[14px] text-[13.5px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-sm shadow-[#007AFF]/25 cursor-pointer">
                             <i data-lucide="save" class="w-4 h-4"></i>
                             <span>Simpan Pengaturan TriPay</span>
                         </button>
+
+
+                        @endif
                     </div>
 
                     <!-- Dynamic Test Result Bento Box -->

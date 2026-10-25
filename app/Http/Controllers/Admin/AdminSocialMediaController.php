@@ -8,10 +8,28 @@ use App\Domain\SocialMedia\AdminSocialMediaService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\View\View;
 
-class AdminSocialMediaController extends Controller
+class AdminSocialMediaController extends Controller implements HasMiddleware
 {
+    /**
+     * Get the middleware that should be assigned to the controller.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.admin.permission:admin.social_media.view', only: ['index']),
+            new Middleware('require.admin.permission:admin.social_media.connect', only: [
+                'getLinkedInAuthUrl', 'handleLinkedInCallback', 'getTikTokAuthUrl',
+                'handleTikTokCallback', 'disconnectAccount', 'updateConfig',
+            ]),
+            new Middleware('require.admin.permission:admin.social_media.post', only: ['storePost', 'updatePost', 'destroyPost']),
+            new Middleware('require.admin.permission:admin.social_media.publish', only: ['publishNow', 'retryPost']),
+            new Middleware('require.admin.permission:admin.social_media.reply', only: ['replyComment']),
+        ];
+    }
     public function __construct(
         protected AdminSocialMediaService $adminService
     ) {}

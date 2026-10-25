@@ -350,11 +350,15 @@
                     <span>Logo dan favicon baru akan langsung tampil di seluruh portal publik dan dashboard
                         admin.</span>
                 </div>
+                @if(Auth::guard('admin')->user()?->hasPermission('admin.settings.update'))
+
                 <button type="submit"
                     class="w-full sm:w-auto h-12 sm:h-11 px-6 rounded-[14px] text-[13px] sm:text-[14px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-md shadow-[#007AFF]/25 cursor-pointer">
                     <i data-lucide="save" class="w-4.5 h-4.5" stroke-width="2"></i>
                     <span>Simpan Perubahan Branding</span>
                 </button>
+
+                @endif
             </div>
 
         </form>

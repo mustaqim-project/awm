@@ -27,6 +27,19 @@ class AppServiceProvider extends ServiceProvider
         \App\Domain\Mail\DynamicMailConfig::bootstrap();
         \Carbon\Carbon::setLocale('id');
 
+        // Platform Admin RBAC Gate Integration
+        \Illuminate\Support\Facades\Gate::before(function ($user, string $ability) {
+            if ($user instanceof \App\Models\Admin) {
+                if ($user->isSuperAdmin()) {
+                    return true;
+                }
+
+                return $user->hasPermission($ability) ? true : null;
+            }
+
+            return null;
+        });
+
         // Self-heal: Ensure colliding public/admin/social-media directory does not intercept Laravel routes
         $collidingDir = public_path('admin/social-media');
         if (is_dir($collidingDir)) {

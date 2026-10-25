@@ -12,10 +12,27 @@ use App\Models\WhatsAppSubscriptionReminder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\View\View;
 
-final class AdminWhatsAppController extends Controller
+final class AdminWhatsAppController extends Controller implements HasMiddleware
 {
+    /**
+     * Get the middleware that should be assigned to the controller.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.admin.permission:admin.whatsapp.view', only: ['index', 'checkStatus', 'getSessions', 'getQr', 'showBlast']),
+            new Middleware('require.admin.permission:admin.whatsapp.blast', only: ['sendSingleReminder', 'sendAllReminders', 'storeBlast', 'testSend', 'sendOtp']),
+            new Middleware('require.admin.permission:admin.whatsapp.templates', only: [
+                'syncMetaTemplates', 'createMetaTemplate', 'deleteMetaTemplate',
+                'deployStandardTemplates', 'seedStandardTemplates', 'updateTemplates',
+            ]),
+            new Middleware('require.admin.permission:admin.whatsapp.config', only: ['verifyMetaCredentials', 'updateGatewayConfig', 'startSession', 'disconnect']),
+        ];
+    }
     public function __construct(
         private readonly AdminWhatsAppService $adminWa
     ) {}

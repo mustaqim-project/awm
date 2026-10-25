@@ -12,6 +12,7 @@ use App\Exports\AccountingReportExport;
 use App\Models\BankStatement;
 use App\Models\BankStatementLine;
 use App\Models\CashAccount;
+use App\Models\AuditLog;
 use App\Domain\Import\DataExchangeService;
 use App\Models\ChartOfAccount;
 use App\Support\Context;
@@ -19,12 +20,47 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-final class AccountingWebController extends Controller
+final class AccountingWebController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.permission:accounting.view', only: [
+                'coaIndex',
+                'coaExport',
+                'coaTemplate',
+                'coaImportPreview',
+                'balanceSheet',
+                'trialBalance',
+                'generalLedger',
+                'reconciliationIndex',
+                'openingBalanceTemplate',
+                'openingBalancePreview',
+            ]),
+            new Middleware(['require.permission:accounting.view', 'entitlement:export'], only: [
+                'balanceSheetExportExcel',
+                'trialBalanceExportExcel',
+                'generalLedgerExportExcel',
+            ]),
+            new Middleware('require.permission:accounting.manage', only: [
+                'coaStore',
+                'coaUpdate',
+                'coaDestroy',
+                'coaImportExecute',
+                'openingBalanceExecute',
+                'reconciliationUpload',
+                'reconciliationMatch',
+                'reconciliationUnmatch',
+            ]),
+        ];
+    }
+
     public function __construct(
         private readonly AutoJournalService $journalService = new AutoJournalService,
         private readonly AccountingReportService $reportService = new AccountingReportService,
@@ -100,7 +136,7 @@ final class AccountingWebController extends Controller
             'parent_id' => ['nullable', 'uuid', Rule::exists('chart_of_accounts', 'id')->where('business_id', $business->id)],
         ]);
 
-        ChartOfAccount::create([
+        $account = ChartOfAccount::create([
             'business_id' => $business->id,
             'parent_id' => $validated['parent_id'] ?? null,
             'code' => trim($validated['code']),
@@ -109,6 +145,18 @@ final class AccountingWebController extends Controller
             'normal_balance' => $validated['normal_balance'],
             'is_system' => false,
             'is_active' => true,
+        ]);
+
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => auth()->id(),
+            'auditable_type' => ChartOfAccount::class,
+            'auditable_id' => $account->id,
+            'action' => 'accounting.coa_created',
+            'notes' => "Tambah akun COA: {$account->code} - {$account->name}",
+            'risk_level' => AuditLog::RISK_LOW,
+            'ip_address' => request()->ip(),
+            'created_at' => now(),
         ]);
 
         return redirect()->route('finance.coa.index')->with('success', "Akun {$validated['code']} - {$validated['name']} berhasil ditambahkan.");
@@ -163,6 +211,18 @@ final class AccountingWebController extends Controller
 
         $account->update($payload);
 
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => auth()->id(),
+            'auditable_type' => ChartOfAccount::class,
+            'auditable_id' => $account->id,
+            'action' => 'accounting.coa_updated',
+            'notes' => "Perbarui akun COA: {$account->code} - {$account->name}",
+            'risk_level' => AuditLog::RISK_LOW,
+            'ip_address' => request()->ip(),
+            'created_at' => now(),
+        ]);
+
         return redirect()->route('finance.coa.index')->with('success', "Akun {$account->code} berhasil diperbarui.");
     }
 
@@ -191,6 +251,19 @@ final class AccountingWebController extends Controller
         }
 
         $code = $account->code;
+
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => auth()->id(),
+            'auditable_type' => ChartOfAccount::class,
+            'auditable_id' => $account->id,
+            'action' => 'accounting.coa_deleted',
+            'notes' => "Hapus akun COA: {$code} - {$account->name}",
+            'risk_level' => AuditLog::RISK_MEDIUM,
+            'ip_address' => request()->ip(),
+            'created_at' => now(),
+        ]);
+
         $account->delete();
 
         return redirect()->route('finance.coa.index')->with('success', "Akun {$code} berhasil dihapus.");

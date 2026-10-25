@@ -157,11 +157,15 @@
                                 <label class="block text-[12px] font-semibold text-black/80 dark:text-white/80">
                                     Kategori <span class="text-[#FF3B30]">*</span>
                                 </label>
+                                @if(Auth::guard('admin')->user()?->hasPermission('admin.posts.categories'))
+
                                 <button type="button" onclick="openQuickAddCategory()"
                                     class="text-[11px] font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline inline-flex items-center gap-1">
                                     <i data-lucide="plus" class="w-3 h-3" stroke-width="2"></i>
                                     <span>Kategori Baru</span>
                                 </button>
+
+                                @endif
                             </div>
 
                             <select name="category_id" id="category_select" required

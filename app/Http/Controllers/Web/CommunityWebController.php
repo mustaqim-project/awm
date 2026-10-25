@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Web;
 
+use App\Http\Controllers\Controller;
 use App\Domain\Billing\EntitlementService;
 use App\Domain\Community\ContentModerationService;
 use App\Domain\Community\EventCheckinService;
@@ -12,7 +13,7 @@ use App\Domain\Community\TrendingTopicService;
 use App\Domain\Payment\TripayService;
 use App\Domain\Storage\OwnerStorageQuotaService;
 use App\Domain\Storage\TenantStorage;
-use App\Http\Controllers\Controller;
+use App\Models\AuditLog;
 use App\Models\CommunityComment;
 use App\Models\CommunityEvent;
 use App\Models\CommunityEventRegistration;
@@ -25,14 +26,24 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
-final class CommunityWebController extends Controller
+final class CommunityWebController extends Controller implements HasMiddleware
 {
     public const MAX_IMAGE_BYTES = 5 * 1024 * 1024; // 5 MB
+
+    /**
+     * Daftarkan Controller-Level RBAC & Middleware.
+     */
+    public static function middleware(): array
+    {
+        return [];
+    }
 
     public function __construct(
         private readonly OwnerStorageQuotaService $storageQuota = new OwnerStorageQuotaService,
@@ -278,6 +289,26 @@ final class CommunityWebController extends Controller
                 ]);
             }
 
+            // Log event registration
+            AuditLog::create([
+                'business_id' => $business->id,
+                'user_id' => $user->getAuthIdentifier(),
+                'action' => 'community.event.registered',
+                'auditable_type' => CommunityEventRegistration::class,
+                'auditable_id' => $registration->id,
+                'risk_level' => AuditLog::RISK_LOW,
+                'notes' => "Mendaftar event: {$event->title} (Tiket: {$registration->ticket_code})",
+                'new_values' => [
+                    'event_id' => $event->id,
+                    'ticket_code' => $registration->ticket_code,
+                    'amount_paid' => $registration->amount_paid,
+                    'payment_status' => $registration->payment_status,
+                ],
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+                'created_at' => now(),
+            ]);
+
             if ($request->wantsJson()) {
                 return response()->json([
                     'success' => true,
@@ -294,6 +325,27 @@ final class CommunityWebController extends Controller
 
         // EVENT GRATIS: Langsung aktif
         $registration->update(['paid_at' => Carbon::now()]);
+
+        // Log event registration
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => $user->getAuthIdentifier(),
+            'action' => 'community.event.registered',
+            'auditable_type' => CommunityEventRegistration::class,
+            'auditable_id' => $registration->id,
+            'risk_level' => AuditLog::RISK_LOW,
+            'notes' => "Mendaftar event gratis: {$event->title} (Tiket: {$registration->ticket_code})",
+            'new_values' => [
+                'event_id' => $event->id,
+                'ticket_code' => $registration->ticket_code,
+                'amount_paid' => 0,
+                'payment_status' => CommunityEventRegistration::PAYMENT_STATUS_PAID,
+            ],
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'created_at' => now(),
+        ]);
+
         $successMsg = "Pendaftaran berhasil! Anda terdaftar pada event '{$event->title}' [Gratis]. Tiket digital dan barcode check-in siap digunakan.";
 
         if ($request->wantsJson()) {
@@ -337,6 +389,20 @@ final class CommunityWebController extends Controller
         }
 
         $registration->update(['status' => CommunityEventRegistration::STATUS_CANCELLED]);
+
+        // Log event registration cancellation
+        AuditLog::create([
+            'business_id' => $registration->business_id,
+            'user_id' => $user->getAuthIdentifier(),
+            'action' => 'community.event.registration_cancelled',
+            'auditable_type' => CommunityEventRegistration::class,
+            'auditable_id' => $registration->id,
+            'risk_level' => AuditLog::RISK_LOW,
+            'notes' => "Pendaftaran event '{$event->title}' dibatalkan.",
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'created_at' => now(),
+        ]);
 
         $msg = "Pendaftaran untuk event '{$event->title}' telah dibatalkan.";
         if ($request->wantsJson()) {
@@ -385,7 +451,9 @@ final class CommunityWebController extends Controller
         $qrString = $registration->gateway_qr_string ?: $registration->ticket_code;
         $qrisSvg = $this->ticketService->generateQrCodeSvg($qrString, 280);
 
-        return view('app.community.event_payment', compact('registration', 'event', 'qrisSvg'));
+        $business = Context::business() ?? $registration->business;
+
+        return view('app.community.event_payment', compact('registration', 'event', 'qrisSvg', 'business'));
     }
 
     /**
@@ -424,7 +492,27 @@ final class CommunityWebController extends Controller
         abort_unless($user !== null, 403);
         abort_unless((string) $registration->user_id === (string) $user->getAuthIdentifier(), 403);
 
+        abort_unless(
+            app()->environment('local', 'testing'),
+            403,
+            'Simulasi pembayaran hanya diizinkan di lingkungan lokal atau pengujian otomatis.'
+        );
+
         $registration->markAsPaid();
+
+        // Audit Log entry
+        AuditLog::create([
+            'business_id' => $registration->business_id,
+            'user_id' => $user->getAuthIdentifier(),
+            'action' => 'community.event.payment_simulated',
+            'auditable_type' => CommunityEventRegistration::class,
+            'auditable_id' => $registration->id,
+            'risk_level' => AuditLog::RISK_LOW,
+            'notes' => "Simulasi pembayaran QRIS event: {$registration->event->title}",
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'created_at' => now(),
+        ]);
 
         $msg = "Simulasi pembayaran QRIS berhasil! Tiket event '{$registration->event->title}' sekarang lunas dan aktif.";
 
@@ -784,7 +872,7 @@ final class CommunityWebController extends Controller
     /**
      * Delete a community post (only the author/owner).
      */
-    public function destroy(Request $request, CommunityPost $post): RedirectResponse
+    public function destroy(Request $request, CommunityPost $post): RedirectResponse|JsonResponse
     {
         $user = $request->user();
         abort_unless($user !== null, 403);
@@ -793,12 +881,31 @@ final class CommunityWebController extends Controller
             abort(403, 'Anda hanya dapat menghapus postingan milik sendiri.');
         }
 
+        // Audit Log entry before deletion
+        AuditLog::create([
+            'business_id' => $post->business_id,
+            'user_id' => $user->getAuthIdentifier(),
+            'action' => 'community.post.deleted',
+            'auditable_type' => CommunityPost::class,
+            'auditable_id' => $post->id,
+            'risk_level' => AuditLog::RISK_MEDIUM,
+            'notes' => 'Menghapus postingan komunitas: ' . Str::limit($post->content, 60),
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'created_at' => now(),
+        ]);
+
         if ($post->image_path) {
             app(\App\Domain\Storage\StorageTrackingService::class)->deleteFile($post->image_path, 'public');
         }
 
         $post->delete();
 
-        return back()->with('success', 'Postingan berhasil dihapus.');
+        $msg = 'Postingan berhasil dihapus.';
+        if ($request->wantsJson()) {
+            return response()->json(['success' => true, 'message' => $msg]);
+        }
+
+        return back()->with('success', $msg);
     }
 }

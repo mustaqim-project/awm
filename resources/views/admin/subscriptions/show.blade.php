@@ -178,7 +178,11 @@
         </div>
 
         <!-- Action Buttons for Verification -->
-        @if ($payment->isAwaitingApproval() || $payment->isPending())
+        @php
+            $canApproveSub = Auth::guard('admin')->user()?->hasPermission('admin.subscriptions.approve');
+            $canRejectSub = Auth::guard('admin')->user()?->hasPermission('admin.subscriptions.reject');
+        @endphp
+        @if (($payment->isAwaitingApproval() || $payment->isPending()) && ($canApproveSub || $canRejectSub))
             <div
                 class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div class="text-[13px] text-black/50 dark:text-white/50">Pastikan dana sebesar <strong
@@ -186,17 +190,22 @@
                         {{ number_format($payment->total_payable, 0, ',', '.') }}</strong> telah masuk ke mutasi rekening
                     bank resmi sebelum menyetujui.</div>
                 <div class="flex items-center gap-3 shrink-0">
+                    @if ($canRejectSub)
                     <button type="button" @click="rejectModalOpen = true"
                         class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-[#FF3B30] dark:text-[#FF453A] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.97] active:opacity-80 transition-all inline-flex items-center gap-1.5"><i
                             data-lucide="x" class="w-4 h-4" stroke-width="1.5"></i><span>Tolak Pembayaran</span></button>
+                    @endif
+                    @if ($canApproveSub)
                     <button type="button" @click="approveModalOpen = true"
                         class="h-9 px-5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all inline-flex items-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)]"><i
                             data-lucide="check" class="w-4 h-4" stroke-width="1.5"></i><span>Setujui &amp; Aktifkan Paket
                             Core</span></button>
+                    @endif
                 </div>
             </div>
         @endif
 
+        @if ($canApproveSub)
         <!-- Modal Approve (Sheet) -->
         <template x-teleport="body">
             <div x-show="approveModalOpen" x-cloak
@@ -247,7 +256,9 @@
                 </div>
             </div>
         </template>
+        @endif
 
+        @if ($canRejectSub)
         <!-- Modal Reject (Sheet) -->
         <template x-teleport="body">
             <div x-show="rejectModalOpen" x-cloak
@@ -296,5 +307,6 @@
                 </div>
             </div>
         </template>
+        @endif
     </div>
 @endsection

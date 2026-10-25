@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             RbacSeeder::class,
             BusinessTemplateSeeder::class,
             AdminSeeder::class,
+            AdminRbacSeeder::class,
             UserSeeder::class,
             RestoranNusantaraLandingSeeder::class,
             CommerceSeeder::class,

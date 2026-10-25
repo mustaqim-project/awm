@@ -783,6 +783,8 @@
                         invoice perpanjangan secara bertahap pada periode H-7, H-3, H-1, dan Hari H</p>
                 </div>
                 <div class="flex items-center gap-3">
+                    @if(Auth::guard('admin')->user()?->hasPermission('admin.whatsapp.blast'))
+
                     <form method="POST" action="{{ route('admin.whatsapp.reminders.send-all') }}"
                         onsubmit="return confirm('Apakah Anda yakin ingin mengirimkan SEMUA pengingat langganan yang masih pending ke WhatsApp pemilik bisnis hari ini?');">
                         @csrf
@@ -792,6 +794,8 @@
                             <span>Kirim Semua ({{ $pendingRemindersCount }})</span>
                         </button>
                     </form>
+
+                    @endif
                 </div>
             </div>
 
@@ -1353,6 +1357,8 @@
                             <i data-lucide="refresh-cw" class="w-4 h-4" :class="{ 'animate-spin': templateSyncing }"></i>
                             <span x-text="templateSyncing ? 'Menyinkronkan...' : 'Sinkronkan dari Meta'">Sinkronkan dari Meta</span>
                         </button>
+                        @if(Auth::guard('admin')->user()?->hasPermission('admin.whatsapp.templates'))
+
                         <button type="button" @click="openCreateTemplateModal()"
                             class="min-h-[42px] px-4 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-bold inline-flex items-center gap-2 shadow-sm active:scale-[0.98] transition-all">
                             <i data-lucide="plus" class="w-4 h-4"></i>
@@ -1786,6 +1792,8 @@
                             <i data-lucide="plus" class="w-4 h-4"></i>
                             <span>Buat Template Baru</span>
                         </button>
+
+                        @endif
                     </div>
                 </div>
 

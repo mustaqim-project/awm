@@ -10,6 +10,8 @@ use App\Models\ExcelTemplate;
 use App\Models\TemplateLead;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -17,8 +19,21 @@ use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-final class AdminTemplateController extends Controller
+final class AdminTemplateController extends Controller implements HasMiddleware
 {
+    /**
+     * Get the middleware that should be assigned to the controller.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.admin.permission:admin.templates.view', only: ['index']),
+            new Middleware('require.admin.permission:admin.templates.create', only: ['create', 'store']),
+            new Middleware('require.admin.permission:admin.templates.edit', only: ['edit', 'update', 'toggle']),
+            new Middleware('require.admin.permission:admin.templates.delete', only: ['destroy']),
+            new Middleware('require.admin.permission:admin.templates.download', only: ['download']),
+        ];
+    }
     /**
      * Display a listing of Excel templates with metrics & search.
      */

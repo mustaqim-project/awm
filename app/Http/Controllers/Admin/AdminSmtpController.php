@@ -9,12 +9,25 @@ use App\Http\Controllers\Controller;
 use App\Models\SystemSetting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 use Throwable;
 
-final class AdminSmtpController extends Controller
+final class AdminSmtpController extends Controller implements HasMiddleware
 {
+    /**
+     * Get the middleware that should be assigned to the controller.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.admin.permission:admin.smtp.view', only: ['index']),
+            new Middleware('require.admin.permission:admin.smtp.update', only: ['update']),
+            new Middleware('require.admin.permission:admin.smtp.test', only: ['test']),
+        ];
+    }
     /**
      * Display CMS SMTP & Mail Configuration within Unified Settings Hub.
      */

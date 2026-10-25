@@ -1473,6 +1473,9 @@
                 </button>
             </div>
 
+            @if(Auth::guard('admin')->user()?->hasPermission('admin.inbox.manage'))
+
+
             <form action="{{ route('admin.inbox.settings') }}" method="POST" class="space-y-4">
                 @csrf
 
@@ -1567,6 +1570,7 @@
                     </button>
                 </div>
             </form>
+            @endif
 
         </div>
     </div>

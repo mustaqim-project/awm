@@ -303,6 +303,9 @@
                 </button>
             </div>
 
+            @if(Auth::guard('admin')->user()?->hasPermission('admin.settlements.approve'))
+
+
             <form :action="'/admin/settlements/' + currentSettlementId + '/approve'" method="POST" enctype="multipart/form-data" class="p-6 space-y-4">
                 @csrf
 
@@ -368,6 +371,7 @@
                     </button>
                 </div>
             </form>
+@endif
             </div>
         </div>
     </template>
@@ -450,6 +454,9 @@
                 </div>
             </div>
 
+            @if(Auth::guard('admin')->user()?->hasPermission('admin.settlements.reject'))
+
+
             <form :action="'/admin/settlements/' + rejectSettlementId + '/reject'" method="POST" class="space-y-3">
                 @csrf
                 <div>
@@ -469,6 +476,7 @@
                     </button>
                 </div>
             </form>
+@endif
             </div>
         </div>
     </template>

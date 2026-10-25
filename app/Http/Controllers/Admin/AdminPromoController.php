@@ -11,10 +11,25 @@ use Carbon\Carbon;
 use Database\Seeders\SubscriptionPromoSeeder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\View\View;
 
-final class AdminPromoController extends Controller
+final class AdminPromoController extends Controller implements HasMiddleware
 {
+    /**
+     * Get the middleware that should be assigned to the controller.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.admin.permission:admin.promos.view', only: ['index']),
+            new Middleware('require.admin.permission:admin.promos.create', only: ['store', 'seedDefaults']),
+            new Middleware('require.admin.permission:admin.promos.edit', only: ['update']),
+            new Middleware('require.admin.permission:admin.promos.toggle', only: ['toggle']),
+            new Middleware('require.admin.permission:admin.promos.delete', only: ['destroy']),
+        ];
+    }
     /**
      * Display a listing of promos and usage analytics.
      */

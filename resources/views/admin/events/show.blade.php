@@ -146,6 +146,7 @@
             </div>
 
             <!-- Input Box -->
+            @if(Auth::guard('admin')->user()?->hasPermission('admin.events.checkin'))
             <form @submit.prevent="submitScan()" class="space-y-3">
                 <div class="relative">
                     <input type="text" x-model="scanCode" placeholder="Scan Barcode atau ketik Tiket Code (contoh: EVT-2610-ABC123)..." autofocus
@@ -170,6 +171,7 @@
                     <span>Format Tiket: <strong class="font-mono text-black dark:text-white">EVT-XXXX-XXXXXX</strong></span>
                 </div>
             </form>
+            @endif
         </div>
 
         <!-- Event Venue QR Display (4 Cols) -->
@@ -270,6 +272,8 @@
                                 @endif
                             </td>
                             <td class="py-3 px-4 text-right whitespace-nowrap">
+                                @if(Auth::guard('admin')->user()?->hasPermission('admin.events.checkin'))
+
                                 <form method="POST" action="{{ route('admin.events.checkin', $event) }}" class="inline">
                                     @csrf
                                     <input type="hidden" name="registration_id" value="{{ $reg->id }}">
@@ -286,6 +290,8 @@
                                         </button>
                                     @endif
                                 </form>
+
+                                @endif
                             </td>
                         </tr>
                     @empty

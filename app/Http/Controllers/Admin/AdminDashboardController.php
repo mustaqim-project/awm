@@ -12,10 +12,21 @@ use App\Models\CostingRun;
 use App\Models\Product;
 use App\Models\SubscriptionPayment;
 use App\Models\User;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\View\View;
 
-final class AdminDashboardController extends Controller
+final class AdminDashboardController extends Controller implements HasMiddleware
 {
+    /**
+     * Get the middleware that should be assigned to the controller.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.admin.permission:admin.dashboard.view', only: ['index']),
+        ];
+    }
     /**
      * Display the admin overview dashboard with SaaS financial & platform metrics.
      */

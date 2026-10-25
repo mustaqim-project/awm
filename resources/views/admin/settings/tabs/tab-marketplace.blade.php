@@ -227,11 +227,15 @@
 
             <!-- Save Action Button -->
             <div class="flex items-center justify-end gap-3 pt-2">
+                @if(Auth::guard('admin')->user()?->hasPermission('admin.settings.update'))
+
                 <button type="submit"
                     class="h-11 px-6 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-98 text-white font-bold text-[13.5px] shadow-sm flex items-center gap-2 transition-all cursor-pointer">
                     <i data-lucide="check" class="w-4 h-4"></i>
                     <span>Simpan Pengaturan Marketplace</span>
                 </button>
+
+                @endif
             </div>
         </form>
     </div>

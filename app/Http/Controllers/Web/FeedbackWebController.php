@@ -5,15 +5,28 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\AuditLog;
 use App\Models\BugReport;
 use App\Models\FeatureRequest;
 use App\Support\Context;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\View\View;
 
-final class FeedbackWebController extends Controller
+final class FeedbackWebController extends Controller implements HasMiddleware
 {
+    /**
+     * Controller-level role enforcement: Owner platform feedback.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.role:owner'),
+        ];
+    }
+
     public function bugs(): View
     {
         $business = Context::requireBusiness();
@@ -65,6 +78,22 @@ final class FeedbackWebController extends Controller
         $validated['progress_percent'] = 0;
         $report = BugReport::create($validated);
         $report->updates()->create(['user_id' => $user->getAuthIdentifier(), 'status' => $report->status, 'progress_percent' => 0, 'comment' => 'Laporan bug dibuat.']);
+
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => $user->getAuthIdentifier(),
+            'action' => 'feedback.bug_reported',
+            'auditable_type' => BugReport::class,
+            'auditable_id' => $report->id,
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'new_values' => [
+                'title' => $report->title,
+                'category' => $report->category,
+                'severity' => $report->severity,
+            ],
+        ]);
+
         return redirect()->route('feedback.bugs.show', $report)->with('success', 'Laporan bug berhasil dikirim.');
     }
 
@@ -108,6 +137,22 @@ final class FeedbackWebController extends Controller
         $validated['progress_percent'] = 0;
         $feature = FeatureRequest::create($validated);
         $feature->updates()->create(['user_id' => $user->getAuthIdentifier(), 'status' => $feature->status, 'progress_percent' => 0, 'comment' => 'Request fitur dibuat.']);
+
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => $user->getAuthIdentifier(),
+            'action' => 'feedback.feature_requested',
+            'auditable_type' => FeatureRequest::class,
+            'auditable_id' => $feature->id,
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'new_values' => [
+                'title' => $feature->title,
+                'category' => $feature->category,
+                'priority' => $feature->priority,
+            ],
+        ]);
+
         return redirect()->route('feedback.features.show', $feature)->with('success', 'Request fitur berhasil dikirim.');
     }
 

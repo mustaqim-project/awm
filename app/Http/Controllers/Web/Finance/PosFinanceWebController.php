@@ -12,17 +12,36 @@ use App\Models\ChartOfAccount;
 use App\Models\Expense;
 use App\Models\JournalEntry;
 use App\Models\Location;
+use App\Models\AuditLog;
 use App\Domain\Storage\TenantStorage;
 use App\Support\Context;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
 
-final class PosFinanceWebController extends Controller
+final class PosFinanceWebController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.permission:accounting.view', only: [
+                'journals',
+            ]),
+            new Middleware('require.permission:expenses.view', only: [
+                'expenses',
+                'viewReceipt',
+            ]),
+            new Middleware('require.permission:expenses.manage', only: [
+                'storeExpense',
+            ]),
+        ];
+    }
+
     public function __construct(
         private readonly AutoJournalService $journalService = new AutoJournalService,
         private readonly CashLedgerService $cashLedgerService = new CashLedgerService
@@ -216,6 +235,18 @@ final class PosFinanceWebController extends Controller
                     $user->id,
                     $cashAccount
                 );
+
+                AuditLog::create([
+                    'business_id' => $business->id,
+                    'user_id' => $user->id,
+                    'auditable_type' => Expense::class,
+                    'auditable_id' => $expense->id,
+                    'action' => 'finance.expense_created',
+                    'notes' => "Catat beban {$expense->expense_number}: {$expense->description} (Rp {$expense->amount})",
+                    'risk_level' => AuditLog::RISK_LOW,
+                    'ip_address' => request()->ip(),
+                    'created_at' => now(),
+                ]);
 
                 return $expense;
             });

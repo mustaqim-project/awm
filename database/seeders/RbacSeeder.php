@@ -445,6 +445,9 @@ final class RbacSeeder extends Seeder
             $this->command?->line("  ✓ Role [{$slug}] → " . count($syncData) . ' permissions synced.');
         }
 
+        // ── 3. Seed Platform Admin Roles & Permissions ────────────────
+        $this->call(AdminRbacSeeder::class);
+
         $this->command?->info('  ✓ RBAC seeder complete.');
     }
 }

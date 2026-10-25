@@ -10,12 +10,29 @@ use App\Models\SystemSetting;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
-final class AdminSettingController extends Controller
+final class AdminSettingController extends Controller implements HasMiddleware
 {
+    /**
+     * Get the middleware that should be assigned to the controller.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.admin.permission:admin.settings.view', only: ['index']),
+            new Middleware('require.admin.permission:admin.settings.update', only: ['update']),
+            new Middleware('require.admin.permission:admin.settings.billing', only: ['updateBilling']),
+            new Middleware('require.admin.permission:admin.settings.test', only: [
+                'testSocialMediaConfig', 'testInstagramConfig', 'testTripayConfig',
+                'testWhatsAppConfig', 'testBiteshipConfig',
+            ]),
+        ];
+    }
     /**
      * Retrieve all unified platform, Google OAuth, and SMTP settings data for views.
      *
