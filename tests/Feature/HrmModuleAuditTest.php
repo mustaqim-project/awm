@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
+use App\Domain\Billing\EntitlementService;
 use App\Models\AuditLog;
 use App\Models\Business;
 use App\Models\BusinessMembership;
+use App\Models\BusinessSubscription;
 use App\Models\EmployeeLoan;
 use App\Models\Payroll;
 use App\Models\PayrollItem;
@@ -56,6 +58,13 @@ final class HrmModuleAuditTest extends TestCase
         ]);
         $this->owner->update(['active_business_id' => $this->business->id]);
 
+        $entitlement = app(EntitlementService::class);
+        $sub = $entitlement->getSubscription($this->business);
+        $sub->update([
+            'plan_code' => BusinessSubscription::PLAN_PREMIUM_MONTHLY,
+            'status' => BusinessSubscription::STATUS_ACTIVE,
+        ]);
+
         $this->staffWithoutPerms = User::create([
             'name' => 'Kasir Tanpa Izin HRM',
             'email' => 'kasir.hrm@cooca.test',
@@ -100,7 +109,7 @@ final class HrmModuleAuditTest extends TestCase
             ->get(route('hrm.index'));
 
         $response->assertStatus(200);
-        $response->assertSee('Human Resource Management');
+        $response->assertSee('Manajemen SDM &amp; Penggajian', false);
     }
 
     public function test_employee_creation_generates_audit_log(): void

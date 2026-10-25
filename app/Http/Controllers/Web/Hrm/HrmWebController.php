@@ -1029,8 +1029,8 @@ final class HrmWebController extends Controller implements HasMiddleware
                     continue;
                 }
 
-                $bankName = $item->user?->bank_name ?? 'BCA';
-                $bankAccount = $item->user?->bank_account_number ?? '-';
+                $bankName = $item->bank_name ?: ($item->user?->bank_name ?? 'BCA');
+                $bankAccount = $item->bank_account_number ?: ($item->user?->bank_account_number ?? '-');
                 $desc = "Gaji {$payroll->formatted_period} - {$business->name}";
 
                 fputcsv($handle, [
