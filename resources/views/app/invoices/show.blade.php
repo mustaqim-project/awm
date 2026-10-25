@@ -44,7 +44,7 @@
             @if(!in_array($invoice->status, ['paid', 'void'], true) && (float) $invoice->paid_amount <= 0 && (\App\Support\Context::hasPermission('invoices.edit') || \App\Support\Context::hasPermission('invoices.create')))
             <a href="{{ route('invoices.edit', $invoice->id) }}" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-[#FF9500] dark:text-[#FF9F0A] bg-[#FF9500]/10 dark:bg-[#FF9500]/20 hover:bg-[#FF9500]/15 dark:hover:bg-[#FF9500]/30 active:scale-[0.97] transition-all flex items-center justify-center gap-1.5">
                 <i data-lucide="edit-3" class="w-4 h-4"></i>
-                <span>{{ $invoice->status === 'draft' ? __('sales.invoices.btn_edit_draft') : 'Edit Faktur' }}</span>
+                <span>{{ $invoice->status === 'draft' ? __('sales.invoices.btn_edit_draft') : __('sales.invoices.btn_edit_invoice') }}</span>
             </a>
             @endif
 
@@ -110,7 +110,7 @@
             @if($invoice->status === 'draft' && (float) $invoice->paid_amount <= 0 && \App\Support\Context::hasPermission('invoices.delete'))
             <button type="button" @click="confirmDeleteModalOpen = true" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5 cursor-pointer">
                 <i data-lucide="trash-2" class="w-4 h-4 text-[#FF3B30]"></i>
-                <span>Hapus Draf</span>
+                <span>{{ __('sales.invoices.btn_delete_draft') }}</span>
             </button>
             <form id="form-confirm-delete" method="POST" action="{{ route('invoices.destroy', $invoice->id) }}" class="hidden">
                 @csrf
@@ -482,7 +482,7 @@
 
                         <div>
                             <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">{{ __('sales.invoices.payment_ref_label') }}</label>
-                            <input type="text" name="reference_number" placeholder="TRX-BCA-981203"
+                            <input type="text" name="reference_number" placeholder="{{ __('sales.invoices.payment_ref_placeholder') }}"
                                 class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                         </div>
 
