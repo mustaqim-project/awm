@@ -434,4 +434,62 @@ class AdminSocialMediaController extends Controller
         return redirect()->route('admin.social-media.index', ['tab' => 'settings'])
             ->with('success', 'Konfigurasi Meta App & TikTok Developer berhasil disimpan.');
     }
+
+    /**
+     * Retry publishing a failed platform post.
+     */
+    public function retryPost(Request $request, \App\Models\SocialMediaPost $post): RedirectResponse
+    {
+        $admin = auth('admin')->user();
+        if (! $admin) {
+            abort(403);
+        }
+
+        try {
+            foreach ($post->targets()->whereIn('status', ['failed', 'pending'])->get() as $target) {
+                $this->adminService->executePlatformPublishTarget($target);
+            }
+            $post->syncStatusFromTargets();
+
+            return redirect()->route('admin.social-media.index', ['tab' => 'posts'])
+                ->with('success', 'Percobaan kirim ulang postingan platform selesai dijalankan.');
+        } catch (\Throwable $e) {
+            return redirect()->route('admin.social-media.index', ['tab' => 'posts'])
+                ->with('error', 'Gagal mencoba kirim ulang postingan: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Delete a platform social media post (draft, failed, or cleanup).
+     */
+    public function destroyPost(Request $request, \App\Models\SocialMediaPost $post): RedirectResponse
+    {
+        $admin = auth('admin')->user();
+        if (! $admin) {
+            abort(403);
+        }
+
+        try {
+            // Purge local media if stored
+            if (! empty($post->local_media_paths) && is_array($post->local_media_paths)) {
+                foreach ($post->local_media_paths as $p) {
+                    \App\Domain\Storage\AdminStorage::deletePublicFile($p);
+                }
+            }
+
+            \Illuminate\Support\Facades\DB::transaction(function () use ($post) {
+                $post->comments()->delete();
+                $post->targets()->delete();
+                $post->media()->delete();
+                $post->delete();
+            });
+
+            return redirect()->route('admin.social-media.index', ['tab' => 'posts'])
+                ->with('success', 'Postingan platform berhasil dihapus dari sistem.');
+        } catch (\Throwable $e) {
+            return redirect()->route('admin.social-media.index', ['tab' => 'posts'])
+                ->with('error', 'Gagal menghapus postingan: ' . $e->getMessage());
+        }
+    }
 }
+
