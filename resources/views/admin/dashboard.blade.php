@@ -666,7 +666,7 @@
                                 <td class="px-5 sm:px-6 py-3.5 text-right whitespace-nowrap">
                                     @if($user->google_id)
                                         <span class="inline-flex items-center justify-end gap-1.5 text-[12px] font-medium text-[#C41E17] dark:text-[#FF453A]">
-                                            <i data-lucide="chrome" class="w-3.5 h-3.5 shrink-0" stroke-width="2"></i>
+                                            <i data-lucide="globe" class="w-3.5 h-3.5 shrink-0" stroke-width="2"></i>
                                             <span>Google SSO</span>
                                         </span>
                                     @else
@@ -715,7 +715,7 @@
                             <div class="shrink-0">
                                 @if($user->google_id)
                                     <span class="inline-flex items-center gap-1 text-[11px] font-medium text-[#C41E17] dark:text-[#FF453A]">
-                                        <i data-lucide="chrome" class="w-3 h-3 shrink-0" stroke-width="2"></i>
+                                        <i data-lucide="globe" class="w-3 h-3 shrink-0" stroke-width="2"></i>
                                         <span>Google</span>
                                     </span>
                                 @else
@@ -1034,7 +1034,7 @@
                             <div class="flex justify-between items-center">
                                 <span class="text-black/50 dark:text-white/50">Metode Login</span>
                                 <span x-show="selectedUser?.google_id" class="inline-flex items-center gap-1.5 text-[12px] font-medium text-[#C41E17] dark:text-[#FF453A]">
-                                    <i data-lucide="chrome" class="w-3.5 h-3.5 shrink-0" stroke-width="2"></i>
+                                    <i data-lucide="globe" class="w-3.5 h-3.5 shrink-0" stroke-width="2"></i>
                                     <span>Google SSO</span>
                                 </span>
                                 <span x-show="!selectedUser?.google_id" class="inline-flex items-center gap-1.5 text-[12px] font-medium text-black/60 dark:text-white/60">
@@ -1200,8 +1200,8 @@
                     </div>
 
                     <!-- Tab 1: Action Approval Form Direct 1-Click with Optional Notes -->
-                    @if(Auth::guard(\'admin\')->user()?->hasPermission(\'admin.subscriptions.approve\'))
-                    <form x-show="approvalTab === \'approve\'" :action="'/admin/subscriptions/' + selectedPayment?.id + '/approve'" method="POST" class="pt-1 space-y-3">
+                    @if(Auth::guard('admin')->user()?->hasPermission('admin.subscriptions.approve'))
+                    <form x-show="approvalTab === 'approve'" :action="'/admin/subscriptions/' + selectedPayment?.id + '/approve'" method="POST" class="pt-1 space-y-3">
                         @csrf
                         <div>
                             <label class="block text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D] mb-1">
@@ -1229,8 +1229,8 @@
                     @endif
 
                     <!-- Tab 2: Action Rejection Form Direct with Required Reason -->
-                    @if(Auth::guard(\'admin\')->user()?->hasPermission(\'admin.subscriptions.reject\'))
-                    <form x-show="approvalTab === \'reject\'" :action="'/admin/subscriptions/' + selectedPayment?.id + '/reject'" method="POST" class="pt-1 space-y-3">
+                    @if(Auth::guard('admin')->user()?->hasPermission('admin.subscriptions.reject'))
+                    <form x-show="approvalTab === 'reject'" :action="'/admin/subscriptions/' + selectedPayment?.id + '/reject'" method="POST" class="pt-1 space-y-3">
                         @csrf
                         <div>
                             <label class="block text-[11px] font-bold uppercase tracking-wider text-[#FF3B30] dark:text-[#FF453A] mb-1">

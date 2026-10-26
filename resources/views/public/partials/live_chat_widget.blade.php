@@ -282,21 +282,37 @@
                 </div>
             </div>
 
-            {{-- CHAT INPUT COMPOSER --}}
-            <div class="p-3 bg-white dark:bg-[#1E1E24] border-t border-gray-200 dark:border-white/10 shrink-0">
-                <form @submit.prevent="sendFollowupMessage()" class="flex items-center gap-2">
-                    <input type="text" x-model="newMessage" 
-                           placeholder="Ketik balasan pesan Anda..." 
-                           :disabled="isSending"
-                           class="flex-1 h-10 px-3.5 rounded-xl bg-gray-50 dark:bg-[#27272A] border border-gray-200 dark:border-white/10 text-[13px] text-gray-900 dark:text-white placeholder-gray-400 focus:outline-hidden focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all">
-                    
-                    <button type="submit" 
-                            :disabled="!newMessage.trim() || isSending"
-                            class="w-10 h-10 rounded-xl bg-violet-600 hover:bg-violet-700 text-white flex items-center justify-center disabled:opacity-40 transition-colors shadow-sm shrink-0">
-                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            {{-- CHAT INPUT COMPOSER OR SESSION ENDED BANNER --}}
+            <template x-if="isSessionEnded">
+                <div class="p-3.5 bg-amber-50/90 dark:bg-[#201D1A] border-t border-amber-200/80 dark:border-amber-900/50 flex flex-col items-center gap-2 text-center shrink-0">
+                    <div class="flex items-center gap-1.5 text-[12px] font-medium text-amber-800 dark:text-amber-300">
+                        <svg class="w-4 h-4 text-amber-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        <span x-text="sessionEndedReason || 'Sesi chat otomatis diakhiri karena tidak ada balasan selama 5 menit.'"></span>
+                    </div>
+                    <button type="button" @click="startNewChatSession()" 
+                            class="px-4 py-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white font-semibold text-[12.5px] shadow-sm flex items-center gap-1.5 transition-all hover:scale-105 active:scale-95">
+                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                        <span>Mulai Sesi Chat Baru</span>
                     </button>
-                </form>
-            </div>
+                </div>
+            </template>
+
+            <template x-if="!isSessionEnded">
+                <div class="p-3 bg-white dark:bg-[#1E1E24] border-t border-gray-200 dark:border-white/10 shrink-0">
+                    <form @submit.prevent="sendFollowupMessage()" class="flex items-center gap-2">
+                        <input type="text" x-model="newMessage" 
+                               placeholder="Ketik balasan pesan Anda..." 
+                               :disabled="isSending"
+                               class="flex-1 h-10 px-3.5 rounded-xl bg-gray-50 dark:bg-[#27272A] border border-gray-200 dark:border-white/10 text-[13px] text-gray-900 dark:text-white placeholder-gray-400 focus:outline-hidden focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all">
+                        
+                        <button type="submit" 
+                                :disabled="!newMessage || !newMessage.trim() || isSending"
+                                class="w-10 h-10 rounded-xl bg-violet-600 hover:bg-violet-700 text-white flex items-center justify-center disabled:opacity-40 transition-colors shadow-sm shrink-0">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        </button>
+                    </form>
+                </div>
+            </template>
         </div>
 
     </div>
@@ -343,9 +359,12 @@ function coocaLiveChatWidget() {
         isSending: false,
         isWaitingReply: false,
         isReverbConnected: false,
+        isSessionEnded: false,
+        sessionEndedReason: '',
         errorMessage: '',
         sessionToken: localStorage.getItem('cooca_livechat_session') || '',
         unreadCount: 0,
+        newMessage: '',
         formData: {
             name: '',
             phone: '',
@@ -361,20 +380,74 @@ function coocaLiveChatWidget() {
         pusherInstance: null,
         reverbChannel: null,
         pollInterval: null,
+        timeoutCheckInterval: null,
 
         init() {
+            // Restore visitor info into formData if present
+            if (this.visitorData.name) this.formData.name = this.visitorData.name;
+            if (this.visitorData.phone) this.formData.phone = this.visitorData.phone;
+            if (this.visitorData.email) this.formData.email = this.visitorData.email;
+
             // If session already exists, restore chat history immediately
             if (this.sessionToken) {
                 this.loadChatHistory();
                 this.connectReverb();
             }
 
-            // Fallback polling every 4 seconds for resilience
+            // Fallback polling every 3.5 seconds for resilience
             this.pollInterval = setInterval(() => {
-                if (this.sessionToken) {
+                if (this.sessionToken && !this.isSessionEnded) {
                     this.pollMessages();
                 }
-            }, 4000);
+            }, 3500);
+
+            // Client-side 5-minute inactivity check every 5 seconds
+            this.timeoutCheckInterval = setInterval(() => {
+                if (this.sessionToken && !this.isSessionEnded) {
+                    this.checkInactivityTimeout();
+                }
+            }, 5000);
+        },
+
+        checkInactivityTimeout() {
+            if (!this.sessionToken || this.isSessionEnded || this.messages.length === 0) return;
+
+            const lastMsg = this.messages[this.messages.length - 1];
+            // Only timeout if the last message was sent by admin / support and waiting for visitor reply
+            if (lastMsg && (lastMsg.is_cooca || lastMsg.is_from_page)) {
+                const msgTime = lastMsg.created_at ? new Date(lastMsg.created_at).getTime() : 0;
+                if (msgTime > 0) {
+                    const elapsedSeconds = Math.floor((Date.now() - msgTime) / 1000);
+                    if (elapsedSeconds >= 300) { // 5 minutes without visitor reply
+                        this.handleSessionEnded('Sesi chat otomatis diakhiri karena tidak ada balasan dari Anda selama 5 menit.');
+                    }
+                }
+            }
+        },
+
+        handleSessionEnded(reason) {
+            this.isSessionEnded = true;
+            this.sessionEndedReason = reason || 'Sesi chat otomatis diakhiri karena tidak ada balasan dalam 5 menit.';
+            this.isWaitingReply = false;
+            // Clear active session in localStorage so user can easily start a fresh session
+            localStorage.removeItem('cooca_livechat_session');
+            this.sessionToken = '';
+            if (this.pusherInstance) {
+                try { this.pusherInstance.disconnect(); } catch (_) {}
+            }
+        },
+
+        startNewChatSession() {
+            this.isSessionEnded = false;
+            this.sessionEndedReason = '';
+            this.sessionToken = '';
+            this.messages = [];
+            this.newMessage = '';
+            this.formData.message = '';
+            localStorage.removeItem('cooca_livechat_session');
+            if (this.visitorData.name) this.formData.name = this.visitorData.name;
+            if (this.visitorData.phone) this.formData.phone = this.visitorData.phone;
+            if (this.visitorData.email) this.formData.email = this.visitorData.email;
         },
 
         toggleChat() {
@@ -409,6 +482,8 @@ function coocaLiveChatWidget() {
                     this.sessionToken = data.session_token;
                     this.visitorData = data.visitor;
                     this.messages = [data.message];
+                    this.isSessionEnded = false;
+                    this.sessionEndedReason = '';
 
                     // Store in localStorage
                     localStorage.setItem('cooca_livechat_session', this.sessionToken);
@@ -433,8 +508,13 @@ function coocaLiveChatWidget() {
         },
 
         async sendFollowupMessage() {
-            const text = this.newMessage.trim();
-            if (!text || this.isSending || !this.sessionToken) return;
+            const text = (this.newMessage || '').trim();
+            if (!text || this.isSending) return;
+
+            if (this.isSessionEnded || !this.sessionToken) {
+                this.handleSessionEnded('Sesi chat telah berakhir. Silakan mulai sesi baru.');
+                return;
+            }
 
             this.isSending = true;
             this.newMessage = '';
@@ -461,6 +541,8 @@ function coocaLiveChatWidget() {
                     this.$nextTick(() => {
                         this.scrollToBottom();
                     });
+                } else if (data.session_ended || res.status === 410 || res.status === 404) {
+                    this.handleSessionEnded(data.message);
                 } else {
                     alert(data.message || 'Gagal mengirim pesan.');
                 }
@@ -485,9 +567,16 @@ function coocaLiveChatWidget() {
                         if (data.visitor && data.visitor.name) {
                             this.visitorData = data.visitor;
                         }
+                        if (data.session_ended) {
+                            this.handleSessionEnded('Sesi chat otomatis diakhiri karena tidak ada balasan dari Anda selama 5 menit.');
+                        } else {
+                            this.checkInactivityTimeout();
+                        }
                         this.$nextTick(() => {
                             this.scrollToBottom();
                         });
+                    } else if (data.session_ended) {
+                        this.handleSessionEnded(data.message);
                     }
                 }
             } catch (e) {
@@ -496,7 +585,7 @@ function coocaLiveChatWidget() {
         },
 
         async pollMessages() {
-            if (!this.sessionToken || this.isSending || this.isSubmitting) return;
+            if (!this.sessionToken || this.isSending || this.isSubmitting || this.isSessionEnded) return;
 
             const lastId = this.messages.length > 0 ? this.messages[this.messages.length - 1].id : '';
 
@@ -506,6 +595,10 @@ function coocaLiveChatWidget() {
                 });
                 if (res.ok) {
                     const data = await res.json();
+                    if (data.session_ended) {
+                        this.handleSessionEnded('Sesi chat otomatis diakhiri karena tidak ada balasan dari Anda selama 5 menit.');
+                        return;
+                    }
                     if (data.success && Array.isArray(data.messages) && data.messages.length > 0) {
                         data.messages.forEach(incoming => {
                             if (!this.messages.some(m => m.id === incoming.id)) {
@@ -517,6 +610,7 @@ function coocaLiveChatWidget() {
                                 }
                             }
                         });
+                        this.checkInactivityTimeout();
                         this.$nextTick(() => {
                             this.scrollToBottom();
                         });
@@ -570,6 +664,7 @@ function coocaLiveChatWidget() {
                             is_from_page: data.is_from_page,
                             time: data.time,
                             date: data.date,
+                            created_at: data.created_at || new Date().toISOString(),
                         });
 
                         this.isWaitingReply = false;
@@ -578,6 +673,8 @@ function coocaLiveChatWidget() {
                             this.unreadCount++;
                             this.playChime();
                         }
+
+                        this.checkInactivityTimeout();
 
                         this.$nextTick(() => {
                             this.scrollToBottom();
@@ -591,12 +688,9 @@ function coocaLiveChatWidget() {
 
         confirmResetSession() {
             if (confirm('Apakah Anda ingin mengakhiri sesi chat ini dan memulai chat baru?')) {
-                localStorage.removeItem('cooca_livechat_session');
-                this.sessionToken = '';
-                this.messages = [];
-                this.formData.message = '';
+                this.startNewChatSession();
                 if (this.pusherInstance) {
-                    this.pusherInstance.disconnect();
+                    try { this.pusherInstance.disconnect(); } catch (_) {}
                 }
             }
         },

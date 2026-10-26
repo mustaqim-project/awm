@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Events\LiveChatMessageSent;
 use App\Http\Controllers\Controller;
+use App\Models\InboxThreadTakeover;
 use App\Models\SocialMediaComment;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -14,6 +15,56 @@ use Illuminate\Support\Str;
 
 class PublicLiveChatController extends Controller
 {
+    /**
+     * Automatic inactivity timeout in seconds (5 minutes).
+     * If the visitor does not reply within 5 minutes after an admin/support message, the session ends.
+     */
+    public const INACTIVITY_TIMEOUT_SECONDS = 300;
+
+    /**
+     * Check if a live chat session has expired because visitor did not reply to admin within 5 minutes.
+     * When expired, automatically transition thread status to resolved and release any human takeover.
+     */
+    public function checkAndHandleInactivityTimeout(string $sessionToken): bool
+    {
+        $lastMessage = SocialMediaComment::where('is_platform', true)
+            ->where('platform', 'live_chat')
+            ->where(function ($q) use ($sessionToken) {
+                $q->where('session_token', $sessionToken)
+                  ->orWhere('from_id', $sessionToken);
+            })
+            ->latest('created_time')
+            ->latest('created_at')
+            ->first();
+
+        if (! $lastMessage) {
+            return false;
+        }
+
+        // Only enforce timeout if the last message in the thread was sent by admin / cooca support
+        if ($lastMessage->is_from_page) {
+            $created = $lastMessage->created_time ?? $lastMessage->created_at;
+            if ($created && Carbon::parse($created)->diffInSeconds(now()) >= self::INACTIVITY_TIMEOUT_SECONDS) {
+                // Mark thread as resolved
+                SocialMediaComment::where('is_platform', true)
+                    ->where('platform', 'live_chat')
+                    ->where(function ($q) use ($sessionToken) {
+                        $q->where('session_token', $sessionToken)
+                          ->orWhere('from_id', $sessionToken);
+                    })
+                    ->whereIn('status', ['unread', 'replied'])
+                    ->update(['status' => 'resolved']);
+
+                // Release human takeover if active
+                $threadKey = InboxThreadTakeover::resolveThreadKey('live_chat', $sessionToken, $sessionToken);
+                InboxThreadTakeover::releaseTakeover($threadKey);
+
+                return true;
+            }
+        }
+
+        return false;
+    }
     /**
      * Start a new live chat session from the public website widget.
      * Requires: Nama, Nomor HP, Email, and initial Pertanyaan.
@@ -114,6 +165,15 @@ class PublicLiveChatController extends Controller
         $sessionToken = trim($validated['session_token']);
         $messageText = strip_tags(trim($validated['message']));
 
+        // Check if session has expired due to 5 minutes of inactivity after an admin message
+        if ($this->checkAndHandleInactivityTimeout($sessionToken)) {
+            return response()->json([
+                'success'       => false,
+                'session_ended' => true,
+                'message'       => 'Sesi chat telah otomatis diakhiri karena tidak ada balasan dari Anda dalam 5 menit. Silakan mulai sesi chat baru.',
+            ], 410);
+        }
+
         // Find existing session info to inherit visitor details
         $firstSessionRecord = SocialMediaComment::where('is_platform', true)
             ->where('platform', 'live_chat')
@@ -123,12 +183,14 @@ class PublicLiveChatController extends Controller
             })
             ->where('is_from_page', false)
             ->oldest('created_time')
+            ->oldest('created_at')
             ->first();
 
         if (! $firstSessionRecord) {
             return response()->json([
-                'success' => false,
-                'message' => 'Sesi chat telah kedaluwarsa atau tidak ditemukan. Silakan mulai chat baru.',
+                'success'       => false,
+                'session_ended' => true,
+                'message'       => 'Sesi chat telah kedaluwarsa atau tidak ditemukan. Silakan mulai chat baru.',
             ], 404);
         }
 
@@ -169,8 +231,9 @@ class PublicLiveChatController extends Controller
         $created = $comment->created_time ?? now();
 
         return response()->json([
-            'success' => true,
-            'message' => [
+            'success'       => true,
+            'session_ended' => false,
+            'message'       => [
                 'id'            => (string) $comment->id,
                 'message'       => $comment->message,
                 'from_name'     => $comment->from_name,
@@ -192,8 +255,11 @@ class PublicLiveChatController extends Controller
         $sessionToken = (string) $request->query('session_token');
 
         if (empty($sessionToken)) {
-            return response()->json(['success' => false, 'messages' => []], 400);
+            return response()->json(['success' => false, 'session_ended' => false, 'messages' => []], 400);
         }
+
+        // Check if session has expired due to 5 minutes of inactivity after an admin message
+        $isSessionEnded = $this->checkAndHandleInactivityTimeout($sessionToken);
 
         $messages = SocialMediaComment::where('is_platform', true)
             ->where('platform', 'live_chat')
@@ -228,14 +294,15 @@ class PublicLiveChatController extends Controller
         });
 
         return response()->json([
-            'success'  => true,
-            'visitor'  => [
+            'success'       => true,
+            'session_ended' => $isSessionEnded,
+            'visitor'       => [
                 'name'  => $firstVisitorMsg?->from_name ?? '',
                 'email' => $firstVisitorMsg?->from_email ?? '',
                 'phone' => $firstVisitorMsg?->from_phone ?? '',
             ],
-            'messages' => $formatted,
-            'count'    => $formatted->count(),
+            'messages'      => $formatted,
+            'count'         => $formatted->count(),
         ]);
     }
 
@@ -248,8 +315,11 @@ class PublicLiveChatController extends Controller
         $afterId = (string) $request->query('after_id');
 
         if (empty($sessionToken)) {
-            return response()->json(['success' => false, 'messages' => []], 400);
+            return response()->json(['success' => false, 'session_ended' => false, 'messages' => []], 400);
         }
+
+        // Check if session has expired due to 5 minutes of inactivity after an admin message
+        $isSessionEnded = $this->checkAndHandleInactivityTimeout($sessionToken);
 
         $query = SocialMediaComment::where('is_platform', true)
             ->where('platform', 'live_chat')
@@ -290,9 +360,10 @@ class PublicLiveChatController extends Controller
         });
 
         return response()->json([
-            'success'  => true,
-            'messages' => $formatted,
-            'count'    => $formatted->count(),
+            'success'       => true,
+            'session_ended' => $isSessionEnded,
+            'messages'      => $formatted,
+            'count'         => $formatted->count(),
         ]);
     }
 }

@@ -79,7 +79,7 @@
                                     @if ($user->google_id)
                                         <span
                                             class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#FF3B30]/12 text-[#C41E17] dark:text-[#FF453A]"><i
-                                                data-lucide="chrome" class="w-3 h-3"
+                                                data-lucide="globe" class="w-3 h-3"
                                                 stroke-width="1.5"></i><span>Google</span></span>
                                     @else
                                         <span

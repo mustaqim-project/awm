@@ -93,7 +93,7 @@
             <div class="rounded-[24px] bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/[0.06] dark:border-white/[0.08] backdrop-blur-md p-6 sm:p-7 space-y-5 shadow-sm">
                 <div class="flex items-center gap-3 pb-4 border-b border-black/[0.04] dark:border-white/[0.06]">
                     <div class="w-10 h-10 rounded-[14px] bg-[#FF3B30]/10 flex items-center justify-center text-[#FF3B30] dark:text-[#FF453A] shrink-0">
-                        <i data-lucide="chrome" class="w-5 h-5" stroke-width="1.8"></i>
+                        <i data-lucide="globe" class="w-5 h-5" stroke-width="1.8"></i>
                     </div>
                     <div>
                         <h3 class="text-[16px] font-bold text-black dark:text-white">Kredensial Bersama Google Cloud OAuth</h3>
