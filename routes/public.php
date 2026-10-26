@@ -83,6 +83,8 @@ Route::get('/kalkulator-omzet-harian', [PublicCalculatorController::class, 'omze
 Route::get('/simulasi-what-if', [PublicCalculatorController::class, 'simulasiWhatIf']);
 
 // 2. Template / Resource Downloads (Lead Capture)
+Route::permanentRedirect('/template', '/template-pembukuan-gratis');
+Route::permanentRedirect('/templates', '/template-pembukuan-gratis');
 Route::get('/template-pembukuan-gratis', [PublicTemplateController::class, 'index'])->name('template.index');
 Route::get('/template/{slug}', [PublicTemplateController::class, 'show'])->name('template.show');
 Route::post('/template/{slug}/download', [PublicTemplateController::class, 'captureLead'])->middleware('throttle:5,5')->name('template.download');
