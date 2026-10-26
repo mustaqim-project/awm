@@ -143,21 +143,30 @@ final class AiProviderManager
         try {
             $engineService = app(\App\Domain\Ai\Platform\AiPlatformEngineService::class);
             $platformConfig = $engineService->getConfig();
-            $platformProvider = (string) ($platformConfig['provider'] ?? 'openai_compatible');
             $resolvedKey = $engineService->resolveNextKey();
 
             if ($resolvedKey && ! empty($resolvedKey['key'])) {
-                $providerInstance = isset($this->providers[$platformProvider])
-                    ? $this->providers[$platformProvider]
+                $keyProvider = (string) ($resolvedKey['provider'] ?? ($platformConfig['provider'] ?? 'openai_compatible'));
+                $providerInstance = isset($this->providers[$keyProvider])
+                    ? $this->providers[$keyProvider]
                     : $this->providers['openai_compatible'];
+
+                $resolvedEndpoint = ! empty($resolvedKey['endpoint'])
+                    ? (string) $resolvedKey['endpoint']
+                    : (string) ($platformConfig['endpoint'] ?? '');
+
+                $resolvedModel = ! empty($resolvedKey['model'])
+                    ? (string) $resolvedKey['model']
+                    : (string) ($platformConfig['model'] ?? 'ag/gemini-3.8-flash-high');
 
                 return [
                     'provider' => $providerInstance,
                     'api_key' => $resolvedKey['key'],
-                    'model' => (string) ($platformConfig['model'] ?? 'ag/gemini-3.8-flash-high'),
+                    'model' => $resolvedModel,
                     'config' => null,
-                    'endpoint' => (string) ($platformConfig['endpoint'] ?? ''),
+                    'endpoint' => $resolvedEndpoint,
                     'key_id' => (string) ($resolvedKey['id'] ?? ''),
+                    'key_provider' => $keyProvider,
                 ];
             }
         } catch (\Throwable) {

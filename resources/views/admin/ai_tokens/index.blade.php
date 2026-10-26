@@ -1,7 +1,7 @@
 @extends('layouts.admin', [
-    'title' => 'Platform AI Engine & Token Console - Admin Console',
+    'title' => 'Platform AI Engine & Token Console - 9Router Smart Gateway',
     'headerTitle' => 'Platform AI Engine & Token Console',
-    'headerSubtitle' => 'Pusat kendali engine multi-provider AI, multi-key pool load balancing, dan monitoring token ekosistem',
+    'headerSubtitle' => 'Pusat kendali 9Router multi-provider AI, multi-key pool load balancing & failover, dan monitoring token ekosistem',
 ])
 
 @section('content')
@@ -15,6 +15,8 @@
     addModelUrl: '{{ route('admin.ai-tokens.engine.models.add') }}',
     deleteModelUrl: '{{ url('admin/ai-tokens/engine/models') }}',
     resetModelsUrl: '{{ route('admin.ai-tokens.engine.models.reset-default') }}',
+    testSingleKeyBaseUrl: '{{ url('admin/ai-tokens/engine/keys') }}',
+    updateKeyBaseUrl: '{{ url('admin/ai-tokens/engine/keys') }}',
     csrfToken: '{{ csrf_token() }}'
 })">
 
@@ -27,7 +29,7 @@
                 :class="activeTab === 'engine' 
                     ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm font-semibold' 
                     : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'">
-                <i data-lucide="cpu" class="w-4 h-4 text-[#007AFF]" stroke-width="1.75"></i>
+                <i data-lucide="router" class="w-4 h-4 text-[#007AFF]" stroke-width="1.75"></i>
                 <span>Platform AI Engine &amp; Multi-Key Pool</span>
                 <span class="w-2 h-2 rounded-full" :class="engineStatus === 'connected' ? 'bg-[#34C759]' : 'bg-[#FF9500]'"></span>
             </button>
@@ -45,7 +47,7 @@
         <!-- Top Action Right -->
         <div class="flex items-center gap-2.5">
             <template x-if="activeTab === 'engine'">
-                <div class="flex items-center gap-2">
+                <div class="flex flex-wrap items-center gap-2">
                     <button type="button" 
                         @click="manageModelsOpen = true"
                         class="h-9 px-3.5 rounded-[10px] text-[12.5px] font-semibold text-[#AF52DE] dark:text-[#BF5AF2] bg-[#AF52DE]/10 hover:bg-[#AF52DE]/15 active:scale-[0.98] transition-all flex items-center gap-1.5 border border-[#AF52DE]/20">
@@ -57,13 +59,13 @@
                         :disabled="isTesting"
                         class="h-9 px-3.5 rounded-[10px] text-[12.5px] font-semibold text-black/80 dark:text-white/90 bg-black/[0.04] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all flex items-center gap-2 border border-black/5 dark:border-white/10 disabled:opacity-50">
                         <i data-lucide="zap" class="w-3.5 h-3.5 text-[#FF9500]" :class="isTesting ? 'animate-spin' : ''" stroke-width="1.75"></i>
-                        <span x-text="isTesting ? 'Menguji Latency...' : 'Uji Koneksi Engine (Live Ping)'"></span>
+                        <span x-text="isTesting ? 'Menguji Gateway...' : 'Live Ping Gateway'"></span>
                     </button>
                     <button type="button" 
-                        @click="addKeyModalOpen = true"
+                        @click="openAddKeyModal()"
                         class="h-9 px-3.5 rounded-[10px] text-[12.5px] font-semibold text-white bg-[#007AFF] hover:bg-[#0062CC] active:scale-[0.98] transition-all flex items-center gap-1.5 shadow-sm shadow-[#007AFF]/25">
                         <i data-lucide="plus" class="w-4 h-4" stroke-width="2"></i>
-                        <span>Tambah API Key Pool</span>
+                        <span>+ Hubungkan Kunci API</span>
                     </button>
                 </div>
             </template>
@@ -79,94 +81,590 @@
         </div>
     </div>
 
-    <!-- TAB 1: PLATFORM AI ENGINE & PROVIDER SETTINGS -->
+    <!-- TAB 1: 9ROUTER AI SMART GATEWAY & PROVIDER POOL -->
     <div x-show="activeTab === 'engine'" x-cloak class="space-y-6">
 
-        <!-- Live Engine Status & Latency Banner -->
-        <div class="rounded-[16px] p-5 bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 shadow-sm">
-            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-                <div class="flex items-start gap-4">
-                    <div class="w-11 h-11 rounded-[12px] flex items-center justify-center shrink-0"
-                        :class="engineStatus === 'connected' ? 'bg-[#34C759]/12 text-[#34C759]' : 'bg-[#FF9500]/12 text-[#FF9500]'">
-                        <i data-lucide="server" class="w-5 h-5" stroke-width="1.75"></i>
-                    </div>
-                    <div>
-                        <div class="flex items-center gap-2.5">
-                            <h2 class="text-[16px] font-bold text-black dark:text-white tracking-tight">Status Engine Platform:</h2>
-                            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold uppercase tracking-wider"
-                                :class="engineStatus === 'connected' 
-                                    ? 'bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]' 
-                                    : 'bg-[#FF9500]/15 text-[#C97700] dark:text-[#FF9F0A]'">
-                                <span class="w-1.5 h-1.5 rounded-full"
-                                    :class="engineStatus === 'connected' ? 'bg-[#34C759] animate-pulse' : 'bg-[#FF9500]'"></span>
-                                <span x-text="engineStatus === 'connected' ? 'Aktif & Terhubung' : 'Belum Teruji / Menunggu'"></span>
-                            </span>
+        <!-- 1. 9ROUTER ARCHITECTURE & VISUAL TOPOLOGY HEADER -->
+        <div class="relative overflow-hidden rounded-[20px] bg-gradient-to-br from-[#0B0F19] via-[#111827] to-[#1E1B4B] text-white p-6 sm:p-7 shadow-lg border border-white/10">
+            <!-- Background Decorative Glow -->
+            <div class="absolute -top-24 -right-24 w-96 h-96 bg-[#007AFF]/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-[#AF52DE]/20 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="relative z-10 space-y-6">
+                <!-- Header Badge & Status -->
+                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-12 h-12 rounded-[14px] bg-white/10 border border-white/15 flex items-center justify-center text-[#38BDF8] shadow-inner shrink-0">
+                            <i data-lucide="router" class="w-6 h-6" stroke-width="2"></i>
                         </div>
-                        <p class="text-[12.5px] text-black/50 dark:text-white/50 mt-1">
-                            Engine ini menenagai seluruh fitur AI bawaan platform COOCA (POS Assistant, Chatbot, Smart Analytics, &amp; Otomasi) untuk tenant bisnis.
-                        </p>
+                        <div>
+                            <div class="flex items-center gap-2.5 flex-wrap">
+                                <h1 class="text-[20px] font-bold tracking-tight text-white flex items-center gap-2">
+                                    <span>9Router Smart Gateway</span>
+                                    <span class="text-[12px] font-mono px-2 py-0.5 rounded-full bg-[#007AFF]/25 text-[#38BDF8] border border-[#007AFF]/40">v2.5 Hybrid Router</span>
+                                </h1>
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold uppercase tracking-wider"
+                                    :class="engineStatus === 'connected' 
+                                        ? 'bg-[#34C759]/20 text-[#4ADE80] border border-[#34C759]/40' 
+                                        : 'bg-[#FF9500]/20 text-[#FBBF24] border border-[#FF9500]/40'">
+                                    <span class="w-1.5 h-1.5 rounded-full"
+                                        :class="engineStatus === 'connected' ? 'bg-[#4ADE80] animate-pulse' : 'bg-[#FBBF24]'"></span>
+                                    <span x-text="engineStatus === 'connected' ? 'Gateway Online & Terverifikasi' : 'Menunggu Verifikasi'"></span>
+                                </span>
+                            </div>
+                            <p class="text-[13px] text-white/70 mt-1 leading-relaxed">
+                                Smart routing layer anti *rate-limit* dengan auto-fallback 3 tier. Menggabungkan banyak provider AI dalam satu endpoint cerdas.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Action Live Test Button in Banner -->
+                    <div class="flex items-center gap-2.5 shrink-0">
+                        <button type="button" @click="testConnection()" :disabled="isTesting"
+                            class="px-4 py-2 rounded-[10px] text-[12.5px] font-semibold text-white bg-white/10 hover:bg-white/15 active:scale-[0.98] transition border border-white/15 flex items-center gap-2 disabled:opacity-50">
+                            <i data-lucide="activity" class="w-3.5 h-3.5 text-[#38BDF8]" :class="isTesting ? 'animate-spin' : ''"></i>
+                            <span x-text="isTesting ? 'Menguji Gateway...' : 'Live Ping All Providers'"></span>
+                        </button>
+                        <button type="button" @click="openAddKeyModal()"
+                            class="px-4 py-2 rounded-[10px] text-[12.5px] font-semibold text-black bg-[#38BDF8] hover:bg-[#0EA5E9] active:scale-[0.98] transition flex items-center gap-1.5 shadow-md shadow-[#38BDF8]/20">
+                            <i data-lucide="plus" class="w-4 h-4" stroke-width="2.25"></i>
+                            <span>Hubungkan Kunci API</span>
+                        </button>
                     </div>
                 </div>
 
-                <!-- Live Metrics Pills -->
-                <div class="flex flex-wrap items-center gap-2 self-start lg:self-auto text-[12px]">
-                    <div class="px-3 py-1.5 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/5 dark:border-white/5 flex items-center gap-2">
-                        <span class="text-black/45 dark:text-white/45">Active Model:</span>
-                        <span class="font-semibold text-black dark:text-white font-mono" x-text="selectedModel"></span>
+                <!-- Visual 9Router Routing Pipeline Flow -->
+                <div class="p-4 rounded-[14px] bg-black/30 border border-white/10 backdrop-blur-sm">
+                    <div class="flex items-center justify-between text-[11px] font-medium text-white/50 mb-3 px-1">
+                        <span>TOPOLOGI ALUR TRAFIK 9ROUTER (REQUEST PIPELINE)</span>
+                        <span class="text-[#38BDF8] font-mono">Auto-Failover Active</span>
                     </div>
-                    <div class="px-3 py-1.5 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/5 dark:border-white/5 flex items-center gap-2">
-                        <span class="text-black/45 dark:text-white/45">Latency:</span>
-                        <span class="font-bold text-[#007AFF] tabular-nums" x-text="latencyMs > 0 ? latencyMs + ' ms' : 'Optimal'"></span>
-                    </div>
-                    <div class="px-3 py-1.5 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/5 dark:border-white/5 flex items-center gap-2">
-                        <span class="text-black/45 dark:text-white/45">Rotasi Key:</span>
-                        <span class="font-semibold text-[#AF52DE]" x-text="rotationStrategy === 'round_robin' ? 'Round-Robin' : 'Failover'"></span>
-                    </div>
-                    <div class="px-3 py-1.5 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/5 dark:border-white/5 flex items-center gap-2">
-                        <span class="text-black/45 dark:text-white/45">Pool:</span>
-                        <span class="font-bold text-[#34C759] tabular-nums" x-text="activeKeysCount + ' / ' + totalKeysCount + ' Key Aktif'"></span>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Test Result Banner Notification -->
-            <div x-show="testFeedback.show" x-transition class="mt-4 p-3.5 rounded-[12px] text-[12.5px] flex items-start gap-3"
-                :class="testFeedback.success 
-                    ? 'bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] border border-[#34C759]/20' 
-                    : 'bg-[#FF3B30]/10 text-[#D70015] dark:text-[#FF453A] border border-[#FF3B30]/20'">
-                <i data-lucide="info" class="w-4 h-4 shrink-0 mt-0.5" stroke-width="2"></i>
-                <div class="flex-1">
-                    <span class="font-semibold" x-text="testFeedback.success ? 'Koneksi Berhasil:' : 'Gagal Menghubungi Engine:'"></span>
-                    <span class="ml-1" x-text="testFeedback.message"></span>
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-2.5 text-center items-center">
+                        <!-- Step 1: Apps -->
+                        <div class="p-3 rounded-[12px] bg-white/[0.06] border border-white/10">
+                            <div class="w-7 h-7 rounded-full bg-[#AF52DE]/20 text-[#C084FC] mx-auto flex items-center justify-center mb-1.5">
+                                <i data-lucide="smartphone" class="w-3.5 h-3.5"></i>
+                            </div>
+                            <div class="text-[12px] font-bold text-white">1. Client Apps</div>
+                            <div class="text-[10px] text-white/60">POS, Inbox, CRM, Analytics</div>
+                        </div>
+
+                        <!-- Connector 1 -->
+                        <div class="hidden md:flex items-center justify-center text-white/30">
+                            <i data-lucide="arrow-right" class="w-4 h-4 animate-pulse text-[#38BDF8]"></i>
+                        </div>
+
+                        <!-- Step 2: 9Router Smart Layer -->
+                        <div class="p-3 rounded-[12px] bg-[#007AFF]/20 border border-[#007AFF]/40 shadow-sm shadow-[#007AFF]/20">
+                            <div class="w-7 h-7 rounded-full bg-[#007AFF]/30 text-[#38BDF8] mx-auto flex items-center justify-center mb-1.5">
+                                <i data-lucide="cpu" class="w-3.5 h-3.5"></i>
+                            </div>
+                            <div class="text-[12px] font-bold text-[#38BDF8]">2. 9Router Gateway</div>
+                            <div class="text-[10px] text-white/80" x-text="rotationStrategy === 'failover' ? '3-Tier Auto-Fallback' : 'Round-Robin Balancing'"></div>
+                        </div>
+
+                        <!-- Connector 2 -->
+                        <div class="hidden md:flex items-center justify-center text-white/30">
+                            <i data-lucide="arrow-right" class="w-4 h-4 animate-pulse text-[#38BDF8]"></i>
+                        </div>
+
+                        <!-- Step 3: Multi-Key Channels -->
+                        <div class="p-3 rounded-[12px] bg-white/[0.06] border border-white/10">
+                            <div class="w-7 h-7 rounded-full bg-[#34C759]/20 text-[#4ADE80] mx-auto flex items-center justify-center mb-1.5">
+                                <i data-lucide="key" class="w-3.5 h-3.5"></i>
+                            </div>
+                            <div class="text-[12px] font-bold text-white">3. Multi-Key Channels</div>
+                            <div class="text-[10px] text-white/60" x-text="activeKeysCount + ' Kunci Aktif Terhubung'"></div>
+                        </div>
+                    </div>
                 </div>
-                <button type="button" @click="testFeedback.show = false" class="opacity-60 hover:opacity-100">
-                    <i data-lucide="x" class="w-3.5 h-3.5"></i>
-                </button>
+
+                <!-- 4 KPI Metrics Cards -->
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 text-white">
+                    <div class="p-3.5 rounded-[12px] bg-white/[0.05] border border-white/10">
+                        <div class="text-[11px] text-white/60 font-medium">Provider Terhubung</div>
+                        <div class="mt-1 flex items-baseline gap-1.5">
+                            <span class="text-[20px] font-bold tracking-tight text-white font-mono" x-text="connectedProvidersCount"></span>
+                            <span class="text-[12px] text-white/50">/ 5 Provider</span>
+                        </div>
+                    </div>
+
+                    <div class="p-3.5 rounded-[12px] bg-white/[0.05] border border-white/10">
+                        <div class="text-[11px] text-white/60 font-medium">Total Kunci API di Pool</div>
+                        <div class="mt-1 flex items-baseline gap-1.5">
+                            <span class="text-[20px] font-bold tracking-tight text-[#4ADE80] font-mono" x-text="activeKeysCount"></span>
+                            <span class="text-[12px] text-white/50" x-text="'/ ' + totalKeysCount + ' Total Key'"></span>
+                        </div>
+                    </div>
+
+                    <div class="p-3.5 rounded-[12px] bg-white/[0.05] border border-white/10">
+                        <div class="text-[11px] text-white/60 font-medium">Rata-rata Latensi Global</div>
+                        <div class="mt-1 flex items-baseline gap-1.5">
+                            <span class="text-[20px] font-bold tracking-tight text-[#38BDF8] font-mono" x-text="latencyMs > 0 ? latencyMs + ' ms' : 'Optimal'"></span>
+                            <span class="text-[12px] text-white/50">live ping</span>
+                        </div>
+                    </div>
+
+                    <div class="p-3.5 rounded-[12px] bg-white/[0.05] border border-white/10">
+                        <div class="text-[11px] text-white/60 font-medium">Trafik Kueri Ter-Rute</div>
+                        <div class="mt-1 flex items-baseline gap-1.5">
+                            <span class="text-[20px] font-bold tracking-tight text-[#C084FC] font-mono" x-text="totalRoutedRequests"></span>
+                            <span class="text-[12px] text-white/50">eksekusi sukses</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Test Feedback Alert -->
+                <div x-show="testFeedback.show" x-transition class="p-3.5 rounded-[12px] text-[12.5px] flex items-start gap-3"
+                    :class="testFeedback.success 
+                        ? 'bg-[#34C759]/20 text-[#4ADE80] border border-[#34C759]/40' 
+                        : 'bg-[#FF3B30]/20 text-[#F87171] border border-[#FF3B30]/40'">
+                    <i data-lucide="info" class="w-4 h-4 shrink-0 mt-0.5"></i>
+                    <div class="flex-1">
+                        <span class="font-bold" x-text="testFeedback.success ? 'Hasil Pengujian Gateway:' : 'Gagal Menghubungi Gateway:'"></span>
+                        <span class="ml-1" x-text="testFeedback.message"></span>
+                    </div>
+                    <button type="button" @click="testFeedback.show = false" class="opacity-70 hover:opacity-100">
+                        <i data-lucide="x" class="w-3.5 h-3.5"></i>
+                    </button>
+                </div>
             </div>
         </div>
 
-        <!-- 2 Columns Grid: Engine Config Form & Multi-Key Pool -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <!-- 2. CONNECTED PROVIDERS MATRIX (VISUALISASI API AI YANG TERHUBUNG) -->
+        <div class="space-y-3">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h3 class="text-[16px] font-bold text-black dark:text-white flex items-center gap-2">
+                        <i data-lucide="cloud-lightning" class="w-5 h-5 text-[#007AFF]"></i>
+                        <span>Visualisasi Provider AI Terhubung (Connected Channels)</span>
+                    </h3>
+                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">
+                        Status konektivitas, ketersediaan kunci, endpoint resmi, dan penggunaan kueri per provider AI.
+                    </p>
+                </div>
+            </div>
 
-            <!-- Left Form: Engine & Endpoint Configuration (7 Cols) -->
-            <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-6 shadow-sm lg:col-span-7 space-y-5">
-                <div class="border-b border-black/5 dark:border-white/10 pb-3 flex items-center justify-between">
-                    <div>
-                        <h3 class="text-[15px] font-semibold text-black dark:text-white flex items-center gap-2">
-                            <i data-lucide="sliders" class="w-4 h-4 text-[#007AFF]" stroke-width="1.75"></i>
-                            <span>Konfigurasi Provider &amp; Endpoint AI</span>
-                        </h3>
-                        <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">Atur driver provider, custom endpoint tunnel/proxy, dan model aktif.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3.5">
+                <template x-for="(pStat, pId) in providersStats" :key="pId">
+                    <div class="rounded-[16px] p-4 bg-white dark:bg-[#1C1C1E] border transition-all duration-150 flex flex-col justify-between shadow-sm relative group"
+                        :class="pStat.is_connected 
+                            ? 'border-[#007AFF]/30 dark:border-[#007AFF]/30 hover:border-[#007AFF]' 
+                            : 'border-black/5 dark:border-white/5 opacity-80 hover:opacity-100'">
+                        
+                        <div>
+                            <!-- Provider Header & Badge -->
+                            <div class="flex items-start justify-between gap-2 mb-3">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-9 h-9 rounded-[10px] flex items-center justify-center text-white shrink-0 font-bold text-[12px]"
+                                        :class="{
+                                            'bg-[#007AFF]': pId === 'openai_compatible',
+                                            'bg-[#D97706]': pId === 'anthropic',
+                                            'bg-[#8B5CF6]': pId === 'gemini',
+                                            'bg-[#10B981]': pId === 'openai',
+                                            'bg-[#06B6D4]': pId === 'openrouter'
+                                        }">
+                                        <template x-if="pId === 'openai_compatible'"><i data-lucide="server" class="w-4 h-4"></i></template>
+                                        <template x-if="pId === 'anthropic'"><i data-lucide="sparkles" class="w-4 h-4"></i></template>
+                                        <template x-if="pId === 'gemini'"><i data-lucide="zap" class="w-4 h-4"></i></template>
+                                        <template x-if="pId === 'openai'"><i data-lucide="cpu" class="w-4 h-4"></i></template>
+                                        <template x-if="pId === 'openrouter'"><i data-lucide="share-2" class="w-4 h-4"></i></template>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-[13px] font-bold text-black dark:text-white leading-tight" x-text="pStat.short_name"></h4>
+                                        <span class="text-[10.5px] text-black/50 dark:text-white/50" x-text="pStat.badge"></span>
+                                    </div>
+                                </div>
+
+                                <!-- Status Badge -->
+                                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider shrink-0"
+                                    :class="pStat.is_connected 
+                                        ? 'bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]' 
+                                        : 'bg-black/5 dark:bg-white/10 text-black/40 dark:text-white/40'">
+                                    <span x-text="pStat.is_connected ? (pStat.active_keys + ' Key') : 'Belum Ada'"></span>
+                                </span>
+                            </div>
+
+                            <!-- Provider Description -->
+                            <p class="text-[11px] text-black/60 dark:text-white/60 line-clamp-2 mb-3 leading-relaxed" x-text="pStat.description"></p>
+
+                            <!-- Endpoint & Model Info -->
+                            <div class="space-y-1.5 text-[10.5px] font-mono text-black/50 dark:text-white/50 p-2.5 rounded-[10px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 mb-3">
+                                <div class="truncate">
+                                    <span class="text-black/40 dark:text-white/40 font-sans">Model:</span>
+                                    <span class="text-black/80 dark:text-white/80 font-semibold" x-text="pStat.default_model"></span>
+                                </div>
+                                <div class="truncate">
+                                    <span class="text-black/40 dark:text-white/40 font-sans">Endpoint:</span>
+                                    <span class="text-[#007AFF] select-all" x-text="pStat.default_endpoint"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card Footer -->
+                        <div class="pt-2 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
+                            <span class="text-[11px] text-black/60 dark:text-white/60 tabular-nums">
+                                <strong class="text-black dark:text-white font-semibold" x-text="pStat.total_requests"></strong> kueri
+                            </span>
+
+                            <button type="button" @click="openAddKeyModal(pId)"
+                                class="text-[11.5px] font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
+                                <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
+                                <span>+ Kunci</span>
+                            </button>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <!-- 3. KELOLA MASING-MASING API KEY TERHUBUNG & PROVIDERNYA (GATEWAY CHANNELS) -->
+        <div class="rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-6 shadow-sm space-y-5">
+            <!-- Header & Filter Bar -->
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 border-b border-black/5 dark:border-white/10 pb-4">
+                <div>
+                    <h3 class="text-[16px] font-bold text-black dark:text-white flex items-center gap-2">
+                        <i data-lucide="key" class="w-5 h-5 text-[#FF9500]"></i>
+                        <span>Multi-Key Pool &amp; Gateway Channels (Kelola Kunci API &amp; Provider)</span>
+                        <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#007AFF]/10 text-[#007AFF]"
+                            x-text="maskedKeys.length + ' Kunci Terdaftar'"></span>
+                    </h3>
+                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">
+                        Setiap kunci API dapat diatur providernya, endpoint URL kustom, model yang dilayani, status, tier failover, dan diuji ping latensinya secara individual.
+                    </p>
+                </div>
+
+                <!-- Add Key Trigger Button -->
+                <button type="button" @click="openAddKeyModal()"
+                    class="h-9 px-4 rounded-[10px] text-[12.5px] font-semibold text-white bg-[#007AFF] hover:bg-[#0062CC] active:scale-[0.98] transition flex items-center gap-1.5 shadow-sm shadow-[#007AFF]/25 self-start lg:self-auto">
+                    <i data-lucide="plus" class="w-4 h-4" stroke-width="2"></i>
+                    <span>+ Tambah Kunci API Baru</span>
+                </button>
+            </div>
+
+            <!-- Filter Tabs & Search Bar -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <!-- Provider Filter Tabs -->
+                <div class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 text-[12px]">
+                    <button type="button" @click="keyFilter = 'all'"
+                        class="px-3 py-1.5 rounded-[8px] font-semibold transition-all shrink-0"
+                        :class="keyFilter === 'all' 
+                            ? 'bg-black text-white dark:bg-white dark:text-black shadow-xs' 
+                            : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'">
+                        Semua Provider (<span x-text="maskedKeys.length"></span>)
+                    </button>
+                    <button type="button" @click="keyFilter = 'openai_compatible'"
+                        class="px-3 py-1.5 rounded-[8px] font-semibold transition-all shrink-0 flex items-center gap-1"
+                        :class="keyFilter === 'openai_compatible' 
+                            ? 'bg-[#007AFF] text-white shadow-xs' 
+                            : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'">
+                        <span>Tunnel / vLLM</span>
+                    </button>
+                    <button type="button" @click="keyFilter = 'anthropic'"
+                        class="px-3 py-1.5 rounded-[8px] font-semibold transition-all shrink-0 flex items-center gap-1"
+                        :class="keyFilter === 'anthropic' 
+                            ? 'bg-[#D97706] text-white shadow-xs' 
+                            : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'">
+                        <span>Anthropic Claude</span>
+                    </button>
+                    <button type="button" @click="keyFilter = 'gemini'"
+                        class="px-3 py-1.5 rounded-[8px] font-semibold transition-all shrink-0 flex items-center gap-1"
+                        :class="keyFilter === 'gemini' 
+                            ? 'bg-[#8B5CF6] text-white shadow-xs' 
+                            : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'">
+                        <span>Google Gemini</span>
+                    </button>
+                    <button type="button" @click="keyFilter = 'openai'"
+                        class="px-3 py-1.5 rounded-[8px] font-semibold transition-all shrink-0 flex items-center gap-1"
+                        :class="keyFilter === 'openai' 
+                            ? 'bg-[#10B981] text-white shadow-xs' 
+                            : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'">
+                        <span>OpenAI</span>
+                    </button>
+                    <button type="button" @click="keyFilter = 'openrouter'"
+                        class="px-3 py-1.5 rounded-[8px] font-semibold transition-all shrink-0 flex items-center gap-1"
+                        :class="keyFilter === 'openrouter' 
+                            ? 'bg-[#06B6D4] text-white shadow-xs' 
+                            : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'">
+                        <span>OpenRouter</span>
+                    </button>
+                </div>
+
+                <!-- Search Input -->
+                <div class="relative w-full sm:w-64">
+                    <input type="text" x-model="keySearch" placeholder="Cari nama, model, endpoint..."
+                        class="w-full h-8 pl-8 pr-3 text-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/5 dark:border-white/5 rounded-[8px] text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
+                    <div class="absolute left-2.5 top-2 text-black/40 dark:text-white/40">
+                        <i data-lucide="search" class="w-3.5 h-3.5"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Keys List Grid -->
+            <div class="space-y-3">
+                <template x-for="k in filteredKeys()" :key="k.id">
+                    <div class="rounded-[16px] p-4 bg-black/[0.02] dark:bg-white/[0.03] border transition-all duration-150 space-y-3.5"
+                        :class="{
+                            'border-black/5 dark:border-white/5 hover:border-black/15 dark:hover:border-white/15': k.is_active,
+                            'border-black/5 dark:border-white/5 opacity-60 bg-black/[0.01] dark:bg-white/[0.01]': !k.is_active
+                        }">
+                        
+                        <!-- Row 1: Provider, Name, Priority Tier, Status, Actions -->
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                            <div class="flex items-center gap-2.5 flex-wrap">
+                                <!-- Provider Badge -->
+                                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold text-white flex items-center gap-1 shadow-xs"
+                                    :class="{
+                                        'bg-[#007AFF]': k.provider === 'openai_compatible',
+                                        'bg-[#D97706]': k.provider === 'anthropic',
+                                        'bg-[#8B5CF6]': k.provider === 'gemini',
+                                        'bg-[#10B981]': k.provider === 'openai',
+                                        'bg-[#06B6D4]': k.provider === 'openrouter'
+                                    }">
+                                    <template x-if="k.provider === 'openai_compatible'"><i data-lucide="server" class="w-3 h-3"></i></template>
+                                    <template x-if="k.provider === 'anthropic'"><i data-lucide="sparkles" class="w-3 h-3"></i></template>
+                                    <template x-if="k.provider === 'gemini'"><i data-lucide="zap" class="w-3 h-3"></i></template>
+                                    <template x-if="k.provider === 'openai'"><i data-lucide="cpu" class="w-3 h-3"></i></template>
+                                    <template x-if="k.provider === 'openrouter'"><i data-lucide="share-2" class="w-3 h-3"></i></template>
+                                    <span x-text="k.provider_meta?.short_name || k.provider"></span>
+                                </span>
+
+                                <!-- Key Name -->
+                                <h4 class="text-[14px] font-bold text-black dark:text-white" x-text="k.name"></h4>
+
+                                <!-- Priority Tier Badge (9Router 3-Tier Fallback) -->
+                                <span class="px-2 py-0.5 rounded-[6px] text-[10.5px] font-semibold border"
+                                    :class="{
+                                        'bg-[#007AFF]/10 text-[#007AFF] border-[#007AFF]/20': k.priority === 1,
+                                        'bg-[#FF9500]/10 text-[#FF9500] border-[#FF9500]/20': k.priority === 2,
+                                        'bg-black/5 dark:bg-white/10 text-black/60 dark:text-white/60 border-black/10 dark:border-white/10': k.priority === 3
+                                    }">
+                                    <span x-text="k.priority === 1 ? 'Tier 1: Utama' : (k.priority === 2 ? 'Tier 2: Cadangan' : 'Tier 3: Fallback')"></span>
+                                </span>
+
+                                <!-- Health / Status Indicator -->
+                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10.5px] font-semibold"
+                                    :class="{
+                                        'bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]': k.is_active && k.status === 'healthy',
+                                        'bg-[#FF9500]/15 text-[#C97700] dark:text-[#FF9F0A]': k.is_active && k.status === 'degraded',
+                                        'bg-[#FF3B30]/15 text-[#D70015] dark:text-[#FF453A]': k.is_active && k.status === 'error',
+                                        'bg-black/10 dark:bg-white/10 text-black/45 dark:text-white/45': !k.is_active
+                                    }">
+                                    <span class="w-1.5 h-1.5 rounded-full"
+                                        :class="{
+                                            'bg-[#34C759] animate-pulse': k.is_active && k.status === 'healthy',
+                                            'bg-[#FF9500]': k.is_active && k.status === 'degraded',
+                                            'bg-[#FF3B30]': k.is_active && k.status === 'error',
+                                            'bg-black/40 dark:bg-white/40': !k.is_active
+                                        }"></span>
+                                    <span x-text="k.is_active ? (k.status === 'healthy' ? 'Online' : (k.status === 'degraded' ? 'Degraded' : 'Error')) : 'Nonaktif'"></span>
+                                </span>
+
+                                <!-- Live Ping Latency Badge if Available -->
+                                <template x-if="k.latency_ms > 0">
+                                    <span class="px-2 py-0.5 rounded-[6px] text-[10.5px] font-mono font-bold bg-[#007AFF]/10 text-[#007AFF]">
+                                        <span x-text="k.latency_ms + ' ms'"></span>
+                                    </span>
+                                </template>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="flex items-center gap-1.5 shrink-0">
+                                <!-- Test Single Key Live Ping -->
+                                <button type="button" @click="testSingleKey(k.id)" :disabled="testingKeyId === k.id"
+                                    class="h-8 px-2.5 rounded-[8px] text-[11.5px] font-semibold text-black/75 dark:text-white/80 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 active:scale-[0.98] transition flex items-center gap-1 shadow-xs disabled:opacity-50"
+                                    title="Uji koneksi khusus untuk key ini">
+                                    <i data-lucide="zap" class="w-3.5 h-3.5 text-[#FF9500]" :class="testingKeyId === k.id ? 'animate-spin' : ''"></i>
+                                    <span x-text="testingKeyId === k.id ? 'Menguji...' : 'Uji Ping'"></span>
+                                </button>
+
+                                <!-- Edit Key Modal Trigger -->
+                                <button type="button" @click="openEditKeyModal(k)"
+                                    class="h-8 px-2.5 rounded-[8px] text-[11.5px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 transition flex items-center gap-1"
+                                    title="Edit konfigurasi key ini">
+                                    <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                                    <span>Edit</span>
+                                </button>
+
+                                <!-- Toggle Active Form -->
+                                <form :action="'{{ url('admin/ai-tokens/engine/keys') }}/' + k.id + '/toggle'" method="POST">
+                                    @csrf
+                                    <button type="submit" 
+                                        class="h-8 px-2.5 rounded-[8px] text-[11.5px] font-semibold transition"
+                                        :class="k.is_active 
+                                            ? 'bg-black/5 dark:bg-white/10 text-black/60 dark:text-white/60 hover:bg-black/10' 
+                                            : 'bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158] hover:bg-[#34C759]/25'">
+                                        <span x-text="k.is_active ? 'Jeda' : 'Aktifkan'"></span>
+                                    </button>
+                                </form>
+
+                                <!-- Delete Key Form -->
+                                <form :action="'{{ url('admin/ai-tokens/engine/keys') }}/' + k.id" method="POST"
+                                    onsubmit="return confirm('Hapus API Key ini dari pool platform?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="h-8 w-8 rounded-[8px] text-black/40 hover:text-[#FF3B30] hover:bg-black/5 dark:hover:bg-white/5 transition flex items-center justify-center" title="Hapus Kunci">
+                                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Row 2: Masked Token with Copy & Reveal, Endpoint URL, Assigned Model, Usage Stats -->
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-3 pt-2 border-t border-black/5 dark:border-white/5 text-[11.5px]">
+                            <!-- Token & Copy (4 Cols) -->
+                            <div class="md:col-span-4 flex items-center gap-2">
+                                <span class="text-black/45 dark:text-white/45 shrink-0 font-medium">Token:</span>
+                                <div class="px-2.5 py-1 rounded-[6px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 font-mono text-[11px] text-black/80 dark:text-white/80 flex items-center justify-between gap-2 flex-1 min-w-0">
+                                    <span class="truncate select-all" x-text="revealedTokens[k.id] ? k.key : k.masked_key"></span>
+                                    <div class="flex items-center gap-1 shrink-0">
+                                        <button type="button" @click="copyText(k.masked_key, k.id)" class="text-black/40 hover:text-[#007AFF] transition" title="Salin Token">
+                                            <i data-lucide="copy" class="w-3 h-3" x-show="copiedTokenId !== k.id"></i>
+                                            <i data-lucide="check" class="w-3 h-3 text-[#34C759]" x-show="copiedTokenId === k.id"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Endpoint URL (4 Cols) -->
+                            <div class="md:col-span-4 flex items-center gap-2 min-w-0">
+                                <span class="text-black/45 dark:text-white/45 shrink-0 font-medium">Endpoint:</span>
+                                <span class="font-mono text-[#007AFF] text-[11px] truncate select-all" x-text="k.endpoint"></span>
+                            </div>
+
+                            <!-- Assigned Model (4 Cols) -->
+                            <div class="md:col-span-4 flex items-center justify-between gap-2">
+                                <div class="flex items-center gap-2 min-w-0">
+                                    <span class="text-black/45 dark:text-white/45 shrink-0 font-medium">Model:</span>
+                                    <span class="font-mono font-semibold text-black dark:text-white text-[11px] truncate" x-text="k.model || 'Default Platform'"></span>
+                                </div>
+                                <div class="text-right shrink-0 tabular-nums text-black/60 dark:text-white/60">
+                                    <strong class="text-black dark:text-white" x-text="k.total_requests"></strong> kueri
+                                    <template x-if="k.total_errors > 0">
+                                        <span class="text-[#FF3B30] font-semibold" x-text="'(' + k.total_errors + ' err)'"></span>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Live Ping Feedback Banner for This Key -->
+                        <div x-show="pingFeedback[k.id]?.show" x-transition class="p-2.5 rounded-[8px] text-[11.5px] flex items-center justify-between gap-2"
+                            :class="pingFeedback[k.id]?.success 
+                                ? 'bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] border border-[#34C759]/20' 
+                                : 'bg-[#FF3B30]/10 text-[#D70015] dark:text-[#FF453A] border border-[#FF3B30]/20'">
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="zap" class="w-3.5 h-3.5 shrink-0"></i>
+                                <span class="font-bold" x-text="pingFeedback[k.id]?.success ? 'Ping Berhasil (' + pingFeedback[k.id]?.latency_ms + 'ms):' : 'Ping Gagal:'"></span>
+                                <span x-text="pingFeedback[k.id]?.message"></span>
+                            </div>
+                            <button type="button" @click="pingFeedback[k.id].show = false" class="opacity-60 hover:opacity-100">
+                                <i data-lucide="x" class="w-3 h-3"></i>
+                            </button>
+                        </div>
+                    </div>
+                </template>
+
+                <!-- Empty State -->
+                <template x-if="filteredKeys().length === 0">
+                    <div class="p-8 text-center rounded-[16px] border border-dashed border-black/10 dark:border-white/10 space-y-2">
+                        <i data-lucide="key" class="w-8 h-8 text-black/30 dark:text-white/30 mx-auto"></i>
+                        <p class="text-[13px] font-semibold text-black dark:text-white">Tidak ada kunci API yang cocok dengan filter</p>
+                        <p class="text-[11.5px] text-black/50 dark:text-white/50">Coba ubah kata kunci pencarian atau hubungkan kunci baru.</p>
+                        <button type="button" @click="openAddKeyModal()"
+                            class="mt-2 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[8px] text-[12px] font-semibold text-white bg-[#007AFF] hover:bg-[#0062CC] transition">
+                            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                            <span>Tambah Kunci API</span>
+                        </button>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <!-- 4. PENGATURAN ROUTER GATEWAY & STRATEGI FAILOVER (ENGINE CONFIG FORM) -->
+        <div class="rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-6 shadow-sm space-y-5">
+            <div class="border-b border-black/5 dark:border-white/10 pb-3 flex items-center justify-between">
+                <div>
+                    <h3 class="text-[15px] font-semibold text-black dark:text-white flex items-center gap-2">
+                        <i data-lucide="sliders" class="w-4 h-4 text-[#007AFF]"></i>
+                        <span>Pengaturan Global Smart Router &amp; Fallback Strategy</span>
+                    </h3>
+                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">
+                        Tentukan strategi rotasi kuota, model default platform, dan endpoint default jika tidak dispesifikasikan oleh key.
+                    </p>
+                </div>
+            </div>
+
+            <form action="{{ route('admin.ai-tokens.engine.update') }}" method="POST" class="space-y-4">
+                @csrf
+
+                <!-- Key Rotation & Fallback Strategy (9Router Style) -->
+                <div>
+                    <label class="block text-[12.5px] font-medium text-black/70 dark:text-white/70 mb-1.5">
+                        Strategi Rotasi &amp; Auto-Fallback 9Router
+                    </label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <label class="p-3.5 rounded-[12px] border cursor-pointer transition-all flex items-start gap-3"
+                            :class="rotationStrategy === 'failover' 
+                                ? 'bg-[#007AFF]/5 border-[#007AFF] text-black dark:text-white ring-1 ring-[#007AFF]' 
+                                : 'bg-black/[0.02] dark:bg-white/[0.03] border-black/10 dark:border-white/10 text-black/70 dark:text-white/70'">
+                            <input type="radio" name="rotation_strategy" value="failover" x-model="rotationStrategy" class="mt-0.5 text-[#007AFF]">
+                            <div>
+                                <div class="text-[13px] font-bold flex items-center gap-1.5">
+                                    <span>3-Tier Priority Auto-Fallback (9Router Style)</span>
+                                    <span class="px-1.5 py-0.2 rounded text-[9.5px] font-bold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]">Rekomendasi</span>
+                                </div>
+                                <div class="text-[11.5px] text-black/60 dark:text-white/60 mt-1 leading-relaxed">
+                                    Prioritaskan Tier 1 (Utama). Jika terkena limit kuota (429) atau error, gateway otomatis mengalihkan request ke Tier 2 (Cadangan) lalu Tier 3 (Fallback) tanpa membuat coding tool/tenant terputus!
+                                </div>
+                            </div>
+                        </label>
+
+                        <label class="p-3.5 rounded-[12px] border cursor-pointer transition-all flex items-start gap-3"
+                            :class="rotationStrategy === 'round_robin' 
+                                ? 'bg-[#007AFF]/5 border-[#007AFF] text-black dark:text-white ring-1 ring-[#007AFF]' 
+                                : 'bg-black/[0.02] dark:bg-white/[0.03] border-black/10 dark:border-white/10 text-black/70 dark:text-white/70'">
+                            <input type="radio" name="rotation_strategy" value="round_robin" x-model="rotationStrategy" class="mt-0.5 text-[#007AFF]">
+                            <div>
+                                <div class="text-[13px] font-bold">Round-Robin Load Balancing</div>
+                                <div class="text-[11.5px] text-black/60 dark:text-white/60 mt-1 leading-relaxed">
+                                    Bagi rata setiap panggilan API secara bergiliran ke seluruh kunci API yang aktif di dalam pool untuk menyeimbangkan beban trafik.
+                                </div>
+                            </div>
+                        </label>
                     </div>
                 </div>
 
-                <form action="{{ route('admin.ai-tokens.engine.update') }}" method="POST" class="space-y-4">
-                    @csrf
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Default Platform Model -->
+                    <div>
+                        <div class="flex items-center justify-between mb-1.5">
+                            <label class="text-[12.5px] font-medium text-black/70 dark:text-white/70">
+                                Model Acuan Default Platform
+                            </label>
+                            <button type="button" @click="manageModelsOpen = true"
+                                class="text-[11.5px] font-semibold text-[#AF52DE] hover:underline flex items-center gap-1">
+                                <i data-lucide="layers" class="w-3 h-3"></i>
+                                <span>Kelola Model (<span x-text="modelsList.length"></span>)</span>
+                            </button>
+                        </div>
+                        <select name="model" x-model="selectedModel"
+                            class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 font-mono">
+                            <template x-for="m in modelsList" :key="m.id">
+                                <option :value="m.id" :selected="m.id === selectedModel" x-text="m.name + ' (' + m.id + ')'"></option>
+                            </template>
+                            <option value="custom">-- Gunakan Model Kustom Lainnya --</option>
+                        </select>
+                        <div x-show="selectedModel === 'custom'" class="mt-2">
+                            <input type="text" name="custom_model" x-model="customModelName" placeholder="Masukkan ID model (misal: cx/gpt-6-astra)"
+                                class="w-full h-9 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] text-[12.5px] font-mono text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                        </div>
+                    </div>
 
-                    <!-- Provider Selector -->
+                    <!-- Default Provider Engine (Fallback) -->
                     <div>
                         <label class="block text-[12.5px] font-medium text-black/70 dark:text-white/70 mb-1.5">
-                            AI Provider Engine
+                            Default Driver Provider (Fallback Global)
                         </label>
                         <select name="provider" x-model="selectedProvider"
                             class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
@@ -177,249 +675,118 @@
                             <option value="openrouter">OpenRouter AI Gateway</option>
                         </select>
                     </div>
+                </div>
 
-                    <!-- Custom Endpoint URL (Always visible & highlighted for openai_compatible) -->
-                    <div>
-                        <label class="block text-[12.5px] font-medium text-black/70 dark:text-white/70 mb-1.5 flex items-center justify-between">
-                            <span>Base URL Endpoint API</span>
-                            <span class="text-[11px] text-[#007AFF] font-normal" x-show="selectedProvider === 'openai_compatible'">Mendukung OpenAI v1 compliant path</span>
-                        </label>
-                        <div class="relative">
-                            <input type="url" name="endpoint" x-model="endpointUrl" required
-                                placeholder="https://r4g77gv.abc-tunnel.us/v1"
-                                class="w-full h-10 pl-3.5 pr-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[13px] font-mono text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
-                            <div class="absolute right-3 top-2.5 text-black/40 dark:text-white/40">
-                                <i data-lucide="globe" class="w-4 h-4"></i>
-                            </div>
-                        </div>
-                        <p class="text-[11px] text-black/45 dark:text-white/45 mt-1.5">
-                            Contoh endpoint tunnel aktif: <code class="text-[#007AFF] font-mono select-all">https://r4g77gv.abc-tunnel.us/v1</code>
-                        </p>
-                    </div>
-
-                    <!-- Model Selection & Dynamic Model Discovery -->
-                    <div>
-                        <div class="flex items-center justify-between mb-1.5">
-                            <label class="text-[12.5px] font-medium text-black/70 dark:text-white/70">
-                                Model AI Utama Platform
-                            </label>
-                            <div class="flex items-center gap-3">
-                                <button type="button" 
-                                    @click="manageModelsOpen = true"
-                                    class="text-[11.5px] font-semibold text-[#AF52DE] hover:underline flex items-center gap-1">
-                                    <i data-lucide="layers" class="w-3 h-3"></i>
-                                    <span>Bongkar Pasang (<span x-text="modelsList.length"></span>)</span>
-                                </button>
-                                <button type="button" 
-                                    @click="detectModels()"
-                                    :disabled="isDetecting"
-                                    class="text-[11.5px] font-semibold text-[#007AFF] hover:underline flex items-center gap-1 disabled:opacity-50">
-                                    <i data-lucide="refresh-cw" class="w-3 h-3" :class="isDetecting ? 'animate-spin' : ''"></i>
-                                    <span x-text="isDetecting ? 'Mendeteksi...' : 'Deteksi Model'"></span>
-                                </button>
-                            </div>
-                        </div>
-
-                        <select name="model" x-model="selectedModel"
-                            class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 font-mono">
-                            <template x-for="m in modelsList" :key="m.id">
-                                <option :value="m.id" :selected="m.id === selectedModel" x-text="m.name + ' (' + m.id + ')'"></option>
-                            </template>
-                            <option value="custom">-- Gunakan Model Kustom Lainnya --</option>
-                        </select>
-
-                        <!-- Custom Model input if selected 'custom' -->
-                        <div x-show="selectedModel === 'custom'" class="mt-2">
-                            <input type="text" name="custom_model" x-model="customModelName" placeholder="Masukkan ID model (misal: cx/gpt-6-astra)"
-                                class="w-full h-9 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] text-[12.5px] font-mono text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                <!-- Default Endpoint URL -->
+                <div>
+                    <label class="block text-[12.5px] font-medium text-black/70 dark:text-white/70 mb-1.5 flex items-center justify-between">
+                        <span>Default Base URL Endpoint API (Fallback)</span>
+                        <span class="text-[11px] text-[#007AFF] font-normal" x-show="selectedProvider === 'openai_compatible'">Mendukung OpenAI v1 compliant path</span>
+                    </label>
+                    <div class="relative">
+                        <input type="url" name="endpoint" x-model="endpointUrl" required
+                            placeholder="https://r4g77gv.abc-tunnel.us/v1"
+                            class="w-full h-10 pl-3.5 pr-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[13px] font-mono text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                        <div class="absolute right-3 top-2.5 text-black/40 dark:text-white/40">
+                            <i data-lucide="globe" class="w-4 h-4"></i>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Key Rotation Strategy -->
-                    <div>
-                        <label class="block text-[12.5px] font-medium text-black/70 dark:text-white/70 mb-1.5">
-                            Strategi Rotasi Multi-Key Pool
-                        </label>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                            <label class="p-3 rounded-[10px] border cursor-pointer transition-all flex items-start gap-2.5"
-                                :class="rotationStrategy === 'round_robin' 
-                                    ? 'bg-[#007AFF]/5 border-[#007AFF] text-black dark:text-white' 
-                                    : 'bg-black/[0.02] dark:bg-white/[0.03] border-black/10 dark:border-white/10 text-black/70 dark:text-white/70'">
-                                <input type="radio" name="rotation_strategy" value="round_robin" x-model="rotationStrategy" class="mt-0.5 text-[#007AFF]">
-                                <div>
-                                    <div class="text-[12.5px] font-semibold">Round-Robin Load Balancing</div>
-                                    <div class="text-[11px] text-black/50 dark:text-white/50 mt-0.5">Bagi rata request secara berimbang ke seluruh API key aktif bergantian.</div>
-                                </div>
-                            </label>
-
-                            <label class="p-3 rounded-[10px] border cursor-pointer transition-all flex items-start gap-2.5"
-                                :class="rotationStrategy === 'failover' 
-                                    ? 'bg-[#007AFF]/5 border-[#007AFF] text-black dark:text-white' 
-                                    : 'bg-black/[0.02] dark:bg-white/[0.03] border-black/10 dark:border-white/10 text-black/70 dark:text-white/70'">
-                                <input type="radio" name="rotation_strategy" value="failover" x-model="rotationStrategy" class="mt-0.5 text-[#007AFF]">
-                                <div>
-                                    <div class="text-[12.5px] font-semibold">Active-Standby Failover</div>
-                                    <div class="text-[11px] text-black/50 dark:text-white/50 mt-0.5">Prioritaskan key utama, otomatis alihkan ke key backup jika terkena limit 429.</div>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Panduan Format Provider & Kunci API Langsung di Form -->
-                    <div class="rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 p-4 space-y-3">
-                        <div class="flex items-center justify-between">
-                            <h4 class="text-[12.5px] font-bold text-black dark:text-white flex items-center gap-1.5">
-                                <i data-lucide="book-open" class="w-4 h-4 text-[#007AFF]"></i>
-                                <span>Panduan Format Provider &amp; Kunci API</span>
-                            </h4>
-                            <span class="text-[11px] text-black/50 dark:text-white/50">Klik baris untuk auto-fill endpoint</span>
-                        </div>
-
-                        <div class="overflow-x-auto rounded-[10px] border border-black/5 dark:border-white/5 bg-white dark:bg-[#1C1C1E]">
-                            <table class="w-full text-left text-[11.5px]">
-                                <thead class="bg-black/[0.03] dark:bg-white/[0.04] text-black/70 dark:text-white/70 font-semibold border-b border-black/5 dark:border-white/5">
-                                    <tr>
-                                        <th class="py-2.5 px-3">Provider AI</th>
-                                        <th class="py-2.5 px-3">Pilihan Dropdown</th>
-                                        <th class="py-2.5 px-3">Base URL Endpoint API</th>
-                                        <th class="py-2.5 px-3">Format API Key &amp; Catatan</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-black/5 dark:divide-white/5 text-black/80 dark:text-white/80">
-                                    <tr @click="applyProviderPreset('openai')" class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] cursor-pointer transition">
-                                        <td class="py-2.5 px-3 font-semibold text-black dark:text-white whitespace-nowrap">OpenAI Official Direct</td>
-                                        <td class="py-2.5 px-3 font-mono text-[11px]">OpenAI Official Direct</td>
-                                        <td class="py-2.5 px-3 font-mono text-[#007AFF] text-[11px] select-all">https://api.openai.com/v1</td>
-                                        <td class="py-2.5 px-3 text-[11px] leading-relaxed">
-                                            Format <code class="font-mono bg-black/5 dark:bg-white/10 px-1 py-0.5 rounded text-[#007AFF]">sk-proj-...</code> dari platform.openai.com. Mendukung GPT-4o, GPT-4o-mini, o1, o3-mini.
-                                        </td>
-                                    </tr>
-                                    <tr @click="applyProviderPreset('gemini')" class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] cursor-pointer transition">
-                                        <td class="py-2.5 px-3 font-semibold text-black dark:text-white whitespace-nowrap">Google Gemini Official</td>
-                                        <td class="py-2.5 px-3 font-mono text-[11px]">Google Gemini Official</td>
-                                        <td class="py-2.5 px-3 font-mono text-[#007AFF] text-[11px] select-all">Otomatis via Google Generative AI REST</td>
-                                        <td class="py-2.5 px-3 text-[11px] leading-relaxed">
-                                            Format <code class="font-mono bg-black/5 dark:bg-white/10 px-1 py-0.5 rounded text-[#007AFF]">AIzaSy...</code> dari Google AI Studio. Mendukung Gemini 2.0 Flash, Gemini 1.5 Pro.
-                                        </td>
-                                    </tr>
-                                    <tr @click="applyProviderPreset('anthropic')" class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] cursor-pointer transition">
-                                        <td class="py-2.5 px-3 font-semibold text-black dark:text-white whitespace-nowrap">Anthropic Claude</td>
-                                        <td class="py-2.5 px-3 font-mono text-[11px]">Anthropic Claude</td>
-                                        <td class="py-2.5 px-3 font-mono text-[#007AFF] text-[11px] select-all">https://api.anthropic.com/v1</td>
-                                        <td class="py-2.5 px-3 text-[11px] leading-relaxed">
-                                            Format <code class="font-mono bg-black/5 dark:bg-white/10 px-1 py-0.5 rounded text-[#007AFF]">sk-ant-api03-...</code> dari console.anthropic.com. Mendukung Claude 3.7 Sonnet, Claude 3.5 Haiku.
-                                        </td>
-                                    </tr>
-                                    <tr @click="applyProviderPreset('openrouter')" class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] cursor-pointer transition">
-                                        <td class="py-2.5 px-3 font-semibold text-black dark:text-white whitespace-nowrap">OpenRouter Gateway</td>
-                                        <td class="py-2.5 px-3 font-mono text-[11px]">OpenRouter AI Gateway</td>
-                                        <td class="py-2.5 px-3 font-mono text-[#007AFF] text-[11px] select-all">https://openrouter.ai/api/v1</td>
-                                        <td class="py-2.5 px-3 text-[11px] leading-relaxed">
-                                            Format <code class="font-mono bg-black/5 dark:bg-white/10 px-1 py-0.5 rounded text-[#007AFF]">sk-or-v1-...</code> dari openrouter.ai. Akses ke ratusan model (DeepSeek-R1, Llama 3.3, Qwen, Mistral).
-                                        </td>
-                                    </tr>
-                                    <tr @click="applyProviderPreset('openai_compatible')" class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] cursor-pointer transition">
-                                        <td class="py-2.5 px-3 font-semibold text-black dark:text-white whitespace-nowrap">OpenAI-Compatible Tunnel / Proxy / vLLM / Ollama</td>
-                                        <td class="py-2.5 px-3 font-mono text-[11px]">OpenAI Compatible</td>
-                                        <td class="py-2.5 px-3 font-mono text-[#007AFF] text-[11px] select-all">https://r4g77gv.abc-tunnel.us/v1</td>
-                                        <td class="py-2.5 px-3 text-[11px] leading-relaxed">
-                                            Format <code class="font-mono bg-black/5 dark:bg-white/10 px-1 py-0.5 rounded text-[#007AFF]">sk-...</code>. Cocok untuk server private AI, vLLM, LiteLLM, Groq-compatible proxy, atau tunnel Cloudflare/Ngrok.
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <!-- Save Button -->
-                    <div class="pt-2 flex justify-end">
-                        <button type="submit"
-                            class="h-10 px-5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0062CC] active:scale-[0.98] transition-all flex items-center gap-2 shadow-sm shadow-[#007AFF]/25">
-                            <i data-lucide="check" class="w-4 h-4" stroke-width="2"></i>
-                            <span>Simpan Konfigurasi Engine</span>
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Right Column: Multi-Key Pool Management (5 Cols) -->
-            <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-6 shadow-sm lg:col-span-5 space-y-4">
-                <div class="border-b border-black/5 dark:border-white/10 pb-3 flex items-center justify-between">
-                    <div>
-                        <h3 class="text-[15px] font-semibold text-black dark:text-white flex items-center gap-2">
-                            <i data-lucide="key" class="w-4 h-4 text-[#FF9500]" stroke-width="1.75"></i>
-                            <span>Multi-Key Pool</span>
-                            <span class="px-2 py-0.5 rounded-full text-[10.5px] font-semibold bg-[#007AFF]/10 text-[#007AFF]"
-                                x-text="activeKeysCount + ' Key'"></span>
-                        </h3>
-                        <p class="text-[11.5px] text-black/50 dark:text-white/50 mt-0.5">Banyak API key terhubung untuk 1 provider.</p>
-                    </div>
-                    <button type="button" 
-                        @click="addKeyModalOpen = true"
-                        class="p-1.5 rounded-[8px] text-[#007AFF] hover:bg-[#007AFF]/10 transition-colors" title="Tambah API Key">
-                        <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                <div class="pt-2 flex justify-end">
+                    <button type="submit"
+                        class="h-10 px-5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0062CC] active:scale-[0.98] transition flex items-center gap-2 shadow-sm shadow-[#007AFF]/25">
+                        <i data-lucide="check" class="w-4 h-4" stroke-width="2"></i>
+                        <span>Simpan Konfigurasi Router Gateway</span>
                     </button>
                 </div>
+            </form>
+        </div>
 
-                <p class="text-[12px] text-black/60 dark:text-white/60 leading-relaxed">
-                    Sistem mendistribusikan kueri secara berurutan (*Round-Robin*) ke seluruh key aktif. Jika salah satu key mencapai limit kuota, sistem otomatis beralih ke key berikutnya.
-                </p>
+        <!-- 5. PANDUAN FORMAT & PRESET PROVIDER 9ROUTER -->
+        <div class="rounded-[20px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 p-5 space-y-3">
+            <div class="flex items-center justify-between">
+                <h4 class="text-[13px] font-bold text-black dark:text-white flex items-center gap-2">
+                    <i data-lucide="book-open" class="w-4 h-4 text-[#007AFF]"></i>
+                    <span>Panduan Preset Format Token &amp; Endpoint Provider 9Router</span>
+                </h4>
+                <span class="text-[11px] text-black/50 dark:text-white/50">Klik baris untuk mengisi konfigurasi otomatis</span>
+            </div>
 
-                <!-- Keys List -->
-                <div class="space-y-3 mt-2">
-                    <template x-for="k in maskedKeys" :key="k.id">
-                        <div class="p-3.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 space-y-2">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-2 min-w-0">
-                                    <span class="w-2 h-2 rounded-full shrink-0"
-                                        :class="k.is_active ? 'bg-[#34C759]' : 'bg-black/30 dark:text-white/30'"></span>
-                                    <span class="font-semibold text-[13px] text-black dark:text-white truncate" x-text="k.name"></span>
-                                </div>
-                                <div class="flex items-center gap-2 shrink-0">
-                                    <!-- Toggle Active Form -->
-                                    <form :action="'{{ url('admin/ai-tokens/engine/keys') }}/' + k.id + '/toggle'" method="POST">
-                                        @csrf
-                                        <button type="submit" 
-                                            class="text-[11px] font-semibold px-2 py-0.5 rounded-[6px] transition-colors"
-                                            :class="k.is_active 
-                                                ? 'bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158] hover:bg-[#34C759]/25' 
-                                                : 'bg-black/10 dark:bg-white/10 text-black/45 dark:text-white/45 hover:bg-black/15'">
-                                            <span x-text="k.is_active ? 'Aktif' : 'Nonaktif'"></span>
-                                        </button>
-                                    </form>
-
-                                    <!-- Delete Key Form -->
-                                    <form :action="'{{ url('admin/ai-tokens/engine/keys') }}/' + k.id" method="POST"
-                                        onsubmit="return confirm('Hapus API Key ini dari pool platform?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="p-1 rounded text-black/40 hover:text-[#FF3B30] transition-colors">
-                                            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-
-                            <div class="flex items-center justify-between text-[11px] font-mono text-black/50 dark:text-white/50 pt-1">
-                                <span class="tracking-wider select-all" x-text="k.masked_key"></span>
-                                <span class="tabular-nums" x-text="k.total_requests + ' kueri'"></span>
-                            </div>
-                        </div>
-                    </template>
-                </div>
-
-                <!-- Add Key Trigger Button -->
-                <button type="button" 
-                    @click="addKeyModalOpen = true"
-                    class="w-full py-2.5 rounded-[10px] text-[12.5px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 transition-colors flex items-center justify-center gap-2">
-                    <i data-lucide="plus" class="w-4 h-4"></i>
-                    <span>Tambah Kunci API Tambahan</span>
-                </button>
+            <div class="overflow-x-auto rounded-[12px] border border-black/5 dark:border-white/5 bg-white dark:bg-[#1C1C1E]">
+                <table class="w-full text-left text-[11.5px]">
+                    <thead class="bg-black/[0.03] dark:bg-white/[0.04] text-black/70 dark:text-white/70 font-semibold border-b border-black/5 dark:border-white/5">
+                        <tr>
+                            <th class="py-2.5 px-3">Provider AI</th>
+                            <th class="py-2.5 px-3">Base URL Endpoint API</th>
+                            <th class="py-2.5 px-3">Format API Key &amp; Model Unggulan</th>
+                            <th class="py-2.5 px-3 text-right">Aksi Cepat</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-black/5 dark:divide-white/5 text-black/80 dark:text-white/80">
+                        <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition">
+                            <td class="py-2.5 px-3 font-semibold text-black dark:text-white whitespace-nowrap flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-[#007AFF]"></span>
+                                <span>OpenAI-Compatible Tunnel / vLLM / Proxy</span>
+                            </td>
+                            <td class="py-2.5 px-3 font-mono text-[#007AFF] text-[11px] select-all">https://r4g77gv.abc-tunnel.us/v1</td>
+                            <td class="py-2.5 px-3 text-[11px]">Format <code class="font-mono text-[#007AFF]">sk-...</code>. Cocok untuk server private AI, LiteLLM, vLLM, Ollama, proxy Groq.</td>
+                            <td class="py-2.5 px-3 text-right">
+                                <button type="button" @click="openAddKeyModal('openai_compatible')" class="text-[#007AFF] font-semibold hover:underline">+ Hubungkan</button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition">
+                            <td class="py-2.5 px-3 font-semibold text-black dark:text-white whitespace-nowrap flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-[#D97706]"></span>
+                                <span>Anthropic Claude Official</span>
+                            </td>
+                            <td class="py-2.5 px-3 font-mono text-[#007AFF] text-[11px] select-all">https://api.anthropic.com/v1</td>
+                            <td class="py-2.5 px-3 text-[11px]">Format <code class="font-mono text-[#007AFF]">sk-ant-api03-...</code> dari console.anthropic.com. Mendukung Claude 3.7 Sonnet, Claude 3.5 Haiku.</td>
+                            <td class="py-2.5 px-3 text-right">
+                                <button type="button" @click="openAddKeyModal('anthropic')" class="text-[#D97706] font-semibold hover:underline">+ Hubungkan</button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition">
+                            <td class="py-2.5 px-3 font-semibold text-black dark:text-white whitespace-nowrap flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-[#8B5CF6]"></span>
+                                <span>Google Gemini Official</span>
+                            </td>
+                            <td class="py-2.5 px-3 font-mono text-[#007AFF] text-[11px] select-all">https://generativelanguage.googleapis.com/v1beta</td>
+                            <td class="py-2.5 px-3 text-[11px]">Format <code class="font-mono text-[#007AFF]">AIzaSy...</code> dari Google AI Studio. Mendukung Gemini 2.0 Flash, Gemini 1.5 Pro.</td>
+                            <td class="py-2.5 px-3 text-right">
+                                <button type="button" @click="openAddKeyModal('gemini')" class="text-[#8B5CF6] font-semibold hover:underline">+ Hubungkan</button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition">
+                            <td class="py-2.5 px-3 font-semibold text-black dark:text-white whitespace-nowrap flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-[#10B981]"></span>
+                                <span>OpenAI Official Direct</span>
+                            </td>
+                            <td class="py-2.5 px-3 font-mono text-[#007AFF] text-[11px] select-all">https://api.openai.com/v1</td>
+                            <td class="py-2.5 px-3 text-[11px]">Format <code class="font-mono text-[#007AFF]">sk-proj-...</code> dari platform.openai.com. Mendukung GPT-4o, GPT-4o-mini, o1, o3-mini.</td>
+                            <td class="py-2.5 px-3 text-right">
+                                <button type="button" @click="openAddKeyModal('openai')" class="text-[#10B981] font-semibold hover:underline">+ Hubungkan</button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition">
+                            <td class="py-2.5 px-3 font-semibold text-black dark:text-white whitespace-nowrap flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-[#06B6D4]"></span>
+                                <span>OpenRouter AI Gateway</span>
+                            </td>
+                            <td class="py-2.5 px-3 font-mono text-[#007AFF] text-[11px] select-all">https://openrouter.ai/api/v1</td>
+                            <td class="py-2.5 px-3 text-[11px]">Format <code class="font-mono text-[#007AFF]">sk-or-v1-...</code> dari openrouter.ai. Akses ke DeepSeek-R1, Llama 3.3, Qwen, Mistral.</td>
+                            <td class="py-2.5 px-3 text-right">
+                                <button type="button" @click="openAddKeyModal('openrouter')" class="text-[#06B6D4] font-semibold hover:underline">+ Hubungkan</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
+
     </div>
 
-    <!-- TAB 2: MONITORING KONSUMSI TOKEN TENANT (EXISTING MONITORING EXPANDED) -->
+    <!-- TAB 2: MONITORING KONSUMSI TOKEN TENANT (PRESERVED) -->
     <div x-show="activeTab === 'monitoring'" x-cloak class="space-y-6">
 
         <!-- KPI Metric Cards Grid -->
@@ -449,53 +816,58 @@
                 <div class="text-[11px] text-black/45 dark:text-white/45 mt-2">Panggilan API AI berhasil</div>
             </div>
             <div class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 shadow-sm">
-                <span class="text-[12px] font-medium text-black/50 dark:text-white/50">Bisnis Aktif Pakai AI</span>
+                <span class="text-[12px] font-medium text-black/50 dark:text-white/50">Bisnis Aktif Menggunakan AI</span>
                 <div class="mt-2 flex items-end justify-between gap-2">
-                    <span class="text-[22px] font-bold tabular-nums text-[#34C759] dark:text-[#30D158] tracking-tight">{{ number_format($activeAiBusinessesCount, 0, ',', '.') }}</span>
+                    <span class="text-[22px] font-bold tabular-nums text-black dark:text-white tracking-tight">{{ number_format($activeAiBusinessesCount, 0, ',', '.') }}</span>
                     <i data-lucide="building-2" class="w-4 h-4 text-[#34C759] dark:text-[#30D158]" stroke-width="1.5"></i>
                 </div>
-                <div class="text-[11px] text-black/45 dark:text-white/45 mt-2">Workspace memanfaatkan AI bulan ini</div>
+                <div class="text-[11px] text-black/45 dark:text-white/45 mt-2">Tenant aktif bulan ini</div>
             </div>
         </div>
 
-        <!-- 2 Columns: Intent Breakdown & Top Businesses -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-6 lg:col-span-6 shadow-sm">
-                <div class="border-b border-black/5 dark:border-white/10 pb-3">
+        <!-- 2 Columns Grid: Usage by Intent & Top Consuming Businesses -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Usage by Intent Breakdown -->
+            <div class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 shadow-sm space-y-4">
+                <div class="flex items-center justify-between border-b border-black/5 dark:border-white/10 pb-3">
                     <h3 class="text-[15px] font-semibold text-black dark:text-white flex items-center gap-2">
-                        <i data-lucide="pie-chart" class="w-4 h-4 text-[#AF52DE] dark:text-[#BF5AF2]" stroke-width="1.5"></i>
-                        <span>Penggunaan Token Berdasarkan Fitur / Intent</span>
+                        <i data-lucide="pie-chart" class="w-4 h-4 text-[#007AFF]" stroke-width="1.5"></i>
+                        <span>Distribusi Konsumsi Token per Fitur (Intent)</span>
                     </h3>
                 </div>
                 @if ($intentBreakdown->isEmpty())
-                    <div class="text-[13px] text-black/45 dark:text-white/45 py-8 text-center">Belum ada data eksekusi AI token tercatat.</div>
+                    <div class="text-[13px] text-black/45 dark:text-white/45 py-8 text-center">Belum ada riwayat konsumsi token tercatat.</div>
                 @else
-                    <div class="space-y-3 mt-4">
+                    <div class="space-y-3">
                         @foreach ($intentBreakdown as $intent)
                             @php
-                                $pct = $totalTokensAllTime > 0 ? round(($intent->total_tokens / $totalTokensAllTime) * 100, 1) : 0;
+                                $percent = $totalTokensAllTime > 0 ? round(($intent->total_tokens / $totalTokensAllTime) * 100, 1) : 0;
                             @endphp
-                            <div class="p-3 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] text-[13px]">
-                                <div class="flex items-center justify-between font-medium">
-                                    <span class="text-black dark:text-white capitalize">{{ str_replace('_', ' ', $intent->intent ?? 'general') }}</span>
-                                    <span class="text-[#AF52DE] dark:text-[#BF5AF2] font-semibold tabular-nums">{{ number_format((float) $intent->total_tokens, 0, ',', '.') }} Token ({{ $pct }}%)</span>
+                            <div class="space-y-1">
+                                <div class="flex items-center justify-between text-[13px]">
+                                    <span class="font-medium text-black dark:text-white capitalize flex items-center gap-2">
+                                        <span class="w-2 h-2 rounded-full bg-[#AF52DE]"></span>
+                                        {{ str_replace('_', ' ', $intent->intent) }}
+                                    </span>
+                                    <div class="text-right text-[12px] tabular-nums text-black/50 dark:text-white/50">
+                                        <span class="font-semibold text-black dark:text-white">{{ number_format($intent->total_tokens, 0, ',', '.') }}</span> token ({{ $percent }}%)
+                                    </div>
                                 </div>
-                                <div class="w-full h-1.5 mt-2 bg-black/[0.08] dark:bg-white/[0.1] rounded-full overflow-hidden">
-                                    <div class="h-full bg-[#AF52DE] rounded-full" style="width: {{ $pct }}%"></div>
+                                <div class="h-2 rounded-full bg-black/[0.04] dark:bg-white/[0.06] overflow-hidden">
+                                    <div class="h-full rounded-full bg-[#AF52DE]" style="width: {{ $percent }}%"></div>
                                 </div>
-                                <div class="text-[11px] text-black/45 dark:text-white/45 text-right tabular-nums mt-1">
-                                    {{ number_format($intent->queries_count) }} kali eksekusi</div>
                             </div>
                         @endforeach
                     </div>
                 @endif
             </div>
 
-            <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-6 lg:col-span-6 shadow-sm">
-                <div class="border-b border-black/5 dark:border-white/10 pb-3">
+            <!-- Top 10 Consuming Businesses -->
+            <div class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 shadow-sm space-y-4">
+                <div class="flex items-center justify-between border-b border-black/5 dark:border-white/10 pb-3">
                     <h3 class="text-[15px] font-semibold text-black dark:text-white flex items-center gap-2">
-                        <i data-lucide="flame" class="w-4 h-4 text-[#FF9500] dark:text-[#FF9F0A]" stroke-width="1.5"></i>
-                        <span>Top 10 Bisnis Konsumen AI Terbesar</span>
+                        <i data-lucide="trending-up" class="w-4 h-4 text-[#FF9500]" stroke-width="1.5"></i>
+                        <span>Top 10 Tenant Konsumsi Token Tertinggi</span>
                     </h3>
                 </div>
                 @if ($topBusinesses->isEmpty())
@@ -584,17 +956,17 @@
         </div>
     </div>
 
-    <!-- MODAL 1: TAMBAH API KEY BARU KE POOL -->
+    <!-- MODAL 1: TAMBAH API KEY BARU KE POOL (9ROUTER STYLE) -->
     <template x-teleport="body">
         <div x-show="addKeyModalOpen" x-cloak
             class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-all"
             role="dialog" aria-modal="true" @click.self="addKeyModalOpen = false" @keydown.escape.window="addKeyModalOpen = false">
             <div @click.stop
-                class="relative z-10 sheet-material rounded-[20px] w-full max-w-md p-6 space-y-5 shadow-2xl border border-black/5 dark:border-white/10 bg-white dark:bg-[#1C1C1E]">
+                class="relative z-10 sheet-material rounded-[20px] w-full max-w-lg p-6 space-y-5 shadow-2xl border border-black/5 dark:border-white/10 bg-white dark:bg-[#1C1C1E]">
                 <div class="flex items-center justify-between border-b border-black/5 dark:border-white/10 pb-3">
                     <div class="flex items-center gap-2 text-[15px] font-semibold text-black dark:text-white">
-                        <i data-lucide="key" class="w-5 h-5 text-[#007AFF]" stroke-width="1.75"></i>
-                        <span>Tambah API Key ke Pool</span>
+                        <i data-lucide="key" class="w-5 h-5 text-[#007AFF]"></i>
+                        <span>Hubungkan Kunci API Baru ke Gateway 9Router</span>
                     </div>
                     <button type="button" @click="addKeyModalOpen = false"
                         class="p-1.5 rounded-[6px] text-black/40 dark:text-white/40 hover:bg-black/5 dark:hover:bg-white/10">
@@ -604,36 +976,72 @@
 
                 <form action="{{ route('admin.ai-tokens.engine.keys.add') }}" method="POST" class="space-y-4">
                     @csrf
+                    
+                    <!-- Provider Selector -->
                     <div>
                         <label class="block text-[12.5px] font-medium text-black/70 dark:text-white/70 mb-1.5">
-                            Label / Nama Kunci
+                            Pilih AI Provider Engine
                         </label>
-                        <input type="text" name="key_name" required placeholder="Misal: Tunnel Primary 2 / Backup Key"
+                        <select name="provider" x-model="newKeyForm.provider" @change="onAddKeyProviderChange()" required
                             class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                            <option value="openai_compatible">OpenAI Compatible (Custom Tunnel / vLLM / Proxy)</option>
+                            <option value="anthropic">Anthropic Claude Official (api.anthropic.com)</option>
+                            <option value="gemini">Google Gemini Official (Google AI Studio)</option>
+                            <option value="openai">OpenAI Official Direct (api.openai.com)</option>
+                            <option value="openrouter">OpenRouter AI Gateway (openrouter.ai)</option>
+                        </select>
                     </div>
 
+                    <!-- Key Name & Priority Tier in Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-[12.5px] font-medium text-black/70 dark:text-white/70 mb-1.5">
+                                Label Nama Kunci
+                            </label>
+                            <input type="text" name="key_name" x-model="newKeyForm.name" required placeholder="Misal: Claude 3.7 Primary / Tunnel 1"
+                                class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                        </div>
+
+                        <div>
+                            <label class="block text-[12.5px] font-medium text-black/70 dark:text-white/70 mb-1.5">
+                                Tier Prioritas Failover
+                            </label>
+                            <select name="priority" x-model.number="newKeyForm.priority"
+                                class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                                <option value="1">Tier 1: Utama (Primary Traffic)</option>
+                                <option value="2">Tier 2: Cadangan (Standby Backup)</option>
+                                <option value="3">Tier 3: Darurat (Emergency Fallback)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Token API Key -->
                     <div>
                         <label class="block text-[12.5px] font-medium text-black/70 dark:text-white/70 mb-1.5">
                             Token API Key
                         </label>
-                        <input type="password" name="api_key" required placeholder="sk-..."
+                        <input type="password" name="api_key" x-model="newKeyForm.api_key" required placeholder="sk-..."
                             class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[13px] font-mono text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
-                        <p class="text-[11px] text-black/45 dark:text-white/45 mt-1">Kunci akan disimpan terenkripsi di database (Zero Plaintext Exposure).</p>
+                        <p class="text-[11px] text-black/45 dark:text-white/45 mt-1">Disimpan terenkripsi di database aman (Zero Plaintext Exposure).</p>
                     </div>
 
-                    <!-- Format Guide Box in Modal -->
-                    <div class="p-3 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/5 dark:border-white/5 space-y-1.5 text-[11px]">
-                        <span class="font-semibold text-black dark:text-white flex items-center gap-1.5">
-                            <i data-lucide="info" class="w-3.5 h-3.5 text-[#007AFF]"></i>
-                            <span>Format Token Resmi per Provider:</span>
-                        </span>
-                        <ul class="space-y-1 text-black/70 dark:text-white/70 font-mono text-[10.5px]">
-                            <li>&bull; <strong class="text-black dark:text-white font-sans">OpenAI:</strong> <code class="text-[#007AFF]">sk-proj-...</code> (platform.openai.com)</li>
-                            <li>&bull; <strong class="text-black dark:text-white font-sans">Google Gemini:</strong> <code class="text-[#007AFF]">AIzaSy...</code> (aistudio.google.com)</li>
-                            <li>&bull; <strong class="text-black dark:text-white font-sans">Anthropic:</strong> <code class="text-[#007AFF]">sk-ant-api03-...</code> (console.anthropic.com)</li>
-                            <li>&bull; <strong class="text-black dark:text-white font-sans">OpenRouter:</strong> <code class="text-[#007AFF]">sk-or-v1-...</code> (openrouter.ai)</li>
-                            <li>&bull; <strong class="text-black dark:text-white font-sans">Tunnel / Proxy / Local:</strong> <code class="text-[#007AFF]">sk-...</code> (vLLM / Ollama)</li>
-                        </ul>
+                    <!-- Base URL Endpoint & Model in Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-[12.5px] font-medium text-black/70 dark:text-white/70 mb-1.5">
+                                Base URL Endpoint
+                            </label>
+                            <input type="url" name="endpoint" x-model="newKeyForm.endpoint" required
+                                class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[12px] font-mono text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                        </div>
+
+                        <div>
+                            <label class="block text-[12.5px] font-medium text-black/70 dark:text-white/70 mb-1.5">
+                                Model Terkait
+                            </label>
+                            <input type="text" name="model" x-model="newKeyForm.model" required
+                                class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[12px] font-mono text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                        </div>
                     </div>
 
                     <div class="pt-2 flex items-center justify-end gap-2">
@@ -644,7 +1052,7 @@
                         <button type="submit"
                             class="h-9 px-4 rounded-[10px] text-[12.5px] font-semibold text-white bg-[#007AFF] hover:bg-[#0062CC] transition flex items-center gap-1.5 shadow-sm shadow-[#007AFF]/25">
                             <i data-lucide="plus" class="w-4 h-4"></i>
-                            <span>Simpan Kunci ke Pool</span>
+                            <span>Simpan Kunci ke Gateway</span>
                         </button>
                     </div>
                 </form>
@@ -652,7 +1060,210 @@
         </div>
     </template>
 
-    <!-- MODAL 2: GRANT TOKEN MANUAL SHEET MODAL -->
+    <!-- MODAL 2: EDIT API KEY POOL (9ROUTER STYLE) -->
+    <template x-teleport="body">
+        <div x-show="editKeyModalOpen" x-cloak
+            class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-all"
+            role="dialog" aria-modal="true" @click.self="editKeyModalOpen = false" @keydown.escape.window="editKeyModalOpen = false">
+            <div @click.stop
+                class="relative z-10 sheet-material rounded-[20px] w-full max-w-lg p-6 space-y-5 shadow-2xl border border-black/5 dark:border-white/10 bg-white dark:bg-[#1C1C1E]">
+                <div class="flex items-center justify-between border-b border-black/5 dark:border-white/10 pb-3">
+                    <div class="flex items-center gap-2 text-[15px] font-semibold text-black dark:text-white">
+                        <i data-lucide="edit-3" class="w-5 h-5 text-[#007AFF]"></i>
+                        <span>Edit Konfigurasi Kunci API</span>
+                    </div>
+                    <button type="button" @click="editKeyModalOpen = false"
+                        class="p-1.5 rounded-[6px] text-black/40 dark:text-white/40 hover:bg-black/5 dark:hover:bg-white/10">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <form :action="'{{ url('admin/ai-tokens/engine/keys') }}/' + editingKey.id" method="POST" class="space-y-4">
+                    @csrf
+                    @method('PUT')
+                    
+                    <!-- Provider Selector -->
+                    <div>
+                        <label class="block text-[12.5px] font-medium text-black/70 dark:text-white/70 mb-1.5">
+                            Pilih AI Provider Engine
+                        </label>
+                        <select name="provider" x-model="editingKey.provider" @change="onEditKeyProviderChange()" required
+                            class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                            <option value="openai_compatible">OpenAI Compatible (Custom Tunnel / vLLM / Proxy)</option>
+                            <option value="anthropic">Anthropic Claude Official (api.anthropic.com)</option>
+                            <option value="gemini">Google Gemini Official (Google AI Studio)</option>
+                            <option value="openai">OpenAI Official Direct (api.openai.com)</option>
+                            <option value="openrouter">OpenRouter AI Gateway (openrouter.ai)</option>
+                        </select>
+                    </div>
+
+                    <!-- Key Name & Priority Tier in Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-[12.5px] font-medium text-black/70 dark:text-white/70 mb-1.5">
+                                Label Nama Kunci
+                            </label>
+                            <input type="text" name="key_name" x-model="editingKey.name" required
+                                class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                        </div>
+
+                        <div>
+                            <label class="block text-[12.5px] font-medium text-black/70 dark:text-white/70 mb-1.5">
+                                Tier Prioritas Failover
+                            </label>
+                            <select name="priority" x-model.number="editingKey.priority"
+                                class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                                <option value="1">Tier 1: Utama (Primary Traffic)</option>
+                                <option value="2">Tier 2: Cadangan (Standby Backup)</option>
+                                <option value="3">Tier 3: Darurat (Emergency Fallback)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Token API Key (Optional Update) -->
+                    <div>
+                        <label class="block text-[12.5px] font-medium text-black/70 dark:text-white/70 mb-1.5">
+                            Perbarui Token API (Biarkan kosong jika tidak ingin mengubah)
+                        </label>
+                        <input type="password" name="api_key" x-model="editingKey.api_key" placeholder="•••••••• (Tetap gunakan token lama)"
+                            class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[13px] font-mono text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                    </div>
+
+                    <!-- Base URL Endpoint & Model in Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-[12.5px] font-medium text-black/70 dark:text-white/70 mb-1.5">
+                                Base URL Endpoint
+                            </label>
+                            <input type="url" name="endpoint" x-model="editingKey.endpoint" required
+                                class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[12px] font-mono text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                        </div>
+
+                        <div>
+                            <label class="block text-[12.5px] font-medium text-black/70 dark:text-white/70 mb-1.5">
+                                Model Terkait
+                            </label>
+                            <input type="text" name="model" x-model="editingKey.model" required
+                                class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[12px] font-mono text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                        </div>
+                    </div>
+
+                    <div class="pt-2 flex items-center justify-end gap-2">
+                        <button type="button" @click="editKeyModalOpen = false"
+                            class="h-9 px-4 rounded-[10px] text-[12.5px] font-semibold text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition">
+                            Batal
+                        </button>
+                        <button type="submit"
+                            class="h-9 px-4 rounded-[10px] text-[12.5px] font-semibold text-white bg-[#007AFF] hover:bg-[#0062CC] transition flex items-center gap-1.5 shadow-sm shadow-[#007AFF]/25">
+                            <i data-lucide="check" class="w-4 h-4"></i>
+                            <span>Simpan Perubahan</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </template>
+
+    <!-- MODAL 3: BONGKAR PASANG MODEL DYNAMIC SHEET (PRESERVED) -->
+    <template x-teleport="body">
+        <div x-show="manageModelsOpen" x-cloak
+            class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-all"
+            role="dialog" aria-modal="true" @click.self="manageModelsOpen = false" @keydown.escape.window="manageModelsOpen = false">
+            <div @click.stop
+                class="relative z-10 sheet-material rounded-[20px] w-full max-w-xl p-6 space-y-5 shadow-2xl border border-black/5 dark:border-white/10 bg-white dark:bg-[#1C1C1E] max-h-[90vh] flex flex-col">
+                
+                <div class="flex items-center justify-between border-b border-black/5 dark:border-white/10 pb-3 shrink-0">
+                    <div class="flex items-center gap-2 text-[15px] font-semibold text-black dark:text-white">
+                        <i data-lucide="layers" class="w-5 h-5 text-[#AF52DE]"></i>
+                        <span>Bongkar Pasang Model AI Platform</span>
+                    </div>
+                    <button type="button" @click="manageModelsOpen = false"
+                        class="p-1.5 rounded-[6px] text-black/40 dark:text-white/40 hover:bg-black/5 dark:hover:bg-white/10">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Model Feedback -->
+                <div x-show="modelFeedback.show" x-transition class="p-3 rounded-[10px] text-[12px] flex items-center justify-between"
+                    :class="modelFeedback.success ? 'bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158]' : 'bg-[#FF3B30]/10 text-[#D70015] dark:text-[#FF453A]'">
+                    <span x-text="modelFeedback.message"></span>
+                    <button type="button" @click="modelFeedback.show = false"><i data-lucide="x" class="w-3 h-3"></i></button>
+                </div>
+
+                <!-- Add New Model Form Inline -->
+                <div class="p-4 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 space-y-3 shrink-0">
+                    <div class="text-[12.5px] font-semibold text-black dark:text-white">Pasang / Daftarkan Model Baru</div>
+                    <div class="grid grid-cols-1 sm:grid-cols-12 gap-2">
+                        <div class="sm:col-span-6">
+                            <input type="text" x-model="newModel.id" placeholder="Model ID (misal: ag/claude-3.7-sonnet)"
+                                class="w-full h-8 px-3 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[8px] text-[12px] font-mono text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#AF52DE]">
+                        </div>
+                        <div class="sm:col-span-6">
+                            <input type="text" x-model="newModel.name" placeholder="Nama Tampilan (opsional)"
+                                class="w-full h-8 px-3 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[8px] text-[12px] text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#AF52DE]">
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between pt-1">
+                        <div class="flex items-center gap-2">
+                            <span class="text-[11.5px] text-black/50 dark:text-white/50">Tier:</span>
+                            <select x-model="newModel.tier" class="h-7 px-2 text-[11.5px] rounded-[6px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-black dark:text-white">
+                                <option value="balanced">Balanced</option>
+                                <option value="reasoning">Reasoning / Heavy</option>
+                                <option value="fast">Fast / Lightweight</option>
+                            </select>
+                        </div>
+                        <button type="button" @click="addModel()" :disabled="isAddingModel || !newModel.id.trim()"
+                            class="h-8 px-3.5 rounded-[8px] text-[12px] font-semibold text-white bg-[#AF52DE] hover:bg-[#9A45C6] transition flex items-center gap-1 disabled:opacity-50">
+                            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                            <span>Pasang Model</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Models List Scrollable -->
+                <div class="overflow-y-auto flex-1 divide-y divide-black/5 dark:divide-white/5 border border-black/5 dark:border-white/5 rounded-[12px]">
+                    <template x-for="m in modelsList" :key="m.id">
+                        <div class="p-3 flex items-center justify-between hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition">
+                            <div class="min-w-0 pr-3">
+                                <div class="flex items-center gap-2">
+                                    <span class="font-bold text-[13px] text-black dark:text-white truncate" x-text="m.name || m.id"></span>
+                                    <template x-if="m.id === selectedModel">
+                                        <span class="px-1.5 py-0.2 rounded text-[9.5px] font-bold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]">Aktif</span>
+                                    </template>
+                                </div>
+                                <div class="text-[11px] font-mono text-black/50 dark:text-white/50 truncate" x-text="m.id"></div>
+                            </div>
+                            <div class="flex items-center gap-2 shrink-0">
+                                <button type="button" @click="selectActiveModel(m.id)"
+                                    class="text-[11px] font-semibold px-2 py-1 rounded-[6px] bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 text-black dark:text-white transition">
+                                    Pilih
+                                </button>
+                                <button type="button" @click="deleteModel(m.id)"
+                                    class="p-1 rounded text-black/40 hover:text-[#FF3B30] transition" title="Bongkar / Hapus model">
+                                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Footer & Reset Seed Button -->
+                <div class="pt-2 border-t border-black/5 dark:border-white/10 flex items-center justify-between shrink-0">
+                    <button type="button" @click="resetModels()" :disabled="isResettingModels"
+                        class="text-[11.5px] text-[#FF3B30] hover:underline flex items-center gap-1 disabled:opacity-50">
+                        <i data-lucide="rotate-ccw" class="w-3 h-3"></i>
+                        <span>Reset ke 13 Model Bawaan</span>
+                    </button>
+                    <button type="button" @click="manageModelsOpen = false"
+                        class="h-8 px-4 rounded-[8px] text-[12px] font-semibold text-white bg-black dark:bg-white dark:text-black hover:opacity-90 transition">
+                        Selesai
+                    </button>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- MODAL 4: GRANT TOKEN MANUAL SHEET (PRESERVED) -->
     @if(Auth::guard('admin')->user()?->hasPermission('admin.ai_tokens.grant'))
     <template x-teleport="body">
         <div x-show="grantModalOpen" x-cloak
@@ -699,165 +1310,19 @@
 
                     <div class="pt-2 flex items-center justify-end gap-2">
                         <button type="button" @click="grantModalOpen = false"
-                            class="h-9 px-4 rounded-[10px] text-[12.5px] font-semibold text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition">Batal</button>
-                        <button type="submit" :disabled="!selectedBizId || !tokenAmount"
-                            class="h-9 px-4 rounded-[10px] text-[12.5px] font-semibold text-white bg-[#AF52DE] hover:bg-[#9A45C6] transition flex items-center gap-1.5 disabled:opacity-50 shadow-sm shadow-[#AF52DE]/25">
+                            class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">Batal</button>
+                        <button type="submit"
+                            class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#AF52DE] hover:bg-[#9A45C6] active:scale-[0.98] transition-all flex items-center gap-1.5 shadow-sm shadow-[#AF52DE]/30">
                             <i data-lucide="check" class="w-4 h-4"></i>
                             <span>Kirim Token Sekarang</span>
                         </button>
                     </div>
                 </form>
             </div>
+        </div>
     </template>
     @endif
 
-    <!-- MODAL 3: BONGKAR PASANG MODEL AI (OPENAI COMPATIBLE) -->
-    <template x-teleport="body">
-        <div x-show="manageModelsOpen" x-cloak
-            class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-all"
-            role="dialog" aria-modal="true" @click.self="manageModelsOpen = false" @keydown.escape.window="manageModelsOpen = false">
-            <div @click.stop
-                class="relative z-10 sheet-material rounded-[20px] w-full max-w-2xl max-h-[90vh] flex flex-col shadow-2xl border border-black/5 dark:border-white/10 bg-white dark:bg-[#1C1C1E] overflow-hidden">
-                
-                <!-- Modal Header -->
-                <div class="flex items-center justify-between border-b border-black/5 dark:border-white/10 p-5 shrink-0">
-                    <div class="flex items-center gap-2.5">
-                        <div class="w-8 h-8 rounded-[10px] bg-[#AF52DE]/10 text-[#AF52DE] dark:text-[#BF5AF2] flex items-center justify-center shrink-0">
-                            <i data-lucide="layers" class="w-4 h-4"></i>
-                        </div>
-                        <div>
-                            <div class="flex items-center gap-2">
-                                <h3 class="text-[15px] font-semibold text-black dark:text-white">Bongkar Pasang Model AI</h3>
-                                <span class="px-2 py-0.5 rounded-[6px] text-[11px] font-bold bg-[#AF52DE]/10 text-[#AF52DE] dark:text-[#BF5AF2]" x-text="modelsList.length + ' Model Terdaftar'"></span>
-                            </div>
-                            <p class="text-[12px] text-black/50 dark:text-white/50">Daftarkan model baru, hapus model tidak terpakai, atau ganti model aktif tanpa hardcode di script.</p>
-                        </div>
-                    </div>
-                    <button type="button" @click="manageModelsOpen = false"
-                        class="p-1.5 rounded-[8px] text-black/40 dark:text-white/40 hover:bg-black/5 dark:hover:bg-white/10">
-                        <i data-lucide="x" class="w-4 h-4"></i>
-                    </button>
-                </div>
-
-                <!-- Modal Action Feedback Banner -->
-                <div x-show="modelFeedback.show" x-transition class="mx-5 mt-4 p-3 rounded-[10px] text-[12px] flex items-center justify-between"
-                    :class="modelFeedback.success ? 'bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158]' : 'bg-[#FF3B30]/10 text-[#D70015] dark:text-[#FF453A]'">
-                    <span x-text="modelFeedback.message"></span>
-                    <button type="button" @click="modelFeedback.show = false" class="opacity-60 hover:opacity-100"><i data-lucide="x" class="w-3.5 h-3.5"></i></button>
-                </div>
-
-                <!-- Scrollable Body -->
-                <div class="p-5 overflow-y-auto space-y-5 flex-1">
-                    
-                    <!-- Quick Add Model Card (Bongkar Pasang Inline Form) -->
-                    <div class="p-4 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 space-y-3">
-                        <div class="flex items-center justify-between">
-                            <span class="text-[12.5px] font-semibold text-black dark:text-white flex items-center gap-1.5">
-                                <i data-lucide="plus-circle" class="w-3.5 h-3.5 text-[#007AFF]"></i>
-                                <span>Pasang Model AI Baru ke Daftar</span>
-                            </span>
-                            <span class="text-[11px] text-black/45 dark:text-white/45">Bebas ID apapun (OpenAI / Tunnel / Local)</span>
-                        </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-12 gap-2.5">
-                            <div class="sm:col-span-5">
-                                <input type="text" x-model="newModel.id" placeholder="ID Model (misal: cx/gpt-6-astra-xhigh)"
-                                    class="w-full h-9 px-3 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[8px] text-[12px] font-mono text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
-                            </div>
-                            <div class="sm:col-span-4">
-                                <input type="text" x-model="newModel.name" placeholder="Nama Label (Opsional)"
-                                    class="w-full h-9 px-3 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[8px] text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
-                            </div>
-                            <div class="sm:col-span-3">
-                                <select x-model="newModel.tier"
-                                    class="w-full h-9 px-2 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[8px] text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
-                                    <option value="reasoning">Reasoning</option>
-                                    <option value="balanced">Balanced</option>
-                                    <option value="fast">Fast</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="flex justify-end">
-                            <button type="button" @click="addModel()" :disabled="isAddingModel || !newModel.id.trim()"
-                                class="h-8 px-4 rounded-[8px] text-[12px] font-semibold text-white bg-[#007AFF] hover:bg-[#0062CC] active:scale-[0.98] transition flex items-center gap-1.5 disabled:opacity-50">
-                                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-                                <span x-text="isAddingModel ? 'Memasang...' : 'Pasang Model'"></span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Preset Actions: Sync & Reset -->
-                    <div class="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-black/5 dark:border-white/5">
-                        <div class="text-[12px] font-medium text-black/60 dark:text-white/60">Daftar Model Terpasang:</div>
-                        <div class="flex items-center gap-2">
-                            <button type="button" @click="detectModels()" :disabled="isDetecting"
-                                class="h-7 px-2.5 rounded-[6px] text-[11px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 transition flex items-center gap-1">
-                                <i data-lucide="refresh-cw" class="w-3 h-3" :class="isDetecting ? 'animate-spin' : ''"></i>
-                                <span>Deteksi Endpoint</span>
-                            </button>
-                            <button type="button" @click="resetModels()" :disabled="isResettingModels"
-                                class="h-7 px-2.5 rounded-[6px] text-[11px] font-semibold text-black/70 dark:text-white/70 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 transition flex items-center gap-1">
-                                <i data-lucide="rotate-ccw" class="w-3 h-3"></i>
-                                <span>Reset 13 Model Bawaan</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Models List -->
-                    <div class="divide-y divide-black/[0.04] dark:divide-white/[0.06] border border-black/5 dark:border-white/5 rounded-[12px] overflow-hidden">
-                        <template x-for="m in modelsList" :key="m.id">
-                            <div class="p-3 bg-white dark:bg-[#1C1C1E] hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors flex items-center justify-between gap-3 text-[12.5px]">
-                                <div class="flex items-center gap-2.5 min-w-0">
-                                    <span class="w-2 h-2 rounded-full shrink-0"
-                                        :class="m.id === selectedModel ? 'bg-[#34C759]' : 'bg-black/20 dark:bg-white/20'"></span>
-                                    <div class="min-w-0">
-                                        <div class="flex items-center gap-2 flex-wrap">
-                                            <span class="font-mono text-[12px] font-semibold text-black dark:text-white select-all" x-text="m.id"></span>
-                                            <span class="px-1.5 py-0.5 rounded-[4px] text-[10px] font-bold uppercase tracking-wider"
-                                                :class="{
-                                                    'bg-[#AF52DE]/15 text-[#AF52DE] dark:text-[#BF5AF2]': m.tier === 'reasoning',
-                                                    'bg-[#007AFF]/15 text-[#007AFF]': m.tier === 'balanced',
-                                                    'bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]': m.tier === 'fast'
-                                                }"
-                                                x-text="m.tier"></span>
-                                            <template x-if="m.id === selectedModel">
-                                                <span class="px-1.5 py-0.5 rounded-[4px] text-[10px] font-bold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]">Aktif Utama</span>
-                                            </template>
-                                        </div>
-                                        <div class="text-[11.5px] text-black/50 dark:text-white/50 truncate" x-text="m.name || m.id"></div>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-1 shrink-0">
-                                    <button type="button" @click="selectActiveModel(m.id)"
-                                        class="h-7 px-2.5 rounded-[6px] text-[11px] font-medium transition"
-                                        :class="m.id === selectedModel 
-                                            ? 'bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158] cursor-default font-semibold' 
-                                            : 'text-[#007AFF] hover:bg-[#007AFF]/10'">
-                                        <span x-text="m.id === selectedModel ? 'Aktif' : 'Pilih Model'"></span>
-                                    </button>
-                                    <button type="button" @click="deleteModel(m.id)"
-                                        class="p-1.5 rounded-[6px] text-black/40 dark:text-white/40 hover:text-[#FF3B30] hover:bg-[#FF3B30]/10 transition"
-                                        title="Bongkar / Hapus Model">
-                                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </template>
-                    </div>
-
-                </div>
-
-                <!-- Footer -->
-                <div class="p-4 border-t border-black/5 dark:border-white/10 flex items-center justify-between bg-black/[0.01] dark:bg-white/[0.01] shrink-0">
-                    <span class="text-[11.5px] text-black/45 dark:text-white/45">Model yang dipilih akan tersimpan di konfigurasi platform.</span>
-                    <button type="button" @click="manageModelsOpen = false"
-                        class="h-8 px-4 rounded-[8px] text-[12px] font-semibold text-white bg-black dark:bg-white dark:text-black hover:opacity-90 transition">
-                        Selesai
-                    </button>
-                </div>
-
-            </div>
-        </div>
-    </template>
 </div>
 
 <script>
@@ -870,24 +1335,68 @@ function aiEngineConsole(config) {
         endpointUrl: config.engineConfig.endpoint || 'https://r4g77gv.abc-tunnel.us/v1',
         selectedModel: config.engineConfig.model || 'ag/gemini-3.8-flash-high',
         customModelName: '',
-        rotationStrategy: config.engineConfig.rotation_strategy || 'round_robin',
+        rotationStrategy: config.engineConfig.rotation_strategy || 'failover',
         modelsList: config.modelsList || [],
         maskedKeys: config.engineConfig.masked_keys || [],
+        providersMeta: config.engineConfig.providers_meta || {},
+        providersStats: config.engineConfig.providers_stats || {},
         totalKeysCount: config.engineConfig.total_keys_count || 0,
         activeKeysCount: config.engineConfig.active_keys_count || 0,
+        connectedProvidersCount: config.engineConfig.connected_providers_count || 0,
+        totalRoutedRequests: config.engineConfig.total_routed_requests || 0,
+        totalRoutedErrors: config.engineConfig.total_routed_errors || 0,
 
+        // Key Filters & Search
+        keyFilter: 'all',
+        keySearch: '',
+
+        // Modals
+        addKeyModalOpen: false,
+        editKeyModalOpen: false,
+        grantModalOpen: false,
+        manageModelsOpen: false,
+
+        // Add Key Form
+        newKeyForm: {
+            name: '',
+            provider: 'openai_compatible',
+            api_key: '',
+            endpoint: 'https://r4g77gv.abc-tunnel.us/v1',
+            model: 'ag/gemini-3.8-flash-high',
+            priority: 1,
+            weight: 1
+        },
+
+        // Edit Key Form
+        editingKey: {
+            id: '',
+            name: '',
+            provider: 'openai_compatible',
+            api_key: '',
+            endpoint: '',
+            model: '',
+            priority: 1,
+            weight: 1,
+            is_active: true
+        },
+
+        // Testing States
         isTesting: false,
         isDetecting: false,
+        testingKeyId: null,
+        pingFeedback: {},
         testFeedback: { show: false, success: true, message: '' },
 
-        addKeyModalOpen: false,
-        grantModalOpen: false,
+        // Token Visual Helpers
+        revealedTokens: {},
+        copiedTokenId: null,
+
+        // Grant Modal
         selectedBizId: '',
         tokenAmount: 10000000,
         reasonText: '',
 
-        // Bongkar Pasang Model State
-        manageModelsOpen: false,
+        // Bongkar Pasang Model
         newModel: { id: '', name: '', tier: 'balanced' },
         isAddingModel: false,
         isResettingModels: false,
@@ -916,11 +1425,134 @@ function aiEngineConsole(config) {
             });
         },
 
+        filteredKeys() {
+            return this.maskedKeys.filter(k => {
+                if (this.keyFilter !== 'all' && k.provider !== this.keyFilter) {
+                    return false;
+                }
+                if (this.keySearch.trim()) {
+                    const q = this.keySearch.toLowerCase();
+                    return (k.name && k.name.toLowerCase().includes(q)) ||
+                           (k.provider && k.provider.toLowerCase().includes(q)) ||
+                           (k.model && k.model.toLowerCase().includes(q)) ||
+                           (k.endpoint && k.endpoint.toLowerCase().includes(q));
+                }
+                return true;
+            });
+        },
+
+        openAddKeyModal(preferredProvider = null) {
+            this.newKeyForm.provider = preferredProvider || this.selectedProvider || 'openai_compatible';
+            this.onAddKeyProviderChange();
+            this.newKeyForm.name = '';
+            this.newKeyForm.api_key = '';
+            this.newKeyForm.priority = 1;
+            this.newKeyForm.weight = 1;
+            this.addKeyModalOpen = true;
+            this.$nextTick(() => {
+                if (typeof lucide !== 'undefined') lucide.createIcons();
+            });
+        },
+
+        onAddKeyProviderChange() {
+            const meta = this.providersMeta[this.newKeyForm.provider];
+            if (meta) {
+                this.newKeyForm.endpoint = meta.default_endpoint || '';
+                this.newKeyForm.model = meta.default_model || '';
+            }
+        },
+
+        openEditKeyModal(k) {
+            this.editingKey = {
+                id: k.id,
+                name: k.name,
+                provider: k.provider || 'openai_compatible',
+                endpoint: k.endpoint || '',
+                model: k.model || '',
+                priority: k.priority || 1,
+                weight: k.weight || 1,
+                api_key: '',
+                is_active: k.is_active
+            };
+            this.editKeyModalOpen = true;
+            this.$nextTick(() => {
+                if (typeof lucide !== 'undefined') lucide.createIcons();
+            });
+        },
+
+        onEditKeyProviderChange() {
+            const meta = this.providersMeta[this.editingKey.provider];
+            if (meta) {
+                this.editingKey.endpoint = meta.default_endpoint || '';
+                this.editingKey.model = meta.default_model || '';
+            }
+        },
+
+        toggleRevealToken(keyId) {
+            this.revealedTokens[keyId] = !this.revealedTokens[keyId];
+        },
+
+        copyText(text, keyId) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text);
+                this.copiedTokenId = keyId;
+                setTimeout(() => { this.copiedTokenId = null; }, 2000);
+            }
+        },
+
+        async testSingleKey(keyId) {
+            this.testingKeyId = keyId;
+            try {
+                const res = await fetch(`${config.testSingleKeyBaseUrl}/${keyId}/test`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': config.csrfToken,
+                        'Accept': 'application/json'
+                    }
+                });
+                const data = await res.json();
+                
+                // Update key in maskedKeys array
+                const keyItem = this.maskedKeys.find(k => k.id === keyId);
+                if (keyItem) {
+                    keyItem.status = data.status || (data.success ? 'healthy' : 'error');
+                    keyItem.latency_ms = data.latency_ms || 0;
+                    keyItem.last_error = data.success ? null : data.message;
+                }
+
+                this.pingFeedback[keyId] = {
+                    show: true,
+                    success: data.success,
+                    message: data.message,
+                    latency_ms: data.latency_ms
+                };
+
+                setTimeout(() => {
+                    if (this.pingFeedback[keyId]) {
+                        this.pingFeedback[keyId].show = false;
+                    }
+                }, 8000);
+            } catch (err) {
+                this.pingFeedback[keyId] = {
+                    show: true,
+                    success: false,
+                    message: 'Gagal menguji key: ' + err.message,
+                    latency_ms: 0
+                };
+            } finally {
+                this.testingKeyId = null;
+                this.$nextTick(() => {
+                    if (typeof lucide !== 'undefined') lucide.createIcons();
+                });
+            }
+        },
+
         selectActiveModel(modelId) {
             this.selectedModel = modelId;
             this.modelFeedback.show = true;
             this.modelFeedback.success = true;
-            this.modelFeedback.message = `Model aktif dipilih: ${modelId}. Klik 'Simpan Konfigurasi Engine' di form untuk menyimpan secara permanen.`;
+            this.modelFeedback.message = `Model aktif dipilih: ${modelId}. Klik 'Simpan Konfigurasi Router Gateway' untuk menerapkan.`;
             this.$nextTick(() => {
                 if (typeof lucide !== 'undefined') lucide.createIcons();
             });
@@ -936,7 +1568,7 @@ function aiEngineConsole(config) {
                 this.selectedModel = 'gemini-2.0-flash';
             } else if (p === 'anthropic') {
                 this.endpointUrl = 'https://api.anthropic.com/v1';
-                this.selectedModel = 'claude-3-5-haiku-latest';
+                this.selectedModel = 'claude-3-7-sonnet-20250219';
             } else if (p === 'openrouter') {
                 this.endpointUrl = 'https://openrouter.ai/api/v1';
                 this.selectedModel = 'deepseek/deepseek-r1';
@@ -946,7 +1578,7 @@ function aiEngineConsole(config) {
             }
             this.testFeedback.show = true;
             this.testFeedback.success = true;
-            this.testFeedback.message = `Preset endpoint untuk provider '${p}' berhasil disematkan. Klik 'Simpan Konfigurasi Engine' untuk menerapkan.`;
+            this.testFeedback.message = `Preset endpoint untuk provider '${p}' berhasil disematkan. Klik 'Simpan Konfigurasi Router Gateway' untuk menerapkan.`;
             this.$nextTick(() => {
                 if (typeof lucide !== 'undefined') lucide.createIcons();
             });
@@ -1133,7 +1765,7 @@ function aiEngineConsole(config) {
                     this.modelsList = data.models;
                     this.testFeedback.show = true;
                     this.testFeedback.success = true;
-                    this.testFeedback.message = data.message || `Berhasil mendeteksi ${data.models.length} model aktif dari endpoint tunnel.`;
+                    this.testFeedback.message = data.message || `Berhasil mendeteksi ${data.models.length} model aktif dari endpoint.`;
                 }
             } catch (err) {
                 this.testFeedback.show = true;

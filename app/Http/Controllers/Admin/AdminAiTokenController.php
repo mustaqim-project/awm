@@ -37,8 +37,10 @@ final class AdminAiTokenController extends Controller implements HasMiddleware
                 'testEngine',
                 'detectModels',
                 'addKey',
+                'updateKey',
                 'toggleKey',
                 'deleteKey',
+                'testSingleKey',
                 'addModel',
                 'deleteModel',
                 'resetDefaultModels',
@@ -195,23 +197,37 @@ final class AdminAiTokenController extends Controller implements HasMiddleware
     }
 
     /**
-     * Add an API Key to the Platform Multi-Key Pool.
+     * Add an API Key to the Platform Multi-Key Pool (9Router channel).
      */
     public function addKey(Request $request): RedirectResponse|JsonResponse
     {
         $validated = $request->validate([
             'key_name' => ['required', 'string', 'max:100'],
             'api_key' => ['required', 'string', 'min:8', 'max:1000'],
+            'provider' => ['nullable', 'string', 'in:openai_compatible,anthropic,gemini,openai,openrouter'],
+            'endpoint' => ['nullable', 'string', 'max:500'],
+            'model' => ['nullable', 'string', 'max:150'],
+            'priority' => ['nullable', 'integer', 'between:1,3'],
+            'weight' => ['nullable', 'integer', 'between:1,10'],
         ], [
             'key_name.required' => 'Label nama API Key wajib diisi.',
             'api_key.required' => 'Token API Key wajib diisi.',
             'api_key.min' => 'Format API Key terlalu pendek.',
         ]);
 
-        $entry = $this->engineService->addKey($validated['key_name'], $validated['api_key']);
+        $entry = $this->engineService->addKey(
+            $validated['key_name'],
+            $validated['api_key'],
+            $validated['provider'] ?? null,
+            $validated['endpoint'] ?? null,
+            $validated['model'] ?? null,
+            (int) ($validated['priority'] ?? 1),
+            (int) ($validated['weight'] ?? 1)
+        );
 
         $adminName = auth('admin')->user()?->name ?? 'Superadmin';
-        Log::info("AUDIT: Admin [{$adminName}] menambahkan API Key baru [{$validated['key_name']}] ke Platform AI Pool.");
+        $providerName = $entry['provider'] ?? 'openai_compatible';
+        Log::info("AUDIT: Admin [{$adminName}] menambahkan API Key baru [{$validated['key_name']}] (Provider: {$providerName}) ke Platform AI Pool.");
 
         if ($request->expectsJson()) {
             return response()->json([
@@ -222,7 +238,71 @@ final class AdminAiTokenController extends Controller implements HasMiddleware
         }
 
         return redirect()->route('admin.ai-tokens.index', ['tab' => 'engine'])
-            ->with('success', "API Key '{$validated['key_name']}' berhasil ditambahkan ke pool.");
+            ->with('success', "API Key '{$validated['key_name']}' berhasil ditambahkan ke pool provider {$providerName}.");
+    }
+
+    /**
+     * Update an existing API Key configuration in the pool.
+     */
+    public function updateKey(Request $request, string $keyId): RedirectResponse|JsonResponse
+    {
+        $validated = $request->validate([
+            'key_name' => ['required', 'string', 'max:100'],
+            'api_key' => ['nullable', 'string', 'min:8', 'max:1000'],
+            'provider' => ['required', 'string', 'in:openai_compatible,anthropic,gemini,openai,openrouter'],
+            'endpoint' => ['nullable', 'string', 'max:500'],
+            'model' => ['nullable', 'string', 'max:150'],
+            'priority' => ['nullable', 'integer', 'between:1,3'],
+            'weight' => ['nullable', 'integer', 'between:1,10'],
+            'is_active' => ['nullable', 'boolean'],
+        ], [
+            'key_name.required' => 'Label nama API Key wajib diisi.',
+            'provider.required' => 'Provider AI wajib ditentukan.',
+        ]);
+
+        $updateData = [
+            'name' => $validated['key_name'],
+            'provider' => $validated['provider'],
+            'endpoint' => $validated['endpoint'] ?? null,
+            'model' => $validated['model'] ?? null,
+            'priority' => (int) ($validated['priority'] ?? 1),
+            'weight' => (int) ($validated['weight'] ?? 1),
+        ];
+
+        if (! empty($validated['api_key'])) {
+            $updateData['key'] = $validated['api_key'];
+        }
+        if (isset($validated['is_active'])) {
+            $updateData['is_active'] = (bool) $validated['is_active'];
+        }
+
+        $updated = $this->engineService->updateKey($keyId, $updateData);
+
+        $adminName = auth('admin')->user()?->name ?? 'Superadmin';
+        Log::info("AUDIT: Admin [{$adminName}] memperbarui API Key [{$keyId}] di Platform AI Pool.");
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => $updated,
+                'message' => $updated ? 'Konfigurasi API Key berhasil diperbarui.' : 'API Key tidak ditemukan.',
+            ]);
+        }
+
+        return redirect()->route('admin.ai-tokens.index', ['tab' => 'engine'])
+            ->with('success', "Konfigurasi API Key '{$validated['key_name']}' berhasil diperbarui.");
+    }
+
+    /**
+     * Test a single API Key (Live Ping per Channel).
+     */
+    public function testSingleKey(Request $request, string $keyId): JsonResponse
+    {
+        $result = $this->engineService->testSingleKey($keyId);
+
+        $adminName = auth('admin')->user()?->name ?? 'Superadmin';
+        Log::info("AUDIT: Admin [{$adminName}] melakukan live ping uji API Key [{$keyId}]. Status: " . ($result['success'] ? 'OK' : 'FAIL') . " ({$result['latency_ms']}ms).");
+
+        return response()->json($result);
     }
 
     /**

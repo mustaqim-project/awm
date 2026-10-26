@@ -425,7 +425,7 @@
                                 {{-- Bubble Card --}}
                                 <div class="max-w-[78%] rounded-[18px] p-3 text-[13px] leading-relaxed shadow-xs space-y-1"
                                      :class="msg.sender === 'business' ? 'bg-[#007AFF] text-white rounded-br-[4px]' : 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white border border-black/5 dark:border-white/5 rounded-bl-[4px]'">
-                                    <p class="whitespace-pre-wrap break-words" x-text="msg.text"></p>
+                                    <div class="whitespace-pre-wrap break-words leading-relaxed" x-html="formatMessage(msg.text, msg.sender === 'business')"></div>
                                     <div class="flex items-center justify-end gap-1 text-[10px]"
                                          :class="msg.sender === 'business' ? 'text-white/75' : 'text-black/45 dark:text-white/45'">
                                         <span x-text="msg.time"></span>
@@ -1751,6 +1751,41 @@
                             if (window.lucide) window.lucide.createIcons();
                         });
                     }
+                },
+
+                formatMessage(text, isBusiness = false) {
+                    if (!text) return '';
+
+                    let safe = String(text)
+                        .replace(/&/g, '&amp;')
+                        .replace(/</g, '&lt;')
+                        .replace(/>/g, '&gt;')
+                        .replace(/"/g, '&quot;')
+                        .replace(/'/g, '&#039;');
+
+                    safe = safe.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold">$1</strong>');
+
+                    const btnClass = isBusiness
+                        ? 'inline-flex items-center gap-1.5 px-3 py-1 my-0.5 rounded-xl bg-white hover:bg-slate-100 text-[#007AFF] font-semibold text-[12px] shadow-xs hover:shadow transition-all active:scale-95 no-underline align-middle mx-1 cursor-pointer'
+                        : 'inline-flex items-center gap-1.5 px-3 py-1 my-0.5 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white font-semibold text-[12px] shadow-xs hover:shadow transition-all active:scale-95 no-underline align-middle mx-1 cursor-pointer';
+
+                    const linkClass = isBusiness
+                        ? 'text-white font-semibold underline hover:opacity-90 break-all inline-flex items-center gap-1'
+                        : 'text-violet-600 dark:text-violet-400 font-semibold underline hover:text-violet-700 break-all inline-flex items-center gap-1';
+
+                    const externalIcon = '<svg class="w-3.5 h-3.5 opacity-90 shrink-0 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>';
+
+                    safe = safe.replace(/\[([^\]]+)\]\(((?:https?:\/\/|\/)[^\s\)]+)\)/g, (match, title, url) => {
+                        return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="${btnClass}"><span>${title}</span> ${externalIcon}</a>`;
+                    });
+
+                    const parts = safe.split(/(<a\b[^>]*>.*?<\/a>)/g);
+                    for (let i = 0; i < parts.length; i++) {
+                        if (!parts[i].startsWith('<a')) {
+                            parts[i] = parts[i].replace(/(https?:\/\/[^\s<]+)/g, `<a href="$1" target="_blank" rel="noopener noreferrer" class="${linkClass}"><span>$1</span> ${externalIcon}</a>`);
+                        }
+                    }
+                    return parts.join('');
                 }
             };
         }

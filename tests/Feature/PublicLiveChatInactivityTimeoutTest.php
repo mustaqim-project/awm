@@ -286,4 +286,33 @@ final class PublicLiveChatInactivityTimeoutTest extends TestCase
         ]);
         $this->assertStringContainsString('5 menit', $response->json('message'));
     }
+
+    public function test_live_chat_history_preserves_action_links_and_trial_url(): void
+    {
+        $sessionToken = 'live_test_links_' . Str::random(20);
+
+        SocialMediaComment::create([
+            'is_platform'         => true,
+            'platform'            => 'live_chat',
+            'platform_comment_id' => 'lc_' . Str::uuid(),
+            'platform_post_id'    => 'live_chat_website',
+            'from_id'             => 'cooca_support',
+            'from_name'           => 'Cooca Support',
+            'session_token'       => $sessionToken,
+            'message'             => 'Kak Agung bisa mencoba semua fitur via [Pendaftaran Free Trial 14 Hari](https://cooca.id/register). 🚀',
+            'is_from_page'        => true,
+            'status'              => 'replied',
+            'created_time'        => now(),
+        ]);
+
+        $response = $this->getJson(route('public.live-chat.history', ['session_token' => $sessionToken]));
+
+        $response->assertOk();
+        $response->assertJson([
+            'success' => true,
+        ]);
+        $messages = $response->json('messages');
+        $this->assertCount(1, $messages);
+        $this->assertStringContainsString('[Pendaftaran Free Trial 14 Hari](https://cooca.id/register)', $messages[0]['message']);
+    }
 }

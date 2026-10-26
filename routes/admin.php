@@ -94,8 +94,10 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
         Route::post('/ai-tokens/engine/test', [AdminAiTokenController::class, 'testEngine'])->name('ai-tokens.engine.test');
         Route::post('/ai-tokens/engine/detect-models', [AdminAiTokenController::class, 'detectModels'])->name('ai-tokens.engine.detect-models');
         Route::post('/ai-tokens/engine/keys', [AdminAiTokenController::class, 'addKey'])->name('ai-tokens.engine.keys.add');
+        Route::put('/ai-tokens/engine/keys/{keyId}', [AdminAiTokenController::class, 'updateKey'])->name('ai-tokens.engine.keys.update');
         Route::post('/ai-tokens/engine/keys/{keyId}/toggle', [AdminAiTokenController::class, 'toggleKey'])->name('ai-tokens.engine.keys.toggle');
         Route::delete('/ai-tokens/engine/keys/{keyId}', [AdminAiTokenController::class, 'deleteKey'])->name('ai-tokens.engine.keys.delete');
+        Route::post('/ai-tokens/engine/keys/{keyId}/test', [AdminAiTokenController::class, 'testSingleKey'])->name('ai-tokens.engine.keys.test-single');
         Route::post('/ai-tokens/engine/models', [AdminAiTokenController::class, 'addModel'])->name('ai-tokens.engine.models.add');
         Route::delete('/ai-tokens/engine/models/{modelId}', [AdminAiTokenController::class, 'deleteModel'])->where('modelId', '.*')->name('ai-tokens.engine.models.delete');
         Route::post('/ai-tokens/engine/models/reset-default', [AdminAiTokenController::class, 'resetDefaultModels'])->name('ai-tokens.engine.models.reset-default');

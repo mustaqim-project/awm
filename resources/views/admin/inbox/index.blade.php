@@ -1039,7 +1039,7 @@
                                                                     </div>
                                                                 </template>
 
-                                                                <p x-show="msg.message && msg.message !== '[Foto]'" class="text-[13px] text-[#1F2937] dark:text-[#F3F4F6] whitespace-pre-wrap leading-relaxed" x-text="msg.message"></p>
+                                                                <div x-show="msg.message && msg.message !== '[Foto]'" class="text-[13px] text-[#1F2937] dark:text-[#F3F4F6] whitespace-pre-wrap break-words leading-relaxed" x-html="formatMessage(msg.message, false)"></div>
                                                             </div>
                                                             <span class="text-[10px] text-[#9CA3AF] px-1 block" x-text="msg.time"></span>
                                                         </div>
@@ -1066,7 +1066,7 @@
                                                                     </div>
                                                                 </template>
 
-                                                                <p x-show="msg.message && msg.message !== '[Foto]'" class="text-[13px] text-white whitespace-pre-wrap leading-relaxed" x-text="msg.message"></p>
+                                                                <div x-show="msg.message && msg.message !== '[Foto]'" class="text-[13px] text-white whitespace-pre-wrap break-words leading-relaxed" x-html="formatMessage(msg.message, true)"></div>
                                                             </div>
                                                             <span class="text-[10px] text-[#9CA3AF] px-1 block text-right" x-text="msg.time"></span>
                                                         </div>
@@ -1446,7 +1446,7 @@
                                                     </a>
                                                 </div>
                                             </template>
-                                            <p class="text-[13px] text-[#1F2937] dark:text-[#F3F4F6] whitespace-pre-wrap leading-relaxed" x-text="hMsg.message"></p>
+                                            <div class="text-[13px] text-[#1F2937] dark:text-[#F3F4F6] whitespace-pre-wrap break-words leading-relaxed" x-html="formatMessage(hMsg.message, false)"></div>
                                         </div>
                                         <span class="text-[10px] text-[#9CA3AF] px-1 block" x-text="hMsg.time"></span>
                                     </div>
@@ -1471,7 +1471,7 @@
                                                     </a>
                                                 </div>
                                             </template>
-                                            <p class="text-[13px] text-white whitespace-pre-wrap leading-relaxed" x-text="hMsg.message"></p>
+                                            <div class="text-[13px] text-white whitespace-pre-wrap break-words leading-relaxed" x-html="formatMessage(hMsg.message, true)"></div>
                                         </div>
                                         <span class="text-[10px] text-[#9CA3AF] px-1 block text-right" x-text="hMsg.time"></span>
                                     </div>
@@ -3456,6 +3456,48 @@ COOCA adalah platform SaaS Business Operating System (BOS) All-in-One yang diran
 - Layanan Darurat Server & Infrastruktur: Siaga 24 Jam 7 Hari seminggu (24/7).
 - Website Resmi: https://cooca.id
 - Pendaftaran Uji Coba Gratis: https://cooca.id/register`;
+        },
+
+        formatMessage(text, isColoredBubble = false) {
+            if (!text) return '';
+
+            // 1. Sanitize HTML entities
+            let safe = String(text)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+
+            // 2. Parse Markdown bold **bold text**
+            safe = safe.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold">$1</strong>');
+
+            // 3. Define action button badge styles
+            const btnClass = isColoredBubble
+                ? 'inline-flex items-center gap-1.5 px-3 py-1 my-0.5 rounded-xl bg-white hover:bg-slate-100 text-slate-900 font-semibold text-[12px] shadow-xs hover:shadow transition-all active:scale-95 no-underline align-middle mx-1 cursor-pointer'
+                : 'inline-flex items-center gap-1.5 px-3 py-1 my-0.5 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white font-semibold text-[12px] shadow-xs hover:shadow transition-all active:scale-95 no-underline align-middle mx-1 cursor-pointer';
+
+            const linkClass = isColoredBubble
+                ? 'text-white font-semibold underline hover:opacity-90 break-all inline-flex items-center gap-1'
+                : 'text-violet-600 dark:text-violet-400 font-semibold underline hover:text-violet-700 break-all inline-flex items-center gap-1';
+
+            const externalIcon = '<svg class="w-3.5 h-3.5 opacity-90 shrink-0 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>';
+
+            // 4. Parse Markdown links [Title](URL) into styled clickable action buttons
+            safe = safe.replace(/\[([^\]]+)\]\(((?:https?:\/\/|\/)[^\s\)]+)\)/g, (match, title, url) => {
+                return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="${btnClass}"><span>${title}</span> ${externalIcon}</a>`;
+            });
+
+            // 5. Parse any remaining bare URLs (https://... or http://...) that are not inside an <a> tag
+            const parts = safe.split(/(<a\b[^>]*>.*?<\/a>)/g);
+            for (let i = 0; i < parts.length; i++) {
+                if (!parts[i].startsWith('<a')) {
+                    parts[i] = parts[i].replace(/(https?:\/\/[^\s<]+)/g, `<a href="$1" target="_blank" rel="noopener noreferrer" class="${linkClass}"><span>$1</span> ${externalIcon}</a>`);
+                }
+            }
+            safe = parts.join('');
+
+            return safe;
         },
 
         showToastNotification(msg) {
