@@ -83,7 +83,8 @@ return Application::configure(basePath: dirname(__DIR__))
             '.well-known',
             '.well-known/*',
             'webhooks/marketplace/*',
-            'live-chat/send',
+            'live-chat',
+            'live-chat/*',
         ]);
 
         $middleware->web(append: [

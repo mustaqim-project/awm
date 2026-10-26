@@ -72,6 +72,7 @@ class ProcessSubscriptionLifecycleCommand extends Command
             $sub->update([
                 'status' => BusinessSubscription::STATUS_EXPIRED,
             ]);
+            app(\App\Domain\Billing\EarlyAdopterPricingService::class)->handleSubscriptionLapse($sub);
             $expiredCount++;
             Log::info("Langganan Bisnis ID: {$sub->business_id} telah melewati masa tenggang toleransi 3 hari pada {$sub->ends_at} dan dinonaktifkan (EXPIRED).");
         }

@@ -268,18 +268,20 @@ Route::post('/webhooks/marketplace/{provider}', [\App\Http\Controllers\Web\Marke
     ->middleware('throttle:120,1')
     ->name('webhooks.marketplace');
 
-// 15. Public COOCA Mobile Android APK Download
+// 15. Public COOCA My Own Mobile Android APK Download
 Route::get('/download/apk', function () {
     $candidates = [
+        public_path('apk/cooca_my_own.apk'),
+        public_path('downloads/cooca_my_own.apk'),
         public_path('downloads/cooca.apk'),
         public_path('cooca.apk'),
-        public_path('apk/cooca_my_own.apk'),
+        public_path('apk/cooca.apk'),
         public_path('apk/app-release.apk'),
     ];
 
     foreach ($candidates as $apkPath) {
         if (file_exists($apkPath)) {
-            return response()->download($apkPath, 'COOCA-POS-v1.0.0.apk', [
+            return response()->download($apkPath, 'COOCA-My-Own-v1.0.0.apk', [
                 'Content-Type' => 'application/vnd.android.package-archive',
             ]);
         }

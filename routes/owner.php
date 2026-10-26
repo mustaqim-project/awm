@@ -492,8 +492,9 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
             Route::post('/attendance/corrections/{correction}/approve', [HrmWebController::class, 'approveCorrection'])->middleware('require.permission:users.manage')->name('attendance.corrections.approve');
             Route::post('/attendance/corrections/{correction}/reject', [HrmWebController::class, 'rejectCorrection'])->middleware('require.permission:users.manage')->name('attendance.corrections.reject');
 
-            // Pendaftaran Biometrik Wajah Karyawan
+            // Pendaftaran & Reset Biometrik Wajah Karyawan
             Route::post('/employees/{membership}/face-register', [HrmWebController::class, 'registerEmployeeFace'])->middleware('require.permission:users.manage')->name('employees.face-register');
+            Route::post('/employees/{membership}/face-reset', [HrmWebController::class, 'resetEmployeeFace'])->middleware('require.permission:users.manage')->name('employees.face-reset');
 
             // Pengaturan Lokasi & Geofencing Presensi
             Route::post('/locations', [HrmWebController::class, 'storeLocation'])->middleware('require.permission:users.manage')->name('locations.store');

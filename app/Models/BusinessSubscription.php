@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Models\Traits\BelongsToBusiness;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -45,6 +46,20 @@ final class BusinessSubscription extends Model
         'ai_tokens_monthly_allowance',
         'ai_tokens_remaining',
         'last_token_reset_at',
+        'pricing_program_id',
+        'pricing_batch_id',
+        'locked_price_monthly',
+        'locked_price_annual',
+        'locked_tier',
+        'locked_cycle',
+        'special_rate_starts_at',
+        'special_rate_ends_at',
+        'annual_increase_percentage',
+        'next_price_increase_at',
+        'last_price_increase_at',
+        'is_price_lock_eligible',
+        'price_lock_forfeited_at',
+        'price_lock_forfeited_reason',
     ];
 
     protected $casts = [
@@ -54,6 +69,15 @@ final class BusinessSubscription extends Model
         'price' => 'decimal:2',
         'ai_tokens_monthly_allowance' => 'integer',
         'ai_tokens_remaining' => 'integer',
+        'locked_price_monthly' => 'float',
+        'locked_price_annual' => 'float',
+        'special_rate_starts_at' => 'datetime',
+        'special_rate_ends_at' => 'datetime',
+        'annual_increase_percentage' => 'float',
+        'next_price_increase_at' => 'date',
+        'last_price_increase_at' => 'date',
+        'is_price_lock_eligible' => 'boolean',
+        'price_lock_forfeited_at' => 'datetime',
     ];
 
     public function isActive(): bool
@@ -124,5 +148,47 @@ final class BusinessSubscription extends Model
         };
 
         return $this->getTierLevel() >= $requiredLevel;
+    }
+
+    public function program(): BelongsTo
+    {
+        return $this->belongsTo(SubscriptionPricingProgram::class, 'pricing_program_id');
+    }
+
+    public function batch(): BelongsTo
+    {
+        return $this->belongsTo(SubscriptionPricingBatch::class, 'pricing_batch_id');
+    }
+
+    public function priceHistories(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(SubscriptionPriceHistory::class, 'business_subscription_id')->latest();
+    }
+
+    public function hasPriceLock(): bool
+    {
+        return $this->pricing_batch_id !== null && $this->is_price_lock_eligible;
+    }
+
+    public function isPriceLockActive(): bool
+    {
+        if (! $this->hasPriceLock()) {
+            return false;
+        }
+
+        if ($this->special_rate_ends_at !== null && Carbon::now()->greaterThan($this->special_rate_ends_at)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function getLockedPriceForCycle(string $cycle): ?float
+    {
+        if (! $this->isPriceLockActive()) {
+            return null;
+        }
+
+        return $cycle === 'annual' ? $this->locked_price_annual : $this->locked_price_monthly;
     }
 }

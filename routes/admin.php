@@ -130,6 +130,24 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
             Route::post('/seed-defaults', [\App\Http\Controllers\Admin\AdminPromoController::class, 'seedDefaults'])->name('seed-defaults');
         });
 
+        // Early Adopter Subscription Pricing & Escalation Programs
+        Route::prefix('pricing-programs')->name('pricing-programs.')->group(function (): void {
+            Route::get('/', [\App\Http\Controllers\Admin\AdminPricingProgramController::class, 'index'])->name('index');
+            Route::post('/', [\App\Http\Controllers\Admin\AdminPricingProgramController::class, 'store'])->name('store');
+            Route::put('/{program}', [\App\Http\Controllers\Admin\AdminPricingProgramController::class, 'update'])->name('update');
+            Route::post('/{program}/toggle', [\App\Http\Controllers\Admin\AdminPricingProgramController::class, 'toggle'])->name('toggle');
+
+            // Batches
+            Route::post('/{program}/batches', [\App\Http\Controllers\Admin\AdminPricingProgramController::class, 'storeBatch'])->name('batches.store');
+            Route::put('/batches/{batch}', [\App\Http\Controllers\Admin\AdminPricingProgramController::class, 'updateBatch'])->name('batches.update');
+            Route::post('/batches/{batch}/status', [\App\Http\Controllers\Admin\AdminPricingProgramController::class, 'toggleBatchStatus'])->name('batches.status');
+            Route::post('/batches/{batch}/next', [\App\Http\Controllers\Admin\AdminPricingProgramController::class, 'linkNextBatch'])->name('batches.next');
+
+            // Escalation
+            Route::get('/simulate-escalation', [\App\Http\Controllers\Admin\AdminPricingProgramController::class, 'simulateEscalation'])->name('simulate-escalation');
+            Route::post('/run-escalation', [\App\Http\Controllers\Admin\AdminPricingProgramController::class, 'runEscalation'])->name('run-escalation');
+        });
+
         // SaaS Subscription Management & Payment Approval
         Route::get('/subscriptions', [AdminSubscriptionController::class, 'index'])->name('subscriptions.index');
         Route::get('/subscriptions/{payment}', [AdminSubscriptionController::class, 'show'])->name('subscriptions.show');
@@ -341,6 +359,7 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
             Route::post('/upload-media', [AdminInboxController::class, 'uploadMedia'])->name('upload-media');
             Route::post('/send-private-dm/{id}', [AdminInboxController::class, 'sendPrivateDm'])->name('send-private-dm');
             Route::post('/toggle-status/{id}', [AdminInboxController::class, 'toggleStatus'])->name('toggle-status');
+            Route::post('/toggle-takeover/{id}', [AdminInboxController::class, 'toggleTakeover'])->name('toggle-takeover');
             Route::post('/tags/{id}', [AdminInboxController::class, 'updateTags'])->name('tags');
             Route::post('/sync-meta', [AdminInboxController::class, 'syncMeta'])->name('sync-meta');
             Route::post('/settings', [AdminInboxController::class, 'saveSettings'])->name('settings');

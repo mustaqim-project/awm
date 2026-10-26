@@ -377,6 +377,18 @@
 
                                             {{-- Badges row (Status + Tags with Soft Colors) --}}
                                             <div class="flex flex-wrap items-center gap-1.5 mt-1.5">
+                                                <template x-if="t.is_human_takeover">
+                                                    <span class="text-[9.5px] px-1.5 py-0.5 rounded-[4px] font-bold bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-400 border border-amber-200 dark:border-amber-800/40 flex items-center gap-0.5" title="Percakapan di-takeover human agent">
+                                                        <i data-lucide="user-check" class="w-2.5 h-2.5"></i>
+                                                        <span>Human</span>
+                                                    </span>
+                                                </template>
+                                                <template x-if="!t.is_human_takeover">
+                                                    <span class="text-[9.5px] px-1.5 py-0.5 rounded-[4px] font-bold bg-purple-100 text-purple-700 dark:bg-purple-950/60 dark:text-purple-400 border border-purple-200 dark:border-purple-800/40 flex items-center gap-0.5" title="AI Auto-Pilot aktif">
+                                                        <i data-lucide="bot" class="w-2.5 h-2.5"></i>
+                                                        <span>AI Auto</span>
+                                                    </span>
+                                                </template>
                                                 <span class="text-[10px] px-1.5 py-0.5 rounded-[5px] font-medium"
                                                     :class="getStatusBadgeClass(t.status)"
                                                     x-text="formatStatusLabel(t.status)"></span>
@@ -422,6 +434,18 @@
 
                                             {{-- Badges row (Status + Tags with Soft Colors) --}}
                                             <div class="flex flex-wrap items-center gap-1.5 mt-1.5">
+                                                <template x-if="t.is_human_takeover">
+                                                    <span class="text-[9.5px] px-1.5 py-0.5 rounded-[4px] font-bold bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-400 border border-amber-200 dark:border-amber-800/40 flex items-center gap-0.5" title="Percakapan di-takeover human agent">
+                                                        <i data-lucide="user-check" class="w-2.5 h-2.5"></i>
+                                                        <span>Human</span>
+                                                    </span>
+                                                </template>
+                                                <template x-if="!t.is_human_takeover">
+                                                    <span class="text-[9.5px] px-1.5 py-0.5 rounded-[4px] font-bold bg-purple-100 text-purple-700 dark:bg-purple-950/60 dark:text-purple-400 border border-purple-200 dark:border-purple-800/40 flex items-center gap-0.5" title="AI Auto-Pilot aktif">
+                                                        <i data-lucide="bot" class="w-2.5 h-2.5"></i>
+                                                        <span>AI Auto</span>
+                                                    </span>
+                                                </template>
                                                 <span class="text-[10px] px-1.5 py-0.5 rounded-[5px] font-medium"
                                                     :class="getStatusBadgeClass(t.status)"
                                                     x-text="formatStatusLabel(t.status)"></span>
@@ -521,6 +545,29 @@
 
                                 {{-- Right Header Actions --}}
                                 <div class="flex items-center gap-1.5 shrink-0">
+                                    {{-- Takeover Toggle Button (Comments) --}}
+                                    <button type="button" @click="toggleThreadTakeover(selectedThread)"
+                                        :class="selectedThread.is_human_takeover ? 'bg-amber-50 hover:bg-amber-100 text-amber-800 border-amber-300 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-700/50' : 'bg-purple-50 hover:bg-purple-100 text-purple-800 border-purple-300 dark:bg-purple-950/40 dark:text-purple-300 dark:border-purple-700/50'"
+                                        class="h-8 px-2.5 rounded-[8px] border text-[11.5px] font-semibold flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
+                                        :title="selectedThread.is_human_takeover ? 'Percakapan di-takeover human agent. Klik untuk melepas takeover dan kembalikan ke AI.' : 'AI Auto-Pilot aktif. Klik untuk takeover percakapan oleh human agent.'">
+                                        <template x-if="selectedThread.is_human_takeover">
+                                            <span class="flex items-center gap-1.5">
+                                                <i data-lucide="user-check" class="w-3.5 h-3.5 text-amber-600"></i>
+                                                <span class="hidden sm:inline" x-text="selectedThread.takeover_by_name ? 'Takeover: ' + selectedThread.takeover_by_name : 'Human Takeover'"></span>
+                                                <span class="sm:hidden">Human</span>
+                                                <span class="text-[9.5px] bg-amber-200/80 dark:bg-amber-900/60 px-1 py-0.2 rounded font-bold">Lepas</span>
+                                            </span>
+                                        </template>
+                                        <template x-if="!selectedThread.is_human_takeover">
+                                            <span class="flex items-center gap-1.5">
+                                                <i data-lucide="bot" class="w-3.5 h-3.5 text-purple-600"></i>
+                                                <span class="hidden sm:inline">AI Auto-Pilot</span>
+                                                <span class="sm:hidden">AI</span>
+                                                <span class="text-[9.5px] bg-purple-200/80 dark:bg-purple-900/60 px-1 py-0.2 rounded font-bold">Takeover</span>
+                                            </span>
+                                        </template>
+                                    </button>
+
                                     <template x-if="selectedThread.post?.permalink">
                                         <a :href="selectedThread.post.permalink" target="_blank" rel="noopener noreferrer"
                                            class="h-8 px-2.5 rounded-[8px] bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 text-[#1877F2] dark:text-[#60A5FA] text-[12px] font-medium flex items-center gap-1.5 transition-colors"
@@ -848,6 +895,29 @@
 
                                 {{-- ACTIONS BAR --}}
                                 <div class="flex items-center gap-2 shrink-0">
+                                    {{-- Takeover Toggle Button (Direct Chat) --}}
+                                    <button type="button" @click="toggleThreadTakeover(selectedThread)"
+                                        :class="selectedThread.is_human_takeover ? 'bg-amber-50 hover:bg-amber-100 text-amber-800 border-amber-300 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-700/50' : 'bg-purple-50 hover:bg-purple-100 text-purple-800 border-purple-300 dark:bg-purple-950/40 dark:text-purple-300 dark:border-purple-700/50'"
+                                        class="h-8 px-2.5 rounded-[8px] border text-[11.5px] font-semibold flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
+                                        :title="selectedThread.is_human_takeover ? 'Percakapan di-takeover human agent. Klik untuk melepas takeover dan kembalikan ke AI.' : 'AI Auto-Pilot aktif. Klik untuk takeover percakapan oleh human agent.'">
+                                        <template x-if="selectedThread.is_human_takeover">
+                                            <span class="flex items-center gap-1.5">
+                                                <i data-lucide="user-check" class="w-3.5 h-3.5 text-amber-600"></i>
+                                                <span class="hidden sm:inline" x-text="selectedThread.takeover_by_name ? 'Takeover: ' + selectedThread.takeover_by_name : 'Human Takeover'"></span>
+                                                <span class="sm:hidden">Human</span>
+                                                <span class="text-[9.5px] bg-amber-200/80 dark:bg-amber-900/60 px-1 py-0.2 rounded font-bold">Lepas</span>
+                                            </span>
+                                        </template>
+                                        <template x-if="!selectedThread.is_human_takeover">
+                                            <span class="flex items-center gap-1.5">
+                                                <i data-lucide="bot" class="w-3.5 h-3.5 text-purple-600"></i>
+                                                <span class="hidden sm:inline">AI Auto-Pilot</span>
+                                                <span class="sm:hidden">AI</span>
+                                                <span class="text-[9.5px] bg-purple-200/80 dark:bg-purple-900/60 px-1 py-0.2 rounded font-bold">Takeover</span>
+                                            </span>
+                                        </template>
+                                    </button>
+
                                     {{-- Tag Dropdown Button --}}
                                     <div class="relative" x-data="{ openDmTagDrop: false, customDmTagVal: '' }">
                                         <button type="button" @click="openDmTagDrop = !openDmTagDrop"
@@ -2940,6 +3010,59 @@ function adminInboxHub() {
                 }
             } catch (err) {
                 console.error('Failed to toggle tag:', err);
+            }
+        },
+
+        async toggleThreadTakeover(thread, action = null) {
+            if (!thread) return;
+            const targetAction = action !== null ? action : (thread.is_human_takeover ? 'release' : 'takeover');
+            const prevStatus = thread.is_human_takeover;
+
+            // Optimistic update
+            thread.is_human_takeover = (targetAction === 'takeover');
+
+            this.allThreads.forEach(t => {
+                if (t.id === thread.id || (t.thread_key && thread.thread_key && t.thread_key === thread.thread_key)) {
+                    t.is_human_takeover = thread.is_human_takeover;
+                    if (targetAction === 'takeover') {
+                        t.takeover_by_name = t.takeover_by_name || 'Admin COOCA';
+                    }
+                }
+            });
+
+            setTimeout(() => { if (window.lucide) window.lucide.createIcons(); }, 50);
+
+            try {
+                const response = await fetch(`/admin/inbox/toggle-takeover/${thread.id}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify({ action: targetAction })
+                });
+                const data = await response.json();
+                if (data.success) {
+                    thread.is_human_takeover = data.is_human_takeover;
+                    thread.takeover_by_name = data.takeover_by_name;
+                    thread.takeover_at = data.takeover_at;
+                    this.allThreads.forEach(t => {
+                        if (t.id === thread.id || (t.thread_key && thread.thread_key && t.thread_key === thread.thread_key)) {
+                            t.is_human_takeover = data.is_human_takeover;
+                            t.takeover_by_name = data.takeover_by_name;
+                            t.takeover_at = data.takeover_at;
+                        }
+                    });
+                } else {
+                    thread.is_human_takeover = prevStatus;
+                    alert(data.message || 'Gagal mengubah status takeover.');
+                }
+            } catch (err) {
+                thread.is_human_takeover = prevStatus;
+                alert('Terjadi kesalahan jaringan: ' + err.message);
+            } finally {
+                setTimeout(() => { if (window.lucide) window.lucide.createIcons(); }, 50);
             }
         },
 

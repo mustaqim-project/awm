@@ -244,7 +244,7 @@ class MetaOmnichannelWebhookController extends Controller
             // Resolve customer sender name via Meta Graph API or cache
             $senderName = $isFromPage ? 'Cooca Indonesia (Admin)' : $this->resolveUserName($customerId, $channel, $token);
 
-            SocialMediaComment::updateOrCreate(
+            $savedComment = SocialMediaComment::updateOrCreate(
                 [
                     'is_platform'         => true,
                     'platform'            => $channel,
@@ -268,6 +268,15 @@ class MetaOmnichannelWebhookController extends Controller
             );
 
             Log::channel('daily')->info("[MetaOmnichannelWebhook] Direct message saved: {$channel} (customer: {$customerId}, fromPage: " . ($isFromPage ? '1' : '0') . "): {$text}");
+
+            // Trigger AI Auto-Reply if inbound from customer
+            if (! $isFromPage) {
+                try {
+                    app(\App\Domain\SocialMedia\AdminInboxAiService::class)->processAutoReplyIfEligible($savedComment);
+                } catch (\Throwable $e) {
+                    Log::channel('daily')->warning('[MetaOmnichannelWebhook] AI Auto-Reply notice: ' . $e->getMessage());
+                }
+            }
         }
     }
 
@@ -441,7 +450,7 @@ class MetaOmnichannelWebhookController extends Controller
             $postRecordId = $linkedPost->id;
         }
 
-        SocialMediaComment::updateOrCreate(
+        $commentRecord = SocialMediaComment::updateOrCreate(
             [
                 'is_platform'         => true,
                 'platform'            => $platform,
@@ -465,6 +474,14 @@ class MetaOmnichannelWebhookController extends Controller
         );
 
         Log::channel('daily')->info("[MetaOmnichannelWebhook] Feed comment saved: {$platform} by {$senderName}: {$message} (parent: " . ($parentCommentId ?? 'NULL') . ")");
+
+        if (! $isFromCooca) {
+            try {
+                app(\App\Domain\SocialMedia\AdminInboxAiService::class)->processAutoReplyIfEligible($commentRecord);
+            } catch (\Throwable $e) {
+                Log::channel('daily')->warning('[MetaOmnichannelWebhook] AI Auto-Reply notice: ' . $e->getMessage());
+            }
+        }
     }
 
     /**
@@ -568,7 +585,7 @@ class MetaOmnichannelWebhookController extends Controller
                 $createdTime = Carbon::createFromTimestamp($ts);
             }
 
-            SocialMediaComment::updateOrCreate(
+            $waComment = SocialMediaComment::updateOrCreate(
                 [
                     'is_platform'         => true,
                     'platform'            => 'whatsapp',
@@ -592,6 +609,12 @@ class MetaOmnichannelWebhookController extends Controller
             );
 
             Log::channel('daily')->info("[MetaOmnichannelWebhook] WhatsApp message saved from {$fromNumber}: {$textBody}");
+
+            try {
+                app(\App\Domain\SocialMedia\AdminInboxAiService::class)->processAutoReplyIfEligible($waComment);
+            } catch (\Throwable $e) {
+                Log::channel('daily')->warning('[MetaOmnichannelWebhook] AI Auto-Reply notice: ' . $e->getMessage());
+            }
         }
     }
 }

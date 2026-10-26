@@ -265,6 +265,72 @@
                         </div>
                     </div>
 
+                    <!-- Panduan Format Provider & Kunci API Langsung di Form -->
+                    <div class="rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 p-4 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <h4 class="text-[12.5px] font-bold text-black dark:text-white flex items-center gap-1.5">
+                                <i data-lucide="book-open" class="w-4 h-4 text-[#007AFF]"></i>
+                                <span>Panduan Format Provider &amp; Kunci API</span>
+                            </h4>
+                            <span class="text-[11px] text-black/50 dark:text-white/50">Klik baris untuk auto-fill endpoint</span>
+                        </div>
+
+                        <div class="overflow-x-auto rounded-[10px] border border-black/5 dark:border-white/5 bg-white dark:bg-[#1C1C1E]">
+                            <table class="w-full text-left text-[11.5px]">
+                                <thead class="bg-black/[0.03] dark:bg-white/[0.04] text-black/70 dark:text-white/70 font-semibold border-b border-black/5 dark:border-white/5">
+                                    <tr>
+                                        <th class="py-2.5 px-3">Provider AI</th>
+                                        <th class="py-2.5 px-3">Pilihan Dropdown</th>
+                                        <th class="py-2.5 px-3">Base URL Endpoint API</th>
+                                        <th class="py-2.5 px-3">Format API Key &amp; Catatan</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-black/5 dark:divide-white/5 text-black/80 dark:text-white/80">
+                                    <tr @click="applyProviderPreset('openai')" class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] cursor-pointer transition">
+                                        <td class="py-2.5 px-3 font-semibold text-black dark:text-white whitespace-nowrap">OpenAI Official Direct</td>
+                                        <td class="py-2.5 px-3 font-mono text-[11px]">OpenAI Official Direct</td>
+                                        <td class="py-2.5 px-3 font-mono text-[#007AFF] text-[11px] select-all">https://api.openai.com/v1</td>
+                                        <td class="py-2.5 px-3 text-[11px] leading-relaxed">
+                                            Format <code class="font-mono bg-black/5 dark:bg-white/10 px-1 py-0.5 rounded text-[#007AFF]">sk-proj-...</code> dari platform.openai.com. Mendukung GPT-4o, GPT-4o-mini, o1, o3-mini.
+                                        </td>
+                                    </tr>
+                                    <tr @click="applyProviderPreset('gemini')" class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] cursor-pointer transition">
+                                        <td class="py-2.5 px-3 font-semibold text-black dark:text-white whitespace-nowrap">Google Gemini Official</td>
+                                        <td class="py-2.5 px-3 font-mono text-[11px]">Google Gemini Official</td>
+                                        <td class="py-2.5 px-3 font-mono text-[#007AFF] text-[11px] select-all">Otomatis via Google Generative AI REST</td>
+                                        <td class="py-2.5 px-3 text-[11px] leading-relaxed">
+                                            Format <code class="font-mono bg-black/5 dark:bg-white/10 px-1 py-0.5 rounded text-[#007AFF]">AIzaSy...</code> dari Google AI Studio. Mendukung Gemini 2.0 Flash, Gemini 1.5 Pro.
+                                        </td>
+                                    </tr>
+                                    <tr @click="applyProviderPreset('anthropic')" class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] cursor-pointer transition">
+                                        <td class="py-2.5 px-3 font-semibold text-black dark:text-white whitespace-nowrap">Anthropic Claude</td>
+                                        <td class="py-2.5 px-3 font-mono text-[11px]">Anthropic Claude</td>
+                                        <td class="py-2.5 px-3 font-mono text-[#007AFF] text-[11px] select-all">https://api.anthropic.com/v1</td>
+                                        <td class="py-2.5 px-3 text-[11px] leading-relaxed">
+                                            Format <code class="font-mono bg-black/5 dark:bg-white/10 px-1 py-0.5 rounded text-[#007AFF]">sk-ant-api03-...</code> dari console.anthropic.com. Mendukung Claude 3.7 Sonnet, Claude 3.5 Haiku.
+                                        </td>
+                                    </tr>
+                                    <tr @click="applyProviderPreset('openrouter')" class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] cursor-pointer transition">
+                                        <td class="py-2.5 px-3 font-semibold text-black dark:text-white whitespace-nowrap">OpenRouter Gateway</td>
+                                        <td class="py-2.5 px-3 font-mono text-[11px]">OpenRouter AI Gateway</td>
+                                        <td class="py-2.5 px-3 font-mono text-[#007AFF] text-[11px] select-all">https://openrouter.ai/api/v1</td>
+                                        <td class="py-2.5 px-3 text-[11px] leading-relaxed">
+                                            Format <code class="font-mono bg-black/5 dark:bg-white/10 px-1 py-0.5 rounded text-[#007AFF]">sk-or-v1-...</code> dari openrouter.ai. Akses ke ratusan model (DeepSeek-R1, Llama 3.3, Qwen, Mistral).
+                                        </td>
+                                    </tr>
+                                    <tr @click="applyProviderPreset('openai_compatible')" class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] cursor-pointer transition">
+                                        <td class="py-2.5 px-3 font-semibold text-black dark:text-white whitespace-nowrap">OpenAI-Compatible Tunnel / Proxy / vLLM / Ollama</td>
+                                        <td class="py-2.5 px-3 font-mono text-[11px]">OpenAI Compatible</td>
+                                        <td class="py-2.5 px-3 font-mono text-[#007AFF] text-[11px] select-all">https://r4g77gv.abc-tunnel.us/v1</td>
+                                        <td class="py-2.5 px-3 text-[11px] leading-relaxed">
+                                            Format <code class="font-mono bg-black/5 dark:bg-white/10 px-1 py-0.5 rounded text-[#007AFF]">sk-...</code>. Cocok untuk server private AI, vLLM, LiteLLM, Groq-compatible proxy, atau tunnel Cloudflare/Ngrok.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                     <!-- Save Button -->
                     <div class="pt-2 flex justify-end">
                         <button type="submit"
@@ -552,7 +618,22 @@
                         </label>
                         <input type="password" name="api_key" required placeholder="sk-..."
                             class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[13px] font-mono text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
-                        <p class="text-[11px] text-black/45 dark:text-white/45 mt-1">Kunci akan disimpan terenkripsi di database.</p>
+                        <p class="text-[11px] text-black/45 dark:text-white/45 mt-1">Kunci akan disimpan terenkripsi di database (Zero Plaintext Exposure).</p>
+                    </div>
+
+                    <!-- Format Guide Box in Modal -->
+                    <div class="p-3 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/5 dark:border-white/5 space-y-1.5 text-[11px]">
+                        <span class="font-semibold text-black dark:text-white flex items-center gap-1.5">
+                            <i data-lucide="info" class="w-3.5 h-3.5 text-[#007AFF]"></i>
+                            <span>Format Token Resmi per Provider:</span>
+                        </span>
+                        <ul class="space-y-1 text-black/70 dark:text-white/70 font-mono text-[10.5px]">
+                            <li>&bull; <strong class="text-black dark:text-white font-sans">OpenAI:</strong> <code class="text-[#007AFF]">sk-proj-...</code> (platform.openai.com)</li>
+                            <li>&bull; <strong class="text-black dark:text-white font-sans">Google Gemini:</strong> <code class="text-[#007AFF]">AIzaSy...</code> (aistudio.google.com)</li>
+                            <li>&bull; <strong class="text-black dark:text-white font-sans">Anthropic:</strong> <code class="text-[#007AFF]">sk-ant-api03-...</code> (console.anthropic.com)</li>
+                            <li>&bull; <strong class="text-black dark:text-white font-sans">OpenRouter:</strong> <code class="text-[#007AFF]">sk-or-v1-...</code> (openrouter.ai)</li>
+                            <li>&bull; <strong class="text-black dark:text-white font-sans">Tunnel / Proxy / Local:</strong> <code class="text-[#007AFF]">sk-...</code> (vLLM / Ollama)</li>
+                        </ul>
                     </div>
 
                     <div class="pt-2 flex items-center justify-end gap-2">
@@ -840,6 +921,32 @@ function aiEngineConsole(config) {
             this.modelFeedback.show = true;
             this.modelFeedback.success = true;
             this.modelFeedback.message = `Model aktif dipilih: ${modelId}. Klik 'Simpan Konfigurasi Engine' di form untuk menyimpan secara permanen.`;
+            this.$nextTick(() => {
+                if (typeof lucide !== 'undefined') lucide.createIcons();
+            });
+        },
+
+        applyProviderPreset(p) {
+            this.selectedProvider = p;
+            if (p === 'openai') {
+                this.endpointUrl = 'https://api.openai.com/v1';
+                this.selectedModel = 'gpt-4o-mini';
+            } else if (p === 'gemini') {
+                this.endpointUrl = 'https://generativelanguage.googleapis.com/v1beta';
+                this.selectedModel = 'gemini-2.0-flash';
+            } else if (p === 'anthropic') {
+                this.endpointUrl = 'https://api.anthropic.com/v1';
+                this.selectedModel = 'claude-3-5-haiku-latest';
+            } else if (p === 'openrouter') {
+                this.endpointUrl = 'https://openrouter.ai/api/v1';
+                this.selectedModel = 'deepseek/deepseek-r1';
+            } else if (p === 'openai_compatible') {
+                this.endpointUrl = 'https://r4g77gv.abc-tunnel.us/v1';
+                this.selectedModel = 'ag/gemini-3.8-flash-high';
+            }
+            this.testFeedback.show = true;
+            this.testFeedback.success = true;
+            this.testFeedback.message = `Preset endpoint untuk provider '${p}' berhasil disematkan. Klik 'Simpan Konfigurasi Engine' untuk menerapkan.`;
             this.$nextTick(() => {
                 if (typeof lucide !== 'undefined') lucide.createIcons();
             });

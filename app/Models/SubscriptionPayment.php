@@ -193,6 +193,10 @@ class SubscriptionPayment extends Model
         'billing_package_id',
         'promo_id',
         'promo_code',
+        'pricing_program_id',
+        'pricing_batch_id',
+        'is_early_adopter',
+        'original_base_price',
         'package_name',
         'package_duration_days',
         'order_number',
@@ -236,6 +240,8 @@ class SubscriptionPayment extends Model
             'discount_amount' => 'float',
             'unique_code' => 'integer',
             'total_payable' => 'float',
+            'original_base_price' => 'float',
+            'is_early_adopter' => 'boolean',
             'topup_quantity' => 'integer',
             'topup_storage_bytes' => 'integer',
             'package_duration_days' => 'integer',
@@ -278,6 +284,16 @@ class SubscriptionPayment extends Model
     public function promo(): BelongsTo
     {
         return $this->belongsTo(SubscriptionPromo::class, 'promo_id');
+    }
+
+    public function program(): BelongsTo
+    {
+        return $this->belongsTo(SubscriptionPricingProgram::class, 'pricing_program_id');
+    }
+
+    public function batch(): BelongsTo
+    {
+        return $this->belongsTo(SubscriptionPricingBatch::class, 'pricing_batch_id');
     }
 
     public function hasDiscount(): bool

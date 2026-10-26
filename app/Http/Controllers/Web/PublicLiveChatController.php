@@ -67,6 +67,13 @@ class PublicLiveChatController extends Controller
             \Illuminate\Support\Facades\Log::warning('[LiveChat] Broadcast event error: ' . $e->getMessage());
         }
 
+        // Trigger AI Auto-Reply if eligible (respecting human takeover lifecycle)
+        try {
+            app(\App\Domain\SocialMedia\AdminInboxAiService::class)->processAutoReplyIfEligible($comment);
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::warning('[LiveChat] AI Auto-Reply error: ' . $e->getMessage());
+        }
+
         $created = $comment->created_time ?? now();
 
         return response()->json([
@@ -150,6 +157,13 @@ class PublicLiveChatController extends Controller
             event(new LiveChatMessageSent($comment));
         } catch (\Throwable $e) {
             \Illuminate\Support\Facades\Log::warning('[LiveChat] Broadcast send error: ' . $e->getMessage());
+        }
+
+        // Trigger AI Auto-Reply if eligible (respecting human takeover lifecycle)
+        try {
+            app(\App\Domain\SocialMedia\AdminInboxAiService::class)->processAutoReplyIfEligible($comment);
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::warning('[LiveChat] AI Auto-Reply error: ' . $e->getMessage());
         }
 
         $created = $comment->created_time ?? now();

@@ -558,7 +558,7 @@
                 <!-- ========================================== -->
                 <!-- Group 2: Keuangan & Penjualan              -->
                 <!-- ========================================== -->
-                @if ($currentAdmin?->hasAnyPermission(['admin.finance.view', 'admin.b2b.view', 'admin.subscriptions.view', 'admin.settlements.view', 'admin.billing_packages.view', 'admin.promos.view', 'admin.payment_accounts.view']))
+                @if ($currentAdmin?->hasAnyPermission(['admin.finance.view', 'admin.b2b.view', 'admin.subscriptions.view', 'admin.settlements.view', 'admin.billing_packages.view', 'admin.promos.view', 'admin.pricing_programs.view', 'admin.payment_accounts.view']))
                     <div class="px-3 pt-3.5 pb-1 text-[10.5px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D]">
                         Keuangan &amp; Penjualan
                     </div>
@@ -647,6 +647,19 @@
                                     <i data-lucide="ticket-percent" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
                                 </div>
                                 <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Kode Promo &amp; Voucher</span>
+                            </div>
+                        </a>
+                    @endif
+
+                    @if ($currentAdmin?->hasPermission('admin.pricing_programs.view'))
+                        @php $isActive = request()->routeIs('admin.pricing-programs.*'); @endphp
+                        <a href="{{ route('admin.pricing-programs.index') }}"
+                            class="group flex items-center justify-between px-2.5 h-[38px] rounded-[11px] transition-all duration-150 {{ $isActive ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25 font-semibold' : 'text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
+                            <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
+                                    <i data-lucide="sparkles" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
+                                </div>
+                                <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Early Adopter &amp; Harga</span>
                             </div>
                         </a>
                     @endif

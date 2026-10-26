@@ -1417,6 +1417,7 @@ Route::prefix('v1')->group(function (): void {
                 // Face Biometrics
                 Route::post('/face-template/register', [\App\Http\Controllers\Api\V1\Hrm\AttendanceApiController::class, 'registerFace']);
                 Route::post('/face-template/verify', [\App\Http\Controllers\Api\V1\Hrm\AttendanceApiController::class, 'verifyFace']);
+                Route::post('/face-template/reset', [\App\Http\Controllers\Api\V1\Hrm\AttendanceApiController::class, 'resetFace']);
 
                 // Attendance Corrections (Ajukan Perbaikan Absen)
                 Route::get('/corrections', [\App\Http\Controllers\Api\V1\Hrm\AttendanceApiController::class, 'listCorrections']);

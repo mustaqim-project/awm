@@ -934,6 +934,27 @@ final class AttendanceApiController extends Controller
             $targetUser = User::findOrFail($validated['user_id']);
         }
 
+        // Security Gate: If biometric is already registered, staff cannot re-enroll or update it.
+        // Updates can strictly only be performed by HR Manager / Admin directly from HRM system.
+        $targetMembership = BusinessMembership::where('business_id', $business->id)
+            ->where('user_id', $targetUser->id)
+            ->first();
+
+        if ($targetMembership && $targetMembership->hasFaceRegistered()) {
+            $isHrmManager = Context::isAdminOrOwner()
+                || Context::hasPermission('users.manage')
+                || Context::hasPermission('hrm.manage')
+                || $user->isBusinessOwner()
+                || in_array(strtolower($user->role ?? ''), ['owner', 'admin', 'manager', 'hr_manager']);
+
+            if (! $isHrmManager) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Data biometrik wajah Anda sudah terdaftar dan terkunci demi keamanan presensi. Pembaruan template wajah hanya dapat dilakukan langsung oleh Admin / HR Manager melalui modul HRM.',
+                ], 403);
+            }
+        }
+
         $faceSource = $request->file('photo') ?? $validated['face_data'] ?? $request->input('photo');
         if (empty($faceSource)) {
             return response()->json(['success' => false, 'message' => 'Data biometrik wajah (photo / face_data) wajib disediakan.'], 422);
@@ -952,6 +973,47 @@ final class AttendanceApiController extends Controller
                 'message' => $e->getMessage(),
             ], 400);
         }
+    }
+
+    /**
+     * Reset employee face biometric template (Admin / HR Manager only).
+     * POST /api/v1/attendance/face-template/reset
+     */
+    public function resetFace(Request $request): JsonResponse
+    {
+        $business = Context::requireBusiness();
+        $user = auth()->user();
+
+        $isHrmManager = Context::isAdminOrOwner()
+            || Context::hasPermission('users.manage')
+            || Context::hasPermission('hrm.manage')
+            || $user->isBusinessOwner()
+            || in_array(strtolower($user->role ?? ''), ['owner', 'admin', 'manager', 'hr_manager']);
+
+        if (! $isHrmManager) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Anda tidak memiliki hak otorisasi untuk mereset template biometrik staf.',
+            ], 403);
+        }
+
+        $validated = $request->validate([
+            'user_id' => ['required', 'uuid', 'exists:users,id'],
+        ]);
+
+        $membership = BusinessMembership::where('business_id', $business->id)
+            ->where('user_id', $validated['user_id'])
+            ->firstOrFail();
+
+        $membership->update([
+            'face_biometric_template' => null,
+            'face_registered_at' => null,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => "Template biometrik wajah karyawan {$membership->user->name} berhasil direset. Karyawan sekarang dapat mendaftarkan template baru.",
+        ], 200);
     }
 
     /**

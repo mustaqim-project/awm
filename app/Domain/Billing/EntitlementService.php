@@ -254,30 +254,22 @@ final class EntitlementService
     }
 
     /**
-     * Get dynamically configured price for a specific tier and cycle.
+     * Get dynamically configured price for a specific tier and cycle, checking Early Adopter and price locks.
      */
-    public function getTierPrice(string $tier, string $cycle = 'monthly'): float
+    public function getTierPrice(string $tier, string $cycle = 'monthly', ?Business $business = null): float
     {
-        $tier = strtolower($tier);
-        $isAnnual = $cycle === 'annual';
+        $earlyAdopterService = app(EarlyAdopterPricingService::class);
+        $pricing = $earlyAdopterService->calculatePrice($tier, $cycle, $business);
 
-        return match ($tier) {
-            BusinessSubscription::TIER_PRESTIGE => (float) (
-                $isAnnual
-                    ? SystemSetting::get('subscription_price_prestige_annual', (string) self::PRICE_PRESTIGE_ANNUAL)
-                    : SystemSetting::get('subscription_price_prestige_monthly', (string) self::PRICE_PRESTIGE_MONTHLY)
-            ),
-            BusinessSubscription::TIER_PREMIUM => (float) (
-                $isAnnual
-                    ? SystemSetting::get('subscription_price_premium_annual', (string) self::PRICE_PREMIUM_ANNUAL)
-                    : SystemSetting::get('subscription_price_premium_monthly', (string) self::PRICE_PREMIUM_MONTHLY)
-            ),
-            default => (float) (
-                $isAnnual
-                    ? SystemSetting::get('subscription_price_standard_annual', (string) SystemSetting::get('subscription_price_annual', (string) self::PRICE_STANDARD_ANNUAL))
-                    : SystemSetting::get('subscription_price_standard_monthly', (string) SystemSetting::get('subscription_price_monthly', (string) self::PRICE_STANDARD_MONTHLY))
-            ),
-        };
+        return (float) $pricing['price'];
+    }
+
+    /**
+     * Get official base normal price (unaffected by Early Adopter batches or price locks).
+     */
+    public function getBaseTierPrice(string $tier, string $cycle = 'monthly'): float
+    {
+        return app(EarlyAdopterPricingService::class)->getBasePrice($tier, $cycle);
     }
 
     /**
@@ -285,20 +277,20 @@ final class EntitlementService
      *
      * @return array<string, array{monthly: float, annual: float}>
      */
-    public function getAllTierPrices(): array
+    public function getAllTierPrices(?Business $business = null): array
     {
         return [
             'standard' => [
-                'monthly' => $this->getTierPrice('standard', 'monthly'),
-                'annual'  => $this->getTierPrice('standard', 'annual'),
+                'monthly' => $this->getTierPrice('standard', 'monthly', $business),
+                'annual'  => $this->getTierPrice('standard', 'annual', $business),
             ],
             'premium' => [
-                'monthly' => $this->getTierPrice('premium', 'monthly'),
-                'annual'  => $this->getTierPrice('premium', 'annual'),
+                'monthly' => $this->getTierPrice('premium', 'monthly', $business),
+                'annual'  => $this->getTierPrice('premium', 'annual', $business),
             ],
             'prestige' => [
-                'monthly' => $this->getTierPrice('prestige', 'monthly'),
-                'annual'  => $this->getTierPrice('prestige', 'annual'),
+                'monthly' => $this->getTierPrice('prestige', 'monthly', $business),
+                'annual'  => $this->getTierPrice('prestige', 'annual', $business),
             ],
         ];
     }
@@ -1237,7 +1229,28 @@ final class EntitlementService
             default => $isAnnual ? BusinessSubscription::PLAN_STANDARD_ANNUAL : BusinessSubscription::PLAN_STANDARD_MONTHLY,
         };
 
-        $baseAmount = $this->getTierPrice($tier, $cycle);
+        $pricingService = app(EarlyAdopterPricingService::class);
+        $pricingDetails = $pricingService->calculatePrice($tier, $cycle, $business);
+        $baseAmount = (float) $pricingDetails['price'];
+        $isEarlyAdopter = (bool) $pricingDetails['is_early_adopter'];
+        $pricingBatchId = $pricingDetails['batch']?->id;
+        $pricingProgramId = $pricingDetails['program']?->id;
+        $originalBasePrice = (float) $pricingDetails['original_base_price'];
+
+        // Atomic reservation if new slot in active early adopter batch
+        if ($isEarlyAdopter && ! $pricingDetails['is_grandfathered'] && $pricingDetails['batch']) {
+            $reserved = $pricingService->reserveQuotaAtomically($pricingDetails['batch']);
+            if (! $reserved) {
+                // Re-evaluate if batch filled up right at reservation
+                $pricingDetails = $pricingService->calculatePrice($tier, $cycle, $business);
+                $baseAmount = (float) $pricingDetails['price'];
+                $isEarlyAdopter = (bool) $pricingDetails['is_early_adopter'];
+                $pricingBatchId = $pricingDetails['batch']?->id;
+                $pricingProgramId = $pricingDetails['program']?->id;
+                $originalBasePrice = (float) $pricingDetails['original_base_price'];
+            }
+        }
+
         $discountAmount = 0.0;
         $promoId = null;
         $promoCode = null;
@@ -1274,6 +1287,10 @@ final class EntitlementService
             'amount' => $baseAmount,
             'promo_id' => $promoId,
             'promo_code' => $promoCode,
+            'pricing_program_id' => $pricingProgramId,
+            'pricing_batch_id' => $pricingBatchId,
+            'is_early_adopter' => $isEarlyAdopter,
+            'original_base_price' => $originalBasePrice,
             'discount_amount' => $discountAmount,
             'unique_code' => 0,
             'total_payable' => $totalPayable,
@@ -1599,6 +1616,12 @@ final class EntitlementService
                 $this->clearUsageCache($payment->business);
             }
 
+            // Apply Early Adopter Price Lock and record in Price History
+            if ($payment->is_early_adopter && $payment->pricing_batch_id) {
+                $subscription = $this->getSubscription($payment->business);
+                app(EarlyAdopterPricingService::class)->applyPriceLockToSubscription($subscription, $payment);
+            }
+
             // Auto-Journal: Catat Beban Langganan SaaS pada Buku Kas Operasional Tenant
             try {
                 if ((float) $payment->total_payable > 0) {
@@ -1716,4 +1739,13 @@ final class EntitlementService
 
         return false;
     }
+
+    /**
+     * Get official annual promo badge label (e.g. Hemat 2 Bulan).
+     */
+    public function getAnnualDiscountBadge(): string
+    {
+        return SystemSetting::get('subscription_annual_discount_badge', 'Hemat 2 Bulan');
+    }
 }
+

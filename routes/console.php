@@ -60,3 +60,10 @@ Schedule::command('cooca:ai-daily-business-check')
     ->dailyAt('07:00')
     ->withoutOverlapping()
     ->appendOutputTo(storage_path('logs/cron-ai.log'));
+
+// 9. Schedule daily Early Adopter annual price escalation evaluation (Setiap pukul 01:00 WIB)
+Schedule::command('cooca:apply-annual-price-escalation')
+    ->dailyAt('01:00')
+    ->withoutOverlapping()
+    ->appendOutputTo(storage_path('logs/cron.log'));
+

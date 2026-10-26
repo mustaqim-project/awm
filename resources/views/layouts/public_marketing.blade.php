@@ -2389,7 +2389,7 @@
                                 <a href="{{ route('public.download.apk') }}"
                                     class="hover:text-white hover:translate-x-0.5 transition-all inline-flex items-center gap-1.5 text-emerald-400 font-medium">
                                     <i data-lucide="download" class="w-3.5 h-3.5"></i>
-                                    <span>Download APK Android</span>
+                                    <span>Download COOCA My Own (APK)</span>
                                 </a>
                             </nav>
                         </div>

@@ -66,6 +66,7 @@ final class HrmWebController extends Controller implements HasMiddleware
                 'approveCorrection',
                 'rejectCorrection',
                 'registerEmployeeFace',
+                'resetEmployeeFace',
                 'storeLocation',
                 'updateLocation',
                 'destroyLocation',
@@ -1299,6 +1300,35 @@ final class HrmWebController extends Controller implements HasMiddleware
             }
             return back()->with('error', 'Gagal mendaftarkan biometrik wajah: ' . $e->getMessage());
         }
+    }
+
+    /**
+     * Reset employee biometric face template (HRM / Admin only).
+     */
+    public function resetEmployeeFace(Request $request, string $membershipId): RedirectResponse|JsonResponse
+    {
+        $business = Context::requireBusiness();
+        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola biometrik staf.');
+
+        $membership = BusinessMembership::where('business_id', $business->id)
+            ->where('id', $membershipId)
+            ->with('user')
+            ->firstOrFail();
+
+        $membership->update([
+            'face_biometric_template' => null,
+            'face_registered_at' => null,
+        ]);
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => "Biometrik wajah karyawan {$membership->user->name} berhasil direset.",
+            ]);
+        }
+
+        return redirect()->route('hrm.index', ['tab' => 'employees'])
+            ->with('success', "Biometrik wajah karyawan {$membership->user->name} berhasil direset.");
     }
 
     /**

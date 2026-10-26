@@ -360,6 +360,26 @@ final class PortalWebController extends Controller
             'photo' => ['required'],
         ]);
 
+        // Security Gate: Staff cannot re-enroll or update biometrics if already registered
+        $membership = \App\Models\BusinessMembership::where('business_id', $business->id)
+            ->where('user_id', $user->id)
+            ->first();
+
+        if ($membership && $membership->hasFaceRegistered()) {
+            $isHrmManager = Context::isAdminOrOwner()
+                || Context::hasPermission('users.manage')
+                || Context::hasPermission('hrm.manage')
+                || $user->isBusinessOwner()
+                || in_array(strtolower($user->role ?? ''), ['owner', 'admin', 'manager', 'hr_manager']);
+
+            if (! $isHrmManager) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Data biometrik wajah Anda sudah terdaftar dan terkunci demi keamanan presensi. Pembaruan template hanya dapat dilakukan langsung oleh Admin / HR Manager melalui modul HRM.',
+                ], 403);
+            }
+        }
+
         try {
             $template = $this->faceVerificationService->registerFaceTemplate(
                 $business,

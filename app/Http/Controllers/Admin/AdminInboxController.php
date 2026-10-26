@@ -8,6 +8,7 @@ use App\Domain\SocialMedia\AdminInboxAiService;
 use App\Domain\SocialMedia\AdminSocialMediaService;
 use App\Domain\SocialMedia\Clients\MetaSocialMediaClient;
 use App\Http\Controllers\Controller;
+use App\Models\InboxThreadTakeover;
 use App\Models\SocialMediaAccount;
 use App\Models\SocialMediaComment;
 use App\Models\SocialMediaPost;
@@ -32,7 +33,7 @@ class AdminInboxController extends Controller implements HasMiddleware
     {
         return [
             new Middleware('require.admin.permission:admin.inbox.view', only: ['index', 'poll', 'customerHistory', 'getAiSettings']),
-            new Middleware('require.admin.permission:admin.inbox.reply', only: ['reply', 'sendPrivateDm', 'uploadMedia', 'generateAiReply', 'testAiPrompt']),
+            new Middleware('require.admin.permission:admin.inbox.reply', only: ['reply', 'sendPrivateDm', 'uploadMedia', 'generateAiReply', 'testAiPrompt', 'toggleTakeover']),
             new Middleware('require.admin.permission:admin.inbox.manage', only: ['toggleStatus', 'updateTags', 'saveSettings', 'syncMeta', 'saveAiSettings']),
         ];
     }
@@ -726,6 +727,18 @@ class AdminInboxController extends Controller implements HasMiddleware
                 ? ($comment->session_token ?: $comment->from_id)
                 : null;
 
+            // Mark human takeover persistently on reply
+            $threadKey = InboxThreadTakeover::resolveThreadKey(
+                $comment->platform,
+                $comment->from_id,
+                $comment->session_token,
+                $comment->parent_comment_id,
+                $comment->platform_comment_id
+            );
+            $channelKey = strtolower((string) $comment->platform);
+            $cid = (string) ($comment->from_id ?: $comment->session_token ?: $comment->id);
+            InboxThreadTakeover::markTakeover($threadKey, $channelKey, $cid, (string) $admin->id, (string) ($admin->name ?? 'Admin'));
+
             $reply = SocialMediaComment::create([
                 'business_id'             => null,
                 'is_platform'             => true,
@@ -743,11 +756,19 @@ class AdminInboxController extends Controller implements HasMiddleware
                 'media_url'               => $imageUrl,
                 'media_type'              => $imageUrl ? 'image' : null,
                 'is_from_page'            => true,
+                'is_human_takeover'       => true,
+                'takeover_by_id'          => (string) $admin->id,
+                'takeover_at'             => now(),
                 'status'                  => 'replied',
                 'created_time'            => now(),
             ]);
 
-            $comment->update(['status' => 'replied']);
+            $comment->update([
+                'status'            => 'replied',
+                'is_human_takeover' => true,
+                'takeover_by_id'    => (string) $admin->id,
+                'takeover_at'       => now(),
+            ]);
 
             // Real-time WebSocket broadcasting via Laravel Reverb
             if ($channel === 'live_chat') {
@@ -912,6 +933,9 @@ class AdminInboxController extends Controller implements HasMiddleware
         }
 
         // 3. Save the outbound private direct message
+        $dmThreadKey = InboxThreadTakeover::resolveThreadKey($targetDmChannel, (string) $customerId);
+        InboxThreadTakeover::markTakeover($dmThreadKey, $targetDmChannel, (string) $customerId, (string) $admin->id, (string) ($admin->name ?? 'Admin'));
+
         $dmReply = SocialMediaComment::create([
             'business_id'             => null,
             'is_platform'             => true,
@@ -926,11 +950,19 @@ class AdminInboxController extends Controller implements HasMiddleware
             'media_url'               => $imageUrl,
             'media_type'              => $imageUrl ? 'image' : null,
             'is_from_page'            => true,
+            'is_human_takeover'       => true,
+            'takeover_by_id'          => (string) $admin->id,
+            'takeover_at'             => now(),
             'status'                  => 'replied',
             'created_time'            => now(),
         ]);
 
-        $comment->update(['status' => 'replied']);
+        $comment->update([
+            'status'            => 'replied',
+            'is_human_takeover' => true,
+            'takeover_by_id'    => (string) $admin->id,
+            'takeover_at'       => now(),
+        ]);
 
         if ($request->wantsJson()) {
             return response()->json([
@@ -991,6 +1023,60 @@ class AdminInboxController extends Controller implements HasMiddleware
         }
 
         return back()->with('success', 'Status percakapan diperbarui.');
+    }
+
+    /**
+     * AJAX/Post: Toggle Human Agent Takeover for a conversation thread.
+     */
+    public function toggleTakeover(Request $request, string $id): JsonResponse
+    {
+        $admin = auth('admin')->user();
+        if (! $admin) {
+            return response()->json(['success' => false, 'message' => 'Unauthorized'], 401);
+        }
+
+        $comment = SocialMediaComment::where('is_platform', true)->find($id);
+        if (! $comment) {
+            return response()->json(['success' => false, 'message' => 'Percakapan tidak ditemukan.'], 404);
+        }
+
+        $threadKey = InboxThreadTakeover::resolveThreadKey(
+            $comment->platform,
+            $comment->from_id,
+            $comment->session_token,
+            $comment->parent_comment_id,
+            $comment->platform_comment_id
+        );
+
+        $currentStatus = InboxThreadTakeover::isTakenOver($threadKey);
+        $action = $request->input('action'); // 'takeover', 'release', or toggle
+
+        if ($action === 'release' || ($action === null && $currentStatus)) {
+            InboxThreadTakeover::releaseTakeover($threadKey);
+            $comment->update(['is_human_takeover' => false]);
+            $isTakenOver = false;
+            $msg = 'Takeover dilepas secara eksplisit. AI Assistant kembali aktif membalas percakapan ini secara otomatis.';
+        } else {
+            $channel = strtolower((string) $comment->platform);
+            $cid = (string) ($comment->from_id ?: $comment->session_token ?: $comment->id);
+            InboxThreadTakeover::markTakeover($threadKey, $channel, $cid, (string) $admin->id, (string) ($admin->name ?? 'Admin'));
+            $comment->update([
+                'is_human_takeover' => true,
+                'takeover_by_id'    => (string) $admin->id,
+                'takeover_at'       => now(),
+            ]);
+            $isTakenOver = true;
+            $msg = "Percakapan berhasil di-takeover oleh {$admin->name}. AI Assistant berhenti membalas otomatis untuk percakapan ini.";
+        }
+
+        return response()->json([
+            'success'           => true,
+            'message'           => $msg,
+            'is_human_takeover' => $isTakenOver,
+            'takeover_by_name'  => $isTakenOver ? ($admin->name ?? 'Admin') : null,
+            'takeover_at'       => $isTakenOver ? now()->format('H.i, d M') : null,
+            'thread_key'        => $threadKey,
+        ]);
     }
 
     /**
@@ -1467,6 +1553,9 @@ class AdminInboxController extends Controller implements HasMiddleware
         $platformPageId = (string) (SystemSetting::get('meta_page_id') ?: SystemSetting::get('social_media_page_id', ''));
         $platformIgId = (string) (SystemSetting::get('meta_instagram_id') ?: SystemSetting::get('instagram_account_id', ''));
 
+        // Preload Takeover status map for all active threads
+        $takeoversMap = InboxThreadTakeover::all()->keyBy('thread_key');
+
         // =========================================================================
         // A. BUILD COMMENT THREADS (Grouped by Post Comment + Child Replies)
         // =========================================================================
@@ -1589,14 +1678,22 @@ class AdminInboxController extends Controller implements HasMiddleware
             }
             $commentTags = array_values(array_unique(array_filter($commentTags)));
 
+            $threadKey = InboxThreadTakeover::resolveThreadKey($channel, $c->from_id, null, $c->parent_comment_id, $c->platform_comment_id ?: $c->id);
+            $takeover = $takeoversMap->get($threadKey);
+            $isHumanTakeover = (bool) ($takeover?->is_human_takeover ?? $c->is_human_takeover ?? false);
+
             $threads[] = [
-                'id'             => $c->id,
-                'comment_id'     => $c->platform_comment_id,
-                'customer_id'    => $c->from_id ?: $c->id,
-                'name'           => $c->from_name ?: 'Pengguna Media Sosial',
-                'channel'        => $channel,
-                'channel_raw'    => $c->platform,
-                'last_message'   => $c->message,
+                'id'                => $c->id,
+                'comment_id'        => $c->platform_comment_id,
+                'customer_id'       => $c->from_id ?: $c->id,
+                'thread_key'        => $threadKey,
+                'is_human_takeover' => $isHumanTakeover,
+                'takeover_by_name'  => $takeover?->takeover_by_name,
+                'takeover_at'       => $takeover?->takeover_at ? $takeover->takeover_at->format('H.i, d M') : null,
+                'name'              => $c->from_name ?: 'Pengguna Media Sosial',
+                'channel'           => $channel,
+                'channel_raw'       => $c->platform,
+                'last_message'      => $c->message,
                 'media_url'      => $c->media_url,
                 'media_type'     => $c->media_type,
                 'status'         => $c->status ?: 'unread',
@@ -1711,17 +1808,25 @@ class AdminInboxController extends Controller implements HasMiddleware
             }
             $groupTags = array_values(array_unique(array_filter($allGroupTags)));
 
+            $threadKey = InboxThreadTakeover::resolveThreadKey($channel, $customerId, $sessionToken);
+            $takeover = $takeoversMap->get($threadKey);
+            $isHumanTakeover = (bool) ($takeover?->is_human_takeover ?? false);
+
             $threads[] = [
-                'id'            => $latestMsg->id,
-                'comment_id'    => $latestMsg->platform_comment_id,
-                'customer_id'   => $customerId,
-                'name'          => $customerName,
-                'email'         => $visitorEmail,
-                'phone'         => $visitorPhone,
-                'session_token' => $sessionToken,
-                'channel'       => $channel,
-                'channel_raw'   => $latestMsg->platform,
-                'last_message'  => $latestMsg->message,
+                'id'                => $latestMsg->id,
+                'comment_id'        => $latestMsg->platform_comment_id,
+                'customer_id'       => $customerId,
+                'thread_key'        => $threadKey,
+                'is_human_takeover' => $isHumanTakeover,
+                'takeover_by_name'  => $takeover?->takeover_by_name,
+                'takeover_at'       => $takeover?->takeover_at ? $takeover->takeover_at->format('H.i, d M') : null,
+                'name'              => $customerName,
+                'email'             => $visitorEmail,
+                'phone'             => $visitorPhone,
+                'session_token'     => $sessionToken,
+                'channel'           => $channel,
+                'channel_raw'       => $latestMsg->platform,
+                'last_message'      => $latestMsg->message,
                 'media_url'     => $latestMsg->media_url,
                 'media_type'    => $latestMsg->media_type,
                 'status'        => $threadStatus,

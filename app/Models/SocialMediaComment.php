@@ -59,6 +59,9 @@ class SocialMediaComment extends Model
         'is_from_page',
         'status',
         'tags',
+        'is_human_takeover',
+        'takeover_by_id',
+        'takeover_at',
         'created_time',
     ];
 
@@ -68,10 +71,12 @@ class SocialMediaComment extends Model
     protected function casts(): array
     {
         return [
-            'is_platform'  => 'boolean',
-            'is_from_page' => 'boolean',
-            'tags'         => 'array',
-            'created_time' => 'datetime',
+            'is_platform'       => 'boolean',
+            'is_from_page'      => 'boolean',
+            'is_human_takeover' => 'boolean',
+            'takeover_at'       => 'datetime',
+            'tags'              => 'array',
+            'created_time'      => 'datetime',
         ];
     }
 

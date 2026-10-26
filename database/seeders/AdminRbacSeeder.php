@@ -76,6 +76,10 @@ final class AdminRbacSeeder extends Seeder
             'admin.promos.toggle'                  => ['Aktif/Nonaktifkan Promo', 'admin_finance', 'Mengubah status aktif/nonaktif kupon promo.'],
             'admin.promos.delete'                  => ['Hapus Kode Promo', 'admin_finance', 'Menghapus kode kupon promo dari database.'],
 
+            // ─── 10B. Early Adopter & Program Harga Khusus ─────────────
+            'admin.pricing_programs.view'          => ['Lihat Program Early Adopter', 'admin_finance', 'Melihat program harga khusus Early Adopter, batch kuota, dan jadwal eskalasi tahunan.'],
+            'admin.pricing_programs.manage'        => ['Kelola Program Early Adopter', 'admin_finance', 'Membuat, mengedit, mengaktifkan program/batch harga khusus, dan menjalankan eskalasi harga tahunan.'],
+
             // ─── 11. Rekening Bank Platform ───────────────────────────
             'admin.payment_accounts.view'          => ['Lihat Rekening Platform', 'admin_finance', 'Melihat daftar rekening bank penampung platform.'],
             'admin.payment_accounts.create'        => ['Tambah Rekening Platform', 'admin_finance', 'Menambahkan nomor rekening bank baru platform.'],
@@ -238,6 +242,8 @@ final class AdminRbacSeeder extends Seeder
                     'admin.promos.edit',
                     'admin.promos.toggle',
                     'admin.promos.delete',
+                    'admin.pricing_programs.view',
+                    'admin.pricing_programs.manage',
                     'admin.payment_accounts.view',
                     'admin.payment_accounts.create',
                     'admin.payment_accounts.edit',

@@ -134,6 +134,12 @@ final class SubscriptionCheckoutWebController extends Controller implements HasM
             $selectedTier = BusinessSubscription::TIER_STANDARD;
         }
 
+        $allTierPrices = $this->entitlementService->getAllTierPrices($business);
+        $earlyAdopterPricing = app(\App\Domain\Billing\EarlyAdopterPricingService::class)->calculatePrice($selectedTier, $cycle, $business);
+        $basePrice = $earlyAdopterPricing['price'];
+        $monthlyPrice = $this->entitlementService->getTierPrice($selectedTier, 'monthly', $business);
+        $annualPrice = $this->entitlementService->getTierPrice($selectedTier, 'annual', $business);
+
         return view('app.billing.checkout', compact(
             'business',
             'type',
@@ -145,8 +151,13 @@ final class SubscriptionCheckoutWebController extends Controller implements HasM
             'allTierPrices',
             'annualDiscountBadge',
             'paymentAccounts',
-            'currentUsage'
-            , 'topupPrice', 'topupQuantity', 'packages', 'packagesData', 'packageMode'
+            'currentUsage',
+            'topupPrice',
+            'topupQuantity',
+            'packages',
+            'packagesData',
+            'packageMode',
+            'earlyAdopterPricing'
         ));
     }
 

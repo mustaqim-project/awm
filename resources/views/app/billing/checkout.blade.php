@@ -371,6 +371,49 @@
             <!-- Left Column: Step Cards (2 cols) -->
             <div class="lg:col-span-2 space-y-6">
 
+                @if(!empty($earlyAdopterPricing['is_price_locked']))
+                    <!-- Grandfathered Locked Price Badge Banner -->
+                    <div class="rounded-[20px] p-5 bg-gradient-to-r from-emerald-500/10 via-teal-500/10 to-blue-500/10 border border-emerald-500/20 dark:border-emerald-500/30 shadow-xs flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-[12px] bg-emerald-500 text-white flex items-center justify-center shrink-0 shadow-xs">
+                            <i data-lucide="lock" class="w-5 h-5"></i>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex items-center gap-2">
+                                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 uppercase tracking-wider font-mono">
+                                    Grandfathered Rate
+                                </span>
+                                <h4 class="text-sm font-bold text-slate-900 dark:text-white">Tarif Khusus Terkunci</h4>
+                            </div>
+                            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                                Sebagai pelanggan setia COOCA, bisnis Anda berhak mempertahankan harga khusus yang telah disepakati selama langganan aktif, terlepas dari kenaikan harga publik untuk pelanggan baru.
+                            </p>
+                        </div>
+                    </div>
+                @elseif(!empty($earlyAdopterPricing['is_early_adopter']))
+                    <!-- Early Adopter Active Batch Offer Banner -->
+                    <div class="rounded-[20px] p-5 bg-gradient-to-r from-blue-500/10 via-indigo-500/10 to-purple-500/10 border border-blue-500/20 dark:border-blue-500/30 shadow-xs flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-[12px] bg-[#007AFF] text-white flex items-center justify-center shrink-0 shadow-xs">
+                            <i data-lucide="sparkles" class="w-5 h-5"></i>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex items-center gap-2">
+                                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-500/20 text-blue-700 dark:text-blue-300 uppercase tracking-wider font-mono">
+                                    {{ $earlyAdopterPricing['batch_name'] ?? 'Early Adopter Program' }}
+                                </span>
+                                @if(($earlyAdopterPricing['remaining_quota'] ?? null) !== null)
+                                    <span class="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+                                        &bull; Sisa Kuota: <strong class="text-slate-900 dark:text-white font-mono">{{ number_format($earlyAdopterPricing['remaining_quota']) }} slot</strong>
+                                    </span>
+                                @endif
+                            </div>
+                            <h4 class="text-sm font-bold text-slate-900 dark:text-white">Selamat! Anda Berhak Atas Tarif Early Adopter</h4>
+                            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                                Selesaikan pembayaran sekarang untuk mengunci tarif khusus ini. Selama langganan Anda aktif, Anda terlindungi dari kenaikan harga publik berikutnya (kenaikan tahunan dibatasi maksimal {{ number_format($earlyAdopterPricing['annual_increase_percentage'] ?? 0, 1) }}%).
+                            </p>
+                        </div>
+                    </div>
+                @endif
+
                 <!-- STEP 1: Subscription Tier Selector (Subscription type) -->
                 @if ($type === 'subscription')
                     <section aria-labelledby="tier-selection-heading"
