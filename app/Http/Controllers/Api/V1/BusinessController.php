@@ -27,9 +27,12 @@ final class BusinessController extends Controller
         /** @var User $user */
         $user = $request->user();
         $businesses = $user->businesses()->get();
+        $resource = BusinessResource::collection($businesses);
 
         return response()->json([
-            'businesses' => BusinessResource::collection($businesses),
+            'success' => true,
+            'data' => $resource,
+            'businesses' => $resource,
         ], Response::HTTP_OK);
     }
 
@@ -112,8 +115,11 @@ final class BusinessController extends Controller
         Context::setBusiness($business, $membership);
 
         return response()->json([
+            'success' => true,
             'message' => 'Active business updated successfully.',
             'active_business' => new BusinessResource($business),
+            'business' => new BusinessResource($business),
+            'data' => new BusinessResource($business),
         ], Response::HTTP_OK);
     }
 }

@@ -87,9 +87,18 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
             Route::post('/{recovery}/reject', [AdminAccountRecoveryController::class, 'reject'])->name('reject');
         });
 
-        // AI Token Monitoring & Granting
+        // AI Token Monitoring & Platform Engine Command Center
         Route::get('/ai-tokens', [AdminAiTokenController::class, 'index'])->name('ai-tokens.index');
         Route::post('/ai-tokens/{business}/grant', [AdminAiTokenController::class, 'grant'])->name('ai-tokens.grant');
+        Route::post('/ai-tokens/engine/update', [AdminAiTokenController::class, 'updateEngine'])->name('ai-tokens.engine.update');
+        Route::post('/ai-tokens/engine/test', [AdminAiTokenController::class, 'testEngine'])->name('ai-tokens.engine.test');
+        Route::post('/ai-tokens/engine/detect-models', [AdminAiTokenController::class, 'detectModels'])->name('ai-tokens.engine.detect-models');
+        Route::post('/ai-tokens/engine/keys', [AdminAiTokenController::class, 'addKey'])->name('ai-tokens.engine.keys.add');
+        Route::post('/ai-tokens/engine/keys/{keyId}/toggle', [AdminAiTokenController::class, 'toggleKey'])->name('ai-tokens.engine.keys.toggle');
+        Route::delete('/ai-tokens/engine/keys/{keyId}', [AdminAiTokenController::class, 'deleteKey'])->name('ai-tokens.engine.keys.delete');
+        Route::post('/ai-tokens/engine/models', [AdminAiTokenController::class, 'addModel'])->name('ai-tokens.engine.models.add');
+        Route::delete('/ai-tokens/engine/models/{modelId}', [AdminAiTokenController::class, 'deleteModel'])->where('modelId', '.*')->name('ai-tokens.engine.models.delete');
+        Route::post('/ai-tokens/engine/models/reset-default', [AdminAiTokenController::class, 'resetDefaultModels'])->name('ai-tokens.engine.models.reset-default');
 
         // Google API, System Settings, Payment Gateway, WhatsApp & SMTP
         Route::get('/settings', [AdminSettingController::class, 'index'])->name('settings.index');
@@ -335,6 +344,12 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
             Route::post('/tags/{id}', [AdminInboxController::class, 'updateTags'])->name('tags');
             Route::post('/sync-meta', [AdminInboxController::class, 'syncMeta'])->name('sync-meta');
             Route::post('/settings', [AdminInboxController::class, 'saveSettings'])->name('settings');
+
+            // AI Chatbot & Knowledge Base Guidelines (Do's and Don'ts)
+            Route::get('/ai-settings', [AdminInboxController::class, 'getAiSettings'])->name('ai-settings');
+            Route::post('/ai-settings', [AdminInboxController::class, 'saveAiSettings'])->name('ai-settings.save');
+            Route::post('/ai-test', [AdminInboxController::class, 'testAiPrompt'])->name('ai-test');
+            Route::post('/generate-ai-reply/{id}', [AdminInboxController::class, 'generateAiReply'])->name('generate-ai-reply');
         });
 
         // Error Logs & System Diagnostics

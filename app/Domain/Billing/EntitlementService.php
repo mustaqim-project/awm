@@ -43,8 +43,8 @@ final class EntitlementService
             'annual'  => 0,
         ],
         BusinessSubscription::TIER_STANDARD => [
-            'monthly' => 29000,
-            'annual'  => 290000,
+            'monthly' => 39000,
+            'annual'  => 390000,
         ],
         BusinessSubscription::TIER_PREMIUM => [
             'monthly' => 89000,
@@ -194,8 +194,8 @@ final class EntitlementService
     public const DEFAULT_ANNUAL_PRICE         = 490_000.0;
     public const DEFAULT_SOCIAL_MONTHLY_PRICE = 89_000.0;
 
-    public const PRICE_STANDARD_MONTHLY = 29_000.0;
-    public const PRICE_STANDARD_ANNUAL  = 290_000.0;
+    public const PRICE_STANDARD_MONTHLY = 39_000.0;
+    public const PRICE_STANDARD_ANNUAL  = 390_000.0;
     public const PRICE_PREMIUM_MONTHLY  = 89_000.0;
     public const PRICE_PREMIUM_ANNUAL   = 890_000.0;
     public const PRICE_PRESTIGE_MONTHLY = 199_000.0;

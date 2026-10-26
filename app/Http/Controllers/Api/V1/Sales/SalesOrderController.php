@@ -87,4 +87,93 @@ final class SalesOrderController extends Controller
             'invoice' => $invoice->load(['customer', 'items']),
         ], Response::HTTP_CREATED);
     }
+
+    /**
+     * Create new sales order.
+     */
+    public function store(Request $request): JsonResponse
+    {
+        $business = Context::requireBusiness();
+
+        $validated = $request->validate([
+            'customer_id' => ['required', 'string', 'exists:customers,id'],
+            'so_number' => ['nullable', 'string', 'max:64'],
+            'order_date' => ['required', 'date'],
+            'expected_delivery_date' => ['nullable', 'date'],
+            'shipping_address' => ['nullable', 'string', 'max:500'],
+            'quotation_id' => ['nullable', 'string', 'exists:quotations,id'],
+            'discount_amount' => ['nullable', 'numeric', 'min:0'],
+            'tax_amount' => ['nullable', 'numeric', 'min:0'],
+            'notes' => ['nullable', 'string', 'max:1000'],
+            'items' => ['required', 'array', 'min:1'],
+            'items.*.product_id' => ['nullable', 'string', 'exists:products,id'],
+            'items.*.product_name' => ['required_without:items.*.product_id', 'nullable', 'string'],
+            'items.*.unit_price' => ['required', 'numeric', 'min:0'],
+            'items.*.quantity' => ['required', 'numeric', 'min:0.01'],
+            'items.*.discount_amount' => ['nullable', 'numeric', 'min:0'],
+        ]);
+
+        $salesOrder = $this->salesPipelineService->createSalesOrder($business, $validated);
+
+        return response()->json([
+            'success' => true,
+            'message' => "Pesanan Penjualan {$salesOrder->so_number} berhasil dibuat.",
+            'sales_order' => $salesOrder->load(['customer', 'items.product']),
+            'data' => $salesOrder,
+        ], Response::HTTP_CREATED);
+    }
+
+    /**
+     * Update sales order.
+     */
+    public function update(Request $request, SalesOrder $salesOrder): JsonResponse
+    {
+        $business = Context::requireBusiness();
+        if ($salesOrder->business_id !== $business->id) {
+            return response()->json(['message' => 'Pesanan penjualan tidak ditemukan.'], Response::HTTP_NOT_FOUND);
+        }
+
+        $validated = $request->validate([
+            'customer_id' => ['string', 'exists:customers,id'],
+            'order_date' => ['date'],
+            'expected_delivery_date' => ['nullable', 'date'],
+            'shipping_address' => ['nullable', 'string', 'max:500'],
+            'discount_amount' => ['nullable', 'numeric', 'min:0'],
+            'tax_amount' => ['nullable', 'numeric', 'min:0'],
+            'notes' => ['nullable', 'string', 'max:1000'],
+            'items' => ['nullable', 'array', 'min:1'],
+            'items.*.product_id' => ['nullable', 'string', 'exists:products,id'],
+            'items.*.product_name' => ['nullable', 'string'],
+            'items.*.unit_price' => ['required_with:items', 'numeric', 'min:0'],
+            'items.*.quantity' => ['required_with:items', 'numeric', 'min:0.01'],
+            'items.*.discount_amount' => ['nullable', 'numeric', 'min:0'],
+        ]);
+
+        $updated = $this->salesPipelineService->updateSalesOrder($salesOrder, $validated);
+
+        return response()->json([
+            'success' => true,
+            'message' => "Pesanan Penjualan {$updated->so_number} berhasil diperbarui.",
+            'sales_order' => $updated->load(['customer', 'items.product']),
+            'data' => $updated,
+        ], Response::HTTP_OK);
+    }
+
+    /**
+     * Delete / cancel sales order.
+     */
+    public function destroy(Request $request, SalesOrder $salesOrder): JsonResponse
+    {
+        $business = Context::requireBusiness();
+        if ($salesOrder->business_id !== $business->id) {
+            return response()->json(['message' => 'Pesanan penjualan tidak ditemukan.'], Response::HTTP_NOT_FOUND);
+        }
+
+        $salesOrder->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Pesanan penjualan berhasil dihapus.',
+        ], Response::HTTP_OK);
+    }
 }

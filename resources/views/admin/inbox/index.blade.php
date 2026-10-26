@@ -16,11 +16,18 @@
             </div>
         </div>
 
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2 flex-wrap">
             <button type="button" @click="syncMessages()" :disabled="isSyncing"
                 class="min-h-[36px] px-3.5 rounded-[10px] text-[12.5px] font-semibold text-[#1F2937] dark:text-white bg-white dark:bg-[#1C1C1E] border border-[#E5E7EB] dark:border-white/10 hover:bg-[#F9FAFB] dark:hover:bg-white/[0.04] transition-all flex items-center gap-1.5 shadow-xs">
                 <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-[#1877F2]" :class="isSyncing ? 'animate-spin' : ''"></i>
                 <span x-text="isSyncing ? 'Menyinkronkan...' : 'Sinkronkan Pesan'"></span>
+            </button>
+            <button type="button" @click="openAiSettings = true"
+                class="min-h-[36px] px-3.5 rounded-[10px] text-[12.5px] font-semibold text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800/40 hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-all flex items-center gap-1.5 shadow-xs">
+                <i data-lucide="bot" class="w-4 h-4 text-purple-600 dark:text-purple-400"></i>
+                <span>Kelola AI Chatbot & Pedoman</span>
+                <span x-show="aiConfig.enabled" class="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400">ON</span>
+                <span x-show="!aiConfig.enabled" class="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-slate-200 text-slate-600 dark:bg-white/10 dark:text-slate-400">OFF</span>
             </button>
             <button type="button" @click="openMetaSettings = true"
                 class="min-h-[36px] px-3.5 rounded-[10px] text-[12.5px] font-semibold text-[#1877F2] bg-[#E7F3FF] dark:bg-[#1877F2]/20 hover:bg-[#DBEAFE] transition-all flex items-center gap-1.5">
@@ -135,6 +142,11 @@
                                     class="w-full text-left px-3 py-2 text-[#1F2937] dark:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.06] flex items-center gap-2">
                                     <i data-lucide="check-check" class="w-3.5 h-3.5 text-[#34C759]"></i>
                                     <span>Tandai Semua Sudah Dibaca</span>
+                                </button>
+                                <button type="button" @click="openAiSettings = true; openManage = false"
+                                    class="w-full text-left px-3 py-2 text-purple-700 dark:text-purple-300 hover:bg-purple-50 dark:hover:bg-purple-950/20 flex items-center gap-2 font-medium">
+                                    <i data-lucide="bot" class="w-3.5 h-3.5 text-purple-600"></i>
+                                    <span>Kelola AI Chatbot & Pedoman</span>
                                 </button>
                                 <button type="button" @click="openMetaSettings = true; openManage = false"
                                     class="w-full text-left px-3 py-2 text-[#1877F2] dark:text-[#64D2FF] hover:bg-[#E7F3FF]/60 dark:hover:bg-[#1877F2]/10 flex items-center gap-2 font-medium">
@@ -755,10 +767,16 @@
                                     </button>
                                 </div>
 
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-full overflow-hidden bg-black shrink-0">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-8 h-8 rounded-full overflow-hidden bg-black shrink-0 hidden sm:block">
                                         <img src="{{ asset('assets/image/cooca-icon.png') }}" class="w-full h-full object-cover" alt="Cooca Official">
                                     </div>
+                                    <button type="button" @click="generateAiReplyForCurrent()" :disabled="isGeneratingAi"
+                                        title="Bantu Susun Balasan Cerdas dengan AI sesuai Pedoman Kerja"
+                                        class="h-10 px-3 rounded-[10px] bg-purple-50 dark:bg-purple-950/30 hover:bg-purple-100 dark:hover:bg-purple-900/40 border border-purple-200 dark:border-purple-800/40 text-purple-700 dark:text-purple-300 text-[12px] font-semibold flex items-center gap-1.5 transition-colors shrink-0 shadow-xs">
+                                        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" :class="isGeneratingAi ? 'animate-spin' : ''"></i>
+                                        <span class="hidden sm:inline" x-text="isGeneratingAi ? 'Menyusun...' : 'AI Balas'"></span>
+                                    </button>
                                     <div class="flex-1 relative flex items-center">
                                         <input type="text" x-model="replyText" @keydown.enter.prevent="sendCommentReply()"
                                                :placeholder="replyTargetComment ? 'Balas ke @' + replyTargetComment.from_name + '...' : 'Tambahkan komentar...'"
@@ -1008,8 +1026,15 @@
                                     </button>
                                 </div>
 
-                                {{-- Quick Responses Pills --}}
+                                {{-- Quick Responses Pills & AI Assistant Trigger --}}
                                 <div class="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-1">
+                                    <button type="button" @click="generateAiReplyForCurrent()" :disabled="isGeneratingAi"
+                                        title="Bantu Susun Balasan Cerdas dengan AI berdasarkan percakapan pelanggan dan Pedoman Kerja"
+                                        class="px-3 py-1 rounded-full text-[11.5px] font-semibold bg-purple-100 dark:bg-purple-950/60 hover:bg-purple-200 dark:hover:bg-purple-900/60 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800/40 flex items-center gap-1.5 transition-all whitespace-nowrap shadow-xs shrink-0">
+                                        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" :class="isGeneratingAi ? 'animate-spin' : ''"></i>
+                                        <span x-text="isGeneratingAi ? 'AI sedang berpikir...' : 'Bantu Jawab dengan AI'"></span>
+                                    </button>
+                                    <span class="text-[11px] font-semibold text-[#9CA3AF] shrink-0 mx-1">|</span>
                                     <span class="text-[11px] font-semibold text-[#9CA3AF] shrink-0 mr-1">Template:</span>
                                     <button type="button" @click="insertTemplate('Halo Kak! Terima kasih telah menghubungi kami. Ada yang bisa kami bantu? 😊')"
                                         class="px-2.5 py-1 rounded-full text-[11px] bg-[#F3F4F6] dark:bg-white/5 hover:bg-[#E5E7EB] text-[#374151] dark:text-[#D1D5DB] transition-colors whitespace-nowrap">
@@ -1575,6 +1600,408 @@
         </div>
     </div>
 
+    {{-- ========================================================================= --}}
+    {{-- MODAL BENTO APPLE HIG: KELOLA AI CHATBOT & PEDOMAN KERJA (DO'S & DON'TS)   --}}
+    {{-- ========================================================================= --}}
+    <div x-show="openAiSettings" @keydown.escape.window="openAiSettings = false" x-cloak
+         class="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-5">
+        <div @click.outside="openAiSettings = false"
+             class="bg-white dark:bg-[#1C1C1E] border border-[#E5E7EB] dark:border-white/10 rounded-[24px] shadow-2xl w-full max-w-4xl h-[780px] max-h-[92vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+            
+            {{-- Modal Header --}}
+            <div class="px-6 py-4 bg-[#F9FAFB] dark:bg-[#2C2C2E] border-b border-[#E5E7EB] dark:border-white/10 flex items-center justify-between gap-3 shrink-0">
+                <div class="flex items-center gap-3 min-w-0">
+                    <div class="w-10 h-10 rounded-[14px] bg-gradient-to-br from-purple-500 to-indigo-600 text-white flex items-center justify-center shadow-sm shadow-purple-500/25 shrink-0">
+                        <i data-lucide="bot" class="w-5 h-5"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <div class="flex items-center gap-2">
+                            <h2 class="text-[16px] font-bold text-[#111827] dark:text-white truncate">Kelola AI Chatbot & Pedoman Kerja</h2>
+                            <span x-show="aiConfig.enabled" class="px-2 py-0.5 rounded-full text-[10.5px] font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400">Aktif</span>
+                            <span x-show="!aiConfig.enabled" class="px-2 py-0.5 rounded-full text-[10.5px] font-bold bg-slate-200 text-slate-600 dark:bg-white/10 dark:text-slate-400">Non-Aktif</span>
+                        </div>
+                        <p class="text-[12px] text-[#6B7280] dark:text-[#9CA3AF] truncate mt-0.5">
+                            Pusat informasi sistem, aturan Do's & Don'ts, serta pengaturan kecerdasan buatan untuk merespon percakapan pelanggan
+                        </p>
+                    </div>
+                </div>
+
+                <button type="button" @click="openAiSettings = false" class="w-8 h-8 rounded-[8px] text-gray-400 hover:text-gray-600 dark:hover:text-white hover:bg-gray-200/50 dark:hover:bg-white/10 flex items-center justify-center transition-colors">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            {{-- Navigation Tabs --}}
+            <div class="px-6 py-2 border-b border-[#E5E7EB] dark:border-white/10 flex items-center gap-2 overflow-x-auto scrollbar-none bg-white dark:bg-[#1C1C1E] shrink-0">
+                <button type="button" @click="aiActiveTab = 'status'"
+                    :class="aiActiveTab === 'status' ? 'bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 font-semibold border-purple-200 dark:border-purple-800/40' : 'text-[#6B7280] dark:text-[#9CA3AF] hover:text-[#111827] dark:hover:text-white border-transparent'"
+                    class="px-3.5 py-1.5 rounded-[10px] border text-[12.5px] flex items-center gap-1.5 transition-all whitespace-nowrap">
+                    <i data-lucide="sliders" class="w-3.5 h-3.5"></i>
+                    <span>Status & Mode Operasi</span>
+                </button>
+
+                <button type="button" @click="aiActiveTab = 'info'"
+                    :class="aiActiveTab === 'info' ? 'bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 font-semibold border-purple-200 dark:border-purple-800/40' : 'text-[#6B7280] dark:text-[#9CA3AF] hover:text-[#111827] dark:hover:text-white border-transparent'"
+                    class="px-3.5 py-1.5 rounded-[10px] border text-[12.5px] flex items-center gap-1.5 transition-all whitespace-nowrap">
+                    <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+                    <span>Informasi Sistem (Knowledge Base)</span>
+                </button>
+
+                <button type="button" @click="aiActiveTab = 'dos_donts'"
+                    :class="aiActiveTab === 'dos_donts' ? 'bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 font-semibold border-purple-200 dark:border-purple-800/40' : 'text-[#6B7280] dark:text-[#9CA3AF] hover:text-[#111827] dark:hover:text-white border-transparent'"
+                    class="px-3.5 py-1.5 rounded-[10px] border text-[12.5px] flex items-center gap-1.5 transition-all whitespace-nowrap">
+                    <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+                    <span>Pedoman Kerja (Do's & Don'ts)</span>
+                </button>
+
+                <button type="button" @click="aiActiveTab = 'test'"
+                    :class="aiActiveTab === 'test' ? 'bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 font-semibold border-purple-200 dark:border-purple-800/40' : 'text-[#6B7280] dark:text-[#9CA3AF] hover:text-[#111827] dark:hover:text-white border-transparent'"
+                    class="px-3.5 py-1.5 rounded-[10px] border text-[12.5px] flex items-center gap-1.5 transition-all whitespace-nowrap">
+                    <i data-lucide="play-circle" class="w-3.5 h-3.5"></i>
+                    <span>Uji Coba Chatbot (AI Sandbox)</span>
+                </button>
+            </div>
+
+            {{-- Modal Body (Scrollable Bento Container) --}}
+            <div class="flex-1 p-6 overflow-y-auto space-y-5 bg-[#F9FAFB]/50 dark:bg-black/10 min-h-0 text-[13px]">
+                
+                {{-- TAB 1: STATUS & MODE OPERASI --}}
+                <div x-show="aiActiveTab === 'status'" class="space-y-4">
+                    {{-- 1. Switch Enable / Disable --}}
+                    <div class="p-4 rounded-[16px] bg-white dark:bg-[#2C2C2E] border border-[#E5E7EB] dark:border-white/10 shadow-xs flex items-center justify-between gap-4">
+                        <div class="min-w-0">
+                            <span class="font-bold text-[#111827] dark:text-white block">Status AI Chatbot di Kotak Masuk</span>
+                            <span class="text-[12px] text-[#6B7280] dark:text-[#9CA3AF] block mt-0.5">
+                                Aktifkan kemampuan AI untuk memberikan draf balasan dan memproses pesan masuk pelanggan.
+                            </span>
+                        </div>
+                        <button type="button" @click="aiConfig.enabled = !aiConfig.enabled"
+                            class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-hidden"
+                            :class="aiConfig.enabled ? 'bg-purple-600' : 'bg-gray-300 dark:bg-gray-700'">
+                            <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out"
+                                :class="aiConfig.enabled ? 'translate-x-5' : 'translate-x-0'"></span>
+                        </button>
+                    </div>
+
+                    {{-- 2. Operation Mode (Cards) --}}
+                    <div class="space-y-2">
+                        <label class="block text-[12.5px] font-bold text-[#374151] dark:text-[#D1D5DB] uppercase tracking-wider">
+                            Mode Operasi Chatbot
+                        </label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            {{-- Assistant Mode --}}
+                            <div @click="aiConfig.mode = 'assistant'"
+                                 class="p-4 rounded-[16px] border cursor-pointer transition-all flex flex-col justify-between"
+                                 :class="aiConfig.mode === 'assistant' ? 'bg-purple-50/60 dark:bg-purple-950/30 border-purple-300 dark:border-purple-700 shadow-xs ring-1 ring-purple-400/30' : 'bg-white dark:bg-[#2C2C2E] border-[#E5E7EB] dark:border-white/10 hover:border-gray-300'">
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="px-2 py-0.5 rounded-full text-[10.5px] font-bold bg-blue-100 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300">
+                                            Rekomendasi (Aman)
+                                        </span>
+                                        <div class="w-4 h-4 rounded-full border flex items-center justify-center"
+                                             :class="aiConfig.mode === 'assistant' ? 'border-purple-600 bg-purple-600 text-white' : 'border-gray-400'">
+                                            <i x-show="aiConfig.mode === 'assistant'" data-lucide="check" class="w-3.5 h-3.5"></i>
+                                        </div>
+                                    </div>
+                                    <h4 class="font-bold text-[14px] text-[#111827] dark:text-white">Mode Asisten (Human-in-the-Loop)</h4>
+                                    <p class="text-[12px] text-[#6B7280] dark:text-[#9CA3AF] mt-1 leading-relaxed">
+                                        AI membantu menyusun draf balasan instan dengan tombol <em>"Bantu Jawab dengan AI"</em>. Admin/operator tetap memeriksa dan mengirim balasan secara manual.
+                                    </p>
+                                </div>
+                            </div>
+
+                            {{-- Auto-Pilot Mode --}}
+                            <div @click="aiConfig.mode = 'auto_pilot'"
+                                 class="p-4 rounded-[16px] border cursor-pointer transition-all flex flex-col justify-between"
+                                 :class="aiConfig.mode === 'auto_pilot' ? 'bg-purple-50/60 dark:bg-purple-950/30 border-purple-300 dark:border-purple-700 shadow-xs ring-1 ring-purple-400/30' : 'bg-white dark:bg-[#2C2C2E] border-[#E5E7EB] dark:border-white/10 hover:border-gray-300'">
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="px-2 py-0.5 rounded-full text-[10.5px] font-bold bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300">
+                                            Otomatis Penuh (24/7)
+                                        </span>
+                                        <div class="w-4 h-4 rounded-full border flex items-center justify-center"
+                                             :class="aiConfig.mode === 'auto_pilot' ? 'border-purple-600 bg-purple-600 text-white' : 'border-gray-400'">
+                                            <i x-show="aiConfig.mode === 'auto_pilot'" data-lucide="check" class="w-3.5 h-3.5"></i>
+                                        </div>
+                                    </div>
+                                    <h4 class="font-bold text-[14px] text-[#111827] dark:text-white">Mode Auto-Pilot (Balasan Otomatis)</h4>
+                                    <p class="text-[12px] text-[#6B7280] dark:text-[#9CA3AF] mt-1 leading-relaxed">
+                                        AI membalas pesan masuk pelanggan secara otomatis seketika pesan diterima melalui webhook/polling pada saluran yang Anda beri izin di bawah.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- 3. Covered Channels Checklist --}}
+                    <div class="p-4 rounded-[16px] bg-white dark:bg-[#2C2C2E] border border-[#E5E7EB] dark:border-white/10 shadow-xs space-y-3">
+                        <label class="block text-[12.5px] font-bold text-[#374151] dark:text-[#D1D5DB] uppercase tracking-wider">
+                            Saluran yang Diaktifkan AI
+                        </label>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                            <label class="flex items-center gap-2 p-2.5 rounded-[10px] bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/5 cursor-pointer hover:bg-slate-100 transition-colors">
+                                <input type="checkbox" value="live_chat" x-model="aiConfig.channels" class="w-4 h-4 rounded text-purple-600 focus:ring-purple-500">
+                                <span class="text-[12px] font-medium text-[#111827] dark:text-white">Live Chat Website</span>
+                            </label>
+                            <label class="flex items-center gap-2 p-2.5 rounded-[10px] bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/5 cursor-pointer hover:bg-slate-100 transition-colors">
+                                <input type="checkbox" value="whatsapp" x-model="aiConfig.channels" class="w-4 h-4 rounded text-purple-600 focus:ring-purple-500">
+                                <span class="text-[12px] font-medium text-[#111827] dark:text-white">WhatsApp Official</span>
+                            </label>
+                            <label class="flex items-center gap-2 p-2.5 rounded-[10px] bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/5 cursor-pointer hover:bg-slate-100 transition-colors">
+                                <input type="checkbox" value="instagram" x-model="aiConfig.channels" class="w-4 h-4 rounded text-purple-600 focus:ring-purple-500">
+                                <span class="text-[12px] font-medium text-[#111827] dark:text-white">Instagram Direct</span>
+                            </label>
+                            <label class="flex items-center gap-2 p-2.5 rounded-[10px] bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/5 cursor-pointer hover:bg-slate-100 transition-colors">
+                                <input type="checkbox" value="messenger" x-model="aiConfig.channels" class="w-4 h-4 rounded text-purple-600 focus:ring-purple-500">
+                                <span class="text-[12px] font-medium text-[#111827] dark:text-white">Facebook Messenger</span>
+                            </label>
+                            <label class="flex items-center gap-2 p-2.5 rounded-[10px] bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/5 cursor-pointer hover:bg-slate-100 transition-colors">
+                                <input type="checkbox" value="facebook_comments" x-model="aiConfig.channels" class="w-4 h-4 rounded text-purple-600 focus:ring-purple-500">
+                                <span class="text-[12px] font-medium text-[#111827] dark:text-white">Komentar Facebook</span>
+                            </label>
+                            <label class="flex items-center gap-2 p-2.5 rounded-[10px] bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/5 cursor-pointer hover:bg-slate-100 transition-colors">
+                                <input type="checkbox" value="instagram_comments" x-model="aiConfig.channels" class="w-4 h-4 rounded text-purple-600 focus:ring-purple-500">
+                                <span class="text-[12px] font-medium text-[#111827] dark:text-white">Komentar Instagram</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    {{-- 4. Model & Temperature --}}
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div class="p-4 rounded-[16px] bg-white dark:bg-[#2C2C2E] border border-[#E5E7EB] dark:border-white/10 shadow-xs space-y-2">
+                            <label class="block text-[12px] font-bold text-[#374151] dark:text-[#D1D5DB] uppercase tracking-wider">
+                                Model AI Terhubung
+                            </label>
+                            <select x-model="aiConfig.model"
+                                class="w-full h-10 px-3 rounded-[10px] bg-[#F9FAFB] dark:bg-[#1C1C1E] border border-[#D1D5DB] dark:border-white/15 text-[12.5px] font-mono text-[#111827] dark:text-white focus:outline-hidden focus:border-purple-500">
+                                <template x-for="mod in (aiConfig.platform_engine?.available_models || [])" :key="mod.id">
+                                    <option :value="mod.id" x-text="mod.id + ' (' + (mod.tier || 'balanced') + ')'"></option>
+                                </template>
+                                <option value="ag/gemini-3.8-flash-high">ag/gemini-3.8-flash-high (Default Recommended)</option>
+                                <option value="ag/gemini-3.8-flash-medium">ag/gemini-3.8-flash-medium</option>
+                                <option value="ag/gemini-3.8-flash-low">ag/gemini-3.8-flash-low</option>
+                                <option value="cx/gpt-6-astra-xhigh">cx/gpt-6-astra-xhigh</option>
+                                <option value="cx/gpt-5.6-sol">cx/gpt-5.6-sol</option>
+                            </select>
+                            <p class="text-[11px] text-[#6B7280] dark:text-[#9CA3AF]">
+                                Model AI yang dikoneksikan via tunnel platform OpenAI-Compatible engine terpusat.
+                            </p>
+                        </div>
+
+                        <div class="p-4 rounded-[16px] bg-white dark:bg-[#2C2C2E] border border-[#E5E7EB] dark:border-white/10 shadow-xs space-y-2">
+                            <div class="flex items-center justify-between">
+                                <label class="text-[12px] font-bold text-[#374151] dark:text-[#D1D5DB] uppercase tracking-wider">
+                                    Tingkat Kepatuhan (Temperature)
+                                </label>
+                                <span class="font-mono text-[12px] font-bold px-2 py-0.5 rounded bg-purple-100 text-purple-700 dark:bg-purple-950/60 dark:text-purple-300" x-text="aiConfig.temperature"></span>
+                            </div>
+                            <input type="range" min="0" max="1" step="0.05" x-model="aiConfig.temperature"
+                                class="w-full accent-purple-600 cursor-pointer">
+                            <div class="flex justify-between text-[10.5px] text-[#6B7280] dark:text-[#9CA3AF]">
+                                <span>0.0 (Ketat & Bebas Halusinasi)</span>
+                                <span>0.3 (Optimal CS)</span>
+                                <span>1.0 (Kreatif)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- 5. Greeting Template --}}
+                    <div class="p-4 rounded-[16px] bg-white dark:bg-[#2C2C2E] border border-[#E5E7EB] dark:border-white/10 shadow-xs space-y-2">
+                        <label class="block text-[12px] font-bold text-[#374151] dark:text-[#D1D5DB] uppercase tracking-wider">
+                            Template Sapaan Fallback
+                        </label>
+                        <input type="text" x-model="aiConfig.greeting_template"
+                            placeholder="Halo Kak {customer_name}! Terima kasih sudah menghubungi COOCA..."
+                            class="w-full h-10 px-3 rounded-[10px] bg-[#F9FAFB] dark:bg-[#1C1C1E] border border-[#D1D5DB] dark:border-white/15 text-[12.5px] text-[#111827] dark:text-white placeholder-[#9CA3AF] focus:outline-hidden focus:border-purple-500">
+                        <p class="text-[11px] text-[#6B7280] dark:text-[#9CA3AF]">
+                            Gunakan tag <code>{customer_name}</code> untuk otomatis menyisipkan nama pelanggan saat sapaan pembuka.
+                        </p>
+                    </div>
+                </div>
+
+                {{-- TAB 2: INFORMASI SISTEM (KNOWLEDGE BASE) --}}
+                <div x-show="aiActiveTab === 'info'" class="space-y-3">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3.5 rounded-[14px] bg-purple-50/80 dark:bg-purple-950/30 border border-purple-200/60 dark:border-purple-800/30">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="info" class="w-4 h-4 text-purple-600 dark:text-purple-400 shrink-0"></i>
+                            <span class="text-[12.5px] text-purple-950 dark:text-purple-200">
+                                Pengetahuan resmi ini menjadi acuan kebenaran mutlak (Single Source of Truth) bagi AI dalam menjawab pelanggan.
+                            </span>
+                        </div>
+                        <button type="button" @click="loadDefaultSystemInfo()"
+                            class="px-2.5 py-1 rounded-[8px] bg-white dark:bg-[#2C2C2E] border border-purple-200 dark:border-purple-800/40 text-[11.5px] font-semibold text-purple-700 dark:text-purple-300 hover:bg-purple-100 transition-colors shrink-0 shadow-2xs">
+                            Muat Template Resmi COOCA
+                        </button>
+                    </div>
+
+                    <div class="p-4 rounded-[16px] bg-white dark:bg-[#2C2C2E] border border-[#E5E7EB] dark:border-white/10 shadow-xs space-y-2">
+                        <div class="flex items-center justify-between">
+                            <label class="text-[12px] font-bold text-[#374151] dark:text-[#D1D5DB] uppercase tracking-wider">
+                                Teks Pengetahuan Sistem & Bisnis
+                            </label>
+                            <span class="text-[11px] text-[#6B7280]" x-text="(aiConfig.system_info || '').length + ' karakter'"></span>
+                        </div>
+                        <textarea x-model="aiConfig.system_info" rows="16"
+                            placeholder="Tulis profil bisnis, daftar produk, rincian harga, panduan registrasi, dan jam kerja..."
+                            class="w-full p-3.5 rounded-[12px] bg-[#F9FAFB] dark:bg-[#1C1C1E] border border-[#D1D5DB] dark:border-white/15 text-[12.5px] leading-relaxed font-mono text-[#111827] dark:text-white placeholder-[#9CA3AF] focus:outline-hidden focus:border-purple-500 resize-y transition-colors"></textarea>
+                    </div>
+                </div>
+
+                {{-- TAB 3: PEDOMAN KERJA (DO'S & DON'TS) --}}
+                <div x-show="aiActiveTab === 'dos_donts'" class="space-y-4">
+                    <p class="text-[12.5px] text-[#6B7280] dark:text-[#9CA3AF] leading-relaxed">
+                        Aturan ketat yang mengunci etika dan batasan kerja AI. Pastikan AI mematuhi hal yang diwajibkan (Do's) dan tidak pernah melanggar pantangan (Don'ts).
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {{-- KOLOM DO'S --}}
+                        <div class="p-4 rounded-[16px] bg-white dark:bg-[#2C2C2E] border border-emerald-200 dark:border-emerald-800/40 shadow-xs space-y-3">
+                            <div class="flex items-center justify-between pb-2 border-b border-emerald-100 dark:border-emerald-950/40">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                                    <h4 class="font-bold text-[13.5px] text-emerald-900 dark:text-emerald-300">DO'S (Wajib Dilakukan)</h4>
+                                </div>
+                                <span class="px-2 py-0.5 rounded-full text-[10.5px] font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400" x-text="(aiConfig.dos || []).length + ' Aturan'"></span>
+                            </div>
+
+                            {{-- List of Do's --}}
+                            <div class="space-y-2 max-h-[380px] overflow-y-auto pr-1">
+                                <template x-for="(item, idx) in (aiConfig.dos || [])" :key="idx">
+                                    <div class="p-2.5 rounded-[10px] bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/30 flex items-start justify-between gap-2 text-[12px]">
+                                        <div class="flex items-start gap-2 min-w-0">
+                                            <span class="text-emerald-600 dark:text-emerald-400 font-bold shrink-0 mt-0.5">✓</span>
+                                            <span class="text-emerald-950 dark:text-emerald-200 leading-snug" x-text="item"></span>
+                                        </div>
+                                        <button type="button" @click="removeDoItem(idx)" class="text-gray-400 hover:text-rose-600 shrink-0 p-0.5" title="Hapus aturan">
+                                            <i data-lucide="x" class="w-3.5 h-3.5"></i>
+                                        </button>
+                                    </div>
+                                </template>
+                            </div>
+
+                            {{-- Add New Do Item --}}
+                            <div class="pt-2 border-t border-emerald-100 dark:border-emerald-950/40 flex items-center gap-1.5">
+                                <input type="text" x-model="newDoText" @keydown.enter.prevent="addDoItem()"
+                                    placeholder="Tambah pedoman Do's baru..."
+                                    class="flex-1 h-9 px-3 rounded-[8px] bg-[#F9FAFB] dark:bg-[#1C1C1E] border border-emerald-200 dark:border-emerald-800/40 text-[12px] text-[#111827] dark:text-white placeholder-[#9CA3AF] focus:outline-hidden focus:border-emerald-500">
+                                <button type="button" @click="addDoItem()"
+                                    class="h-9 px-3 rounded-[8px] bg-emerald-600 hover:bg-emerald-700 text-white text-[12px] font-bold shrink-0 transition-colors">
+                                    + Tambah
+                                </button>
+                            </div>
+                        </div>
+
+                        {{-- KOLOM DON'TS --}}
+                        <div class="p-4 rounded-[16px] bg-white dark:bg-[#2C2C2E] border border-rose-200 dark:border-rose-800/40 shadow-xs space-y-3">
+                            <div class="flex items-center justify-between pb-2 border-b border-rose-100 dark:border-rose-950/40">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+                                    <h4 class="font-bold text-[13.5px] text-rose-900 dark:text-rose-300">DON'TS (Dilarang Keras)</h4>
+                                </div>
+                                <span class="px-2 py-0.5 rounded-full text-[10.5px] font-bold bg-rose-100 text-rose-700 dark:bg-rose-950/60 dark:text-rose-400" x-text="(aiConfig.donts || []).length + ' Larangan'"></span>
+                            </div>
+
+                            {{-- List of Don'ts --}}
+                            <div class="space-y-2 max-h-[380px] overflow-y-auto pr-1">
+                                <template x-for="(item, idx) in (aiConfig.donts || [])" :key="idx">
+                                    <div class="p-2.5 rounded-[10px] bg-rose-50/50 dark:bg-rose-950/20 border border-rose-100 dark:border-rose-900/30 flex items-start justify-between gap-2 text-[12px]">
+                                        <div class="flex items-start gap-2 min-w-0">
+                                            <span class="text-rose-600 dark:text-rose-400 font-bold shrink-0 mt-0.5">✕</span>
+                                            <span class="text-rose-950 dark:text-rose-200 leading-snug" x-text="item"></span>
+                                        </div>
+                                        <button type="button" @click="removeDontItem(idx)" class="text-gray-400 hover:text-rose-600 shrink-0 p-0.5" title="Hapus larangan">
+                                            <i data-lucide="x" class="w-3.5 h-3.5"></i>
+                                        </button>
+                                    </div>
+                                </template>
+                            </div>
+
+                            {{-- Add New Don't Item --}}
+                            <div class="pt-2 border-t border-rose-100 dark:border-rose-950/40 flex items-center gap-1.5">
+                                <input type="text" x-model="newDontText" @keydown.enter.prevent="addDontItem()"
+                                    placeholder="Tambah pantangan Don't baru..."
+                                    class="flex-1 h-9 px-3 rounded-[8px] bg-[#F9FAFB] dark:bg-[#1C1C1E] border border-rose-200 dark:border-rose-800/40 text-[12px] text-[#111827] dark:text-white placeholder-[#9CA3AF] focus:outline-hidden focus:border-rose-500">
+                                <button type="button" @click="addDontItem()"
+                                    class="h-9 px-3 rounded-[8px] bg-rose-600 hover:bg-rose-700 text-white text-[12px] font-bold shrink-0 transition-colors">
+                                    + Tambah
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- TAB 4: UJI COBA CHATBOT (AI SANDBOX) --}}
+                <div x-show="aiActiveTab === 'test'" class="space-y-4">
+                    <div class="p-4 rounded-[16px] bg-white dark:bg-[#2C2C2E] border border-[#E5E7EB] dark:border-white/10 shadow-xs space-y-3">
+                        <label class="block text-[12.5px] font-bold text-[#374151] dark:text-[#D1D5DB] uppercase tracking-wider">
+                            Simulasi Pertanyaan Pelanggan
+                        </label>
+                        <div class="flex items-center gap-2">
+                            <input type="text" x-model="aiTestMessage" @keydown.enter.prevent="runAiTest()"
+                                placeholder="Ketik pesan simulasi (misal: 'Halo, harga paket Pro berapa ya? Bisa minta diskon?')..."
+                                class="flex-1 h-11 px-3.5 rounded-[12px] bg-[#F9FAFB] dark:bg-[#1C1C1E] border border-[#D1D5DB] dark:border-white/15 text-[13px] text-[#111827] dark:text-white placeholder-[#9CA3AF] focus:outline-hidden focus:border-purple-500">
+                            <button type="button" @click="runAiTest()" :disabled="!aiTestMessage.trim() || isTestingAi"
+                                class="h-11 px-5 rounded-[12px] bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-white text-[13px] font-bold flex items-center gap-2 shadow-sm transition-all shrink-0">
+                                <i data-lucide="play" class="w-4 h-4" :class="isTestingAi ? 'animate-spin' : ''"></i>
+                                <span x-text="isTestingAi ? 'Memproses...' : 'Uji Balasan AI'"></span>
+                            </button>
+                        </div>
+                    </div>
+
+                    {{-- AI Test Output Window --}}
+                    <div x-show="aiTestResult" class="p-4 rounded-[16px] bg-white dark:bg-[#2C2C2E] border border-purple-200 dark:border-purple-800/40 shadow-xs space-y-2.5 animate-in fade-in">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                                <span class="font-bold text-[13px] text-[#111827] dark:text-white">Hasil Simulasi Balasan AI:</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-[11px] text-[#6B7280]">
+                                <span class="font-mono bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 px-2 py-0.5 rounded" x-text="aiTestResult?.model"></span>
+                                <span>·</span>
+                                <span x-text="(aiTestResult?.latency_ms || 0) + ' ms'"></span>
+                            </div>
+                        </div>
+
+                        <div class="p-3.5 rounded-[12px] bg-[#F9FAFB] dark:bg-black/20 border border-[#E5E7EB] dark:border-white/5 text-[13px] text-[#1F2937] dark:text-[#F3F4F6] whitespace-pre-wrap leading-relaxed"
+                             x-text="aiTestResult?.reply"></div>
+
+                        <div class="pt-1 flex items-center justify-between text-[11px] text-[#6B7280]">
+                            <span class="text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1">
+                                <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+                                Mematuhi Aturan Do's & Pantangan Don'ts
+                            </span>
+                            <button type="button" @click="insertTemplate(aiTestResult.reply); openAiSettings = false"
+                                class="text-purple-600 dark:text-purple-400 font-semibold hover:underline">
+                                Pakai Jawaban Ini di Composer Chat →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            {{-- Modal Footer Actions --}}
+            <div class="px-6 py-3.5 bg-[#F9FAFB] dark:bg-[#2C2C2E] border-t border-[#E5E7EB] dark:border-white/10 flex items-center justify-between gap-3 shrink-0">
+                <div class="text-[11.5px] text-[#6B7280] dark:text-[#9CA3AF] hidden sm:block">
+                    Perubahan langsung berlaku untuk seluruh agen CS dan balasan otomatis.
+                </div>
+
+                <div class="flex items-center gap-2.5 ml-auto">
+                    <button type="button" @click="openAiSettings = false"
+                        class="h-9.5 px-4 rounded-[10px] text-[13px] font-medium text-[#4B5563] dark:text-[#9CA3AF] hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+                        Tutup
+                    </button>
+                    <button type="button" @click="saveAiSettings()" :disabled="isSavingAi"
+                        class="h-9.5 px-5 rounded-[10px] bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-white text-[13px] font-bold shadow-sm transition-all flex items-center gap-2">
+                        <i data-lucide="check" class="w-4 h-4" :class="isSavingAi ? 'animate-spin' : ''"></i>
+                        <span x-text="isSavingAi ? 'Menyimpan...' : 'Simpan Pedoman & Konfigurasi'"></span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 </div>
 
 @push('scripts')
@@ -1609,9 +2036,18 @@ function adminInboxHub() {
         isSendingDm: false,
         isSending: false,
         isSyncing: false,
-        isPolling: false,
         pollTimer: null,
         openMetaSettings: false,
+        openAiSettings: false,
+        aiActiveTab: 'status',
+        aiConfig: @json($aiSettings ?? []),
+        isSavingAi: false,
+        isGeneratingAi: false,
+        aiTestMessage: 'Halo Kak, mau tanya harga paket Pro COOCA berapa ya per bulan dan apa saja keunggulannya?',
+        aiTestResult: null,
+        isTestingAi: false,
+        newDoText: '',
+        newDontText: '',
 
         init() {
             // Select first thread if available
@@ -2648,6 +3084,266 @@ function adminInboxHub() {
                 default:
                     return t.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
             }
+        },
+
+        async generateAiReplyForCurrent() {
+            if (!this.selectedThread) {
+                alert('Pilih percakapan terlebih dahulu.');
+                return;
+            }
+
+            let targetCommentId = this.selectedThread.id;
+            if (this.selectedThread.comments && this.selectedThread.comments.length > 0) {
+                const parent = this.getParentComment(this.selectedThread);
+                targetCommentId = parent.id || targetCommentId;
+            }
+
+            this.isGeneratingAi = true;
+            try {
+                const res = await fetch(`/admin/inbox/generate-ai-reply/${targetCommentId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || ''
+                    }
+                });
+
+                const data = await res.json();
+                if (data.success && data.reply) {
+                    this.replyText = data.reply;
+                    this.showToastNotification('Draf balasan AI berhasil dibuat (' + (data.model || 'AI') + ')');
+                } else {
+                    alert(data.message || data.error || 'Gagal membuat draf AI.');
+                }
+            } catch (err) {
+                console.error('[AdminInboxAi] Error generating reply:', err);
+                alert('Terjadi kesalahan koneksi saat memanggil AI.');
+            } finally {
+                this.isGeneratingAi = false;
+                this.$nextTick(() => {
+                    if (window.lucide) window.lucide.createIcons();
+                });
+            }
+        },
+
+        async saveAiSettings() {
+            this.isSavingAi = true;
+            try {
+                const res = await fetch('/admin/inbox/ai-settings', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || ''
+                    },
+                    body: JSON.stringify(this.aiConfig)
+                });
+
+                const data = await res.json();
+                if (data.success) {
+                    this.aiConfig = data.settings;
+                    this.showToastNotification('Pengaturan AI Chatbot & Pedoman Kerja berhasil disimpan!');
+                    this.openAiSettings = false;
+                } else {
+                    alert(data.message || 'Gagal menyimpan pengaturan.');
+                }
+            } catch (err) {
+                console.error('[AdminInboxAi] Error saving settings:', err);
+                alert('Gagal menyimpan pengaturan AI.');
+            } finally {
+                this.isSavingAi = false;
+            }
+        },
+
+        async runAiTest() {
+            if (!this.aiTestMessage.trim()) return;
+
+            this.isTestingAi = true;
+            this.aiTestResult = null;
+            try {
+                const res = await fetch('/admin/inbox/ai-test', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || ''
+                    },
+                    body: JSON.stringify({
+                        message: this.aiTestMessage,
+                        system_info: this.aiConfig.system_info,
+                        dos: this.aiConfig.dos,
+                        donts: this.aiConfig.donts,
+                        model: this.aiConfig.model,
+                        temperature: this.aiConfig.temperature
+                    })
+                });
+
+                const data = await res.json();
+                if (data.success) {
+                    this.aiTestResult = data;
+                } else {
+                    alert(data.message || data.error || 'Gagal memproses simulasi AI.');
+                }
+            } catch (err) {
+                console.error('[AdminInboxAi] Error running test:', err);
+                alert('Koneksi simulasi AI gagal.');
+            } finally {
+                this.isTestingAi = false;
+                this.$nextTick(() => {
+                    if (window.lucide) window.lucide.createIcons();
+                });
+            }
+        },
+
+        addDoItem() {
+            const val = (this.newDoText || '').trim();
+            if (!val) return;
+            if (!Array.isArray(this.aiConfig.dos)) {
+                this.aiConfig.dos = [];
+            }
+            this.aiConfig.dos.push(val);
+            this.newDoText = '';
+            this.$nextTick(() => {
+                if (window.lucide) window.lucide.createIcons();
+            });
+        },
+
+        removeDoItem(idx) {
+            if (Array.isArray(this.aiConfig.dos)) {
+                this.aiConfig.dos.splice(idx, 1);
+            }
+        },
+
+        addDontItem() {
+            const val = (this.newDontText || '').trim();
+            if (!val) return;
+            if (!Array.isArray(this.aiConfig.donts)) {
+                this.aiConfig.donts = [];
+            }
+            this.aiConfig.donts.push(val);
+            this.newDontText = '';
+            this.$nextTick(() => {
+                if (window.lucide) window.lucide.createIcons();
+            });
+        },
+
+        removeDontItem(idx) {
+            if (Array.isArray(this.aiConfig.donts)) {
+                this.aiConfig.donts.splice(idx, 1);
+            }
+        },
+
+        loadDefaultSystemInfo() {
+            this.aiConfig.system_info = `[PROFIL COOCA INDONESIA & BUSINESS OPERATING SYSTEM]
+COOCA adalah platform SaaS Business Operating System (BOS) All-in-One yang dirancang khusus untuk memajukan UMKM Indonesia. COOCA menghubungkan seluruh operasional bisnis mulai dari kasir POS, manajemen inventori multi-gudang, kalkulasi HPP resep otomatis (BOM), pembukuan keuangan real-time, channel penjualan omnichannel (WhatsApp, Toko Online Digital, Shopee, Tokopedia, TikTok Shop), HRM & absensi GPS, hingga asisten AI bisnis dalam satu sistem terpadu tanpa software terpisah dan dengan sinkronisasi 0 detik delay.
+
+[KATALOG RESMI PAKET & HARGA BERLANGGANAN]
+(Sumber Data Tunggal: CMS Billing Packages Platform COOCA)
+- Uji Coba Gratis (Free Trial): 14 Hari Akses Penuh ke semua fitur tanpa perlu kartu kredit dan tanpa komitmen.
+- Paket Solo (Gratis): Cocok untuk usaha perorangan yang baru merintis pencatatan transaksi kasir sederhana.
+- Paket Standard Plan:
+  * Harga Bulanan: Rp 39.000 / bulan
+  * Harga Tahunan: Rp 390.000 / tahun (Promo: Hemat 2 Bulan)
+  * Target Segmen: UMKM Pemula (toko kelontong, kafe kecil, bengkel rumahan) dengan kuota hingga 1.000 transaksi kasir/bulan, 1 outlet/toko, dan master data produk dasar.
+- Paket Premium Plan (Paling Populer & Rekomendasi):
+  * Harga Bulanan: Rp 89.000 / bulan
+  * Harga Tahunan: Rp 890.000 / tahun (Promo: Hemat 2 Bulan)
+  * Target Segmen: Bisnis berkembang & multi-cabang (hingga 3 outlet cabang/gudang), kuota transaksi kasir tanpa batas, manajemen harga per cabang (Multi-Branch Pricing), sinkronisasi Omnichannel Marketplace (Shopee, Tokopedia, TikTok Shop), integrasi WhatsApp Gateway, dan analitik bisnis AI.
+- Paket Prestige Plan (Enterprise & Waralaba):
+  * Harga Bulanan: Rp 199.000 / bulan
+  * Harga Tahunan: Rp 1.990.000 / tahun (Promo: Hemat 2 Bulan)
+  * Target Segmen: Jaringan korporat, waralaba, dan distributor besar dengan outlet tanpa batas, kuota penyimpanan cloud besar, prioritas bantuan teknis 24/7, integrasi API kustom, dan SLA 99.9%.
+
+[KUOTA TOKEN AI & PENYIMPANAN CLOUD (STORAGE)]
+- Kuota Token AI Bawaan: 10.000.000 token / bulan sudah termasuk dalam paket langganan aktif.
+- Top-Up Token AI Tambahan: Rp 50.000 per 1.000.000 token (dapat dibeli instan secara mandiri di dashboard).
+- Kapasitas Dasar Storage Owner: 3 GB ruang penyimpanan cloud gratis untuk seluruh cabang.
+- Top-Up Storage Tambahan: Rp 50.000 per 1 GB (bersifat permanen dan diakumulasikan).
+- Metode Pembayaran Resmi: QRIS Dinamis Otomatis (GoPay, OVO, ShopeePay, DANA, BCA Mobile, Livin, BRImo) dan Virtual Account Bank (BCA, Mandiri, BNI, BRI, Permata) dengan verifikasi otomatis detik itu juga tanpa perlu kirim bukti transfer manual.
+
+[PANDUAN SETUP AWAL & ONBOARDING (5 MENIT MEMULAI)]
+1. Profil Usaha & Identitas Struk: Buka menu Pengaturan -> Profil Bisnis (/settings?tab=general). Masukkan nama usaha, logo (PNG transparan 500x500px), alamat, dan nomor WhatsApp resmi. Data ini otomatis tercetak pada struk belanja kasir dan dokumen faktur resmi.
+2. Pajak & Service Charge: Buka menu Pengaturan -> Pajak & Biaya (/settings?tab=pos_financial). Atur pajak PB1/PPN (Tax Inclusive atau Tax Exclusive) serta Service Charge resto bila ada.
+3. Multi-Gudang & Cabang: Buka menu Inventori -> Gudang (/inventory). Buat minimal 1 gudang utama (contoh: Gudang Pusat / Toko Utama).
+4. Staf & Hak Akses (RBAC): Buka menu Pengaturan -> Peran & Hak Akses (/roles). Daftarkan akun kasir atau staf gudang dengan membatasi akses ke laporan keuangan sensitif.
+5. Import Excel: Unggah ratusan produk dan stok awal sekaligus via tombol Import Excel di sidebar.
+
+[PANDUAN OPERASIONAL KASIR MODERN (POS)]
+- 4 Langkah Kasir Harian:
+  1. Buka Shift: Masukkan modal kas awal laci (Starting Cash).
+  2. Input Pesanan: Scan barcode (F4) atau klik menu produk. Untuk resto, tentukan meja tamu dan modifier (topping/level pedas).
+  3. Pembayaran Cepat: Tekan F2 untuk Quick Pay. Pilih metode Tunai, QRIS Dinamis, Transfer Bank, atau Split Bill (bagi tagihan per orang/nominal).
+  4. Tutup Shift: Hitung uang kas fisik laci, sistem mencocokkan selisih kas, lalu cetak laporan Z-Report kasir.
+- Kitchen Display & Tiket Dapur (KDS): Tiket pesanan makanan otomatis terkirim ke printer dapur dan layar barista.
+- Printer Kasir: Buka Pengaturan Kasir -> Printer. Mendukung printer thermal 58mm dan 80mm standar Bluetooth & USB.
+- Anti-Fraud Kasir: Void transaksi, pembatalan pesanan yang sudah tercetak, atau diskon di atas batas wewenang mewajibkan PIN Supervisor 6-digit dan terekam di Audit Log.
+- Mode Offline Caching: Jika internet toko terputus, kasir tetap bisa bertransaksi dan mencetak struk. Data otomatis tersinkronisasi kembali ke server saat internet menyala.
+
+[PANDUAN STOK, RESEP BOM & HPP OTOMATIS]
+- Resep Bill of Materials (BOM): Menu makanan/minuman dikaitkan ke bahan baku mentah di menu Produk -> Atur Resep (/products/{id}/bom). Saat kasir menjual 1 porsi Es Kopi Susu, stok espresso, susu, gula aren, dan cup otomatis terpotong per gram/ml di gudang cabang tersebut.
+- HPP Real-Time: Jika harga beli bahan mentah dari pemasok naik, HPP menu otomatis ter-update sehingga laba kotor selalu presisi.
+- Stock Opname Berkala: Pada menu Inventori -> Stock Opname (/inventory/opnames), unduh Lembar Hitung Kosong untuk staf, input hasil hitung fisik, lalu klik Rekonsiliasi agar sistem menyesuaikan stok dan mencatat selisih ke laporan laba-rugi.
+- Transfer Antar-Gudang: Distribusi stok dari Gudang Pusat ke Cabang melalui menu Inventori -> Transfer Stok (/inventory/transfers) dengan status Pending In-Transit dan tombol Konfirmasi Terima di cabang tujuan.
+
+[PANDUAN PENGADAAN (PURCHASING) & PENJUALAN B2B]
+- Pengadaan Supplier (PO): Buat Purchase Order di /purchase-orders -> Terima barang fisik gudang (GRN) -> Sistem mencatat faktur hutang dagang (AP) beserta jadwal jatuh tempo.
+- Penjualan B2B & Grosir: Buat Surat Penawaran (Quotation PDF) -> Konversi jadi Sales Order (SO) di /sales-orders -> Terbitkan Surat Jalan (Delivery Order) -> Terbitkan Faktur Penagihan (Invoice AR bertempo).
+
+[PANDUAN PEMBUKUAN KEUANGAN & AKUNTANSI]
+- Laporan Laba Rugi (P&L): Pantau omzet kotor, beban pokok penjualan (HPP), biaya operasional (listrik, sewa, gaji), dan laba bersih riil setiap saat di /reports.
+- Neraca Saldo: Memantau saldo kas fisik di laci, rekening bank, total valuasi stok gudang, dan kewajiban hutang.
+- Rekonsiliasi Bank: Buka /finance/reconciliations untuk mencocokkan mutasi rekening koran CSV (BCA, Mandiri, BRI, BNI) dengan buku kas COOCA. Catat biaya admin bank melalui tombol Buat Pengeluaran Cepat.
+- Ekspor Laporan: Seluruh laporan penjualan dan finansial dapat diunduh ke format XLSX dan PDF siap audit.
+
+[PANDUAN KARYAWAN, PRESENSI GPS & PENGGAJIAN (HRM)]
+- Presensi GPS Geofencing: Karyawan melakukan absensi masuk/pulang lewat smartphone dengan validasi radius toko (rekomendasi radius: 50-100 meter di Pengaturan Cabang).
+- Pengaturan Shift: Atur shift kerja pagi/siang/malam dengan toleransi keterlambatan menit otomatis di /hrm.
+- Perhitungan Gaji & Komisi: Bonus penjualan kasir terkalkulasi otomatis ke slip gaji bulanan dan dapat dicetak ke PDF resmi.
+
+[PANDUAN CRM, LOYALITAS & OMNICHANNEL]
+- Member Tiering: Akumulasi belanja menaikkan tingkat member (Silver -> Gold -> Platinum) dengan poin yang bisa dipotongkan sebagai diskon belanja di kasir POS.
+- WhatsApp Broadcast & Struk Digital: Struk belanja ramah lingkungan otomatis terkirim ke WhatsApp pelanggan tanpa kertas.
+- Integrasi Marketplace: Sinkronisasi produk, harga, dan stok otomatis ke Shopee, Tokopedia, dan TikTok Shop untuk mencegah overselling.
+- QR Order Meja Dine-In: Pelanggan scan kode QR di meja, buka menu digital interaktif, pesan langsung dari HP, dan bayar via QRIS otomatis.
+
+[KOLEKSI 8 KALKULATOR BISNIS UMKM GRATIS (cooca.id/kalkulator)]
+1. Kalkulator HPP: Menghitung biaya bahan baku + operasional per unit/porsi.
+2. Kalkulator BEP: Mengetahui titik impas penjualan agar tidak merugi.
+3. Kalkulator Margin & Markup: Menentukan harga jual berdasarkan target margin keuntungan.
+4. Kalkulator Laba Bersih: Menghitung laba riil setelah dikurangi seluruh beban usaha.
+5. Kalkulator Gaji Karyawan: Menghitung gaji pokok, komisi, dan tunjangan staf.
+6. Kalkulator PPh Final 0.5%: Menghitung kewajiban pajak UMKM omzet bruto (PP 23/2018).
+7. Kalkulator Omzet Harian: Menentukan target omzet harian untuk mencapai target bulanan.
+8. Simulasi What-If: Simulasi dampak kenaikan biaya bahan baku terhadap laba bersih.
+
+[PANDUAN PEMECAHAN MASALAH TEKNIS (TROUBLESHOOTING)]
+- Printer thermal bluetooth tidak mencetak: Pastikan bluetooth aktif dan sudah di-pairing, buka menu Pengaturan Kasir -> Printer di COOCA, pilih nama printer dan lakukan "Test Print", pastikan kertas thermal tidak terpasang terbalik.
+- Selisih kas laci saat tutup shift: Periksa apakah ada pengeluaran kas kecil yang lupa dicatat di tombol "Uang Keluar Kas" atau transaksi non-tunai yang keliru diinput sebagai tunai.
+- Karyawan gagal absen "di luar jangkauan": Buka Pengaturan -> Cabang, periksa titik koordinat latitude/longitude di Google Maps, naikkan radius geofence menjadi 50 atau 100 meter.
+- PIN Supervisor salah saat void pesanan: Owner dapat mereset 6 digit PIN Supervisor baru di Pengaturan -> Keuangan & Kasir POS.
+- Logo struk tidak muncul / rusak: Gunakan file format PNG transparan dengan resolusi ideal 500x500 pixel.
+- Struk tidak terkirim ke WhatsApp: Periksa status koneksi di Pengaturan -> WhatsApp Gateway, pastikan nomor pelanggan diawali kode negara 628...
+- Muncul Akses Ditolak (403): Minta Owner memberikan hak akses melalui Pengaturan -> Peran & Hak Akses (contoh: izin accounting.view untuk laporan keuangan).
+
+[JAM OPERASIONAL & LAYANAN RESMI]
+- WhatsApp Hotline Resmi Customer Service: +62 852-8786-4176 (Tersedia panduan foto & video call)
+- Email Dukungan Resmi: support@cooca.id
+- Jam Layanan Customer Service: Setiap Hari (Senin - Minggu) pukul 08:00 - 22:00 WIB (SLA respon < 15 menit).
+- Layanan Darurat Server & Infrastruktur: Siaga 24 Jam 7 Hari seminggu (24/7).
+- Website Resmi: https://cooca.id
+- Pendaftaran Uji Coba Gratis: https://cooca.id/register`;
+        },
+
+        showToastNotification(msg) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-5 right-5 z-50 px-4 py-3 rounded-[12px] bg-purple-900 text-white text-[12.5px] font-medium shadow-xl flex items-center gap-2 animate-in fade-in slide-in-from-bottom-2 duration-200';
+            toast.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400"></span> <span>${msg}</span>`;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'transition-opacity', 'duration-300');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
         }
     }
 }

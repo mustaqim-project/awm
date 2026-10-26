@@ -26,6 +26,14 @@ final class Context
     }
 
     /**
+     * Get the ID of the active business from context.
+     */
+    public static function businessId(): ?string
+    {
+        return self::$business?->id;
+    }
+
+    /**
      * Get the active location from context (if set).
      */
     public static function location(): ?\App\Models\Location

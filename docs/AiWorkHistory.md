@@ -33,6 +33,120 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-10-26-368] Penyelarasan Penuh Paritas REST API V1 terhadap Sistem Web dan 100% Dukungan Endpoint Aplikasi Mobile Flutter (cooca_my_own)
+
+- **Date:** 2026-10-26
+- **Status:** COMPLETED
+- **Module:** REST API V1, Mobile App Integration & Core Business Parity (`routes/api.php`, `ProductController.php`, `MaterialController.php`, `AuthController.php`, `ProfileController.php`, `BusinessController.php`, `AccountRecoveryApiController.php`, `PosModifierApiController.php`, `SalesOrderController.php`, `ProductResource.php`, `MaterialResource.php`, `Context.php`)
+- **Feature:** Audit komparasi menyeluruh antara 101 Web Controller vs 84 API V1 Controller di `cooca_core` serta 174 signature pemanggilan API pada aplikasi Flutter mobile `cooca_my_own`. Menyelesaikan seluruh celah fungsionalitas (missing endpoints & payload contracts), menambahkan endpoint pemulihan akun (Account Recovery), POS Modifiers CRUD, Sales Orders CRUD, sinkronisasi harga & modal produk, unit name auto-resolution, serta pendaftaran alias route sehingga tercapai 100% endpoint matching (174/174 OK, 0 missing).
+- **Work Type:** Feature | API Parity | Multi-Tenant Architecture | Database Seeders | Mobile Backend Integration | Automated Testing
+
+#### 1. Business Context & Objective
+- **Konteks:** Aplikasi mobile Flutter (`C:\laragon\www\cooca_my_own`) dirancang sebagai antarmuka operasional merchant dan kasir di lapangan. Seluruh fungsionalitas di mobile bergantung penuh pada API V1 di `cooca_core`.
+- **Masalah/Target:** Ditemukan ketidaksesuaian kontrak payload pada Product & Material (harga jual, base cost, dan min_stock sebelumnya dibuang oleh API V1), hilangnya endpoint pemulihan akun (Account Recovery) dan POS modifiers di API, serta perbedaan URI antara web/mobile (seperti `/businesses/switch` vs `/me/active-business`). Diperlukan perbaikan komprehensif tanpa merusak sistem web yang sudah ada dan memastikan isolasi multi-tenant tetap terjaga.
+
+#### 2. What Was Done
+- **Full Static & Reflection Audit:** Memindai 101 web controller dan membandingkannya dengan 84 API controller serta 174 titik pemanggilan API di `cooca_my_own/lib` (POS, HRM, Presensi, Attendance, Inventory, Auth, Merchant State).
+- **Database Default Unit Seeding:** Menjalankan seeder `DefaultUnitSeeder.php` untuk mempopulasikan 20 unit standar (`pcs`, `kg`, `g`, `ml`, `l`, `jam`, dll) di tabel `units`.
+- **Product & Material Payload Parity:**
+  - `ProductController.php`: Menambahkan isolasi tenant (`Context::businessId()`), filter `type` (goods vs service), auto-resolution unit string/kode ke UUID unit, serta persistensi `selling_price`, `base_cost`, `min_stock`, `type`, dan `is_active`.
+  - `ProductResource.php`: Mengembalikan atribut `selling_price`, `base_cost`, `min_stock`, `type`, `is_active`, dan `image_url`.
+  - `MaterialController.php`: Menambahkan pembuatan supplier otomatis jika `supplier_name` dikirim tanpa ID, auto-resolution unit, kalkulasi `effective_cost` via `MaterialCostService`, dan pembuatan data harga awal `MaterialPrice`.
+  - `MaterialResource.php`: Mengembalikan atribut root-level `purchase_price`, `effective_cost`, dan `unit_name`.
+- **Auth, Profile & Account Recovery Implementation:**
+  - `AuthController.php`: Mengimplementasikan `forgotPassword` dan `resetPassword` berbasis nomor telepon / email.
+  - `ProfileController.php`: Mengimplementasikan `completeProfile` untuk onboarding profil pemilik, pembuatan cabang awal, dan penerapan template bisnis.
+  - `AccountRecoveryApiController.php`: Controller baru untuk pengajuan tiket pemulihan akun (`store`) dengan penerbitan kode tiket `ARC-YYYYMMDD-XXXX` dan pelacakan status (`status`) yang mendukung upload multipart maupun base64.
+- **POS Modifiers & Sales Order CRUD:**
+  - `PosModifierApiController.php`: Controller baru untuk manajemen POS Modifier Groups dan Modifier Options (single/multiple select, price delta, material linkage).
+  - `SalesOrderController.php`: Mengimplementasikan `store`, `update`, dan `destroy` untuk Sales Order B2B menggunakan `SalesPipelineService`.
+- **API Routing & Aliases Registration:**
+  - Menambahkan endpoint dan alias di `routes/api.php`: `/api/v1/businesses` (alias dari `/me/businesses`), `/api/v1/businesses/switch` (alias dari `/me/active-business`), `/api/v1/customer/auth/profile` dan `/api/v1/customer/auth/logout`, serta prefix `/services` sebagai alias service-type products.
+- **Automated Verification:**
+  - Skrip pengujian endpoint menghasilkan 174 matched (100%) dan 0 missing.
+  - Pengujian unit otomatis `tests/Feature/Api/MobileApiParityTest.php` lulus 100% (6/6 tests passed, 35 assertions).
+
+#### 3. Technical Changes
+- **Files Affected:**
+  - `app/Support/Context.php` (Added `businessId()`)
+  - `app/Http/Controllers/Api/V1/ProductController.php` (Price, cost, min_stock, and unit resolution)
+  - `app/Http/Resources/ProductResource.php` (Output serialization update)
+  - `app/Http/Controllers/Api/V1/MaterialController.php` (Supplier auto-creation & price calculation)
+  - `app/Http/Resources/MaterialResource.php` (Output serialization update)
+  - `app/Http/Controllers/Api/V1/AuthController.php` (Added forgotPassword & resetPassword)
+  - `app/Http/Controllers/Api/V1/ProfileController.php` (Added completeProfile)
+  - `app/Http/Controllers/Api/V1/BusinessController.php` (Added success & data envelope for index & setActive)
+  - `app/Http/Controllers/Api/V1/AccountRecoveryApiController.php` (New controller)
+  - `app/Http/Controllers/Api/V1/Pos/PosModifierApiController.php` (New controller)
+  - `app/Http/Controllers/Api/V1/Sales/SalesOrderController.php` (Added store, update, destroy)
+  - `routes/api.php` (Registered new routes & mobile aliases)
+  - `tests/Feature/Api/MobileApiParityTest.php` (New automated feature test suite)
+  - `docs/AiWorkHistory.md` (Updated Layer 1 history)
+
+### [WORK-2026-10-26-367] Arsitektur Dynamic Modular Model Management ("Bongkar Pasang Model" / Zero Hardcode) pada Provider Universal OpenAI Compatible & Tenant BYOAI
+
+- **Date:** 2026-10-26
+- **Status:** COMPLETED
+- **Module:** AI Engine, Platform Administration & Tenant BYOAI (`OpenAiCompatibleProvider.php`, `AiPlatformEngineService.php`, `AdminAiTokenController.php`, `AiCompanyWebController.php`, `routes/admin.php`, `resources/views/admin/ai_tokens/index.blade.php`)
+- **Feature:** Implementasi sistem "Bongkar Pasang Model" dinamis (Zero Hardcode) untuk provider universal OpenAI Compatible. Superadmin dan tenant dapat mendaftarkan, membongkar (menghapus), mengganti tier, dan memilih model AI aktif secara runtime tanpa perlu mengubah satu baris pun kode sumber PHP. Mengintegrasikan 13 model bawaan tunnel teruji (`ag/gemini-3.8-flash-*`, `ag/gemini-3.7-flash-high`, `cx/gpt-6-astra-*`, `cx/gpt-5.6-*`, `cx/gpt-5.5-*`, `cx/gpt-5.4`) sebagai baseline seed pool dinamis.
+- **Work Type:** Feature | Architecture | Dynamic Model CRUD | Zero Hardcode | UI/UX (Bento Apple HIG Sheet) | Automated Testing
+
+#### 1. Business Context & Objective
+- **Konteks:** Perkembangan model AI eksternal bergerak cepat (hadir model baru seperti `ag/gemini-3.7-flash-high`, `cx/gpt-5.5-xhigh`, `cx/gpt-5.4`, dll). Model AI tidak boleh di-hardcode ke dalam file kode sumber, melainkan harus dapat dibongkar-pasang (*plug-and-play*) secara bebas oleh administrator platform.
+- **Masalah/Target:** Mengeliminasi daftar model statis pada `OpenAiCompatibleProvider.php`, menyediakan RESTful API & method service untuk manajemen model dinamis (tambah model, hapus model, reset ke 13 model bawaan tunnel, deteksi via endpoint `/models`), menghadirkan antarmuka modal Sheet interaktif di Blade Admin Console, serta membuka dukungan provider `openai_compatible` dan custom `endpoint` pada modul Tenant BYOAI (`AiCompanyWebController.php`).
+
+#### 2. What Was Done
+- **Dynamic Model Resolution pada Driver:** Mengembangkan `OpenAiCompatibleProvider::getDefaultSeedModels()` berisi 13 model standar tunnel, serta memperbarui `getAvailableModels()` agar secara dinamis memprioritaskan model in-memory atau model dari `SystemSetting (ai_platform_available_models)` sebelum jatuh ke default seed. Menambahkan method mutasi runtime `setAvailableModels()`.
+- **Persistent Model CRUD di Service:** Menambahkan method `getAvailableModels()`, `addCustomModel()`, `deleteCustomModel()`, dan `resetModelsToDefault()` pada `AiPlatformEngineService.php`. Jika model yang sedang aktif dihapus, service secara otomatis memindahkan active model ke model pertama yang tersedia.
+- **Admin Controller & Routing:** Menambahkan endpoint `addModel`, `deleteModel` (dengan regex wildcard parameter `{modelId}` untuk menangani ID bergaris miring seperti `cx/gpt-6-astra`), dan `resetDefaultModels` pada `AdminAiTokenController.php` dengan perlindungan RBAC `admin.ai_tokens.grant`.
+- **Antarmuka Apple HIG Sheet "Bongkar Pasang Model AI":** Menambahkan modal Sheet responsif di `resources/views/admin/ai_tokens/index.blade.php` lengkap dengan form inline penambahan model (ID, nama, tier), badge tier berkode warna (*Reasoning* ungu, *Balanced* biru, *Fast* hijau), tombol *Pilih Model Aktif*, tombol *Hapus / Bongkar*, tombol *Reset 13 Model Bawaan*, dan tombol *Deteksi dari Endpoint*.
+- **Tenant BYOAI Extension:** Memperluas validasi dan penyimpanan konfigurasi pada `AiCompanyWebController.php` agar bisnis / tenant juga dapat menggunakan provider `openai_compatible` dengan URL custom endpoint dan model kustom mandiri.
+- **Automated Testing:** Menambahkan 3 pengujian fitur di `tests/Feature/AdminAiEnginePlatformTest.php` (total 11 tests, 50 assertions, 100% PASS) dan memvalidasi `tests/Feature/AiProviderManagementTest.php` (4 tests, 19 assertions, 100% PASS).
+
+#### 3. Technical Changes
+- **Files Affected:**
+  - `app/Domain/Ai/Providers/OpenAiCompatibleProvider.php` (Dynamic model resolution & 13 seed baseline)
+  - `app/Domain/Ai/Platform/AiPlatformEngineService.php` (Model CRUD methods & auto-fallback)
+  - `app/Http/Controllers/Admin/AdminAiTokenController.php` (Actions addModel, deleteModel, resetDefaultModels)
+  - `routes/admin.php` (Routes /ai-tokens/engine/models/*)
+  - `resources/views/admin/ai_tokens/index.blade.php` (Interactive Apple HIG Model Sheet modal & Alpine functions)
+  - `app/Http/Controllers/Web/Ai/AiCompanyWebController.php` (Tenant BYOAI openai_compatible & endpoint support)
+  - `tests/Feature/AdminAiEnginePlatformTest.php` (11 feature tests)
+  - `docs/AiWorkHistory.md` & `docs/system/modules/ai-digital-company.md`
+
+### [WORK-2026-10-26-366] Arsitektur Multi-Provider AI Engine, Multi-Key Pool Round-Robin Load Balancing, dan Transformasi Command Center Admin AI Tokens (Live Tested OpenAI-Compatible Tunnel Endpoint)
+
+- **Date:** 2026-10-26
+- **Status:** COMPLETED
+- **Module:** AI Engine, Platform Administration & Token Monitoring (`resources/views/admin/ai_tokens/`, `AdminAiTokenController.php`, `OpenAiCompatibleProvider.php`, `AiPlatformEngineService.php`, `AiProviderManager.php`, `routes/admin.php`)
+- **Feature:** Transformasi arsitektur AI platform menjadi engine multi-provider yang dapat dikoneksikan dengan berbagai endpoint provider kustom (OpenAI-compatible tunnels, local LLMs, proxy gateways) serta mendukung Multi-Key Pool dengan strategi Round-Robin Load Balancing dan failover otomatis saat 429 rate limit. Perombakan antarmuka Admin AI Tokens menjadi Command Center Bento Apple HIG dengan 2 tab interaktif (Platform AI Engine & Monitoring Kuota Tenant).
+- **Work Type:** Feature | Architecture | Multi-Provider Engine | Multi-Key Pool | Load Balancing | UI/UX | Security | Automated Testing
+
+#### 1. Business Context & Objective
+- **Konteks:** Menjadikan modul AI platform bukan lagi sekadar pemantauan token pasif, melainkan sebuah Engine Inti yang dapat menghubungkan banyak provider AI kustom (termasuk OpenAI-compatible tunnels) dan mendukung banyak API Key (Multi-Key Pool) dalam 1 provider secara terdistribusi.
+- **Masalah/Target:** Mengatasi keterbatasan kaku sebelumnya di mana endpoint OpenAI di-hardcode ke `api.openai.com`, 1 provider hanya bisa menyimpan 1 key statis, dan Superadmin tidak memiliki panel konfigurasi engine platform. Mengintegrasikan endpoint tunnel pengguna (`https://r4g77gv.abc-tunnel.us/v1`), kunci API (`sk-5980...97ac1590`), dan model reasoning tinggi `ag/gemini-3.8-flash-high` sebagai konfigurasi aktif teruji.
+
+#### 2. What Was Done
+- **Live Endpoint Verification & Benchmarking:** Menguji koneksi langsung ke endpoint OpenAI-compatible tunnel (`https://r4g77gv.abc-tunnel.us/v1`) dengan model `cx/gpt-6-astra`, `cx/gpt-6-astra-xhigh`, `cx/gpt-5.6-sol`, `cx/gpt-5.6-sol-xhigh`, `cx/gpt-5.6-terra`, `cx/gpt-5.6-luna`, `ag/gemini-3.8-flash-high`, `ag/gemini-3.8-flash-medium`, `ag/gemini-3.8-flash-low`, membuktikan 100% kelulusan HTTP 200 OK dan latensi cepat (~24ms).
+- **OpenAiCompatibleProvider Driver:** Membangun `app/Domain/Ai/Providers/OpenAiCompatibleProvider.php` yang mengimplementasikan `AiProviderInterface`, mendukung kustom base URL, auto-discovery daftar model via `GET /v1/models`, mode chat completions non-streaming, RFC-8259 structured JSON prompt parser, serta plain-text completion `generateText()` untuk kompatibilitas hulu-ke-hilir.
+- **AiPlatformEngineService & Multi-Key Pool:** Mengembangkan `app/Domain/Ai/Platform/AiPlatformEngineService.php` dengan fitur penyimpanan aman di `SystemSetting` (`is_secret`), isolasi kunci mentah dari HTML front-end (`maskApiKey`), dynamic model discovery, health tracking (total requests, error count, last used timestamp), dan algoritma **Round-Robin Load Balancing** menggunakan atomic cache rotation counter.
+- **AiProviderManager Integration:** Memperbarui `app/Domain/Ai/Providers/AiProviderManager.php` untuk mendaftarkan driver `openai_compatible` ke katalog dan mengintegrasikan `resolveForBusiness(?Business $business)` agar otomatis memanfaatkan Platform AI Engine dengan key yang dirotasi secara seimbang saat tenant tidak membawa BYOAI sendiri.
+- **Admin Controller & Routes Extension:** Memperluas `app/Http/Controllers/Admin/AdminAiTokenController.php` dengan Controller-Level RBAC `HasMiddleware` (`admin.ai_tokens.view` & `admin.ai_tokens.grant`) serta 6 aksi engine: `updateEngine`, `testEngine`, `detectModels`, `addKey`, `toggleKey`, dan `deleteKey` di `routes/admin.php`.
+- **Bento Apple HIG UI Overhaul:** Merombak total `resources/views/admin/ai_tokens/index.blade.php` dengan layout 2 tab (*Platform AI Engine & Multi-Key Pool* dan *Monitoring Konsumsi Token Tenant*), status card vibran dengan visual latency live, selektor strategi rotasi, dynamic model picker dengan tombol deteksi instan, tabel pengelolaan Multi-Key Pool (toggle, delete, stats), modal sheet tambah key, serta preservasi penuh fitur monitoring KPI dan manual grant token.
+- **Automated Testing Suite:** Membangun `tests/Feature/AdminAiEnginePlatformTest.php` (8 test cases, 38 assertions) yang memvalidasi render command center, enkripsi & zero plaintext exposure di HTML, persistensi pengaturan engine, penambahan key ke pool, aktivasi/deaktivasi key, penghapusan key, distribusi rotasi Round-Robin, uji koneksi latency via Http::fake, deteksi model `/models`, dan resolusi otomatis platform engine pada `AiProviderManager` (Hasil: 100% PASS).
+
+#### 3. Technical Changes
+- **Files Affected:**
+  - `app/Domain/Ai/Providers/OpenAiCompatibleProvider.php` (New driver)
+  - `app/Domain/Ai/Platform/AiPlatformEngineService.php` (New service)
+  - `app/Domain/Ai/Providers/AiProviderManager.php` (Updated provider resolution & catalog)
+  - `app/Http/Controllers/Admin/AdminAiTokenController.php` (Extended controller methods & RBAC)
+  - `routes/admin.php` (Added 6 platform engine routes)
+  - `resources/views/admin/ai_tokens/index.blade.php` (Apple HIG AI Command Center overhaul)
+  - `resources/views/layouts/admin.blade.php` (Updated sidebar and spotlight title)
+  - `tests/Feature/AdminAiEnginePlatformTest.php` (New comprehensive feature test suite)
+  - `docs/AiWorkHistory.md` (Updated Layer 1 history)
+
 ### [WORK-2026-10-25-365] Audit Komprehensif Modul Keuangan & Akuntansi Korporasi (Penguatan Controller-Level RBAC HasMiddleware pada 7 Controller, Mitigasi Formula Injection CWE-1236, Financial AuditLog Integration, Penyelarasan Navigasi SAK EMKM, dan 100% Pass 42 Automated Tests)
 
 - **Date:** 2026-10-25

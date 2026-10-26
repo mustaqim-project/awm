@@ -12,6 +12,9 @@ use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
 use App\Domain\Mail\DynamicMailConfig;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
@@ -165,5 +168,88 @@ final class AuthController extends Controller
         $user->sendEmailVerificationNotification();
 
         return response()->json(['message' => 'Tautan verifikasi telah dikirim ulang.'], Response::HTTP_OK);
+    }
+
+    /**
+     * Send password reset link via email.
+     * POST /api/v1/auth/forgot-password
+     */
+    public function forgotPassword(Request $request): JsonResponse
+    {
+        $login = $request->input('login') ?? $request->input('email');
+        if (empty($login)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Email atau nomor telepon wajib diisi.',
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $user = User::where('email', $login)
+            ->orWhere('phone', $login)
+            ->first();
+
+        if (! $user) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Jika akun terdaftar, petunjuk pemulihan kata sandi telah dikirimkan ke email Anda.',
+            ], Response::HTTP_OK);
+        }
+
+        try {
+            DynamicMailConfig::bootstrap();
+            Password::sendResetLink(['email' => $user->email]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Petunjuk pemulihan kata sandi telah dikirimkan ke email terdaftar Anda.',
+            ], Response::HTTP_OK);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Petunjuk pemulihan kata sandi telah diproses untuk akun Anda.',
+            ], Response::HTTP_OK);
+        }
+    }
+
+    /**
+     * Reset user password using token.
+     * POST /api/v1/auth/reset-password
+     */
+    public function resetPassword(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'token' => ['required', 'string'],
+            'email' => ['required', 'email'],
+            'password' => ['required', 'string', 'min:8'],
+        ]);
+
+        $status = Password::reset(
+            [
+                'email' => $validated['email'],
+                'password' => $validated['password'],
+                'password_confirmation' => $request->input('password_confirmation') ?? $validated['password'],
+                'token' => $validated['token'],
+            ],
+            function (User $user, string $password): void {
+                $user->forceFill([
+                    'password' => Hash::make($password),
+                    'remember_token' => Str::random(60),
+                ])->save();
+
+                event(new PasswordReset($user));
+            }
+        );
+
+        if ($status === Password::PASSWORD_RESET) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Kata sandi berhasil diperbarui. Silakan login kembali dengan kata sandi baru Anda.',
+            ], Response::HTTP_OK);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => __($status) ?: 'Token reset kata sandi tidak valid atau telah kedaluwarsa.',
+        ], Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 }

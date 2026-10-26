@@ -36,8 +36,8 @@ final class AdminBillingPackageController extends Controller implements HasMiddl
         $counts = BillingPackage::select('type', DB::raw('COUNT(*) as total'))->groupBy('type')->pluck('total', 'type');
 
         // Default 4-Tier pricing shown on the subscription catalog
-        $subscriptionPriceMonthly = SystemSetting::get('subscription_price_monthly', '29000');
-        $subscriptionPriceAnnual = SystemSetting::get('subscription_price_annual', '290000');
+        $subscriptionPriceMonthly = SystemSetting::get('subscription_price_monthly', '39000');
+        $subscriptionPriceAnnual = SystemSetting::get('subscription_price_annual', '390000');
         $subscriptionAiTokensMonthly = SystemSetting::get('subscription_ai_tokens_monthly', '10000000');
         $subscriptionAnnualDiscountBadge = SystemSetting::get('subscription_annual_discount_badge', 'Hemat 2 Bulan');
 

@@ -174,4 +174,110 @@ final class ProfileController extends Controller
             'message' => 'Berhasil keluar dari semua perangkat.',
         ], Response::HTTP_OK);
     }
+
+    /**
+     * Complete owner & business setup onboarding profile.
+     * POST /api/v1/profile/complete
+     */
+    public function completeProfile(Request $request): JsonResponse
+    {
+        $user = $request->user();
+
+        $validated = $request->validate([
+            'name' => ['nullable', 'string', 'max:150'],
+            'business_name' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:50'],
+            'address' => ['nullable', 'string', 'max:500'],
+            'province' => ['nullable', 'string', 'max:100'],
+            'city' => ['nullable', 'string', 'max:100'],
+            'district' => ['nullable', 'string', 'max:100'],
+            'village' => ['nullable', 'string', 'max:100'],
+            'postal_code' => ['nullable', 'string', 'max:20'],
+            'latitude' => ['nullable', 'numeric'],
+            'longitude' => ['nullable', 'numeric'],
+            'business_scale' => ['nullable', 'string', 'max:50'],
+            'template_code' => ['nullable', 'string', 'max:50'],
+        ]);
+
+        // 1. Update user
+        $userUpdates = ['phone' => $validated['phone']];
+        if (! empty($validated['name'])) {
+            $userUpdates['name'] = $validated['name'];
+        }
+        $user->update($userUpdates);
+
+        // 2. Resolve or create active business
+        $business = $user->activeBusiness ?: $user->businesses()->first();
+        if (! $business) {
+            $business = Business::create([
+                'name' => $validated['business_name'],
+                'currency' => 'IDR',
+                'business_scale' => $validated['business_scale'] ?? 'micro',
+            ]);
+
+            \App\Models\BusinessMembership::create([
+                'user_id' => $user->id,
+                'business_id' => $business->id,
+                'role' => 'owner',
+            ]);
+
+            $user->update(['active_business_id' => $business->id]);
+        } else {
+            $business->update([
+                'name' => $validated['business_name'],
+                'business_scale' => $validated['business_scale'] ?? $business->business_scale,
+            ]);
+        }
+
+        // Apply template if requested
+        if (! empty($validated['template_code'])) {
+            try {
+                $templateService = app(\App\Domain\Business\BusinessTypeTemplateService::class);
+                $templateService->applyTemplateByCode($business, $validated['template_code']);
+            } catch (\Throwable) {}
+        }
+
+        // 3. Update or create primary location
+        $location = $business->locations()->where('is_primary', true)->first()
+            ?? $business->locations()->first();
+
+        $locData = [
+            'name' => $location?->name ?? 'Outlet Utama',
+            'type' => 'outlet',
+            'is_primary' => true,
+            'is_active' => true,
+            'address' => $validated['address'] ?? $location?->address,
+            'city' => $validated['city'] ?? $location?->city,
+            'province' => $validated['province'] ?? $location?->province,
+            'district' => $validated['district'] ?? $location?->district,
+            'village' => $validated['village'] ?? $location?->village,
+            'postal_code' => $validated['postal_code'] ?? $location?->postal_code,
+            'latitude' => $validated['latitude'] ?? $location?->latitude,
+            'longitude' => $validated['longitude'] ?? $location?->longitude,
+        ];
+
+        if ($location) {
+            $location->update($locData);
+        } else {
+            $locData['business_id'] = $business->id;
+            $locData['code'] = 'OUT-01';
+            $location = \App\Models\Location::create($locData);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Profil bisnis berhasil dilengkapi.',
+            'business' => [
+                'id' => $business->id,
+                'name' => $business->name,
+                'slug' => $business->slug,
+            ],
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'phone' => $user->phone,
+            ],
+            'location' => $location,
+        ], Response::HTTP_OK);
+    }
 }

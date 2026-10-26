@@ -19,12 +19,20 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class MaterialController extends Controller
 {
+    public function __construct(
+        private readonly MaterialCostService $costService = new MaterialCostService
+    ) {}
+
     /**
      * List materials with filtering by category and keyword search.
      */
     public function index(Request $request): JsonResponse
     {
         $query = Material::with(['unit', 'category', 'supplier', 'latestPrice']);
+
+        if (Context::hasBusiness()) {
+            $query->where('business_id', Context::businessId());
+        }
 
         if ($request->filled('category_id')) {
             $query->where('category_id', $request->query('category_id'));
@@ -43,9 +51,11 @@ final class MaterialController extends Controller
             $query->whereNull('discontinued_at');
         }
 
-        $materials = $query->latest()->paginate(25);
+        $materials = $query->latest()->paginate((int) $request->query('per_page', 25));
 
         return response()->json([
+            'success' => true,
+            'materials' => MaterialResource::collection($materials),
             'data' => MaterialResource::collection($materials),
             'pagination' => [
                 'current_page' => $materials->currentPage(),
@@ -63,6 +73,37 @@ final class MaterialController extends Controller
     {
         $business = Context::requireBusiness();
 
+        // Graceful unit resolution if client sends string name or abbreviation
+        $unitId = $request->input('unit_id');
+        if (empty($unitId) && $request->filled('unit')) {
+            $unitInput = strtolower(trim((string) $request->input('unit')));
+            $unit = Unit::where(function ($q) use ($business) {
+                $q->where('business_id', $business->id)->orWhereNull('business_id');
+            })->where(function ($q) use ($unitInput) {
+                $q->where('code', $unitInput)->orWhere('name', 'like', "%{$unitInput}%");
+            })->first();
+
+            $unitId = $unit?->id;
+        }
+
+        if (empty($unitId)) {
+            $unitId = Unit::whereIn('code', ['kg', 'g', 'pcs', 'ml', 'l'])->first()?->id ?? Unit::first()?->id;
+        }
+
+        $request->merge(['unit_id' => $unitId]);
+
+        // Auto find or create supplier if supplier_name provided without supplier_id
+        if (! $request->filled('supplier_id') && $request->filled('supplier_name')) {
+            $supplierName = trim((string) $request->input('supplier_name'));
+            if ($supplierName !== '') {
+                $supplier = \App\Models\Supplier::firstOrCreate(
+                    ['business_id' => $business->id, 'name' => $supplierName],
+                    ['is_active' => true]
+                );
+                $request->merge(['supplier_id' => $supplier->id]);
+            }
+        }
+
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'code' => ['nullable', 'string', 'max:50'],
@@ -70,15 +111,67 @@ final class MaterialController extends Controller
             'category_id' => ['nullable', 'string', 'exists:material_categories,id'],
             'supplier_id' => ['nullable', 'string', 'exists:suppliers,id'],
             'description' => ['nullable', 'string'],
+            'purchase_price' => ['nullable', 'numeric', 'min:0'],
+            'yield_percentage' => ['nullable', 'numeric', 'min:0'],
+            'waste_percentage' => ['nullable', 'numeric', 'min:0'],
+            'shipping_cost' => ['nullable', 'numeric', 'min:0'],
+            'discount_amount' => ['nullable', 'numeric', 'min:0'],
         ]);
 
+        $validated['business_id'] = $business->id;
+
         /** @var Material $material */
-        $material = Material::create($validated);
-        $material->load(['unit', 'category', 'supplier']);
+        $material = Material::create([
+            'business_id' => $business->id,
+            'name' => $validated['name'],
+            'code' => $validated['code'] ?? null,
+            'unit_id' => $validated['unit_id'],
+            'category_id' => $validated['category_id'] ?? null,
+            'supplier_id' => $validated['supplier_id'] ?? null,
+            'description' => $validated['description'] ?? null,
+        ]);
+
+        // Create initial price if purchase_price provided
+        if (isset($validated['purchase_price']) && (float) $validated['purchase_price'] > 0) {
+            $purchasePrice = (float) $validated['purchase_price'];
+            $shipping = (float) ($validated['shipping_cost'] ?? 0.0);
+            $discount = (float) ($validated['discount_amount'] ?? 0.0);
+
+            /** @var MaterialPrice $price */
+            $price = MaterialPrice::create([
+                'business_id' => $business->id,
+                'material_id' => $material->id,
+                'supplier_id' => $validated['supplier_id'] ?? null,
+                'purchase_price' => $purchasePrice,
+                'shipping_cost' => $shipping,
+                'handling_cost' => 0.0,
+                'import_cost' => 0.0,
+                'discount_amount' => $discount,
+                'yield_percentage' => (float) ($validated['yield_percentage'] ?? 100.0),
+                'waste_percentage' => (float) ($validated['waste_percentage'] ?? 0.0),
+                'purchase_unit_id' => $material->unit_id,
+                'effective_date' => now()->toDateString(),
+                'notes' => 'Penerimaan harga bahan awal (Mobile/API).',
+            ]);
+
+            try {
+                $price->update([
+                    'effective_cost' => $this->costService->calculateEffectiveAcquisitionCost($price),
+                ]);
+            } catch (\Throwable) {
+                $price->update([
+                    'effective_cost' => $purchasePrice + $shipping - $discount,
+                ]);
+            }
+        }
+
+        $material->load(['unit', 'category', 'supplier', 'latestPrice']);
 
         return response()->json([
-            'message' => 'Material created successfully.',
+            'success' => true,
+            'message' => 'Bahan baku berhasil dibuat.',
             'material' => new MaterialResource($material),
+            'data' => new MaterialResource($material),
         ], Response::HTTP_CREATED);
     }
 

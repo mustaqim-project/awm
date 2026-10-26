@@ -345,11 +345,9 @@
         ['perm' => 'admin.posts.view', 'title' => 'Artikel Blog & Edukasi', 'desc' => 'CMS artikel publikasi & edukasi bisnis', 'url' => route('admin.posts.index'), 'icon' => 'file-text', 'cat' => 'Pemasaran'],
         ['perm' => 'admin.templates.view', 'title' => 'Template Excel Master', 'desc' => 'Katalog spreadsheet akuntansi & stok UMKM', 'url' => route('admin.templates.index'), 'icon' => 'file-spreadsheet', 'cat' => 'Pemasaran'],
         ['perm' => 'admin.word_filters.view', 'title' => 'Moderasi Kata Terlarang', 'desc' => 'Filter kata judi online, scam & konten terlarang', 'url' => route('admin.word-filters.index'), 'icon' => 'shield-ban', 'cat' => 'Pemasaran'],
-        ['perm' => 'admin.legal_pages.view', 'title' => 'Kebijakan & Legalitas', 'desc' => 'CMS Kebijakan Privasi & Syarat Ketentuan', 'url' => route('admin.legal-pages.index'), 'icon' => 'scale', 'cat' => 'Pemasaran'],
-
         // Sistem & Keamanan
         ['perm' => 'admin.roles.view', 'title' => 'Hak Akses & Peran (RBAC)', 'desc' => 'Peran administrator, matriks izin & staf', 'url' => route('admin.roles.index'), 'icon' => 'shield-check', 'cat' => 'Sistem'],
-        ['perm' => 'admin.ai_tokens.view', 'title' => 'Monitoring Token AI', 'desc' => 'Pantau konsumsi kuota Gemini AI token', 'url' => route('admin.ai-tokens.index'), 'icon' => 'sparkles', 'cat' => 'Sistem'],
+        ['perm' => 'admin.ai_tokens.view', 'title' => 'AI Engine & Token Console', 'desc' => 'Kelola engine multi-provider AI & pantau konsumsi token platform', 'url' => route('admin.ai-tokens.index'), 'icon' => 'sparkles', 'cat' => 'Sistem'],
         ['perm' => 'admin.settings.view', 'title' => 'Pengaturan Sistem', 'desc' => 'Konfigurasi Google OAuth, TriPay & SMTP', 'url' => route('admin.settings.index'), 'icon' => 'sliders', 'cat' => 'Sistem'],
         ['perm' => 'admin.error_logs.view', 'title' => 'Log Error & Diagnostik', 'desc' => 'Pemantauan runtime exception & debug log', 'url' => route('admin.error-logs.index'), 'icon' => 'terminal', 'cat' => 'Sistem'],
         ['perm' => 'admin.profile.view', 'title' => 'Profil Administrator', 'desc' => 'Kelola identitas akun & ubah kata sandi', 'url' => route('admin.profile.index'), 'icon' => 'key-round', 'cat' => 'Sistem'],
@@ -849,7 +847,7 @@
                                 <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
                                     <i data-lucide="sparkles" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
                                 </div>
-                                <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Monitoring Token AI</span>
+                                <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">AI Engine &amp; Tokens</span>
                             </div>
                         </a>
                     @endif

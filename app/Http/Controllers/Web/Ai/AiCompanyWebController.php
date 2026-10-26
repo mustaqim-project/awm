@@ -647,7 +647,8 @@ final class AiCompanyWebController extends Controller
         $business = Context::requireBusiness();
 
         $validated = $request->validate([
-            'provider' => ['required', 'string', 'in:openai,gemini,anthropic,openrouter'],
+            'provider' => ['required', 'string', 'in:openai,gemini,anthropic,openrouter,openai_compatible'],
+            'endpoint' => ['nullable', 'string', 'max:500'],
             'api_key' => ['nullable', 'string', 'max:1000'],
             'model' => ['required', 'string', 'max:150'],
             'custom_model' => ['nullable', 'string', 'max:150'],
@@ -682,8 +683,11 @@ final class AiCompanyWebController extends Controller
             $targetModel = ! empty($validated['custom_model']) ? trim($validated['custom_model']) : 'default';
         }
 
-        // Handle custom models persistence in settings
+        // Handle custom models and endpoint persistence in settings
         $settings = is_array($existing?->settings) ? $existing->settings : [];
+        if (! empty($validated['endpoint'])) {
+            $settings['endpoint'] = trim($validated['endpoint']);
+        }
         $customModels = $settings['custom_models'] ?? [];
         if (! empty($validated['custom_model'])) {
             $cModel = trim($validated['custom_model']);
@@ -734,7 +738,8 @@ final class AiCompanyWebController extends Controller
         $business = Context::requireBusiness();
 
         $validated = $request->validate([
-            'provider' => ['required', 'string', 'in:openai,gemini,anthropic,openrouter'],
+            'provider' => ['required', 'string', 'in:openai,gemini,anthropic,openrouter,openai_compatible'],
+            'endpoint' => ['nullable', 'string', 'max:500'],
             'api_key' => ['nullable', 'string'],
             'model' => ['required', 'string'],
             'custom_model' => ['nullable', 'string', 'max:150'],
@@ -768,10 +773,19 @@ final class AiCompanyWebController extends Controller
             $targetModel = trim((string) $request->input('custom_model'));
         }
 
+        $endpoint = ! empty($validated['endpoint']) ? trim($validated['endpoint']) : null;
+        if (empty($endpoint)) {
+            $existing = AiProviderConfig::where('business_id', $business->id)
+                ->where('provider', $validated['provider'])
+                ->first();
+            $endpoint = is_array($existing?->settings) ? ($existing->settings['endpoint'] ?? null) : null;
+        }
+
         $result = $this->providerManager->testConnection(
             $validated['provider'],
             $apiKey,
-            $targetModel
+            $targetModel,
+            $endpoint
         );
 
         // Update status in database if config exists
@@ -810,7 +824,8 @@ final class AiCompanyWebController extends Controller
         $business = Context::requireBusiness();
 
         $validated = $request->validate([
-            'provider' => ['required', 'string', 'in:openai,gemini,anthropic,openrouter'],
+            'provider' => ['required', 'string', 'in:openai,gemini,anthropic,openrouter,openai_compatible'],
+            'endpoint' => ['nullable', 'string', 'max:500'],
             'api_key' => ['nullable', 'string'],
         ]);
 
@@ -832,36 +847,31 @@ final class AiCompanyWebController extends Controller
         if (empty($apiKey)) {
             return response()->json([
                 'success' => false,
-                'message' => 'API Key belum diisi. Masukkan API Key terlebih dahulu.',
+                'message' => 'Kunci API kosong. Masukkan API Key terlebih dahulu.',
             ], 422);
         }
 
-        try {
-            $models = $this->providerManager->discoverModels($validated['provider'], $apiKey);
-
-            // Update settings if config exists
-            $config = AiProviderConfig::where('business_id', $business->id)
+        $endpoint = ! empty($validated['endpoint']) ? trim($validated['endpoint']) : null;
+        if (empty($endpoint)) {
+            $existing = AiProviderConfig::where('business_id', $business->id)
                 ->where('provider', $validated['provider'])
                 ->first();
-
-            if ($config) {
-                $settings = is_array($config->settings) ? $config->settings : [];
-                $settings['available_models'] = $models;
-                $config->update(['settings' => $settings]);
-            }
-
-            return response()->json([
-                'success' => true,
-                'provider' => $validated['provider'],
-                'models' => $models,
-                'message' => 'Berhasil mendeteksi ' . count($models) . ' model aktif untuk ' . ucfirst($validated['provider']) . '.',
-            ]);
-        } catch (Throwable $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Gagal mendeteksi model: ' . $e->getMessage(),
-            ], 500);
+            $endpoint = is_array($existing?->settings) ? ($existing->settings['endpoint'] ?? null) : null;
         }
+
+        $models = $this->providerManager->discoverModels(
+            $validated['provider'],
+            $apiKey,
+            $endpoint
+        );
+
+        return response()->json([
+            'success' => true,
+            'provider' => $validated['provider'],
+            'models' => $models,
+            'count' => count($models),
+            'message' => 'Berhasil mendeteksi ' . count($models) . ' model aktif.',
+        ]);
     }
 
     /**

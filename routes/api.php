@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\Api\V1\AbcActivityController;
+use App\Http\Controllers\Api\V1\AccountRecoveryApiController;
 use App\Http\Controllers\Api\V1\AiAssistantController;
 use App\Http\Controllers\Api\V1\AllocationRuleController;
 use App\Http\Controllers\Api\V1\AuditLogController;
@@ -19,6 +20,7 @@ use App\Http\Controllers\Api\V1\Inventory\InventoryController;
 use App\Http\Controllers\Api\V1\Inventory\StockOpnameController;
 use App\Http\Controllers\Api\V1\Inventory\StockTransferController;
 use App\Http\Controllers\Api\V1\Pos\PosAgentApiController;
+use App\Http\Controllers\Api\V1\Pos\PosModifierApiController;
 use App\Http\Controllers\Api\V1\Pos\PosOrderController;
 use App\Http\Controllers\Api\V1\Pos\PosReportController;
 use App\Http\Controllers\Api\V1\Pos\PosShiftController;
@@ -834,6 +836,9 @@ Route::prefix('v1')->group(function (): void {
     Route::prefix('customer')->middleware(['auth:sanctum', 'throttle:180,1'])->group(function (): void {
         Route::get('/me', [\App\Http\Controllers\Api\V1\Customer\CustomerAuthApiController::class, 'me']);
         Route::post('/logout', [\App\Http\Controllers\Api\V1\Customer\CustomerAuthApiController::class, 'logout']);
+        // Aliases for Mobile Customer Portal
+        Route::get('/auth/profile', [\App\Http\Controllers\Api\V1\Customer\CustomerAuthApiController::class, 'me']);
+        Route::post('/auth/logout', [\App\Http\Controllers\Api\V1\Customer\CustomerAuthApiController::class, 'logout']);
 
         // Address Book
         Route::get('/addresses', [\App\Http\Controllers\Api\V1\Customer\CustomerAddressApiController::class, 'index']);
@@ -872,6 +877,14 @@ Route::prefix('v1')->group(function (): void {
         Route::post('/register', [AuthController::class, 'register']);
         Route::post('/login', [AuthController::class, 'login']);
         Route::post('/google', [AuthController::class, 'googleLogin']);
+        Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
+        Route::post('/reset-password', [AuthController::class, 'resetPassword']);
+    });
+
+    // Account Recovery (Public)
+    Route::prefix('account-recovery')->middleware('throttle:10,1')->group(function (): void {
+        Route::post('/', [AccountRecoveryApiController::class, 'store']);
+        Route::get('/status/{ticket}', [AccountRecoveryApiController::class, 'status']);
     });
 
     // Authenticated User Routes (with 300 req/min rate limit)
@@ -888,9 +901,12 @@ Route::prefix('v1')->group(function (): void {
         // User & Business Management
         Route::get('/me/businesses', [BusinessController::class, 'index']);
         Route::post('/me/active-business', [BusinessController::class, 'setActive']);
+        Route::get('/businesses', [BusinessController::class, 'index']);
+        Route::post('/businesses/switch', [BusinessController::class, 'setActive']);
         Route::post('/businesses', [BusinessController::class, 'store']);
         Route::get('/businesses/{business:slug}', [BusinessController::class, 'show']);
         Route::post('/businesses/{business:slug}/apply-template', [BusinessTypeTemplateController::class, 'apply']);
+        Route::post('/profile/complete', [ProfileController::class, 'completeProfile']);
 
         // Business Members Management
         Route::get('/businesses/{business:slug}/members', [MemberController::class, 'index'])->middleware('require.permission:users.view');
@@ -988,6 +1004,13 @@ Route::prefix('v1')->group(function (): void {
             Route::get('/products/{product:slug}', [ProductController::class, 'show'])->middleware('require.permission:products.view');
             Route::put('/products/{product:slug}', [ProductController::class, 'update'])->middleware('require.permission:products.edit');
             Route::delete('/products/{product:slug}', [ProductController::class, 'destroy'])->middleware('require.permission:products.delete');
+
+            // Services CRUD (Service-type Products)
+            Route::get('/services', [ProductController::class, 'index'])->middleware('require.permission:products.view');
+            Route::post('/services', [ProductController::class, 'store'])->middleware('require.permission:products.create');
+            Route::get('/services/{product:slug}', [ProductController::class, 'show'])->middleware('require.permission:products.view');
+            Route::put('/services/{product:slug}', [ProductController::class, 'update'])->middleware('require.permission:products.edit');
+            Route::delete('/services/{product:slug}', [ProductController::class, 'destroy'])->middleware('require.permission:products.delete');
 
             // Cost Categories & Cost Models
             Route::get('/cost-categories', [CostModelController::class, 'categories'])->middleware('require.permission:costing.view_margin');
@@ -1188,6 +1211,15 @@ Route::prefix('v1')->group(function (): void {
                 // Supervisor Authorization (mirror of web /pos/verify-pin)
                 Route::post('/verify-pin', [PosTerminalController::class, 'verifySupervisorPin'])->middleware('throttle:5,1');
 
+                // Modifiers & Add-ons
+                Route::get('/modifiers', [PosModifierApiController::class, 'index'])->middleware('require.permission:pos.terminal');
+                Route::post('/modifiers/groups', [PosModifierApiController::class, 'storeGroup'])->middleware('require.permission:pos.terminal');
+                Route::put('/modifiers/groups/{group}', [PosModifierApiController::class, 'updateGroup'])->middleware('require.permission:pos.terminal');
+                Route::delete('/modifiers/groups/{group}', [PosModifierApiController::class, 'destroyGroup'])->middleware('require.permission:pos.terminal');
+                Route::post('/modifiers/options', [PosModifierApiController::class, 'storeOption'])->middleware('require.permission:pos.terminal');
+                Route::put('/modifiers/options/{option}', [PosModifierApiController::class, 'updateOption'])->middleware('require.permission:pos.terminal');
+                Route::delete('/modifiers/options/{option}', [PosModifierApiController::class, 'destroyOption'])->middleware('require.permission:pos.terminal');
+
                 // Shift Management
                 Route::get('/shifts', [PosShiftController::class, 'index'])->middleware('require.permission:pos.terminal,pos.orders');
                 Route::post('/shifts/open', [PosShiftController::class, 'open'])->middleware('require.permission:pos.terminal,pos.orders');
@@ -1304,7 +1336,10 @@ Route::prefix('v1')->group(function (): void {
 
                 // Sales Orders
                 Route::get('/orders', [SalesOrderController::class, 'index'])->middleware('require.permission:sales.view');
+                Route::post('/orders', [SalesOrderController::class, 'store'])->middleware('require.permission:sales.pipeline');
                 Route::get('/orders/{salesOrder}', [SalesOrderController::class, 'show'])->middleware('require.permission:sales.view');
+                Route::put('/orders/{salesOrder}', [SalesOrderController::class, 'update'])->middleware('require.permission:sales.pipeline');
+                Route::delete('/orders/{salesOrder}', [SalesOrderController::class, 'destroy'])->middleware('require.permission:sales.pipeline');
                 Route::post('/orders/{salesOrder}/generate-invoice', [SalesOrderController::class, 'generateInvoice'])->middleware('require.permission:sales.pipeline');
 
                 // Invoices

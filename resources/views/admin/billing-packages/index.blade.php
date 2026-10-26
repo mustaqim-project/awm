@@ -172,13 +172,13 @@
                                     <div>
                                         <label class="block text-[11px] font-semibold text-black/70 dark:text-white/70 mb-1">Bulanan (Rp)</label>
                                         <input type="number" name="subscription_price_standard_monthly"
-                                            value="{{ $priceStandardMonthly ?? 29000 }}" min="0" step="1000"
+                                            value="{{ $priceStandardMonthly ?? 39000 }}" min="0" step="1000"
                                             class="w-full h-9 px-3 bg-white dark:bg-black/20 border border-black/[0.08] dark:border-white/[0.1] rounded-[10px] text-[13px] tabular-nums font-bold text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/40">
                                     </div>
                                     <div>
                                         <label class="block text-[11px] font-semibold text-black/70 dark:text-white/70 mb-1">Tahunan (Rp)</label>
                                         <input type="number" name="subscription_price_standard_annual"
-                                            value="{{ $priceStandardAnnual ?? 290000 }}" min="0" step="1000"
+                                            value="{{ $priceStandardAnnual ?? 390000 }}" min="0" step="1000"
                                             class="w-full h-9 px-3 bg-white dark:bg-black/20 border border-black/[0.08] dark:border-white/[0.1] rounded-[10px] text-[13px] tabular-nums font-bold text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/40">
                                     </div>
                                 </div>

@@ -17,6 +17,7 @@ final class AiProviderManager
 
     public function __construct()
     {
+        $this->registerProvider(new OpenAiCompatibleProvider());
         $this->registerProvider(new OpenAiProvider());
         $this->registerProvider(new GeminiProvider());
         $this->registerProvider(new AnthropicProvider());
@@ -46,6 +47,10 @@ final class AiProviderManager
     public function getCatalog(?Business $business = null): array
     {
         $catalog = [
+            'openai_compatible' => [
+                'name' => 'OpenAI Compatible (Custom Tunnel / Local / Proxy)',
+                'models' => $this->providers['openai_compatible']->getAvailableModels(),
+            ],
             'openai' => [
                 'name' => 'OpenAI',
                 'models' => $this->providers['openai']->getAvailableModels(),
@@ -112,7 +117,7 @@ final class AiProviderManager
     /**
      * Resolve the active AI provider, decrypted key, and model for a business.
      *
-     * @return array{provider: AiProviderInterface, api_key: string, model: string, config: ?AiProviderConfig}
+     * @return array{provider: AiProviderInterface, api_key: string, model: string, config: ?AiProviderConfig, endpoint?: string, key_id?: string}
      */
     public function resolveForBusiness(?Business $business): array
     {
@@ -134,7 +139,32 @@ final class AiProviderManager
             }
         }
 
-        // 2. Check system environment fallbacks
+        // 2. Check Platform AI Engine settings configured by Superadmin (Multi-Key Pool & Tunnel)
+        try {
+            $engineService = app(\App\Domain\Ai\Platform\AiPlatformEngineService::class);
+            $platformConfig = $engineService->getConfig();
+            $platformProvider = (string) ($platformConfig['provider'] ?? 'openai_compatible');
+            $resolvedKey = $engineService->resolveNextKey();
+
+            if ($resolvedKey && ! empty($resolvedKey['key'])) {
+                $providerInstance = isset($this->providers[$platformProvider])
+                    ? $this->providers[$platformProvider]
+                    : $this->providers['openai_compatible'];
+
+                return [
+                    'provider' => $providerInstance,
+                    'api_key' => $resolvedKey['key'],
+                    'model' => (string) ($platformConfig['model'] ?? 'ag/gemini-3.8-flash-high'),
+                    'config' => null,
+                    'endpoint' => (string) ($platformConfig['endpoint'] ?? ''),
+                    'key_id' => (string) ($resolvedKey['id'] ?? ''),
+                ];
+            }
+        } catch (\Throwable) {
+            // Fallback to environment credentials if platform engine not yet initialized
+        }
+
+        // 3. Check system environment fallbacks
         $geminiKey = (string) (config('services.gemini.key') ?? env('GEMINI_API_KEY') ?? '');
         if ($geminiKey !== '') {
             return [
@@ -155,7 +185,7 @@ final class AiProviderManager
             ];
         }
 
-        // 3. Fallback to 100% offline native rule-based engine
+        // 4. Fallback to 100% offline native rule-based engine
         return [
             'provider' => $this->providers['fallback'],
             'api_key' => '',
@@ -169,9 +199,12 @@ final class AiProviderManager
      *
      * @return array{success: bool, message: string}
      */
-    public function testConnection(string $providerName, string $apiKey, string $model): array
+    public function testConnection(string $providerName, string $apiKey, string $model, ?string $endpoint = null): array
     {
         $provider = $this->getProvider($providerName);
+        if ($provider instanceof OpenAiCompatibleProvider && $endpoint) {
+            return $provider->testConnection($apiKey, $model, $endpoint);
+        }
         return $provider->testConnection($apiKey, $model);
     }
 
@@ -180,9 +213,12 @@ final class AiProviderManager
      *
      * @return array<int, array{id: string, name: string, tier: string}>
      */
-    public function discoverModels(string $providerName, string $apiKey): array
+    public function discoverModels(string $providerName, string $apiKey, ?string $endpoint = null): array
     {
         $provider = $this->getProvider($providerName);
+        if ($provider instanceof OpenAiCompatibleProvider && $endpoint) {
+            return $provider->fetchAvailableModels($apiKey, $endpoint);
+        }
         if (method_exists($provider, 'fetchAvailableModels')) {
             return $provider->fetchAvailableModels($apiKey);
         }

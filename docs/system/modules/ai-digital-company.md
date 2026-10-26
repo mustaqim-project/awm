@@ -190,11 +190,15 @@ Dilarang keras menggunakan animasi mengetik palsu atau avatar kartun yang mengel
    Setiap proposal dilengkapi `idempotency_key` (`ACT-xxxx`). Proposal yang telah dieksekusi dikunci agar tidak dapat dieksekusi ganda jika tombol ditekan berkali-kali. Eksekusi dilakukan di dalam `DB::transaction` atomik dengan re-validasi status data fisik.
 3. **Isolasi Multi-Tenant Mutlak:**
    Setiap tabel AI memegang kolom `business_id` berindeks. Context tenant terisolasi penuh; tenant lain tidak dapat membaca proposal, memicu tugas, atau mengintip kunci provider milik tenant lain.
-4. **Kriptografi API Key (AES-256-CBC):**
+4. **Kriptografi API Key (AES-256-CBC) & Zero Plaintext Exposure:**
    Kunci API penyedia AI dienkripsi saat tersimpan di database (`$casts = ['api_key' => 'encrypted']`), disembunyikan dari array/JSON serialisasi (`$hidden = ['api_key']`), dan ditampilkan bertopeng (`••••••••`).
-5. **Multi-Provider BYOAI (Bring Your Own AI):**
-   Mendukung integrasi langsung ke OpenAI, Google Gemini, Anthropic Claude, OpenRouter, serta **Rule-Based Fallback Engine (100% Offline)** tanpa ketergantungan API pihak ketiga.
-6. **Zero External Dependency & Zero Native Dialogs:**
+5. **Multi-Provider BYOAI (Bring Your Own AI) & OpenAI-Compatible Driver:**
+   Mendukung integrasi langsung ke OpenAI Official, Google Gemini, Anthropic Claude, OpenRouter, **OpenAI-Compatible Providers (Custom Tunnel, vLLM, Ollama, Proxy Gateway)** via `OpenAiCompatibleProvider`, serta **Rule-Based Fallback Engine (100% Offline)** tanpa ketergantungan API pihak ketiga.
+6. **Platform AI Engine, Multi-Key Pool & Dynamic Modular Models ("Bongkar Pasang Model" / Zero Hardcode):**
+   Pada level platform (`/admin/ai-tokens`), Superadmin mengelola engine pusat dengan:
+   - **Multi-Key Pool:** Mendukung banyak API key dalam satu provider dengan strategi rotasi **Round-Robin Load Balancing** atomik dan failover proteksi limit kuota (HTTP 429).
+   - **Bongkar Pasang Model (Zero Hardcode):** Daftar model AI tidak dikunci di kode sumber PHP, melainkan dikelola secara dinamis via database `SystemSetting` (`ai_platform_available_models`). Admin dapat mendaftarkan model kustom baru, membongkar/menghapus model, mengganti tier performa (*reasoning*, *balanced*, *fast*), mendeteksi model dari endpoint `/models`, atau me-reset ke 13 model bawaan tunnel (`ag/gemini-3.8-flash-*`, `ag/gemini-3.7-flash-high`, `cx/gpt-6-astra-*`, `cx/gpt-5.6-*`, `cx/gpt-5.5-*`, `cx/gpt-5.4`).
+7. **Zero External Dependency & Zero Native Dialogs:**
    100% Native PHP/Laravel tanpa Node.js microservice. Seluruh interaksi UI mengeliminasi dialog browser `alert()` dan `confirm()` ke suite modal Apple HIG `AppAlert` (`AppAlert.confirm`, `AppAlert.success`, `AppAlert.error`).
 
 ---

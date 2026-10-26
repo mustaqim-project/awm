@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Domain\SocialMedia\AdminInboxAiService;
 use App\Domain\SocialMedia\AdminSocialMediaService;
 use App\Domain\SocialMedia\Clients\MetaSocialMediaClient;
 use App\Http\Controllers\Controller;
@@ -30,16 +31,19 @@ class AdminInboxController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('require.admin.permission:admin.inbox.view', only: ['index', 'poll', 'customerHistory']),
-            new Middleware('require.admin.permission:admin.inbox.reply', only: ['reply', 'sendPrivateDm', 'uploadMedia']),
-            new Middleware('require.admin.permission:admin.inbox.manage', only: ['toggleStatus', 'updateTags', 'saveSettings', 'syncMeta']),
+            new Middleware('require.admin.permission:admin.inbox.view', only: ['index', 'poll', 'customerHistory', 'getAiSettings']),
+            new Middleware('require.admin.permission:admin.inbox.reply', only: ['reply', 'sendPrivateDm', 'uploadMedia', 'generateAiReply', 'testAiPrompt']),
+            new Middleware('require.admin.permission:admin.inbox.manage', only: ['toggleStatus', 'updateTags', 'saveSettings', 'syncMeta', 'saveAiSettings']),
         ];
     }
+
     public function __construct(
         protected AdminSocialMediaService $adminService,
-        protected ?MetaSocialMediaClient $metaClient = null
+        protected ?MetaSocialMediaClient $metaClient = null,
+        protected ?AdminInboxAiService $aiService = null
     ) {
         $this->metaClient = $metaClient ?? app(MetaSocialMediaClient::class);
+        $this->aiService = $aiService ?? app(AdminInboxAiService::class);
     }
 
     /**
@@ -162,6 +166,7 @@ class AdminInboxController extends Controller implements HasMiddleware
             'platformWaNumber' => $platformWaNumber,
             'platformWaActive' => $platformWaActive,
             'metaSettings'     => $metaSettings,
+            'aiSettings'       => $this->aiService->getSettings(),
         ]);
     }
 
@@ -379,6 +384,88 @@ class AdminInboxController extends Controller implements HasMiddleware
         }
 
         return back()->with('success', 'Pengaturan Kredensial Meta & Webhook berhasil disimpan dan Webhook Page Feed aktif!');
+    }
+
+    /**
+     * AJAX/GET: Retrieve AI Chatbot settings, knowledge base & Do's/Don'ts.
+     */
+    public function getAiSettings(): JsonResponse
+    {
+        return response()->json([
+            'success'  => true,
+            'settings' => $this->aiService->getSettings(),
+        ]);
+    }
+
+    /**
+     * AJAX/POST: Save AI Chatbot settings, knowledge base & Do's/Don'ts.
+     */
+    public function saveAiSettings(Request $request): JsonResponse|RedirectResponse
+    {
+        $validated = $request->validate([
+            'enabled'           => ['nullable', 'boolean'],
+            'mode'              => ['nullable', 'string', 'in:assistant,auto_pilot'],
+            'channels'          => ['nullable', 'array'],
+            'channels.*'        => ['string'],
+            'model'             => ['nullable', 'string', 'max:100'],
+            'temperature'       => ['nullable', 'numeric', 'min:0', 'max:1'],
+            'system_info'       => ['nullable', 'string', 'max:20000'],
+            'dos'               => ['nullable'],
+            'donts'             => ['nullable'],
+            'greeting_template' => ['nullable', 'string', 'max:1000'],
+        ]);
+
+        $this->aiService->saveSettings($validated);
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success'  => true,
+                'message'  => 'Pengaturan AI Chatbot & Pedoman Kerja berhasil disimpan.',
+                'settings' => $this->aiService->getSettings(),
+            ]);
+        }
+
+        return back()->with('success', 'Pengaturan AI Chatbot & Pedoman Kerja berhasil disimpan.');
+    }
+
+    /**
+     * AJAX/POST: Generate AI reply suggestion for a comment or conversation thread.
+     */
+    public function generateAiReply(Request $request, string $id): JsonResponse
+    {
+        $comment = SocialMediaComment::where('is_platform', true)->find($id);
+
+        if (! $comment) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Percakapan tidak ditemukan.',
+            ], 404);
+        }
+
+        $result = $this->aiService->generateReplySuggestion($comment);
+
+        return response()->json($result, $result['success'] ? 200 : 422);
+    }
+
+    /**
+     * AJAX/POST: Interactive test prompt simulation for AI Sandbox.
+     */
+    public function testAiPrompt(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'message'     => ['required', 'string', 'max:2000'],
+            'system_info' => ['nullable', 'string'],
+            'dos'         => ['nullable'],
+            'donts'       => ['nullable'],
+            'model'       => ['nullable', 'string'],
+            'temperature' => ['nullable', 'numeric'],
+        ]);
+
+        $custom = array_filter($validated, fn($v, $k) => $k !== 'message' && $v !== null, ARRAY_FILTER_USE_BOTH);
+
+        $result = $this->aiService->testAiResponse($validated['message'], $custom);
+
+        return response()->json($result, $result['success'] ? 200 : 422);
     }
 
     /**
