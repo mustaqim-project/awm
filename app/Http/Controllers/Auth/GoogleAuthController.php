@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Domain\WhatsApp\AdminWhatsAppService;
 use App\Http\Controllers\Controller;
+use App\Mail\UserOtpMail;
 use App\Models\SystemSetting;
 use App\Models\User;
 use Exception;
@@ -13,6 +14,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Laravel\Socialite\Facades\Socialite;
@@ -186,19 +189,46 @@ final class GoogleAuthController extends Controller
         ];
 
         $result = $adminWa->sendOtp($phone, $otp);
-        if (! ($result['success'] ?? false)) {
-            $pending['otp_hash'] = null;
-            $pending['delivery_error'] = 'OTP gagal dikirim ke WhatsApp. Coba kirim ulang OTP.';
-            $request->session()->put('pending_registration', $pending);
-            $request->session()->forget('pending_google_registration');
+        $sent = (bool) ($result['success'] ?? false);
+        $sentViaEmail = false;
 
-            return redirect()->route('register.verify')->with('status', 'Data pendaftaran diterima, namun OTP belum terkirim. Silakan tekan "Kirim ulang OTP".');
+        $targetEmail = (string) ($pendingGoogle['email'] ?? '');
+        if (! $sent && ! empty($targetEmail)) {
+            try {
+                Mail::to($targetEmail)->send(new UserOtpMail(
+                    otpCode: $otp,
+                    recipientName: (string) ($pendingGoogle['name'] ?? 'Pemilik Bisnis'),
+                    expiresInMinutes: 10,
+                    action: 'Pendaftaran Akun Bisnis via Google',
+                    phone: $phone,
+                    isFallbackFromWaba: true
+                ));
+                $sentViaEmail = true;
+                Log::info("[OTP-Fallback] WABA gagal saat pendaftaran Google, OTP berhasil dialihkan ke email {$targetEmail}");
+            } catch (\Throwable $e) {
+                Log::error("[OTP-Fallback] Gagal mengirim OTP Google ke email {$targetEmail}: " . $e->getMessage());
+            }
         }
+
+        $channel = $sent ? 'whatsapp' : ($sentViaEmail ? 'email' : 'failed');
+        $isOtpValid = $sent || $sentViaEmail || app()->isLocal();
+
+        $pending['channel'] = $channel;
+        $pending['otp_hash'] = $isOtpValid ? Hash::make($otp) : null;
+        $pending['delivery_error'] = $isOtpValid ? null : 'OTP gagal dikirim ke WhatsApp dan Email. Coba kirim ulang OTP.';
 
         $request->session()->put('pending_registration', $pending);
         $request->session()->forget('pending_google_registration');
 
-        return redirect()->route('register.verify')->with('status', 'Kode OTP telah dikirim ke WhatsApp pemilik bisnis.');
+        if ($sent) {
+            return redirect()->route('register.verify')->with('status', 'Kode OTP telah dikirim ke WhatsApp pemilik bisnis.');
+        }
+
+        if ($sentViaEmail) {
+            return redirect()->route('register.verify')->with('status', 'WhatsApp sedang mengalami kendala. Kode OTP telah dialihkan dan dikirimkan ke email Google Anda.');
+        }
+
+        return redirect()->route('register.verify')->with('status', 'Data pendaftaran diterima, namun OTP belum terkirim. Silakan tekan "Kirim ulang OTP".');
     }
 
     private function loginUser(User $user): RedirectResponse

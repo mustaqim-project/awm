@@ -6,11 +6,14 @@ namespace App\Http\Controllers\Api\V1\Customer;
 
 use App\Domain\WhatsApp\AdminWhatsAppService;
 use App\Http\Controllers\Controller;
+use App\Mail\UserOtpMail;
 use App\Models\GlobalCustomer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpFoundation\Response;
 
 final class CustomerAuthApiController extends Controller
@@ -147,8 +150,14 @@ final class CustomerAuthApiController extends Controller
      */
     public function sendOtp(Request $request): JsonResponse
     {
-        /** @var GlobalCustomer $customer */
+        /** @var GlobalCustomer|null $customer */
         $customer = $request->user();
+        if (! $customer instanceof GlobalCustomer) {
+            $phoneLookup = $request->input('phone');
+            if (! empty($phoneLookup)) {
+                $customer = GlobalCustomer::where('phone', $this->normalizePhone((string) $phoneLookup))->first();
+            }
+        }
         if (! $customer instanceof GlobalCustomer) {
             return response()->json(['success' => false, 'message' => 'Unauthorized customer.'], Response::HTTP_UNAUTHORIZED);
         }
@@ -167,23 +176,53 @@ final class CustomerAuthApiController extends Controller
         $waService = $this->wa ?? app(AdminWhatsAppService::class);
         $waResult = $waService->sendOtp($phone, $otp);
         $isSent = (bool) ($waResult['success'] ?? false);
+        $sentViaEmail = false;
+
+        if (! $isSent && ! empty($customer->email)) {
+            try {
+                Mail::to($customer->email)->send(new UserOtpMail(
+                    otpCode: $otp,
+                    recipientName: (string) ($customer->name ?: 'Pelanggan'),
+                    expiresInMinutes: 10,
+                    action: 'Verifikasi Nomor Pelanggan (API)',
+                    phone: $phone,
+                    isFallbackFromWaba: true
+                ));
+                $sentViaEmail = true;
+                Log::info("[Customer-API-OTP] WABA gagal, OTP dialihkan ke email {$customer->email}");
+            } catch (\Throwable $e) {
+                Log::error("[Customer-API-OTP] Gagal kirim email: " . $e->getMessage());
+            }
+        }
+
         $isLocal = app()->environment('local', 'testing');
+        $isOtpValid = $isSent || $sentViaEmail || $isLocal;
+        $channel = $isSent ? 'whatsapp' : ($sentViaEmail ? 'email' : 'failed');
 
         Cache::put("customer_otp_{$customer->id}", [
             'phone' => $phone,
-            'otp_hash' => Hash::make($otp),
+            'channel' => $channel,
+            'otp_hash' => $isOtpValid ? Hash::make($otp) : null,
             'expires_at' => now()->addMinutes(10)->timestamp,
             'attempts' => 0,
         ], now()->addMinutes(10));
 
+        $message = $isSent
+            ? 'Kode OTP telah dikirimkan ke nomor WhatsApp Anda.'
+            : ($sentViaEmail
+                ? 'Pengiriman WhatsApp sedang terkendala. Kode OTP telah dialihkan ke email terdaftar Anda.'
+                : ($isLocal
+                    ? 'Mode pengujian: Gunakan kode OTP 123456 atau periksa log.'
+                    : 'Sistem pengiriman WhatsApp sedang sibuk. Silakan coba sesaat lagi.'));
+
         return response()->json([
-            'success' => true,
-            'message' => ($isSent || $isLocal)
-                ? 'Kode OTP telah dikirimkan ke nomor WhatsApp Anda.'
-                : 'Sistem pengiriman OTP sedang sibuk. Silakan coba sesaat lagi.',
+            'success' => $isOtpValid,
+            'channel' => $channel,
+            'message' => $message,
             'phone_masked' => substr($phone, 0, 4) . '••••' . substr($phone, -4),
+            'email_masked' => ! empty($customer->email) ? $this->maskEmail((string) $customer->email) : null,
             'expires_in_seconds' => 600,
-        ], Response::HTTP_OK);
+        ], $isOtpValid ? Response::HTTP_OK : Response::HTTP_SERVICE_UNAVAILABLE);
     }
 
     /**
@@ -276,5 +315,22 @@ final class CustomerAuthApiController extends Controller
         }
 
         return $clean;
+    }
+
+    private function maskEmail(string $email): string
+    {
+        if (! filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return $email;
+        }
+
+        [$name, $domain] = explode('@', $email, 2);
+        $len = strlen($name);
+        if ($len <= 2) {
+            $maskedName = substr($name, 0, 1) . '*';
+        } else {
+            $maskedName = substr($name, 0, 2) . str_repeat('*', max(3, $len - 2));
+        }
+
+        return $maskedName . '@' . $domain;
     }
 }

@@ -45,7 +45,9 @@ class SendWhatsAppOtpJob implements ShouldQueue
     public function __construct(
         public readonly string $phone,
         public readonly string $otpCode,
-        public readonly ?string $templateName = null
+        public readonly ?string $templateName = null,
+        public readonly ?string $email = null,
+        public readonly ?string $recipientName = null
     ) {
         $this->onQueue('whatsapp');
     }
@@ -75,6 +77,7 @@ class SendWhatsAppOtpJob implements ShouldQueue
 
     /**
      * Handle kegagalan setelah semua retry habis.
+     * Secara otomatis memicu mitigasi pengiriman ke email pengguna/pelanggan.
      */
     public function failed(?\Throwable $exception): void
     {
@@ -84,5 +87,40 @@ class SendWhatsAppOtpJob implements ShouldQueue
             "[SendWhatsAppOtpJob] FINAL FAILURE - OTP untuk {$maskedPhone} gagal dikirim setelah {$this->tries} percobaan.",
             ['error' => $exception?->getMessage()]
         );
+
+        $targetEmail = $this->email;
+        $name = $this->recipientName;
+
+        if (empty($targetEmail)) {
+            // Coba cari email dari User (owner/staff) atau GlobalCustomer
+            $user = \App\Models\User::where('phone', $this->phone)->first();
+            if ($user && ! empty($user->email)) {
+                $targetEmail = $user->email;
+                $name = $name ?: (string) ($user->name ?: 'Pengguna');
+            } else {
+                $customer = \App\Models\GlobalCustomer::where('phone', $this->phone)->first();
+                if ($customer && ! empty($customer->email)) {
+                    $targetEmail = $customer->email;
+                    $name = $name ?: (string) ($customer->name ?: 'Pelanggan');
+                }
+            }
+        }
+
+        if (! empty($targetEmail)) {
+            try {
+                \Illuminate\Support\Facades\Mail::to($targetEmail)->send(new \App\Mail\UserOtpMail(
+                    otpCode: $this->otpCode,
+                    recipientName: $name ?: 'Pengguna Cooca',
+                    expiresInMinutes: 10,
+                    action: 'Autentikasi & Keamanan Akun',
+                    phone: $this->phone,
+                    isFallbackFromWaba: true
+                ));
+
+                Log::channel('daily')->info("[SendWhatsAppOtpJob] Fallback OTP darurat berhasil dikirim ke email: {$targetEmail}");
+            } catch (\Throwable $e) {
+                Log::channel('daily')->error("[SendWhatsAppOtpJob] Gagal mengirim fallback OTP ke email {$targetEmail}: " . $e->getMessage());
+            }
+        }
     }
 }

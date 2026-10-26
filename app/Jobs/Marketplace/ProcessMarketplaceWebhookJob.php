@@ -28,8 +28,10 @@ class ProcessMarketplaceWebhookJob implements ShouldQueue
     {
         $eventType = (int) ($this->eventData['event'] ?? ($this->eventData['payload']['type'] ?? 0));
 
-        // Event 13 (New conversation) and Event 14 (New message)
-        if (in_array($eventType, [13, 14], true) || ! empty($this->eventData['payload']['data']['conversation_id'])) {
+        // Event 10 (Shopee webchat_push), Event 13 (TikTok New conversation) and Event 14 (TikTok New message)
+        if (in_array($eventType, [10, 13, 14], true) 
+            || ! empty($this->eventData['payload']['data']['conversation_id'])
+            || ! empty($this->eventData['payload']['data']['content']['conversation_id'])) {
             $chatService->processChatWebhook($this->channel, $this->eventData);
             return;
         }

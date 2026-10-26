@@ -7,12 +7,15 @@ namespace App\Http\Controllers\Web;
 use App\Domain\Mail\DynamicMailConfig;
 use App\Domain\WhatsApp\AdminWhatsAppService;
 use App\Http\Controllers\Controller;
+use App\Mail\UserOtpMail;
 use App\Models\User;
 use App\Support\Context;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules\Password as PasswordRule;
 use Illuminate\View\View;
 
@@ -104,21 +107,47 @@ final class ProfileWebController extends Controller
 
         $otp = (string) random_int(100000, 999999);
         $result = $adminWa->sendOtp($phone, $otp);
+        $sent = (bool) ($result['success'] ?? false);
+        $sentViaEmail = false;
 
-        if (! ($result['success'] ?? false)) {
-            return back()->withErrors(['phone' => 'OTP gagal dikirim. Coba lagi.'])->withInput();
+        if (! $sent && ! empty($user->email)) {
+            try {
+                Mail::to($user->email)->send(new UserOtpMail(
+                    otpCode: $otp,
+                    recipientName: (string) ($user->name ?: 'Pemilik Bisnis'),
+                    expiresInMinutes: 10,
+                    action: 'Pembaruan Nomor WhatsApp Profil',
+                    phone: $phone,
+                    isFallbackFromWaba: true
+                ));
+                $sentViaEmail = true;
+                Log::info("[OTP-Fallback] WABA gagal saat ubah HP profil, OTP dialihkan ke email {$user->email}");
+            } catch (\Throwable $e) {
+                Log::error("[OTP-Fallback] Gagal kirim OTP profil ke email: " . $e->getMessage());
+            }
         }
 
+        if (! $sent && ! $sentViaEmail && ! app()->isLocal()) {
+            return back()->withErrors(['phone' => 'OTP gagal dikirim ke WhatsApp dan Email. Coba lagi.'])->withInput();
+        }
+
+        $channel = $sent ? 'whatsapp' : ($sentViaEmail ? 'email' : 'failed');
         $request->session()->put('profile_phone_change', [
             'user_id' => $user->id,
             'phone' => $phone,
+            'channel' => $channel,
+            'email' => $user->email,
             'otp_hash' => Hash::make($otp),
             'expires_at' => now()->addMinutes(10)->timestamp,
             'attempts' => 0,
             'last_sent_at' => now()->timestamp,
         ]);
 
-        return redirect()->route('profile.contact.verify')->with('status', 'Kode OTP telah dikirim ke nomor WhatsApp baru (' . $phone . ').');
+        $statusMsg = $sent 
+            ? 'Kode OTP telah dikirim ke nomor WhatsApp baru (' . $phone . ').'
+            : 'WhatsApp sedang kendala. Kode OTP telah dialihkan dan dikirimkan ke email Anda (' . $user->email . ').';
+
+        return redirect()->route('profile.contact.verify')->with('status', $statusMsg);
     }
 
     /**
@@ -183,22 +212,48 @@ final class ProfileWebController extends Controller
 
         $otp = (string) random_int(100000, 999999);
         $result = $adminWa->sendOtp($phone, $otp);
+        $sent = (bool) ($result['success'] ?? false);
+        $sentViaEmail = false;
 
-        if (! ($result['success'] ?? false)) {
-            return back()->withErrors(['phone' => 'OTP gagal dikirim. Coba lagi.'])->withInput();
+        $targetEmail = $validated['email'] ?: $user->email;
+        if (! $sent && ! empty($targetEmail)) {
+            try {
+                Mail::to($targetEmail)->send(new UserOtpMail(
+                    otpCode: $otp,
+                    recipientName: (string) ($user->name ?: 'Pemilik Bisnis'),
+                    expiresInMinutes: 10,
+                    action: 'Pembaruan Kontak & WhatsApp Profil',
+                    phone: $phone,
+                    isFallbackFromWaba: true
+                ));
+                $sentViaEmail = true;
+                Log::info("[OTP-Fallback] WABA gagal saat ubah kontak profil, OTP dialihkan ke email {$targetEmail}");
+            } catch (\Throwable $e) {
+                Log::error("[OTP-Fallback] Gagal kirim OTP ubah kontak ke email: " . $e->getMessage());
+            }
         }
 
+        if (! $sent && ! $sentViaEmail && ! app()->isLocal()) {
+            return back()->withErrors(['phone' => 'OTP gagal dikirim ke WhatsApp dan Email. Coba lagi.'])->withInput();
+        }
+
+        $channel = $sent ? 'whatsapp' : ($sentViaEmail ? 'email' : 'failed');
         $request->session()->put('profile_contact_change', [
             'user_id' => $user->id,
             'email' => $validated['email'],
             'phone' => $phone,
+            'channel' => $channel,
             'otp_hash' => Hash::make($otp),
             'expires_at' => now()->addMinutes(10)->timestamp,
             'attempts' => 0,
             'last_sent_at' => now()->timestamp,
         ]);
 
-        return redirect()->route('profile.contact.verify')->with('status', 'OTP telah dikirim ke nomor WhatsApp baru.');
+        $statusMsg = $sent 
+            ? 'OTP telah dikirim ke nomor WhatsApp baru.'
+            : 'WhatsApp sedang kendala. Kode OTP telah dialihkan dan dikirimkan ke email Anda (' . $targetEmail . ').';
+
+        return redirect()->route('profile.contact.verify')->with('status', $statusMsg);
     }
 
     /**
@@ -298,10 +353,33 @@ final class ProfileWebController extends Controller
 
         $otp = (string) random_int(100000, 999999);
         $result = $adminWa->sendOtp((string) $pending['phone'], $otp);
-        if (! ($result['success'] ?? false)) {
-            return back()->withErrors(['otp' => 'OTP gagal dikirim. Coba lagi.']);
+        $sent = (bool) ($result['success'] ?? false);
+        $sentViaEmail = false;
+
+        $targetEmail = (string) ($pending['email'] ?? $user->email ?? '');
+        if (! $sent && ! empty($targetEmail)) {
+            try {
+                Mail::to($targetEmail)->send(new UserOtpMail(
+                    otpCode: $otp,
+                    recipientName: (string) ($user->name ?: 'Pemilik Bisnis'),
+                    expiresInMinutes: 10,
+                    action: 'Pembaruan Kontak / WhatsApp Profil',
+                    phone: (string) $pending['phone'],
+                    isFallbackFromWaba: true
+                ));
+                $sentViaEmail = true;
+                Log::info("[OTP-Fallback] WABA gagal saat resend kontak profil, OTP dialihkan ke email {$targetEmail}");
+            } catch (\Throwable $e) {
+                Log::error("[OTP-Fallback] Gagal kirim OTP resend kontak ke email: " . $e->getMessage());
+            }
         }
 
+        if (! $sent && ! $sentViaEmail && ! app()->isLocal()) {
+            return back()->withErrors(['otp' => 'OTP gagal dikirim ke WhatsApp dan Email. Coba lagi.']);
+        }
+
+        $channel = $sent ? 'whatsapp' : ($sentViaEmail ? 'email' : 'failed');
+        $pending['channel'] = $channel;
         $pending['otp_hash'] = Hash::make($otp);
         $pending['expires_at'] = now()->addMinutes(10)->timestamp;
         $pending['attempts'] = 0;
@@ -310,7 +388,11 @@ final class ProfileWebController extends Controller
         $sessionKey = $request->session()->has('profile_phone_change') ? 'profile_phone_change' : 'profile_contact_change';
         $request->session()->put($sessionKey, $pending);
 
-        return back()->with('status', 'OTP baru telah dikirim ke WhatsApp Anda.');
+        $statusMsg = $sent 
+            ? 'OTP baru telah dikirim ke WhatsApp Anda.'
+            : 'WhatsApp sedang kendala. Kode OTP baru telah dialihkan dan dikirimkan ke email Anda (' . $targetEmail . ').';
+
+        return back()->with('status', $statusMsg);
     }
 
     private function normalizePhone(string $phone): ?string

@@ -106,8 +106,12 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
             ? substr($phone, 0, 4) . str_repeat('*', max(2, strlen($phone) - 7)) . substr($phone, -3)
             : ($phone !== '' ? $phone : 'nomor WhatsApp owner');
 
+        $targetEmail = (string) ($pending['email'] ?? (request()->user()?->email ?? ''));
+
         return view('app.profile.verify-contact', [
             'phone' => $masked,
+            'channel' => (string) ($pending['channel'] ?? 'whatsapp'),
+            'targetEmail' => $targetEmail,
             'expiresAt' => (int) ($pending['expires_at'] ?? 0),
             'resendIn' => max(0, ((int) ($pending['last_sent_at'] ?? 0)) + 60 - time()),
         ]);

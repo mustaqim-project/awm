@@ -47,10 +47,16 @@ class MarketplaceChatService
             return;
         }
 
-        $conversationId = (string) ($data['conversation_id'] ?? '');
+        $chatContent    = $data['content'] ?? [];
+        $conversationId = (string) ($data['conversation_id'] ?? ($chatContent['conversation_id'] ?? ''));
         if (empty($conversationId)) {
             return;
         }
+
+        $participantName = $data['sender']['nickname'] 
+            ?? ($chatContent['from_user_name'] 
+            ?? (($channel === 'shopee' ? 'Shopee' : 'Marketplace') . ' Buyer (' . substr($conversationId, -6) . ')'));
+        $participantId   = $data['sender']['im_user_id'] ?? ($chatContent['from_id'] ?? null);
 
         // 1. Upsert Conversation Thread
         $conversation = MarketplaceConversation::firstOrCreate([
@@ -61,15 +67,15 @@ class MarketplaceChatService
             'marketplace_account_id'  => $account->id,
             'shop_id'                 => $account->shop_id,
             'shop_cipher'             => $account->settings['shop_cipher'] ?? $account->shop_id,
-            'participant_id'          => $data['sender']['im_user_id'] ?? null,
-            'participant_name'        => 'TikTok Buyer (' . substr($conversationId, -6) . ')',
+            'participant_id'          => $participantId,
+            'participant_name'        => $participantName,
             'status'                  => 'open',
             'raw_metadata'            => $data,
         ]);
 
-        // 2. Process Event 14: New Message
-        if ($eventType === 14) {
-            $messageId = (string) ($data['message_id'] ?? '');
+        // 2. Process Event: New Message (TikTok: 14, Shopee: 10)
+        if ($eventType === 14 || $eventType === 10 || ($eventType === 0 && ! empty($chatContent['message_id']))) {
+            $messageId = (string) ($data['message_id'] ?? ($chatContent['message_id'] ?? ''));
             if (empty($messageId)) {
                 return;
             }
@@ -80,32 +86,33 @@ class MarketplaceChatService
                 return;
             }
 
-            // Extract content from stringified JSON
-            $rawContent = (string) ($data['content'] ?? '');
-            $decoded    = json_decode($rawContent, true);
+            $rawContent  = (string) ($data['content'] ?? (is_array($chatContent) ? json_encode($chatContent) : $chatContent));
+            $decoded     = json_decode($rawContent, true);
             $contentText = null;
             $mediaUrl    = null;
 
             if (is_array($decoded)) {
-                $contentText = $decoded['content'] ?? ($decoded['text'] ?? null);
-                $mediaUrl    = $decoded['image_url'] ?? null;
+                $contentText = $decoded['content']['text'] ?? ($decoded['text'] ?? ($decoded['content'] ?? null));
+                $mediaUrl    = $decoded['image_url'] ?? ($decoded['content']['image_url'] ?? null);
+            } elseif (isset($chatContent['content']['text'])) {
+                $contentText = (string) $chatContent['content']['text'];
             } else {
                 $contentText = $rawContent;
             }
 
-            $messageType = strtoupper((string) ($data['type'] ?? 'TEXT'));
-            $senderRole  = strtoupper((string) ($data['sender']['role'] ?? 'BUYER'));
+            $messageType = strtoupper((string) ($chatContent['message_type'] ?? ($data['type'] ?? 'TEXT')));
+            $senderRole  = strtoupper((string) ($data['sender']['role'] ?? (! empty($chatContent['from_id']) && (string) $chatContent['from_id'] === (string) $shopId ? 'SELLER' : 'BUYER')));
             $isBuyer     = ($senderRole === 'BUYER');
 
-            $createdAt = isset($data['create_time'])
-                ? Carbon::createFromTimestamp((int) $data['create_time'])
-                : now();
+            $createdAt = isset($chatContent['created_timestamp'])
+                ? Carbon::createFromTimestamp((int) $chatContent['created_timestamp'])
+                : (isset($data['create_time']) ? Carbon::createFromTimestamp((int) $data['create_time']) : now());
 
             MarketplaceMessage::create([
                 'marketplace_conversation_id' => $conversation->id,
                 'external_message_id'        => $messageId,
                 'sender_role'                => $senderRole,
-                'sender_user_id'             => (string) ($data['sender']['im_user_id'] ?? ''),
+                'sender_user_id'             => (string) ($data['sender']['im_user_id'] ?? ($chatContent['from_id'] ?? '')),
                 'message_type'               => $messageType,
                 'raw_content'                => $rawContent,
                 'content_text'               => $contentText ?? ($mediaUrl ? '[Gambar]' : ''),
@@ -123,13 +130,13 @@ class MarketplaceChatService
                 'unread_count'         => $isBuyer ? DB::raw('unread_count + 1') : $conversation->unread_count,
             ]);
 
-            Log::info("Processed TikTok Shop chat message", [
+            Log::info("Processed {$channel} chat message", [
                 'conversation_id' => $conversationId,
                 'message_id'      => $messageId,
                 'role'            => $senderRole,
             ]);
         } elseif ($eventType === 13) {
-            Log::info("Processed TikTok Shop new conversation", [
+            Log::info("Processed {$channel} new conversation", [
                 'conversation_id' => $conversationId,
             ]);
         }

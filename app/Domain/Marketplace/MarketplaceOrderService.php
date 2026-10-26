@@ -94,11 +94,17 @@ class MarketplaceOrderService
             ->where('shop_id', $shopId)
             ->first();
 
+        // Fallback for sandbox/test store
+        if (! $account) {
+            $account = MarketplaceAccount::where('channel', $channel)->first();
+        }
+
         if (! $account) {
             return;
         }
 
         $payload = $eventData['payload'] ?? [];
+        $data    = $payload['data'] ?? [];
 
         MarketplaceSyncLog::log(
             businessId: $account->business_id,
@@ -110,18 +116,32 @@ class MarketplaceOrderService
             marketplaceAccountId: $account->id
         );
 
-        // If payload has order information, upsert it
-        if (! empty($payload['order_id']) || ! empty($payload['order_sn'])) {
-            $orderId = (string) ($payload['order_id'] ?? $payload['order_sn']);
+        // Shopee sends order serial number inside $data['ordersn'] or $payload['order_sn']
+        $orderSn = $data['ordersn'] ?? ($payload['order_sn'] ?? ($payload['order_id'] ?? null));
+        if (! empty($orderSn)) {
+            $orderId = (string) $orderSn;
             $this->upsertMarketplaceOrder($account, [
                 'order_id'     => $orderId,
-                'order_sn'     => $payload['order_sn'] ?? $orderId,
-                'buyer_name'   => $payload['buyer_name'] ?? 'Marketplace Buyer',
-                'total_amount' => (float) ($payload['total_amount'] ?? 0),
-                'status'       => (string) ($payload['status'] ?? ($payload['order_status'] ?? 'UNPAID')),
-                'items'        => $payload['items'] ?? [],
+                'order_sn'     => $orderId,
+                'buyer_name'   => $payload['buyer_name'] ?? ('Shopee Buyer (' . substr($orderId, -4) . ')'),
+                'total_amount' => (float) ($payload['total_amount'] ?? ($data['total_amount'] ?? 0)),
+                'status'       => (string) ($data['status'] ?? ($payload['status'] ?? ($payload['order_status'] ?? 'PROCESSED'))),
+                'items'        => $data['items'] ?? ($payload['items'] ?? []),
                 'raw'          => $payload,
             ]);
+        }
+
+        // Product / Reserved Stock Change Push (Code 5: reserved_stock_change_push)
+        if (! empty($data['item_id']) && ! empty($data['changed_values'])) {
+            MarketplaceSyncLog::log(
+                businessId: $account->business_id,
+                channel: $channel,
+                entityType: 'stock',
+                action: 'reserved_stock_change',
+                status: 'success',
+                payload: $data,
+                marketplaceAccountId: $account->id
+            );
         }
     }
 }

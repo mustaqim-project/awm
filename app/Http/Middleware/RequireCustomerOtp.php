@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace App\Http\Middleware;
 
 use App\Domain\WhatsApp\AdminWhatsAppService;
+use App\Mail\UserOtpMail;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -78,16 +81,38 @@ final class RequireCustomerOtp
             );
 
             $sent = (bool) ($result['success'] ?? false);
+            $sentViaEmail = false;
+
+            if (! $sent && ! empty($customer->email)) {
+                try {
+                    Mail::to($customer->email)->send(new UserOtpMail(
+                        otpCode: $otp,
+                        recipientName: (string) ($customer->name ?: 'Pelanggan'),
+                        expiresInMinutes: 10,
+                        action: 'Verifikasi Nomor Pelanggan',
+                        phone: $phone,
+                        isFallbackFromWaba: true
+                    ));
+                    $sentViaEmail = true;
+                    Log::info("[RequireCustomerOtp-Fallback] WABA gagal saat cek pelanggan, OTP dialihkan ke email {$customer->email}");
+                } catch (\Throwable $e) {
+                    Log::error("[RequireCustomerOtp-Fallback] Gagal kirim email: " . $e->getMessage());
+                }
+            }
+
             $isLocal = app()->environment('local', 'testing');
+            $isOtpValid = $sent || $sentViaEmail || $isLocal;
+            $channel = $sent ? 'whatsapp' : ($sentViaEmail ? 'email' : 'failed');
 
             $request->session()->put('customer_otp_challenge', [
                 'customer_id'   => $customer->id,
                 'phone'         => $phone,
-                'otp_hash'      => ($sent || $isLocal) ? Hash::make($otp) : null,
+                'channel'       => $channel,
+                'otp_hash'      => $isOtpValid ? Hash::make($otp) : null,
                 'expires_at'    => now()->addMinutes(10)->timestamp,
                 'attempts'      => 0,
                 'last_sent_at'  => now()->timestamp,
-                'delivery_error'=> $sent ? null : 'OTP gagal dikirim.',
+                'delivery_error'=> $isOtpValid ? null : 'OTP gagal dikirim ke WhatsApp dan Email.',
             ]);
         }
 

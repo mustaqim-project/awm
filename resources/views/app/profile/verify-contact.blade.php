@@ -8,14 +8,23 @@
                 <div class="mb-5 rounded-[10px] bg-[#34C759]/10 border border-[#34C759]/20 p-3 text-[13px] text-[#248A3D]">
                     {{ session('status') }}</div>
             @endif
+            @if (($channel ?? 'whatsapp') === 'email' && !empty($targetEmail))
+                <div class="mb-5 rounded-[10px] bg-amber-500/10 border border-amber-500/25 p-3 text-[13px] text-amber-800 dark:text-amber-300">
+                    <strong class="font-semibold block mb-0.5">Pengiriman WhatsApp Terkendala</strong>
+                    <span>Kode OTP telah dialihkan dan dikirimkan ke email Anda: <strong class="font-mono text-black dark:text-white">{{ $targetEmail }}</strong>. Silakan periksa Kotak Masuk atau Spam email Anda.</span>
+                </div>
+            @endif
             @if ($errors->any())
                 <div class="mb-5 rounded-[10px] bg-[#FF3B30]/10 border border-[#FF3B30]/20 p-3 text-[13px] text-[#FF3B30]">
                     {{ $errors->first() }}</div>
             @endif
 
             <p class="mb-5 text-[13px] text-black/55 dark:text-white/55 leading-relaxed">
-                Masukkan OTP yang dikirim ke WhatsApp <strong
-                    class="font-mono text-black dark:text-white">{{ $phone }}</strong>.
+                @if (($channel ?? 'whatsapp') === 'email' && !empty($targetEmail))
+                    Masukkan OTP yang dikirim ke email <strong class="font-mono text-black dark:text-white">{{ $targetEmail }}</strong>.
+                @else
+                    Masukkan OTP yang dikirim ke WhatsApp <strong class="font-mono text-black dark:text-white">{{ $phone }}</strong>.
+                @endif
             </p>
 
             <form method="POST" action="{{ route('profile.contact.verify.submit') }}" class="space-y-5"

@@ -6,9 +6,12 @@ namespace App\Http\Middleware;
 
 use App\Domain\WhatsApp\AdminWhatsAppService;
 use App\Domain\WhatsApp\WhatsAppTrustedDeviceService;
+use App\Mail\UserOtpMail;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpFoundation\Response;
 
 final class RequireWhatsAppOtp
@@ -105,15 +108,39 @@ final class RequireWhatsAppOtp
         $otp = (string) random_int(100000, 999999);
         $result = $this->adminWa->sendMessage($phone, "Kode OTP keamanan login Cooca Anda adalah *{$otp}*. Kode ini berlaku 10 menit. Jangan bagikan kode ini kepada siapa pun.");
         $sent = (bool) ($result['success'] ?? false);
+        $sentViaEmail = false;
+
+        if (! $sent && ! empty($user->email)) {
+            try {
+                Mail::to($user->email)->send(new UserOtpMail(
+                    otpCode: $otp,
+                    recipientName: (string) ($user->name ?: 'Pemilik Bisnis'),
+                    expiresInMinutes: 10,
+                    action: 'Verifikasi Keamanan Akun',
+                    phone: $phone,
+                    isFallbackFromWaba: true
+                ));
+                $sentViaEmail = true;
+                Log::info("[RequireWhatsAppOtp-Fallback] WABA gagal saat cek login, OTP dialihkan ke email {$user->email}");
+            } catch (\Throwable $e) {
+                Log::error("[RequireWhatsAppOtp-Fallback] Gagal kirim email: " . $e->getMessage());
+            }
+        }
+
+        $channel = $sent ? 'whatsapp' : ($sentViaEmail ? 'email' : 'failed');
+        $isLocal = app()->environment('local', 'testing');
+        $isOtpValid = $sent || $sentViaEmail || $isLocal;
 
         $request->session()->put('auth_wa_otp_challenge', [
             'user_id' => $user->id,
             'phone' => $phone,
-            'otp_hash' => $sent ? Hash::make($otp) : null,
+            'email' => $user->email,
+            'channel' => $channel,
+            'otp_hash' => $isOtpValid ? Hash::make($otp) : null,
             'expires_at' => now()->addMinutes(10)->timestamp,
             'attempts' => 0,
             'last_sent_at' => now()->timestamp,
-            'delivery_error' => $sent ? null : 'OTP gagal dikirim. Coba lagi.',
+            'delivery_error' => $isOtpValid ? null : 'OTP gagal dikirim ke WhatsApp dan Email. Coba lagi.',
         ]);
         $this->rememberIntendedUrl($request);
 
