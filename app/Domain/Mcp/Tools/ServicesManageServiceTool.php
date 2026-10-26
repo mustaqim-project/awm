@@ -31,7 +31,7 @@ final class ServicesManageServiceTool implements McpToolInterface
 
     public function getRequiredAbility(): string
     {
-        return 'mcp:services:manage';
+        return 'mcp:services:create';
     }
 
     public function getInputSchema(): array

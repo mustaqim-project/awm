@@ -29,7 +29,7 @@ final class InventoryManageBomTool implements McpToolInterface
 
     public function getRequiredAbility(): string
     {
-        return 'mcp:products:manage';
+        return 'mcp:products:update';
     }
 
     public function getInputSchema(): array

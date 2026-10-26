@@ -3,6 +3,127 @@
 @section('title', __('mcp.page_title'))
 
 @section('content')
+@php
+    $abilityDomains = [
+        [
+            'id' => 'products',
+            'name' => 'Produk, Varian & Resep (BOM)',
+            'icon' => 'package',
+            'tools_hint' => 'inventory_create_product, inventory_check_stock, modifier_manage, inventory_manage_bom',
+            'crud' => [
+                ['code' => 'mcp:products:create', 'letter' => 'C', 'action' => 'Create', 'label' => 'Tambah Master Produk Baru', 'hint' => 'inventory_create_product', 'color' => 'emerald'],
+                ['code' => 'mcp:products:read', 'letter' => 'R', 'action' => 'Read', 'label' => 'Cek Stok & Katalog Produk', 'hint' => 'inventory_check_stock', 'color' => 'blue'],
+                ['code' => 'mcp:products:update', 'letter' => 'U', 'action' => 'Update', 'label' => 'Ubah Varian & Resep BOM', 'hint' => 'modifier_manage, inventory_manage_bom', 'color' => 'amber'],
+                ['code' => 'mcp:products:delete', 'letter' => 'D', 'action' => 'Delete', 'label' => 'Hapus / Arsip Produk & Varian', 'hint' => 'product_delete', 'color' => 'rose'],
+            ],
+        ],
+        [
+            'id' => 'inventory',
+            'name' => 'Stok Opname, Gudang & Bahan Baku',
+            'icon' => 'boxes',
+            'tools_hint' => 'inventory_manage_material, inventory_stock_opname',
+            'crud' => [
+                ['code' => 'mcp:inventory:create', 'letter' => 'C', 'action' => 'Create', 'label' => 'Tambah Bahan Baku Baru', 'hint' => 'inventory_manage_material', 'color' => 'emerald'],
+                ['code' => 'mcp:inventory:read', 'letter' => 'R', 'action' => 'Read', 'label' => 'Lihat Mutasi & Stok Bahan', 'hint' => 'inventory_check_stock', 'color' => 'blue'],
+                ['code' => 'mcp:inventory:update', 'letter' => 'U', 'action' => 'Update', 'label' => 'Stok Opname & Penyesuaian Fisik', 'hint' => 'inventory_stock_opname', 'color' => 'amber'],
+                ['code' => 'mcp:inventory:delete', 'letter' => 'D', 'action' => 'Delete', 'label' => 'Hapus / Arsip Bahan Baku', 'hint' => 'material_delete', 'color' => 'rose'],
+            ],
+        ],
+        [
+            'id' => 'finance',
+            'name' => 'Keuangan, Pengeluaran & Kas Bank',
+            'icon' => 'wallet',
+            'tools_hint' => 'finance_record_expense, finance_get_cash_and_bank_balances, finance_manage_invoice',
+            'crud' => [
+                ['code' => 'mcp:finance:create', 'letter' => 'C', 'action' => 'Create', 'label' => 'Catat Pengeluaran & Nota Beban', 'hint' => 'finance_record_expense', 'color' => 'emerald'],
+                ['code' => 'mcp:finance:read', 'letter' => 'R', 'action' => 'Read', 'label' => 'Cek Saldo Kas & Rekening Bank', 'hint' => 'finance_get_cash_and_bank_balances', 'color' => 'blue'],
+                ['code' => 'mcp:finance:update', 'letter' => 'U', 'action' => 'Update', 'label' => 'Kelola Faktur & Pelunasan Invoice', 'hint' => 'finance_manage_invoice', 'color' => 'amber'],
+                ['code' => 'mcp:finance:delete', 'letter' => 'D', 'action' => 'Delete', 'label' => 'Batalkan Faktur & Transaksi Biaya', 'hint' => 'finance_cancel', 'color' => 'rose'],
+            ],
+        ],
+        [
+            'id' => 'purchasing',
+            'name' => 'Pemasok, PO & Penerimaan Barang',
+            'icon' => 'truck',
+            'tools_hint' => 'purchasing_manage_supplier, purchasing_manage_order',
+            'crud' => [
+                ['code' => 'mcp:purchasing:create', 'letter' => 'C', 'action' => 'Create', 'label' => 'Tambah Supplier & Buat PO', 'hint' => 'purchasing_manage_supplier, purchasing_manage_order', 'color' => 'emerald'],
+                ['code' => 'mcp:purchasing:read', 'letter' => 'R', 'action' => 'Read', 'label' => 'Lihat Direktori Supplier & Status PO', 'hint' => 'purchasing_view', 'color' => 'blue'],
+                ['code' => 'mcp:purchasing:update', 'letter' => 'U', 'action' => 'Update', 'label' => 'Update PO & Penerimaan Barang Masuk', 'hint' => 'purchasing_update', 'color' => 'amber'],
+                ['code' => 'mcp:purchasing:delete', 'letter' => 'D', 'action' => 'Delete', 'label' => 'Batalkan Pesanan PO', 'hint' => 'purchasing_delete', 'color' => 'rose'],
+            ],
+        ],
+        [
+            'id' => 'sales',
+            'name' => 'Penjualan B2B, Penawaran & SO',
+            'icon' => 'badge-percent',
+            'tools_hint' => 'sales_manage_quotation, sales_manage_order',
+            'crud' => [
+                ['code' => 'mcp:sales:create', 'letter' => 'C', 'action' => 'Create', 'label' => 'Buat Penawaran & Sales Order', 'hint' => 'sales_manage_quotation, sales_manage_order', 'color' => 'emerald'],
+                ['code' => 'mcp:sales:read', 'letter' => 'R', 'action' => 'Read', 'label' => 'Lihat Penawaran & Riwayat Order', 'hint' => 'sales_view', 'color' => 'blue'],
+                ['code' => 'mcp:sales:update', 'letter' => 'U', 'action' => 'Update', 'label' => 'Revisi Penawaran & Konfirmasi Order', 'hint' => 'sales_update', 'color' => 'amber'],
+                ['code' => 'mcp:sales:delete', 'letter' => 'D', 'action' => 'Delete', 'label' => 'Batalkan Penawaran / Sales Order', 'hint' => 'sales_delete', 'color' => 'rose'],
+            ],
+        ],
+        [
+            'id' => 'services',
+            'name' => 'Jasa, Layanan & Tarif Operasional',
+            'icon' => 'wrench',
+            'tools_hint' => 'services_manage_service',
+            'crud' => [
+                ['code' => 'mcp:services:create', 'letter' => 'C', 'action' => 'Create', 'label' => 'Daftarkan Jasa & Layanan Baru', 'hint' => 'services_manage_service', 'color' => 'emerald'],
+                ['code' => 'mcp:services:read', 'letter' => 'R', 'action' => 'Read', 'label' => 'Lihat Katalog Jasa & Tarif', 'hint' => 'services_view', 'color' => 'blue'],
+                ['code' => 'mcp:services:update', 'letter' => 'U', 'action' => 'Update', 'label' => 'Ubah Tarif & Deskripsi Layanan', 'hint' => 'services_update', 'color' => 'amber'],
+                ['code' => 'mcp:services:delete', 'letter' => 'D', 'action' => 'Delete', 'label' => 'Hapus / Nonaktifkan Layanan', 'hint' => 'services_delete', 'color' => 'rose'],
+            ],
+        ],
+        [
+            'id' => 'social',
+            'name' => 'Media Sosial Omnichannel & AI Content',
+            'icon' => 'share-2',
+            'tools_hint' => 'social_schedule_post, social_get_insights, social_manage_post, social_upload_media, social_generate_visual, social_manage_channels',
+            'crud' => [
+                ['code' => 'mcp:social:create', 'letter' => 'C', 'action' => 'Create', 'label' => 'Jadwalkan Post, Visual AI & Media', 'hint' => 'social_schedule_post, social_generate_visual, social_upload_media', 'color' => 'emerald'],
+                ['code' => 'mcp:social:read', 'letter' => 'R', 'action' => 'Read', 'label' => 'Lihat Insight & Status Kanal Medsos', 'hint' => 'social_get_insights, social_manage_channels', 'color' => 'blue'],
+                ['code' => 'mcp:social:update', 'letter' => 'U', 'action' => 'Update', 'label' => 'Ubah Konten & Reschedule Postingan', 'hint' => 'social_manage_post', 'color' => 'amber'],
+                ['code' => 'mcp:social:delete', 'letter' => 'D', 'action' => 'Delete', 'label' => 'Hapus / Batalkan Jadwal Postingan', 'hint' => 'social_delete', 'color' => 'rose'],
+            ],
+        ],
+        [
+            'id' => 'crm',
+            'name' => 'Pelanggan, Member & CRM',
+            'icon' => 'users',
+            'tools_hint' => 'crm_search_customer',
+            'crud' => [
+                ['code' => 'mcp:crm:read', 'letter' => 'R', 'action' => 'Read', 'label' => 'Cari & Lihat Profil Pelanggan', 'hint' => 'crm_search_customer', 'color' => 'blue'],
+                ['code' => 'mcp:crm:create', 'letter' => 'C', 'action' => 'Create', 'label' => 'Tambah Data Pelanggan Baru', 'hint' => 'crm_create', 'color' => 'emerald'],
+                ['code' => 'mcp:crm:update', 'letter' => 'U', 'action' => 'Update', 'label' => 'Perbarui Kontak & Catatan Pelanggan', 'hint' => 'crm_update', 'color' => 'amber'],
+                ['code' => 'mcp:crm:delete', 'letter' => 'D', 'action' => 'Delete', 'label' => 'Hapus / Arsipkan Pelanggan', 'hint' => 'crm_delete', 'color' => 'rose'],
+            ],
+        ],
+        [
+            'id' => 'whatsapp',
+            'name' => 'WhatsApp Gateway & Notifikasi',
+            'icon' => 'message-square',
+            'tools_hint' => 'whatsapp_send_notification',
+            'crud' => [
+                ['code' => 'mcp:whatsapp:send', 'letter' => 'C', 'action' => 'Execute', 'label' => 'Kirim Pesan & Notifikasi WA Pelanggan', 'hint' => 'whatsapp_send_notification', 'color' => 'emerald'],
+            ],
+        ],
+        [
+            'id' => 'reports',
+            'name' => 'Laporan Keuangan, AI Forecast & Profil',
+            'icon' => 'line-chart',
+            'tools_hint' => 'report_get_profit_loss, analytics_get_sales_forecast, business_get_logo',
+            'crud' => [
+                ['code' => 'mcp:reports:read', 'letter' => 'R', 'action' => 'Read', 'label' => 'Laporan Laba Rugi Bisnis (P&L)', 'hint' => 'report_get_profit_loss', 'color' => 'blue'],
+                ['code' => 'mcp:analytics:read', 'letter' => 'R', 'action' => 'Read', 'label' => 'Prediksi & Proyeksi Penjualan AI', 'hint' => 'analytics_get_sales_forecast', 'color' => 'blue'],
+                ['code' => 'mcp:business:read', 'letter' => 'R', 'action' => 'Read', 'label' => 'Baca Logo & Info Branding Usaha', 'hint' => 'business_get_logo', 'color' => 'blue'],
+            ],
+        ],
+    ];
+    $allAbilityCodesList = collect($abilityDomains)->flatMap(fn($d) => collect($d['crud'])->pluck('code'))->values()->all();
+@endphp
 <script>
 function mcpSettingsHub() {
     const sseUrl = @json($sseEndpoint);
@@ -16,6 +137,7 @@ function mcpSettingsHub() {
     const oauthIssuerUrl = @json($oauthIssuerUrl ?? url('/'));
     const oidcConfigUrl = @json($oidcConfigUrl ?? url('/.well-known/openid-configuration'));
     const oauthMetadataUrl = @json($oauthMetadataUrl ?? url('/.well-known/oauth-authorization-server'));
+    const allAbilityCodes = @json($allAbilityCodesList);
 
     return {
         sseUrl,
@@ -29,10 +151,17 @@ function mcpSettingsHub() {
         oauthIssuerUrl,
         oidcConfigUrl,
         oauthMetadataUrl,
+        allAbilityCodes,
         openCreateModal: false,
         openViewModal: false,
         openEditModal: false,
         activeTokenDetail: null,
+        createTokenForm: {
+            name: '',
+            provider_hint: 'all',
+            expires_in: 'never',
+            abilities: ['*'],
+        },
         editTokenForm: {
             id: '',
             name: '',
@@ -69,28 +198,134 @@ function mcpSettingsHub() {
             });
         },
 
-        toggleEditAbility(val) {
-            if (val === '*') {
-                if (this.editTokenForm.abilities.includes('*')) {
-                    this.editTokenForm.abilities = [];
-                } else {
-                    this.editTokenForm.abilities = ['*'];
-                }
-                return;
-            }
-            if (this.editTokenForm.abilities.includes('*')) {
-                this.editTokenForm.abilities = this.editTokenForm.abilities.filter(a => a !== '*');
-            }
-            if (this.editTokenForm.abilities.includes(val)) {
-                this.editTokenForm.abilities = this.editTokenForm.abilities.filter(a => a !== val);
+        // Create Modal CRUD Helpers
+        isCreateFullAccess() {
+            return this.createTokenForm.abilities.includes('*');
+        },
+        toggleCreateFullAccess() {
+            if (this.isCreateFullAccess()) {
+                this.createTokenForm.abilities = [...this.allAbilityCodes];
             } else {
-                this.editTokenForm.abilities.push(val);
+                this.createTokenForm.abilities = ['*'];
             }
         },
+        hasCreateAbility(code) {
+            if (this.isCreateFullAccess()) return true;
+            return this.createTokenForm.abilities.includes(code);
+        },
+        toggleCreateAbility(code) {
+            if (this.isCreateFullAccess()) {
+                this.createTokenForm.abilities = this.allAbilityCodes.filter(c => c !== code);
+                return;
+            }
+            if (this.createTokenForm.abilities.includes(code)) {
+                this.createTokenForm.abilities = this.createTokenForm.abilities.filter(c => c !== code);
+            } else {
+                this.createTokenForm.abilities.push(code);
+            }
+        },
+        toggleCreateDomain(codes) {
+            if (this.isCreateFullAccess()) {
+                this.createTokenForm.abilities = this.allAbilityCodes.filter(c => !codes.includes(c));
+                return;
+            }
+            const allSelected = codes.every(c => this.createTokenForm.abilities.includes(c));
+            if (allSelected) {
+                this.createTokenForm.abilities = this.createTokenForm.abilities.filter(c => !codes.includes(c));
+            } else {
+                const combined = new Set([...this.createTokenForm.abilities, ...codes]);
+                this.createTokenForm.abilities = Array.from(combined);
+            }
+        },
+        isCreateDomainAllChecked(codes) {
+            if (this.isCreateFullAccess()) return true;
+            return codes.every(c => this.createTokenForm.abilities.includes(c));
+        },
+        getCreateCount() {
+            if (this.isCreateFullAccess()) return @json(__('mcp.badge_all_access'));
+            return this.createTokenForm.abilities.length + ' Hak Akses Dipilih';
+        },
 
-        hasEditAbility(val) {
-            if (this.editTokenForm.abilities.includes('*')) return true;
-            return this.editTokenForm.abilities.includes(val);
+        // Edit Modal CRUD Helpers
+        isEditFullAccess() {
+            return this.editTokenForm.abilities.includes('*');
+        },
+        toggleEditFullAccess() {
+            if (this.isEditFullAccess()) {
+                this.editTokenForm.abilities = [...this.allAbilityCodes];
+            } else {
+                this.editTokenForm.abilities = ['*'];
+            }
+        },
+        hasEditAbility(code) {
+            if (this.isEditFullAccess()) return true;
+            if (this.editTokenForm.abilities.includes(code)) return true;
+            // Legacy manage aliases
+            if (code.startsWith('mcp:products:') && this.editTokenForm.abilities.includes('mcp:products:manage')) return true;
+            if (code.startsWith('mcp:inventory:') && this.editTokenForm.abilities.includes('mcp:inventory:manage')) return true;
+            if (code.startsWith('mcp:finance:') && (this.editTokenForm.abilities.includes('mcp:finance:manage') || (code === 'mcp:finance:create' && this.editTokenForm.abilities.includes('mcp:expenses:write')))) return true;
+            if (code.startsWith('mcp:purchasing:') && this.editTokenForm.abilities.includes('mcp:purchasing:manage')) return true;
+            if (code.startsWith('mcp:sales:') && this.editTokenForm.abilities.includes('mcp:sales:manage')) return true;
+            if (code.startsWith('mcp:services:') && this.editTokenForm.abilities.includes('mcp:services:manage')) return true;
+            if (code.startsWith('mcp:social:') && this.editTokenForm.abilities.includes('mcp:social:manage')) return true;
+            return false;
+        },
+        toggleEditAbility(code) {
+            if (this.isEditFullAccess()) {
+                this.editTokenForm.abilities = this.allAbilityCodes.filter(c => c !== code);
+                return;
+            }
+            if (this.hasEditAbility(code)) {
+                this.editTokenForm.abilities = this.editTokenForm.abilities.filter(c => c !== code && !c.endsWith(':manage') && c !== 'mcp:expenses:write');
+            } else {
+                this.editTokenForm.abilities.push(code);
+            }
+        },
+        toggleEditDomain(codes) {
+            if (this.isEditFullAccess()) {
+                this.editTokenForm.abilities = this.allAbilityCodes.filter(c => !codes.includes(c));
+                return;
+            }
+            const allSelected = codes.every(c => this.hasEditAbility(c));
+            if (allSelected) {
+                this.editTokenForm.abilities = this.editTokenForm.abilities.filter(c => !codes.includes(c) && !c.endsWith(':manage') && c !== 'mcp:expenses:write');
+            } else {
+                const combined = new Set([...this.editTokenForm.abilities, ...codes]);
+                this.editTokenForm.abilities = Array.from(combined);
+            }
+        },
+        isEditDomainAllChecked(codes) {
+            if (this.isEditFullAccess()) return true;
+            return codes.every(c => this.hasEditAbility(c));
+        },
+        getEditCount() {
+            if (this.isEditFullAccess()) return @json(__('mcp.badge_all_access'));
+            return this.editTokenForm.abilities.length + ' Hak Akses Dipilih';
+        },
+
+        // View Modal Detail Helpers
+        hasDetailAbility(token, code) {
+            if (!token || !Array.isArray(token.abilities)) return false;
+            if (token.abilities.includes('*')) return true;
+            if (token.abilities.includes(code)) return true;
+            if (code.startsWith('mcp:products:') && token.abilities.includes('mcp:products:manage')) return true;
+            if (code.startsWith('mcp:inventory:') && token.abilities.includes('mcp:inventory:manage')) return true;
+            if (code.startsWith('mcp:finance:') && (token.abilities.includes('mcp:finance:manage') || (code === 'mcp:finance:create' && token.abilities.includes('mcp:expenses:write')))) return true;
+            if (code.startsWith('mcp:purchasing:') && token.abilities.includes('mcp:purchasing:manage')) return true;
+            if (code.startsWith('mcp:sales:') && token.abilities.includes('mcp:sales:manage')) return true;
+            if (code.startsWith('mcp:services:') && token.abilities.includes('mcp:services:manage')) return true;
+            if (code.startsWith('mcp:social:') && token.abilities.includes('mcp:social:manage')) return true;
+            return false;
+        },
+        hasDetailDomainActive(token, codes) {
+            if (!token || !Array.isArray(token.abilities)) return false;
+            if (token.abilities.includes('*')) return true;
+            return codes.some(c => this.hasDetailAbility(token, c));
+        },
+        countDomainActive(token, codes) {
+            if (!token || !Array.isArray(token.abilities)) return 0;
+            if (token.abilities.includes('*')) return codes.length;
+            return codes.filter(c => this.hasDetailAbility(token, c)).length;
         },
         activeProviderTab: 'claude',
         claudeMode: 'web', // 'web' (Claude.ai Web & Mobile - Streamable HTTP), 'desktop_http' (Claude Desktop Remote HTTP), 'desktop_stdio' (Local CLI)
@@ -301,38 +536,39 @@ document.addEventListener('alpine:init', () => {
 });
 </script>
 
-<div x-data="mcpSettingsHub()" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-32 space-y-6">
+<div x-data="mcpSettingsHub()" class="max-w-[1360px] mx-auto space-y-6 pb-28 lg:pb-12">
 
-    {{-- Breadcrumb & Header --}}
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-            <div class="flex items-center gap-2 text-xs text-neutral-500 dark:text-neutral-400 mb-1">
-                <a href="{{ route('settings.index') }}" class="hover:text-neutral-800 dark:hover:text-neutral-200 transition-colors">{{ __('mcp.breadcrumb_settings') }}</a>
-                <i data-lucide="chevron-right" class="w-3 h-3"></i>
-                <span class="text-neutral-900 dark:text-neutral-100 font-medium">{{ __('mcp.page_title') }}</span>
+    <!-- 1. TOOLBAR / PAGE HEADER (Apple HIG 3-Baris Standard) -->
+    <header class="rounded-[16px] backdrop-blur-md bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 p-4 sm:p-6 space-y-4 shadow-sm">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+                <!-- Overline Typographic (Anti-Pill) -->
+                <p class="text-[11px] font-semibold uppercase tracking-wider text-black/45 dark:text-white/45 mb-1">
+                    {{ __('mcp.breadcrumb_settings') }} &bull; {{ __('mcp.page_title') }}
+                </p>
+                <h1 class="text-2xl sm:text-3xl font-bold text-black dark:text-white tracking-tight">
+                    {{ __('mcp.page_title') }}
+                </h1>
+                <p class="text-[13px] text-black/55 dark:text-white/55 mt-1 leading-relaxed max-w-3xl">
+                    {{ __('mcp.page_subtitle') }}
+                </p>
             </div>
-            <h1 class="text-2xl sm:text-3xl font-semibold tracking-tight text-neutral-900 dark:text-white">
-                {{ __('mcp.page_title') }}
-            </h1>
-            <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 max-w-3xl">
-                {{ __('mcp.page_subtitle') }}
-            </p>
-        </div>
 
-        <div class="flex items-center gap-3">
-            <button
-                type="button"
-                @click="openCreateModal = true"
-                class="inline-flex items-center justify-center gap-2 px-4 py-2.5 min-h-[44px] rounded-[14px] bg-neutral-900 hover:bg-black text-white dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-100 font-medium text-sm shadow-sm transition-all active:scale-[0.98]">
-                <i data-lucide="plus" class="w-4 h-4"></i>
-                <span>{{ __('mcp.btn_create_token') }}</span>
-            </button>
+            <div class="flex items-center gap-3">
+                <button
+                    type="button"
+                    @click="openCreateModal = true"
+                    class="inline-flex items-center justify-center gap-2 px-4 py-2.5 min-h-[44px] rounded-[12px] bg-neutral-900 hover:bg-black text-white dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-100 font-semibold text-xs sm:text-sm shadow-sm transition-all active:scale-[0.98] cursor-pointer">
+                    <i data-lucide="plus" class="w-4 h-4"></i>
+                    <span>{{ __('mcp.btn_create_token') }}</span>
+                </button>
+            </div>
         </div>
-    </div>
+    </header>
 
     {{-- Alert: Token Baru Saja Dibuat (One-Time View) --}}
     @if(session('plain_token'))
-    <div class="rounded-[20px] bg-emerald-50/80 dark:bg-emerald-950/40 border border-emerald-500/20 p-5 backdrop-blur-md">
+    <div class="rounded-[16px] bg-emerald-50/80 dark:bg-emerald-950/40 border border-emerald-500/20 p-5 backdrop-blur-md">
         <div class="flex items-start gap-3">
             <div class="w-9 h-9 rounded-[12px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
                 <i data-lucide="key" class="w-5 h-5"></i>
@@ -354,7 +590,7 @@ document.addEventListener('alpine:init', () => {
                     <button
                         type="button"
                         @click="copyText('{{ session('plain_token') }}')"
-                        class="px-3 py-2 rounded-[10px] bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-medium flex items-center gap-1.5 transition-colors">
+                        class="px-3 py-2 rounded-[10px] bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer">
                         <i data-lucide="copy" class="w-3.5 h-3.5"></i>
                         <span>{{ __('mcp.btn_copy_token') }}</span>
                     </button>
@@ -368,7 +604,7 @@ document.addEventListener('alpine:init', () => {
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
         {{-- KARTU 1: Master Status & Metrics Cockpit (4-Kolom) --}}
-        <div class="lg:col-span-4 rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-neutral-200/80 dark:border-neutral-800 p-6 shadow-sm flex flex-col justify-between">
+        <div class="lg:col-span-4 rounded-[16px] bg-white/80 dark:bg-[#1C1C1E]/80 backdrop-blur-md border border-black/5 dark:border-white/10 p-6 shadow-sm flex flex-col justify-between">
             <div>
                 <div class="flex items-center justify-between pb-4 border-b border-neutral-100 dark:border-neutral-800/80">
                     <span class="text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
@@ -431,7 +667,7 @@ document.addEventListener('alpine:init', () => {
         </div>
 
         {{-- KARTU 2: Kunci Akses & Token Registry (8-Kolom) --}}
-        <div class="lg:col-span-8 rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-neutral-200/80 dark:border-neutral-800 p-6 shadow-sm">
+        <div class="lg:col-span-8 rounded-[16px] bg-white/80 dark:bg-[#1C1C1E]/80 backdrop-blur-md border border-black/5 dark:border-white/10 p-6 shadow-sm">
             <div class="flex items-center justify-between pb-4 border-b border-neutral-100 dark:border-neutral-800">
                 <div>
                     <h3 class="text-base font-semibold text-neutral-900 dark:text-white">
@@ -494,9 +730,15 @@ document.addEventListener('alpine:init', () => {
                             </span>
                             <span>•</span>
                             @if(in_array('*', $token->abilities ?? []))
-                                <span class="text-emerald-600 dark:text-emerald-400 font-medium">{{ __('mcp.lbl_all_access_granted') }}</span>
+                                <span class="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-semibold text-[11px]">
+                                    <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+                                    <span>{{ __('mcp.badge_all_access') }}</span>
+                                </span>
                             @else
-                                <span>{{ __('mcp.lbl_permissions_count', ['count' => count($token->abilities ?? [])]) }}</span>
+                                <span class="inline-flex items-center gap-1 text-blue-600 dark:text-blue-400 font-semibold text-[11px]">
+                                    <i data-lucide="sliders" class="w-3.5 h-3.5"></i>
+                                    <span>{{ count($token->abilities ?? []) }} {{ __('mcp.badge_custom_access') }}</span>
+                                </span>
                             @endif
                             <span>•</span>
                             <span>{{ __('mcp.lbl_used_prefix') }}: {{ $token->last_used_at ? $token->last_used_at->diffForHumans() : __('mcp.lbl_never_used') }}</span>
@@ -549,7 +791,7 @@ document.addEventListener('alpine:init', () => {
         </div>
 
         {{-- KARTU 3: Universal Multi-Provider Setup & Step-by-Step Tutorial Hub (12-Kolom) --}}
-        <div class="lg:col-span-12 rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-neutral-200/80 dark:border-neutral-800 p-6 sm:p-7 shadow-sm space-y-6">
+        <div class="lg:col-span-12 rounded-[16px] bg-white/80 dark:bg-[#1C1C1E]/80 backdrop-blur-md border border-black/5 dark:border-white/10 p-6 sm:p-7 shadow-sm space-y-6">
             <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 pb-5 border-b border-neutral-100 dark:border-neutral-800">
                 <div>
                     <div class="flex items-center gap-2">
@@ -2373,12 +2615,17 @@ document.addEventListener('alpine:init', () => {
                 x-transition:leave="transition ease-in duration-150"
                 x-transition:leave-start="opacity-100 scale-100"
                 x-transition:leave-end="opacity-0 scale-95"
-                class="relative z-10 w-full max-w-xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-neutral-200 dark:border-neutral-800 p-6 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto my-auto">
+                class="relative z-10 w-full max-w-3xl rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/15 p-6 sm:p-7 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto my-auto">
 
                 <div class="flex items-center justify-between pb-3 border-b border-neutral-100 dark:border-neutral-800">
-                    <h3 id="modal-create-token-title" class="text-base font-semibold text-neutral-900 dark:text-white">
-                        {{ __('mcp.modal_create_title') }}
-                    </h3>
+                    <div>
+                        <p class="text-[10px] font-semibold uppercase tracking-wider text-neutral-400 dark:text-neutral-500 mb-0.5">
+                            {{ __('mcp.page_title') }} &bull; {{ __('mcp.modal_create_title') }}
+                        </p>
+                        <h3 id="modal-create-token-title" class="text-base sm:text-lg font-bold text-neutral-900 dark:text-white">
+                            {{ __('mcp.modal_create_title') }}
+                        </h3>
+                    </div>
                     <button
                         type="button"
                         @click="openCreateModal = false"
@@ -2388,11 +2635,11 @@ document.addEventListener('alpine:init', () => {
                     </button>
                 </div>
 
-            <form action="{{ route('settings.integrations.mcp.tokens.store') }}" method="POST" class="space-y-4">
+            <form action="{{ route('settings.integrations.mcp.tokens.store') }}" method="POST" class="space-y-5">
                 @csrf
 
                 <div>
-                    <label class="block text-xs font-medium text-neutral-700 dark:text-neutral-300 mb-1">
+                    <label class="block text-xs font-semibold text-neutral-800 dark:text-neutral-200 mb-1.5">
                         {{ __('mcp.input_token_name') }} <span class="text-rose-500">*</span>
                     </label>
                     <input
@@ -2400,17 +2647,17 @@ document.addEventListener('alpine:init', () => {
                         name="name"
                         required
                         placeholder="{{ __('mcp.input_token_name_ph') }}"
-                        class="w-full min-h-[44px] text-[16px] sm:text-[15px] px-3.5 py-2.5 rounded-[12px] bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-neutral-900 dark:focus:ring-white" />
+                        class="w-full min-h-[44px] text-[15px] px-3.5 py-2.5 rounded-[12px] bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-neutral-900 dark:focus:ring-white transition-all" />
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-medium text-neutral-700 dark:text-neutral-300 mb-1">
+                        <label class="block text-xs font-semibold text-neutral-800 dark:text-neutral-200 mb-1.5">
                             {{ __('mcp.input_provider') }}
                         </label>
                         <select
                             name="provider_hint"
-                            class="w-full min-h-[44px] text-[16px] sm:text-[15px] px-3 py-2.5 rounded-[12px] bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-white focus:outline-none">
+                            class="w-full min-h-[44px] text-[14px] px-3 py-2.5 rounded-[12px] bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-white focus:outline-none">
                             <option value="all">{{ __('mcp.lbl_all_providers_universal') }}</option>
                             <option value="claude">Claude (Desktop / Code / Web)</option>
                             <option value="openai">ChatGPT / OpenAI</option>
@@ -2419,12 +2666,12 @@ document.addEventListener('alpine:init', () => {
                     </div>
 
                     <div>
-                        <label class="block text-xs font-medium text-neutral-700 dark:text-neutral-300 mb-1">
+                        <label class="block text-xs font-semibold text-neutral-800 dark:text-neutral-200 mb-1.5">
                             {{ __('mcp.input_expires') }}
                         </label>
                         <select
                             name="expires_in"
-                            class="w-full min-h-[44px] text-[16px] sm:text-[15px] px-3 py-2.5 rounded-[12px] bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-white focus:outline-none">
+                            class="w-full min-h-[44px] text-[14px] px-3 py-2.5 rounded-[12px] bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-white focus:outline-none">
                             <option value="never">{{ __('mcp.expires_never') }}</option>
                             <option value="30_days">{{ __('mcp.expires_30_days') }}</option>
                             <option value="90_days">{{ __('mcp.expires_90_days') }}</option>
@@ -2433,94 +2680,165 @@ document.addEventListener('alpine:init', () => {
                     </div>
                 </div>
 
-                <div>
-                    <label class="block text-xs font-medium text-neutral-700 dark:text-neutral-300 mb-2">
-                        {{ __('mcp.permissions_title') }}
-                    </label>
-
-                    <div class="space-y-2 p-3 rounded-[14px] bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 max-h-56 overflow-y-auto">
-                        <label class="flex items-center gap-2.5 text-xs text-neutral-900 dark:text-white font-medium pb-2 border-b border-neutral-200 dark:border-neutral-800 cursor-pointer">
-                            <input type="checkbox" name="abilities[]" value="*" checked class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
-                            <span>{{ __('mcp.perm_all') }}</span>
-                        </label>
-
-                        <label class="flex items-center gap-2.5 text-xs text-neutral-700 dark:text-neutral-300 cursor-pointer">
-                            <input type="checkbox" name="abilities[]" value="mcp:expenses:write" checked class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
-                            <span>{{ __('mcp.perm_finance_write') }}</span>
-                        </label>
-                        <label class="flex items-center gap-2.5 text-xs text-neutral-700 dark:text-neutral-300 cursor-pointer">
-                            <input type="checkbox" name="abilities[]" value="mcp:finance:read" checked class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
-                            <span>{{ __('mcp.perm_finance_read') }}</span>
-                        </label>
-                        <label class="flex items-center gap-2.5 text-xs text-neutral-700 dark:text-neutral-300 cursor-pointer">
-                            <input type="checkbox" name="abilities[]" value="mcp:finance:manage" checked class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
-                            <span>{{ __('mcp.perm_finance_manage') }}</span>
-                        </label>
-                        <label class="flex items-center gap-2.5 text-xs text-neutral-700 dark:text-neutral-300 cursor-pointer">
-                            <input type="checkbox" name="abilities[]" value="mcp:products:manage" checked class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
-                            <span>{{ __('mcp.perm_products_manage') }}</span>
-                        </label>
-                        <label class="flex items-center gap-2.5 text-xs text-neutral-700 dark:text-neutral-300 cursor-pointer">
-                            <input type="checkbox" name="abilities[]" value="mcp:products:read" checked class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
-                            <span>{{ __('mcp.perm_products_read') }}</span>
-                        </label>
-                        <label class="flex items-center gap-2.5 text-xs text-neutral-700 dark:text-neutral-300 cursor-pointer">
-                            <input type="checkbox" name="abilities[]" value="mcp:inventory:manage" checked class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
-                            <span>{{ __('mcp.perm_inventory_manage') }}</span>
-                        </label>
-                        <label class="flex items-center gap-2.5 text-xs text-neutral-700 dark:text-neutral-300 cursor-pointer">
-                            <input type="checkbox" name="abilities[]" value="mcp:purchasing:manage" checked class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
-                            <span>{{ __('mcp.perm_purchasing_manage') }}</span>
-                        </label>
-                        <label class="flex items-center gap-2.5 text-xs text-neutral-700 dark:text-neutral-300 cursor-pointer">
-                            <input type="checkbox" name="abilities[]" value="mcp:sales:manage" checked class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
-                            <span>{{ __('mcp.perm_sales_manage') }}</span>
-                        </label>
-                        <label class="flex items-center gap-2.5 text-xs text-neutral-700 dark:text-neutral-300 cursor-pointer">
-                            <input type="checkbox" name="abilities[]" value="mcp:social:manage" checked class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
-                            <span>{{ __('mcp.perm_social_manage') }}</span>
-                        </label>
-                        <label class="flex items-center gap-2.5 text-xs text-neutral-700 dark:text-neutral-300 cursor-pointer">
-                            <input type="checkbox" name="abilities[]" value="mcp:social:read" checked class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
-                            <span>{{ __('mcp.perm_social_read') }}</span>
-                        </label>
-                        <label class="flex items-center gap-2.5 text-xs text-neutral-700 dark:text-neutral-300 cursor-pointer">
-                            <input type="checkbox" name="abilities[]" value="mcp:reports:read" checked class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
-                            <span>{{ __('mcp.perm_reports_read') }}</span>
-                        </label>
-                        <label class="flex items-center gap-2.5 text-xs text-neutral-700 dark:text-neutral-300 cursor-pointer">
-                            <input type="checkbox" name="abilities[]" value="mcp:analytics:read" checked class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
-                            <span>{{ __('mcp.perm_analytics_read') }}</span>
-                        </label>
-                        <label class="flex items-center gap-2.5 text-xs text-neutral-700 dark:text-neutral-300 cursor-pointer">
-                            <input type="checkbox" name="abilities[]" value="mcp:crm:read" checked class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
-                            <span>{{ __('mcp.perm_crm_read') }}</span>
-                        </label>
-                        <label class="flex items-center gap-2.5 text-xs text-neutral-700 dark:text-neutral-300 cursor-pointer">
-                            <input type="checkbox" name="abilities[]" value="mcp:whatsapp:send" checked class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
-                            <span>{{ __('mcp.perm_whatsapp_send') }}</span>
-                        </label>
-                        <label class="flex items-center gap-2.5 text-xs text-neutral-700 dark:text-neutral-300 cursor-pointer">
-                            <input type="checkbox" name="abilities[]" value="mcp:services:manage" checked class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
-                            <span>{{ __('mcp.perm_services_manage') }}</span>
-                        </label>
-                        <label class="flex items-center gap-2.5 text-xs text-neutral-700 dark:text-neutral-300 cursor-pointer">
-                            <input type="checkbox" name="abilities[]" value="mcp:business:read" checked class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
-                            <span>{{ __('mcp.perm_business_read') }}</span>
-                        </label>
+                {{-- Master Full Access Toggle Card --}}
+                <div class="p-4 rounded-[16px] transition-all border"
+                    :class="isCreateFullAccess() ? 'bg-emerald-500/10 border-emerald-500/30 dark:bg-emerald-950/20' : 'bg-neutral-50 dark:bg-neutral-900 border-neutral-200/80 dark:border-neutral-800'">
+                    <div class="flex items-center justify-between gap-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-[12px] flex items-center justify-center shrink-0 transition-colors"
+                                :class="isCreateFullAccess() ? 'bg-emerald-500 text-white shadow-xs' : 'bg-neutral-200 dark:bg-neutral-800 text-neutral-500'">
+                                <i data-lucide="shield-check" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs sm:text-sm font-bold text-neutral-900 dark:text-white flex items-center gap-2">
+                                    <span>{{ __('mcp.perm_all') }}</span>
+                                    <span x-show="isCreateFullAccess()" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500 text-white uppercase tracking-wide">
+                                        {{ __('mcp.badge_all_access') }}
+                                    </span>
+                                </div>
+                                <p class="text-[11px] sm:text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">
+                                    {{ __('mcp.crud_matrix_desc') }}
+                                </p>
+                            </div>
+                        </div>
+                        <button
+                            type="button"
+                            @click="toggleCreateFullAccess()"
+                            class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none shrink-0 cursor-pointer"
+                            :class="isCreateFullAccess() ? 'bg-emerald-500' : 'bg-neutral-300 dark:bg-neutral-700'">
+                            <span class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform"
+                                :class="isCreateFullAccess() ? 'translate-x-6' : 'translate-x-1'"></span>
+                        </button>
                     </div>
                 </div>
 
-                <div class="pt-3 flex items-center justify-end gap-3">
+                {{-- Hidden master checkbox input --}}
+                <input type="checkbox" name="abilities[]" value="*" :checked="isCreateFullAccess()" :disabled="!isCreateFullAccess()" class="hidden">
+
+                {{-- Granular Bento CRUD Matrix Section --}}
+                <div class="space-y-3 pt-1">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                        <div>
+                            <h4 class="text-xs font-bold uppercase tracking-wider text-neutral-900 dark:text-white">
+                                {{ __('mcp.crud_matrix_title') }}
+                            </h4>
+                            <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
+                                Pilih aksi yang diperbolehkan untuk AI: <span class="font-semibold text-emerald-600">[C] Create</span>, <span class="font-semibold text-blue-600">[R] Read</span>, <span class="font-semibold text-amber-600">[U] Update</span>, <span class="font-semibold text-rose-600">[D] Delete</span>
+                            </p>
+                        </div>
+                        <span class="text-[11px] font-semibold px-2.5 py-1 rounded-full bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 self-start sm:self-auto tabular-nums" x-text="getCreateCount()"></span>
+                    </div>
+
+                    <div class="space-y-3 max-h-[380px] overflow-y-auto pr-1">
+                        @foreach($abilityDomains as $domain)
+                        @php
+                            $domainCodesJson = json_encode(collect($domain['crud'])->pluck('code')->all());
+                        @endphp
+                        <div class="p-3.5 sm:p-4 rounded-[16px] bg-neutral-50/70 dark:bg-neutral-900/70 border border-neutral-200/80 dark:border-neutral-800 space-y-3">
+                            {{-- Domain Header --}}
+                            <div class="flex items-center justify-between pb-2 border-b border-neutral-200/60 dark:border-neutral-800/80">
+                                <div class="flex items-center gap-2.5 min-w-0">
+                                    <div class="w-7 h-7 rounded-[8px] bg-neutral-200/70 dark:bg-neutral-800 flex items-center justify-center text-neutral-700 dark:text-neutral-300 shrink-0">
+                                        <i data-lucide="{{ $domain['icon'] }}" class="w-3.5 h-3.5"></i>
+                                    </div>
+                                    <div class="min-w-0">
+                                        <div class="text-xs font-bold text-neutral-900 dark:text-white truncate">
+                                            {{ $domain['name'] }}
+                                        </div>
+                                        <div class="text-[10px] font-mono text-neutral-400 dark:text-neutral-500 truncate" title="{{ $domain['tools_hint'] }}">
+                                            {{ $domain['tools_hint'] }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- Select/Deselect All in this domain --}}
+                                <button
+                                    type="button"
+                                    @click="toggleCreateDomain({{ $domainCodesJson }})"
+                                    class="text-[11px] font-medium text-blue-600 dark:text-blue-400 hover:underline shrink-0 ml-2 cursor-pointer">
+                                    <span x-text="isCreateDomainAllChecked({{ $domainCodesJson }}) ? '{{ __('mcp.crud_deselect_all_domain') }}' : '{{ __('mcp.crud_select_all_domain') }}'"></span>
+                                </button>
+                            </div>
+
+                            {{-- 4 CRUD Actions Grid --}}
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                @foreach($domain['crud'] as $item)
+                                @php
+                                    $colorMap = [
+                                        'emerald' => [
+                                            'active_bg' => 'bg-emerald-500/10 dark:bg-emerald-500/15 border-emerald-500/40 text-emerald-950 dark:text-emerald-100',
+                                            'badge' => 'bg-emerald-500 text-white',
+                                            'hover' => 'hover:border-emerald-500/30',
+                                        ],
+                                        'blue' => [
+                                            'active_bg' => 'bg-blue-500/10 dark:bg-blue-500/15 border-blue-500/40 text-blue-950 dark:text-blue-100',
+                                            'badge' => 'bg-blue-500 text-white',
+                                            'hover' => 'hover:border-blue-500/30',
+                                        ],
+                                        'amber' => [
+                                            'active_bg' => 'bg-amber-500/10 dark:bg-amber-500/15 border-amber-500/40 text-amber-950 dark:text-amber-100',
+                                            'badge' => 'bg-amber-500 text-white',
+                                            'hover' => 'hover:border-amber-500/30',
+                                        ],
+                                        'rose' => [
+                                            'active_bg' => 'bg-rose-500/10 dark:bg-rose-500/15 border-rose-500/40 text-rose-950 dark:text-rose-100',
+                                            'badge' => 'bg-rose-500 text-white',
+                                            'hover' => 'hover:border-rose-500/30',
+                                        ],
+                                    ];
+                                    $c = $colorMap[$item['color']] ?? $colorMap['blue'];
+                                @endphp
+                                <label
+                                    class="p-2.5 rounded-[12px] border transition-all cursor-pointer flex items-start gap-2.5 min-h-[44px]"
+                                    :class="hasCreateAbility('{{ $item['code'] }}')
+                                        ? '{{ $c['active_bg'] }} shadow-xs'
+                                        : 'bg-white dark:bg-[#2C2C2E]/60 border-neutral-200/80 dark:border-neutral-800 text-neutral-700 dark:text-neutral-300 {{ $c['hover'] }}'">
+                                    
+                                    <input
+                                        type="checkbox"
+                                        name="abilities[]"
+                                        value="{{ $item['code'] }}"
+                                        :checked="hasCreateAbility('{{ $item['code'] }}')"
+                                        :disabled="isCreateFullAccess()"
+                                        @change="toggleCreateAbility('{{ $item['code'] }}')"
+                                        class="hidden">
+
+                                    <span class="w-5 h-5 rounded-[6px] {{ $c['badge'] }} text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">
+                                        {{ $item['letter'] }}
+                                    </span>
+
+                                    <div class="flex-1 min-w-0">
+                                        <div class="flex items-center justify-between gap-1">
+                                            <span class="text-xs font-semibold leading-tight truncate">
+                                                {{ $item['action'] }} &bull; {{ $item['label'] }}
+                                            </span>
+                                            <span class="w-4 h-4 rounded-full flex items-center justify-center shrink-0"
+                                                :class="hasCreateAbility('{{ $item['code'] }}') ? 'text-emerald-600 dark:text-emerald-400' : 'text-neutral-300 dark:text-neutral-600'">
+                                                <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                                            </span>
+                                        </div>
+                                        <div class="text-[10px] font-mono text-neutral-400 dark:text-neutral-500 truncate mt-0.5" title="{{ $item['hint'] }}">
+                                            {{ $item['hint'] }}
+                                        </div>
+                                    </div>
+                                </label>
+                                @endforeach
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <div class="pt-3 border-t border-neutral-100 dark:border-neutral-800 flex items-center justify-end gap-3">
                     <button
                         type="button"
                         @click="openCreateModal = false"
-                        class="px-4 py-2.5 min-h-[44px] rounded-[12px] text-xs font-medium text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">
+                        class="px-4 py-2.5 min-h-[44px] rounded-[12px] text-xs font-medium text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer">
                         {{ __('mcp.btn_cancel') }}
                     </button>
                     <button
                         type="submit"
-                        class="px-5 py-2.5 min-h-[44px] rounded-[12px] bg-neutral-900 hover:bg-black dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-100 text-white text-xs font-semibold shadow-sm transition-all">
+                        class="px-5 py-2.5 min-h-[44px] rounded-[12px] bg-neutral-900 hover:bg-black dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-100 text-white text-xs font-semibold shadow-sm transition-all cursor-pointer">
                         {{ __('mcp.btn_submit_create_token') }}
                     </button>
                 </div>
@@ -2560,16 +2878,21 @@ document.addEventListener('alpine:init', () => {
                 x-transition:leave="transition ease-in duration-150"
                 x-transition:leave-start="opacity-100 scale-100"
                 x-transition:leave-end="opacity-0 scale-95"
-                class="relative z-10 w-full max-w-xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-neutral-200 dark:border-neutral-800 p-6 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto my-auto">
+                class="relative z-10 w-full max-w-3xl rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/15 p-6 sm:p-7 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto my-auto">
 
                 <div class="flex items-center justify-between pb-3 border-b border-neutral-100 dark:border-neutral-800">
-                    <div class="flex items-center gap-2">
-                        <div class="w-8 h-8 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center">
-                            <i data-lucide="shield-check" class="w-4 h-4"></i>
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-9 h-9 rounded-[12px] bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
+                            <i data-lucide="shield-check" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-base font-semibold text-neutral-900 dark:text-white">
-                            {{ __('mcp.modal_view_auth_title') }}
-                        </h3>
+                        <div>
+                            <p class="text-[10px] font-semibold uppercase tracking-wider text-neutral-400 dark:text-neutral-500 mb-0.5">
+                                {{ __('mcp.page_title') }} &bull; {{ __('mcp.modal_view_auth_title') }}
+                            </p>
+                            <h3 class="text-base sm:text-lg font-bold text-neutral-900 dark:text-white">
+                                {{ __('mcp.modal_view_auth_title') }}
+                            </h3>
+                        </div>
                     </div>
                     <button
                         type="button"
@@ -2628,36 +2951,78 @@ document.addEventListener('alpine:init', () => {
                             </div>
                         </div>
 
-                        {{-- Hak Akses & Abilities --}}
-                        <div class="space-y-2">
-                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white uppercase tracking-wider">
+                        {{-- Hak Akses & Abilities (Granular Bento Display) --}}
+                        <div class="space-y-3">
+                            <h4 class="text-xs font-bold text-neutral-900 dark:text-white uppercase tracking-wider">
                                 {{ __('mcp.lbl_abilities_granted') }}
                             </h4>
 
+                            {{-- Tampilan Full Access --}}
                             <template x-if="activeTokenDetail.abilities.includes('*')">
-                                <div class="p-4 rounded-[16px] bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200/80 dark:border-emerald-800/60 flex items-start gap-3">
-                                    <div class="w-8 h-8 rounded-[10px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
-                                        <i data-lucide="check-check" class="w-4 h-4"></i>
+                                <div class="p-4 rounded-[16px] bg-emerald-50/80 dark:bg-emerald-950/30 border border-emerald-500/30 flex items-start gap-3.5">
+                                    <div class="w-9 h-9 rounded-[12px] bg-emerald-500 text-white flex items-center justify-center shrink-0 shadow-xs">
+                                        <i data-lucide="shield-check" class="w-5 h-5"></i>
                                     </div>
-                                    <div>
-                                        <div class="text-xs font-bold text-emerald-900 dark:text-emerald-200">
-                                            {{ __('mcp.lbl_all_access_granted') }}
+                                    <div class="space-y-1">
+                                        <div class="text-xs sm:text-sm font-bold text-emerald-950 dark:text-emerald-100 flex items-center gap-2">
+                                            <span>{{ __('mcp.lbl_all_access_granted') }}</span>
+                                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500 text-white uppercase tracking-wide">
+                                                {{ __('mcp.badge_all_access') }}
+                                            </span>
                                         </div>
-                                        <p class="text-[11px] text-emerald-700 dark:text-emerald-300 mt-0.5 leading-relaxed">
+                                        <p class="text-[11px] text-emerald-800 dark:text-emerald-300 leading-relaxed">
                                             {{ __('mcp.lbl_all_access_granted_desc') }}
                                         </p>
                                     </div>
                                 </div>
                             </template>
 
+                            {{-- Tampilan Matriks Granular CRUD per Domain --}}
                             <template x-if="!activeTokenDetail.abilities.includes('*')">
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-60 overflow-y-auto p-1">
-                                    <template x-for="ability in activeTokenDetail.abilities" :key="ability">
-                                        <div class="p-2.5 rounded-[12px] bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 flex items-center gap-2">
-                                            <span class="w-2 h-2 rounded-full bg-blue-500 shrink-0"></span>
-                                            <span class="font-mono text-[11px] text-neutral-800 dark:text-neutral-200 font-medium" x-text="ability"></span>
+                                <div class="space-y-2.5 max-h-[360px] overflow-y-auto pr-1">
+                                    @foreach($abilityDomains as $domain)
+                                    @php
+                                        $domainCodesJson = json_encode(collect($domain['crud'])->pluck('code')->all());
+                                    @endphp
+                                    <div
+                                        x-show="hasDetailDomainActive(activeTokenDetail, {{ $domainCodesJson }})"
+                                        class="p-3.5 rounded-[14px] bg-neutral-50/80 dark:bg-neutral-900/80 border border-neutral-200/80 dark:border-neutral-800 space-y-2.5">
+                                        
+                                        <div class="flex items-center justify-between pb-1.5 border-b border-neutral-200/60 dark:border-neutral-800">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-6 h-6 rounded-[6px] bg-neutral-200/70 dark:bg-neutral-800 flex items-center justify-center text-neutral-700 dark:text-neutral-300">
+                                                    <i data-lucide="{{ $domain['icon'] }}" class="w-3.5 h-3.5"></i>
+                                                </div>
+                                                <span class="text-xs font-bold text-neutral-900 dark:text-white">
+                                                    {{ $domain['name'] }}
+                                                </span>
+                                            </div>
+                                            <span class="text-[10px] font-mono text-neutral-500 dark:text-neutral-400">
+                                                <span x-text="countDomainActive(activeTokenDetail, {{ $domainCodesJson }})"></span>/{{ count($domain['crud']) }} Izin Aktif
+                                            </span>
                                         </div>
-                                    </template>
+
+                                        <div class="flex flex-wrap gap-1.5">
+                                            @foreach($domain['crud'] as $item)
+                                            @php
+                                                $colorMap = [
+                                                    'emerald' => 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/25',
+                                                    'blue' => 'bg-blue-500/10 text-blue-700 dark:text-blue-300 border-blue-500/25',
+                                                    'amber' => 'bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500/25',
+                                                    'rose' => 'bg-rose-500/10 text-rose-700 dark:text-rose-300 border-rose-500/25',
+                                                ];
+                                                $badgeStyle = $colorMap[$item['color']] ?? $colorMap['blue'];
+                                            @endphp
+                                            <div
+                                                x-show="hasDetailAbility(activeTokenDetail, '{{ $item['code'] }}')"
+                                                class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[8px] text-[11px] font-medium border {{ $badgeStyle }}">
+                                                <span class="font-bold font-mono">[{{ $item['letter'] }}]</span>
+                                                <span>{{ $item['action'] }} &bull; {{ $item['label'] }}</span>
+                                            </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                    @endforeach
                                 </div>
                             </template>
                         </div>
@@ -2715,16 +3080,21 @@ document.addEventListener('alpine:init', () => {
                 x-transition:leave="transition ease-in duration-150"
                 x-transition:leave-start="opacity-100 scale-100"
                 x-transition:leave-end="opacity-0 scale-95"
-                class="relative z-10 w-full max-w-xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-neutral-200 dark:border-neutral-800 p-6 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto my-auto">
+                class="relative z-10 w-full max-w-3xl rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/15 p-6 sm:p-7 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto my-auto">
 
                 <div class="flex items-center justify-between pb-3 border-b border-neutral-100 dark:border-neutral-800">
-                    <div class="flex items-center gap-2">
-                        <div class="w-8 h-8 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center">
-                            <i data-lucide="edit-3" class="w-4 h-4"></i>
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-9 h-9 rounded-[12px] bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
+                            <i data-lucide="edit-3" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-base font-semibold text-neutral-900 dark:text-white">
-                            {{ __('mcp.modal_edit_auth_title') }}
-                        </h3>
+                        <div>
+                            <p class="text-[10px] font-semibold uppercase tracking-wider text-neutral-400 dark:text-neutral-500 mb-0.5">
+                                {{ __('mcp.page_title') }} &bull; {{ __('mcp.modal_edit_auth_title') }}
+                            </p>
+                            <h3 class="text-base sm:text-lg font-bold text-neutral-900 dark:text-white">
+                                {{ __('mcp.modal_edit_auth_title') }}
+                            </h3>
+                        </div>
                     </div>
                     <button
                         type="button"
@@ -2735,12 +3105,12 @@ document.addEventListener('alpine:init', () => {
                     </button>
                 </div>
 
-                <form :action="editTokenForm.update_url" method="POST" class="space-y-4">
+                <form :action="editTokenForm.update_url" method="POST" class="space-y-5">
                     @csrf
                     @method('PUT')
 
                     <div>
-                        <label class="block text-xs font-medium text-neutral-700 dark:text-neutral-300 mb-1">
+                        <label class="block text-xs font-semibold text-neutral-800 dark:text-neutral-200 mb-1.5">
                             {{ __('mcp.input_token_name') }} <span class="text-rose-500">*</span>
                         </label>
                         <input
@@ -2748,18 +3118,18 @@ document.addEventListener('alpine:init', () => {
                             name="name"
                             required
                             x-model="editTokenForm.name"
-                            class="w-full min-h-[44px] text-[16px] sm:text-[15px] px-3.5 py-2.5 rounded-[12px] bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-neutral-900 dark:focus:ring-white" />
+                            class="w-full min-h-[44px] text-[15px] px-3.5 py-2.5 rounded-[12px] bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-neutral-900 dark:focus:ring-white transition-all" />
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs font-medium text-neutral-700 dark:text-neutral-300 mb-1">
+                            <label class="block text-xs font-semibold text-neutral-800 dark:text-neutral-200 mb-1.5">
                                 {{ __('mcp.input_provider') }}
                             </label>
                             <select
                                 name="provider_hint"
                                 x-model="editTokenForm.provider_hint"
-                                class="w-full min-h-[44px] text-[16px] sm:text-[15px] px-3 py-2.5 rounded-[12px] bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-white focus:outline-none">
+                                class="w-full min-h-[44px] text-[14px] px-3 py-2.5 rounded-[12px] bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-white focus:outline-none">
                                 <option value="all">{{ __('mcp.lbl_all_providers_universal') }}</option>
                                 <option value="claude">Claude (Desktop / Code / Web)</option>
                                 <option value="openai">ChatGPT / OpenAI</option>
@@ -2768,13 +3138,13 @@ document.addEventListener('alpine:init', () => {
                         </div>
 
                         <div>
-                            <label class="block text-xs font-medium text-neutral-700 dark:text-neutral-300 mb-1">
+                            <label class="block text-xs font-semibold text-neutral-800 dark:text-neutral-200 mb-1.5">
                                 {{ __('mcp.lbl_expires_at') }}
                             </label>
                             <select
                                 name="expires_in"
                                 x-model="editTokenForm.expires_in"
-                                class="w-full min-h-[44px] text-[16px] sm:text-[15px] px-3 py-2.5 rounded-[12px] bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-white focus:outline-none">
+                                class="w-full min-h-[44px] text-[14px] px-3 py-2.5 rounded-[12px] bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-white focus:outline-none">
                                 <option value="keep">{{ __('mcp.expires_keep') }}</option>
                                 <option value="never">{{ __('mcp.expires_never') }}</option>
                                 <option value="30_days">{{ __('mcp.expires_30_days') }}</option>
@@ -2785,16 +3155,16 @@ document.addEventListener('alpine:init', () => {
                     </div>
 
                     {{-- Toggle Status Aktif --}}
-                    <div class="p-3.5 rounded-[14px] bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 flex items-center justify-between">
+                    <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900 border border-neutral-200/80 dark:border-neutral-800 flex items-center justify-between">
                         <div>
-                            <div class="text-xs font-semibold text-neutral-900 dark:text-white">
+                            <div class="text-xs sm:text-sm font-bold text-neutral-900 dark:text-white">
                                 {{ __('mcp.input_is_active') }}
                             </div>
-                            <p class="text-[11px] text-neutral-500 dark:text-neutral-400 mt-0.5">
+                            <p class="text-[11px] sm:text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">
                                 {{ __('mcp.input_is_active_help') }}
                             </p>
                         </div>
-                        <label class="relative inline-flex items-center cursor-pointer">
+                        <label class="relative inline-flex items-center cursor-pointer shrink-0">
                             <input
                                 type="checkbox"
                                 name="is_active"
@@ -2806,206 +3176,156 @@ document.addEventListener('alpine:init', () => {
                         </label>
                     </div>
 
-                    {{-- Checkbox Hak Akses (Abilities) --}}
-                    <div>
-                        <div class="flex items-center justify-between mb-2">
-                            <label class="block text-xs font-medium text-neutral-700 dark:text-neutral-300">
-                                {{ __('mcp.permissions_title') }} <span class="text-rose-500">*</span>
-                            </label>
-                            <span class="text-[11px] text-neutral-400" x-text="editTokenForm.abilities.includes('*') ? 'Semua Akses Aktif' : editTokenForm.abilities.length + ' dipilih'"></span>
-                        </div>
-
-                        <div class="space-y-2 p-3 rounded-[14px] bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 max-h-56 overflow-y-auto">
-                            <label class="flex items-center gap-2.5 text-xs text-neutral-900 dark:text-white font-semibold pb-2 border-b border-neutral-200 dark:border-neutral-800 cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    name="abilities[]"
-                                    value="*"
-                                    :checked="editTokenForm.abilities.includes('*')"
-                                    @click="toggleEditAbility('*')"
-                                    class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
-                                <span>{{ __('mcp.perm_all') }}</span>
-                            </label>
-
-                            <label class="flex items-center gap-2.5 text-xs text-neutral-700 dark:text-neutral-300 cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    name="abilities[]"
-                                    value="mcp:social:manage"
-                                    :checked="hasEditAbility('mcp:social:manage')"
-                                    @click="toggleEditAbility('mcp:social:manage')"
-                                    class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
-                                <span>{{ __('mcp.perm_social_manage') }}</span>
-                            </label>
-
-                            <label class="flex items-center gap-2.5 text-xs text-neutral-700 dark:text-neutral-300 cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    name="abilities[]"
-                                    value="mcp:social:read"
-                                    :checked="hasEditAbility('mcp:social:read')"
-                                    @click="toggleEditAbility('mcp:social:read')"
-                                    class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
-                                <span>{{ __('mcp.perm_social_read') }}</span>
-                            </label>
-
-                            <label class="flex items-center gap-2.5 text-xs text-neutral-700 dark:text-neutral-300 cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    name="abilities[]"
-                                    value="mcp:expenses:write"
-                                    :checked="hasEditAbility('mcp:expenses:write')"
-                                    @click="toggleEditAbility('mcp:expenses:write')"
-                                    class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
-                                <span>{{ __('mcp.perm_finance_write') }}</span>
-                            </label>
-
-                            <label class="flex items-center gap-2.5 text-xs text-neutral-700 dark:text-neutral-300 cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    name="abilities[]"
-                                    value="mcp:finance:read"
-                                    :checked="hasEditAbility('mcp:finance:read')"
-                                    @click="toggleEditAbility('mcp:finance:read')"
-                                    class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
-                                <span>{{ __('mcp.perm_finance_read') }}</span>
-                            </label>
-
-                            <label class="flex items-center gap-2.5 text-xs text-neutral-700 dark:text-neutral-300 cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    name="abilities[]"
-                                    value="mcp:finance:manage"
-                                    :checked="hasEditAbility('mcp:finance:manage')"
-                                    @click="toggleEditAbility('mcp:finance:manage')"
-                                    class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
-                                <span>{{ __('mcp.perm_finance_manage') }}</span>
-                            </label>
-
-                            <label class="flex items-center gap-2.5 text-xs text-neutral-700 dark:text-neutral-300 cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    name="abilities[]"
-                                    value="mcp:products:manage"
-                                    :checked="hasEditAbility('mcp:products:manage')"
-                                    @click="toggleEditAbility('mcp:products:manage')"
-                                    class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
-                                <span>{{ __('mcp.perm_products_manage') }}</span>
-                            </label>
-
-                            <label class="flex items-center gap-2.5 text-xs text-neutral-700 dark:text-neutral-300 cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    name="abilities[]"
-                                    value="mcp:products:read"
-                                    :checked="hasEditAbility('mcp:products:read')"
-                                    @click="toggleEditAbility('mcp:products:read')"
-                                    class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
-                                <span>{{ __('mcp.perm_products_read') }}</span>
-                            </label>
-
-                            <label class="flex items-center gap-2.5 text-xs text-neutral-700 dark:text-neutral-300 cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    name="abilities[]"
-                                    value="mcp:inventory:manage"
-                                    :checked="hasEditAbility('mcp:inventory:manage')"
-                                    @click="toggleEditAbility('mcp:inventory:manage')"
-                                    class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
-                                <span>{{ __('mcp.perm_inventory_manage') }}</span>
-                            </label>
-
-                            <label class="flex items-center gap-2.5 text-xs text-neutral-700 dark:text-neutral-300 cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    name="abilities[]"
-                                    value="mcp:purchasing:manage"
-                                    :checked="hasEditAbility('mcp:purchasing:manage')"
-                                    @click="toggleEditAbility('mcp:purchasing:manage')"
-                                    class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
-                                <span>{{ __('mcp.perm_purchasing_manage') }}</span>
-                            </label>
-
-                            <label class="flex items-center gap-2.5 text-xs text-neutral-700 dark:text-neutral-300 cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    name="abilities[]"
-                                    value="mcp:sales:manage"
-                                    :checked="hasEditAbility('mcp:sales:manage')"
-                                    @click="toggleEditAbility('mcp:sales:manage')"
-                                    class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
-                                <span>{{ __('mcp.perm_sales_manage') }}</span>
-                            </label>
-
-                            <label class="flex items-center gap-2.5 text-xs text-neutral-700 dark:text-neutral-300 cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    name="abilities[]"
-                                    value="mcp:services:manage"
-                                    :checked="hasEditAbility('mcp:services:manage')"
-                                    @click="toggleEditAbility('mcp:services:manage')"
-                                    class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
-                                <span>{{ __('mcp.perm_services_manage') }}</span>
-                            </label>
-
-                            <label class="flex items-center gap-2.5 text-xs text-neutral-700 dark:text-neutral-300 cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    name="abilities[]"
-                                    value="mcp:business:read"
-                                    :checked="hasEditAbility('mcp:business:read')"
-                                    @click="toggleEditAbility('mcp:business:read')"
-                                    class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
-                                <span>{{ __('mcp.perm_business_read') }}</span>
-                            </label>
-
-                            <label class="flex items-center gap-2.5 text-xs text-neutral-700 dark:text-neutral-300 cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    name="abilities[]"
-                                    value="mcp:reports:read"
-                                    :checked="hasEditAbility('mcp:reports:read')"
-                                    @click="toggleEditAbility('mcp:reports:read')"
-                                    class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
-                                <span>{{ __('mcp.perm_reports_read') }}</span>
-                            </label>
-
-                            <label class="flex items-center gap-2.5 text-xs text-neutral-700 dark:text-neutral-300 cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    name="abilities[]"
-                                    value="mcp:analytics:read"
-                                    :checked="hasEditAbility('mcp:analytics:read')"
-                                    @click="toggleEditAbility('mcp:analytics:read')"
-                                    class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
-                                <span>{{ __('mcp.perm_analytics_read') }}</span>
-                            </label>
-
-                            <label class="flex items-center gap-2.5 text-xs text-neutral-700 dark:text-neutral-300 cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    name="abilities[]"
-                                    value="mcp:crm:read"
-                                    :checked="hasEditAbility('mcp:crm:read')"
-                                    @click="toggleEditAbility('mcp:crm:read')"
-                                    class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
-                                <span>{{ __('mcp.perm_crm_read') }}</span>
-                            </label>
-
-                            <label class="flex items-center gap-2.5 text-xs text-neutral-700 dark:text-neutral-300 cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    name="abilities[]"
-                                    value="mcp:whatsapp:send"
-                                    :checked="hasEditAbility('mcp:whatsapp:send')"
-                                    @click="toggleEditAbility('mcp:whatsapp:send')"
-                                    class="rounded border-neutral-300 text-neutral-900 dark:bg-neutral-800" />
-                                <span>{{ __('mcp.perm_whatsapp_send') }}</span>
-                            </label>
+                    {{-- Master Full Access Toggle Card --}}
+                    <div class="p-4 rounded-[16px] transition-all border"
+                        :class="isEditFullAccess() ? 'bg-emerald-500/10 border-emerald-500/30 dark:bg-emerald-950/20' : 'bg-neutral-50 dark:bg-neutral-900 border-neutral-200/80 dark:border-neutral-800'">
+                        <div class="flex items-center justify-between gap-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-[12px] flex items-center justify-center shrink-0 transition-colors"
+                                    :class="isEditFullAccess() ? 'bg-emerald-500 text-white shadow-xs' : 'bg-neutral-200 dark:bg-neutral-800 text-neutral-500'">
+                                    <i data-lucide="shield-check" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <div class="text-xs sm:text-sm font-bold text-neutral-900 dark:text-white flex items-center gap-2">
+                                        <span>{{ __('mcp.perm_all') }}</span>
+                                        <span x-show="isEditFullAccess()" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500 text-white uppercase tracking-wide">
+                                            {{ __('mcp.badge_all_access') }}
+                                        </span>
+                                    </div>
+                                    <p class="text-[11px] sm:text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">
+                                        {{ __('mcp.crud_matrix_desc') }}
+                                    </p>
+                                </div>
+                            </div>
+                            <button
+                                type="button"
+                                @click="toggleEditFullAccess()"
+                                class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none shrink-0 cursor-pointer"
+                                :class="isEditFullAccess() ? 'bg-emerald-500' : 'bg-neutral-300 dark:bg-neutral-700'">
+                                <span class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform"
+                                    :class="isEditFullAccess() ? 'translate-x-6' : 'translate-x-1'"></span>
+                            </button>
                         </div>
                     </div>
 
-                    <div class="pt-3 flex items-center justify-end gap-3">
+                    {{-- Hidden master checkbox input --}}
+                    <input type="checkbox" name="abilities[]" value="*" :checked="isEditFullAccess()" :disabled="!isEditFullAccess()" class="hidden">
+
+                    {{-- Granular Bento CRUD Matrix Section --}}
+                    <div class="space-y-3 pt-1">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                            <div>
+                                <h4 class="text-xs font-bold uppercase tracking-wider text-neutral-900 dark:text-white">
+                                    {{ __('mcp.crud_matrix_title') }}
+                                </h4>
+                                <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
+                                    Pilih aksi yang diperbolehkan untuk AI: <span class="font-semibold text-emerald-600">[C] Create</span>, <span class="font-semibold text-blue-600">[R] Read</span>, <span class="font-semibold text-amber-600">[U] Update</span>, <span class="font-semibold text-rose-600">[D] Delete</span>
+                                </p>
+                            </div>
+                            <span class="text-[11px] font-semibold px-2.5 py-1 rounded-full bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 self-start sm:self-auto tabular-nums" x-text="getEditCount()"></span>
+                        </div>
+
+                        <div class="space-y-3 max-h-[380px] overflow-y-auto pr-1">
+                            @foreach($abilityDomains as $domain)
+                            @php
+                                $domainCodesJson = json_encode(collect($domain['crud'])->pluck('code')->all());
+                            @endphp
+                            <div class="p-3.5 sm:p-4 rounded-[16px] bg-neutral-50/70 dark:bg-neutral-900/70 border border-neutral-200/80 dark:border-neutral-800 space-y-3">
+                                {{-- Domain Header --}}
+                                <div class="flex items-center justify-between pb-2 border-b border-neutral-200/60 dark:border-neutral-800/80">
+                                    <div class="flex items-center gap-2.5 min-w-0">
+                                        <div class="w-7 h-7 rounded-[8px] bg-neutral-200/70 dark:bg-neutral-800 flex items-center justify-center text-neutral-700 dark:text-neutral-300 shrink-0">
+                                            <i data-lucide="{{ $domain['icon'] }}" class="w-3.5 h-3.5"></i>
+                                        </div>
+                                        <div class="min-w-0">
+                                            <div class="text-xs font-bold text-neutral-900 dark:text-white truncate">
+                                                {{ $domain['name'] }}
+                                            </div>
+                                            <div class="text-[10px] font-mono text-neutral-400 dark:text-neutral-500 truncate" title="{{ $domain['tools_hint'] }}">
+                                                {{ $domain['tools_hint'] }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{-- Select/Deselect All in this domain --}}
+                                    <button
+                                        type="button"
+                                        @click="toggleEditDomain({{ $domainCodesJson }})"
+                                        class="text-[11px] font-medium text-blue-600 dark:text-blue-400 hover:underline shrink-0 ml-2 cursor-pointer">
+                                        <span x-text="isEditDomainAllChecked({{ $domainCodesJson }}) ? '{{ __('mcp.crud_deselect_all_domain') }}' : '{{ __('mcp.crud_select_all_domain') }}'"></span>
+                                    </button>
+                                </div>
+
+                                {{-- 4 CRUD Actions Grid --}}
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                    @foreach($domain['crud'] as $item)
+                                    @php
+                                        $colorMap = [
+                                            'emerald' => [
+                                                'active_bg' => 'bg-emerald-500/10 dark:bg-emerald-500/15 border-emerald-500/40 text-emerald-950 dark:text-emerald-100',
+                                                'badge' => 'bg-emerald-500 text-white',
+                                                'hover' => 'hover:border-emerald-500/30',
+                                            ],
+                                            'blue' => [
+                                                'active_bg' => 'bg-blue-500/10 dark:bg-blue-500/15 border-blue-500/40 text-blue-950 dark:text-blue-100',
+                                                'badge' => 'bg-blue-500 text-white',
+                                                'hover' => 'hover:border-blue-500/30',
+                                            ],
+                                            'amber' => [
+                                                'active_bg' => 'bg-amber-500/10 dark:bg-amber-500/15 border-amber-500/40 text-amber-950 dark:text-amber-100',
+                                                'badge' => 'bg-amber-500 text-white',
+                                                'hover' => 'hover:border-amber-500/30',
+                                            ],
+                                            'rose' => [
+                                                'active_bg' => 'bg-rose-500/10 dark:bg-rose-500/15 border-rose-500/40 text-rose-950 dark:text-rose-100',
+                                                'badge' => 'bg-rose-500 text-white',
+                                                'hover' => 'hover:border-rose-500/30',
+                                            ],
+                                        ];
+                                        $c = $colorMap[$item['color']] ?? $colorMap['blue'];
+                                    @endphp
+                                    <label
+                                        class="p-2.5 rounded-[12px] border transition-all cursor-pointer flex items-start gap-2.5 min-h-[44px]"
+                                        :class="hasEditAbility('{{ $item['code'] }}')
+                                            ? '{{ $c['active_bg'] }} shadow-xs'
+                                            : 'bg-white dark:bg-[#2C2C2E]/60 border-neutral-200/80 dark:border-neutral-800 text-neutral-700 dark:text-neutral-300 {{ $c['hover'] }}'">
+                                        
+                                        <input
+                                            type="checkbox"
+                                            name="abilities[]"
+                                            value="{{ $item['code'] }}"
+                                            :checked="hasEditAbility('{{ $item['code'] }}')"
+                                            :disabled="isEditFullAccess()"
+                                            @change="toggleEditAbility('{{ $item['code'] }}')"
+                                            class="hidden">
+
+                                        <span class="w-5 h-5 rounded-[6px] {{ $c['badge'] }} text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">
+                                            {{ $item['letter'] }}
+                                        </span>
+
+                                        <div class="flex-1 min-w-0">
+                                            <div class="flex items-center justify-between gap-1">
+                                                <span class="text-xs font-semibold leading-tight truncate">
+                                                    {{ $item['action'] }} &bull; {{ $item['label'] }}
+                                                </span>
+                                                <span class="w-4 h-4 rounded-full flex items-center justify-center shrink-0"
+                                                    :class="hasEditAbility('{{ $item['code'] }}') ? 'text-emerald-600 dark:text-emerald-400' : 'text-neutral-300 dark:text-neutral-600'">
+                                                    <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                                                </span>
+                                            </div>
+                                            <div class="text-[10px] font-mono text-neutral-400 dark:text-neutral-500 truncate mt-0.5" title="{{ $item['hint'] }}">
+                                                {{ $item['hint'] }}
+                                            </div>
+                                        </div>
+                                    </label>
+                                    @endforeach
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <div class="pt-3 border-t border-neutral-100 dark:border-neutral-800 flex items-center justify-end gap-3">
                         <button
                             type="button"
                             @click="openEditModal = false"

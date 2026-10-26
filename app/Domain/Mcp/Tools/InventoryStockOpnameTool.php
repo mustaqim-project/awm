@@ -32,7 +32,7 @@ final class InventoryStockOpnameTool implements McpToolInterface
 
     public function getRequiredAbility(): string
     {
-        return 'mcp:inventory:manage';
+        return 'mcp:inventory:update';
     }
 
     public function getInputSchema(): array

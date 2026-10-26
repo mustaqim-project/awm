@@ -29,7 +29,7 @@ final class SocialUploadMediaTool implements McpToolInterface
 
     public function getRequiredAbility(): string
     {
-        return 'mcp:social:manage';
+        return 'mcp:social:create';
     }
 
     public function getInputSchema(): array

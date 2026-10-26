@@ -31,7 +31,7 @@ final class SalesManageQuotationTool implements McpToolInterface
 
     public function getRequiredAbility(): string
     {
-        return 'mcp:sales:manage';
+        return 'mcp:sales:create';
     }
 
     public function getInputSchema(): array

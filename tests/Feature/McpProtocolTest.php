@@ -365,6 +365,48 @@ final class McpProtocolTest extends TestCase
         $this->assertStringContainsString('lacks ability', $callResponse->json('error.message'));
     }
 
+    public function test_granular_crud_abilities_enforcement(): void
+    {
+        // 1. Create a token with ONLY products:create
+        $createOnly = McpAccessToken::generateToken(
+            business: $this->business,
+            user: $this->user,
+            name: 'Create Product Only Token',
+            abilities: ['mcp:products:create'],
+            providerHint: 'claude'
+        );
+
+        // tools/list should contain inventory_create_product but NOT inventory_check_stock
+        $listResponse = $this->withHeader('Authorization', "Bearer {$createOnly['token']}")
+            ->postJson('/api/v1/mcp/message', [
+                'jsonrpc' => '2.0',
+                'method'  => 'tools/list',
+                'id'      => 30,
+            ]);
+
+        $listResponse->assertStatus(200);
+        $tools = $listResponse->json('result.tools');
+        $toolNames = array_column($tools, 'name');
+        $this->assertContains('inventory_create_product', $toolNames);
+        $this->assertNotContains('inventory_check_stock', $toolNames);
+
+        // Calling inventory_check_stock should be rejected because token lacks mcp:products:read
+        $callResponse = $this->withHeader('Authorization', "Bearer {$createOnly['token']}")
+            ->postJson('/api/v1/mcp/message', [
+                'jsonrpc' => '2.0',
+                'method'  => 'tools/call',
+                'params'  => [
+                    'name'      => 'inventory_check_stock',
+                    'arguments' => ['product_name' => 'Kopi'],
+                ],
+                'id'      => 31,
+            ]);
+
+        $callResponse->assertStatus(400);
+        $this->assertSame(-32001, $callResponse->json('error.code'));
+        $this->assertStringContainsString('lacks ability', $callResponse->json('error.message'));
+    }
+
     public function test_social_schedule_post_and_report_tools(): void
     {
         // 1. Tool social_schedule_post

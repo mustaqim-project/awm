@@ -54,6 +54,12 @@ final class McpAccessToken extends Model
 
     /**
      * Check if token has a specific ability.
+     * Supports:
+     * 1. Full wildcard: '*'
+     * 2. Direct match: e.g. 'mcp:products:create'
+     * 3. Domain wildcard: e.g. 'mcp:products:*'
+     * 4. Domain manage alias: 'mcp:products:manage' grants full CRUD ('create', 'read', 'update', 'delete')
+     * 5. Special legacy aliases: 'mcp:expenses:write' is granted by 'mcp:finance:create' or 'mcp:finance:manage'
      */
     public function hasAbility(string $ability): bool
     {
@@ -67,11 +73,34 @@ final class McpAccessToken extends Model
             return true;
         }
 
-        // Wildcard check, e.g. 'mcp:expenses:*' matches 'mcp:expenses:write'
+        // Wildcard check, e.g. 'mcp:products:*' matches 'mcp:products:create'
         foreach ($abilities as $pattern) {
             if (str_ends_with($pattern, ':*')) {
                 $prefix = substr($pattern, 0, -1);
                 if (str_starts_with($ability, $prefix)) {
+                    return true;
+                }
+            }
+        }
+
+        // Domain manage alias: if token has '{domain}:manage', it grants all CRUD actions on that domain
+        if (preg_match('/^mcp:([a-z0-9_-]+):([a-z0-9_-]+)$/', $ability, $m)) {
+            $domain = $m[1];
+            $action = $m[2];
+
+            // If token has '{domain}:manage', it grants all CRUD actions on that domain
+            if (in_array("mcp:{$domain}:manage", $abilities, true)) {
+                return true;
+            }
+
+            // Special finance aliases
+            if ($domain === 'expenses' && $action === 'write') {
+                if (in_array('mcp:finance:create', $abilities, true) || in_array('mcp:finance:manage', $abilities, true)) {
+                    return true;
+                }
+            }
+            if ($domain === 'finance' && $action === 'create') {
+                if (in_array('mcp:expenses:write', $abilities, true)) {
                     return true;
                 }
             }

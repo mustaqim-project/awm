@@ -88,15 +88,15 @@
                         </div>
                     </div>
                     <div
-                        class="text-xl sm:text-2xl font-black font-mono tracking-tight text-slate-900 dark:text-white truncate">
+                        class="text-lg sm:text-xl md:text-2xl font-black tracking-tight text-slate-900 dark:text-white truncate" title="{{ $tierBadge['label'] }}">
                         {{ $tierBadge['label'] }}
                     </div>
                 </div>
                 <div
-                    class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 text-xs text-slate-500 dark:text-slate-400 flex items-center justify-between">
-                    <span>{{ __('billing.pillar_license') }}</span>
+                    class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 text-xs text-slate-500 dark:text-slate-400 flex items-center justify-between gap-2">
+                    <span class="shrink-0">{{ __('billing.pillar_license') }}</span>
                     <span
-                        class="font-bold text-emerald-600 dark:text-emerald-400">{{ $usage['is_core'] ? __('billing.status_active') : __('billing.status_standard') }}</span>
+                        class="font-bold text-emerald-600 dark:text-emerald-400 text-right truncate">{{ $usage['is_core'] ? __('billing.status_active') : __('billing.status_standard') }}</span>
                 </div>
             </div>
 
@@ -112,7 +112,7 @@
                         </div>
                     </div>
                     <div
-                        class="text-xl sm:text-2xl font-black font-mono tracking-tight text-slate-900 dark:text-white truncate tabular-nums">
+                        class="text-lg sm:text-xl md:text-2xl font-black font-mono tracking-tight text-slate-900 dark:text-white truncate tabular-nums">
                         @if (!empty($usage['ends_at']))
                             {{ $usage['ends_at'] }}
                         @else
@@ -121,10 +121,10 @@
                     </div>
                 </div>
                 <div
-                    class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 text-xs text-slate-500 dark:text-slate-400 flex items-center justify-between">
-                    <span>{{ __('billing.pillar_renewal') }}</span>
+                    class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 text-xs text-slate-500 dark:text-slate-400 flex items-center justify-between gap-2">
+                    <span class="shrink-0">{{ __('billing.pillar_renewal') }}</span>
                     <span
-                        class="font-bold text-slate-700 dark:text-slate-300">{{ $usage['is_core'] ? __('billing.can_renew') : __('billing.available_upgrade') }}</span>
+                        class="font-bold text-slate-700 dark:text-slate-300 text-right truncate" title="{{ $usage['is_core'] ? __('billing.can_renew') : __('billing.available_upgrade') }}">{{ $usage['is_core'] ? __('billing.can_renew') : __('billing.available_upgrade') }}</span>
                 </div>
             </div>
 
@@ -145,16 +145,16 @@
                         </div>
                     </div>
                     <div
-                        class="text-xl sm:text-2xl font-black font-mono tracking-tight text-slate-900 dark:text-white truncate tabular-nums">
+                        class="text-lg sm:text-xl md:text-2xl font-black font-mono tracking-tight text-slate-900 dark:text-white truncate tabular-nums">
                         {{ number_format($posUsed, 0, ',', '.') }} <span class="text-xs font-normal text-slate-500">/
                             {{ $posLimit }}</span>
                     </div>
                 </div>
                 <div
-                    class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 text-xs text-slate-500 dark:text-slate-400 flex items-center justify-between">
-                    <span>{{ __('billing.reset_date_1') }}</span>
+                    class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 text-xs text-slate-500 dark:text-slate-400 flex items-center justify-between gap-2">
+                    <span class="shrink-0">{{ __('billing.reset_date_1') }}</span>
                     <span
-                        class="font-bold text-emerald-600 dark:text-emerald-400">{{ $usage['is_core'] ? __('billing.no_quota') : ($pos['is_reached'] ?? false ? __('billing.limit_reached') : __('billing.available')) }}</span>
+                        class="font-bold text-emerald-600 dark:text-emerald-400 text-right truncate">{{ $usage['is_core'] ? __('billing.no_quota') : ($pos['is_reached'] ?? false ? __('billing.limit_reached') : __('billing.available')) }}</span>
                 </div>
             </div>
 
@@ -171,17 +171,17 @@
                     </div>
                     @if ($hasActiveAi)
                         <div
-                            class="text-xl sm:text-2xl font-black font-mono tracking-tight text-emerald-600 dark:text-emerald-400 truncate">
+                            class="text-lg sm:text-xl md:text-2xl font-black font-mono tracking-tight text-emerald-600 dark:text-emerald-400 truncate">
                             {{ __('billing.ai_byoai_active') }}
                         </div>
                         <div class="text-xs text-slate-500 dark:text-slate-400 font-mono mt-0.5 truncate flex items-center gap-1.5">
                             <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></span>
-                            <span class="font-semibold text-slate-700 dark:text-slate-300">{{ $activeProviderLabel }}</span>
-                            <span class="text-slate-400 dark:text-slate-500">· Unlimited</span>
+                            <span class="font-semibold text-slate-700 dark:text-slate-300 truncate">{{ $activeProviderLabel }}</span>
+                            <span class="text-slate-400 dark:text-slate-500 shrink-0">· Unlimited</span>
                         </div>
                     @else
                         <div
-                            class="text-xl sm:text-2xl font-black tracking-tight text-slate-800 dark:text-slate-200 truncate">
+                            class="text-base sm:text-lg font-bold tracking-tight text-slate-800 dark:text-slate-200 truncate" title="{{ __('billing.ai_byoai_unconfigured') }}">
                             {{ __('billing.ai_byoai_unconfigured') }}
                         </div>
                         <a href="{{ route('cooca-ai.providers') }}"
@@ -192,10 +192,10 @@
                     @endif
                 </div>
                 <div
-                    class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 text-xs text-slate-500 dark:text-slate-400 flex items-center justify-between">
-                    <span>{{ __('billing.cloud_storage') }}</span>
+                    class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 text-xs text-slate-500 dark:text-slate-400 flex items-center justify-between gap-2">
+                    <span class="shrink-0">{{ __('billing.cloud_storage') }}</span>
                     <span
-                        class="font-bold text-slate-700 dark:text-slate-300 font-mono tabular-nums">{{ number_format($usage['storage']['used_mb'] ?? 0, 0) }}
+                        class="font-bold text-slate-700 dark:text-slate-300 font-mono tabular-nums text-right truncate">{{ number_format($usage['storage']['used_mb'] ?? 0, 0) }}
                         MB / {{ $usage['storage']['limit_gb'] ?? 1 }} GB</span>
                 </div>
             </div>
@@ -609,7 +609,7 @@
             </div>
 
             <!-- Matriks Perbandingan Detail Seluruh Fitur & Limitasi Antar Paket (Apple HIG Table) -->
-            <div class="rounded-[22px] bg-white dark:bg-slate-900 border border-black/[0.06] dark:border-white/[0.08] shadow-xs overflow-hidden" x-data="{ expandedMatrix: true }">
+            <div class="rounded-[22px] bg-white dark:bg-slate-900 border border-black/[0.06] dark:border-white/[0.08] shadow-xs overflow-hidden" x-data="{ expandedMatrix: false }">
                 <div class="p-4 sm:p-5 border-b border-slate-100 dark:border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50/50 dark:bg-slate-800/20">
                     <div>
                         <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
@@ -1008,6 +1008,45 @@
                                     <td class="py-2.5 px-3 text-center font-mono font-bold text-purple-600">24/7 Dedicated Manager</td>
                                 </tr>
                             </tbody>
+                            <tfoot class="bg-slate-50/80 dark:bg-slate-950/60 border-t border-slate-200 dark:border-slate-800">
+                                <tr>
+                                    <td class="py-3 px-4 font-bold text-slate-700 dark:text-slate-300">{{ __('billing.choose_business_plan') }}</td>
+                                    <td class="py-3 px-3 text-center">
+                                        @if($tier === 'free')
+                                            <span class="px-2.5 py-1 rounded-[8px] bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-semibold text-[11px] font-mono">{{ __('billing.current_active_plan') }}</span>
+                                        @else
+                                            <span class="text-slate-400 text-xs font-mono">-</span>
+                                        @endif
+                                    </td>
+                                    <td class="py-3 px-3 text-center">
+                                        @if($tier === 'standard')
+                                            <span class="px-2.5 py-1 rounded-[8px] bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 font-semibold text-[11px] font-mono">{{ __('billing.current_active_plan') }}</span>
+                                        @else
+                                            <a :href="'{{ route('billing.checkout', ['tier' => 'standard']) }}&cycle=' + pricingCycle" class="min-h-[44px] px-3.5 py-2 rounded-[10px] text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-500 shadow-2xs inline-flex items-center gap-1">
+                                                <span>{{ __('billing.tier_choose_standard') }}</span>
+                                            </a>
+                                        @endif
+                                    </td>
+                                    <td class="py-3 px-3 text-center bg-indigo-50/40 dark:bg-indigo-950/30">
+                                        @if($tier === 'premium')
+                                            <span class="px-2.5 py-1 rounded-[8px] bg-indigo-100 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-400 font-semibold text-[11px] font-mono">{{ __('billing.current_active_plan') }}</span>
+                                        @else
+                                            <a :href="'{{ route('billing.checkout', ['tier' => 'premium']) }}&cycle=' + pricingCycle" class="min-h-[44px] px-3.5 py-2 rounded-[10px] text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 shadow-2xs inline-flex items-center gap-1">
+                                                <span>{{ __('billing.tier_choose_premium') }}</span>
+                                            </a>
+                                        @endif
+                                    </td>
+                                    <td class="py-3 px-3 text-center bg-purple-50/40 dark:bg-purple-950/30">
+                                        @if($tier === 'prestige')
+                                            <span class="px-2.5 py-1 rounded-[8px] bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-400 font-semibold text-[11px] font-mono">{{ __('billing.current_active_plan') }}</span>
+                                        @else
+                                            <a :href="'{{ route('billing.checkout', ['tier' => 'prestige']) }}&cycle=' + pricingCycle" class="min-h-[44px] px-3.5 py-2 rounded-[10px] text-xs font-bold text-white bg-purple-600 hover:bg-purple-500 shadow-2xs inline-flex items-center gap-1">
+                                                <span>{{ __('billing.tier_choose_prestige') }}</span>
+                                            </a>
+                                        @endif
+                                    </td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -2010,227 +2049,7 @@
             </div>
         </section>
 
-        <!-- 7. SECTION 4: Feature Comparison Matrix (SaaS Enterprise Grade) -->
-        <section aria-labelledby="matrix-heading"
-            class="bg-white dark:bg-slate-900 rounded-[20px] border border-black/[0.06] dark:border-white/[0.08] shadow-xs p-5 sm:p-6 space-y-6">
-            <div
-                class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800 pb-5">
-                <div>
-                    <h3 id="matrix-heading"
-                        class="text-sm sm:text-base font-black text-slate-900 dark:text-white flex items-center gap-2">
-                        <i data-lucide="columns-3" class="w-5 h-5 text-emerald-600 dark:text-emerald-400"
-                            aria-hidden="true"></i>
-                        <span>{{ __('billing.feature_matrix_heading') }}</span>
-                    </h3>
-                    <p class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 mt-1">{{ __('billing.feature_matrix_subtitle') }}</p>
-                </div>
-                @if (!$usage['is_core'])
-                    @if (\App\Support\Context::hasPermission('billing.manage'))
-                        <a href="{{ route('billing.checkout') }}"
-                            class="px-4 py-2.5 rounded-[12px] text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-500 shadow-sm shadow-emerald-600/20 active:scale-[0.98] transition cursor-pointer self-start sm:self-auto flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-emerald-500">
-                            <i data-lucide="zap" class="w-3.5 h-3.5" aria-hidden="true"></i>
-                            <span>{{ __('billing.upgrade_now') }}</span>
-                        </a>
-                    @endif
-                @endif
-            </div>
-
-            <!-- Matrix Table Container with Horizontal Scroll Notice on Mobile -->
-            <div class="relative overflow-x-auto -mx-5 sm:mx-0 px-5 sm:px-0">
-                <table class="w-full text-left text-xs min-w-[780px] border-collapse"
-                    aria-label="{{ __('billing.feature_matrix_heading') }}">
-                    <thead
-                        class="bg-slate-50/80 dark:bg-slate-950/60 text-slate-500 dark:text-slate-400 font-mono uppercase text-[10px] font-bold border-b border-slate-200 dark:border-slate-800 whitespace-nowrap">
-                        <tr>
-                            <th scope="col" class="py-3.5 px-4 w-1/3">{{ __('billing.matrix_col_feature') }}</th>
-                            <th scope="col" class="py-3.5 px-3 text-center">Free (Rp 0)</th>
-                            <th scope="col" class="py-3.5 px-3 text-center">Standard (Rp 29k/bln)</th>
-                            <th scope="col"
-                                class="py-3.5 px-3 text-center bg-indigo-50/80 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 font-bold border-t-2 border-indigo-500">
-                                Premium (Rp 89k/bln)
-                            </th>
-                            <th scope="col"
-                                class="py-3.5 px-3 text-center bg-purple-50/80 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 font-bold border-t-2 border-purple-500">
-                                Prestige (Rp 199k/bln)
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-100 dark:divide-slate-800/60 font-sans">
-                        <!-- Entitas Bisnis -->
-                        <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
-                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">{{ __('billing.matrix_multi_company') }}</td>
-                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">1 {{ __('billing.unit_businesses') }}</td>
-                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">1 {{ __('billing.unit_businesses') }}</td>
-                            <td class="py-3 px-3 text-center font-mono font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50/30 dark:bg-indigo-950/20">3 {{ __('billing.unit_businesses') }}</td>
-                            <td class="py-3 px-3 text-center font-mono font-bold text-purple-700 dark:text-purple-300 bg-purple-50/30 dark:bg-purple-950/20">{{ __('billing.unlimited') }}</td>
-                        </tr>
-                        <!-- Katalog Produk -->
-                        <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
-                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">{{ __('billing.matrix_products_sku') }}</td>
-                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">10 {{ __('billing.unit_items') }}</td>
-                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">100 {{ __('billing.unit_items') }}</td>
-                            <td class="py-3 px-3 text-center font-mono font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50/30 dark:bg-indigo-950/20">{{ __('billing.unlimited') }}</td>
-                            <td class="py-3 px-3 text-center font-mono font-bold text-purple-700 dark:text-purple-300 bg-purple-50/30 dark:bg-purple-950/20">{{ __('billing.unlimited') }}</td>
-                        </tr>
-                        <!-- Resep BOM -->
-                        <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
-                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">{{ __('billing.matrix_recipe_bom') }}</td>
-                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">3 {{ __('billing.unit_recipes') }}</td>
-                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">20 {{ __('billing.unit_recipes') }}</td>
-                            <td class="py-3 px-3 text-center font-mono font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50/30 dark:bg-indigo-950/20">{{ __('billing.unlimited') }}</td>
-                            <td class="py-3 px-3 text-center font-mono font-bold text-purple-700 dark:text-purple-300 bg-purple-50/30 dark:bg-purple-950/20">{{ __('billing.unlimited') }}</td>
-                        </tr>
-                        <!-- Transaksi Kasir POS -->
-                        <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
-                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">{{ __('billing.matrix_pos_monthly') }}</td>
-                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">30 / bln</td>
-                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">1.000 / bln</td>
-                            <td class="py-3 px-3 text-center font-mono font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50/30 dark:bg-indigo-950/20">{{ __('billing.unlimited') }}</td>
-                            <td class="py-3 px-3 text-center font-mono font-bold text-purple-700 dark:text-purple-300 bg-purple-50/30 dark:bg-purple-950/20">{{ __('billing.unlimited') }}</td>
-                        </tr>
-                        <!-- Outlet & Gudang -->
-                        <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
-                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">{{ __('billing.matrix_outlets_warehouses') }}</td>
-                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">{{ __('billing.one_store_one_warehouse') }}</td>
-                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">{{ __('billing.locations_count', ['count' => 2]) }}</td>
-                            <td class="py-3 px-3 text-center font-mono font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50/30 dark:bg-indigo-950/20">{{ __('billing.locations_count', ['count' => 5]) }}</td>
-                            <td class="py-3 px-3 text-center font-mono font-bold text-purple-700 dark:text-purple-300 bg-purple-50/30 dark:bg-purple-950/20">{{ __('billing.unlimited') }}</td>
-                        </tr>
-                        <!-- Karyawan / Staf -->
-                        <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
-                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">{{ __('billing.matrix_registered_staff') }}</td>
-                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">{{ __('billing.solo_owner') }}</td>
-                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">3 {{ __('billing.unit_staff') }}</td>
-                            <td class="py-3 px-3 text-center font-mono font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50/30 dark:bg-indigo-950/20">10 {{ __('billing.unit_staff') }}</td>
-                            <td class="py-3 px-3 text-center font-mono font-bold text-purple-700 dark:text-purple-300 bg-purple-50/30 dark:bg-purple-950/20">{{ __('billing.unlimited') }}</td>
-                        </tr>
-                        @if($business->hasDineInFeature())
-                        <!-- Meja Dine-in -->
-                        <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
-                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">{{ __('billing.matrix_dinein_tables') }}</td>
-                            <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600 font-mono">-</td>
-                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">5 {{ __('billing.unit_tables') }}</td>
-                            <td class="py-3 px-3 text-center font-mono font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50/30 dark:bg-indigo-950/20">{{ __('billing.unlimited') }}</td>
-                            <td class="py-3 px-3 text-center font-mono font-bold text-purple-700 dark:text-purple-300 bg-purple-50/30 dark:bg-purple-950/20">{{ __('billing.unlimited') }}</td>
-                        </tr>
-                        @endif
-                        <!-- Transfer Stok Multi-Gudang -->
-                        <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
-                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">{{ __('billing.matrix_stock_transfer') }}</td>
-                            <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600"><i data-lucide="minus" class="w-4 h-4 mx-auto text-slate-400"></i></td>
-                            <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600"><i data-lucide="minus" class="w-4 h-4 mx-auto text-slate-400"></i></td>
-                            <td class="py-3 px-3 text-center text-indigo-600 dark:text-indigo-400 bg-indigo-50/30 dark:bg-indigo-950/20"><i data-lucide="check" class="w-4 h-4 mx-auto font-black"></i></td>
-                            <td class="py-3 px-3 text-center text-purple-600 dark:text-purple-400 bg-purple-50/30 dark:bg-purple-950/20"><i data-lucide="check" class="w-4 h-4 mx-auto font-black"></i></td>
-                        </tr>
-                        <!-- Kitchen Display System (KDS) -->
-                        <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
-                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">{{ __('billing.matrix_kds') }}</td>
-                            <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600"><i data-lucide="minus" class="w-4 h-4 mx-auto text-slate-400"></i></td>
-                            <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600"><i data-lucide="minus" class="w-4 h-4 mx-auto text-slate-400"></i></td>
-                            <td class="py-3 px-3 text-center text-indigo-600 dark:text-indigo-400 bg-indigo-50/30 dark:bg-indigo-950/20"><i data-lucide="check" class="w-4 h-4 mx-auto font-black"></i></td>
-                            <td class="py-3 px-3 text-center text-purple-600 dark:text-purple-400 bg-purple-50/30 dark:bg-purple-950/20"><i data-lucide="check" class="w-4 h-4 mx-auto font-black"></i></td>
-                        </tr>
-                        <!-- Multi-Pricing Produk Cabang -->
-                        <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
-                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">{{ __('billing.matrix_multipricing') }}</td>
-                            <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600"><i data-lucide="minus" class="w-4 h-4 mx-auto text-slate-400"></i></td>
-                            <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600"><i data-lucide="minus" class="w-4 h-4 mx-auto text-slate-400"></i></td>
-                            <td class="py-3 px-3 text-center text-indigo-600 dark:text-indigo-400 bg-indigo-50/30 dark:bg-indigo-950/20"><i data-lucide="check" class="w-4 h-4 mx-auto font-black"></i></td>
-                            <td class="py-3 px-3 text-center text-purple-600 dark:text-purple-400 bg-purple-50/30 dark:bg-purple-950/20"><i data-lucide="check" class="w-4 h-4 mx-auto font-black"></i></td>
-                        </tr>
-                        <!-- HRM: Komisi & Kasbon -->
-                        <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
-                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">{{ __('billing.matrix_hrm_commission') }}</td>
-                            <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600"><i data-lucide="minus" class="w-4 h-4 mx-auto text-slate-400"></i></td>
-                            <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600"><i data-lucide="minus" class="w-4 h-4 mx-auto text-slate-400"></i></td>
-                            <td class="py-3 px-3 text-center text-indigo-600 dark:text-indigo-400 bg-indigo-50/30 dark:bg-indigo-950/20"><i data-lucide="check" class="w-4 h-4 mx-auto font-black"></i></td>
-                            <td class="py-3 px-3 text-center text-purple-600 dark:text-purple-400 bg-purple-50/30 dark:bg-purple-950/20"><i data-lucide="check" class="w-4 h-4 mx-auto font-black"></i></td>
-                        </tr>
-                        <!-- HRM: Pekerja Harian & BPJS/THR -->
-                        <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
-                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">{{ __('billing.matrix_hrm_bpjs') }}</td>
-                            <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600"><i data-lucide="minus" class="w-4 h-4 mx-auto text-slate-400"></i></td>
-                            <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600"><i data-lucide="minus" class="w-4 h-4 mx-auto text-slate-400"></i></td>
-                            <td class="py-3 px-3 text-center text-indigo-600 dark:text-indigo-400 bg-indigo-50/30 dark:bg-indigo-950/20"><i data-lucide="check" class="w-4 h-4 mx-auto font-black"></i></td>
-                            <td class="py-3 px-3 text-center text-purple-600 dark:text-purple-400 bg-purple-50/30 dark:bg-purple-950/20"><i data-lucide="check" class="w-4 h-4 mx-auto font-black"></i></td>
-                        </tr>
-                        <!-- Tax PPh 21 TER -->
-                        <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
-                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">{{ __('billing.matrix_tax_pph21') }}</td>
-                            <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600"><i data-lucide="minus" class="w-4 h-4 mx-auto text-slate-400"></i></td>
-                            <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600"><i data-lucide="minus" class="w-4 h-4 mx-auto text-slate-400"></i></td>
-                            <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600 bg-indigo-50/30 dark:bg-indigo-950/20"><i data-lucide="minus" class="w-4 h-4 mx-auto text-slate-400"></i></td>
-                            <td class="py-3 px-3 text-center text-purple-600 dark:text-purple-400 bg-purple-50/30 dark:bg-purple-950/20"><i data-lucide="check" class="w-4 h-4 mx-auto font-black"></i></td>
-                        </tr>
-                        <!-- Auto Slip Gaji WA -->
-                        <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
-                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">{{ __('billing.matrix_auto_payslip_wa') }}</td>
-                            <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600"><i data-lucide="minus" class="w-4 h-4 mx-auto text-slate-400"></i></td>
-                            <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600"><i data-lucide="minus" class="w-4 h-4 mx-auto text-slate-400"></i></td>
-                            <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600 bg-indigo-50/30 dark:bg-indigo-950/20"><i data-lucide="minus" class="w-4 h-4 mx-auto text-slate-400"></i></td>
-                            <td class="py-3 px-3 text-center text-purple-600 dark:text-purple-400 bg-purple-50/30 dark:bg-purple-950/20"><i data-lucide="check" class="w-4 h-4 mx-auto font-black"></i></td>
-                        </tr>
-                        <!-- Ekspor Impor Excel -->
-                        <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
-                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">{{ __('billing.matrix_excel_export_import') }}</td>
-                            <td class="py-3 px-3 text-center text-slate-400 dark:text-slate-600"><i data-lucide="minus" class="w-4 h-4 mx-auto text-slate-400"></i></td>
-                            <td class="py-3 px-3 text-center text-emerald-600 dark:text-emerald-400"><i data-lucide="check" class="w-4 h-4 mx-auto font-black"></i></td>
-                            <td class="py-3 px-3 text-center text-indigo-600 dark:text-indigo-400 bg-indigo-50/30 dark:bg-indigo-950/20"><i data-lucide="check" class="w-4 h-4 mx-auto font-black"></i></td>
-                            <td class="py-3 px-3 text-center text-purple-600 dark:text-purple-400 bg-purple-50/30 dark:bg-purple-950/20"><i data-lucide="check" class="w-4 h-4 mx-auto font-black"></i></td>
-                        </tr>
-                        <!-- WhatsApp Kuota -->
-                        <tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors">
-                            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">{{ __('billing.matrix_wa_gateway_monthly') }}</td>
-                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">10 {{ __('billing.quota_unit_messages') }}</td>
-                            <td class="py-3 px-3 text-center text-slate-600 dark:text-slate-400 font-mono">50 {{ __('billing.quota_unit_messages') }}</td>
-                            <td class="py-3 px-3 text-center font-mono font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50/30 dark:bg-indigo-950/20">200 {{ __('billing.quota_unit_messages') }}</td>
-                            <td class="py-3 px-3 text-center font-mono font-bold text-purple-700 dark:text-purple-300 bg-purple-50/30 dark:bg-purple-950/20">1.000 {{ __('billing.quota_unit_messages') }}</td>
-                        </tr>
-                    </tbody>
-                    <tfoot class="bg-slate-50/70 dark:bg-slate-950/60 border-t border-slate-200 dark:border-slate-800">
-                        <tr>
-                            <td class="py-3 px-4 font-bold text-slate-700 dark:text-slate-300">{{ __('billing.choose_business_plan') }}</td>
-                            <td class="py-3 px-3 text-center">
-                                @if($tier === 'free')
-                                    <span class="px-2.5 py-1 rounded-[8px] bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-semibold text-[11px] font-mono">{{ __('billing.current_active_plan') }}</span>
-                                @else
-                                    <span class="text-slate-400 text-xs font-mono">-</span>
-                                @endif
-                            </td>
-                            <td class="py-3 px-3 text-center">
-                                @if($tier === 'standard')
-                                    <span class="px-2.5 py-1 rounded-[8px] bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 font-semibold text-[11px] font-mono">{{ __('billing.current_active_plan') }}</span>
-                                @else
-                                    <a :href="'{{ route('billing.checkout', ['tier' => 'standard']) }}&cycle=' + pricingCycle" class="min-h-[44px] px-3.5 py-2 rounded-[10px] text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-500 shadow-2xs inline-flex items-center gap-1">
-                                        <span>{{ __('billing.tier_choose_standard') }}</span>
-                                    </a>
-                                @endif
-                            </td>
-                            <td class="py-3 px-3 text-center bg-indigo-50/40 dark:bg-indigo-950/30">
-                                @if($tier === 'premium')
-                                    <span class="px-2.5 py-1 rounded-[8px] bg-indigo-100 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-400 font-semibold text-[11px] font-mono">{{ __('billing.current_active_plan') }}</span>
-                                @else
-                                    <a :href="'{{ route('billing.checkout', ['tier' => 'premium']) }}&cycle=' + pricingCycle" class="min-h-[44px] px-3.5 py-2 rounded-[10px] text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 shadow-2xs inline-flex items-center gap-1">
-                                        <span>{{ __('billing.tier_choose_premium') }}</span>
-                                    </a>
-                                @endif
-                            </td>
-                            <td class="py-3 px-3 text-center bg-purple-50/40 dark:bg-purple-950/30">
-                                @if($tier === 'prestige')
-                                    <span class="px-2.5 py-1 rounded-[8px] bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-400 font-semibold text-[11px] font-mono">{{ __('billing.current_active_plan') }}</span>
-                                @else
-                                    <a :href="'{{ route('billing.checkout', ['tier' => 'prestige']) }}&cycle=' + pricingCycle" class="min-h-[44px] px-3.5 py-2 rounded-[10px] text-xs font-bold text-white bg-purple-600 hover:bg-purple-500 shadow-2xs inline-flex items-center gap-1">
-                                        <span>{{ __('billing.tier_choose_prestige') }}</span>
-                                    </a>
-                                @endif
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-        </section>
-
-        <!-- 8. SECTION 5: Trust, Continuity & Privacy Commitment -->
+        <!-- 7. SECTION 4: Trust, Continuity & Privacy Commitment -->
         <section aria-labelledby="commitment-heading"
             class="rounded-[20px] p-5 sm:p-6 border border-emerald-500/20 dark:border-emerald-500/30 bg-emerald-50/70 dark:bg-emerald-950/20 flex flex-col sm:flex-row items-start sm:items-center gap-4 backdrop-blur-md">
             <div class="p-3 rounded-[16px] bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 shrink-0"

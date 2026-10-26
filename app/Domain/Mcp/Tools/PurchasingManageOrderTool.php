@@ -35,7 +35,7 @@ final class PurchasingManageOrderTool implements McpToolInterface
 
     public function getRequiredAbility(): string
     {
-        return 'mcp:purchasing:manage';
+        return 'mcp:purchasing:create';
     }
 
     public function getInputSchema(): array

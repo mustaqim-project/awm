@@ -30,7 +30,7 @@ final class InventoryCreateProductTool implements McpToolInterface
 
     public function getRequiredAbility(): string
     {
-        return 'mcp:products:manage';
+        return 'mcp:products:create';
     }
 
     public function getInputSchema(): array

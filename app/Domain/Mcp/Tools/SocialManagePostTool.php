@@ -29,7 +29,7 @@ final class SocialManagePostTool implements McpToolInterface
 
     public function getRequiredAbility(): string
     {
-        return 'mcp:social:manage';
+        return 'mcp:social:update';
     }
 
     public function getInputSchema(): array

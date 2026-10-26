@@ -33,7 +33,7 @@ final class FinanceManageInvoiceTool implements McpToolInterface
 
     public function getRequiredAbility(): string
     {
-        return 'mcp:finance:manage';
+        return 'mcp:finance:update';
     }
 
     public function getInputSchema(): array

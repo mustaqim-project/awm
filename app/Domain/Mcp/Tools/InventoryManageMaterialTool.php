@@ -31,7 +31,7 @@ final class InventoryManageMaterialTool implements McpToolInterface
 
     public function getRequiredAbility(): string
     {
-        return 'mcp:inventory:manage';
+        return 'mcp:inventory:create';
     }
 
     public function getInputSchema(): array
