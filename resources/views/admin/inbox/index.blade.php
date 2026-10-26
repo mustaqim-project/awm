@@ -102,7 +102,7 @@
         <div class="flex-1 flex flex-col md:flex-row min-h-0 overflow-hidden">
 
             {{-- LEFT COLUMN: SEARCH, QUICK FILTERS & THREAD LIST --}}
-            <div class="w-full md:w-[380px] lg:w-[410px] shrink-0 border-r border-[#E5E7EB] dark:border-white/10 flex flex-col bg-white dark:bg-[#1C1C1E] min-h-0">
+            <div class="w-full md:w-[290px] lg:w-[310px] xl:w-[330px] shrink-0 border-r border-[#E5E7EB] dark:border-white/10 flex flex-col bg-white dark:bg-[#1C1C1E] min-h-0">
 
                 {{-- SEARCH AND KELOLA BUTTON ROW --}}
                 <div class="p-3 border-b border-[#E5E7EB] dark:border-white/10 space-y-2.5 shrink-0">
@@ -636,6 +636,12 @@
                                     <button type="button" title="Tandai Selesai" @click="updateThreadStatus('resolved')" class="w-8 h-8 rounded-[8px] border border-[#E5E7EB] dark:border-white/10 text-[#4B5563] dark:text-[#9CA3AF] hover:bg-gray-50 dark:hover:bg-white/5 flex items-center justify-center transition-colors">
                                         <i data-lucide="check" class="w-4 h-4"></i>
                                     </button>
+                                    <button type="button" @click="showRightSidebar = !showRightSidebar"
+                                        :class="showRightSidebar ? 'bg-[#1877F2]/10 text-[#1877F2] border-[#1877F2]/30 dark:bg-[#1877F2]/20 dark:text-[#64D2FF]' : 'text-slate-500 hover:text-slate-800 dark:hover:text-white border-[#E5E7EB] dark:border-white/10 bg-white dark:bg-[#2C2C2E]'"
+                                        class="w-8 h-8 rounded-[8px] border flex items-center justify-center transition-colors shrink-0 cursor-pointer"
+                                        title="Tampilkan / Sembunyikan Panel Post Inspector">
+                                        <i data-lucide="panel-right" class="w-3.5 h-3.5"></i>
+                                    </button>
                                 </div>
                             </div>
 
@@ -847,26 +853,27 @@
                     <template x-if="!isCommentChannel(selectedThread.channel)">
                         <div class="h-full flex flex-col min-h-0 overflow-hidden">
                             {{-- DM DETAIL HEADER --}}
-                            <div class="px-4 sm:px-5 py-3 border-b border-[#E5E7EB] dark:border-white/10 flex items-center justify-between gap-3 bg-white dark:bg-[#1C1C1E] shrink-0 min-w-0">
+                            <div class="px-4 sm:px-5 py-3 border-b border-[#E5E7EB] dark:border-white/10 flex items-center justify-between gap-2.5 bg-white dark:bg-[#1C1C1E] shrink-0 min-w-0">
                                 <div class="flex items-center gap-3 min-w-0 flex-1">
-                                    <div class="w-10 h-10 rounded-full bg-[#F1F5F9] dark:bg-[#27272A] border border-[#E2E8F0] dark:border-white/10 flex items-center justify-center font-bold text-[14px] text-[#334155] dark:text-[#F1F5F9] shrink-0">
+                                    <div class="w-10 h-10 rounded-full bg-[#F1F5F9] dark:bg-[#27272A] border border-[#E2E8F0] dark:border-white/10 flex items-center justify-center font-bold text-[14px] text-[#334155] dark:text-[#F1F5F9] shrink-0 shadow-2xs">
                                         <span x-text="getInitials(selectedThread.name)"></span>
                                     </div>
                                     <div class="min-w-0 flex-1">
-                                        <div class="flex items-center gap-2 min-w-0">
-                                            <h2 class="text-[14.5px] font-bold text-[#111827] dark:text-white truncate" x-text="selectedThread.name"></h2>
-                                            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold text-white whitespace-nowrap shrink-0 shadow-2xs"
+                                        {{-- Row 1: Customer Name (Prominent & Dedicated 100% Width) --}}
+                                        <div class="min-w-0">
+                                            <h2 class="text-[15px] font-bold text-[#111827] dark:text-white truncate" :title="selectedThread.name" x-text="selectedThread.name"></h2>
+                                        </div>
+
+                                        {{-- Row 2: Channel Badge & Contact Subtitle --}}
+                                        <div class="text-[11.5px] text-[#6B7280] dark:text-[#9CA3AF] truncate mt-0.5 flex items-center gap-1.5 min-w-0">
+                                            <span class="inline-flex items-center gap-1 px-2 py-0.2 rounded-full text-[10px] font-semibold text-white whitespace-nowrap shrink-0 shadow-2xs"
                                                 :class="getChannelBadgeClass(selectedThread.channel)">
                                                 <i :data-lucide="getChannelIcon(selectedThread.channel)" class="w-2.5 h-2.5"></i>
                                                 <span x-text="formatChannelName(selectedThread.channel)"></span>
                                             </span>
-                                        </div>
-                                        <div class="text-[11.5px] text-[#6B7280] dark:text-[#9CA3AF] truncate mt-0.5 flex items-center gap-1.5 min-w-0">
+                                            <span class="text-slate-300 dark:text-white/20 shrink-0">·</span>
                                             <template x-if="selectedThread.email">
                                                 <span class="truncate text-slate-700 dark:text-slate-300" x-text="selectedThread.email"></span>
-                                            </template>
-                                            <template x-if="selectedThread.email && selectedThread.phone">
-                                                <span class="text-slate-300 dark:text-white/20 shrink-0">·</span>
                                             </template>
                                             <template x-if="selectedThread.phone">
                                                 <a :href="'https://wa.me/' + selectedThread.phone.replace(/[^0-9]/g, '')" target="_blank"
@@ -876,7 +883,7 @@
                                                 </a>
                                             </template>
                                             <template x-if="!selectedThread.email && !selectedThread.phone && selectedThread.date">
-                                                <span class="truncate" x-text="'Aktif: ' + selectedThread.date"></span>
+                                                <span class="truncate" x-text="'Aktif ' + selectedThread.date"></span>
                                             </template>
                                             <template x-if="(selectedThread.email || selectedThread.phone) && selectedThread.date">
                                                 <span class="text-slate-400 dark:text-slate-500 shrink-0 hidden md:inline" x-text="'· ' + selectedThread.date"></span>
@@ -897,26 +904,24 @@
                                 </div>
 
                                 {{-- ACTIONS BAR --}}
-                                <div class="flex items-center gap-2 shrink-0">
+                                <div class="flex items-center gap-1.5 shrink-0">
                                     {{-- Takeover Toggle Button (Direct Chat) --}}
                                     <button type="button" @click="toggleThreadTakeover(selectedThread)"
                                         :class="selectedThread.is_human_takeover ? 'bg-amber-50 hover:bg-amber-100 text-amber-800 border-amber-300 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-700/50' : 'bg-purple-50 hover:bg-purple-100 text-purple-800 border-purple-300 dark:bg-purple-950/40 dark:text-purple-300 dark:border-purple-700/50'"
-                                        class="h-8 px-2.5 rounded-[8px] border text-[11.5px] font-semibold flex items-center gap-1.5 transition-all shadow-xs cursor-pointer whitespace-nowrap shrink-0"
+                                        class="h-8 px-2 sm:px-2.5 rounded-[8px] border text-[11.5px] font-semibold flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer whitespace-nowrap shrink-0"
                                         :title="selectedThread.is_human_takeover ? 'Percakapan di-takeover human agent. Klik untuk melepas takeover dan kembalikan ke AI.' : 'AI Auto-Pilot aktif. Klik untuk takeover percakapan oleh human agent.'">
                                         <template x-if="selectedThread.is_human_takeover">
-                                            <span class="flex items-center gap-1.5">
+                                            <span class="flex items-center gap-1">
                                                 <i data-lucide="user-check" class="w-3.5 h-3.5 text-amber-600"></i>
-                                                <span class="hidden sm:inline" x-text="selectedThread.takeover_by_name ? 'Takeover: ' + selectedThread.takeover_by_name : 'Human Takeover'"></span>
-                                                <span class="sm:hidden">Human</span>
-                                                <span class="text-[9.5px] bg-amber-200/80 dark:bg-amber-900/60 px-1 py-0.2 rounded font-bold">Lepas</span>
+                                                <span class="hidden sm:inline">Human</span>
+                                                <span class="text-[9px] bg-amber-200/80 dark:bg-amber-900/60 px-1 py-0.2 rounded font-bold">Lepas</span>
                                             </span>
                                         </template>
                                         <template x-if="!selectedThread.is_human_takeover">
-                                            <span class="flex items-center gap-1.5">
+                                            <span class="flex items-center gap-1">
                                                 <i data-lucide="bot" class="w-3.5 h-3.5 text-purple-600"></i>
-                                                <span class="hidden sm:inline">AI Auto-Pilot</span>
-                                                <span class="sm:hidden">AI</span>
-                                                <span class="text-[9.5px] bg-purple-200/80 dark:bg-purple-900/60 px-1 py-0.2 rounded font-bold">Takeover</span>
+                                                <span class="hidden sm:inline">AI Auto</span>
+                                                <span class="text-[9px] bg-purple-200/80 dark:bg-purple-900/60 px-1 py-0.2 rounded font-bold">Takeover</span>
                                             </span>
                                         </template>
                                     </button>
@@ -974,10 +979,11 @@
                                     {{-- Status Switcher Dropdown --}}
                                     <div class="relative shrink-0" x-data="{ openStatus: false }">
                                         <button type="button" @click="openStatus = !openStatus"
-                                            class="h-8 px-2.5 rounded-[8px] border border-[#D1D5DB] dark:border-white/15 bg-white dark:bg-[#2C2C2E] text-[12px] font-medium text-[#374151] dark:text-white hover:bg-[#F9FAFB] flex items-center gap-1.5 transition-colors whitespace-nowrap shrink-0">
-                                            <span class="w-2 h-2 rounded-full" :class="selectedThread.is_unread ? 'bg-[#1877F2]' : 'bg-[#34C759]'"></span>
-                                            <span x-text="formatStatusLabel(selectedThread.status)"></span>
-                                            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-[#9CA3AF]"></i>
+                                            title="Ubah Status Percakapan"
+                                            class="h-8 px-2 sm:px-2.5 rounded-[8px] border border-[#D1D5DB] dark:border-white/15 bg-white dark:bg-[#2C2C2E] text-[12px] font-medium text-[#374151] dark:text-white hover:bg-[#F9FAFB] flex items-center gap-1.5 transition-colors whitespace-nowrap shrink-0">
+                                            <span class="w-2 h-2 rounded-full shrink-0" :class="selectedThread.is_unread ? 'bg-[#1877F2]' : 'bg-[#34C759]'"></span>
+                                            <span class="hidden md:inline" x-text="formatStatusLabel(selectedThread.status)"></span>
+                                            <i data-lucide="chevron-down" class="w-3 h-3 text-[#9CA3AF]"></i>
                                         </button>
 
                                         <div x-show="openStatus" @click.outside="openStatus = false" x-cloak
@@ -1009,6 +1015,14 @@
                                             </button>
                                         </div>
                                     </div>
+
+                                    {{-- Info Panel Toggle Button --}}
+                                    <button type="button" @click="showRightSidebar = !showRightSidebar"
+                                        :class="showRightSidebar ? 'bg-[#1877F2]/10 text-[#1877F2] border-[#1877F2]/30 dark:bg-[#1877F2]/20 dark:text-[#64D2FF]' : 'text-slate-500 hover:text-slate-800 dark:hover:text-white border-[#D1D5DB] dark:border-white/15 bg-white dark:bg-[#2C2C2E]'"
+                                        class="h-8 w-8 rounded-[8px] border flex items-center justify-center transition-colors shrink-0 cursor-pointer"
+                                        title="Tampilkan / Sembunyikan Panel Profil Pelanggan">
+                                        <i data-lucide="panel-right" class="w-3.5 h-3.5"></i>
+                                    </button>
                                 </div>
                             </div>
 
@@ -1161,11 +1175,14 @@
 
             {{-- 3. RIGHT COLUMN: POST INSPECTOR (FOR COMMENTS) & CONTACT PROFILE (FOR DIRECT CHAT) --}}
             {{-- 3A. POST INSPECTOR FOR COMMENT THREADS --}}
-            <div x-show="selectedThread && isCommentChannel(selectedThread.channel)" x-cloak
-                 class="hidden lg:flex w-[320px] xl:w-[350px] shrink-0 border-l border-[#E5E7EB] dark:border-white/10 bg-white dark:bg-[#1C1C1E] flex-col h-full overflow-y-auto">
+            <div x-show="selectedThread && isCommentChannel(selectedThread.channel) && showRightSidebar" x-cloak
+                 class="hidden lg:flex w-[260px] xl:w-[280px] shrink-0 border-l border-[#E5E7EB] dark:border-white/10 bg-white dark:bg-[#1C1C1E] flex-col h-full overflow-y-auto">
                 
                 {{-- Post Media Preview Banner (Soft flat surface, no gradient) --}}
-                <div class="p-4 border-b border-[#E5E7EB] dark:border-white/10 bg-slate-50/50 dark:bg-black/10">
+                <div class="p-4 border-b border-[#E5E7EB] dark:border-white/10 bg-slate-50/50 dark:bg-black/10 relative">
+                    <button type="button" @click="showRightSidebar = false" class="absolute top-2.5 right-2.5 z-10 w-7 h-7 rounded-full bg-white/90 dark:bg-black/60 border border-slate-200 dark:border-white/10 text-slate-500 hover:text-slate-800 dark:hover:text-white flex items-center justify-center transition-colors shadow-2xs" title="Tutup Panel">
+                        <i data-lucide="x" class="w-3.5 h-3.5"></i>
+                    </button>
                     <div class="rounded-[12px] overflow-hidden border border-[#E5E7EB] dark:border-white/10 shadow-xs aspect-video bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
                         <template x-if="selectedThread?.post?.media_url">
                             <img :src="selectedThread?.post?.media_url" 
@@ -1261,11 +1278,14 @@
             </div>
 
             {{-- 3B. CONTACT & THREAD PROFILE FOR DIRECT CHAT (WHATSAPP, MESSENGER, INSTAGRAM DM) --}}
-            <div x-show="selectedThread && !isCommentChannel(selectedThread.channel)" x-cloak
-                 class="hidden lg:flex w-[320px] xl:w-[350px] shrink-0 border-l border-[#E5E7EB] dark:border-white/10 bg-white dark:bg-[#1C1C1E] flex-col h-full overflow-y-auto">
+            <div x-show="selectedThread && !isCommentChannel(selectedThread.channel) && showRightSidebar" x-cloak
+                 class="hidden lg:flex w-[260px] xl:w-[280px] shrink-0 border-l border-[#E5E7EB] dark:border-white/10 bg-white dark:bg-[#1C1C1E] flex-col h-full overflow-y-auto">
                 
                 {{-- Customer Profile Header Banner --}}
-                <div class="p-5 border-b border-[#E5E7EB] dark:border-white/10 bg-slate-50/50 dark:bg-black/10 text-center flex flex-col items-center">
+                <div class="p-4 border-b border-[#E5E7EB] dark:border-white/10 bg-slate-50/50 dark:bg-black/10 text-center flex flex-col items-center relative">
+                    <button type="button" @click="showRightSidebar = false" class="absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 dark:bg-black/60 border border-slate-200 dark:border-white/10 text-slate-500 hover:text-slate-800 dark:hover:text-white flex items-center justify-center transition-colors shadow-2xs" title="Tutup Panel">
+                        <i data-lucide="x" class="w-3.5 h-3.5"></i>
+                    </button>
                     <div class="w-16 h-16 rounded-full bg-[#F1F5F9] dark:bg-[#27272A] border-2 border-[#E2E8F0] dark:border-white/10 flex items-center justify-center font-bold text-[20px] text-[#334155] dark:text-[#F1F5F9] mb-2.5 shadow-xs">
                         <span x-text="getInitials(selectedThread.name)"></span>
                     </div>
@@ -2107,6 +2127,7 @@ function adminInboxHub() {
         customTagVal: '',
         customDmTagVal: '',
         openFilterMore: false,
+        showRightSidebar: true,
         searchKeyword: @json($search ?? ''),
         replyText: '',
         replyTargetComment: null,
@@ -2145,6 +2166,17 @@ function adminInboxHub() {
                 if (window.lucide) {
                     window.lucide.createIcons();
                 }
+            });
+
+            this.$watch('showRightSidebar', () => {
+                this.$nextTick(() => {
+                    if (window.lucide) window.lucide.createIcons();
+                });
+            });
+            this.$watch('selectedThread', () => {
+                this.$nextTick(() => {
+                    if (window.lucide) window.lucide.createIcons();
+                });
             });
 
             // Start background polling for live incoming messages every 3.5 seconds
