@@ -1118,6 +1118,12 @@
                                         class="px-2.5 py-1 rounded-full text-[11px] bg-[#F3F4F6] dark:bg-white/5 hover:bg-[#E5E7EB] text-[#374151] dark:text-[#D1D5DB] transition-colors whitespace-nowrap">
                                         Respons Masukan
                                     </button>
+                                    <button type="button" @click="insertClosingTemplate()"
+                                        title="Sisipkan pesan penutup ramah sebelum mengakhiri sesi percakapan"
+                                        class="px-2.5 py-1 rounded-full text-[11px] bg-emerald-50 dark:bg-emerald-950/40 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/40 transition-colors whitespace-nowrap flex items-center gap-1 font-medium shadow-xs">
+                                        <i data-lucide="check-check" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>
+                                        <span>Akhiri Sesi (Pesan Penutup)</span>
+                                    </button>
                                 </div>
 
                                 {{-- Textarea & Action Bar with Image Attachment --}}
@@ -1130,7 +1136,7 @@
                                     </button>
 
                                     <div class="flex-1 min-w-0 relative">
-                                        <textarea x-model="replyText" @keydown.enter.prevent="if(!$event.shiftKey) sendReply()"
+                                        <textarea x-model="replyText" @input="handleTypingPing()" @keydown.enter.prevent="if(!$event.shiftKey) sendReply()"
                                             rows="2"
                                             :placeholder="attachedImageUrl ? 'Tulis pesan/keterangan gambar (opsional)... (Enter untuk kirim)' : 'Tulis balasan resmi sebagai Cooca Official... (Tekan Enter untuk kirim, Shift+Enter untuk baris baru)'"
                                             class="w-full p-2.5 sm:p-3 rounded-[12px] bg-[#F9FAFB] dark:bg-[#2C2C2E] border border-[#D1D5DB] dark:border-white/15 text-[13px] text-[#111827] dark:text-white placeholder-[#9CA3AF] focus:outline-hidden focus:border-[#1877F2] resize-none transition-colors"></textarea>
@@ -2401,6 +2407,12 @@ function adminInboxHub() {
             this.replyText = text;
         },
 
+        insertClosingTemplate() {
+            const name = (this.selectedThread?.name || this.selectedThread?.contact_name || this.selectedThread?.from_name || '').trim();
+            const greeting = name ? `Baik Kak ${name}` : 'Baik Kak';
+            this.insertTemplate(`${greeting}, jika sudah tidak ada hal lain yang ingin ditanyakan, saya izin mengakhiri sesi chat ini terlebih dahulu ya. Terima kasih banyak telah berkonsultasi dengan COOCA. Semoga usaha Kakak semakin sukses dan lancar! Jika sewaktu-waktu membutuhkan bantuan seputar operasional atau fitur COOCA, silakan hubungi kami kembali. 🙏😊`);
+        },
+
         scrollToBottom() {
             const el = document.getElementById('messagesContainer');
             if (el) {
@@ -3361,27 +3373,55 @@ function adminInboxHub() {
             this.aiConfig.system_info = `[PROFIL COOCA INDONESIA & BUSINESS OPERATING SYSTEM]
 COOCA adalah platform SaaS Business Operating System (BOS) All-in-One yang dirancang khusus untuk memajukan UMKM Indonesia. COOCA menghubungkan seluruh operasional bisnis mulai dari kasir POS, manajemen inventori multi-gudang, kalkulasi HPP resep otomatis (BOM), pembukuan keuangan real-time, channel penjualan omnichannel (WhatsApp, Toko Online Digital, Shopee, Tokopedia, TikTok Shop), HRM & absensi GPS, hingga asisten AI bisnis dalam satu sistem terpadu tanpa software terpisah dan dengan sinkronisasi 0 detik delay.
 
-[KATALOG RESMI PAKET & HARGA BERLANGGANAN]
-(Sumber Data Tunggal: CMS Billing Packages Platform COOCA)
-- Uji Coba Gratis (Free Trial): 14 Hari Akses Penuh ke semua fitur tanpa perlu kartu kredit dan tanpa komitmen.
-- Paket Solo (Gratis): Cocok untuk usaha perorangan yang baru merintis pencatatan transaksi kasir sederhana.
-- Paket Standard Plan:
-  * Harga Bulanan: Rp 39.000 / bulan
-  * Harga Tahunan: Rp 390.000 / tahun (Promo: Hemat 2 Bulan)
-  * Target Segmen: UMKM Pemula (toko kelontong, kafe kecil, bengkel rumahan) dengan kuota hingga 1.000 transaksi kasir/bulan, 1 outlet/toko, dan master data produk dasar.
-- Paket Premium Plan (Paling Populer & Rekomendasi):
-  * Harga Bulanan: Rp 89.000 / bulan
-  * Harga Tahunan: Rp 890.000 / tahun (Promo: Hemat 2 Bulan)
-  * Target Segmen: Bisnis berkembang & multi-cabang (hingga 3 outlet cabang/gudang), kuota transaksi kasir tanpa batas, manajemen harga per cabang (Multi-Branch Pricing), sinkronisasi Omnichannel Marketplace (Shopee, Tokopedia, TikTok Shop), integrasi WhatsApp Gateway, dan analitik bisnis AI.
-- Paket Prestige Plan (Enterprise & Waralaba):
-  * Harga Bulanan: Rp 199.000 / bulan
-  * Harga Tahunan: Rp 1.990.000 / tahun (Promo: Hemat 2 Bulan)
-  * Target Segmen: Jaringan korporat, waralaba, dan distributor besar dengan outlet tanpa batas, kuota penyimpanan cloud besar, prioritas bantuan teknis 24/7, integrasi API kustom, dan SLA 99.9%.
+[KATALOG RESMI PAKET, HARGA & MATRIKS KOMPARASI FITUR COOCA]
+(Sumber Data Tunggal: Matrix Komparasi Resmi COOCA Indonesia)
+PERINGATAN PENTING: COOCA TIDAK MENGGUNAKAN SISTEM FREE TRIAL 14 HARI.
+COOCA menyediakan Paket FREE (Rp 0) Gratis Selamanya untuk Solo Owner di mana hampir semua modul dapat langsung digunakan tanpa batas waktu uji coba. Pengguna dapat upgrade kapan saja ke paket berbayar sesuai skala pertumbuhan usahanya:
+
+1. PAKET FREE (Rp 0) - GRATIS SELAMANYA (SOLO OWNER):
+   - Akses Cooca AI: Terkunci (Gateway MCP Terkunci)
+   - Kapasitas: 1 Entitas Bisnis / Toko, 1 Pengguna (Solo Owner), 1 GB Cloud Storage Terproteksi
+   - Master Data: 10 Produk & SKU, 3 Formula Resep HPP/BOM, 10 Bahan Baku (Raw Materials), 15 Kontak Pelanggan CRM, 2 Pemasok/Vendor
+   - Transaksi Bulanan (Reset tgl 1): 30 Struk Kasir POS/bln, 3 Faktur B2B/bln, 3 PO Pembelian/bln, 10 Notifikasi WhatsApp/bln, 3 Jadwal Posting Medsos/bln
+   - Cabang & Resto: 1 Cabang/Outlet, 1 Gudang, 0 Meja Kasir POS Dine-in, 1 Harga Flat, Transfer Cabang (✕), KDS Layar Dapur (✕), Self-Order QR (✕)
+   - HRM & Karyawan: Otorisasi PIN Kasir (✕), Presensi Karyawan (-)
+   - Perpajakan & Akuntansi: Pajak Restoran (PB1 10%) & PPN Kasir Tarif Flat, Ekspor Data Dasar
+   - Jaminan & Support: 100% Aman (No Data Punishment, Data tidak pernah dihapus, akses read-only jika downgrade/expired), Jalur Bantuan via Komunitas
+
+2. PAKET STANDARD (Rp 29.000 / Bulan atau Rp 290.000 / Tahun - Promo: Hemat 2 Bulan):
+   - Akses Cooca AI: Terbuka (Cooca AI & POS Intelligence aktif, Bebas Integrasi BYOAI: Gemini Gratis, OpenAI, Claude, Groq; Prediksi Penjualan POS 14 Hari; Deteksi Anomali & Fraud Kasir; Menu Engineering BCG Matrix & Saran Bundling; Draft Balasan AI Grounded di Kotak Masuk Terpadu; 1 Token Gateway MCP Aktif)
+   - Kapasitas: 1 Entitas Bisnis / Toko, 3 Akun Pengguna Staf/Karyawan, 3 GB Cloud Storage Terproteksi
+   - Master Data: 100 Produk & SKU, 20 Formula Resep HPP/BOM, 30 Bahan Baku, 100 Kontak CRM, 5 Pemasok/Vendor
+   - Transaksi Bulanan (Reset tgl 1): 1.000 Struk Kasir POS/bln, 15 Faktur B2B/bln, 15 PO Pembelian/bln, 50 Notifikasi WhatsApp/bln, 10 Jadwal Posting Medsos/bln
+   - Cabang & Resto: 1 Cabang/Outlet, 1 Gudang, 5 Meja Kasir POS Dine-in, 1 Harga Flat
+   - HRM & Karyawan: Otorisasi PIN Kasir & Shift Kasir Aktif, Presensi Shift via POS, Buku Kasbon Catatan Kasar
+   - Perpajakan & Akuntansi: Pajak PB1/PPN Flat, Rekap Omzet PPh Final UMKM 0.5% (PP 55/2022), Ekspor & Impor Massal Excel/CSV Lengkap
+   - Jaminan & Support: 100% Aman, Akses Read-Only saat Downgrade, Jalur Bantuan Email Support Resmi
+
+3. PAKET PREMIUM (Rp 89.000 / Bulan atau Rp 890.000 / Tahun - Promo: Hemat 2 Bulan - PALING POPULER & REKOMENDASI):
+   - Akses Cooca AI: Full Suite (Semua fitur AI aktif, BYOAI Bebas Terhubung, Prediksi Penjualan 14 Hari, Deteksi Anomali & Fraud Kasir, Menu Engineering BCG Matrix, Draft Balasan AI di Kotak Masuk, Gateway MCP Multi-Client 5 Token)
+   - Kapasitas: Hingga 3 Entitas Bisnis / Toko, 10 Akun Pengguna Staf/Karyawan, 10 GB Cloud Storage Terproteksi
+   - Master Data: Katalog Produk & SKU UNLIMITED, Formula Resep HPP/BOM UNLIMITED, Bahan Baku UNLIMITED, 1.000 Kontak CRM, Pemasok/Vendor UNLIMITED
+   - Transaksi Bulanan (Reset tgl 1): Transaksi Kasir POS UNLIMITED, Faktur Penjualan B2B UNLIMITED, PO Pembelian UNLIMITED, 200 Notifikasi WhatsApp/bln, 30 Jadwal Posting Medsos/bln
+   - Multi-Cabang & Resto F&B: Hingga 3 Cabang Toko/Outlet, Hingga 3 Gudang/Dapur Pusat, Bebas Transfer Stok Antar-Cabang (Surat Jalan), Multi-Pricing (Beda Harga per Cabang), Denah Meja Dine-in UNLIMITED, Kitchen Display System (KDS Layar Dapur) Aktif, Self-Order QR Meja Pelanggan Aktif
+   - HRM & Penggajian: Custom Roles, Presensi GPS Geofencing + POS, Sistem Komisi Kinerja Staf per Struk Kasir, Buku Cicilan Pinjaman/Kasbon Karyawan, Skema Upah Harian Lepas (Daily Worker), Kalkulator Persentase BPJS TK & Kesehatan, Perhitungan THR Rumus Manual, Rekap Sederhana Slip Gaji
+   - Perpajakan & Akuntansi: Multi-Tarif Pajak Fleksibel, PPh Final UMKM 0.5% (Batas 500 Juta Bebas Pajak PP 55/2022), Estimasi Bruto Pajak Karyawan PPh 21, Jurnal Akuntansi Otomatis & Laba Rugi per Cabang, Ekspor & Impor Massal Excel/CSV Lengkap
+   - Jaminan & Support: 100% Aman, Akses Read-Only saat Downgrade, Jalur Bantuan WhatsApp Customer Service Resmi
+
+4. PAKET PRESTIGE (Rp 199.000 / Bulan atau Rp 1.990.000 / Tahun - Promo: Hemat 2 Bulan - ENTERPRISE & WARALABA):
+   - Akses Cooca AI: Full Suite Dedicated (Semua fitur AI aktif, BYOAI Bebas Terhubung, Prediksi Penjualan 14 Hari, Fraud Detection, BCG Matrix, Draft Balasan AI, Gateway MCP Dedicated Unlimited)
+   - Kapasitas: Entitas Bisnis UNLIMITED, Akun Pengguna Staf/Karyawan UNLIMITED, 30 GB Cloud Storage Terproteksi (+ Opsi Top-up Storage Tambahan)
+   - Master Data: Katalog Produk & SKU UNLIMITED, Formula Resep BOM UNLIMITED, Bahan Baku UNLIMITED, Kontak CRM UNLIMITED, Pemasok/Vendor UNLIMITED
+   - Transaksi Bulanan (Reset tgl 1): Transaksi Kasir POS UNLIMITED, Faktur B2B UNLIMITED, PO Pembelian UNLIMITED, 1.000 Notifikasi WhatsApp/bln, Jadwal Posting Medsos UNLIMITED
+   - Multi-Cabang & Resto Enterprise: Cabang Toko/Outlet UNLIMITED, Gudang/Central Kitchen UNLIMITED, Bebas Transfer Stok Antar-Cabang, Multi-Pricing (Beda Harga per Cabang), Denah Meja Kasir POS UNLIMITED, Layar Dapur KDS & Self-Order QR Meja Aktif
+   - HRM & Penggajian Enterprise: Granular RBAC, Presensi Absensi Multi-Cabang, Sistem Komisi Kinerja Bertingkat, Auto-Potong Gaji Pinjaman/Kasbon, Skema Pekerja Harian Lepas + Borongan, Modul BPJS Terpadu, Kalkulasi THR Otomatis Berbasis Tanggal Masuk (Join Date), Auto-Kirim Slip Gaji Digital via WhatsApp Otomatis
+   - Perpajakan & Akuntansi Enterprise: Multi-Tarif Pajak Fleksibel, Rekonsiliasi SPT PPh Final UMKM 0.5%, Pajak Karyawan PPh 21 TER A/B/C + Desember (PP 58/2023), Jurnal Akuntansi Otomatis & Laba Rugi Konsolidasian Seluruh Cabang, Ekspor & Impor Massal Excel/CSV Lengkap
+   - Jaminan & Support: 100% Aman, Akses Read-Only saat Downgrade, Jalur Bantuan Prioritas 24/7 Dedicated Account Manager
 
 [KUOTA TOKEN AI & PENYIMPANAN CLOUD (STORAGE)]
 - Kuota Token AI Bawaan: 10.000.000 token / bulan sudah termasuk dalam paket langganan aktif.
 - Top-Up Token AI Tambahan: Rp 50.000 per 1.000.000 token (dapat dibeli instan secara mandiri di dashboard).
-- Kapasitas Dasar Storage Owner: 3 GB ruang penyimpanan cloud gratis untuk seluruh cabang.
+- Kapasitas Dasar Storage Owner: Sesuai tier paket (Free: 1 GB, Standard: 3 GB, Premium: 10 GB, Prestige: 30 GB).
 - Top-Up Storage Tambahan: Rp 50.000 per 1 GB (bersifat permanen dan diakumulasikan).
 - Metode Pembayaran Resmi: QRIS Dinamis Otomatis (GoPay, OVO, ShopeePay, DANA, BCA Mobile, Livin, BRImo) dan Virtual Account Bank (BCA, Mandiri, BNI, BRI, Permata) dengan verifikasi otomatis detik itu juga tanpa perlu kirim bukti transfer manual.
 
@@ -3509,6 +3549,28 @@ COOCA adalah platform SaaS Business Operating System (BOS) All-in-One yang diran
                 toast.classList.add('opacity-0', 'transition-opacity', 'duration-300');
                 setTimeout(() => toast.remove(), 300);
             }, 3000);
+        },
+
+        handleTypingPing() {
+            if (!this.selectedThread || this.selectedThread.channel !== 'live_chat') return;
+            const sessionToken = this.selectedThread.session_token || this.selectedThread.sender_id;
+            if (!sessionToken) return;
+
+            if (this._typingPingTimeout) return;
+            this._typingPingTimeout = setTimeout(() => {
+                this._typingPingTimeout = null;
+            }, 2500);
+
+            try {
+                fetch('{{ route('admin.inbox.typing') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({ session_token: sessionToken })
+                }).catch(() => {});
+            } catch (_) {}
         }
     }
 }

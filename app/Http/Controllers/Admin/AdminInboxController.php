@@ -810,6 +810,21 @@ class AdminInboxController extends Controller implements HasMiddleware
     }
 
     /**
+     * Broadcast agent typing indicator to visitor via Reverb.
+     */
+    public function broadcastTyping(Request $request): JsonResponse
+    {
+        $sessionToken = (string) $request->input('session_token');
+        if (! empty($sessionToken)) {
+            try {
+                event(new \App\Events\LiveChatTyping($sessionToken, true));
+            } catch (\Throwable $e) {}
+        }
+
+        return response()->json(['success' => true]);
+    }
+
+    /**
      * AJAX/Post: Send official Private Reply (Direct Message) to a customer from a comment.
      * Uses Meta Graph API Private Reply and provisions the target DM thread.
      */

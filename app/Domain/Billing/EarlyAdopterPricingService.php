@@ -363,11 +363,11 @@ final class EarlyAdopterPricingService
             ->whereNotNull('pricing_batch_id')
             ->where('annual_increase_percentage', '>', 0)
             ->whereNotNull('next_price_increase_at')
-            ->where('next_price_increase_at', '<=', $today->toDateString())
+            ->whereDate('next_price_increase_at', '<=', $today->toDateString())
             ->where(function ($q) use ($thisYearStart) {
                 // Idempotency: skip if already increased during this calendar anniversary cycle
                 $q->whereNull('last_price_increase_at')
-                    ->orWhere('last_price_increase_at', '<', $thisYearStart->toDateString());
+                    ->orWhereDate('last_price_increase_at', '<', $thisYearStart->toDateString());
             })
             ->with(['batch', 'business'])
             ->get();
@@ -396,11 +396,18 @@ final class EarlyAdopterPricingService
             ];
 
             if (! $dryRun) {
-                DB::transaction(function () use ($sub, $oldPrice, $newPrice, $pct, $today): void {
+                DB::transaction(function () use ($sub, $batch, $oldPrice, $newPrice, $pct, $today): void {
                     $nextIncrease = $today->copy()->addYear();
+
+                    $oldLockedMonthly = (float) $sub->locked_price_monthly;
+                    $oldLockedAnnual = (float) $sub->locked_price_annual;
+                    $newLockedMonthly = $oldLockedMonthly > 0 ? ($batch ? $batch->calculateRoundedPrice($oldLockedMonthly * (1 + ($pct / 100))) : round($oldLockedMonthly * (1 + ($pct / 100)), 2)) : null;
+                    $newLockedAnnual = $oldLockedAnnual > 0 ? ($batch ? $batch->calculateRoundedPrice($oldLockedAnnual * (1 + ($pct / 100))) : round($oldLockedAnnual * (1 + ($pct / 100)), 2)) : null;
 
                     $sub->update([
                         'price' => $newPrice,
+                        'locked_price_monthly' => $newLockedMonthly ?? $sub->locked_price_monthly,
+                        'locked_price_annual' => $newLockedAnnual ?? $sub->locked_price_annual,
                         'last_price_increase_at' => $today->toDateString(),
                         'next_price_increase_at' => $nextIncrease->toDateString(),
                     ]);

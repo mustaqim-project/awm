@@ -177,6 +177,24 @@ final class PublicLiveChatInactivityTimeoutTest extends TestCase
 
         // Takeover must be released
         $this->assertFalse(InboxThreadTakeover::isTakenOver($threadKey));
+
+        // Polite closing message must be automatically created in database from Cooca Support
+        $closingMsg = SocialMediaComment::where('session_token', $sessionToken)
+            ->where('is_from_page', true)
+            ->latest('created_time')
+            ->latest('created_at')
+            ->first();
+        $this->assertNotNull($closingMsg);
+        $this->assertEquals('resolved', $closingMsg->status);
+        $this->assertStringContainsString('saya izin mengakhiri sesi', $closingMsg->message);
+        $this->assertStringContainsString('Agung Wijaya', $closingMsg->message);
+
+        // Subsequent check must return true immediately without duplicating closing message
+        $this->assertTrue($controller->checkAndHandleInactivityTimeout($sessionToken));
+        $this->assertEquals(1, SocialMediaComment::where('session_token', $sessionToken)
+            ->where('is_from_page', true)
+            ->where('message', 'like', '%saya izin mengakhiri sesi%')
+            ->count());
     }
 
     public function test_poll_and_history_endpoints_return_session_ended_when_inactivity_exceeds_5_minutes(): void
@@ -299,7 +317,7 @@ final class PublicLiveChatInactivityTimeoutTest extends TestCase
             'from_id'             => 'cooca_support',
             'from_name'           => 'Cooca Support',
             'session_token'       => $sessionToken,
-            'message'             => 'Kak Agung bisa mencoba semua fitur via [Pendaftaran Free Trial 14 Hari](https://cooca.id/register). 🚀',
+            'message'             => 'Kak Agung bisa mencoba semua fitur via [Pendaftaran Akun Gratis COOCA](https://cooca.id/register). 🚀',
             'is_from_page'        => true,
             'status'              => 'replied',
             'created_time'        => now(),
@@ -313,6 +331,6 @@ final class PublicLiveChatInactivityTimeoutTest extends TestCase
         ]);
         $messages = $response->json('messages');
         $this->assertCount(1, $messages);
-        $this->assertStringContainsString('[Pendaftaran Free Trial 14 Hari](https://cooca.id/register)', $messages[0]['message']);
+        $this->assertStringContainsString('[Pendaftaran Akun Gratis COOCA](https://cooca.id/register)', $messages[0]['message']);
     }
 }

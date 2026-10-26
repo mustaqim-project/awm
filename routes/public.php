@@ -107,7 +107,7 @@ Route::get('/jelajah', [PublicDiscoveryController::class, 'index'])->name('publi
 Route::get('/direktori', [PublicDiscoveryController::class, 'index'])->name('public.directory.index');
 
 // 6b. Core Public Ecosystem Pages (BOS, ERP, Omnichannel, Content Automation, Solutions, Resources)
-Route::get('/pricing', fn() => view('public.pricing'))->name('public.pricing');
+Route::get('/pricing', [\App\Http\Controllers\PublicPricingController::class, 'index'])->name('public.pricing');
 Route::get('/demo', fn() => view('public.demo'))->name('public.demo');
 Route::get('/about', fn() => view('public.about'))->name('public.about');
 Route::get('/tentang', fn() => view('public.about'));
@@ -311,6 +311,7 @@ Route::prefix('live-chat')->name('public.live-chat.')->group(function (): void {
     Route::post('/send', \App\Http\Controllers\Web\PublicLiveChatController::class . '@sendMessage')->name('send');
     Route::get('/history', \App\Http\Controllers\Web\PublicLiveChatController::class . '@getHistory')->name('history');
     Route::get('/poll', \App\Http\Controllers\Web\PublicLiveChatController::class . '@poll')->name('poll');
+    Route::post('/typing', \App\Http\Controllers\Web\PublicLiveChatController::class . '@broadcastTyping')->name('typing');
 });
 
 // 15. Public business landing pages using business name as direct URL slug (Must be last)

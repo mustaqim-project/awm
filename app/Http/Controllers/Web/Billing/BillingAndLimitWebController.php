@@ -51,7 +51,7 @@ final class BillingAndLimitWebController extends Controller implements HasMiddle
         $monthlyPrice         = $this->entitlementService->getMonthlyPrice();
         $annualPrice          = $this->entitlementService->getAnnualPrice();
         $annualDiscountBadge  = SystemSetting::get('subscription_annual_discount_badge', 'Hemat 2 Bulan');
-        $tierPrices           = EntitlementService::TIER_PRICES;
+        $tierPrices           = $this->entitlementService->getAllTierPrices($business);
 
         // Active AI Provider Configuration (BYOAI)
         $activeAiConfig = \App\Models\AiProviderConfig::where('business_id', $business->id)

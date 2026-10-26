@@ -12,6 +12,7 @@ use App\Models\BusinessSubscription;
 use App\Models\SubscriptionPriceHistory;
 use App\Models\SubscriptionPricingBatch;
 use App\Models\SubscriptionPricingProgram;
+use App\Models\User;
 use Carbon\Carbon;
 use Database\Seeders\AdminRbacSeeder;
 use Database\Seeders\DefaultCostCategorySeeder;
@@ -395,5 +396,159 @@ class EarlyAdopterPricingTest extends TestCase
             ->get(route('admin.pricing-programs.index'));
         $response->assertOk();
         $response->assertSee('Early Adopter');
+    }
+
+    /**
+     * Test 8: Admin Updates Base Normal Prices & Annual Badge via UI Endpoint (Single Source of Truth).
+     */
+    public function test_admin_updates_base_prices_and_annual_badge_via_dashboard(): void
+    {
+        $superAdmin = Admin::factory()->create([
+            'email' => 'superadmin@cooca.test',
+            'role' => 'super_admin',
+        ]);
+
+        $payload = [
+            'standard_monthly_price' => 45000,
+            'standard_annual_price' => 450000,
+            'premium_monthly_price' => 99000,
+            'premium_annual_price' => 990000,
+            'prestige_monthly_price' => 219000,
+            'prestige_annual_price' => 2190000,
+            'annual_discount_badge' => 'Hemat 3 Bulan Spesial',
+        ];
+
+        $response = $this->actingAs($superAdmin, 'admin')
+            ->post(route('admin.pricing-programs.base-prices.update'), $payload);
+
+        $response->assertRedirect(route('admin.pricing-programs.index', ['tab' => 'programs']));
+        $response->assertSessionHas('success');
+
+        // Verify EarlyAdopterPricingService returns updated base prices
+        $this->assertEquals(45000.0, $this->pricingService->getBasePrice('standard', 'monthly'));
+        $this->assertEquals(450000.0, $this->pricingService->getBasePrice('standard', 'annual'));
+        $this->assertEquals(99000.0, $this->pricingService->getBasePrice('premium', 'monthly'));
+        $this->assertEquals(990000.0, $this->pricingService->getBasePrice('premium', 'annual'));
+        $this->assertEquals(219000.0, $this->pricingService->getBasePrice('prestige', 'monthly'));
+        $this->assertEquals(2190000.0, $this->pricingService->getBasePrice('prestige', 'annual'));
+
+        // Verify badge
+        $this->assertEquals('Hemat 3 Bulan Spesial', $this->entitlementService->getAnnualDiscountBadge());
+
+        // Verify BillingPackage records were updated
+        $this->assertDatabaseHas('billing_packages', [
+            'code' => 'standard-monthly',
+            'price' => 45000,
+        ]);
+        $this->assertDatabaseHas('billing_packages', [
+            'code' => 'standard-annual',
+            'price' => 450000,
+        ]);
+    }
+
+    /**
+     * Test 9: Hybrid Operator Logic ('either' vs 'both').
+     */
+    public function test_hybrid_batch_operator_either_vs_both(): void
+    {
+        $program = SubscriptionPricingProgram::create([
+            'name' => 'Hybrid Testing Program',
+            'code' => 'hybrid-test',
+            'is_active' => true,
+        ]);
+
+        Carbon::setTestNow('2026-10-26 10:00:00');
+
+        // Case A: Operator 'either' (default) -> Transitions if quota OR time expired
+        $batchEither = SubscriptionPricingBatch::create([
+            'program_id' => $program->id,
+            'name' => 'Batch Either',
+            'batch_number' => 1,
+            'status' => SubscriptionPricingBatch::STATUS_ACTIVE,
+            'trigger_mode' => SubscriptionPricingBatch::MODE_HYBRID,
+            'hybrid_operator' => SubscriptionPricingBatch::HYBRID_EITHER,
+            'quota_limit' => 10,
+            'quota_used' => 10, // Quota reached
+            'starts_at' => Carbon::parse('2026-10-01 00:00:00'),
+            'ends_at' => Carbon::parse('2026-11-01 00:00:00'), // Time NOT expired
+            'fallback_behavior' => 'base_pricing',
+        ]);
+
+        $this->assertTrue($batchEither->shouldTransition());
+
+        // Case B: Operator 'both' -> Quota reached but time NOT expired -> DO NOT transition
+        $batchBoth = SubscriptionPricingBatch::create([
+            'program_id' => $program->id,
+            'name' => 'Batch Both',
+            'batch_number' => 2,
+            'status' => SubscriptionPricingBatch::STATUS_ACTIVE,
+            'trigger_mode' => SubscriptionPricingBatch::MODE_HYBRID,
+            'hybrid_operator' => SubscriptionPricingBatch::HYBRID_BOTH,
+            'quota_limit' => 10,
+            'quota_used' => 10, // Quota reached
+            'starts_at' => Carbon::parse('2026-10-01 00:00:00'),
+            'ends_at' => Carbon::parse('2026-11-01 00:00:00'), // Time NOT expired
+            'fallback_behavior' => 'base_pricing',
+        ]);
+
+        $this->assertFalse($batchBoth->shouldTransition());
+
+        // Advance time past ends_at
+        Carbon::setTestNow('2026-11-02 00:00:00');
+        // Now BOTH quota AND time expired -> SHOULD transition!
+        $this->assertTrue($batchBoth->shouldTransition());
+
+        Carbon::setTestNow();
+    }
+
+    /**
+     * Test 10: Public Pricing Page (/pricing) renders dynamic prices and badge.
+     */
+    public function test_public_pricing_page_renders_dynamic_prices_and_badge(): void
+    {
+        $response = $this->get('/pricing');
+        $response->assertOk();
+        $response->assertSee('39.000');
+        $response->assertSee('89.000');
+        $response->assertSee('199.000');
+        $response->assertSee('Hemat 2 Bulan');
+
+        // Admin updates prices
+        \App\Models\SystemSetting::set('subscription_price_standard_monthly', '49000');
+        \App\Models\SystemSetting::set('subscription_annual_discount_badge', 'Spesial 2 Bulan');
+
+        // Page should immediately reflect changes
+        $response2 = $this->get('/pricing');
+        $response2->assertOk();
+        $response2->assertSee('49.000');
+        $response2->assertSee('Spesial 2 Bulan');
+    }
+
+    /**
+     * Test 11: Server-side validation and anti-tampering on checkout payment order creation.
+     */
+    public function test_checkout_server_side_price_integrity_against_client_tampering(): void
+    {
+        $business = Business::create([
+            'name' => 'Warung Kopi Anti Hacking',
+            'slug' => 'warung-anti-hacking-' . uniqid(),
+            'is_active' => true,
+        ]);
+
+        $user = User::factory()->create();
+
+        // Attempt to create payment order through EntitlementService with an official plan
+        $order = $this->entitlementService->createPaymentOrder(
+            business: $business,
+            user: $user,
+            cycle: 'monthly',
+            paymentMethod: 'qris',
+            tier: 'standard'
+        );
+
+        // System must use calculated server price (39.000), not zero or client price
+        $this->assertEquals(39000.0, (float) $order->amount);
+        $this->assertEquals(39000.0, (float) $order->total_payable);
+        $this->assertEquals(BusinessSubscription::PLAN_STANDARD_MONTHLY, $order->plan_code);
     }
 }

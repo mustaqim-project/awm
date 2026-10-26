@@ -40,6 +40,13 @@ final class SubscriptionPricingBatch extends Model
         self::MODE_HYBRID,
     ];
 
+    public const HYBRID_EITHER = 'either';
+    public const HYBRID_BOTH = 'both';
+    public const HYBRID_OPERATORS = [
+        self::HYBRID_EITHER,
+        self::HYBRID_BOTH,
+    ];
+
     public const BASIS_SUBSCRIPTION_ANNIVERSARY = 'subscription_anniversary';
     public const BASIS_CALENDAR_ANNIVERSARY = 'calendar_anniversary';
     public const BASIS_FIXED_DATE = 'fixed_date';
@@ -63,6 +70,7 @@ final class SubscriptionPricingBatch extends Model
         'name',
         'status',
         'trigger_mode',
+        'hybrid_operator',
         'quota_limit',
         'quota_used',
         'starts_at',
@@ -178,7 +186,9 @@ final class SubscriptionPricingBatch extends Model
         return match ($this->trigger_mode) {
             self::MODE_QUOTA => $this->isQuotaExceeded(),
             self::MODE_TIME => $this->isTimeExpired(),
-            self::MODE_HYBRID => $this->isQuotaExceeded() || $this->isTimeExpired(),
+            self::MODE_HYBRID => ($this->hybrid_operator === self::HYBRID_BOTH)
+                ? ($this->isQuotaExceeded() && $this->isTimeExpired())
+                : ($this->isQuotaExceeded() || $this->isTimeExpired()),
             default => false,
         };
     }

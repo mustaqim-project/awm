@@ -12,8 +12,51 @@
 @section('og_description', 'Pilihan paket jujur dan terjangkau untuk UMKM Indonesia. Mulai gratis selamanya tanpa kartu kredit hingga paket multi-cabang lengkap.')
 
 @section('content')
+@php
+    $pricingData = $pricingData ?? [
+        'standard' => [
+            'tier' => 'standard',
+            'monthly_price' => 39000,
+            'annual_price' => 390000,
+            'monthly_price_formatted' => '39.000',
+            'annual_price_formatted' => '390.000',
+            'annual_monthly_equivalent_formatted' => '32.500',
+            'annual_savings_formatted' => '78.000',
+            'is_early_adopter' => false,
+            'batch_name' => null,
+            'remaining_quota' => null,
+        ],
+        'premium' => [
+            'tier' => 'premium',
+            'monthly_price' => 89000,
+            'annual_price' => 890000,
+            'monthly_price_formatted' => '89.000',
+            'annual_price_formatted' => '890.000',
+            'annual_monthly_equivalent_formatted' => '74.167',
+            'annual_savings_formatted' => '178.000',
+            'is_early_adopter' => false,
+            'batch_name' => null,
+            'remaining_quota' => null,
+        ],
+        'prestige' => [
+            'tier' => 'prestige',
+            'monthly_price' => 199000,
+            'annual_price' => 1990000,
+            'monthly_price_formatted' => '199.000',
+            'annual_price_formatted' => '1.990.000',
+            'annual_monthly_equivalent_formatted' => '165.833',
+            'annual_savings_formatted' => '398.000',
+            'is_early_adopter' => false,
+            'batch_name' => null,
+            'remaining_quota' => null,
+        ],
+    ];
+    $annualDiscountBadge = $annualDiscountBadge ?? \App\Models\SystemSetting::get('subscription_annual_discount_badge', 'Hemat 2 Bulan');
+@endphp
     <div x-data="{
         pricingCycle: 'monthly',
+        prices: @js($pricingData),
+        annualBadge: '{{ $annualDiscountBadge }}',
         openFaq: null,
         showComparisonModal: false,
         activeDetailModal: null,
@@ -159,7 +202,7 @@
                                         :class="pricingCycle === 'annual' ? 'bg-[#007AFF] text-white shadow-xs' : 'text-slate-400 hover:text-white'"
                                         class="px-3 py-1 rounded-full transition-all flex items-center gap-1 cursor-pointer">
                                         <span>Tahunan</span>
-                                        <span class="px-1.5 py-0.2 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-bold">Hemat 20%</span>
+                                        <span class="px-1.5 py-0.2 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-bold" x-text="annualBadge">{{ $annualDiscountBadge }}</span>
                                     </button>
                                 </div>
                             </div>
@@ -180,7 +223,7 @@
                                         <div class="text-[10.5px] font-bold text-[#00C4D8] uppercase tracking-wider">Standard</div>
                                         <span class="text-[9px] font-bold bg-[#007AFF] text-white px-1.5 py-0.2 rounded-full">Populer</span>
                                     </div>
-                                    <div class="text-lg font-bold text-white tabular-nums tracking-tight" x-text="pricingCycle === 'annual' ? 'Rp 39rb' : 'Rp 49rb'">Rp 49rb</div>
+                                    <div class="text-lg font-bold text-white tabular-nums tracking-tight" x-text="pricingCycle === 'annual' ? 'Rp ' + prices.standard.annual_monthly_equivalent_formatted : 'Rp ' + prices.standard.monthly_price_formatted">Rp {{ $pricingData['standard']['monthly_price_formatted'] }}</div>
                                     <div class="text-[10px] text-[#00C4D8] font-medium">Trx Kasir Tanpa Batas</div>
                                     <div class="text-[10.5px] text-slate-300 leading-snug">Banyak kasir, 3 cabang, nota WA</div>
                                 </div>
@@ -188,7 +231,7 @@
                                 <!-- Plan 3: Premium -->
                                 <div class="p-3 sm:p-3.5 rounded-[16px] bg-white/[0.04] border border-white/[0.08] space-y-1.5 hover:border-white/20 transition-all">
                                     <div class="text-[10.5px] font-bold text-purple-400 uppercase tracking-wider">Premium</div>
-                                    <div class="text-lg font-bold text-white tabular-nums tracking-tight" x-text="pricingCycle === 'annual' ? 'Rp 79rb' : 'Rp 99rb'">Rp 99rb</div>
+                                    <div class="text-lg font-bold text-white tabular-nums tracking-tight" x-text="pricingCycle === 'annual' ? 'Rp ' + prices.premium.annual_monthly_equivalent_formatted : 'Rp ' + prices.premium.monthly_price_formatted">Rp {{ $pricingData['premium']['monthly_price_formatted'] }}</div>
                                     <div class="text-[10px] text-purple-300 font-medium">Marketplace Hub</div>
                                     <div class="text-[10.5px] text-slate-400 leading-snug">Sync Shopee, TikTok, CRM poin</div>
                                 </div>
@@ -196,7 +239,7 @@
                                 <!-- Plan 4: Prestige -->
                                 <div class="p-3 sm:p-3.5 rounded-[16px] bg-white/[0.04] border border-white/[0.08] space-y-1.5 hover:border-white/20 transition-all">
                                     <div class="text-[10.5px] font-bold text-amber-400 uppercase tracking-wider">Prestige</div>
-                                    <div class="text-lg font-bold text-white tabular-nums tracking-tight" x-text="pricingCycle === 'annual' ? 'Rp 159rb' : 'Rp 199rb'">Rp 199rb</div>
+                                    <div class="text-lg font-bold text-white tabular-nums tracking-tight" x-text="pricingCycle === 'annual' ? 'Rp ' + prices.prestige.annual_monthly_equivalent_formatted : 'Rp ' + prices.prestige.monthly_price_formatted">Rp {{ $pricingData['prestige']['monthly_price_formatted'] }}</div>
                                     <div class="text-[10px] text-amber-300 font-medium">AI &amp; Resep BOM</div>
                                     <div class="text-[10.5px] text-slate-400 leading-snug">Asisten AI bisnis, potong bahan</div>
                                 </div>
@@ -342,14 +385,12 @@
                                     <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Rp</span>
                                     <span
                                         class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tabular-nums tracking-tight"
-                                        x-text="pricingCycle === 'annual' ? '39.000' : '49.000'">49.000</span>
+                                        x-text="pricingCycle === 'annual' ? prices.standard.annual_monthly_equivalent_formatted : prices.standard.monthly_price_formatted">{{ $pricingData['standard']['monthly_price_formatted'] }}</span>
                                     <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">/ bulan</span>
                                 </div>
                                 <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
-                                    <span x-show="pricingCycle === 'annual'">Ditagih Rp 468.000 per tahun (hemat Rp
-                                        120.000)</span>
-                                    <span x-show="pricingCycle === 'monthly'">Bayar bulanan tanpa komitmen jangka
-                                        panjang</span>
+                                    <span x-show="pricingCycle === 'annual'">Ditagih Rp <span x-text="prices.standard.annual_price_formatted">{{ $pricingData['standard']['annual_price_formatted'] }}</span> per tahun (<span class="text-emerald-600 dark:text-emerald-400 font-semibold" x-text="annualBadge">{{ $annualDiscountBadge }}</span>)</span>
+                                    <span x-show="pricingCycle === 'monthly'">Bayar bulanan tanpa komitmen jangka panjang</span>
                                 </div>
                             </div>
 
@@ -423,14 +464,12 @@
                                     <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Rp</span>
                                     <span
                                         class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tabular-nums tracking-tight"
-                                        x-text="pricingCycle === 'annual' ? '79.000' : '99.000'">99.000</span>
+                                        x-text="pricingCycle === 'annual' ? prices.premium.annual_monthly_equivalent_formatted : prices.premium.monthly_price_formatted">{{ $pricingData['premium']['monthly_price_formatted'] }}</span>
                                     <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">/ bulan</span>
                                 </div>
                                 <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
-                                    <span x-show="pricingCycle === 'annual'">Ditagih Rp 948.000 per tahun (hemat Rp
-                                        240.000)</span>
-                                    <span x-show="pricingCycle === 'monthly'">Bayar bulanan tanpa komitmen jangka
-                                        panjang</span>
+                                    <span x-show="pricingCycle === 'annual'">Ditagih Rp <span x-text="prices.premium.annual_price_formatted">{{ $pricingData['premium']['annual_price_formatted'] }}</span> per tahun (<span class="text-emerald-600 dark:text-emerald-400 font-semibold" x-text="annualBadge">{{ $annualDiscountBadge }}</span>)</span>
+                                    <span x-show="pricingCycle === 'monthly'">Bayar bulanan tanpa komitmen jangka panjang</span>
                                 </div>
                             </div>
 
@@ -506,14 +545,12 @@
                                     <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Rp</span>
                                     <span
                                         class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tabular-nums tracking-tight"
-                                        x-text="pricingCycle === 'annual' ? '159.000' : '199.000'">199.000</span>
+                                        x-text="pricingCycle === 'annual' ? prices.prestige.annual_monthly_equivalent_formatted : prices.prestige.monthly_price_formatted">{{ $pricingData['prestige']['monthly_price_formatted'] }}</span>
                                     <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">/ bulan</span>
                                 </div>
                                 <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
-                                    <span x-show="pricingCycle === 'annual'">Ditagih Rp 1.908.000 per tahun (hemat Rp
-                                        480.000)</span>
-                                    <span x-show="pricingCycle === 'monthly'">Bayar bulanan tanpa komitmen jangka
-                                        panjang</span>
+                                    <span x-show="pricingCycle === 'annual'">Ditagih Rp <span x-text="prices.prestige.annual_price_formatted">{{ $pricingData['prestige']['annual_price_formatted'] }}</span> per tahun (<span class="text-emerald-600 dark:text-emerald-400 font-semibold" x-text="annualBadge">{{ $annualDiscountBadge }}</span>)</span>
+                                    <span x-show="pricingCycle === 'monthly'">Bayar bulanan tanpa komitmen jangka panjang</span>
                                 </div>
                             </div>
 
@@ -1181,21 +1218,21 @@
                             <div class="text-xs font-bold text-[#007AFF] dark:text-[#0A84FF]">Standard</div>
                             <div
                                 class="text-base sm:text-xl font-extrabold text-slate-900 dark:text-white mt-0.5 tabular-nums">
-                                <span x-text="pricingCycle === 'annual' ? 'Rp 39rb' : 'Rp 49rb'">Rp 49rb</span>
+                                <span x-text="pricingCycle === 'annual' ? 'Rp ' + prices.standard.annual_monthly_equivalent_formatted : 'Rp ' + prices.standard.monthly_price_formatted">Rp {{ $pricingData['standard']['monthly_price_formatted'] }}</span>
                             </div>
                         </div>
                         <div class="p-3 rounded-[16px] bg-purple-500/10 border border-purple-500/20">
                             <div class="text-xs font-bold text-purple-600 dark:text-purple-400">Premium</div>
                             <div
                                 class="text-base sm:text-xl font-extrabold text-slate-900 dark:text-white mt-0.5 tabular-nums">
-                                <span x-text="pricingCycle === 'annual' ? 'Rp 79rb' : 'Rp 99rb'">Rp 99rb</span>
+                                <span x-text="pricingCycle === 'annual' ? 'Rp ' + prices.premium.annual_monthly_equivalent_formatted : 'Rp ' + prices.premium.monthly_price_formatted">Rp {{ $pricingData['premium']['monthly_price_formatted'] }}</span>
                             </div>
                         </div>
                         <div class="p-3 rounded-[16px] bg-amber-500/10 border border-amber-500/20">
                             <div class="text-xs font-bold text-amber-600 dark:text-amber-400">Prestige</div>
                             <div
                                 class="text-base sm:text-xl font-extrabold text-slate-900 dark:text-white mt-0.5 tabular-nums">
-                                <span x-text="pricingCycle === 'annual' ? 'Rp 159rb' : 'Rp 199rb'">Rp 199rb</span>
+                                <span x-text="pricingCycle === 'annual' ? 'Rp ' + prices.prestige.annual_monthly_equivalent_formatted : 'Rp ' + prices.prestige.monthly_price_formatted">Rp {{ $pricingData['prestige']['monthly_price_formatted'] }}</span>
                             </div>
                         </div>
                     </div>

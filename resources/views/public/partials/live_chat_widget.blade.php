@@ -271,14 +271,21 @@
                     </div>
                 </template>
 
-                {{-- Admin Typing indicator simulation when waiting --}}
-                <div x-show="isWaitingReply" class="flex items-center gap-2 p-2 text-violet-600 text-[11px]">
-                    <span class="flex gap-1">
-                        <span class="w-1.5 h-1.5 rounded-full bg-violet-600 animate-bounce"></span>
-                        <span class="w-1.5 h-1.5 rounded-full bg-violet-600 animate-bounce [animation-delay:0.2s]"></span>
-                        <span class="w-1.5 h-1.5 rounded-full bg-violet-600 animate-bounce [animation-delay:0.4s]"></span>
-                    </span>
-                    <span>Menunggu balasan tim support...</span>
+                {{-- Typing Indicator Bubble (WhatsApp / Apple / Intercom Style) --}}
+                <div x-show="isWaitingReply" x-transition.opacity.duration.150ms class="flex flex-col items-start gap-1">
+                    <div class="flex items-center gap-1.5 px-1 text-[10.5px] text-gray-400">
+                        <span class="font-semibold text-violet-600 dark:text-violet-400">Cooca Support</span>
+                        <span>•</span>
+                        <span class="text-violet-500 font-medium animate-pulse">sedang mengetik...</span>
+                    </div>
+                    <div class="rounded-2xl rounded-tl-xs px-4 py-3 bg-white dark:bg-[#27272A] border border-gray-200/80 dark:border-white/10 shadow-xs flex items-center gap-2.5">
+                        <div class="flex items-center gap-1.5 py-0.5">
+                            <span class="w-2 h-2 rounded-full bg-violet-600 dark:bg-violet-400 animate-bounce [animation-delay:-0.32s]"></span>
+                            <span class="w-2 h-2 rounded-full bg-violet-600 dark:bg-violet-400 animate-bounce [animation-delay:-0.16s]"></span>
+                            <span class="w-2 h-2 rounded-full bg-violet-600 dark:bg-violet-400 animate-bounce"></span>
+                        </div>
+                        <span class="text-[12px] text-gray-500 dark:text-gray-400 italic">mengetik balasan...</span>
+                    </div>
                 </div>
             </div>
 
@@ -429,6 +436,33 @@ function coocaLiveChatWidget() {
             this.isSessionEnded = true;
             this.sessionEndedReason = reason || 'Sesi chat otomatis diakhiri karena tidak ada balasan dalam 5 menit.';
             this.isWaitingReply = false;
+
+            // Ensure polite closing message bubble appears before session ended banner
+            const hasClosingMsg = this.messages.some(m => (m.is_cooca || m.is_from_page) && m.message && (
+                m.message.toLowerCase().includes('izin mengakhiri sesi') || 
+                m.message.toLowerCase().includes('mengakhiri sesi')
+            ));
+
+            if (!hasClosingMsg && this.messages.length > 0) {
+                const name = this.visitorData?.name ? (' ' + this.visitorData.name.trim()) : '';
+                const now = new Date();
+                const timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+                this.messages.push({
+                    id: 'closing_' + Date.now(),
+                    message: `Baik Kak${name}, jika sudah tidak ada hal lain yang ingin ditanyakan, saya izin mengakhiri sesi live chat ini terlebih dahulu ya. Terima kasih banyak telah berkonsultasi dengan COOCA. Semoga usaha Kakak semakin sukses dan lancar! Jika sewaktu-waktu membutuhkan bantuan seputar operasional atau fitur COOCA, silakan mulai sesi chat baru kapan saja. 🙏😊`,
+                    from_name: 'Cooca Support',
+                    is_cooca: true,
+                    is_from_page: true,
+                    time: timeStr,
+                    time_relative: 'Baru saja',
+                    date: 'Hari ini',
+                    created_at: now.toISOString(),
+                });
+                this.$nextTick(() => {
+                    this.scrollToBottom();
+                });
+            }
+
             // Clear active session in localStorage so user can easily start a fresh session
             localStorage.removeItem('cooca_livechat_session');
             this.sessionToken = '';
@@ -484,6 +518,7 @@ function coocaLiveChatWidget() {
                     this.messages = [data.message];
                     this.isSessionEnded = false;
                     this.sessionEndedReason = '';
+                    this.isWaitingReply = true;
 
                     // Store in localStorage
                     localStorage.setItem('cooca_livechat_session', this.sessionToken);
@@ -497,6 +532,20 @@ function coocaLiveChatWidget() {
                     this.$nextTick(() => {
                         this.scrollToBottom();
                     });
+
+                    // If immediate reply arrived with the start payload
+                    if (data.reply) {
+                        setTimeout(() => {
+                            if (!this.messages.some(m => m.id === data.reply.id)) {
+                                this.messages.push(data.reply);
+                                this.playChime();
+                            }
+                            this.isWaitingReply = false;
+                            this.$nextTick(() => {
+                                this.scrollToBottom();
+                            });
+                        }, 700);
+                    }
                 } else {
                     this.errorMessage = data.message || 'Gagal memulai live chat. Silakan periksa kembali input Anda.';
                 }
@@ -516,8 +565,33 @@ function coocaLiveChatWidget() {
                 return;
             }
 
-            this.isSending = true;
+            const tempId = 'temp_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
+            const now = new Date();
+            const timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+
+            // 1. OPTIMISTIC UI: Immediately render in dialog without waiting for AI/network
+            const optimisticMsg = {
+                id: tempId,
+                temp_id: tempId,
+                message: text,
+                from_name: this.visitorData?.name || 'Anda',
+                is_cooca: false,
+                is_from_page: false,
+                time: timeStr,
+                time_relative: 'Baru saja',
+                date: 'Hari ini',
+                created_at: now.toISOString(),
+                is_optimistic: true,
+            };
+
+            this.messages.push(optimisticMsg);
             this.newMessage = '';
+            this.isWaitingReply = true; // Show animated typing dots immediately!
+            this.isSending = true;
+
+            this.$nextTick(() => {
+                this.scrollToBottom();
+            });
 
             try {
                 const res = await fetch('/live-chat/send', {
@@ -536,17 +610,43 @@ function coocaLiveChatWidget() {
                 const data = await res.json();
 
                 if (res.ok && data.success) {
-                    this.messages.push(data.message);
-                    this.isWaitingReply = true;
+                    // Replace temporary optimistic message with persistent server record
+                    const idx = this.messages.findIndex(m => m.id === tempId || m.temp_id === tempId);
+                    if (idx !== -1) {
+                        this.messages.splice(idx, 1, data.message);
+                    } else if (!this.messages.some(m => m.id === data.message.id)) {
+                        this.messages.push(data.message);
+                    }
+
+                    // If server already returned the AI response in payload
+                    if (data.reply) {
+                        setTimeout(() => {
+                            if (!this.messages.some(m => m.id === data.reply.id)) {
+                                this.messages.push(data.reply);
+                                this.playChime();
+                            }
+                            this.isWaitingReply = false;
+                            this.$nextTick(() => {
+                                this.scrollToBottom();
+                            });
+                        }, 700);
+                    }
+
                     this.$nextTick(() => {
                         this.scrollToBottom();
                     });
                 } else if (data.session_ended || res.status === 410 || res.status === 404) {
+                    this.messages = this.messages.filter(m => m.id !== tempId);
+                    this.isWaitingReply = false;
                     this.handleSessionEnded(data.message);
                 } else {
+                    this.messages = this.messages.filter(m => m.id !== tempId);
+                    this.isWaitingReply = false;
+                    this.newMessage = text; // restore message to composer
                     alert(data.message || 'Gagal mengirim pesan.');
                 }
             } catch (err) {
+                this.isWaitingReply = false;
                 alert('Gangguan koneksi: ' + err.message);
             } finally {
                 this.isSending = false;
@@ -668,6 +768,7 @@ function coocaLiveChatWidget() {
                         });
 
                         this.isWaitingReply = false;
+                        if (this.typingTimer) clearTimeout(this.typingTimer);
 
                         if (!this.isOpen && (data.is_cooca || data.is_from_page)) {
                             this.unreadCount++;
@@ -680,6 +781,18 @@ function coocaLiveChatWidget() {
                             this.scrollToBottom();
                         });
                     }
+                });
+
+                // Listen for live agent typing events
+                this.reverbChannel.bind('agent.typing', (data) => {
+                    this.isWaitingReply = true;
+                    this.$nextTick(() => {
+                        this.scrollToBottom();
+                    });
+                    if (this.typingTimer) clearTimeout(this.typingTimer);
+                    this.typingTimer = setTimeout(() => {
+                        this.isWaitingReply = false;
+                    }, 6000);
                 });
             } catch (err) {
                 console.warn('[LiveChat] Reverb initialization warning:', err);

@@ -10,9 +10,11 @@
     showBatchModal: false,
     showEditBatchModal: false,
     showNextBatchModal: false,
+    showEditBasePricesModal: false,
     currentProgram: { id: '', name: '', code: '', description: '', is_active: true },
     currentBatch: {
         id: '', program_id: '', name: '', status: 'draft', trigger_mode: 'hybrid',
+        hybrid_operator: 'either',
         quota_limit: '', starts_at: '', ends_at: '', fallback_behavior: 'base_pricing',
         standard_monthly_price: '', standard_annual_price: '',
         premium_monthly_price: '', premium_annual_price: '',
@@ -46,6 +48,7 @@
         this.selectedProgramIdForBatch = programId;
         this.currentBatch = {
             id: '', program_id: programId, name: '', status: 'draft', trigger_mode: 'hybrid',
+            hybrid_operator: 'either',
             quota_limit: '1000', starts_at: '', ends_at: '', fallback_behavior: 'base_pricing',
             standard_monthly_price: '29000', standard_annual_price: '290000',
             premium_monthly_price: '69000', premium_annual_price: '690000',
@@ -61,6 +64,7 @@
     openEditBatch(batch) {
         this.currentBatch = {
             ...batch,
+            hybrid_operator: batch.hybrid_operator || 'either',
             starts_at: batch.starts_at ? batch.starts_at.substring(0, 16) : '',
             ends_at: batch.ends_at ? batch.ends_at.substring(0, 16) : '',
         };
@@ -160,17 +164,90 @@
         </div>
     </div>
 
-    <!-- 3. Base Reference Pricing Callout (Guaranteed Integrity) -->
-    <div class="p-4 rounded-[18px] bg-blue-50/70 dark:bg-blue-950/20 border border-blue-200/60 dark:border-blue-900/40 text-blue-900 dark:text-blue-200 flex flex-col md:flex-row md:items-center md:justify-between gap-3 text-xs">
-        <div class="flex items-start gap-2.5">
-            <i data-lucide="info" class="w-4 h-4 text-[#007AFF] shrink-0 mt-0.5"></i>
-            <div>
-                <span class="font-bold">Harga Acuan Normal COOCA (Base Pricing Fallback):</span>
-                <span> Standard: Rp {{ number_format($basePrices['standard_monthly'], 0, ',', '.') }}/bln (Rp {{ number_format($basePrices['standard_annual'], 0, ',', '.') }}/thn) • Premium: Rp {{ number_format($basePrices['premium_monthly'], 0, ',', '.') }}/bln (Rp {{ number_format($basePrices['premium_annual'], 0, ',', '.') }}/thn) • Prestige: Rp {{ number_format($basePrices['prestige_monthly'], 0, ',', '.') }}/bln (Rp {{ number_format($basePrices['prestige_annual'], 0, ',', '.') }}/thn).</span>
+    <!-- 3. Base Reference Pricing Card (Single Source of Truth) -->
+    <div class="p-5 rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-xs space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-3 border-b border-black/[0.05] dark:border-white/[0.06]">
+            <div class="flex items-center gap-2.5">
+                <span class="w-8 h-8 rounded-[10px] bg-emerald-500/10 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                    <i data-lucide="badge-percent" class="w-4 h-4"></i>
+                </span>
+                <div>
+                    <h2 class="text-sm font-bold text-black dark:text-white flex items-center gap-2">
+                        <span>Pusat Pengelolaan Harga Normal Publik &amp; Promo Tahunan</span>
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">Single Source of Truth</span>
+                    </h2>
+                    <p class="text-[11px] text-black/50 dark:text-white/50">
+                        Harga acuan resmi yang berlaku di landing page (/pricing), checkout (/billing/checkout), batas kuota (/billing/limits), dan fallback jika promo batch berakhir.
+                    </p>
+                </div>
+            </div>
+
+            @if(Auth::guard('admin')->user()?->hasPermission('admin.pricing_programs.manage'))
+                <button type="button" @click="showEditBasePricesModal = true; refreshIcons()"
+                    class="h-8 px-3 rounded-[10px] bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow-2xs flex items-center gap-1.5 transition active:scale-[0.98] shrink-0 cursor-pointer">
+                    <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                    <span>Ubah Harga Normal &amp; Promo</span>
+                </button>
+            @endif
+        </div>
+
+        <!-- 4 Grid Columns for Plans & Promo Badge -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <!-- Free Plan -->
+            <div class="p-3.5 rounded-[14px] bg-slate-50 dark:bg-white/[0.02] border border-black/[0.04] dark:border-white/[0.05] space-y-1">
+                <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500 font-mono">Free Solo</div>
+                <div class="text-lg font-black text-slate-900 dark:text-white font-mono">Rp 0</div>
+                <div class="text-[11px] text-slate-500">Selamanya gratis &bull; Tanpa AI</div>
+            </div>
+
+            <!-- Standard Plan -->
+            <div class="p-3.5 rounded-[14px] bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-200/50 dark:border-emerald-900/40 space-y-1">
+                <div class="flex items-center justify-between">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 font-mono">Standard UMKM</span>
+                </div>
+                <div class="text-lg font-black text-emerald-700 dark:text-emerald-400 font-mono tabular-nums">
+                    Rp {{ number_format($basePrices['standard_monthly'], 0, ',', '.') }}<span class="text-xs font-normal text-slate-500">/bln</span>
+                </div>
+                <div class="text-[11px] text-slate-600 dark:text-slate-400 font-mono">
+                    Tahunan: Rp {{ number_format($basePrices['standard_annual'], 0, ',', '.') }}/thn
+                </div>
+            </div>
+
+            <!-- Premium Plan -->
+            <div class="p-3.5 rounded-[14px] bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-200/50 dark:border-indigo-900/40 space-y-1">
+                <div class="flex items-center justify-between">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-indigo-700 dark:text-indigo-400 font-mono">Premium Scale-Up</span>
+                </div>
+                <div class="text-lg font-black text-indigo-700 dark:text-indigo-400 font-mono tabular-nums">
+                    Rp {{ number_format($basePrices['premium_monthly'], 0, ',', '.') }}<span class="text-xs font-normal text-slate-500">/bln</span>
+                </div>
+                <div class="text-[11px] text-slate-600 dark:text-slate-400 font-mono">
+                    Tahunan: Rp {{ number_format($basePrices['premium_annual'], 0, ',', '.') }}/thn
+                </div>
+            </div>
+
+            <!-- Prestige Plan -->
+            <div class="p-3.5 rounded-[14px] bg-purple-50/50 dark:bg-purple-950/20 border border-purple-200/50 dark:border-purple-900/40 space-y-1">
+                <div class="flex items-center justify-between">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-purple-700 dark:text-purple-400 font-mono">Prestige Enterprise</span>
+                </div>
+                <div class="text-lg font-black text-purple-700 dark:text-purple-400 font-mono tabular-nums">
+                    Rp {{ number_format($basePrices['prestige_monthly'], 0, ',', '.') }}<span class="text-xs font-normal text-slate-500">/bln</span>
+                </div>
+                <div class="text-[11px] text-slate-600 dark:text-slate-400 font-mono">
+                    Tahunan: Rp {{ number_format($basePrices['prestige_annual'], 0, ',', '.') }}/thn
+                </div>
             </div>
         </div>
-        <div class="shrink-0 font-medium text-blue-700 dark:text-blue-300">
-            Promo Tahunan: <span class="font-bold underline decoration-blue-400">Hemat 2 Bulan</span>
+
+        <div class="pt-2 border-t border-black/[0.04] dark:border-white/[0.05] flex flex-wrap items-center justify-between text-xs text-black/60 dark:text-white/60">
+            <div class="flex items-center gap-2">
+                <i data-lucide="tag" class="w-3.5 h-3.5 text-emerald-600"></i>
+                <span>Teks Badge Promo Paket Tahunan: <strong class="text-emerald-700 dark:text-emerald-400 font-mono bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded-[6px] border border-emerald-200/60 dark:border-emerald-800/60">{{ $basePrices['annual_discount_badge'] }}</strong></span>
+            </div>
+            <div class="text-[11px] text-slate-400 font-mono">
+                Perubahan tersimpan otomatis di SystemSettings &amp; BillingPackages
+            </div>
         </div>
     </div>
 
@@ -290,6 +367,9 @@
                                                 <div class="font-semibold text-black dark:text-white">{{ $batch->name }}</div>
                                                 <div class="text-[10px] text-black/50 dark:text-white/50 mt-0.5">
                                                     Mode: <span class="capitalize">{{ str_replace('_', ' ', $batch->trigger_mode) }}</span>
+                                                    @if($batch->trigger_mode === 'hybrid')
+                                                        <span class="font-bold text-[#007AFF]">({{ $batch->hybrid_operator === 'both' ? 'Wajib Keduanya' : 'Salah Satu' }})</span>
+                                                    @endif
                                                     @if($batch->ends_at)
                                                         • s/d {{ $batch->ends_at->format('d M Y') }}
                                                     @endif
@@ -835,6 +915,15 @@
                         </select>
                     </div>
 
+                    <div x-show="currentBatch.trigger_mode === 'hybrid'">
+                        <label class="block text-xs font-semibold text-black dark:text-white mb-1">Operator Logika Hybrid</label>
+                        <select name="hybrid_operator" x-model="currentBatch.hybrid_operator"
+                            class="w-full px-3 py-2 text-xs rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-black dark:text-white focus:outline-hidden">
+                            <option value="either">Salah Satu (ATAU) - Default</option>
+                            <option value="both">Keduanya Wajib (DAN)</option>
+                        </select>
+                    </div>
+
                     <div>
                         <label class="block text-xs font-semibold text-black dark:text-white mb-1">Kuota Maksimal Pelanggan</label>
                         <input type="number" name="quota_limit" x-model="currentBatch.quota_limit" placeholder="Contoh: 1000" min="1"
@@ -1044,6 +1133,15 @@
                         </select>
                     </div>
 
+                    <div x-show="currentBatch.trigger_mode === 'hybrid'">
+                        <label class="block text-xs font-semibold text-black dark:text-white mb-1">Operator Hybrid</label>
+                        <select name="hybrid_operator" x-model="currentBatch.hybrid_operator"
+                            class="w-full px-3 py-2 text-xs rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-black dark:text-white">
+                            <option value="either">Salah Satu (ATAU) - Default</option>
+                            <option value="both">Keduanya Wajib (DAN)</option>
+                        </select>
+                    </div>
+
                     <div>
                         <label class="block text-xs font-semibold text-black dark:text-white mb-1">Kuota Limit</label>
                         <input type="number" name="quota_limit" x-model="currentBatch.quota_limit"
@@ -1220,6 +1318,99 @@
                     </button>
                     <button type="submit" class="px-4 py-2 rounded-[10px] bg-[#007AFF] hover:bg-[#0066D6] text-white text-xs font-semibold shadow-xs">
                         Simpan Tautan Batch
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Ubah Harga Normal Acuan & Badge Promo -->
+    <div x-show="showEditBasePricesModal" x-cloak class="fixed inset-0 z-50 overflow-y-auto bg-black/40 backdrop-blur-xs flex items-center justify-center p-4">
+        <div @click.away="showEditBasePricesModal = false" class="w-full max-w-xl bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-2xl p-6 space-y-5 my-8">
+            <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-3">
+                <div class="flex items-center gap-2">
+                    <span class="w-7 h-7 rounded-[8px] bg-emerald-500/10 text-emerald-600 flex items-center justify-center">
+                        <i data-lucide="edit" class="w-4 h-4"></i>
+                    </span>
+                    <h3 class="text-base font-bold text-black dark:text-white">Ubah Harga Normal &amp; Promo Tahunan</h3>
+                </div>
+                <button type="button" @click="showEditBasePricesModal = false" class="p-1 rounded-[8px] hover:bg-black/5 dark:hover:bg-white/10 text-black/50 dark:text-white/50 cursor-pointer">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <form method="POST" action="{{ route('admin.pricing-programs.base-prices.update') }}" class="space-y-4">
+                @csrf
+                <p class="text-xs text-black/60 dark:text-white/60">
+                    Perubahan harga di sini akan langsung menjadi harga resmi di seluruh sistem tanpa mengubah kode program. Pelanggan lama yang sudah mengunci harga tetap terlindungi.
+                </p>
+
+                <!-- Standard -->
+                <div class="p-3.5 rounded-[16px] bg-emerald-50/40 dark:bg-emerald-950/20 border border-emerald-200/50 dark:border-emerald-800/40 space-y-2">
+                    <div class="text-xs font-bold text-emerald-800 dark:text-emerald-300">Paket Standard UMKM</div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-[11px] font-medium text-black/70 dark:text-white/70 mb-1">Harga Bulanan (Rp)</label>
+                            <input type="number" name="standard_monthly_price" value="{{ (int)$basePrices['standard_monthly'] }}" min="0" required
+                                class="w-full px-3 py-1.5 text-xs rounded-[8px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-black dark:text-white font-mono">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-medium text-black/70 dark:text-white/70 mb-1">Harga Tahunan (Rp)</label>
+                            <input type="number" name="standard_annual_price" value="{{ (int)$basePrices['standard_annual'] }}" min="0" required
+                                class="w-full px-3 py-1.5 text-xs rounded-[8px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-black dark:text-white font-mono">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Premium -->
+                <div class="p-3.5 rounded-[16px] bg-indigo-50/40 dark:bg-indigo-950/20 border border-indigo-200/50 dark:border-indigo-800/40 space-y-2">
+                    <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300">Paket Premium Scale-Up</div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-[11px] font-medium text-black/70 dark:text-white/70 mb-1">Harga Bulanan (Rp)</label>
+                            <input type="number" name="premium_monthly_price" value="{{ (int)$basePrices['premium_monthly'] }}" min="0" required
+                                class="w-full px-3 py-1.5 text-xs rounded-[8px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-black dark:text-white font-mono">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-medium text-black/70 dark:text-white/70 mb-1">Harga Tahunan (Rp)</label>
+                            <input type="number" name="premium_annual_price" value="{{ (int)$basePrices['premium_annual'] }}" min="0" required
+                                class="w-full px-3 py-1.5 text-xs rounded-[8px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-black dark:text-white font-mono">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prestige -->
+                <div class="p-3.5 rounded-[16px] bg-purple-50/40 dark:bg-purple-950/20 border border-purple-200/50 dark:border-purple-800/40 space-y-2">
+                    <div class="text-xs font-bold text-purple-800 dark:text-purple-300">Paket Prestige Enterprise</div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-[11px] font-medium text-black/70 dark:text-white/70 mb-1">Harga Bulanan (Rp)</label>
+                            <input type="number" name="prestige_monthly_price" value="{{ (int)$basePrices['prestige_monthly'] }}" min="0" required
+                                class="w-full px-3 py-1.5 text-xs rounded-[8px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-black dark:text-white font-mono">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-medium text-black/70 dark:text-white/70 mb-1">Harga Tahunan (Rp)</label>
+                            <input type="number" name="prestige_annual_price" value="{{ (int)$basePrices['prestige_annual'] }}" min="0" required
+                                class="w-full px-3 py-1.5 text-xs rounded-[8px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-black dark:text-white font-mono">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Annual Discount Badge -->
+                <div>
+                    <label class="block text-xs font-semibold text-black dark:text-white mb-1">Label / Teks Badge Promo Tahunan</label>
+                    <input type="text" name="annual_discount_badge" value="{{ $basePrices['annual_discount_badge'] }}" required maxlength="50"
+                        placeholder="Contoh: Hemat 2 Bulan"
+                        class="w-full px-3 py-2 text-xs rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-black dark:text-white focus:outline-hidden">
+                    <p class="text-[11px] text-slate-400 mt-1">Ditampilkan pada switcher bulanan/tahunan di /pricing dan /billing/limits.</p>
+                </div>
+
+                <div class="flex items-center justify-end gap-2 pt-3 border-t border-black/[0.06] dark:border-white/[0.08]">
+                    <button type="button" @click="showEditBasePricesModal = false" class="px-4 py-2 rounded-[10px] text-xs font-semibold hover:bg-black/5 dark:hover:bg-white/10 text-black/70 dark:text-white/70 cursor-pointer">
+                        Batal
+                    </button>
+                    <button type="submit" class="px-4 py-2 rounded-[10px] bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow-xs cursor-pointer">
+                        Simpan Perubahan Harga Normal
                     </button>
                 </div>
             </form>

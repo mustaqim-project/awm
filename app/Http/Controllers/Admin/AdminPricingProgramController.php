@@ -8,15 +8,18 @@ use App\Domain\Billing\EarlyAdopterPricingService;
 use App\Domain\Billing\EntitlementService;
 use App\Http\Controllers\Controller;
 use App\Models\AuditLog;
+use App\Models\BillingPackage;
 use App\Models\BusinessSubscription;
 use App\Models\SubscriptionPriceHistory;
 use App\Models\SubscriptionPricingBatch;
 use App\Models\SubscriptionPricingProgram;
+use App\Models\SystemSetting;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
@@ -32,7 +35,7 @@ final class AdminPricingProgramController extends Controller implements HasMiddl
             new Middleware('require.admin.permission:admin.pricing_programs.manage', only: [
                 'store', 'update', 'toggle',
                 'storeBatch', 'updateBatch', 'toggleBatchStatus', 'linkNextBatch',
-                'runEscalation',
+                'runEscalation', 'updateBasePrices',
             ]),
         ];
     }
@@ -124,6 +127,7 @@ final class AdminPricingProgramController extends Controller implements HasMiddl
             'premium_annual' => $this->pricingService->getBasePrice('premium', 'annual'),
             'prestige_monthly' => $this->pricingService->getBasePrice('prestige', 'monthly'),
             'prestige_annual' => $this->pricingService->getBasePrice('prestige', 'annual'),
+            'annual_discount_badge' => SystemSetting::get('subscription_annual_discount_badge', 'Hemat 2 Bulan'),
         ];
 
         return view('admin.pricing-programs.index', compact(
@@ -172,14 +176,9 @@ final class AdminPricingProgramController extends Controller implements HasMiddl
             'is_active' => (bool) ($request->input('is_active', true)),
         ]);
 
-        AuditLog::create([
-            'business_id' => null,
-            'user_id' => auth('admin')->id(),
-            'action' => 'billing.pricing_program.created',
-            'auditable_type' => SubscriptionPricingProgram::class,
-            'auditable_id' => $program->id,
-            'risk_level' => AuditLog::RISK_LOW,
-            'notes' => "Program Early Adopter baru dibuat: {$program->name} ({$program->code})",
+        Log::info("Program Early Adopter baru dibuat: {$program->name} ({$program->code})", [
+            'admin_id' => auth('admin')->id(),
+            'program_id' => $program->id,
         ]);
 
         return redirect()->route('admin.pricing-programs.index', ['tab' => 'programs'])
@@ -231,14 +230,11 @@ final class AdminPricingProgramController extends Controller implements HasMiddl
             'quota_used' => 0,
         ]));
 
-        AuditLog::create([
-            'business_id' => null,
-            'user_id' => auth('admin')->id(),
-            'action' => 'billing.pricing_batch.created',
-            'auditable_type' => SubscriptionPricingBatch::class,
-            'auditable_id' => $batch->id,
-            'risk_level' => AuditLog::RISK_MEDIUM,
-            'notes' => "Batch #{$batch->batch_number} ({$batch->name}) dibuat pada program {$program->name}. Kuota: {$batch->quota_limit}, Kenaikan Tahunan: {$batch->annual_increase_percentage}%",
+        Log::info("Batch #{$batch->batch_number} ({$batch->name}) dibuat pada program {$program->name}", [
+            'admin_id' => auth('admin')->id(),
+            'batch_id' => $batch->id,
+            'quota_limit' => $batch->quota_limit,
+            'annual_increase_percentage' => $batch->annual_increase_percentage,
         ]);
 
         return redirect()->route('admin.pricing-programs.index', ['tab' => 'programs'])
@@ -254,14 +250,9 @@ final class AdminPricingProgramController extends Controller implements HasMiddl
 
         $batch->update($validated);
 
-        AuditLog::create([
-            'business_id' => null,
-            'user_id' => auth('admin')->id(),
-            'action' => 'billing.pricing_batch.updated',
-            'auditable_type' => SubscriptionPricingBatch::class,
-            'auditable_id' => $batch->id,
-            'risk_level' => AuditLog::RISK_MEDIUM,
-            'notes' => "Batch #{$batch->batch_number} ({$batch->name}) diperbarui oleh admin.",
+        Log::info("Batch #{$batch->batch_number} ({$batch->name}) diperbarui oleh admin.", [
+            'admin_id' => auth('admin')->id(),
+            'batch_id' => $batch->id,
         ]);
 
         return redirect()->route('admin.pricing-programs.index', ['tab' => 'programs'])
@@ -335,6 +326,73 @@ final class AdminPricingProgramController extends Controller implements HasMiddl
     }
 
     /**
+     * Update official base normal prices for all 3 tiers and annual discount badge.
+     */
+    public function updateBasePrices(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'standard_monthly_price' => ['required', 'numeric', 'min:0'],
+            'standard_annual_price'  => ['required', 'numeric', 'min:0'],
+            'premium_monthly_price'   => ['required', 'numeric', 'min:0'],
+            'premium_annual_price'    => ['required', 'numeric', 'min:0'],
+            'prestige_monthly_price'  => ['required', 'numeric', 'min:0'],
+            'prestige_annual_price'   => ['required', 'numeric', 'min:0'],
+            'annual_discount_badge'   => ['required', 'string', 'max:100'],
+        ]);
+
+        $oldPrices = [
+            'standard_monthly' => $this->pricingService->getBasePrice('standard', 'monthly'),
+            'standard_annual' => $this->pricingService->getBasePrice('standard', 'annual'),
+            'premium_monthly' => $this->pricingService->getBasePrice('premium', 'monthly'),
+            'premium_annual' => $this->pricingService->getBasePrice('premium', 'annual'),
+            'prestige_monthly' => $this->pricingService->getBasePrice('prestige', 'monthly'),
+            'prestige_annual' => $this->pricingService->getBasePrice('prestige', 'annual'),
+            'annual_discount_badge' => SystemSetting::get('subscription_annual_discount_badge', 'Hemat 2 Bulan'),
+        ];
+
+        // 1. Update SystemSettings (Single Source of Truth)
+        SystemSetting::set('subscription_price_standard_monthly', (string) $validated['standard_monthly_price'], 'billing');
+        SystemSetting::set('subscription_price_standard_annual', (string) $validated['standard_annual_price'], 'billing');
+        SystemSetting::set('subscription_price_monthly', (string) $validated['standard_monthly_price'], 'billing');
+        SystemSetting::set('subscription_price_annual', (string) $validated['standard_annual_price'], 'billing');
+        SystemSetting::set('subscription_price_premium_monthly', (string) $validated['premium_monthly_price'], 'billing');
+        SystemSetting::set('subscription_price_premium_annual', (string) $validated['premium_annual_price'], 'billing');
+        SystemSetting::set('subscription_price_prestige_monthly', (string) $validated['prestige_monthly_price'], 'billing');
+        SystemSetting::set('subscription_price_prestige_annual', (string) $validated['prestige_annual_price'], 'billing');
+        SystemSetting::set('subscription_annual_discount_badge', $validated['annual_discount_badge'], 'billing');
+
+        // 2. Synchronize BillingPackage catalog for consistency across legacy checkout & APIs
+        $packageSyncMap = [
+            'standard-monthly' => (float) $validated['standard_monthly_price'],
+            'standard-annual'  => (float) $validated['standard_annual_price'],
+            'premium-monthly'  => (float) $validated['premium_monthly_price'],
+            'premium-annual'   => (float) $validated['premium_annual_price'],
+            'prestige-monthly' => (float) $validated['prestige_monthly_price'],
+            'prestige-annual'  => (float) $validated['prestige_annual_price'],
+        ];
+
+        foreach ($packageSyncMap as $code => $price) {
+            BillingPackage::where('type', BillingPackage::TYPE_SUBSCRIPTION)
+                ->where('code', $code)
+                ->update(['price' => $price]);
+        }
+
+        // 3. Invalidate caches
+        \Illuminate\Support\Facades\Cache::forget('system_settings');
+        \Illuminate\Support\Facades\Cache::forget('billing_all_tier_prices');
+
+        // 4. Financial & Commercial Audit Trail
+        Log::info('Admin memperbarui harga normal publik 3 paket langganan dan badge promo tahunan.', [
+            'admin_id' => auth('admin')->id(),
+            'old_values' => $oldPrices,
+            'new_values' => $validated,
+        ]);
+
+        return redirect()->route('admin.pricing-programs.index', ['tab' => 'programs'])
+            ->with('success', 'Harga normal publik berhasil diperbarui dan disinkronkan ke seluruh sistem billing.');
+    }
+
+    /**
      * Validate batch form request, enforcing strict max 10.00% annual increase policy.
      *
      * @return array<string, mixed>
@@ -345,6 +403,7 @@ final class AdminPricingProgramController extends Controller implements HasMiddl
             'name' => ['required', 'string', 'max:150'],
             'status' => ['required', 'string', 'in:' . implode(',', SubscriptionPricingBatch::STATUSES)],
             'trigger_mode' => ['required', 'string', 'in:' . implode(',', SubscriptionPricingBatch::MODES)],
+            'hybrid_operator' => ['nullable', 'string', 'in:' . implode(',', SubscriptionPricingBatch::HYBRID_OPERATORS)],
             'quota_limit' => ['nullable', 'integer', 'min:1'],
             'starts_at' => ['nullable', 'date'],
             'ends_at' => ['nullable', 'date', 'after_or_equal:starts_at'],

@@ -283,7 +283,21 @@
         @endif
 
         <!-- 3. Official 4-Tier Subscription Plans Showcase -->
-        <section aria-labelledby="pricing-tiers-heading" class="space-y-4">
+        <section aria-labelledby="pricing-tiers-heading" class="space-y-4" x-data="{
+            pricingCycle: 'monthly',
+            tierPrices: @js($tierPrices),
+            annualBadge: '{{ $annualDiscountBadge }}',
+            formatRupiah(num) {
+                return 'Rp ' + Number(num || 0).toLocaleString('id-ID');
+            },
+            formatApprox(annualNum) {
+                return Number(Math.round((annualNum || 0) / 12)).toLocaleString('id-ID');
+            },
+            approxText(annualNum) {
+                const template = @js(__('billing.plan_per_year_approx', ['price' => ':price']));
+                return template.replace(':price', this.formatApprox(annualNum));
+            }
+        }">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 dark:border-slate-800 pb-3">
                 <div>
                     <h2 id="pricing-tiers-heading" class="text-sm sm:text-base font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
@@ -306,7 +320,7 @@
                         :class="pricingCycle === 'annual' ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-2xs font-bold' : 'text-slate-500 hover:text-slate-900 dark:hover:text-white font-medium'"
                         class="px-3 py-1.5 rounded-[9px] text-xs transition-all flex items-center gap-1.5 cursor-pointer">
                         <span>{{ __('billing.billing_annual') }}</span>
-                        <span class="px-1.5 py-0.5 text-[9px] font-bold rounded-full bg-emerald-600 text-white">{{ __('billing.annual_badge') }}</span>
+                        <span class="px-1.5 py-0.5 text-[9px] font-bold rounded-full bg-emerald-600 text-white" x-text="annualBadge">{{ $annualDiscountBadge }}</span>
                     </button>
                 </div>
             </div>
@@ -392,9 +406,9 @@
                         </div>
                         <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
                             <div class="text-2xl font-black font-mono tabular-nums text-slate-900 dark:text-white"
-                                x-text="pricingCycle === 'annual' ? 'Rp 290.000' : 'Rp 29.000'"></div>
+                                x-text="pricingCycle === 'annual' ? formatRupiah(tierPrices.standard?.annual) : formatRupiah(tierPrices.standard?.monthly)"></div>
                             <div class="text-[10px] text-slate-500 font-mono"
-                                x-text="pricingCycle === 'annual' ? '{{ __('billing.plan_per_year_approx', ['price' => '24.167']) }}' : '{{ __('billing.plan_per_month_flexible') }}'"></div>
+                                x-text="pricingCycle === 'annual' ? approxText(tierPrices.standard?.annual) : '{{ __('billing.plan_per_month_flexible') }}'"></div>
                         </div>
 
                         <!-- Ringkasan Kapasitas Inti -->
@@ -464,9 +478,9 @@
                         </div>
                         <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
                             <div class="text-2xl font-black font-mono tabular-nums text-indigo-600 dark:text-indigo-400"
-                                x-text="pricingCycle === 'annual' ? 'Rp 890.000' : 'Rp 89.000'"></div>
+                                x-text="pricingCycle === 'annual' ? formatRupiah(tierPrices.premium?.annual) : formatRupiah(tierPrices.premium?.monthly)"></div>
                             <div class="text-[10px] text-slate-500 font-mono"
-                                x-text="pricingCycle === 'annual' ? '{{ __('billing.plan_per_year_approx', ['price' => '74.167']) }}' : '{{ __('billing.plan_per_month_flexible') }}'"></div>
+                                x-text="pricingCycle === 'annual' ? approxText(tierPrices.premium?.annual) : '{{ __('billing.plan_per_month_flexible') }}'"></div>
                         </div>
 
                         <!-- Ringkasan Kapasitas Inti -->
@@ -531,9 +545,9 @@
                         </div>
                         <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
                             <div class="text-2xl font-black font-mono tabular-nums text-purple-600 dark:text-purple-400"
-                                x-text="pricingCycle === 'annual' ? 'Rp 1.990.000' : 'Rp 199.000'"></div>
+                                x-text="pricingCycle === 'annual' ? formatRupiah(tierPrices.prestige?.annual) : formatRupiah(tierPrices.prestige?.monthly)"></div>
                             <div class="text-[10px] text-slate-500 font-mono"
-                                x-text="pricingCycle === 'annual' ? '{{ __('billing.plan_per_year_approx', ['price' => '165.833']) }}' : '{{ __('billing.plan_per_month_flexible') }}'"></div>
+                                x-text="pricingCycle === 'annual' ? approxText(tierPrices.prestige?.annual) : '{{ __('billing.plan_per_month_flexible') }}'"></div>
                         </div>
 
                         <!-- Ringkasan Kapasitas Inti -->
@@ -634,9 +648,18 @@
                                 <tr class="border-b border-slate-200 dark:border-slate-800 bg-slate-100/70 dark:bg-slate-800/70 text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400">
                                     <th class="py-3 px-4 w-[36%] font-bold">{{ __('billing.matrix_col_feature') }}</th>
                                     <th class="py-3 px-3 text-center w-[16%]">Free (Rp 0)</th>
-                                    <th class="py-3 px-3 text-center w-[16%] text-emerald-700 dark:text-emerald-400">Standard (Rp 29k)</th>
-                                    <th class="py-3 px-3 text-center w-[16%] text-indigo-700 dark:text-indigo-400 font-bold bg-indigo-50/50 dark:bg-indigo-950/20">Premium (Rp 89k)</th>
-                                    <th class="py-3 px-3 text-center w-[16%] text-purple-700 dark:text-purple-400">Prestige (Rp 199k)</th>
+                                    <th class="py-3 px-3 text-center w-[16%] text-emerald-700 dark:text-emerald-400">
+                                        <span>Standard</span>
+                                        <span class="block text-[10px] font-normal" x-text="pricingCycle === 'annual' ? formatRupiah(tierPrices.standard?.annual) : formatRupiah(tierPrices.standard?.monthly)"></span>
+                                    </th>
+                                    <th class="py-3 px-3 text-center w-[16%] text-indigo-700 dark:text-indigo-400 font-bold bg-indigo-50/50 dark:bg-indigo-950/20">
+                                        <span>Premium</span>
+                                        <span class="block text-[10px] font-normal" x-text="pricingCycle === 'annual' ? formatRupiah(tierPrices.premium?.annual) : formatRupiah(tierPrices.premium?.monthly)"></span>
+                                    </th>
+                                    <th class="py-3 px-3 text-center w-[16%] text-purple-700 dark:text-purple-400">
+                                        <span>Prestige</span>
+                                        <span class="block text-[10px] font-normal" x-text="pricingCycle === 'annual' ? formatRupiah(tierPrices.prestige?.annual) : formatRupiah(tierPrices.prestige?.monthly)"></span>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-100 dark:divide-slate-800/60 font-sans text-slate-700 dark:text-slate-300 text-[12px]">

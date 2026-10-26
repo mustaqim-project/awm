@@ -138,6 +138,7 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
             Route::post('/', [\App\Http\Controllers\Admin\AdminPricingProgramController::class, 'store'])->name('store');
             Route::put('/{program}', [\App\Http\Controllers\Admin\AdminPricingProgramController::class, 'update'])->name('update');
             Route::post('/{program}/toggle', [\App\Http\Controllers\Admin\AdminPricingProgramController::class, 'toggle'])->name('toggle');
+            Route::post('/base-prices', [\App\Http\Controllers\Admin\AdminPricingProgramController::class, 'updateBasePrices'])->name('base-prices.update');
 
             // Batches
             Route::post('/{program}/batches', [\App\Http\Controllers\Admin\AdminPricingProgramController::class, 'storeBatch'])->name('batches.store');
@@ -371,6 +372,7 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
             Route::post('/ai-settings', [AdminInboxController::class, 'saveAiSettings'])->name('ai-settings.save');
             Route::post('/ai-test', [AdminInboxController::class, 'testAiPrompt'])->name('ai-test');
             Route::post('/generate-ai-reply/{id}', [AdminInboxController::class, 'generateAiReply'])->name('generate-ai-reply');
+            Route::post('/typing', [AdminInboxController::class, 'broadcastTyping'])->name('typing');
         });
 
         // Error Logs & System Diagnostics

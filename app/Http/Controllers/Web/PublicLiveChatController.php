@@ -27,6 +27,20 @@ class PublicLiveChatController extends Controller
      */
     public function checkAndHandleInactivityTimeout(string $sessionToken): bool
     {
+        // If thread has already been resolved, return true immediately
+        $isAlreadyResolved = SocialMediaComment::where('is_platform', true)
+            ->where('platform', 'live_chat')
+            ->where(function ($q) use ($sessionToken) {
+                $q->where('session_token', $sessionToken)
+                  ->orWhere('from_id', $sessionToken);
+            })
+            ->where('status', 'resolved')
+            ->exists();
+
+        if ($isAlreadyResolved) {
+            return true;
+        }
+
         $lastMessage = SocialMediaComment::where('is_platform', true)
             ->where('platform', 'live_chat')
             ->where(function ($q) use ($sessionToken) {
@@ -45,6 +59,50 @@ class PublicLiveChatController extends Controller
         if ($lastMessage->is_from_page) {
             $created = $lastMessage->created_time ?? $lastMessage->created_at;
             if ($created && Carbon::parse($created)->diffInSeconds(now()) >= self::INACTIVITY_TIMEOUT_SECONDS) {
+                // Find visitor details from earliest message in this session
+                $visitorMsg = SocialMediaComment::where('is_platform', true)
+                    ->where('platform', 'live_chat')
+                    ->where(function ($q) use ($sessionToken) {
+                        $q->where('session_token', $sessionToken)
+                          ->orWhere('from_id', $sessionToken);
+                    })
+                    ->where('is_from_page', false)
+                    ->oldest('created_time')
+                    ->oldest('created_at')
+                    ->first();
+
+                $visitorName = trim((string) ($visitorMsg?->from_name ?? ''));
+                $greetingName = $visitorName !== '' ? ' ' . $visitorName : '';
+
+                // Create official polite closing message before marking session as resolved
+                $closingText = "Baik Kak{$greetingName}, jika sudah tidak ada hal lain yang ingin ditanyakan, saya izin mengakhiri sesi live chat ini terlebih dahulu ya. Terima kasih banyak telah berkonsultasi dengan COOCA. Semoga usaha Kakak semakin sukses dan lancar! Jika sewaktu-waktu membutuhkan bantuan seputar operasional atau fitur COOCA, silakan mulai sesi chat baru kapan saja. 🙏😊";
+
+                $commentId = (string) Str::uuid();
+                $closingComment = SocialMediaComment::create([
+                    'business_id'         => null,
+                    'is_platform'         => true,
+                    'platform'            => 'live_chat',
+                    'platform_comment_id' => 'lc_' . $commentId,
+                    'platform_post_id'    => 'live_chat_website',
+                    'parent_comment_id'   => $lastMessage->platform_comment_id,
+                    'from_id'             => 'cooca_support',
+                    'from_name'           => 'Cooca Support',
+                    'from_email'          => $visitorMsg?->from_email,
+                    'from_phone'          => $visitorMsg?->from_phone,
+                    'session_token'       => $sessionToken,
+                    'message'             => $closingText,
+                    'is_from_page'        => true,
+                    'status'              => 'resolved',
+                    'created_time'        => now(),
+                ]);
+
+                // Broadcast closing message to Reverb WebSockets
+                try {
+                    event(new LiveChatMessageSent($closingComment));
+                } catch (\Throwable $e) {
+                    \Illuminate\Support\Facades\Log::warning('[LiveChat] Broadcast closing error: ' . $e->getMessage());
+                }
+
                 // Mark thread as resolved
                 SocialMediaComment::where('is_platform', true)
                     ->where('platform', 'live_chat')
@@ -119,13 +177,32 @@ class PublicLiveChatController extends Controller
         }
 
         // Trigger AI Auto-Reply if eligible (respecting human takeover lifecycle)
+        $replyComment = null;
         try {
-            app(\App\Domain\SocialMedia\AdminInboxAiService::class)->processAutoReplyIfEligible($comment);
+            $replyComment = app(\App\Domain\SocialMedia\AdminInboxAiService::class)->processAutoReplyIfEligible($comment);
         } catch (\Throwable $e) {
             \Illuminate\Support\Facades\Log::warning('[LiveChat] AI Auto-Reply error: ' . $e->getMessage());
         }
 
         $created = $comment->created_time ?? now();
+
+        $replyData = null;
+        if ($replyComment) {
+            $rCreated = $replyComment->created_time ?? $replyComment->created_at ?? now();
+            $replyData = [
+                'id'            => (string) $replyComment->id,
+                'message'       => $replyComment->message,
+                'media_url'     => $replyComment->media_url,
+                'media_type'    => $replyComment->media_type,
+                'from_name'     => $replyComment->from_name ?: 'Cooca Support',
+                'is_cooca'      => true,
+                'is_from_page'  => true,
+                'time'          => $rCreated->format('H:i'),
+                'time_relative' => 'Baru saja',
+                'date'          => $rCreated->format('d M Y'),
+                'created_at'    => $rCreated->toIso8601String(),
+            ];
+        }
 
         return response()->json([
             'success'       => true,
@@ -146,6 +223,7 @@ class PublicLiveChatController extends Controller
                 'date'          => $created->format('d M Y'),
                 'created_at'    => $created->toIso8601String(),
             ],
+            'reply'         => $replyData,
         ]);
     }
 
@@ -222,13 +300,32 @@ class PublicLiveChatController extends Controller
         }
 
         // Trigger AI Auto-Reply if eligible (respecting human takeover lifecycle)
+        $replyComment = null;
         try {
-            app(\App\Domain\SocialMedia\AdminInboxAiService::class)->processAutoReplyIfEligible($comment);
+            $replyComment = app(\App\Domain\SocialMedia\AdminInboxAiService::class)->processAutoReplyIfEligible($comment);
         } catch (\Throwable $e) {
             \Illuminate\Support\Facades\Log::warning('[LiveChat] AI Auto-Reply error: ' . $e->getMessage());
         }
 
         $created = $comment->created_time ?? now();
+
+        $replyData = null;
+        if ($replyComment) {
+            $rCreated = $replyComment->created_time ?? $replyComment->created_at ?? now();
+            $replyData = [
+                'id'            => (string) $replyComment->id,
+                'message'       => $replyComment->message,
+                'media_url'     => $replyComment->media_url,
+                'media_type'    => $replyComment->media_type,
+                'from_name'     => $replyComment->from_name ?: 'Cooca Support',
+                'is_cooca'      => true,
+                'is_from_page'  => true,
+                'time'          => $rCreated->format('H:i'),
+                'time_relative' => 'Baru saja',
+                'date'          => $rCreated->format('d M Y'),
+                'created_at'    => $rCreated->toIso8601String(),
+            ];
+        }
 
         return response()->json([
             'success'       => true,
@@ -244,6 +341,7 @@ class PublicLiveChatController extends Controller
                 'date'          => $created->format('d M Y'),
                 'created_at'    => $created->toIso8601String(),
             ],
+            'reply'         => $replyData,
         ]);
     }
 
@@ -365,5 +463,24 @@ class PublicLiveChatController extends Controller
             'messages'      => $formatted,
             'count'         => $formatted->count(),
         ]);
+    }
+
+    /**
+     * Broadcast live typing indicator from visitor or agent.
+     */
+    public function broadcastTyping(Request $request): JsonResponse
+    {
+        $sessionToken = (string) $request->input('session_token');
+        if (empty($sessionToken)) {
+            return response()->json(['success' => false], 400);
+        }
+
+        $isAgent = (bool) $request->input('is_agent', false);
+
+        try {
+            event(new \App\Events\LiveChatTyping($sessionToken, $isAgent));
+        } catch (\Throwable $e) {}
+
+        return response()->json(['success' => true]);
     }
 }
