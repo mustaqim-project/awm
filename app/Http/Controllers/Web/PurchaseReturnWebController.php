@@ -6,18 +6,28 @@ namespace App\Http\Controllers\Web;
 
 use App\Domain\Purchasing\PurchaseReturnService;
 use App\Http\Controllers\Controller;
+use App\Models\AuditLog;
 use App\Models\GoodsReceipt;
 use App\Models\PurchaseReturn;
 use App\Support\Context;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use InvalidArgumentException;
 
-final class PurchaseReturnWebController extends Controller
+final class PurchaseReturnWebController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.permission:purchase.returns', only: ['index', 'create', 'store', 'show', 'approve', 'complete']),
+        ];
+    }
+
     public function __construct(private readonly PurchaseReturnService $service = new PurchaseReturnService) {}
 
     public function index(): View
@@ -73,6 +83,23 @@ final class PurchaseReturnWebController extends Controller
             $return = $this->service->createFromGoodsReceipt($receipt, $validated['items'], array_merge($validated, [
                 'created_by' => auth()->id(),
             ]));
+
+            AuditLog::create([
+                'business_id' => $businessId,
+                'user_id' => auth()->id(),
+                'auditable_type' => PurchaseReturn::class,
+                'auditable_id' => $return->id,
+                'action' => 'purchase_return.created',
+                'risk_level' => AuditLog::RISK_LOW,
+                'new_values' => [
+                    'return_number' => $return->return_number,
+                    'goods_receipt_id' => $receipt->id,
+                    'reason' => $validated['reason'],
+                ],
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+                'created_at' => now(),
+            ]);
         } catch (InvalidArgumentException $exception) {
             return back()->withInput()->withErrors(['items' => $exception->getMessage()]);
         }
@@ -105,6 +132,21 @@ final class PurchaseReturnWebController extends Controller
 
         $this->service->approve($return, auth()->id());
 
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => auth()->id(),
+            'auditable_type' => PurchaseReturn::class,
+            'auditable_id' => $return->id,
+            'action' => 'purchase_return.approved',
+            'risk_level' => AuditLog::RISK_MEDIUM,
+            'new_values' => [
+                'return_number' => $return->return_number,
+            ],
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'created_at' => now(),
+        ]);
+
         return back()->with('success', __('purchasing.messages.return_approved'));
     }
 
@@ -122,6 +164,21 @@ final class PurchaseReturnWebController extends Controller
 
         try {
             $this->service->complete($return, auth()->id());
+
+            AuditLog::create([
+                'business_id' => $business->id,
+                'user_id' => auth()->id(),
+                'auditable_type' => PurchaseReturn::class,
+                'auditable_id' => $return->id,
+                'action' => 'purchase_return.completed',
+                'risk_level' => AuditLog::RISK_MEDIUM,
+                'new_values' => [
+                    'return_number' => $return->return_number,
+                ],
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+                'created_at' => now(),
+            ]);
         } catch (\Throwable $exception) {
             return back()->withErrors(['return' => $exception->getMessage()]);
         }

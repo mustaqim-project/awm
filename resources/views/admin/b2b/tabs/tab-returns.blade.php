@@ -119,7 +119,7 @@
                                 {{-- Tombol PDF --}}
                                 <a href="{{ route('admin.b2b.returns.pdf', $r) }}" target="_blank"
                                     class="h-8 px-2.5 rounded-[9px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-[#e11d48]/10 hover:text-[#e11d48] text-black/70 dark:text-white/70 text-[11.5px] font-bold transition-all inline-flex items-center gap-1"
-                                    title="Unduh / Cetak Nota Retur Penjualan Resmi PDF (A4)">
+                                    title="Unduh / Cetak Nota Retur Penjualan Resmi PDF (A4)" rel="noopener noreferrer">
                                     <i data-lucide="file-down" class="w-3.5 h-3.5"></i>
                                     <span>PDF</span>
                                 </a>

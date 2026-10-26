@@ -1,0 +1,9 @@
+# Risk Register: Modul Purchasing
+
+| Risk ID | Severity | Aspek | Deskripsi Risiko | Dampak Potensial | Mitigasi / Status |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **RSK-PUR-01** | **HIGH** | Security / RBAC | Keempat controller purchasing (`PurchaseOrderWebController`, `GoodsReceiptWebController`, `SupplierInvoiceWebController`, `PurchaseReturnWebController`) belum menerapkan `HasMiddleware`. | Staf tanpa izin dapat memanggil aksi purchasing jika route middleware terlewati atau diakses dari rute baru. | **RESOLVED**: Seluruh controller kini menerapkan `HasMiddleware` dengan pemetaan izin granular (`purchasing.*`, `receiving.manage`, `purchase.returns`). |
+| **RSK-PUR-02** | **MEDIUM** | Compliance / Audit | Penerimaan barang fisik (`GoodsReceiptWebController@store`) belum mencatat entri `AuditLog`. | Tidak ada rekam jejak staf yang memasukkan stok barang fisik ke gudang jika terjadi selisih stok. | **RESOLVED**: Diintegrasikan `AuditLog::create` event `goods_receipt.created` tingkat risiko `LOW`. |
+| **RSK-PUR-03** | **MEDIUM** | Compliance / Fraud | Pembayaran hutang vendor dan penyelesaian retur belum mencatat entri `AuditLog`. | Kesulitan melacak staf yang mencatat pengeluaran kas atau pengembalian barang retur. | **RESOLVED**: Diintegrasikan `AuditLog::create` untuk `supplier_invoice.payment_recorded`, `purchase_return.created`, `approved`, dan `completed`. |
+| **RSK-PUR-04** | **LOW** | UI/UX | Karakter Unicode centang `✓` pada status cetak PO. | Tampilan tidak seragam dan melanggar aturan Zero Emoji Apple HIG. | **RESOLVED**: Dihapus dan digantikan teks bersih didukung ikon Lucide SVG. |
+| **RSK-PUR-05** | **LOW** | Accessibility | Tombol segmented control dan tombol aksi tabel baris berukuran $32\text{px}$ (`w-8 h-8`). | Sulit diklik pada layar sentuh tablet kasir atau staf gudang. | **RESOLVED**: Ditingkatkan menjadi `w-9 h-9 min-h-[36px] min-w-[36px] rounded-[9px]`. |

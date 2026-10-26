@@ -93,7 +93,7 @@ function mcpSettingsHub() {
             return this.editTokenForm.abilities.includes(val);
         },
         activeProviderTab: 'claude',
-        claudeMode: 'web', // 'web' (Claude.ai Web & Mobile), 'desktop_sse' (Claude Desktop Remote), 'desktop_stdio' (Local CLI)
+        claudeMode: 'web', // 'web' (Claude.ai Web & Mobile - Streamable HTTP), 'desktop_http' (Claude Desktop Remote HTTP), 'desktop_stdio' (Local CLI)
         chatgptMode: 'connector', // 'connector' (ChatGPT Apps SDK / MCP Connector), 'actions' (Custom GPT Actions)
         chatgptAuthMethod: 'oauth', // 'oauth' (Recommended by ChatGPT Apps SDK), 'none' (Direct Token URL)
         chatgptClientRegMethod: 'user_defined', // 'user_defined' (Klien OAuth yang Ditentukan Pengguna), 'dcr' (Dynamic Client Registration)
@@ -181,14 +181,18 @@ function mcpSettingsHub() {
         },
 
         getClaudeWebUrl() {
-            return `${sseUrl}?token=${this.getToken()}`;
+            return `${topLevelMcpUrl}?token=${this.getToken()}`;
         },
 
-        getClaudeDesktopSseConfig() {
+        getClaudeHttpBaseUrl() {
+            return topLevelMcpUrl;
+        },
+
+        getClaudeDesktopHttpConfig() {
             const config = {
                 "mcpServers": {
                     "cooca-erp": {
-                        "url": sseUrl,
+                        "url": topLevelMcpUrl,
                         "headers": {
                             "Authorization": "Bearer " + this.getToken()
                         }
@@ -196,6 +200,10 @@ function mcpSettingsHub() {
                 }
             };
             return JSON.stringify(config, null, 2);
+        },
+
+        getClaudeDesktopSseConfig() {
+            return this.getClaudeDesktopHttpConfig();
         },
 
         getClaudeDesktopStdioConfig() {
@@ -656,7 +664,7 @@ document.addEventListener('alpine:init', () => {
                             </span>
                         </div>
 
-                        {{-- Sub-toggle: Web/Apps vs Desktop SSE vs Stdio --}}
+                        {{-- Sub-toggle: Web/Apps (HTTP) vs Desktop Remote (HTTP) vs Stdio --}}
                         <div class="inline-flex p-1 rounded-[12px] bg-neutral-100 dark:bg-neutral-800 text-[11px] font-medium overflow-x-auto">
                             <button
                                 type="button"
@@ -667,10 +675,10 @@ document.addEventListener('alpine:init', () => {
                             </button>
                             <button
                                 type="button"
-                                @click="claudeMode = 'desktop_sse'"
-                                :class="claudeMode === 'desktop_sse' ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500'"
+                                @click="claudeMode = 'desktop_http'"
+                                :class="(claudeMode === 'desktop_http' || claudeMode === 'desktop_sse') ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500'"
                                 class="px-3 py-1 rounded-[8px] transition-all whitespace-nowrap">
-                                {{ __('mcp.claude_mode_desktop_sse') }}
+                                {{ __('mcp.claude_mode_desktop_http') }}
                             </button>
                             <button
                                 type="button"
@@ -682,8 +690,21 @@ document.addEventListener('alpine:init', () => {
                         </div>
                     </div>
 
-                    {{-- Mode 1A: Claude.ai Web & Mobile Apps Custom Connector --}}
+                    {{-- Mode 1A: Claude.ai Web & Mobile Apps Custom Connector (Streamable HTTP) --}}
                     <div x-show="claudeMode === 'web'" class="space-y-4">
+                        {{-- Warning Alert: Anthropic SSE Deprecation Notice & Streamable HTTP Solution --}}
+                        <div class="p-4 rounded-[16px] bg-amber-50/80 dark:bg-amber-950/30 border border-amber-500/25 text-xs text-amber-900 dark:text-amber-200 leading-relaxed flex items-start gap-3">
+                            <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5"></i>
+                            <div class="space-y-1">
+                                <strong class="font-semibold text-amber-950 dark:text-amber-100 flex items-center gap-1.5">
+                                    <span>{{ __('mcp.claude_advanced_warning_title') }}</span>
+                                </strong>
+                                <p class="text-[11.5px] text-amber-800 dark:text-amber-300 leading-relaxed">
+                                    {!! __('mcp.claude_advanced_warning_desc') !!}
+                                </p>
+                            </div>
+                        </div>
+
                         <div class="p-4 rounded-[16px] bg-blue-50/70 dark:bg-blue-950/30 border border-blue-500/20 text-xs text-blue-800 dark:text-blue-300 leading-relaxed flex items-start gap-3">
                             <i data-lucide="smartphone" class="w-5 h-5 text-blue-500 shrink-0 mt-0.5"></i>
                             <div>
@@ -719,7 +740,7 @@ document.addEventListener('alpine:init', () => {
                             </div>
                         </div>
 
-                        <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-2">
+                        <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-3">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-2">
                                     <span class="w-6 h-6 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-xs font-bold flex items-center justify-center">3</span>
@@ -744,6 +765,27 @@ document.addEventListener('alpine:init', () => {
                                     <span>{{ __('mcp.btn_copy_url') }}</span>
                                 </button>
                             </div>
+
+                            {{-- Petunjuk Bagian Lanjutan (Advanced) di Claude.ai --}}
+                            <div class="p-3.5 rounded-[14px] bg-neutral-100 dark:bg-neutral-800/80 border border-neutral-200/90 dark:border-neutral-700 space-y-2 mt-2">
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="font-bold text-neutral-900 dark:text-white flex items-center gap-1.5">
+                                        <i data-lucide="sliders" class="w-3.5 h-3.5 text-blue-500"></i>
+                                        <span>{{ __('mcp.claude_advanced_transport_title') }}</span>
+                                    </span>
+                                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 font-semibold">{{ __('mcp.claude_advanced_transport_badge') }}</span>
+                                </div>
+                                <ul class="space-y-1.5 text-[11.5px] text-neutral-600 dark:text-neutral-300">
+                                    <li class="flex items-start gap-2">
+                                        <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5"></i>
+                                        <span>{!! __('mcp.claude_advanced_transport_step1') !!}</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5"></i>
+                                        <span>{!! __('mcp.claude_advanced_transport_step2') !!}</span>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
 
                         <div class="p-4 rounded-[16px] bg-emerald-50/60 dark:bg-emerald-950/30 border border-emerald-500/20 space-y-1">
@@ -757,8 +799,8 @@ document.addEventListener('alpine:init', () => {
                         </div>
                     </div>
 
-                    {{-- Mode 1B: Claude Desktop Remote SSE --}}
-                    <div x-show="claudeMode === 'desktop_sse'" class="space-y-4" style="display: none;">
+                    {{-- Mode 1B: Claude Desktop Remote (Streamable HTTP) --}}
+                    <div x-show="claudeMode === 'desktop_http' || claudeMode === 'desktop_sse'" class="space-y-4" style="display: none;">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-2">
                                 <div class="flex items-center justify-between">
@@ -784,24 +826,24 @@ document.addEventListener('alpine:init', () => {
                                 <span class="w-6 h-6 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-xs font-bold flex items-center justify-center">2</span>
                                 <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.claude_desktop_step2_title') }}</h4>
                                 <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
-                                    {{ __('mcp.claude_desktop_sse_note') }}
+                                    {{ __('mcp.claude_desktop_http_note') }}
                                 </p>
                             </div>
                         </div>
 
-                        {{-- Live Code Box Claude Desktop SSE --}}
+                        {{-- Live Code Box Claude Desktop HTTP --}}
                         <div class="relative">
                             <div class="flex items-center justify-between px-4 py-2.5 rounded-t-[16px] bg-neutral-800 text-neutral-300 text-xs font-mono border-b border-neutral-700">
                                 <span>claude_desktop_config.json</span>
                                 <button
                                     type="button"
-                                    @click="copyText(getClaudeDesktopSseConfig(), '{{ addslashes(__('mcp.toast_claude_desktop_sse_copied')) }}')"
+                                    @click="copyText(getClaudeDesktopHttpConfig(), '{{ addslashes(__('mcp.toast_claude_desktop_http_copied')) }}')"
                                     class="px-3 py-1 rounded-[8px] bg-white/10 hover:bg-white/20 text-white text-xs font-medium flex items-center gap-1.5 transition-colors">
                                     <i data-lucide="copy" class="w-3.5 h-3.5"></i>
                                     <span>{{ __('mcp.btn_copy_config') }}</span>
                                 </button>
                             </div>
-                            <pre class="p-4 rounded-b-[16px] bg-neutral-900 text-neutral-100 font-mono text-xs overflow-x-auto leading-relaxed select-all"><code x-text="getClaudeDesktopSseConfig()"></code></pre>
+                            <pre class="p-4 rounded-b-[16px] bg-neutral-900 text-neutral-100 font-mono text-xs overflow-x-auto leading-relaxed select-all"><code x-text="getClaudeDesktopHttpConfig()"></code></pre>
                         </div>
                     </div>
 

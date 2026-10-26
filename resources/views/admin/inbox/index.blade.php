@@ -805,7 +805,7 @@
                                             </template>
                                             <template x-if="selectedThread.phone">
                                                 <a :href="'https://wa.me/' + selectedThread.phone.replace(/[^0-9]/g, '')" target="_blank"
-                                                   class="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400 hover:underline font-medium">
+                                                   class="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400 hover:underline font-medium" rel="noopener noreferrer">
                                                     <i data-lucide="phone" class="w-3 h-3"></i>
                                                     <span x-text="selectedThread.phone"></span>
                                                     <span class="text-[9.5px] bg-emerald-100 dark:bg-emerald-950/60 px-1 py-0.2 rounded font-normal text-emerald-700 dark:text-emerald-300">Chat WA</span>
@@ -1186,7 +1186,7 @@
                             <div class="flex items-center justify-between py-1 border-b border-slate-200/60 dark:border-white/5">
                                 <span class="text-slate-500">Telepon / WhatsApp</span>
                                 <a :href="'https://wa.me/' + selectedThread.phone.replace(/[^0-9]/g, '')" target="_blank"
-                                   class="font-semibold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1">
+                                   class="font-semibold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1" rel="noopener noreferrer">
                                     <i data-lucide="phone" class="w-3 h-3"></i>
                                     <span x-text="selectedThread.phone"></span>
                                 </a>

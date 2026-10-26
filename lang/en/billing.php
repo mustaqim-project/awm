@@ -763,4 +763,22 @@ return [
     'zero_tables' => '0 Tables',
     'solo_owner' => '1 (Solo Owner)',
     'locations_count' => ':count Locations',
+
+    // Missing Billing Keys (Limits & Plans)
+    'meta_title_limits' => 'Subscription Plans & Resource Quota',
+    'tier_free_label' => 'Free Solo',
+    'plan_active_badge' => 'Active Plan',
+    'plan_free_desc' => 'For home-based micro businesses and solo entrepreneurs at no cost.',
+    'plan_free_forever' => 'Free Forever',
+    'plan_current_active' => 'Current Active Plan',
+    'plan_baseline_tier' => 'Baseline Tier',
+    'plan_standard_desc' => 'Ideal for startups with active POS cashier & 1–3 staff.',
+    'plan_per_month_flexible' => '/ month (flexible)',
+    'plan_per_year_approx' => 'approx. Rp :price / mo (save 2 months)',
+    'plan_premium_desc' => 'Complete solution for multi-branches, kitchen KDS, commissions & recipes.',
+    'plan_prestige_desc' => 'Full unlimited capacity, TER income tax, & WA payslips.',
+    'active_business' => 'Active Business',
+    'pos_transactions' => 'POS Cashier Transactions',
+    'storage_used_label' => 'Used',
+    'storage_remaining_label' => 'Remaining Storage',
 ];

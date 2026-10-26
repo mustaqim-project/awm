@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <a href="https://tripay.co.id/member" target="_blank"
-                    class="h-10 px-4 rounded-[12px] text-[12px] font-bold text-[#007AFF] dark:text-[#0A84FF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 active:scale-[0.98] transition-all inline-flex items-center gap-1.5 self-start sm:self-auto shrink-0 shadow-sm cursor-pointer">
+                    class="h-10 px-4 rounded-[12px] text-[12px] font-bold text-[#007AFF] dark:text-[#0A84FF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 active:scale-[0.98] transition-all inline-flex items-center gap-1.5 self-start sm:self-auto shrink-0 shadow-sm cursor-pointer" rel="noopener noreferrer">
                     <span>Merchant Dashboard TriPay</span>
                     <i data-lucide="external-link" class="w-3.5 h-3.5" stroke-width="2"></i>
                 </a>

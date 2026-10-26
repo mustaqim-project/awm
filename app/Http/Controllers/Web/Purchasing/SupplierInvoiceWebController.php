@@ -6,18 +6,28 @@ namespace App\Http\Controllers\Web\Purchasing;
 
 use App\Domain\Purchasing\SupplierInvoiceService;
 use App\Http\Controllers\Controller;
+use App\Models\AuditLog;
 use App\Models\CashAccount;
 use App\Models\SupplierInvoice;
 use App\Support\Context;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use InvalidArgumentException;
 
-final class SupplierInvoiceWebController extends Controller
+final class SupplierInvoiceWebController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.permission:purchasing.bills', only: ['index', 'show', 'recordPayment']),
+        ];
+    }
+
     public function __construct(
         private readonly SupplierInvoiceService $supplierInvoiceService = new SupplierInvoiceService,
     ) {}
@@ -75,9 +85,27 @@ final class SupplierInvoiceWebController extends Controller
         }
 
         try {
-            $this->supplierInvoiceService->recordPayment($invoice, array_merge($validated, [
+            $payment = $this->supplierInvoiceService->recordPayment($invoice, array_merge($validated, [
                 'created_by' => auth()->id(),
             ]));
+
+            AuditLog::create([
+                'business_id' => $business->id,
+                'user_id' => auth()->id(),
+                'auditable_type' => SupplierInvoice::class,
+                'auditable_id' => $invoice->id,
+                'action' => 'supplier_invoice.payment_recorded',
+                'risk_level' => AuditLog::RISK_MEDIUM,
+                'new_values' => [
+                    'amount' => $validated['amount'],
+                    'payment_method' => $validated['payment_method'],
+                    'invoice_number' => $invoice->invoice_number,
+                    'supplier_id' => $invoice->supplier_id,
+                ],
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+                'created_at' => now(),
+            ]);
         } catch (InvalidArgumentException $exception) {
             return back()->withInput()->withErrors(['amount' => $exception->getMessage()]);
         }

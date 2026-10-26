@@ -8,6 +8,7 @@ use App\Domain\Finance\CashLedgerService;
 use App\Domain\Inventory\StockService;
 use App\Domain\Purchasing\GoodsReceiptService;
 use App\Http\Controllers\Controller;
+use App\Models\AuditLog;
 use App\Models\CashAccount;
 use App\Models\GoodsReceipt;
 use App\Models\Location;
@@ -16,12 +17,21 @@ use App\Models\StockMovement;
 use App\Support\Context;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
-final class GoodsReceiptWebController extends Controller
+final class GoodsReceiptWebController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.permission:receiving.manage', only: ['create', 'store', 'instantStockIn']),
+        ];
+    }
+
     public function __construct(
         private readonly StockService $stockService = new StockService,
         private readonly GoodsReceiptService $goodsReceiptService = new GoodsReceiptService,
@@ -100,7 +110,25 @@ final class GoodsReceiptWebController extends Controller
             'items.*.expiry_date' => ['nullable', 'date'],
         ]);
 
-        $this->goodsReceiptService->receive($purchaseOrder, $validated, request()->user()?->id);
+        $receipt = $this->goodsReceiptService->receive($purchaseOrder, $validated, request()->user()?->id);
+
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => request()->user()?->id,
+            'auditable_type' => GoodsReceipt::class,
+            'auditable_id' => $receipt?->id ?? $purchaseOrder->id,
+            'action' => 'goods_receipt.created',
+            'risk_level' => AuditLog::RISK_LOW,
+            'new_values' => [
+                'po_id' => $purchaseOrder->id,
+                'po_number' => $purchaseOrder->po_number,
+                'location_id' => $validated['location_id'],
+                'items_count' => count($validated['items']),
+            ],
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'created_at' => now(),
+        ]);
 
         return redirect()->route('purchase-orders.show', $purchaseOrder)
             ->with('success', 'Penerimaan barang fisik berhasil dicatat dan stok gudang telah diperbarui.');

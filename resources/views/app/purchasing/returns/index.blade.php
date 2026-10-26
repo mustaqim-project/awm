@@ -102,7 +102,7 @@
                             {{ $return->goodsReceipt->receipt_number ?? '-' }}
                         </td>
                         <td class="px-4 py-3 text-black/60 dark:text-white/60 tabular-nums">
-                            {{ $return->created_at->format('d/m/Y') }}
+                            {{ $return->created_at?->format('d/m/Y') ?? $return->return_date?->format('d/m/Y') ?? '-' }}
                         </td>
                         <td class="px-4 py-3 text-right tabular-nums font-semibold text-black dark:text-white">
                             Rp {{ number_format($return->total_amount, 0, ',', '.') }}
@@ -124,7 +124,7 @@
                         </td>
                         <td class="px-4 py-3 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                             <div class="flex items-center justify-end gap-1">
-                                <a href="{{ route('purchase.returns.show', $return) }}" class="w-8 h-8 rounded-[8px] bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('purchasing.bills.action_detail') }}" aria-label="{{ __('purchasing.bills.action_detail') }}">
+                                <a href="{{ route('purchase.returns.show', $return) }}" class="w-9 h-9 min-h-[36px] min-w-[36px] rounded-[9px] bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('purchasing.bills.action_detail') }}" aria-label="{{ __('purchasing.bills.action_detail') }}">
                                     <i data-lucide="eye" class="w-4 h-4"></i>
                                 </a>
                             </div>
@@ -164,7 +164,7 @@
                 </div>
                 <p class="text-[13px] text-black/60 dark:text-white/60 truncate mt-0.5">{{ $return->supplier->name ?? '-' }} &bull; GR: {{ $return->goodsReceipt->receipt_number ?? '-' }}</p>
                 <div class="flex items-center gap-2 mt-1 text-[12px] text-black/45 dark:text-white/45 tabular-nums">
-                    <span>{{ $return->created_at->format('d/m/Y') }}</span>
+                    <span>{{ $return->created_at?->format('d/m/Y') ?? $return->return_date?->format('d/m/Y') ?? '-' }}</span>
                     <span>&bull;</span>
                     <span class="font-semibold text-black dark:text-white">Rp {{ number_format($return->total_amount, 0, ',', '.') }}</span>
                 </div>

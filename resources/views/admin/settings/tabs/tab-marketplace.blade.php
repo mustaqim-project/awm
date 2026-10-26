@@ -32,7 +32,7 @@
                 </div>
                 <div class="flex items-center gap-2 self-start sm:self-auto">
                     <a href="{{ route('marketplace-hub.index') }}" target="_blank"
-                        class="h-10 px-4 rounded-[12px] text-[12px] font-bold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 active:scale-[0.98] transition-all inline-flex items-center gap-1.5 shrink-0 shadow-sm cursor-pointer">
+                        class="h-10 px-4 rounded-[12px] text-[12px] font-bold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 active:scale-[0.98] transition-all inline-flex items-center gap-1.5 shrink-0 shadow-sm cursor-pointer" rel="noopener noreferrer">
                         <span>Lihat Panel Merchant</span>
                         <i data-lucide="external-link" class="w-3.5 h-3.5" stroke-width="2"></i>
                     </a>

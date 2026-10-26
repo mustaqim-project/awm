@@ -32,7 +32,7 @@
                 </div>
                 <div class="flex items-center gap-2 self-start sm:self-auto">
                     <a href="https://developers.facebook.com/apps" target="_blank"
-                        class="h-10 px-4 rounded-[12px] text-[12px] font-bold text-[#25D366] bg-[#25D366]/10 hover:bg-[#25D366]/20 active:scale-[0.98] transition-all inline-flex items-center gap-1.5 shrink-0 shadow-sm cursor-pointer">
+                        class="h-10 px-4 rounded-[12px] text-[12px] font-bold text-[#25D366] bg-[#25D366]/10 hover:bg-[#25D366]/20 active:scale-[0.98] transition-all inline-flex items-center gap-1.5 shrink-0 shadow-sm cursor-pointer" rel="noopener noreferrer">
                         <span>Meta Developer Console</span>
                         <i data-lucide="external-link" class="w-3.5 h-3.5" stroke-width="2"></i>
                     </a>
@@ -90,7 +90,7 @@
                             </div>
                             <p class="text-[11.5px] text-black/60 dark:text-white/60 leading-relaxed">
                                 Siapkan endpoint Webhooks untuk mendapatkan notifikasi pesan masuk dan status.
-                                <a href="https://developers.facebook.com/documentation/business-messaging/whatsapp/webhooks/overview/" target="_blank" class="text-[#007AFF] hover:underline font-medium inline-flex items-center gap-0.5">
+                                <a href="https://developers.facebook.com/documentation/business-messaging/whatsapp/webhooks/overview/" target="_blank" class="text-[#007AFF] hover:underline font-medium inline-flex items-center gap-0.5" rel="noopener noreferrer">
                                     <span>Panduan</span>
                                     <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
                                 </a>
@@ -111,7 +111,7 @@
                                 <button type="button" @click="copyToClipboard('{{ $metaWaWebhookVerifyToken ?? 'cooca_meta_wa_webhook_secret' }}', 'wa_tok')" class="text-[#007AFF] hover:underline shrink-0 text-[10.5px] font-bold">Salin</button>
                             </div>
                             <a href="https://developers.facebook.com/docs/graph-api/webhooks/getting-started/#mtls-for-webhooks" target="_blank"
-                                class="text-[10.5px] text-[#007AFF] hover:underline flex items-center gap-1">
+                                class="text-[10.5px] text-[#007AFF] hover:underline flex items-center gap-1" rel="noopener noreferrer">
                                 <span>Lampirkan sertifikat mTLS</span>
                                 <i data-lucide="external-link" class="w-3 h-3"></i>
                             </a>
@@ -138,7 +138,7 @@
                         <div class="pt-1">
                             <a href="https://business.facebook.com/latest/whatsapp_manager/phone_numbers/?business_id=2409028599628721&tab=phone-numbers&nav_ref=whatsapp_manager&asset_id="
                                 target="_blank"
-                                class="w-full h-8 px-3 rounded-[8px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-[#007AFF] text-[11px] font-bold transition flex items-center justify-center gap-1">
+                                class="w-full h-8 px-3 rounded-[8px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-[#007AFF] text-[11px] font-bold transition flex items-center justify-center gap-1" rel="noopener noreferrer">
                                 <span>Buka WhatsApp Manager</span>
                                 <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
                             </a>
@@ -165,7 +165,7 @@
                         <div class="pt-1">
                             <a href="https://business.facebook.com/billing_hub/?business_id=2409028599628721&placement=whatsapp_ads&account_type=whatsapp-business-account"
                                 target="_blank"
-                                class="w-full h-8 px-3 rounded-[8px] bg-[#34C759]/10 hover:bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] text-[11px] font-bold transition flex items-center justify-center gap-1">
+                                class="w-full h-8 px-3 rounded-[8px] bg-[#34C759]/10 hover:bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] text-[11px] font-bold transition flex items-center justify-center gap-1" rel="noopener noreferrer">
                                 <span>Buka Billing Hub Meta</span>
                                 <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
                             </a>
@@ -458,7 +458,7 @@
                             </div>
                             <a href="https://developers.facebook.com/documentation/business-messaging/whatsapp/get-started#step-5-create-a-system-user-and-generate-a-permanent-access-token"
                                 target="_blank"
-                                class="w-full h-8 px-2.5 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[#007AFF] text-[11px] font-semibold transition flex items-center justify-center gap-1">
+                                class="w-full h-8 px-2.5 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[#007AFF] text-[11px] font-semibold transition flex items-center justify-center gap-1" rel="noopener noreferrer">
                                 <span>Panduan Token System User Meta</span>
                                 <i data-lucide="external-link" class="w-3 h-3"></i>
                             </a>

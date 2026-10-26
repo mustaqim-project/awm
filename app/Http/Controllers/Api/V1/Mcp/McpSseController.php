@@ -80,10 +80,14 @@ final class McpSseController extends Controller
      */
     public function message(Request $request): JsonResponse
     {
+        $sessionId = (string) ($request->header('mcp-session-id') ?: $request->query('sessionId') ?: Str::uuid()->toString());
+
         $corsHeaders = [
-            'Access-Control-Allow-Origin'  => '*',
-            'Access-Control-Allow-Methods' => 'GET, POST, OPTIONS, HEAD',
-            'Access-Control-Allow-Headers' => 'Authorization, Content-Type, X-Requested-With, mcp-session-id, Accept, Last-Event-ID, x-mcp-token',
+            'Access-Control-Allow-Origin'   => '*',
+            'Access-Control-Allow-Methods'  => 'GET, POST, OPTIONS, HEAD',
+            'Access-Control-Allow-Headers'  => 'Authorization, Content-Type, X-Requested-With, mcp-session-id, Accept, Last-Event-ID, x-mcp-token',
+            'Access-Control-Expose-Headers' => 'mcp-session-id, Content-Type',
+            'mcp-session-id'                => $sessionId,
         ];
 
         if ($request->isMethod('OPTIONS')) {

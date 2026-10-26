@@ -183,7 +183,7 @@
                             </div>
                             <p class="text-[12px] text-black/70 dark:text-white/70 leading-relaxed">
                                 Mulailah menggunakan API Instagram untuk membuat, menerbitkan, dan mengelola konten. Anda juga bisa berinteraksi dengan pengguna dengan mengirim dan menerima pesan, serta memoderasi komentar.
-                                <a href="https://developers.facebook.com/docs/instagram-platform/" target="_blank" class="text-[#007AFF] font-medium hover:underline inline-flex items-center gap-0.5">
+                                <a href="https://developers.facebook.com/docs/instagram-platform/" target="_blank" class="text-[#007AFF] font-medium hover:underline inline-flex items-center gap-0.5" rel="noopener noreferrer">
                                     <span>Pelajari selengkapnya</span>
                                     <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
                                 </a>
@@ -191,7 +191,7 @@
                             <div class="pt-2 border-t border-black/[0.05] dark:border-white/[0.06] text-[11.5px] text-black/60 dark:text-white/60 flex flex-wrap items-center gap-x-2 gap-y-1">
                                 <span>Jika Anda ingin bisa melacak tagar dan insight, beralihlah ke:</span>
                                 <a href="https://developers.facebook.com/apps/1454871749894754/instagram-business/API-Setup/?business_id=2409028599628721#" target="_blank"
-                                    class="text-[#E1306C] font-semibold hover:underline inline-flex items-center gap-1">
+                                    class="text-[#E1306C] font-semibold hover:underline inline-flex items-center gap-1" rel="noopener noreferrer">
                                     <span>API setup with Facebook login</span>
                                     <i data-lucide="external-link" class="w-3 h-3"></i>
                                 </a>
@@ -209,13 +209,13 @@
                                             <span>Buat Token Akses</span>
                                         </div>
                                         <a href="https://developers.facebook.com/apps/1454871749894754/roles/roles/" target="_blank"
-                                            class="text-[11px] font-semibold text-[#007AFF] hover:underline inline-flex items-center gap-0.5">
+                                            class="text-[11px] font-semibold text-[#007AFF] hover:underline inline-flex items-center gap-0.5" rel="noopener noreferrer">
                                             <span>Tab Peran</span>
                                             <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
                                         </a>
                                     </div>
                                     <p class="text-[11.5px] text-black/60 dark:text-white/60 leading-relaxed">
-                                        Tambahkan akun Instagram untuk membuat token akses dan menyiapkan langganan webhook. Pastikan menetapkan peran <strong>Penguji Instagram</strong> pada tab <a href="https://developers.facebook.com/apps/1454871749894754/roles/roles/" target="_blank" class="text-[#007AFF] underline font-medium">Peran</a>.
+                                        Tambahkan akun Instagram untuk membuat token akses dan menyiapkan langganan webhook. Pastikan menetapkan peran <strong>Penguji Instagram</strong> pada tab <a href="https://developers.facebook.com/apps/1454871749894754/roles/roles/" target="_blank" class="text-[#007AFF] underline font-medium" rel="noopener noreferrer">Peran</a>.
                                     </p>
                                 </div>
                                 <div class="space-y-1.5 pt-1">
@@ -225,7 +225,7 @@
                                     </div>
                                     <div class="p-2.5 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/[0.04] dark:border-white/[0.06] flex items-center justify-between text-[11.5px]">
                                         <span class="text-black/50 dark:text-white/50">ID Akun:</span>
-                                        <a href="https://developers.facebook.com/apps/1454871749894754/instagram-business/API-Setup/?business_id=2409028599628721#" target="_blank" class="font-mono font-bold text-[#007AFF] hover:underline flex items-center gap-1">
+                                        <a href="https://developers.facebook.com/apps/1454871749894754/instagram-business/API-Setup/?business_id=2409028599628721#" target="_blank" class="font-mono font-bold text-[#007AFF] hover:underline flex items-center gap-1" rel="noopener noreferrer">
                                             <span>17841439846162016</span>
                                             <i data-lucide="external-link" class="w-3 h-3"></i>
                                         </a>
@@ -249,7 +249,7 @@
                                             <span>Konfigurasi Webhook</span>
                                         </div>
                                         <a href="https://developers.facebook.com/docs/instagram/platform/instagram-api/webhooks/" target="_blank"
-                                            class="text-[11px] font-semibold text-[#007AFF] hover:underline inline-flex items-center gap-0.5">
+                                            class="text-[11px] font-semibold text-[#007AFF] hover:underline inline-flex items-center gap-0.5" rel="noopener noreferrer">
                                             <span>Dokumentasi</span>
                                             <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
                                         </a>
@@ -262,7 +262,7 @@
                                     <div class="p-2.5 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/[0.04] dark:border-white/[0.06] flex items-center justify-between text-[11.5px]">
                                         <span class="text-black/50 dark:text-white/50">mTLS Sertifikat:</span>
                                         <a href="https://developers.facebook.com/docs/graph-api/webhooks/getting-started/#mtls-for-webhooks" target="_blank"
-                                            class="text-[#007AFF] font-medium hover:underline inline-flex items-center gap-1">
+                                            class="text-[#007AFF] font-medium hover:underline inline-flex items-center gap-1" rel="noopener noreferrer">
                                             <span>Pelajari mTLS</span>
                                             <i data-lucide="external-link" class="w-3 h-3"></i>
                                         </a>
@@ -272,7 +272,7 @@
                                         <span class="font-mono text-[11px] text-black/80 dark:text-white/80 select-all">{{ $metaSocialWebhookToken ?? 'cooca_meta_social_webhook_token' }}</span>
                                     </div>
                                     <a href="https://developers.facebook.com/apps/1454871749894754/instagram-business/API-Setup/?business_id=2409028599628721#" target="_blank"
-                                        class="w-full h-8 px-3 rounded-[8px] bg-[#E1306C]/10 hover:bg-[#E1306C]/20 text-[#E1306C] text-[11.5px] font-bold transition flex items-center justify-center gap-1">
+                                        class="w-full h-8 px-3 rounded-[8px] bg-[#E1306C]/10 hover:bg-[#E1306C]/20 text-[#E1306C] text-[11.5px] font-bold transition flex items-center justify-center gap-1" rel="noopener noreferrer">
                                         <span>Buka API Setup Instagram di Meta</span>
                                         <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
                                     </a>
@@ -332,7 +332,7 @@
                                     <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">
                                         ID Aplikasi Instagram
                                     </label>
-                                    <a href="https://developers.facebook.com/apps/1454871749894754/instagram-business/API-Setup/?business_id=2409028599628721#" target="_blank" class="text-[11px] text-[#007AFF] hover:underline font-mono inline-flex items-center gap-0.5">
+                                    <a href="https://developers.facebook.com/apps/1454871749894754/instagram-business/API-Setup/?business_id=2409028599628721#" target="_blank" class="text-[11px] text-[#007AFF] hover:underline font-mono inline-flex items-center gap-0.5" rel="noopener noreferrer">
                                         <span>1813131243044390</span>
                                         <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
                                     </a>
@@ -857,7 +857,7 @@
                         <span>Konfigurasi LinkedIn Developer Portal:</span>
                     </div>
                     <p class="text-[11.5px] leading-relaxed">
-                        Pada menu <strong>Auth</strong> &gt; <strong>OAuth 2.0 settings</strong> di portal <a href="https://www.linkedin.com/developers/apps" target="_blank" class="text-[#007AFF] underline font-semibold">LinkedIn Developers</a>:
+                        Pada menu <strong>Auth</strong> &gt; <strong>OAuth 2.0 settings</strong> di portal <a href="https://www.linkedin.com/developers/apps" target="_blank" class="text-[#007AFF] underline font-semibold" rel="noopener noreferrer">LinkedIn Developers</a>:
                     </p>
                     <div class="space-y-1 text-[11px]">
                         <p class="font-semibold text-black dark:text-white">1. Authorized redirect URLs for your app:</p>

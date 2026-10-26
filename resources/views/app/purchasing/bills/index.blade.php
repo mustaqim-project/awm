@@ -86,23 +86,23 @@
                 <span class="text-[12px] font-medium text-black/50 dark:text-white/50">{{ __('purchasing.fields.status') }}:</span>
                 <!-- Segmented Control -->
                 <div class="inline-flex p-0.5 rounded-[9px] bg-black/[0.06] dark:bg-white/[0.08] text-[13px] font-medium">
-                    <a href="{{ route('purchasing.bills.index') }}" class="px-3 py-1 rounded-[7px] transition-all {{ !request('status') ? 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' : 'text-black/55 dark:text-white/55 hover:text-black dark:hover:text-white' }}">
+                    <a href="{{ route('purchasing.bills.index') }}" class="min-h-[36px] flex items-center px-3.5 py-1.5 rounded-[7px] transition-all {{ !request('status') ? 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' : 'text-black/55 dark:text-white/55 hover:text-black dark:hover:text-white' }}">
                         {{ __('purchasing.bills.status_all') }}
                     </a>
-                    <a href="{{ route('purchasing.bills.index', ['status' => 'unpaid']) }}" class="px-3 py-1 rounded-[7px] transition-all {{ request('status') === 'unpaid' ? 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' : 'text-black/55 dark:text-white/55 hover:text-black dark:hover:text-white' }}">
+                    <a href="{{ route('purchasing.bills.index', ['status' => 'unpaid']) }}" class="min-h-[36px] flex items-center px-3.5 py-1.5 rounded-[7px] transition-all {{ request('status') === 'unpaid' ? 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' : 'text-black/55 dark:text-white/55 hover:text-black dark:hover:text-white' }}">
                         {{ __('purchasing.bills.status_unpaid') }}
                     </a>
-                    <a href="{{ route('purchasing.bills.index', ['status' => 'partial']) }}" class="px-3 py-1 rounded-[7px] transition-all {{ request('status') === 'partial' ? 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' : 'text-black/55 dark:text-white/55 hover:text-black dark:hover:text-white' }}">
+                    <a href="{{ route('purchasing.bills.index', ['status' => 'partial']) }}" class="min-h-[36px] flex items-center px-3.5 py-1.5 rounded-[7px] transition-all {{ request('status') === 'partial' ? 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' : 'text-black/55 dark:text-white/55 hover:text-black dark:hover:text-white' }}">
                         {{ __('purchasing.bills.status_partial') }}
                     </a>
-                    <a href="{{ route('purchasing.bills.index', ['status' => 'paid']) }}" class="px-3 py-1 rounded-[7px] transition-all {{ request('status') === 'paid' ? 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' : 'text-black/55 dark:text-white/55 hover:text-black dark:hover:text-white' }}">
+                    <a href="{{ route('purchasing.bills.index', ['status' => 'paid']) }}" class="min-h-[36px] flex items-center px-3.5 py-1.5 rounded-[7px] transition-all {{ request('status') === 'paid' ? 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' : 'text-black/55 dark:text-white/55 hover:text-black dark:hover:text-white' }}">
                         {{ __('purchasing.bills.status_paid') }}
                     </a>
                 </div>
             </div>
 
             @if(request('status'))
-            <a href="{{ route('purchasing.bills.index') }}" class="min-h-[44px] sm:min-h-0 h-10 sm:h-8 px-3 rounded-[8px] text-[12px] font-medium text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] transition-colors inline-flex items-center gap-1.5 self-start sm:self-auto">
+            <a href="{{ route('purchasing.bills.index') }}" class="min-h-[44px] sm:min-h-[36px] px-3.5 py-1.5 rounded-[9px] text-[12px] font-medium text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] transition-colors inline-flex items-center gap-1.5 self-start sm:self-auto">
                 <i data-lucide="x" class="w-3.5 h-3.5"></i>
                 <span>{{ __('purchasing.bills.reset_filter') }}</span>
             </a>
@@ -174,7 +174,7 @@
                         </td>
                         <td class="px-4 py-3 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                             <div class="flex items-center justify-end gap-1">
-                                <a href="{{ route('purchasing.bills.show', $invoice) }}" class="w-8 h-8 rounded-[8px] bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('purchasing.bills.action_detail') }}" aria-label="{{ __('purchasing.bills.action_detail') }}">
+                                <a href="{{ route('purchasing.bills.show', $invoice) }}" class="w-9 h-9 min-h-[36px] min-w-[36px] rounded-[9px] bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('purchasing.bills.action_detail') }}" aria-label="{{ __('purchasing.bills.action_detail') }}">
                                     <i data-lucide="eye" class="w-4 h-4"></i>
                                 </a>
                             </div>

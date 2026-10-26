@@ -238,7 +238,7 @@
                         <td class="py-3.5 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                             <div class="flex items-center justify-end gap-1">
                                 @if (\App\Support\Context::hasPermission('inventory.manage'))
-                                <button type="button" @click="openAdjust('{{ $st->id }}')" class="w-8 h-8 rounded-[8px] bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('warehouse.quick_adjust') }}" aria-label="{{ __('warehouse.quick_adjust') }}">
+                                <button type="button" @click="openAdjust('{{ $st->id }}')" class="w-9 h-9 min-h-[36px] min-w-[36px] rounded-[9px] bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('warehouse.quick_adjust') }}" aria-label="{{ __('warehouse.quick_adjust') }}">
                                     <i data-lucide="sliders-horizontal" class="w-4 h-4"></i>
                                 </button>
                                 @endif

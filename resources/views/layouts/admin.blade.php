@@ -1198,7 +1198,10 @@
         --}}
         <main
             class="flex-1 p-3.5 sm:p-6 lg:p-8 max-w-[1440px] w-full min-w-0 mx-auto space-y-5 sm:space-y-6 pb-28 lg:pb-12">
-            @if ($errors->any())
+            @php
+                $errorList = is_array($errors ?? null) ? $errors : (($errors ?? null) instanceof \Illuminate\Support\ViewErrorBag || ($errors ?? null) instanceof \Illuminate\Contracts\Support\MessageBag ? $errors->all() : []);
+            @endphp
+            @if (!empty($errorList))
                 <div
                     class="rounded-[18px] px-5 py-4 bg-[#FF3B30]/12 border border-[#FF3B30]/25 text-[13px] space-y-1.5 backdrop-blur-md shadow-sm">
                     <div class="font-bold flex items-center gap-2 text-[#C41E17] dark:text-[#FF453A]">
@@ -1207,7 +1210,7 @@
                     </div>
                     <ul
                         class="list-disc list-inside pl-2 space-y-0.5 text-[12px] font-medium text-[#C41E17]/90 dark:text-[#FF453A]/90">
-                        @foreach ($errors->all() as $error)
+                        @foreach ($errorList as $error)
                             <li>{{ $error }}</li>
                         @endforeach
                     </ul>

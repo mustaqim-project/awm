@@ -225,7 +225,7 @@
                     <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('purchasing.sections.items_ordered_desc') }}</p>
                 </div>
 
-                <button type="button" @click="addItem()" class="min-h-[44px] sm:min-h-0 h-11 sm:h-8 px-3.5 rounded-[8px] text-[13px] sm:text-[12px] font-medium text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5">
+                <button type="button" @click="addItem()" class="min-h-[44px] sm:min-h-[36px] px-3.5 py-1.5 rounded-[9px] text-[13px] sm:text-[12px] font-medium text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5">
                     <i data-lucide="plus" class="w-3.5 h-3.5"></i>
                     <span>{{ __('purchasing.actions.add_row') }}</span>
                 </button>
@@ -289,7 +289,7 @@
                                 <td class="px-3 py-2.5 text-right font-semibold tabular-nums text-black dark:text-white text-[13px]" x-text="formatCurrency(item.quantity * item.unit_price)">
                                 </td>
                                 <td class="px-3 py-2.5 text-center">
-                                    <button type="button" @click="removeItem(index)" :disabled="items.length <= 1" class="w-8 h-8 rounded-[8px] text-black/40 hover:text-[#FF3B30] hover:bg-[#FF3B30]/10 disabled:opacity-20 transition-all inline-flex items-center justify-center" title="Hapus">
+                                    <button type="button" @click="removeItem(index)" :disabled="items.length <= 1" class="w-9 h-9 min-h-[36px] min-w-[36px] rounded-[9px] text-black/40 hover:text-[#FF3B30] hover:bg-[#FF3B30]/10 disabled:opacity-20 transition-all inline-flex items-center justify-center" title="Hapus">
                                         <i data-lucide="trash-2" class="w-4 h-4"></i>
                                     </button>
                                 </td>

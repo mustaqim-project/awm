@@ -52,7 +52,7 @@ class AdminPanelAndGoogleAuthTest extends TestCase
         $response = $this->get(route('landing'));
 
         $response->assertStatus(200);
-        $response->assertSeeText('HPP');
+        $response->assertSeeText('POS');
     }
 
     // ─────────────────────────────────────────────────

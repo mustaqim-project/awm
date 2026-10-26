@@ -1,0 +1,10 @@
+# Risk Register: Modul Produk
+
+| Risk ID | Severity | Aspek | Deskripsi Risiko | Dampak Potensial | Mitigasi / Status |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **RSK-PRD-01** | **HIGH** | Security / RBAC | `ProductCategoryWebController` dan `MasterDataWebController` belum menerapkan `HasMiddleware`. | Pengguna staf tanpa hak akses kategori dapat membuat, memperbarui, atau menghapus kategori produk jika route middleware terlewati. | **RESOLVED**: Telah diterapkan kontrak `HasMiddleware` dengan guard permission `master_data.product_categories.*`. |
+| **RSK-PRD-02** | **HIGH** | Security / IDOR | Ketiadaan verifikasi kepemilikan tenant eksplisit pada mutasi kategori (`update` & `destroy`). | Potensi manipulasi kategori bisnis lain (cross-tenant IDOR attack). | **RESOLVED**: Ditambahkan validasi `abort_unless($category->business_id === $business->id, 403)`. |
+| **RSK-PRD-03** | **MEDIUM** | Compliance / Audit | Perubahan harga jual produk dan harga cabang belum mencatat log perubahan harga terdahulu. | Kesulitan melacak staf yang mengubah harga jual jika terjadi kesalahan penentuan harga atau fraud. | **RESOLVED**: Diintegrasikan `AuditLog::create` tingkat risiko `MEDIUM` dengan payload harga lama vs baru. |
+| **RSK-PRD-04** | **LOW** | UI/UX | Terdapat Unicode Emojis (`💡`) pada tips modal form produk. | Tampilan tidak profesional, inkonsistensi rendering lintas sistem operasi. | **RESOLVED**: Seluruh emoji diganti dengan ikon Lucide SVG standard. |
+| **RSK-PRD-05** | **LOW** | Accessibility | Tombol navigasi dan cockpit marketplace berukuran sub-36px ($32\text{px}$). | Kesulitan tap pada perangkat tablet layar sentuh atau smartphone kasir. | **RESOLVED**: Ukuran dinaikkan menjadi `min-h-[36px]` dengan margin sentuh aman. |
+| **RSK-PRD-06** | **LOW** | i18n | Flash message controller kategori menggunakan teks bahasa Indonesia hardcoded. | Pengguna antarmuka bahasa Inggris melihat pesan flash yang tidak diterjemahkan. | **RESOLVED**: Dikonversi menggunakan helper lokalisasi `__('products.category_*')`. |

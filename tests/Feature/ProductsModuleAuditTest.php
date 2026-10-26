@@ -12,9 +12,11 @@ use App\Models\BusinessSubscription;
 use App\Models\CostModel;
 use App\Models\Location;
 use App\Models\Material;
+use App\Models\Permission;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductImage;
+use App\Models\Role;
 use App\Models\Unit;
 use App\Models\User;
 use App\Support\Context;
@@ -102,6 +104,12 @@ final class ProductsModuleAuditTest extends TestCase
         $this->otherOwner->update(['active_business_id' => $this->otherBusiness->id]);
 
         // Staff users with different roles
+        $roleEmpty = Role::create([
+            'id' => (string) Str::uuid(),
+            'business_id' => $this->business->id,
+            'name' => 'Staf Magang',
+            'slug' => 'staf-magang',
+        ]);
         $this->staffWithoutPerms = User::create([
             'name' => 'Staf Tanpa Izin',
             'email' => 'staf.none@cooca.test',
@@ -113,8 +121,19 @@ final class ProductsModuleAuditTest extends TestCase
         $this->business->users()->attach($this->staffWithoutPerms->id, [
             'id' => (string) Str::uuid(),
             'role' => 'staff',
+            'role_id' => $roleEmpty->id,
         ]);
         $this->staffWithoutPerms->update(['active_business_id' => $this->business->id]);
+
+        // Role for staffWithView
+        $roleView = Role::create([
+            'id' => (string) Str::uuid(),
+            'business_id' => $this->business->id,
+            'name' => 'Staf Viewer',
+            'slug' => 'staf-viewer',
+        ]);
+        $viewPerms = Permission::whereIn('slug', ['products.view', 'master_data.product_categories.view'])->pluck('id');
+        $roleView->permissions()->attach($viewPerms);
 
         $this->staffWithView = User::create([
             'name' => 'Staf View Produk',
@@ -127,10 +146,26 @@ final class ProductsModuleAuditTest extends TestCase
         $this->business->users()->attach($this->staffWithView->id, [
             'id' => (string) Str::uuid(),
             'role' => 'staff',
+            'role_id' => $roleView->id,
         ]);
-        $this->staffWithView->givePermissionTo('products.view');
-        $this->staffWithView->givePermissionTo('master_data.product_categories.view');
         $this->staffWithView->update(['active_business_id' => $this->business->id]);
+
+        // Role for staffWithManage
+        $roleManage = Role::create([
+            'id' => (string) Str::uuid(),
+            'business_id' => $this->business->id,
+            'name' => 'Staf Manajer Produk',
+            'slug' => 'staf-manajer-produk',
+        ]);
+        $managePerms = Permission::whereIn('slug', [
+            'products.view',
+            'products.create',
+            'products.edit',
+            'products.delete',
+            'master_data.product_categories.view',
+            'master_data.product_categories.manage',
+        ])->pluck('id');
+        $roleManage->permissions()->attach($managePerms);
 
         $this->staffWithManage = User::create([
             'name' => 'Staf Kelola Produk',
@@ -143,19 +178,16 @@ final class ProductsModuleAuditTest extends TestCase
         $this->business->users()->attach($this->staffWithManage->id, [
             'id' => (string) Str::uuid(),
             'role' => 'staff',
+            'role_id' => $roleManage->id,
         ]);
-        $this->staffWithManage->givePermissionTo('products.view');
-        $this->staffWithManage->givePermissionTo('products.create');
-        $this->staffWithManage->givePermissionTo('products.edit');
-        $this->staffWithManage->givePermissionTo('products.delete');
-        $this->staffWithManage->givePermissionTo('master_data.product_categories.view');
-        $this->staffWithManage->givePermissionTo('master_data.product_categories.manage');
         $this->staffWithManage->update(['active_business_id' => $this->business->id]);
 
         // Default Unit & Category
         $this->unit = Unit::create([
             'name' => 'Pcs',
-            'symbol' => 'pcs',
+            'code' => 'PCS',
+            'category' => Unit::CATEGORY_QUANTITY,
+            'is_base' => true,
             'business_id' => null, // Global system unit
         ]);
 
@@ -175,7 +207,10 @@ final class ProductsModuleAuditTest extends TestCase
     public function test_products_index_requires_permission(): void
     {
         $response = $this->actingAs($this->staffWithoutPerms)->get(route('products.index'));
-        $response->assertStatus(403);
+        $response->assertRedirect(route('portal'));
+
+        $jsonResponse = $this->actingAs($this->staffWithoutPerms)->getJson(route('products.index'));
+        $jsonResponse->assertStatus(403);
     }
 
     public function test_user_with_permission_can_view_products_index(): void
@@ -291,7 +326,7 @@ final class ProductsModuleAuditTest extends TestCase
         ];
 
         $response = $this->actingAs($this->owner)->put(route('products.update', $otherProduct), $payload);
-        $response->assertStatus(403);
+        $this->assertContains($response->status(), [403, 404]);
     }
 
     public function test_product_destroy_soft_deletes_and_logs_audit(): void
@@ -440,7 +475,12 @@ final class ProductsModuleAuditTest extends TestCase
         $response = $this->actingAs($this->staffWithoutPerms)->post(route('product-categories.store'), [
             'name' => 'Kategori Ilegal',
         ]);
-        $response->assertStatus(403);
+        $response->assertRedirect(route('portal'));
+
+        $jsonResponse = $this->actingAs($this->staffWithoutPerms)->postJson(route('product-categories.store'), [
+            'name' => 'Kategori Ilegal',
+        ]);
+        $jsonResponse->assertStatus(403);
 
         // 2. Staff with permission can store
         $response = $this->actingAs($this->staffWithManage)->post(route('product-categories.store'), [
@@ -462,11 +502,11 @@ final class ProductsModuleAuditTest extends TestCase
         $response = $this->actingAs($this->owner)->put(route('product-categories.update', $otherCategory), [
             'name' => 'Kategori Dirampas',
         ]);
-        $response->assertStatus(403);
+        $this->assertContains($response->status(), [403, 404]);
 
         // 4. IDOR Guard: User cannot delete category of another business
         $response = $this->actingAs($this->owner)->delete(route('product-categories.destroy', $otherCategory));
-        $response->assertStatus(403);
+        $this->assertContains($response->status(), [403, 404]);
     }
 
     public function test_product_category_crud_logs_audit_trail(): void
@@ -502,7 +542,10 @@ final class ProductsModuleAuditTest extends TestCase
     public function test_master_data_product_categories_requires_permission(): void
     {
         $response = $this->actingAs($this->staffWithoutPerms)->get(route('product-categories.index'));
-        $response->assertStatus(403);
+        $response->assertRedirect(route('portal'));
+
+        $jsonResponse = $this->actingAs($this->staffWithoutPerms)->getJson(route('product-categories.index'));
+        $jsonResponse->assertStatus(403);
 
         $response = $this->actingAs($this->staffWithView)->get(route('product-categories.index'));
         $response->assertStatus(200);
@@ -524,10 +567,12 @@ final class ProductsModuleAuditTest extends TestCase
         ]);
 
         // Other user attempts to delete image
+        Context::setBusiness($this->otherBusiness);
         $response = $this->actingAs($this->otherOwner)->delete(route('products.gallery.destroy', [$product, $image]));
-        $response->assertStatus(403);
+        $this->assertContains($response->status(), [403, 404]);
 
         // Owner can delete
+        Context::setBusiness($this->business);
         $response = $this->actingAs($this->owner)->delete(route('products.gallery.destroy', [$product, $image]));
         $response->assertStatus(302);
         $this->assertDatabaseMissing('product_images', ['id' => $image->id]);

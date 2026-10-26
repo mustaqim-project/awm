@@ -328,7 +328,7 @@
             </div>
             <div class="flex flex-wrap gap-2">
                 @foreach($purchaseOrder->invoices as $inv)
-                <a href="{{ route('invoices.show', $inv->id) }}" class="h-8 px-3 rounded-[8px] bg-white dark:bg-[#2C2C2E] text-black dark:text-white text-[12px] font-medium border border-black/5 dark:border-white/10 hover:border-[#007AFF] transition-colors flex items-center gap-2 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
+                <a href="{{ route('invoices.show', $inv->id) }}" class="min-h-[36px] px-3.5 py-1.5 rounded-[9px] bg-white dark:bg-[#2C2C2E] text-black dark:text-white text-[12px] font-medium border border-black/5 dark:border-white/10 hover:border-[#007AFF] transition-colors flex items-center gap-2 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
                     <span class="tabular-nums font-semibold">{{ $inv->invoice_number }}</span>
                     <span class="text-[11px] text-black/50 dark:text-white/50 uppercase font-semibold">({{ $inv->status }})</span>
                 </a>

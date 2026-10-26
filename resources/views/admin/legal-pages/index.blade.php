@@ -26,12 +26,12 @@
 
         <div class="flex items-center gap-2.5 shrink-0">
             <a href="https://cooca.id/privacy" target="_blank"
-                class="h-10 px-4 rounded-[12px] text-[12px] font-bold text-black/80 dark:text-white/80 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] border border-black/[0.06] dark:border-white/[0.08] active:scale-[0.98] transition-all inline-flex items-center gap-1.5 cursor-pointer">
+                class="h-10 px-4 rounded-[12px] text-[12px] font-bold text-black/80 dark:text-white/80 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] border border-black/[0.06] dark:border-white/[0.08] active:scale-[0.98] transition-all inline-flex items-center gap-1.5 cursor-pointer" rel="noopener noreferrer">
                 <span>Preview Privasi</span>
                 <i data-lucide="external-link" class="w-3.5 h-3.5" stroke-width="2"></i>
             </a>
             <a href="https://cooca.id/terms" target="_blank"
-                class="h-10 px-4 rounded-[12px] text-[12px] font-bold text-[#007AFF] dark:text-[#0A84FF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 border border-[#007AFF]/20 active:scale-[0.98] transition-all inline-flex items-center gap-1.5 cursor-pointer">
+                class="h-10 px-4 rounded-[12px] text-[12px] font-bold text-[#007AFF] dark:text-[#0A84FF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 border border-[#007AFF]/20 active:scale-[0.98] transition-all inline-flex items-center gap-1.5 cursor-pointer" rel="noopener noreferrer">
                 <span>Preview Syarat Layanan</span>
                 <i data-lucide="external-link" class="w-3.5 h-3.5" stroke-width="2"></i>
             </a>

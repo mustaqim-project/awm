@@ -2559,7 +2559,7 @@
                                     <label class="block text-[11px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50">Media Terlampir</label>
                                     <div class="grid grid-cols-3 sm:grid-cols-4 gap-2">
                                         <template x-for="(url, idx) in previewPost.media_urls" :key="idx">
-                                            <a :href="url" target="_blank" class="block aspect-square rounded-[12px] overflow-hidden bg-black/5 border border-black/10 dark:border-white/10 relative group">
+                                            <a :href="url" target="_blank" class="block aspect-square rounded-[12px] overflow-hidden bg-black/5 border border-black/10 dark:border-white/10 relative group" rel="noopener noreferrer">
                                                 <img :src="url" alt="Media preview" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200">
                                             </a>
                                         </template>

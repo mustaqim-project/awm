@@ -295,7 +295,7 @@
                             <div class="flex items-center justify-end gap-1">
                                 @if($op->status !== 'reconciled')
                                     @if(\App\Support\Context::hasPermission('inventory.manage'))
-                                    <button type="button" @click="openReconcile('{{ $op->id }}', '{{ $op->opname_number }}')" class="w-8 h-8 rounded-[8px] bg-[#34C759]/10 text-[#34C759] hover:bg-[#34C759]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('inventory.btn_reconcile') }}" aria-label="{{ __('inventory.btn_reconcile') }}">
+                                    <button type="button" @click="openReconcile('{{ $op->id }}', '{{ $op->opname_number }}')" class="w-9 h-9 min-h-[36px] min-w-[36px] rounded-[9px] bg-[#34C759]/10 text-[#34C759] hover:bg-[#34C759]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('inventory.btn_reconcile') }}" aria-label="{{ __('inventory.btn_reconcile') }}">
                                         <i data-lucide="check" class="w-4 h-4"></i>
                                     </button>
                                     <form id="form-reconcile-{{ $op->id }}" action="{{ route('inventory.opnames.reconcile', $op->id) }}" method="POST" class="hidden">
@@ -303,7 +303,7 @@
                                     </form>
                                     @endif
                                 @else
-                                    <span class="inline-flex items-center justify-center w-8 h-8 rounded-[8px] text-[#34C759] bg-[#34C759]/10" title="{{ __('inventory.status_done') }}">
+                                    <span class="inline-flex items-center justify-center w-9 h-9 min-h-[36px] min-w-[36px] rounded-[9px] text-[#34C759] bg-[#34C759]/10" title="{{ __('inventory.status_done') }}">
                                         <i data-lucide="check-check" class="w-4 h-4"></i>
                                     </span>
                                 @endif
@@ -453,7 +453,7 @@
                     <div class="space-y-3 pt-3 border-t border-black/[0.06] dark:border-white/[0.08]">
                         <div class="flex items-center justify-between">
                             <label class="text-[11px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50">{{ __('inventory.label_counted_items') }}</label>
-                            <button type="button" @click="addItem()" class="min-h-[44px] sm:min-h-0 h-8 px-3 rounded-[8px] text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.97] transition-all flex items-center gap-1 cursor-pointer">
+                            <button type="button" @click="addItem()" class="min-h-[36px] px-3.5 rounded-[9px] text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.97] transition-all flex items-center gap-1 cursor-pointer">
                                 <i data-lucide="plus" class="w-3.5 h-3.5"></i>
                                 <span>{{ __('inventory.btn_add_item') }}</span>
                             </button>
@@ -478,7 +478,7 @@
                                     @endforeach
                                 </select>
                                 <input type="number" step="any" :name="'items[' + idx + '][physical_quantity]'" x-model.number="item.physical_quantity" placeholder="{{ __('inventory.placeholder_physical_qty') }}" class="h-10 w-24 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[8px] px-2 text-[13px] text-center tabular-nums font-bold text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                                <button type="button" @click="removeItem(idx)" :disabled="items.length <= 1" class="min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 p-2 text-black/30 hover:text-[#FF3B30] dark:text-white/30 dark:hover:text-[#FF453A] disabled:opacity-20 transition-colors cursor-pointer">
+                                <button type="button" @click="removeItem(idx)" :disabled="items.length <= 1" class="w-9 h-9 min-h-[36px] min-w-[36px] rounded-[9px] flex items-center justify-center p-0 text-black/30 hover:text-[#FF3B30] dark:text-white/30 dark:hover:text-[#FF453A] disabled:opacity-20 transition-colors cursor-pointer">
                                     <i data-lucide="trash-2" class="w-4 h-4"></i>
                                 </button>
                             </div>

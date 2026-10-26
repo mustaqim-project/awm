@@ -781,4 +781,22 @@ return [
     'zero_tables' => '0 Meja',
     'solo_owner' => '1 (Solo Owner)',
     'locations_count' => ':count Lokasi',
+
+    // Missing Billing Keys (Limits & Plans)
+    'meta_title_limits' => 'Batas Kuota & Paket Langganan',
+    'tier_free_label' => 'Free Solo',
+    'plan_active_badge' => 'Paket Aktif',
+    'plan_free_desc' => 'Untuk usaha mikro rumahan dan pedagang solo tanpa biaya.',
+    'plan_free_forever' => 'Gratis Selamanya',
+    'plan_current_active' => 'Paket Aktif Saat Ini',
+    'plan_baseline_tier' => 'Tingkat Dasar',
+    'plan_standard_desc' => 'Cocok untuk usaha rintisan dengan kasir POS aktif & 1–3 staf.',
+    'plan_per_month_flexible' => '/ bulan (fleksibel)',
+    'plan_per_year_approx' => 'setara Rp :price / bln (hemat 2 bulan)',
+    'plan_premium_desc' => 'Solusi lengkap multi-cabang, KDS dapur, komisi kasir & resep.',
+    'plan_prestige_desc' => 'Kapasitas unlimited penuh, pajak PPh 21 TER, & slip gaji WA.',
+    'active_business' => 'Bisnis Aktif',
+    'pos_transactions' => 'Transaksi Kasir POS',
+    'storage_used_label' => 'Terpakai',
+    'storage_remaining_label' => 'Sisa Kapasitas',
 ];

@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <a href="https://console.cloud.google.com/apis/credentials" target="_blank"
-                    class="h-10 px-4 rounded-[12px] text-[12px] font-bold text-[#5856D6] dark:text-[#5E5CE6] bg-[#5856D6]/10 hover:bg-[#5856D6]/20 active:scale-[0.98] transition-all inline-flex items-center gap-1.5 self-start sm:self-auto shrink-0 shadow-sm cursor-pointer">
+                    class="h-10 px-4 rounded-[12px] text-[12px] font-bold text-[#5856D6] dark:text-[#5E5CE6] bg-[#5856D6]/10 hover:bg-[#5856D6]/20 active:scale-[0.98] transition-all inline-flex items-center gap-1.5 self-start sm:self-auto shrink-0 shadow-sm cursor-pointer" rel="noopener noreferrer">
                     <span>Buka Google Console</span>
                     <i data-lucide="external-link" class="w-3.5 h-3.5" stroke-width="2"></i>
                 </a>

@@ -76,8 +76,12 @@ final class McpProtocolEngine
      */
     private function handleInitialize(array $params): array
     {
+        $requestedVersion = (string) ($params['protocolVersion'] ?? '2024-11-05');
+        $supportedVersions = ['2024-11-05', '2025-03-26', '2025-06-18', 'latest'];
+        $protocolVersion = in_array($requestedVersion, $supportedVersions, true) ? $requestedVersion : '2024-11-05';
+
         return [
-            'protocolVersion' => '2024-11-05',
+            'protocolVersion' => $protocolVersion,
             'serverInfo'      => [
                 'name'    => 'cooca-erp-mcp',
                 'version' => '1.0.0',

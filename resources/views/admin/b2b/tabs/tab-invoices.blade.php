@@ -143,7 +143,7 @@
                                 {{-- Tombol PDF --}}
                                 <a href="{{ route('admin.b2b.invoices.pdf', $inv) }}" target="_blank"
                                     class="h-8 px-2.5 rounded-[9px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-[#0284c7]/10 hover:text-[#0284c7] text-black/70 dark:text-white/70 text-[11.5px] font-bold transition-all inline-flex items-center gap-1"
-                                    title="Unduh / Cetak Faktur Penjualan Komersial PDF (A4)">
+                                    title="Unduh / Cetak Faktur Penjualan Komersial PDF (A4)" rel="noopener noreferrer">
                                     <i data-lucide="file-down" class="w-3.5 h-3.5"></i>
                                     <span>PDF</span>
                                 </a>

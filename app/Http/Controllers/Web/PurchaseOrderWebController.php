@@ -21,11 +21,21 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
-final class PurchaseOrderWebController extends Controller
+final class PurchaseOrderWebController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.permission:purchasing.view', only: ['index', 'create', 'show', 'print']),
+            new Middleware('require.permission:purchasing.manage', only: ['store', 'confirm', 'cancel', 'generateInvoice', 'destroy']),
+        ];
+    }
+
     public function __construct(
         private readonly PurchaseOrderService $poService = new PurchaseOrderService,
         private readonly InvoiceService $invoiceService = new InvoiceService

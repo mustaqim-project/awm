@@ -363,7 +363,7 @@
                     <!-- Modal Actions -->
                     <div class="flex items-center justify-between gap-2 pt-1">
                         <a :href="qrisModalUrl" target="_blank"
-                            class="h-9 px-3 rounded-[10px] text-[12px] font-semibold text-[#007AFF] dark:text-[#0A84FF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 transition inline-flex items-center gap-1.5">
+                            class="h-9 px-3 rounded-[10px] text-[12px] font-semibold text-[#007AFF] dark:text-[#0A84FF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 transition inline-flex items-center gap-1.5" rel="noopener noreferrer">
                             <i data-lucide="external-link" class="w-3.5 h-3.5" stroke-width="2"></i>
                             <span>Buka Penuh</span>
                         </a>

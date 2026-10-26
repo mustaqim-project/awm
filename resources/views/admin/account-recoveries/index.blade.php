@@ -614,7 +614,7 @@
                                                     </div>
                                                 </div>
                                                 <a :href="selectedRecovery.identity_url" target="_blank"
-                                                    class="text-[11px] font-medium text-[#007AFF] dark:text-[#0A84FF] hover:underline inline-flex items-center gap-1">
+                                                    class="text-[11px] font-medium text-[#007AFF] dark:text-[#0A84FF] hover:underline inline-flex items-center gap-1" rel="noopener noreferrer">
                                                     <i data-lucide="external-link" class="w-3 h-3"></i>
                                                     <span>Buka Resolusi Penuh</span>
                                                 </a>
@@ -646,7 +646,7 @@
                                                         <span class="text-[11px] font-semibold text-black dark:text-white">Dokumen
                                                             PDF Usaha</span>
                                                         <a :href="selectedRecovery.business_url" target="_blank"
-                                                            class="text-[10px] font-bold text-[#5856D6] hover:underline inline-flex items-center gap-1">
+                                                            class="text-[10px] font-bold text-[#5856D6] hover:underline inline-flex items-center gap-1" rel="noopener noreferrer">
                                                             <span>Buka PDF di Tab Baru &rarr;</span>
                                                         </a>
                                                     </div>
@@ -665,7 +665,7 @@
                                                             </div>
                                                         </div>
                                                         <a :href="selectedRecovery.business_url" target="_blank"
-                                                            class="text-[11px] font-medium text-[#007AFF] dark:text-[#0A84FF] hover:underline inline-flex items-center gap-1 mt-1">
+                                                            class="text-[11px] font-medium text-[#007AFF] dark:text-[#0A84FF] hover:underline inline-flex items-center gap-1 mt-1" rel="noopener noreferrer">
                                                             <i data-lucide="external-link" class="w-3 h-3"></i>
                                                             <span>Buka Resolusi Penuh</span>
                                                         </a>
@@ -703,7 +703,7 @@
                                                     </div>
                                                 </div>
                                                 <a :href="selectedRecovery.selfie_url" target="_blank"
-                                                    class="text-[11px] font-medium text-[#007AFF] dark:text-[#0A84FF] hover:underline inline-flex items-center gap-1">
+                                                    class="text-[11px] font-medium text-[#007AFF] dark:text-[#0A84FF] hover:underline inline-flex items-center gap-1" rel="noopener noreferrer">
                                                     <i data-lucide="external-link" class="w-3 h-3"></i>
                                                     <span>Buka Resolusi Penuh</span>
                                                 </a>

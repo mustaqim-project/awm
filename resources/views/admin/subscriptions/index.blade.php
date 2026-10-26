@@ -707,7 +707,7 @@
                                     class="text-[13px] font-semibold text-black dark:text-white" x-text="modalTitle"></span></div>
                             <div class="flex items-center gap-2">
                                 <a :href="modalImageUrl" target="_blank"
-                                    class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium bg-black/[0.06] dark:bg-white/[0.08] text-black/80 dark:text-white/80 hover:bg-black/[0.09] dark:hover:bg-white/[0.12] transition flex items-center gap-1"><i
+                                    class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium bg-black/[0.06] dark:bg-white/[0.08] text-black/80 dark:text-white/80 hover:bg-black/[0.09] dark:hover:bg-white/[0.12] transition flex items-center gap-1" rel="noopener noreferrer"><i
                                         data-lucide="external-link" class="w-3 h-3" stroke-width="1.5"></i><span>Buka Tab
                                         Baru</span></a>
                                 <button @click="imageModalOpen = false"

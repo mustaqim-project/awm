@@ -137,7 +137,7 @@
                                 {{-- Tombol PDF --}}
                                 <a href="{{ route('admin.b2b.orders.pdf', $o) }}" target="_blank"
                                     class="h-8 px-2.5 rounded-[9px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-[#34C759]/10 hover:text-[#248A3D] text-black/70 dark:text-white/70 text-[11.5px] font-bold transition-all inline-flex items-center gap-1"
-                                    title="Unduh / Cetak Konfirmasi Pesanan SO Resmi PDF (A4)">
+                                    title="Unduh / Cetak Konfirmasi Pesanan SO Resmi PDF (A4)" rel="noopener noreferrer">
                                     <i data-lucide="file-down" class="w-3.5 h-3.5"></i>
                                     <span>PDF</span>
                                 </a>

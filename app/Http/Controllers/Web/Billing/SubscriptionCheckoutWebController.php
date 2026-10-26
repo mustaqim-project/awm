@@ -121,6 +121,11 @@ final class SubscriptionCheckoutWebController extends Controller implements HasM
             ];
         });
 
+        $manualAccounts = PaymentAccount::where('is_active', true)->orderBy('sort_order')->get();
+        if ($manualAccounts->isNotEmpty()) {
+            $paymentAccounts = $paymentAccounts->concat($manualAccounts);
+        }
+
         $annualDiscountBadge = SystemSetting::get('subscription_annual_discount_badge', 'Hemat 2 Bulan');
         $currentUsage = $this->entitlementService->getUsageSummary($business);
 
@@ -231,13 +236,15 @@ final class SubscriptionCheckoutWebController extends Controller implements HasM
 
         $isFreePackage = $package && (float) $package->price <= 0.0;
 
-        // Allowed payment codes: active TriPay Channels + defined methods + Free Promo
+        // Allowed payment codes: active TriPay Channels + manual bank accounts + defined methods + Free Promo
         $activeTripayCodes = collect($this->tripayService->getActiveChannels())->pluck('code')->map(fn($c) => strtolower((string) $c))->all();
+        $manualAccountCodes = PaymentAccount::where('is_active', true)->pluck('bank_code')->map(fn($c) => strtolower((string) $c))->all();
         $validCodes = array_values(array_unique(array_merge(
             ['qris', SubscriptionPayment::METHOD_FREE_PROMO],
             array_keys(SubscriptionPayment::PAYMENT_METHODS),
             array_keys(SubscriptionPayment::TRIPAY_CHANNELS),
-            $activeTripayCodes
+            $activeTripayCodes,
+            $manualAccountCodes
         )));
 
         $validated = $request->validate([

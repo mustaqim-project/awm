@@ -44,7 +44,7 @@
 
                 {{-- Download / External --}}
                 <a :href="modalImageUrl" target="_blank"
-                    class="h-8 px-3 rounded-[8px] bg-white/15 hover:bg-white/25 text-[11px] font-bold text-white flex items-center gap-1.5 cursor-pointer ml-1">
+                    class="h-8 px-3 rounded-[8px] bg-white/15 hover:bg-white/25 text-[11px] font-bold text-white flex items-center gap-1.5 cursor-pointer ml-1" rel="noopener noreferrer">
                     <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
                     <span>Buka Penuh</span>
                 </a>

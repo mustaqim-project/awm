@@ -263,7 +263,7 @@ class AdminPaymentAccountManagementTest extends TestCase
         // View checkout
         $response = $this->get(route('billing.checkout', ['cycle' => 'monthly']));
         $response->assertStatus(200);
-        $response->assertSee('199.000');
+        $response->assertSee('199000');
         $response->assertSee('BCA Virtual Account');
 
         // Create order

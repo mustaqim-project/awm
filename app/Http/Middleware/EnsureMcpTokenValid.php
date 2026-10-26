@@ -57,7 +57,7 @@ final class EnsureMcpTokenValid
             }
             $method = (string) ($payload['method'] ?? '');
 
-            if (in_array($method, ['initialize', 'ping', 'tools/list', 'notifications/initialized', 'prompts/list', 'resources/list'], true)) {
+            if (in_array($method, ['initialize', 'tools/list', 'notifications/initialized', 'prompts/list', 'resources/list'], true)) {
                 return $next($request);
             }
 

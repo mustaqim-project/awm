@@ -93,7 +93,7 @@
                                     @if (!empty($socialInstagramUrl))
                                         <a href="{{ $socialInstagramUrl }}" target="_blank"
                                             class="h-10 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] flex items-center justify-center text-black/60 dark:text-white/60 shrink-0"
-                                            title="Buka Profil">
+                                            title="Buka Profil" rel="noopener noreferrer">
                                             <i data-lucide="external-link" class="w-4 h-4"></i>
                                         </a>
                                     @endif
@@ -153,7 +153,7 @@
                                     @if (!empty($socialFacebookUrl))
                                         <a href="{{ $socialFacebookUrl }}" target="_blank"
                                             class="h-10 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] flex items-center justify-center text-black/60 dark:text-white/60 shrink-0"
-                                            title="Buka Halaman">
+                                            title="Buka Halaman" rel="noopener noreferrer">
                                             <i data-lucide="external-link" class="w-4 h-4"></i>
                                         </a>
                                     @endif
@@ -214,7 +214,7 @@
                                     @if (!empty($socialTiktokUrl))
                                         <a href="{{ $socialTiktokUrl }}" target="_blank"
                                             class="h-10 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] flex items-center justify-center text-black/60 dark:text-white/60 shrink-0"
-                                            title="Buka TikTok">
+                                            title="Buka TikTok" rel="noopener noreferrer">
                                             <i data-lucide="external-link" class="w-4 h-4"></i>
                                         </a>
                                     @endif
@@ -275,7 +275,7 @@
                                     @if (!empty($socialYoutubeUrl))
                                         <a href="{{ $socialYoutubeUrl }}" target="_blank"
                                             class="h-10 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] flex items-center justify-center text-black/60 dark:text-white/60 shrink-0"
-                                            title="Buka YouTube">
+                                            title="Buka YouTube" rel="noopener noreferrer">
                                             <i data-lucide="external-link" class="w-4 h-4"></i>
                                         </a>
                                     @endif
@@ -336,7 +336,7 @@
                                     @if (!empty($socialTwitterUrl))
                                         <a href="{{ $socialTwitterUrl }}" target="_blank"
                                             class="h-10 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] flex items-center justify-center text-black/60 dark:text-white/60 shrink-0"
-                                            title="Buka X">
+                                            title="Buka X" rel="noopener noreferrer">
                                             <i data-lucide="external-link" class="w-4 h-4"></i>
                                         </a>
                                     @endif
@@ -397,7 +397,7 @@
                                     @if (!empty($socialLinkedinUrl))
                                         <a href="{{ $socialLinkedinUrl }}" target="_blank"
                                             class="h-10 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] flex items-center justify-center text-black/60 dark:text-white/60 shrink-0"
-                                            title="Buka LinkedIn">
+                                            title="Buka LinkedIn" rel="noopener noreferrer">
                                             <i data-lucide="external-link" class="w-4 h-4"></i>
                                         </a>
                                     @endif
@@ -459,7 +459,7 @@
                                     @if (!empty($socialWhatsappUrl))
                                         <a href="{{ $socialWhatsappUrl }}" target="_blank"
                                             class="h-10 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] flex items-center justify-center text-black/60 dark:text-white/60 shrink-0"
-                                            title="Buka Chat">
+                                            title="Buka Chat" rel="noopener noreferrer">
                                             <i data-lucide="external-link" class="w-4 h-4"></i>
                                         </a>
                                     @endif
@@ -520,7 +520,7 @@
                                     @if (!empty($socialTelegramUrl))
                                         <a href="{{ $socialTelegramUrl }}" target="_blank"
                                             class="h-10 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] flex items-center justify-center text-black/60 dark:text-white/60 shrink-0"
-                                            title="Buka Telegram">
+                                            title="Buka Telegram" rel="noopener noreferrer">
                                             <i data-lucide="external-link" class="w-4 h-4"></i>
                                         </a>
                                     @endif

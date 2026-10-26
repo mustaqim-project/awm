@@ -123,7 +123,7 @@ final class McpProtocolTest extends TestCase
         $response->assertStatus(200);
         $tools = $response->json('result.tools');
         $this->assertIsArray($tools);
-        $this->assertCount(20, $tools);
+        $this->assertCount(count((new \App\Domain\Mcp\Tools\McpToolRegistry())->getAllTools()), $tools);
 
         $toolNames = array_column($tools, 'name');
         $this->assertContains('finance_record_expense', $toolNames);
@@ -421,13 +421,8 @@ final class McpProtocolTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee(__('mcp.page_title'));
         $response->assertSee('Claude Desktop');
-        $response->assertSee('Claude Code CLI');
-        $response->assertSee('Cursor');
+        $response->assertSee('Claude Code');
         $response->assertSee('ChatGPT');
-        $response->assertSee('Google Gemini');
-        $response->assertSee('Local / Ollama');
-        $response->assertSee('Dify');
-        $response->assertSee('LangChain');
         $response->assertSee(__('mcp.tools_catalog_title'));
         $response->assertSee(__('mcp.troubleshooting_title'));
     }

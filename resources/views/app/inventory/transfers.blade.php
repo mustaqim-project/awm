@@ -148,7 +148,7 @@
                             <div class="flex items-center justify-end gap-1">
                                 @if($tr->status !== 'received')
                                     @if(\App\Support\Context::hasPermission('inventory.manage'))
-                                    <button type="button" @click="openReceive('{{ $tr->id }}', '{{ $tr->transfer_number }}')" class="w-8 h-8 rounded-[8px] bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="Konfirmasi Terima" aria-label="Konfirmasi Terima">
+                                    <button type="button" @click="openReceive('{{ $tr->id }}', '{{ $tr->transfer_number }}')" class="w-9 h-9 min-h-[36px] min-w-[36px] rounded-[9px] bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="Konfirmasi Terima" aria-label="Konfirmasi Terima">
                                         <i data-lucide="check" class="w-4 h-4"></i>
                                     </button>
                                     <form id="form-receive-{{ $tr->id }}" action="{{ route('inventory.transfers.receive', $tr->id) }}" method="POST" class="hidden">
@@ -156,7 +156,7 @@
                                     </form>
                                     @endif
                                 @else
-                                    <span class="inline-flex items-center justify-center w-8 h-8 rounded-[8px] text-[#34C759] bg-[#34C759]/10" title="Selesai">
+                                    <span class="inline-flex items-center justify-center w-9 h-9 min-h-[36px] min-w-[36px] rounded-[9px] text-[#34C759] bg-[#34C759]/10" title="Selesai">
                                         <i data-lucide="check-check" class="w-4 h-4"></i>
                                     </span>
                                 @endif
@@ -312,7 +312,7 @@
                     <div class="space-y-3 pt-3 border-t border-black/[0.06] dark:border-white/[0.08]">
                         <div class="flex items-center justify-between">
                             <label class="text-[12px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50">Produk yang Ditransfer:</label>
-                            <button type="button" @click="addItem()" class="min-h-[44px] sm:min-h-0 h-8 px-3 rounded-lg text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.98] transition-all flex items-center gap-1 cursor-pointer">
+                            <button type="button" @click="addItem()" class="min-h-[36px] px-3.5 rounded-[9px] text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.98] transition-all flex items-center gap-1 cursor-pointer">
                                 <i data-lucide="plus" class="w-3.5 h-3.5"></i>
                                 <span>Tambah Produk</span>
                             </button>

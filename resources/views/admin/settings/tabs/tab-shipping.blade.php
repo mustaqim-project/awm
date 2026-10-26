@@ -32,7 +32,7 @@
                 </div>
                 <div class="flex items-center gap-2 self-start sm:self-auto">
                     <a href="https://dashboard.biteship.com" target="_blank"
-                        class="h-10 px-4 rounded-[12px] text-[12px] font-bold text-[#FF9500] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 active:scale-[0.98] transition-all inline-flex items-center gap-1.5 shrink-0 shadow-sm cursor-pointer">
+                        class="h-10 px-4 rounded-[12px] text-[12px] font-bold text-[#FF9500] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 active:scale-[0.98] transition-all inline-flex items-center gap-1.5 shrink-0 shadow-sm cursor-pointer" rel="noopener noreferrer">
                         <span>Dashboard Biteship</span>
                         <i data-lucide="external-link" class="w-3.5 h-3.5" stroke-width="2"></i>
                     </a>

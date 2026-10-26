@@ -241,35 +241,35 @@
                         </td>
                         <td class="px-4 py-3 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                             <div class="flex items-center justify-end gap-1">
-                                <a href="{{ route('purchase-orders.show', $po->id) }}" class="w-8 h-8 rounded-[8px] bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('purchasing.actions.view_detail') }}" aria-label="{{ __('purchasing.actions.view_detail') }}">
+                                <a href="{{ route('purchase-orders.show', $po->id) }}" class="w-9 h-9 min-h-[36px] min-w-[36px] rounded-[9px] bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('purchasing.actions.view_detail') }}" aria-label="{{ __('purchasing.actions.view_detail') }}">
                                     <i data-lucide="eye" class="w-4 h-4"></i>
                                 </a>
 
-                                <a href="{{ route('purchase-orders.print', $po->id) }}?download=1" target="_blank" class="w-8 h-8 rounded-[8px] text-black/60 hover:text-black dark:text-white/60 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('purchasing.actions.download_pdf') }}" aria-label="{{ __('purchasing.actions.download_pdf') }}">
+                                <a href="{{ route('purchase-orders.print', $po->id) }}?download=1" target="_blank" class="w-9 h-9 min-h-[36px] min-w-[36px] rounded-[9px] text-black/60 hover:text-black dark:text-white/60 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('purchasing.actions.download_pdf') }}" aria-label="{{ __('purchasing.actions.download_pdf') }}">
                                     <i data-lucide="download" class="w-4 h-4"></i>
                                 </a>
 
-                                <a href="{{ route('purchase-orders.print', $po->id) }}" target="_blank" class="w-8 h-8 rounded-[8px] text-black/60 hover:text-black dark:text-white/60 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('purchasing.actions.print') }}" aria-label="{{ __('purchasing.actions.print') }}">
+                                <a href="{{ route('purchase-orders.print', $po->id) }}" target="_blank" class="w-9 h-9 min-h-[36px] min-w-[36px] rounded-[9px] text-black/60 hover:text-black dark:text-white/60 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('purchasing.actions.print') }}" aria-label="{{ __('purchasing.actions.print') }}">
                                     <i data-lucide="printer" class="w-4 h-4"></i>
                                 </a>
 
                                 @if(\App\Support\Context::hasPermission('invoices.create') && $po->po_type === 'customer' && $po->status !== 'fully_invoiced' && $po->status !== 'cancelled')
                                 <form method="POST" action="{{ route('purchase-orders.generate-invoice', $po->id) }}" class="inline">
                                     @csrf
-                                    <button type="submit" class="w-8 h-8 rounded-[8px] bg-[#34C759]/10 text-[#34C759] hover:bg-[#34C759]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('purchasing.actions.generate_invoice_title') }}" aria-label="{{ __('purchasing.actions.generate_invoice') }}">
+                                    <button type="submit" class="w-9 h-9 min-h-[36px] min-w-[36px] rounded-[9px] bg-[#34C759]/10 text-[#34C759] hover:bg-[#34C759]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('purchasing.actions.generate_invoice_title') }}" aria-label="{{ __('purchasing.actions.generate_invoice') }}">
                                         <i data-lucide="file-text" class="w-4 h-4"></i>
                                     </button>
                                 </form>
                                 @endif
 
                                 @if((\App\Support\Context::hasPermission('receiving.manage') || \App\Support\Context::hasPermission('purchasing.manage')) && $po->po_type === 'supplier' && $po->status === 'confirmed')
-                                <a href="{{ route('purchasing.receipts.create', $po->id) }}" class="w-8 h-8 rounded-[8px] bg-[#FF9500]/10 text-[#FF9500] hover:bg-[#FF9500]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('purchasing.actions.receive_goods_title') }}" aria-label="{{ __('purchasing.actions.receive_goods') }}">
+                                <a href="{{ route('purchasing.receipts.create', $po->id) }}" class="w-9 h-9 min-h-[36px] min-w-[36px] rounded-[9px] bg-[#FF9500]/10 text-[#FF9500] hover:bg-[#FF9500]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('purchasing.actions.receive_goods_title') }}" aria-label="{{ __('purchasing.actions.receive_goods') }}">
                                     <i data-lucide="package-check" class="w-4 h-4"></i>
                                 </a>
                                 @endif
 
                                 @if(\App\Support\Context::hasPermission('purchasing.manage') && $po->status === 'draft')
-                                <button type="button" @click="openDelete({{ $po->id }}, '{{ addslashes($po->po_number) }}')" class="w-8 h-8 rounded-[8px] text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('purchasing.actions.delete_draft') }}" aria-label="{{ __('purchasing.actions.delete_draft') }}">
+                                <button type="button" @click="openDelete({{ $po->id }}, '{{ addslashes($po->po_number) }}')" class="w-9 h-9 min-h-[36px] min-w-[36px] rounded-[9px] text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('purchasing.actions.delete_draft') }}" aria-label="{{ __('purchasing.actions.delete_draft') }}">
                                     <i data-lucide="trash-2" class="w-4 h-4"></i>
                                 </button>
                                 <form id="form-delete-po-{{ $po->id }}" method="POST" action="{{ route('purchase-orders.destroy', $po->id) }}" class="hidden">

@@ -93,8 +93,8 @@
             <form method="POST" action="{{ route('purchase.returns.approve', $return) }}" id="form-approve">
                 @csrf
                 <input type="hidden" name="pin" :value="pinValue">
-                <button type="button" @click="pinAction = 'approve'; showPinModal = true;"
-                        class="min-h-[44px] h-11 sm:h-9 px-5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
+                <button type="button" @click="@if(!empty($business->pos_supervisor_pin)) pinAction = 'approve'; showPinModal = true; @else document.getElementById('form-approve').submit(); @endif"
+                        class="min-h-[44px] h-11 sm:h-9 px-5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)] cursor-pointer">
                     <i data-lucide="check" class="w-4 h-4"></i>
                     <span>{{ __('purchasing.returns.btn_approve') }}</span>
                 </button>
@@ -105,8 +105,8 @@
             <form method="POST" action="{{ route('purchase.returns.complete', $return) }}" id="form-complete">
                 @csrf
                 <input type="hidden" name="pin" :value="pinValue">
-                <button type="button" @click="pinAction = 'complete'; showPinModal = true;"
-                        class="min-h-[44px] h-11 sm:h-9 px-5 rounded-[10px] text-[13px] font-semibold text-white bg-[#34C759] hover:bg-[#2FB350] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5 shadow-[0_1px_2px_rgba(52,199,89,0.25)]">
+                <button type="button" @click="@if(!empty($business->pos_supervisor_pin)) pinAction = 'complete'; showPinModal = true; @else document.getElementById('form-complete').submit(); @endif"
+                        class="min-h-[44px] h-11 sm:h-9 px-5 rounded-[10px] text-[13px] font-semibold text-white bg-[#34C759] hover:bg-[#2FB350] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5 shadow-[0_1px_2px_rgba(52,199,89,0.25)] cursor-pointer">
                     <i data-lucide="check-circle-2" class="w-4 h-4"></i>
                     <span>{{ __('purchasing.returns.btn_complete') }}</span>
                 </button>

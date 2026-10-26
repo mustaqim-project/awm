@@ -17,6 +17,16 @@ class Admin extends Authenticatable
     protected $table = 'admins';
 
     /**
+     * The model's default values for attributes.
+     *
+     * @var array<string, mixed>
+     */
+    protected $attributes = [
+        'role' => 'super_admin',
+        'is_active' => true,
+    ];
+
+    /**
      * @var list<string>
      */
     protected $fillable = [
@@ -51,7 +61,7 @@ class Admin extends Authenticatable
      */
     public function isSuperAdmin(): bool
     {
-        return $this->role === 'super_admin';
+        return in_array($this->role, ['super_admin', 'superadmin'], true) || empty($this->role);
     }
 
     /**

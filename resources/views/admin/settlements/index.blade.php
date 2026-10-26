@@ -394,7 +394,7 @@
                 </div>
                 <div class="flex items-center gap-2">
                     <a :href="viewImageUrl" target="_blank" download title="Unduh Gambar"
-                        class="p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 text-black/60 dark:text-white/60">
+                        class="p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 text-black/60 dark:text-white/60" rel="noopener noreferrer">
                         <i data-lucide="download" class="w-4 h-4"></i>
                     </a>
                     <button type="button" @click="showViewProofModal = false" class="p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 text-black/40 dark:text-white/40">

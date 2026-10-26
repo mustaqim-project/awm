@@ -32,10 +32,36 @@ use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use App\Domain\Import\DataExchangeService;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-final class InventoryWebController extends Controller
+final class InventoryWebController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.permission:inventory.view', only: [
+                'stocks',
+                'movements',
+                'opnames',
+                'transfers',
+                'exportBlankOpname',
+            ]),
+            new Middleware('require.permission:inventory.manage', only: [
+                'quickAdjust',
+                'approveAdjustment',
+                'rejectAdjustment',
+                'storeOpname',
+                'previewOpnameImport',
+                'executeOpnameImport',
+                'reconcileOpname',
+                'storeTransfer',
+                'receiveTransfer',
+            ]),
+        ];
+    }
+
     public function __construct(
         private readonly StockService $stockService = new StockService,
         private readonly AutoJournalService $journalService = new AutoJournalService
@@ -282,6 +308,7 @@ final class InventoryWebController extends Controller
     public function approveAdjustment(StockAdjustment $adjustment): RedirectResponse|JsonResponse
     {
         $business = Context::requireBusiness();
+        abort_unless($adjustment->business_id === $business->id, 404);
         $user = auth()->user();
 
         $stockRule = ApprovalRule::where('business_id', $business->id)
@@ -379,6 +406,7 @@ final class InventoryWebController extends Controller
     public function rejectAdjustment(Request $request, StockAdjustment $adjustment): RedirectResponse|JsonResponse
     {
         $business = Context::requireBusiness();
+        abort_unless($adjustment->business_id === $business->id, 404);
         $user = auth()->user();
 
         $stockRule = ApprovalRule::where('business_id', $business->id)
@@ -618,6 +646,17 @@ final class InventoryWebController extends Controller
         $user = auth()->user();
         $this->stockService->reconcileStockOpname($opname, $user);
 
+        AuditLogService::log(
+            (string) $business->id,
+            'STOCK_OPNAME_RECONCILED',
+            $opname,
+            ['status' => 'pending'],
+            [
+                'status' => 'reconciled',
+                'reconciled_by' => $user->id,
+            ]
+        );
+
         return redirect()->back()->with('success', "Stock Opname #{$opname->opname_number} berhasil direkonsiliasi.");
     }
 
@@ -684,6 +723,19 @@ final class InventoryWebController extends Controller
             ]);
         }
 
+        AuditLogService::log(
+            (string) $business->id,
+            'STOCK_TRANSFER_CREATED',
+            $transfer,
+            null,
+            [
+                'transfer_number' => $transferNumber,
+                'source_location_id' => $validated['source_location_id'],
+                'destination_location_id' => $validated['destination_location_id'],
+                'items_count' => count($validated['items']),
+            ]
+        );
+
         return redirect()->back()->with('success', "Transfer Stok #{$transferNumber} berhasil dibuat.");
     }
 
@@ -697,6 +749,17 @@ final class InventoryWebController extends Controller
 
         $user = auth()->user();
         $this->stockService->completeStockTransfer($transfer, $user);
+
+        AuditLogService::log(
+            (string) $business->id,
+            'STOCK_TRANSFER_RECEIVED',
+            $transfer,
+            ['status' => StockTransfer::STATUS_PENDING],
+            [
+                'status' => StockTransfer::STATUS_RECEIVED,
+                'received_by' => $user->id,
+            ]
+        );
 
         return redirect()->back()->with('success', "Transfer Stok #{$transfer->transfer_number} telah diterima & stok diperbarui.");
     }

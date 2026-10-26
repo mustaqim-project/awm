@@ -1176,7 +1176,7 @@
                                 </button>
                                 <a :href="'/storage/' + selectedPayment.payment_proof_path" target="_blank"
                                     class="h-9 px-2.5 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-black/60 dark:text-white/60 text-[12px] font-medium flex items-center gap-1 transition-all shrink-0"
-                                    title="Buka tab baru">
+                                    title="Buka tab baru" rel="noopener noreferrer">
                                     <i data-lucide="external-link" class="w-3.5 h-3.5" stroke-width="2"></i>
                                 </a>
                             </div>
@@ -1329,7 +1329,7 @@
                 <!-- Footer Actions (Min 48px height on mobile) -->
                 <div class="pt-2 flex flex-col sm:flex-row items-center gap-2.5">
                     <a :href="previewProofUrl" target="_blank"
-                        class="w-full sm:flex-1 h-12 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white font-bold text-[13px] flex items-center justify-center gap-2 shadow-xs shadow-[#007AFF]/25 transition-all">
+                        class="w-full sm:flex-1 h-12 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white font-bold text-[13px] flex items-center justify-center gap-2 shadow-xs shadow-[#007AFF]/25 transition-all" rel="noopener noreferrer">
                         <i data-lucide="external-link" class="w-4 h-4" stroke-width="2"></i>
                         <span>Buka Tab Terpisah / Unduh Struk</span>
                     </a>
