@@ -11,10 +11,20 @@ use App\Models\Unit;
 use App\Models\UnitConversion;
 use App\Support\Context;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\View\View;
 
-final class MasterDataWebController extends Controller
+final class MasterDataWebController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.permission:master_data.material_categories.view', only: ['materialCategories']),
+            new Middleware('require.permission:master_data.product_categories.view', only: ['productCategories']),
+            new Middleware('require.permission:master_data.units.view', only: ['units']),
+        ];
+    }
     public function materialCategories(): View
     {
         $business = Context::requireBusiness();

@@ -382,4 +382,5 @@ Semoga hari Anda menyenangkan! ✨',
     'receipt_mock_item_2' => '1x Croissant Butter Bakar',
     'receipt_mock_item_3' => '1x Teh Botol Sosro Dingin',
     'receipt_mock_tax' => 'PB1 / Pajak Resto (10%)',
+    'close' => 'Tutup',
 ];

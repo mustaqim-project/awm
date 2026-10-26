@@ -98,8 +98,6 @@ function mcpSettingsHub() {
         chatgptAuthMethod: 'oauth', // 'oauth' (Recommended by ChatGPT Apps SDK), 'none' (Direct Token URL)
         chatgptClientRegMethod: 'user_defined', // 'user_defined' (Klien OAuth yang Ditentukan Pengguna), 'dcr' (Dynamic Client Registration)
         chatgptTokenEndpointAuth: 'client_secret_post', // 'client_secret_post', 'none', 'client_secret_basic'
-        cursorMode: 'sse', // 'sse', 'stdio'
-        dolaMode: 'http', // 'http' (Remote HTTP / SSE), 'stdio' (Local CLI)
         customToken: @json(session('plain_token') ?? ''),
         activeOs: 'windows',
         toastVisible: false,
@@ -247,33 +245,6 @@ function mcpSettingsHub() {
             return `${openApiUrl}?token=${this.getToken()}`;
         },
 
-        getCursorSseConfig() {
-            const config = {
-                "mcpServers": {
-                    "cooca-erp": {
-                        "url": sseUrl,
-                        "headers": {
-                            "Authorization": "Bearer " + this.getToken()
-                        }
-                    }
-                }
-            };
-            return JSON.stringify(config, null, 2);
-        },
-
-        getCursorStdioConfig() {
-            const config = {
-                "mcpServers": {
-                    "cooca-erp": {
-                        "command": "php",
-                        "args": ["artisan", "mcp:serve", "--token=" + this.getToken()],
-                        "cwd": "/path/ke/proyek/cooca_core"
-                    }
-                }
-            };
-            return JSON.stringify(config, null, 2);
-        },
-
         getGeminiPythonCode() {
             const token = this.getToken();
             return `import requests
@@ -304,59 +275,6 @@ print("{{ addslashes(__('mcp.py_sample_print_bank')) }}", bank_resp.json())`;
             return `curl -X POST "${apiBase}/tools/finance_get_cash_and_bank_balances/execute" \\
   -H "Authorization: Bearer ${token}" \\
   -H "Content-Type: application/json"`;
-        },
-
-        getOllamaInspectorCmd() {
-            const token = this.getToken();
-            return `npx @modelcontextprotocol/inspector php artisan mcp:serve --token=${token}`;
-        },
-
-        getLangChainCode() {
-            const token = this.getToken();
-            return `from langchain.tools import tool
-import requests
-
-COOCA_TOKEN = "${token}"
-API_BASE = "${apiBase}"
-
-@tool
-def check_inventory_stock(query: str = "") -> str:
-    """Memeriksa ketersediaan stok produk COOCA ID."""
-    resp = requests.post(
-        f"{API_BASE}/tools/inventory_check_stock/execute",
-        headers={"Authorization": f"Bearer {COOCA_TOKEN}"},
-        json={"search_query": query}
-    )
-    return str(resp.json())`;
-        },
-
-        getDolaConfig() {
-            const config = {
-                "mcpServers": {
-                    "cooca-erp": {
-                        "transport": "http",
-                        "url": topLevelMcpUrl,
-                        "headers": {
-                            "Authorization": "Bearer " + this.getToken()
-                        }
-                    }
-                }
-            };
-            return JSON.stringify(config, null, 2);
-        },
-
-        getDolaStdioConfig() {
-            const config = {
-                "mcpServers": {
-                    "cooca-erp": {
-                        "transport": "stdio",
-                        "command": "php",
-                        "args": ["artisan", "mcp:serve", "--token=" + this.getToken()],
-                        "cwd": "/path/ke/proyek/cooca_core"
-                    }
-                }
-            };
-            return JSON.stringify(config, null, 2);
         }
     };
 }
@@ -582,20 +500,22 @@ document.addEventListener('alpine:init', () => {
                         <button
                             type="button"
                             @click="openView({{ $tokenJson }})"
-                            class="px-2.5 py-1.5 rounded-[10px] bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-200 text-xs font-medium inline-flex items-center gap-1.5 transition-colors cursor-pointer"
-                            title="{{ __('mcp.btn_view_auth') }}">
-                            <i data-lucide="shield-check" class="w-3.5 h-3.5 text-blue-500"></i>
-                            <span>{{ __('mcp.btn_view_auth') }}</span>
+                            class="min-h-[36px] px-2.5 py-1.5 rounded-[10px] bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-200 text-xs font-medium inline-flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                            title="{{ __('mcp.btn_view_auth') }}"
+                            aria-label="{{ __('mcp.btn_view_auth') }}">
+                            <i data-lucide="shield-check" class="w-3.5 h-3.5 text-blue-500 shrink-0"></i>
+                            <span class="hidden sm:inline">{{ __('mcp.btn_view_auth') }}</span>
                         </button>
 
                         {{-- Tombol Edit Autorisasi --}}
                         <button
                             type="button"
                             @click="openEdit({{ $tokenJson }})"
-                            class="px-2.5 py-1.5 rounded-[10px] bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-200 text-xs font-medium inline-flex items-center gap-1.5 transition-colors cursor-pointer"
-                            title="{{ __('mcp.btn_edit_auth') }}">
-                            <i data-lucide="edit-3" class="w-3.5 h-3.5 text-amber-500"></i>
-                            <span>{{ __('mcp.btn_edit_auth') }}</span>
+                            class="min-h-[36px] px-2.5 py-1.5 rounded-[10px] bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-200 text-xs font-medium inline-flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                            title="{{ __('mcp.btn_edit_auth') }}"
+                            aria-label="{{ __('mcp.btn_edit_auth') }}">
+                            <i data-lucide="edit-3" class="w-3.5 h-3.5 text-amber-500 shrink-0"></i>
+                            <span class="hidden sm:inline">{{ __('mcp.btn_edit_auth') }}</span>
                         </button>
 
                         {{-- Tombol Hapus/Cabut --}}
@@ -604,8 +524,9 @@ document.addEventListener('alpine:init', () => {
                             @method('DELETE')
                             <button
                                 type="submit"
-                                class="p-2 rounded-[10px] text-neutral-400 hover:text-rose-600 hover:bg-rose-500/10 transition-colors cursor-pointer"
-                                title="{{ __('mcp.title_revoke_token') }}">
+                                class="w-9 h-9 rounded-[10px] text-neutral-400 hover:text-rose-600 hover:bg-rose-500/10 transition-colors cursor-pointer flex items-center justify-center shrink-0"
+                                title="{{ __('mcp.title_revoke_token') }}"
+                                aria-label="{{ __('mcp.title_revoke_token') }}">
                                 <i data-lucide="trash-2" class="w-4 h-4"></i>
                             </button>
                         </form>
@@ -687,13 +608,13 @@ document.addEventListener('alpine:init', () => {
                 </div>
             </div>
 
-            {{-- Segmented Control Provider Tabs (8 Providers) --}}
+            {{-- Segmented Control Provider Tabs (Claude, ChatGPT, Gemini Ecosystems) --}}
             <div class="flex items-center gap-1.5 p-1.5 rounded-[16px] bg-neutral-100 dark:bg-neutral-800/80 text-xs font-medium overflow-x-auto no-scrollbar">
                 <button
                     type="button"
                     @click="activeProviderTab = 'claude'"
                     :class="activeProviderTab === 'claude' ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500 hover:text-neutral-900 dark:hover:text-white'"
-                    class="px-3.5 py-2 rounded-[12px] transition-all whitespace-nowrap flex items-center gap-2">
+                    class="px-3.5 py-2 min-h-[36px] rounded-[12px] transition-all whitespace-nowrap flex items-center gap-2 cursor-pointer">
                     <i data-lucide="bot" class="w-4 h-4 text-amber-500"></i>
                     <span>{{ __('mcp.tab_claude') }}</span>
                 </button>
@@ -701,23 +622,15 @@ document.addEventListener('alpine:init', () => {
                     type="button"
                     @click="activeProviderTab = 'chatgpt'"
                     :class="activeProviderTab === 'chatgpt' ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500 hover:text-neutral-900 dark:hover:text-white'"
-                    class="px-3.5 py-2 rounded-[12px] transition-all whitespace-nowrap flex items-center gap-2">
+                    class="px-3.5 py-2 min-h-[36px] rounded-[12px] transition-all whitespace-nowrap flex items-center gap-2 cursor-pointer">
                     <i data-lucide="sparkles" class="w-4 h-4 text-emerald-500"></i>
                     <span>{{ __('mcp.tab_chatgpt') }}</span>
                 </button>
                 <button
                     type="button"
-                    @click="activeProviderTab = 'cursor'"
-                    :class="activeProviderTab === 'cursor' ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500 hover:text-neutral-900 dark:hover:text-white'"
-                    class="px-3.5 py-2 rounded-[12px] transition-all whitespace-nowrap flex items-center gap-2">
-                    <i data-lucide="code-2" class="w-4 h-4 text-blue-500"></i>
-                    <span>{{ __('mcp.tab_cursor') }}</span>
-                </button>
-                <button
-                    type="button"
                     @click="activeProviderTab = 'claude_code'"
                     :class="activeProviderTab === 'claude_code' ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500 hover:text-neutral-900 dark:hover:text-white'"
-                    class="px-3.5 py-2 rounded-[12px] transition-all whitespace-nowrap flex items-center gap-2">
+                    class="px-3.5 py-2 min-h-[36px] rounded-[12px] transition-all whitespace-nowrap flex items-center gap-2 cursor-pointer">
                     <i data-lucide="terminal" class="w-4 h-4 text-neutral-700 dark:text-neutral-300"></i>
                     <span>{{ __('mcp.tab_claude_code') }}</span>
                 </button>
@@ -725,41 +638,9 @@ document.addEventListener('alpine:init', () => {
                     type="button"
                     @click="activeProviderTab = 'gemini'"
                     :class="activeProviderTab === 'gemini' ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500 hover:text-neutral-900 dark:hover:text-white'"
-                    class="px-3.5 py-2 rounded-[12px] transition-all whitespace-nowrap flex items-center gap-2">
+                    class="px-3.5 py-2 min-h-[36px] rounded-[12px] transition-all whitespace-nowrap flex items-center gap-2 cursor-pointer">
                     <i data-lucide="cpu" class="w-4 h-4 text-purple-500"></i>
                     <span>{{ __('mcp.tab_gemini') }}</span>
-                </button>
-                <button
-                    type="button"
-                    @click="activeProviderTab = 'ollama'"
-                    :class="activeProviderTab === 'ollama' ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500 hover:text-neutral-900 dark:hover:text-white'"
-                    class="px-3.5 py-2 rounded-[12px] transition-all whitespace-nowrap flex items-center gap-2">
-                    <i data-lucide="server" class="w-4 h-4 text-sky-500"></i>
-                    <span>{{ __('mcp.tab_ollama') }}</span>
-                </button>
-                <button
-                    type="button"
-                    @click="activeProviderTab = 'n8n'"
-                    :class="activeProviderTab === 'n8n' ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500 hover:text-neutral-900 dark:hover:text-white'"
-                    class="px-3.5 py-2 rounded-[12px] transition-all whitespace-nowrap flex items-center gap-2">
-                    <i data-lucide="git-branch" class="w-4 h-4 text-rose-500"></i>
-                    <span>{{ __('mcp.tab_n8n') }}</span>
-                </button>
-                <button
-                    type="button"
-                    @click="activeProviderTab = 'langchain'"
-                    :class="activeProviderTab === 'langchain' ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500 hover:text-neutral-900 dark:hover:text-white'"
-                    class="px-3.5 py-2 rounded-[12px] transition-all whitespace-nowrap flex items-center gap-2">
-                    <i data-lucide="file-code" class="w-4 h-4 text-indigo-500"></i>
-                    <span>{{ __('mcp.tab_langchain') }}</span>
-                </button>
-                <button
-                    type="button"
-                    @click="activeProviderTab = 'dola'"
-                    :class="activeProviderTab === 'dola' ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500 hover:text-neutral-900 dark:hover:text-white'"
-                    class="px-3.5 py-2 rounded-[12px] transition-all whitespace-nowrap flex items-center gap-2">
-                    <i data-lucide="calendar-clock" class="w-4 h-4 text-orange-500"></i>
-                    <span>{{ __('mcp.tab_dola') }}</span>
                 </button>
             </div>
 
@@ -1666,78 +1547,7 @@ document.addEventListener('alpine:init', () => {
                     </div>
                 </div>
 
-                {{-- 3. Cursor & Antigravity IDE --}}
-                <div x-show="activeProviderTab === 'cursor'" class="space-y-5" style="display: none;">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-2">
-                            <span class="px-2.5 py-1 rounded-[8px] bg-blue-500/10 text-blue-600 dark:text-blue-400 text-xs font-semibold">
-                                {{ __('mcp.cursor_badge') }}
-                            </span>
-                            <span class="text-xs text-neutral-500 dark:text-neutral-400">{{ __('mcp.cursor_compat_subtitle') }}</span>
-                        </div>
-
-                        {{-- Sub-toggle Stdio vs SSE --}}
-                        <div class="inline-flex p-1 rounded-[10px] bg-neutral-100 dark:bg-neutral-800 text-[11px] font-medium">
-                            <button
-                                type="button"
-                                @click="cursorMode = 'sse'"
-                                :class="cursorMode === 'sse' ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500'"
-                                class="px-2.5 py-1 rounded-[7px] transition-all">
-                                {{ __('mcp.cursor_mode_sse') }}
-                            </button>
-                            <button
-                                type="button"
-                                @click="cursorMode = 'stdio'"
-                                :class="cursorMode === 'stdio' ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500'"
-                                class="px-2.5 py-1 rounded-[7px] transition-all">
-                                {{ __('mcp.cursor_mode_stdio') }}
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-1.5">
-                            <span class="w-5 h-5 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-[10px] flex items-center justify-center font-bold">1</span>
-                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.cursor_step1_title') }}</h4>
-                            <p class="text-[11px] text-neutral-500 dark:text-neutral-400 leading-relaxed">
-                                {!! __('mcp.cursor_step1_desc') !!}
-                            </p>
-                        </div>
-                        <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-1.5">
-                            <span class="w-5 h-5 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-[10px] flex items-center justify-center font-bold">2</span>
-                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.cursor_step2_title') }}</h4>
-                            <p class="text-[11px] text-neutral-500 dark:text-neutral-400 leading-relaxed">
-                                {{ __('mcp.cursor_step2_desc') }}
-                            </p>
-                        </div>
-                        <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-1.5">
-                            <span class="w-5 h-5 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-[10px] flex items-center justify-center font-bold">3</span>
-                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.cursor_step3_title') }}</h4>
-                            <p class="text-[11px] text-neutral-500 dark:text-neutral-400 leading-relaxed">
-                                {!! __('mcp.cursor_step3_desc') !!}
-                            </p>
-                        </div>
-                    </div>
-
-                    {{-- Live Code Box Cursor --}}
-                    <div class="relative">
-                        <div class="flex items-center justify-between px-4 py-2.5 rounded-t-[16px] bg-neutral-800 text-neutral-300 text-xs font-mono border-b border-neutral-700">
-                            <span>.cursor/mcp.json</span>
-                            <button
-                                type="button"
-                                @click="copyText(cursorMode === 'sse' ? getCursorSseConfig() : getCursorStdioConfig(), '{{ addslashes(__('mcp.toast_cursor_config_copied')) }}')"
-                                class="px-3 py-1 rounded-[8px] bg-white/10 hover:bg-white/20 text-white text-xs font-medium flex items-center gap-1.5 transition-colors">
-                                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                                <span>{{ __('mcp.btn_copy_config') }}</span>
-                            </button>
-                        </div>
-                        <pre class="p-4 rounded-b-[16px] bg-neutral-900 text-neutral-100 font-mono text-xs overflow-x-auto leading-relaxed select-all"><code x-text="cursorMode === 'sse' ? getCursorSseConfig() : getCursorStdioConfig()"></code></pre>
-                    </div>
-                </div>
-
-
-
-                {{-- 5. Google Gemini --}}
+                {{-- 3. Google Gemini --}}
                 <div x-show="activeProviderTab === 'gemini'" class="space-y-5" style="display: none;">
                     <div class="flex items-center gap-2">
                         <span class="px-2.5 py-1 rounded-[8px] bg-purple-500/10 text-purple-600 dark:text-purple-400 text-xs font-semibold">
@@ -1782,644 +1592,6 @@ document.addEventListener('alpine:init', () => {
                                 </button>
                             </div>
                             <pre class="p-3.5 rounded-b-[14px] bg-neutral-900 text-neutral-100 font-mono text-xs overflow-x-auto select-all"><code x-text="getGeminiCurl()"></code></pre>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- 6. Local / Ollama --}}
-                <div x-show="activeProviderTab === 'ollama'" class="space-y-5" style="display: none;">
-                    <div class="flex items-center gap-2">
-                        <span class="px-2.5 py-1 rounded-[8px] bg-sky-500/10 text-sky-600 dark:text-sky-400 text-xs font-semibold">
-                            {{ __('mcp.ollama_badge') }}
-                        </span>
-                        <span class="text-xs text-neutral-500 dark:text-neutral-400">{{ __('mcp.ollama_compat_subtitle') }}</span>
-                    </div>
-
-                    <div class="space-y-4">
-                        <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-2">
-                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.ollama_method1_title') }}</h4>
-                            <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
-                                {!! __('mcp.ollama_method1_desc') !!}
-                            </p>
-                            <div class="relative">
-                                <pre class="p-3.5 rounded-[12px] bg-neutral-900 text-neutral-100 font-mono text-xs overflow-x-auto select-all"><code x-text="getOllamaInspectorCmd()"></code></pre>
-                                <button
-                                    type="button"
-                                    @click="copyText(getOllamaInspectorCmd(), '{{ addslashes(__('mcp.toast_inspector_cmd_copied')) }}')"
-                                    class="absolute top-2.5 right-2.5 px-2.5 py-1 rounded-[8px] bg-white/10 hover:bg-white/20 text-white text-xs font-medium flex items-center gap-1">
-                                    <i data-lucide="copy" class="w-3 h-3"></i>
-                                    <span>{{ __('mcp.btn_copy_short') }}</span>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="p-4 rounded-[16px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-2">
-                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.ollama_method2_title') }}</h4>
-                            <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
-                                {{ __('mcp.ollama_method2_desc') }}
-                            </p>
-                            <div class="p-3 rounded-[10px] bg-neutral-100 dark:bg-neutral-900 font-mono text-xs text-neutral-800 dark:text-neutral-200 select-all">
-                                URL: <span class="text-blue-600 dark:text-blue-400">{{ $sseEndpoint }}</span><br>
-                                Header: Authorization: Bearer <span x-text="getToken()"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- 7. n8n & Dify Automation --}}
-                <div x-show="activeProviderTab === 'n8n'" class="space-y-5" style="display: none;">
-                    <div class="flex items-center gap-2">
-                        <span class="px-2.5 py-1 rounded-[8px] bg-rose-500/10 text-rose-600 dark:text-rose-400 text-xs font-semibold">
-                            {{ __('mcp.n8n_badge') }}
-                        </span>
-                        <span class="text-xs text-neutral-500 dark:text-neutral-400">{{ __('mcp.n8n_compat_subtitle') }}</span>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="p-4.5 rounded-[18px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-3">
-                            <div class="flex items-center gap-2 font-semibold text-xs text-neutral-900 dark:text-white">
-                                <i data-lucide="workflow" class="w-4 h-4 text-rose-500"></i>
-                                <span>{{ __('mcp.n8n_workflow_title') }}</span>
-                            </div>
-                            <ol class="list-decimal list-inside text-[11px] text-neutral-600 dark:text-neutral-300 space-y-2 leading-relaxed">
-                                <li>{!! __('mcp.n8n_step1') !!}</li>
-                                <li>{!! __('mcp.n8n_step2') !!}</li>
-                                <li>URL: <code class="font-mono text-[10px] bg-neutral-200 dark:bg-neutral-800 px-1 py-0.5 rounded">{{ $apiBaseUrl }}/tools/finance_record_expense/execute</code></li>
-                                <li>Headers: <code class="font-mono text-[10px] bg-neutral-200 dark:bg-neutral-800 px-1 py-0.5 rounded">Authorization: Bearer <span x-text="getToken()"></span></code></li>
-                                <li>{{ __('mcp.n8n_step5') }}</li>
-                            </ol>
-                        </div>
-
-                        <div class="p-4.5 rounded-[18px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-3">
-                            <div class="flex items-center gap-2 font-semibold text-xs text-neutral-900 dark:text-white">
-                                <i data-lucide="layers" class="w-4 h-4 text-blue-500"></i>
-                                <span>{{ __('mcp.dify_agent_title') }}</span>
-                            </div>
-                            <ol class="list-decimal list-inside text-[11px] text-neutral-600 dark:text-neutral-300 space-y-2 leading-relaxed">
-                                <li>{!! __('mcp.dify_step1') !!}</li>
-                                <li>{!! __('mcp.dify_step2') !!}
-                                    <div class="mt-1 flex items-center gap-1">
-                                        <input type="text" readonly value="{{ $openApiEndpoint }}" class="w-full text-[10px] font-mono px-2 py-1 rounded bg-neutral-200/60 dark:bg-neutral-800" />
-                                        <button type="button" @click="copyText('{{ $openApiEndpoint }}')" class="p-1 text-blue-600 dark:text-blue-400"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
-                                    </div>
-                                </li>
-                                <li>{!! __('mcp.dify_step3') !!}</li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- 8. LangChain & Python Agents --}}
-                <div x-show="activeProviderTab === 'langchain'" class="space-y-5" style="display: none;">
-                    <div class="flex items-center gap-2">
-                        <span class="px-2.5 py-1 rounded-[8px] bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-xs font-semibold">
-                            {{ __('mcp.langchain_badge') }}
-                        </span>
-                        <span class="text-xs text-neutral-500 dark:text-neutral-400">{{ __('mcp.langchain_compat_subtitle') }}</span>
-                    </div>
-
-                    <div class="relative">
-                        <div class="flex items-center justify-between px-4 py-2.5 rounded-t-[16px] bg-neutral-800 text-neutral-300 text-xs font-mono border-b border-neutral-700">
-                            <span>langchain_cooca_agent.py</span>
-                            <button
-                                type="button"
-                                @click="copyText(getLangChainCode(), '{{ addslashes(__('mcp.toast_langchain_code_copied')) }}')"
-                                class="px-3 py-1 rounded-[8px] bg-white/10 hover:bg-white/20 text-white text-xs font-medium flex items-center gap-1.5 transition-colors">
-                                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                                <span>{{ __('mcp.btn_copy_python') }}</span>
-                            </button>
-                        </div>
-                        <pre class="p-4 rounded-b-[16px] bg-neutral-900 text-neutral-100 font-mono text-xs overflow-x-auto leading-relaxed select-all"><code x-text="getLangChainCode()"></code></pre>
-                    </div>
-                </div>
-
-                {{-- 9. Dola AI Assistant --}}
-                <div x-show="activeProviderTab === 'dola'" class="space-y-6" style="display: none;">
-                    {{-- Header & Sub-Toggle --}}
-                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-3 border-b border-neutral-100 dark:border-neutral-800">
-                        <div class="flex items-center gap-2">
-                            <span class="px-2.5 py-1 rounded-[8px] bg-orange-500/10 text-orange-600 dark:text-orange-400 text-xs font-semibold">
-                                {{ __('mcp.dola_badge') }}
-                            </span>
-                            <span class="text-xs text-neutral-500 dark:text-neutral-400 hidden sm:inline">
-                                {{ __('mcp.dola_subtitle') }}
-                            </span>
-                        </div>
-
-                        {{-- Sub-toggle: HTTP vs STDIO --}}
-                        <div class="inline-flex p-1 rounded-[12px] bg-neutral-100 dark:bg-neutral-800 text-[11px] font-medium overflow-x-auto shrink-0">
-                            <button
-                                type="button"
-                                @click="dolaMode = 'http'"
-                                :class="dolaMode === 'http' ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500'"
-                                class="px-3 py-1 rounded-[8px] transition-all whitespace-nowrap flex items-center gap-1.5">
-                                <i data-lucide="globe" class="w-3.5 h-3.5 text-blue-500"></i>
-                                <span>{{ __('mcp.dola_mode_http') }}</span>
-                            </button>
-                            <button
-                                type="button"
-                                @click="dolaMode = 'stdio'"
-                                :class="dolaMode === 'stdio' ? 'bg-white dark:bg-[#2C2C2E] text-neutral-900 dark:text-white shadow-xs font-semibold' : 'text-neutral-500'"
-                                class="px-3 py-1 rounded-[8px] transition-all whitespace-nowrap flex items-center gap-1.5">
-                                <i data-lucide="terminal" class="w-3.5 h-3.5 text-neutral-500"></i>
-                                <span>{{ __('mcp.dola_mode_stdio') }}</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    {{-- Intro Card --}}
-                    <div class="p-4 rounded-[16px] bg-orange-50/60 dark:bg-orange-950/20 border border-orange-200/70 dark:border-orange-800/60 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                        <div class="flex items-start sm:items-center gap-3">
-                            <div class="w-9 h-9 rounded-[12px] bg-orange-500/10 text-orange-600 dark:text-orange-400 flex items-center justify-center shrink-0">
-                                <i data-lucide="sparkles" class="w-4 h-4"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.dola_guide_title') }}</h4>
-                                <p class="text-[11px] text-neutral-600 dark:text-neutral-400 mt-0.5">{{ __('mcp.dola_guide_sub') }}</p>
-                            </div>
-                        </div>
-                        <a href="https://dola.me" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-medium text-orange-600 dark:text-orange-400 hover:underline shrink-0">
-                            <span>Buka Dola AI</span>
-                            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-                        </a>
-                    </div>
-
-                    {{-- 1. Informasi Dasar Server MCP --}}
-                    <div class="rounded-[18px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 p-4 sm:p-5 space-y-3.5">
-                        <div class="flex items-center justify-between">
-                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white flex items-center gap-2">
-                                <i data-lucide="server" class="w-4 h-4 text-blue-500"></i>
-                                <span>{{ __('mcp.dola_sec1_title') }}</span>
-                            </h4>
-                            <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-[6px] bg-blue-500/10 text-blue-600 dark:text-blue-400">
-                                Server Specs
-                            </span>
-                        </div>
-
-                        <div class="overflow-x-auto rounded-[12px] border border-neutral-200/80 dark:border-neutral-800 bg-white dark:bg-[#1E1E1E]">
-                            <table class="w-full text-left text-xs">
-                                <thead>
-                                    <tr class="border-b border-neutral-200 dark:border-neutral-800 bg-neutral-50/80 dark:bg-neutral-900/80 text-neutral-600 dark:text-neutral-400">
-                                        <th class="py-2.5 px-3.5 font-semibold w-1/4">Parameter</th>
-                                        <th class="py-2.5 px-3.5 font-semibold w-1/2">Nilai / Rekomendasi COOCA</th>
-                                        <th class="py-2.5 px-3.5 font-semibold text-right w-1/4">Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-neutral-100 dark:divide-neutral-800 text-neutral-800 dark:text-neutral-200">
-                                    <tr>
-                                        <td class="py-2.5 px-3.5 font-medium">Nama koneksi</td>
-                                        <td class="py-2.5 px-3.5 font-mono text-[11px] text-neutral-600 dark:text-neutral-300">
-                                            <span class="px-2 py-0.5 rounded-[6px] bg-neutral-100 dark:bg-neutral-800">cooca-erp</span>
-                                            <span class="text-[11px] text-neutral-400 ml-2">(Bebas, misal: sistem-kantor atau cooca-mcp)</span>
-                                        </td>
-                                        <td class="py-2.5 px-3.5 text-right">
-                                            <button
-                                                type="button"
-                                                @click="copyText('cooca-erp', 'Nama koneksi tersalin!')"
-                                                class="px-2.5 py-1 rounded-[6px] bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-300 text-[11px] font-medium inline-flex items-center gap-1 transition-colors">
-                                                <i data-lucide="copy" class="w-3 h-3"></i>
-                                                <span>{{ __('mcp.btn_copy_short') }}</span>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="py-2.5 px-3.5 font-medium">Tipe koneksi</td>
-                                        <td class="py-2.5 px-3.5">
-                                            <span class="px-2 py-0.5 rounded-[6px] text-[10px] font-bold" :class="dolaMode === 'http' ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300'">HTTP/SSE</span>
-                                            <span class="mx-1 text-neutral-400">atau</span>
-                                            <span class="px-2 py-0.5 rounded-[6px] text-[10px] font-bold" :class="dolaMode === 'stdio' ? 'bg-purple-500/10 text-purple-600 dark:text-purple-400' : 'bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300'">STDIO</span>
-                                            <span class="text-[11px] text-neutral-400 ml-2" x-text="dolaMode === 'http' ? '(Mode aktif: HTTP Remote)' : '(Mode aktif: STDIO Lokal CLI)'"></span>
-                                        </td>
-                                        <td class="py-2.5 px-3.5 text-right">
-                                            <button
-                                                type="button"
-                                                @click="copyText(dolaMode === 'http' ? 'http' : 'stdio', 'Tipe koneksi tersalin!')"
-                                                class="px-2.5 py-1 rounded-[6px] bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-300 text-[11px] font-medium inline-flex items-center gap-1 transition-colors">
-                                                <i data-lucide="copy" class="w-3 h-3"></i>
-                                                <span>{{ __('mcp.btn_copy_short') }}</span>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="py-2.5 px-3.5 font-medium">Alamat URL / Host</td>
-                                        <td class="py-2.5 px-3.5 font-mono text-[11px] text-neutral-900 dark:text-neutral-100 select-all">
-                                            <span x-text="topLevelMcpUrl">{{ $topLevelMcpUrl ?? url('/mcp') }}</span>
-                                        </td>
-                                        <td class="py-2.5 px-3.5 text-right">
-                                            <button
-                                                type="button"
-                                                @click="copyText(topLevelMcpUrl || '{{ $topLevelMcpUrl ?? url('/mcp') }}', 'URL host MCP tersalin!')"
-                                                class="px-2.5 py-1 rounded-[6px] bg-neutral-900 hover:bg-black text-white dark:bg-white dark:text-neutral-900 text-[11px] font-medium inline-flex items-center gap-1 transition-colors">
-                                                <i data-lucide="copy" class="w-3 h-3"></i>
-                                                <span>{{ __('mcp.btn_copy_short') }}</span>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="py-2.5 px-3.5 font-medium">Port</td>
-                                        <td class="py-2.5 px-3.5 font-mono text-[11px]">
-                                            <span class="px-2 py-0.5 rounded-[6px] bg-neutral-100 dark:bg-neutral-800">443</span>
-                                            <span class="text-[11px] text-neutral-400 ml-2">(Standar HTTPS) / 8000 untuk pengujian lokal</span>
-                                        </td>
-                                        <td class="py-2.5 px-3.5 text-right">
-                                            <button
-                                                type="button"
-                                                @click="copyText('443', 'Port tersalin!')"
-                                                class="px-2.5 py-1 rounded-[6px] bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-300 text-[11px] font-medium inline-flex items-center gap-1 transition-colors">
-                                                <i data-lucide="copy" class="w-3 h-3"></i>
-                                                <span>{{ __('mcp.btn_copy_short') }}</span>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="py-2.5 px-3.5 font-medium">Versi protokol</td>
-                                        <td class="py-2.5 px-3.5 font-mono text-[11px]">
-                                            <span class="px-2 py-0.5 rounded-[6px] bg-neutral-100 dark:bg-neutral-800">2024-11-05</span>
-                                            <span class="text-[11px] text-neutral-400 ml-2">(Kompatibel penuh dengan Dola & MCP Client SDK)</span>
-                                        </td>
-                                        <td class="py-2.5 px-3.5 text-right">
-                                            <button
-                                                type="button"
-                                                @click="copyText('2024-11-05', 'Versi protokol tersalin!')"
-                                                class="px-2.5 py-1 rounded-[6px] bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-300 text-[11px] font-medium inline-flex items-center gap-1 transition-colors">
-                                                <i data-lucide="copy" class="w-3 h-3"></i>
-                                                <span>{{ __('mcp.btn_copy_short') }}</span>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    {{-- 2. Kredensial / Autentikasi --}}
-                    <div class="rounded-[18px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 p-4 sm:p-5 space-y-4">
-                        <div class="flex items-center justify-between">
-                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white flex items-center gap-2">
-                                <i data-lucide="shield-check" class="w-4 h-4 text-emerald-500"></i>
-                                <span>{{ __('mcp.dola_sec2_title') }}</span>
-                            </h4>
-                            <span class="text-[10px] text-neutral-500 dark:text-neutral-400">Pilih metode yang sesuai arsitektur kamu</span>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
-                            {{-- Pilihan 1: Token / Kunci API (Rekomendasi Utama Dola) --}}
-                            <div class="p-3.5 rounded-[14px] bg-white dark:bg-[#1E1E1E] border-2 border-emerald-500/50 dark:border-emerald-500/40 space-y-2">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center gap-2">
-                                        <span class="w-6 h-6 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xs">🔑</span>
-                                        <span class="text-xs font-semibold text-neutral-900 dark:text-white">Token / Kunci API (Rekomendasi)</span>
-                                    </div>
-                                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">Aktif</span>
-                                </div>
-                                <p class="text-[11px] text-neutral-500 dark:text-neutral-400 leading-relaxed">
-                                    Gunakan Personal Access Token COOCA. Kirimkan token via header <code>Authorization: Bearer &lt;TOKEN&gt;</code>.
-                                </p>
-                                <div class="flex items-center gap-2 pt-1">
-                                    <input
-                                        type="text"
-                                        readonly
-                                        :value="getToken()"
-                                        class="flex-1 font-mono text-[11px] bg-neutral-50 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 px-2.5 py-1.5 rounded-[8px] border border-neutral-200 dark:border-neutral-700 select-all" />
-                                    <button
-                                        type="button"
-                                        @click="copyText(getToken(), 'Token MCP tersalin!')"
-                                        class="px-2.5 py-1.5 rounded-[8px] bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-[11px] font-medium flex items-center gap-1 shrink-0">
-                                        <i data-lucide="copy" class="w-3 h-3"></i>
-                                        <span>Salin</span>
-                                    </button>
-                                </div>
-                            </div>
-
-                            {{-- Pilihan 2: Header Khusus --}}
-                            <div class="p-3.5 rounded-[14px] bg-white dark:bg-[#1E1E1E] border border-neutral-200/80 dark:border-neutral-800 space-y-2">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center gap-2">
-                                        <span class="w-6 h-6 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center text-xs">📋</span>
-                                        <span class="text-xs font-semibold text-neutral-900 dark:text-white">Header Khusus (Custom Headers)</span>
-                                    </div>
-                                    <span class="px-2 py-0.5 rounded-[6px] text-[10px] bg-blue-500/10 text-blue-600 dark:text-blue-400 font-mono">JSON Config</span>
-                                </div>
-                                <p class="text-[11px] text-neutral-500 dark:text-neutral-400 leading-relaxed">
-                                    Tambahkan header pada file JSON Dola agar permintaan HTTP/SSE terotorisasi penuh:
-                                </p>
-                                <div class="flex items-center justify-between bg-neutral-50 dark:bg-neutral-900 p-2 rounded-[8px] border border-neutral-200 dark:border-neutral-700 font-mono text-[11px]">
-                                    <span class="text-neutral-700 dark:text-neutral-300 truncate">Authorization: Bearer <span x-text="getToken()"></span></span>
-                                    <button
-                                        type="button"
-                                        @click="copyText('Authorization: Bearer ' + getToken(), 'Header Authorization tersalin!')"
-                                        class="text-blue-600 dark:text-blue-400 hover:underline shrink-0 ml-2 text-[11px]">
-                                        Salin
-                                    </button>
-                                </div>
-                            </div>
-
-                            {{-- Pilihan 3: OAuth 2.0 (Jika Menggunakan Akun Terpusat) --}}
-                            <div class="p-3.5 rounded-[14px] bg-white dark:bg-[#1E1E1E] border border-neutral-200/80 dark:border-neutral-800 space-y-2">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center gap-2">
-                                        <span class="w-6 h-6 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xs">🔐</span>
-                                        <span class="text-xs font-semibold text-neutral-900 dark:text-white">OAuth 2.0 (Izin Masuk Akun)</span>
-                                    </div>
-                                    <span class="px-2 py-0.5 rounded-[6px] text-[10px] bg-amber-500/10 text-amber-600 dark:text-amber-400 font-mono">RFC 6749</span>
-                                </div>
-                                <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
-                                    Jika Dola meminta kredensial OAuth, gunakan endpoint discovery terdaftar:
-                                </p>
-                                <div class="space-y-1 font-mono text-[11px] text-neutral-600 dark:text-neutral-300">
-                                    <div class="flex justify-between items-center bg-neutral-50 dark:bg-neutral-900 px-2.5 py-1 rounded-[6px]">
-                                        <span>Authorize:</span>
-                                        <button type="button" @click="copyText(oauthAuthorizeUrl, 'URL Authorize tersalin!')" class="text-blue-600 hover:underline">Salin</button>
-                                    </div>
-                                    <div class="flex justify-between items-center bg-neutral-50 dark:bg-neutral-900 px-2.5 py-1 rounded-[6px]">
-                                        <span>Token:</span>
-                                        <button type="button" @click="copyText(oauthTokenUrl, 'URL Token tersalin!')" class="text-blue-600 hover:underline">Salin</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {{-- Pilihan 4: Tanpa Autentikasi / Direct Query (Pengujian) --}}
-                            <div class="p-3.5 rounded-[14px] bg-white dark:bg-[#1E1E1E] border border-neutral-200/80 dark:border-neutral-800 space-y-2">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center gap-2">
-                                        <span class="w-6 h-6 rounded-full bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 flex items-center justify-center text-xs">❌</span>
-                                        <span class="text-xs font-semibold text-neutral-900 dark:text-white">Tanpa Header / Query URL (Dev)</span>
-                                    </div>
-                                    <span class="px-2 py-0.5 rounded-[6px] text-[10px] bg-neutral-100 dark:bg-neutral-800 text-neutral-500 font-mono">Dev Only</span>
-                                </div>
-                                <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
-                                    Khusus jaringan tertutup atau Dola local runner yang menyisipkan token langsung pada URL:
-                                </p>
-                                <div class="flex items-center justify-between bg-neutral-50 dark:bg-neutral-900 p-2 rounded-[8px] border border-neutral-200 dark:border-neutral-700 font-mono text-[10px] text-neutral-600 dark:text-neutral-300 truncate">
-                                    <span class="truncate" x-text="topLevelMcpUrl + '?token=' + getToken()"></span>
-                                    <button
-                                        type="button"
-                                        @click="copyText(topLevelMcpUrl + '?token=' + getToken(), 'URL dengan token tersalin!')"
-                                        class="text-blue-600 dark:text-blue-400 hover:underline shrink-0 ml-2">
-                                        Salin
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- 3. Lingkungan Sistem --}}
-                    <div class="rounded-[18px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 p-4 sm:p-5 space-y-3.5">
-                        <div class="flex items-center justify-between">
-                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white flex items-center gap-2">
-                                <i data-lucide="cpu" class="w-4 h-4 text-purple-500"></i>
-                                <span>{{ __('mcp.dola_sec3_title') }}</span>
-                            </h4>
-                            <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-[6px] bg-purple-500/10 text-purple-600 dark:text-purple-400">
-                                Environment
-                            </span>
-                        </div>
-
-                        <div class="overflow-x-auto rounded-[12px] border border-neutral-200/80 dark:border-neutral-800 bg-white dark:bg-[#1E1E1E]">
-                            <table class="w-full text-left text-xs">
-                                <thead>
-                                    <tr class="border-b border-neutral-200 dark:border-neutral-800 bg-neutral-50/80 dark:bg-neutral-900/80 text-neutral-600 dark:text-neutral-400">
-                                        <th class="py-2.5 px-3.5 font-semibold w-1/4">Kebutuhan</th>
-                                        <th class="py-2.5 px-3.5 font-semibold w-1/2">Keterangan & Rekomendasi</th>
-                                        <th class="py-2.5 px-3.5 font-semibold text-right w-1/4">Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-neutral-100 dark:divide-neutral-800 text-neutral-800 dark:text-neutral-200">
-                                    <tr>
-                                        <td class="py-2.5 px-3.5 font-medium">Koneksi jaringan</td>
-                                        <td class="py-2.5 px-3.5 text-neutral-600 dark:text-neutral-300">
-                                            Dola bisa menjangkau server MCP (tidak diblokir firewall). Wajib HTTPS jika server berada di internet publik atau gunakan Cloudflare Tunnel untuk dev lokal.
-                                        </td>
-                                        <td class="py-2.5 px-3.5 text-right">
-                                            <span class="px-2 py-0.5 rounded-[6px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-semibold">Port 443 Terbuka</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="py-2.5 px-3.5 font-medium">Runtime (untuk STDIO)</td>
-                                        <td class="py-2.5 px-3.5 font-mono text-[11px] text-neutral-600 dark:text-neutral-300">
-                                            PHP 8.2+ (Host COOCA) / Node.js 18+ / Python 3.10+ terpasang
-                                        </td>
-                                        <td class="py-2.5 px-3.5 text-right">
-                                            <button
-                                                type="button"
-                                                @click="copyText('php -v', 'Perintah cek PHP tersalin!')"
-                                                class="px-2.5 py-1 rounded-[6px] bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-300 text-[11px] font-medium inline-flex items-center gap-1 transition-colors">
-                                                <i data-lucide="copy" class="w-3 h-3"></i>
-                                                <span>Cek PHP</span>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="py-2.5 px-3.5 font-medium">File / Perintah (STDIO)</td>
-                                        <td class="py-2.5 px-3.5 font-mono text-[11px] text-neutral-900 dark:text-neutral-100">
-                                            <code>php artisan mcp:serve --token=<span x-text="getToken()"></span></code>
-                                        </td>
-                                        <td class="py-2.5 px-3.5 text-right">
-                                            <button
-                                                type="button"
-                                                @click="copyText('php artisan mcp:serve --token=' + getToken(), 'Perintah STDIO tersalin!')"
-                                                class="px-2.5 py-1 rounded-[6px] bg-neutral-900 hover:bg-black text-white dark:bg-white dark:text-neutral-900 text-[11px] font-medium inline-flex items-center gap-1 transition-colors">
-                                                <i data-lucide="copy" class="w-3 h-3"></i>
-                                                <span>{{ __('mcp.btn_copy_short') }}</span>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="py-2.5 px-3.5 font-medium">Variabel Lingkungan</td>
-                                        <td class="py-2.5 px-3.5 font-mono text-[11px] text-neutral-600 dark:text-neutral-300">
-                                            <code>COOCA_MCP_TOKEN=<span x-text="getToken()"></span></code>
-                                        </td>
-                                        <td class="py-2.5 px-3.5 text-right">
-                                            <button
-                                                type="button"
-                                                @click="copyText('COOCA_MCP_TOKEN=' + getToken(), 'Variabel env tersalin!')"
-                                                class="px-2.5 py-1 rounded-[6px] bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-300 text-[11px] font-medium inline-flex items-center gap-1 transition-colors">
-                                                <i data-lucide="copy" class="w-3 h-3"></i>
-                                                <span>{{ __('mcp.btn_copy_short') }}</span>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    {{-- 4. Hak Akses & Batasan --}}
-                    <div class="rounded-[18px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 p-4 sm:p-5 space-y-3.5">
-                        <div class="flex items-center justify-between">
-                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white flex items-center gap-2">
-                                <i data-lucide="lock" class="w-4 h-4 text-rose-500"></i>
-                                <span>{{ __('mcp.dola_sec4_title') }}</span>
-                            </h4>
-                            <span class="text-[10px] text-neutral-500 dark:text-neutral-400">Granular Role-Based Access Control</span>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                            <div class="p-3 rounded-[12px] bg-white dark:bg-[#1E1E1E] border border-neutral-200/80 dark:border-neutral-800 space-y-1">
-                                <span class="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">Tingkat Izin</span>
-                                <h5 class="text-xs font-semibold text-neutral-900 dark:text-white">Token Abilities</h5>
-                                <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
-                                    Pilih kemampuan token saat dibuat: <code>read</code> (baca saja), <code>write</code> (buat transaksi), atau <code>tools:*</code> (penuh).
-                                </p>
-                            </div>
-                            <div class="p-3 rounded-[12px] bg-white dark:bg-[#1E1E1E] border border-neutral-200/80 dark:border-neutral-800 space-y-1">
-                                <span class="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">Katalog Alat</span>
-                                <h5 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ count($tools) }} Enterprise Tools</h5>
-                                <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
-                                    Kas/bank, stok, faktur, sales order, hutang piutang, kontak pelanggan, payroll, dan analitik laba rugi.
-                                </p>
-                            </div>
-                            <div class="p-3 rounded-[12px] bg-white dark:bg-[#1E1E1E] border border-neutral-200/80 dark:border-neutral-800 space-y-1">
-                                <span class="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">Audit & Keamanan</span>
-                                <h5 class="text-xs font-semibold text-neutral-900 dark:text-white">Catatan & Log Admin</h5>
-                                <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
-                                    Setiap pemanggilan tools tercatat di audit log. Anda dapat mencabut (revoke) token kapan saja jika terjadi kendala.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- 5. File Konfigurasi (JSON) --}}
-                    <div class="space-y-2.5">
-                        <div class="flex items-center justify-between">
-                            <h4 class="text-xs font-semibold text-neutral-900 dark:text-white flex items-center gap-2">
-                                <i data-lucide="code" class="w-4 h-4 text-emerald-500"></i>
-                                <span>{{ __('mcp.dola_sec5_title') }}</span>
-                            </h4>
-                            <span class="text-[11px] font-mono text-neutral-500" x-text="dolaMode === 'http' ? 'Format Dola HTTP / SSE' : 'Format Dola Local STDIO'"></span>
-                        </div>
-
-                        <div class="relative">
-                            <div class="flex items-center justify-between px-4 py-2.5 rounded-t-[16px] bg-neutral-800 text-neutral-300 text-xs font-mono border-b border-neutral-700">
-                                <div class="flex items-center gap-2">
-                                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span>
-                                    <span>dola-mcp-config.json</span>
-                                </div>
-                                <button
-                                    type="button"
-                                    @click="copyText(dolaMode === 'http' ? getDolaConfig() : getDolaStdioConfig(), '{{ addslashes(__('mcp.dola_toast_config_copied')) }}')"
-                                    class="px-3 py-1 rounded-[8px] bg-white/10 hover:bg-white/20 text-white text-xs font-medium flex items-center gap-1.5 transition-colors">
-                                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                                    <span>Salin JSON Dola</span>
-                                </button>
-                            </div>
-                            <pre class="p-4 rounded-b-[16px] bg-neutral-900 text-neutral-100 font-mono text-xs overflow-x-auto leading-relaxed select-all"><code x-text="dolaMode === 'http' ? getDolaConfig() : getDolaStdioConfig()"></code></pre>
-                        </div>
-                    </div>
-
-                    {{-- Catatan Keamanan & Cek Siap (2 Kolom) --}}
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {{-- Catatan Keamanan --}}
-                        <div class="p-4 rounded-[16px] bg-amber-50/70 dark:bg-amber-950/20 border border-amber-200/80 dark:border-amber-800/60 space-y-2.5">
-                            <h4 class="text-xs font-semibold text-amber-900 dark:text-amber-200 flex items-center gap-2">
-                                <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-600 dark:text-amber-400"></i>
-                                <span>{{ __('mcp.dola_sec_security_title') }}</span>
-                            </h4>
-                            <ul class="text-[11px] text-amber-800 dark:text-amber-300/90 space-y-1.5 list-disc pl-4 leading-relaxed">
-                                <li>{{ __('mcp.dola_security_tip1') }}</li>
-                                <li>{{ __('mcp.dola_security_tip2') }}</li>
-                                <li>{{ __('mcp.dola_security_tip3') }}</li>
-                            </ul>
-                        </div>
-
-                        {{-- Cek Siap? (Checklist) --}}
-                        <div class="p-4 rounded-[16px] bg-emerald-50/60 dark:bg-emerald-950/20 border border-emerald-200/70 dark:border-emerald-800/60 space-y-2.5">
-                            <h4 class="text-xs font-semibold text-emerald-900 dark:text-emerald-200 flex items-center gap-2">
-                                <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
-                                <span>{{ __('mcp.dola_sec_checklist_title') }}</span>
-                            </h4>
-                            <div class="space-y-1.5 text-[11px] text-emerald-800 dark:text-emerald-300/90">
-                                <div class="flex items-center gap-2">
-                                    <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i>
-                                    <span>{{ __('mcp.dola_check1') }}</span>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i>
-                                    <span>{{ __('mcp.dola_check2') }}</span>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i>
-                                    <span>{{ __('mcp.dola_check3') }}</span>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i>
-                                    <span>{{ __('mcp.dola_check4') }}</span>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i>
-                                    <span>{{ __('mcp.dola_check5') }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- Contoh Prompt Bisnis Dola AI --}}
-                    <div class="p-4 sm:p-5 rounded-[18px] bg-white dark:bg-[#1E1E1E] border border-neutral-200/80 dark:border-neutral-800 space-y-3.5">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-2">
-                                <i data-lucide="message-square" class="w-4 h-4 text-orange-500"></i>
-                                <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">Contoh Perintah & Prompt Bisnis untuk Dola AI</h4>
-                            </div>
-                            <span class="text-[11px] text-neutral-400">Siap Digunakan di Chat Dola</span>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                            <div class="p-3 rounded-[12px] bg-neutral-50 dark:bg-neutral-900/80 border border-neutral-200/70 dark:border-neutral-800 flex flex-col justify-between gap-2.5">
-                                <div class="space-y-1">
-                                    <div class="flex items-center gap-1.5 text-neutral-500 text-[10px] font-semibold uppercase">
-                                        <i data-lucide="calendar" class="w-3 h-3 text-orange-500"></i>
-                                        <span>Jadwal & Kas</span>
-                                    </div>
-                                    <p class="text-xs text-neutral-800 dark:text-neutral-200 leading-snug">
-                                        "{{ __('mcp.dola_prompt_1') }}"
-                                    </p>
-                                </div>
-                                <button
-                                    type="button"
-                                    @click="copyText('{{ addslashes(__('mcp.dola_prompt_1')) }}', 'Prompt tersalin!')"
-                                    class="w-full py-1.5 rounded-[8px] bg-white dark:bg-[#2C2C2E] border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 text-neutral-700 dark:text-neutral-300 text-[11px] font-medium flex items-center justify-center gap-1.5 transition-colors">
-                                    <i data-lucide="copy" class="w-3 h-3"></i>
-                                    <span>Salin Prompt</span>
-                                </button>
-                            </div>
-
-                            <div class="p-3 rounded-[12px] bg-neutral-50 dark:bg-neutral-900/80 border border-neutral-200/70 dark:border-neutral-800 flex flex-col justify-between gap-2.5">
-                                <div class="space-y-1">
-                                    <div class="flex items-center gap-1.5 text-neutral-500 text-[10px] font-semibold uppercase">
-                                        <i data-lucide="package-search" class="w-3 h-3 text-blue-500"></i>
-                                        <span>Inventori & Pengiriman</span>
-                                    </div>
-                                    <p class="text-xs text-neutral-800 dark:text-neutral-200 leading-snug">
-                                        "{{ __('mcp.dola_prompt_2') }}"
-                                    </p>
-                                </div>
-                                <button
-                                    type="button"
-                                    @click="copyText('{{ addslashes(__('mcp.dola_prompt_2')) }}', 'Prompt tersalin!')"
-                                    class="w-full py-1.5 rounded-[8px] bg-white dark:bg-[#2C2C2E] border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 text-neutral-700 dark:text-neutral-300 text-[11px] font-medium flex items-center justify-center gap-1.5 transition-colors">
-                                    <i data-lucide="copy" class="w-3 h-3"></i>
-                                    <span>Salin Prompt</span>
-                                </button>
-                            </div>
-
-                            <div class="p-3 rounded-[12px] bg-neutral-50 dark:bg-neutral-900/80 border border-neutral-200/70 dark:border-neutral-800 flex flex-col justify-between gap-2.5">
-                                <div class="space-y-1">
-                                    <div class="flex items-center gap-1.5 text-neutral-500 text-[10px] font-semibold uppercase">
-                                        <i data-lucide="bar-chart-3" class="w-3 h-3 text-emerald-500"></i>
-                                        <span>Laporan Keuangan</span>
-                                    </div>
-                                    <p class="text-xs text-neutral-800 dark:text-neutral-200 leading-snug">
-                                        "{{ __('mcp.dola_prompt_3') }}"
-                                    </p>
-                                </div>
-                                <button
-                                    type="button"
-                                    @click="copyText('{{ addslashes(__('mcp.dola_prompt_3')) }}', 'Prompt tersalin!')"
-                                    class="w-full py-1.5 rounded-[8px] bg-white dark:bg-[#2C2C2E] border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 text-neutral-700 dark:text-neutral-300 text-[11px] font-medium flex items-center justify-center gap-1.5 transition-colors">
-                                    <i data-lucide="copy" class="w-3 h-3"></i>
-                                    <span>Salin Prompt</span>
-                                </button>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -3198,13 +2370,9 @@ document.addEventListener('alpine:init', () => {
                             name="provider_hint"
                             class="w-full min-h-[44px] text-[16px] sm:text-[15px] px-3 py-2.5 rounded-[12px] bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-white focus:outline-none">
                             <option value="all">{{ __('mcp.lbl_all_providers_universal') }}</option>
-                            <option value="claude">Claude Desktop</option>
-                            <option value="cursor">Cursor / Antigravity</option>
+                            <option value="claude">Claude (Desktop / Code / Web)</option>
                             <option value="openai">ChatGPT / OpenAI</option>
                             <option value="gemini">Google Gemini</option>
-                            <option value="ollama">Local / Ollama</option>
-                            <option value="langchain">LangChain / n8n</option>
-                            <option value="dola">Dola AI (Calendar & Assistant)</option>
                         </select>
                     </div>
 
@@ -3551,13 +2719,9 @@ document.addEventListener('alpine:init', () => {
                                 x-model="editTokenForm.provider_hint"
                                 class="w-full min-h-[44px] text-[16px] sm:text-[15px] px-3 py-2.5 rounded-[12px] bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-white focus:outline-none">
                                 <option value="all">{{ __('mcp.lbl_all_providers_universal') }}</option>
-                                <option value="claude">Claude Desktop</option>
-                                <option value="cursor">Cursor / Antigravity</option>
+                                <option value="claude">Claude (Desktop / Code / Web)</option>
                                 <option value="openai">ChatGPT / OpenAI</option>
                                 <option value="gemini">Google Gemini</option>
-                                <option value="ollama">Local / Ollama</option>
-                                <option value="langchain">LangChain / n8n</option>
-                                <option value="dola">Dola AI (Calendar & Assistant)</option>
                             </select>
                         </div>
 

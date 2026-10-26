@@ -13,10 +13,28 @@ use App\Support\Context;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\View\View;
 
-final class McpIntegrationWebController extends Controller
+final class McpIntegrationWebController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.permission:settings.view', only: [
+                'index',
+                'logs',
+            ]),
+            new Middleware('require.permission:settings.edit', only: [
+                'storeToken',
+                'updateToken',
+                'revokeToken',
+                'toggleMaster',
+            ]),
+        ];
+    }
+
     public function __construct(
         private readonly McpToolRegistry $toolRegistry = new McpToolRegistry()
     ) {}
@@ -260,6 +278,18 @@ final class McpIntegrationWebController extends Controller
 
         McpAccessToken::where('business_id', $business->id)->update([
             'is_active' => $targetState,
+        ]);
+
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => auth()->id(),
+            'action' => 'mcp.master_toggle',
+            'auditable_type' => McpAccessToken::class,
+            'auditable_id' => $business->id,
+            'old_values' => ['master_active' => ! $targetState],
+            'new_values' => ['master_active' => $targetState],
+            'ip_address' => request()->ip(),
+            'user_agent' => request()->userAgent() ?: 'COOCA-Web',
         ]);
 
         $message = $targetState ? __('mcp.master_enabled') : __('mcp.master_disabled');

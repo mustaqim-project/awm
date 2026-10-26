@@ -1546,7 +1546,7 @@
                                         <div x-show="newIsBundle" x-cloak class="space-y-3 pt-3 border-t border-black/[0.05] dark:border-white/[0.08]">
                                             <div class="flex items-center justify-between">
                                                 <span class="text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('products.bundle_items_list') }}</span>
-                                                <button type="button" @click="addBundleItem('add')" class="h-8 px-2.5 rounded-[8px] bg-amber-500/10 text-amber-600 dark:text-amber-400 hover:bg-amber-500/20 text-[12px] font-semibold flex items-center gap-1 transition min-w-[44px]">
+                                                <button type="button" @click="addBundleItem('add')" class="min-h-[36px] px-3 rounded-[9px] bg-amber-500/10 text-amber-600 dark:text-amber-400 hover:bg-amber-500/20 text-[12px] font-semibold flex items-center gap-1.5 transition min-w-[44px]">
                                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
                                                     <span>{{ __('products.btn_add_bundle_product') }}</span>
                                                 </button>
@@ -1590,8 +1590,9 @@
                                                     <span>{{ __('products.bundle_est_normal_value') }}</span>
                                                     <span class="line-through tabular-nums text-black/50 dark:text-white/50" x-text="'Rp ' + getEstimatedBundleValue(newBundleItems).toLocaleString('id-ID')"></span>
                                                 </div>
-                                                <p class="text-[11px] text-amber-700 dark:text-amber-300 pt-1 border-t border-amber-500/20">
-                                                    💡 <em>{{ __('products.bundle_bottleneck_tip') }}</em>
+                                                <p class="text-[11px] text-amber-700 dark:text-amber-300 pt-1 border-t border-amber-500/20 flex items-center gap-1.5">
+                                                    <i data-lucide="lightbulb" class="w-3.5 h-3.5 text-amber-500 shrink-0"></i>
+                                                    <em>{{ __('products.bundle_bottleneck_tip') }}</em>
                                                 </p>
                                             </div>
                                         </div>
@@ -2162,7 +2163,7 @@
                                         <div x-show="editProduct.is_bundle" x-cloak class="space-y-3 pt-3 border-t border-black/[0.05] dark:border-white/[0.08]">
                                             <div class="flex items-center justify-between">
                                                 <span class="text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('products.bundle_items_list') }}</span>
-                                                <button type="button" @click="addBundleItem('edit')" class="h-8 px-2.5 rounded-[8px] bg-amber-500/10 text-amber-600 dark:text-amber-400 hover:bg-amber-500/20 text-[12px] font-semibold flex items-center gap-1 transition min-w-[44px]">
+                                                <button type="button" @click="addBundleItem('edit')" class="min-h-[36px] px-3 rounded-[9px] bg-amber-500/10 text-amber-600 dark:text-amber-400 hover:bg-amber-500/20 text-[12px] font-semibold flex items-center gap-1.5 transition min-w-[44px]">
                                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
                                                     <span>{{ __('products.btn_add_bundle_product') }}</span>
                                                 </button>
@@ -2206,8 +2207,9 @@
                                                     <span>{{ __('products.bundle_est_normal_value') }}</span>
                                                     <span class="line-through tabular-nums text-black/50 dark:text-white/50" x-text="'Rp ' + getEstimatedBundleValue(editProduct.bundle_items).toLocaleString('id-ID')"></span>
                                                 </div>
-                                                <p class="text-[11px] text-amber-700 dark:text-amber-300 pt-1 border-t border-amber-500/20">
-                                                    💡 <em>{{ __('products.bundle_bottleneck_tip') }}</em>
+                                                <p class="text-[11px] text-amber-700 dark:text-amber-300 pt-1 border-t border-amber-500/20 flex items-center gap-1.5">
+                                                    <i data-lucide="lightbulb" class="w-3.5 h-3.5 text-amber-500 shrink-0"></i>
+                                                    <em>{{ __('products.bundle_bottleneck_tip') }}</em>
                                                 </p>
                                             </div>
                                         </div>
@@ -2645,7 +2647,7 @@
                                                     <span class="text-[12px] font-bold text-black dark:text-white block truncate">{{ __('products.card_marketplace_cockpit') }}</span>
                                                     <span class="text-[11px] text-black/50 dark:text-white/50 block truncate">{{ __('products.card_marketplace_cockpit_desc') }}</span>
                                                 </div>
-                                                <a href="{{ route('marketplace-hub.products') }}" class="h-8 px-3 rounded-[8px] text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 transition flex items-center gap-1 shrink-0 min-w-[44px]">
+                                                <a href="{{ route('marketplace-hub.products') }}" class="min-h-[36px] px-3.5 rounded-[9px] text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 transition flex items-center gap-1.5 shrink-0 min-w-[44px]">
                                                     <span>{{ __('products.btn_open_hub') }}</span>
                                                     <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                                                 </a>

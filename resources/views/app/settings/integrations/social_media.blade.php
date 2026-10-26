@@ -111,7 +111,7 @@
                                         </div>
                                     </div>
                                     <button type="button" @click="disconnectSocial('{{ $acc->id }}')"
-                                        class="min-h-[32px] px-3 rounded-[8px] text-[11px] font-semibold text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.98] transition-all shrink-0 cursor-pointer">
+                                        class="min-h-[36px] px-3.5 rounded-[9px] text-[11.5px] font-semibold text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.98] transition-all shrink-0 cursor-pointer">
                                         {{ __('social_media.disconnect') }}
                                     </button>
                                 </div>
@@ -180,7 +180,7 @@
                                         </div>
                                     </div>
                                     <button type="button" @click="disconnectSocial('{{ $acc->id }}')"
-                                        class="min-h-[32px] px-3 rounded-[8px] text-[11px] font-semibold text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.98] transition-all shrink-0 cursor-pointer">
+                                        class="min-h-[36px] px-3.5 rounded-[9px] text-[11.5px] font-semibold text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.98] transition-all shrink-0 cursor-pointer">
                                         {{ __('social_media.disconnect') }}
                                     </button>
                                 </div>
@@ -248,7 +248,7 @@
                                         </div>
                                     </div>
                                     <button type="button" @click="disconnectSocial('{{ $acc->id }}')"
-                                        class="min-h-[32px] px-3 rounded-[8px] text-[11px] font-semibold text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.98] transition-all shrink-0 cursor-pointer">
+                                        class="min-h-[36px] px-3.5 rounded-[9px] text-[11.5px] font-semibold text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.98] transition-all shrink-0 cursor-pointer">
                                         {{ __('social_media.disconnect') }}
                                     </button>
                                 </div>

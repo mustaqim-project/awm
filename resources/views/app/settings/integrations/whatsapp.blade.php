@@ -156,22 +156,22 @@
 
                         <!-- Quiet Informational Stepper -->
                         <div class="pt-3 border-t border-black/5 dark:border-white/10">
-                            <div class="flex overflow-x-auto sm:grid sm:grid-cols-3 gap-3 no-scrollbar pb-1">
-                                <div class="flex items-start gap-2.5 shrink-0 w-[190px] sm:w-auto">
+                            <div class="flex overflow-x-auto sm:grid sm:grid-cols-3 gap-3 no-scrollbar pb-1 snap-x snap-mandatory">
+                                <div class="snap-start flex items-start gap-2.5 shrink-0 w-[220px] sm:w-auto">
                                     <span class="w-5 h-5 rounded-full bg-[#1877F2]/10 text-[#1877F2] text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5">1</span>
                                     <div class="space-y-0.5 min-w-0">
                                         <p class="font-semibold text-black dark:text-white text-[12px] leading-tight">{{ __('whatsapp.step_1_title') }}</p>
                                         <p class="text-[11px] text-black/55 dark:text-white/55 leading-normal">{{ __('whatsapp.step_1_desc') }}</p>
                                     </div>
                                 </div>
-                                <div class="flex items-start gap-2.5 shrink-0 w-[190px] sm:w-auto">
+                                <div class="snap-start flex items-start gap-2.5 shrink-0 w-[220px] sm:w-auto">
                                     <span class="w-5 h-5 rounded-full bg-[#1877F2]/10 text-[#1877F2] text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5">2</span>
                                     <div class="space-y-0.5 min-w-0">
                                         <p class="font-semibold text-black dark:text-white text-[12px] leading-tight">{{ __('whatsapp.step_2_title') }}</p>
                                         <p class="text-[11px] text-black/55 dark:text-white/55 leading-normal">{{ __('whatsapp.step_2_desc') }}</p>
                                     </div>
                                 </div>
-                                <div class="flex items-start gap-2.5 shrink-0 w-[190px] sm:w-auto">
+                                <div class="snap-start flex items-start gap-2.5 shrink-0 w-[220px] sm:w-auto">
                                     <span class="w-5 h-5 rounded-full bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158] text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5">3</span>
                                     <div class="space-y-0.5 min-w-0">
                                         <p class="font-semibold text-[#248A3D] dark:text-[#30D158] text-[12px] leading-tight">{{ __('whatsapp.step_3_title') }}</p>
@@ -437,7 +437,7 @@
                                 <h4 class="text-[12.5px] font-semibold truncate leading-tight text-white flex items-center gap-1">
                                     <span>{{ $business->name ?? 'Toko Saya' }}</span>
                                     <template x-if="previewMode === 'waba'">
-                                        <span class="text-[#34C759] text-[11px]" title="Official Business Account">✓</span>
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] inline-block" title="Official Business Account"></i>
                                     </template>
                                 </h4>
                                 <p class="text-[10px] text-white/70 leading-tight">
@@ -491,12 +491,14 @@
                                     x-text="receiptFooterNote || @json($business->pos_receipt_footer_note ?? __('settings.default_footer_note'))">
                                 </div>
                                 <div class="pt-1">
-                                    <div class="w-full py-1.5 px-2 bg-white dark:bg-white/10 text-[#007AFF] text-center font-semibold rounded text-[11px] shadow-xs">
-                                        📄 Buka Nota Digital
+                                    <div class="w-full py-1.5 px-2 bg-white dark:bg-white/10 text-[#007AFF] text-center font-semibold rounded text-[11px] shadow-xs flex items-center justify-center gap-1.5">
+                                        <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+                                        <span>Buka Nota Digital</span>
                                     </div>
                                 </div>
-                                <div class="text-[9.5px] text-right opacity-60 font-mono">
-                                    {{ now()->format('H:i') }} ✓✓
+                                <div class="text-[9.5px] text-right opacity-60 font-mono flex items-center justify-end gap-1">
+                                    <span>{{ now()->format('H:i') }}</span>
+                                    <i data-lucide="check-check" class="w-3.5 h-3.5 text-[#53bdeb] inline-block"></i>
                                 </div>
                             </div>
 

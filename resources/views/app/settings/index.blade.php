@@ -136,10 +136,10 @@
             </div>
         </header>
 
-        <!-- Governance & Security Fast Links -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+        <!-- Governance & Security Fast Links (Horizontal Snap Slider on Mobile, Grid on Tablet/Desktop) -->
+        <div class="flex gap-3 overflow-x-auto snap-x snap-mandatory no-scrollbar -mx-4 px-4 pb-1 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-3.5 sm:overflow-visible sm:mx-0 sm:px-0 sm:pb-0">
             <a href="{{ route('settings.audit-logs.index') }}"
-                class="p-4 rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 hover:border-[#FF3B30]/30 transition-all flex items-center justify-between group shadow-sm active:scale-[0.99]">
+                class="snap-start shrink-0 w-[260px] sm:w-auto p-4 rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 hover:border-[#FF3B30]/30 transition-all flex items-center justify-between group shadow-sm active:scale-[0.99]">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-[10px] bg-[#FF3B30]/10 text-[#FF3B30] flex items-center justify-center shrink-0">
                         <i data-lucide="shield-alert" class="w-5 h-5"></i>
@@ -152,7 +152,7 @@
                 <i data-lucide="chevron-right" class="w-4 h-4 text-black/30 dark:text-white/30 group-hover:translate-x-0.5 transition-transform"></i>
             </a>
             <a href="{{ route('approval-rules.index') }}"
-                class="p-4 rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 hover:border-[#007AFF]/30 transition-all flex items-center justify-between group shadow-sm active:scale-[0.99]">
+                class="snap-start shrink-0 w-[260px] sm:w-auto p-4 rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 hover:border-[#007AFF]/30 transition-all flex items-center justify-between group shadow-sm active:scale-[0.99]">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0">
                         <i data-lucide="shield-check" class="w-5 h-5"></i>
@@ -165,7 +165,7 @@
                 <i data-lucide="chevron-right" class="w-4 h-4 text-black/30 dark:text-white/30 group-hover:translate-x-0.5 transition-transform"></i>
             </a>
             <a href="{{ route('roles.index') }}"
-                class="p-4 rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 hover:border-[#34C759]/30 transition-all flex items-center justify-between group shadow-sm active:scale-[0.99]">
+                class="snap-start shrink-0 w-[260px] sm:w-auto p-4 rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 hover:border-[#34C759]/30 transition-all flex items-center justify-between group shadow-sm active:scale-[0.99]">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-[10px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center shrink-0">
                         <i data-lucide="shield" class="w-5 h-5"></i>
@@ -178,7 +178,7 @@
                 <i data-lucide="chevron-right" class="w-4 h-4 text-black/30 dark:text-white/30 group-hover:translate-x-0.5 transition-transform"></i>
             </a>
             <a href="{{ route('settings.integrations.mcp.index') }}"
-                class="p-4 rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 hover:border-[#AF52DE]/30 transition-all flex items-center justify-between group shadow-sm active:scale-[0.99]">
+                class="snap-start shrink-0 w-[260px] sm:w-auto p-4 rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 hover:border-[#AF52DE]/30 transition-all flex items-center justify-between group shadow-sm active:scale-[0.99]">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-[10px] bg-[#AF52DE]/10 text-[#AF52DE] flex items-center justify-center shrink-0">
                         <i data-lucide="bot" class="w-5 h-5"></i>
@@ -724,14 +724,15 @@
                         <div class="pt-3 border-t border-black/5 dark:border-white/5 flex items-center justify-between gap-2">
                             @if (\App\Support\Context::hasPermission('settings.edit') || \App\Support\Context::isAdminOrOwner())
                                 <button type="button" @click="openEditBranch('{{ $branch->id }}')"
-                                        class="flex-1 h-9 px-3 rounded-[9px] text-[12px] font-semibold text-black/80 dark:text-white/80 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+                                        class="flex-1 min-h-[40px] px-3.5 rounded-[10px] text-[12.5px] font-semibold text-black/80 dark:text-white/80 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 cursor-pointer">
                                     <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
                                     <span>{{ __('settings.edit_branch') }}</span>
                                 </button>
                                 @if(!$branch->is_primary)
                                     <button type="button" @click="openDeleteBranch('{{ $branch->id }}')"
-                                            class="w-9 h-9 rounded-[9px] text-[#FF3B30] hover:bg-[#FF3B30]/10 active:scale-[0.98] transition-all flex items-center justify-center shrink-0 cursor-pointer"
-                                            title="{{ __('settings.delete_branch') }}">
+                                            class="w-10 h-10 rounded-[10px] text-[#FF3B30] hover:bg-[#FF3B30]/10 active:scale-[0.98] transition-all flex items-center justify-center shrink-0 cursor-pointer"
+                                            title="{{ __('settings.delete_branch') }}"
+                                            aria-label="{{ __('settings.delete_branch') }}: {{ $branch->name }}">
                                         <i data-lucide="trash-2" class="w-4 h-4"></i>
                                     </button>
                                 @endif
@@ -1102,48 +1103,48 @@
                     </div>
                 </div>
 
-                <!-- Segmented Category Filters -->
-                <div class="flex items-center gap-1.5 flex-wrap pt-2 border-t border-black/5 dark:border-white/5">
+                <!-- Segmented Category Filters (Swipeable Pill Bar on Mobile, Flex on Desktop) -->
+                <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1 -mx-2 px-2 sm:mx-0 sm:px-0 sm:flex-wrap border-t border-black/5 dark:border-white/5">
                     <button type="button" @click="selectedCategory = 'all'"
                         :class="selectedCategory === 'all' ?
                             'bg-[#007AFF] text-white shadow-[0_1px_2px_rgba(0,122,255,0.25)]' :
                             'bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70 hover:bg-black/[0.08] dark:hover:bg-white/[0.12]'"
-                        class="h-9 sm:h-8 px-3.5 rounded-[8px] text-[12px] font-medium active:scale-[0.97] transition-all min-h-[36px]">
+                        class="h-9 sm:h-8 px-3.5 rounded-[8px] text-[12px] font-medium active:scale-[0.97] transition-all min-h-[36px] shrink-0 whitespace-nowrap">
                         {{ __('settings.all_categories') }}
                     </button>
                     <button type="button" @click="selectedCategory = 'fnb'"
                         :class="selectedCategory === 'fnb' ?
                             'bg-[#007AFF] text-white shadow-[0_1px_2px_rgba(0,122,255,0.25)]' :
                             'bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70 hover:bg-black/[0.08] dark:hover:bg-white/[0.12]'"
-                        class="h-9 sm:h-8 px-3.5 rounded-[8px] text-[12px] font-medium active:scale-[0.97] transition-all min-h-[36px]">
+                        class="h-9 sm:h-8 px-3.5 rounded-[8px] text-[12px] font-medium active:scale-[0.97] transition-all min-h-[36px] shrink-0 whitespace-nowrap">
                         {{ __('settings.fnb') }}
                     </button>
                     <button type="button" @click="selectedCategory = 'retail'"
                         :class="selectedCategory === 'retail' ?
                             'bg-[#007AFF] text-white shadow-[0_1px_2px_rgba(0,122,255,0.25)]' :
                             'bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70 hover:bg-black/[0.08] dark:hover:bg-white/[0.12]'"
-                        class="h-9 sm:h-8 px-3.5 rounded-[8px] text-[12px] font-medium active:scale-[0.97] transition-all min-h-[36px]">
+                        class="h-9 sm:h-8 px-3.5 rounded-[8px] text-[12px] font-medium active:scale-[0.97] transition-all min-h-[36px] shrink-0 whitespace-nowrap">
                         {{ __('settings.retail') }}
                     </button>
                     <button type="button" @click="selectedCategory = 'manufacturing'"
                         :class="selectedCategory === 'manufacturing' ?
                             'bg-[#007AFF] text-white shadow-[0_1px_2px_rgba(0,122,255,0.25)]' :
                             'bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70 hover:bg-black/[0.08] dark:hover:bg-white/[0.12]'"
-                        class="h-9 sm:h-8 px-3.5 rounded-[8px] text-[12px] font-medium active:scale-[0.97] transition-all min-h-[36px]">
+                        class="h-9 sm:h-8 px-3.5 rounded-[8px] text-[12px] font-medium active:scale-[0.97] transition-all min-h-[36px] shrink-0 whitespace-nowrap">
                         {{ __('settings.manufacturing') }}
                     </button>
                     <button type="button" @click="selectedCategory = 'service'"
                         :class="selectedCategory === 'service' ?
                             'bg-[#007AFF] text-white shadow-[0_1px_2px_rgba(0,122,255,0.25)]' :
                             'bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70 hover:bg-black/[0.08] dark:hover:bg-white/[0.12]'"
-                        class="h-9 sm:h-8 px-3.5 rounded-[8px] text-[12px] font-medium active:scale-[0.97] transition-all min-h-[36px]">
+                        class="h-9 sm:h-8 px-3.5 rounded-[8px] text-[12px] font-medium active:scale-[0.97] transition-all min-h-[36px] shrink-0 whitespace-nowrap">
                         {{ __('settings.service') }}
                     </button>
                     <button type="button" @click="selectedCategory = 'agriculture'"
                         :class="selectedCategory === 'agriculture' ?
                             'bg-[#007AFF] text-white shadow-[0_1px_2px_rgba(0,122,255,0.25)]' :
                             'bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70 hover:bg-black/[0.08] dark:hover:bg-white/[0.12]'"
-                        class="h-9 sm:h-8 px-3.5 rounded-[8px] text-[12px] font-medium active:scale-[0.97] transition-all min-h-[36px]">
+                        class="h-9 sm:h-8 px-3.5 rounded-[8px] text-[12px] font-medium active:scale-[0.97] transition-all min-h-[36px] shrink-0 whitespace-nowrap">
                         {{ __('settings.agriculture') }}
                     </button>
                 </div>
@@ -1860,7 +1861,7 @@
                                 </div>
 
                                 <div class="space-y-3">
-                                    <label class="flex items-start gap-3 p-3.5 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.08] cursor-pointer hover:border-[#FF9500]/40 transition">
+                                    <label class="flex items-start gap-3 p-3.5 min-h-[44px] rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.08] cursor-pointer hover:border-[#FF9500]/40 transition">
                                         <input type="checkbox" name="is_primary" value="1" x-model="branchForm.is_primary" class="mt-0.5 w-4 h-4 rounded text-[#FF9500] focus:ring-[#FF9500]">
                                         <div class="text-xs">
                                             <span class="font-bold text-black dark:text-white block">{{ __('settings.lbl_set_primary_branch') }}</span>
@@ -1869,14 +1870,14 @@
                                     </label>
 
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                        <label class="flex items-start gap-2.5 p-3 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.08] cursor-pointer">
+                                        <label class="flex items-start gap-2.5 p-3 min-h-[44px] rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.08] cursor-pointer">
                                             <input type="checkbox" name="is_online_fulfillment" value="1" x-model="branchForm.is_online_fulfillment" class="mt-0.5 w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]">
                                             <div class="text-xs">
                                                 <span class="font-semibold text-black/85 dark:text-white/85 block">{{ __('settings.lbl_online_shipping_origin') }}</span>
                                                 <span class="text-[10.5px] text-black/50 dark:text-white/50 block">{{ __('settings.desc_online_shipping_origin') }}</span>
                                             </div>
                                         </label>
-                                        <label class="flex items-start gap-2.5 p-3 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.08] cursor-pointer">
+                                        <label class="flex items-start gap-2.5 p-3 min-h-[44px] rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.08] cursor-pointer">
                                             <input type="checkbox" name="allow_storefront_pickup" value="1" x-model="branchForm.allow_storefront_pickup" class="mt-0.5 w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]">
                                             <div class="text-xs">
                                                 <span class="font-semibold text-black/85 dark:text-white/85 block">{{ __('settings.lbl_allow_self_pickup') }}</span>
@@ -2022,7 +2023,7 @@
 
                                 <!-- Sakelar Status Cabang Aktif -->
                                 <div class="pt-1">
-                                    <label class="flex items-center gap-3 p-3 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 cursor-pointer">
+                                    <label class="flex items-center gap-3 p-3 min-h-[44px] rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 cursor-pointer">
                                         <input type="checkbox" name="is_active" value="1" x-model="branchEditData.is_active" class="w-4 h-4 rounded text-[#34C759] focus:ring-[#34C759]">
                                         <span class="text-xs font-semibold text-black/85 dark:text-white/85">{{ __('settings.lbl_branch_active_toggle') }}</span>
                                     </label>
@@ -2220,7 +2221,7 @@
                                 </div>
 
                                 <div class="space-y-3">
-                                    <label class="flex items-start gap-3 p-3.5 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.08] cursor-pointer hover:border-[#FF9500]/40 transition">
+                                    <label class="flex items-start gap-3 p-3.5 min-h-[44px] rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.08] cursor-pointer hover:border-[#FF9500]/40 transition">
                                         <input type="checkbox" name="is_primary" value="1" x-model="branchEditData.is_primary" class="mt-0.5 w-4 h-4 rounded text-[#FF9500] focus:ring-[#FF9500]">
                                         <div class="text-xs">
                                             <span class="font-bold text-black dark:text-white block">{{ __('settings.lbl_set_primary_branch') }}</span>
@@ -2229,14 +2230,14 @@
                                     </label>
 
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                        <label class="flex items-start gap-2.5 p-3 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.08] cursor-pointer">
+                                        <label class="flex items-start gap-2.5 p-3 min-h-[44px] rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.08] cursor-pointer">
                                             <input type="checkbox" name="is_online_fulfillment" value="1" x-model="branchEditData.is_online_fulfillment" class="mt-0.5 w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]">
                                             <div class="text-xs">
                                                 <span class="font-semibold text-black/85 dark:text-white/85 block">{{ __('settings.lbl_online_shipping_origin') }}</span>
                                                 <span class="text-[10.5px] text-black/50 dark:text-white/50 block">{{ __('settings.desc_online_shipping_origin') }}</span>
                                             </div>
                                         </label>
-                                        <label class="flex items-start gap-2.5 p-3 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.08] cursor-pointer">
+                                        <label class="flex items-start gap-2.5 p-3 min-h-[44px] rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.08] dark:border-white/[0.08] cursor-pointer">
                                             <input type="checkbox" name="allow_storefront_pickup" value="1" x-model="branchEditData.allow_storefront_pickup" class="mt-0.5 w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]">
                                             <div class="text-xs">
                                                 <span class="font-semibold text-black/85 dark:text-white/85 block">{{ __('settings.lbl_allow_self_pickup') }}</span>

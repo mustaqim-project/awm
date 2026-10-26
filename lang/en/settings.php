@@ -382,4 +382,5 @@ Have a great day! ✨',
     'receipt_mock_item_2' => '1x Toasted Butter Croissant',
     'receipt_mock_item_3' => '1x Cold Bottled Tea',
     'receipt_mock_tax' => 'PB1 / Restaurant Tax (10%)',
+    'close' => 'Close',
 ];

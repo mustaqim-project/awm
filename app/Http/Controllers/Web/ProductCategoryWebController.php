@@ -5,15 +5,25 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\AuditLog;
 use App\Models\ProductCategory;
 use App\Support\Context;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Str;
 
-final class ProductCategoryWebController extends Controller
+final class ProductCategoryWebController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.permission:master_data.product_categories.manage', only: ['store', 'update', 'destroy']),
+        ];
+    }
+
     /**
      * Store a new product category (via regular form or AJAX modal).
      */
@@ -43,15 +53,31 @@ final class ProductCategoryWebController extends Controller
             'marketplace_category_name' => $marketplaceCategoryName,
         ]);
 
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => $request->user()?->id,
+            'auditable_type' => ProductCategory::class,
+            'auditable_id' => $category->id,
+            'action' => 'product_category.created',
+            'risk_level' => AuditLog::RISK_LOW,
+            'new_values' => [
+                'name' => $category->name,
+                'marketplace_category_id' => $category->marketplace_category_id,
+            ],
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'created_at' => now(),
+        ]);
+
         if ($request->wantsJson() || $request->ajax()) {
             return response()->json([
                 'success'  => true,
-                'message'  => 'Kategori produk berhasil ditambahkan.',
+                'message'  => __('products.category_created'),
                 'category' => $category,
             ], 201);
         }
 
-        return back()->with('success', 'Kategori produk berhasil ditambahkan.');
+        return back()->with('success', __('products.category_created'));
     }
 
     /**
@@ -59,6 +85,9 @@ final class ProductCategoryWebController extends Controller
      */
     public function update(Request $request, ProductCategory $category): RedirectResponse|JsonResponse
     {
+        $business = Context::requireBusiness();
+        abort_unless($category->business_id === $business->id, 403);
+
         $validated = $request->validate([
             'name'                      => ['required', 'string', 'max:150'],
             'description'               => ['nullable', 'string', 'max:500'],
@@ -72,6 +101,12 @@ final class ProductCategoryWebController extends Controller
             $matched = \App\Domain\Marketplace\MarketplaceCategoryRegistry::find($validated['marketplace_category_id']);
             $marketplaceCategoryName = $matched['name'] ?? null;
         }
+
+        $oldValues = [
+            'name' => $category->name,
+            'description' => $category->description,
+            'marketplace_category_id' => $category->marketplace_category_id,
+        ];
 
         $category->update([
             'name'                      => $validated['name'],
@@ -94,15 +129,33 @@ final class ProductCategoryWebController extends Controller
             }
         }
 
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => $request->user()?->id,
+            'auditable_type' => ProductCategory::class,
+            'auditable_id' => $category->id,
+            'action' => 'product_category.updated',
+            'risk_level' => AuditLog::RISK_LOW,
+            'old_values' => $oldValues,
+            'new_values' => [
+                'name' => $category->name,
+                'description' => $category->description,
+                'marketplace_category_id' => $category->marketplace_category_id,
+            ],
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'created_at' => now(),
+        ]);
+
         if ($request->wantsJson() || $request->ajax()) {
             return response()->json([
                 'success'  => true,
-                'message'  => 'Kategori produk berhasil diperbarui.',
+                'message'  => __('products.category_updated'),
                 'category' => $category,
             ]);
         }
 
-        return back()->with('success', 'Kategori produk berhasil diperbarui.');
+        return back()->with('success', __('products.category_updated'));
     }
 
     /**
@@ -110,8 +163,30 @@ final class ProductCategoryWebController extends Controller
      */
     public function destroy(ProductCategory $category): RedirectResponse
     {
+        $business = Context::requireBusiness();
+        abort_unless($category->business_id === $business->id, 403);
+
+        $oldValues = [
+            'name' => $category->name,
+            'marketplace_category_id' => $category->marketplace_category_id,
+        ];
+
+        $categoryId = $category->id;
         $category->delete();
 
-        return back()->with('success', 'Kategori produk berhasil dihapus.');
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => request()->user()?->id,
+            'auditable_type' => ProductCategory::class,
+            'auditable_id' => $categoryId,
+            'action' => 'product_category.deleted',
+            'risk_level' => AuditLog::RISK_LOW,
+            'old_values' => $oldValues,
+            'ip_address' => request()->ip(),
+            'user_agent' => request()->userAgent(),
+            'created_at' => now(),
+        ]);
+
+        return back()->with('success', __('products.category_deleted'));
     }
 }
