@@ -470,6 +470,19 @@
 
                 <div class="border-t border-black/5 dark:border-white/10 my-1"></div>
 
+                @if (session()->has('admin_impersonator_id'))
+                    <div class="p-1 mb-1 bg-[#FF9500]/10 dark:bg-[#FF9F0A]/15 rounded-[10px] border border-[#FF9500]/25">
+                        <form method="POST" action="{{ route('admin.businesses.leave-impersonation') }}">
+                            @csrf
+                            <button type="submit"
+                                class="w-full px-2.5 py-1.5 rounded-[8px] text-[#FF9500] dark:text-[#FF9F0A] hover:bg-[#FF9500]/15 flex items-center gap-2 transition active:scale-98 text-left font-bold text-[12px] cursor-pointer">
+                                <i data-lucide="arrow-left-to-line" class="w-3.5 h-3.5 shrink-0" stroke-width="2.5"></i>
+                                <span>Kembali ke Admin Console</span>
+                            </button>
+                        </form>
+                    </div>
+                @endif
+
                 <!-- Logout Option with Apple Alert Modal Trigger -->
                 <div>
                     <button type="button" @click="profileOpen = false; showLogoutConfirm = true"

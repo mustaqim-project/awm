@@ -910,6 +910,10 @@ final class AuthWebController extends Controller
      */
     public function logout(Request $request): RedirectResponse
     {
+        if ($request->session()->has('admin_impersonator_id')) {
+            return app(\App\Http\Controllers\Admin\AdminBusinessController::class)->leaveImpersonation($request);
+        }
+
         Auth::guard('web')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

@@ -70,6 +70,8 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
         Route::get('/businesses', [AdminBusinessController::class, 'index'])->name('businesses.index');
         Route::get('/businesses/{business}', [AdminBusinessController::class, 'show'])->name('businesses.show');
         Route::post('/businesses/{business}/toggle-status', [AdminBusinessController::class, 'toggleStatus'])->name('businesses.toggle-status');
+        Route::post('/businesses/{business}/impersonate', [AdminBusinessController::class, 'impersonate'])->name('businesses.impersonate');
+        Route::match(['GET', 'POST'], '/businesses/leave-impersonation', [AdminBusinessController::class, 'leaveImpersonation'])->name('businesses.leave-impersonation');
 
         // User Management & CSV Export
         Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');

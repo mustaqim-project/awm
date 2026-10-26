@@ -31,6 +31,7 @@ final class AdminRbacSeeder extends Seeder
             // ─── 2. Tenants / Bisnis ──────────────────────────────────
             'admin.businesses.view'                => ['Lihat Tenant Bisnis', 'admin_tenants', 'Melihat daftar seluruh tenant bisnis UMKM yang terdaftar di platform.'],
             'admin.businesses.toggle_status'       => ['Ubah Status Tenant', 'admin_tenants', 'Mengaktifkan atau membekukan (suspend) akses tenant bisnis.'],
+            'admin.businesses.impersonate'         => ['Masuk ke Workspace Bisnis', 'admin_tenants', 'Masuk ke dalam workspace bisnis tenant (impersonasi) untuk investigasi bugs dan diagnosa sistem.'],
 
             // ─── 3. Basis Pengguna Platform ───────────────────────────
             'admin.users.view'                     => ['Lihat Pengguna Platform', 'admin_tenants', 'Melihat seluruh akun pengguna dan owner bisnis terdaftar.'],
@@ -197,6 +198,7 @@ final class AdminRbacSeeder extends Seeder
                     'admin.dashboard.view',
                     'admin.businesses.view',
                     'admin.businesses.toggle_status',
+                    'admin.businesses.impersonate',
                     'admin.users.view',
                     'admin.users.export',
                     'admin.users.delete',
@@ -263,6 +265,8 @@ final class AdminRbacSeeder extends Seeder
                     'admin.inbox.manage',
                     'admin.feedback.view',
                     'admin.feedback.manage',
+                    'admin.businesses.view',
+                    'admin.businesses.impersonate',
                     'admin.account_recoveries.view',
                     'admin.whatsapp.view',
                     'admin.whatsapp.blast',

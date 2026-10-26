@@ -85,6 +85,10 @@ use Illuminate\Support\Facades\Route;
 */
 Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
 
+    // Admin Workspace Impersonation Exit Gate
+    Route::match(['GET', 'POST'], '/leave-impersonation', [\App\Http\Controllers\Admin\AdminBusinessController::class, 'leaveImpersonation'])
+        ->name('impersonation.leave');
+
     // 1. User Profile & Password Management
     Route::get('/profile', [ProfileWebController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileWebController::class, 'updateProfile'])->name('profile.update');

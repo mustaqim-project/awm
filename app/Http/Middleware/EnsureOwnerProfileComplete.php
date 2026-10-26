@@ -22,7 +22,7 @@ final class EnsureOwnerProfileComplete
             return $next($request);
         }
 
-        if (app()->environment('testing')) {
+        if (app()->environment('testing') || $request->session()->has('admin_impersonator_id')) {
             return $next($request);
         }
 

@@ -193,31 +193,44 @@
                                     @endif
                                 </td>
                                 <td class="px-5 py-4 text-right">
-                                    <div class="flex items-center justify-end gap-2">
+                                    <div class="flex items-center justify-end gap-1.5">
                                         @if(Auth::guard('admin')->user()?->hasPermission('admin.businesses.view'))
                                         <a href="{{ route('admin.businesses.show', $biz->id) }}"
-                                            class="h-8 px-3 rounded-[10px] text-[12px] font-bold text-[#007AFF] dark:text-[#0A84FF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-95 transition-all inline-flex items-center gap-1">
+                                            class="h-8 px-2.5 rounded-[10px] text-[12px] font-bold text-[#007AFF] dark:text-[#0A84FF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-95 transition-all inline-flex items-center gap-1"
+                                            title="Lihat Detail Workspace">
                                             <span>Detail</span>
                                             <i data-lucide="arrow-right" class="w-3 h-3" stroke-width="2"></i>
                                         </a>
                                         @endif
-                                        @if($biz->is_active && Auth::guard('admin')->user()?->hasPermission('admin.businesses.suspend'))
+                                        @if(Auth::guard('admin')->user()?->hasPermission('admin.businesses.impersonate') || Auth::guard('admin')->user()?->hasPermission('admin.businesses.view'))
+                                        <form method="POST" action="{{ route('admin.businesses.impersonate', $biz->id) }}" class="inline"
+                                            onsubmit="return AppAlert.confirmSubmit(event, this, 'Masuk ke workspace {{ addslashes($biz->name) }} untuk investigasi bugs dan diagnosa sistem?', 'Masuk ke Bisnis?', 'info')">
+                                            @csrf
+                                            <button type="submit"
+                                                class="h-8 px-2.5 rounded-[10px] text-[12px] font-bold text-[#FF9500] dark:text-[#FF9F0A] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 active:scale-95 transition-all inline-flex items-center gap-1 cursor-pointer"
+                                                title="Masuk ke Workspace (Cek Bug)">
+                                                <i data-lucide="log-in" class="w-3.5 h-3.5" stroke-width="2"></i>
+                                                <span>Masuk</span>
+                                            </button>
+                                        </form>
+                                        @endif
+                                        @if($biz->is_active && Auth::guard('admin')->user()?->hasPermission('admin.businesses.toggle_status'))
                                         <form method="POST"
                                             action="{{ route('admin.businesses.toggle-status', $biz->id) }}"
                                             onsubmit="return AppAlert.confirmSubmit(event, this, 'Apakah Anda yakin ingin menangguhkan status bisnis {{ addslashes($biz->name) }}?', 'Tangguhkan Bisnis?', 'warning')">
                                             @csrf
                                             <button type="submit"
-                                                class="h-8 px-2.5 rounded-[10px] text-[12px] font-bold transition-all inline-flex items-center gap-1 text-[#FF3B30] hover:bg-[#FF3B30]/10 active:scale-95">
+                                                class="h-8 px-2.5 rounded-[10px] text-[12px] font-bold transition-all inline-flex items-center gap-1 text-[#FF3B30] hover:bg-[#FF3B30]/10 active:scale-95 cursor-pointer">
                                                 Suspend
                                             </button>
                                         </form>
-                                        @elseif(! $biz->is_active && Auth::guard('admin')->user()?->hasPermission('admin.businesses.activate'))
+                                        @elseif(! $biz->is_active && Auth::guard('admin')->user()?->hasPermission('admin.businesses.toggle_status'))
                                         <form method="POST"
                                             action="{{ route('admin.businesses.toggle-status', $biz->id) }}"
                                             onsubmit="return AppAlert.confirmSubmit(event, this, 'Apakah Anda yakin ingin mengaktifkan kembali bisnis {{ addslashes($biz->name) }}?', 'Aktifkan Bisnis?', 'info')">
                                             @csrf
                                             <button type="submit"
-                                                class="h-8 px-2.5 rounded-[10px] text-[12px] font-bold transition-all inline-flex items-center gap-1 text-[#34C759] hover:bg-[#34C759]/10 active:scale-95">
+                                                class="h-8 px-2.5 rounded-[10px] text-[12px] font-bold transition-all inline-flex items-center gap-1 text-[#34C759] hover:bg-[#34C759]/10 active:scale-95 cursor-pointer">
                                                 Aktifkan
                                             </button>
                                         </form>

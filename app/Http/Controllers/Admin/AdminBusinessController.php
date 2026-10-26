@@ -6,12 +6,17 @@ namespace App\Http\Controllers\Admin;
 
 use App\Domain\OperatingMode\OperatingModeResolver;
 use App\Http\Controllers\Controller;
+use App\Models\AuditLog;
 use App\Models\Business;
+use App\Models\BusinessMembership;
 use App\Models\BusinessSubscription;
+use App\Support\Context;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 
 final class AdminBusinessController extends Controller implements HasMiddleware
@@ -22,7 +27,7 @@ final class AdminBusinessController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('require.admin.permission:admin.businesses.view', only: ['index', 'show']),
+            new Middleware('require.admin.permission:admin.businesses.view', only: ['index', 'show', 'impersonate']),
             new Middleware('require.admin.permission:admin.businesses.toggle_status', only: ['toggleStatus']),
         ];
     }
@@ -147,5 +152,135 @@ final class AdminBusinessController extends Controller implements HasMiddleware
 
         return redirect()->back()
             ->with('success', "Workspace bisnis {$business->name} berhasil diaktifkan kembali.");
+    }
+
+    /**
+     * Masuk ke workspace bisnis tenant (impersonasi) untuk investigasi bug dan diagnosa sistem.
+     */
+    public function impersonate(Request $request, Business $business): RedirectResponse
+    {
+        /** @var \App\Models\Admin|null $admin */
+        $admin = Auth::guard('admin')->user();
+        if (! $admin) {
+            abort(403, 'Akses ditolak: Hanya administrator platform yang diizinkan.');
+        }
+
+        if (! $admin->isSuperAdmin() && ! $admin->hasPermission('admin.businesses.impersonate') && ! $admin->hasPermission('admin.businesses.view')) {
+            abort(403, 'Anda tidak memiliki hak akses untuk masuk ke workspace tenant.');
+        }
+
+        // Cari user target: prioritas owner, fallback user pertama dalam tim
+        $targetUser = $business->owner ?: $business->users()->first();
+
+        if (! $targetUser) {
+            return redirect()->back()
+                ->with('error', "Bisnis '{$business->name}' belum memiliki pengguna terdaftar dalam tim.");
+        }
+
+        // Sinkronisasi active_business_id pada user target
+        $targetUser->update(['active_business_id' => $business->id]);
+
+        // Simpan data sesi impersonasi
+        $request->session()->put([
+            'admin_impersonator_id' => $admin->id,
+            'admin_impersonator_name' => $admin->name,
+            'admin_impersonator_email' => $admin->email,
+            'admin_impersonated_business_id' => $business->id,
+            'admin_impersonated_business_name' => $business->name,
+            'active_business_id' => $business->id,
+            'auth_wa_otp_verified_user_id' => $targetUser->id,
+            'auth_wa_otp_verified_at' => now()->timestamp,
+        ]);
+
+        // Login ke tenant web guard sebagai user target
+        Auth::guard('web')->login($targetUser);
+
+        // Bind Context tenant secara langsung
+        $membership = BusinessMembership::where('business_id', $business->id)
+            ->where('user_id', $targetUser->id)
+            ->first();
+        if ($membership) {
+            Context::setBusiness($business, $membership);
+        }
+
+        // Catat AuditLog investigasi
+        try {
+            AuditLog::create([
+                'business_id' => $business->id,
+                'user_id' => $targetUser->id,
+                'auditable_type' => Business::class,
+                'auditable_id' => $business->id,
+                'action' => 'admin_impersonate_start',
+                'risk_level' => AuditLog::RISK_MEDIUM,
+                'risk_reason' => 'Admin diagnostic workspace impersonation',
+                'notes' => "Administrator {$admin->name} ({$admin->email}) masuk ke workspace {$business->name} untuk diagnosa bug.",
+                'new_values' => [
+                    'admin_id' => $admin->id,
+                    'admin_email' => $admin->email,
+                    'target_user_id' => $targetUser->id,
+                ],
+                'ip_address' => $request->ip(),
+                'user_agent' => substr((string) $request->userAgent(), 0, 255),
+                'created_at' => now(),
+            ]);
+        } catch (\Throwable $e) {
+            Log::warning('Impersonate audit log error: ' . $e->getMessage());
+        }
+
+        return redirect()->route('dashboard')
+            ->with('info', "Anda telah masuk ke workspace {$business->name} dalam Mode Investigasi Admin.");
+    }
+
+    /**
+     * Mengakhiri sesi impersonasi dan kembali ke Admin Console.
+     */
+    public function leaveImpersonation(Request $request): RedirectResponse
+    {
+        $businessId = $request->session()->get('admin_impersonated_business_id');
+        $targetUserId = Auth::guard('web')->id();
+        $adminName = $request->session()->get('admin_impersonator_name', 'Administrator');
+
+        if ($businessId && $targetUserId) {
+            try {
+                AuditLog::create([
+                    'business_id' => $businessId,
+                    'user_id' => $targetUserId,
+                    'auditable_type' => Business::class,
+                    'auditable_id' => $businessId,
+                    'action' => 'admin_impersonate_end',
+                    'risk_level' => AuditLog::RISK_LOW,
+                    'risk_reason' => 'Admin diagnostic session concluded',
+                    'notes' => "Administrator {$adminName} mengakhiri sesi investigasi bugs di workspace.",
+                    'ip_address' => $request->ip(),
+                    'user_agent' => substr((string) $request->userAgent(), 0, 255),
+                    'created_at' => now(),
+                ]);
+            } catch (\Throwable $e) {
+                Log::warning('Leave impersonation audit log error: ' . $e->getMessage());
+            }
+        }
+
+        // Logout dari tenant web guard
+        Auth::guard('web')->logout();
+
+        // Hapus variabel sesi impersonasi
+        $request->session()->forget([
+            'admin_impersonator_id',
+            'admin_impersonator_name',
+            'admin_impersonator_email',
+            'admin_impersonated_business_id',
+            'admin_impersonated_business_name',
+            'active_business_id',
+            'auth_wa_otp_verified_user_id',
+            'auth_wa_otp_verified_at',
+        ]);
+
+        if ($businessId && Business::where('id', $businessId)->exists()) {
+            return redirect()->route('admin.businesses.show', $businessId)
+                ->with('success', 'Sesi investigasi bugs telah diakhiri. Anda kembali ke Admin Console.');
+        }
+
+        return redirect()->route('admin.businesses.index')
+            ->with('success', 'Sesi investigasi bugs telah diakhiri. Anda kembali ke Admin Console.');
     }
 }

@@ -24,6 +24,11 @@ final class RequireWhatsAppOtp
             return $next($request);
         }
 
+        // Bypass OTP challenges during Platform Admin diagnostic / bug-investigation impersonation
+        if ($request->session()->has('admin_impersonator_id')) {
+            return $next($request);
+        }
+
         if (! auth('web')->check() || $this->isExempt($request)) {
             return $next($request);
         }

@@ -1294,6 +1294,33 @@
         <div :class="sidebarCollapsed ? 'lg:pl-[76px]' : 'lg:pl-[272px]'"
             class="flex-1 flex flex-col min-h-screen min-w-0 transition-[padding] duration-250 ease-out bg-[#F2F2F7] dark:bg-[#1E1E1E]">
 
+            @if (session()->has('admin_impersonator_id'))
+                <!-- Apple HIG Admin Impersonation Investigation Banner -->
+                <div class="sticky top-0 z-[60] bg-gradient-to-r from-[#FF9500] via-[#FF9F0A] to-[#FF9500] border-b border-[#FF8000] px-4 py-2.5 shadow-md text-white transition-all">
+                    <div class="max-w-[1440px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+                        <div class="flex items-center gap-2.5 min-w-0">
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-black bg-black/25 text-white tracking-wider uppercase shrink-0">
+                                <i data-lucide="shield-alert" class="w-3.5 h-3.5 text-white" stroke-width="2.5"></i>
+                                Mode Investigasi Bug
+                            </span>
+                            <p class="text-[12.5px] font-medium text-white/95 truncate">
+                                Masuk sebagai <strong>{{ Auth::user()?->name }}</strong> di workspace <strong>{{ $activeBiz?->name ?? session('admin_impersonated_business_name') }}</strong> oleh Admin <strong>{{ session('admin_impersonator_name', 'Superadmin') }}</strong>.
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-2 shrink-0">
+                            <form method="POST" action="{{ route('admin.businesses.leave-impersonation') }}" class="inline">
+                                @csrf
+                                <button type="submit"
+                                    class="h-8 px-3.5 rounded-[10px] text-[12px] font-bold text-[#FF9500] bg-white hover:bg-white/90 active:scale-95 transition-all inline-flex items-center gap-1.5 shadow-sm cursor-pointer">
+                                    <i data-lucide="arrow-left-to-line" class="w-3.5 h-3.5" stroke-width="2"></i>
+                                    <span>Kembali ke Admin Console</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
             <!-- Topbar Header (Apple macOS Toolbar Architecture) -->
             @include(
                 'layouts.partials.topbar',
