@@ -307,7 +307,7 @@
                         </div>
                         <div>
                             <h3 class="text-[16px] font-bold text-black dark:text-white">Tangguhkan Bisnis?</h3>
-                            <p class="text-[12px] text-black/50 dark:text-white/50">Operasional POS, toko online, dan akses staf akan dibekukan sementara.</p>
+                            <p class="text-[12px] text-black/50 dark:text-white/50">Operasional transaksi akan dinonaktifkan dan notifikasi resmi akan otomatis dikirimkan via email ke pemilik bisnis.</p>
                         </div>
                     </div>
 
@@ -315,9 +315,9 @@
                         @csrf
                         <div>
                             <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
-                                Alasan Penangguhan <span class="text-[#FF3B30]">*</span>
+                                Alasan Penangguhan <span class="text-[#FF3B30]">* (Wajib Diisi)</span>
                             </label>
-                            <textarea name="reason" rows="3" required placeholder="Contoh: Terdeteksi pelanggaran syarat & ketentuan penggunaan platform..."
+                            <textarea name="reason" rows="3" required minlength="5" placeholder="Contoh: Terdeteksi pelanggaran syarat & ketentuan penggunaan platform / indikasi fraud..."
                                 class="w-full px-3.5 py-2.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF3B30]/40"></textarea>
                         </div>
 

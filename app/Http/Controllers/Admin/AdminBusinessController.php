@@ -7,6 +7,8 @@ namespace App\Http\Controllers\Admin;
 use App\Domain\OperatingMode\OperatingModeResolver;
 use App\Http\Controllers\Controller;
 use App\Models\AuditLog;
+use App\Mail\BusinessReactivatedMail;
+use App\Mail\BusinessSuspendedMail;
 use App\Models\Business;
 use App\Models\BusinessMembership;
 use App\Models\BusinessSubscription;
@@ -17,6 +19,7 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
 final class AdminBusinessController extends Controller implements HasMiddleware
@@ -133,12 +136,39 @@ final class AdminBusinessController extends Controller implements HasMiddleware
     public function toggleStatus(Request $request, Business $business): RedirectResponse
     {
         if ($business->is_active) {
-            $reason = (string) $request->input('reason', 'Ditangguhkan oleh Superadmin');
+            $validated = $request->validate([
+                'reason' => ['required', 'string', 'min:5', 'max:1000'],
+            ], [
+                'reason.required' => 'Alasan penangguhan wajib diisi.',
+                'reason.min' => 'Alasan penangguhan minimal 5 karakter.',
+                'reason.max' => 'Alasan penangguhan maksimal 1000 karakter.',
+            ]);
+
+            $reason = trim($validated['reason']);
+
             $business->update([
                 'is_active' => false,
                 'suspended_reason' => $reason,
                 'suspended_at' => now(),
             ]);
+
+            $owner = $business->owner
+                ?: $business->users()->wherePivot('role', 'owner')->first()
+                ?: $business->users()->first();
+
+            $ownerEmail = $owner?->email ?: $business->email;
+            $ownerName = $owner?->name ?: ($business->name . ' Owner');
+
+            if (! empty($ownerEmail)) {
+                try {
+                    Mail::to($ownerEmail)->send(new BusinessSuspendedMail($business, $reason, $ownerName));
+                } catch (\Throwable $e) {
+                    Log::error('Failed sending business suspension notification email: ' . $e->getMessage(), [
+                        'business_id' => $business->id,
+                        'email' => $ownerEmail,
+                    ]);
+                }
+            }
 
             return redirect()->back()
                 ->with('success', "Workspace bisnis {$business->name} berhasil ditangguhkan.");
@@ -149,6 +179,24 @@ final class AdminBusinessController extends Controller implements HasMiddleware
             'suspended_reason' => null,
             'suspended_at' => null,
         ]);
+
+        $owner = $business->owner
+            ?: $business->users()->wherePivot('role', 'owner')->first()
+            ?: $business->users()->first();
+
+        $ownerEmail = $owner?->email ?: $business->email;
+        $ownerName = $owner?->name ?: ($business->name . ' Owner');
+
+        if (! empty($ownerEmail)) {
+            try {
+                Mail::to($ownerEmail)->send(new BusinessReactivatedMail($business, $ownerName));
+            } catch (\Throwable $e) {
+                Log::error('Failed sending business reactivation notification email: ' . $e->getMessage(), [
+                    'business_id' => $business->id,
+                    'email' => $ownerEmail,
+                ]);
+            }
+        }
 
         return redirect()->back()
             ->with('success', "Workspace bisnis {$business->name} berhasil diaktifkan kembali.");

@@ -1330,6 +1330,34 @@
         <div :class="sidebarCollapsed ? 'lg:pl-[76px]' : 'lg:pl-[272px]'"
             class="flex-1 flex flex-col min-h-screen min-w-0 transition-[padding] duration-250 ease-out bg-[#F2F2F7] dark:bg-[#1E1E1E]">
 
+            @if ($activeBiz && ! $activeBiz->is_active)
+                <!-- Apple HIG Workspace Suspended Alert Banner -->
+                <div class="sticky top-0 z-[60] bg-gradient-to-r from-[#FF3B30] via-[#FF453A] to-[#D70015] border-b border-[#C4000F] px-4 py-2.5 shadow-md text-white transition-all">
+                    <div class="max-w-[1440px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+                        <div class="flex items-center gap-2.5 min-w-0">
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-black bg-black/25 text-white tracking-wider uppercase shrink-0">
+                                <i data-lucide="ban" class="w-3.5 h-3.5 text-white" stroke-width="2.5"></i>
+                                Akun Bisnis Ditangguhkan
+                            </span>
+                            <p class="text-[12.5px] font-medium text-white/95 leading-snug">
+                                Seluruh transaksi baru dinonaktifkan sementara.
+                                @if ($activeBiz->suspended_reason)
+                                    <span class="text-white font-semibold">Alasan: "{{ $activeBiz->suspended_reason }}"</span>
+                                @endif
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-2 shrink-0">
+                            <a href="https://wa.me/6281234567890?text={{ urlencode('Halo Support COOCA, saya ingin menanyakan penangguhan akun bisnis ' . ($activeBiz->name ?? '') . ' (ID: ' . ($activeBiz->id ?? '') . ')') }}"
+                               target="_blank" rel="noopener noreferrer"
+                               class="h-8 px-3.5 rounded-[10px] text-[12px] font-bold text-[#FF3B30] bg-white hover:bg-white/90 active:scale-95 transition-all inline-flex items-center gap-1.5 shadow-sm">
+                                <i data-lucide="message-circle" class="w-3.5 h-3.5" stroke-width="2"></i>
+                                <span>Hubungi Support</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
             @if (session()->has('admin_impersonator_id'))
                 <!-- Apple HIG Admin Impersonation Investigation Banner -->
                 <div class="sticky top-0 z-[60] bg-gradient-to-r from-[#FF9500] via-[#FF9F0A] to-[#FF9500] border-b border-[#FF8000] px-4 py-2.5 shadow-md text-white transition-all">

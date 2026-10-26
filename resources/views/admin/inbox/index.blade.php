@@ -46,7 +46,7 @@
     <div class="rounded-[18px] bg-white dark:bg-[#1C1C1E] border border-[#E5E7EB] dark:border-white/10 shadow-xs overflow-hidden flex flex-col min-h-[680px] lg:h-[calc(100vh-190px)]">
 
         {{-- 1. TOP CHANNEL TABS BAR --}}
-        <div class="px-4 py-2.5 border-b border-[#E5E7EB] dark:border-white/10 overflow-x-auto scrollbar-none flex items-center gap-2 bg-white dark:bg-[#1C1C1E] shrink-0">
+        <div class="px-4 py-2.5 border-b border-[#E5E7EB] dark:border-white/10 overflow-x-auto no-scrollbar scrollbar-none flex items-center gap-2 bg-white dark:bg-[#1C1C1E] shrink-0">
             <button type="button" @click="setChannel('all')"
                 :class="currentChannel === 'all' ? 'bg-[#E7F3FF] text-[#1877F2] font-semibold dark:bg-[#1877F2]/20 dark:text-[#64D2FF]' : 'text-[#4B5563] dark:text-[#9CA3AF] hover:text-[#111827] dark:hover:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.04]'"
                 class="px-4 py-1.5 rounded-[10px] text-[13.5px] transition-all whitespace-nowrap flex items-center gap-1.5 shrink-0">
@@ -169,8 +169,8 @@
                     </div>
 
                     {{-- QUICK FILTER PILLS ROW (TAGS & STATUS WITH SOFT COLORS) --}}
-                    <div class="flex items-center justify-between gap-1 overflow-x-auto scrollbar-none pt-0.5 relative" x-data="{ openFilterMore: false }">
-                        <div class="flex items-center gap-1.5 overflow-x-auto scrollbar-none py-0.5">
+                    <div class="flex items-center justify-between gap-1 overflow-x-auto no-scrollbar scrollbar-none pt-0.5 relative" x-data="{ openFilterMore: false }">
+                        <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar scrollbar-none py-0.5">
                             {{-- Semua --}}
                             <button type="button" @click="resetFilters()"
                                 :class="(currentStatus === 'all' && currentTag === 'all') ? 'bg-[#1877F2] text-white font-semibold border-[#1877F2] shadow-2xs' : 'bg-white dark:bg-[#2C2C2E] text-[#374151] dark:text-[#D1D5DB] border-[#E5E7EB] dark:border-white/10 hover:bg-[#F3F4F6]'"
@@ -847,46 +847,49 @@
                     <template x-if="!isCommentChannel(selectedThread.channel)">
                         <div class="h-full flex flex-col min-h-0 overflow-hidden">
                             {{-- DM DETAIL HEADER --}}
-                            <div class="px-5 py-3.5 border-b border-[#E5E7EB] dark:border-white/10 flex items-center justify-between gap-3 bg-white dark:bg-[#1C1C1E] shrink-0">
-                                <div class="flex items-center gap-3 min-w-0">
+                            <div class="px-4 sm:px-5 py-3 border-b border-[#E5E7EB] dark:border-white/10 flex items-center justify-between gap-3 bg-white dark:bg-[#1C1C1E] shrink-0 min-w-0">
+                                <div class="flex items-center gap-3 min-w-0 flex-1">
                                     <div class="w-10 h-10 rounded-full bg-[#F1F5F9] dark:bg-[#27272A] border border-[#E2E8F0] dark:border-white/10 flex items-center justify-center font-bold text-[14px] text-[#334155] dark:text-[#F1F5F9] shrink-0">
                                         <span x-text="getInitials(selectedThread.name)"></span>
                                     </div>
-                                    <div class="min-w-0">
-                                        <div class="flex items-center gap-2">
+                                    <div class="min-w-0 flex-1">
+                                        <div class="flex items-center gap-2 min-w-0">
                                             <h2 class="text-[14.5px] font-bold text-[#111827] dark:text-white truncate" x-text="selectedThread.name"></h2>
-                                            <span class="px-2 py-0.5 rounded-full text-[10.5px] font-semibold text-white flex items-center gap-1"
+                                            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold text-white whitespace-nowrap shrink-0 shadow-2xs"
                                                 :class="getChannelBadgeClass(selectedThread.channel)">
                                                 <i :data-lucide="getChannelIcon(selectedThread.channel)" class="w-2.5 h-2.5"></i>
                                                 <span x-text="formatChannelName(selectedThread.channel)"></span>
                                             </span>
                                         </div>
-                                        <div class="text-[11.5px] text-[#6B7280] dark:text-[#9CA3AF] truncate mt-0.5 flex flex-wrap items-center gap-x-2">
+                                        <div class="text-[11.5px] text-[#6B7280] dark:text-[#9CA3AF] truncate mt-0.5 flex items-center gap-1.5 min-w-0">
                                             <template x-if="selectedThread.email">
-                                                <span class="inline-flex items-center gap-1 text-slate-700 dark:text-slate-300">
-                                                    <i data-lucide="mail" class="w-3 h-3 text-slate-400"></i>
-                                                    <span x-text="selectedThread.email"></span>
-                                                </span>
+                                                <span class="truncate text-slate-700 dark:text-slate-300" x-text="selectedThread.email"></span>
+                                            </template>
+                                            <template x-if="selectedThread.email && selectedThread.phone">
+                                                <span class="text-slate-300 dark:text-white/20 shrink-0">·</span>
                                             </template>
                                             <template x-if="selectedThread.phone">
                                                 <a :href="'https://wa.me/' + selectedThread.phone.replace(/[^0-9]/g, '')" target="_blank"
-                                                   class="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400 hover:underline font-medium" rel="noopener noreferrer">
+                                                   class="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400 hover:underline font-medium shrink-0" rel="noopener noreferrer">
                                                     <i data-lucide="phone" class="w-3 h-3"></i>
                                                     <span x-text="selectedThread.phone"></span>
-                                                    <span class="text-[9.5px] bg-emerald-100 dark:bg-emerald-950/60 px-1 py-0.2 rounded font-normal text-emerald-700 dark:text-emerald-300">Chat WA</span>
                                                 </a>
                                             </template>
-                                            <span>• ID: <span x-text="selectedThread.customer_id"></span></span>
-                                            <span>• Aktif: <span x-text="selectedThread.date"></span></span>
+                                            <template x-if="!selectedThread.email && !selectedThread.phone && selectedThread.date">
+                                                <span class="truncate" x-text="'Aktif: ' + selectedThread.date"></span>
+                                            </template>
+                                            <template x-if="(selectedThread.email || selectedThread.phone) && selectedThread.date">
+                                                <span class="text-slate-400 dark:text-slate-500 shrink-0 hidden md:inline" x-text="'· ' + selectedThread.date"></span>
+                                            </template>
                                         </div>
 
                                         {{-- Active Tags in Header --}}
-                                        <div x-show="(selectedThread.tags || []).length > 0" class="flex flex-wrap items-center gap-1 mt-1">
+                                        <div x-show="(selectedThread.tags || []).length > 0" class="flex items-center gap-1 mt-1 overflow-hidden">
                                             <template x-for="tg in (selectedThread.tags || [])" :key="tg">
-                                                <span class="inline-flex items-center gap-1 text-[10px] px-1.5 py-0.2 rounded-[5px] font-medium border"
+                                                <span class="inline-flex items-center gap-1 text-[10px] px-1.5 py-0.2 rounded-[5px] font-medium border whitespace-nowrap shrink-0"
                                                     :class="getTagBadgeClass(tg)">
                                                     <span x-text="formatTagLabel(tg)"></span>
-                                                    <button type="button" @click.stop="removeThreadTag(selectedThread, tg)" class="hover:opacity-75" title="Hapus tag">×</button>
+                                                    <button type="button" @click.stop="removeThreadTag(selectedThread, tg)" class="hover:opacity-75 font-bold" title="Hapus tag">×</button>
                                                 </span>
                                             </template>
                                         </div>
@@ -898,7 +901,7 @@
                                     {{-- Takeover Toggle Button (Direct Chat) --}}
                                     <button type="button" @click="toggleThreadTakeover(selectedThread)"
                                         :class="selectedThread.is_human_takeover ? 'bg-amber-50 hover:bg-amber-100 text-amber-800 border-amber-300 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-700/50' : 'bg-purple-50 hover:bg-purple-100 text-purple-800 border-purple-300 dark:bg-purple-950/40 dark:text-purple-300 dark:border-purple-700/50'"
-                                        class="h-8 px-2.5 rounded-[8px] border text-[11.5px] font-semibold flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
+                                        class="h-8 px-2.5 rounded-[8px] border text-[11.5px] font-semibold flex items-center gap-1.5 transition-all shadow-xs cursor-pointer whitespace-nowrap shrink-0"
                                         :title="selectedThread.is_human_takeover ? 'Percakapan di-takeover human agent. Klik untuk melepas takeover dan kembalikan ke AI.' : 'AI Auto-Pilot aktif. Klik untuk takeover percakapan oleh human agent.'">
                                         <template x-if="selectedThread.is_human_takeover">
                                             <span class="flex items-center gap-1.5">
@@ -919,10 +922,10 @@
                                     </button>
 
                                     {{-- Tag Dropdown Button --}}
-                                    <div class="relative" x-data="{ openDmTagDrop: false, customDmTagVal: '' }">
+                                    <div class="relative shrink-0" x-data="{ openDmTagDrop: false, customDmTagVal: '' }">
                                         <button type="button" @click="openDmTagDrop = !openDmTagDrop"
                                             title="Kelola Tag & Kategori"
-                                            class="h-8 px-2.5 rounded-[8px] border border-[#D1D5DB] dark:border-white/15 bg-white dark:bg-[#2C2C2E] text-[12px] font-medium text-[#374151] dark:text-white hover:bg-[#F9FAFB] flex items-center gap-1.5 transition-colors">
+                                            class="h-8 px-2.5 rounded-[8px] border border-[#D1D5DB] dark:border-white/15 bg-white dark:bg-[#2C2C2E] text-[12px] font-medium text-[#374151] dark:text-white hover:bg-[#F9FAFB] flex items-center gap-1.5 transition-colors whitespace-nowrap shrink-0">
                                             <i data-lucide="tag" class="w-3.5 h-3.5 text-[#1877F2]"></i>
                                             <span class="hidden sm:inline">Tag</span>
                                             <template x-if="(selectedThread.tags || []).length > 0">
@@ -969,9 +972,9 @@
                                     </div>
 
                                     {{-- Status Switcher Dropdown --}}
-                                    <div class="relative" x-data="{ openStatus: false }">
+                                    <div class="relative shrink-0" x-data="{ openStatus: false }">
                                         <button type="button" @click="openStatus = !openStatus"
-                                            class="h-8 px-2.5 rounded-[8px] border border-[#D1D5DB] dark:border-white/15 bg-white dark:bg-[#2C2C2E] text-[12px] font-medium text-[#374151] dark:text-white hover:bg-[#F9FAFB] flex items-center gap-1.5 transition-colors">
+                                            class="h-8 px-2.5 rounded-[8px] border border-[#D1D5DB] dark:border-white/15 bg-white dark:bg-[#2C2C2E] text-[12px] font-medium text-[#374151] dark:text-white hover:bg-[#F9FAFB] flex items-center gap-1.5 transition-colors whitespace-nowrap shrink-0">
                                             <span class="w-2 h-2 rounded-full" :class="selectedThread.is_unread ? 'bg-[#1877F2]' : 'bg-[#34C759]'"></span>
                                             <span x-text="formatStatusLabel(selectedThread.status)"></span>
                                             <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-[#9CA3AF]"></i>
@@ -1097,7 +1100,7 @@
                                 </div>
 
                                 {{-- Quick Responses Pills & AI Assistant Trigger --}}
-                                <div class="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-1">
+                                <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar scrollbar-none pb-1">
                                     <button type="button" @click="generateAiReplyForCurrent()" :disabled="isGeneratingAi"
                                         title="Bantu Susun Balasan Cerdas dengan AI berdasarkan percakapan pelanggan dan Pedoman Kerja"
                                         class="px-3 py-1 rounded-full text-[11.5px] font-semibold bg-purple-100 dark:bg-purple-950/60 hover:bg-purple-200 dark:hover:bg-purple-900/60 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800/40 flex items-center gap-1.5 transition-all whitespace-nowrap shadow-xs shrink-0">
@@ -1225,12 +1228,13 @@
                         </div>
 
                         {{-- Quick Tag Toggle Buttons --}}
-                        <div class="flex flex-wrap items-center gap-1 pt-1 border-t border-[#E5E7EB]/70 dark:border-white/5">
+                        <div class="flex flex-wrap items-center gap-1.5 pt-1 border-t border-[#E5E7EB]/70 dark:border-white/5">
                             <template x-for="avail in availableTags" :key="avail">
                                 <button type="button" @click="toggleThreadTag(selectedThread, avail)"
-                                    class="text-[10px] px-2 py-0.5 rounded-[5px] border transition-colors flex items-center gap-1"
-                                    :class="(selectedThread.tags || []).includes(avail) ? 'bg-[#1877F2] text-white border-[#1877F2]' : 'bg-white dark:bg-[#2C2C2E] text-slate-700 dark:text-slate-300 border-slate-200 dark:border-white/10 hover:bg-slate-100'">
-                                    <span x-text="(selectedThread.tags || []).includes(avail) ? '✓ ' + formatTagLabel(avail) : '+ ' + formatTagLabel(avail)"></span>
+                                    class="text-[10.5px] px-2.5 py-1 rounded-[6px] border transition-all flex items-center gap-1 font-medium cursor-pointer"
+                                    :class="(selectedThread.tags || []).includes(avail) ? 'bg-[#1877F2] text-white border-[#1877F2] shadow-2xs font-semibold' : 'bg-white dark:bg-[#2C2C2E] text-slate-700 dark:text-slate-300 border-slate-200 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/5'">
+                                    <span x-show="(selectedThread.tags || []).includes(avail)" class="font-bold text-[10.5px]">✓</span>
+                                    <span x-text="formatTagLabel(avail)"></span>
                                 </button>
                             </template>
                         </div>
@@ -1266,13 +1270,13 @@
                         <span x-text="getInitials(selectedThread.name)"></span>
                     </div>
                     <h3 class="text-[15px] font-bold text-[#111827] dark:text-white" x-text="selectedThread.name"></h3>
-                    <div class="mt-1 flex items-center gap-1.5">
-                        <span class="px-2 py-0.5 rounded-full text-[10.5px] font-semibold text-white flex items-center gap-1"
+                    <div class="mt-1 flex items-center gap-1.5 flex-wrap justify-center">
+                        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold text-white whitespace-nowrap shrink-0 shadow-2xs"
                             :class="getChannelBadgeClass(selectedThread.channel)">
                             <i :data-lucide="getChannelIcon(selectedThread.channel)" class="w-2.5 h-2.5"></i>
                             <span x-text="formatChannelName(selectedThread.channel)"></span>
                         </span>
-                        <span class="text-[10.5px] px-2 py-0.5 rounded-md font-medium"
+                        <span class="inline-flex items-center px-2 py-0.5 rounded-md font-medium text-[10.5px] whitespace-nowrap shrink-0"
                             :class="getStatusBadgeClass(selectedThread.status)"
                             x-text="formatStatusLabel(selectedThread.status)"></span>
                     </div>
@@ -1299,9 +1303,15 @@
                                 <span class="font-medium text-slate-900 dark:text-white" x-text="selectedThread.email"></span>
                             </div>
                         </template>
-                        <div class="flex items-center justify-between py-1 border-b border-slate-200/60 dark:border-white/5">
-                            <span class="text-slate-500">Customer ID</span>
-                            <span class="font-mono text-[11.5px] text-slate-700 dark:text-slate-300" x-text="selectedThread.customer_id"></span>
+                        <div class="flex items-center justify-between py-1.5 border-b border-slate-200/60 dark:border-white/5 gap-2">
+                            <span class="text-slate-500 shrink-0 whitespace-nowrap text-[12px]">Customer ID</span>
+                            <div class="flex items-center gap-1.5 min-w-0 justify-end">
+                                <span class="font-mono text-[11px] text-slate-700 dark:text-slate-300 truncate max-w-[145px]" :title="selectedThread.customer_id" x-text="selectedThread.customer_id"></span>
+                                <button type="button" @click="navigator.clipboard.writeText(selectedThread.customer_id); showToastNotification('Customer ID berhasil disalin')"
+                                    class="text-slate-400 hover:text-slate-700 dark:hover:text-white p-0.5 rounded transition-colors shrink-0" title="Salin Customer ID">
+                                    <i data-lucide="copy" class="w-3 h-3"></i>
+                                </button>
+                            </div>
                         </div>
                         <div class="flex items-center justify-between py-1">
                             <span class="text-slate-500">Waktu Terakhir</span>
@@ -1331,12 +1341,13 @@
                         </div>
 
                         {{-- Quick Tag Toggle Buttons --}}
-                        <div class="flex flex-wrap items-center gap-1 pt-1 border-t border-[#E5E7EB]/70 dark:border-white/5">
+                        <div class="flex flex-wrap items-center gap-1.5 pt-1 border-t border-[#E5E7EB]/70 dark:border-white/5">
                             <template x-for="avail in availableTags" :key="avail">
                                 <button type="button" @click="toggleThreadTag(selectedThread, avail)"
-                                    class="text-[10px] px-2 py-0.5 rounded-[5px] border transition-colors flex items-center gap-1"
-                                    :class="(selectedThread.tags || []).includes(avail) ? 'bg-[#1877F2] text-white border-[#1877F2]' : 'bg-white dark:bg-[#2C2C2E] text-slate-700 dark:text-slate-300 border-slate-200 dark:border-white/10 hover:bg-slate-100'">
-                                    <span x-text="(selectedThread.tags || []).includes(avail) ? '✓ ' + formatTagLabel(avail) : '+ ' + formatTagLabel(avail)"></span>
+                                    class="text-[10.5px] px-2.5 py-1 rounded-[6px] border transition-all flex items-center gap-1 font-medium cursor-pointer"
+                                    :class="(selectedThread.tags || []).includes(avail) ? 'bg-[#1877F2] text-white border-[#1877F2] shadow-2xs font-semibold' : 'bg-white dark:bg-[#2C2C2E] text-slate-700 dark:text-slate-300 border-slate-200 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/5'">
+                                    <span x-show="(selectedThread.tags || []).includes(avail)" class="font-bold text-[10.5px]">✓</span>
+                                    <span x-text="formatTagLabel(avail)"></span>
                                 </button>
                             </template>
                         </div>
@@ -1507,7 +1518,7 @@
                 </div>
 
                 {{-- Quick Templates Pills --}}
-                <div class="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-0.5">
+                <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar scrollbar-none pb-0.5">
                     <span class="text-[11px] font-semibold text-[#9CA3AF] shrink-0 mr-1">Template:</span>
                     <button type="button" @click="privateDmText = 'Halo Kak! Terima kasih telah menghubungi kami. Ada yang bisa kami bantu? 😊'"
                             class="px-2.5 py-1 rounded-full text-[11px] bg-[#F3F4F6] dark:bg-white/5 hover:bg-[#E5E7EB] text-[#374151] dark:text-[#D1D5DB] transition-colors whitespace-nowrap">
@@ -1708,7 +1719,7 @@
             </div>
 
             {{-- Navigation Tabs --}}
-            <div class="px-6 py-2 border-b border-[#E5E7EB] dark:border-white/10 flex items-center gap-2 overflow-x-auto scrollbar-none bg-white dark:bg-[#1C1C1E] shrink-0">
+            <div class="px-6 py-2 border-b border-[#E5E7EB] dark:border-white/10 flex items-center gap-2 overflow-x-auto no-scrollbar scrollbar-none bg-white dark:bg-[#1C1C1E] shrink-0">
                 <button type="button" @click="aiActiveTab = 'status'"
                     :class="aiActiveTab === 'status' ? 'bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 font-semibold border-purple-200 dark:border-purple-800/40' : 'text-[#6B7280] dark:text-[#9CA3AF] hover:text-[#111827] dark:hover:text-white border-transparent'"
                     class="px-3.5 py-1.5 rounded-[10px] border text-[12.5px] flex items-center gap-1.5 transition-all whitespace-nowrap">

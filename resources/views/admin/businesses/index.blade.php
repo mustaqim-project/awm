@@ -5,7 +5,7 @@
 ])
 
 @section('content')
-    <div class="space-y-6">
+    <div class="space-y-6" x-data="{ showSuspendModal: false, suspendBizName: '', suspendActionUrl: '' }">
 
         <!-- Bento KPI Summary Grid (Adaptive 2-Column Micro-Bento Mobile, 4-Column Desktop) -->
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
@@ -215,15 +215,11 @@
                                         </form>
                                         @endif
                                         @if($biz->is_active && Auth::guard('admin')->user()?->hasPermission('admin.businesses.toggle_status'))
-                                        <form method="POST"
-                                            action="{{ route('admin.businesses.toggle-status', $biz->id) }}"
-                                            onsubmit="return AppAlert.confirmSubmit(event, this, 'Apakah Anda yakin ingin menangguhkan status bisnis {{ addslashes($biz->name) }}?', 'Tangguhkan Bisnis?', 'warning')">
-                                            @csrf
-                                            <button type="submit"
+                                            <button type="button"
+                                                @click="suspendBizName = '{{ addslashes($biz->name) }}'; suspendActionUrl = '{{ route('admin.businesses.toggle-status', $biz->id) }}'; showSuspendModal = true;"
                                                 class="h-8 px-2.5 rounded-[10px] text-[12px] font-bold transition-all inline-flex items-center gap-1 text-[#FF3B30] hover:bg-[#FF3B30]/10 active:scale-95 cursor-pointer">
                                                 Suspend
                                             </button>
-                                        </form>
                                         @elseif(! $biz->is_active && Auth::guard('admin')->user()?->hasPermission('admin.businesses.toggle_status'))
                                         <form method="POST"
                                             action="{{ route('admin.businesses.toggle-status', $biz->id) }}"
@@ -258,6 +254,48 @@
                     {{ $businesses->links() }}
                 </div>
             @endif
+        </div>
+
+        <!-- Apple HIG Suspend Modal with Mandatory Reason -->
+        <div x-show="showSuspendModal" x-cloak class="fixed inset-0 z-50 overflow-y-auto" role="dialog" aria-modal="true">
+            <div class="fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity" @click="showSuspendModal = false"></div>
+            <div class="flex min-h-full items-center justify-center p-4">
+                <div class="relative w-full max-w-md rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.12] p-6 shadow-2xl space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-[#FF3B30]/15 text-[#FF3B30] flex items-center justify-center shrink-0">
+                            <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-[16px] font-bold text-black dark:text-white">Tangguhkan Bisnis?</h3>
+                            <p class="text-[12px] text-black/50 dark:text-white/50">
+                                Bisnis <strong class="text-black dark:text-white" x-text="suspendBizName"></strong> akan dibekukan dan notifikasi resmi dikirimkan via email ke pemilik bisnis.
+                            </p>
+                        </div>
+                    </div>
+
+                    <form method="POST" :action="suspendActionUrl" class="space-y-4">
+                        @csrf
+                        <div>
+                            <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
+                                Alasan Penangguhan <span class="text-[#FF3B30]">* (Wajib Diisi)</span>
+                            </label>
+                            <textarea name="reason" rows="3" required minlength="5" placeholder="Contoh: Terdeteksi pelanggaran syarat & ketentuan platform / indikasi fraud..."
+                                class="w-full px-3.5 py-2.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF3B30]/40"></textarea>
+                        </div>
+
+                        <div class="flex items-center justify-end gap-2.5 pt-2 border-t border-black/[0.04] dark:border-white/[0.06]">
+                            <button type="button" @click="showSuspendModal = false"
+                                class="h-10 px-4 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition">
+                                Batal
+                            </button>
+                            <button type="submit"
+                                class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#FF3B30] hover:bg-[#E0352B] transition shadow-sm cursor-pointer">
+                                Konfirmasi Suspend
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

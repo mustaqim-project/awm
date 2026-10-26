@@ -57,9 +57,10 @@ final class CustomerCheckoutApiController extends Controller
             'items.*.quantity' => ['required', 'numeric', 'gt:0'],
         ]);
 
-        $business = Business::where('slug', $validated['store_slug'])
-            ->orWhere('id', $validated['store_slug'])
-            ->firstOrFail();
+        $business = Business::where(function ($q) use ($validated) {
+            $q->where('slug', $validated['store_slug'])
+                ->orWhere('id', $validated['store_slug']);
+        })->where('is_active', true)->firstOrFail();
 
         // Resolve destination
         $postalCode = $validated['destination_postal_code'] ?? null;
@@ -152,10 +153,10 @@ final class CustomerCheckoutApiController extends Controller
             'items.*.notes' => ['nullable', 'string', 'max:255'],
         ]);
 
-        $business = Business::where('slug', $validated['store_slug'])
-            ->orWhere('id', $validated['store_slug'])
-            ->where('is_active', true)
-            ->firstOrFail();
+        $business = Business::where(function ($q) use ($validated) {
+            $q->where('slug', $validated['store_slug'])
+                ->orWhere('id', $validated['store_slug']);
+        })->where('is_active', true)->firstOrFail();
 
         // Resolve address details
         $address = null;
