@@ -7,11 +7,14 @@ namespace App\Http\Controllers\Web;
 use App\Domain\WhatsApp\AdminWhatsAppService;
 use App\Domain\WhatsApp\WhatsAppTrustedDeviceService;
 use App\Http\Controllers\Controller;
+use App\Mail\UserOtpMail;
 use App\Models\AccountRecoveryRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
 final class AuthOtpController extends Controller
@@ -83,20 +86,44 @@ final class AuthOtpController extends Controller
                 $otp = (string) random_int(100000, 999999);
                 $result = $adminWa->sendOtp($userPhone, $otp);
                 $sent = (bool) ($result['success'] ?? false);
+                $sentViaEmail = false;
+
+                // Fallback otomatis: jika pengiriman WABA gagal dan user punya email, kirimkan ke email pengguna
+                if (! $sent && ! empty($user->email)) {
+                    try {
+                        Mail::to($user->email)->send(new UserOtpMail(
+                            otpCode: $otp,
+                            recipientName: (string) ($user->name ?: 'Pemilik Bisnis'),
+                            expiresInMinutes: 10,
+                            action: 'Verifikasi Masuk Akun',
+                            phone: $userPhone,
+                            isFallbackFromWaba: true
+                        ));
+                        $sentViaEmail = true;
+                        Log::info("[OTP-Fallback] WABA gagal, OTP berhasil dikirimkan ke email {$user->email} untuk user {$user->id}");
+                    } catch (\Throwable $e) {
+                        Log::error("[OTP-Fallback] Gagal mengirim OTP ke email {$user->email}: " . $e->getMessage());
+                    }
+                }
 
                 // In local dev, allow testing OTP even if WhatsApp server is offline
-                if (! $sent && app()->isLocal()) {
-                    \Illuminate\Support\Facades\Log::info("[DEV-OTP] WhatsApp server offline. Local OTP for {$userPhone} ({$user->email}): {$otp} (or master testing OTP: 123456)");
+                if (! $sent && ! $sentViaEmail && app()->isLocal()) {
+                    Log::info("[DEV-OTP] WhatsApp server offline. Local OTP for {$userPhone} ({$user->email}): {$otp} (or master testing OTP: 123456)");
                 }
+
+                $channel = $sent ? 'whatsapp' : ($sentViaEmail ? 'email' : 'failed');
+                $isOtpValid = $sent || $sentViaEmail || app()->isLocal();
 
                 $challenge = [
                     'user_id' => $user->id,
                     'phone' => $userPhone,
-                    'otp_hash' => ($sent || app()->isLocal()) ? Hash::make($otp) : null,
+                    'email' => $user->email,
+                    'channel' => $channel,
+                    'otp_hash' => $isOtpValid ? Hash::make($otp) : null,
                     'expires_at' => now()->addMinutes(10)->timestamp,
                     'attempts' => 0,
                     'last_sent_at' => now()->timestamp,
-                    'delivery_error' => ($sent || app()->isLocal()) ? null : 'OTP gagal dikirim. Coba lagi.',
+                    'delivery_error' => $isOtpValid ? null : 'OTP gagal dikirim ke WhatsApp dan Email. Silakan klik kirim ulang.',
                 ];
                 $request->session()->put('auth_wa_otp_challenge', $challenge);
             } else {
@@ -106,7 +133,6 @@ final class AuthOtpController extends Controller
 
         $deliveryError = $challenge['delivery_error'] ?? null;
         if ($deliveryError) {
-            // Normalisasi pesan jika sesi lama masih menyimpan redaksi teks sebelumnya
             $deliveryError = 'OTP gagal dikirim. Coba lagi.';
         }
 
@@ -114,8 +140,14 @@ final class AuthOtpController extends Controller
             ->latest('created_at')
             ->first();
 
+        $channel = (string) ($challenge['channel'] ?? 'whatsapp');
+        $maskedEmail = ! empty($user->email) ? $this->maskEmail((string) $user->email) : '';
+
         return view('auth.otp', [
             'phone' => $this->maskPhone((string) ($challenge['phone'] ?? $userPhone ?? '')),
+            'channel' => $channel,
+            'email' => $user->email,
+            'maskedEmail' => $maskedEmail,
             'expiresAt' => (int) ($challenge['expires_at'] ?? 0),
             'resendIn' => max(0, ((int) ($challenge['last_sent_at'] ?? 0)) + 60 - now()->timestamp),
             'deliveryError' => $deliveryError,
@@ -182,7 +214,7 @@ final class AuthOtpController extends Controller
             $request->session()->forget('url.intended');
         }
 
-        return redirect()->intended(route('dashboard'))->with('success', 'Verifikasi WhatsApp berhasil.');
+        return redirect()->intended(route('dashboard'))->with('success', 'Verifikasi keamanan berhasil.');
     }
 
     public function resend(Request $request, AdminWhatsAppService $adminWa): RedirectResponse
@@ -207,20 +239,42 @@ final class AuthOtpController extends Controller
         $otp = (string) random_int(100000, 999999);
         $result = $adminWa->sendOtp($targetPhone, $otp);
         $sent = (bool) ($result['success'] ?? false);
+        $sentViaEmail = false;
 
-        if (! $sent && ! app()->isLocal()) {
+        // Fallback otomatis: jika pengiriman WABA gagal dan user punya email, kirimkan ke email pengguna
+        if (! $sent && ! empty($user->email)) {
+            try {
+                Mail::to($user->email)->send(new UserOtpMail(
+                    otpCode: $otp,
+                    recipientName: (string) ($user->name ?: 'Pemilik Bisnis'),
+                    expiresInMinutes: 10,
+                    action: 'Verifikasi Masuk Akun',
+                    phone: $targetPhone,
+                    isFallbackFromWaba: true
+                ));
+                $sentViaEmail = true;
+                Log::info("[OTP-Fallback] WABA gagal saat resend, OTP berhasil dialihkan ke email {$user->email} untuk user {$user->id}");
+            } catch (\Throwable $e) {
+                Log::error("[OTP-Fallback] Gagal mengirim OTP resend ke email {$user->email}: " . $e->getMessage());
+            }
+        }
+
+        if (! $sent && ! $sentViaEmail && ! app()->isLocal()) {
             $challenge['phone'] = $targetPhone;
-            $challenge['delivery_error'] = 'OTP gagal dikirim. Coba lagi.';
+            $challenge['delivery_error'] = 'OTP gagal dikirim ke WhatsApp dan Email. Coba lagi.';
             $request->session()->put('auth_wa_otp_challenge', $challenge);
 
-            return back()->withErrors(['otp' => 'OTP gagal dikirim. Coba lagi.']);
+            return back()->withErrors(['otp' => 'OTP gagal dikirim ke WhatsApp dan Email. Coba lagi.']);
         }
 
-        if (! $sent && app()->isLocal()) {
-            \Illuminate\Support\Facades\Log::info("[DEV-OTP] Resend WhatsApp server offline. Local OTP for {$targetPhone} ({$user->email}): {$otp} (or master testing OTP: 123456)");
+        if (! $sent && ! $sentViaEmail && app()->isLocal()) {
+            Log::info("[DEV-OTP] Resend WhatsApp server offline. Local OTP for {$targetPhone} ({$user->email}): {$otp} (or master testing OTP: 123456)");
         }
 
+        $channel = $sent ? 'whatsapp' : ($sentViaEmail ? 'email' : 'failed');
         $challenge['phone'] = $targetPhone;
+        $challenge['email'] = $user->email;
+        $challenge['channel'] = $channel;
         $challenge['otp_hash'] = Hash::make($otp);
         $challenge['expires_at'] = now()->addMinutes(10)->timestamp;
         $challenge['attempts'] = 0;
@@ -229,7 +283,11 @@ final class AuthOtpController extends Controller
         Cache::forget('otp_attempts:auth:' . $user->id);
         $request->session()->put('auth_wa_otp_challenge', $challenge);
 
-        return back()->with('status', 'OTP baru telah dikirim ke WhatsApp Anda.');
+        $statusMsg = $sent 
+            ? 'OTP baru telah dikirim ke WhatsApp Anda.' 
+            : 'WhatsApp sedang terkendala. Kode OTP baru telah dialihkan dan dikirimkan ke email Anda (' . $this->maskEmail((string) $user->email) . ').';
+
+        return back()->with('status', $statusMsg);
     }
 
     private function normalizePhone(string $phone): ?string
@@ -249,5 +307,22 @@ final class AuthOtpController extends Controller
         return strlen($phone) > 6
             ? substr($phone, 0, 4) . str_repeat('*', max(2, strlen($phone) - 7)) . substr($phone, -3)
             : ($phone !== '' ? $phone : 'nomor WhatsApp owner');
+    }
+
+    private function maskEmail(string $email): string
+    {
+        if (! filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return $email;
+        }
+
+        [$name, $domain] = explode('@', $email, 2);
+        $len = strlen($name);
+        if ($len <= 2) {
+            $maskedName = substr($name, 0, 1) . '*';
+        } else {
+            $maskedName = substr($name, 0, 2) . str_repeat('*', max(3, $len - 2));
+        }
+
+        return $maskedName . '@' . $domain;
     }
 }

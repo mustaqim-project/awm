@@ -8,6 +8,7 @@ use App\Domain\Template\BusinessTemplateService;
 use App\Domain\WhatsApp\AdminWhatsAppService;
 use App\Domain\WhatsApp\WhatsAppTrustedDeviceService;
 use App\Http\Controllers\Controller;
+use App\Mail\UserOtpMail;
 use App\Models\Business;
 use App\Models\BusinessMembership;
 use App\Models\BusinessTypeTemplate;
@@ -20,6 +21,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
@@ -222,8 +225,14 @@ final class AuthWebController extends Controller
             return redirect()->route('login')->with('info', $message);
         }
 
+        $channel = (string) ($pending['channel'] ?? 'whatsapp');
+        $maskedEmail = ! empty($pending['email']) ? $this->maskEmail((string) $pending['email']) : '';
+
         return view('auth.register-otp', [
             'phone' => $this->maskPhone((string) $pending['phone']),
+            'channel' => $channel,
+            'email' => (string) ($pending['email'] ?? ''),
+            'maskedEmail' => $maskedEmail,
             'expiresAt' => (int) ($pending['expires_at'] ?? 0),
             'resendIn' => max(0, ((int) ($pending['last_sent_at'] ?? 0)) + 60 - now()->timestamp),
             'deliveryError' => $pending['delivery_error'] ?? null,
@@ -292,18 +301,45 @@ final class AuthWebController extends Controller
         ];
 
         $result = $adminWa->sendOtp($phone, $otp);
-        if (! ($result['success'] ?? false)) {
-            // Pola konsisten: tetap lanjut ke halaman OTP, user bisa mencoba "Kirim ulang OTP".
-            $pending['otp_hash'] = null;
-            $pending['delivery_error'] = 'OTP gagal dikirim. Coba lagi.';
-            $request->session()->put('pending_registration', $pending);
+        $sent = (bool) ($result['success'] ?? false);
+        $sentViaEmail = false;
 
-            return redirect()->route('register.verify')->with('status', 'Data pendaftaran diterima, namun OTP belum terkirim. Silakan tekan "Kirim ulang OTP".');
+        // Fallback otomatis: jika pengiriman WABA gagal dan pendaftar memiliki email, kirimkan ke email
+        if (! $sent && ! empty($pending['email'])) {
+            try {
+                Mail::to($pending['email'])->send(new UserOtpMail(
+                    otpCode: $otp,
+                    recipientName: (string) ($pending['name'] ?: 'Pemilik Bisnis'),
+                    expiresInMinutes: 10,
+                    action: 'Pendaftaran Akun Bisnis',
+                    phone: $phone,
+                    isFallbackFromWaba: true
+                ));
+                $sentViaEmail = true;
+                Log::info("[OTP-Fallback] WABA gagal saat registrasi, OTP dikirimkan ke email {$pending['email']}");
+            } catch (\Throwable $e) {
+                Log::error("[OTP-Fallback] Gagal mengirim OTP registrasi ke email {$pending['email']}: " . $e->getMessage());
+            }
         }
+
+        $channel = $sent ? 'whatsapp' : ($sentViaEmail ? 'email' : 'failed');
+        $isOtpValid = $sent || $sentViaEmail || app()->isLocal();
+
+        $pending['channel'] = $channel;
+        $pending['otp_hash'] = $isOtpValid ? Hash::make($otp) : null;
+        $pending['delivery_error'] = $isOtpValid ? null : 'OTP gagal dikirim ke WhatsApp dan Email. Silakan tekan "Kirim ulang OTP".';
 
         $request->session()->put('pending_registration', $pending);
 
-        return redirect()->route('register.verify')->with('status', 'Kode OTP telah dikirim ke WhatsApp pemilik bisnis.');
+        if ($sent) {
+            return redirect()->route('register.verify')->with('status', 'Kode OTP telah dikirim ke WhatsApp pemilik bisnis.');
+        }
+
+        if ($sentViaEmail) {
+            return redirect()->route('register.verify')->with('status', 'WhatsApp sedang mengalami kendala jaringan. Kode OTP verifikasi telah dialihkan dan dikirimkan ke email Anda.');
+        }
+
+        return redirect()->route('register.verify')->with('status', 'Data pendaftaran diterima, namun OTP belum terkirim. Silakan tekan "Kirim ulang OTP".');
     }
 
     /**
@@ -466,10 +502,33 @@ final class AuthWebController extends Controller
 
         $otp = (string) random_int(100000, 999999);
         $result = $adminWa->sendOtp((string) $pending['phone'], $otp);
-        if (! ($result['success'] ?? false)) {
-            return back()->withErrors(['otp' => 'OTP gagal dikirim. Coba lagi.']);
+        $sent = (bool) ($result['success'] ?? false);
+        $sentViaEmail = false;
+
+        // Fallback otomatis: jika WABA gagal dan ada email pendaftar, kirim ke email
+        if (! $sent && ! empty($pending['email'])) {
+            try {
+                Mail::to($pending['email'])->send(new UserOtpMail(
+                    otpCode: $otp,
+                    recipientName: (string) ($pending['name'] ?: 'Pemilik Bisnis'),
+                    expiresInMinutes: 10,
+                    action: 'Pendaftaran Akun Bisnis',
+                    phone: (string) $pending['phone'],
+                    isFallbackFromWaba: true
+                ));
+                $sentViaEmail = true;
+                Log::info("[OTP-Fallback] WABA gagal saat resend registrasi, OTP dikirim ke email {$pending['email']}");
+            } catch (\Throwable $e) {
+                Log::error("[OTP-Fallback] Gagal mengirim OTP resend registrasi ke email: " . $e->getMessage());
+            }
         }
 
+        if (! $sent && ! $sentViaEmail && ! app()->isLocal()) {
+            return back()->withErrors(['otp' => 'OTP gagal dikirim ke WhatsApp dan Email. Coba lagi.']);
+        }
+
+        $channel = $sent ? 'whatsapp' : ($sentViaEmail ? 'email' : 'failed');
+        $pending['channel'] = $channel;
         $pending['otp_hash'] = Hash::make($otp);
         $pending['expires_at'] = now()->addMinutes(10)->timestamp;
         $pending['attempts'] = 0;
@@ -478,7 +537,11 @@ final class AuthWebController extends Controller
         Cache::forget('otp_attempts:register:' . $pending['phone']);
         $request->session()->put('pending_registration', $pending);
 
-        return back()->with('status', 'OTP baru telah dikirim ke WhatsApp pemilik bisnis.');
+        $statusMsg = $sent 
+            ? 'OTP baru telah dikirim ke WhatsApp pemilik bisnis.'
+            : 'WhatsApp sedang terkendala. Kode OTP baru telah dialihkan dan dikirimkan ke email Anda (' . $this->maskEmail((string) $pending['email']) . ').';
+
+        return back()->with('status', $statusMsg);
     }
 
     /**
@@ -509,21 +572,48 @@ final class AuthWebController extends Controller
         $otp = (string) random_int(100000, 999999);
         $result = $adminWa->sendOtp($phone, $otp);
         $sent = (bool) ($result['success'] ?? false);
+        $sentViaEmail = false;
+
+        // Fallback otomatis: jika pengiriman ke nomor baru gagal dan ada email, kirim via email
+        if (! $sent && ! empty($pending['email'])) {
+            try {
+                Mail::to($pending['email'])->send(new UserOtpMail(
+                    otpCode: $otp,
+                    recipientName: (string) ($pending['name'] ?: 'Pemilik Bisnis'),
+                    expiresInMinutes: 10,
+                    action: 'Pendaftaran Akun Bisnis',
+                    phone: $phone,
+                    isFallbackFromWaba: true
+                ));
+                $sentViaEmail = true;
+                Log::info("[OTP-Fallback] WABA gagal saat ubah nomor, OTP dikirim ke email {$pending['email']}");
+            } catch (\Throwable $e) {
+                Log::error("[OTP-Fallback] Gagal mengirim OTP ubah nomor ke email: " . $e->getMessage());
+            }
+        }
+
+        $isOtpValid = $sent || $sentViaEmail || app()->isLocal();
+        $channel = $sent ? 'whatsapp' : ($sentViaEmail ? 'email' : 'failed');
 
         $pending['phone'] = $phone;
-        $pending['otp_hash'] = $sent ? Hash::make($otp) : null;
+        $pending['channel'] = $channel;
+        $pending['otp_hash'] = $isOtpValid ? Hash::make($otp) : null;
         $pending['expires_at'] = now()->addMinutes(10)->timestamp;
         $pending['attempts'] = 0;
         $pending['last_sent_at'] = now()->timestamp;
-        $pending['delivery_error'] = $sent ? null : 'OTP gagal dikirim. Coba lagi.';
+        $pending['delivery_error'] = $isOtpValid ? null : 'OTP gagal dikirim ke WhatsApp dan Email. Coba lagi.';
         Cache::forget('otp_attempts:register:' . $phone);
         $request->session()->put('pending_registration', $pending);
 
-        if (! $sent) {
-            return back()->withErrors(['phone' => 'OTP gagal dikirim. Coba lagi.'])->withInput();
+        if (! $isOtpValid) {
+            return back()->withErrors(['phone' => 'OTP gagal dikirim ke WhatsApp dan Email. Coba lagi.'])->withInput();
         }
 
-        return back()->with('status', 'Nomor WhatsApp diperbarui. OTP baru telah dikirim ke nomor tersebut.');
+        $statusMsg = $sent 
+            ? 'Nomor WhatsApp diperbarui. OTP baru telah dikirim ke nomor tersebut.'
+            : 'Nomor diperbarui. WhatsApp sedang kendala, OTP telah dikirimkan ke email Anda (' . $this->maskEmail((string) $pending['email']) . ').';
+
+        return back()->with('status', $statusMsg);
     }
 
     /**
@@ -624,6 +714,23 @@ final class AuthWebController extends Controller
         return strlen($phone) > 6
             ? substr($phone, 0, 4) . str_repeat('*', max(2, strlen($phone) - 7)) . substr($phone, -3)
             : $phone;
+    }
+
+    private function maskEmail(string $email): string
+    {
+        if (! filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return $email;
+        }
+
+        [$name, $domain] = explode('@', $email, 2);
+        $len = strlen($name);
+        if ($len <= 2) {
+            $maskedName = substr($name, 0, 1) . '*';
+        } else {
+            $maskedName = substr($name, 0, 2) . str_repeat('*', max(3, $len - 2));
+        }
+
+        return $maskedName . '@' . $domain;
     }
 
     /**

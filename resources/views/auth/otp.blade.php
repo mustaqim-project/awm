@@ -12,7 +12,14 @@
                     {{ __('auth.otp.heading') }}
                 </h1>
                 <p class="mt-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-sm mx-auto leading-relaxed">
-                    {!! __('auth.otp.subheading', ['phone' => '<span class="font-mono font-bold text-slate-900 dark:text-white px-2 py-0.5 rounded bg-slate-100 dark:bg-white/10">' . e($phone) . '</span>']) !!}
+                    @if (($channel ?? 'whatsapp') === 'email' && !empty($maskedEmail))
+                        {!! __('auth.otp.subheading_email', [
+                            'email' => '<span class="font-mono font-bold text-slate-900 dark:text-white px-2 py-0.5 rounded bg-slate-100 dark:bg-white/10">' . e($maskedEmail) . '</span>',
+                            'phone' => '<span class="font-mono font-semibold text-slate-700 dark:text-slate-300">' . e($phone) . '</span>'
+                        ]) !!}
+                    @else
+                        {!! __('auth.otp.subheading', ['phone' => '<span class="font-mono font-bold text-slate-900 dark:text-white px-2 py-0.5 rounded bg-slate-100 dark:bg-white/10">' . e($phone) . '</span>']) !!}
+                    @endif
                 </p>
             </div>
 
@@ -23,6 +30,18 @@
                     <div class="mb-5 p-3.5 rounded-xl bg-[#34C759]/10 border border-[#34C759]/25 text-[#34C759] dark:text-[#30D158] text-xs sm:text-sm flex items-center gap-2">
                         <i data-lucide="check-circle" class="w-4 h-4 shrink-0"></i>
                         <span>{{ session('status') }}</span>
+                    </div>
+                @endif
+
+                @if (($channel ?? 'whatsapp') === 'email' && !empty($maskedEmail))
+                    <div class="mb-5 p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-800 dark:text-amber-300 text-xs sm:text-sm flex items-start gap-2.5">
+                        <i data-lucide="mail-warning" class="w-4 h-4 mt-0.5 text-amber-600 dark:text-amber-400 shrink-0"></i>
+                        <div>
+                            <strong class="font-bold block text-amber-800 dark:text-amber-300">{{ __('auth.otp.waba_failed_email_notice') }}</strong>
+                            <p class="text-xs text-amber-700/90 dark:text-amber-400/90 mt-0.5 leading-relaxed">
+                                Kode OTP telah dialihkan dan dikirimkan ke email Anda: <strong class="font-mono text-slate-900 dark:text-white">{{ $maskedEmail }}</strong>. Silakan periksa folder Kotak Masuk (Inbox) atau Spam email Anda.
+                            </p>
+                        </div>
                     </div>
                 @endif
 

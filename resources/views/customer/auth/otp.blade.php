@@ -29,6 +29,18 @@
                     </div>
                 @endif
 
+                @if (($channel ?? 'whatsapp') === 'email' && !empty($customer->email))
+                    <div class="mb-5 p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-800 dark:text-amber-300 text-xs sm:text-sm flex items-start gap-2.5">
+                        <i data-lucide="mail-warning" class="w-4 h-4 mt-0.5 text-amber-600 dark:text-amber-400 shrink-0"></i>
+                        <div>
+                            <strong class="font-bold block text-amber-800 dark:text-amber-300">Pengiriman WhatsApp Terkendala</strong>
+                            <p class="text-xs text-amber-700/90 dark:text-amber-400/90 mt-0.5 leading-relaxed">
+                                Kode OTP telah dialihkan dan dikirimkan ke email Anda: <strong class="font-mono text-slate-900 dark:text-white">{{ $customer->email }}</strong>. Silakan periksa folder Kotak Masuk (Inbox) atau Spam email Anda.
+                            </p>
+                        </div>
+                    </div>
+                @endif
+
                 @if (app()->environment('local', 'testing'))
                     <!-- Dev Testing Bypass Alert -->
                     <div class="mb-5 p-3.5 rounded-xl bg-[#007AFF]/10 border border-[#007AFF]/20 text-[#007AFF] dark:text-[#0A84FF] text-xs sm:text-sm flex items-center gap-2">

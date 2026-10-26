@@ -17,10 +17,16 @@
         </div>
 
         <div class="flex items-center gap-2 flex-wrap">
-            <button type="button" @click="syncMessages()" :disabled="isSyncing"
-                class="min-h-[36px] px-3.5 rounded-[10px] text-[12.5px] font-semibold text-[#1F2937] dark:text-white bg-white dark:bg-[#1C1C1E] border border-[#E5E7EB] dark:border-white/10 hover:bg-[#F9FAFB] dark:hover:bg-white/[0.04] transition-all flex items-center gap-1.5 shadow-xs">
+            {{-- Auto-Sync Status Indicator & Trigger Button --}}
+            <button type="button" @click="syncMessages(true)" :disabled="isSyncing"
+                title="Otomatis sinkron setiap 10 detik. Klik untuk sinkronisasi manual sekarang."
+                class="min-h-[36px] px-3.5 rounded-[10px] text-[12.5px] font-semibold text-[#1F2937] dark:text-white bg-white dark:bg-[#1C1C1E] border border-[#E5E7EB] dark:border-white/10 hover:bg-[#F9FAFB] dark:hover:bg-white/[0.04] transition-all flex items-center gap-2 shadow-xs cursor-pointer">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
                 <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-[#1877F2]" :class="isSyncing ? 'animate-spin' : ''"></i>
-                <span x-text="isSyncing ? 'Menyinkronkan...' : 'Sinkronkan Pesan'"></span>
+                <span x-text="isSyncing ? 'Menyinkronkan...' : 'Sinkronkan (10d)'"></span>
             </button>
             <button type="button" @click="openAiSettings = true"
                 class="min-h-[36px] px-3.5 rounded-[10px] text-[12.5px] font-semibold text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800/40 hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-all flex items-center gap-1.5 shadow-xs">
@@ -2003,10 +2009,18 @@
                                 Pengetahuan resmi ini menjadi acuan kebenaran mutlak (Single Source of Truth) bagi AI dalam menjawab pelanggan.
                             </span>
                         </div>
-                        <button type="button" @click="loadDefaultSystemInfo()"
-                            class="px-2.5 py-1 rounded-[8px] bg-white dark:bg-[#2C2C2E] border border-purple-200 dark:border-purple-800/40 text-[11.5px] font-semibold text-purple-700 dark:text-purple-300 hover:bg-purple-100 transition-colors shrink-0 shadow-2xs">
-                            Muat Template Resmi COOCA
-                        </button>
+                        <div class="flex items-center gap-2 flex-wrap shrink-0">
+                            <button type="button" @click="syncUserGuidesDocumentation()" :disabled="isLoadingGuides"
+                                title="Muat seluruh 39 berkas panduan dari folder docs/user-guides langsung ke AI Knowledge Base"
+                                class="px-2.5 py-1 rounded-[8px] bg-purple-600 hover:bg-purple-700 text-white text-[11.5px] font-semibold flex items-center gap-1.5 transition-colors shadow-2xs cursor-pointer">
+                                <i data-lucide="book-open" class="w-3.5 h-3.5" :class="isLoadingGuides ? 'animate-spin' : ''"></i>
+                                <span x-text="isLoadingGuides ? 'Menyinkronkan...' : '📥 Sinkronkan docs/user-guides (39 Berkas)'"></span>
+                            </button>
+                            <button type="button" @click="loadDefaultSystemInfo()"
+                                class="px-2.5 py-1 rounded-[8px] bg-white dark:bg-[#2C2C2E] border border-purple-200 dark:border-purple-800/40 text-[11.5px] font-semibold text-purple-700 dark:text-purple-300 hover:bg-purple-100 transition-colors shrink-0 shadow-2xs">
+                                Muat Template Bawaan
+                            </button>
+                        </div>
                     </div>
 
                     <div class="p-4 rounded-[16px] bg-white dark:bg-[#2C2C2E] border border-[#E5E7EB] dark:border-white/10 shadow-xs space-y-2">
@@ -2225,6 +2239,7 @@ function adminInboxHub() {
         isTestingAi: false,
         newDoText: '',
         newDontText: '',
+        isLoadingGuides: false,
 
         init() {
             // Select first thread if available
@@ -2248,10 +2263,10 @@ function adminInboxHub() {
                 });
             });
 
-            // Start background polling for live incoming messages every 3.5 seconds
+            // Start background automatic synchronization every 10 seconds (100% AJAX without page reload)
             this.pollTimer = setInterval(() => {
-                this.pollLiveUpdates();
-            }, 3500);
+                this.syncMessages(false);
+            }, 10000);
 
             // Connect to Laravel Reverb WebSockets for instant message broadcasting
             this.initReverbBroadcasting();
@@ -2286,7 +2301,7 @@ function adminInboxHub() {
         },
 
         async pollLiveUpdates() {
-            if (this.isPolling || this.isSending || this.isSendingDm || this.isSyncing) return;
+            if (this.isPolling || this.isSending || this.isSendingDm) return;
             this.isPolling = true;
 
             try {
@@ -2303,25 +2318,33 @@ function adminInboxHub() {
                         }
                         this.filterThreads(false);
 
-                        // If a thread is currently open, seamlessly sync its messages
+                        // If a thread is currently open, seamlessly sync its messages directly to the chat dialog!
                         if (this.selectedThread) {
                             const updated = this.allThreads.find(t => 
                                 t.id === this.selectedThread.id || 
                                 (t.customer_id && t.customer_id === this.selectedThread.customer_id && t.channel === this.selectedThread.channel)
                             );
-                            if (updated && updated.messages && (
-                                updated.messages.length !== (this.selectedThread.messages?.length || 0) ||
-                                updated.last_message !== this.selectedThread.last_message
-                            )) {
-                                const oldLen = this.selectedThread.messages?.length || 0;
-                                this.selectedThread.messages = updated.messages;
-                                this.selectedThread.replies = updated.replies || [];
+                            if (updated) {
+                                const currentMessages = this.selectedThread.messages || [];
+                                const newMessages = updated.messages || [];
+                                const currentReplies = this.selectedThread.replies || [];
+                                const newReplies = updated.replies || [];
+
+                                const hasNewMessage = newMessages.length !== currentMessages.length ||
+                                    newReplies.length !== currentReplies.length ||
+                                    updated.last_message !== this.selectedThread.last_message;
+
+                                // Seamless update of thread metadata & chat content
+                                this.selectedThread.messages = newMessages;
+                                this.selectedThread.replies = newReplies;
                                 this.selectedThread.parent_comment = updated.parent_comment || null;
                                 this.selectedThread.last_message = updated.last_message;
                                 this.selectedThread.time = updated.time;
                                 this.selectedThread.status = updated.status;
+                                this.selectedThread.tags = updated.tags || [];
                                 this.selectedThread.is_unread = updated.is_unread;
-                                if (updated.messages.length > oldLen) {
+
+                                if (hasNewMessage && (newMessages.length > currentMessages.length || newReplies.length > currentReplies.length)) {
                                     this.$nextTick(() => {
                                         this.scrollToBottom();
                                         if (window.lucide) window.lucide.createIcons();
@@ -3050,11 +3073,12 @@ function adminInboxHub() {
             this.filterThreads();
         },
 
-        async syncMessages() {
+        async syncMessages(isManual = false) {
             if (this.isSyncing) return;
             this.isSyncing = true;
 
             try {
+                // 1. Trigger background Graph API sync for Meta channels
                 const response = await fetch('/admin/inbox/sync-meta', {
                     method: 'POST',
                     headers: {
@@ -3064,21 +3088,32 @@ function adminInboxHub() {
                     }
                 });
                 const data = await response.json();
-                if (data.success) {
-                    alert(data.message || 'Sinkronisasi berhasil.');
-                    if (data.count && data.count > 0) {
-                        window.location.reload();
-                    }
-                } else {
-                    alert(data.message || 'Gagal menyinkronkan data.');
-                    if (data.message && data.message.includes('belum diisi')) {
-                        this.openMetaSettings = true;
+
+                // 2. Seamlessly reload latest messages & thread list via AJAX (zero full page reload)
+                await this.pollLiveUpdates();
+
+                if (isManual) {
+                    if (data.success) {
+                        const countMsg = (data.count && data.count > 0)
+                            ? `Berhasil menyinkronkan ${data.count} pesan baru!`
+                            : 'Sinkronisasi selesai. Seluruh data sudah termutakhirkan.';
+                        this.showToastNotification(countMsg);
+                    } else {
+                        this.showToastNotification(data.message || 'Gagal menyinkronkan data.');
+                        if (data.message && data.message.includes('belum diisi')) {
+                            this.openMetaSettings = true;
+                        }
                     }
                 }
             } catch (err) {
-                alert('Terjadi kendala saat menyinkronkan data: ' + err.message);
+                if (isManual) {
+                    this.showToastNotification('Terjadi kendala saat menyinkronkan data: ' + err.message);
+                }
             } finally {
                 this.isSyncing = false;
+                this.$nextTick(() => {
+                    if (window.lucide) window.lucide.createIcons();
+                });
             }
         },
 
@@ -3534,6 +3569,36 @@ function adminInboxHub() {
         removeDontItem(idx) {
             if (Array.isArray(this.aiConfig.donts)) {
                 this.aiConfig.donts.splice(idx, 1);
+            }
+        },
+
+        async syncUserGuidesDocumentation() {
+            if (this.isLoadingGuides) return;
+            this.isLoadingGuides = true;
+
+            try {
+                const res = await fetch('/admin/inbox/sync-user-guides', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Accept': 'application/json',
+                    }
+                });
+                const data = await res.json();
+                if (data.success && data.system_info) {
+                    this.aiConfig.system_info = data.system_info;
+                    this.showToastNotification(data.message || '39 Berkas docs/user-guides berhasil dimuat ke Knowledge Base AI!');
+                } else {
+                    this.showToastNotification(data.message || 'Gagal menyinkronkan panduan.', 'error');
+                }
+            } catch (err) {
+                this.showToastNotification('Terjadi kendala saat menyinkronkan panduan: ' + err.message, 'error');
+            } finally {
+                this.isLoadingGuides = false;
+                this.$nextTick(() => {
+                    if (window.lucide) window.lucide.createIcons();
+                });
             }
         },
 

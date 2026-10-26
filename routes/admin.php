@@ -371,6 +371,7 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
             // AI Chatbot & Knowledge Base Guidelines (Do's and Don'ts)
             Route::get('/ai-settings', [AdminInboxController::class, 'getAiSettings'])->name('ai-settings');
             Route::post('/ai-settings', [AdminInboxController::class, 'saveAiSettings'])->name('ai-settings.save');
+            Route::post('/sync-user-guides', [AdminInboxController::class, 'syncUserGuides'])->name('sync-user-guides');
             Route::post('/ai-test', [AdminInboxController::class, 'testAiPrompt'])->name('ai-test');
             Route::post('/generate-ai-reply/{id}', [AdminInboxController::class, 'generateAiReply'])->name('generate-ai-reply');
             Route::post('/typing', [AdminInboxController::class, 'broadcastTyping'])->name('typing');

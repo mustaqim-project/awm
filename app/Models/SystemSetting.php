@@ -41,27 +41,32 @@ class SystemSetting extends Model
             return Cache::remember("system_setting_{$key}", 3600, function () use ($key, $default) {
                 $setting = static::where('key', $key)->first();
 
-                return $setting?->value ?? $default;
+                return $setting?->value ?? Cache::get("system_setting_fallback_{$key}", $default);
             });
         } catch (\Throwable) {
-            return $default;
+            return Cache::get("system_setting_fallback_{$key}", $default);
         }
     }
 
     /**
      * Set a setting by key.
      */
-    public static function set(string $key, ?string $value, string $group = 'general', bool $isSecret = false): self
+    public static function set(string $key, ?string $value, string $group = 'general', bool $isSecret = false): ?self
     {
         Cache::forget("system_setting_{$key}");
+        Cache::forever("system_setting_fallback_{$key}", $value);
 
-        return static::updateOrCreate(
-            ['key' => $key],
-            [
-                'value' => $value,
-                'group' => $group,
-                'is_secret' => $isSecret,
-            ]
-        );
+        try {
+            return static::updateOrCreate(
+                ['key' => $key],
+                [
+                    'value' => $value,
+                    'group' => $group,
+                    'is_secret' => $isSecret,
+                ]
+            );
+        } catch (\Throwable) {
+            return null;
+        }
     }
 }

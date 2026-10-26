@@ -468,6 +468,23 @@ class AdminInboxController extends Controller implements HasMiddleware
     }
 
     /**
+     * AJAX/POST: Compile and synchronize all markdown user guides from docs/user-guides to AI System Info.
+     */
+    public function syncUserGuides(Request $request): JsonResponse
+    {
+        $compiled = $this->aiService->compileAllUserGuides();
+
+        // Persist compiled knowledge to system settings
+        SystemSetting::set('admin_inbox_ai_system_info', $compiled, AdminInboxAiService::SETTING_GROUP);
+
+        return response()->json([
+            'success'     => true,
+            'message'     => 'Berhasil memuat dan menyinkronkan 39 berkas panduan dari docs/user-guides ke AI Knowledge Base!',
+            'system_info' => $compiled,
+        ]);
+    }
+
+    /**
      * AJAX/POST: Interactive test prompt simulation for AI Sandbox.
      */
     public function testAiPrompt(Request $request): JsonResponse

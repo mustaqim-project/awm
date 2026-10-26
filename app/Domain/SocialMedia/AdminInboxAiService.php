@@ -342,7 +342,7 @@ TXT;
      *
      * @param array<string, mixed> $settings
      */
-    public function buildSystemPrompt(array $settings, string $channel, ?string $customerName = null): string
+    public function buildSystemPrompt(array $settings, string $channel, ?string $customerName = null, ?string $userQuery = null): string
     {
         $systemInfo = (string) ($settings['system_info'] ?? self::DEFAULT_SYSTEM_INFO);
         $dos = (array) ($settings['dos'] ?? self::DEFAULT_DOS);
@@ -362,6 +362,18 @@ TXT;
         };
 
         $customerContext = $customerName ? "Nama pelanggan yang sedang berinteraksi: {$customerName}." : "Nama pelanggan belum diketahui (sapa dengan ramah).";
+
+        $relevantGuides = ! empty($userQuery) ? $this->getRelevantUserGuides($userQuery) : '';
+        $guidesSection = '';
+        if ($relevantGuides !== '') {
+            $guidesSection = <<<GUIDES
+
+============================================================
+PANDUAN OPERASIONAL & TROUBLESHOOTING RELEVAN (DOCS/USER-GUIDES)
+============================================================
+{$relevantGuides}
+GUIDES;
+        }
 
         return <<<PROMPT
 Anda adalah AI Customer Assistant Resmi dari COOCA Indonesia (SaaS Business Operating System All-in-One untuk UMKM).
@@ -386,6 +398,7 @@ PRINSIP UTAMA: FOKUS EKSKLUSIF PADA OPERASIONAL BISNIS & COOCA
 INFORMASI SISTEM & PENGETAHUAN RESMI COOCA (KNOWLEDGE BASE)
 ============================================================
 {$systemInfo}
+{$guidesSection}
 
 ============================================================
 PEDOMAN KERJA UTAMA - HAL YANG WAJIB DILAKUKAN (DO'S)
@@ -407,6 +420,138 @@ ATURAN FORMAT BALASAN (OUTPUT GUIDELINES):
 5. Sesuaikan panjang respon dengan saluran (misal: WhatsApp/DM lebih personal dan ringkas, komentar media sosial lebih padat).
 6. Pastikan mematuhi seluruh aturan DO'S dan TIDAK MELANGGAR satu pun aturan DON'TS.
 PROMPT;
+    }
+
+    /**
+     * Retrieve relevant markdown documentation from docs/user-guides based on message context.
+     */
+    public function getRelevantUserGuides(?string $query = null, int $maxChars = 6000): string
+    {
+        $baseDir = base_path('docs/user-guides');
+        if (! is_dir($baseDir)) {
+            return '';
+        }
+
+        $query = strtolower(trim((string) $query));
+        if ($query === '') {
+            return '';
+        }
+
+        // Map keywords to module folders
+        $moduleKeywords = [
+            'inventory'   => ['stok', 'stock', 'opname', 'gudang', 'mutasi', 'transfer', 'min_stock'],
+            'products'    => ['produk', 'product', 'barang', 'varian', 'resep', 'bom', 'harga modal', 'hpp', 'menu'],
+            'purchasing'  => ['purchasing', 'supplier', 'po', 'purchase order', 'beli barang', 'pengadaan', 'vendor'],
+            'settings'    => ['setting', 'pengaturan', 'mcp', 'pin', 'supervisor', 'logo', 'struk', 'printer', 'bluetooth', 'void'],
+            'finance'     => ['finance', 'keuangan', 'laba rugi', 'neraca', 'jurnal', 'kas', 'bank', 'rekon', 'pajak', 'ppn', 'pb1'],
+            'hrm'         => ['hrm', 'karyawan', 'pegawai', 'absensi', 'gaji', 'payroll', 'shift', 'cuti', 'komisi'],
+            'invoices'    => ['invoice', 'faktur', 'piutang', 'tagihan', 'jatuh tempo', 'kredit'],
+            'billing'     => ['billing', 'paket', 'langganan', 'standard', 'premium', 'prestige', 'free', 'upgrade', 'biaya'],
+            'crm'         => ['crm', 'member', 'loyalitas', 'pelanggan setia', 'voucher', 'diskon', 'poin'],
+            'customers'   => ['customer', 'pelanggan', 'kontak', 'database pembeli', 'telepon'],
+            'approvals'   => ['approval', 'persetujuan', 'otorisasi', 'void kasir'],
+            'analytics'   => ['analytics', 'analisis', 'tren penjualan', 'laporan grafik', 'performa'],
+            'admin'       => ['admin', 'super admin', 'role', 'hak akses', 'pengguna', 'user'],
+        ];
+
+        $matchedModules = [];
+        foreach ($moduleKeywords as $mod => $keywords) {
+            foreach ($keywords as $kw) {
+                if (str_contains($query, $kw)) {
+                    $matchedModules[] = $mod;
+                    break;
+                }
+            }
+        }
+
+        if (empty($matchedModules)) {
+            return '';
+        }
+
+        $matchedModules = array_unique(array_slice($matchedModules, 0, 3));
+        $extractedContent = [];
+        $totalLen = 0;
+
+        foreach ($matchedModules as $mod) {
+            $dir = $baseDir . DIRECTORY_SEPARATOR . $mod;
+            if (! is_dir($dir)) {
+                continue;
+            }
+
+            $files = glob($dir . DIRECTORY_SEPARATOR . '*.md') ?: [];
+            foreach ($files as $file) {
+                $content = @file_get_contents($file);
+                if (! $content) {
+                    continue;
+                }
+
+                $content = trim($content);
+                $relName = basename($dir) . '/' . basename($file);
+                $snippet = "--- PANDUAN PENGGUNA RESMI: [{$relName}] ---\n" . substr($content, 0, 2500);
+
+                $extractedContent[] = $snippet;
+                $totalLen += strlen($snippet);
+
+                if ($totalLen >= $maxChars) {
+                    break 2;
+                }
+            }
+        }
+
+        return implode("\n\n", $extractedContent);
+    }
+
+    /**
+     * Compile an indexed synthesis of all 39 user-guide markdown files.
+     */
+    public function compileAllUserGuides(): string
+    {
+        $baseDir = base_path('docs/user-guides');
+        if (! is_dir($baseDir)) {
+            return self::DEFAULT_SYSTEM_INFO;
+        }
+
+        $modules = glob($baseDir . DIRECTORY_SEPARATOR . '*', GLOB_ONLYDIR) ?: [];
+        $sections = [];
+        $sections[] = self::DEFAULT_SYSTEM_INFO;
+        $sections[] = "\n\n============================================================\nPANDUAN RESMI OPERASIONAL BISNIS & FITUR COOCA (DOKUMENTASI 15 MODUL)\n============================================================";
+
+        foreach ($modules as $modDir) {
+            $modKey = basename($modDir);
+            $modTitle = strtoupper(str_replace('-', ' ', $modKey));
+            $files = glob($modDir . DIRECTORY_SEPARATOR . '*.md') ?: [];
+            if (empty($files)) {
+                continue;
+            }
+
+            $modContent = [];
+            $modContent[] = "[MODUL {$modTitle}]";
+
+            foreach ($files as $f) {
+                $base = basename($f);
+                $raw = (string) @file_get_contents($f);
+                if (trim($raw) === '') {
+                    continue;
+                }
+
+                // Clean markdown table artifacts and redundant headers for dense AI knowledge
+                $lines = explode("\n", $raw);
+                $cleanLines = [];
+                foreach ($lines as $line) {
+                    $trim = trim($line);
+                    if (str_starts_with($trim, '| Profil Dokumen') || str_starts_with($trim, '| Target Pembaca') || str_starts_with($trim, '| Level Teknis') || str_starts_with($trim, '| Versi Panduan')) {
+                        continue;
+                    }
+                    $cleanLines[] = $line;
+                }
+                $cleanText = trim(implode("\n", $cleanLines));
+                $modContent[] = "### Berkas: {$modKey}/{$base}\n" . $cleanText;
+            }
+
+            $sections[] = implode("\n\n", $modContent);
+        }
+
+        return implode("\n\n", $sections);
     }
 
     /**
@@ -565,11 +710,10 @@ PROMPT;
             ];
         }
 
-        $channel = strtolower((string) $comment->platform);
-        $customerName = (string) ($comment->from_name ?: 'Pelanggan');
+        $latestCustomerMessage = trim((string) $comment->message);
 
         // Build conversation history messages
-        $systemPrompt = $this->buildSystemPrompt($settings, $channel, $customerName);
+        $systemPrompt = $this->buildSystemPrompt($settings, $channel, $customerName, $latestCustomerMessage);
 
         $messages = [
             ['role' => 'system', 'content' => $systemPrompt],
@@ -1002,7 +1146,8 @@ PROMPT;
         $currentSettings = $this->getSettings();
         $mergedSettings = array_merge($currentSettings, $customSettings);
 
-        $systemPrompt = $this->buildSystemPrompt($mergedSettings, 'whatsapp', 'Calon Mitra UMKM');
+        $testMessage = trim($prompt);
+        $systemPrompt = $this->buildSystemPrompt($mergedSettings, 'whatsapp', 'Calon Mitra UMKM', $testMessage);
 
         $messages = [
             ['role' => 'system', 'content' => $systemPrompt],
