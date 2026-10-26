@@ -264,7 +264,7 @@ Route::get('/payslip/{token}', [\App\Http\Controllers\Web\Hrm\HrmWebController::
 
 // 14. Marketplace Integration OAuth Callbacks & Webhooks
 Route::get('/integrations/{provider}/callback', [\App\Http\Controllers\Web\Marketplace\MarketplaceWebController::class, 'callback'])->name('integrations.marketplace.callback');
-Route::post('/webhooks/marketplace/{provider}', [\App\Http\Controllers\Web\Marketplace\MarketplaceWebhookController::class, 'handle'])
+Route::match(['get', 'post'], '/webhooks/marketplace/{provider}', [\App\Http\Controllers\Web\Marketplace\MarketplaceWebhookController::class, 'handle'])
     ->middleware('throttle:120,1')
     ->name('webhooks.marketplace');
 

@@ -27,10 +27,27 @@ class MarketplaceWebhookController extends Controller
             default                                     => abort(404),
         };
 
+        if ($request->isMethod('GET')) {
+            return response()->json([
+                'code'    => 0,
+                'success' => true,
+                'message' => "Webhook endpoint for {$normalizedChannel} is active.",
+            ], 200);
+        }
+
         try {
             $adapter   = $this->manager->driver($normalizedChannel);
             $rawBody   = (string) $request->getContent();
             $headers   = $request->headers->all();
+
+            // Handle empty verification test ping from marketplace consoles
+            if (empty(trim($rawBody)) || $rawBody === '{}') {
+                return response()->json([
+                    'code'    => 0,
+                    'success' => true,
+                    'message' => 'Ping received',
+                ], 200);
+            }
 
             $eventData = $adapter->handleWebhook($request, $rawBody, $headers);
 
