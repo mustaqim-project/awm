@@ -364,6 +364,7 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
             Route::post('/toggle-status/{id}', [AdminInboxController::class, 'toggleStatus'])->name('toggle-status');
             Route::post('/toggle-takeover/{id}', [AdminInboxController::class, 'toggleTakeover'])->name('toggle-takeover');
             Route::post('/tags/{id}', [AdminInboxController::class, 'updateTags'])->name('tags');
+            Route::post('/ai-tag/{id}', [AdminInboxController::class, 'autoTagWithAi'])->name('ai-tag');
             Route::post('/sync-meta', [AdminInboxController::class, 'syncMeta'])->name('sync-meta');
             Route::post('/settings', [AdminInboxController::class, 'saveSettings'])->name('settings');
 

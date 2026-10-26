@@ -217,7 +217,7 @@ TXT;
     public function getSettings(): array
     {
         $enabled = SystemSetting::get('admin_inbox_ai_enabled');
-        $mode = SystemSetting::get('admin_inbox_ai_mode', 'auto_pilot'); // 'auto_pilot' by default for instant AI response
+        $mode = SystemSetting::get('admin_inbox_ai_mode', 'assistant');
         $channelsRaw = SystemSetting::get('admin_inbox_ai_channels');
         $model = SystemSetting::get('admin_inbox_ai_model');
         $temperature = (float) SystemSetting::get('admin_inbox_ai_temperature', '0.3');
@@ -225,6 +225,7 @@ TXT;
         $dosRaw = SystemSetting::get('admin_inbox_ai_dos');
         $dontsRaw = SystemSetting::get('admin_inbox_ai_donts');
         $greeting = SystemSetting::get('admin_inbox_ai_greeting_template');
+        $autoTagging = SystemSetting::get('admin_inbox_ai_auto_tagging');
 
         // Resolve channels
         $channels = ['live_chat', 'whatsapp', 'instagram', 'messenger', 'facebook_comments', 'instagram_comments'];
@@ -275,6 +276,7 @@ TXT;
             'dos' => $dos,
             'donts' => $donts,
             'greeting_template' => $greeting !== null && trim($greeting) !== '' ? $greeting : self::DEFAULT_GREETING,
+            'auto_tagging' => $autoTagging === null ? true : filter_var($autoTagging, FILTER_VALIDATE_BOOLEAN),
             'platform_engine' => [
                 'provider' => $engineConfig['provider'] ?? 'openai_compatible',
                 'endpoint' => $engineConfig['endpoint'] ?? '',
@@ -328,6 +330,10 @@ TXT;
 
         if (isset($data['greeting_template'])) {
             SystemSetting::set('admin_inbox_ai_greeting_template', trim((string) $data['greeting_template']), self::SETTING_GROUP);
+        }
+
+        if (array_key_exists('auto_tagging', $data)) {
+            SystemSetting::set('admin_inbox_ai_auto_tagging', $data['auto_tagging'] ? 'true' : 'false', self::SETTING_GROUP);
         }
     }
 
@@ -726,6 +732,15 @@ PROMPT;
             // Re-check takeover inside lock
             if (InboxThreadTakeover::isTakenOver($threadKey)) {
                 return null;
+            }
+
+            // Auto-tag incoming thread if enabled
+            if ($settings['auto_tagging'] ?? true) {
+                try {
+                    $this->analyzeAndInferTags($freshComment, ['persist' => true]);
+                } catch (Throwable $e) {
+                    Log::warning("[AdminInboxAi] Auto-tagging failed on auto-reply: {$e->getMessage()}");
+                }
             }
 
             // Generate AI reply suggestion
@@ -1141,5 +1156,285 @@ PROMPT;
         }
 
         return $messages;
+    }
+
+    /**
+     * Analyze conversation messages and infer tags (prospek, client, prioritas, komplain, tindak_lanjut, vip).
+     * Cross-checks database records (User, Business, Subscription) to accurately identify registered clients.
+     *
+     * @param SocialMediaComment $comment
+     * @param array<string, mixed> $options
+     * @return array{
+     *     success: bool,
+     *     tags: array<string>,
+     *     new_tags: array<string>,
+     *     primary_category: string,
+     *     reason: string,
+     *     lead_score: int,
+     *     is_registered_client: bool,
+     *     client_business_name: ?string
+     * }
+     */
+    public function analyzeAndInferTags(SocialMediaComment $comment, array $options = []): array
+    {
+        $existingTags = (array) ($comment->tags ?? []);
+        $history = $this->extractConversationHistory($comment);
+
+        // 1. Ground-Truth Database Cross-Check
+        $fromEmail = trim((string) ($comment->from_email ?: ''));
+        $fromPhone = trim((string) ($comment->from_phone ?: ''));
+
+        // Scan conversation text if email or phone is mentioned in messages
+        $allText = (string) ($comment->message ?? '');
+        foreach ($history as $h) {
+            $allText .= ' ' . ($h['content'] ?? '');
+        }
+
+        if ($fromEmail === '' && preg_match('/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/', $allText, $emailMatch)) {
+            $fromEmail = $emailMatch[0];
+        }
+
+        if ($fromPhone === '' && preg_match('/(?:\+?62|0)8[1-9][0-9]{7,11}/', $allText, $phoneMatch)) {
+            $fromPhone = $phoneMatch[0];
+        }
+
+        $isRegisteredClient = false;
+        $clientBusinessName = null;
+        $userMatch = null;
+        $businessMatch = null;
+
+        if ($fromEmail !== '') {
+            $userMatch = \App\Models\User::where('email', $fromEmail)->first();
+            if (! $userMatch) {
+                $businessMatch = \App\Models\Business::where('email', $fromEmail)->first();
+            }
+        }
+
+        if (! $userMatch && ! $businessMatch && $fromPhone !== '') {
+            $cleanPhone = preg_replace('/[^0-9]/', '', $fromPhone);
+            $phoneVariations = [$cleanPhone];
+            if (str_starts_with($cleanPhone, '62')) {
+                $phoneVariations[] = '0' . substr($cleanPhone, 2);
+            } elseif (str_starts_with($cleanPhone, '0')) {
+                $phoneVariations[] = '62' . substr($cleanPhone, 1);
+            }
+            $userMatch = \App\Models\User::whereIn('phone', $phoneVariations)->first();
+            if (! $userMatch) {
+                $businessMatch = \App\Models\Business::whereIn('phone', $phoneVariations)->first();
+            }
+        }
+
+        if ($userMatch) {
+            $isRegisteredClient = true;
+            $biz = $userMatch->active_business_id ? \App\Models\Business::find($userMatch->active_business_id) : null;
+            $clientBusinessName = $biz ? $biz->name : ($userMatch->name . ' (User Terdaftar)');
+        } elseif ($businessMatch) {
+            $isRegisteredClient = true;
+            $clientBusinessName = $businessMatch->name . ' (Bisnis Terdaftar)';
+        }
+
+        // 2. AI Classifier via Provider
+        $inferredTags = [];
+        $primaryCategory = 'prospek';
+        $reason = '';
+        $leadScore = 50;
+
+        $settings = $this->getSettings();
+
+        if ($settings['enabled'] ?? true) {
+            try {
+                $resolvedAi = $this->getProviderManager()->resolveForBusiness(null);
+                /** @var AiProviderInterface $provider */
+                $provider = $resolvedAi['provider'];
+                $apiKey = (string) ($resolvedAi['api_key'] ?? '');
+                $model = (string) ($settings['model'] ?: $resolvedAi['model']);
+
+                if ($apiKey !== '') {
+                    $classifierSystemPrompt = <<<PROMPT
+Anda adalah AI Lead & Customer Classifier profesional untuk COOCA (Platform SaaS BOS/ERP UMKM Indonesia).
+Tugas Anda: Menganalisa percakapan pelanggan dan menentukan label/tag yang paling tepat.
+
+Pilihan Tag yang Sah:
+1. "prospek": Calon pelanggan baru yang bertanya tentang harga, fitur, modul, paket langganan (Free, Standard, Premium, Prestige), demo, cara daftar, atau tertarik mencoba COOCA.
+2. "client": Pengguna/pelanggan yang sudah terdaftar atau sudah menggunakan COOCA (bertanya perihal operasional akun usahanya, toko, kendala internal akun, atau perpanjangan).
+3. "prioritas": Percakapan berurgensi tinggi, kebutuhan mendesak, atau skala transaksi besar.
+4. "tindak_lanjut": Percakapan yang membutuhkan tindak lanjut atau penjadwalan oleh tim sales/support (misal minta penawaran harga, janji hubungi lagi).
+5. "komplain": Pengguna mengalami kendala teknis, error, transaksi kasir gagal, sistem lambat, atau keluhan layanan.
+6. "vip": Klien skala besar, waralaba/franchise multi-cabang, atau akun enterprise.
+
+Konteks Tambahan:
+- Nama Pelanggan: "{$comment->from_name}"
+- Saluran: "{$comment->platform}"
+- Terverifikasi Terdaftar di Database COOCA: " . ($isRegisteredClient ? "YA (Nama Usaha: {$clientBusinessName})" : "BELUM") . "
+
+Format Wajib: Balas HANYA dengan format JSON valid tanpa teks pengantar maupun blok kode markdown:
+{
+    "tags": ["prospek"],
+    "primary_category": "prospek",
+    "lead_score": 85,
+    "reason": "Alasan singkat dalam bahasa Indonesia mengapa tag ini dipilih."
+}
+PROMPT;
+
+                    $classifierMessages = [
+                        ['role' => 'system', 'content' => $classifierSystemPrompt],
+                    ];
+
+                    foreach ($history as $h) {
+                        $classifierMessages[] = $h;
+                    }
+
+                    if (empty($history)) {
+                        $classifierMessages[] = [
+                            'role' => 'user',
+                            'content' => "Pesan pelanggan: \"{$comment->message}\"",
+                        ];
+                    }
+
+                    $response = $provider->chat($apiKey, $model, $classifierMessages, [
+                        'temperature' => 0.1,
+                        'max_tokens' => 300,
+                        'timeout' => 15,
+                    ]);
+
+                    $rawContent = trim((string) ($response['content'] ?? ''));
+                    // Strip potential markdown code block
+                    $rawContent = preg_replace('/^```(?:json)?\s*/i', '', $rawContent);
+                    $rawContent = preg_replace('/\s*```$/', '', (string) $rawContent);
+                    $parsed = json_decode((string) $rawContent, true);
+
+                    if (is_array($parsed) && isset($parsed['tags'])) {
+                        $validTags = ['prioritas', 'client', 'prospek', 'tindak_lanjut', 'komplain', 'vip'];
+                        foreach ((array) $parsed['tags'] as $t) {
+                            $t = strtolower(trim((string) $t));
+                            if (in_array($t, $validTags, true) && ! in_array($t, $inferredTags, true)) {
+                                $inferredTags[] = $t;
+                            }
+                        }
+                        $primaryCategory = (string) ($parsed['primary_category'] ?? ($inferredTags[0] ?? 'prospek'));
+                        $reason = (string) ($parsed['reason'] ?? '');
+                        $leadScore = (int) ($parsed['lead_score'] ?? 60);
+                    }
+                }
+            } catch (Throwable $e) {
+                Log::warning("[AdminInboxAi] AI Classifier API call failed, falling back to heuristics: {$e->getMessage()}");
+            }
+        }
+
+        // 3. Deterministic Heuristics Fallback & Ground Truth Enforcement
+        if (empty($inferredTags)) {
+            $lowerText = strtolower($allText);
+
+            if ($isRegisteredClient) {
+                $inferredTags[] = 'client';
+                $primaryCategory = 'client';
+                $reason = "Terverifikasi sebagai pelanggan terdaftar ({$clientBusinessName}).";
+                $leadScore = 90;
+            }
+
+            // Check prospect keywords
+            if (Str::contains($lowerText, ['harga', 'paket', 'biaya', 'fitur', 'demo', 'daftar', 'langganan', 'trial', 'beli', 'promo', 'berapa', 'fasilitas', 'pos', 'kasir'])) {
+                if (! in_array('prospek', $inferredTags, true)) {
+                    $inferredTags[] = 'prospek';
+                }
+                if (! $isRegisteredClient) {
+                    $primaryCategory = 'prospek';
+                    $reason = "Menanyakan informasi harga, paket, atau fitur operasional COOCA.";
+                    $leadScore = 80;
+                }
+            }
+
+            // Check complaint keywords
+            if (Str::contains($lowerText, ['error', 'bug', 'gagal', 'rusak', 'tidak bisa', 'kendala', 'masalah', 'kecewa', 'komplain', 'mati', 'hang'])) {
+                if (! in_array('komplain', $inferredTags, true)) {
+                    $inferredTags[] = 'komplain';
+                }
+                $primaryCategory = 'komplain';
+                $reason = "Menyampaikan kendala teknis atau komplain layanan.";
+            }
+
+            // Check priority keywords
+            if (Str::contains($lowerText, ['urgent', 'segera', 'cepat', 'darurat', 'sekarang', 'hari ini', 'secepatnya', 'penting'])) {
+                if (! in_array('prioritas', $inferredTags, true)) {
+                    $inferredTags[] = 'prioritas';
+                }
+            }
+
+            // Check follow up keywords
+            if (Str::contains($lowerText, ['hubungi nanti', 'kabari lagi', 'kirim penawaran', 'besok', 'proposal', 'nanti saya'])) {
+                if (! in_array('tindak_lanjut', $inferredTags, true)) {
+                    $inferredTags[] = 'tindak_lanjut';
+                }
+            }
+
+            // Check VIP keywords
+            if (Str::contains($lowerText, ['cabang', 'franchise', 'waralaba', 'korporat', 'enterprise', 'pabrik', 'gudang pusat'])) {
+                if (! in_array('vip', $inferredTags, true)) {
+                    $inferredTags[] = 'vip';
+                }
+            }
+
+            if (empty($inferredTags)) {
+                $inferredTags[] = 'prospek';
+                $reason = "Pesan baru yang berpotensi menjadi prospek.";
+            }
+        }
+
+        // Always guarantee ground truth: if verified registered in DB, ensure 'client' tag is present
+        if ($isRegisteredClient && ! in_array('client', $inferredTags, true)) {
+            array_unshift($inferredTags, 'client');
+        }
+
+        // 4. Merge with existing tags & persist if requested
+        $finalTags = array_values(array_unique(array_merge($existingTags, $inferredTags)));
+
+        if ($options['persist'] ?? true) {
+            $this->saveTagsToThread($comment, $finalTags);
+        }
+
+        return [
+            'success'              => true,
+            'tags'                 => $finalTags,
+            'new_tags'             => $inferredTags,
+            'primary_category'     => $primaryCategory,
+            'reason'               => $reason ?: "Terklasifikasi sebagai {$primaryCategory}",
+            'lead_score'           => $leadScore,
+            'is_registered_client' => $isRegisteredClient,
+            'client_business_name' => $clientBusinessName,
+        ];
+    }
+
+    /**
+     * Save tags to a comment and all sibling comments in the same thread.
+     *
+     * @param SocialMediaComment $comment
+     * @param array<string> $tags
+     */
+    public function saveTagsToThread(SocialMediaComment $comment, array $tags): void
+    {
+        $tags = array_values(array_unique(array_filter(array_map('strtolower', $tags))));
+
+        $targetComments = collect([$comment]);
+        if (! in_array(strtolower((string) $comment->platform), ['facebook_comments', 'instagram_comments'], true)) {
+            $customerId = $comment->session_token ?: $comment->from_id;
+            if ($customerId) {
+                $targetComments = SocialMediaComment::where('is_platform', true)
+                    ->where(function ($q) use ($customerId) {
+                        $q->where('from_id', $customerId)
+                          ->orWhere('session_token', $customerId);
+                    })
+                    ->get();
+            }
+        }
+
+        foreach ($targetComments as $c) {
+            $c->tags = $tags;
+            if (in_array('prioritas', $tags, true) && $c->status !== 'priority' && $c->status !== 'resolved') {
+                $c->status = 'priority';
+            } elseif (! in_array('prioritas', $tags, true) && $c->status === 'priority') {
+                $c->status = 'read';
+            }
+            $c->save();
+        }
     }
 }

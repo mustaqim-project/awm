@@ -449,6 +449,25 @@ class AdminInboxController extends Controller implements HasMiddleware
     }
 
     /**
+     * AJAX/POST: Analyze conversation intent with AI and infer lead/client/issue tags.
+     */
+    public function autoTagWithAi(Request $request, string $id): JsonResponse
+    {
+        $comment = SocialMediaComment::where('is_platform', true)->find($id);
+
+        if (! $comment) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Percakapan tidak ditemukan.',
+            ], 404);
+        }
+
+        $result = $this->aiService->analyzeAndInferTags($comment, ['persist' => true]);
+
+        return response()->json($result);
+    }
+
+    /**
      * AJAX/POST: Interactive test prompt simulation for AI Sandbox.
      */
     public function testAiPrompt(Request $request): JsonResponse

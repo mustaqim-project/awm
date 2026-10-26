@@ -1232,6 +1232,32 @@
                             </span>
                         </div>
 
+                        {{-- AI Auto-Tag Trigger Button --}}
+                        <button type="button" @click="autoTagWithAi(selectedThread)" :disabled="isAnalyzingAiTags"
+                            title="AI menganalisa isi percakapan dan database untuk mengklasifikasikan apakah prospek, pelanggan, atau komplain"
+                            class="w-full py-1.5 px-2.5 rounded-[8px] bg-purple-100 hover:bg-purple-200 dark:bg-purple-950/60 dark:hover:bg-purple-900/60 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800/40 text-[11px] font-semibold flex items-center justify-center gap-1.5 transition-all shadow-2xs cursor-pointer">
+                            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" :class="isAnalyzingAiTags ? 'animate-spin' : ''"></i>
+                            <span x-text="isAnalyzingAiTags ? 'AI Menganalisa Percakapan...' : 'Analisa & Klasifikasi Tag AI'"></span>
+                        </button>
+
+                        {{-- AI Insight Banner --}}
+                        <div x-show="selectedThread?.ai_tag_reason" x-cloak
+                            class="p-2 rounded-[8px] bg-purple-50 dark:bg-purple-950/40 border border-purple-200/70 dark:border-purple-800/40 text-[10.5px] space-y-1">
+                            <div class="flex items-center justify-between font-bold text-purple-900 dark:text-purple-200">
+                                <span class="flex items-center gap-1">
+                                    <i data-lucide="brain-circuit" class="w-3 h-3 text-purple-600"></i>
+                                    <span x-text="selectedThread?.is_registered_client ? 'Pelanggan Terdaftar' : 'Analisa Lead AI'"></span>
+                                </span>
+                                <span x-show="selectedThread?.lead_score" class="px-1.5 py-0.2 rounded-full bg-purple-200/70 dark:bg-purple-900 text-purple-800 dark:text-purple-200 text-[9.5px]" x-text="'Skor: ' + selectedThread.lead_score + '%'"></span>
+                            </div>
+                            <p class="text-purple-800 dark:text-purple-300 leading-tight" x-text="selectedThread?.ai_tag_reason"></p>
+                            <template x-if="selectedThread?.client_business_name">
+                                <div class="text-[10px] text-purple-700 dark:text-purple-400 font-medium pt-0.5">
+                                    Usaha: <span class="font-bold text-purple-900 dark:text-purple-200" x-text="selectedThread?.client_business_name"></span>
+                                </div>
+                            </template>
+                        </div>
+
                         {{-- Tag Badges List --}}
                         <div class="flex flex-wrap items-center gap-1.5 min-h-6">
                             <template x-for="tg in (selectedThread.tags || [])" :key="tg">
@@ -1346,6 +1372,32 @@
                                 <i data-lucide="tag" class="w-3.5 h-3.5 text-[#1877F2]"></i>
                                 <span>Label & Tag Percakapan</span>
                             </span>
+                        </div>
+
+                        {{-- AI Auto-Tag Trigger Button --}}
+                        <button type="button" @click="autoTagWithAi(selectedThread)" :disabled="isAnalyzingAiTags"
+                            title="AI menganalisa isi percakapan dan database untuk mengklasifikasikan apakah prospek, pelanggan, atau komplain"
+                            class="w-full py-1.5 px-2.5 rounded-[8px] bg-purple-100 hover:bg-purple-200 dark:bg-purple-950/60 dark:hover:bg-purple-900/60 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800/40 text-[11px] font-semibold flex items-center justify-center gap-1.5 transition-all shadow-2xs cursor-pointer">
+                            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" :class="isAnalyzingAiTags ? 'animate-spin' : ''"></i>
+                            <span x-text="isAnalyzingAiTags ? 'AI Menganalisa Percakapan...' : 'Analisa & Klasifikasi Tag AI'"></span>
+                        </button>
+
+                        {{-- AI Insight Banner --}}
+                        <div x-show="selectedThread?.ai_tag_reason" x-cloak
+                            class="p-2 rounded-[8px] bg-purple-50 dark:bg-purple-950/40 border border-purple-200/70 dark:border-purple-800/40 text-[10.5px] space-y-1">
+                            <div class="flex items-center justify-between font-bold text-purple-900 dark:text-purple-200">
+                                <span class="flex items-center gap-1">
+                                    <i data-lucide="brain-circuit" class="w-3 h-3 text-purple-600"></i>
+                                    <span x-text="selectedThread?.is_registered_client ? 'Pelanggan Terdaftar' : 'Analisa Lead AI'"></span>
+                                </span>
+                                <span x-show="selectedThread?.lead_score" class="px-1.5 py-0.2 rounded-full bg-purple-200/70 dark:bg-purple-900 text-purple-800 dark:text-purple-200 text-[9.5px]" x-text="'Skor: ' + selectedThread.lead_score + '%'"></span>
+                            </div>
+                            <p class="text-purple-800 dark:text-purple-300 leading-tight" x-text="selectedThread?.ai_tag_reason"></p>
+                            <template x-if="selectedThread?.client_business_name">
+                                <div class="text-[10px] text-purple-700 dark:text-purple-400 font-medium pt-0.5">
+                                    Usaha: <span class="font-bold text-purple-900 dark:text-purple-200" x-text="selectedThread?.client_business_name"></span>
+                                </div>
+                            </template>
                         </div>
 
                         {{-- Active Tag Badges --}}
@@ -1873,6 +1925,22 @@
                         </div>
                     </div>
 
+                    {{-- 3B. Auto-Tagging & Lead Classification Feature --}}
+                    <div class="p-4 rounded-[16px] bg-white dark:bg-[#2C2C2E] border border-[#E5E7EB] dark:border-white/10 shadow-xs">
+                        <label class="flex items-center justify-between cursor-pointer">
+                            <div class="pr-4">
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="sparkles" class="w-4 h-4 text-purple-600"></i>
+                                    <h4 class="font-bold text-[13.5px] text-[#111827] dark:text-white">Klasifikasi & Auto-Tagging Lead AI</h4>
+                                </div>
+                                <p class="text-[12px] text-[#6B7280] dark:text-[#9CA3AF] mt-1 leading-relaxed">
+                                    Otomatis mendeteksi dan memberi tag (Prospek, Client, Prioritas, Komplain, Tindak Lanjut, VIP) pada setiap pesan masuk dengan mencocokkan intensi percakapan dan status database COOCA.
+                                </p>
+                            </div>
+                            <input type="checkbox" x-model="aiConfig.auto_tagging" class="w-5 h-5 rounded text-purple-600 focus:ring-purple-500 shrink-0">
+                        </label>
+                    </div>
+
                     {{-- 4. Model & Temperature --}}
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <div class="p-4 rounded-[16px] bg-white dark:bg-[#2C2C2E] border border-[#E5E7EB] dark:border-white/10 shadow-xs space-y-2">
@@ -2128,6 +2196,7 @@ function adminInboxHub() {
         customDmTagVal: '',
         openFilterMore: false,
         showRightSidebar: true,
+        isAnalyzingAiTags: false,
         searchKeyword: @json($search ?? ''),
         replyText: '',
         replyTargetComment: null,
@@ -3065,6 +3134,62 @@ function adminInboxHub() {
                 }
             } catch (err) {
                 console.error('Failed to toggle tag:', err);
+            }
+        },
+
+        async autoTagWithAi(thread) {
+            if (!thread || this.isAnalyzingAiTags) return;
+            this.isAnalyzingAiTags = true;
+
+            const targetId = thread.primary_comment_id || thread.id;
+
+            try {
+                const response = await fetch(`/admin/inbox/ai-tag/${targetId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Accept': 'application/json',
+                    }
+                });
+
+                const data = await response.json();
+                if (response.ok && data.success) {
+                    const newTags = data.tags || [];
+                    thread.tags = newTags;
+                    thread.ai_tag_reason = data.reason;
+                    thread.lead_score = data.lead_score;
+                    thread.is_registered_client = data.is_registered_client;
+                    thread.client_business_name = data.client_business_name;
+
+                    // Sync across instances in allThreads
+                    this.allThreads.forEach(t => {
+                        if (t.id === thread.id || (t.customer_id && thread.customer_id && t.customer_id === thread.customer_id)) {
+                            t.tags = [...newTags];
+                            t.ai_tag_reason = data.reason;
+                            t.lead_score = data.lead_score;
+                            t.is_registered_client = data.is_registered_client;
+                            t.client_business_name = data.client_business_name;
+                            if (newTags.includes('prioritas') && t.status !== 'priority') {
+                                t.status = 'priority';
+                            }
+                        }
+                    });
+
+                    this.recalculateCounts();
+                    this.filterThreads(false);
+                    this.showToastNotification(`✨ AI: ${data.reason || 'Klasifikasi tag berhasil diperbarui'}`);
+                } else {
+                    this.showToastNotification(data.message || 'Gagal menganalisa tag dengan AI');
+                }
+            } catch (err) {
+                console.error('[Inbox] Auto tag error:', err);
+                this.showToastNotification('Terjadi kendala saat menganalisa tag dengan AI');
+            } finally {
+                this.isAnalyzingAiTags = false;
+                this.$nextTick(() => {
+                    if (window.lucide) window.lucide.createIcons();
+                });
             }
         },
 
