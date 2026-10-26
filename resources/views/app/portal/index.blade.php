@@ -316,14 +316,14 @@
                             <span class="text-[10px] uppercase font-bold tracking-wider text-slate-400 block">{{ __('portal.clock_in_title') }}</span>
                             <span class="text-sm font-bold text-slate-800 dark:text-slate-100 font-mono tabular-nums mt-0.5 block"
                                 x-text="attendance ? (attendance.clock_in_at ? formatTime(attendance.clock_in_at) : '--:--') : '--:--'">
-                                {{ $todayAttendance?->clock_in_at ? $todayAttendance->clock_in_at->format('H:i') . ' WIB' : '--:--' }}
+                                {{ $todayAttendance?->clock_in_at ? $todayAttendance->clock_in_at->format('H:i') . ' ' . ($tzAbbr ?? 'WIB') : '--:--' }}
                             </span>
                         </div>
                         <div class="p-2.5 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/5 dark:border-white/5">
                             <span class="text-[10px] uppercase font-bold tracking-wider text-slate-400 block">{{ __('portal.clock_out_title') }}</span>
                             <span class="text-sm font-bold text-slate-800 dark:text-slate-100 font-mono tabular-nums mt-0.5 block"
                                 x-text="attendance ? (attendance.clock_out_at ? formatTime(attendance.clock_out_at) : '--:--') : '--:--'">
-                                {{ $todayAttendance?->clock_out_at ? $todayAttendance->clock_out_at->format('H:i') . ' WIB' : '--:--' }}
+                                {{ $todayAttendance?->clock_out_at ? $todayAttendance->clock_out_at->format('H:i') . ' ' . ($tzAbbr ?? 'WIB') : '--:--' }}
                             </span>
                         </div>
                     </div>
@@ -497,7 +497,7 @@
                                     @if ($item->clock_in_at)
                                         <div class="flex items-center gap-1.5">
                                             <i data-lucide="log-in" class="w-3.5 h-3.5 text-[#34C759]"></i>
-                                            <span>{{ $item->clock_in_at->format('H:i') }} WIB</span>
+                                            <span>{{ $item->clock_in_at->format('H:i') }} {{ $tzAbbr ?? 'WIB' }}</span>
                                             @if ($item->clock_in_status === \App\Models\Attendance::CLOCK_IN_LATE)
                                                 <span class="text-[10px] text-[#FF9500] font-sans font-bold">({{ $item->late_minutes }}m telat)</span>
                                             @endif
@@ -510,7 +510,7 @@
                                     @if ($item->clock_out_at)
                                         <div class="flex items-center gap-1.5">
                                             <i data-lucide="log-out" class="w-3.5 h-3.5 text-[#FF9500]"></i>
-                                            <span>{{ $item->clock_out_at->format('H:i') }} WIB</span>
+                                            <span>{{ $item->clock_out_at->format('H:i') }} {{ $tzAbbr ?? 'WIB' }}</span>
                                         </div>
                                     @else
                                         <span class="text-slate-400 italic">{{ __('portal.not_checked_out') }}</span>
@@ -1022,10 +1022,10 @@
                                     {{ $row->date ? $row->date->translatedFormat('l, d M Y') : '-' }}
                                 </td>
                                 <td class="py-3 px-3 font-mono tabular-nums">
-                                    {{ $row->clock_in_at ? $row->clock_in_at->format('H:i') . ' WIB' : '-' }}
+                                    {{ $row->clock_in_at ? $row->clock_in_at->format('H:i') . ' ' . ($tzAbbr ?? 'WIB') : '-' }}
                                 </td>
                                 <td class="py-3 px-3 font-mono tabular-nums">
-                                    {{ $row->clock_out_at ? $row->clock_out_at->format('H:i') . ' WIB' : '-' }}
+                                    {{ $row->clock_out_at ? $row->clock_out_at->format('H:i') . ' ' . ($tzAbbr ?? 'WIB') : '-' }}
                                 </td>
                                 <td class="py-3 px-3 font-mono tabular-nums">
                                     {{ $row->work_duration_minutes ? __('portal.hours_suffix', ['count' => round($row->work_duration_minutes / 60, 1)]) : '-' }}
@@ -1076,13 +1076,13 @@
                             <div class="p-2.5 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/5 dark:border-white/5">
                                 <span class="text-[10px] uppercase font-bold text-black/50 dark:text-white/50 block">{{ __('portal.col_clock_in') }}</span>
                                 <span class="text-[12.5px] font-bold font-mono text-black dark:text-white tabular-nums">
-                                    {{ $row->clock_in_at ? $row->clock_in_at->format('H:i') . ' WIB' : '-' }}
+                                    {{ $row->clock_in_at ? $row->clock_in_at->format('H:i') . ' ' . ($tzAbbr ?? 'WIB') : '-' }}
                                 </span>
                             </div>
                             <div class="p-2.5 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/5 dark:border-white/5">
                                 <span class="text-[10px] uppercase font-bold text-black/50 dark:text-white/50 block">{{ __('portal.clock_out_short') }}</span>
                                 <span class="text-[12.5px] font-bold font-mono text-black dark:text-white tabular-nums">
-                                    {{ $row->clock_out_at ? $row->clock_out_at->format('H:i') . ' WIB' : '-' }}
+                                    {{ $row->clock_out_at ? $row->clock_out_at->format('H:i') . ' ' . ($tzAbbr ?? 'WIB') : '-' }}
                                 </span>
                             </div>
                             <div class="p-2.5 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/5 dark:border-white/5">
@@ -1983,7 +1983,7 @@ function portalAttendance(config) {
         formatTime(isoString) {
             if (!isoString) return '--:--';
             const d = new Date(isoString);
-            return d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) + ' WIB';
+            return d.toLocaleTimeString('en-GB', { timeZone: this.timezone || 'Asia/Jakarta', hour12: false, hour: '2-digit', minute: '2-digit' }) + ' ' + (this.tzAbbr || 'WIB');
         },
 
         // --- FACE REGISTRATION LOGIC ---

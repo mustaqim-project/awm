@@ -1480,7 +1480,7 @@
                                     {{ __('hrm.currently_working') }}
                                 </span>
                                 <span class="text-[13.5px] font-bold text-black dark:text-white">
-                                    Clock-In: {{ $currentUserAttendance->clock_in_at->format('H:i') }} WIB
+                                    Clock-In: {{ \App\Support\TimezoneHelper::formatTime($currentUserAttendance->clock_in_at, 'H:i', null, true) }}
                                 </span>
                             </div>
                             <p class="text-[12px] text-black/70 dark:text-white/70 font-medium">
@@ -1754,7 +1754,7 @@
                             <div class="p-2.5 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/5 dark:border-white/5 space-y-0.5">
                                 <span class="text-[10px] uppercase font-bold text-black/50 dark:text-white/50 block">{{ __('hrm.th_clock_in') }}</span>
                                 <div class="font-bold text-black dark:text-white tabular-nums text-[12.5px]">
-                                    {{ $att->clock_in_at ? $att->clock_in_at->format('H:i') . ' WIB' : '-' }}
+                                    {{ \App\Support\TimezoneHelper::formatTime($att->clock_in_at, 'H:i', null, true) }}
                                 </div>
                                 @if($att->clock_in_status === 'late')
                                     <span class="text-[10.5px] text-[#FF9500] font-bold block">{{ __('hrm.late_with_min', ['min' => $att->late_minutes]) }}</span>
@@ -1764,7 +1764,7 @@
                             <div class="p-2.5 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/5 dark:border-white/5 space-y-0.5">
                                 <span class="text-[10px] uppercase font-bold text-black/50 dark:text-white/50 block">{{ __('hrm.th_clock_out') }}</span>
                                 <div class="font-bold text-black dark:text-white tabular-nums text-[12.5px]">
-                                    {{ $att->clock_out_at ? $att->clock_out_at->format('H:i') . ' WIB' : '-' }}
+                                    {{ \App\Support\TimezoneHelper::formatTime($att->clock_out_at, 'H:i', null, true) }}
                                 </div>
                                 <span class="text-[10.5px] text-black/50 dark:text-white/50 block">{{ __('hrm.th_duration') }}: {{ $att->formatted_work_duration }}</span>
                             </div>

@@ -621,7 +621,7 @@ function actionCenterApp() {
                 if (val.match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/)) {
                     try {
                         const d = new Date(val);
-                        return d.toLocaleDateString(locale, { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) + (window.COOCA_LOCALE === 'en' ? ' (UTC+7)' : ' WIB');
+                        return d.toLocaleDateString(locale, { timeZone: '{{ \App\Support\Context::timezone() }}', day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) + ' ' + (window.COOCA_TZ_ABBR || '{{ \App\Support\TimezoneHelper::abbreviation(\App\Support\Context::timezone()) }}');
                     } catch (e) {
                         return val;
                     }

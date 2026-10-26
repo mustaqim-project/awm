@@ -101,7 +101,7 @@
                         <div>
                             <span class="text-black/45 dark:text-white/45 block text-[11px] font-medium uppercase tracking-wider">{{ __('finance.transfer_time') }}</span>
                             <span class="text-[13px] font-bold text-black dark:text-white tabular-nums block mt-0.5">
-                                {{ $settlement->transferred_at ? $settlement->transferred_at->translatedFormat('d F Y, H:i') . ' WIB' : '-' }}
+                                @datetime($settlement->transferred_at, 'd F Y, H:i')
                             </span>
                         </div>
                         <div>

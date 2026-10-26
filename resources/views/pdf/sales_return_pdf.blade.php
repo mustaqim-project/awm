@@ -403,7 +403,7 @@
                     <tr>
                         <td class="ref-label-right">Tanggal Retur</td>
                         <td class="ref-sep">:</td>
-                        <td class="ref-val-right"><strong>{{ $return->return_date ? \Carbon\Carbon::parse($return->return_date)->locale('id')->translatedFormat('d F Y') : date('d F Y') }}</strong></td>
+                        <td class="ref-val-right"><strong>@date($return->return_date ?? now(), 'd F Y')</strong></td>
                     </tr>
                     <tr>
                         <td class="ref-label-right">Metode Kompensasi</td>

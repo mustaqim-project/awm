@@ -21,6 +21,8 @@
     <!-- Multi-Language i18n & l10n Dictionary Injection -->
     <script>
         window.COOCA_LOCALE = '{{ app()->getLocale() }}';
+        window.COOCA_TIMEZONE = '{{ \App\Support\Context::timezone() }}';
+        window.COOCA_TZ_ABBR = '{{ \App\Support\TimezoneHelper::abbreviation(\App\Support\Context::timezone()) }}';
         window.COOCA_I18N = {
             common: @json(__('common')),
             quick_actions: @json(__('quick_actions')),
@@ -84,6 +86,40 @@
             const loc = (window.COOCA_LOCALE === 'en') ? 'en-US' : 'id-ID';
             const formatted = num.toLocaleString(loc, { minimumFractionDigits: 0, maximumFractionDigits: 0 });
             return (currency === 'IDR' ? 'Rp ' : (currency + ' ')) + formatted;
+        };
+
+        // Universal Timezone-Aware DateTime Formatter for Client-Side Scripts
+        window.formatDateTime = function(dateInput, options = {}) {
+            if (!dateInput) return '-';
+            const d = new Date(dateInput);
+            if (isNaN(d.getTime())) return '-';
+            const loc = (window.COOCA_LOCALE === 'en') ? 'en-US' : 'id-ID';
+            const defaultOpts = {
+                timeZone: window.COOCA_TIMEZONE || 'Asia/Jakarta',
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            };
+            const withAbbr = options.withAbbr !== false;
+            const res = d.toLocaleDateString(loc, Object.assign({}, defaultOpts, options));
+            return withAbbr ? (res + ' ' + (window.COOCA_TZ_ABBR || 'WIB')) : res;
+        };
+
+        window.formatTimeOnly = function(dateInput, withAbbr = false) {
+            if (!dateInput) return '--:--';
+            const d = new Date(dateInput);
+            if (isNaN(d.getTime())) return '--:--';
+            const loc = (window.COOCA_LOCALE === 'en') ? 'en-US' : 'id-ID';
+            const res = d.toLocaleTimeString(loc, {
+                timeZone: window.COOCA_TIMEZONE || 'Asia/Jakarta',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            });
+            return withAbbr ? (res + ' ' + (window.COOCA_TZ_ABBR || 'WIB')) : res;
         };
 
         // Global Reactive Event Bus (CoocaBus)

@@ -27,6 +27,19 @@ class AppServiceProvider extends ServiceProvider
         \App\Domain\Mail\DynamicMailConfig::bootstrap();
         \Carbon\Carbon::setLocale('id');
 
+        // Standardized Global Blade Directives for DateTime & Timezone
+        \Illuminate\Support\Facades\Blade::directive('datetime', function ($expression) {
+            return "<?php echo \\App\\Support\\TimezoneHelper::formatLocal({$expression}); ?>";
+        });
+
+        \Illuminate\Support\Facades\Blade::directive('date', function ($expression) {
+            return "<?php echo \\App\\Support\\TimezoneHelper::formatDate({$expression}); ?>";
+        });
+
+        \Illuminate\Support\Facades\Blade::directive('time', function ($expression) {
+            return "<?php echo \\App\\Support\\TimezoneHelper::formatTime({$expression}); ?>";
+        });
+
         // Platform Admin RBAC Gate Integration
         \Illuminate\Support\Facades\Gate::before(function ($user, string $ability) {
             if ($user instanceof \App\Models\Admin) {

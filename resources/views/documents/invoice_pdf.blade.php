@@ -235,10 +235,10 @@
             <div class="meta-col text-right">
                 <h3>Informasi Faktur:</h3>
                 <p>Tanggal:
-                    {{ $invoice->invoice_date ? \Carbon\Carbon::parse($invoice->invoice_date)->format('d M Y') : date('d M Y') }}
+                    @date($invoice->invoice_date ?? now(), 'd M Y')
                 </p>
                 <p style="color: #64748b; font-size: 13px;">Jatuh Tempo:
-                    {{ $invoice->due_date ? \Carbon\Carbon::parse($invoice->due_date)->format('d M Y') : '-' }}</p>
+                    @date($invoice->due_date, 'd M Y')</p>
             </div>
         </div>
 

@@ -192,7 +192,7 @@
 
                                     <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-[8px] {{ $isExpired ? 'bg-[#FF3B30]/10 text-[#FF3B30] border border-[#FF3B30]/20' : 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20' }} text-[11.5px] font-semibold">
                                         <i data-lucide="clock" class="w-3.5 h-3.5"></i>
-                                        <span>{{ $isExpired ? 'Waktu Bayar Habis' : 'Batas: ' . $expiredAt->translatedFormat('H:i') . ' WIB' }}</span>
+                                        <span>{{ $isExpired ? 'Waktu Bayar Habis' : 'Batas: ' . \App\Support\TimezoneHelper::formatTime($expiredAt, 'H:i', null, true) }}</span>
                                     </div>
 
                                     <a href="{{ $payUrl }}"

@@ -182,7 +182,7 @@
                                     'issue_type_label' => $rec->getIssueTypeLabel(),
                                     'reason_description' => $rec->reason_description,
                                     'status' => $rec->status,
-                                    'created_at_human' => $rec->created_at->format('d M Y, H:i') . ' WIB',
+                                    'created_at_human' => \App\Support\TimezoneHelper::formatLocal($rec->created_at),
                                     'identity_url' => $rec->getIdentityCardUrl(),
                                     'business_url' => $rec->getBusinessProofUrl(),
                                     'selfie_url' => $rec->getSelfieProofUrl(),
@@ -196,9 +196,9 @@
                                     'admin_notes' => $rec->admin_notes,
                                     'rejection_reason' => $rec->rejection_reason,
                                     'approver_name' => $rec->approver?->name,
-                                    'approved_at_human' => $rec->approved_at?->format('d M Y, H:i') . ' WIB',
+                                    'approved_at_human' => \App\Support\TimezoneHelper::formatLocal($rec->approved_at),
                                     'rejector_name' => $rec->rejector?->name,
-                                    'rejected_at_human' => $rec->rejected_at?->format('d M Y, H:i') . ' WIB',
+                                    'rejected_at_human' => \App\Support\TimezoneHelper::formatLocal($rec->rejected_at),
                                     'ip_address' => $rec->ip_address ?? '-',
                                 ];
                             @endphp
@@ -330,7 +330,7 @@
                             'issue_type_label' => $rec->getIssueTypeLabel(),
                             'reason_description' => $rec->reason_description,
                             'status' => $rec->status,
-                            'created_at_human' => $rec->created_at->format('d M Y, H:i') . ' WIB',
+                            'created_at_human' => \App\Support\TimezoneHelper::formatLocal($rec->created_at),
                             'identity_url' => $rec->getIdentityCardUrl(),
                             'business_url' => $rec->getBusinessProofUrl(),
                             'selfie_url' => $rec->getSelfieProofUrl(),
@@ -341,9 +341,9 @@
                             'admin_notes' => $rec->admin_notes,
                             'rejection_reason' => $rec->rejection_reason,
                             'approver_name' => $rec->approver?->name,
-                            'approved_at_human' => $rec->approved_at?->format('d M Y, H:i') . ' WIB',
+                            'approved_at_human' => \App\Support\TimezoneHelper::formatLocal($rec->approved_at),
                             'rejector_name' => $rec->rejector?->name,
-                            'rejected_at_human' => $rec->rejected_at?->format('d M Y, H:i') . ' WIB',
+                            'rejected_at_human' => \App\Support\TimezoneHelper::formatLocal($rec->rejected_at),
                             'ip_address' => $rec->ip_address ?? '-',
                         ];
                     @endphp

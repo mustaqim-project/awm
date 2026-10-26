@@ -198,7 +198,7 @@
                 @if ($order->last_printed_at)
                     <div class="flex justify-between text-[9px] text-gray-600">
                         <span>{{ __('pos.reprint_time_label') }}</span>
-                        <span>{{ $order->last_printed_at->format('d/m/Y H:i') }}</span>
+                        <span>@datetime($order->last_printed_at, 'd/m/Y H:i')</span>
                     </div>
                 @endif
                 @if ($order->lastPrintedBy)
@@ -214,8 +214,8 @@
             </div>
             <div class="flex justify-between">
                 <span>{{ __('pos.date_label') }}</span>
-                <span class="tabular-nums">{{ $order->order_date->format('d/m/Y') }}
-                    {{ $order->created_at->format('H:i') }}</span>
+                <span class="tabular-nums">@date($order->order_date ?? $order->created_at, 'd/m/Y')
+                    @time($order->created_at, 'H:i')</span>
             </div>
             <div class="flex justify-between">
                 <span>{{ __('pos.cashier_label') }}</span>
@@ -297,7 +297,7 @@
             @if ($order->estimated_completion_at)
                 <div class="flex justify-between text-[10px]">
                     <span>{{ __('pos.est_completion_label') }}</span>
-                    <span class="tabular-nums">{{ $order->estimated_completion_at->format('d/m/Y H:i') }}</span>
+                    <span class="tabular-nums">@datetime($order->estimated_completion_at, 'd/m/Y H:i')</span>
                 </div>
             @endif
         </div>

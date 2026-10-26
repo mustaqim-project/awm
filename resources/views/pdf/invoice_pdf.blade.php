@@ -384,10 +384,10 @@
             </td>
             <td style="width: 42%; vertical-align: top; text-align: right;">
                 <div class="letter-date-box">
-                    Tanggal Faktur: <strong>{{ $invoice->invoice_date ? \Carbon\Carbon::parse($invoice->invoice_date)->locale('id')->translatedFormat('d F Y') : date('d F Y') }}</strong>
+                    Tanggal Faktur: <strong>@date($invoice->invoice_date ?? now(), 'd F Y')</strong>
                 </div>
                 <div style="font-size: 9px; color: #b91c1c; margin-top: 3px;">
-                    Jatuh Tempo: <strong>{{ $invoice->due_date ? \Carbon\Carbon::parse($invoice->due_date)->locale('id')->translatedFormat('d F Y') : 'Sesuai Ketentuan' }}</strong>
+                    Jatuh Tempo: <strong>{{ $invoice->due_date ? \App\Support\TimezoneHelper::formatDate($invoice->due_date, 'd F Y') : 'Sesuai Ketentuan' }}</strong>
                 </div>
                 @if($invoice->payment_terms)
                 <div style="font-size: 9px; color: #475569; margin-top: 2px;">

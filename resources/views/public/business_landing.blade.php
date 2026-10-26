@@ -3442,11 +3442,12 @@
     {{-- ANNOUNCEMENT MARQUEE (Apple Banner Style)                                  --}}
     {{-- ========================================================================= --}}
     @php
+        $tzAbbr = \App\Support\TimezoneHelper::abbreviation(\App\Support\TimezoneHelper::resolve($business));
         $announcementParts = array_filter([
             $storeSetting?->announcement_text,
             $landingPage->announcement_badge,
             $storeSetting?->cut_off_time
-                ? 'Batas pesanan masuk hari ini: ' . substr((string) $storeSetting->cut_off_time, 0, 5) . ' WIB'
+                ? 'Batas pesanan masuk hari ini: ' . substr((string) $storeSetting->cut_off_time, 0, 5) . ' ' . $tzAbbr
                 : null,
             ($storeSetting?->daily_order_quota ?? 0) > 0
                 ? 'Kuota harian terbatas: maks. ' . $storeSetting->daily_order_quota . ' order/hari'
@@ -4390,7 +4391,7 @@
                                                 class="text-[11px] text-black/50 dark:text-white/50 flex items-center gap-1">
                                                 <i data-lucide="clock" class="w-3 h-3 text-amber-500"></i>
                                                 <span>Batas pesan:
-                                                    {{ substr((string) $storeSetting->cut_off_time, 0, 5) }} WIB</span>
+                                                    {{ substr((string) $storeSetting->cut_off_time, 0, 5) }} {{ $tzAbbr ?? 'WIB' }}</span>
                                             </span>
                                         @endif
                                     </div>
@@ -7002,7 +7003,7 @@
                                                 <i data-lucide="clock" class="w-3 h-3 text-amber-500"></i>
                                                 <span>Batas pesanan masuk hari ini:
                                                     {{ substr((string) $storeSetting->cut_off_time, 0, 5) }}
-                                                    WIB.</span>
+                                                    {{ $tzAbbr ?? 'WIB' }}.</span>
                                             </p>
                                         @endif
                                     </div>

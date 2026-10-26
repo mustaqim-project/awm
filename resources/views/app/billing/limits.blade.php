@@ -93,10 +93,10 @@
                     </div>
                 </div>
                 <div
-                    class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 text-xs text-slate-500 dark:text-slate-400 flex items-center justify-between gap-2">
+                    class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 text-xs text-slate-500 dark:text-slate-400 flex items-center justify-between gap-2 flex-wrap">
                     <span class="shrink-0">{{ __('billing.pillar_license') }}</span>
                     <span
-                        class="font-bold text-emerald-600 dark:text-emerald-400 text-right truncate">{{ $usage['is_core'] ? __('billing.status_active') : __('billing.status_standard') }}</span>
+                        class="font-bold text-emerald-600 dark:text-emerald-400 text-right shrink-0">{{ $usage['is_core'] ? __('billing.status_active') : __('billing.status_standard') }}</span>
                 </div>
             </div>
 
@@ -121,10 +121,10 @@
                     </div>
                 </div>
                 <div
-                    class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 text-xs text-slate-500 dark:text-slate-400 flex items-center justify-between gap-2">
+                    class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 text-xs text-slate-500 dark:text-slate-400 flex items-center justify-between gap-2 flex-wrap">
                     <span class="shrink-0">{{ __('billing.pillar_renewal') }}</span>
                     <span
-                        class="font-bold text-slate-700 dark:text-slate-300 text-right truncate" title="{{ $usage['is_core'] ? __('billing.can_renew') : __('billing.available_upgrade') }}">{{ $usage['is_core'] ? __('billing.can_renew') : __('billing.available_upgrade') }}</span>
+                        class="font-bold text-slate-700 dark:text-slate-300 text-right shrink-0" title="{{ $usage['is_core'] ? __('billing.can_renew') : __('billing.available_upgrade') }}">{{ $usage['is_core'] ? __('billing.can_renew') : __('billing.available_upgrade') }}</span>
                 </div>
             </div>
 
@@ -151,10 +151,10 @@
                     </div>
                 </div>
                 <div
-                    class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 text-xs text-slate-500 dark:text-slate-400 flex items-center justify-between gap-2">
+                    class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 text-xs text-slate-500 dark:text-slate-400 flex items-center justify-between gap-2 flex-wrap">
                     <span class="shrink-0">{{ __('billing.reset_date_1') }}</span>
                     <span
-                        class="font-bold text-emerald-600 dark:text-emerald-400 text-right truncate">{{ $usage['is_core'] ? __('billing.no_quota') : ($pos['is_reached'] ?? false ? __('billing.limit_reached') : __('billing.available')) }}</span>
+                        class="font-bold text-emerald-600 dark:text-emerald-400 text-right shrink-0">{{ $usage['is_core'] ? __('billing.no_quota') : ($pos['is_reached'] ?? false ? __('billing.limit_reached') : __('billing.available')) }}</span>
                 </div>
             </div>
 
@@ -192,10 +192,10 @@
                     @endif
                 </div>
                 <div
-                    class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 text-xs text-slate-500 dark:text-slate-400 flex items-center justify-between gap-2">
+                    class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 text-xs text-slate-500 dark:text-slate-400 flex items-center justify-between gap-2 flex-wrap">
                     <span class="shrink-0">{{ __('billing.cloud_storage') }}</span>
                     <span
-                        class="font-bold text-slate-700 dark:text-slate-300 font-mono tabular-nums text-right truncate">{{ number_format($usage['storage']['used_mb'] ?? 0, 0) }}
+                        class="font-bold text-slate-700 dark:text-slate-300 font-mono tabular-nums text-right shrink-0">{{ number_format($usage['storage']['used_mb'] ?? 0, 0) }}
                         MB / {{ $usage['storage']['limit_gb'] ?? 1 }} GB</span>
                 </div>
             </div>
@@ -446,7 +446,7 @@
 
                 <!-- 3. Premium Plan (Highlighted / Populer) -->
                 <div class="bg-white dark:bg-slate-900 rounded-[20px] border-2 {{ $tier === 'premium' ? 'border-indigo-500 ring-2 ring-indigo-500/30' : 'border-indigo-500 dark:border-indigo-500' }} p-5 shadow-md flex flex-col justify-between relative group hover:border-indigo-600 transition-all">
-                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 bg-indigo-600 text-white text-[9px] font-bold uppercase tracking-wider rounded-full shadow-xs">
+                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 bg-indigo-600 text-white text-[9px] font-bold uppercase tracking-wider rounded-full shadow-xs whitespace-nowrap z-10">
                         {{ __('billing.popular') }}
                     </div>
                     <div class="space-y-3 mt-1">
@@ -2045,7 +2045,6 @@
                         {{ $tbl['limit'] ? __('billing.max_tables_format', ['limit' => $tbl['limit']]) : ($usage['is_core'] ? __('billing.unlimited_dinein_tables') : __('billing.paid_feature_standard_premium')) }}</div>
                 </div>
                 @endif
-            </div>
             </div>
         </section>
 

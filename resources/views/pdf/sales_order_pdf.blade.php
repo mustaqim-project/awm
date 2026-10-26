@@ -383,11 +383,11 @@
             </td>
             <td style="width: 42%; vertical-align: top; text-align: right;">
                 <div class="letter-date-box">
-                    {{ !empty($business->city) ? $business->city . ', ' : '' }}{{ $salesOrder->order_date ? \Carbon\Carbon::parse($salesOrder->order_date)->locale('id')->translatedFormat('d F Y') : date('d F Y') }}
+                    {{ !empty($business->city) ? $business->city . ', ' : '' }}@date($salesOrder->order_date ?? now(), 'd F Y')
                 </div>
                 @if($salesOrder->expected_delivery_date)
                 <div style="font-size: 9px; color: #475569; margin-top: 3px;">
-                    Estimasi Pengiriman: <strong>{{ \Carbon\Carbon::parse($salesOrder->expected_delivery_date)->locale('id')->translatedFormat('d F Y') }}</strong>
+                    Estimasi Pengiriman: <strong>@date($salesOrder->expected_delivery_date, 'd F Y')</strong>
                 </div>
                 @endif
             </td>

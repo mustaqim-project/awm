@@ -11,6 +11,10 @@
 
     <!-- Theme is applied before paint so the default light surface never flashes dark. -->
     <script>
+        window.COOCA_LOCALE = '{{ app()->getLocale() }}';
+        window.COOCA_TIMEZONE = 'Asia/Jakarta';
+        window.COOCA_TZ_ABBR = 'WIB';
+
         (() => {
             try {
                 const savedTheme = localStorage.getItem('cooca-admin-theme') || localStorage.getItem('cooca-theme') ||

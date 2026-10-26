@@ -298,11 +298,11 @@
                             </tr>
                             <tr>
                                 <td style="color: #64748b; font-weight: 600;">Tgl. Terbit:</td>
-                                <td style="color: #0f172a;">{{ ($payment->created_at ?? now())->timezone('Asia/Jakarta')->translatedFormat('d F Y') }}</td>
+                                <td style="color: #0f172a;">@date($payment->created_at ?? now(), 'd F Y')</td>
                             </tr>
                             <tr>
                                 <td style="color: #64748b; font-weight: 600;">Tgl. Lunas:</td>
-                                <td style="color: #059669; font-weight: 700;">{{ ($payment->approved_at ?? ($payment->updated_at ?? now()))->timezone('Asia/Jakarta')->translatedFormat('d F Y, H:i') }} WIB</td>
+                                <td style="color: #059669; font-weight: 700;">@datetime($payment->approved_at ?? ($payment->updated_at ?? now()), 'd F Y, H:i')</td>
                             </tr>
                         </table>
                     </div>
@@ -334,7 +334,7 @@
                             $sub = $payment->business?->subscription;
                         @endphp
                         @if($sub && $sub->ends_at)
-                            <br><span style="color: #059669; font-weight: 600;">Masa Aktif: s/d {{ $sub->ends_at->timezone('Asia/Jakarta')->translatedFormat('d F Y') }}</span>
+                            <br><span style="color: #059669; font-weight: 600;">Masa Aktif: s/d @date($sub->ends_at, 'd F Y')</span>
                         @endif
                     </div>
                 </td>
@@ -421,7 +421,7 @@
 
     <!-- Footer Note -->
     <div class="footer-note">
-        Dicetak otomatis pada {{ now()->timezone('Asia/Jakarta')->translatedFormat('d F Y H:i:s') }} WIB &bull; Cooca Engine Cloud SaaS &bull; Hubungi kami di support@cooca.id untuk informasi billing lebih lanjut.
+        Dicetak otomatis pada @datetime(now(), 'd F Y H:i:s') &bull; Cooca Engine Cloud SaaS &bull; Hubungi kami di support@cooca.id untuk informasi billing lebih lanjut.
     </div>
 
 </body>

@@ -529,7 +529,7 @@
                                 </div>
                                 <div class="flex items-center justify-between pt-2">
                                     <span class="text-black/50 dark:text-white/50">{{ __('pos.shift_start_time') }}</span>
-                                    <span class="tabular-nums font-medium text-black dark:text-white">{{ now()->format('d/m/Y H:i') }} WIB</span>
+                                    <span class="tabular-nums font-medium text-black dark:text-white">@datetime(now(), 'd/m/Y H:i')</span>
                                 </div>
                                 <div class="flex items-center justify-between pt-2">
                                     <span class="text-black/50 dark:text-white/50">{{ __('pos.system_status_label') }}</span>

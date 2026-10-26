@@ -591,9 +591,9 @@
                                                         'media_type' => $p->media_type,
                                                         'status' => $p->status,
                                                         'error_message' => $p->error_message,
-                                                        'created_at' => $p->created_at->format('d M Y, H:i') . ' WIB',
-                                                        'published_at' => $p->published_at?->format('d M Y, H:i') . ' WIB',
-                                                        'scheduled_at' => $p->scheduled_at?->format('d M Y, H:i') . ' WIB',
+                                                        'created_at' => \App\Support\TimezoneHelper::formatLocal($p->created_at),
+                                                        'published_at' => \App\Support\TimezoneHelper::formatLocal($p->published_at),
+                                                        'scheduled_at' => \App\Support\TimezoneHelper::formatLocal($p->scheduled_at),
                                                         'targets' => $p->targets->map(fn($t) => [
                                                             'channel' => $t->channel,
                                                             'status' => $t->status,

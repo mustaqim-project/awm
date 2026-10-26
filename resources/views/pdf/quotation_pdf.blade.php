@@ -376,11 +376,11 @@
             </td>
             <td style="width: 42%; vertical-align: top; text-align: right;">
                 <div class="letter-date-box">
-                    {{ !empty($business->city) ? $business->city . ', ' : '' }}{{ $quotation->date ? \Carbon\Carbon::parse($quotation->date)->locale('id')->translatedFormat('d F Y') : date('d F Y') }}
+                    {{ !empty($business->city) ? $business->city . ', ' : '' }}@date($quotation->date ?? now(), 'd F Y')
                 </div>
                 @if($quotation->expiry_date)
                 <div style="font-size: 9px; color: #475569; margin-top: 3px;">
-                    Masa Berlaku s/d: <strong>{{ \Carbon\Carbon::parse($quotation->expiry_date)->locale('id')->translatedFormat('d F Y') }}</strong>
+                    Masa Berlaku s/d: <strong>@date($quotation->expiry_date, 'd F Y')</strong>
                 </div>
                 @endif
             </td>
