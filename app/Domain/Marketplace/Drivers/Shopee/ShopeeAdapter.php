@@ -596,6 +596,168 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
     }
 
     /**
+     * Fetch category attributes from Shopee Open Platform.
+     */
+    public function getCategoryAttributes(MarketplaceAccount $account, int $categoryId): array
+    {
+        $cacheKey = "shopee_cat_attrs_{$account->id}_{$categoryId}";
+        return Cache::remember($cacheKey, 86400, function () use ($account, $categoryId) {
+            $timestamp   = time();
+            $path        = '/api/v2/product/get_attributes';
+            $accessToken = (string) $account->access_token;
+            $sign        = $this->generateSignature($path, $timestamp, $accessToken, (string) $account->shop_id);
+
+            $url = sprintf(
+                '%s%s?partner_id=%s&timestamp=%s&access_token=%s&shop_id=%s&sign=%s&category_id=%s&language=id',
+                $this->host,
+                $path,
+                $this->partnerId,
+                $timestamp,
+                $accessToken,
+                $account->shop_id,
+                $sign,
+                $categoryId
+            );
+
+            try {
+                $response = Http::timeout(20)->get($url);
+                $data     = $response->json() ?? [];
+                if ($response->successful() && empty($data['error']) && ! empty($data['response']['attribute_list'])) {
+                    return $data['response']['attribute_list'];
+                }
+
+                // Fallback without language
+                $urlNoLang = sprintf(
+                    '%s%s?partner_id=%s&timestamp=%s&access_token=%s&shop_id=%s&sign=%s&category_id=%s',
+                    $this->host,
+                    $path,
+                    $this->partnerId,
+                    $timestamp,
+                    $accessToken,
+                    $account->shop_id,
+                    $sign,
+                    $categoryId
+                );
+                $res2 = Http::timeout(20)->get($urlNoLang);
+                $d2   = $res2->json() ?? [];
+                if ($res2->successful() && empty($d2['error']) && ! empty($d2['response']['attribute_list'])) {
+                    return $d2['response']['attribute_list'];
+                }
+            } catch (\Throwable $e) {
+                Log::warning("Shopee get_attributes error: {$e->getMessage()}");
+            }
+
+            return [];
+        });
+    }
+
+    /**
+     * Resolve mandatory attributes for the selected category.
+     */
+    public function resolveCategoryAttributes(MarketplaceAccount $account, int $categoryId): array
+    {
+        $attributes        = $this->getCategoryAttributes($account, $categoryId);
+        $payloadAttributes = [];
+
+        foreach ($attributes as $attr) {
+            if (empty($attr['is_mandatory'])) {
+                continue;
+            }
+
+            $attrId              = (int) $attr['attribute_id'];
+            $inputValidationType = $attr['input_validation_type'] ?? '';
+            $valueList           = $attr['attribute_value_list'] ?? [];
+
+            // Case A: Predefined options available in Shopee
+            if (! empty($valueList) && is_array($valueList)) {
+                $firstVal = $valueList[0];
+                $valObj   = [
+                    'value_id' => (int) ($firstVal['value_id'] ?? 0),
+                ];
+                if (! empty($firstVal['original_value_name'])) {
+                    $valObj['original_value_name'] = $firstVal['original_value_name'];
+                }
+                if (! empty($firstVal['value_unit'])) {
+                    $valObj['value_unit'] = $firstVal['value_unit'];
+                }
+                $payloadAttributes[] = [
+                    'attribute_id'         => $attrId,
+                    'attribute_value_list' => [$valObj],
+                ];
+                continue;
+            }
+
+            // Case B: DATE_TYPE (e.g. Expiry Date)
+            if ($inputValidationType === 'DATE_TYPE' || str_contains(strtolower($attr['original_attribute_name'] ?? ''), 'date')) {
+                $futureTimestamp = strtotime('+1 year');
+                $payloadAttributes[] = [
+                    'attribute_id'         => $attrId,
+                    'attribute_value_list' => [
+                        [
+                            'value_id'            => 0,
+                            'original_value_name' => (string) $futureTimestamp,
+                        ],
+                    ],
+                ];
+                continue;
+            }
+
+            // Case C: INT_TYPE (e.g. Shelf Life)
+            if ($inputValidationType === 'INT_TYPE') {
+                $payloadAttributes[] = [
+                    'attribute_id'         => $attrId,
+                    'attribute_value_list' => [
+                        [
+                            'value_id'            => 0,
+                            'original_value_name' => '12',
+                            'value_unit'          => 'month',
+                        ],
+                    ],
+                ];
+                continue;
+            }
+
+            // Case D: Fallback string value
+            $payloadAttributes[] = [
+                'attribute_id'         => $attrId,
+                'attribute_value_list' => [
+                    [
+                        'value_id'            => 0,
+                        'original_value_name' => '12 Bulan',
+                    ],
+                ],
+            ];
+        }
+
+        // Hardcoded safety fallback for food categories if get_attributes returned empty
+        if (empty($payloadAttributes)) {
+            $payloadAttributes = [
+                [
+                    'attribute_id'         => 200010, // Shelf Life
+                    'attribute_value_list' => [
+                        [
+                            'value_id'            => 0,
+                            'original_value_name' => '12',
+                            'value_unit'          => 'month',
+                        ],
+                    ],
+                ],
+                [
+                    'attribute_id'         => 200061, // Expiry Date
+                    'attribute_value_list' => [
+                        [
+                            'value_id'            => 0,
+                            'original_value_name' => (string) strtotime('+1 year'),
+                        ],
+                    ],
+                ],
+            ];
+        }
+
+        return $payloadAttributes;
+    }
+
+    /**
      * Upload / publish a new product listing from COOCA to Shopee.
      */
     public function publishProduct(MarketplaceAccount $account, \App\Models\Product $product, array $options = []): array
@@ -765,6 +927,12 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
         }
         if (! empty($logisticsList)) {
             $payload['logistic_info'] = $logisticsList;
+        }
+
+        // Attach mandatory attributes
+        $attributes = $this->resolveCategoryAttributes($account, $resolvedCatId);
+        if (! empty($attributes)) {
+            $payload['attribute_list'] = $attributes;
         }
 
         try {
