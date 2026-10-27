@@ -961,6 +961,7 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         Route::prefix('storefront')->name('storefront.')->middleware(['module:storefront_checkout', 'require.permission:storefront.orders.view'])->group(function (): void {
             Route::get('/orders', [MerchantOrderController::class, 'index'])->name('orders.index');
             Route::get('/orders/export-dispatch', [MerchantOrderController::class, 'exportDispatch'])->name('orders.export-dispatch');
+            Route::match(['get', 'post'], '/orders/mass-shipping-label', [MerchantOrderController::class, 'massShippingLabel'])->name('orders.mass_shipping_label');
             Route::get('/orders/{order}', [MerchantOrderController::class, 'show'])->name('orders.show');
             Route::get('/orders/{order}/shipping-label', [MerchantOrderController::class, 'shippingLabel'])->name('orders.shipping_label');
             Route::post('/orders/{order}/waybill', [MerchantOrderController::class, 'updateWaybill'])->middleware('require.permission:storefront.orders.process')->name('orders.waybill.update');

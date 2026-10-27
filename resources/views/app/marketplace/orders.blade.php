@@ -228,6 +228,64 @@
 
     <x-module-tabs module="marketplace" />
 
+    {{-- OMNICHANNEL CHANNEL SWITCHER (SATUKAN SEMUA PESANAN DALAM 1 TEMPAT) --}}
+    <div class="p-3 sm:p-4 rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.04)] flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <div class="flex items-center gap-2.5 min-w-0">
+            <div class="w-9 h-9 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0">
+                <i data-lucide="layers" class="w-4 h-4"></i>
+            </div>
+            <div class="min-w-0">
+                <div class="flex items-center gap-2">
+                    <h2 class="text-[13.5px] font-bold text-black dark:text-white leading-tight">Hub Pesanan Omnichannel</h2>
+                    <span class="px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/20">
+                        Semua Saluran
+                    </span>
+                </div>
+                <p class="text-[11.5px] text-black/50 dark:text-white/50 truncate">
+                    Pusat kendali & cetak label resi lintas Toko Online COOCA, Shopee, TikTok Shop, dan Tokopedia
+                </p>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5 shrink-0">
+            {{-- 1. Toko Online COOCA --}}
+            <a href="{{ route('storefront.orders.index') }}"
+                class="h-9 px-3.5 rounded-[11px] text-[12.5px] font-semibold transition-all flex items-center gap-1.5 shrink-0 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-black/75 dark:text-white/75 hover:text-black dark:hover:text-white">
+                <i data-lucide="store" class="w-3.5 h-3.5 text-[#007AFF]"></i>
+                <span>Toko Online COOCA</span>
+            </a>
+
+            {{-- 2. Semua Marketplace Hub --}}
+            <a href="{{ route('marketplace-hub.orders') }}"
+                class="h-9 px-3.5 rounded-[11px] text-[12.5px] font-bold transition-all flex items-center gap-1.5 shrink-0 {{ empty(request('channel')) ? 'bg-[#007AFF] text-white shadow-xs' : 'bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-black/75 dark:text-white/75 hover:text-black dark:hover:text-white' }}">
+                <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
+                <span>Semua Marketplace</span>
+                <span class="ml-0.5 px-1.5 py-0.2 rounded-full text-[10.5px] {{ empty(request('channel')) ? 'bg-white/20' : 'bg-black/10 dark:bg-white/10' }} font-extrabold">{{ $orders->total() }}</span>
+            </a>
+
+            {{-- 3. Shopee --}}
+            <a href="{{ route('marketplace-hub.orders', ['channel' => 'shopee']) }}"
+                class="h-9 px-3 rounded-[11px] text-[12px] font-bold transition-all flex items-center gap-1.5 shrink-0 {{ request('channel') === 'shopee' ? 'bg-[#EE4D2D] text-white shadow-xs' : 'bg-[#EE4D2D]/10 hover:bg-[#EE4D2D]/15 text-[#EE4D2D]' }}">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6h-2c0-2.76-2.24-5-5-5S7 3.24 7 6H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-7-3c1.66 0 3 1.34 3 3H9c0-1.66 1.34-3 3-3zm7 17H5V8h14v12z"/></svg>
+                <span>Shopee</span>
+            </a>
+
+            {{-- 4. TikTok Shop --}}
+            <a href="{{ route('marketplace-hub.orders', ['channel' => 'tiktok_shop']) }}"
+                class="h-9 px-3 rounded-[11px] text-[12px] font-bold transition-all flex items-center gap-1.5 shrink-0 {{ request('channel') === 'tiktok_shop' || request('channel') === 'tiktok' ? 'bg-black dark:bg-white text-white dark:text-black shadow-xs' : 'bg-black/5 hover:bg-black/10 dark:bg-white/10 text-black dark:text-white' }}">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.29 0 .58.04.86.12V9.42a6.34 6.34 0 0 0-.86-.06 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 10.79 4.48 6.31 6.31 0 0 0 1.9-4.48V8.9a8.18 8.18 0 0 0 4.76 1.52v-3.4a4.85 4.85 0 0 1-1-.33z"/></svg>
+                <span>TikTok Shop</span>
+            </a>
+
+            {{-- 5. Tokopedia --}}
+            <a href="{{ route('marketplace-hub.orders', ['channel' => 'tokopedia']) }}"
+                class="h-9 px-3 rounded-[11px] text-[12px] font-bold transition-all flex items-center gap-1.5 shrink-0 {{ request('channel') === 'tokopedia' ? 'bg-[#03AC0E] text-white shadow-xs' : 'bg-[#03AC0E]/10 hover:bg-[#03AC0E]/15 text-[#03AC0E]' }}">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm4 0h-2v-6h2v6zm-2-8c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg>
+                <span>Tokopedia</span>
+            </a>
+        </div>
+    </div>
+
     <!-- ===================================================== -->
     <!-- 2. CHANNEL & STATUS FILTER BAR                        -->
     <!-- ===================================================== -->

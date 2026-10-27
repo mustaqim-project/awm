@@ -1,10 +1,27 @@
+@php
+    $labelItems = isset($labels) ? $labels : [
+        [
+            'order'            => $order,
+            'waybillNumber'    => $waybillNumber,
+            'barcodeSvg'       => $barcodeSvg,
+            'qrSvg'            => $qrSvg,
+            'trackingUrl'      => $trackingUrl ?? null,
+            'totalWeightKg'    => $totalWeightKg ?? '1.00',
+            'totalWeightGrams' => $totalWeightGrams ?? 1000,
+        ]
+    ];
+    $firstOrder = $labelItems[0]['order'];
+    $pageTitle = count($labelItems) > 1 
+        ? ('Cetak ' . count($labelItems) . ' Label Resi Pengiriman - ' . ($business->name ?? 'COOCA'))
+        : ('Label Pengiriman #' . $firstOrder->order_number . ' - ' . ($business->name ?? 'COOCA'));
+@endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ __('storefront.backoffice.shipping_label.page_title', ['waybill' => $waybillNumber, 'order' => $order->order_number]) }}</title>
+    <title>{{ $pageTitle }}</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,12 +52,18 @@
             min-height: 148mm;
             background-color: #ffffff;
             margin: 20px auto;
-            padding: 6mm;
+            padding: 5mm;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05);
             border-radius: 8px;
             color: #000000;
             box-sizing: border-box;
             border: 2px solid #000000;
+            page-break-after: always;
+            page-break-inside: avoid;
+        }
+
+        .shipping-label-container:last-child {
+            page-break-after: auto;
         }
 
         /* A4 print mode switch */
@@ -74,6 +97,14 @@
             object-fit: contain;
         }
 
+        .cooca-logo-img {
+            height: 7.5mm;
+            width: auto;
+            max-width: 28mm;
+            object-fit: contain;
+            display: block;
+        }
+
         @media print {
             body {
                 background-color: #ffffff !important;
@@ -96,12 +127,27 @@
                 border: 2px solid #000000 !important;
                 border-radius: 0 !important;
                 page-break-inside: avoid;
+                page-break-after: always;
+            }
+
+            .shipping-label-container:last-child {
+                page-break-after: auto;
             }
 
             .shipping-label-container.format-a4 {
                 max-width: 140mm !important;
                 min-height: 200mm !important;
                 padding: 6mm !important;
+            }
+
+            .cooca-storefront-badge {
+                background-color: #000000 !important;
+                color: #ffffff !important;
+                border: 1px solid #000000 !important;
+            }
+
+            .cooca-logo-img {
+                filter: contrast(160%) brightness(85%);
             }
 
             .qr-box {
@@ -135,8 +181,8 @@
 <body class="p-3 sm:p-6 min-h-screen">
 
     <!-- FLOATING ACTION TOOLBAR (Hidden on Print) -->
-    <div class="no-print max-w-[100mm] mx-auto mb-4 p-3 rounded-[16px] backdrop-blur-md bg-white/90 dark:bg-[#1C1C1E]/90 border border-black/10 dark:border-white/10 shadow-lg flex items-center justify-between gap-2">
-        <a href="{{ route('storefront.orders.show', $order) }}"
+    <div class="no-print max-w-[100mm] mx-auto mb-4 p-3 rounded-[16px] backdrop-blur-md bg-white/95 dark:bg-[#1C1C1E]/95 border border-black/10 dark:border-white/10 shadow-lg flex items-center justify-between gap-2">
+        <a href="{{ count($labelItems) > 1 ? route('storefront.orders.index') : route('storefront.orders.show', $firstOrder) }}"
             class="h-9 px-3.5 rounded-[10px] bg-black/5 hover:bg-black/10 dark:bg-white/10 text-black dark:text-white text-[12.5px] font-semibold transition flex items-center gap-1.5">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
@@ -144,7 +190,13 @@
             <span>{{ __('storefront.backoffice.shipping_label.back_button') }}</span>
         </a>
 
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-1.5">
+            @if(count($labelItems) > 1)
+                <span class="text-[11.5px] font-bold text-gray-700 dark:text-gray-300 px-2 py-1 bg-black/5 dark:bg-white/10 rounded-[8px]">
+                    {{ count($labelItems) }} Label
+                </span>
+            @endif
+
             <button type="button" onclick="toggleFormat()" id="formatBtn"
                 class="h-9 px-3 rounded-[10px] bg-black/5 hover:bg-black/10 text-black dark:text-white text-[12px] font-medium transition">
                 {{ __('storefront.backoffice.shipping_label.format_thermal') }}
@@ -160,178 +212,209 @@
         </div>
     </div>
 
-    <!-- 100x150 MM THERMAL SHIPPING LABEL -->
-    <div class="shipping-label-container text-black" id="labelCard">
+    @foreach ($labelItems as $idx => $item)
+        @php
+            $order = $item['order'];
+            $waybillNumber = $item['waybillNumber'];
+            $barcodeSvg = $item['barcodeSvg'];
+            $qrSvg = $item['qrSvg'];
+            $totalWeightKg = $item['totalWeightKg'];
+        @endphp
 
-        {{-- 1. COURIER HEADER & PAYMENT TYPE --}}
-        <div class="border-b-2 border-black pb-2 mb-2 flex items-center justify-between">
-            <div class="flex items-center gap-2">
-                <div class="px-2.5 py-1 bg-black text-white font-black text-[15px] tracking-wider rounded uppercase">
-                    {{ $order->shipping_courier_code ? strtoupper($order->shipping_courier_code) : __('storefront.backoffice.shipping_label.default_courier') }}
+        <!-- 100x150 MM THERMAL SHIPPING LABEL -->
+        <div class="shipping-label-container text-black" id="labelCard-{{ $idx }}">
+
+            {{-- 1. HEADER: COOCA OFFICIAL BRANDING + COURIER + PAYMENT TYPE --}}
+            <div class="border-b-2 border-black pb-2 mb-2 flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                    <div class="h-8 flex items-center">
+                        <img src="{{ asset('assets/image/cooca-logo-landscape.png') }}" alt="COOCA" class="cooca-logo-img" />
+                    </div>
+                    <div class="border-l-2 border-black pl-2 flex flex-col justify-center">
+                        <span class="inline-block px-1.5 py-0.5 rounded text-[9.5px] font-black uppercase tracking-wider bg-[#007AFF] text-white cooca-storefront-badge">
+                            STOREFRONT
+                        </span>
+                        <span class="text-[8px] font-extrabold uppercase tracking-wide text-gray-700 leading-none mt-0.5">
+                            Toko Online Resmi
+                        </span>
+                    </div>
+                </div>
+
+                <div class="text-right flex flex-col items-end">
+                    <div class="flex items-center gap-1.5">
+                        <div class="px-2 py-0.5 bg-black text-white font-black text-[13px] tracking-wider rounded uppercase">
+                            {{ $order->shipping_courier_code ? strtoupper($order->shipping_courier_code) : __('storefront.backoffice.shipping_label.default_courier') }}
+                        </div>
+                        @if ($order->isCod())
+                            <span class="px-2 py-0.5 bg-black text-white font-black text-[11px] tracking-wide rounded">
+                                {{ __('storefront.backoffice.shipping_label.cod_label', ['amount' => number_format((float) $order->total_amount, 0, ',', '.')]) }}
+                            </span>
+                        @else
+                            <span class="px-2 py-0.5 border-2 border-black font-extrabold text-[10.5px] uppercase tracking-wider rounded">
+                                {{ __('storefront.backoffice.shipping_label.non_cod') }}
+                            </span>
+                        @endif
+                    </div>
+                    <span class="text-[9px] font-bold text-gray-800 uppercase mt-0.5">
+                        {{ $order->shipping_courier_service ?: 'REGULER' }} &bull; {{ $order->shipping_courier_name ?: __('storefront.backoffice.shipping_label.standard_logistics') }}
+                    </span>
+                </div>
+            </div>
+
+            {{-- 2. BARCODE & WAYBILL ID --}}
+            <div class="text-center py-1.5 border-b-2 border-black">
+                <div class="max-w-[85mm] mx-auto my-1">
+                    {!! $barcodeSvg !!}
+                </div>
+                <div class="mono font-black text-[16px] tracking-widest mt-1">
+                    {{ $waybillNumber }}
+                </div>
+                <div class="text-[10.5px] font-semibold text-gray-600 mt-0.5">
+                    {{ __('storefront.backoffice.shipping_label.order_number_label') }}: <span class="mono font-bold text-black">#{{ $order->order_number }}</span> &bull; {{ $order->created_at->translatedFormat('d/m/Y H:i') }}
+                </div>
+            </div>
+
+            {{-- 3. ROUTE / POSTAL CODE STRIP --}}
+            <div class="grid grid-cols-2 border-b-2 border-black py-1.5 bg-gray-100 text-center text-[11px] font-bold">
+                <div class="border-r border-black">
+                    {{ __('storefront.backoffice.shipping_label.origin') }}: <span class="mono font-extrabold">{{ $storeSetting->origin_postal_code ?: '-' }}</span>
                 </div>
                 <div>
-                    <span class="font-extrabold text-[13px] block leading-tight uppercase">
-                        {{ $order->shipping_courier_service ?: 'REGULER' }}
-                    </span>
-                    <span class="text-[10px] text-gray-700 block leading-none font-medium">
-                        {{ $order->shipping_courier_name ?: __('storefront.backoffice.shipping_label.standard_logistics') }}
-                    </span>
+                    {{ __('storefront.backoffice.shipping_label.destination') }}: <span class="mono font-extrabold text-[13px] bg-black text-white px-2 py-0.5 rounded">{{ $order->destination_postal_code ?: '-' }}</span>
                 </div>
             </div>
 
-            <div class="text-right">
-                @if ($order->isCod())
-                    <span class="px-2.5 py-1 bg-black text-white font-black text-[13px] tracking-wide rounded block">
-                        {{ __('storefront.backoffice.shipping_label.cod_label', ['amount' => number_format((float) $order->total_amount, 0, ',', '.')]) }}
-                    </span>
-                @else
-                    <span class="px-2.5 py-0.5 border-2 border-black font-extrabold text-[11px] uppercase tracking-wider rounded inline-block">
-                        {{ __('storefront.backoffice.shipping_label.non_cod') }}
-                    </span>
-                    <span class="text-[9.5px] text-gray-600 block mt-0.5">{{ __('storefront.backoffice.shipping_label.shipping_paid') }}</span>
-                @endif
-            </div>
-        </div>
-
-        {{-- 2. BARCODE & WAYBILL ID --}}
-        <div class="text-center py-1.5 border-b-2 border-black">
-            <div class="max-w-[85mm] mx-auto my-1">
-                {!! $barcodeSvg !!}
-            </div>
-            <div class="mono font-black text-[16px] tracking-widest mt-1">
-                {{ $waybillNumber }}
-            </div>
-            <div class="text-[10.5px] font-semibold text-gray-600 mt-0.5">
-                {{ __('storefront.backoffice.shipping_label.order_number_label') }}: <span class="mono font-bold text-black">#{{ $order->order_number }}</span> &bull; {{ $order->created_at->translatedFormat('d/m/Y H:i') }}
-            </div>
-        </div>
-
-        {{-- 3. ROUTE / POSTAL CODE STRIP --}}
-        <div class="grid grid-cols-2 border-b-2 border-black py-1.5 bg-gray-100 text-center text-[11px] font-bold">
-            <div class="border-r border-black">
-                {{ __('storefront.backoffice.shipping_label.origin') }}: <span class="mono font-extrabold">{{ $storeSetting->origin_postal_code ?: '-' }}</span>
-            </div>
-            <div>
-                {{ __('storefront.backoffice.shipping_label.destination') }}: <span class="mono font-extrabold text-[13px] bg-black text-white px-2 py-0.5 rounded">{{ $order->destination_postal_code ?: '-' }}</span>
-            </div>
-        </div>
-
-        {{-- 4. RECIPIENT & SENDER ADDRESS BOXES --}}
-        <div class="grid grid-cols-1 divide-y-2 divide-black border-b-2 border-black">
-            {{-- PENERIMA (KEPADA) --}}
-            <div class="p-2">
-                <div class="flex items-center justify-between mb-1">
-                    <span class="text-[10px] font-black uppercase tracking-wider bg-black text-white px-1.5 py-0.5 rounded">
-                        {{ __('storefront.backoffice.shipping_label.recipient_to') }}:
-                    </span>
-                    <span class="mono font-extrabold text-[13px]">
-                        {{ $order->customer_phone }}
-                    </span>
-                </div>
-                <div class="font-black text-[14.5px] leading-tight mb-1">
-                    {{ $order->customer_name }}
-                </div>
-                <p class="text-[11px] leading-snug font-medium text-gray-900">
-                    {{ $order->shipping_address }}
-                </p>
-                @if ($order->destination_postal_code)
-                    <div class="mt-1 text-[11px] font-bold">
-                        {{ __('storefront.backoffice.shipping_label.postal_code_label') }}: <span class="mono text-[12px] underline">{{ $order->destination_postal_code }}</span>
+            {{-- 4. RECIPIENT & SENDER ADDRESS BOXES --}}
+            <div class="grid grid-cols-1 divide-y-2 divide-black border-b-2 border-black">
+                {{-- PENERIMA (KEPADA) --}}
+                <div class="p-2">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-[10px] font-black uppercase tracking-wider bg-black text-white px-1.5 py-0.5 rounded">
+                            {{ __('storefront.backoffice.shipping_label.recipient_to') }}:
+                        </span>
+                        <span class="mono font-extrabold text-[13px]">
+                            {{ $order->customer_phone }}
+                        </span>
                     </div>
-                @endif
-                @if ($order->notes)
-                    <div class="mt-1 p-1 bg-gray-100 rounded text-[10px] italic font-semibold border border-gray-300">
-                        {{ __('storefront.backoffice.shipping_label.notes_label') }}: "{{ $order->notes }}"
+                    <div class="font-black text-[14.5px] leading-tight mb-1">
+                        {{ $order->customer_name }}
                     </div>
-                @endif
-            </div>
-
-            {{-- PENGIRIM (DARI) --}}
-            <div class="p-2 bg-gray-50/50">
-                <div class="flex items-center justify-between mb-1">
-                    <span class="text-[9.5px] font-bold uppercase tracking-wider text-gray-700">
-                        {{ __('storefront.backoffice.shipping_label.sender_from') }}:
-                    </span>
-                    <span class="mono text-[11px] font-bold">
-                        {{ $storeSetting->origin_contact_phone ?: ($business->phone ?: '-') }}
-                    </span>
-                </div>
-                <div class="font-bold text-[12.5px] leading-tight">
-                    {{ $business->name }}
-                    @if ($storeSetting && $storeSetting->origin_contact_name && $storeSetting->origin_contact_name !== $business->name)
-                        <span class="text-[10.5px] font-normal text-gray-600">({{ $storeSetting->origin_contact_name }})</span>
+                    <p class="text-[11px] leading-snug font-medium text-gray-900">
+                        {{ $order->shipping_address }}
+                    </p>
+                    @if ($order->destination_postal_code)
+                        <div class="mt-1 text-[11px] font-bold">
+                            {{ __('storefront.backoffice.shipping_label.postal_code_label') }}: <span class="mono text-[12px] underline">{{ $order->destination_postal_code }}</span>
+                        </div>
+                    @endif
+                    @if ($order->notes)
+                        <div class="mt-1 p-1 bg-gray-100 rounded text-[10px] italic font-semibold border border-gray-300">
+                            {{ __('storefront.backoffice.shipping_label.notes_label') }}: "{{ $order->notes }}"
+                        </div>
                     @endif
                 </div>
-                <p class="text-[10.5px] leading-snug text-gray-700 mt-0.5">
-                    {{ $storeSetting->origin_address ?: ($business->address ?: __('storefront.backoffice.shipping_label.store_address_fallback')) }}
-                </p>
-            </div>
-        </div>
 
-        {{-- 5. PACKAGE DETAILS & FRAGILE NOTICE --}}
-        <div class="grid grid-cols-3 border-b-2 border-black py-1.5 px-2 text-[10.5px] font-bold items-center">
-            <div>
-                {{ __('storefront.backoffice.shipping_label.weight_label') }}: <span class="font-extrabold text-[12px]">{{ $totalWeightKg }} kg</span>
-            </div>
-            <div class="text-center">
-                {{ __('storefront.backoffice.shipping_label.contents_label') }}: <span class="font-extrabold">{{ $order->items->sum('quantity') }} pcs</span>
-            </div>
-            <div class="text-right">
-                <span class="px-2 py-0.5 border border-black rounded text-[9.5px] font-black uppercase bg-white">
-                    {{ __('storefront.backoffice.shipping_label.fragile') }}
-                </span>
-            </div>
-        </div>
-
-        {{-- 6. PACKING ITEM BREAKDOWN --}}
-        <div class="p-2 border-b-2 border-black text-[10px]">
-            <div class="font-bold uppercase tracking-wider text-gray-700 mb-1 flex items-center justify-between">
-                <span>{{ __('storefront.backoffice.shipping_label.packing_slip_title') }}:</span>
-                <span>{{ __('storefront.backoffice.shipping_label.qty') }}</span>
-            </div>
-            <div class="divide-y divide-gray-200">
-                @foreach ($order->items as $item)
-                    <div class="py-1 flex items-start justify-between gap-2">
-                        <div class="leading-tight">
-                            <span class="font-bold text-black">{{ $item->product_name }}</span>
-                            @if ($item->notes)
-                                <span class="text-gray-500 block text-[9px]">{{ __('storefront.backoffice.shipping_label.notes_label') }}: {{ $item->notes }}</span>
-                            @endif
-                        </div>
-                        <div class="mono font-black text-[11px] text-right shrink-0">
-                            {{ (float) $item->quantity }}x
-                        </div>
+                {{-- PENGIRIM (DARI) --}}
+                <div class="p-2 bg-gray-50/50">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-[9.5px] font-bold uppercase tracking-wider text-gray-700">
+                            {{ __('storefront.backoffice.shipping_label.sender_from') }}:
+                        </span>
+                        <span class="mono text-[11px] font-bold">
+                            {{ $storeSetting->origin_contact_phone ?: ($business->phone ?: '-') }}
+                        </span>
                     </div>
-                @endforeach
+                    <div class="font-bold text-[12.5px] leading-tight">
+                        {{ $business->name }}
+                        @if ($storeSetting && $storeSetting->origin_contact_name && $storeSetting->origin_contact_name !== $business->name)
+                            <span class="text-[10.5px] font-normal text-gray-600">({{ $storeSetting->origin_contact_name }})</span>
+                        @endif
+                    </div>
+                    <p class="text-[10.5px] leading-snug text-gray-700 mt-0.5">
+                        {{ $storeSetting->origin_address ?: ($business->address ?: __('storefront.backoffice.shipping_label.store_address_fallback')) }}
+                    </p>
+                </div>
             </div>
-        </div>
 
-        {{-- 7. QR CODE & FOOTER --}}
-        <div class="p-2 flex items-center justify-between gap-3">
-            <div class="text-[9.5px] text-gray-600 leading-snug flex-1">
-                <p class="font-bold text-black mb-0.5">{{ __('storefront.backoffice.shipping_label.scan_qr_title') }}</p>
-                <p>{{ __('storefront.backoffice.shipping_label.scan_qr_desc') }}</p>
-                <p class="mono text-[8.5px] text-gray-400 mt-1">{{ __('storefront.backoffice.shipping_label.printed_from') }}</p>
+            {{-- 5. PACKAGE DETAILS & FRAGILE NOTICE --}}
+            <div class="grid grid-cols-3 border-b-2 border-black py-1.5 px-2 text-[10.5px] font-bold items-center">
+                <div>
+                    {{ __('storefront.backoffice.shipping_label.weight_label') }}: <span class="font-extrabold text-[12px]">{{ $totalWeightKg }} kg</span>
+                </div>
+                <div class="text-center">
+                    {{ __('storefront.backoffice.shipping_label.contents_label') }}: <span class="font-extrabold">{{ $order->items->sum('quantity') }} pcs</span>
+                </div>
+                <div class="text-right">
+                    <span class="px-2 py-0.5 border border-black rounded text-[9.5px] font-black uppercase bg-white">
+                        {{ __('storefront.backoffice.shipping_label.fragile') }}
+                    </span>
+                </div>
             </div>
-            <div class="qr-box w-[22mm] h-[22mm] shrink-0 border-[1.5px] border-black p-1 bg-white flex items-center justify-center overflow-hidden [&>svg]:w-full [&>svg]:h-full [&>svg]:max-w-full [&>svg]:max-h-full [&>svg]:block">
-                {!! $qrSvg !!}
-            </div>
-        </div>
 
-    </div>
+            {{-- 6. PACKING ITEM BREAKDOWN --}}
+            <div class="p-2 border-b-2 border-black text-[10px]">
+                <div class="font-bold uppercase tracking-wider text-gray-700 mb-1 flex items-center justify-between">
+                    <span>{{ __('storefront.backoffice.shipping_label.packing_slip_title') }}:</span>
+                    <span>{{ __('storefront.backoffice.shipping_label.qty') }}</span>
+                </div>
+                <div class="divide-y divide-gray-200">
+                    @foreach ($order->items as $item)
+                        <div class="py-1 flex items-start justify-between gap-2">
+                            <div class="leading-tight">
+                                <span class="font-bold text-black">{{ $item->product_name }}</span>
+                                @if ($item->notes)
+                                    <span class="text-gray-500 block text-[9px]">{{ __('storefront.backoffice.shipping_label.notes_label') }}: {{ $item->notes }}</span>
+                                @endif
+                            </div>
+                            <div class="mono font-black text-[11px] text-right shrink-0">
+                                {{ (float) $item->quantity }}x
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+            {{-- 7. QR CODE & FOOTER --}}
+            <div class="p-2 flex items-center justify-between gap-3">
+                <div class="text-[9.5px] text-gray-600 leading-snug flex-1">
+                    <p class="font-bold text-black mb-0.5">{{ __('storefront.backoffice.shipping_label.scan_qr_title') }}</p>
+                    <p>{{ __('storefront.backoffice.shipping_label.scan_qr_desc') }}</p>
+                    <p class="mono text-[8.5px] text-gray-400 mt-1">{{ __('storefront.backoffice.shipping_label.printed_from') }}</p>
+                </div>
+                <div class="qr-box w-[22mm] h-[22mm] shrink-0 border-[1.5px] border-black p-1 bg-white flex items-center justify-center overflow-hidden [&>svg]:w-full [&>svg]:h-full [&>svg]:max-w-full [&>svg]:max-h-full [&>svg]:block">
+                    {!! $qrSvg !!}
+                </div>
+            </div>
+
+        </div>
+    @endforeach
 
     <script>
         function toggleFormat() {
-            const card = document.getElementById('labelCard');
+            const cards = document.querySelectorAll('.shipping-label-container');
             const btn = document.getElementById('formatBtn');
-            if (card.classList.contains('format-a4')) {
-                card.classList.remove('format-a4');
-                btn.innerText = '{{ __('storefront.backoffice.shipping_label.format_thermal') }}';
-            } else {
-                card.classList.add('format-a4');
-                btn.innerText = '{{ __('storefront.backoffice.shipping_label.format_a4') }}';
+            const isCurrentlyA4 = cards[0]?.classList.contains('format-a4');
+            
+            cards.forEach(card => {
+                if (isCurrentlyA4) {
+                    card.classList.remove('format-a4');
+                } else {
+                    card.classList.add('format-a4');
+                }
+            });
+
+            if (btn) {
+                btn.innerText = isCurrentlyA4
+                    ? '{{ __('storefront.backoffice.shipping_label.format_thermal') }}'
+                    : '{{ __('storefront.backoffice.shipping_label.format_a4') }}';
             }
         }
+
+        @if (!empty($autoPrint))
+            window.addEventListener('DOMContentLoaded', () => {
+                setTimeout(() => window.print(), 500);
+            });
+        @endif
     </script>
 </body>
 

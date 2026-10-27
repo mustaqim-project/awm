@@ -5,7 +5,46 @@
 ])
 
 @section('content')
-    <div class="space-y-6 pb-28 sm:pb-32 lg:pb-10 max-w-[1250px] mx-auto px-3 sm:px-6 lg:px-8">
+    <div class="space-y-6 pb-28 sm:pb-32 lg:pb-10 max-w-[1250px] mx-auto px-3 sm:px-6 lg:px-8"
+        x-data="{
+            selectedOrderIds: [],
+            pageOrderIds: @js($orders->pluck('id')),
+            toggleSelectAll() {
+                if (this.selectedOrderIds.length === this.pageOrderIds.length) {
+                    this.selectedOrderIds = [];
+                } else {
+                    this.selectedOrderIds = [...this.pageOrderIds];
+                }
+            },
+            printMassLabels() {
+                if (this.selectedOrderIds.length === 0) {
+                    if (window.AppAlert) AppAlert.toast('Pilih pesanan terlebih dahulu.', 'warning');
+                    return;
+                }
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '{{ route('storefront.orders.mass_shipping_label') }}';
+                form.target = '_blank';
+                
+                const csrf = document.createElement('input');
+                csrf.type = 'hidden';
+                csrf.name = '_token';
+                csrf.value = document.querySelector('meta[name=\'csrf-token\']')?.getAttribute('content') || '';
+                form.appendChild(csrf);
+
+                this.selectedOrderIds.forEach(id => {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'order_ids[]';
+                    input.value = id;
+                    form.appendChild(input);
+                });
+
+                document.body.appendChild(form);
+                form.submit();
+                document.body.removeChild(form);
+            }
+        }">
 
         {{-- FLASH MESSAGES --}}
         @if (session('success'))
@@ -25,6 +64,64 @@
 
         {{-- UNIFIED STOREFRONT HUB NAVIGATION --}}
         @include('app.storefront.partials.navigation', ['title' => __('storefront.backoffice.orders.header_title')])
+
+        {{-- OMNICHANNEL CHANNEL SWITCHER (SATUKAN SEMUA PESANAN DALAM 1 TEMPAT) --}}
+        <div class="p-3 sm:p-4 rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.04)] flex flex-col md:flex-row md:items-center justify-between gap-3">
+            <div class="flex items-center gap-2.5 min-w-0">
+                <div class="w-9 h-9 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0">
+                    <i data-lucide="layers" class="w-4 h-4"></i>
+                </div>
+                <div class="min-w-0">
+                    <div class="flex items-center gap-2">
+                        <h2 class="text-[13.5px] font-bold text-black dark:text-white leading-tight">Hub Pesanan Omnichannel</h2>
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/20">
+                            Semua Saluran
+                        </span>
+                    </div>
+                    <p class="text-[11.5px] text-black/50 dark:text-white/50 truncate">
+                        Pusat kendali & cetak label resi lintas Toko Online COOCA, Shopee, TikTok Shop, dan Tokopedia
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5 shrink-0">
+                {{-- 1. Toko Online COOCA (Aktif) --}}
+                <a href="{{ route('storefront.orders.index') }}"
+                    class="h-9 px-3.5 rounded-[11px] text-[12.5px] font-bold transition-all flex items-center gap-1.5 shrink-0 bg-[#007AFF] text-white shadow-xs">
+                    <i data-lucide="store" class="w-3.5 h-3.5"></i>
+                    <span>Toko Online COOCA</span>
+                    <span class="ml-0.5 px-1.5 py-0.2 rounded-full text-[10.5px] bg-white/20 font-extrabold">{{ $orders->total() }}</span>
+                </a>
+
+                {{-- 2. Semua Marketplace Hub --}}
+                <a href="{{ route('marketplace-hub.orders') }}"
+                    class="h-9 px-3 rounded-[11px] text-[12.5px] font-semibold transition-all flex items-center gap-1.5 shrink-0 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-black/75 dark:text-white/75 hover:text-black dark:hover:text-white">
+                    <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
+                    <span>Marketplace Hub</span>
+                </a>
+
+                {{-- 3. Shopee --}}
+                <a href="{{ route('marketplace-hub.orders', ['channel' => 'shopee']) }}"
+                    class="h-9 px-3 rounded-[11px] text-[12px] font-bold transition-all flex items-center gap-1.5 shrink-0 bg-[#EE4D2D]/10 hover:bg-[#EE4D2D]/15 text-[#EE4D2D]">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6h-2c0-2.76-2.24-5-5-5S7 3.24 7 6H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-7-3c1.66 0 3 1.34 3 3H9c0-1.66 1.34-3 3-3zm7 17H5V8h14v12z"/></svg>
+                    <span>Shopee</span>
+                </a>
+
+                {{-- 4. TikTok Shop --}}
+                <a href="{{ route('marketplace-hub.orders', ['channel' => 'tiktok_shop']) }}"
+                    class="h-9 px-3 rounded-[11px] text-[12px] font-bold transition-all flex items-center gap-1.5 shrink-0 bg-black/5 hover:bg-black/10 dark:bg-white/10 text-black dark:text-white">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.29 0 .58.04.86.12V9.42a6.34 6.34 0 0 0-.86-.06 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 10.79 4.48 6.31 6.31 0 0 0 1.9-4.48V8.9a8.18 8.18 0 0 0 4.76 1.52v-3.4a4.85 4.85 0 0 1-1-.33z"/></svg>
+                    <span>TikTok Shop</span>
+                </a>
+
+                {{-- 5. Tokopedia --}}
+                <a href="{{ route('marketplace-hub.orders', ['channel' => 'tokopedia']) }}"
+                    class="h-9 px-3 rounded-[11px] text-[12px] font-bold transition-all flex items-center gap-1.5 shrink-0 bg-[#03AC0E]/10 hover:bg-[#03AC0E]/15 text-[#03AC0E]">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm4 0h-2v-6h2v6zm-2-8c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg>
+                    <span>Tokopedia</span>
+                </a>
+            </div>
+        </div>
 
         {{-- BENTO METRIC CARDS --}}
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
@@ -184,7 +281,9 @@
                 <div
                     class="p-4 rounded-[18px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-sm space-y-3">
                     <div class="flex items-center justify-between gap-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <input type="checkbox" :value="'{{ $order->id }}'" x-model="selectedOrderIds"
+                                class="w-4 h-4 rounded border-gray-300 text-[#007AFF] focus:ring-[#007AFF] cursor-pointer shrink-0">
                             <span class="font-mono font-bold text-[14px] text-black dark:text-white">
                                 #{{ $order->order_number }}
                             </span>
@@ -259,11 +358,19 @@
                                 Rp {{ number_format($order->total_amount, 0, ',', '.') }}
                             </div>
                         </div>
-                        <a href="{{ route('storefront.orders.show', $order) }}"
-                            class="h-9 px-4 rounded-[12px] bg-[#007AFF] text-white text-[13px] font-semibold transition flex items-center gap-1.5 active:scale-[0.98] shadow-sm">
-                            <span>{{ __('storefront.backoffice.orders.btn_view') }}</span>
-                            <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-                        </a>
+                        <div class="flex items-center gap-1.5">
+                            <a href="{{ route('storefront.orders.shipping_label', $order) }}" target="_blank"
+                                class="h-9 px-3 rounded-[12px] bg-black/5 dark:bg-white/10 hover:bg-[#007AFF]/10 text-black/70 dark:text-white/70 hover:text-[#007AFF] transition active:scale-[0.98] flex items-center gap-1 text-[12px] font-semibold"
+                                title="Cetak Label Resi Thermal">
+                                <i data-lucide="printer" class="w-3.5 h-3.5"></i>
+                                <span>Label</span>
+                            </a>
+                            <a href="{{ route('storefront.orders.show', $order) }}"
+                                class="h-9 px-3.5 rounded-[12px] bg-[#007AFF] text-white text-[13px] font-semibold transition flex items-center gap-1 active:scale-[0.98] shadow-sm">
+                                <span>{{ __('storefront.backoffice.orders.btn_view') }}</span>
+                                <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             @empty
@@ -289,6 +396,10 @@
                     <thead>
                         <tr
                             class="border-b border-black/5 dark:border-white/5 text-black/50 dark:text-white/50 bg-black/[0.01] dark:bg-white/[0.02]">
+                            <th class="py-3.5 px-3 w-10 text-center">
+                                <input type="checkbox" @click="toggleSelectAll()" :checked="selectedOrderIds.length === pageOrderIds.length && pageOrderIds.length > 0"
+                                    class="w-4 h-4 rounded border-gray-300 text-[#007AFF] focus:ring-[#007AFF] cursor-pointer">
+                            </th>
                             <th class="py-3.5 px-4 font-semibold">{{ __('storefront.backoffice.orders.col_order_num') }}</th>
                             <th class="py-3.5 px-4 font-semibold">{{ __('storefront.backoffice.orders.col_customer_label') }}</th>
                             <th class="py-3.5 px-4 font-semibold">{{ __('storefront.backoffice.orders.col_method') }}</th>
@@ -301,6 +412,10 @@
                     <tbody class="divide-y divide-black/5 dark:divide-white/5">
                         @forelse($orders as $order)
                             <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors group">
+                                <td class="py-3.5 px-3 text-center" @click.stop>
+                                    <input type="checkbox" :value="'{{ $order->id }}'" x-model="selectedOrderIds"
+                                        class="w-4 h-4 rounded border-gray-300 text-[#007AFF] focus:ring-[#007AFF] cursor-pointer">
+                                </td>
                                 <td class="py-3.5 px-4 font-mono font-semibold text-black dark:text-white">
                                     <div class="flex items-center gap-2">
                                         <a href="{{ route('storefront.orders.show', $order) }}"
@@ -385,7 +500,13 @@
                                     {{ $order->created_at->format('d/m/Y H:i') }}
                                 </td>
                                 <td class="py-3.5 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
-                                    <div class="flex items-center justify-end">
+                                    <div class="flex items-center justify-end gap-1.5">
+                                        <a href="{{ route('storefront.orders.shipping_label', $order) }}" target="_blank"
+                                            class="h-8 px-2.5 rounded-[8px] bg-black/5 dark:bg-white/10 hover:bg-[#007AFF]/10 text-black/70 dark:text-white/70 hover:text-[#007AFF] transition active:scale-[0.98] flex items-center gap-1 shrink-0 cursor-pointer text-[11.5px] font-semibold"
+                                            title="Cetak Label Resi Thermal" aria-label="Cetak Label Resi">
+                                            <i data-lucide="printer" class="w-3.5 h-3.5"></i>
+                                            <span class="hidden xl:inline">Label</span>
+                                        </a>
                                         <a href="{{ route('storefront.orders.show', $order) }}"
                                             class="w-8 h-8 rounded-[8px] bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 text-black/80 dark:text-white/80 transition active:scale-[0.98] flex items-center justify-center shrink-0 cursor-pointer"
                                             title="{{ __('storefront.backoffice.orders.btn_view') }}"
@@ -397,7 +518,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="py-12 text-center text-black/40 dark:text-white/40">
+                                <td colspan="8" class="py-12 text-center text-black/40 dark:text-white/40">
                                     <i data-lucide="inbox" class="w-10 h-10 mx-auto mb-2 opacity-40"></i>
                                     <p class="text-[14px] font-medium">{{ __('storefront.backoffice.orders.empty_orders') }}</p>
                                 </td>
@@ -412,6 +533,33 @@
                     {{ $orders->links() }}
                 </div>
             @endif
+        </div>
+
+        {{-- FLOATING BATCH ACTION BAR (APPLE HIG DOCK PILL) --}}
+        <div x-show="selectedOrderIds.length > 0" x-cloak
+            x-transition:enter="ease-out duration-300"
+            x-transition:enter-start="opacity-0 translate-y-8 scale-95"
+            x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+            x-transition:leave="ease-in duration-200"
+            x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+            x-transition:leave-end="opacity-0 translate-y-8 scale-95"
+            class="fixed bottom-6 inset-x-0 z-[150] flex justify-center px-4 pointer-events-none">
+            <div class="pointer-events-auto bg-black/90 dark:bg-white/95 text-white dark:text-black backdrop-blur-xl px-5 py-3 rounded-[22px] shadow-2xl flex flex-wrap items-center gap-3 border border-white/10 dark:border-black/10">
+                <div class="flex items-center gap-2 text-[13px] font-semibold">
+                    <span class="w-2 h-2 rounded-full bg-[#007AFF] animate-ping"></span>
+                    <span><strong x-text="selectedOrderIds.length"></strong> Pesanan Terpilih</span>
+                </div>
+                <div class="h-4 w-px bg-white/20 dark:bg-black/20"></div>
+                <button type="button" @click="printMassLabels()"
+                    class="h-9 px-4 rounded-[12px] text-[13px] font-bold bg-[#007AFF] hover:bg-[#0071E3] text-white flex items-center gap-1.5 cursor-pointer active:scale-95 shadow-md transition">
+                    <i data-lucide="printer" class="w-4 h-4"></i>
+                    <span>Cetak Label Thermal (Massal)</span>
+                </button>
+                <button type="button" @click="selectedOrderIds = []"
+                    class="h-9 px-3 rounded-[12px] text-[12px] font-medium text-white/70 dark:text-black/70 hover:text-white dark:hover:text-black hover:bg-white/10 dark:hover:bg-black/10 transition cursor-pointer">
+                    Batal
+                </button>
+            </div>
         </div>
 
     </div>

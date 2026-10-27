@@ -563,9 +563,9 @@ final class MerchantOrderController extends Controller
     }
 
     /**
-     * Display printable AWB / Shipping Label (Thermal 100x150mm & A4 layout).
+     * Display printable AWB / Shipping Label (Thermal 100x150mm & A4 layout) for a single order.
      */
-    public function shippingLabel(CommerceOrder $order): View
+    public function shippingLabel(CommerceOrder $order, Request $request): View
     {
         $business = Context::business();
         abort_unless($business && $order->business_id === $business->id, 403);
@@ -592,6 +592,18 @@ final class MerchantOrderController extends Controller
         }
         $totalWeightKg = max(0.1, round($totalWeightGrams / 1000, 2));
 
+        $labels = [
+            [
+                'order'            => $order,
+                'waybillNumber'    => $waybillNumber,
+                'barcodeSvg'       => $barcodeSvg,
+                'qrSvg'            => $qrSvg,
+                'trackingUrl'      => $trackingUrl,
+                'totalWeightKg'    => $totalWeightKg,
+                'totalWeightGrams' => $totalWeightGrams,
+            ],
+        ];
+
         return view('app.storefront.orders.shipping_label', [
             'order'            => $order,
             'business'         => $business,
@@ -602,6 +614,74 @@ final class MerchantOrderController extends Controller
             'trackingUrl'      => $trackingUrl,
             'totalWeightKg'    => $totalWeightKg,
             'totalWeightGrams' => $totalWeightGrams,
+            'labels'           => $labels,
+            'autoPrint'        => $request->boolean('auto_print', true),
+        ]);
+    }
+
+    /**
+     * Batch Print Shipping Labels for multiple storefront orders.
+     */
+    public function massShippingLabel(Request $request): mixed
+    {
+        $business = Context::business();
+        abort_unless($business, 404);
+        abort_unless(Context::hasPermission('storefront.orders.view'), 403);
+
+        $orderIds = $request->input('order_ids', []);
+        if (is_string($orderIds)) {
+            $orderIds = explode(',', $orderIds);
+        }
+        $orderIds = array_filter(array_map('trim', (array) $orderIds));
+
+        if (empty($orderIds)) {
+            return back()->with('error', 'Pilih minimal satu pesanan untuk mencetak label.');
+        }
+
+        $orders = CommerceOrder::where('business_id', $business->id)
+            ->whereIn('id', $orderIds)
+            ->with(['items.product', 'business'])
+            ->latest()
+            ->get();
+
+        if ($orders->isEmpty()) {
+            return back()->with('error', 'Pesanan yang dipilih tidak ditemukan.');
+        }
+
+        $storeSetting = CommerceStoreSetting::where('business_id', $business->id)->first();
+
+        $labels = [];
+        foreach ($orders as $order) {
+            $waybillNumber = $order->shipping_waybill_id ?: ('CC' . str_replace('-', '', $order->order_number));
+            $barcodeSvg = $this->barcodeService->generateSvg($waybillNumber, 55);
+            $trackingUrl = $order->shipping_tracking_url ?: url("/{$business->slug}/order/{$order->tracking_token}");
+            $rawQrSvg = $this->qrCodeService->generateSvg($trackingUrl, null, 220);
+            $qrSvg = preg_replace('/<\?xml.*?\?>/is', '', $rawQrSvg) ?? $rawQrSvg;
+            $qrSvg = preg_replace('/<svg([^>]*)width="[^"]*"([^>]*)height="[^"]*"/i', '<svg$1width="100%"$2height="100%" preserveAspectRatio="xMidYMid meet"', $qrSvg) ?? $qrSvg;
+
+            $totalWeightGrams = 0;
+            foreach ($order->items as $item) {
+                $itemWeight = (int) ($item->product?->weight_grams ?? 200);
+                $totalWeightGrams += ($itemWeight * (float) $item->quantity);
+            }
+            $totalWeightKg = max(0.1, round($totalWeightGrams / 1000, 2));
+
+            $labels[] = [
+                'order'            => $order,
+                'waybillNumber'    => $waybillNumber,
+                'barcodeSvg'       => $barcodeSvg,
+                'qrSvg'            => $qrSvg,
+                'trackingUrl'      => $trackingUrl,
+                'totalWeightKg'    => $totalWeightKg,
+                'totalWeightGrams' => $totalWeightGrams,
+            ];
+        }
+
+        return view('app.storefront.orders.shipping_label', [
+            'business'     => $business,
+            'storeSetting' => $storeSetting,
+            'labels'       => $labels,
+            'autoPrint'    => $request->boolean('auto_print', true),
         ]);
     }
 
