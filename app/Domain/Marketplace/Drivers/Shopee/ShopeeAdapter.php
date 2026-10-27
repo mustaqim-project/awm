@@ -368,19 +368,17 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
      */
     public function uploadImageBytes(MarketplaceAccount $account, string $bytes, string $filename = 'product.jpg'): ?string
     {
-        $timestamp   = time();
-        $path        = '/api/v2/media_space/upload_image';
-        $accessToken = (string) $account->access_token;
-        $sign        = $this->generateSignature($path, $timestamp, $accessToken, $account->shop_id);
+        $timestamp = time();
+        $path      = '/api/v2/media_space/upload_image';
+        $baseStr   = $this->partnerId . $path . $timestamp;
+        $sign      = hash_hmac('sha256', $baseStr, $this->partnerKey);
 
         $url = sprintf(
-            '%s%s?partner_id=%s&timestamp=%s&access_token=%s&shop_id=%s&sign=%s',
+            '%s%s?partner_id=%s&timestamp=%s&sign=%s',
             $this->host,
             $path,
             $this->partnerId,
             $timestamp,
-            $accessToken,
-            $account->shop_id,
             $sign
         );
 
