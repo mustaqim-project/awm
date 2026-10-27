@@ -396,65 +396,109 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
             }
         }
 
-        // Live API call if credentials present
-        if ($this->hasCredentials() && ! empty($accessToken)) {
-            $url = sprintf(
-                '%s%s?partner_id=%s&timestamp=%s&access_token=%s&shop_id=%s&sign=%s',
-                $this->host,
-                $path,
-                $this->partnerId,
-                $timestamp,
-                $accessToken,
-                $account->shop_id,
-                $sign
-            );
+        $debugInfo = [
+            'has_credentials' => $this->hasCredentials(),
+            'partner_id'      => $this->partnerId,
+            'host'            => $this->host,
+            'shop_id'         => $account->shop_id,
+            'has_token'       => ! empty($accessToken),
+            'token_preview'   => ! empty($accessToken) ? substr($accessToken, 0, 10) . '...' : null,
+        ];
 
-            $payload = [
-                'original_price' => $price,
-                'description'    => ! empty($product->description) ? strip_tags($product->description) : $product->name,
-                'item_name'      => $product->name,
-                'normal_stock'   => max(1, $stock),
-                'weight'         => max(0.1, (float) ($product->weight ?? 0.5)),
-                'item_sku'       => $sku,
-                'category_id'    => (int) ($options['category_id'] ?? 100001),
-                'seller_stock'   => [
-                    ['stock' => max(1, $stock)],
-                ],
+        // 1. Guard against missing partner credentials
+        if (! $this->hasCredentials()) {
+            return [
+                'success'      => false,
+                'message'      => 'Kredensial Shopee Partner ID atau Partner Key belum dikonfigurasi di sistem server.',
+                'raw_response' => $debugInfo,
             ];
-
-            if (! empty($imageIdList)) {
-                $payload['image'] = ['image_id_list' => $imageIdList];
-            }
-
-            try {
-                $response = Http::timeout(20)->post($url, $payload);
-                $data     = $response->json();
-
-                if ($response->successful() && empty($data['error']) && ! empty($data['response']['item_id'])) {
-                    $itemId = (string) $data['response']['item_id'];
-                    return [
-                        'success'             => true,
-                        'external_product_id' => $itemId,
-                        'external_sku_code'   => $sku,
-                        'message'             => "Produk \"{$product->name}\" berhasil diterbitkan ke Shopee!",
-                        'raw_response'        => $data,
-                    ];
-                }
-            } catch (\Throwable $e) {
-                Log::warning("Shopee add_item error: {$e->getMessage()}");
-            }
         }
 
-        // Resilient fallback / Demo / Sandbox Store generator
-        $generatedItemId = 'SP' . substr(preg_replace('/[^0-9]/', '', (string) $product->id), 0, 6) . rand(1000, 9999);
+        // 2. Guard against missing or empty access token
+        if (empty($accessToken)) {
+            return [
+                'success'      => false,
+                'message'      => 'Toko Shopee belum terhubung dengan Access Token resmi (belum menyelesaikan otorisasi OAuth Shopee).',
+                'raw_response' => $debugInfo,
+            ];
+        }
 
-        return [
-            'success'             => true,
-            'external_product_id' => $generatedItemId,
-            'external_sku_code'   => $sku,
-            'message'             => "Produk \"{$product->name}\" beserta " . ($product->images->count() + ($product->image ? 1 : 0)) . " foto galeri berhasil diterbitkan ke Shopee Official Store.",
-            'raw_response'        => ['item_id' => $generatedItemId, 'images_count' => count($imageIdList)],
+        // Live API call to Shopee Open Platform V2
+        $url = sprintf(
+            '%s%s?partner_id=%s&timestamp=%s&access_token=%s&shop_id=%s&sign=%s',
+            $this->host,
+            $path,
+            $this->partnerId,
+            $timestamp,
+            $accessToken,
+            $account->shop_id,
+            $sign
+        );
+
+        $payload = [
+            'original_price' => $price,
+            'description'    => ! empty($product->description) ? strip_tags($product->description) : $product->name,
+            'item_name'      => $product->name,
+            'normal_stock'   => max(1, $stock),
+            'weight'         => max(0.1, (float) ($product->weight ?? 0.5)),
+            'item_sku'       => $sku,
+            'category_id'    => (int) ($options['category_id'] ?? 100001),
+            'seller_stock'   => [
+                ['stock' => max(1, $stock)],
+            ],
+            'brand'          => [
+                'brand_id'            => 0,
+                'original_brand_name' => 'NoBrand',
+            ],
         ];
+
+        if (! empty($imageIdList)) {
+            $payload['image'] = ['image_id_list' => $imageIdList];
+        }
+
+        try {
+            $response = Http::timeout(25)->post($url, $payload);
+            $data     = $response->json() ?? [];
+
+            if ($response->successful() && empty($data['error']) && ! empty($data['response']['item_id'])) {
+                $itemId = (string) $data['response']['item_id'];
+                return [
+                    'success'             => true,
+                    'external_product_id' => $itemId,
+                    'external_sku_code'   => $sku,
+                    'message'             => "Produk \"{$product->name}\" berhasil diterbitkan ke Shopee!",
+                    'raw_response'        => $data,
+                ];
+            }
+
+            $errorMsg = $data['message'] ?? ($data['error'] ?? ('Gagal membuat produk di Shopee (HTTP ' . $response->status() . ')'));
+            Log::warning("Shopee add_item error from API: {$errorMsg}", [
+                'status'   => $response->status(),
+                'response' => $data,
+                'debug'    => $debugInfo,
+            ]);
+
+            return [
+                'success'      => false,
+                'message'      => "Shopee API menolak penerbitan produk: {$errorMsg}",
+                'raw_response' => array_merge($debugInfo, [
+                    'shopee_error'    => $data['error'] ?? null,
+                    'shopee_message'  => $data['message'] ?? null,
+                    'http_status'     => $response->status(),
+                    'full_response'   => $data,
+                ]),
+            ];
+        } catch (\Throwable $e) {
+            Log::error("Shopee add_item exception: {$e->getMessage()}", [
+                'debug' => $debugInfo,
+            ]);
+
+            return [
+                'success'      => false,
+                'message'      => "Gagal menghubungi Shopee API: {$e->getMessage()}",
+                'raw_response' => array_merge($debugInfo, ['exception' => $e->getMessage()]),
+            ];
+        }
     }
 
     /**

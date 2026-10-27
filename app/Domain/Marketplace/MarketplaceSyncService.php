@@ -356,7 +356,11 @@ class MarketplaceSyncService
             ->where('channel', $normalizedChannel)
             ->first();
 
-        if ($existingMapping && ! empty($existingMapping->external_product_id) && empty($options['force_new_listing'])) {
+        $isRealExternalId = ! empty($existingMapping->external_product_id) 
+            && ! str_starts_with((string) $existingMapping->external_product_id, 'SP')
+            && ! str_starts_with((string) $existingMapping->external_product_id, 'TKP');
+
+        if ($existingMapping && $isRealExternalId && empty($options['force_new_listing'])) {
             $existingMapping->marketplace_account_id = $account->id;
             $existingMapping->channel_price         = $channelPrice;
             $existingMapping->sync_price_auto       = $syncPriceAuto;
