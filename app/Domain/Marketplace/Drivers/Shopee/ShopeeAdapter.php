@@ -22,9 +22,18 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
 
     public function __construct()
     {
-        $isProd           = filter_var(SystemSetting::get('shopee_is_production') ?? config('services.shopee.is_production', true), FILTER_VALIDATE_BOOLEAN);
-        $defaultHost      = $isProd ? 'https://partner.shopeemobile.com' : 'https://partner.test-stable.shopeemobile.com';
-        $this->host       = (string) (SystemSetting::get('shopee_host') ?? config('services.shopee.host', $defaultHost));
+        $isProdSetting = SystemSetting::get('shopee_is_production');
+        $isProd = $isProdSetting !== null 
+            ? filter_var($isProdSetting, FILTER_VALIDATE_BOOLEAN)
+            : filter_var(config('services.shopee.is_production', false), FILTER_VALIDATE_BOOLEAN);
+
+        // Shopee Open Platform V2: Production vs Sandbox V2 domain
+        $defaultHost = $isProd 
+            ? 'https://partner.shopeemobile.com' 
+            : 'https://openplatform.sandbox.test-stable.shopee.sg';
+
+        $configuredHost   = (string) (SystemSetting::get('shopee_host') ?? env('SHOPEE_HOST'));
+        $this->host       = ! empty($configuredHost) ? $configuredHost : $defaultHost;
         $this->partnerId  = (int) (SystemSetting::get('shopee_partner_id') ?? config('services.shopee.partner_id', 0));
         $this->partnerKey = (string) (SystemSetting::get('shopee_partner_key') ?? config('services.shopee.partner_key', ''));
     }

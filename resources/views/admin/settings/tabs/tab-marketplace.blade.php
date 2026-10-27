@@ -141,8 +141,8 @@
                             <div class="w-11 h-6 bg-black/20 peer-focus:outline-none rounded-full peer dark:bg-white/20 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#34C759]"></div>
                         </label>
                         <div>
-                            <div class="text-[13px] font-bold text-black dark:text-white">Shopee Production Mode</div>
-                            <div class="text-[11px] text-black/50 dark:text-white/50">Aktifkan untuk koneksi toko live resmi shopee</div>
+                            <div class="text-[13px] font-bold text-black dark:text-white">Shopee Production Mode (Live)</div>
+                            <div class="text-[11px] text-black/50 dark:text-white/50">Nonaktifkan (OFF) untuk App Developing / Test Partner ID (Sandbox V2). Aktifkan (ON) hanya jika App sudah disetujui untuk toko live resmi.</div>
                         </div>
                     </div>
                 </div>

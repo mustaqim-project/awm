@@ -99,10 +99,11 @@ return [
     ],
 
     'shopee' => [
-        'partner_id'   => (int) env('SHOPEE_PARTNER_ID', 0),
-        'partner_key'  => env('SHOPEE_PARTNER_KEY', ''),
-        'host'         => env('SHOPEE_HOST', 'https://partner.shopeemobile.com'),
-        'redirect_uri' => env('SHOPEE_REDIRECT_URI', 'https://cooca.id/integrations/shopee/callback'),
+        'partner_id'    => (int) env('SHOPEE_PARTNER_ID', 0),
+        'partner_key'   => env('SHOPEE_PARTNER_KEY', ''),
+        'is_production' => (bool) env('SHOPEE_IS_PRODUCTION', false),
+        'host'          => env('SHOPEE_HOST', null),
+        'redirect_uri'  => env('SHOPEE_REDIRECT_URI', 'https://cooca.id/integrations/shopee/callback'),
     ],
 
     'tiktok_shop' => [
