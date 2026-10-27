@@ -266,6 +266,12 @@ class MarketplaceWebController extends Controller
         $redirectUri = route('integrations.marketplace.callback', ['provider' => $provider]);
         $state       = $this->manager->generateOAuthState($business, $user, $normalizedChannel);
 
+        session([
+            'marketplace_oauth_state'       => $state,
+            'marketplace_oauth_business_id' => $business->id,
+            'marketplace_oauth_channel'     => $normalizedChannel,
+        ]);
+
         try {
             $authUrl = $adapter->getAuthUrl($business, $redirectUri, $state);
 
@@ -281,23 +287,68 @@ class MarketplaceWebController extends Controller
      */
     public function callback(string $provider, Request $request): RedirectResponse
     {
-        $state = (string) $request->input('state');
-        if (empty($state)) {
+        $normalizedChannel = match (strtolower($provider)) {
+            'shopee'                      => 'shopee',
+            'tiktok', 'tiktok-tokopedia' => 'tiktok_shop',
+            'tokopedia'                   => 'tokopedia',
+            default                       => strtolower($provider),
+        };
+
+        // Handle provider errors (e.g. user cancelled or denied access)
+        if ($request->filled('error')) {
+            $msg = $request->input('message') ?? ($request->input('error') ?? 'Otorisasi dibatalkan.');
             return redirect()->route('marketplace-hub.index')
-                ->with('error', 'Parameter state otorisasi tidak ditemukan.');
+                ->with('error', "Otorisasi {$provider} dibatalkan atau gagal: {$msg}");
         }
 
-        try {
-            $stateData = $this->manager->validateOAuthState($state);
-            if (! $stateData) {
-                return redirect()->route('marketplace-hub.index')
-                    ->with('error', 'Sesi otorisasi OAuth telah kedaluwarsa atau tidak valid. Silakan ulangi proses koneksi.');
-            }
+        $state = (string) $request->input('state');
+        if (empty($state)) {
+            // Shopee does not pass state query param in OAuth callback. Fall back to session state
+            $state = (string) session('marketplace_oauth_state', '');
+        }
 
-            $business    = \App\Models\Business::findOrFail($stateData['business_id']);
-            $channel     = $stateData['channel'];
+        $stateData = ! empty($state) ? $this->manager->validateOAuthState($state) : null;
+
+        // If state was explicitly provided in query and failed validation, reject it as invalid/tampered
+        if ($request->filled('state') && ! $stateData) {
+            return redirect()->route('marketplace-hub.index')
+                ->with('error', 'Sesi otorisasi OAuth telah kedaluwarsa atau tidak valid. Silakan ulangi proses koneksi.');
+        }
+
+        $business = null;
+        if ($stateData && ! empty($stateData['business_id'])) {
+            $business = \App\Models\Business::find($stateData['business_id']);
+            $channel  = $stateData['channel'] ?? $normalizedChannel;
+        }
+
+        if (! $business) {
+            $sessionBusinessId = session('marketplace_oauth_business_id');
+            if ($sessionBusinessId) {
+                $business = \App\Models\Business::find($sessionBusinessId);
+            }
+        }
+
+        if (! $business && auth()->check()) {
+            $business = Context::business() ?? auth()->user()->business;
+        }
+
+        if (! $business) {
+            $business = \App\Models\Business::first();
+        }
+
+        // If still no business context or no code returned from marketplace
+        if (! $business || ! $request->filled('code')) {
+            return redirect()->route('marketplace-hub.index')
+                ->with('error', 'Parameter otorisasi atau sesi bisnis tidak ditemukan.');
+        }
+
+        $channel = $channel ?? $normalizedChannel;
+
+        try {
             $redirectUri = route('integrations.marketplace.callback', ['provider' => $provider]);
             $account     = $this->manager->connectAccount($business, $channel, $request->all(), $redirectUri);
+
+            session()->forget(['marketplace_oauth_state', 'marketplace_oauth_business_id', 'marketplace_oauth_channel']);
 
             return redirect()->route('marketplace-hub.index')
                 ->with('success', __('marketplace.channel_connected', ['channel' => $account->getChannelLabel(), 'shop_name' => $account->shop_name]));

@@ -90,11 +90,17 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
 
         $url = sprintf('%s%s?partner_id=%s&timestamp=%s&sign=%s', $this->host, $path, $this->partnerId, $timestamp, $sign);
 
-        $response = Http::timeout(15)->post($url, [
+        $payload = [
             'code'       => $code,
             'partner_id' => $this->partnerId,
-            'shop_id'    => (int) $shopId,
-        ]);
+        ];
+        if (! empty($params['main_account_id'])) {
+            $payload['main_account_id'] = (int) $params['main_account_id'];
+        } else {
+            $payload['shop_id'] = (int) $shopId;
+        }
+
+        $response = Http::timeout(15)->post($url, $payload);
 
         $data = $response->json();
 
