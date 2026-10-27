@@ -69,11 +69,794 @@
     })->all();
 @endphp
 
+<script>
+window.__MARKETPLACE_CATEGORIES__ = @json($marketplaceCategories ?? []);
+window.__MARKETPLACE_PRODUCTS__ = @json($productsMap ?? []);
+
+function marketplaceProductManager(config = {}) {
+    return {
+        mappingModal: false,
+        syncModal: false,
+        submitting: false,
+        publishing: false,
+        togglingStatus: false,
+        pullingProducts: false,
+        syncingAll: false,
+        activeMenuId: null,
+        toggleMenu(id) {
+            const strId = String(id);
+            this.activeMenuId = (this.activeMenuId === strId ? null : strId);
+        },
+        closeMenu() {
+            this.activeMenuId = null;
+        },
+        pollTimer: null,
+        init() {
+            // Auto-refresh product listing silently every 25s without interrupting user interactions
+            this.pollTimer = setInterval(() => {
+                if (!this.mappingModal && !this.submitting && !this.publishing && !this.togglingStatus && !this.pullingProducts && !this.syncingAll && !this.activeMenuId) {
+                    this.refreshProductsTable();
+                }
+            }, 25000);
+        },
+        destroy() {
+            if (this.pollTimer) {
+                clearInterval(this.pollTimer);
+            }
+        },
+        async refreshProductsTable() {
+            try {
+                const res = await fetch(window.location.href, {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'text/html'
+                    }
+                });
+                if (res.ok) {
+                    const html = await res.text();
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const newTbody = doc.getElementById('marketplace-products-tbody');
+                    const currentTbody = document.getElementById('marketplace-products-tbody');
+                    if (newTbody && currentTbody) {
+                        currentTbody.innerHTML = newTbody.innerHTML;
+                        if (window.Alpine && typeof window.Alpine.initTree === 'function') {
+                            window.Alpine.initTree(currentTbody);
+                        }
+                        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                            window.lucide.createIcons();
+                        }
+                    }
+                }
+            } catch (e) {
+                console.warn('Silent product refresh error:', e);
+            }
+        },
+        async pullProductsAjax() {
+            let confirmed = true;
+            if (window.AppAlert && typeof window.AppAlert['confirm'] === 'function') {
+                confirmed = await window.AppAlert['confirm'](
+                    {{ json_encode(__('marketplace.confirm_pull_title')) }},
+                    {{ json_encode(__('marketplace.confirm_pull_desc')) }}
+                );
+            }
+            if (!confirmed) return;
+
+            this.pullingProducts = true;
+            try {
+                const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+                const res = await fetch('{{ route('marketplace-hub.products.pull') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': token || ''
+                    },
+                    body: JSON.stringify({ channel: 'all' })
+                });
+                const data = await res.json();
+                if (!res.ok || !data.success) {
+                    throw new Error(data.message || data.error || 'Gagal menarik katalog produk dari marketplace.');
+                }
+                if (window.AppAlert) {
+                    AppAlert.toast(data.message, 'success');
+                }
+                await this.refreshProductsTable();
+            } catch (err) {
+                if (window.AppAlert) {
+                    AppAlert.toast(err.message, 'error');
+                } else {
+                    alert(err.message);
+                }
+            } finally {
+                this.pullingProducts = false;
+            }
+        },
+        async syncAllAjax() {
+            let confirmed = true;
+            if (window.AppAlert && typeof window.AppAlert['confirm'] === 'function') {
+                confirmed = await window.AppAlert['confirm'](
+                    {{ json_encode(__('marketplace.confirm_sync_title')) }},
+                    {{ json_encode(__('marketplace.confirm_sync_desc')) }}
+                );
+            }
+            if (!confirmed) return;
+
+            this.syncingAll = true;
+            try {
+                const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+                const res = await fetch('{{ route('marketplace-hub.products.sync-all') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': token || ''
+                    }
+                });
+                const data = await res.json();
+                if (!res.ok || !data.success) {
+                    throw new Error(data.message || data.error || 'Gagal sinkronisasi produk massal.');
+                }
+                if (window.AppAlert) {
+                    AppAlert.toast(data.message, 'success');
+                }
+                await this.refreshProductsTable();
+            } catch (err) {
+                if (window.AppAlert) {
+                    AppAlert.toast(err.message, 'error');
+                } else {
+                    alert(err.message);
+                }
+            } finally {
+                this.syncingAll = false;
+            }
+        },
+        selectedProduct: null,
+        categories: (config && config.categories && config.categories.length)
+            ? config.categories
+            : (window.__MARKETPLACE_CATEGORIES__ || []),
+        productsMap: (() => {
+            const map = {};
+            const src = (config && config.products && Object.keys(config.products).length)
+                ? config.products
+                : (window.__MARKETPLACE_PRODUCTS__ || {});
+            if (Array.isArray(src)) {
+                src.forEach(p => {
+                    if (p && p.id !== undefined) {
+                        map[String(p.id)] = p;
+                    }
+                });
+            } else if (typeof src === 'object' && src !== null) {
+                Object.keys(src).forEach(k => {
+                    const p = src[k];
+                    if (p && p.id !== undefined) {
+                        map[String(p.id)] = p;
+                    }
+                    map[k] = p;
+                });
+            }
+            return map;
+        })(),
+        categorySearch: '',
+        categoryDropdownOpen: false,
+        pricingMode: 'nominal',
+        markupPercent: 0,
+        stockMode: 'auto',
+        form: {
+            product_id: '',
+            channel: 'shopee',
+            category_id: '',
+            category_name: '',
+            marketplace_item_id: '',
+            marketplace_sku: '',
+            channel_price: '',
+            sync_price_auto: false,
+            price_multiplier: 1.0,
+            sync_stock_auto: true,
+            stock_buffer: 0,
+            custom_stock: '',
+            is_active: true,
+            allow_below_cost: false
+        },
+        openMapping(productOrId, channel) {
+            this.activeMenuId = null;
+            let product = (typeof productOrId === 'object' && productOrId !== null)
+                ? productOrId
+                : (this.productsMap[productOrId] || this.productsMap[String(productOrId)] || null);
+
+            if (!product && this.productsMap) {
+                const list = Array.isArray(this.productsMap) ? this.productsMap : Object.values(this.productsMap);
+                product = list.find(p => p && (String(p.id) === String(productOrId)));
+            }
+
+            if (!product) {
+                console.warn('openMapping: Produk tidak ditemukan di data lokal', productOrId);
+                return;
+            }
+            this.selectedProduct = product;
+            this.form.product_id = product.id;
+            this.form.allow_below_cost = false;
+            this.categorySearch = '';
+            this.categoryDropdownOpen = false;
+            this.switchChannel(channel || 'shopee');
+            this.submitting = false;
+            this.publishing = false;
+            this.mappingModal = true;
+        },
+        switchChannel(channel) {
+            this.form.channel = channel;
+            this.form.allow_below_cost = false;
+            if (!this.selectedProduct) return;
+            const existing = (this.selectedProduct.marketplace_mappings || []).find(m => m.channel === channel);
+            if (existing) {
+                this.form.marketplace_item_id = existing.marketplace_item_id || existing.external_product_id || '';
+                this.form.marketplace_sku = existing.marketplace_sku || existing.external_sku_code || '';
+                this.form.category_id = (existing.raw_metadata && existing.raw_metadata.category_id) ? existing.raw_metadata.category_id : '';
+                this.form.category_name = (existing.raw_metadata && existing.raw_metadata.category_name) ? existing.raw_metadata.category_name : '';
+                if (!this.form.category_id) {
+                    this.autoDetectCategory(this.selectedProduct);
+                }
+                this.form.channel_price = existing.channel_price || '';
+                this.form.sync_price_auto = Boolean(existing.sync_price_auto);
+                this.form.price_multiplier = existing.price_multiplier || 1.0;
+                this.pricingMode = this.form.sync_price_auto ? 'percentage' : 'nominal';
+                this.markupPercent = Math.round(((parseFloat(this.form.price_multiplier) || 1.0) - 1.0) * 100);
+                this.form.sync_stock_auto = Boolean(existing.sync_stock_auto);
+                this.stockMode = this.form.sync_stock_auto ? 'auto' : 'manual';
+                this.form.stock_buffer = existing.stock_buffer || 0;
+                this.form.custom_stock = existing.custom_stock !== null ? existing.custom_stock : '';
+                this.form.is_active = Boolean(existing.is_active);
+            } else {
+                this.form.marketplace_item_id = '';
+                this.form.marketplace_sku = this.selectedProduct.code || '';
+                this.autoDetectCategory(this.selectedProduct);
+                this.form.channel_price = this.selectedProduct.selling_price || '';
+                this.form.sync_price_auto = false;
+                this.form.price_multiplier = 1.0;
+                this.pricingMode = 'nominal';
+                this.markupPercent = 0;
+                this.form.sync_stock_auto = true;
+                this.stockMode = 'auto';
+                this.form.stock_buffer = 0;
+                this.form.custom_stock = '';
+                this.form.is_active = true;
+            }
+        },
+        autoDetectCategory(product) {
+            if (!product || !this.categories || !this.categories.length) return;
+            const text = ((product.name || '') + ' ' + (product.category?.name || '') + ' ' + (product.description || '')).toLowerCase();
+            let bestMatch = null;
+            let maxScore = 0;
+            for (const cat of this.categories) {
+                let score = 0;
+                if (text.includes(cat.name.toLowerCase())) {
+                    score += 10;
+                }
+                if (cat.keywords && Array.isArray(cat.keywords)) {
+                    for (const kw of cat.keywords) {
+                        if (text.includes(kw.toLowerCase())) {
+                            score += 3;
+                        }
+                    }
+                }
+                if (score > maxScore) {
+                    maxScore = score;
+                    bestMatch = cat;
+                }
+            }
+            if (bestMatch && maxScore > 0) {
+                this.form.category_id = bestMatch.id;
+                this.form.category_name = bestMatch.name;
+            } else {
+                this.form.category_id = this.categories[0]?.id || '';
+                this.form.category_name = this.categories[0]?.name || '';
+            }
+        },
+        get filteredCategories() {
+            if (!this.categorySearch || !this.categorySearch.trim()) return this.categories;
+            const q = this.categorySearch.toLowerCase().trim();
+            return this.categories.filter(c => 
+                c.name.toLowerCase().includes(q) || 
+                (c.id && c.id.includes(q)) || 
+                (c.description && c.description.toLowerCase().includes(q)) ||
+                (c.keywords && c.keywords.some(k => k.toLowerCase().includes(q)))
+            );
+        },
+        get selectedCategoryObj() {
+            return this.categories.find(c => c.id === this.form.category_id) || null;
+        },
+        selectCategory(cat) {
+            this.form.category_id = cat.id;
+            this.form.category_name = cat.name;
+            this.categoryDropdownOpen = false;
+            this.categorySearch = '';
+        },
+        setPricingMode(mode) {
+            this.pricingMode = mode;
+            if (mode === 'percentage') {
+                this.form.sync_price_auto = true;
+                this.updateMultiplierFromPercent();
+            } else {
+                this.form.sync_price_auto = false;
+                if (!this.form.channel_price || Number(this.form.channel_price) === 0) {
+                    this.form.channel_price = this.computedEffectivePrice || this.selectedProduct?.selling_price || 0;
+                }
+            }
+        },
+        updateMultiplierFromPercent() {
+            const p = parseFloat(this.markupPercent) || 0;
+            this.form.price_multiplier = Math.round((1 + (p / 100)) * 1000) / 1000;
+        },
+        setMarkupPercent(p) {
+            this.markupPercent = p;
+            this.setPricingMode('percentage');
+            this.updateMultiplierFromPercent();
+        },
+        setNominalPrice(price) {
+            this.form.channel_price = Math.max(0, Math.round(price));
+            this.setPricingMode('nominal');
+        },
+        setStockMode(mode) {
+            this.stockMode = mode;
+            this.form.sync_stock_auto = (mode === 'auto');
+        },
+        async handleFormSubmit(e) {
+            e.preventDefault();
+            if (this.isZeroPrice) {
+                if (window.AppAlert) {
+                    AppAlert.toast({{ json_encode(__('marketplace.toast_zero_price')) }}, 'warning');
+                } else {
+                    alert({{ json_encode(__('marketplace.toast_zero_price')) }});
+                }
+                return false;
+            }
+            if (this.isBelowCost && !this.form.allow_below_cost) {
+                if (window.AppAlert) {
+                    AppAlert.toast({{ json_encode(__('marketplace.toast_unlock_risk')) }}, 'warning');
+                } else {
+                    alert({{ json_encode(__('marketplace.toast_unlock_risk')) }});
+                }
+                return false;
+            }
+
+            this.submitting = true;
+            try {
+                const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+                const formEl = e.target;
+                const formData = new FormData(formEl);
+
+                const res = await fetch(formEl.action, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': token || ''
+                    },
+                    body: formData
+                });
+
+                const data = await res.json();
+                if (!res.ok || !data.success) {
+                    throw new Error(data.message || data.error || 'Gagal menyimpan pemetaan SKU.');
+                }
+
+                if (window.AppAlert) {
+                    AppAlert.toast(data.message || 'Pengaturan SKU & Saluran berhasil disimpan!', 'success');
+                }
+
+                // Update in-memory product mapping
+                if (this.selectedProduct) {
+                    if (!this.selectedProduct.marketplace_mappings) {
+                        this.selectedProduct.marketplace_mappings = [];
+                    }
+                    const existingIdx = this.selectedProduct.marketplace_mappings.findIndex(m => m.channel === this.form.channel);
+                    const updatedMapping = {
+                        channel: this.form.channel,
+                        marketplace_item_id: this.form.marketplace_item_id,
+                        channel_price: this.form.channel_price,
+                        is_active: this.form.is_active,
+                    };
+                    if (existingIdx >= 0) {
+                        this.selectedProduct.marketplace_mappings[existingIdx] = Object.assign(this.selectedProduct.marketplace_mappings[existingIdx], updatedMapping);
+                    } else {
+                        this.selectedProduct.marketplace_mappings.push(updatedMapping);
+                    }
+                }
+
+                this.mappingModal = false;
+                await this.refreshProductsTable();
+            } catch (err) {
+                if (window.AppAlert) {
+                    AppAlert.toast(err.message, 'error');
+                } else {
+                    alert(err.message);
+                }
+            } finally {
+                this.submitting = false;
+            }
+        },
+        async publishToMarketplace() {
+            if (!this.selectedProduct) return;
+            if (this.isZeroPrice) {
+                if (window.AppAlert) {
+                    AppAlert.toast({{ json_encode(__('marketplace.toast_zero_price_short')) }}, 'warning');
+                } else {
+                    alert({{ json_encode(__('marketplace.toast_zero_price_short')) }});
+                }
+                return;
+            }
+            if (this.isBelowCost && !this.form.allow_below_cost) {
+                if (window.AppAlert) {
+                    AppAlert.toast({{ json_encode(__('marketplace.toast_unlock_risk')) }}, 'warning');
+                } else {
+                    alert({{ json_encode(__('marketplace.toast_unlock_risk')) }});
+                }
+                return;
+            }
+
+            const channelName = this.form.channel === 'tiktok_shop' ? 'TikTok Shop' : (this.form.channel === 'tokopedia' ? 'Tokopedia' : 'Shopee');
+            const publishTitleTpl = {{ json_encode(__('marketplace.confirm_publish_title')) }};
+            const publishDescTpl = {{ json_encode(__('marketplace.confirm_publish_desc')) }};
+            
+            if (window.AppAlert && typeof window.AppAlert['confirm'] === 'function') {
+                const confirmed = await window.AppAlert['confirm'](
+                    publishTitleTpl.replace(':channel', channelName),
+                    publishDescTpl.replace(':channel', channelName).replace(':name', this.selectedProduct.name).replace(':count', this.galleryPhotos.length)
+                );
+                if (!confirmed) return;
+            }
+
+            this.publishing = true;
+            try {
+                const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+                const url = `/marketplace-hub/products/${this.selectedProduct.id}/publish`;
+                
+                const res = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': token || ''
+                    },
+                    body: JSON.stringify({
+                        channel: this.form.channel,
+                        category_id: this.form.category_id,
+                        category_name: this.form.category_name,
+                        channel_price: this.form.channel_price,
+                        sync_price_auto: this.form.sync_price_auto,
+                        price_multiplier: this.form.price_multiplier,
+                        custom_stock: this.form.custom_stock,
+                        sync_stock_auto: this.form.sync_stock_auto,
+                        stock_buffer: this.form.stock_buffer,
+                        allow_below_cost: this.form.allow_below_cost
+                    })
+                });
+
+                const data = await res.json();
+                if (!res.ok || !data.success) {
+                    throw new Error(data.error || data.message || {{ json_encode(__('marketplace.publish_failed')) }});
+                }
+
+                this.form.marketplace_item_id = data.external_product_id || this.form.marketplace_item_id;
+                
+                const publishSuccessTpl = {{ json_encode(__('marketplace.publish_success')) }};
+                if (window.AppAlert) {
+                    AppAlert.toast(data.message || publishSuccessTpl.replace(':channel', channelName), 'success');
+                }
+
+                // Close modal sheet reactively and update in-memory product mapping
+                this.mappingModal = false;
+                if (this.selectedProduct) {
+                    if (!this.selectedProduct.marketplace_mappings) {
+                        this.selectedProduct.marketplace_mappings = [];
+                    }
+                    const existingIdx = this.selectedProduct.marketplace_mappings.findIndex(m => m.channel === this.form.channel);
+                    const updatedMapping = {
+                        channel: this.form.channel,
+                        marketplace_item_id: this.form.marketplace_item_id,
+                        channel_price: this.form.channel_price,
+                        is_active: this.form.is_active,
+                    };
+                    if (existingIdx >= 0) {
+                        this.selectedProduct.marketplace_mappings[existingIdx] = Object.assign(this.selectedProduct.marketplace_mappings[existingIdx], updatedMapping);
+                    } else {
+                        this.selectedProduct.marketplace_mappings.push(updatedMapping);
+                    }
+                }
+
+                await this.refreshProductsTable();
+            } catch (err) {
+                if (window.AppAlert) {
+                    AppAlert.toast(err.message, 'error');
+                } else {
+                    alert(err.message);
+                }
+            } finally {
+                this.publishing = false;
+            }
+        },
+        async toggleChannelProductStatus(action) {
+            if (!this.selectedProduct || !this.form.marketplace_item_id) return;
+            const isDeactivate = action === 'deactivate';
+            const actionBadge = isDeactivate ? {{ json_encode(__('marketplace.btn_delist_modal')) }} : {{ json_encode(__('marketplace.activate')) }};
+            const actionText = isDeactivate ? {{ json_encode(__('marketplace.action_deactivate_text')) }} : {{ json_encode(__('marketplace.action_activate_text')) }};
+            const channelName = this.form.channel === 'tiktok_shop' ? 'TikTok Shop' : (this.form.channel === 'tokopedia' ? 'Tokopedia' : 'Shopee');
+            const confirmToggleTitleTpl = {{ json_encode(__('marketplace.confirm_toggle_title')) }};
+            const confirmToggleDescTpl = {{ json_encode(__('marketplace.confirm_toggle_desc')) }};
+            
+            if (window.AppAlert && typeof window.AppAlert['confirm'] === 'function') {
+                const confirmed = await window.AppAlert['confirm'](
+                    confirmToggleTitleTpl.replace(':action', actionBadge),
+                    confirmToggleDescTpl.replace(':action', actionText).replace(':name', this.selectedProduct.name).replace(':channel', channelName)
+                );
+                if (!confirmed) return;
+            }
+
+            this.togglingStatus = true;
+            try {
+                const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+                const endpoint = isDeactivate ? 'deactivate' : 'activate';
+                const url = `/marketplace-hub/products/${this.selectedProduct.id}/${endpoint}`;
+
+                const res = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': token || ''
+                    },
+                    body: JSON.stringify({
+                        channel: this.form.channel
+                    })
+                });
+
+                const data = await res.json();
+                if (!res.ok || !data.success) {
+                    throw new Error(data.message || data.error || {{ json_encode(__('marketplace.toggle_status_failed')) }});
+                }
+
+                this.form.is_active = !isDeactivate;
+                if (this.selectedProduct && this.selectedProduct.marketplace_mappings) {
+                    const m = this.selectedProduct.marketplace_mappings.find(x => x.channel === this.form.channel);
+                    if (m) {
+                        m.is_active = !isDeactivate;
+                    }
+                }
+
+                if (window.AppAlert) {
+                    AppAlert.toast(data.message || {{ json_encode(__('marketplace.status_updated_success')) }}, 'success');
+                }
+
+                await this.refreshProductsTable();
+            } catch (err) {
+                if (window.AppAlert) {
+                    AppAlert.toast(err.message, 'error');
+                } else {
+                    alert(err.message);
+                }
+            } finally {
+                this.togglingStatus = false;
+            }
+        },
+        async toggleChannelProductDirect(productId, channel, action) {
+            this.activeMenuId = null;
+            const product = this.productsMap[productId] || this.productsMap[String(productId)] || null;
+            const isDeactivate = action === 'deactivate';
+            const actionTitle = isDeactivate ? {{ json_encode(__('marketplace.btn_delist_modal')) }} : {{ json_encode(__('marketplace.activate')) }};
+            const actionVerb = isDeactivate ? {{ json_encode(__('marketplace.action_deactivate_text')) }} : {{ json_encode(__('marketplace.action_activate_text')) }};
+            const channelLabel = channel === 'all' 
+                ? {{ json_encode(__('marketplace.channel_all_label')) }}
+                : (channel === 'tiktok_shop' ? 'TikTok Shop' : (channel === 'tokopedia' ? 'Tokopedia' : 'Shopee'));
+            const productName = product ? product.name : {{ json_encode(__('marketplace.th_product')) }};
+            const confirmToggleTitleTpl = {{ json_encode(__('marketplace.confirm_toggle_title')) }};
+            const confirmToggleDescTpl = {{ json_encode(__('marketplace.confirm_toggle_desc')) }};
+            const promptTitle = confirmToggleTitleTpl.replace(':action', actionTitle);
+            const promptMsg = confirmToggleDescTpl.replace(':action', actionVerb).replace(':name', productName).replace(':channel', channelLabel);
+
+            let confirmed = true;
+            if (window.AppAlert && typeof window.AppAlert['confirm'] === 'function') {
+                confirmed = await window.AppAlert['confirm'](promptTitle, promptMsg);
+            } else {
+                confirmed = confirm(promptMsg);
+            }
+
+            if (!confirmed) return;
+
+            const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+            const endpoint = isDeactivate ? 'deactivate' : 'activate';
+            const url = `/marketplace-hub/products/${productId}/${endpoint}`;
+            const procWord = isDeactivate ? {{ json_encode(__('marketplace.action_deactivation')) }} : {{ json_encode(__('marketplace.action_activation')) }};
+
+            try {
+                const toastProcTpl = {{ json_encode(__('marketplace.toggle_processing_toast')) }};
+                if (window.AppAlert) {
+                    AppAlert.toast(toastProcTpl.replace(':action', procWord).replace(':channel', channelLabel), 'info');
+                }
+
+                const res = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': token || ''
+                    },
+                    body: JSON.stringify({ channel: channel })
+                });
+
+                const data = await res.json();
+                const toggleFailedTpl = {{ json_encode(__('marketplace.toggle_failed')) }};
+                if (!res.ok || !data.success) {
+                    throw new Error(data.message || data.error || toggleFailedTpl.replace(':action', procWord));
+                }
+
+                if (window.AppAlert) {
+                    AppAlert.toast(data.message || {{ json_encode(__('marketplace.listing_status_updated')) }}, 'success');
+                }
+
+                await this.refreshProductsTable();
+            } catch (err) {
+                if (window.AppAlert) {
+                    AppAlert.toast(err.message, 'error');
+                } else {
+                    alert(err.message);
+                }
+            }
+        },
+        get categoryDisplayName() {
+            return this.selectedCategoryObj ? this.selectedCategoryObj.name : '{{ addslashes(__('marketplace.modal_category_placeholder')) }}';
+        },
+        get categoryDisplayDesc() {
+            return this.selectedCategoryObj ? this.selectedCategoryObj.description : '{{ addslashes(__('marketplace.modal_category_hint')) }}';
+        },
+        get categoryToggleLabel() {
+            return this.categoryDropdownOpen ? '{{ addslashes(__('marketplace.close')) }}' : '{{ addslashes(__('marketplace.modal_change')) }}';
+        },
+        get pricingModeBadgeText() {
+            return this.pricingMode === 'nominal' ? '{{ addslashes(__('marketplace.badge_fixed_price')) }}' : '{{ addslashes(__('marketplace.badge_percentage')) }}';
+        },
+        get stockModeBadgeText() {
+            return this.stockMode === 'auto' ? '{{ addslashes(__('marketplace.badge_auto_warehouse')) }}' : '{{ addslashes(__('marketplace.badge_manual_quota')) }}';
+        },
+        get listingStatusLabel() {
+            return this.form.is_active ? '{{ addslashes(__('marketplace.filter_status_active')) }}' : '{{ addslashes(__('marketplace.delisted_from_channel')) }}';
+        },
+        get photosCountLabel() {
+            return this.galleryPhotos.length + ' {{ addslashes(__('marketplace.photos_unit')) }}';
+        },
+        get delistButtonText() {
+            return this.togglingStatus ? '{{ addslashes(__('marketplace.processing')) }}' : '{{ addslashes(__('marketplace.btn_delist_modal')) }}';
+        },
+        get relistButtonText() {
+            return this.togglingStatus ? '{{ addslashes(__('marketplace.processing')) }}' : '{{ addslashes(__('marketplace.btn_relist_modal')) }}';
+        },
+        get publishButtonText() {
+            if (this.publishing) return '{{ addslashes(__('marketplace.btn_syncing')) }}';
+            if (this.isZeroPrice) return '{{ addslashes(__('marketplace.btn_enter_price_first')) }}';
+            const prefix = this.form.marketplace_item_id ? '{{ addslashes(__('marketplace.btn_update_listing_at')) }}' : '{{ addslashes(__('marketplace.btn_publish_listing_to')) }}';
+            const ch = this.form.channel === 'tiktok_shop' ? 'TikTok Shop' : (this.form.channel === 'tokopedia' ? 'Tokopedia' : 'Shopee');
+            return prefix + ch;
+        },
+        get submitButtonText() {
+            if (this.submitting) return '{{ addslashes(__('marketplace.btn_saving_settings')) }}';
+            if (this.isZeroPrice) return '{{ addslashes(__('marketplace.btn_enter_channel_price')) }}';
+            if (this.isBelowCost && !this.form.allow_below_cost) return '{{ addslashes(__('marketplace.btn_unlock_risk_to_save')) }}';
+            return '{{ addslashes(__('marketplace.btn_save_channel_settings')) }}';
+        },
+        get galleryPhotos() {
+            if (!this.selectedProduct) return [];
+            const photos = [];
+            if (this.selectedProduct.image) {
+                photos.push({
+                    url: this.selectedProduct.image.startsWith('http') ? this.selectedProduct.image : ('/storage/' + this.selectedProduct.image),
+                    caption: {{ json_encode(__('marketplace.photo_main')) }}
+                });
+            }
+            if (Array.isArray(this.selectedProduct.gallery_images)) {
+                for (const img of this.selectedProduct.gallery_images) {
+                    const u = (typeof img === 'string') ? img : (img.image_url || img.path || '');
+                    if (u) {
+                        photos.push({
+                            url: u.startsWith('http') ? u : ('/storage/' + u),
+                            caption: img.caption || {{ json_encode(__('marketplace.photo_gallery')) }}
+                        });
+                    }
+                }
+            } else if (Array.isArray(this.selectedProduct.images)) {
+                for (const img of this.selectedProduct.images) {
+                    const u = (typeof img === 'string') ? img : (img.image_url || img.path || '');
+                    if (u) {
+                        photos.push({
+                            url: u.startsWith('http') ? u : ('/storage/' + u),
+                            caption: img.caption || {{ json_encode(__('marketplace.photo_gallery')) }}
+                        });
+                    }
+                }
+            }
+            return photos;
+        },
+        get effectiveChannelStock() {
+            if (!this.selectedProduct) return 0;
+            if (this.stockMode === 'manual') {
+                return Math.max(0, parseInt(this.form.custom_stock) || 0);
+            }
+            const physical = parseInt(this.selectedProduct.stock) || 0;
+            const buffer = parseInt(this.form.stock_buffer) || 0;
+            return Math.max(0, physical - buffer);
+        },
+        get isBufferExceedingStock() {
+            if (!this.selectedProduct || this.stockMode !== 'auto') return false;
+            const physical = parseInt(this.selectedProduct.stock) || 0;
+            const buffer = parseInt(this.form.stock_buffer) || 0;
+            return buffer > 0 && buffer >= physical;
+        },
+        get isZeroPrice() {
+            return !this.computedEffectivePrice || this.computedEffectivePrice <= 0;
+        },
+        get nominalDiffVsStore() {
+            if (!this.selectedProduct) return { amount: 0, rawDiff: 0, percent: 0, isHigher: true };
+            const storePrice = Number(this.selectedProduct.selling_price || 0);
+            const channelPrice = Number(this.form.channel_price || 0);
+            const diff = channelPrice - storePrice;
+            const percent = storePrice > 0 ? Math.round((diff / storePrice) * 100) : 0;
+            return {
+                amount: Math.abs(diff),
+                rawDiff: diff,
+                percent: Math.abs(percent),
+                isHigher: diff >= 0
+            };
+        },
+        get computedEffectivePrice() {
+            if (!this.selectedProduct) return 0;
+            if (this.pricingMode === 'percentage' || this.form.sync_price_auto) {
+                const mult = parseFloat(this.form.price_multiplier) || 1.0;
+                return Math.round(Number(this.selectedProduct.selling_price || 0) * mult);
+            }
+            return Math.round(parseFloat(this.form.channel_price) || 0);
+        },
+        get computedAdminFee() {
+            return Math.round(this.computedEffectivePrice * 0.08);
+        },
+        get computedNetReceived() {
+            return this.computedEffectivePrice - this.computedAdminFee;
+        },
+        get computedBaseCost() {
+            return Number(this.selectedProduct?.base_cost || 0);
+        },
+        get computedNetMargin() {
+            return this.computedNetReceived - this.computedBaseCost;
+        },
+        get computedMarginPercent() {
+            if (this.computedEffectivePrice <= 0) return 0;
+            return Math.round((this.computedNetMargin / this.computedEffectivePrice) * 100);
+        },
+        get isBelowCost() {
+            return this.computedBaseCost > 0 && this.computedEffectivePrice < this.computedBaseCost;
+        },
+        get costDeficit() {
+            return Math.max(0, this.computedBaseCost - this.computedEffectivePrice);
+        },
+        formatRupiah(val) {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(val || 0);
+        }
+    };
+}
+
+// Assign to window for direct Alpine component instantiation
+window.marketplaceProductManager = marketplaceProductManager;
+
+// Register with Alpine.data if Alpine is already loaded or on alpine:init
+if (typeof Alpine !== 'undefined' && Alpine.data) {
+    Alpine.data('marketplaceProductManager', marketplaceProductManager);
+}
+document.addEventListener('alpine:init', () => {
+    if (typeof Alpine !== 'undefined' && Alpine.data) {
+        Alpine.data('marketplaceProductManager', marketplaceProductManager);
+    }
+});
+</script>
+
 <div class="max-w-[1360px] mx-auto space-y-6 pb-28 sm:pb-32 lg:pb-12"
-    x-data="marketplaceProductManager({
-        categories: {{ Js::from($marketplaceCategories ?? []) }},
-        products: {{ Js::from($productsMap) }}
-    })">
+    x-data="marketplaceProductManager()">
 
     {{-- MODULE HEADER & PERSISTENT MARKETPLACE TABS --}}
     <x-module-header
@@ -896,12 +1679,12 @@
                                             <i data-lucide="layers" class="w-5 h-5"></i>
                                         </div>
                                         <div class="min-w-0">
-                                            <div class="text-[13px] font-bold text-black dark:text-white truncate" x-text="selectedCategoryObj ? selectedCategoryObj.name : {{ json_encode(__('marketplace.modal_category_placeholder')) }}"></div>
-                                            <div class="text-[11px] text-black/50 dark:text-white/50 truncate max-w-[280px] sm:max-w-md" x-text="selectedCategoryObj ? selectedCategoryObj.description : {{ json_encode(__('marketplace.modal_category_hint')) }}"></div>
+                                            <div class="text-[13px] font-bold text-black dark:text-white truncate" x-text="categoryDisplayName"></div>
+                                            <div class="text-[11px] text-black/50 dark:text-white/50 truncate max-w-[280px] sm:max-w-md" x-text="categoryDisplayDesc"></div>
                                         </div>
                                     </div>
                                     <div class="flex items-center gap-1.5 shrink-0 text-black/40 dark:text-white/40">
-                                        <span class="text-[11.5px] font-medium hidden sm:inline" x-text="categoryDropdownOpen ? {{ json_encode(__('marketplace.close')) }} : {{ json_encode(__('marketplace.modal_change')) }}"></span>
+                                        <span class="text-[11.5px] font-medium hidden sm:inline" x-text="categoryToggleLabel"></span>
                                         <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-200" :class="categoryDropdownOpen ? 'rotate-180' : ''"></i>
                                     </div>
                                 </button>
@@ -1021,7 +1804,7 @@
                                 </div>
                                 <span class="text-[11px] font-bold px-2.5 py-1 rounded-full" 
                                     :class="pricingMode === 'nominal' ? 'bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]' : 'bg-[#007AFF]/10 text-[#007AFF]'">
-                                    <span x-text="pricingMode === 'nominal' ? {{ json_encode(__('marketplace.badge_fixed_price')) }} : {{ json_encode(__('marketplace.badge_percentage')) }}"></span>
+                                    <span x-text="pricingModeBadgeText"></span>
                                 </span>
                             </div>
 
@@ -1164,7 +1947,7 @@
                                     <p class="text-[11.5px] text-black/50 dark:text-white/50">{{ __('marketplace.modal_stock_scheme_sub') }}</p>
                                 </div>
                                 <span class="text-[11px] font-bold px-2.5 py-1 rounded-full" :class="stockMode === 'auto' ? 'bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]' : 'bg-black/10 text-black/60 dark:text-white/60'">
-                                    <span x-text="stockMode === 'auto' ? {{ json_encode(__('marketplace.badge_auto_warehouse')) }} : {{ json_encode(__('marketplace.badge_manual_quota')) }}"></span>
+                                    <span x-text="stockModeBadgeText"></span>
                                 </span>
                             </div>
 
@@ -1236,7 +2019,7 @@
                             <div class="flex items-center gap-3">
                                 <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full transition-colors"
                                     :class="form.is_active ? 'bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]' : 'bg-[#FF9500]/15 text-[#FF9500]'">
-                                    <span x-text="form.is_active ? {{ json_encode(__('marketplace.filter_status_active')) }} : {{ json_encode(__('marketplace.delisted_from_channel')) }}"></span>
+                                    <span x-text="listingStatusLabel"></span>
                                 </span>
                                 <label class="relative inline-flex items-center cursor-pointer">
                                     <input type="checkbox" x-model="form.is_active" class="sr-only peer">
@@ -1263,7 +2046,7 @@
                                 </template>
                                 <template x-if="galleryPhotos.length > 0 && galleryPhotos.length < 5">
                                     <span class="text-[10.5px] font-bold px-2.5 py-0.5 rounded-full bg-[#007AFF]/10 text-[#007AFF]">
-                                        <span x-text="galleryPhotos.length + ' ' + {{ json_encode(__('marketplace.photos_unit')) }}"></span>
+                                        <span x-text="photosCountLabel"></span>
                                     </span>
                                 </template>
                                 <template x-if="galleryPhotos.length === 0">
@@ -1283,8 +2066,8 @@
                                 <div class="flex items-center gap-2 overflow-x-auto pb-1 custom-scrollbar">
                                     <template x-for="(photo, pidx) in galleryPhotos" :key="pidx">
                                         <div class="relative w-12 h-12 rounded-[10px] overflow-hidden border border-black/10 dark:border-white/10 shrink-0 group bg-black/5 dark:bg-white/5">
-                                            <img :src="photo.url" class="w-full h-full object-cover" :alt="photo.caption || {{ json_encode(__('marketplace.th_product')) }}">
-                                            <span class="absolute bottom-0 inset-x-0 bg-black/70 text-white text-[8px] font-bold text-center py-0.5 truncate" x-text="pidx === 0 ? {{ json_encode(__('marketplace.photo_main_badge')) }} : '#' + (pidx + 1)"></span>
+                                            <img :src="photo.url" class="w-full h-full object-cover" :alt="photo.caption || '{{ addslashes(__('marketplace.th_product')) }}'">
+                                            <span class="absolute bottom-0 inset-x-0 bg-black/70 text-white text-[8px] font-bold text-center py-0.5 truncate" x-text="pidx === 0 ? '{{ addslashes(__('marketplace.photo_main_badge')) }}' : '#' + (pidx + 1)"></span>
                                         </div>
                                     </template>
                                     <div x-show="galleryPhotos.length === 0" class="w-full py-3 text-center text-[11.5px] text-[#FF3B30] bg-[#FF3B30]/10 rounded-[10px] border border-[#FF3B30]/20 font-medium">
@@ -1437,7 +2220,7 @@
                                 class="h-11 px-4 rounded-[14px] text-[13px] font-semibold text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 cursor-pointer"
                                 title="{{ __('marketplace.title_delist_direct') }}">
                                 <i data-lucide="eye-off" class="w-4 h-4"></i>
-                                <span x-text="togglingStatus ? {{ json_encode(__('marketplace.processing')) }} : {{ json_encode(__('marketplace.btn_delist_modal')) }}"></span>
+                                <span x-text="delistButtonText"></span>
                             </button>
                         </template>
                         <template x-if="form.marketplace_item_id && !form.is_active">
@@ -1445,7 +2228,7 @@
                                 class="h-11 px-4 rounded-[14px] text-[13px] font-semibold text-[#34C759] bg-[#34C759]/15 hover:bg-[#34C759]/25 active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 cursor-pointer"
                                 title="{{ __('marketplace.title_relist_direct') }}">
                                 <i data-lucide="eye" class="w-4 h-4"></i>
-                                <span x-text="togglingStatus ? {{ json_encode(__('marketplace.processing')) }} : {{ json_encode(__('marketplace.btn_relist_modal')) }}"></span>
+                                <span x-text="relistButtonText"></span>
                             </button>
                         </template>
 
@@ -1457,7 +2240,7 @@
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
                             <i x-show="!publishing" data-lucide="cloud-upload" class="w-4 h-4"></i>
-                            <span x-text="publishing ? {{ json_encode(__('marketplace.btn_syncing')) }} : (isZeroPrice ? {{ json_encode(__('marketplace.btn_enter_price_first')) }} : (form.marketplace_item_id ? {{ json_encode(__('marketplace.btn_update_listing_at')) }} : {{ json_encode(__('marketplace.btn_publish_listing_to')) }}) + (form.channel === 'tiktok_shop' ? 'TikTok Shop' : (form.channel === 'tokopedia' ? 'Tokopedia' : 'Shopee')))"></span>
+                            <span x-text="publishButtonText"></span>
                         </button>
                         <button type="submit" :disabled="submitting || publishing || togglingStatus || isZeroPrice || (isBelowCost && !form.allow_below_cost)"
                             class="h-11 px-5 rounded-[14px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer">
@@ -1465,7 +2248,7 @@
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
-                            <span x-text="submitting ? {{ json_encode(__('marketplace.btn_saving_settings')) }} : (isZeroPrice ? {{ json_encode(__('marketplace.btn_enter_channel_price')) }} : (isBelowCost && !form.allow_below_cost ? {{ json_encode(__('marketplace.btn_unlock_risk_to_save')) }} : {{ json_encode(__('marketplace.btn_save_channel_settings')) }}))"></span>
+                            <span x-text="submitButtonText"></span>
                         </button>
 
                     </div>
@@ -1479,742 +2262,3 @@
 </div>
 @endsection
 
-@push('scripts')
-<script>
-function marketplaceProductManager(config = {}) {
-    return {
-        mappingModal: false,
-        syncModal: false,
-        submitting: false,
-        publishing: false,
-        togglingStatus: false,
-        pullingProducts: false,
-        syncingAll: false,
-        activeMenuId: null,
-        toggleMenu(id) {
-            const strId = String(id);
-            this.activeMenuId = (this.activeMenuId === strId ? null : strId);
-        },
-        closeMenu() {
-            this.activeMenuId = null;
-        },
-        pollTimer: null,
-        init() {
-            // Auto-refresh product listing silently every 25s without interrupting user interactions
-            this.pollTimer = setInterval(() => {
-                if (!this.mappingModal && !this.submitting && !this.publishing && !this.togglingStatus && !this.pullingProducts && !this.syncingAll && !this.activeMenuId) {
-                    this.refreshProductsTable();
-                }
-            }, 25000);
-        },
-        destroy() {
-            if (this.pollTimer) {
-                clearInterval(this.pollTimer);
-            }
-        },
-        async refreshProductsTable() {
-            try {
-                const res = await fetch(window.location.href, {
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'Accept': 'text/html'
-                    }
-                });
-                if (res.ok) {
-                    const html = await res.text();
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-                    const newTbody = doc.getElementById('marketplace-products-tbody');
-                    const currentTbody = document.getElementById('marketplace-products-tbody');
-                    if (newTbody && currentTbody) {
-                        currentTbody.innerHTML = newTbody.innerHTML;
-                        if (window.Alpine && typeof window.Alpine.initTree === 'function') {
-                            window.Alpine.initTree(currentTbody);
-                        }
-                        if (window.lucide && typeof window.lucide.createIcons === 'function') {
-                            window.lucide.createIcons();
-                        }
-                    }
-                }
-            } catch (e) {
-                console.warn('Silent product refresh error:', e);
-            }
-        },
-            async pullProductsAjax() {
-                let confirmed = true;
-                if (window.AppAlert && typeof window.AppAlert['confirm'] === 'function') {
-                    confirmed = await window.AppAlert['confirm'](
-                        {{ json_encode(__('marketplace.confirm_pull_title')) }},
-                        {{ json_encode(__('marketplace.confirm_pull_desc')) }}
-                    );
-                }
-                if (!confirmed) return;
-
-                this.pullingProducts = true;
-                try {
-                    const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-                    const res = await fetch('{{ route('marketplace-hub.products.pull') }}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json',
-                            'X-CSRF-TOKEN': token || ''
-                        },
-                        body: JSON.stringify({ channel: 'all' })
-                    });
-                    const data = await res.json();
-                    if (!res.ok || !data.success) {
-                        throw new Error(data.message || data.error || 'Gagal menarik katalog produk dari marketplace.');
-                    }
-                    if (window.AppAlert) {
-                        AppAlert.toast(data.message, 'success');
-                    }
-                    await this.refreshProductsTable();
-                } catch (err) {
-                    if (window.AppAlert) {
-                        AppAlert.toast(err.message, 'error');
-                    } else {
-                        alert(err.message);
-                    }
-                } finally {
-                    this.pullingProducts = false;
-                }
-            },
-            async syncAllAjax() {
-                let confirmed = true;
-                if (window.AppAlert && typeof window.AppAlert['confirm'] === 'function') {
-                    confirmed = await window.AppAlert['confirm'](
-                        {{ json_encode(__('marketplace.confirm_sync_title')) }},
-                        {{ json_encode(__('marketplace.confirm_sync_desc')) }}
-                    );
-                }
-                if (!confirmed) return;
-
-                this.syncingAll = true;
-                try {
-                    const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-                    const res = await fetch('{{ route('marketplace-hub.products.sync-all') }}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json',
-                            'X-CSRF-TOKEN': token || ''
-                        }
-                    });
-                    const data = await res.json();
-                    if (!res.ok || !data.success) {
-                        throw new Error(data.message || data.error || 'Gagal sinkronisasi produk massal.');
-                    }
-                    if (window.AppAlert) {
-                        AppAlert.toast(data.message, 'success');
-                    }
-                    await this.refreshProductsTable();
-                } catch (err) {
-                    if (window.AppAlert) {
-                        AppAlert.toast(err.message, 'error');
-                    } else {
-                        alert(err.message);
-                    }
-                } finally {
-                    this.syncingAll = false;
-                }
-            },
-            selectedProduct: null,
-            categories: config.categories || [],
-            productsMap: (() => {
-                const map = {};
-                const src = config.products || {};
-                if (Array.isArray(src)) {
-                    src.forEach(p => {
-                        if (p && p.id !== undefined) {
-                            map[String(p.id)] = p;
-                        }
-                    });
-                } else if (typeof src === 'object' && src !== null) {
-                    Object.keys(src).forEach(k => {
-                        const p = src[k];
-                        if (p && p.id !== undefined) {
-                            map[String(p.id)] = p;
-                        }
-                        map[k] = p;
-                    });
-                }
-                return map;
-            })(),
-            categorySearch: '',
-            categoryDropdownOpen: false,
-            pricingMode: 'nominal', // 'nominal' (Harga Langsung Rp) or 'percentage' (Markup %)
-            markupPercent: 0,
-            stockMode: 'auto', // 'auto' (Gudang) or 'manual' (Kuota Khusus)
-            form: {
-                product_id: '',
-                channel: 'shopee',
-                category_id: '',
-                category_name: '',
-                marketplace_item_id: '',
-                marketplace_sku: '',
-                channel_price: '',
-                sync_price_auto: false,
-                price_multiplier: 1.0,
-                sync_stock_auto: true,
-                stock_buffer: 0,
-                custom_stock: '',
-                is_active: true,
-                allow_below_cost: false
-            },
-            openMapping(productOrId, channel) {
-                this.activeMenuId = null;
-                let product = (typeof productOrId === 'object' && productOrId !== null)
-                    ? productOrId
-                    : (this.productsMap[productOrId] || this.productsMap[String(productOrId)] || null);
-
-                if (!product && this.productsMap) {
-                    const list = Array.isArray(this.productsMap) ? this.productsMap : Object.values(this.productsMap);
-                    product = list.find(p => p && (String(p.id) === String(productOrId)));
-                }
-
-                if (!product) {
-                    console.warn('openMapping: Produk tidak ditemukan di data lokal', productOrId);
-                    return;
-                }
-                this.selectedProduct = product;
-                this.form.product_id = product.id;
-                this.form.allow_below_cost = false;
-                this.categorySearch = '';
-                this.categoryDropdownOpen = false;
-                this.switchChannel(channel || 'shopee');
-                this.submitting = false;
-                this.publishing = false;
-                this.mappingModal = true;
-            },
-            switchChannel(channel) {
-                this.form.channel = channel;
-                this.form.allow_below_cost = false;
-                if (!this.selectedProduct) return;
-                const existing = (this.selectedProduct.marketplace_mappings || []).find(m => m.channel === channel);
-                if (existing) {
-                    this.form.marketplace_item_id = existing.marketplace_item_id || existing.external_product_id || '';
-                    this.form.marketplace_sku = existing.marketplace_sku || existing.external_sku_code || '';
-                    this.form.category_id = (existing.raw_metadata && existing.raw_metadata.category_id) ? existing.raw_metadata.category_id : '';
-                    this.form.category_name = (existing.raw_metadata && existing.raw_metadata.category_name) ? existing.raw_metadata.category_name : '';
-                    if (!this.form.category_id) {
-                        this.autoDetectCategory(this.selectedProduct);
-                    }
-                    this.form.channel_price = existing.channel_price || '';
-                    this.form.sync_price_auto = Boolean(existing.sync_price_auto);
-                    this.form.price_multiplier = existing.price_multiplier || 1.0;
-                    this.pricingMode = this.form.sync_price_auto ? 'percentage' : 'nominal';
-                    this.markupPercent = Math.round(((parseFloat(this.form.price_multiplier) || 1.0) - 1.0) * 100);
-                    this.form.sync_stock_auto = Boolean(existing.sync_stock_auto);
-                    this.stockMode = this.form.sync_stock_auto ? 'auto' : 'manual';
-                    this.form.stock_buffer = existing.stock_buffer || 0;
-                    this.form.custom_stock = existing.custom_stock !== null ? existing.custom_stock : '';
-                    this.form.is_active = Boolean(existing.is_active);
-                } else {
-                    this.form.marketplace_item_id = '';
-                    this.form.marketplace_sku = this.selectedProduct.code || '';
-                    this.autoDetectCategory(this.selectedProduct);
-                    this.form.channel_price = this.selectedProduct.selling_price || '';
-                    this.form.sync_price_auto = false;
-                    this.form.price_multiplier = 1.0;
-                    this.pricingMode = 'nominal';
-                    this.markupPercent = 0;
-                    this.form.sync_stock_auto = true;
-                    this.stockMode = 'auto';
-                    this.form.stock_buffer = 0;
-                    this.form.custom_stock = '';
-                    this.form.is_active = true;
-                }
-            },
-            autoDetectCategory(product) {
-                if (!product || !this.categories || !this.categories.length) return;
-                const text = ((product.name || '') + ' ' + (product.category?.name || '') + ' ' + (product.description || '')).toLowerCase();
-                let bestMatch = null;
-                let maxScore = 0;
-                for (const cat of this.categories) {
-                    let score = 0;
-                    if (text.includes(cat.name.toLowerCase())) {
-                        score += 10;
-                    }
-                    if (cat.keywords && Array.isArray(cat.keywords)) {
-                        for (const kw of cat.keywords) {
-                            if (text.includes(kw.toLowerCase())) {
-                                score += 3;
-                            }
-                        }
-                    }
-                    if (score > maxScore) {
-                        maxScore = score;
-                        bestMatch = cat;
-                    }
-                }
-                if (bestMatch && maxScore > 0) {
-                    this.form.category_id = bestMatch.id;
-                    this.form.category_name = bestMatch.name;
-                } else {
-                    this.form.category_id = this.categories[0]?.id || '';
-                    this.form.category_name = this.categories[0]?.name || '';
-                }
-            },
-            get filteredCategories() {
-                if (!this.categorySearch || !this.categorySearch.trim()) return this.categories;
-                const q = this.categorySearch.toLowerCase().trim();
-                return this.categories.filter(c => 
-                    c.name.toLowerCase().includes(q) || 
-                    (c.id && c.id.includes(q)) || 
-                    (c.description && c.description.toLowerCase().includes(q)) ||
-                    (c.keywords && c.keywords.some(k => k.toLowerCase().includes(q)))
-                );
-            },
-            get selectedCategoryObj() {
-                return this.categories.find(c => c.id === this.form.category_id) || null;
-            },
-            selectCategory(cat) {
-                this.form.category_id = cat.id;
-                this.form.category_name = cat.name;
-                this.categoryDropdownOpen = false;
-                this.categorySearch = '';
-            },
-            setPricingMode(mode) {
-                this.pricingMode = mode;
-                if (mode === 'percentage') {
-                    this.form.sync_price_auto = true;
-                    this.updateMultiplierFromPercent();
-                } else {
-                    this.form.sync_price_auto = false;
-                    if (!this.form.channel_price || Number(this.form.channel_price) === 0) {
-                        this.form.channel_price = this.computedEffectivePrice || this.selectedProduct?.selling_price || 0;
-                    }
-                }
-            },
-            updateMultiplierFromPercent() {
-                const p = parseFloat(this.markupPercent) || 0;
-                this.form.price_multiplier = Math.round((1 + (p / 100)) * 1000) / 1000;
-            },
-            setMarkupPercent(p) {
-                this.markupPercent = p;
-                this.setPricingMode('percentage');
-                this.updateMultiplierFromPercent();
-            },
-            setNominalPrice(price) {
-                this.form.channel_price = Math.max(0, Math.round(price));
-                this.setPricingMode('nominal');
-            },
-            setStockMode(mode) {
-                this.stockMode = mode;
-                this.form.sync_stock_auto = (mode === 'auto');
-            },
-            async handleFormSubmit(e) {
-                e.preventDefault();
-                if (this.isZeroPrice) {
-                    if (window.AppAlert) {
-                        AppAlert.toast({{ json_encode(__('marketplace.toast_zero_price')) }}, 'warning');
-                    } else {
-                        alert({{ json_encode(__('marketplace.toast_zero_price')) }});
-                    }
-                    return false;
-                }
-                if (this.isBelowCost && !this.form.allow_below_cost) {
-                    if (window.AppAlert) {
-                        AppAlert.toast({{ json_encode(__('marketplace.toast_unlock_risk')) }}, 'warning');
-                    } else {
-                        alert({{ json_encode(__('marketplace.toast_unlock_risk')) }});
-                    }
-                    return false;
-                }
-
-                this.submitting = true;
-                try {
-                    const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-                    const formEl = e.target;
-                    const formData = new FormData(formEl);
-
-                    const res = await fetch(formEl.action, {
-                        method: 'POST',
-                        headers: {
-                            'Accept': 'application/json',
-                            'X-Requested-With': 'XMLHttpRequest',
-                            'X-CSRF-TOKEN': token || ''
-                        },
-                        body: formData
-                    });
-
-                    const data = await res.json();
-                    if (!res.ok || !data.success) {
-                        throw new Error(data.message || data.error || 'Gagal menyimpan pemetaan SKU.');
-                    }
-
-                    if (window.AppAlert) {
-                        AppAlert.toast(data.message || 'Pengaturan SKU & Saluran berhasil disimpan!', 'success');
-                    }
-
-                    // Update in-memory product mapping
-                    if (this.selectedProduct) {
-                        if (!this.selectedProduct.marketplace_mappings) {
-                            this.selectedProduct.marketplace_mappings = [];
-                        }
-                        const existingIdx = this.selectedProduct.marketplace_mappings.findIndex(m => m.channel === this.form.channel);
-                        const updatedMapping = {
-                            channel: this.form.channel,
-                            marketplace_item_id: this.form.marketplace_item_id,
-                            channel_price: this.form.channel_price,
-                            is_active: this.form.is_active,
-                        };
-                        if (existingIdx >= 0) {
-                            this.selectedProduct.marketplace_mappings[existingIdx] = Object.assign(this.selectedProduct.marketplace_mappings[existingIdx], updatedMapping);
-                        } else {
-                            this.selectedProduct.marketplace_mappings.push(updatedMapping);
-                        }
-                    }
-
-                    this.mappingModal = false;
-                    await this.refreshProductsTable();
-                } catch (err) {
-                    if (window.AppAlert) {
-                        AppAlert.toast(err.message, 'error');
-                    } else {
-                        alert(err.message);
-                    }
-                } finally {
-                    this.submitting = false;
-                }
-            },
-            async publishToMarketplace() {
-                if (!this.selectedProduct) return;
-                if (this.isZeroPrice) {
-                    if (window.AppAlert) {
-                        AppAlert.toast({{ json_encode(__('marketplace.toast_zero_price_short')) }}, 'warning');
-                    } else {
-                        alert({{ json_encode(__('marketplace.toast_zero_price_short')) }});
-                    }
-                    return;
-                }
-                if (this.isBelowCost && !this.form.allow_below_cost) {
-                    if (window.AppAlert) {
-                        AppAlert.toast({{ json_encode(__('marketplace.toast_unlock_risk')) }}, 'warning');
-                    } else {
-                        alert({{ json_encode(__('marketplace.toast_unlock_risk')) }});
-                    }
-                    return;
-                }
-
-                const channelName = this.form.channel === 'tiktok_shop' ? 'TikTok Shop' : (this.form.channel === 'tokopedia' ? 'Tokopedia' : 'Shopee');
-                const publishTitleTpl = {{ json_encode(__('marketplace.confirm_publish_title')) }};
-                const publishDescTpl = {{ json_encode(__('marketplace.confirm_publish_desc')) }};
-                
-                if (window.AppAlert && typeof window.AppAlert['confirm'] === 'function') {
-                    const confirmed = await window.AppAlert['confirm'](
-                        publishTitleTpl.replace(':channel', channelName),
-                        publishDescTpl.replace(':channel', channelName).replace(':name', this.selectedProduct.name).replace(':count', this.galleryPhotos.length)
-                    );
-                    if (!confirmed) return;
-                }
-
-                this.publishing = true;
-                try {
-                    const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-                    const url = `/marketplace-hub/products/${this.selectedProduct.id}/publish`;
-                    
-                    const res = await fetch(url, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json',
-                            'X-CSRF-TOKEN': token || ''
-                        },
-                        body: JSON.stringify({
-                            channel: this.form.channel,
-                            category_id: this.form.category_id,
-                            category_name: this.form.category_name,
-                            channel_price: this.form.channel_price,
-                            sync_price_auto: this.form.sync_price_auto,
-                            price_multiplier: this.form.price_multiplier,
-                            custom_stock: this.form.custom_stock,
-                            sync_stock_auto: this.form.sync_stock_auto,
-                            stock_buffer: this.form.stock_buffer,
-                            allow_below_cost: this.form.allow_below_cost
-                        })
-                    });
-
-                    const data = await res.json();
-                    if (!res.ok || !data.success) {
-                        throw new Error(data.error || data.message || {{ json_encode(__('marketplace.publish_failed')) }});
-                    }
-
-                    this.form.marketplace_item_id = data.external_product_id || this.form.marketplace_item_id;
-                    
-                    const publishSuccessTpl = {{ json_encode(__('marketplace.publish_success')) }};
-                    if (window.AppAlert) {
-                        AppAlert.toast(data.message || publishSuccessTpl.replace(':channel', channelName), 'success');
-                    }
-
-                    // Close modal sheet reactively and update in-memory product mapping
-                    this.mappingModal = false;
-                    if (this.selectedProduct) {
-                        if (!this.selectedProduct.marketplace_mappings) {
-                            this.selectedProduct.marketplace_mappings = [];
-                        }
-                        const existingIdx = this.selectedProduct.marketplace_mappings.findIndex(m => m.channel === this.form.channel);
-                        const updatedMapping = {
-                            channel: this.form.channel,
-                            marketplace_item_id: this.form.marketplace_item_id,
-                            channel_price: this.form.channel_price,
-                            is_active: this.form.is_active,
-                        };
-                        if (existingIdx >= 0) {
-                            this.selectedProduct.marketplace_mappings[existingIdx] = Object.assign(this.selectedProduct.marketplace_mappings[existingIdx], updatedMapping);
-                        } else {
-                            this.selectedProduct.marketplace_mappings.push(updatedMapping);
-                        }
-                    }
-
-                    await this.refreshProductsTable();
-                } catch (err) {
-                    if (window.AppAlert) {
-                        AppAlert.toast(err.message, 'error');
-                    } else {
-                        alert(err.message);
-                    }
-                } finally {
-                    this.publishing = false;
-                }
-            },
-            async toggleChannelProductStatus(action) {
-                if (!this.selectedProduct || !this.form.marketplace_item_id) return;
-                const isDeactivate = action === 'deactivate';
-                const actionBadge = isDeactivate ? {{ json_encode(__('marketplace.btn_delist_modal')) }} : {{ json_encode(__('marketplace.activate')) }};
-                const actionText = isDeactivate ? {{ json_encode(__('marketplace.action_deactivate_text')) }} : {{ json_encode(__('marketplace.action_activate_text')) }};
-                const channelName = this.form.channel === 'tiktok_shop' ? 'TikTok Shop' : (this.form.channel === 'tokopedia' ? 'Tokopedia' : 'Shopee');
-                const confirmToggleTitleTpl = {{ json_encode(__('marketplace.confirm_toggle_title')) }};
-                const confirmToggleDescTpl = {{ json_encode(__('marketplace.confirm_toggle_desc')) }};
-                
-                if (window.AppAlert && typeof window.AppAlert['confirm'] === 'function') {
-                    const confirmed = await window.AppAlert['confirm'](
-                        confirmToggleTitleTpl.replace(':action', actionBadge),
-                        confirmToggleDescTpl.replace(':action', actionText).replace(':name', this.selectedProduct.name).replace(':channel', channelName)
-                    );
-                    if (!confirmed) return;
-                }
-
-                this.togglingStatus = true;
-                try {
-                    const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-                    const endpoint = isDeactivate ? 'deactivate' : 'activate';
-                    const url = `/marketplace-hub/products/${this.selectedProduct.id}/${endpoint}`;
-
-                    const res = await fetch(url, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json',
-                            'X-CSRF-TOKEN': token || ''
-                        },
-                        body: JSON.stringify({
-                            channel: this.form.channel
-                        })
-                    });
-
-                    const data = await res.json();
-                    if (!res.ok || !data.success) {
-                        throw new Error(data.message || data.error || {{ json_encode(__('marketplace.toggle_status_failed')) }});
-                    }
-
-                    this.form.is_active = !isDeactivate;
-                    if (this.selectedProduct && this.selectedProduct.marketplace_mappings) {
-                        const m = this.selectedProduct.marketplace_mappings.find(x => x.channel === this.form.channel);
-                        if (m) {
-                            m.is_active = !isDeactivate;
-                        }
-                    }
-
-                    if (window.AppAlert) {
-                        AppAlert.toast(data.message || {{ json_encode(__('marketplace.status_updated_success')) }}, 'success');
-                    }
-
-                    await this.refreshProductsTable();
-                } catch (err) {
-                    if (window.AppAlert) {
-                        AppAlert.toast(err.message, 'error');
-                    } else {
-                        alert(err.message);
-                    }
-                } finally {
-                    this.togglingStatus = false;
-                }
-            },
-            async toggleChannelProductDirect(productId, channel, action) {
-                this.activeMenuId = null;
-                const product = this.productsMap[productId] || this.productsMap[String(productId)] || null;
-                const isDeactivate = action === 'deactivate';
-                const actionTitle = isDeactivate ? {{ json_encode(__('marketplace.btn_delist_modal')) }} : {{ json_encode(__('marketplace.activate')) }};
-                const actionVerb = isDeactivate ? {{ json_encode(__('marketplace.action_deactivate_text')) }} : {{ json_encode(__('marketplace.action_activate_text')) }};
-                const channelLabel = channel === 'all' 
-                    ? {{ json_encode(__('marketplace.channel_all_label')) }}
-                    : (channel === 'tiktok_shop' ? 'TikTok Shop' : (channel === 'tokopedia' ? 'Tokopedia' : 'Shopee'));
-                const productName = product ? product.name : {{ json_encode(__('marketplace.th_product')) }};
-                const confirmToggleTitleTpl = {{ json_encode(__('marketplace.confirm_toggle_title')) }};
-                const confirmToggleDescTpl = {{ json_encode(__('marketplace.confirm_toggle_desc')) }};
-                const promptTitle = confirmToggleTitleTpl.replace(':action', actionTitle);
-                const promptMsg = confirmToggleDescTpl.replace(':action', actionVerb).replace(':name', productName).replace(':channel', channelLabel);
-
-                let confirmed = true;
-                if (window.AppAlert && typeof window.AppAlert['confirm'] === 'function') {
-                    confirmed = await window.AppAlert['confirm'](promptTitle, promptMsg);
-                } else {
-                    confirmed = confirm(promptMsg);
-                }
-
-                if (!confirmed) return;
-
-                const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-                const endpoint = isDeactivate ? 'deactivate' : 'activate';
-                const url = `/marketplace-hub/products/${productId}/${endpoint}`;
-                const procWord = isDeactivate ? {{ json_encode(__('marketplace.action_deactivation')) }} : {{ json_encode(__('marketplace.action_activation')) }};
-
-                try {
-                    const toastProcTpl = {{ json_encode(__('marketplace.toggle_processing_toast')) }};
-                    if (window.AppAlert) {
-                        AppAlert.toast(toastProcTpl.replace(':action', procWord).replace(':channel', channelLabel), 'info');
-                    }
-
-                    const res = await fetch(url, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json',
-                            'X-CSRF-TOKEN': token || ''
-                        },
-                        body: JSON.stringify({ channel: channel })
-                    });
-
-                    const data = await res.json();
-                    const toggleFailedTpl = {{ json_encode(__('marketplace.toggle_failed')) }};
-                    if (!res.ok || !data.success) {
-                        throw new Error(data.message || data.error || toggleFailedTpl.replace(':action', procWord));
-                    }
-
-                    if (window.AppAlert) {
-                        AppAlert.toast(data.message || {{ json_encode(__('marketplace.listing_status_updated')) }}, 'success');
-                    }
-
-                    await this.refreshProductsTable();
-                } catch (err) {
-                    if (window.AppAlert) {
-                        AppAlert.toast(err.message, 'error');
-                    } else {
-                        alert(err.message);
-                    }
-                }
-            },
-            get galleryPhotos() {
-                if (!this.selectedProduct) return [];
-                const photos = [];
-                if (this.selectedProduct.image) {
-                    photos.push({
-                        url: this.selectedProduct.image.startsWith('http') ? this.selectedProduct.image : ('/storage/' + this.selectedProduct.image),
-                        caption: {{ json_encode(__('marketplace.photo_main')) }}
-                    });
-                }
-                if (Array.isArray(this.selectedProduct.gallery_images)) {
-                    for (const img of this.selectedProduct.gallery_images) {
-                        const u = (typeof img === 'string') ? img : (img.image_url || img.path || '');
-                        if (u) {
-                            photos.push({
-                                url: u.startsWith('http') ? u : ('/storage/' + u),
-                                caption: img.caption || {{ json_encode(__('marketplace.photo_gallery')) }}
-                            });
-                        }
-                    }
-                } else if (Array.isArray(this.selectedProduct.images)) {
-                    for (const img of this.selectedProduct.images) {
-                        const u = (typeof img === 'string') ? img : (img.image_url || img.path || '');
-                        if (u) {
-                            photos.push({
-                                url: u.startsWith('http') ? u : ('/storage/' + u),
-                                caption: img.caption || {{ json_encode(__('marketplace.photo_gallery')) }}
-                            });
-                        }
-                    }
-                }
-                return photos;
-            },
-            get effectiveChannelStock() {
-                if (!this.selectedProduct) return 0;
-                if (this.stockMode === 'manual') {
-                    return Math.max(0, parseInt(this.form.custom_stock) || 0);
-                }
-                const physical = parseInt(this.selectedProduct.stock) || 0;
-                const buffer = parseInt(this.form.stock_buffer) || 0;
-                return Math.max(0, physical - buffer);
-            },
-            get isBufferExceedingStock() {
-                if (!this.selectedProduct || this.stockMode !== 'auto') return false;
-                const physical = parseInt(this.selectedProduct.stock) || 0;
-                const buffer = parseInt(this.form.stock_buffer) || 0;
-                return buffer > 0 && buffer >= physical;
-            },
-            get isZeroPrice() {
-                return !this.computedEffectivePrice || this.computedEffectivePrice <= 0;
-            },
-            get nominalDiffVsStore() {
-                if (!this.selectedProduct) return { amount: 0, rawDiff: 0, percent: 0, isHigher: true };
-                const storePrice = Number(this.selectedProduct.selling_price || 0);
-                const channelPrice = Number(this.form.channel_price || 0);
-                const diff = channelPrice - storePrice;
-                const percent = storePrice > 0 ? Math.round((diff / storePrice) * 100) : 0;
-                return {
-                    amount: Math.abs(diff),
-                    rawDiff: diff,
-                    percent: Math.abs(percent),
-                    isHigher: diff >= 0
-                };
-            },
-            get computedEffectivePrice() {
-                if (!this.selectedProduct) return 0;
-                if (this.pricingMode === 'percentage' || this.form.sync_price_auto) {
-                    const mult = parseFloat(this.form.price_multiplier) || 1.0;
-                    return Math.round(Number(this.selectedProduct.selling_price || 0) * mult);
-                }
-                return Math.round(parseFloat(this.form.channel_price) || 0);
-            },
-            get computedAdminFee() {
-                return Math.round(this.computedEffectivePrice * 0.08);
-            },
-            get computedNetReceived() {
-                return this.computedEffectivePrice - this.computedAdminFee;
-            },
-            get computedBaseCost() {
-                return Number(this.selectedProduct?.base_cost || 0);
-            },
-            get computedNetMargin() {
-                return this.computedNetReceived - this.computedBaseCost;
-            },
-            get computedMarginPercent() {
-                if (this.computedEffectivePrice <= 0) return 0;
-                return Math.round((this.computedNetMargin / this.computedEffectivePrice) * 100);
-            },
-            get isBelowCost() {
-                return this.computedBaseCost > 0 && this.computedEffectivePrice < this.computedBaseCost;
-            },
-            get costDeficit() {
-                return Math.max(0, this.computedBaseCost - this.computedEffectivePrice);
-            },
-            formatRupiah(val) {
-                return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(val || 0);
-            }
-    };
-}
-window.marketplaceProductManager = marketplaceProductManager;
-
-// Register with Alpine if present or when initialized
-if (window.Alpine) {
-    window.Alpine.data('marketplaceProductManager', marketplaceProductManager);
-} else {
-    document.addEventListener('alpine:init', function() {
-        if (window.Alpine) {
-            window.Alpine.data('marketplaceProductManager', marketplaceProductManager);
-        }
-    });
-}
-</script>
-@endpush
