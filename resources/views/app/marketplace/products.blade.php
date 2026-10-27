@@ -678,13 +678,14 @@
                             </td>
 
                             <!-- Column 6: Sync & Management Actions -->
-                            <td class="py-3.5 px-4 sm:px-6 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                            <td class="py-3.5 px-4 sm:px-6 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)] transition-all"
+                                :class="activeMenuId === '{{ $product->id }}' ? '!z-30' : 'z-10'">
                                 @if($isRestrictedDrug || $isServiceItem)
                                     <span class="text-[11px] text-black/35 dark:text-white/35 italic font-medium">
                                         {{ $isRestrictedDrug ? __('marketplace.status_restricted') : __('marketplace.offline_service') }}
                                     </span>
                                 @else
-                                    <div class="flex items-center justify-end gap-1 relative" x-data="{ openMenu: false }" @click.outside="openMenu = false">
+                                    <div class="flex items-center justify-end gap-1 relative">
                                         <button type="button" @click="openMapping('{{ $product->id }}', 'shopee')"
                                             class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#007AFF] hover:bg-[#007AFF]/10 dark:hover:bg-[#007AFF]/20 transition-all cursor-pointer shrink-0"
                                             title="{{ __('marketplace.manage') }}"
@@ -693,34 +694,35 @@
                                         </button>
 
                                         @if($hasAnyMapping)
-                                            <button type="button" @click="openMenu = !openMenu"
+                                            <button type="button" @click.stop="toggleMenu('{{ $product->id }}')"
                                                 class="w-8 h-8 rounded-[8px] flex items-center justify-center text-black/50 dark:text-white/50 hover:bg-black/[0.06] dark:hover:bg-white/[0.08] transition-colors cursor-pointer shrink-0"
                                                 title="{{ __('marketplace.menu_additional_actions') }}"
                                                 aria-label="{{ __('marketplace.menu_additional_actions') }}">
                                                 <i data-lucide="more-horizontal" class="w-4 h-4"></i>
                                             </button>
 
-                                            <!-- Dropdown Menu -->
-                                            <div x-show="openMenu" x-cloak
+                                            <!-- Dropdown Menu (Clean, no overlap, full label visibility) -->
+                                            <div x-show="activeMenuId === '{{ $product->id }}'" x-cloak
+                                                @click.outside="if (activeMenuId === '{{ $product->id }}') activeMenuId = null"
                                                 x-transition:enter="transition ease-out duration-100"
                                                 x-transition:enter-start="transform opacity-0 scale-95"
                                                 x-transition:enter-end="transform opacity-100 scale-100"
                                                 x-transition:leave="transition ease-in duration-75"
                                                 x-transition:leave-start="transform opacity-100 scale-100"
                                                 x-transition:leave-end="transform opacity-0 scale-95"
-                                                class="absolute right-0 {{ $loop->index >= (count($products) - 3) && count($products) > 3 ? 'bottom-8' : 'top-8' }} z-50 w-52 rounded-[14px] bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.1] shadow-xl py-1 text-[12px] divide-y divide-black/[0.04] dark:divide-white/[0.06] text-left">
+                                                class="absolute right-0 {{ $loop->index >= (count($products) - 3) && count($products) > 3 ? 'bottom-full mb-1.5' : 'top-full mt-1.5' }} z-50 min-w-[220px] whitespace-nowrap rounded-[14px] bg-white dark:bg-[#2C2C2E] border border-black/[0.1] dark:border-white/[0.12] shadow-2xl p-1 text-[12px] divide-y divide-black/[0.04] dark:divide-white/[0.06] text-left">
                                                 <div class="py-1">
                                                     <form method="POST" action="{{ route('marketplace-hub.products.sync-price', $product->id) }}">
                                                         @csrf
-                                                        <button type="submit" class="w-full text-left px-3 py-1.5 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] flex items-center gap-2 text-black/80 dark:text-white/80 transition-colors cursor-pointer">
-                                                            <i data-lucide="dollar-sign" class="w-3.5 h-3.5 text-[#007AFF]"></i>
+                                                        <button type="submit" class="w-full text-left px-3.5 py-2 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] rounded-[8px] flex items-center gap-2.5 text-black/80 dark:text-white/80 transition-colors cursor-pointer">
+                                                            <i data-lucide="dollar-sign" class="w-3.5 h-3.5 text-[#007AFF] shrink-0"></i>
                                                             <span>{{ __('marketplace.push_price_to_store') }}</span>
                                                         </button>
                                                     </form>
                                                     <form method="POST" action="{{ route('marketplace-hub.products.sync-stock', $product->id) }}">
                                                         @csrf
-                                                        <button type="submit" class="w-full text-left px-3 py-1.5 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] flex items-center gap-2 text-black/80 dark:text-white/80 transition-colors cursor-pointer">
-                                                            <i data-lucide="box" class="w-3.5 h-3.5 text-[#34C759]"></i>
+                                                        <button type="submit" class="w-full text-left px-3.5 py-2 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] rounded-[8px] flex items-center gap-2.5 text-black/80 dark:text-white/80 transition-colors cursor-pointer">
+                                                            <i data-lucide="box" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
                                                             <span>{{ __('marketplace.push_stock_to_store') }}</span>
                                                         </button>
                                                     </form>
@@ -728,15 +730,15 @@
 
                                                 <div class="py-1">
                                                     @if($hasActiveMapping)
-                                                        <button type="button" @click="openMenu = false; toggleChannelProductDirect('{{ $product->id }}', 'all', 'deactivate')"
-                                                            class="w-full text-left px-3 py-1.5 hover:bg-[#FF3B30]/10 flex items-center gap-2 text-[#FF3B30] transition-colors cursor-pointer">
-                                                            <i data-lucide="eye-off" class="w-3.5 h-3.5"></i>
+                                                        <button type="button" @click="activeMenuId = null; toggleChannelProductDirect('{{ $product->id }}', 'all', 'deactivate')"
+                                                            class="w-full text-left px-3.5 py-2 hover:bg-[#FF3B30]/10 rounded-[8px] flex items-center gap-2.5 text-[#FF3B30] transition-colors cursor-pointer">
+                                                            <i data-lucide="eye-off" class="w-3.5 h-3.5 shrink-0"></i>
                                                             <span>{{ __('marketplace.delist_all_stores') }}</span>
                                                         </button>
                                                     @elseif($allMappingsInactive)
-                                                        <button type="button" @click="openMenu = false; toggleChannelProductDirect('{{ $product->id }}', 'all', 'activate')"
-                                                            class="w-full text-left px-3 py-1.5 hover:bg-[#34C759]/10 flex items-center gap-2 text-[#34C759] transition-colors cursor-pointer">
-                                                            <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                                                        <button type="button" @click="activeMenuId = null; toggleChannelProductDirect('{{ $product->id }}', 'all', 'activate')"
+                                                            class="w-full text-left px-3.5 py-2 hover:bg-[#34C759]/10 rounded-[8px] flex items-center gap-2.5 text-[#34C759] transition-colors cursor-pointer">
+                                                            <i data-lucide="eye" class="w-3.5 h-3.5 shrink-0"></i>
                                                             <span>{{ __('marketplace.activate_all_stores') }}</span>
                                                         </button>
                                                     @endif
@@ -1482,51 +1484,62 @@
 function marketplaceProductManager(config = {}) {
     return {
         mappingModal: false,
-            syncModal: false,
-            submitting: false,
-            publishing: false,
-            togglingStatus: false,
-            pullingProducts: false,
-            syncingAll: false,
-            pollTimer: null,
-            init() {
-                // Auto-refresh product listing silently every 25s without interrupting user interactions
-                this.pollTimer = setInterval(() => {
-                    if (!this.mappingModal && !this.submitting && !this.publishing && !this.togglingStatus && !this.pullingProducts && !this.syncingAll) {
-                        this.refreshProductsTable();
-                    }
-                }, 25000);
-            },
-            destroy() {
-                if (this.pollTimer) {
-                    clearInterval(this.pollTimer);
+        syncModal: false,
+        submitting: false,
+        publishing: false,
+        togglingStatus: false,
+        pullingProducts: false,
+        syncingAll: false,
+        activeMenuId: null,
+        toggleMenu(id) {
+            const strId = String(id);
+            this.activeMenuId = (this.activeMenuId === strId ? null : strId);
+        },
+        closeMenu() {
+            this.activeMenuId = null;
+        },
+        pollTimer: null,
+        init() {
+            // Auto-refresh product listing silently every 25s without interrupting user interactions
+            this.pollTimer = setInterval(() => {
+                if (!this.mappingModal && !this.submitting && !this.publishing && !this.togglingStatus && !this.pullingProducts && !this.syncingAll && !this.activeMenuId) {
+                    this.refreshProductsTable();
                 }
-            },
-            async refreshProductsTable() {
-                try {
-                    const res = await fetch(window.location.href, {
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest',
-                            'Accept': 'text/html'
+            }, 25000);
+        },
+        destroy() {
+            if (this.pollTimer) {
+                clearInterval(this.pollTimer);
+            }
+        },
+        async refreshProductsTable() {
+            try {
+                const res = await fetch(window.location.href, {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'text/html'
+                    }
+                });
+                if (res.ok) {
+                    const html = await res.text();
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const newTbody = doc.getElementById('marketplace-products-tbody');
+                    const currentTbody = document.getElementById('marketplace-products-tbody');
+                    if (newTbody && currentTbody) {
+                        currentTbody.innerHTML = newTbody.innerHTML;
+                        if (window.Alpine && typeof window.Alpine.initTree === 'function') {
+                            window.Alpine.initTree(currentTbody);
                         }
-                    });
-                    if (res.ok) {
-                        const html = await res.text();
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(html, 'text/html');
-                        const newTbody = doc.getElementById('marketplace-products-tbody');
-                        const currentTbody = document.getElementById('marketplace-products-tbody');
-                        if (newTbody && currentTbody) {
-                            currentTbody.innerHTML = newTbody.innerHTML;
-                            if (window.lucide && typeof window.lucide.createIcons === 'function') {
-                                window.lucide.createIcons();
-                            }
+                        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                            window.lucide.createIcons();
                         }
                     }
-                } catch (e) {
-                    console.warn('Silent product refresh error:', e);
                 }
-            },
+            } catch (e) {
+                console.warn('Silent product refresh error:', e);
+            }
+        },
             async pullProductsAjax() {
                 let confirmed = true;
                 if (window.AppAlert && typeof window.AppAlert['confirm'] === 'function') {
@@ -1608,7 +1621,26 @@ function marketplaceProductManager(config = {}) {
             },
             selectedProduct: null,
             categories: config.categories || [],
-            productsMap: config.products || {},
+            productsMap: (() => {
+                const map = {};
+                const src = config.products || {};
+                if (Array.isArray(src)) {
+                    src.forEach(p => {
+                        if (p && p.id !== undefined) {
+                            map[String(p.id)] = p;
+                        }
+                    });
+                } else if (typeof src === 'object' && src !== null) {
+                    Object.keys(src).forEach(k => {
+                        const p = src[k];
+                        if (p && p.id !== undefined) {
+                            map[String(p.id)] = p;
+                        }
+                        map[k] = p;
+                    });
+                }
+                return map;
+            })(),
             categorySearch: '',
             categoryDropdownOpen: false,
             pricingMode: 'nominal', // 'nominal' (Harga Langsung Rp) or 'percentage' (Markup %)
@@ -1631,10 +1663,20 @@ function marketplaceProductManager(config = {}) {
                 allow_below_cost: false
             },
             openMapping(productOrId, channel) {
-                const product = (typeof productOrId === 'object' && productOrId !== null)
+                this.activeMenuId = null;
+                let product = (typeof productOrId === 'object' && productOrId !== null)
                     ? productOrId
-                    : (this.productsMap[productOrId] || null);
-                if (!product) return;
+                    : (this.productsMap[productOrId] || this.productsMap[String(productOrId)] || null);
+
+                if (!product && this.productsMap) {
+                    const list = Array.isArray(this.productsMap) ? this.productsMap : Object.values(this.productsMap);
+                    product = list.find(p => p && (String(p.id) === String(productOrId)));
+                }
+
+                if (!product) {
+                    console.warn('openMapping: Produk tidak ditemukan di data lokal', productOrId);
+                    return;
+                }
                 this.selectedProduct = product;
                 this.form.product_id = product.id;
                 this.form.allow_below_cost = false;
@@ -2001,7 +2043,8 @@ function marketplaceProductManager(config = {}) {
                 }
             },
             async toggleChannelProductDirect(productId, channel, action) {
-                const product = this.productsMap[productId];
+                this.activeMenuId = null;
+                const product = this.productsMap[productId] || this.productsMap[String(productId)] || null;
                 const isDeactivate = action === 'deactivate';
                 const actionTitle = isDeactivate ? {{ json_encode(__('marketplace.btn_delist_modal')) }} : {{ json_encode(__('marketplace.activate')) }};
                 const actionVerb = isDeactivate ? {{ json_encode(__('marketplace.action_deactivate_text')) }} : {{ json_encode(__('marketplace.action_activate_text')) }};
