@@ -7,10 +7,30 @@
 @section('content')
 <div class="max-w-[1360px] mx-auto space-y-6 pb-28 sm:pb-32 lg:pb-12" x-data="{
     pullModal: false,
+    detailModal: false,
+    selectedOrder: null,
     submitting: false,
     refreshing: false,
     selectedPullChannel: 'shopee',
     pollTimer: null,
+    openDetail(order) {
+        this.selectedOrder = order;
+        this.detailModal = true;
+        this.$nextTick(() => {
+            if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                window.lucide.createIcons();
+            }
+        });
+    },
+    copyText(text, msg) {
+        if (!text) return;
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(text);
+            if (window.AppAlert) {
+                AppAlert.toast(msg || 'Tersalin ke clipboard!', 'success');
+            }
+        }
+    },
     async pullOrdersAjax() {
         this.submitting = true;
         try {
@@ -162,10 +182,42 @@
                         <th class="py-3.5 px-4 text-right">{{ __('marketplace.th_transaction_total') }}</th>
                         <th class="py-3.5 px-4 text-center">{{ __('marketplace.th_order_status') }}</th>
                         <th class="py-3.5 px-4 sm:px-6 text-right">{{ __('marketplace.th_order_time') }}</th>
+                        <th class="py-3.5 px-4 text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody id="marketplace-orders-tbody" class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                     @forelse($orders as $order)
+                        @php
+                            $recipientAddress = $order->raw_payload['recipient_address']['full_address'] 
+                                ?? ($order->raw_payload['recipient_address']['address'] ?? null);
+                            if (empty($recipientAddress) && !empty($order->raw_payload['recipient_address']) && is_array($order->raw_payload['recipient_address'])) {
+                                $addrParts = array_filter([
+                                    $order->raw_payload['recipient_address']['full_address'] ?? null,
+                                    $order->raw_payload['recipient_address']['city'] ?? null,
+                                    $order->raw_payload['recipient_address']['district'] ?? null,
+                                    $order->raw_payload['recipient_address']['state'] ?? null,
+                                    $order->raw_payload['recipient_address']['zipcode'] ?? null,
+                                ]);
+                                $recipientAddress = implode(', ', $addrParts);
+                            }
+                            $orderItems = is_array($order->items_summary) ? $order->items_summary : json_decode($order->items_summary ?? '[]', true) ?: [];
+                            $orderModalData = [
+                                'id' => $order->id,
+                                'channel' => $order->channel,
+                                'channel_label' => $order->getChannelLabel(),
+                                'external_order_sn' => $order->external_order_sn ?? $order->external_order_id,
+                                'buyer_name' => $order->buyer_name ?? __('marketplace.default_marketplace_buyer'),
+                                'buyer_phone' => $order->buyer_phone ?? '-',
+                                'shipping_provider' => $order->shipping_provider ?? 'Kurir Marketplace',
+                                'tracking_number' => $order->tracking_number ?? '',
+                                'recipient_address' => $recipientAddress ?: 'Sesuai pesanan di sistem marketplace',
+                                'total_amount' => (float) $order->total_amount,
+                                'channel_fee' => (float) $order->channel_fee,
+                                'order_status' => strtoupper((string) $order->order_status),
+                                'placed_at' => $order->placed_at ? $order->placed_at->format('d M Y, H:i') : $order->created_at->format('d M Y, H:i'),
+                                'items' => $orderItems,
+                            ];
+                        @endphp
                         <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.015] transition-colors">
                             <!-- Col 1: Order ID & Channel Badge -->
                             <td class="py-4 px-4 sm:px-6">
@@ -201,7 +253,7 @@
                             <!-- Col 3: Items Summary -->
                             <td class="py-4 px-4">
                                 @php
-                                    $items = is_array($order->items_summary) ? $order->items_summary : json_decode($order->items_summary ?? '[]', true);
+                                    $items = $orderItems;
                                     $itemCount = is_countable($items) ? count($items) : 0;
                                 @endphp
                                 <div class="font-medium text-black dark:text-white">
@@ -263,10 +315,20 @@
                                     {{ ($order->placed_at ?? $order->created_at)->diffForHumans() }}
                                 </div>
                             </td>
+
+                            <!-- Col 7: Actions -->
+                            <td class="py-4 px-4 text-center">
+                                <button type="button" @click="openDetail(@js($orderModalData))"
+                                    class="h-8 px-3 rounded-[9px] text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 transition-all inline-flex items-center gap-1.5 cursor-pointer active:scale-95 shadow-2xs"
+                                    title="Lihat Rincian Barang & Pengiriman">
+                                    <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                                    <span>Detail</span>
+                                </button>
+                            </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="py-12 text-center text-black/50 dark:text-white/50">
+                            <td colspan="7" class="py-12 text-center text-black/50 dark:text-white/50">
                                 <div class="w-12 h-12 rounded-[16px] bg-black/[0.04] dark:bg-white/[0.06] flex items-center justify-center mx-auto mb-3">
                                     <i data-lucide="shopping-bag" class="w-6 h-6 text-black/40 dark:text-white/40"></i>
                                 </div>
@@ -377,6 +439,171 @@
                         </button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </template>
+
+    <!-- ===================================================== -->
+    <!-- 5. MODAL DETAIL PESANAN MARKETPLACE (BENTO APPLE HIG) -->
+    <!-- ===================================================== -->
+    <template x-teleport="body">
+        <div x-show="detailModal" x-cloak
+            class="fixed inset-0 z-[200] overflow-y-auto flex items-center justify-center p-3 sm:p-4"
+            @keydown.escape.window="detailModal = false"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="order-detail-modal-title">
+
+            <!-- Backdrop -->
+            <div x-show="detailModal"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="detailModal = false"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
+
+            <div x-show="detailModal"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0 translate-y-4 sm:scale-95"
+                x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave-end="opacity-0 translate-y-4 sm:scale-95"
+                class="relative w-full max-w-2xl rounded-[28px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-5 sm:p-7 space-y-5 shadow-2xl z-10 max-h-[92vh] overflow-y-auto"
+                @click.outside="detailModal = false">
+                
+                <!-- Modal Header -->
+                <div class="flex items-start justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-4">
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <span class="px-2.5 py-0.5 rounded-[6px] text-[11px] font-bold"
+                                :class="{
+                                    'bg-[#EE4D2D]/15 text-[#EE4D2D]': selectedOrder?.channel === 'shopee',
+                                    'bg-black text-white dark:bg-white dark:text-black': selectedOrder?.channel === 'tiktok_shop',
+                                    'bg-[#00AA5B]/15 text-[#00AA5B]': selectedOrder?.channel === 'tokopedia',
+                                }"
+                                x-text="selectedOrder?.channel_label || selectedOrder?.channel?.toUpperCase()">
+                            </span>
+                            <h3 id="order-detail-modal-title" class="text-[17px] font-bold text-black dark:text-white font-mono tracking-tight" x-text="'#' + (selectedOrder?.external_order_sn || '')"></h3>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#007AFF]/15 text-[#007AFF]" x-text="selectedOrder?.order_status"></span>
+                        </div>
+                        <p class="text-[12px] text-black/50 dark:text-white/50" x-text="'Diterima pada ' + (selectedOrder?.placed_at || '-')"></p>
+                    </div>
+                    <button type="button" @click="detailModal = false" class="min-w-[40px] min-h-[40px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-all cursor-pointer active:scale-95" aria-label="{{ __('marketplace.close') }}">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <div class="space-y-4">
+                    <!-- Section: Item Produk Yang Dipesan -->
+                    <div class="p-4 rounded-[18px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] space-y-3">
+                        <div class="flex items-center justify-between pb-2 border-b border-black/[0.06] dark:border-white/[0.08]">
+                            <span class="text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 flex items-center gap-1.5">
+                                <i data-lucide="package" class="w-3.5 h-3.5 text-[#007AFF]"></i>
+                                <span>Rincian Produk Dipesan</span>
+                            </span>
+                            <span class="text-[12px] font-semibold text-black/50 dark:text-white/50" x-text="(selectedOrder?.items?.length || 0) + ' Item'"></span>
+                        </div>
+
+                        <div class="space-y-2.5 divide-y divide-black/[0.04] dark:divide-white/[0.06]">
+                            <template x-for="(item, idx) in (selectedOrder?.items || [])" :key="idx">
+                                <div class="pt-2.5 first:pt-0 flex items-center justify-between gap-3">
+                                    <div class="flex items-center gap-3 min-w-0">
+                                        <template x-if="item.image_url">
+                                            <img :src="item.image_url" alt="" class="w-10 h-10 rounded-lg object-cover bg-black/5 shrink-0 border border-black/5">
+                                        </template>
+                                        <template x-if="!item.image_url">
+                                            <div class="w-10 h-10 rounded-lg bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0">
+                                                <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                                            </div>
+                                        </template>
+                                        <div class="min-w-0">
+                                            <div class="font-bold text-[13px] text-black dark:text-white truncate" x-text="item.item_name || item.name || 'Produk Marketplace'"></div>
+                                            <div class="flex items-center gap-2 mt-0.5 text-[11px] text-black/50 dark:text-white/50">
+                                                <span x-show="item.model_name" class="px-1.5 py-0.5 rounded bg-black/[0.05] dark:bg-white/[0.08] font-medium" x-text="item.model_name"></span>
+                                                <span x-show="item.sku" class="font-mono text-black/40 dark:text-white/40" x-text="'SKU: ' + item.sku"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-right shrink-0">
+                                        <div class="font-bold text-[13px] text-black dark:text-white" x-text="'Rp ' + (new Intl.NumberFormat('id-ID').format(item.subtotal || (item.price * item.quantity) || 0))"></div>
+                                        <div class="text-[11px] text-black/45 dark:text-white/45" x-text="(item.quantity || 1) + 'x @ Rp ' + (new Intl.NumberFormat('id-ID').format(item.price || 0))"></div>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <div x-show="!selectedOrder?.items || selectedOrder?.items?.length === 0" class="py-4 text-center text-[12px] text-black/45 dark:text-white/45">
+                                Tidak ada rincian item atau belum disinkronkan dari marketplace.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section: Pengiriman & Logistik (Shipping) -->
+                    <div class="p-4 rounded-[18px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] space-y-3">
+                        <span class="text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 flex items-center gap-1.5 pb-2 border-b border-black/[0.06] dark:border-white/[0.08]">
+                            <i data-lucide="truck" class="w-3.5 h-3.5 text-[#34C759]"></i>
+                            <span>Pengiriman & Logistik</span>
+                        </span>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 text-[12.5px]">
+                            <div>
+                                <span class="text-[11px] font-semibold text-black/45 dark:text-white/45 block mb-0.5">Ekspedisi / Kurir:</span>
+                                <div class="font-bold text-black dark:text-white flex items-center gap-1.5">
+                                    <i data-lucide="truck" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
+                                    <span x-text="selectedOrder?.shipping_provider || 'Kurir Standar Marketplace'"></span>
+                                </div>
+                            </div>
+
+                            <div>
+                                <span class="text-[11px] font-semibold text-black/45 dark:text-white/45 block mb-0.5">Nomor Resi / AWB:</span>
+                                <div class="flex items-center gap-2">
+                                    <span class="font-mono font-bold text-black dark:text-white" x-text="selectedOrder?.tracking_number || 'Belum Terbit / Dalam Proses'"></span>
+                                    <template x-if="selectedOrder?.tracking_number">
+                                        <button type="button" @click="copyText(selectedOrder.tracking_number, 'No. Resi disalin!')"
+                                            class="px-2 py-0.5 rounded-[6px] text-[11px] font-bold bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF]/20 transition cursor-pointer">
+                                            Salin
+                                        </button>
+                                    </template>
+                                </div>
+                            </div>
+
+                            <div class="sm:col-span-2 pt-2 border-t border-black/[0.04] dark:border-white/[0.06]">
+                                <span class="text-[11px] font-semibold text-black/45 dark:text-white/45 block mb-0.5">Penerima & Alamat Tujuan:</span>
+                                <div class="font-bold text-black dark:text-white" x-text="selectedOrder?.buyer_name + ' (' + selectedOrder?.buyer_phone + ')'"></div>
+                                <p class="text-[12px] text-black/70 dark:text-white/70 mt-1 leading-relaxed bg-white/70 dark:bg-black/30 p-2.5 rounded-[10px] border border-black/5 dark:border-white/5" x-text="selectedOrder?.recipient_address"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section: Rincian Pembayaran -->
+                    <div class="p-4 rounded-[18px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] space-y-2 text-[12.5px]">
+                        <div class="flex items-center justify-between text-black/60 dark:text-white/60">
+                            <span>Total Belanja Pembeli:</span>
+                            <span class="font-bold text-black dark:text-white" x-text="'Rp ' + (new Intl.NumberFormat('id-ID').format(selectedOrder?.total_amount || 0))"></span>
+                        </div>
+                        <template x-if="selectedOrder?.channel_fee > 0">
+                            <div class="flex items-center justify-between text-black/50 dark:text-white/50 text-[11.5px]">
+                                <span>Potongan Admin / Layanan Channel:</span>
+                                <span class="text-[#FF3B30] font-semibold" x-text="'-Rp ' + (new Intl.NumberFormat('id-ID').format(selectedOrder?.channel_fee || 0))"></span>
+                            </div>
+                        </template>
+                        <div class="flex items-center justify-between pt-2 border-t border-black/[0.06] dark:border-white/[0.08] text-[14px] font-bold text-black dark:text-white">
+                            <span>Pendapatan Bersih:</span>
+                            <span class="text-emerald-600 dark:text-emerald-400 font-extrabold" x-text="'Rp ' + (new Intl.NumberFormat('id-ID').format(Math.max(0, (selectedOrder?.total_amount || 0) - (selectedOrder?.channel_fee || 0))))"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="flex items-center justify-end gap-2.5 pt-2 border-t border-black/[0.06] dark:border-white/[0.08]">
+                    <button type="button" @click="detailModal = false"
+                        class="min-h-[42px] px-5 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] transition-all cursor-pointer active:scale-95">
+                        Tutup
+                    </button>
+                </div>
             </div>
         </div>
     </template>

@@ -431,14 +431,42 @@ class TikTokShopAdapter implements MarketplaceAdapterInterface
 
         if ($response->successful() && ! empty($data['data']['orders'])) {
             foreach ($data['data']['orders'] as $ord) {
+                $items = [];
+                if (! empty($ord['line_items'])) {
+                    foreach ($ord['line_items'] as $it) {
+                        $name = $it['product_name'] ?? 'Produk TikTok Shop';
+                        $qty = (int) ($it['quantity'] ?? 1);
+                        $price = (float) ($it['sale_price'] ?? 0);
+                        $items[] = [
+                            'item_id'    => $it['product_id'] ?? null,
+                            'item_name'  => $name,
+                            'name'       => $name,
+                            'model_name' => $it['sku_name'] ?? null,
+                            'sku'        => $it['seller_sku'] ?: ($it['sku_id'] ?: null),
+                            'quantity'   => $qty,
+                            'price'      => $price,
+                            'subtotal'   => (float) ($qty * $price),
+                            'image_url'  => $it['sku_image'] ?? null,
+                        ];
+                    }
+                }
+
+                $shippingProvider = $ord['shipping_provider_name']
+                    ?? ($ord['shipping_info']['shipping_provider_name'] ?? ($ord['delivery_option_name'] ?? null));
+                $trackingNumber = $ord['tracking_number']
+                    ?? ($ord['packages'][0]['tracking_number'] ?? null);
+
                 $orders[] = [
-                    'order_id'     => (string) $ord['id'],
-                    'order_sn'     => (string) $ord['id'],
-                    'buyer_name'   => $ord['recipient_address']['name'] ?? 'TikTok Buyer',
-                    'total_amount' => (float) ($ord['payment']['total_amount'] ?? 0),
-                    'status'       => (string) ($ord['status'] ?? 'UNPAID'),
-                    'items'        => $ord['line_items'] ?? [],
-                    'raw'          => $ord,
+                    'order_id'          => (string) $ord['id'],
+                    'order_sn'          => (string) $ord['id'],
+                    'buyer_name'        => $ord['recipient_address']['name'] ?? 'TikTok Buyer',
+                    'buyer_phone'       => $ord['recipient_address']['phone_number'] ?? null,
+                    'total_amount'      => (float) ($ord['payment']['total_amount'] ?? 0),
+                    'status'            => (string) ($ord['status'] ?? 'UNPAID'),
+                    'shipping_provider' => $shippingProvider,
+                    'tracking_number'   => $trackingNumber,
+                    'items'             => $items,
+                    'raw'               => $ord,
                 ];
             }
         }

@@ -281,11 +281,11 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
         $accessToken = (string) $account->access_token;
         $sign        = $this->generateSignature($path, $timestamp, $accessToken, $account->shop_id);
 
-        $timeFrom = $params['time_from'] ?? (time() - 86400 * 7);
+        $timeFrom = $params['time_from'] ?? (time() - 86400 * 14);
         $timeTo   = $params['time_to'] ?? time();
 
         $url = sprintf(
-            '%s%s?partner_id=%s&timestamp=%s&access_token=%s&shop_id=%s&sign=%s&time_range_field=create_time&time_from=%s&time_to=%s&page_size=20',
+            '%s%s?partner_id=%s&timestamp=%s&access_token=%s&shop_id=%s&sign=%s&time_range_field=create_time&time_from=%s&time_to=%s&page_size=50',
             $this->host,
             $path,
             $this->partnerId,
@@ -302,15 +302,83 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
 
         $orders = [];
         if ($response->successful() && ! empty($data['response']['order_list'])) {
+            $orderSns = [];
             foreach ($data['response']['order_list'] as $ord) {
+                if (! empty($ord['order_sn'])) {
+                    $orderSns[] = (string) $ord['order_sn'];
+                }
+            }
+
+            // Batch-fetch complete order details (buyer info, items, logistics carrier, tracking)
+            $detailsMap = [];
+            if (! empty($orderSns)) {
+                $details = $this->getOrderDetail($account, $orderSns);
+                foreach ($details as $det) {
+                    if (! empty($det['order_sn'])) {
+                        $detailsMap[$det['order_sn']] = $det;
+                    }
+                }
+            }
+
+            foreach ($data['response']['order_list'] as $ord) {
+                $sn = (string) $ord['order_sn'];
+                $det = $detailsMap[$sn] ?? [];
+
+                // Parse items with full metadata
+                $items = [];
+                if (! empty($det['item_list'])) {
+                    foreach ($det['item_list'] as $it) {
+                        $name = ! empty($it['item_name']) ? $it['item_name'] : (! empty($it['model_name']) ? $it['model_name'] : 'Produk Shopee');
+                        $qty = (int) ($it['model_quantity_purchased'] ?? 1);
+                        $price = (float) ($it['model_discounted_price'] ?? ($it['model_original_price'] ?? 0));
+                        $sku = ! empty($it['model_sku']) ? $it['model_sku'] : (! empty($it['item_sku']) ? $it['item_sku'] : null);
+                        $imageUrl = $it['image_info']['image_url'] ?? null;
+
+                        $items[] = [
+                            'item_id'    => $it['item_id'] ?? null,
+                            'item_name'  => $name,
+                            'name'       => $name,
+                            'model_name' => $it['model_name'] ?? null,
+                            'sku'        => $sku,
+                            'quantity'   => $qty,
+                            'price'      => $price,
+                            'subtotal'   => $qty * $price,
+                            'image_url'  => $imageUrl,
+                        ];
+                    }
+                }
+
+                // Shipping provider & tracking number
+                $shippingCarrier = $det['shipping_carrier']
+                    ?? ($det['package_list'][0]['shipping_carrier'] ?? null);
+
+                $trackingNumber = $det['package_list'][0]['tracking_number']
+                    ?? ($det['tracking_number'] ?? null);
+
+                if (empty($trackingNumber) && in_array(strtoupper($det['order_status'] ?? ''), ['READY_TO_SHIP', 'PROCESSED', 'SHIPPED', 'COMPLETED'], true)) {
+                    $trackingNumber = $this->getTrackingNumber($account, $sn);
+                }
+
+                // Buyer details & contact
+                $buyerName = ! empty($det['recipient_address']['name'])
+                    ? $det['recipient_address']['name']
+                    : (! empty($det['buyer_username']) ? $det['buyer_username'] : ('Shopee Buyer (' . substr($sn, -4) . ')'));
+                $buyerPhone = $det['recipient_address']['phone'] ?? null;
+
+                $totalAmount = (float) ($det['total_amount'] ?? ($ord['total_amount'] ?? 0));
+                $orderStatus = (string) ($det['order_status'] ?? ($ord['order_status'] ?? 'UNPAID'));
+
                 $orders[] = [
-                    'order_id'     => (string) $ord['order_sn'],
-                    'order_sn'     => (string) $ord['order_sn'],
-                    'buyer_name'   => 'Shopee Buyer (' . substr((string) $ord['order_sn'], -4) . ')',
-                    'total_amount' => (float) ($ord['total_amount'] ?? 0),
-                    'status'       => (string) ($ord['order_status'] ?? 'UNPAID'),
-                    'items'        => [],
-                    'raw'          => $ord,
+                    'order_id'          => $sn,
+                    'order_sn'          => $sn,
+                    'buyer_name'        => $buyerName,
+                    'buyer_phone'       => $buyerPhone,
+                    'total_amount'      => $totalAmount,
+                    'status'            => $orderStatus,
+                    'shipping_provider' => $shippingCarrier,
+                    'tracking_number'   => $trackingNumber,
+                    'items'             => $items,
+                    'raw'               => ! empty($det) ? $det : $ord,
                 ];
             }
         }
@@ -1327,7 +1395,8 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
 
         if ($this->hasCredentials() && ! empty($accessToken)) {
             $sign = $this->generateSignature($path, $timestamp, $accessToken, $account->shop_id);
-            $url  = sprintf('%s%s?partner_id=%s&timestamp=%s&access_token=%s&shop_id=%s&sign=%s&order_sn_list=%s&response_optional_fields=buyer_user_id,buyer_username,recipient_address,item_list', $this->host, $path, $this->partnerId, $timestamp, $accessToken, $account->shop_id, $sign, $orderSnList);
+            $optionalFields = 'buyer_user_id,buyer_username,recipient_address,actual_shipping_fee,item_list,shipping_carrier,payment_method,total_amount,package_list,pay_time';
+            $url  = sprintf('%s%s?partner_id=%s&timestamp=%s&access_token=%s&shop_id=%s&sign=%s&order_sn_list=%s&response_optional_fields=%s', $this->host, $path, $this->partnerId, $timestamp, $accessToken, $account->shop_id, $sign, $orderSnList, $optionalFields);
 
             try {
                 $response = Http::timeout(15)->get($url);
@@ -1341,6 +1410,30 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
         }
 
         return [];
+    }
+
+    public function getTrackingNumber(MarketplaceAccount $account, string $orderSn): ?string
+    {
+        $timestamp   = time();
+        $path        = '/api/v2/logistics/get_tracking_number';
+        $accessToken = (string) $account->access_token;
+
+        if ($this->hasCredentials() && ! empty($accessToken)) {
+            $sign = $this->generateSignature($path, $timestamp, $accessToken, $account->shop_id);
+            $url  = sprintf('%s%s?partner_id=%s&timestamp=%s&access_token=%s&shop_id=%s&sign=%s&order_sn=%s', $this->host, $path, $this->partnerId, $timestamp, $accessToken, $account->shop_id, $sign, $orderSn);
+
+            try {
+                $response = Http::timeout(15)->get($url);
+                $data     = $response->json();
+                if ($response->successful() && ! empty($data['response']['tracking_number'])) {
+                    return (string) $data['response']['tracking_number'];
+                }
+            } catch (\Throwable $e) {
+                Log::warning("Shopee get_tracking_number error: {$e->getMessage()}");
+            }
+        }
+
+        return null;
     }
 
     public function cancelOrder(MarketplaceAccount $account, string $orderSn, string $cancelReason = 'OUT_OF_STOCK'): bool

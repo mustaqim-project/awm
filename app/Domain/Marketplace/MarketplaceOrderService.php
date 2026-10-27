@@ -62,14 +62,26 @@ class MarketplaceOrderService
 
             $order->marketplace_account_id = $account->id;
             $order->external_order_sn      = (string) ($data['order_sn'] ?? $data['order_id']);
-            $order->buyer_name             = (string) ($data['buyer_name'] ?? 'Pelanggan Marketplace');
-            $order->buyer_phone            = $data['buyer_phone'] ?? null;
-            $order->total_amount           = (float) ($data['total_amount'] ?? 0);
-            $order->channel_fee            = (float) ($data['channel_fee'] ?? 0);
-            $order->order_status           = strtoupper((string) ($data['status'] ?? 'UNPAID'));
-            $order->items_summary          = $data['items'] ?? [];
-            $order->shipping_provider      = $data['shipping_provider'] ?? null;
-            $order->tracking_number        = $data['tracking_number'] ?? null;
+            $order->buyer_name             = (string) ($data['buyer_name'] ?? ($order->buyer_name ?: 'Pelanggan Marketplace'));
+            $order->buyer_phone            = $data['buyer_phone'] ?? $order->buyer_phone;
+            $order->total_amount           = (float) ($data['total_amount'] ?? ($order->total_amount ?? 0));
+            $order->channel_fee            = (float) ($data['channel_fee'] ?? ($order->channel_fee ?? 0));
+            $order->order_status           = strtoupper((string) ($data['status'] ?? ($order->order_status ?: 'UNPAID')));
+
+            // Retain existing items if incoming payload is empty
+            if (! empty($data['items'])) {
+                $order->items_summary = $data['items'];
+            } elseif (empty($order->items_summary)) {
+                $order->items_summary = [];
+            }
+
+            if (! empty($data['shipping_provider'])) {
+                $order->shipping_provider = $data['shipping_provider'];
+            }
+            if (! empty($data['tracking_number'])) {
+                $order->tracking_number = $data['tracking_number'];
+            }
+
             $order->raw_payload            = $data['raw'] ?? $data;
             $order->synced_at              = now();
             if (! $order->exists) {
@@ -121,14 +133,82 @@ class MarketplaceOrderService
         $orderSn = $data['ordersn'] ?? ($payload['order_sn'] ?? ($payload['order_id'] ?? null));
         if (! empty($orderSn)) {
             $orderId = (string) $orderSn;
+            $items = $data['items'] ?? ($payload['items'] ?? []);
+            $shippingProvider = $data['shipping_carrier'] ?? ($payload['shipping_carrier'] ?? null);
+            $trackingNo = $data['tracking_no'] ?? ($data['tracking_number'] ?? ($payload['tracking_no'] ?? null));
+            $buyerName = $payload['buyer_name'] ?? null;
+            $buyerPhone = $payload['buyer_phone'] ?? null;
+            $totalAmount = (float) ($payload['total_amount'] ?? ($data['total_amount'] ?? 0));
+            $status = (string) ($data['status'] ?? ($payload['status'] ?? ($payload['order_status'] ?? 'PROCESSED')));
+            $rawPayload = $payload;
+
+            // Enrich webhook notification with full live details (items, courier, tracking, address)
+            try {
+                $adapter = $this->manager->driver($channel);
+                if (method_exists($adapter, 'getOrderDetail')) {
+                    $details = $adapter->getOrderDetail($account, $orderId);
+                    $det = $details[0] ?? $details;
+                    if (! empty($det) && is_array($det)) {
+                        $rawPayload = array_merge($rawPayload, $det);
+                        if (! empty($det['order_status'])) {
+                            $status = (string) $det['order_status'];
+                        }
+                        if (! empty($det['total_amount'])) {
+                            $totalAmount = (float) $det['total_amount'];
+                        }
+                        if (! empty($det['recipient_address']['name'])) {
+                            $buyerName = $det['recipient_address']['name'];
+                        } elseif (! empty($det['buyer_username'])) {
+                            $buyerName = $det['buyer_username'];
+                        }
+                        if (! empty($det['recipient_address']['phone'])) {
+                            $buyerPhone = $det['recipient_address']['phone'];
+                        }
+                        if (! empty($det['shipping_carrier'])) {
+                            $shippingProvider = $det['shipping_carrier'];
+                        } elseif (! empty($det['package_list'][0]['shipping_carrier'])) {
+                            $shippingProvider = $det['package_list'][0]['shipping_carrier'];
+                        }
+                        if (empty($trackingNo) && ! empty($det['package_list'][0]['tracking_number'])) {
+                            $trackingNo = $det['package_list'][0]['tracking_number'];
+                        }
+                        if (! empty($det['item_list'])) {
+                            $parsedItems = [];
+                            foreach ($det['item_list'] as $it) {
+                                $name = ! empty($it['item_name']) ? $it['item_name'] : (! empty($it['model_name']) ? $it['model_name'] : 'Produk Shopee');
+                                $qty = (int) ($it['model_quantity_purchased'] ?? 1);
+                                $price = (float) ($it['model_discounted_price'] ?? ($it['model_original_price'] ?? 0));
+                                $parsedItems[] = [
+                                    'item_id'    => $it['item_id'] ?? null,
+                                    'item_name'  => $name,
+                                    'name'       => $name,
+                                    'model_name' => $it['model_name'] ?? null,
+                                    'sku'        => ! empty($it['model_sku']) ? $it['model_sku'] : (! empty($it['item_sku']) ? $it['item_sku'] : null),
+                                    'quantity'   => $qty,
+                                    'price'      => $price,
+                                    'subtotal'   => $qty * $price,
+                                    'image_url'  => $it['image_info']['image_url'] ?? null,
+                                ];
+                            }
+                            $items = $parsedItems;
+                        }
+                    }
+                }
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::warning("Failed to enrich order detail on webhook: {$e->getMessage()}");
+            }
+
             $this->upsertMarketplaceOrder($account, [
-                'order_id'     => $orderId,
-                'order_sn'     => $orderId,
-                'buyer_name'   => $payload['buyer_name'] ?? ('Shopee Buyer (' . substr($orderId, -4) . ')'),
-                'total_amount' => (float) ($payload['total_amount'] ?? ($data['total_amount'] ?? 0)),
-                'status'       => (string) ($data['status'] ?? ($payload['status'] ?? ($payload['order_status'] ?? 'PROCESSED'))),
-                'items'        => $data['items'] ?? ($payload['items'] ?? []),
-                'raw'          => $payload,
+                'order_id'          => $orderId,
+                'order_sn'          => $orderId,
+                'buyer_name'        => $buyerName ?? ('Shopee Buyer (' . substr($orderId, -4) . ')'),
+                'buyer_phone'       => $buyerPhone,
+                'total_amount'      => $totalAmount,
+                'status'            => $status,
+                'shipping_provider' => $shippingProvider,
+                'tracking_number'   => $trackingNo,
+                'items'             => $items,
+                'raw'               => $rawPayload,
             ]);
         }
 

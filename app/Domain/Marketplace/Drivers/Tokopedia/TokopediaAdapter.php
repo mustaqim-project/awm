@@ -253,14 +253,44 @@ class TokopediaAdapter implements MarketplaceAdapterInterface
 
         if ($response->successful() && ! empty($data['data'])) {
             foreach ($data['data'] as $ord) {
+                $items = [];
+                if (! empty($ord['order_detail'])) {
+                    foreach ($ord['order_detail'] as $it) {
+                        $name = $it['product_name'] ?? 'Produk Tokopedia';
+                        $qty = (int) ($it['quantity'] ?? 1);
+                        $price = (float) ($it['product_price'] ?? 0);
+                        $items[] = [
+                            'item_id'    => $it['product_id'] ?? null,
+                            'item_name'  => $name,
+                            'name'       => $name,
+                            'sku'        => $it['sku'] ?? null,
+                            'quantity'   => $qty,
+                            'price'      => $price,
+                            'subtotal'   => (float) ($it['total_price'] ?? ($qty * $price)),
+                            'image_url'  => $it['product_picture'] ?? null,
+                        ];
+                    }
+                }
+
+                $shippingAgency = $ord['order_info']['shipping_info']['shipping_agency'] ?? null;
+                $serviceName    = $ord['order_info']['shipping_info']['service_name'] ?? null;
+                $shippingProvider = $shippingAgency && $serviceName
+                    ? "{$shippingAgency} - {$serviceName}"
+                    : ($shippingAgency ?: ($serviceName ?: null));
+
+                $trackingNumber = $ord['order_info']['shipping_info']['awb'] ?? null;
+
                 $orders[] = [
-                    'order_id'     => (string) $ord['order_id'],
-                    'order_sn'     => (string) ($ord['invoice_ref_num'] ?? $ord['order_id']),
-                    'buyer_name'   => $ord['buyer_info']['buyer_fullname'] ?? 'Tokopedia Buyer',
-                    'total_amount' => (float) ($ord['item_price'] ?? 0),
-                    'status'       => (string) ($ord['order_status'] ?? 'UNPAID'),
-                    'items'        => $ord['order_detail'] ?? [],
-                    'raw'          => $ord,
+                    'order_id'          => (string) $ord['order_id'],
+                    'order_sn'          => (string) ($ord['invoice_ref_num'] ?? $ord['order_id']),
+                    'buyer_name'        => $ord['buyer_info']['buyer_fullname'] ?? 'Tokopedia Buyer',
+                    'buyer_phone'       => $ord['buyer_info']['buyer_phone'] ?? null,
+                    'total_amount'      => (float) ($ord['item_price'] ?? 0),
+                    'status'            => (string) ($ord['order_status'] ?? 'UNPAID'),
+                    'shipping_provider' => $shippingProvider,
+                    'tracking_number'   => $trackingNumber,
+                    'items'             => $items,
+                    'raw'               => $ord,
                 ];
             }
         }

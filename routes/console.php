@@ -67,3 +67,10 @@ Schedule::command('cooca:apply-annual-price-escalation')
     ->withoutOverlapping()
     ->appendOutputTo(storage_path('logs/cron.log'));
 
+// 10. Schedule automatic periodic sync for marketplace orders (Setiap 5 menit)
+Schedule::command('marketplace:sync-orders')
+    ->everyFiveMinutes()
+    ->withoutOverlapping()
+    ->appendOutputTo(storage_path('logs/marketplace-sync.log'));
+
+
