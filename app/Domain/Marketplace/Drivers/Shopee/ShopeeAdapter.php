@@ -729,31 +729,6 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
             ];
         }
 
-        // Hardcoded safety fallback for food categories if get_attributes returned empty
-        if (empty($payloadAttributes)) {
-            $payloadAttributes = [
-                [
-                    'attribute_id'         => 200010, // Shelf Life
-                    'attribute_value_list' => [
-                        [
-                            'value_id'            => 0,
-                            'original_value_name' => '12',
-                            'value_unit'          => 'month',
-                        ],
-                    ],
-                ],
-                [
-                    'attribute_id'         => 200061, // Expiry Date
-                    'attribute_value_list' => [
-                        [
-                            'value_id'            => 0,
-                            'original_value_name' => (string) strtotime('+1 year'),
-                        ],
-                    ],
-                ],
-            ];
-        }
-
         return $payloadAttributes;
     }
 
