@@ -1024,5 +1024,231 @@ class MarketplaceWebController extends Controller
 
         return (new DataExchangeService())->exportMarketplaceOrders($business, $request->all());
     }
+
+    /**
+     * Print or Download Shipping Label for a single order.
+     * Direct Shopee PDF or Thermal 100x150 mm HTML print view.
+     */
+    public function shippingLabel(MarketplaceOrder $order, Request $request): mixed
+    {
+        $business = Context::requireBusiness();
+        if ($order->business_id !== $business->id) {
+            abort(404);
+        }
+
+        // If user wants native Shopee PDF download
+        if ($order->channel === 'shopee' && $order->account) {
+            try {
+                $driver = $this->manager->driver('shopee');
+                $docType = $request->query('format', 'THERMAL_AIR_WAYBILL');
+                $res = $driver->downloadShippingDocument($order->account, $order->external_order_id, $docType);
+
+                if (! empty($res['success']) && ! empty($res['pdf_content'])) {
+                    return response($res['pdf_content'], 200, [
+                        'Content-Type'        => 'application/pdf',
+                        'Content-Disposition' => 'inline; filename="label_' . ($order->external_order_sn ?: $order->external_order_id) . '.pdf"',
+                    ]);
+                }
+            } catch (\Throwable $e) {
+                \Log::warning("Native Shopee label download failed: {$e->getMessage()}");
+            }
+        }
+
+        // Fallback: render the dedicated thermal 100x150 mm print view
+        return view('app.marketplace.shipping_label', [
+            'business'  => $business,
+            'orders'    => collect([$order]),
+            'autoPrint' => $request->boolean('auto_print', true),
+        ]);
+    }
+
+    /**
+     * Batch Print or Download Shipping Labels for multiple orders.
+     */
+    public function massShippingLabel(Request $request): mixed
+    {
+        $business = Context::requireBusiness();
+        $orderIds = $request->input('order_ids', []);
+
+        if (is_string($orderIds)) {
+            $orderIds = explode(',', $orderIds);
+        }
+        $orderIds = array_filter(array_map('trim', (array) $orderIds));
+
+        if (empty($orderIds)) {
+            return back()->with('error', 'Pilih minimal satu pesanan untuk mencetak label.');
+        }
+
+        $orders = MarketplaceOrder::where('business_id', $business->id)
+            ->whereIn('id', $orderIds)
+            ->with('account')
+            ->get();
+
+        if ($orders->isEmpty()) {
+            return back()->with('error', 'Pesanan yang dipilih tidak ditemukan.');
+        }
+
+        // Check if all selected orders belong to a single Shopee account and can be downloaded as a merged PDF
+        $shopeeOrders = $orders->where('channel', 'shopee');
+        if ($shopeeOrders->count() === $orders->count()) {
+            $account = $orders->first()->account;
+            if ($account) {
+                try {
+                    $driver = $this->manager->driver('shopee');
+                    $orderSns = $orders->pluck('external_order_id')->toArray();
+                    $docType = $request->query('format', 'THERMAL_AIR_WAYBILL');
+                    $res = $driver->downloadShippingDocument($account, $orderSns, $docType);
+
+                    if (! empty($res['success']) && ! empty($res['pdf_content'])) {
+                        return response($res['pdf_content'], 200, [
+                            'Content-Type'        => 'application/pdf',
+                            'Content-Disposition' => 'inline; filename="shopee_labels_batch_' . count($orderSns) . '_orders.pdf"',
+                        ]);
+                    }
+                } catch (\Throwable $e) {
+                    \Log::warning("Batch Shopee PDF label download failed: {$e->getMessage()}");
+                }
+            }
+        }
+
+        // Render merged thermal label view
+        return view('app.marketplace.shipping_label', [
+            'business'  => $business,
+            'orders'    => $orders,
+            'autoPrint' => $request->boolean('auto_print', true),
+        ]);
+    }
+
+    /**
+     * Get shipping logistics parameters for an order (pickup addresses / dropoff branches).
+     */
+    public function getShippingParameter(MarketplaceOrder $order): JsonResponse
+    {
+        $business = Context::requireBusiness();
+        if ($order->business_id !== $business->id) {
+            abort(404);
+        }
+
+        if ($order->channel === 'shopee' && $order->account) {
+            $driver = $this->manager->driver('shopee');
+            $params = $driver->getShippingParameter($order->account, $order->external_order_id);
+            return response()->json(['success' => true, 'parameters' => $params]);
+        }
+
+        return response()->json(['success' => true, 'parameters' => []]);
+    }
+
+    /**
+     * Arrange shipment for an order (Pickup / Dropoff / Handover to courier).
+     */
+    public function shipOrder(Request $request, MarketplaceOrder $order): JsonResponse|RedirectResponse
+    {
+        $business = Context::requireBusiness();
+        if ($order->business_id !== $business->id) {
+            abort(404);
+        }
+
+        if ($order->channel === 'shopee' && $order->account) {
+            $driver = $this->manager->driver('shopee');
+            $res = $driver->shipOrder($order->account, $order->external_order_id, $request->only(['pickup', 'dropoff', 'non_integrated']));
+
+            if (! empty($res['success'])) {
+                $tracking = $driver->getTrackingNumber($order->account, $order->external_order_id);
+                $order->update([
+                    'order_status'    => 'shipped',
+                    'tracking_number' => $tracking ?: $order->tracking_number,
+                ]);
+
+                $msg = "Pengiriman untuk pesanan {$order->external_order_sn} berhasil diatur ke kurir Shopee!";
+                if ($request->wantsJson() || $request->ajax()) {
+                    return response()->json(['success' => true, 'message' => $msg, 'order' => $order]);
+                }
+                return back()->with('success', $msg);
+            }
+
+            $errMsg = $res['message'] ?? 'Gagal mengatur pengiriman pesanan di Shopee.';
+            if ($request->wantsJson() || $request->ajax()) {
+                return response()->json(['success' => false, 'error' => $errMsg], 422);
+            }
+            return back()->with('error', $errMsg);
+        }
+
+        $order->update(['order_status' => 'shipped']);
+        $msg = "Pesanan {$order->external_order_sn} berhasil diset ke pengiriman!";
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json(['success' => true, 'message' => $msg, 'order' => $order]);
+        }
+        return back()->with('success', $msg);
+    }
+
+    /**
+     * Batch arrange shipment for multiple orders.
+     */
+    public function massShipOrders(Request $request): JsonResponse|RedirectResponse
+    {
+        $business = Context::requireBusiness();
+        $orderIds = $request->input('order_ids', []);
+
+        if (is_string($orderIds)) {
+            $orderIds = explode(',', $orderIds);
+        }
+        $orderIds = array_filter(array_map('trim', (array) $orderIds));
+
+        if (empty($orderIds)) {
+            $msg = 'Pilih minimal satu pesanan untuk mengatur pengiriman massal.';
+            if ($request->wantsJson() || $request->ajax()) {
+                return response()->json(['success' => false, 'error' => $msg], 422);
+            }
+            return back()->with('error', $msg);
+        }
+
+        $orders = MarketplaceOrder::where('business_id', $business->id)
+            ->whereIn('id', $orderIds)
+            ->with('account')
+            ->get();
+
+        $shippedCount = 0;
+        $failedCount = 0;
+
+        foreach ($orders as $order) {
+            if ($order->channel === 'shopee' && $order->account) {
+                try {
+                    $driver = $this->manager->driver('shopee');
+                    $res = $driver->shipOrder($order->account, $order->external_order_id);
+                    if (! empty($res['success'])) {
+                        $tracking = $driver->getTrackingNumber($order->account, $order->external_order_id);
+                        $order->update([
+                            'order_status'    => 'shipped',
+                            'tracking_number' => $tracking ?: $order->tracking_number,
+                        ]);
+                        $shippedCount++;
+                    } else {
+                        $failedCount++;
+                    }
+                } catch (\Throwable $e) {
+                    $failedCount++;
+                }
+            } else {
+                $order->update(['order_status' => 'shipped']);
+                $shippedCount++;
+            }
+        }
+
+        $msg = "Pengiriman massal selesai: {$shippedCount} pesanan berhasil diproses.";
+        if ($failedCount > 0) {
+            $msg .= " ({$failedCount} pesanan gagal atau memerlukan penanganan kurir manual).";
+        }
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => $msg,
+                'shipped_count' => $shippedCount,
+                'failed_count'  => $failedCount,
+            ]);
+        }
+
+        return back()->with('success', $msg);
+    }
 }
 

@@ -1009,6 +1009,9 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
                 Route::get('/products', [MarketplaceWebController::class, 'products'])->name('products');
                 Route::get('/orders', [MarketplaceWebController::class, 'orders'])->name('orders');
                 Route::get('/orders/export', [MarketplaceWebController::class, 'exportOrders'])->name('orders.export');
+                Route::get('/orders/{order}/shipping-label', [MarketplaceWebController::class, 'shippingLabel'])->name('orders.shipping-label');
+                Route::post('/orders/mass-shipping-label', [MarketplaceWebController::class, 'massShippingLabel'])->name('orders.mass-shipping-label');
+                Route::get('/orders/{order}/shipping-parameter', [MarketplaceWebController::class, 'getShippingParameter'])->name('orders.shipping-parameter');
                 Route::get('/chat', [MarketplaceWebController::class, 'chat'])->name('chat');
                 Route::get('/chat/{conversation}', [MarketplaceWebController::class, 'getConversationDetails'])->name('chat.details');
                 Route::get('/logs', [MarketplaceWebController::class, 'logs'])->name('logs');
@@ -1034,8 +1037,10 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
                 Route::post('/products/sync-all', [MarketplaceWebController::class, 'syncAll'])->middleware('throttle:10,1')->name('products.sync-all');
                 Route::post('/products/pull', [MarketplaceWebController::class, 'pullProducts'])->middleware('throttle:10,1')->name('products.pull');
 
-                // Marketplace Orders
+                // Marketplace Orders & Shipment
                 Route::post('/orders/pull', [MarketplaceWebController::class, 'pullOrders'])->middleware('throttle:10,1')->name('orders.pull');
+                Route::post('/orders/{order}/ship', [MarketplaceWebController::class, 'shipOrder'])->name('orders.ship');
+                Route::post('/orders/mass-ship', [MarketplaceWebController::class, 'massShipOrders'])->name('orders.mass-ship');
             });
 
         });

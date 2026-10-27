@@ -13,6 +13,103 @@
     refreshing: false,
     selectedPullChannel: 'shopee',
     pollTimer: null,
+    selectedOrderIds: [],
+    pageOrderIds: @js($orders->pluck('id')),
+    shippingInProgress: false,
+    toggleSelectAll() {
+        if (this.selectedOrderIds.length === this.pageOrderIds.length) {
+            this.selectedOrderIds = [];
+        } else {
+            this.selectedOrderIds = [...this.pageOrderIds];
+        }
+    },
+    printMassLabels() {
+        if (this.selectedOrderIds.length === 0) {
+            if (window.AppAlert) AppAlert.toast('Pilih pesanan terlebih dahulu.', 'warning');
+            return;
+        }
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '{{ route('marketplace-hub.orders.mass-shipping-label') }}';
+        form.target = '_blank';
+        
+        const csrf = document.createElement('input');
+        csrf.type = 'hidden';
+        csrf.name = '_token';
+        csrf.value = document.querySelector('meta[name=\'csrf-token\']')?.getAttribute('content') || '';
+        form.appendChild(csrf);
+
+        this.selectedOrderIds.forEach(id => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'order_ids[]';
+            input.value = id;
+            form.appendChild(input);
+        });
+
+        document.body.appendChild(form);
+        form.submit();
+        document.body.removeChild(form);
+    },
+    async massShipOrders() {
+        if (this.selectedOrderIds.length === 0) return;
+        if (!confirm(`Atur pengiriman untuk ${this.selectedOrderIds.length} pesanan terpilih ke kurir?`)) return;
+
+        this.shippingInProgress = true;
+        try {
+            const token = document.querySelector('meta[name=\'csrf-token\']')?.getAttribute('content');
+            const res = await fetch('{{ route('marketplace-hub.orders.mass-ship') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': token || ''
+                },
+                body: JSON.stringify({ order_ids: this.selectedOrderIds })
+            });
+            const data = await res.json();
+            if (data.success) {
+                if (window.AppAlert) AppAlert.toast(data.message, 'success');
+                this.selectedOrderIds = [];
+                await this.refreshOrdersTable();
+            } else {
+                if (window.AppAlert) AppAlert.toast(data.error || 'Gagal mengatur pengiriman massal.', 'error');
+            }
+        } catch (e) {
+            if (window.AppAlert) AppAlert.toast('Kesalahan jaringan saat memproses pengiriman.', 'error');
+        } finally {
+            this.shippingInProgress = false;
+        }
+    },
+    async shipCurrentOrder() {
+        if (!this.selectedOrder) return;
+        if (!confirm(`Atur pengiriman pesanan ${this.selectedOrder.external_order_sn} ke kurir?`)) return;
+
+        this.shippingInProgress = true;
+        try {
+            const token = document.querySelector('meta[name=\'csrf-token\']')?.getAttribute('content');
+            const res = await fetch(`{{ url('marketplace-hub/orders') }}/${this.selectedOrder.id}/ship`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': token || ''
+                }
+            });
+            const data = await res.json();
+            if (data.success) {
+                if (window.AppAlert) AppAlert.toast(data.message, 'success');
+                this.detailModal = false;
+                await this.refreshOrdersTable();
+            } else {
+                if (window.AppAlert) AppAlert.toast(data.error || 'Gagal mengatur pengiriman.', 'error');
+            }
+        } catch (e) {
+            if (window.AppAlert) AppAlert.toast('Kesalahan jaringan saat mengatur pengiriman.', 'error');
+        } finally {
+            this.shippingInProgress = false;
+        }
+    },
     openDetail(order) {
         this.selectedOrder = order;
         this.detailModal = true;
@@ -176,6 +273,9 @@
             <table class="w-full text-left text-[13px] border-collapse">
                 <thead>
                     <tr class="border-b border-black/[0.06] dark:border-white/[0.08] bg-black/[0.02] dark:bg-white/[0.02] text-black/60 dark:text-white/60 font-semibold text-[11.5px] uppercase tracking-wider">
+                        <th class="py-3.5 px-3 text-center w-10">
+                            <input type="checkbox" @change="toggleSelectAll()" :checked="pageOrderIds.length > 0 && selectedOrderIds.length === pageOrderIds.length" class="w-4 h-4 rounded border-black/20 text-[#007AFF] focus:ring-[#007AFF] cursor-pointer" title="Pilih Semua di Halaman Ini">
+                        </th>
                         <th class="py-3.5 px-4 sm:px-6">{{ __('marketplace.th_order_sn_channel') }}</th>
                         <th class="py-3.5 px-4">{{ __('marketplace.th_customer') }}</th>
                         <th class="py-3.5 px-4">{{ __('marketplace.th_items_products') }}</th>
@@ -218,7 +318,12 @@
                                 'items' => $orderItems,
                             ];
                         @endphp
-                        <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.015] transition-colors">
+                        <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.015] transition-colors" :class="selectedOrderIds.includes('{{ $order->id }}') ? 'bg-[#007AFF]/[0.04] dark:bg-[#007AFF]/[0.08]' : ''">
+                            <!-- Col 0: Checkbox -->
+                            <td class="py-4 px-3 text-center">
+                                <input type="checkbox" value="{{ $order->id }}" x-model="selectedOrderIds" class="w-4 h-4 rounded border-black/20 text-[#007AFF] focus:ring-[#007AFF] cursor-pointer">
+                            </td>
+
                             <!-- Col 1: Order ID & Channel Badge -->
                             <td class="py-4 px-4 sm:px-6">
                                 <div class="flex items-center gap-2">
@@ -318,17 +423,25 @@
 
                             <!-- Col 7: Actions -->
                             <td class="py-4 px-4 text-center">
-                                <button type="button" @click="openDetail(@js($orderModalData))"
-                                    class="h-8 px-3 rounded-[9px] text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 transition-all inline-flex items-center gap-1.5 cursor-pointer active:scale-95 shadow-2xs"
-                                    title="Lihat Rincian Barang & Pengiriman">
-                                    <i data-lucide="eye" class="w-3.5 h-3.5"></i>
-                                    <span>Detail</span>
-                                </button>
+                                <div class="flex items-center justify-center gap-1.5">
+                                    <a href="{{ route('marketplace-hub.orders.shipping-label', $order) }}" target="_blank"
+                                        class="h-8 px-2.5 rounded-[9px] text-[11.5px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 transition-all inline-flex items-center gap-1 cursor-pointer active:scale-95 shadow-2xs"
+                                        title="Cetak Label Pengiriman (Thermal 100x150 / Shopee PDF)">
+                                        <i data-lucide="printer" class="w-3.5 h-3.5"></i>
+                                        <span>Label</span>
+                                    </a>
+                                    <button type="button" @click="openDetail(@js($orderModalData))"
+                                        class="h-8 px-2.5 rounded-[9px] text-[11.5px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 transition-all inline-flex items-center gap-1 cursor-pointer active:scale-95 shadow-2xs"
+                                        title="Lihat Rincian Barang & Pengiriman">
+                                        <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                                        <span>Detail</span>
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="py-12 text-center text-black/50 dark:text-white/50">
+                            <td colspan="8" class="py-12 text-center text-black/50 dark:text-white/50">
                                 <div class="w-12 h-12 rounded-[16px] bg-black/[0.04] dark:bg-white/[0.06] flex items-center justify-center mx-auto mb-3">
                                     <i data-lucide="shopping-bag" class="w-6 h-6 text-black/40 dark:text-white/40"></i>
                                 </div>
@@ -598,15 +711,63 @@
                 </div>
 
                 <!-- Modal Footer -->
-                <div class="flex items-center justify-end gap-2.5 pt-2 border-t border-black/[0.06] dark:border-white/[0.08]">
+                <div class="flex flex-wrap items-center justify-between gap-2.5 pt-3 border-t border-black/[0.06] dark:border-white/[0.08]">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <a :href="'{{ url('marketplace-hub/orders') }}/' + selectedOrder?.id + '/shipping-label'" target="_blank"
+                            class="min-h-[40px] px-3.5 rounded-[12px] text-[12.5px] font-semibold text-white bg-emerald-600 hover:bg-emerald-500 transition-all inline-flex items-center gap-1.5 cursor-pointer shadow-xs active:scale-95">
+                            <i data-lucide="printer" class="w-4 h-4"></i>
+                            <span>Cetak Label Pengiriman</span>
+                        </a>
+                        <template x-if="selectedOrder?.order_status === 'PAID' || selectedOrder?.order_status === 'READY_TO_SHIP' || selectedOrder?.order_status === 'PENDING'">
+                            <button type="button" @click="shipCurrentOrder()" :disabled="shippingInProgress"
+                                class="min-h-[40px] px-3.5 rounded-[12px] text-[12.5px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] transition-all inline-flex items-center gap-1.5 cursor-pointer shadow-xs active:scale-95 disabled:opacity-50">
+                                <i data-lucide="truck" class="w-4 h-4" :class="shippingInProgress ? 'animate-bounce' : ''"></i>
+                                <span x-text="shippingInProgress ? 'Memproses...' : 'Atur Pengiriman Kurir'"></span>
+                            </button>
+                        </template>
+                    </div>
                     <button type="button" @click="detailModal = false"
-                        class="min-h-[42px] px-5 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] transition-all cursor-pointer active:scale-95">
+                        class="min-h-[40px] px-5 rounded-[12px] text-[12.5px] font-semibold text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] transition-all cursor-pointer active:scale-95">
                         Tutup
                     </button>
                 </div>
             </div>
         </div>
     </template>
+
+    <!-- ===================================================== -->
+    <!-- 6. FLOATING BATCH ACTION BAR (APPLE HIG DOCK PILL)    -->
+    <!-- ===================================================== -->
+    <div x-show="selectedOrderIds.length > 0" x-cloak
+        x-transition:enter="ease-out duration-300"
+        x-transition:enter-start="opacity-0 translate-y-8 scale-95"
+        x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+        x-transition:leave="ease-in duration-200"
+        x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+        x-transition:leave-end="opacity-0 translate-y-8 scale-95"
+        class="fixed bottom-6 inset-x-0 z-[150] flex justify-center px-4 pointer-events-none">
+        <div class="pointer-events-auto bg-black/90 dark:bg-white/95 text-white dark:text-black backdrop-blur-xl px-5 py-3 rounded-[22px] shadow-2xl flex flex-wrap items-center gap-3 border border-white/10 dark:border-black/10">
+            <div class="flex items-center gap-2 text-[13px] font-semibold">
+                <span class="w-2 h-2 rounded-full bg-[#007AFF] animate-ping"></span>
+                <span><strong x-text="selectedOrderIds.length"></strong> Pesanan Terpilih</span>
+            </div>
+            <div class="h-4 w-px bg-white/20 dark:bg-black/20"></div>
+            <button type="button" @click="printMassLabels()"
+                class="h-9 px-4 rounded-[12px] text-[13px] font-bold bg-emerald-600 hover:bg-emerald-500 text-white flex items-center gap-1.5 cursor-pointer active:scale-95 shadow-md transition">
+                <i data-lucide="printer" class="w-4 h-4"></i>
+                <span>Cetak Label Terpilih</span>
+            </button>
+            <button type="button" @click="massShipOrders()" :disabled="shippingInProgress"
+                class="h-9 px-4 rounded-[12px] text-[13px] font-bold bg-[#007AFF] hover:bg-[#0071E3] text-white flex items-center gap-1.5 cursor-pointer active:scale-95 shadow-md transition disabled:opacity-50">
+                <i data-lucide="truck" class="w-4 h-4" :class="shippingInProgress ? 'animate-bounce' : ''"></i>
+                <span x-text="shippingInProgress ? 'Memproses...' : 'Atur Pengiriman Massal'"></span>
+            </button>
+            <button type="button" @click="selectedOrderIds = []"
+                class="h-9 px-3 rounded-[12px] text-[12px] font-medium text-white/70 dark:text-black/70 hover:text-white dark:hover:text-black hover:bg-white/10 dark:hover:bg-black/10 transition cursor-pointer">
+                Batal
+            </button>
+        </div>
+    </div>
 
 </div>
 @endsection

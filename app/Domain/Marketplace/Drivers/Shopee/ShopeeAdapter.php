@@ -1462,32 +1462,72 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
     }
 
     // =========================================================================
-    // MODULE 6: LOGISTICS & SHIPPING DOCUMENTS
+    // MODULE 6: LOGISTICS, ARRANGING SHIPMENT & SHIPPING DOCUMENTS (LABEL PRINTING)
     // =========================================================================
 
-    public function createShippingDocument(MarketplaceAccount $account, string $orderSn): array
+    /**
+     * Get shipping parameters for an order (pickup addresses/slots, dropoff branches).
+     * Shopee API: GET /api/v2/logistics/get_shipping_parameter
+     */
+    public function getShippingParameter(MarketplaceAccount $account, string $orderSn): array
     {
         $timestamp   = time();
-        $path        = '/api/v2/logistics/create_shipping_document';
+        $path        = '/api/v2/logistics/get_shipping_parameter';
+        $accessToken = (string) $account->access_token;
+
+        if ($this->hasCredentials() && ! empty($accessToken)) {
+            $sign = $this->generateSignature($path, $timestamp, $accessToken, $account->shop_id);
+            $url  = sprintf('%s%s?partner_id=%s&timestamp=%s&access_token=%s&shop_id=%s&sign=%s&order_sn=%s', $this->host, $path, $this->partnerId, $timestamp, $accessToken, $account->shop_id, $sign, $orderSn);
+
+            try {
+                $response = Http::timeout(15)->get($url);
+                $data     = $response->json();
+                if ($response->successful() && empty($data['error'])) {
+                    return $data['response'] ?? [];
+                }
+                Log::warning("Shopee get_shipping_parameter failed: " . json_encode($data));
+            } catch (\Throwable $e) {
+                Log::warning("Shopee get_shipping_parameter error: {$e->getMessage()}");
+            }
+        }
+
+        return [];
+    }
+
+    /**
+     * Get mass shipping parameters for multiple orders.
+     * Shopee API: POST /api/v2/logistics/get_mass_shipping_parameter
+     */
+    public function getMassShippingParameter(MarketplaceAccount $account, array $orderSns): array
+    {
+        $timestamp   = time();
+        $path        = '/api/v2/logistics/get_mass_shipping_parameter';
         $accessToken = (string) $account->access_token;
 
         if ($this->hasCredentials() && ! empty($accessToken)) {
             $sign = $this->generateSignature($path, $timestamp, $accessToken, $account->shop_id);
             $url  = sprintf('%s%s?partner_id=%s&timestamp=%s&access_token=%s&shop_id=%s&sign=%s', $this->host, $path, $this->partnerId, $timestamp, $accessToken, $account->shop_id, $sign);
 
+            $orderList = array_map(fn($sn) => ['order_sn' => is_array($sn) ? ($sn['order_sn'] ?? '') : (string) $sn], $orderSns);
+
             try {
-                $response = Http::timeout(15)->post($url, [
-                    'order_list' => [['order_sn' => $orderSn]],
-                ]);
-                return $response->json() ?: ['success' => true];
+                $response = Http::timeout(20)->post($url, ['order_list' => $orderList]);
+                $data     = $response->json();
+                if ($response->successful() && empty($data['error'])) {
+                    return $data['response'] ?? [];
+                }
             } catch (\Throwable $e) {
-                Log::warning("Shopee create_shipping_document error: {$e->getMessage()}");
+                Log::warning("Shopee get_mass_shipping_parameter error: {$e->getMessage()}");
             }
         }
 
-        return ['success' => true, 'status' => 'READY'];
+        return [];
     }
 
+    /**
+     * Arrange shipment for a single order (Pickup or Dropoff).
+     * Shopee API: POST /api/v2/logistics/ship_order
+     */
     public function shipOrder(MarketplaceAccount $account, string $orderSn, array $params = []): array
     {
         $timestamp   = time();
@@ -1498,17 +1538,270 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
             $sign = $this->generateSignature($path, $timestamp, $accessToken, $account->shop_id);
             $url  = sprintf('%s%s?partner_id=%s&timestamp=%s&access_token=%s&shop_id=%s&sign=%s', $this->host, $path, $this->partnerId, $timestamp, $accessToken, $account->shop_id, $sign);
 
-            $payload = array_merge(['order_sn' => $orderSn], $params);
+            $payload = ['order_sn' => $orderSn];
+
+            if (! empty($params['pickup'])) {
+                $payload['pickup'] = $params['pickup'];
+            } elseif (! empty($params['dropoff'])) {
+                $payload['dropoff'] = $params['dropoff'];
+            } elseif (! empty($params['non_integrated'])) {
+                $payload['non_integrated'] = $params['non_integrated'];
+            } else {
+                // Auto-detect: query shipping parameter first to detect if pickup or dropoff
+                $param = $this->getShippingParameter($account, $orderSn);
+                $infoNeeded = $param['info_needed'] ?? [];
+                if (! empty($infoNeeded['dropoff']) || isset($param['dropoff'])) {
+                    $payload['dropoff'] = ['branch_id' => $param['dropoff']['branch_list'][0]['branch_id'] ?? 0];
+                } elseif (! empty($infoNeeded['pickup']) || isset($param['pickup'])) {
+                    $firstAddress = $param['pickup']['address_list'][0] ?? null;
+                    $firstSlot = $firstAddress['time_slot_list'][0] ?? null;
+                    $payload['pickup'] = [
+                        'address_id'     => $firstAddress['address_id'] ?? 0,
+                        'pickup_time_id' => $firstSlot['pickup_time_id'] ?? '',
+                    ];
+                }
+            }
 
             try {
-                $response = Http::timeout(15)->post($url, $payload);
-                return $response->json() ?: ['success' => true];
+                $response = Http::timeout(20)->post($url, $payload);
+                $data     = $response->json();
+                if ($response->successful() && empty($data['error'])) {
+                    return ['success' => true, 'response' => $data['response'] ?? [], 'message' => 'Pesanan berhasil diserahkan ke kurir Shopee.'];
+                }
+                return [
+                    'success' => false,
+                    'error'   => $data['error'] ?? 'ship_failed',
+                    'message' => $data['message'] ?? 'Gagal mengatur pengiriman pesanan di Shopee.',
+                ];
             } catch (\Throwable $e) {
                 Log::warning("Shopee ship_order error: {$e->getMessage()}");
+                return ['success' => false, 'message' => $e->getMessage()];
             }
         }
 
-        return ['success' => true, 'message' => 'Pesanan berhasil diserahkan ke kurir Shopee.'];
+        return ['success' => true, 'message' => 'Mode offline: Pesanan diset ke pengiriman Shopee.'];
+    }
+
+    /**
+     * Batch arrange shipment for multiple orders.
+     * Shopee API: POST /api/v2/logistics/mass_ship_order
+     */
+    public function massShipOrder(MarketplaceAccount $account, array $orderList): array
+    {
+        $timestamp   = time();
+        $path        = '/api/v2/logistics/mass_ship_order';
+        $accessToken = (string) $account->access_token;
+
+        if ($this->hasCredentials() && ! empty($accessToken)) {
+            $sign = $this->generateSignature($path, $timestamp, $accessToken, $account->shop_id);
+            $url  = sprintf('%s%s?partner_id=%s&timestamp=%s&access_token=%s&shop_id=%s&sign=%s', $this->host, $path, $this->partnerId, $timestamp, $accessToken, $account->shop_id, $sign);
+
+            try {
+                $response = Http::timeout(25)->post($url, ['order_list' => $orderList]);
+                $data     = $response->json();
+                if ($response->successful() && empty($data['error'])) {
+                    return ['success' => true, 'response' => $data['response'] ?? []];
+                }
+                return ['success' => false, 'error' => $data['error'] ?? 'mass_ship_failed', 'message' => $data['message'] ?? 'Gagal mengatur pengiriman massal.'];
+            } catch (\Throwable $e) {
+                Log::warning("Shopee mass_ship_order error: {$e->getMessage()}");
+                return ['success' => false, 'message' => $e->getMessage()];
+            }
+        }
+
+        return ['success' => true];
+    }
+
+    /**
+     * Create shipping document / airway bill generation job (up to 50 orders).
+     * Shopee API: POST /api/v2/logistics/create_shipping_document
+     */
+    public function createShippingDocument(MarketplaceAccount $account, string|array $orderSns, string $documentType = 'THERMAL_AIR_WAYBILL'): array
+    {
+        $timestamp   = time();
+        $path        = '/api/v2/logistics/create_shipping_document';
+        $accessToken = (string) $account->access_token;
+
+        $orders = is_array($orderSns) ? $orderSns : [$orderSns];
+        $orderList = array_map(function ($item) {
+            if (is_array($item)) {
+                return ['order_sn' => (string) ($item['order_sn'] ?? $item['order_id'] ?? '')];
+            }
+            return ['order_sn' => (string) $item];
+        }, $orders);
+
+        if ($this->hasCredentials() && ! empty($accessToken)) {
+            $sign = $this->generateSignature($path, $timestamp, $accessToken, $account->shop_id);
+            $url  = sprintf('%s%s?partner_id=%s&timestamp=%s&access_token=%s&shop_id=%s&sign=%s', $this->host, $path, $this->partnerId, $timestamp, $accessToken, $account->shop_id, $sign);
+
+            try {
+                $response = Http::timeout(20)->post($url, [
+                    'order_list'             => array_slice($orderList, 0, 50),
+                    'shipping_document_type' => $documentType,
+                ]);
+                $data = $response->json();
+                return $data ?: ['success' => true];
+            } catch (\Throwable $e) {
+                Log::warning("Shopee create_shipping_document error: {$e->getMessage()}");
+            }
+        }
+
+        return ['success' => true, 'status' => 'READY'];
+    }
+
+    /**
+     * Check generation result / status of shipping documents.
+     * Shopee API: POST /api/v2/logistics/get_shipping_document_result
+     */
+    public function getShippingDocumentResult(MarketplaceAccount $account, string|array $orderSns, string $documentType = 'THERMAL_AIR_WAYBILL'): array
+    {
+        $timestamp   = time();
+        $path        = '/api/v2/logistics/get_shipping_document_result';
+        $accessToken = (string) $account->access_token;
+
+        $orders = is_array($orderSns) ? $orderSns : [$orderSns];
+        $orderList = array_map(fn($sn) => ['order_sn' => is_array($sn) ? ($sn['order_sn'] ?? '') : (string) $sn], $orders);
+
+        if ($this->hasCredentials() && ! empty($accessToken)) {
+            $sign = $this->generateSignature($path, $timestamp, $accessToken, $account->shop_id);
+            $url  = sprintf('%s%s?partner_id=%s&timestamp=%s&access_token=%s&shop_id=%s&sign=%s', $this->host, $path, $this->partnerId, $timestamp, $accessToken, $account->shop_id, $sign);
+
+            try {
+                $response = Http::timeout(15)->post($url, [
+                    'order_list'             => array_slice($orderList, 0, 50),
+                    'shipping_document_type' => $documentType,
+                ]);
+                return $response->json() ?: [];
+            } catch (\Throwable $e) {
+                Log::warning("Shopee get_shipping_document_result error: {$e->getMessage()}");
+            }
+        }
+
+        return [];
+    }
+
+    /**
+     * Download shipping document (Air Waybill Label) as binary PDF.
+     * Supports single order SN or array of up to 50 order SNs (merged PDF).
+     * Shopee API: POST /api/v2/logistics/download_shipping_document
+     */
+    public function downloadShippingDocument(MarketplaceAccount $account, string|array $orderSns, string $documentType = 'THERMAL_AIR_WAYBILL'): array
+    {
+        $timestamp   = time();
+        $path        = '/api/v2/logistics/download_shipping_document';
+        $accessToken = (string) $account->access_token;
+
+        $orders = is_array($orderSns) ? $orderSns : [$orderSns];
+        $orderList = array_map(fn($sn) => ['order_sn' => is_array($sn) ? ($sn['order_sn'] ?? '') : (string) $sn], $orders);
+
+        if ($this->hasCredentials() && ! empty($accessToken)) {
+            $sign = $this->generateSignature($path, $timestamp, $accessToken, $account->shop_id);
+            $url  = sprintf('%s%s?partner_id=%s&timestamp=%s&access_token=%s&shop_id=%s&sign=%s', $this->host, $path, $this->partnerId, $timestamp, $accessToken, $account->shop_id, $sign);
+
+            try {
+                $payload = [
+                    'order_list'             => array_slice($orderList, 0, 50),
+                    'shipping_document_type' => $documentType,
+                ];
+
+                $response = Http::timeout(30)->post($url, $payload);
+
+                $contentType = $response->header('Content-Type');
+                $body = $response->body();
+
+                if ($response->successful() && (str_contains((string) $contentType, 'application/pdf') || str_starts_with($body, '%PDF-'))) {
+                    return [
+                        'success'     => true,
+                        'pdf_content' => $body,
+                        'file_name'   => 'shopee_shipping_label_' . count($orderList) . '_orders.pdf',
+                    ];
+                }
+
+                // If error logistics.shipping_document_should_print_first, trigger creation and retry once
+                $data = $response->json() ?: [];
+                if (($data['error'] ?? '') === 'logistics.shipping_document_should_print_first') {
+                    $this->createShippingDocument($account, $orderSns, $documentType);
+                    usleep(1500000); // Wait 1.5s for Shopee generation engine
+
+                    $retryResponse = Http::timeout(30)->post($url, $payload);
+                    $retryBody = $retryResponse->body();
+                    if ($retryResponse->successful() && (str_contains((string) $retryResponse->header('Content-Type'), 'application/pdf') || str_starts_with($retryBody, '%PDF-'))) {
+                        return [
+                            'success'     => true,
+                            'pdf_content' => $retryBody,
+                            'file_name'   => 'shopee_shipping_label_' . count($orderList) . '_orders.pdf',
+                        ];
+                    }
+                    $data = $retryResponse->json() ?: $data;
+                }
+
+                return [
+                    'success' => false,
+                    'error'   => $data['error'] ?? 'download_failed',
+                    'message' => $data['message'] ?? 'Gagal mengunduh label pengiriman dari Shopee.',
+                ];
+            } catch (\Throwable $e) {
+                Log::warning("Shopee download_shipping_document error: {$e->getMessage()}");
+                return ['success' => false, 'error' => 'exception', 'message' => $e->getMessage()];
+            }
+        }
+
+        return ['success' => false, 'error' => 'no_credentials', 'message' => 'Kredensial Shopee tidak lengkap.'];
+    }
+
+    /**
+     * Create shipping document job for large batch (up to 600 orders).
+     * Shopee API: POST /api/v2/logistics/create_shipping_document_job
+     */
+    public function createShippingDocumentJob(MarketplaceAccount $account, array $orderSns, string $documentType = 'THERMAL_AIR_WAYBILL'): array
+    {
+        $timestamp   = time();
+        $path        = '/api/v2/logistics/create_shipping_document_job';
+        $accessToken = (string) $account->access_token;
+
+        $orderList = array_map(fn($sn) => ['order_sn' => is_array($sn) ? ($sn['order_sn'] ?? '') : (string) $sn], $orderSns);
+
+        if ($this->hasCredentials() && ! empty($accessToken)) {
+            $sign = $this->generateSignature($path, $timestamp, $accessToken, $account->shop_id);
+            $url  = sprintf('%s%s?partner_id=%s&timestamp=%s&access_token=%s&shop_id=%s&sign=%s', $this->host, $path, $this->partnerId, $timestamp, $accessToken, $account->shop_id, $sign);
+
+            try {
+                $response = Http::timeout(25)->post($url, [
+                    'order_list'             => array_slice($orderList, 0, 600),
+                    'shipping_document_type' => $documentType,
+                ]);
+                return $response->json() ?: [];
+            } catch (\Throwable $e) {
+                Log::warning("Shopee create_shipping_document_job error: {$e->getMessage()}");
+            }
+        }
+
+        return [];
+    }
+
+    /**
+     * Get job result of batch shipping document job.
+     * Shopee API: POST /api/v2/logistics/get_shipping_document_job_result
+     */
+    public function getShippingDocumentJobResult(MarketplaceAccount $account, string $jobId): array
+    {
+        $timestamp   = time();
+        $path        = '/api/v2/logistics/get_shipping_document_job_result';
+        $accessToken = (string) $account->access_token;
+
+        if ($this->hasCredentials() && ! empty($accessToken)) {
+            $sign = $this->generateSignature($path, $timestamp, $accessToken, $account->shop_id);
+            $url  = sprintf('%s%s?partner_id=%s&timestamp=%s&access_token=%s&shop_id=%s&sign=%s', $this->host, $path, $this->partnerId, $timestamp, $accessToken, $account->shop_id, $sign);
+
+            try {
+                $response = Http::timeout(15)->post($url, ['job_id' => $jobId]);
+                return $response->json() ?: [];
+            } catch (\Throwable $e) {
+                Log::warning("Shopee get_shipping_document_job_result error: {$e->getMessage()}");
+            }
+        }
+
+        return [];
     }
 
     public function getTrackingInfo(MarketplaceAccount $account, string $orderSn): array
