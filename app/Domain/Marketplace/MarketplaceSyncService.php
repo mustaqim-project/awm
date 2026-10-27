@@ -396,8 +396,9 @@ class MarketplaceSyncService
 
             if (empty($publishResult['success']) || empty($publishResult['external_product_id'])) {
                 return [
-                    'success' => false,
-                    'message' => $publishResult['message'] ?? 'Gagal memproses penerbitan produk ke marketplace.',
+                    'success'      => false,
+                    'message'      => $publishResult['message'] ?? 'Gagal memproses penerbitan produk ke marketplace.',
+                    'raw_response' => $publishResult['raw_response'] ?? null,
                 ];
             }
 

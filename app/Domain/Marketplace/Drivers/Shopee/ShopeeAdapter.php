@@ -20,6 +20,7 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
     protected string $host;
     protected int $partnerId;
     protected string $partnerKey;
+    public ?array $lastCategoryDebug = null;
 
     public function __construct()
     {
@@ -443,56 +444,90 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
      */
     public function getCategoryList(MarketplaceAccount $account): array
     {
-        $cacheKey = "shopee_categories_{$account->id}";
-        return Cache::remember($cacheKey, 3600, function () use ($account) {
-            $timestamp   = time();
-            $path        = '/api/v2/product/get_category';
-            $accessToken = (string) $account->access_token;
-            $sign        = $this->generateSignature($path, $timestamp, $accessToken, (string) $account->shop_id);
+        $cacheKey = "shopee_categories_{$account->id}_v2";
+        $cached = Cache::get($cacheKey);
+        if (is_array($cached) && ! empty($cached)) {
+            $this->lastCategoryDebug = ['source' => 'cache', 'count' => count($cached)];
+            return $cached;
+        }
 
-            $url = sprintf(
-                '%s%s?partner_id=%s&timestamp=%s&access_token=%s&shop_id=%s&sign=%s&language=id',
-                $this->host,
-                $path,
-                $this->partnerId,
-                $timestamp,
-                $accessToken,
-                $account->shop_id,
-                $sign
-            );
+        $timestamp   = time();
+        $path        = '/api/v2/product/get_category';
+        $accessToken = (string) $account->access_token;
+        $sign        = $this->generateSignature($path, $timestamp, $accessToken, (string) $account->shop_id);
 
-            try {
-                $response = Http::timeout(20)->get($url);
-                $data     = $response->json() ?? [];
-                if ($response->successful() && empty($data['error']) && ! empty($data['response']['category_list'])) {
-                    return $data['response']['category_list'];
-                }
+        $debug = [];
 
-                // Fallback without language parameter if rejected
-                if (! empty($data['error'])) {
-                    $urlNoLang = sprintf(
-                        '%s%s?partner_id=%s&timestamp=%s&access_token=%s&shop_id=%s&sign=%s',
-                        $this->host,
-                        $path,
-                        $this->partnerId,
-                        $timestamp,
-                        $accessToken,
-                        $account->shop_id,
-                        $sign
-                    );
-                    $response2 = Http::timeout(20)->get($urlNoLang);
-                    $data2     = $response2->json() ?? [];
-                    if ($response2->successful() && empty($data2['error']) && ! empty($data2['response']['category_list'])) {
-                        return $data2['response']['category_list'];
-                    }
-                }
-                Log::warning('Shopee get_category response:', ['data' => $data]);
-            } catch (\Throwable $e) {
-                Log::warning("Shopee get_category error: {$e->getMessage()}");
+        // Attempt 1: Standard Shop API request without language (uses shop default)
+        $url1 = sprintf(
+            '%s%s?partner_id=%s&timestamp=%s&access_token=%s&shop_id=%s&sign=%s',
+            $this->host,
+            $path,
+            $this->partnerId,
+            $timestamp,
+            $accessToken,
+            $account->shop_id,
+            $sign
+        );
+
+        try {
+            $response1 = Http::timeout(20)->get($url1);
+            $data1     = $response1->json() ?? [];
+            $debug['attempt_no_lang'] = [
+                'status' => $response1->status(),
+                'error'  => $data1['error'] ?? null,
+                'msg'    => $data1['message'] ?? null,
+                'count'  => count($data1['response']['category_list'] ?? []),
+            ];
+
+            if ($response1->successful() && empty($data1['error']) && ! empty($data1['response']['category_list'])) {
+                $list = $data1['response']['category_list'];
+                Cache::put($cacheKey, $list, 86400);
+                $this->lastCategoryDebug = ['source' => 'api_no_lang', 'count' => count($list), 'debug' => $debug];
+                return $list;
             }
 
-            return [];
-        });
+            // Attempt 2: With language=id
+            $url2 = $url1 . '&language=id';
+            $response2 = Http::timeout(20)->get($url2);
+            $data2     = $response2->json() ?? [];
+            $debug['attempt_lang_id'] = [
+                'status' => $response2->status(),
+                'error'  => $data2['error'] ?? null,
+                'msg'    => $data2['message'] ?? null,
+                'count'  => count($data2['response']['category_list'] ?? []),
+            ];
+
+            if ($response2->successful() && empty($data2['error']) && ! empty($data2['response']['category_list'])) {
+                $list = $data2['response']['category_list'];
+                Cache::put($cacheKey, $list, 86400);
+                $this->lastCategoryDebug = ['source' => 'api_lang_id', 'count' => count($list), 'debug' => $debug];
+                return $list;
+            }
+
+            // Attempt 3: With language=en
+            $url3 = $url1 . '&language=en';
+            $response3 = Http::timeout(20)->get($url3);
+            $data3     = $response3->json() ?? [];
+            $debug['attempt_lang_en'] = [
+                'status' => $response3->status(),
+                'error'  => $data3['error'] ?? null,
+                'msg'    => $data3['message'] ?? null,
+                'count'  => count($data3['response']['category_list'] ?? []),
+            ];
+
+            if ($response3->successful() && empty($data3['error']) && ! empty($data3['response']['category_list'])) {
+                $list = $data3['response']['category_list'];
+                Cache::put($cacheKey, $list, 86400);
+                $this->lastCategoryDebug = ['source' => 'api_lang_en', 'count' => count($list), 'debug' => $debug];
+                return $list;
+            }
+        } catch (\Throwable $e) {
+            $debug['exception'] = $e->getMessage();
+        }
+
+        $this->lastCategoryDebug = ['source' => 'failed', 'count' => 0, 'debug' => $debug];
+        return [];
     }
 
     /**
@@ -504,20 +539,14 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
         $categories  = $this->getCategoryList($account);
         $passedCatId = isset($options['category_id']) ? (int) $options['category_id'] : null;
 
-        if (empty($categories)) {
-            // Well-known leaf categories in Shopee:
-            // 100523 (Kopi Bubuk / Coffee in ID), or return passed if present
-            return $passedCatId ?: 100523;
-        }
+        // If passed category is COOCA's internal mock category (>= 600000), ignore it
+        $isInternalCoocaCat = $passedCatId >= 600000;
 
         // Filter leaf categories only (has_children === false)
         $leafCategories = array_values(array_filter($categories, fn($c) => empty($c['has_children'])));
-        if (empty($leafCategories)) {
-            return $passedCatId ?: 100523;
-        }
 
-        // 1. Check if passed category_id is already a valid leaf category
-        if ($passedCatId) {
+        // 1. If passed category ID is already a valid Shopee leaf category
+        if ($passedCatId && ! $isInternalCoocaCat && ! empty($leafCategories)) {
             foreach ($leafCategories as $cat) {
                 if ((int) $cat['category_id'] === $passedCatId) {
                     return $passedCatId;
@@ -535,7 +564,6 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
         }
         $searchTerms[] = mb_strtolower(trim($product->name));
 
-        // Tokenize product name into words of length >= 3
         $words = preg_split('/[\s,\.\-\_\/()]+/', mb_strtolower($product->name));
         foreach ($words as $w) {
             if (mb_strlen($w) >= 3) {
@@ -544,30 +572,27 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
         }
         $searchTerms = array_unique(array_filter($searchTerms));
 
-        // 3. Find matching leaf category
-        foreach ($searchTerms as $term) {
-            foreach ($leafCategories as $cat) {
-                $catName = mb_strtolower($cat['display_category_name'] ?? ($cat['original_category_name'] ?? ''));
-                if ($catName === $term || str_contains($catName, $term) || str_contains($term, $catName)) {
-                    Log::info("Shopee category matched term '{$term}' to category_id {$cat['category_id']} ({$catName})");
-                    return (int) $cat['category_id'];
+        // 3. Match search terms to Shopee leaf categories
+        if (! empty($leafCategories)) {
+            foreach ($searchTerms as $term) {
+                foreach ($leafCategories as $cat) {
+                    $catName = mb_strtolower($cat['display_category_name'] ?? ($cat['original_category_name'] ?? ''));
+                    if ($catName === $term || str_contains($catName, $term) || str_contains($term, $catName)) {
+                        Log::info("Shopee category matched term '{$term}' to category_id {$cat['category_id']} ({$catName})");
+                        return (int) $cat['category_id'];
+                    }
                 }
             }
+
+            // Fallback: Pick first available leaf category
+            $first = (int) $leafCategories[0]['category_id'];
+            Log::info("Shopee category fallback to first leaf category: {$first}");
+            return $first;
         }
 
-        // 4. If passedCatId was a parent category in Shopee, find its first leaf descendant
-        if ($passedCatId) {
-            foreach ($leafCategories as $cat) {
-                if ((int) ($cat['parent_category_id'] ?? 0) === $passedCatId) {
-                    return (int) $cat['category_id'];
-                }
-            }
-        }
-
-        // 5. Fallback: Return first available leaf category
-        $fallback = (int) $leafCategories[0]['category_id'];
-        Log::info("Shopee category fallback to first leaf category: {$fallback}");
-        return $fallback;
+        // 4. If category API could not be reached, use a known valid leaf category ID
+        // In Shopee ID / SG: 100523 or 100010
+        return (! $isInternalCoocaCat && $passedCatId) ? $passedCatId : 100523;
     }
 
     /**
@@ -768,10 +793,13 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
                 'success'      => false,
                 'message'      => "Shopee API menolak penerbitan produk: {$errorMsg}",
                 'raw_response' => array_merge($debugInfo, [
-                    'shopee_error'    => $data['error'] ?? null,
-                    'shopee_message'  => $data['message'] ?? null,
-                    'http_status'     => $response->status(),
-                    'full_response'   => $data,
+                    'shopee_error'      => $data['error'] ?? null,
+                    'shopee_message'    => $data['message'] ?? null,
+                    'http_status'       => $response->status(),
+                    'full_response'     => $data,
+                    'resolved_category' => $resolvedCatId,
+                    'category_debug'    => $this->lastCategoryDebug,
+                    'attempted_payload' => $payload,
                 ]),
             ];
         } catch (\Throwable $e) {

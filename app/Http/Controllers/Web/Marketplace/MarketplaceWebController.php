@@ -850,6 +850,7 @@ class MarketplaceWebController extends Controller
                 return response()->json([
                     'success' => false,
                     'error'   => $result['message'] ?? 'Gagal menerbitkan produk ke marketplace.',
+                    'details' => $result['raw_response'] ?? null,
                 ], 422);
             }
 
