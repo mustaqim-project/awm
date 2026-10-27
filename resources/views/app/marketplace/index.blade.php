@@ -179,197 +179,163 @@
 
         <!-- =================== CHANNEL 1: SHOPEE =================== -->
         @php
-            $shopeeAccount = $channels['shopee']['account'] ?? null;
-            $shopeeConnected = $shopeeAccount && $shopeeAccount->status === 'connected';
+            $shopeeAccounts = $accounts->where('channel', 'shopee')->where('status', 'connected');
+            $shopeeConnected = $shopeeAccounts->isNotEmpty();
         @endphp
-        <div class="col-span-1 rounded-[24px] bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/[0.06] dark:border-white/[0.08] backdrop-blur-md p-6 flex flex-col justify-between space-y-5 shadow-xs transition-all hover:shadow-md">
-            <div class="space-y-4">
-                <!-- Channel Header -->
-                <div class="flex items-center justify-between flex-wrap gap-2">
-                    <div class="flex items-center gap-3.5">
-                        <div class="w-12 h-12 rounded-[16px] bg-[#EE4D2D]/15 text-[#EE4D2D] flex items-center justify-center font-black text-sm shadow-xs tracking-tight">
-                            SP
-                        </div>
-                        <div>
-                            <div class="flex items-center gap-2 flex-wrap">
-                                <h2 class="text-[17px] font-bold text-black dark:text-white">{{ __('marketplace.channel_shopee_title') }}</h2>
-                                <span class="px-2 py-0.5 rounded-full text-[10.5px] font-bold bg-[#EE4D2D]/15 text-[#EE4D2D] border border-[#EE4D2D]/20">
-                                    {{ __('marketplace.shopee_erp_badge') }}
-                                </span>
-                                <span class="px-2 py-0.5 rounded-full text-[10.5px] font-semibold bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] border border-[#34C759]/20">
-                                    API V2 Verified
-                                </span>
-                            </div>
-                            <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('marketplace.channel_shopee_sub') }}</p>
-                        </div>
+        <div class="col-span-1 rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 shadow-sm p-5 sm:p-6 space-y-4 transition-all">
+            {{-- Header --}}
+            <div class="flex items-center justify-between gap-3 pb-3.5 border-b border-black/5 dark:border-white/10">
+                <div class="flex items-center gap-3 min-w-0">
+                    <div class="w-10 h-10 rounded-[13px] bg-[#EE4D2D] text-white flex items-center justify-center shrink-0 shadow-sm font-black text-sm tracking-tight">
+                        SP
                     </div>
-                    @if($shopeeConnected)
-                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11.5px] font-bold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]">
-                            <span class="w-2 h-2 rounded-full bg-[#34C759] animate-pulse"></span>
-                            <span>{{ __('marketplace.status_connected_active') }}</span>
-                        </span>
-                    @else
-                        <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-semibold bg-black/[0.05] dark:bg-white/[0.08] text-black/50 dark:text-white/50">
-                            <span>{{ __('marketplace.status_disconnected') }}</span>
-                        </span>
-                    @endif
+                    <div class="min-w-0">
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <h3 class="text-[15px] font-bold text-black dark:text-white">1. Shopee Indonesia</h3>
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#EE4D2D]/15 text-[#EE4D2D] border border-[#EE4D2D]/20">
+                                {{ __('marketplace.shopee_erp_badge') }}
+                            </span>
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] border border-[#34C759]/20">
+                                API V2 Verified
+                            </span>
+                        </div>
+                        <p class="text-[12px] text-black/50 dark:text-white/50 truncate">{{ __('marketplace.channel_shopee_sub') }}</p>
+                    </div>
                 </div>
+                <span class="px-2.5 py-1 rounded-full text-[11px] font-bold inline-flex items-center gap-1.5 {{ $shopeeConnected ? 'bg-[#34C759]/12 text-[#248A3D] dark:text-[#30D158]' : 'bg-black/5 text-black/45 dark:bg-white/5 dark:text-white/45' }}">
+                    <span class="w-1.5 h-1.5 rounded-full {{ $shopeeConnected ? 'bg-[#34C759]' : 'bg-black/30 dark:bg-white/30' }}"></span>
+                    <span>{{ $shopeeConnected ? 'Connected' : 'Not Connected' }}</span>
+                </span>
+            </div>
 
-                <!-- Channel Body Info -->
+            {{-- Akun Terkoneksi Shopee (ACTIVE CONNECTED ASSETS) --}}
+            <div class="space-y-2.5">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-black/45 dark:text-white/45 block">ACTIVE CONNECTED ASSETS:</span>
                 @if($shopeeConnected)
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 p-4 rounded-[18px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.04] dark:border-white/[0.06]">
-                        <div class="space-y-0.5">
-                            <span class="text-[11.5px] text-black/50 dark:text-white/50 block">{{ __('marketplace.shop_name_official') }}</span>
-                            <span class="font-bold text-black dark:text-white text-[13px] truncate block">{{ $shopeeAccount->shop_name ?? 'Shopee Store' }}</span>
-                        </div>
-                        <div class="space-y-0.5">
-                            <span class="text-[11.5px] text-black/50 dark:text-white/50 block">{{ __('marketplace.shop_id') }}</span>
-                            <span class="font-mono text-black/80 dark:text-white/80 text-[12px] block">{{ $shopeeAccount->shop_id }}</span>
-                        </div>
-                        <div class="space-y-0.5">
-                            <span class="text-[11.5px] text-black/50 dark:text-white/50 block">{{ __('marketplace.last_synced') }}</span>
-                            <span class="text-black/80 dark:text-white/80 text-[12px] font-medium block">{{ $shopeeAccount->last_synced_at?->diffForHumans() ?? __('marketplace.never_synced') }}</span>
-                        </div>
-                    </div>
-
-                    <!-- Achieved Capabilities Matrix (9 Modules ERP Shopee) -->
-                    <div class="p-3.5 rounded-[18px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.04] dark:border-white/[0.06] space-y-2.5">
-                        <div class="flex items-center justify-between">
-                            <span class="text-[12px] font-bold text-black/80 dark:text-white/80 flex items-center gap-1.5">
-                                <i data-lucide="shield-check" class="w-4 h-4 text-[#EE4D2D]"></i>
-                                <span>{{ __('marketplace.shopee_erp_capabilities') }}</span>
-                            </span>
-                            <span class="text-[11px] font-semibold text-[#EE4D2D] bg-[#EE4D2D]/10 px-2 py-0.5 rounded-full">
-                                {{ __('marketplace.shopee_erp_active_count') }}
-                            </span>
-                        </div>
-                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-[11px]">
-                            <div class="p-2 rounded-[12px] bg-white/60 dark:bg-[#2C2C2E]/60 border border-black/[0.04] dark:border-white/[0.06] flex items-center gap-2">
-                                <i data-lucide="store" class="w-3.5 h-3.5 text-[#EE4D2D] shrink-0"></i>
-                                <span class="truncate" title="Shop Management (/api/v2/shop/*)">{{ __('marketplace.shopee_mod_shop') }}</span>
+                    <div class="space-y-2">
+                        @foreach($shopeeAccounts as $acc)
+                            <div class="p-3.5 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/10 flex items-center justify-between gap-3">
+                                <div class="flex items-center gap-3 min-w-0">
+                                    <div class="w-8 h-8 rounded-[10px] bg-[#EE4D2D]/12 text-[#EE4D2D] flex items-center justify-center shrink-0 font-bold text-xs">
+                                        SP
+                                    </div>
+                                    <div class="min-w-0">
+                                        <div class="font-bold text-black dark:text-white text-[13px] truncate">{{ $acc->shop_name ?? ('Shopee Store #' . $acc->shop_id) }}</div>
+                                        <div class="text-[11px] text-black/50 dark:text-white/50 flex items-center gap-1.5 flex-wrap">
+                                            <span class="capitalize font-semibold text-[#EE4D2D]">Shopee</span>
+                                            <span>•</span>
+                                            <span class="font-mono text-[#007AFF]">ID: {{ $acc->shop_id }}</span>
+                                            <span>•</span>
+                                            <span class="text-[10px] text-[#34C759] font-medium flex items-center gap-1">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]"></span>
+                                                Auto-Refresh Active
+                                            </span>
+                                            @if($acc->last_synced_at)
+                                                <span>•</span>
+                                                <span>Synced {{ $acc->last_synced_at->diffForHumans() }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" @click="openDisconnect('{{ $acc->channel }}', '{{ $acc->shop_name ?? ('Shopee Store #' . $acc->shop_id) }}')"
+                                    class="min-h-[32px] px-3 rounded-[8px] text-[11px] font-semibold text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.98] transition-all shrink-0 cursor-pointer">
+                                    Disconnect
+                                </button>
                             </div>
-                            <div class="p-2 rounded-[12px] bg-white/60 dark:bg-[#2C2C2E]/60 border border-black/[0.04] dark:border-white/[0.06] flex items-center gap-2">
-                                <i data-lucide="package" class="w-3.5 h-3.5 text-[#007AFF] shrink-0"></i>
-                                <span class="truncate" title="Product Management (/api/v2/product/*)">{{ __('marketplace.shopee_mod_product') }}</span>
-                            </div>
-                            <div class="p-2 rounded-[12px] bg-white/60 dark:bg-[#2C2C2E]/60 border border-black/[0.04] dark:border-white/[0.06] flex items-center gap-2">
-                                <i data-lucide="image" class="w-3.5 h-3.5 text-[#AF52DE] shrink-0"></i>
-                                <span class="truncate" title="Media Library (/api/v2/media_space/*)">{{ __('marketplace.shopee_mod_media') }}</span>
-                            </div>
-                            <div class="p-2 rounded-[12px] bg-white/60 dark:bg-[#2C2C2E]/60 border border-black/[0.04] dark:border-white/[0.06] flex items-center gap-2">
-                                <i data-lucide="tag" class="w-3.5 h-3.5 text-[#FF2D55] shrink-0"></i>
-                                <span class="truncate" title="Product Marketing (/api/v2/discount/*)">{{ __('marketplace.shopee_mod_marketing') }}</span>
-                            </div>
-                            <div class="p-2 rounded-[12px] bg-white/60 dark:bg-[#2C2C2E]/60 border border-black/[0.04] dark:border-white/[0.06] flex items-center gap-2">
-                                <i data-lucide="shopping-bag" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
-                                <span class="truncate" title="Order Management (/api/v2/order/*)">{{ __('marketplace.shopee_mod_order') }}</span>
-                            </div>
-                            <div class="p-2 rounded-[12px] bg-white/60 dark:bg-[#2C2C2E]/60 border border-black/[0.04] dark:border-white/[0.06] flex items-center gap-2">
-                                <i data-lucide="truck" class="w-3.5 h-3.5 text-[#FF9500] shrink-0"></i>
-                                <span class="truncate" title="Logistics & Shipping (/api/v2/logistics/*)">{{ __('marketplace.shopee_mod_logistics') }}</span>
-                            </div>
-                            <div class="p-2 rounded-[12px] bg-white/60 dark:bg-[#2C2C2E]/60 border border-black/[0.04] dark:border-white/[0.06] flex items-center gap-2">
-                                <i data-lucide="folder-tree" class="w-3.5 h-3.5 text-[#5856D6] shrink-0"></i>
-                                <span class="truncate" title="Shop Categories (/api/v2/shop_category/*)">{{ __('marketplace.shopee_mod_category') }}</span>
-                            </div>
-                            <div class="p-2 rounded-[12px] bg-white/60 dark:bg-[#2C2C2E]/60 border border-black/[0.04] dark:border-white/[0.06] flex items-center gap-2">
-                                <i data-lucide="rotate-ccw" class="w-3.5 h-3.5 text-[#FF3B30] shrink-0"></i>
-                                <span class="truncate" title="Returns & Refunds (/api/v2/returns/*)">{{ __('marketplace.shopee_mod_returns') }}</span>
-                            </div>
-                            <div class="p-2 rounded-[12px] bg-white/60 dark:bg-[#2C2C2E]/60 border border-black/[0.04] dark:border-white/[0.06] flex items-center gap-2">
-                                <i data-lucide="message-circle" class="w-3.5 h-3.5 text-[#007AFF] shrink-0"></i>
-                                <span class="truncate" title="Customer Service Chat (/api/v2/sellerchat/*)">{{ __('marketplace.shopee_mod_chat') }}</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Active Toggle (AJAX Real-time) -->
-                    <div class="flex items-center justify-between pt-1">
-                        <div class="space-y-0.5">
-                            <span class="text-[13px] font-bold text-black dark:text-white">{{ __('marketplace.sales_sync_active') }}</span>
-                            <p class="text-[11.5px] text-black/50 dark:text-white/50">{{ __('marketplace.sales_sync_desc_shopee') }}</p>
-                        </div>
-                        <button type="button" @click="toggleChannel('shopee')" :disabled="toggling"
-                            :title="shopeeActive ? '{{ __('marketplace.click_to_deactivate') }}' : '{{ __('marketplace.click_to_activate') }}'"
-                            class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none"
-                            :class="shopeeActive ? 'bg-[#34C759]' : 'bg-black/20 dark:bg-white/20'">
-                            <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
-                                :class="shopeeActive ? 'translate-x-5' : 'translate-x-0'"></span>
-                        </button>
+                        @endforeach
                     </div>
                 @else
-                    <div class="p-4 rounded-[18px] bg-[#EE4D2D]/5 dark:bg-[#EE4D2D]/10 border border-[#EE4D2D]/15 space-y-3">
-                        <p class="text-[13px] text-black/75 dark:text-white/75 leading-relaxed">
-                            Hubungkan akun <strong>Shopee Open Platform</strong> Anda untuk mengelola seluruh operasional toko online langsung dari COOCA ERP. Sistem mendukung 9 modul resmi: Manajemen Toko, Katalog & Multi-Harga, Media Library, Diskon & Promosi, Sinkronisasi Pesanan, Logistik & Cetak Resi, Kategori Toko, Retur/Refund, dan Customer Service Live Chat.
-                        </p>
-                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-1.5 text-[11px] text-black/60 dark:text-white/60">
-                            <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md truncate">
-                                <i data-lucide="check" class="w-3 h-3 text-[#34C759] shrink-0"></i> {{ __('marketplace.shopee_mod_shop') }}
-                            </span>
-                            <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md truncate">
-                                <i data-lucide="check" class="w-3 h-3 text-[#34C759] shrink-0"></i> {{ __('marketplace.shopee_mod_product') }}
-                            </span>
-                            <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md truncate">
-                                <i data-lucide="check" class="w-3 h-3 text-[#34C759] shrink-0"></i> {{ __('marketplace.shopee_mod_media') }}
-                            </span>
-                            <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md truncate">
-                                <i data-lucide="check" class="w-3 h-3 text-[#34C759] shrink-0"></i> {{ __('marketplace.shopee_mod_marketing') }}
-                            </span>
-                            <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md truncate">
-                                <i data-lucide="check" class="w-3 h-3 text-[#34C759] shrink-0"></i> {{ __('marketplace.shopee_mod_order') }}
-                            </span>
-                            <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md truncate">
-                                <i data-lucide="check" class="w-3 h-3 text-[#34C759] shrink-0"></i> {{ __('marketplace.shopee_mod_logistics') }}
-                            </span>
-                            <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md truncate">
-                                <i data-lucide="check" class="w-3 h-3 text-[#34C759] shrink-0"></i> {{ __('marketplace.shopee_mod_category') }}
-                            </span>
-                            <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md truncate">
-                                <i data-lucide="check" class="w-3 h-3 text-[#34C759] shrink-0"></i> {{ __('marketplace.shopee_mod_returns') }}
-                            </span>
-                            <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md truncate">
-                                <i data-lucide="check" class="w-3 h-3 text-[#34C759] shrink-0"></i> {{ __('marketplace.shopee_mod_chat') }}
-                            </span>
-                        </div>
-                    </div>
+                    <p class="text-[12px] text-black/45 dark:text-white/45 italic py-1">Belum ada akun Shopee yang terhubung.</p>
                 @endif
             </div>
 
-            <!-- Actions -->
-            <div class="pt-3 border-t border-black/[0.04] dark:border-white/[0.06] flex items-center justify-between gap-3">
-                @if($shopeeConnected)
-                    <div class="flex items-center gap-2 flex-1 flex-wrap">
-                        <a href="{{ route('marketplace-hub.products', ['channel' => 'shopee']) }}"
-                            class="h-10 px-4 rounded-[12px] text-[12.5px] font-bold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 transition-all flex items-center justify-center gap-1.5 cursor-pointer">
-                            <i data-lucide="tag" class="w-4 h-4"></i>
-                            <span>{{ __('marketplace.action_manage_products') }}</span>
-                        </a>
-                        <a href="{{ route('marketplace-hub.orders', ['channel' => 'shopee']) }}"
-                            class="h-10 px-3.5 rounded-[12px] text-[12.5px] font-semibold text-black/75 dark:text-white/75 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-all flex items-center justify-center gap-1.5 cursor-pointer"
-                            title="Lihat Pesanan Shopee">
-                            <i data-lucide="shopping-bag" class="w-4 h-4 text-[#EE4D2D]"></i>
-                            <span>{{ __('marketplace.action_orders_short') }}</span>
-                        </a>
-                        <a href="{{ route('marketplace-hub.chat', ['channel' => 'shopee']) }}"
-                            class="h-10 px-3.5 rounded-[12px] text-[12.5px] font-semibold text-black/75 dark:text-white/75 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-all flex items-center justify-center gap-1.5 cursor-pointer"
-                            title="Live Chat Shopee">
-                            <i data-lucide="message-circle" class="w-4 h-4 text-[#EE4D2D]"></i>
-                            <span>{{ __('marketplace.action_chat_short') }}</span>
-                        </a>
+            @if($shopeeConnected)
+                {{-- Quick Nav Actions when Connected --}}
+                <div class="flex items-center gap-2 flex-wrap pt-1">
+                    <a href="{{ route('marketplace-hub.products', ['channel' => 'shopee']) }}"
+                        class="min-h-[34px] px-3.5 rounded-[10px] text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 transition-all flex items-center gap-1.5 cursor-pointer">
+                        <i data-lucide="tag" class="w-3.5 h-3.5"></i>
+                        <span>Atur Produk & Stok</span>
+                    </a>
+                    <a href="{{ route('marketplace-hub.orders', ['channel' => 'shopee']) }}"
+                        class="min-h-[34px] px-3.5 rounded-[10px] text-[12px] font-semibold text-black/75 dark:text-white/75 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-all flex items-center gap-1.5 cursor-pointer">
+                        <i data-lucide="shopping-bag" class="w-3.5 h-3.5 text-[#EE4D2D]"></i>
+                        <span>Pesanan Masuk</span>
+                    </a>
+                    <a href="{{ route('marketplace-hub.chat', ['channel' => 'shopee']) }}"
+                        class="min-h-[34px] px-3.5 rounded-[10px] text-[12px] font-semibold text-black/75 dark:text-white/75 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-all flex items-center gap-1.5 cursor-pointer">
+                        <i data-lucide="message-circle" class="w-3.5 h-3.5 text-[#EE4D2D]"></i>
+                        <span>Live Chat CS</span>
+                    </a>
+                    <div class="ml-auto flex items-center gap-2">
+                        <span class="text-[11px] text-black/50 dark:text-white/50 hidden sm:inline">Sync Otomatis:</span>
+                        <button type="button" @click="toggleChannel('shopee')" :disabled="toggling"
+                            class="relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none"
+                            :class="shopeeActive ? 'bg-[#34C759]' : 'bg-black/20 dark:bg-white/20'">
+                            <span class="pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
+                                :class="shopeeActive ? 'translate-x-4' : 'translate-x-0'"></span>
+                        </button>
                     </div>
-                    <button type="button" @click="openDisconnect('shopee', 'Shopee Indonesia')"
-                        class="h-10 px-3.5 rounded-[12px] text-[12px] font-semibold text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 transition-all flex items-center justify-center gap-1 cursor-pointer shrink-0"
-                        title="{{ __('marketplace.action_disconnect') }}">
-                        <i data-lucide="unlink" class="w-4 h-4"></i>
-                        <span class="hidden sm:inline">{{ __('marketplace.action_disconnect_short') }}</span>
-                    </button>
-                @else
-                    <form method="POST" action="{{ route('marketplace-hub.connect', 'shopee') }}" class="w-full">
+                </div>
+            @else
+                {{-- Module Capabilities Box when Disconnected --}}
+                <div class="p-4 rounded-[16px] bg-[#EE4D2D]/5 dark:bg-[#EE4D2D]/10 border border-[#EE4D2D]/15 space-y-3">
+                    <p class="text-[12.5px] text-black/75 dark:text-white/75 leading-relaxed">
+                        Hubungkan akun <strong>Shopee Open Platform</strong> Anda untuk mengelola seluruh operasional toko online langsung dari COOCA ERP. Sistem mendukung 9 modul resmi: Manajemen Toko, Katalog & Multi-Harga, Media Library, Diskon & Promosi, Sinkronisasi Pesanan, Logistik & Cetak Resi, Kategori Toko, Retur/Refund, dan Customer Service Live Chat.
+                    </p>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-1.5 text-[11px] text-black/60 dark:text-white/60">
+                        <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md truncate">
+                            <i data-lucide="check" class="w-3 h-3 text-[#34C759] shrink-0"></i> {{ __('marketplace.shopee_mod_shop') }}
+                        </span>
+                        <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md truncate">
+                            <i data-lucide="check" class="w-3 h-3 text-[#34C759] shrink-0"></i> {{ __('marketplace.shopee_mod_product') }}
+                        </span>
+                        <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md truncate">
+                            <i data-lucide="check" class="w-3 h-3 text-[#34C759] shrink-0"></i> {{ __('marketplace.shopee_mod_media') }}
+                        </span>
+                        <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md truncate">
+                            <i data-lucide="check" class="w-3 h-3 text-[#34C759] shrink-0"></i> {{ __('marketplace.shopee_mod_marketing') }}
+                        </span>
+                        <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md truncate">
+                            <i data-lucide="check" class="w-3 h-3 text-[#34C759] shrink-0"></i> {{ __('marketplace.shopee_mod_order') }}
+                        </span>
+                        <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md truncate">
+                            <i data-lucide="check" class="w-3 h-3 text-[#34C759] shrink-0"></i> {{ __('marketplace.shopee_mod_logistics') }}
+                        </span>
+                        <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md truncate">
+                            <i data-lucide="check" class="w-3 h-3 text-[#34C759] shrink-0"></i> {{ __('marketplace.shopee_mod_category') }}
+                        </span>
+                        <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md truncate">
+                            <i data-lucide="check" class="w-3 h-3 text-[#34C759] shrink-0"></i> {{ __('marketplace.shopee_mod_returns') }}
+                        </span>
+                        <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md truncate">
+                            <i data-lucide="check" class="w-3 h-3 text-[#34C759] shrink-0"></i> {{ __('marketplace.shopee_mod_chat') }}
+                        </span>
+                    </div>
+                </div>
+            @endif
+
+            {{-- Compact Action Button (Footer Row) --}}
+            <div class="pt-2 flex items-center justify-between gap-3 flex-wrap">
+                <p class="text-[11.5px] text-black/50 dark:text-white/50 hidden sm:block">
+                    {{ $shopeeConnected ? 'Otorisasikan toko resmi Shopee untuk mempublikasikan produk dan sinkronisasi pesanan langsung dari COOCA.' : 'Hubungkan akun Shopee Seller untuk otomatisasi sinkronisasi harga, stok, dan pesanan terpadu.' }}
+                </p>
+                @if($shopeeConnected)
+                    <form method="POST" action="{{ route('marketplace-hub.connect', 'shopee') }}" class="ml-auto">
                         @csrf
                         <button type="submit"
-                            class="w-full h-11 px-4 rounded-[14px] text-[13.5px] font-bold text-white bg-[#EE4D2D] hover:bg-[#E03A1A] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer">
-                            <i data-lucide="plug" class="w-4 h-4"></i>
-                            <span>{{ __('marketplace.btn_connect_shopee') }}</span>
+                            class="min-h-[38px] px-4 rounded-[11px] bg-black dark:bg-white text-white dark:text-black hover:opacity-90 font-semibold text-[12.5px] inline-flex items-center justify-center gap-2 shadow-xs active:scale-[0.98] transition-all shrink-0 cursor-pointer">
+                            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+                            <span>Update Shopee Account</span>
+                        </button>
+                    </form>
+                @else
+                    <form method="POST" action="{{ route('marketplace-hub.connect', 'shopee') }}" class="w-full sm:w-auto ml-auto">
+                        @csrf
+                        <button type="submit"
+                            class="min-h-[38px] px-5 rounded-[11px] bg-[#EE4D2D] hover:bg-[#E03A1A] text-white font-semibold text-[12.5px] inline-flex items-center justify-center gap-2 shadow-xs active:scale-[0.98] transition-all cursor-pointer w-full sm:w-auto">
+                            <i data-lucide="plug" class="w-3.5 h-3.5"></i>
+                            <span>Connect Shopee</span>
                         </button>
                     </form>
                 @endif
@@ -378,180 +344,155 @@
 
         <!-- =================== CHANNEL 2: TIKTOK SHOP + TOKOPEDIA =================== -->
         @php
-            $tiktokAccount = $channels['tiktok_shop']['account'] ?? $channels['tokopedia']['account'] ?? null;
-            $tiktokConnected = $tiktokAccount && $tiktokAccount->status === 'connected';
+            $tiktokAccounts = $accounts->whereIn('channel', ['tiktok_shop', 'tokopedia'])->where('status', 'connected');
+            $tiktokConnected = $tiktokAccounts->isNotEmpty();
         @endphp
-        <div class="col-span-1 rounded-[24px] bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/[0.06] dark:border-white/[0.08] backdrop-blur-md p-6 flex flex-col justify-between space-y-5 shadow-xs transition-all hover:shadow-md">
-            <div class="space-y-4">
-                <!-- Channel Header -->
-                <div class="flex items-center justify-between flex-wrap gap-2">
-                    <div class="flex items-center gap-3.5">
-                        <div class="w-12 h-12 rounded-[16px] bg-gradient-to-br from-black via-[#1C1C1E] to-[#00AA5B] text-white flex items-center justify-center font-black text-sm shadow-xs tracking-tight">
-                            TT+TP
-                        </div>
-                        <div>
-                            <div class="flex items-center gap-2 flex-wrap">
-                                <h2 class="text-[17px] font-bold text-black dark:text-white">{{ __('marketplace.channel_tiktok_tokped_title') }}</h2>
-                                <span class="px-2 py-0.5 rounded-full text-[10.5px] font-bold bg-[#007AFF]/15 text-[#007AFF] border border-[#007AFF]/20">{{ __('marketplace.channel_unified_badge') }}</span>
-                                <span class="px-2 py-0.5 rounded-full text-[10.5px] font-semibold bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] border border-[#34C759]/20">
-                                    {{ __('marketplace.channel_sdk_verified') }}
-                                </span>
-                            </div>
-                            <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('marketplace.channel_tiktok_tokped_sub') }}</p>
-                        </div>
+        <div class="col-span-1 rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 shadow-sm p-5 sm:p-6 space-y-4 transition-all">
+            {{-- Header --}}
+            <div class="flex items-center justify-between gap-3 pb-3.5 border-b border-black/5 dark:border-white/10">
+                <div class="flex items-center gap-3 min-w-0">
+                    <div class="w-10 h-10 rounded-[13px] bg-gradient-to-br from-black via-[#1C1C1E] to-[#00AA5B] text-white flex items-center justify-center shrink-0 shadow-sm font-black text-xs tracking-tight">
+                        TT+TP
                     </div>
-                    @if($tiktokConnected)
-                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11.5px] font-bold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]">
-                            <span class="w-2 h-2 rounded-full bg-[#34C759] animate-pulse"></span>
-                            <span>{{ __('marketplace.status_connected_active') }}</span>
-                        </span>
-                    @else
-                        <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-semibold bg-black/[0.05] dark:bg-white/[0.08] text-black/50 dark:text-white/50">
-                            <span>{{ __('marketplace.status_disconnected') }}</span>
-                        </span>
-                    @endif
+                    <div class="min-w-0">
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <h3 class="text-[15px] font-bold text-black dark:text-white">2. {{ __('marketplace.channel_tiktok_tokped_title') }}</h3>
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#007AFF]/15 text-[#007AFF] border border-[#007AFF]/20">
+                                {{ __('marketplace.channel_unified_badge') }}
+                            </span>
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] border border-[#34C759]/20">
+                                {{ __('marketplace.channel_sdk_verified') }}
+                            </span>
+                        </div>
+                        <p class="text-[12px] text-black/50 dark:text-white/50 truncate">{{ __('marketplace.channel_tiktok_tokped_sub') }}</p>
+                    </div>
                 </div>
+                <span class="px-2.5 py-1 rounded-full text-[11px] font-bold inline-flex items-center gap-1.5 {{ $tiktokConnected ? 'bg-[#34C759]/12 text-[#248A3D] dark:text-[#30D158]' : 'bg-black/5 text-black/45 dark:bg-white/5 dark:text-white/45' }}">
+                    <span class="w-1.5 h-1.5 rounded-full {{ $tiktokConnected ? 'bg-[#34C759]' : 'bg-black/30 dark:bg-white/30' }}"></span>
+                    <span>{{ $tiktokConnected ? 'Connected' : 'Not Connected' }}</span>
+                </span>
+            </div>
 
-                <!-- Channel Body Info -->
+            {{-- Akun Terkoneksi TikTok Shop + Tokopedia (ACTIVE CONNECTED ASSETS) --}}
+            <div class="space-y-2.5">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-black/45 dark:text-white/45 block">ACTIVE CONNECTED ASSETS:</span>
                 @if($tiktokConnected)
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 p-4 rounded-[18px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.04] dark:border-white/[0.06]">
-                        <div class="space-y-0.5">
-                            <span class="text-[11.5px] text-black/50 dark:text-white/50 block">{{ __('marketplace.shop_name_official') }}</span>
-                            <span class="font-bold text-black dark:text-white text-[13px] truncate block">{{ $tiktokAccount->shop_name ?? 'TikTok Shop + Tokopedia Store' }}</span>
-                        </div>
-                        <div class="space-y-0.5">
-                            <span class="text-[11.5px] text-black/50 dark:text-white/50 block">{{ __('marketplace.shop_cipher_seller_id') }}</span>
-                            <span class="font-mono text-black/80 dark:text-white/80 text-[12px] block">{{ $tiktokAccount->shop_id }}</span>
-                        </div>
-                        <div class="space-y-0.5">
-                            <span class="text-[11.5px] text-black/50 dark:text-white/50 block">{{ __('marketplace.last_synced') }}</span>
-                            <span class="text-black/80 dark:text-white/80 text-[12px] font-medium block">{{ $tiktokAccount->last_synced_at?->diffForHumans() ?? __('marketplace.never_synced') }}</span>
-                        </div>
-                    </div>
-
-                    <!-- Achieved Capabilities Matrix (7 Pillars) -->
-                    <div class="p-3.5 rounded-[18px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.04] dark:border-white/[0.06] space-y-2.5">
-                        <div class="flex items-center justify-between">
-                            <span class="text-[12px] font-bold text-black/80 dark:text-white/80 flex items-center gap-1.5">
-                                <i data-lucide="shield-check" class="w-4 h-4 text-[#34C759]"></i>
-                                <span>{{ __('marketplace.integrated_capabilities') }}</span>
-                            </span>
-                            <span class="text-[11px] font-semibold text-[#34C759] bg-[#34C759]/10 px-2 py-0.5 rounded-full">
-                                {{ __('marketplace.active_modules_count') }}
-                            </span>
-                        </div>
-                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px]">
-                            <div class="p-2 rounded-[12px] bg-white/60 dark:bg-[#2C2C2E]/60 border border-black/[0.04] dark:border-white/[0.06] flex items-center gap-2">
-                                <i data-lucide="package" class="w-3.5 h-3.5 text-[#007AFF] shrink-0"></i>
-                                <span class="truncate" title="seller.product.basic, write, delete, global">{{ __('marketplace.scope_products_stock') }}</span>
+                    <div class="space-y-2">
+                        @foreach($tiktokAccounts as $acc)
+                            <div class="p-3.5 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/10 flex items-center justify-between gap-3">
+                                <div class="flex items-center gap-3 min-w-0">
+                                    <div class="w-8 h-8 rounded-[10px] {{ $acc->channel === 'tokopedia' ? 'bg-[#00AA5B]/15 text-[#00AA5B]' : 'bg-black/10 dark:bg-white/10 text-black dark:text-white' }} flex items-center justify-center shrink-0 font-bold text-xs">
+                                        {{ $acc->channel === 'tokopedia' ? 'TP' : 'TT' }}
+                                    </div>
+                                    <div class="min-w-0">
+                                        <div class="font-bold text-black dark:text-white text-[13px] truncate">{{ $acc->shop_name ?? ($acc->channel === 'tokopedia' ? 'Tokopedia Store' : 'TikTok Shop') }}</div>
+                                        <div class="text-[11px] text-black/50 dark:text-white/50 flex items-center gap-1.5 flex-wrap">
+                                            <span class="capitalize font-semibold {{ $acc->channel === 'tokopedia' ? 'text-[#00AA5B]' : 'text-black dark:text-white' }}">
+                                                {{ $acc->channel === 'tokopedia' ? 'Tokopedia' : 'TikTok Shop' }}
+                                            </span>
+                                            <span>•</span>
+                                            <span class="font-mono text-[#007AFF]">ID: {{ $acc->shop_id }}</span>
+                                            <span>•</span>
+                                            <span class="text-[10px] text-[#34C759] font-medium flex items-center gap-1">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]"></span>
+                                                Auto-Refresh Active
+                                            </span>
+                                            @if($acc->last_synced_at)
+                                                <span>•</span>
+                                                <span>Synced {{ $acc->last_synced_at->diffForHumans() }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" @click="openDisconnect('{{ $acc->channel }}', '{{ $acc->shop_name ?? ($acc->channel === 'tokopedia' ? 'Tokopedia Store' : 'TikTok Shop') }}')"
+                                    class="min-h-[32px] px-3 rounded-[8px] text-[11px] font-semibold text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.98] transition-all shrink-0 cursor-pointer">
+                                    Disconnect
+                                </button>
                             </div>
-                            <div class="p-2 rounded-[12px] bg-white/60 dark:bg-[#2C2C2E]/60 border border-black/[0.04] dark:border-white/[0.06] flex items-center gap-2">
-                                <i data-lucide="shopping-bag" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
-                                <span class="truncate" title="seller.order.info, fulfillment.basic, package.write">{{ __('marketplace.scope_orders_resi') }}</span>
-                            </div>
-                            <div class="p-2 rounded-[12px] bg-white/60 dark:bg-[#2C2C2E]/60 border border-black/[0.04] dark:border-white/[0.06] flex items-center gap-2">
-                                <i data-lucide="truck" class="w-3.5 h-3.5 text-[#FF9500] shrink-0"></i>
-                                <span class="truncate" title="seller.logistics">{{ __('marketplace.scope_warehouse_logistics') }}</span>
-                            </div>
-                            <div class="p-2 rounded-[12px] bg-white/60 dark:bg-[#2C2C2E]/60 border border-black/[0.04] dark:border-white/[0.06] flex items-center gap-2">
-                                <i data-lucide="wallet" class="w-3.5 h-3.5 text-[#AF52DE] shrink-0"></i>
-                                <span class="truncate" title="seller.finance.info">{{ __('marketplace.scope_finance_settlement') }}</span>
-                            </div>
-                            <div class="p-2 rounded-[12px] bg-white/60 dark:bg-[#2C2C2E]/60 border border-black/[0.04] dark:border-white/[0.06] flex items-center gap-2">
-                                <i data-lucide="tag" class="w-3.5 h-3.5 text-[#FF2D55] shrink-0"></i>
-                                <span class="truncate" title="seller.promotion.info, write">{{ __('marketplace.scope_promo_discount') }}</span>
-                            </div>
-                            <div class="p-2 rounded-[12px] bg-white/60 dark:bg-[#2C2C2E]/60 border border-black/[0.04] dark:border-white/[0.06] flex items-center gap-2">
-                                <i data-lucide="rotate-ccw" class="w-3.5 h-3.5 text-[#5856D6] shrink-0"></i>
-                                <span class="truncate" title="seller.return_refund.basic">{{ __('marketplace.scope_return_refund') }}</span>
-                            </div>
-                            <div class="p-2 rounded-[12px] bg-white/60 dark:bg-[#2C2C2E]/60 border border-black/[0.04] dark:border-white/[0.06] flex items-center gap-2">
-                                <i data-lucide="store" class="w-3.5 h-3.5 text-[#00AA5B] shrink-0"></i>
-                                <span class="truncate" title="seller.shop.info, authorization.info">{{ __('marketplace.scope_shop_auth') }}</span>
-                            </div>
-                            <div class="p-2 rounded-[12px] bg-white/60 dark:bg-[#2C2C2E]/60 border border-black/[0.04] dark:border-white/[0.06] flex items-center gap-2">
-                                <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#007AFF] shrink-0"></i>
-                                <span class="truncate" title="Image Translation & Product Optimization">{{ __('marketplace.scope_product_optimization') }}</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Active Toggle (AJAX Real-time) -->
-                    <div class="flex items-center justify-between pt-1">
-                        <div class="space-y-0.5">
-                            <span class="text-[13px] font-bold text-black dark:text-white">{{ __('marketplace.sales_sync_title_unified') }}</span>
-                            <p class="text-[11.5px] text-black/50 dark:text-white/50">{{ __('marketplace.sales_sync_desc_unified') }}</p>
-                        </div>
-                        <button type="button" @click="toggleChannel('tiktok_shop')" :disabled="toggling"
-                            :title="tiktokActive ? '{{ __('marketplace.click_to_deactivate') }}' : '{{ __('marketplace.click_to_activate') }}'"
-                            class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none"
-                            :class="tiktokActive ? 'bg-[#34C759]' : 'bg-black/20 dark:bg-white/20'">
-                            <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
-                                :class="tiktokActive ? 'translate-x-5' : 'translate-x-0'"></span>
-                        </button>
+                        @endforeach
                     </div>
                 @else
-                    <div class="p-4 rounded-[18px] bg-[#007AFF]/5 dark:bg-[#007AFF]/10 border border-[#007AFF]/15 space-y-3">
-                        <p class="text-[13px] text-black/75 dark:text-white/75 leading-relaxed">
-                            {!! __('marketplace.connect_unified_desc') !!}
-                        </p>
-                        <div class="flex items-center gap-2 text-[11px] text-black/60 dark:text-white/60 flex-wrap">
-                            <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md">
-                                <i data-lucide="check" class="w-3 h-3 text-[#34C759]"></i> {{ __('marketplace.scope_products_stock') }}
-                            </span>
-                            <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md">
-                                <i data-lucide="check" class="w-3 h-3 text-[#34C759]"></i> {{ __('marketplace.scope_fulfillment') }}
-                            </span>
-                            <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md">
-                                <i data-lucide="check" class="w-3 h-3 text-[#34C759]"></i> {{ __('marketplace.scope_logistics') }}
-                            </span>
-                            <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md">
-                                <i data-lucide="check" class="w-3 h-3 text-[#34C759]"></i> {{ __('marketplace.scope_finance') }}
-                            </span>
-                            <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md">
-                                <i data-lucide="check" class="w-3 h-3 text-[#34C759]"></i> {{ __('marketplace.scope_promotions') }}
-                            </span>
-                            <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md">
-                                <i data-lucide="check" class="w-3 h-3 text-[#34C759]"></i> {{ __('marketplace.scope_return_refund') }}
-                            </span>
-                        </div>
-                    </div>
+                    <p class="text-[12px] text-black/45 dark:text-white/45 italic py-1">Belum ada akun TikTok Shop atau Tokopedia yang terhubung.</p>
                 @endif
             </div>
 
-            <!-- Actions -->
-            <div class="pt-3 border-t border-black/[0.04] dark:border-white/[0.06] flex items-center justify-between gap-3">
-                @if($tiktokConnected)
-                    <div class="flex items-center gap-2 flex-1 flex-wrap">
-                        <a href="{{ route('marketplace-hub.products', ['channel' => 'tiktok_shop']) }}"
-                            class="h-10 px-4 rounded-[12px] text-[12.5px] font-bold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 transition-all flex items-center justify-center gap-1.5 cursor-pointer">
-                            <i data-lucide="tag" class="w-4 h-4"></i>
-                            <span>{{ __('marketplace.action_pricing_stock_tiktok') }}</span>
-                        </a>
-                        <a href="{{ route('marketplace-hub.products', ['channel' => 'tokopedia']) }}"
-                            class="h-10 px-4 rounded-[12px] text-[12.5px] font-bold text-[#00AA5B] bg-[#00AA5B]/10 hover:bg-[#00AA5B]/20 transition-all flex items-center justify-center gap-1.5 cursor-pointer">
-                            <i data-lucide="tag" class="w-4 h-4"></i>
-                            <span>{{ __('marketplace.action_pricing_stock_tokopedia') }}</span>
-                        </a>
-                        <a href="{{ route('marketplace-hub.orders', ['channel' => 'tiktok_shop']) }}"
-                            class="h-10 px-3.5 rounded-[12px] text-[12px] font-medium text-black/70 dark:text-white/70 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] transition-all flex items-center justify-center gap-1.5 cursor-pointer"
-                            title="{{ __('marketplace.action_view_orders_title') }}">
-                            <i data-lucide="package" class="w-3.5 h-3.5"></i>
-                            <span>{{ __('marketplace.action_orders_short') }}</span>
-                        </a>
+            @if($tiktokConnected)
+                {{-- Quick Nav Actions when Connected --}}
+                <div class="flex items-center gap-2 flex-wrap pt-1">
+                    <a href="{{ route('marketplace-hub.products', ['channel' => 'tiktok_shop']) }}"
+                        class="min-h-[34px] px-3.5 rounded-[10px] text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 transition-all flex items-center gap-1.5 cursor-pointer">
+                        <i data-lucide="tag" class="w-3.5 h-3.5"></i>
+                        <span>Produk TikTok</span>
+                    </a>
+                    <a href="{{ route('marketplace-hub.products', ['channel' => 'tokopedia']) }}"
+                        class="min-h-[34px] px-3.5 rounded-[10px] text-[12px] font-semibold text-[#00AA5B] bg-[#00AA5B]/10 hover:bg-[#00AA5B]/20 transition-all flex items-center gap-1.5 cursor-pointer">
+                        <i data-lucide="tag" class="w-3.5 h-3.5"></i>
+                        <span>Produk Tokopedia</span>
+                    </a>
+                    <a href="{{ route('marketplace-hub.orders', ['channel' => 'tiktok_shop']) }}"
+                        class="min-h-[34px] px-3.5 rounded-[10px] text-[12px] font-semibold text-black/75 dark:text-white/75 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-all flex items-center gap-1.5 cursor-pointer">
+                        <i data-lucide="shopping-bag" class="w-3.5 h-3.5 text-[#00AA5B]"></i>
+                        <span>Pesanan Masuk</span>
+                    </a>
+                    <div class="ml-auto flex items-center gap-2">
+                        <span class="text-[11px] text-black/50 dark:text-white/50 hidden sm:inline">Sync Otomatis:</span>
+                        <button type="button" @click="toggleChannel('tiktok_shop')" :disabled="toggling"
+                            class="relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none"
+                            :class="tiktokActive ? 'bg-[#34C759]' : 'bg-black/20 dark:bg-white/20'">
+                            <span class="pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
+                                :class="tiktokActive ? 'translate-x-4' : 'translate-x-0'"></span>
+                        </button>
                     </div>
-                    <button type="button" @click="openDisconnect('tiktok_shop', 'TikTok Shop + Tokopedia')"
-                        class="h-10 px-3.5 rounded-[12px] text-[12px] font-semibold text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
-                        title="{{ __('marketplace.action_disconnect') }}">
-                        <i data-lucide="unlink" class="w-4 h-4"></i>
-                        <span class="text-[12px]">{{ __('marketplace.action_disconnect_short') }}</span>
-                    </button>
-                @else
-                    <form method="POST" action="{{ route('marketplace-hub.connect', 'tiktok-tokopedia') }}" class="w-full">
+                </div>
+            @else
+                {{-- Module Capabilities Box when Disconnected --}}
+                <div class="p-4 rounded-[16px] bg-[#007AFF]/5 dark:bg-[#007AFF]/10 border border-[#007AFF]/15 space-y-3">
+                    <p class="text-[12.5px] text-black/75 dark:text-white/75 leading-relaxed">
+                        {!! __('marketplace.connect_unified_desc') !!}
+                    </p>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-1.5 text-[11px] text-black/60 dark:text-white/60">
+                        <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md truncate">
+                            <i data-lucide="check" class="w-3 h-3 text-[#34C759] shrink-0"></i> {{ __('marketplace.scope_products_stock') }}
+                        </span>
+                        <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md truncate">
+                            <i data-lucide="check" class="w-3 h-3 text-[#34C759] shrink-0"></i> {{ __('marketplace.scope_fulfillment') }}
+                        </span>
+                        <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md truncate">
+                            <i data-lucide="check" class="w-3 h-3 text-[#34C759] shrink-0"></i> {{ __('marketplace.scope_logistics') }}
+                        </span>
+                        <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md truncate">
+                            <i data-lucide="check" class="w-3 h-3 text-[#34C759] shrink-0"></i> {{ __('marketplace.scope_finance') }}
+                        </span>
+                        <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md truncate">
+                            <i data-lucide="check" class="w-3 h-3 text-[#34C759] shrink-0"></i> {{ __('marketplace.scope_promotions') }}
+                        </span>
+                        <span class="inline-flex items-center gap-1 font-medium bg-black/[0.04] dark:bg-white/[0.06] px-2 py-0.5 rounded-md truncate">
+                            <i data-lucide="check" class="w-3 h-3 text-[#34C759] shrink-0"></i> {{ __('marketplace.scope_return_refund') }}
+                        </span>
+                    </div>
+                </div>
+            @endif
+
+            {{-- Compact Action Button (Footer Row) --}}
+            <div class="pt-2 flex items-center justify-between gap-3 flex-wrap">
+                <p class="text-[11.5px] text-black/50 dark:text-white/50 hidden sm:block">
+                    {{ $tiktokConnected ? 'Otorisasi TikTok Shop Partner & Tokopedia aktif untuk sinkronisasi inventori dan pesanan multi-toko.' : 'Hubungkan akun TikTok Shop Partner untuk sinkronisasi pesanan TikTok Shop dan Tokopedia sekaligus.' }}
+                </p>
+                @if($tiktokConnected)
+                    <form method="POST" action="{{ route('marketplace-hub.connect', 'tiktok-tokopedia') }}" class="ml-auto">
                         @csrf
                         <button type="submit"
-                            class="w-full h-11 px-5 rounded-[14px] text-[13.5px] font-bold text-white bg-gradient-to-r from-black via-[#1C1C1E] to-[#00AA5B] hover:opacity-95 active:scale-[0.98] transition-all flex items-center justify-center gap-2.5 shadow-md shadow-black/10 cursor-pointer">
-                            <i data-lucide="plug" class="w-4 h-4"></i>
+                            class="min-h-[38px] px-4 rounded-[11px] bg-black dark:bg-white text-white dark:text-black hover:opacity-90 font-semibold text-[12.5px] inline-flex items-center justify-center gap-2 shadow-xs active:scale-[0.98] transition-all shrink-0 cursor-pointer">
+                            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+                            <span>Update TikTok Account</span>
+                        </button>
+                    </form>
+                @else
+                    <form method="POST" action="{{ route('marketplace-hub.connect', 'tiktok-tokopedia') }}" class="w-full sm:w-auto ml-auto">
+                        @csrf
+                        <button type="submit"
+                            class="min-h-[38px] px-5 rounded-[11px] bg-gradient-to-r from-black via-[#1C1C1E] to-[#00AA5B] hover:opacity-95 text-white font-semibold text-[12.5px] inline-flex items-center justify-center gap-2 shadow-xs active:scale-[0.98] transition-all cursor-pointer w-full sm:w-auto">
+                            <i data-lucide="plug" class="w-3.5 h-3.5"></i>
                             <span>{{ __('marketplace.btn_connect_unified') }}</span>
                         </button>
                     </form>

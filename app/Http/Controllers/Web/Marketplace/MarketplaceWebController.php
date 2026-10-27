@@ -46,24 +46,34 @@ class MarketplaceWebController extends Controller
         $totalOrders   = MarketplaceOrder::where('business_id', $business->id)->count();
         $totalErrors   = MarketplaceSyncLog::where('business_id', $business->id)->where('status', 'failed')->count();
 
+        $shopeeAccount = $accounts->where('channel', 'shopee')->where('status', MarketplaceAccount::STATUS_CONNECTED)->first()
+            ?? $accounts->where('channel', 'shopee')->first();
+        $tiktokAccount = $accounts->whereIn('channel', ['tiktok_shop', 'tokopedia'])->where('status', MarketplaceAccount::STATUS_CONNECTED)->first()
+            ?? $accounts->whereIn('channel', ['tiktok_shop', 'tokopedia'])->first();
+        $tokopediaAccount = $accounts->where('channel', 'tokopedia')->where('status', MarketplaceAccount::STATUS_CONNECTED)->first()
+            ?? $accounts->where('channel', 'tokopedia')->first();
+
         $channels = [
             'shopee' => [
-                'name'    => 'Shopee',
-                'account' => $accounts->firstWhere('channel', 'shopee'),
-                'icon'    => 'shopping-bag',
-                'color'   => '#EE4D2D',
+                'name'     => 'Shopee',
+                'account'  => $shopeeAccount,
+                'accounts' => $accounts->where('channel', 'shopee')->where('status', MarketplaceAccount::STATUS_CONNECTED),
+                'icon'     => 'shopping-bag',
+                'color'    => '#EE4D2D',
             ],
             'tiktok_shop' => [
-                'name'    => 'TikTok Shop',
-                'account' => $accounts->firstWhere('channel', 'tiktok_shop'),
-                'icon'    => 'video',
-                'color'   => '#000000',
+                'name'     => 'TikTok Shop',
+                'account'  => $tiktokAccount,
+                'accounts' => $accounts->whereIn('channel', ['tiktok_shop', 'tokopedia'])->where('status', MarketplaceAccount::STATUS_CONNECTED),
+                'icon'     => 'video',
+                'color'    => '#000000',
             ],
             'tokopedia' => [
-                'name'    => 'Tokopedia',
-                'account' => $accounts->firstWhere('channel', 'tokopedia'),
-                'icon'    => 'store',
-                'color'   => '#03AC0E',
+                'name'     => 'Tokopedia',
+                'account'  => $tokopediaAccount,
+                'accounts' => $accounts->where('channel', 'tokopedia')->where('status', MarketplaceAccount::STATUS_CONNECTED),
+                'icon'     => 'store',
+                'color'    => '#03AC0E',
             ],
         ];
 
