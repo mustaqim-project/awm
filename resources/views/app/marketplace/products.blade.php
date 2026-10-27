@@ -952,7 +952,11 @@
                             <div class="p-3.5 rounded-[16px] border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 text-[12.5px]"
                                 :class="form.marketplace_item_id ? (form.is_active ? 'bg-[#34C759]/10 border-[#34C759]/20 text-[#248A3D] dark:text-[#30D158]' : 'bg-[#FF9500]/10 border-[#FF9500]/20 text-[#FF9500]') : 'bg-[#007AFF]/10 border-[#007AFF]/20 text-[#007AFF]'">
                                 <div class="flex items-center gap-2.5">
-                                    <i :data-lucide="form.marketplace_item_id ? (form.is_active ? 'check-circle-2' : 'pause-circle') : 'sparkles'" class="w-4 h-4 shrink-0"></i>
+                                    <div class="w-4 h-4 shrink-0 flex items-center justify-center">
+                                        <i x-show="form.marketplace_item_id && form.is_active" data-lucide="check-circle-2" class="w-4 h-4"></i>
+                                        <i x-show="form.marketplace_item_id && !form.is_active" data-lucide="pause-circle" class="w-4 h-4"></i>
+                                        <i x-show="!form.marketplace_item_id" data-lucide="sparkles" class="w-4 h-4"></i>
+                                    </div>
                                     <div>
                                         <template x-if="form.marketplace_item_id">
                                             <div class="flex items-center gap-2 flex-wrap">
@@ -1475,19 +1479,9 @@
 
 @push('scripts')
 <script>
-(function() {
-    function initMarketplaceAlpine() {
-        if (typeof Alpine !== 'undefined') {
-            registerComponent();
-        } else {
-            document.addEventListener('alpine:init', registerComponent);
-        }
-    }
-
-    function registerComponent() {
-        if (!window.Alpine) return;
-        Alpine.data('marketplaceProductManager', (config = {}) => ({
-            mappingModal: false,
+function marketplaceProductManager(config = {}) {
+    return {
+        mappingModal: false,
             syncModal: false,
             submitting: false,
             publishing: false,
@@ -2165,10 +2159,19 @@
             formatRupiah(val) {
                 return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(val || 0);
             }
-        }));
-    }
+    };
+}
+window.marketplaceProductManager = marketplaceProductManager;
 
-    initMarketplaceAlpine();
-})();
+// Register with Alpine if present or when initialized
+if (window.Alpine) {
+    window.Alpine.data('marketplaceProductManager', marketplaceProductManager);
+} else {
+    document.addEventListener('alpine:init', function() {
+        if (window.Alpine) {
+            window.Alpine.data('marketplaceProductManager', marketplaceProductManager);
+        }
+    });
+}
 </script>
 @endpush
