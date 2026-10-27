@@ -7,6 +7,7 @@ namespace App\Domain\Marketplace;
 use App\Models\Business;
 use App\Models\MarketplaceAccount;
 use App\Models\MarketplaceOrder;
+use App\Models\MarketplaceProductMapping;
 use App\Models\MarketplaceSyncLog;
 use Illuminate\Support\Facades\DB;
 
@@ -131,7 +132,16 @@ class MarketplaceOrderService
             ]);
         }
 
-        // Product / Reserved Stock Change Push (Code 5: reserved_stock_change_push)
+        // Tracking number updates (Code 4: order_trackingno_push, Code 24: booking_trackingno_push)
+        $trackingNo = $data['tracking_no'] ?? ($data['tracking_number'] ?? ($payload['tracking_no'] ?? null));
+        if (! empty($orderSn) && ! empty($trackingNo)) {
+            MarketplaceOrder::where('business_id', $account->business_id)
+                ->where('channel', $channel)
+                ->where('external_order_id', (string) $orderSn)
+                ->update(['tracking_number' => (string) $trackingNo]);
+        }
+
+        // Product / Reserved Stock Change Push (Code 8: reserved_stock_change_push)
         if (! empty($data['item_id']) && ! empty($data['changed_values'])) {
             MarketplaceSyncLog::log(
                 businessId: $account->business_id,
@@ -140,6 +150,62 @@ class MarketplaceOrderService
                 action: 'reserved_stock_change',
                 status: 'success',
                 payload: $data,
+                marketplaceAccountId: $account->id
+            );
+        }
+
+        // Product Violation / Banned Push (Code 6: banned_item_push, Code 16: violation_item_push)
+        $itemId = $data['item_id'] ?? ($payload['item_id'] ?? null);
+        $eventCode = (int) ($payload['code'] ?? ($payload['type'] ?? 0));
+        if (! empty($itemId) && in_array($eventCode, [6, 16], true)) {
+            MarketplaceProductMapping::where('business_id', $account->business_id)
+                ->where('channel', $channel)
+                ->where('external_product_id', (string) $itemId)
+                ->update([
+                    'is_active' => false,
+                    'sync_status' => MarketplaceProductMapping::STATUS_FAILED,
+                    'last_sync_error' => $data['reason'] ?? ($payload['reason'] ?? 'Produk dibatasi atau dinonaktifkan oleh Shopee'),
+                ]);
+
+            MarketplaceSyncLog::log(
+                businessId: $account->business_id,
+                channel: $channel,
+                entityType: 'product',
+                action: $eventCode === 6 ? 'banned_item_push' : 'violation_item_push',
+                status: 'warning',
+                payload: $payload,
+                marketplaceAccountId: $account->id
+            );
+        }
+
+        // Shopee Auto Correct Item Push (Code 17: shopee_auto_correct_item_push)
+        if (! empty($itemId) && $eventCode === 17) {
+            MarketplaceSyncLog::log(
+                businessId: $account->business_id,
+                channel: $channel,
+                entityType: 'product',
+                action: 'auto_correct_item_push',
+                status: 'info',
+                payload: $payload,
+                marketplaceAccountId: $account->id
+            );
+        }
+
+        // Booking & Fulfillment Updates (Code 23: booking_status, Code 25: booking_shipping_document, Code 30: package_fulfillment, Code 37: courier_delivery_binding)
+        if (in_array($eventCode, [23, 25, 30, 37], true)) {
+            MarketplaceSyncLog::log(
+                businessId: $account->business_id,
+                channel: $channel,
+                entityType: 'fulfillment',
+                action: match ($eventCode) {
+                    23 => 'booking_status_push',
+                    25 => 'booking_shipping_document_status_push',
+                    30 => 'package_fulfillment_status_push',
+                    37 => 'courier_delivery_binding_status_push',
+                    default => 'fulfillment_push'
+                },
+                status: 'info',
+                payload: $payload,
                 marketplaceAccountId: $account->id
             );
         }

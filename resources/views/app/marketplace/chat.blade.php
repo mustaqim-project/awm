@@ -17,6 +17,10 @@
         :title="__('marketplace.chat_page_title')"
         :subtitle="__('marketplace.chat_module_subtitle')">
         <x-slot:actions>
+            <div class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] border border-[#34C759]/20">
+                <span class="w-1.5 h-1.5 rounded-full bg-[#34C759] animate-pulse"></span>
+                <span>Live Chat • Real-time</span>
+            </div>
             <a href="{{ route('marketplace-hub.index') }}"
                 class="min-h-[44px] sm:min-h-0 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] flex items-center justify-center gap-1.5 cursor-pointer">
                 <i data-lucide="arrow-left" class="w-4 h-4"></i>
@@ -203,11 +207,57 @@ function marketplaceChatCockpit(config) {
         newMessage: '',
         loadingMessages: false,
         sendingMessage: false,
+        pollTimer: null,
 
         init() {
             if (this.conversations.length > 0) {
                 const initial = this.conversations.find(c => c.id === config.initialActiveId) || this.conversations[0];
                 this.selectConversation(initial);
+            }
+            // Auto-polling for new incoming messages without page reload
+            this.pollTimer = setInterval(() => {
+                this.pollIncomingUpdates();
+            }, 4000);
+        },
+
+        async pollIncomingUpdates() {
+            try {
+                // Poll conversation list to catch new threads or unread messages
+                const res = await fetch('/marketplace-hub/chat' + (this.channelFilter !== 'all' ? '?channel=' + this.channelFilter : ''), {
+                    headers: { 'Accept': 'application/json' }
+                });
+                const data = await res.json();
+                if (data.success && Array.isArray(data.conversations)) {
+                    for (const incoming of data.conversations) {
+                        const existing = this.conversations.find(c => c.id === incoming.id);
+                        if (existing) {
+                            existing.last_message_content = incoming.last_message_content;
+                            existing.last_message_at = incoming.last_message_at;
+                            if (this.activeConv?.id !== existing.id) {
+                                existing.unread_count = incoming.unread_count;
+                            }
+                        } else {
+                            this.conversations.unshift(incoming);
+                        }
+                    }
+                }
+
+                // If an active conversation is open, refresh messages silently
+                if (this.activeConv && !this.sendingMessage) {
+                    const msgRes = await fetch(`/marketplace-hub/chat/${this.activeConv.id}`, {
+                        headers: { 'Accept': 'application/json' }
+                    });
+                    const msgData = await msgRes.json();
+                    if (msgData.success && msgData.conversation) {
+                        const newMsgList = msgData.conversation.messages || [];
+                        if (newMsgList.length !== this.messages.length) {
+                            this.messages = newMsgList;
+                            this.scrollToBottom();
+                        }
+                    }
+                }
+            } catch (e) {
+                // silent background poll
             }
         },
 

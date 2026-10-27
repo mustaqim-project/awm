@@ -441,7 +441,7 @@ class MarketplaceWebController extends Controller
 
         if ($effectivePrice <= 0) {
             $msg = "Harga jual saluran tidak boleh Rp 0 atau kosong untuk mencegah risiko transaksi gratis yang merugikan.";
-            if ($request->wantsJson()) {
+            if ($request->wantsJson() || $request->ajax()) {
                 return response()->json(['success' => false, 'error' => $msg], 422);
             }
             return back()->with('error', $msg);
@@ -454,7 +454,7 @@ class MarketplaceWebController extends Controller
             $costFormatted  = number_format($baseCost, 0, ',', '.');
             $priceFormatted = number_format($effectivePrice, 0, ',', '.');
             $msg = "Harga jual saluran (Rp {$priceFormatted}) berada di bawah modal dasar HPP (Rp {$costFormatted}). Potensi kerugian Rp {$diffFormatted}/unit. Centang persetujuan risiko untuk melanjutkan.";
-            if ($request->wantsJson()) {
+            if ($request->wantsJson() || $request->ajax()) {
                 return response()->json(['success' => false, 'error' => $msg], 422);
             }
             return back()->with('error', $msg);
@@ -497,7 +497,7 @@ class MarketplaceWebController extends Controller
             }
         }
 
-        if ($request->wantsJson()) {
+        if ($request->wantsJson() || $request->ajax()) {
             return response()->json(['success' => true, 'mapping' => $mapping, 'message' => __('marketplace.sku_mapping_saved')]);
         }
 
@@ -552,7 +552,7 @@ class MarketplaceWebController extends Controller
             }
         }
 
-        if ($request->wantsJson()) {
+        if ($request->wantsJson() || $request->ajax()) {
             return response()->json(['success' => true, 'message' => __('marketplace.sku_mapping_saved')]);
         }
 
@@ -571,7 +571,7 @@ class MarketplaceWebController extends Controller
 
         $results = $this->syncService->syncProductToAllChannels($product);
 
-        if (request()->wantsJson()) {
+        if (request()->wantsJson() || request()->ajax()) {
             return response()->json(['success' => true, 'results' => $results]);
         }
 
@@ -590,7 +590,7 @@ class MarketplaceWebController extends Controller
 
         $results = $this->syncService->syncProductToAllChannels($product);
 
-        if (request()->wantsJson()) {
+        if (request()->wantsJson() || request()->ajax()) {
             return response()->json(['success' => true, 'results' => $results]);
         }
 

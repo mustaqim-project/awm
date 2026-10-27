@@ -8,7 +8,75 @@
 <div class="max-w-[1360px] mx-auto space-y-6 pb-28 sm:pb-32 lg:pb-12" x-data="{
     pullModal: false,
     submitting: false,
-    selectedPullChannel: 'shopee'
+    refreshing: false,
+    selectedPullChannel: 'shopee',
+    pollTimer: null,
+    async pullOrdersAjax() {
+        this.submitting = true;
+        try {
+            const token = document.querySelector('meta[name=\'csrf-token\']')?.getAttribute('content');
+            const res = await fetch('{{ route('marketplace-hub.orders.pull') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': token || ''
+                },
+                body: JSON.stringify({ channel: this.selectedPullChannel })
+            });
+            const data = await res.json();
+            if (data.success) {
+                if (window.AppAlert) {
+                    AppAlert.toast(data.message || 'Pesanan berhasil ditarik!', 'success');
+                }
+                this.pullModal = false;
+                await this.refreshOrdersTable();
+            } else {
+                if (window.AppAlert) {
+                    AppAlert.toast(data.message || 'Gagal menarik pesanan.', 'error');
+                }
+            }
+        } catch (e) {
+            if (window.AppAlert) {
+                AppAlert.toast('Kesalahan jaringan saat menarik pesanan.', 'error');
+            }
+        } finally {
+            this.submitting = false;
+        }
+    },
+    async refreshOrdersTable() {
+        if (this.refreshing) return;
+        this.refreshing = true;
+        try {
+            const url = new URL(window.location.href);
+            const res = await fetch(url.toString(), {
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            });
+            const html = await res.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const newTbody = doc.querySelector('#marketplace-orders-tbody');
+            const curTbody = document.querySelector('#marketplace-orders-tbody');
+            if (newTbody && curTbody) {
+                curTbody.innerHTML = newTbody.innerHTML;
+                if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                    window.lucide.createIcons();
+                }
+            }
+            const newCount = doc.querySelector('#marketplace-orders-total-count');
+            const curCount = document.querySelector('#marketplace-orders-total-count');
+            if (newCount && curCount) {
+                curCount.innerHTML = newCount.innerHTML;
+            }
+        } catch (e) {
+            // silent catch
+        } finally {
+            this.refreshing = false;
+        }
+    },
+    init() {
+        this.pollTimer = setInterval(() => this.refreshOrdersTable(), 10000);
+    }
 }">
 
     <!-- ========================================== -->
@@ -18,6 +86,10 @@
         :title="__('marketplace.orders_page_title')"
         :subtitle="__('marketplace.orders_module_subtitle')">
         <x-slot:actions>
+            <div class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] border border-[#34C759]/20">
+                <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]" :class="refreshing ? 'animate-spin' : 'animate-pulse'"></span>
+                <span>Live Feed • Auto-sync</span>
+            </div>
             <a href="{{ route('marketplace-hub.orders.export', request()->only(['channel', 'status', 'start_date', 'end_date'])) }}"
                 class="min-h-[44px] sm:min-h-0 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 cursor-pointer"
                 title="{{ __('marketplace.btn_export_excel_title') }}">
@@ -72,7 +144,7 @@
         </form>
 
         <div class="text-[12px] text-black/60 dark:text-white/60">
-            <span>{!! __('marketplace.total_orders_count', ['count' => $orders->total()]) !!}</span>
+            <span id="marketplace-orders-total-count">{!! __('marketplace.total_orders_count', ['count' => $orders->total()]) !!}</span>
         </div>
     </div>
 
@@ -92,7 +164,7 @@
                         <th class="py-3.5 px-4 sm:px-6 text-right">{{ __('marketplace.th_order_time') }}</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
+                <tbody id="marketplace-orders-tbody" class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                     @forelse($orders as $order)
                         <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.015] transition-colors">
                             <!-- Col 1: Order ID & Channel Badge -->
@@ -261,7 +333,7 @@
                     </button>
                 </div>
 
-                <form method="POST" action="{{ route('marketplace-hub.orders.pull') }}" @submit="submitting = true" class="space-y-4">
+                <form method="POST" action="{{ route('marketplace-hub.orders.pull') }}" @submit.prevent="pullOrdersAjax()" class="space-y-4">
                     @csrf
                     <div>
                         <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-2">{{ __('marketplace.pull_orders_select_channel') }}</label>

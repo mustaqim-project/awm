@@ -81,28 +81,35 @@
         :title="__('marketplace.products_module_title')"
         :subtitle="__('marketplace.products_module_subtitle')">
         <x-slot:actions>
-            {{-- 1-Click Pull / Import Products from Marketplace --}}
-            <form method="POST" action="{{ route('marketplace-hub.products.pull') }}" onsubmit="return typeof AppAlert !== 'undefined' ? AppAlert.confirmSubmit(event, this, '{{ addslashes(__('marketplace.confirm_pull_desc')) }}', '{{ addslashes(__('marketplace.confirm_pull_title')) }}', 'info') : true">
-                @csrf
-                <input type="hidden" name="channel" value="all">
-                <button type="submit"
-                    class="min-h-[44px] sm:min-h-0 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#34C759] hover:bg-[#30B753] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 shadow-sm cursor-pointer"
-                    title="{{ __('marketplace.btn_pull_products_title') }}">
-                    <i data-lucide="download" class="w-4 h-4"></i>
-                    <span>{{ __('marketplace.btn_pull_products') }}</span>
-                </button>
-            </form>
+            {{-- Live Feed Status Indicator --}}
+            <div class="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-semibold bg-[#34C759]/10 text-[#34C759] border border-[#34C759]/20 shadow-sm" title="Katalog produk tersinkronisasi live dengan saluran Shopee, TikTok Shop & Tokopedia">
+                <span class="w-2 h-2 rounded-full bg-[#34C759] animate-pulse"></span>
+                <span>Auto-sync Aktif</span>
+            </div>
 
-            {{-- 1-Click Push / Sync All Price & Stock to Marketplace --}}
-            <form method="POST" action="{{ route('marketplace-hub.products.sync-all') }}" onsubmit="return typeof AppAlert !== 'undefined' ? AppAlert.confirmSubmit(event, this, '{{ addslashes(__('marketplace.confirm_sync_desc')) }}', '{{ addslashes(__('marketplace.confirm_sync_title')) }}', 'info') : true">
-                @csrf
-                <button type="submit"
-                    class="min-h-[44px] sm:min-h-0 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 shadow-sm cursor-pointer"
-                    title="{{ __('marketplace.btn_sync_all_title') }}">
-                    <i data-lucide="refresh-cw" class="w-4 h-4"></i>
-                    <span>{{ __('marketplace.btn_sync_all') }}</span>
-                </button>
-            </form>
+            {{-- 1-Click Pull / Import Products from Marketplace (AJAX) --}}
+            <button type="button" @click="pullProductsAjax()" :disabled="pullingProducts || syncingAll"
+                class="min-h-[44px] sm:min-h-0 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#34C759] hover:bg-[#30B753] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 shadow-sm cursor-pointer disabled:opacity-60"
+                title="{{ __('marketplace.btn_pull_products_title') }}">
+                <svg x-show="pullingProducts" class="animate-spin w-4 h-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <i x-show="!pullingProducts" data-lucide="download" class="w-4 h-4"></i>
+                <span x-text="pullingProducts ? 'Menarik...' : '{{ __('marketplace.btn_pull_products') }}'"></span>
+            </button>
+
+            {{-- 1-Click Push / Sync All Price & Stock to Marketplace (AJAX) --}}
+            <button type="button" @click="syncAllAjax()" :disabled="syncingAll || pullingProducts"
+                class="min-h-[44px] sm:min-h-0 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 shadow-sm cursor-pointer disabled:opacity-60"
+                title="{{ __('marketplace.btn_sync_all_title') }}">
+                <svg x-show="syncingAll" class="animate-spin w-4 h-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <i x-show="!syncingAll" data-lucide="refresh-cw" class="w-4 h-4"></i>
+                <span x-text="syncingAll ? 'Sinkronisasi...' : '{{ __('marketplace.btn_sync_all') }}'"></span>
+            </button>
 
             <a href="{{ route('import.index') }}"
                 class="min-h-[44px] sm:min-h-0 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] flex items-center justify-center gap-1.5 cursor-pointer"
@@ -344,7 +351,7 @@
                         <th class="py-3 px-4 sm:px-6 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('marketplace.th_action') }}</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
+                <tbody id="marketplace-products-tbody" class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                     @forelse($products as $product)
                         @php
                             $shopeeMapping = $product->marketplaceMappings->firstWhere('channel', 'shopee');
@@ -1485,6 +1492,126 @@
             submitting: false,
             publishing: false,
             togglingStatus: false,
+            pullingProducts: false,
+            syncingAll: false,
+            pollTimer: null,
+            init() {
+                // Auto-refresh product listing silently every 25s without interrupting user interactions
+                this.pollTimer = setInterval(() => {
+                    if (!this.mappingModal && !this.submitting && !this.publishing && !this.togglingStatus && !this.pullingProducts && !this.syncingAll) {
+                        this.refreshProductsTable();
+                    }
+                }, 25000);
+            },
+            destroy() {
+                if (this.pollTimer) {
+                    clearInterval(this.pollTimer);
+                }
+            },
+            async refreshProductsTable() {
+                try {
+                    const res = await fetch(window.location.href, {
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Accept': 'text/html'
+                        }
+                    });
+                    if (res.ok) {
+                        const html = await res.text();
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+                        const newTbody = doc.getElementById('marketplace-products-tbody');
+                        const currentTbody = document.getElementById('marketplace-products-tbody');
+                        if (newTbody && currentTbody) {
+                            currentTbody.innerHTML = newTbody.innerHTML;
+                            if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                                window.lucide.createIcons();
+                            }
+                        }
+                    }
+                } catch (e) {
+                    console.warn('Silent product refresh error:', e);
+                }
+            },
+            async pullProductsAjax() {
+                let confirmed = true;
+                if (window.AppAlert && typeof window.AppAlert['confirm'] === 'function') {
+                    confirmed = await window.AppAlert['confirm'](
+                        {{ json_encode(__('marketplace.confirm_pull_title')) }},
+                        {{ json_encode(__('marketplace.confirm_pull_desc')) }}
+                    );
+                }
+                if (!confirmed) return;
+
+                this.pullingProducts = true;
+                try {
+                    const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+                    const res = await fetch('{{ route('marketplace-hub.products.pull') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': token || ''
+                        },
+                        body: JSON.stringify({ channel: 'all' })
+                    });
+                    const data = await res.json();
+                    if (!res.ok || !data.success) {
+                        throw new Error(data.message || data.error || 'Gagal menarik katalog produk dari marketplace.');
+                    }
+                    if (window.AppAlert) {
+                        AppAlert.toast(data.message, 'success');
+                    }
+                    await this.refreshProductsTable();
+                } catch (err) {
+                    if (window.AppAlert) {
+                        AppAlert.toast(err.message, 'error');
+                    } else {
+                        alert(err.message);
+                    }
+                } finally {
+                    this.pullingProducts = false;
+                }
+            },
+            async syncAllAjax() {
+                let confirmed = true;
+                if (window.AppAlert && typeof window.AppAlert['confirm'] === 'function') {
+                    confirmed = await window.AppAlert['confirm'](
+                        {{ json_encode(__('marketplace.confirm_sync_title')) }},
+                        {{ json_encode(__('marketplace.confirm_sync_desc')) }}
+                    );
+                }
+                if (!confirmed) return;
+
+                this.syncingAll = true;
+                try {
+                    const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+                    const res = await fetch('{{ route('marketplace-hub.products.sync-all') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': token || ''
+                        }
+                    });
+                    const data = await res.json();
+                    if (!res.ok || !data.success) {
+                        throw new Error(data.message || data.error || 'Gagal sinkronisasi produk massal.');
+                    }
+                    if (window.AppAlert) {
+                        AppAlert.toast(data.message, 'success');
+                    }
+                    await this.refreshProductsTable();
+                } catch (err) {
+                    if (window.AppAlert) {
+                        AppAlert.toast(err.message, 'error');
+                    } else {
+                        alert(err.message);
+                    }
+                } finally {
+                    this.syncingAll = false;
+                }
+            },
             selectedProduct: null,
             categories: config.categories || [],
             productsMap: config.products || {},
@@ -1641,9 +1768,9 @@
                 this.stockMode = mode;
                 this.form.sync_stock_auto = (mode === 'auto');
             },
-            handleFormSubmit(e) {
+            async handleFormSubmit(e) {
+                e.preventDefault();
                 if (this.isZeroPrice) {
-                    e.preventDefault();
                     if (window.AppAlert) {
                         AppAlert.toast({{ json_encode(__('marketplace.toast_zero_price')) }}, 'warning');
                     } else {
@@ -1652,7 +1779,6 @@
                     return false;
                 }
                 if (this.isBelowCost && !this.form.allow_below_cost) {
-                    e.preventDefault();
                     if (window.AppAlert) {
                         AppAlert.toast({{ json_encode(__('marketplace.toast_unlock_risk')) }}, 'warning');
                     } else {
@@ -1660,7 +1786,62 @@
                     }
                     return false;
                 }
+
                 this.submitting = true;
+                try {
+                    const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+                    const formEl = e.target;
+                    const formData = new FormData(formEl);
+
+                    const res = await fetch(formEl.action, {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'X-CSRF-TOKEN': token || ''
+                        },
+                        body: formData
+                    });
+
+                    const data = await res.json();
+                    if (!res.ok || !data.success) {
+                        throw new Error(data.message || data.error || 'Gagal menyimpan pemetaan SKU.');
+                    }
+
+                    if (window.AppAlert) {
+                        AppAlert.toast(data.message || 'Pengaturan SKU & Saluran berhasil disimpan!', 'success');
+                    }
+
+                    // Update in-memory product mapping
+                    if (this.selectedProduct) {
+                        if (!this.selectedProduct.marketplace_mappings) {
+                            this.selectedProduct.marketplace_mappings = [];
+                        }
+                        const existingIdx = this.selectedProduct.marketplace_mappings.findIndex(m => m.channel === this.form.channel);
+                        const updatedMapping = {
+                            channel: this.form.channel,
+                            marketplace_item_id: this.form.marketplace_item_id,
+                            channel_price: this.form.channel_price,
+                            is_active: this.form.is_active,
+                        };
+                        if (existingIdx >= 0) {
+                            this.selectedProduct.marketplace_mappings[existingIdx] = Object.assign(this.selectedProduct.marketplace_mappings[existingIdx], updatedMapping);
+                        } else {
+                            this.selectedProduct.marketplace_mappings.push(updatedMapping);
+                        }
+                    }
+
+                    this.mappingModal = false;
+                    await this.refreshProductsTable();
+                } catch (err) {
+                    if (window.AppAlert) {
+                        AppAlert.toast(err.message, 'error');
+                    } else {
+                        alert(err.message);
+                    }
+                } finally {
+                    this.submitting = false;
+                }
             },
             async publishToMarketplace() {
                 if (!this.selectedProduct) return;
@@ -1750,6 +1931,8 @@
                             this.selectedProduct.marketplace_mappings.push(updatedMapping);
                         }
                     }
+
+                    await this.refreshProductsTable();
                 } catch (err) {
                     if (window.AppAlert) {
                         AppAlert.toast(err.message, 'error');
@@ -1812,9 +1995,7 @@
                         AppAlert.toast(data.message || {{ json_encode(__('marketplace.status_updated_success')) }}, 'success');
                     }
 
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 600);
+                    await this.refreshProductsTable();
                 } catch (err) {
                     if (window.AppAlert) {
                         AppAlert.toast(err.message, 'error');
@@ -1879,9 +2060,7 @@
                         AppAlert.toast(data.message || {{ json_encode(__('marketplace.listing_status_updated')) }}, 'success');
                     }
 
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 600);
+                    await this.refreshProductsTable();
                 } catch (err) {
                     if (window.AppAlert) {
                         AppAlert.toast(err.message, 'error');
