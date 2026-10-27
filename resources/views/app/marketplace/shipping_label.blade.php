@@ -1,9 +1,24 @@
+@php
+    $firstOrder = $orders->first();
+    $firstRawChannel = strtolower(trim((string) ($firstOrder?->channel ?: ($firstOrder?->account?->channel ?? ''))));
+    $firstBuyer = strtolower((string) ($firstOrder?->buyer_name ?? ''));
+    $firstProvider = strtolower((string) ($firstOrder?->shipping_provider ?? ''));
+
+    $pageChannelName = 'Shopee';
+    if (str_contains($firstRawChannel, 'tiktok') || str_contains($firstBuyer, 'tiktok') || str_contains($firstProvider, 'tiktok')) {
+        $pageChannelName = 'TikTok Shop';
+    } elseif (str_contains($firstRawChannel, 'tokopedia') || str_contains($firstRawChannel, 'toped') || str_contains($firstBuyer, 'tokopedia')) {
+        $pageChannelName = 'Tokopedia';
+    } elseif (str_contains($firstRawChannel, 'storefront') || str_contains($firstRawChannel, 'cooca')) {
+        $pageChannelName = 'COOCA Storefront';
+    }
+@endphp
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Label Pengiriman Resmi Shopee - {{ $business->name }}</title>
+    <title>Label Pengiriman Resmi {{ $pageChannelName }} - {{ $business->name }}</title>
     <style>
         @page {
             size: 100mm 150mm;
@@ -494,7 +509,7 @@
             <svg style="width: 20px; height: 20px; color: #EE4D2D;" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M19 8h-1V3H6v5H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zM8 5h8v3H8V5zm8 14H8v-4h8v4zm4-4h-2v-2H4v2H2v-4c0-.55.45-1 1-1h18c.55 0 1 .45 1 1v4z"/>
             </svg>
-            <span><strong>{{ $orders->count() }}</strong> Label Shopee Siap Cetak</span>
+            <span><strong>{{ $orders->count() }}</strong> Label {{ $pageChannelName }} Siap Cetak</span>
         </div>
         <button type="button" onclick="window.print()">
             <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
@@ -545,9 +560,17 @@
                     <div class="shopee-header">
                         <div class="shopee-brand">
                             @php
-                                $channelCode = strtolower((string) ($order->channel ?? 'shopee'));
+                                $rawChannel = strtolower(trim((string) ($order->channel ?: ($order->account?->channel ?? ''))));
+                                $buyerStr = strtolower((string) ($order->buyer_name ?? ''));
+                                $carrierStr = strtolower((string) ($order->shipping_provider ?? ''));
+
+                                $isTikTok = str_contains($rawChannel, 'tiktok') || str_contains($buyerStr, 'tiktok') || str_contains($carrierStr, 'tiktok');
+                                $isTokopedia = str_contains($rawChannel, 'tokopedia') || str_contains($rawChannel, 'toped') || str_contains($buyerStr, 'tokopedia');
+                                $isStorefront = str_contains($rawChannel, 'storefront') || str_contains($rawChannel, 'cooca');
+
+                                $channelLabel = $isTikTok ? 'TikTok Shop' : ($isTokopedia ? 'Tokopedia' : ($isStorefront ? 'COOCA Storefront' : 'Shopee'));
                             @endphp
-                            @if ($channelCode === 'tiktok' || $channelCode === 'tiktok_shop')
+                            @if ($isTikTok)
                                 <!-- Official TikTok Shop Vector Logo -->
                                 <svg class="tiktok-official-logo" viewBox="0 0 160 40" xmlns="http://www.w3.org/2000/svg">
                                     <g transform="translate(0, 4)">
@@ -560,7 +583,7 @@
                                     <text class="tiktok-shop-text" x="129" y="24.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="800" font-size="12" fill="#FFFFFF" text-anchor="middle" letter-spacing="0.3">Shop</text>
                                 </svg>
                                 <div class="shopee-brand-sub">TikTok Shop Logistics</div>
-                            @elseif ($channelCode === 'tokopedia')
+                            @elseif ($isTokopedia)
                                 <!-- Official Tokopedia Vector Logo -->
                                 <svg class="tokopedia-official-logo" viewBox="0 0 660 175" xmlns="http://www.w3.org/2000/svg">
                                     <g class="tokopedia-path" fill="#03AC0E">
@@ -576,7 +599,7 @@
                                     <text class="tokopedia-text" x="135" y="115" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="800" font-size="82" fill="#03AC0E" letter-spacing="-2.5">tokopedia</text>
                                 </svg>
                                 <div class="shopee-brand-sub">Tokopedia Logistics</div>
-                            @elseif ($channelCode === 'storefront' || $channelCode === 'cooca')
+                            @elseif ($isStorefront)
                                 <!-- Official COOCA Storefront Logo -->
                                 <div class="cooca-official-brand">
                                     <img src="{{ asset('assets/image/cooca-logo-landscape.png') }}" alt="COOCA" class="cooca-official-img" />
@@ -694,7 +717,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="4" style="text-align: center; padding: 4px; color: #4b5563;">1x Paket Pesanan Shopee</td>
+                                        <td colspan="4" style="text-align: center; padding: 4px; color: #4b5563;">1x Paket Pesanan {{ $channelLabel }}</td>
                                     </tr>
                                 @endforelse
                                 @if(count($items) > 4)
