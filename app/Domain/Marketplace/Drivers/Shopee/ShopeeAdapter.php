@@ -317,7 +317,7 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
     }
 
     /**
-     * Upload an image file to Shopee Media Space.
+     * Upload an image file or remote image URL to Shopee Media Space.
      */
     public function uploadImage(MarketplaceAccount $account, string $imagePathOrUrl): ?string
     {
@@ -325,6 +325,49 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
             return null;
         }
 
+        $imageContent = null;
+        $filename     = 'item_' . time() . '.jpg';
+
+        if (filter_var($imagePathOrUrl, FILTER_VALIDATE_URL) || str_starts_with($imagePathOrUrl, 'http://') || str_starts_with($imagePathOrUrl, 'https://')) {
+            try {
+                $dl = Http::timeout(20)->get($imagePathOrUrl);
+                if ($dl->successful() && ! empty($dl->body())) {
+                    $imageContent = $dl->body();
+                    $parsedPath = parse_url($imagePathOrUrl, PHP_URL_PATH);
+                    if ($parsedPath) {
+                        $ext = pathinfo($parsedPath, PATHINFO_EXTENSION);
+                        if ($ext) {
+                            $filename = basename($parsedPath);
+                        }
+                    }
+                }
+            } catch (\Throwable $e) {
+                Log::warning("Shopee uploadImage: download failed for {$imagePathOrUrl}: {$e->getMessage()}");
+            }
+        } elseif (file_exists($imagePathOrUrl)) {
+            $imageContent = file_get_contents($imagePathOrUrl);
+            $filename     = basename($imagePathOrUrl);
+        } elseif (\Illuminate\Support\Facades\Storage::disk('public')->exists($imagePathOrUrl)) {
+            $fullPath     = \Illuminate\Support\Facades\Storage::disk('public')->path($imagePathOrUrl);
+            $imageContent = file_get_contents($fullPath);
+            $filename     = basename($fullPath);
+        } elseif (\Illuminate\Support\Facades\Storage::exists($imagePathOrUrl)) {
+            $imageContent = \Illuminate\Support\Facades\Storage::get($imagePathOrUrl);
+            $filename     = basename($imagePathOrUrl);
+        }
+
+        if (empty($imageContent)) {
+            return null;
+        }
+
+        return $this->uploadImageBytes($account, $imageContent, $filename);
+    }
+
+    /**
+     * Upload raw image bytes to Shopee Media Space.
+     */
+    public function uploadImageBytes(MarketplaceAccount $account, string $bytes, string $filename = 'product.jpg'): ?string
+    {
         $timestamp   = time();
         $path        = '/api/v2/media_space/upload_image';
         $accessToken = (string) $account->access_token;
@@ -342,26 +385,58 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
         );
 
         try {
-            $request = Http::timeout(20);
+            $response = Http::timeout(35)
+                ->attach('image', $bytes, $filename)
+                ->post($url);
 
-            if (file_exists($imagePathOrUrl)) {
-                $response = $request->attach('image', file_get_contents($imagePathOrUrl), basename($imagePathOrUrl))->post($url);
-            } elseif (\Illuminate\Support\Facades\Storage::disk('public')->exists($imagePathOrUrl)) {
-                $fullPath = \Illuminate\Support\Facades\Storage::disk('public')->path($imagePathOrUrl);
-                $response = $request->attach('image', file_get_contents($fullPath), basename($fullPath))->post($url);
-            } else {
-                return null;
-            }
-
-            $data = $response->json();
+            $data = $response->json() ?? [];
             if ($response->successful() && empty($data['error']) && ! empty($data['response']['image_info']['image_id'])) {
                 return (string) $data['response']['image_info']['image_id'];
             }
+
+            Log::warning('Shopee upload_image error from API', [
+                'status'   => $response->status(),
+                'response' => $data,
+            ]);
         } catch (\Throwable $e) {
-            Log::warning("Gagal upload gambar ke Shopee Media Space: {$e->getMessage()}");
+            Log::warning("Shopee upload_image exception: {$e->getMessage()}");
         }
 
         return null;
+    }
+
+    /**
+     * Fetch enabled logistics channels for the shop.
+     */
+    public function getShopLogistics(MarketplaceAccount $account): array
+    {
+        $timestamp   = time();
+        $path        = '/api/v2/logistics/get_channel_list';
+        $accessToken = (string) $account->access_token;
+        $sign        = $this->generateSignature($path, $timestamp, $accessToken, $account->shop_id);
+
+        $url = sprintf(
+            '%s%s?partner_id=%s&timestamp=%s&access_token=%s&shop_id=%s&sign=%s',
+            $this->host,
+            $path,
+            $this->partnerId,
+            $timestamp,
+            $accessToken,
+            $account->shop_id,
+            $sign
+        );
+
+        try {
+            $response = Http::timeout(15)->get($url);
+            $data     = $response->json() ?? [];
+            if ($response->successful() && empty($data['error']) && ! empty($data['response']['logistics_channel_list'])) {
+                return $data['response']['logistics_channel_list'];
+            }
+        } catch (\Throwable $e) {
+            Log::warning("Shopee get_channel_list error: {$e->getMessage()}");
+        }
+
+        return [];
     }
 
     /**
@@ -380,18 +455,62 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
 
         // Upload main and gallery images to Shopee Media Space
         $imageIdList = [];
+        $candidates  = [];
+
         if (! empty($product->image)) {
-            $mainImgId = $this->uploadImage($account, $product->image);
-            if ($mainImgId) {
-                $imageIdList[] = $mainImgId;
+            $candidates[] = $product->image;
+        }
+        if (! empty($product->image_url)) {
+            $candidates[] = $product->image_url;
+        }
+
+        if ($product->relationLoaded('images') || $product->images()->exists()) {
+            foreach ($product->images as $galleryImg) {
+                if (! empty($galleryImg->image_path)) {
+                    $candidates[] = $galleryImg->image_path;
+                }
+                if (! empty($galleryImg->image_url)) {
+                    $candidates[] = $galleryImg->image_url;
+                }
             }
         }
 
-        foreach ($product->images as $galleryImg) {
-            if (! empty($galleryImg->image_path)) {
-                $galImgId = $this->uploadImage($account, $galleryImg->image_path);
-                if ($galImgId && count($imageIdList) < 9) {
-                    $imageIdList[] = $galImgId;
+        if (! empty($product->gallery_images) && is_array($product->gallery_images)) {
+            foreach ($product->gallery_images as $g) {
+                $url = is_array($g) ? ($g['url'] ?? $g['image_path'] ?? null) : (is_string($g) ? $g : null);
+                if ($url) {
+                    $candidates[] = $url;
+                }
+            }
+        }
+
+        $candidates = array_unique(array_filter($candidates));
+
+        foreach ($candidates as $cand) {
+            if (count($imageIdList) >= 9) {
+                break;
+            }
+            $imgId = $this->uploadImage($account, $cand);
+            if ($imgId && ! in_array($imgId, $imageIdList, true)) {
+                $imageIdList[] = $imgId;
+            }
+        }
+
+        // Safety fallback: If still empty, create an 800x800 square JPEG placeholder
+        if (empty($imageIdList) && extension_loaded('gd')) {
+            $im = imagecreatetruecolor(800, 800);
+            $bg = imagecolorallocate($im, 240, 242, 245);
+            imagefilledrectangle($im, 0, 0, 800, 800, $bg);
+            $tc = imagecolorallocate($im, 33, 33, 33);
+            imagestring($im, 5, 40, 390, substr($product->name, 0, 40), $tc);
+            ob_start();
+            imagejpeg($im, null, 90);
+            $rawJpg = ob_get_clean();
+            imagedestroy($im);
+            if ($rawJpg) {
+                $pId = $this->uploadImageBytes($account, $rawJpg, 'cover.jpg');
+                if ($pId) {
+                    $imageIdList[] = $pId;
                 }
             }
         }
@@ -403,6 +522,7 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
             'shop_id'         => $account->shop_id,
             'has_token'       => ! empty($accessToken),
             'token_preview'   => ! empty($accessToken) ? substr($accessToken, 0, 10) . '...' : null,
+            'uploaded_images' => count($imageIdList),
         ];
 
         // 1. Guard against missing partner credentials
@@ -454,6 +574,21 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
 
         if (! empty($imageIdList)) {
             $payload['image'] = ['image_id_list' => $imageIdList];
+        }
+
+        // Fetch and attach enabled logistics channels
+        $logisticsList = [];
+        $channels = $this->getShopLogistics($account);
+        foreach ($channels as $ch) {
+            if (! empty($ch['enabled']) && ! empty($ch['logistics_channel_id'])) {
+                $logisticsList[] = [
+                    'logistic_id' => (int) $ch['logistics_channel_id'],
+                    'enabled'     => true,
+                ];
+            }
+        }
+        if (! empty($logisticsList)) {
+            $payload['logistic_info'] = $logisticsList;
         }
 
         try {
