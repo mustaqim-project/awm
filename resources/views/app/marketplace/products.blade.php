@@ -136,8 +136,8 @@ function marketplaceProductManager(config = {}) {
             let confirmed = true;
             if (window.AppAlert && typeof window.AppAlert['confirm'] === 'function') {
                 confirmed = await window.AppAlert['confirm'](
-                    {{ json_encode(__('marketplace.confirm_pull_title')) }},
-                    {{ json_encode(__('marketplace.confirm_pull_desc')) }}
+                    @json(__('marketplace.confirm_pull_title')),
+                    @json(__('marketplace.confirm_pull_desc'))
                 );
             }
             if (!confirmed) return;
@@ -176,8 +176,8 @@ function marketplaceProductManager(config = {}) {
             let confirmed = true;
             if (window.AppAlert && typeof window.AppAlert['confirm'] === 'function') {
                 confirmed = await window.AppAlert['confirm'](
-                    {{ json_encode(__('marketplace.confirm_sync_title')) }},
-                    {{ json_encode(__('marketplace.confirm_sync_desc')) }}
+                    @json(__('marketplace.confirm_sync_title')),
+                    @json(__('marketplace.confirm_sync_desc'))
                 );
             }
             if (!confirmed) return;
@@ -404,17 +404,17 @@ function marketplaceProductManager(config = {}) {
             e.preventDefault();
             if (this.isZeroPrice) {
                 if (window.AppAlert) {
-                    AppAlert.toast({{ json_encode(__('marketplace.toast_zero_price')) }}, 'warning');
+                    AppAlert.toast(@json(__('marketplace.toast_zero_price')), 'warning');
                 } else {
-                    alert({{ json_encode(__('marketplace.toast_zero_price')) }});
+                    alert(@json(__('marketplace.toast_zero_price')));
                 }
                 return false;
             }
             if (this.isBelowCost && !this.form.allow_below_cost) {
                 if (window.AppAlert) {
-                    AppAlert.toast({{ json_encode(__('marketplace.toast_unlock_risk')) }}, 'warning');
+                    AppAlert.toast(@json(__('marketplace.toast_unlock_risk')), 'warning');
                 } else {
-                    alert({{ json_encode(__('marketplace.toast_unlock_risk')) }});
+                    alert(@json(__('marketplace.toast_unlock_risk')));
                 }
                 return false;
             }
@@ -479,24 +479,24 @@ function marketplaceProductManager(config = {}) {
             if (!this.selectedProduct) return;
             if (this.isZeroPrice) {
                 if (window.AppAlert) {
-                    AppAlert.toast({{ json_encode(__('marketplace.toast_zero_price_short')) }}, 'warning');
+                    AppAlert.toast(@json(__('marketplace.toast_zero_price_short')), 'warning');
                 } else {
-                    alert({{ json_encode(__('marketplace.toast_zero_price_short')) }});
+                    alert(@json(__('marketplace.toast_zero_price_short')));
                 }
                 return;
             }
             if (this.isBelowCost && !this.form.allow_below_cost) {
                 if (window.AppAlert) {
-                    AppAlert.toast({{ json_encode(__('marketplace.toast_unlock_risk')) }}, 'warning');
+                    AppAlert.toast(@json(__('marketplace.toast_unlock_risk')), 'warning');
                 } else {
-                    alert({{ json_encode(__('marketplace.toast_unlock_risk')) }});
+                    alert(@json(__('marketplace.toast_unlock_risk')));
                 }
                 return;
             }
 
             const channelName = this.form.channel === 'tiktok_shop' ? 'TikTok Shop' : (this.form.channel === 'tokopedia' ? 'Tokopedia' : 'Shopee');
-            const publishTitleTpl = {{ json_encode(__('marketplace.confirm_publish_title')) }};
-            const publishDescTpl = {{ json_encode(__('marketplace.confirm_publish_desc')) }};
+            const publishTitleTpl = @json(__('marketplace.confirm_publish_title'));
+            const publishDescTpl = @json(__('marketplace.confirm_publish_desc'));
             
             if (window.AppAlert && typeof window.AppAlert['confirm'] === 'function') {
                 const confirmed = await window.AppAlert['confirm'](
@@ -534,12 +534,12 @@ function marketplaceProductManager(config = {}) {
 
                 const data = await res.json();
                 if (!res.ok || !data.success) {
-                    throw new Error(data.error || data.message || {{ json_encode(__('marketplace.publish_failed')) }});
+                    throw new Error(data.error || data.message || @json(__('marketplace.publish_failed')));
                 }
 
                 this.form.marketplace_item_id = data.external_product_id || this.form.marketplace_item_id;
                 
-                const publishSuccessTpl = {{ json_encode(__('marketplace.publish_success')) }};
+                const publishSuccessTpl = @json(__('marketplace.publish_success'));
                 if (window.AppAlert) {
                     AppAlert.toast(data.message || publishSuccessTpl.replace(':channel', channelName), 'success');
                 }
@@ -578,11 +578,11 @@ function marketplaceProductManager(config = {}) {
         async toggleChannelProductStatus(action) {
             if (!this.selectedProduct || !this.form.marketplace_item_id) return;
             const isDeactivate = action === 'deactivate';
-            const actionBadge = isDeactivate ? {{ json_encode(__('marketplace.btn_delist_modal')) }} : {{ json_encode(__('marketplace.activate')) }};
-            const actionText = isDeactivate ? {{ json_encode(__('marketplace.action_deactivate_text')) }} : {{ json_encode(__('marketplace.action_activate_text')) }};
+            const actionBadge = isDeactivate ? @json(__('marketplace.btn_delist_modal')) : @json(__('marketplace.activate'));
+            const actionText = isDeactivate ? @json(__('marketplace.action_deactivate_text')) : @json(__('marketplace.action_activate_text'));
             const channelName = this.form.channel === 'tiktok_shop' ? 'TikTok Shop' : (this.form.channel === 'tokopedia' ? 'Tokopedia' : 'Shopee');
-            const confirmToggleTitleTpl = {{ json_encode(__('marketplace.confirm_toggle_title')) }};
-            const confirmToggleDescTpl = {{ json_encode(__('marketplace.confirm_toggle_desc')) }};
+            const confirmToggleTitleTpl = @json(__('marketplace.confirm_toggle_title'));
+            const confirmToggleDescTpl = @json(__('marketplace.confirm_toggle_desc'));
             
             if (window.AppAlert && typeof window.AppAlert['confirm'] === 'function') {
                 const confirmed = await window.AppAlert['confirm'](
@@ -612,7 +612,7 @@ function marketplaceProductManager(config = {}) {
 
                 const data = await res.json();
                 if (!res.ok || !data.success) {
-                    throw new Error(data.message || data.error || {{ json_encode(__('marketplace.toggle_status_failed')) }});
+                    throw new Error(data.message || data.error || @json(__('marketplace.toggle_status_failed')));
                 }
 
                 this.form.is_active = !isDeactivate;
@@ -624,7 +624,7 @@ function marketplaceProductManager(config = {}) {
                 }
 
                 if (window.AppAlert) {
-                    AppAlert.toast(data.message || {{ json_encode(__('marketplace.status_updated_success')) }}, 'success');
+                    AppAlert.toast(data.message || @json(__('marketplace.status_updated_success')), 'success');
                 }
 
                 await this.refreshProductsTable();
@@ -642,14 +642,14 @@ function marketplaceProductManager(config = {}) {
             this.activeMenuId = null;
             const product = this.productsMap[productId] || this.productsMap[String(productId)] || null;
             const isDeactivate = action === 'deactivate';
-            const actionTitle = isDeactivate ? {{ json_encode(__('marketplace.btn_delist_modal')) }} : {{ json_encode(__('marketplace.activate')) }};
-            const actionVerb = isDeactivate ? {{ json_encode(__('marketplace.action_deactivate_text')) }} : {{ json_encode(__('marketplace.action_activate_text')) }};
+            const actionTitle = isDeactivate ? @json(__('marketplace.btn_delist_modal')) : @json(__('marketplace.activate'));
+            const actionVerb = isDeactivate ? @json(__('marketplace.action_deactivate_text')) : @json(__('marketplace.action_activate_text'));
             const channelLabel = channel === 'all' 
-                ? {{ json_encode(__('marketplace.channel_all_label')) }}
+                ? @json(__('marketplace.channel_all_label'))
                 : (channel === 'tiktok_shop' ? 'TikTok Shop' : (channel === 'tokopedia' ? 'Tokopedia' : 'Shopee'));
-            const productName = product ? product.name : {{ json_encode(__('marketplace.th_product')) }};
-            const confirmToggleTitleTpl = {{ json_encode(__('marketplace.confirm_toggle_title')) }};
-            const confirmToggleDescTpl = {{ json_encode(__('marketplace.confirm_toggle_desc')) }};
+            const productName = product ? product.name : @json(__('marketplace.th_product'));
+            const confirmToggleTitleTpl = @json(__('marketplace.confirm_toggle_title'));
+            const confirmToggleDescTpl = @json(__('marketplace.confirm_toggle_desc'));
             const promptTitle = confirmToggleTitleTpl.replace(':action', actionTitle);
             const promptMsg = confirmToggleDescTpl.replace(':action', actionVerb).replace(':name', productName).replace(':channel', channelLabel);
 
@@ -665,10 +665,10 @@ function marketplaceProductManager(config = {}) {
             const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
             const endpoint = isDeactivate ? 'deactivate' : 'activate';
             const url = `/marketplace-hub/products/${productId}/${endpoint}`;
-            const procWord = isDeactivate ? {{ json_encode(__('marketplace.action_deactivation')) }} : {{ json_encode(__('marketplace.action_activation')) }};
+            const procWord = isDeactivate ? @json(__('marketplace.action_deactivation')) : @json(__('marketplace.action_activation'));
 
             try {
-                const toastProcTpl = {{ json_encode(__('marketplace.toggle_processing_toast')) }};
+                const toastProcTpl = @json(__('marketplace.toggle_processing_toast'));
                 if (window.AppAlert) {
                     AppAlert.toast(toastProcTpl.replace(':action', procWord).replace(':channel', channelLabel), 'info');
                 }
@@ -684,13 +684,13 @@ function marketplaceProductManager(config = {}) {
                 });
 
                 const data = await res.json();
-                const toggleFailedTpl = {{ json_encode(__('marketplace.toggle_failed')) }};
+                const toggleFailedTpl = @json(__('marketplace.toggle_failed'));
                 if (!res.ok || !data.success) {
                     throw new Error(data.message || data.error || toggleFailedTpl.replace(':action', procWord));
                 }
 
                 if (window.AppAlert) {
-                    AppAlert.toast(data.message || {{ json_encode(__('marketplace.listing_status_updated')) }}, 'success');
+                    AppAlert.toast(data.message || @json(__('marketplace.listing_status_updated')), 'success');
                 }
 
                 await this.refreshProductsTable();
@@ -748,7 +748,7 @@ function marketplaceProductManager(config = {}) {
             if (this.selectedProduct.image) {
                 photos.push({
                     url: this.selectedProduct.image.startsWith('http') ? this.selectedProduct.image : ('/storage/' + this.selectedProduct.image),
-                    caption: {{ json_encode(__('marketplace.photo_main')) }}
+                    caption: @json(__('marketplace.photo_main'))
                 });
             }
             if (Array.isArray(this.selectedProduct.gallery_images)) {
@@ -757,7 +757,7 @@ function marketplaceProductManager(config = {}) {
                     if (u) {
                         photos.push({
                             url: u.startsWith('http') ? u : ('/storage/' + u),
-                            caption: img.caption || {{ json_encode(__('marketplace.photo_gallery')) }}
+                            caption: img.caption || @json(__('marketplace.photo_gallery'))
                         });
                     }
                 }
@@ -767,7 +767,7 @@ function marketplaceProductManager(config = {}) {
                     if (u) {
                         photos.push({
                             url: u.startsWith('http') ? u : ('/storage/' + u),
-                            caption: img.caption || {{ json_encode(__('marketplace.photo_gallery')) }}
+                            caption: img.caption || @json(__('marketplace.photo_gallery'))
                         });
                     }
                 }
@@ -1746,7 +1746,7 @@ document.addEventListener('alpine:init', () => {
                                         <template x-if="form.marketplace_item_id">
                                             <div class="flex items-center gap-2 flex-wrap">
                                                 <span>Item ID: <strong class="font-mono" x-text="form.marketplace_item_id"></strong></span>
-                                                <span class="font-bold px-2 py-0.5 rounded text-[10.5px]" :class="form.is_active ? 'bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158]' : 'bg-[#FF9500]/20 text-[#FF9500]'" x-text="form.is_active ? {{ json_encode(__('marketplace.filter_status_active')) }} : {{ json_encode(__('marketplace.delisted_from_channel')) }}"></span>
+                                                <span class="font-bold px-2 py-0.5 rounded text-[10.5px]" :class="form.is_active ? 'bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158]' : 'bg-[#FF9500]/20 text-[#FF9500]'" x-text="listingStatusLabel"></span>
                                             </div>
                                         </template>
                                         <template x-if="!form.marketplace_item_id">
@@ -1760,17 +1760,17 @@ document.addEventListener('alpine:init', () => {
                                             <button type="button" x-show="form.is_active" @click="toggleChannelProductStatus('deactivate')" :disabled="togglingStatus"
                                                 class="px-2.5 py-1 rounded-[10px] text-[11px] font-bold bg-[#FF3B30]/15 text-[#FF3B30] hover:bg-[#FF3B30]/25 transition-all flex items-center gap-1 cursor-pointer">
                                                 <i data-lucide="eye-off" class="w-3.5 h-3.5"></i>
-                                                <span x-text="togglingStatus ? {{ json_encode(__('marketplace.processing')) }} : {{ json_encode(__('marketplace.btn_delist_modal')) }}"></span>
+                                                <span x-text="delistButtonText"></span>
                                             </button>
                                             <button type="button" x-show="!form.is_active" @click="toggleChannelProductStatus('activate')" :disabled="togglingStatus"
                                                 class="px-2.5 py-1 rounded-[10px] text-[11px] font-bold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158] hover:bg-[#34C759]/25 transition-all flex items-center gap-1 cursor-pointer">
                                                 <i data-lucide="eye" class="w-3.5 h-3.5"></i>
-                                                <span x-text="togglingStatus ? {{ json_encode(__('marketplace.processing')) }} : {{ json_encode(__('marketplace.btn_relist_modal')) }}"></span>
+                                                <span x-text="relistButtonText"></span>
                                             </button>
                                         </div>
                                     </template>
                                     <div x-show="selectedProduct" class="shrink-0 text-[11px] font-semibold opacity-90 px-2.5 py-0.5 rounded-full bg-white/60 dark:bg-black/20 border border-current/20">
-                                        <span x-text="((selectedProduct?.images ? selectedProduct.images.length : 0) + (selectedProduct?.image ? 1 : 0)) + ' ' + {{ json_encode(__('marketplace.photos_unit')) }}"></span>
+                                        <span x-text="photosCountLabel"></span>
                                     </div>
                                 </div>
                             </div>
