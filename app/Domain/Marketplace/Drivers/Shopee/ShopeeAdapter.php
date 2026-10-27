@@ -11,6 +11,7 @@ use App\Models\MarketplaceProductMapping;
 use App\Models\Product;
 use App\Models\SystemSetting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
@@ -438,6 +439,138 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
     }
 
     /**
+     * Fetch all categories for the shop from Shopee Open Platform.
+     */
+    public function getCategoryList(MarketplaceAccount $account): array
+    {
+        $cacheKey = "shopee_categories_{$account->id}";
+        return Cache::remember($cacheKey, 3600, function () use ($account) {
+            $timestamp   = time();
+            $path        = '/api/v2/product/get_category';
+            $accessToken = (string) $account->access_token;
+            $sign        = $this->generateSignature($path, $timestamp, $accessToken, (string) $account->shop_id);
+
+            $url = sprintf(
+                '%s%s?partner_id=%s&timestamp=%s&access_token=%s&shop_id=%s&sign=%s&language=id',
+                $this->host,
+                $path,
+                $this->partnerId,
+                $timestamp,
+                $accessToken,
+                $account->shop_id,
+                $sign
+            );
+
+            try {
+                $response = Http::timeout(20)->get($url);
+                $data     = $response->json() ?? [];
+                if ($response->successful() && empty($data['error']) && ! empty($data['response']['category_list'])) {
+                    return $data['response']['category_list'];
+                }
+
+                // Fallback without language parameter if rejected
+                if (! empty($data['error'])) {
+                    $urlNoLang = sprintf(
+                        '%s%s?partner_id=%s&timestamp=%s&access_token=%s&shop_id=%s&sign=%s',
+                        $this->host,
+                        $path,
+                        $this->partnerId,
+                        $timestamp,
+                        $accessToken,
+                        $account->shop_id,
+                        $sign
+                    );
+                    $response2 = Http::timeout(20)->get($urlNoLang);
+                    $data2     = $response2->json() ?? [];
+                    if ($response2->successful() && empty($data2['error']) && ! empty($data2['response']['category_list'])) {
+                        return $data2['response']['category_list'];
+                    }
+                }
+                Log::warning('Shopee get_category response:', ['data' => $data]);
+            } catch (\Throwable $e) {
+                Log::warning("Shopee get_category error: {$e->getMessage()}");
+            }
+
+            return [];
+        });
+    }
+
+    /**
+     * Resolve a valid leaf category_id for Shopee.
+     * Shopee strictly rejects parent categories (has_children: true) and invalid category IDs.
+     */
+    public function resolveShopeeCategoryId(MarketplaceAccount $account, \App\Models\Product $product, array $options = []): int
+    {
+        $categories  = $this->getCategoryList($account);
+        $passedCatId = isset($options['category_id']) ? (int) $options['category_id'] : null;
+
+        if (empty($categories)) {
+            // Well-known leaf categories in Shopee:
+            // 100523 (Kopi Bubuk / Coffee in ID), or return passed if present
+            return $passedCatId ?: 100523;
+        }
+
+        // Filter leaf categories only (has_children === false)
+        $leafCategories = array_values(array_filter($categories, fn($c) => empty($c['has_children'])));
+        if (empty($leafCategories)) {
+            return $passedCatId ?: 100523;
+        }
+
+        // 1. Check if passed category_id is already a valid leaf category
+        if ($passedCatId) {
+            foreach ($leafCategories as $cat) {
+                if ((int) $cat['category_id'] === $passedCatId) {
+                    return $passedCatId;
+                }
+            }
+        }
+
+        // 2. Build search terms from product name, category, and options
+        $searchTerms = [];
+        if (! empty($options['category_name'])) {
+            $searchTerms[] = mb_strtolower(trim($options['category_name']));
+        }
+        if ($product->relationLoaded('category') && $product->category) {
+            $searchTerms[] = mb_strtolower(trim($product->category->name));
+        }
+        $searchTerms[] = mb_strtolower(trim($product->name));
+
+        // Tokenize product name into words of length >= 3
+        $words = preg_split('/[\s,\.\-\_\/()]+/', mb_strtolower($product->name));
+        foreach ($words as $w) {
+            if (mb_strlen($w) >= 3) {
+                $searchTerms[] = $w;
+            }
+        }
+        $searchTerms = array_unique(array_filter($searchTerms));
+
+        // 3. Find matching leaf category
+        foreach ($searchTerms as $term) {
+            foreach ($leafCategories as $cat) {
+                $catName = mb_strtolower($cat['display_category_name'] ?? ($cat['original_category_name'] ?? ''));
+                if ($catName === $term || str_contains($catName, $term) || str_contains($term, $catName)) {
+                    Log::info("Shopee category matched term '{$term}' to category_id {$cat['category_id']} ({$catName})");
+                    return (int) $cat['category_id'];
+                }
+            }
+        }
+
+        // 4. If passedCatId was a parent category in Shopee, find its first leaf descendant
+        if ($passedCatId) {
+            foreach ($leafCategories as $cat) {
+                if ((int) ($cat['parent_category_id'] ?? 0) === $passedCatId) {
+                    return (int) $cat['category_id'];
+                }
+            }
+        }
+
+        // 5. Fallback: Return first available leaf category
+        $fallback = (int) $leafCategories[0]['category_id'];
+        Log::info("Shopee category fallback to first leaf category: {$fallback}");
+        return $fallback;
+    }
+
+    /**
      * Upload / publish a new product listing from COOCA to Shopee.
      */
     public function publishProduct(MarketplaceAccount $account, \App\Models\Product $product, array $options = []): array
@@ -553,14 +686,20 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
             $sign
         );
 
+        $resolvedCatId = $this->resolveShopeeCategoryId($account, $product, $options);
+        $description   = ! empty($product->description) ? strip_tags($product->description) : $product->name;
+        if (mb_strlen($description) < 25) {
+            $description = $product->name . ' - Produk berkualitas original dari toko kami. ' . $description;
+        }
+
         $payload = [
             'original_price' => $price,
-            'description'    => ! empty($product->description) ? strip_tags($product->description) : $product->name,
+            'description'    => $description,
             'item_name'      => $product->name,
             'normal_stock'   => max(1, $stock),
             'weight'         => max(0.1, (float) ($product->weight ?? 0.5)),
             'item_sku'       => $sku,
-            'category_id'    => (int) ($options['category_id'] ?? 100001),
+            'category_id'    => $resolvedCatId,
             'seller_stock'   => [
                 ['stock' => max(1, $stock)],
             ],
@@ -576,13 +715,27 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
 
         // Fetch and attach enabled logistics channels
         $logisticsList = [];
-        $channels = $this->getShopLogistics($account);
+        $channels      = $this->getShopLogistics($account);
         foreach ($channels as $ch) {
-            if (! empty($ch['enabled']) && ! empty($ch['logistics_channel_id'])) {
-                $logisticsList[] = [
-                    'logistic_id' => (int) $ch['logistics_channel_id'],
-                    'enabled'     => true,
-                ];
+            if (! empty($ch['logistics_channel_id'])) {
+                $enabled = ! empty($ch['enabled']) || ! empty($ch['mask_channel_id']);
+                if ($enabled) {
+                    $logisticsList[] = [
+                        'logistic_id' => (int) $ch['logistics_channel_id'],
+                        'enabled'     => true,
+                    ];
+                }
+            }
+        }
+        if (empty($logisticsList) && ! empty($channels)) {
+            foreach ($channels as $ch) {
+                if (! empty($ch['logistics_channel_id'])) {
+                    $logisticsList[] = [
+                        'logistic_id' => (int) $ch['logistics_channel_id'],
+                        'enabled'     => true,
+                    ];
+                    break;
+                }
             }
         }
         if (! empty($logisticsList)) {
