@@ -846,6 +846,43 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
 
         $candidates = array_unique(array_filter($candidates));
 
+        // 0. Pre-flight Validation: Shopee Mandatory Data Completeness
+        $missingData = [];
+        $totalCandidates = count($candidates);
+
+        if ($totalCandidates < 2) {
+            $missingData[] = "Foto Produk: Shopee mewajibkan minimal 2 foto produk (maksimal 9 foto). Produk Anda saat ini baru memiliki {$totalCandidates} foto. Silakan unggah minimal 1 foto lagi di galeri produk sebelum menerbitkan.";
+        }
+
+        if (empty($product->name) || mb_strlen(trim($product->name)) < 5) {
+            $missingData[] = "Nama Produk: Minimal 5 karakter dan maksimal 120 karakter.";
+        }
+
+        if ($price < 100) {
+            $missingData[] = "Harga Produk: Harga jual saluran tidak boleh Rp 0 atau di bawah Rp 100.";
+        }
+
+        if ($stock < 1) {
+            $missingData[] = "Stok Produk: Minimal 1 unit.";
+        }
+
+        $rawWeight = (float) ($product->weight ?? 0);
+        if ($rawWeight <= 0) {
+            $missingData[] = "Berat Produk: Wajib diisi (minimal 100 gram / 0.1 kg) untuk kalkulasi ongkos kirim ekspedisi Shopee.";
+        }
+
+        if (! empty($missingData)) {
+            $bulletList = "• " . implode("\n• ", $missingData);
+            return [
+                'success'      => false,
+                'message'      => "Data produk belum lengkap untuk diterbitkan ke Shopee:\n{$bulletList}",
+                'raw_response' => [
+                    'error'          => 'incomplete_product_data',
+                    'missing_fields' => $missingData,
+                ],
+            ];
+        }
+
         foreach ($candidates as $cand) {
             if (count($imageIdList) >= 9) {
                 break;
@@ -921,12 +958,26 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
             $description = $product->name . ' - Produk berkualitas original dari toko kami. ' . $description;
         }
 
+        $rawWeight = (float) ($product->weight ?? 200.0);
+        if ($rawWeight > 30.0) {
+            // Values > 30 are in grams -> convert to kg (e.g. 200g = 0.2kg, 1000g = 1.0kg)
+            $weightKg = round($rawWeight / 1000.0, 2);
+        } else {
+            // Values <= 30 are already in kg (e.g. 0.5kg, 2.5kg)
+            $weightKg = max(0.01, $rawWeight);
+        }
+        $weightKg = max(0.01, min(30.0, $weightKg));
+
+        $length = max(1, (int) round((float) ($product->length ?: 10)));
+        $width  = max(1, (int) round((float) ($product->width ?: 10)));
+        $height = max(1, (int) round((float) ($product->height ?: 10)));
+
         $payload = [
             'original_price' => $price,
             'description'    => $description,
             'item_name'      => $product->name,
             'normal_stock'   => max(1, $stock),
-            'weight'         => max(0.1, (float) ($product->weight ?? 0.5)),
+            'weight'         => $weightKg,
             'item_sku'       => $sku,
             'category_id'    => $resolvedCatId,
             'seller_stock'   => [
@@ -935,6 +986,11 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
             'brand'          => [
                 'brand_id'            => 0,
                 'original_brand_name' => 'NoBrand',
+            ],
+            'dimension'      => [
+                'package_length' => $length,
+                'package_width'  => $width,
+                'package_height' => $height,
             ],
         ];
 
@@ -992,8 +1048,8 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
                 ];
             }
 
-            $errorMsg = $data['message'] ?? ($data['error'] ?? ('Gagal membuat produk di Shopee (HTTP ' . $response->status() . ')'));
-            Log::warning("Shopee add_item error from API: {$errorMsg}", [
+            $humanizedMsg = $this->humanizeShopeeError($data, $response->status());
+            Log::warning("Shopee add_item error from API: {$humanizedMsg}", [
                 'status'   => $response->status(),
                 'response' => $data,
                 'debug'    => $debugInfo,
@@ -1001,7 +1057,7 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
 
             return [
                 'success'      => false,
-                'message'      => "Shopee API menolak penerbitan produk: {$errorMsg}",
+                'message'      => $humanizedMsg,
                 'raw_response' => array_merge($debugInfo, [
                     'shopee_error'      => $data['error'] ?? null,
                     'shopee_message'    => $data['message'] ?? null,
@@ -1023,6 +1079,63 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
                 'raw_response' => array_merge($debugInfo, ['exception' => $e->getMessage()]),
             ];
         }
+    }
+
+    /**
+     * Humanize Shopee API error responses into clear, actionable Indonesian instructions for merchants.
+     */
+    public function humanizeShopeeError(array $data, int $httpStatus = 200): string
+    {
+        $rawMsg   = (string) ($data['message'] ?? $data['error'] ?? '');
+        $debugMsg = (string) ($data['debug_message'] ?? $data['response']['debug_message'] ?? '');
+        $fullText = strtolower($rawMsg . ' ' . $debugMsg);
+
+        $issues = [];
+
+        // 1. Image quantity requirement
+        if (str_contains($fullText, 'media.image.quantity.range') || str_contains($fullText, 'between 2 and 9') || str_contains($fullText, 'image count') || str_contains($fullText, 'image quantity')) {
+            $issues[] = 'Foto Produk Kurang: Shopee mewajibkan minimal 2 foto produk (maksimal 9 foto). Silakan unggah minimal 1 foto lagi di galeri foto produk COOCA Anda.';
+        }
+
+        // 2. Weight and dimension
+        if (str_contains($fullText, 'weight.dimension') || str_contains($fullText, '1304') || str_contains($fullText, 'weight or size is invalid')) {
+            $issues[] = 'Berat / Dimensi Paket: Berat atau ukuran paket tidak sesuai dengan ketentuan kurir Shopee. Pastikan berat produk diisi wajar (misal: 200 gram / 0.2 kg) dan dimensi paket valid.';
+        }
+
+        // 3. Category requirement
+        if (str_contains($fullText, 'category_id') || str_contains($fullText, 'category is invalid') || str_contains($fullText, 'leaf category')) {
+            $issues[] = 'Kategori Produk: Kategori yang dipilih tidak valid atau bukan kategori level terbawah (leaf category) di Shopee. Silakan pilih kategori lain yang sesuai di mapping.';
+        }
+
+        // 4. Mandatory attributes
+        if (str_contains($fullText, 'attribute') || str_contains($fullText, 'mandatory attribute')) {
+            $issues[] = 'Atribut Kategori Wajib: Kategori ini memerlukan atribut spesifikasi tambahan dari Shopee.';
+        }
+
+        // 5. Price
+        if (str_contains($fullText, 'price') || str_contains($fullText, 'original_price')) {
+            $issues[] = 'Harga Produk: Harga jual di bawah batas minimal Shopee (Rp 100) atau di luar rentang harga yang diizinkan.';
+        }
+
+        // 6. Name
+        if (str_contains($fullText, 'item_name') || str_contains($fullText, 'product name')) {
+            $issues[] = 'Nama Produk: Nama produk terlalu pendek atau mengandung kata/karakter yang dilarang Shopee.';
+        }
+
+        // 7. Stock
+        if (str_contains($fullText, 'stock') || str_contains($fullText, 'normal_stock')) {
+            $issues[] = 'Stok Produk: Stok produk tidak boleh kosong atau 0.';
+        }
+
+        if (! empty($issues)) {
+            return "Penerbitan ke Shopee belum dapat diproses karena data berikut belum lengkap:\n• " . implode("\n• ", $issues);
+        }
+
+        if (! empty($rawMsg)) {
+            return "Shopee API menolak penerbitan produk: {$rawMsg}";
+        }
+
+        return "Gagal membuat produk di Shopee (HTTP {$httpStatus}). Periksa kembali kelengkapan data produk Anda.";
     }
 
     /**

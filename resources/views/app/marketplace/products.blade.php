@@ -494,6 +494,27 @@ function marketplaceProductManager(config = {}) {
                 return;
             }
 
+            // Shopee Completeness Validation
+            if (this.form.channel === 'shopee') {
+                const missing = [];
+                if (this.galleryPhotos.length < 2) {
+                    missing.push('• Foto Produk: Shopee mewajibkan minimal 2 foto produk (saat ini baru ' + this.galleryPhotos.length + ' foto). Silakan tambahkan foto di galeri produk.');
+                }
+                const weight = parseFloat(this.selectedProduct.weight || 0);
+                if (weight <= 0) {
+                    missing.push('• Berat Produk: Wajib diisi (minimal 100 gram / 0.1 kg) untuk ongkir kurir Shopee.');
+                }
+                if (missing.length > 0) {
+                    const msg = 'Data upload ke Shopee belum lengkap:\n' + missing.join('\n');
+                    if (window.AppAlert) {
+                        AppAlert.toast(msg, 'warning');
+                    } else {
+                        alert(msg);
+                    }
+                    return;
+                }
+            }
+
             const channelName = this.form.channel === 'tiktok_shop' ? 'TikTok Shop' : (this.form.channel === 'tokopedia' ? 'Tokopedia' : 'Shopee');
             const publishTitleTpl = @json(__('marketplace.confirm_publish_title'));
             const publishDescTpl = @json(__('marketplace.confirm_publish_desc'));
@@ -2073,6 +2094,17 @@ document.addEventListener('alpine:init', () => {
                                     <div x-show="galleryPhotos.length === 0" class="w-full py-3 text-center text-[11.5px] text-[#FF3B30] bg-[#FF3B30]/10 rounded-[10px] border border-[#FF3B30]/20 font-medium">
                                         {{ __('marketplace.inspection_no_photo_alert') }}
                                     </div>
+                                </div>
+
+                                <!-- Shopee Specific Requirement Notice -->
+                                <div x-show="form.channel === 'shopee' && galleryPhotos.length < 2" class="p-2.5 rounded-[12px] bg-[#FF9500]/10 border border-[#FF9500]/25 text-[#D97706] dark:text-[#FBBF24] text-[11px] space-y-1">
+                                    <div class="font-bold flex items-center gap-1.5">
+                                        <i data-lucide="alert-triangle" class="w-3.5 h-3.5 shrink-0"></i>
+                                        <span>Syarat Foto Shopee Belum Lengkap</span>
+                                    </div>
+                                    <p class="text-[10.5px] leading-relaxed opacity-95">
+                                        Shopee mewajibkan <strong>minimal 2 foto produk</strong>. Saat ini produk baru memiliki <span class="font-bold font-mono" x-text="galleryPhotos.length"></span> foto. Silakan tambahkan minimal 1 foto lagi di Master Data Produk sebelum menerbitkan.
+                                    </p>
                                 </div>
                             </div>
 
