@@ -37,7 +37,7 @@ class MarketplaceWebController extends Controller
     /**
      * Marketplace Hub: Cockpit overview of all connected marketplace stores.
      */
-    public function index(): View
+    public function index(Request $request): View|JsonResponse
     {
         $business = Context::requireBusiness();
 
@@ -66,6 +66,30 @@ class MarketplaceWebController extends Controller
                 'color'   => '#03AC0E',
             ],
         ];
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'metrics' => [
+                    'connected_channels' => $accounts->where('status', 'connected')->count(),
+                    'total_mappings'     => $totalMappings,
+                    'total_orders'       => $totalOrders,
+                    'total_errors'       => $totalErrors,
+                ],
+                'channels' => [
+                    'shopee' => [
+                        'connected' => $channels['shopee']['account'] && $channels['shopee']['account']->status === 'connected',
+                        'is_active' => (bool) ($channels['shopee']['account']->is_active ?? true),
+                        'shop_name' => $channels['shopee']['account']->shop_name ?? null,
+                    ],
+                    'tiktok_shop' => [
+                        'connected' => $channels['tiktok_shop']['account'] && $channels['tiktok_shop']['account']->status === 'connected',
+                        'is_active' => (bool) ($channels['tiktok_shop']['account']->is_active ?? true),
+                        'shop_name' => $channels['tiktok_shop']['account']->shop_name ?? null,
+                    ],
+                ],
+            ]);
+        }
 
         return view('app.marketplace.index', compact(
             'business',
@@ -156,7 +180,7 @@ class MarketplaceWebController extends Controller
     /**
      * Multi-Channel Order Feed.
      */
-    public function orders(Request $request): View
+    public function orders(Request $request): View|JsonResponse
     {
         $business = Context::requireBusiness();
 
@@ -173,6 +197,14 @@ class MarketplaceWebController extends Controller
         }
 
         $orders = $query->paginate(20);
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'total'   => $orders->total(),
+                'orders'  => $orders->items(),
+            ]);
+        }
 
         return view('app.marketplace.orders', compact('business', 'orders'));
     }
@@ -625,7 +657,7 @@ class MarketplaceWebController extends Controller
     /**
      * Pull orders manually.
      */
-    public function pullOrders(Request $request): RedirectResponse
+    public function pullOrders(Request $request): RedirectResponse|JsonResponse
     {
         $business = Context::requireBusiness();
         $channel = $request->input('channel');
@@ -645,7 +677,17 @@ class MarketplaceWebController extends Controller
             $totalPulled += count($orders);
         }
 
-        return back()->with('success', __('marketplace.orders_synced', ['count' => $totalPulled]));
+        $msg = __('marketplace.orders_synced', ['count' => $totalPulled]);
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => $msg,
+                'count'   => $totalPulled,
+            ]);
+        }
+
+        return back()->with('success', $msg);
     }
 
     /**
@@ -810,7 +852,7 @@ class MarketplaceWebController extends Controller
     /**
      * Marketplace Live Chat: Omnichannel chat inbox (TikTok Shop, Shopee, Tokopedia).
      */
-    public function chat(Request $request): View
+    public function chat(Request $request): View|JsonResponse
     {
         $business = Context::requireBusiness();
         $channel  = $request->query('channel');
@@ -824,6 +866,15 @@ class MarketplaceWebController extends Controller
         }
 
         $conversations = $query->paginate(20)->withQueryString();
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success'       => true,
+                'conversations' => $conversations->items(),
+                'unread_total'  => (int) MarketplaceConversation::where('business_id', $business->id)->sum('unread_count'),
+            ]);
+        }
+
         $activeAccount = MarketplaceAccount::where('business_id', $business->id)
             ->where('channel', MarketplaceAccount::CHANNEL_TIKTOK)
             ->first();

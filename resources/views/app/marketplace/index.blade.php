@@ -8,13 +8,81 @@
 <div class="max-w-[1360px] mx-auto space-y-6 pb-28 sm:pb-32 lg:pb-12" x-data="{
     disconnectModal: false,
     submitting: false,
+    toggling: false,
     selectedChannel: '',
     selectedChannelName: '',
+    shopeeActive: {{ ($channels['shopee']['account'] && ($channels['shopee']['account']->is_active ?? true)) ? 'true' : 'false' }},
+    tiktokActive: {{ (($channels['tiktok_shop']['account'] ?? $channels['tokopedia']['account'] ?? null) && (($channels['tiktok_shop']['account'] ?? $channels['tokopedia']['account'])->is_active ?? true)) ? 'true' : 'false' }},
+    metrics: {
+        channels: {{ $accounts->where('status', 'connected')->count() }},
+        mappings: {{ (int) $totalMappings }},
+        orders: {{ (int) $totalOrders }},
+        errors: {{ (int) $totalErrors }}
+    },
+    pollTimer: null,
     openDisconnect(channel, name) {
         this.selectedChannel = channel;
         this.selectedChannelName = name;
         this.submitting = false;
         this.disconnectModal = true;
+    },
+    async toggleChannel(channel) {
+        if (this.toggling) return;
+        this.toggling = true;
+        try {
+            const token = document.querySelector('meta[name=\'csrf-token\']')?.getAttribute('content');
+            const res = await fetch(`/marketplace-hub/toggle/${channel}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': token || ''
+                }
+            });
+            const data = await res.json();
+            if (data.success) {
+                if (channel === 'shopee') this.shopeeActive = Boolean(data.is_active);
+                if (channel === 'tiktok_shop' || channel === 'tokopedia') this.tiktokActive = Boolean(data.is_active);
+                if (window.AppAlert) {
+                    AppAlert.toast(data.message, 'success');
+                }
+            } else {
+                if (window.AppAlert) {
+                    AppAlert.toast(data.message || 'Gagal mengubah status', 'error');
+                }
+            }
+        } catch (e) {
+            if (window.AppAlert) {
+                AppAlert.toast('Kesalahan jaringan saat mengubah status', 'error');
+            }
+        } finally {
+            this.toggling = false;
+        }
+    },
+    async pollMetrics() {
+        try {
+            const res = await fetch('{{ route('marketplace-hub.index') }}', {
+                headers: { 'Accept': 'application/json' }
+            });
+            const data = await res.json();
+            if (data.success && data.metrics) {
+                this.metrics.channels = data.metrics.connected_channels;
+                this.metrics.mappings = data.metrics.total_mappings;
+                this.metrics.orders   = data.metrics.total_orders;
+                this.metrics.errors   = data.metrics.total_errors;
+                if (data.channels?.shopee) {
+                    this.shopeeActive = data.channels.shopee.is_active;
+                }
+                if (data.channels?.tiktok_shop) {
+                    this.tiktokActive = data.channels.tiktok_shop.is_active;
+                }
+            }
+        } catch (e) {
+            // silent background poll
+        }
+    },
+    init() {
+        this.pollTimer = setInterval(() => this.pollMetrics(), 10000);
     }
 }">
 
@@ -24,6 +92,10 @@
         :title="__('marketplace.hub_title')"
         :subtitle="__('marketplace.hub_subtitle')">
         <x-slot:actions>
+            <div class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] border border-[#34C759]/20">
+                <span class="w-1.5 h-1.5 rounded-full bg-[#34C759] animate-pulse"></span>
+                <span>Auto-sync Aktif</span>
+            </div>
             <a href="{{ route('marketplace-hub.products') }}"
                 class="min-h-[44px] sm:min-h-0 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 w-full sm:w-auto shadow-sm">
                 <i data-lucide="tag" class="w-4 h-4"></i>
@@ -56,7 +128,7 @@
                 <i data-lucide="plug-2" class="w-4 h-4 text-[#007AFF]"></i>
             </div>
             <div class="text-[24px] sm:text-[28px] font-extrabold text-black dark:text-white tracking-tight">
-                {{ $accounts->where('status', 'connected')->count() }} <span class="text-[14px] font-medium text-black/40 dark:text-white/40">{{ __('marketplace.metric_channels_unit') }}</span>
+                <span x-text="metrics.channels">{{ $accounts->where('status', 'connected')->count() }}</span> <span class="text-[14px] font-medium text-black/40 dark:text-white/40">{{ __('marketplace.metric_channels_unit') }}</span>
             </div>
             <p class="text-[11px] text-black/50 dark:text-white/50">{{ __('marketplace.metric_channels_sub') }}</p>
         </div>
@@ -68,7 +140,7 @@
                 <i data-lucide="layers" class="w-4 h-4 text-[#34C759]"></i>
             </div>
             <div class="text-[24px] sm:text-[28px] font-extrabold text-black dark:text-white tracking-tight">
-                {{ number_format($totalMappings) }}
+                <span x-text="Number(metrics.mappings).toLocaleString('id-ID')">{{ number_format($totalMappings) }}</span>
             </div>
             <p class="text-[11px] text-black/50 dark:text-white/50">{{ __('marketplace.metric_mapped_sub') }}</p>
         </div>
@@ -80,7 +152,7 @@
                 <i data-lucide="package-check" class="w-4 h-4 text-[#FF9500]"></i>
             </div>
             <div class="text-[24px] sm:text-[28px] font-extrabold text-black dark:text-white tracking-tight">
-                {{ number_format($totalOrders) }}
+                <span x-text="Number(metrics.orders).toLocaleString('id-ID')">{{ number_format($totalOrders) }}</span>
             </div>
             <p class="text-[11px] text-black/50 dark:text-white/50">{{ __('marketplace.metric_orders_sub') }}</p>
         </div>
@@ -89,13 +161,13 @@
         <div class="rounded-[20px] p-4 sm:p-5 bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 backdrop-blur-md shadow-xs space-y-2">
             <div class="flex items-center justify-between text-black/50 dark:text-white/50">
                 <span class="text-[12px] font-semibold">{{ __('marketplace.metric_sync_status') }}</span>
-                <i data-lucide="{{ $totalErrors > 0 ? 'alert-triangle' : 'check-circle-2' }}" class="w-4 h-4 {{ $totalErrors > 0 ? 'text-[#FF3B30]' : 'text-[#34C759]' }}"></i>
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-[#34C759]"></i>
             </div>
-            <div class="text-[24px] sm:text-[28px] font-extrabold {{ $totalErrors > 0 ? 'text-[#FF3B30]' : 'text-[#34C759]' }} tracking-tight">
-                {{ $totalErrors > 0 ? __('marketplace.metric_sync_errors_count', ['count' => $totalErrors]) : __('marketplace.metric_sync_normal') }}
+            <div class="text-[24px] sm:text-[28px] font-extrabold tracking-tight" :class="metrics.errors > 0 ? 'text-[#FF3B30]' : 'text-[#34C759]'">
+                <span x-text="metrics.errors > 0 ? metrics.errors + ' Error' : '{{ __('marketplace.metric_sync_normal') }}'">{{ $totalErrors > 0 ? __('marketplace.metric_sync_errors_count', ['count' => $totalErrors]) : __('marketplace.metric_sync_normal') }}</span>
             </div>
             <p class="text-[11px] text-black/50 dark:text-white/50">
-                {{ $totalErrors > 0 ? __('marketplace.metric_sync_err_sub') : __('marketplace.metric_sync_ok_sub') }}
+                <span x-text="metrics.errors > 0 ? '{{ __('marketplace.metric_sync_err_sub') }}' : '{{ __('marketplace.metric_sync_ok_sub') }}'">{{ $totalErrors > 0 ? __('marketplace.metric_sync_err_sub') : __('marketplace.metric_sync_ok_sub') }}</span>
             </p>
         </div>
     </div>
@@ -211,19 +283,20 @@
                         </div>
                     </div>
 
-                    <!-- Active Toggle Form -->
-                    <form method="POST" action="{{ route('marketplace-hub.toggle', 'shopee') }}" class="flex items-center justify-between pt-1">
-                        @csrf
+                    <!-- Active Toggle (AJAX Real-time) -->
+                    <div class="flex items-center justify-between pt-1">
                         <div class="space-y-0.5">
                             <span class="text-[13px] font-bold text-black dark:text-white">{{ __('marketplace.sales_sync_active') }}</span>
                             <p class="text-[11.5px] text-black/50 dark:text-white/50">{{ __('marketplace.sales_sync_desc_shopee') }}</p>
                         </div>
-                        <button type="submit"
-                            title="{{ ($shopeeAccount->is_active ?? true) ? __('marketplace.click_to_deactivate') : __('marketplace.click_to_activate') }}"
-                            class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none {{ ($shopeeAccount->is_active ?? true) ? 'bg-[#34C759]' : 'bg-black/20 dark:bg-white/20' }}">
-                            <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out {{ ($shopeeAccount->is_active ?? true) ? 'translate-x-5' : 'translate-x-0' }}"></span>
+                        <button type="button" @click="toggleChannel('shopee')" :disabled="toggling"
+                            :title="shopeeActive ? '{{ __('marketplace.click_to_deactivate') }}' : '{{ __('marketplace.click_to_activate') }}'"
+                            class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none"
+                            :class="shopeeActive ? 'bg-[#34C759]' : 'bg-black/20 dark:bg-white/20'">
+                            <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
+                                :class="shopeeActive ? 'translate-x-5' : 'translate-x-0'"></span>
                         </button>
-                    </form>
+                    </div>
                 @else
                     <div class="p-4 rounded-[18px] bg-[#EE4D2D]/5 dark:bg-[#EE4D2D]/10 border border-[#EE4D2D]/15 space-y-3">
                         <p class="text-[13px] text-black/75 dark:text-white/75 leading-relaxed">
@@ -403,19 +476,20 @@
                         </div>
                     </div>
 
-                    <!-- Active Toggle Form -->
-                    <form method="POST" action="{{ route('marketplace-hub.toggle', 'tiktok_shop') }}" class="flex items-center justify-between pt-1">
-                        @csrf
+                    <!-- Active Toggle (AJAX Real-time) -->
+                    <div class="flex items-center justify-between pt-1">
                         <div class="space-y-0.5">
                             <span class="text-[13px] font-bold text-black dark:text-white">{{ __('marketplace.sales_sync_title_unified') }}</span>
                             <p class="text-[11.5px] text-black/50 dark:text-white/50">{{ __('marketplace.sales_sync_desc_unified') }}</p>
                         </div>
-                        <button type="submit"
-                            title="{{ ($tiktokAccount->is_active ?? true) ? __('marketplace.click_to_deactivate') : __('marketplace.click_to_activate') }}"
-                            class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none {{ ($tiktokAccount->is_active ?? true) ? 'bg-[#34C759]' : 'bg-black/20 dark:bg-white/20' }}">
-                            <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out {{ ($tiktokAccount->is_active ?? true) ? 'translate-x-5' : 'translate-x-0' }}"></span>
+                        <button type="button" @click="toggleChannel('tiktok_shop')" :disabled="toggling"
+                            :title="tiktokActive ? '{{ __('marketplace.click_to_deactivate') }}' : '{{ __('marketplace.click_to_activate') }}'"
+                            class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none"
+                            :class="tiktokActive ? 'bg-[#34C759]' : 'bg-black/20 dark:bg-white/20'">
+                            <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
+                                :class="tiktokActive ? 'translate-x-5' : 'translate-x-0'"></span>
                         </button>
-                    </form>
+                    </div>
                 @else
                     <div class="p-4 rounded-[18px] bg-[#007AFF]/5 dark:bg-[#007AFF]/10 border border-[#007AFF]/15 space-y-3">
                         <p class="text-[13px] text-black/75 dark:text-white/75 leading-relaxed">
