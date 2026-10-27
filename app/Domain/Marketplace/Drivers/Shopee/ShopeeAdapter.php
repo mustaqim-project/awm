@@ -600,55 +600,54 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
      */
     public function getCategoryAttributes(MarketplaceAccount $account, int $categoryId): array
     {
-        $cacheKey = "shopee_cat_attrs_{$account->id}_{$categoryId}";
-        return Cache::remember($cacheKey, 86400, function () use ($account, $categoryId) {
-            $timestamp   = time();
-            $path        = '/api/v2/product/get_attributes';
-            $accessToken = (string) $account->access_token;
-            $sign        = $this->generateSignature($path, $timestamp, $accessToken, (string) $account->shop_id);
+        $cacheKey = "shopee_cat_attrs_v3_{$account->id}_{$categoryId}";
+        $cached = Cache::get($cacheKey);
+        if (is_array($cached) && ! empty($cached)) {
+            return $cached;
+        }
 
-            $url = sprintf(
-                '%s%s?partner_id=%s&timestamp=%s&access_token=%s&shop_id=%s&sign=%s&category_id=%s&language=id',
-                $this->host,
-                $path,
-                $this->partnerId,
-                $timestamp,
-                $accessToken,
-                $account->shop_id,
-                $sign,
-                $categoryId
-            );
+        $timestamp   = time();
+        $path        = '/api/v2/product/get_attributes';
+        $accessToken = (string) $account->access_token;
+        $sign        = $this->generateSignature($path, $timestamp, $accessToken, (string) $account->shop_id);
 
-            try {
-                $response = Http::timeout(20)->get($url);
-                $data     = $response->json() ?? [];
-                if ($response->successful() && empty($data['error']) && ! empty($data['response']['attribute_list'])) {
-                    return $data['response']['attribute_list'];
-                }
+        $url = sprintf(
+            '%s%s?partner_id=%s&timestamp=%s&access_token=%s&shop_id=%s&sign=%s&category_id=%s',
+            $this->host,
+            $path,
+            $this->partnerId,
+            $timestamp,
+            $accessToken,
+            $account->shop_id,
+            $sign,
+            $categoryId
+        );
 
-                // Fallback without language
-                $urlNoLang = sprintf(
-                    '%s%s?partner_id=%s&timestamp=%s&access_token=%s&shop_id=%s&sign=%s&category_id=%s',
-                    $this->host,
-                    $path,
-                    $this->partnerId,
-                    $timestamp,
-                    $accessToken,
-                    $account->shop_id,
-                    $sign,
-                    $categoryId
-                );
-                $res2 = Http::timeout(20)->get($urlNoLang);
-                $d2   = $res2->json() ?? [];
-                if ($res2->successful() && empty($d2['error']) && ! empty($d2['response']['attribute_list'])) {
-                    return $d2['response']['attribute_list'];
-                }
-            } catch (\Throwable $e) {
-                Log::warning("Shopee get_attributes error: {$e->getMessage()}");
+        try {
+            $response = Http::timeout(20)->get($url);
+            $data     = $response->json() ?? [];
+            Log::info("Shopee get_attributes for cat {$categoryId}:", ['status' => $response->status(), 'data' => $data]);
+
+            if ($response->successful() && empty($data['error']) && ! empty($data['response']['attribute_list'])) {
+                $list = $data['response']['attribute_list'];
+                Cache::put($cacheKey, $list, 86400);
+                return $list;
             }
 
-            return [];
-        });
+            // Fallback with language=id
+            $urlId = $url . '&language=id';
+            $resId = Http::timeout(20)->get($urlId);
+            $dataId = $resId->json() ?? [];
+            if ($resId->successful() && empty($dataId['error']) && ! empty($dataId['response']['attribute_list'])) {
+                $list = $dataId['response']['attribute_list'];
+                Cache::put($cacheKey, $list, 86400);
+                return $list;
+            }
+        } catch (\Throwable $e) {
+            Log::warning("Shopee get_attributes error: {$e->getMessage()}");
+        }
+
+        return [];
     }
 
     /**
