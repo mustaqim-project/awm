@@ -300,7 +300,11 @@
                                 ]);
                                 $recipientAddress = implode(', ', $addrParts);
                             }
-                            $orderItems = is_array($order->items_summary) ? $order->items_summary : json_decode($order->items_summary ?? '[]', true) ?: [];
+                            if (is_array($order->items_summary)) {
+                                $orderItems = $order->items_summary;
+                            } else {
+                                $orderItems = json_decode($order->items_summary ?? '[]', true) ?: [];
+                            }
                             $orderModalData = [
                                 'id' => $order->id,
                                 'channel' => $order->channel,
