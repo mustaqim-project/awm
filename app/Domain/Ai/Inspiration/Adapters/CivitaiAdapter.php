@@ -41,34 +41,100 @@ final class CivitaiAdapter implements InspirationAdapterInterface
      */
     public function search(string $query = '', array $filters = []): array
     {
-        $limit = (int) ($filters['limit'] ?? 24);
-        $period = (string) ($filters['period'] ?? 'Week');
+        $limit = (int) ($filters['limit'] ?? 50);
+        $periods = ($limit > 24) ? ['AllTime', 'Month', 'Week'] : [(string) ($filters['period'] ?? 'Week')];
         $sort = (string) ($filters['sort'] ?? 'Most Reactions');
 
+        $allItems = [];
+
         try {
-            // Kita minta batch yang cukup besar karena sebagian item mungkin tidak memiliki meta prompt
-            $fetchLimit = min(100, max(30, $limit * 2));
+            foreach ($periods as $period) {
+                $fetchLimit = min(100, max(40, (int) ceil($limit / count($periods)) * 2));
 
-            $response = Http::withHeaders([
-                'User-Agent' => 'Cooca-AiStudio/1.0 (+https://cooca.id)',
-                'Accept' => 'application/json',
-            ])->timeout(12)->get(self::BASE_URL, [
-                'limit' => $fetchLimit,
-                'sort' => $sort,
-                'period' => $period,
-                'nsfw' => 'false',
-                'withMeta' => 'true',
-            ]);
+                $response = Http::withHeaders([
+                    'User-Agent' => 'Cooca-AiStudio/1.0 (+https://cooca.id)',
+                    'Accept' => 'application/json',
+                ])->timeout(12)->get(self::BASE_URL, [
+                    'limit' => $fetchLimit,
+                    'sort' => $sort,
+                    'period' => $period,
+                    'nsfw' => 'false',
+                    'withMeta' => 'true',
+                ]);
 
-            if (! $response->successful()) {
-                Log::warning("[CivitaiAdapter] HTTP failed ({$response->status()}) from Civitai API");
-                return $this->getFallbackCuratedItems($query);
+                if (! $response->successful()) {
+                    Log::warning("[CivitaiAdapter] HTTP failed ({$response->status()}) from Civitai API for period {$period}");
+                    continue;
+                }
+
+                $json = $response->json();
+                $items = $json['items'] ?? [];
+
+                foreach ($items as $item) {
+                    $rawPrompt = $item['meta']['prompt'] ?? null;
+                    if (empty($rawPrompt) || ! is_string($rawPrompt)) {
+                        continue;
+                    }
+
+                    $id = (int) ($item['id'] ?? 0);
+                    if ($id <= 0) {
+                        continue;
+                    }
+
+                    $imageUrl = (string) ($item['url'] ?? '');
+                    if (empty($imageUrl)) {
+                        continue;
+                    }
+
+                    $width = (int) ($item['width'] ?? 1024);
+                    $height = (int) ($item['height'] ?? 1024);
+                    $aspectRatio = $this->resolveAspectRatio($width, $height);
+
+                    $username = (string) ($item['username'] ?? 'Civitai Creator');
+                    $baseModel = (string) ($item['baseModel'] ?? $item['meta']['Model'] ?? 'Flux.1');
+                    $negativePrompt = (string) ($item['meta']['negativePrompt'] ?? '');
+
+                    $likes = (int) (($item['stats']['likeCount'] ?? 0) + ($item['stats']['heartCount'] ?? 0));
+                    $comments = (int) ($item['stats']['commentCount'] ?? 0);
+
+                    $tags = $this->extractTags($rawPrompt, $baseModel);
+                    $title = $this->deriveTitle($rawPrompt, $baseModel);
+
+                    $allItems['civitai_' . $id] = [
+                        'external_id' => 'civitai_' . $id,
+                        'title' => $title,
+                        'caption' => Str::limit($this->cleanPromptForDisplay($rawPrompt), 180),
+                        'canonical_url' => $imageUrl,
+                        'thumbnail_url' => $imageUrl,
+                        'media_type' => 'image',
+                        'media_urls' => [$imageUrl],
+                        'aspect_ratio' => $aspectRatio,
+                        'tags' => $tags,
+                        'license' => 'Open Community AI License',
+                        'photographer_name' => $username,
+                        'allow_commercial_use' => true,
+                        'raw_prompt' => $rawPrompt,
+                        'negative_prompt' => $negativePrompt,
+                        'ai_model' => $baseModel,
+                        'like_count' => $likes,
+                        'view_count' => $likes * 12 + ($comments * 5),
+                        'meta_details' => [
+                            'steps' => $item['meta']['steps'] ?? null,
+                            'cfgScale' => $item['meta']['cfgScale'] ?? null,
+                            'sampler' => $item['meta']['sampler'] ?? null,
+                            'seed' => $item['meta']['seed'] ?? null,
+                        ],
+                    ];
+
+                    if (count($allItems) >= $limit) {
+                        break 2;
+                    }
+                }
             }
 
-            $json = $response->json();
-            $items = $json['items'] ?? [];
+            $results = array_values($allItems);
 
-            if (empty($items)) {
+            if (empty($results)) {
                 return $this->getFallbackCuratedItems($query);
             }
 

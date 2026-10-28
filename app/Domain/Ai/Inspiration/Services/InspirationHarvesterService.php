@@ -14,7 +14,9 @@ use App\Models\AiStudio\InspirationSourcePolicy;
 use App\Models\AiStudio\InspirationTrendScore;
 use App\Models\AiStudio\InspirationVisualAnalysis;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Throwable;
 
@@ -54,15 +56,21 @@ final class InspirationHarvesterService
     }
 
     /**
-     * Sinkronkan katalog inspirasi visual dari sumber eksternal ('all', 'copasprompt', atau 'civitai').
+     * Sinkronkan katalog inspirasi visual dari sumber eksternal ('all', 'copasprompt', atau 'civitai')
+     * dan download gambarnya sebagai aset lokal permanen COOCA.
      *
      * @return array{
      *     total_synced: int,
-     *     sources: array<string, array{status: string, synced: int, error?: string}>
+     *     total_downloaded: int,
+     *     sources: array<string, array{status: string, synced: int, downloaded: int, error?: string}>
      * }
      */
-    public function harvest(string $sourceCode = 'all', int $limit = 24): array
-    {
+    public function harvest(
+        string $sourceCode = 'all',
+        int $limit = 50,
+        bool $downloadAssets = true,
+        ?callable $onProgress = null
+    ): array {
         $this->ensureDefaultCategoriesExist();
 
         $targetAdapters = [];
@@ -76,6 +84,7 @@ final class InspirationHarvesterService
 
         $results = [
             'total_synced' => 0,
+            'total_downloaded' => 0,
             'sources' => [],
         ];
 
@@ -87,6 +96,7 @@ final class InspirationHarvesterService
                     $results['sources'][$code] = [
                         'status' => 'skipped',
                         'synced' => 0,
+                        'downloaded' => 0,
                         'reason' => 'Source is inactive',
                     ];
                     continue;
@@ -94,10 +104,20 @@ final class InspirationHarvesterService
 
                 $items = $adapter->search('', ['limit' => $limit]);
                 $syncedCount = 0;
+                $downloadedCount = 0;
+                $totalItems = count($items);
 
-                foreach ($items as $itemData) {
-                    $this->persistItem($sourceModel, $itemData);
+                foreach ($items as $idx => $itemData) {
+                    $wasDownloaded = false;
+                    $item = $this->persistItem($sourceModel, $itemData, $downloadAssets, $wasDownloaded);
                     $syncedCount++;
+                    if ($wasDownloaded) {
+                        $downloadedCount++;
+                    }
+
+                    if ($onProgress !== null) {
+                        $onProgress($code, $idx + 1, $totalItems, $item, $wasDownloaded);
+                    }
                 }
 
                 $sourceModel->update(['last_synced_at' => now()]);
@@ -105,8 +125,10 @@ final class InspirationHarvesterService
                 $results['sources'][$code] = [
                     'status' => 'success',
                     'synced' => $syncedCount,
+                    'downloaded' => $downloadedCount,
                 ];
                 $results['total_synced'] += $syncedCount;
+                $results['total_downloaded'] += $downloadedCount;
             } catch (Throwable $e) {
                 Log::error("[InspirationHarvesterService] Gagal sinkronisasi sumber {$code}: " . $e->getMessage(), [
                     'exception' => $e,
@@ -115,6 +137,7 @@ final class InspirationHarvesterService
                 $results['sources'][$code] = [
                     'status' => 'failed',
                     'synced' => 0,
+                    'downloaded' => 0,
                     'error' => $e->getMessage(),
                 ];
             }
@@ -242,9 +265,27 @@ final class InspirationHarvesterService
      *
      * @param array<string, mixed> $data
      */
-    private function persistItem(InspirationSource $source, array $data): InspirationItem
-    {
-        return DB::transaction(function () use ($source, $data): InspirationItem {
+    private function persistItem(
+        InspirationSource $source,
+        array $data,
+        bool $downloadAssets = true,
+        bool &$wasDownloaded = false
+    ): InspirationItem {
+        $wasDownloaded = false;
+
+        $remoteImageUrl = (string) ($data['canonical_url'] ?? $data['thumbnail_url'] ?? '');
+        $localAssetUrl = $remoteImageUrl;
+
+        if ($downloadAssets && ! empty($remoteImageUrl)) {
+            $localAssetUrl = $this->downloadAndLocalizeAsset(
+                sourceCode: $source->code,
+                externalId: (string) $data['external_id'],
+                remoteUrl: $remoteImageUrl,
+                wasDownloaded: $wasDownloaded
+            );
+        }
+
+        return DB::transaction(function () use ($source, $data, $remoteImageUrl, $localAssetUrl): InspirationItem {
             $tags = (array) ($data['tags'] ?? []);
             $rawPrompt = (string) ($data['raw_prompt'] ?? $data['caption'] ?? '');
             $categoryId = $this->resolveCategoryId($tags, $rawPrompt);
@@ -263,10 +304,10 @@ final class InspirationHarvesterService
                     'category_id' => $categoryId,
                     'title' => (string) ($data['title'] ?? 'Inspirasi Visual'),
                     'caption' => Str::limit((string) ($data['caption'] ?? $rawPrompt), 500),
-                    'canonical_url' => (string) ($data['canonical_url'] ?? ''),
-                    'thumbnail_url' => (string) ($data['thumbnail_url'] ?? $data['canonical_url'] ?? ''),
+                    'canonical_url' => $remoteImageUrl,
+                    'thumbnail_url' => $localAssetUrl,
                     'media_type' => (string) ($data['media_type'] ?? 'image'),
-                    'media_urls' => (array) ($data['media_urls'] ?? [$data['canonical_url'] ?? '']),
+                    'media_urls' => [$localAssetUrl],
                     'tags' => $tags,
                     'industry_target' => $industry,
                     'like_count' => $likes,
@@ -281,6 +322,10 @@ final class InspirationHarvesterService
             $aspectRatio = (string) ($data['aspect_ratio'] ?? '1:1');
             $suggestedRatios = array_values(array_unique([$aspectRatio, '1:1', '4:5', '9:16']));
 
+            $metaDetails = (array) ($data['meta_details'] ?? []);
+            $metaDetails['original_remote_url'] = $remoteImageUrl;
+            $metaDetails['local_asset_url'] = $localAssetUrl;
+
             InspirationVisualAnalysis::updateOrCreate(
                 ['inspiration_item_id' => $item->id],
                 [
@@ -293,7 +338,7 @@ final class InspirationHarvesterService
                     'negative_style_prompt' => (string) ($data['negative_prompt'] ?? 'blurry, low quality, distorted, duplicate, text, watermark'),
                     'suggested_aspect_ratios' => $suggestedRatios,
                     'safety_score' => 99.50,
-                    'metadata' => (array) ($data['meta_details'] ?? []),
+                    'metadata' => $metaDetails,
                     'analyzed_at' => now(),
                 ]
             );
@@ -316,6 +361,64 @@ final class InspirationHarvesterService
 
             return $item;
         });
+    }
+
+    /**
+     * Download gambar dari sumber eksternal dan jadikan aset lokal COOCA di disk public.
+     */
+    public function downloadAndLocalizeAsset(
+        string $sourceCode,
+        string $externalId,
+        string $remoteUrl,
+        bool &$wasDownloaded = false
+    ): string {
+        $wasDownloaded = false;
+
+        if (empty($remoteUrl) || str_starts_with($remoteUrl, '/storage/')) {
+            return $remoteUrl;
+        }
+
+        // Tentukan ekstensi file
+        $parsedPath = parse_url($remoteUrl, PHP_URL_PATH) ?? '';
+        $ext = strtolower(pathinfo($parsedPath, PATHINFO_EXTENSION));
+        if (! in_array($ext, ['webp', 'jpg', 'jpeg', 'png', 'avif'], true)) {
+            $ext = 'webp';
+        }
+
+        $safeExtId = preg_replace('/[^a-zA-Z0-9_\-]/', '_', $externalId);
+        $relativePath = "ai-studio/inspirations/{$sourceCode}/{$safeExtId}.{$ext}";
+        $localWebUrl = "/storage/{$relativePath}";
+
+        // Jika file sudah ada dan ukurannya > 0, langsung gunakan aset lokal
+        if (Storage::disk('public')->exists($relativePath) && Storage::disk('public')->size($relativePath) > 0) {
+            return $localWebUrl;
+        }
+
+        try {
+            $response = Http::withHeaders([
+                'User-Agent' => 'Cooca-AiStudio/1.0 (+https://cooca.id)',
+                'Accept' => 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+            ])->timeout(15)->get($remoteUrl);
+
+            if ($response->successful() && strlen($response->body()) > 500) {
+                // Simpan ke storage/app/public/
+                Storage::disk('public')->put($relativePath, $response->body());
+
+                // Pastikan disalin juga ke public/storage/ jika symlink belum aktif
+                $publicTargetDir = public_path('storage/' . dirname($relativePath));
+                if (! is_dir($publicTargetDir)) {
+                    @mkdir($publicTargetDir, 0755, true);
+                }
+                @file_put_contents(public_path('storage/' . $relativePath), $response->body());
+
+                $wasDownloaded = true;
+                return $localWebUrl;
+            }
+        } catch (Throwable $e) {
+            Log::warning("[InspirationHarvesterService] Gagal download aset {$remoteUrl}: " . $e->getMessage());
+        }
+
+        return $remoteUrl;
     }
 
     /**

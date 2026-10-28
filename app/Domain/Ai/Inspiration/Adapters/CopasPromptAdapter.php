@@ -47,49 +47,67 @@ final class CopasPromptAdapter implements InspirationAdapterInterface
      */
     public function search(string $query = '', array $filters = []): array
     {
-        $targetCategory = $filters['category'] ?? 'viral';
-        $path = self::CATEGORY_ENDPOINTS[$targetCategory] ?? self::CATEGORY_ENDPOINTS['viral'];
-        $url = self::BASE_URL . $path;
+        $targetCategory = $filters['category'] ?? 'all';
+        $limit = (int) ($filters['limit'] ?? 50);
 
-        try {
-            $response = Http::withHeaders([
-                'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36',
-                'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-                'Accept-Language' => 'id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7',
-            ])->timeout(10)->get($url);
+        // Jika category 'all' atau meminta banyak item, crawl seluruh endpoint kategori
+        $categoriesToFetch = ($targetCategory === 'all' || $limit > 24)
+            ? array_keys(self::CATEGORY_ENDPOINTS)
+            : [$targetCategory];
 
-            if (! $response->successful()) {
-                Log::warning("[CopasPromptAdapter] HTTP failed ({$response->status()}) for URL: {$url}");
-                return $this->getFallbackCuratedItems($query);
+        $allItems = [];
+
+        foreach ($categoriesToFetch as $cat) {
+            $path = self::CATEGORY_ENDPOINTS[$cat] ?? self::CATEGORY_ENDPOINTS['viral'];
+            $url = self::BASE_URL . $path;
+
+            try {
+                $response = Http::withHeaders([
+                    'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36',
+                    'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+                    'Accept-Language' => 'id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7',
+                ])->timeout(10)->get($url);
+
+                if (! $response->successful()) {
+                    Log::warning("[CopasPromptAdapter] HTTP failed ({$response->status()}) for URL: {$url}");
+                    continue;
+                }
+
+                $parsed = $this->parseNextDataPayload($response->body());
+                foreach ($parsed as $item) {
+                    $allItems[$item['external_id']] = $item;
+                }
+
+                if (count($allItems) >= $limit) {
+                    break;
+                }
+            } catch (Throwable $e) {
+                Log::warning("[CopasPromptAdapter] Error scraping {$url}: " . $e->getMessage());
             }
-
-            $html = $response->body();
-            $items = $this->parseNextDataPayload($html);
-
-            if (empty($items)) {
-                return $this->getFallbackCuratedItems($query);
-            }
-
-            // Filter berdasarkan query teks jika ada
-            if (! empty($query)) {
-                $q = mb_strtolower(trim($query));
-                $items = array_filter($items, function (array $item) use ($q): bool {
-                    $haystack = mb_strtolower(
-                        ($item['title'] ?? '') . ' ' .
-                        ($item['caption'] ?? '') . ' ' .
-                        implode(' ', $item['tags'] ?? []) . ' ' .
-                        ($item['raw_prompt'] ?? '')
-                    );
-                    return str_contains($haystack, $q);
-                });
-            }
-
-            $limit = (int) ($filters['limit'] ?? 24);
-            return array_slice(array_values($items), 0, $limit);
-        } catch (Throwable $e) {
-            Log::warning('[CopasPromptAdapter] Error scraping copasprompt.id: ' . $e->getMessage());
-            return $this->getFallbackCuratedItems($query);
         }
+
+        $items = array_values($allItems);
+
+        if (empty($items)) {
+            $items = $this->getFallbackCuratedItems($query);
+        }
+
+        // Filter berdasarkan query teks jika ada
+        if (! empty($query)) {
+            $q = mb_strtolower(trim($query));
+            $items = array_filter($items, function (array $item) use ($q): bool {
+                $haystack = mb_strtolower(
+                    ($item['title'] ?? '') . ' ' .
+                    ($item['caption'] ?? '') . ' ' .
+                    implode(' ', $item['tags'] ?? []) . ' ' .
+                    ($item['raw_prompt'] ?? '')
+                );
+                return str_contains($haystack, $q);
+            });
+            $items = array_values($items);
+        }
+
+        return array_slice($items, 0, $limit);
     }
 
     /**
@@ -145,8 +163,16 @@ final class CopasPromptAdapter implements InspirationAdapterInterface
             return [];
         }
 
-        $promptCards = $data['props']['pageProps']['initialPromptCards'] ?? [];
-        if (! is_array($promptCards)) {
+        $pageProps = $data['props']['pageProps'] ?? [];
+        $promptCards = $pageProps['initialPromptCards'] ?? [];
+        if (empty($promptCards) || ! is_array($promptCards)) {
+            $promptCards = array_merge(
+                (array) ($pageProps['seoPromptGroups']['native'] ?? []),
+                (array) ($pageProps['seoPromptGroups']['topPerforming'] ?? [])
+            );
+        }
+
+        if (empty($promptCards)) {
             return [];
         }
 
