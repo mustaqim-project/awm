@@ -16,15 +16,29 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        Admin::updateOrCreate(
-            ['email' => 'admin@cooca.id'],
-            [
-                'name' => 'Super Administrator',
-                'password' => Hash::make('password123'),
-                'role' => 'super_admin',
-                'is_active' => true,
-            ]
-        );
+        if (app()->environment('production')) {
+            // In production, preserve existing admin and never overwrite password with a default value
+            $existing = Admin::where('email', 'admin@cooca.id')->first();
+            if (! $existing) {
+                Admin::create([
+                    'name' => 'Super Administrator',
+                    'email' => 'admin@cooca.id',
+                    'password' => Hash::make(\Illuminate\Support\Str::random(32)),
+                    'role' => 'super_admin',
+                    'is_active' => true,
+                ]);
+            }
+        } else {
+            Admin::updateOrCreate(
+                ['email' => 'admin@cooca.id'],
+                [
+                    'name' => 'Super Administrator',
+                    'password' => Hash::make('password123'),
+                    'role' => 'super_admin',
+                    'is_active' => true,
+                ]
+            );
+        }
 
         SystemSetting::set('app_name', 'Cooca', 'general');
         SystemSetting::set('google_client_id', env('GOOGLE_CLIENT_ID', ''), 'google_api');

@@ -307,11 +307,11 @@ Route::get('/apk', function () {
 
 // 14. Website Public Live Chat (Real-time Laravel Reverb Broadcasting)
 Route::prefix('live-chat')->name('public.live-chat.')->group(function (): void {
-    Route::post('/start', \App\Http\Controllers\Web\PublicLiveChatController::class . '@start')->name('start');
-    Route::post('/send', \App\Http\Controllers\Web\PublicLiveChatController::class . '@sendMessage')->name('send');
-    Route::get('/history', \App\Http\Controllers\Web\PublicLiveChatController::class . '@getHistory')->name('history');
-    Route::get('/poll', \App\Http\Controllers\Web\PublicLiveChatController::class . '@poll')->name('poll');
-    Route::post('/typing', \App\Http\Controllers\Web\PublicLiveChatController::class . '@broadcastTyping')->name('typing');
+    Route::post('/start', \App\Http\Controllers\Web\PublicLiveChatController::class . '@start')->middleware('throttle:15,1')->name('start');
+    Route::post('/send', \App\Http\Controllers\Web\PublicLiveChatController::class . '@sendMessage')->middleware('throttle:30,1')->name('send');
+    Route::get('/history', \App\Http\Controllers\Web\PublicLiveChatController::class . '@getHistory')->middleware('throttle:60,1')->name('history');
+    Route::get('/poll', \App\Http\Controllers\Web\PublicLiveChatController::class . '@poll')->middleware('throttle:120,1')->name('poll');
+    Route::post('/typing', \App\Http\Controllers\Web\PublicLiveChatController::class . '@broadcastTyping')->middleware('throttle:60,1')->name('typing');
 });
 
 // 15. Public business landing pages using business name as direct URL slug (Must be last)

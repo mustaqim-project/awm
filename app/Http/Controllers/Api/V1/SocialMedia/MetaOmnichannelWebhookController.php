@@ -38,8 +38,6 @@ class MetaOmnichannelWebhookController extends Controller
             SystemSetting::get('meta_wa_webhook_verify_token'),
             config('services.meta_social.webhook_verify_token'),
             config('services.meta_whatsapp.webhook_verify_token'),
-            'cooca_meta_social_webhook_token',
-            'cooca_meta_wa_webhook_token',
         ]);
 
         $isMatch = false;
@@ -68,10 +66,40 @@ class MetaOmnichannelWebhookController extends Controller
      */
     public function handle(Request $request): JsonResponse
     {
+        $rawPayload = (string) $request->getContent();
+        $signature = (string) ($request->header('X-Hub-Signature-256') ?? '');
+
+        // 0. Verify HMAC-SHA256 signature if app secret is configured
+        $appSecret = (string) (
+            SystemSetting::get('meta_app_secret')
+            ?: SystemSetting::get('social_media_app_secret')
+            ?: SystemSetting::get('meta_wa_app_secret')
+            ?: config('services.meta_social.app_secret')
+            ?: config('services.meta_whatsapp.app_secret')
+        );
+
+        if (! empty($appSecret)) {
+            if (empty($signature) || ! str_starts_with($signature, 'sha256=')) {
+                Log::channel('daily')->warning('[MetaOmnichannelWebhook] Missing or invalid signature header', [
+                    'ip' => $request->ip(),
+                ]);
+                return response()->json(['error' => 'Invalid signature header'], 403);
+            }
+
+            $expectedHash = hash_hmac('sha256', $rawPayload, $appSecret);
+            $providedHash = substr($signature, 7);
+
+            if (! hash_equals($expectedHash, $providedHash)) {
+                Log::channel('daily')->warning('[MetaOmnichannelWebhook] Signature mismatch', [
+                    'ip' => $request->ip(),
+                ]);
+                return response()->json(['error' => 'Invalid signature'], 403);
+            }
+        }
+
         $payload = $request->all();
         if (empty($payload)) {
-            $raw = (string) $request->getContent();
-            $payload = ! empty($raw) ? (json_decode($raw, true) ?: []) : [];
+            $payload = ! empty($rawPayload) ? (json_decode($rawPayload, true) ?: []) : [];
         }
         $object = (string) ($payload['object'] ?? '');
 
