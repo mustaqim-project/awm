@@ -61,8 +61,16 @@ return new class extends Migration
                 $table->timestamps();
 
                 $table->index(['business_id', 'generation_id'], 'insp_gen_asset_biz_gen_idx');
-                $table->index('is_selected_favorite');
+                $table->index('is_selected_favorite', 'insp_gen_asset_fav_idx');
             });
+        } else {
+            try {
+                Schema::table('business_inspiration_generation_assets', function (Blueprint $table): void {
+                    $table->index('is_selected_favorite', 'insp_gen_asset_fav_idx');
+                });
+            } catch (\Throwable $e) {
+                // Abaikan jika indeks sudah terpasang
+            }
         }
 
         // 3. Ledger Transaksi Saldo Kredit AI (Append-Only, Anti Double Spending)
