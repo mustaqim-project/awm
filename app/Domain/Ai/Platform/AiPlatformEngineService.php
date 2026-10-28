@@ -18,7 +18,7 @@ final class AiPlatformEngineService
     public const DEFAULT_ENDPOINT = 'https://r4g77gv.abc-tunnel.us/v1';
     public const DEFAULT_MODEL = 'ag/gemini-3.8-flash-high';
     public const DEFAULT_STRATEGY = 'round_robin';
-    public const DEFAULT_API_KEY = 'sk-59807b51bc76063d-ge0agt-97ac1590';
+    public const DEFAULT_API_KEY = 'sk-cooca-platform-placeholder-key-00000000';
 
     /**
      * Supported AI Providers Catalog & Metadata (9Router Architecture).

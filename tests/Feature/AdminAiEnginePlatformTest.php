@@ -49,6 +49,7 @@ final class AdminAiEnginePlatformTest extends TestCase
         $response->assertSee('ag/gemini-3.8-flash-high');
 
         // Security check: Plaintext API key must never be printed to HTML
+        $response->assertDontSee('sk-cooca-platform-placeholder-key-00000000');
         $response->assertDontSee('sk-59807b51bc76063d-ge0agt-97ac1590');
     }
 
