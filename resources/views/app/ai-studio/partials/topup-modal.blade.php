@@ -88,7 +88,7 @@
                     <label class="text-xs font-bold text-black/80 dark:text-white/80 block">Pilih Paket Isi Ulang Kredit:</label>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                         <template x-for="pkg in packages" :key="pkg.code">
-                            <div @click="selectedTierCode = pkg.code"
+                            <div @click="selectPackage(pkg)"
                                 class="relative p-3.5 rounded-[16px] border cursor-pointer transition-all text-left flex flex-col justify-between"
                                 :class="selectedTierCode === pkg.code
                                     ? 'bg-[#007AFF]/5 dark:bg-[#007AFF]/15 border-[#007AFF] shadow-sm shadow-[#007AFF]/15 ring-2 ring-[#007AFF]/20'
@@ -275,6 +275,7 @@ function aiStudioTopupModal() {
         shortageTitle: '',
         shortageMessage: '',
         selectedTierCode: 'growth',
+        selectedPackageId: null,
         selectedPaymentMethod: 'qris',
         submitting: false,
         activeOrder: null,
@@ -332,7 +333,12 @@ function aiStudioTopupModal() {
 
         get selectedPackagePrice() {
             const pkg = this.packages.find(p => p.code === this.selectedTierCode);
-            return pkg ? pkg.formatted_price : 'Rp 25.000';
+            return pkg ? pkg.formatted_price : (this.packages[0]?.formatted_price || 'Rp 25.000');
+        },
+
+        selectPackage(pkg) {
+            this.selectedTierCode = pkg.code;
+            this.selectedPackageId = pkg.id || null;
         },
 
         init() {
@@ -346,6 +352,13 @@ function aiStudioTopupModal() {
                 if (data.success) {
                     if (data.packages && data.packages.length > 0) {
                         this.packages = data.packages;
+                        const found = this.packages.find(p => p.code === this.selectedTierCode);
+                        if (found) {
+                            this.selectedPackageId = found.id || null;
+                        } else {
+                            this.selectedTierCode = this.packages[0].code;
+                            this.selectedPackageId = this.packages[0].id || null;
+                        }
                     }
                     if (data.payment_channels && data.payment_channels.length > 0) {
                         this.paymentChannels = data.paymentChannels || data.payment_channels;
@@ -372,6 +385,7 @@ function aiStudioTopupModal() {
             if (typeof detail.available !== 'undefined') {
                 this.currentCredits = detail.available;
             }
+            this.fetchPackages();
             this.$nextTick(() => lucide.createIcons());
         },
 
@@ -385,8 +399,10 @@ function aiStudioTopupModal() {
             this.submitting = true;
 
             try {
+                const selectedPkg = this.packages.find(p => p.code === this.selectedTierCode);
                 const payload = {
                     tier_code: this.selectedTierCode,
+                    package_id: this.selectedPackageId || (selectedPkg ? selectedPkg.id : null),
                     payment_method: this.selectedPaymentMethod,
                 };
 

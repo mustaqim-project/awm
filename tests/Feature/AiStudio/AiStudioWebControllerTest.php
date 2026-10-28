@@ -595,6 +595,54 @@ final class AiStudioWebControllerTest extends TestCase
         ]);
     }
 
+    public function test_merchant_can_fetch_and_order_dynamic_billing_package_from_catalog(): void
+    {
+        $customPkg = \App\Models\BillingPackage::create([
+            'type' => \App\Models\BillingPackage::TYPE_AI_TOKEN,
+            'code' => 'umkm-viral-pack',
+            'name' => 'UMKM Viral Pack [Terpopuler]',
+            'description' => 'Paket promosi foto produk viral 200 kredit.',
+            'price' => 79000,
+            'token_quantity' => 200,
+            'token_expiry_days' => 30,
+            'is_active' => true,
+            'sort_order' => 1,
+        ]);
+
+        $resPackages = $this->actingAs($this->user)
+            ->getJson(route('ai-studio.topup.packages'));
+
+        $resPackages->assertOk();
+        $packages = $resPackages->json('packages');
+        $this->assertNotEmpty($packages);
+        $found = collect($packages)->firstWhere('code', 'umkm-viral-pack');
+        $this->assertNotNull($found);
+        $this->assertEquals('UMKM Viral Pack', $found['name']);
+        $this->assertEquals('Terpopuler', $found['badge']);
+        $this->assertEquals(200, $found['credits']);
+        $this->assertEquals(79000, $found['price']);
+
+        // Order topup using package_id or tier_code
+        $resOrder = $this->actingAs($this->user)
+            ->postJson(route('ai-studio.topup.order'), [
+                'package_id' => $customPkg->id,
+                'tier_code' => 'umkm-viral-pack',
+                'payment_method' => 'qris',
+            ]);
+
+        $resOrder->assertOk();
+        $this->assertEquals(200, $resOrder->json('payment.credits'));
+        $this->assertEquals(79000, $resOrder->json('payment.amount'));
+
+        $this->assertDatabaseHas('subscription_payments', [
+            'business_id' => $this->business->id,
+            'billing_package_id' => $customPkg->id,
+            'payment_type' => 'ai_token',
+            'topup_quantity' => 200,
+            'total_payable' => 79000,
+        ]);
+    }
+
     public function test_merchant_can_check_topup_status(): void
     {
         $payment = \App\Models\SubscriptionPayment::create([

@@ -660,20 +660,42 @@ final class OwnerAiStudioWebController extends Controller implements HasMiddlewa
     public function topupPackages(Request $request): JsonResponse
     {
         $business = Context::requireBusiness();
-        $dbPackages = BillingPackage::where('type', BillingPackage::TYPE_AI_TOKEN)->active()->get();
+        $dbPackages = collect();
+        try {
+            $dbPackages = BillingPackage::where('type', BillingPackage::TYPE_AI_TOKEN)->active()->get();
+        } catch (Throwable) {
+            $dbPackages = collect();
+        }
 
         $packages = [];
         if ($dbPackages->isNotEmpty()) {
             foreach ($dbPackages as $pkg) {
+                $badge = null;
+                if (preg_match('/\[(.*?)\]/', $pkg->name, $matches)) {
+                    $badge = trim($matches[1]);
+                    $displayName = trim(str_replace($matches[0], '', $pkg->name));
+                } else {
+                    $displayName = $pkg->name;
+                    $nameLower = strtolower($pkg->name);
+                    $codeLower = strtolower((string) $pkg->code);
+                    if (str_contains($nameLower, 'growth') || str_contains($codeLower, 'growth') || str_contains($nameLower, 'populer')) {
+                        $badge = 'Terpopuler';
+                    } elseif (str_contains($nameLower, 'pro') || str_contains($codeLower, 'pro') || str_contains($nameLower, 'hemat')) {
+                        $badge = 'Paling Hemat';
+                    } elseif (str_contains($nameLower, 'sultan') || str_contains($codeLower, 'sultan') || str_contains($nameLower, 'terbaik')) {
+                        $badge = 'Nilai Terbaik';
+                    }
+                }
+
                 $packages[] = [
                     'id' => $pkg->id,
                     'code' => $pkg->code,
-                    'name' => $pkg->name,
+                    'name' => $displayName,
                     'credits' => (int) ($pkg->token_quantity ?? 50),
                     'price' => (float) $pkg->price,
                     'formatted_price' => 'Rp ' . number_format((float) $pkg->price, 0, ',', '.'),
-                    'badge' => null,
-                    'description' => $pkg->description ?: "Isi ulang {$pkg->token_quantity} kredit AI Studio.",
+                    'badge' => $badge,
+                    'description' => $pkg->description ?: "Isi ulang {$pkg->token_quantity} kredit visual AI Studio.",
                 ];
             }
         } else {
@@ -771,8 +793,8 @@ final class OwnerAiStudioWebController extends Controller implements HasMiddlewa
         $user = $request->user();
 
         $validated = $request->validate([
-            'tier_code' => ['nullable', 'string', 'max:50'],
-            'package_id' => ['nullable', 'uuid'],
+            'tier_code' => ['nullable', 'string', 'max:80'],
+            'package_id' => ['nullable', 'string', 'max:80'],
             'payment_method' => ['required', 'string', 'max:50'],
         ]);
 
@@ -781,11 +803,27 @@ final class OwnerAiStudioWebController extends Controller implements HasMiddlewa
         $packageName = '';
         $billingPackageId = null;
 
-        if (!empty($validated['package_id'])) {
-            $pkg = BillingPackage::where('type', BillingPackage::TYPE_AI_TOKEN)->active()->find($validated['package_id']);
-            if (!$pkg) {
-                return response()->json(['success' => false, 'message' => 'Paket top-up tidak ditemukan atau sudah tidak aktif.'], 404);
+        $pkg = null;
+        try {
+            if (!empty($validated['package_id'])) {
+                $pkg = BillingPackage::where('type', BillingPackage::TYPE_AI_TOKEN)->active()->find($validated['package_id']);
             }
+
+            if (!$pkg && !empty($validated['tier_code'])) {
+                $tierCode = trim((string) $validated['tier_code']);
+                $pkg = BillingPackage::where('type', BillingPackage::TYPE_AI_TOKEN)
+                    ->active()
+                    ->where(function ($q) use ($tierCode) {
+                        $q->where('code', $tierCode)
+                            ->orWhere('id', $tierCode);
+                    })
+                    ->first();
+            }
+        } catch (Throwable) {
+            $pkg = null;
+        }
+
+        if ($pkg) {
             $billingPackageId = $pkg->id;
             $credits = (int) ($pkg->token_quantity ?? 50);
             $price = (float) $pkg->price;
