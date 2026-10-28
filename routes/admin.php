@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\Admin\AdminAccountRecoveryController;
+use App\Http\Controllers\Admin\AdminAiStudioPricingController;
+use App\Http\Controllers\Admin\AdminAiStudioSourceController;
 use App\Http\Controllers\Admin\AdminAiTokenController;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminBillingPackageController;
@@ -101,6 +103,22 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
         Route::post('/ai-tokens/engine/models', [AdminAiTokenController::class, 'addModel'])->name('ai-tokens.engine.models.add');
         Route::delete('/ai-tokens/engine/models/{modelId}', [AdminAiTokenController::class, 'deleteModel'])->where('modelId', '.*')->name('ai-tokens.engine.models.delete');
         Route::post('/ai-tokens/engine/models/reset-default', [AdminAiTokenController::class, 'resetDefaultModels'])->name('ai-tokens.engine.models.reset-default');
+
+        // AI Studio Platform Administration (Sources, Licenses, and Pricing)
+        Route::prefix('ai-studio')->name('ai-studio.')->group(function (): void {
+            // Sumber Inspirasi & Lisensi
+            Route::get('/sources', [AdminAiStudioSourceController::class, 'index'])->name('sources.index');
+            Route::post('/sources', [AdminAiStudioSourceController::class, 'storeSource'])->name('sources.store');
+            Route::put('/sources/{source}', [AdminAiStudioSourceController::class, 'updateSource'])->name('sources.update');
+            Route::post('/sources/{source}/credentials', [AdminAiStudioSourceController::class, 'saveCredentials'])->name('sources.credentials.save');
+            Route::post('/sources/{source}/policy', [AdminAiStudioSourceController::class, 'updatePolicy'])->name('sources.policy.update');
+            Route::post('/sources/{source}/toggle', [AdminAiStudioSourceController::class, 'toggleSource'])->name('sources.toggle');
+
+            // Matriks Harga & Ledger Finansial
+            Route::get('/pricing', [AdminAiStudioPricingController::class, 'index'])->name('pricing.index');
+            Route::post('/pricing/grant-credits', [AdminAiStudioPricingController::class, 'grantCredits'])->name('pricing.grant-credits');
+            Route::post('/pricing/update', [AdminAiStudioPricingController::class, 'updatePricing'])->name('pricing.update');
+        });
 
         // Google API, System Settings, Payment Gateway, WhatsApp & SMTP
         Route::get('/settings', [AdminSettingController::class, 'index'])->name('settings.index');

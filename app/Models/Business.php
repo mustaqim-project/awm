@@ -73,6 +73,7 @@ class Business extends Model
         'pos_service_charge_percent',
         'timezone',
         'operating_hours',
+        'ai_credits_balance',
     ];
 
     protected $hidden = [
@@ -117,6 +118,7 @@ class Business extends Model
             'pos_tax_percent' => 'float',
             'pos_enable_service_charge' => 'boolean',
             'pos_service_charge_percent' => 'float',
+            'ai_credits_balance' => 'integer',
         ];
     }
 
@@ -656,5 +658,15 @@ class Business extends Model
     public function aiWorkHistories(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(AiWorkHistory::class);
+    }
+
+    public function inspirationProjects(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\AiStudio\BusinessInspirationProject::class);
+    }
+
+    public function aiCreditTransactions(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\AiStudio\AiCreditTransaction::class);
     }
 }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 use App\Http\Controllers\Web\Ai\AiCompanyWebController;
 use App\Http\Controllers\Web\Ai\PosAiWebController;
+use App\Http\Controllers\Web\AiStudio\OwnerAiStudioWebController;
+use App\Http\Controllers\Web\AiStudio\OwnerInspirationWebController;
 use App\Http\Controllers\Web\AnalyticsWebController;
 use App\Http\Controllers\Web\Billing\BillingAndLimitWebController;
 use App\Http\Controllers\Web\Billing\SubscriptionCheckoutWebController;
@@ -677,6 +679,33 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
             Route::post('/providers/test', [AiCompanyWebController::class, 'testProvider'])->name('providers.test');
             Route::post('/providers/detect-models', [AiCompanyWebController::class, 'detectModels'])->name('providers.detect-models');
             Route::post('/agents/{role}/avatar', [AiCompanyWebController::class, 'updateAgentAvatar'])->name('agents.avatar.update');
+        });
+
+        // COOCA AI Studio: Viral Visual Inspiration & Multi-Channel Image Generation
+        Route::prefix('ai-studio')->name('ai-studio.')->group(function (): void {
+            // Proyek & Dashboard
+            Route::get('/', [OwnerAiStudioWebController::class, 'index'])->name('index');
+            Route::get('/create', [OwnerAiStudioWebController::class, 'create'])->name('create');
+            Route::post('/projects', [OwnerAiStudioWebController::class, 'store'])->name('projects.store');
+            Route::get('/projects/{project}', [OwnerAiStudioWebController::class, 'show'])->name('show');
+            Route::delete('/projects/{project}', [OwnerAiStudioWebController::class, 'destroy'])->name('projects.destroy');
+
+            // Kompilasi Prompt Dinamis & Pemesanan Generasi
+            Route::post('/prompt/compile', [OwnerAiStudioWebController::class, 'compilePrompt'])->name('prompt.compile');
+            Route::post('/generate', [OwnerAiStudioWebController::class, 'dispatchGeneration'])->name('generate');
+            Route::get('/projects/{project}/generations/{generation}/status', [OwnerAiStudioWebController::class, 'generationStatus'])->name('generation.status');
+
+            // Aksi Output Gambar Render
+            Route::post('/assets/{asset}/export-to-catalog', [OwnerAiStudioWebController::class, 'exportToCatalog'])->name('assets.export-to-catalog');
+            Route::post('/assets/{asset}/toggle-favorite', [OwnerAiStudioWebController::class, 'toggleFavoriteAsset'])->name('assets.toggle-favorite');
+
+            // Riwayat Ledger Kredit Transaksi
+            Route::get('/credit-history', [OwnerAiStudioWebController::class, 'creditHistory'])->name('credit-history');
+
+            // Penjelajahan Katalog Inspirasi Legal
+            Route::get('/inspiration', [OwnerInspirationWebController::class, 'index'])->name('inspiration.index');
+            Route::get('/inspiration/search', [OwnerInspirationWebController::class, 'search'])->name('inspiration.search');
+            Route::get('/inspiration/{inspiration}', [OwnerInspirationWebController::class, 'show'])->name('inspiration.show');
         });
 
         // POS Incoming Online/QR Orders
