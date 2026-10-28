@@ -111,6 +111,7 @@
         </script>
     @endif
 
+    <meta name="p:domain_verify" content="9f8366e58e2ab167a9a99c794e3a2243"/>
     <!-- Custom Head Scripts -->
     @if (!empty($seoCustomHeadScripts))
         {!! $seoCustomHeadScripts !!}

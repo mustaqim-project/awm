@@ -4,6 +4,67 @@
     'headerSubtitle' => __('sales.invoices.show_subtitle')
 ])
 
+@php
+    $statusBadges = [
+        'draft' => [
+            'bg' => 'bg-black/6 dark:bg-white/10',
+            'text' => 'text-black/60 dark:text-white/60',
+            'dot' => 'bg-black/40 dark:bg-white/40',
+            'label' => __('sales.invoices.status_draft'),
+        ],
+        'sent' => [
+            'bg' => 'bg-[#007AFF]/12',
+            'text' => 'text-[#007AFF] dark:text-[#0A84FF]',
+            'dot' => 'bg-[#007AFF]',
+            'label' => __('sales.invoices.status_sent'),
+        ],
+        'unpaid' => [
+            'bg' => 'bg-[#FF9500]/12',
+            'text' => 'text-[#B25E00] dark:text-[#FF9F0A]',
+            'dot' => 'bg-[#FF9500]',
+            'label' => __('sales.invoices.status_unpaid'),
+        ],
+        'partially_paid' => [
+            'bg' => 'bg-[#FF9500]/12',
+            'text' => 'text-[#B25E00] dark:text-[#FF9F0A]',
+            'dot' => 'bg-[#FF9500]',
+            'label' => __('sales.invoices.status_partially_paid'),
+        ],
+        'paid' => [
+            'bg' => 'bg-[#34C759]/12',
+            'text' => 'text-[#248A3D] dark:text-[#30D158]',
+            'dot' => 'bg-[#34C759]',
+            'label' => __('sales.invoices.status_paid'),
+        ],
+        'overdue' => [
+            'bg' => 'bg-[#FF3B30]/12',
+            'text' => 'text-[#C41E17] dark:text-[#FF453A]',
+            'dot' => 'bg-[#FF3B30]',
+            'label' => __('sales.invoices.status_overdue'),
+        ],
+        'void' => [
+            'bg' => 'bg-black/6 dark:bg-white/8',
+            'text' => 'text-black/40 dark:text-white/40 line-through',
+            'dot' => 'bg-black/30',
+            'label' => __('sales.invoices.status_void'),
+        ],
+    ];
+
+    $currentStatus = $invoice->status;
+    if ($currentStatus !== 'paid' && $currentStatus !== 'void' && $currentStatus !== 'draft' && $invoice->due_date && $invoice->due_date->isPast() && $invoice->balance_due > 0) {
+        $currentStatus = 'overdue';
+    }
+    $statusStyle = $statusBadges[$currentStatus] ?? $statusBadges['draft'];
+
+    $canEdit = !in_array($invoice->status, ['paid', 'void'], true) && (float) $invoice->paid_amount <= 0 && (\App\Support\Context::hasPermission('invoices.edit') || \App\Support\Context::hasPermission('invoices.create'));
+    $canRelease = $invoice->status === 'draft' && (\App\Support\Context::hasPermission('invoices.create') || \App\Support\Context::hasPermission('invoices.edit'));
+    $canRecordPayment = $invoice->balance_due > 0 && $invoice->status !== 'void' && $invoice->status !== 'draft' && \App\Support\Context::hasPermission('invoices.record_payment');
+    $canRemind = $invoice->balance_due > 0 && !in_array($invoice->status, ['void', 'draft']) && \App\Support\Context::hasPermission('invoices.view');
+    $canExport = \App\Support\Context::hasPermission('invoices.export') || \App\Support\Context::hasPermission('invoices.view');
+    $canVoid = !in_array($invoice->status, ['draft', 'void']) && $invoice->paid_amount == 0 && (\App\Support\Context::hasPermission('invoices.delete') || \App\Support\Context::hasPermission('invoices.edit'));
+    $canDeleteDraft = $invoice->status === 'draft' && (float) $invoice->paid_amount <= 0 && \App\Support\Context::hasPermission('invoices.delete');
+@endphp
+
 @section('content')
 <div class="max-w-[1360px] mx-auto space-y-6 pb-28 lg:pb-12" x-data="{
     showPaymentModal: false,
@@ -24,33 +85,37 @@
     }
 }">
 
+    <!-- ===================================================== -->
+    <!-- 1. TOOLBAR / HEADER (Clean Apple HIG Layout)          -->
+    <!-- ===================================================== -->
     <x-module-header
         module="sales"
         :title="__('sales.invoices.show_title', ['number' => $invoice->invoice_number])"
         :subtitle="($invoice->customer?->name ?? __('sales.invoices.customer_label')) . ' · ' . __('sales.sales_orders.summary_issued_on', ['date' => $invoice->invoice_date?->translatedFormat('d F Y') ?? ''])"
         :breadcrumbs="[
-            ['label' => __('sales.invoices.breadcrumb_dashboard'), 'route' => route('dashboard')],
-            ['label' => __('sales.sales_orders.module_title'), 'route' => route('sales.orders.index')],
-            ['label' => __('sales.invoices.module_title'), 'route' => route('invoices.index')],
-            ['label' => $invoice->invoice_number],
+            ['label' => __('sales.invoices.breadcrumb_dashboard'), 'url' => route('dashboard')],
+            ['label' => __('sales.sales_orders.module_title'), 'url' => route('sales.orders.index')],
+            ['label' => __('sales.invoices.module_title'), 'url' => route('invoices.index')],
+            ['label' => $invoice->invoice_number, 'url' => null],
         ]">
-        <div class="flex items-center gap-2 flex-wrap w-full sm:w-auto">
-            <a href="{{ route('invoices.index') }}" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5">
-                <i data-lucide="arrow-left" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
-                <span>{{ __('sales.invoices.btn_list') }}</span>
+
+        <x-slot:badgeSlot>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold {{ $statusStyle['bg'] }} {{ $statusStyle['text'] }} shrink-0">
+                <span class="w-1.5 h-1.5 rounded-full {{ $statusStyle['dot'] }}"></span>
+                <span>{{ $statusStyle['label'] }}</span>
+            </span>
+        </x-slot:badgeSlot>
+
+        <div class="flex items-center gap-2 flex-wrap sm:flex-nowrap justify-start sm:justify-end">
+            {{-- Tombol Kembali ke Daftar Faktur --}}
+            <a href="{{ route('invoices.index') }}" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shrink-0">
+                <i data-lucide="arrow-left" class="w-4 h-4 text-black/50 dark:text-white/50"></i>
+                <span class="hidden sm:inline">{{ __('sales.invoices.btn_list') }}</span>
             </a>
 
-            {{-- Tombol Edit Faktur (kondisi: bukan paid/void & paid_amount <= 0) --}}
-            @if(!in_array($invoice->status, ['paid', 'void'], true) && (float) $invoice->paid_amount <= 0 && (\App\Support\Context::hasPermission('invoices.edit') || \App\Support\Context::hasPermission('invoices.create')))
-            <a href="{{ route('invoices.edit', $invoice->id) }}" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-[#FF9500] dark:text-[#FF9F0A] bg-[#FF9500]/10 dark:bg-[#FF9500]/20 hover:bg-[#FF9500]/15 dark:hover:bg-[#FF9500]/30 active:scale-[0.97] transition-all flex items-center justify-center gap-1.5">
-                <i data-lucide="edit-3" class="w-4 h-4"></i>
-                <span>{{ $invoice->status === 'draft' ? __('sales.invoices.btn_edit_draft') : __('sales.invoices.btn_edit_invoice') }}</span>
-            </a>
-            @endif
-
-            {{-- Tombol Konfirmasi & Rilis Faktur (hanya tampil saat draft) --}}
-            @if($invoice->status === 'draft' && (\App\Support\Context::hasPermission('invoices.create') || \App\Support\Context::hasPermission('invoices.edit')))
-            <button type="button" @click="confirmReleaseModalOpen = true" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#34C759] hover:bg-[#2FB350] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5 shadow-[0_1px_2px_rgba(52,199,89,0.25)]">
+            {{-- Primary Action: Rilis Draf (jika status draft) --}}
+            @if($canRelease)
+            <button type="button" @click="confirmReleaseModalOpen = true" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#34C759] hover:bg-[#2FB350] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shadow-[0_1px_2px_rgba(52,199,89,0.25)] shrink-0 cursor-pointer">
                 <i data-lucide="check-circle-2" class="w-4 h-4"></i>
                 <span>{{ __('sales.invoices.btn_confirm_release') }}</span>
             </button>
@@ -59,59 +124,106 @@
             </form>
             @endif
 
-            {{-- Tombol Catat Pembayaran (hanya saat ada sisa tagihan dan bukan void) --}}
-            @if($invoice->balance_due > 0 && $invoice->status !== 'void' && $invoice->status !== 'draft' && \App\Support\Context::hasPermission('invoices.record_payment'))
-            <button type="button" @click="showPaymentModal = true" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
+            {{-- Primary Action: Catat Pembayaran (jika ada sisa tagihan) --}}
+            @if($canRecordPayment)
+            <button type="button" @click="showPaymentModal = true" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)] shrink-0 cursor-pointer">
                 <i data-lucide="credit-card" class="w-4 h-4"></i>
                 <span>{{ __('sales.invoices.btn_record_payment') }}</span>
             </button>
             @endif
 
-            {{-- Tombol Kirim Pengingat Termin (WA & Email) --}}
-            @if($invoice->balance_due > 0 && !in_array($invoice->status, ['void', 'draft']) && \App\Support\Context::hasPermission('invoices.view'))
-            <button type="button" @click="showReminderModal = true" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-[#5856D6] dark:text-[#BF5AF2] bg-[#5856D6]/10 dark:bg-[#5856D6]/20 hover:bg-[#5856D6]/15 dark:hover:bg-[#5856D6]/30 active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 cursor-pointer">
-                <i data-lucide="bell-ring" class="w-4 h-4"></i>
-                <span>{{ __('sales.invoices.btn_send_reminder') }}</span>
-            </button>
-            @endif
-
-            {{-- Tautan Cepat WhatsApp Web jika ada session wa_url --}}
+            {{-- Secondary Action: WhatsApp Cepat (jika ada session wa_url) --}}
             @if(session('wa_url'))
-            <a href="{{ session('wa_url') }}" target="_blank" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-white bg-[#25D366] hover:bg-[#20BA5A] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 shadow-[0_1px_2px_rgba(37,211,102,0.25)]">
+            <a href="{{ session('wa_url') }}" target="_blank" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-[#25D366] bg-[#25D366]/10 hover:bg-[#25D366]/15 active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shrink-0">
                 <i data-lucide="message-circle" class="w-4 h-4"></i>
                 <span>{{ __('sales.invoices.btn_open_wa') }}</span>
             </a>
             @endif
 
-            @if(\App\Support\Context::hasPermission('invoices.export') || \App\Support\Context::hasPermission('invoices.view'))
-            <a href="{{ route('invoices.pdf', $invoice->id) }}" target="_blank" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5">
-                <i data-lucide="download" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
-                <span>{{ __('sales.invoices.btn_download_pdf') }}</span>
-            </a>
-            @endif
-
-            <a href="{{ route('invoices.print', $invoice->id) }}" target="_blank" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5">
-                <i data-lucide="printer" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
-                <span>{{ __('sales.invoices.btn_print_a4') }}</span>
+            {{-- Secondary Action: Cetak A4 / PDF Cepat --}}
+            <a href="{{ route('invoices.print', $invoice->id) }}" target="_blank" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shrink-0">
+                <i data-lucide="printer" class="w-4 h-4 text-black/50 dark:text-white/50"></i>
+                <span class="hidden md:inline">{{ __('sales.invoices.btn_print_a4') }}</span>
             </a>
 
-            {{-- Tombol Void (kondisi: bukan draft/void & paid_amount == 0) --}}
-            @if(!in_array($invoice->status, ['draft','void']) && $invoice->paid_amount == 0 && (\App\Support\Context::hasPermission('invoices.delete') || \App\Support\Context::hasPermission('invoices.edit')))
-            <button type="button" @click="confirmVoidModalOpen = true" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5">
-                <i data-lucide="ban" class="w-4 h-4"></i>
-                <span>{{ __('sales.invoices.btn_void_invoice') }}</span>
-            </button>
+            {{-- Overflow Menu (Apple HIG "⋯" Actions) --}}
+            <div class="relative" x-data="{ open: false }" @click.away="open = false" @keydown.escape.window="open = false">
+                <button type="button" @click="open = !open"
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 w-11 sm:w-9 rounded-[10px] text-black/70 dark:text-white/70 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] active:scale-[0.98] transition-all flex items-center justify-center cursor-pointer shrink-0"
+                    aria-label="{{ __('common.actions') ?? 'Aksi' }}"
+                    :aria-expanded="open">
+                    <i data-lucide="more-horizontal" class="w-4 h-4"></i>
+                </button>
+
+                <div x-show="open"
+                    x-cloak
+                    x-transition:enter="transition ease-out duration-150"
+                    x-transition:enter-start="opacity-0 scale-95 translate-y-1"
+                    x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                    x-transition:leave="transition ease-in duration-100"
+                    x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                    x-transition:leave-end="opacity-0 scale-95 translate-y-1"
+                    class="absolute right-0 mt-2 w-56 rounded-[14px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 shadow-[0_12px_32px_rgba(0,0,0,0.18)] py-1.5 z-50 text-[13px]">
+
+                    {{-- Edit Faktur --}}
+                    @if($canEdit)
+                    <a href="{{ route('invoices.edit', $invoice->id) }}" class="flex items-center gap-2.5 px-3.5 py-2 text-black/80 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/10 transition">
+                        <i data-lucide="edit-3" class="w-4 h-4 text-[#FF9500] dark:text-[#FF9F0A]"></i>
+                        <span>{{ $invoice->status === 'draft' ? __('sales.invoices.btn_edit_draft') : __('sales.invoices.btn_edit_invoice') }}</span>
+                    </a>
+                    @endif
+
+                    {{-- Kirim Pengingat Termin --}}
+                    @if($canRemind)
+                    <button type="button" @click="showReminderModal = true; open = false" class="w-full flex items-center gap-2.5 px-3.5 py-2 text-black/80 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/10 transition text-left cursor-pointer">
+                        <i data-lucide="bell-ring" class="w-4 h-4 text-[#5856D6] dark:text-[#BF5AF2]"></i>
+                        <span>{{ __('sales.invoices.btn_send_reminder') }}</span>
+                    </button>
+                    @endif
+
+                    {{-- Unduh PDF --}}
+                    @if($canExport)
+                    <a href="{{ route('invoices.pdf', $invoice->id) }}" target="_blank" class="flex items-center gap-2.5 px-3.5 py-2 text-black/80 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/10 transition">
+                        <i data-lucide="download" class="w-4 h-4 text-black/50 dark:text-white/50"></i>
+                        <span>{{ __('sales.invoices.btn_download_pdf') }}</span>
+                    </a>
+                    @endif
+
+                    {{-- Cetak A4 --}}
+                    <a href="{{ route('invoices.print', $invoice->id) }}" target="_blank" class="flex items-center gap-2.5 px-3.5 py-2 text-black/80 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/10 transition">
+                        <i data-lucide="printer" class="w-4 h-4 text-black/50 dark:text-white/50"></i>
+                        <span>{{ __('sales.invoices.btn_print_a4') }}</span>
+                    </a>
+
+                    {{-- Destructive Options --}}
+                    @if($canVoid || $canDeleteDraft)
+                    <div class="h-px bg-black/5 dark:bg-white/10 my-1"></div>
+
+                    @if($canVoid)
+                    <button type="button" @click="confirmVoidModalOpen = true; open = false" class="w-full flex items-center gap-2.5 px-3.5 py-2 text-[#FF3B30] hover:bg-[#FF3B30]/10 transition text-left cursor-pointer">
+                        <i data-lucide="ban" class="w-4 h-4 text-[#FF3B30]"></i>
+                        <span>{{ __('sales.invoices.btn_void_invoice') }}</span>
+                    </button>
+                    @endif
+
+                    @if($canDeleteDraft)
+                    <button type="button" @click="confirmDeleteModalOpen = true; open = false" class="w-full flex items-center gap-2.5 px-3.5 py-2 text-[#FF3B30] hover:bg-[#FF3B30]/10 transition text-left cursor-pointer">
+                        <i data-lucide="trash-2" class="w-4 h-4 text-[#FF3B30]"></i>
+                        <span>{{ __('sales.invoices.btn_delete_draft') }}</span>
+                    </button>
+                    @endif
+                    @endif
+                </div>
+            </div>
+
+            {{-- Hidden Forms for Actions --}}
+            @if($canVoid)
             <form id="form-confirm-void" method="POST" action="{{ route('invoices.void', $invoice->id) }}" class="hidden">
                 @csrf
             </form>
             @endif
 
-            {{-- Tombol Hapus Draf (kondisi: status draft & paid_amount <= 0) --}}
-            @if($invoice->status === 'draft' && (float) $invoice->paid_amount <= 0 && \App\Support\Context::hasPermission('invoices.delete'))
-            <button type="button" @click="confirmDeleteModalOpen = true" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5 cursor-pointer">
-                <i data-lucide="trash-2" class="w-4 h-4 text-[#FF3B30]"></i>
-                <span>{{ __('sales.invoices.btn_delete_draft') }}</span>
-            </button>
+            @if($canDeleteDraft)
             <form id="form-confirm-delete" method="POST" action="{{ route('invoices.destroy', $invoice->id) }}" class="hidden">
                 @csrf
                 @method('DELETE')
@@ -125,7 +237,7 @@
     <!-- ===================================================== -->
     <!-- 2. MAIN INVOICE DOCUMENT CARD (Apple Material & Depth) -->
     <!-- ===================================================== -->
-    <div class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 sm:p-8 space-y-6">
+    <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 sm:p-8 space-y-6 shadow-xs">
 
         <!-- Document Top Info -->
         <div class="flex flex-col sm:flex-row justify-between items-start gap-4 pb-6 border-b border-black/5 dark:border-white/10">
@@ -142,11 +254,11 @@
                 @endif
             </div>
 
-            <div class="text-left sm:text-right space-y-1 self-start sm:self-auto">
-                <div class="text-[13px] text-black/50 dark:text-white/50">
+            <div class="text-left sm:text-right space-y-1 self-start sm:self-auto text-[13px]">
+                <div class="text-black/50 dark:text-white/50">
                     {{ __('sales.invoices.invoice_date_label') }}: <span class="font-medium text-black dark:text-white tabular-nums">{{ $invoice->invoice_date?->translatedFormat('d F Y') }}</span>
                 </div>
-                <div class="text-[13px] text-black/50 dark:text-white/50">
+                <div class="text-black/50 dark:text-white/50">
                     {{ __('sales.invoices.due_date_label') }}: <span class="font-medium text-black dark:text-white tabular-nums">{{ $invoice->due_date?->translatedFormat('d F Y') }}</span>
                 </div>
                 @if($invoice->payment_terms)
@@ -157,36 +269,37 @@
             </div>
         </div>
 
-        <!-- Party Information (Two Grouped Inset Blocks) -->
+        <!-- Party Information (Two Clean Inset Bento Blocks) -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-[13px]">
             <!-- Seller Info -->
-            <div class="p-4 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 space-y-1">
-                <span class="text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40">{{ __('sales.invoices.seller_party_title') }}</span>
-                <div class="text-[15px] font-semibold text-black dark:text-white mt-1">{{ $business->name }}</div>
-                @if($invoice->sender_name)
+            <div class="p-4 sm:p-5 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 space-y-1.5">
+                <span class="text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 block">{{ __('sales.invoices.seller_party_title') }}</span>
+                <div class="text-[16px] font-bold text-black dark:text-white tracking-tight">{{ $business->name }}</div>
+                @if($invoice->sender_name && strcasecmp(trim($invoice->sender_name), trim($business->name)) !== 0)
                     <div class="text-[12px] font-medium text-[#007AFF]">{{ __('sales.invoices.sender_pic_label') }} {{ $invoice->sender_name }}</div>
                 @endif
-                <p class="text-black/60 dark:text-white/60 leading-snug">{{ $business->address ?? __('sales.sales_orders.doc_default_address') }}</p>
-                <div class="text-black/50 dark:text-white/50 text-[12px] pt-1">
-                    {{ __('sales.invoices.currency_info_label') }} <span class="font-medium text-black/70 dark:text-white/70">{{ $business->currency_code }} ({{ $business->currency_symbol }})</span>
+                <p class="text-black/60 dark:text-white/60 leading-relaxed text-[12.5px]">{{ $business->address ?? __('sales.sales_orders.doc_default_address') }}</p>
+                <div class="text-black/50 dark:text-white/50 text-[12px] pt-1 border-t border-black/[0.04] dark:border-white/[0.06] flex items-center gap-1.5">
+                    <span>{{ __('sales.invoices.currency_info_label') }}</span>
+                    <span class="font-medium text-black/70 dark:text-white/70">{{ $business->currency_code }} ({{ $business->currency_symbol }})</span>
                 </div>
             </div>
 
             <!-- Customer Info -->
-            <div class="p-4 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 space-y-1">
-                <span class="text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40">{{ __('sales.invoices.recipient_party_title') }}</span>
-                <div class="text-[15px] font-semibold text-black dark:text-white mt-1">{{ $invoice->customer?->name ?? __('sales.invoices.customer_label') }}</div>
-                @if($invoice->recipient_name)
+            <div class="p-4 sm:p-5 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 space-y-1.5">
+                <span class="text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 block">{{ __('sales.invoices.recipient_party_title') }}</span>
+                <div class="text-[16px] font-bold text-black dark:text-white tracking-tight">{{ $invoice->customer?->name ?? __('sales.invoices.customer_label') }}</div>
+                @if($invoice->recipient_name && strcasecmp(trim($invoice->recipient_name), trim($invoice->customer?->name ?? '')) !== 0)
                     <div class="text-[12px] font-medium text-[#34C759] dark:text-[#30D158]">{{ __('sales.invoices.recipient_pic_label') }} {{ $invoice->recipient_name }}</div>
                 @endif
-                @if($invoice->customer?->company_name)
+                @if($invoice->customer?->company_name && strcasecmp(trim($invoice->customer->company_name), trim($invoice->customer?->name ?? '')) !== 0)
                     <div class="text-[12px] font-medium text-[#007AFF]">{{ $invoice->customer->company_name }}</div>
                 @endif
-                <p class="text-black/60 dark:text-white/60 leading-snug">{{ $invoice->customer?->billing_address ?? '-' }}</p>
-                <div class="text-black/50 dark:text-white/50 text-[12px] pt-1 flex flex-wrap gap-x-3">
-                    <span>{{ __('sales.invoices.contact_label') }} <span class="tabular-nums text-black/70 dark:text-white/70">{{ $invoice->customer?->phone ?? $invoice->customer?->email ?? '-' }}</span></span>
+                <p class="text-black/60 dark:text-white/60 leading-relaxed text-[12.5px]">{{ $invoice->customer?->billing_address ?? '-' }}</p>
+                <div class="text-black/50 dark:text-white/50 text-[12px] pt-1 border-t border-black/[0.04] dark:border-white/[0.06] flex flex-wrap gap-x-4 gap-y-1">
+                    <span>{{ __('sales.invoices.contact_label') }} <span class="tabular-nums font-medium text-black/70 dark:text-white/70">{{ $invoice->customer?->phone ?? $invoice->customer?->email ?? '-' }}</span></span>
                     @if($invoice->customer?->tax_identification_number)
-                        <span>{{ __('sales.invoices.tax_id_label') }} <span class="tabular-nums text-black/70 dark:text-white/70">{{ $invoice->customer->tax_identification_number }}</span></span>
+                        <span>{{ __('sales.invoices.tax_id_label') }} <span class="tabular-nums font-medium text-black/70 dark:text-white/70">{{ $invoice->customer->tax_identification_number }}</span></span>
                     @endif
                 </div>
             </div>
@@ -194,12 +307,10 @@
 
         {{-- Gudang Asal Pengeluaran Barang --}}
         @if($invoice->location)
-        <div class="flex items-center gap-2 text-[12px] text-black/55 dark:text-white/55 px-3 py-2 rounded-[10px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5">
-            <svg class="w-4 h-4 text-[#007AFF] shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349m-16.5 11.65V9.35m0 0a3.001 3.001 0 003.75-.615A2.993 2.993 0 009 9c.896 0 1.706-.395 2.25-1.02a2.993 2.993 0 002.25 1.02c.896 0 1.706-.395 2.25-1.02a3.001 3.001 0 003.75.614m-16.5 0L6 3.75h12l2.25 5.6" />
-            </svg>
+        <div class="flex items-center gap-2.5 text-[12.5px] text-black/60 dark:text-white/60 px-3.5 py-2.5 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5">
+            <i data-lucide="warehouse" class="w-4 h-4 text-[#007AFF] shrink-0"></i>
             <span>{{ __('sales.invoices.inventory_out_from') }}</span>
-            <span class="font-medium text-black dark:text-white">{{ $invoice->location->name }}</span>
+            <span class="font-semibold text-black dark:text-white">{{ $invoice->location->name }}</span>
             @if($invoice->location->type)
                 <span class="text-black/40 dark:text-white/40">({{ $invoice->location->type }})</span>
             @endif
@@ -207,7 +318,7 @@
         @endif
 
         <!-- Items Table (Desktop & Tablet Dense List) -->
-        <div class="rounded-[12px] border border-black/5 dark:border-white/10 overflow-hidden">
+        <div class="rounded-[14px] border border-black/5 dark:border-white/10 overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-[13px]">
                     <thead>
@@ -217,7 +328,7 @@
                             <th class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-center w-24">{{ __('sales.invoices.col_unit') }}</th>
                             <th class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right w-20">{{ __('sales.invoices.col_qty') }}</th>
                             <th class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right w-32">{{ __('sales.invoices.print_col_unit_price') }}</th>
-                            <th class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-[#FF9500] dark:text-[#FF9F0A] text-right w-28">{{ __('sales.invoices.col_hpp') }}</th>
+                            <th class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right w-28">{{ __('sales.invoices.col_hpp') }}</th>
                             <th class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right w-36">{{ __('sales.invoices.col_subtotal') }}</th>
                         </tr>
                     </thead>
@@ -243,7 +354,7 @@
                             <td class="py-3 px-4 text-right tabular-nums text-black/70 dark:text-white/70">
                                 {{ $business->currency_symbol }} {{ number_format((float)$item->unit_price, 0, ',', '.') }}
                             </td>
-                            <td class="py-3 px-4 text-right tabular-nums text-[#FF9500] dark:text-[#FF9F0A]">
+                            <td class="py-3 px-4 text-right tabular-nums text-black/60 dark:text-white/60">
                                 {{ $business->currency_symbol }} {{ number_format((float)$item->unit_hpp, 0, ',', '.') }}
                             </td>
                             <td class="py-3 px-4 text-right tabular-nums font-semibold text-black dark:text-white">
@@ -259,39 +370,40 @@
         <!-- Financial Summary Breakdown & Margin -->
         <div class="flex flex-col sm:flex-row justify-between items-start pt-4 border-t border-black/5 dark:border-white/10 gap-6">
             <div class="space-y-3 w-full sm:max-w-md text-[13px]">
-                <!-- Profit Analysis Card (Apple System Green Tint) -->
-                <div class="p-4 rounded-[12px] bg-[#34C759]/10 border border-[#34C759]/20 space-y-1.5">
+                <!-- Profit Analysis Card (Apple System Green Bento) -->
+                <div class="p-4 sm:p-5 rounded-[14px] bg-[#34C759]/10 border border-[#34C759]/20 space-y-2">
                     <div class="text-[11px] text-[#248A3D] dark:text-[#30D158] font-semibold uppercase tracking-wider flex items-center justify-between">
                         <span>{{ __('sales.invoices.real_gross_profit_title') }}</span>
-                        <span class="px-2 py-0.5 rounded-full bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] text-[11px] font-bold tabular-nums">
+                        <span class="px-2.5 py-0.5 rounded-full bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] text-[11px] font-bold tabular-nums">
                             {{ $invoice->subtotal > 0 ? round(($invoice->total_gross_profit / $invoice->subtotal) * 100) : 0 }}% {{ __('sales.invoices.margin_label') }}
                         </span>
                     </div>
-                    <div class="text-[22px] font-bold text-[#248A3D] dark:text-[#30D158] tabular-nums">
+                    <div class="text-[24px] font-bold text-[#248A3D] dark:text-[#30D158] tabular-nums tracking-tight">
                         {{ $business->currency_symbol }} {{ number_format((float)$invoice->total_gross_profit, 0, ',', '.') }}
                     </div>
-                    <div class="text-[11px] text-black/50 dark:text-white/50">
-                        {{ __('sales.invoices.sales_label') }} <span class="tabular-nums">{{ $business->currency_symbol }} {{ number_format((float)$invoice->subtotal, 0, ',', '.') }}</span> · {{ __('sales.invoices.cogs_label') }} <span class="tabular-nums">{{ $business->currency_symbol }} {{ number_format((float)$invoice->total_hpp_cost, 0, ',', '.') }}</span>
+                    <div class="text-[11.5px] text-black/50 dark:text-white/50 pt-1.5 border-t border-[#34C759]/15 flex items-center justify-between">
+                        <span>{{ __('sales.invoices.sales_label') }}: <strong class="text-black/70 dark:text-white/70 tabular-nums">{{ $business->currency_symbol }} {{ number_format((float)$invoice->subtotal, 0, ',', '.') }}</strong></span>
+                        <span>{{ __('sales.invoices.cogs_label') }}: <strong class="text-black/70 dark:text-white/70 tabular-nums">{{ $business->currency_symbol }} {{ number_format((float)$invoice->total_hpp_cost, 0, ',', '.') }}</strong></span>
                     </div>
                 </div>
 
                 @if($invoice->notes)
-                <div class="p-3 rounded-[10px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5">
-                    <div class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wide mb-0.5">{{ __('sales.invoices.invoice_notes_label') }}</div>
-                    <div class="text-black/70 dark:text-white/70 whitespace-pre-line leading-relaxed">{{ $invoice->notes }}</div>
+                <div class="p-3.5 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5">
+                    <div class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wide mb-1">{{ __('sales.invoices.invoice_notes_label') }}</div>
+                    <div class="text-black/70 dark:text-white/70 whitespace-pre-line leading-relaxed text-[12.5px]">{{ $invoice->notes }}</div>
                 </div>
                 @endif
 
                 @if($invoice->terms_conditions)
-                <div class="p-3 rounded-[10px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5">
-                    <div class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wide mb-0.5">{{ __('sales.invoices.terms_title') }}</div>
-                    <div class="text-black/70 dark:text-white/70 whitespace-pre-line">{{ $invoice->terms_conditions }}</div>
+                <div class="p-3.5 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5">
+                    <div class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wide mb-1">{{ __('sales.invoices.terms_title') }}</div>
+                    <div class="text-black/70 dark:text-white/70 whitespace-pre-line leading-relaxed text-[12.5px]">{{ $invoice->terms_conditions }}</div>
                 </div>
                 @endif
             </div>
 
             <!-- Financial Calculation Totals -->
-            <div class="w-full sm:w-80 space-y-2 text-[13px]">
+            <div class="w-full sm:w-80 space-y-2.5 text-[13px]">
                 <div class="flex justify-between text-black/60 dark:text-white/60">
                     <span>{{ __('sales.invoices.subtotal_label') }}</span>
                     <span class="tabular-nums font-medium text-black dark:text-white">{{ $business->currency_symbol }} {{ number_format((float)$invoice->subtotal, 0, ',', '.') }}</span>
@@ -318,7 +430,7 @@
                 </div>
                 @endif
 
-                <div class="pt-2 border-t border-black/5 dark:border-white/10 flex justify-between items-center text-[15px] font-bold text-black dark:text-white">
+                <div class="pt-2.5 border-t border-black/5 dark:border-white/10 flex justify-between items-center text-[15px] font-bold text-black dark:text-white">
                     <span>{{ __('sales.invoices.grand_total_label') }}</span>
                     <span class="tabular-nums text-[18px] text-[#007AFF]">{{ $business->currency_symbol }} {{ number_format((float)$invoice->total_amount, 0, ',', '.') }}</span>
                 </div>
@@ -328,7 +440,7 @@
                     <span class="tabular-nums font-semibold text-[#34C759] dark:text-[#30D158]">{{ $business->currency_symbol }} {{ number_format((float)$invoice->paid_amount, 0, ',', '.') }}</span>
                 </div>
 
-                <div class="flex justify-between items-center pt-2 border-t border-black/5 dark:border-white/10 font-bold {{ $invoice->balance_due > 0 ? 'text-[#FF9500] dark:text-[#FF9F0A]' : 'text-[#34C759] dark:text-[#30D158]' }}">
+                <div class="flex justify-between items-center pt-2.5 border-t border-black/5 dark:border-white/10 font-bold {{ $invoice->balance_due > 0 ? 'text-[#FF9500] dark:text-[#FF9F0A]' : 'text-[#34C759] dark:text-[#30D158]' }}">
                     <span class="text-[13px]">{{ __('sales.invoices.remaining_receivable_label') }}</span>
                     <span class="tabular-nums text-[16px]">{{ $business->currency_symbol }} {{ number_format((float)$invoice->balance_due, 0, ',', '.') }}</span>
                 </div>
@@ -339,22 +451,18 @@
         <div class="pt-6 border-t border-black/5 dark:border-white/10 space-y-3">
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2">
-                    <svg class="w-4 h-4 text-[#007AFF]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
+                    <i data-lucide="history" class="w-4 h-4 text-[#007AFF]"></i>
                     <h3 class="text-[15px] font-semibold text-black dark:text-white">{{ __('sales.invoices.history_receipts_title') }}</h3>
                 </div>
-                @if($invoice->balance_due > 0 && $invoice->status !== 'void' && $invoice->status !== 'draft')
-                <button type="button" @click="showPaymentModal = true" class="h-7 px-2.5 rounded-[6px] text-[12px] font-medium text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.97] transition-all flex items-center gap-1">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                    </svg>
+                @if($canRecordPayment)
+                <button type="button" @click="showPaymentModal = true" class="h-7 px-2.5 rounded-[8px] text-[12px] font-medium text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.98] transition-all flex items-center gap-1 cursor-pointer">
+                    <i data-lucide="plus" class="w-3.5 h-3.5"></i>
                     <span>{{ __('sales.invoices.btn_add_payment') }}</span>
                 </button>
                 @endif
             </div>
 
-            <div class="rounded-[12px] border border-black/5 dark:border-white/10 overflow-hidden">
+            <div class="rounded-[14px] border border-black/5 dark:border-white/10 overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-[13px]">
                         <thead>
@@ -420,7 +528,7 @@
                 class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
             <div class="relative z-10 min-h-full flex items-end sm:items-center justify-center p-0 sm:p-4" @click.self="showPaymentModal = false">
-                <div class="relative w-full sm:max-w-md rounded-t-[20px] sm:rounded-[16px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)]"
+                <div class="relative w-full sm:max-w-md rounded-t-[20px] sm:rounded-[18px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)]"
                     @click.away="showPaymentModal = false"
                     x-show="showPaymentModal"
                     x-transition:enter="transition ease-out duration-200"
@@ -436,9 +544,7 @@
                     <div class="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/10">
                         <h3 id="invoice-payment-modal-title" class="text-[17px] font-semibold text-black dark:text-white">{{ __('sales.invoices.modal_payment_record_title') }}</h3>
                         <button type="button" @click="showPaymentModal = false" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer" aria-label="{{ __('common.close') ?? 'Close' }}">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
+                            <i data-lucide="x" class="w-4 h-4"></i>
                         </button>
                     </div>
 
@@ -446,7 +552,7 @@
                         @csrf
 
                         <!-- Balance Due Tile -->
-                        <div class="p-3.5 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] flex justify-between items-center">
+                        <div class="p-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] flex justify-between items-center">
                             <span class="text-black/60 dark:text-white/60">{{ __('sales.invoices.remaining_receivable_label') }}</span>
                             <span class="font-bold tabular-nums text-[#FF9500] dark:text-[#FF9F0A] text-[15px]">
                                 {{ $business->currency_symbol }} {{ number_format((float)$invoice->balance_due, 0, ',', '.') }}
@@ -493,10 +599,10 @@
                         </div>
 
                         <div class="flex items-center justify-end gap-2 pt-3 border-t border-black/5 dark:border-white/10">
-                            <button type="button" @click="showPaymentModal = false" class="min-h-[44px] h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 active:scale-[0.97] transition-all cursor-pointer">
+                            <button type="button" @click="showPaymentModal = false" class="min-h-[44px] h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 active:scale-[0.98] transition-all cursor-pointer">
                                 {{ __('sales.invoices.btn_cancel') }}
                             </button>
-                            <button type="submit" class="min-h-[44px] h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all shadow-[0_1px_2px_rgba(0,122,255,0.25)] cursor-pointer">
+                            <button type="submit" class="min-h-[44px] h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all shadow-[0_1px_2px_rgba(0,122,255,0.25)] cursor-pointer">
                                 {{ __('sales.invoices.btn_confirm_pay') }}
                             </button>
                         </div>
@@ -510,7 +616,7 @@
     <!-- ===================================================== -->
     <!-- 4. APPLE ALERT DIALOG: KONFIRMASI RILIS FAKTUR         -->
     <!-- ===================================================== -->
-    @if(\App\Support\Context::hasPermission('invoices.create') || \App\Support\Context::hasPermission('invoices.edit'))
+    @if($canRelease)
     <template x-teleport="body">
         <div x-show="confirmReleaseModalOpen"
             x-cloak
@@ -531,7 +637,7 @@
                 class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
             <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="confirmReleaseModalOpen = false">
-                <div class="relative w-[290px] rounded-[14px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-black/5 dark:border-white/10"
+                <div class="relative w-[320px] rounded-[18px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-black/5 dark:border-white/10"
                     @click.away="confirmReleaseModalOpen = false"
                     x-show="confirmReleaseModalOpen"
                     x-transition:enter="transition ease-out duration-200"
@@ -541,9 +647,9 @@
                     x-transition:leave-start="opacity-100 scale-100"
                     x-transition:leave-end="opacity-0 scale-95">
 
-                    <div class="px-4 pt-5 pb-4">
+                    <div class="px-5 pt-6 pb-4">
                         <p id="invoice-release-dialog-title" class="text-[17px] font-semibold text-black dark:text-white">{{ __('sales.invoices.dialog_release_title') }}</p>
-                        <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
+                        <p class="text-[13px] text-black/60 dark:text-white/60 mt-1.5 leading-snug">
                             {{ __('sales.invoices.dialog_release_desc') }}
                         </p>
                     </div>
@@ -565,7 +671,7 @@
     <!-- ===================================================== -->
     <!-- 5. APPLE ALERT DIALOG: VOID / BATALKAN FAKTUR          -->
     <!-- ===================================================== -->
-    @if(\App\Support\Context::hasPermission('invoices.delete') || \App\Support\Context::hasPermission('invoices.edit'))
+    @if($canVoid)
     <template x-teleport="body">
         <div x-show="confirmVoidModalOpen"
             x-cloak
@@ -586,7 +692,7 @@
                 class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
             <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="confirmVoidModalOpen = false">
-                <div class="relative w-[290px] rounded-[14px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-black/5 dark:border-white/10"
+                <div class="relative w-[320px] rounded-[18px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-black/5 dark:border-white/10"
                     @click.away="confirmVoidModalOpen = false"
                     x-show="confirmVoidModalOpen"
                     x-transition:enter="transition ease-out duration-200"
@@ -596,9 +702,9 @@
                     x-transition:leave-start="opacity-100 scale-100"
                     x-transition:leave-end="opacity-0 scale-95">
 
-                    <div class="px-4 pt-5 pb-4">
+                    <div class="px-5 pt-6 pb-4">
                         <p id="invoice-void-dialog-title" class="text-[17px] font-semibold text-black dark:text-white">{{ __('sales.invoices.dialog_void_title') }}</p>
-                        <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
+                        <p class="text-[13px] text-black/60 dark:text-white/60 mt-1.5 leading-snug">
                             {{ __('sales.invoices.dialog_void_desc') }}
                         </p>
                     </div>
@@ -620,7 +726,7 @@
     <!-- ===================================================== -->
     <!-- 5.1 APPLE ALERT DIALOG: HAPUS DRAF FAKTUR             -->
     <!-- ===================================================== -->
-    @if($invoice->status === 'draft' && \App\Support\Context::hasPermission('invoices.delete'))
+    @if($canDeleteDraft)
     <template x-teleport="body">
         <div x-show="confirmDeleteModalOpen"
             x-cloak
@@ -651,10 +757,10 @@
                     x-transition:leave-start="opacity-100 scale-100"
                     x-transition:leave-end="opacity-0 scale-95">
 
-                    <div class="px-4 pt-5 pb-4">
-                        <p id="invoice-delete-dialog-title" class="text-[17px] font-semibold text-black dark:text-white">Hapus Draf Faktur?</p>
-                        <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
-                            Apakah Anda yakin ingin menghapus draf faktur <span class="font-medium text-black dark:text-white">{{ $invoice->invoice_number }}</span>? Tindakan ini tidak dapat dibatalkan.
+                    <div class="px-5 pt-6 pb-4">
+                        <p id="invoice-delete-dialog-title" class="text-[17px] font-semibold text-black dark:text-white">{{ __('sales.invoices.btn_delete_draft') }}?</p>
+                        <p class="text-[13px] text-black/60 dark:text-white/60 mt-1.5 leading-snug">
+                            {{ __('sales.invoices.confirm_delete_draft_desc', ['number' => $invoice->invoice_number]) }}
                         </p>
                     </div>
 
@@ -796,7 +902,7 @@
                                 {{ __('sales.invoices.btn_cancel') }}
                             </button>
                             <button type="submit"
-                                class="min-h-[44px] px-5 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-semibold shadow-md shadow-[#007AFF]/25 active:scale-[0.97] transition flex items-center justify-center gap-2 cursor-pointer">
+                                class="min-h-[44px] px-5 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-semibold shadow-md shadow-[#007AFF]/25 active:scale-[0.98] transition flex items-center justify-center gap-2 cursor-pointer">
                                 <i data-lucide="send" class="w-4 h-4"></i>
                                 <span>{{ __('sales.invoices.btn_send_now') }}</span>
                             </button>

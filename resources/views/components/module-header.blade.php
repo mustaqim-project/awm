@@ -11,10 +11,10 @@
         <x-breadcrumb :items="$breadcrumbs" />
         <div class="flex items-center gap-2.5 flex-wrap">
             <h1 class="text-[20px] sm:text-[22px] font-bold text-black dark:text-white tracking-tight break-words">{{ $title }}</h1>
-            @if ($badge)
-                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-black/[0.06] dark:bg-white/[0.1] text-black/70 dark:text-white/70 shrink-0">
-                    {{ $badge }}
-                </span>
+            @if (isset($badgeSlot) && $badgeSlot->isNotEmpty())
+                {{ $badgeSlot }}
+            @elseif ($badge)
+                {!! is_string($badge) && str_starts_with(trim($badge), '<') ? $badge : '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-black/[0.06] dark:bg-white/[0.1] text-black/70 dark:text-white/70 shrink-0">' . e($badge) . '</span>' !!}
             @endif
         </div>
         @if ($subtitle)
