@@ -97,7 +97,7 @@ return new class extends Migration
         // 4. Tambahkan saldo cache ai_credits_balance ke tabel businesses jika belum ada
         if (Schema::hasTable('businesses') && !Schema::hasColumn('businesses', 'ai_credits_balance')) {
             Schema::table('businesses', function (Blueprint $table): void {
-                $table->integer('ai_credits_balance')->default(0)->after('status');
+                $table->integer('ai_credits_balance')->default(0);
                 $table->index('ai_credits_balance');
             });
         }
