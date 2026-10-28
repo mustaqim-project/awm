@@ -6,7 +6,7 @@ namespace App\Domain\Ai\Inspiration\Exceptions;
 
 use RuntimeException;
 
-final class CommercialUseNotAllowedException extends RuntimeException
+class CommercialUseNotAllowedException extends RuntimeException
 {
     public function __construct(
         public readonly string $licenseName,

@@ -33,6 +33,109 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-10-28-369] Implementasi Penuh Modul COOCA AI Studio Generation & Viral Inspiration Library (Hulu-ke-Hilir: Bagian 1 s.d. Bagian 7)
+
+- **Date:** 2026-10-28
+- **Status:** COMPLETED
+- **Module:** AI Studio, Viral Inspiration Library, Two-Phase Credit Ledger, Vision Analysis, Prompt Compiler, Rights Policy Gate, SSRF Security Guardrail, Bento Apple HIG UI (`app/Domain/Ai/Studio/*`, `app/Domain/Ai/Inspiration/*`, `app/Models/AiStudio/*`, `app/Http/Controllers/Web/AiStudio/*`, `app/Http/Controllers/Admin/*`, `resources/views/app/ai-studio/*`, `resources/views/admin/ai-studio/*`, `tests/Feature/AiStudio/*`)
+- **Feature:** Implementasi komprehensif sistem generasi materi visual pemasaran berbasis AI (COOCA AI Studio) dan kurasi referensi visual komersial viral (Viral Inspiration Library) sesuai dokumen cetak biru *COOCA AI Studio Viral Inspiration Blueprint v2*. Mengadopsi arsitektur ledger kredit finansial dua tahap (*two-phase hold-settle-release*), pemisahan hak cipta/lisensi komersial (*Rights Policy Gate*), proteksi SSRF dan isolasi multi-tenant, antrean pemrosesan asinkron latar belakang (*job queue worker*), serta antarmuka pengguna Bento Apple HIG responsif (Dashboard, Inspiration Masonry, Creative Brief, Prompt Preview Sheet, Live Canvas Poller).
+- **Work Type:** Feature | Architecture | Financial Ledger | Multi-Provider AI | Security Hardening | UI/UX (Bento Apple HIG) | Automated Testing
+
+#### 1. Business Context & Objective
+- **Konteks:** Pemilik usaha UMKM Indonesia (merchant) sering mengalami kebuntuan ide dalam memproduksi materi promosi produk yang menarik di media sosial (Instagram, TikTok, Shopee, Tokopedia, Banner Web). Pembuatan foto studio profesional memerlukan biaya mahal dan waktu lama.
+- **Masalah/Target:** Merchant membutuhkan alat bantu terintegrasi di dalam COOCA yang dapat:
+  1. Menyediakan inspirasi visual viral siap pakai dengan kepastian lisensi komersial yang aman dari tuntutan hukum hak cipta.
+  2. Menganalisis foto produk fisik merchant dari katalog COOCA dan menggabungkannya ke dalam komposisi visual inspirasi tanpa merusak identitas fisik produk.
+  3. Memastikan transparansi penuh atas prompt AI yang dirakit dan estimasi biaya kredit finansial sebelum dieksekusi.
+  4. Mencegah kerugian finansial akibat kegagalan render melalui sistem reservasi kredit dua tahap (*hold* dan *auto-release* 100% jika gagal).
+  5. Menyediakan ekspor 1-klik hasil render kembali ke katalog produk COOCA.
+
+#### 2. What Was Done
+- **Bagian 1: Migrasi Basis Data, ORM Models & RBAC:**
+  - Membuat 4 berkas migrasi database: `2026_11_01_000001_create_ai_inspiration_sources_tables.php`, `2026_11_01_000002_create_ai_inspiration_catalog_tables.php`, `2026_11_01_000003_create_ai_studio_project_tables.php`, dan `2026_11_01_000004_create_ai_studio_generation_and_ledger_tables.php`.
+  - Membangun 13 model Eloquent di `app/Models/AiStudio/` dengan relasi lengkap, casts JSON, dan trait `BelongsToBusiness` (`InspirationSource`, `InspirationSourcePolicy`, `InspirationCategory`, `InspirationItem`, `InspirationTrendScore`, `InspirationVisualAnalysis`, `BusinessInspirationProject`, `BusinessInspirationProjectAsset`, `BusinessInspirationPromptVersion`, `BusinessInspirationGeneration`, `BusinessInspirationGenerationAsset`, `BusinessInspirationCreditLedger`, `BusinessInspirationCreditPackage`).
+  - Mendaftarkan permission RBAC di `RbacSeeder.php`: `ai_studio.view`, `ai_studio.generate`, `ai_studio.manage`, `admin.ai_studio.sources`, `admin.ai_studio.pricing`.
+- **Bagian 2: Financial Engine & Two-Phase Atomic Credit Ledger:**
+  - Mengembangkan `CreditLedgerService` dengan metode transaksi dua tahap (`reserveHold`, `settleHold`, `releaseHold`, dan `topUpCredits`) menggunakan database row locking (`lockForUpdate`) untuk mencegah *double-spending* dan *race conditions*.
+  - Mengembangkan `CostQuoteService` untuk estimasi kebutuhan kredit dinamis berdasarkan model aktif, rasio aspek, batch count, dan opsi upscaling resolusi.
+  - Memverifikasi ketahanan finansial via `TwoPhaseCreditLedgerTest.php` (8 tests passed).
+- **Bagian 3: Domain Engine AI, Vision & Prompt Compiler:**
+  - Membangun antarmuka kontrak `InspirationAdapterInterface` dan `ImageGenerationProviderInterface`.
+  - Mengembangkan `VisualReferenceAnalyzer` untuk ekstraksi struktur visual (komposisi, pencahayaan, palet warna, camera angle, dan style descriptors).
+  - Mengembangkan `BusinessAssetAnalyzer` untuk membaca identitas produk katalog merchant dan atribut fisik yang wajib dipertahankan.
+  - Mengembangkan `PromptCompilerService` yang menghasilkan prompt positif/negatif seimbang, parameter teknis, dan lembar transparansi prompt.
+  - Mengembangkan `RightsPolicyService` sebagai *gatekeeper* lisensi komersial (CC0, Pexels, Unsplash, Pixabay) dan memblokir lisensi terlarang (CC-BY-NC, Editorial Only, All Rights Reserved).
+  - Mengembangkan `OpenAiImageAdapter` untuk eksekusi generasi gambar via OpenAI / Azure / Compatible API.
+- **Bagian 4: Antrean Asinkron, Orchestration & Multi-Tenant Storage:**
+  - Mengembangkan `GenerationOrchestrator` yang mengoordinasikan siklus hidup generasi: validasi multi-tenant $\rightarrow$ gate lisensi $\rightarrow$ resolusi prompt $\rightarrow$ hold kredit $\rightarrow$ dispatch job.
+  - Mengembangkan `ProcessImageGenerationJob` (Queue Worker) dengan sanitasi respon, handling error komprehensif, dan *auto-release* kredit otomatis saat terjadi kegagalan provider.
+  - Mengembangkan `AssetStorageManager` untuk menyimpan output pada direktori privat terisolasi: `bisnis/{business_id}/ai-studio/...`.
+- **Bagian 5: Controller & Routing (Web & Admin):**
+  - Mengembangkan `OwnerAiStudioWebController` untuk seluruh alur merchant (dashboard, buat brief, kompilasi prompt, pemesanan generasi, polling status, toggle favorit, dan ekspor ke katalog produk).
+  - Mengembangkan `OwnerInspirationWebController` untuk eksplorasi katalog inspirasi viral dan detail inspirasi.
+  - Mengembangkan `AdminAiStudioSourceController` dan `AdminAiStudioPricingController` untuk pengelolaan provider, scraping source, dan matriks harga kredit.
+  - Mendaftarkan 23 rute terproteksi controller-level RBAC di `routes/owner.php` dan `routes/admin.php`.
+- **Bagian 6: Antarmuka Pengguna Bento Apple HIG (Blade & Alpine.js):**
+  - Membangun `index.blade.php`: Dashboard Bento, metrik saldo kredit, filter proyek, dan kartu proyek responsif.
+  - Membangun `inspiration/index.blade.php`: Layar A Masonry Grid katalog inspirasi dengan badge lisensi sah, filter kategori, dan modal detail.
+  - Membangun `create.blade.php`: Layar B Form Brief Kreatif dengan selector produk katalog COOCA, pemilihan rasio aspek (1:1, 4:5, 9:16, 16:9), dan preset gaya.
+  - Membangun `prompt-preview.blade.php`: Layar C Sheet Transparansi Prompt & Kuotasi Kredit dengan editor prompt manual.
+  - Membangun `show.blade.php`: Layar D Canvas Output dengan Alpine.js auto-poller, status rendering live, tombol 1-klik ekspor ke katalog produk, unduh, dan revisi.
+  - Membangun `credit-history.blade.php`: Riwayat mutasi kredit finansial dengan audit trail lengkap.
+  - Membangun views Admin Console (`admin/ai-studio/sources/index.blade.php` dan `admin/ai-studio/pricing/index.blade.php`).
+  - Mengintegrasikan menu navigasi AI Studio pada sidebar utama `sidebar.blade.php` dan sidebar admin `admin.blade.php`.
+- **Bagian 7: Hardening Keamanan, Pengujian & Dokumentasi:**
+  - Mengembangkan `SsrfProtectionService` dengan resolusi DNS, pemblokiran alamat IP privat/loopback (RFC 1918, 127.0.0.0/8), pemblokiran endpoint metadata cloud (`169.254.169.254`, `metadata.google.internal`), whitelist protokol HTTP/HTTPS, pembatasan port (80, 443, 8080, 8443), dan penguncian redirect (`allow_redirects = false`).
+  - Mengintegrasikan proteksi SSRF ke dalam `AssetStorageManager` untuk memastikan seluruh unduhan URL eksternal terverifikasi aman.
+  - Membangun `TenantIsolationTest.php` untuk memverifikasi isolasi multi-tenant data proyek, prompt, generasi, saldo kredit, dan aset (6 tests passed).
+  - Membangun `RightsPolicyGateTest.php` untuk memverifikasi pemblokiran lisensi non-komersial dan pengujian SSRF (5 tests passed).
+  - Menjalankan seluruh test suite fitur `tests/Feature/AiStudio/` dengan hasil 100% lulus (6 test files, 41 tests, 175 assertions, 0 errors, 0 failures).
+
+#### 3. Technical Changes
+- **Files Affected:**
+  - Migrasi: `database/migrations/2026_11_01_000001_create_ai_inspiration_sources_tables.php`, `...000002_..._catalog_tables.php`, `...000003_..._project_tables.php`, `...000004_..._generation_and_ledger_tables.php`
+  - Model: `app/Models/AiStudio/*.php` (13 Eloquent models)
+  - RBAC: `database/seeders/RbacSeeder.php`
+  - Domain Services:
+    - `app/Domain/Ai/Studio/Billing/CreditLedgerService.php`
+    - `app/Domain/Ai/Studio/Billing/CostQuoteService.php`
+    - `app/Domain/Ai/Studio/Analyzers/VisualReferenceAnalyzer.php`
+    - `app/Domain/Ai/Studio/Analyzers/BusinessAssetAnalyzer.php`
+    - `app/Domain/Ai/Studio/Compilers/PromptCompilerService.php`
+    - `app/Domain/Ai/Studio/Orchestration/GenerationOrchestrator.php`
+    - `app/Domain/Ai/Studio/Storage/AssetStorageManager.php`
+    - `app/Domain/Ai/Studio/Security/SsrfProtectionService.php`
+    - `app/Domain/Ai/Studio/Jobs/ProcessImageGenerationJob.php`
+    - `app/Domain/Ai/Studio/Adapters/OpenAiImageAdapter.php`
+    - `app/Domain/Ai/Inspiration/RightsPolicyService.php`
+    - `app/Domain/Ai/Inspiration/CommercialUseNotAllowedException.php`
+  - Controllers & Requests:
+    - `app/Http/Controllers/Web/AiStudio/OwnerAiStudioWebController.php`
+    - `app/Http/Controllers/Web/AiStudio/OwnerInspirationWebController.php`
+    - `app/Http/Controllers/Admin/AdminAiStudioSourceController.php`
+    - `app/Http/Controllers/Admin/AdminAiStudioPricingController.php`
+    - `app/Http/Requests/AiStudio/*.php` (4 Form Requests)
+  - Views:
+    - `resources/views/app/ai-studio/*.blade.php` (Dashboard, Create, Show, Prompt-Preview, Credit-History)
+    - `resources/views/app/ai-studio/inspiration/*.blade.php` (Index, Show)
+    - `resources/views/admin/ai-studio/**/*.blade.php` (Sources, Pricing)
+    - `resources/views/layouts/partials/sidebar.blade.php`
+    - `resources/views/layouts/admin.blade.php`
+  - Routes:
+    - `routes/owner.php`
+    - `routes/admin.php`
+  - Tests:
+    - `tests/Feature/AiStudio/AiStudioWebControllerTest.php` (13 tests)
+    - `tests/Feature/AiStudio/TwoPhaseCreditLedgerTest.php` (8 tests)
+    - `tests/Feature/AiStudio/GenerationIdempotencyTest.php` (4 tests)
+    - `tests/Feature/AiStudio/PromptCompilerTest.php` (5 tests)
+    - `tests/Feature/AiStudio/TenantIsolationTest.php` (6 tests)
+    - `tests/Feature/AiStudio/RightsPolicyGateTest.php` (5 tests)
+  - Documentation:
+    - `docs/IMPLEMENTATION_PLAN_COOCA_AI_STUDIO_VIRAL_INSPIRATION.md`
+    - `docs/AiWorkHistory.md`
+    - `docs/SYSTEM_GUIDE.md`
+
 ### [WORK-2026-10-26-368] Penyelarasan Penuh Paritas REST API V1 terhadap Sistem Web dan 100% Dukungan Endpoint Aplikasi Mobile Flutter (cooca_my_own)
 
 - **Date:** 2026-10-26

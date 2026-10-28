@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Ai\Studio\Orchestration;
 
+use App\Domain\Ai\Inspiration\RightsPolicyService;
 use App\Domain\Ai\Studio\Billing\CostQuoteService;
 use App\Domain\Ai\Studio\Billing\CreditLedgerService;
 use App\Domain\Ai\Studio\Compilers\PromptCompilerService;
@@ -22,7 +23,8 @@ class GenerationOrchestrator
     public function __construct(
         protected CreditLedgerService $creditLedgerService = new CreditLedgerService,
         protected CostQuoteService $costQuoteService = new CostQuoteService,
-        protected PromptCompilerService $promptCompilerService = new PromptCompilerService
+        protected PromptCompilerService $promptCompilerService = new PromptCompilerService,
+        protected RightsPolicyService $rightsPolicyService = new RightsPolicyService
     ) {}
 
     /**
@@ -40,6 +42,12 @@ class GenerationOrchestrator
         // 1. Validasi Isolasi Multi-Tenant
         if ($project->business_id !== $business->id) {
             throw new InvalidArgumentException('Proyek tidak terdaftar pada bisnis yang aktif.');
+        }
+
+        // 2. Proteksi Lisensi Komersial (AC-002)
+        $reference = $project->inspirationItem()->first();
+        if ($reference !== null) {
+            $this->rightsPolicyService->assertCanUseCommercially($reference);
         }
 
         $userId = (string) ($options['user_id'] ?? $project->user_id ?? '');

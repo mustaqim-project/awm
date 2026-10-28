@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Ai\Studio\Compilers;
 
+use App\Domain\Ai\Inspiration\RightsPolicyService;
 use App\Domain\Ai\Studio\Analyzers\BusinessAssetAnalyzer;
 use App\Domain\Ai\Studio\Analyzers\VisualReferenceAnalyzer;
 use App\Domain\Ai\Studio\Billing\CostQuoteService;
@@ -16,7 +17,8 @@ class PromptCompilerService
     public function __construct(
         protected VisualReferenceAnalyzer $visualAnalyzer = new VisualReferenceAnalyzer,
         protected BusinessAssetAnalyzer $assetAnalyzer = new BusinessAssetAnalyzer,
-        protected CostQuoteService $costQuoteService = new CostQuoteService
+        protected CostQuoteService $costQuoteService = new CostQuoteService,
+        protected RightsPolicyService $rightsPolicyService = new RightsPolicyService
     ) {}
 
     /**
@@ -42,6 +44,11 @@ class PromptCompilerService
         InspirationItem|array|null $reference = null,
         array $brief = []
     ): array {
+        // 0. Hak Cipta & Kebijakan Lisensi Komersial (AC-002)
+        if ($reference !== null) {
+            $this->rightsPolicyService->assertCanUseCommercially($reference);
+        }
+
         // 1. Analisis Visual Referensi
         $visual = $reference !== null
             ? $this->visualAnalyzer->analyze($reference)

@@ -87,7 +87,7 @@ final class RightsPolicyGateTest extends TestCase
 
         $restrictedItem = InspirationItem::create([
             'source_id' => $this->source->id,
-            'inspiration_category_id' => $this->category->id,
+            'category_id' => $this->category->id,
             'external_id' => 'item_nc_999',
             'title' => 'Foto Pribadi Non Komersial',
             'license_type' => 'CC-BY-NC', // Non-commercial explicitly
@@ -115,7 +115,7 @@ final class RightsPolicyGateTest extends TestCase
 
         $restrictedItem = InspirationItem::create([
             'source_id' => $this->source->id,
-            'inspiration_category_id' => $this->category->id,
+            'category_id' => $this->category->id,
             'external_id' => 'item_nc_456',
             'title' => 'Gambar Terlarang',
             'license_type' => 'Editorial Only / No Commercial',
@@ -128,6 +128,7 @@ final class RightsPolicyGateTest extends TestCase
                 'name' => 'Proyek Uji Lisensi',
                 'target_channel' => 'instagram',
                 'aspect_ratio' => '1:1',
+                'style_preset' => 'clean_commercial',
                 'inspiration_item_id' => $restrictedItem->id,
             ]);
 
@@ -148,8 +149,8 @@ final class RightsPolicyGateTest extends TestCase
         ]);
 
         $restrictedItem = InspirationItem::create([
-            'inspiration_source_id' => $this->source->id,
-            'inspiration_category_id' => $this->category->id,
+            'source_id' => $this->source->id,
+            'category_id' => $this->category->id,
             'external_id' => 'item_nc_123',
             'title' => 'Gambar Terlarang Render',
             'license_type' => 'CC-BY-NC-ND',

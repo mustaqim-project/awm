@@ -28,6 +28,7 @@
    - [3.14 Portal Karyawan & Presensi Mandiri (Staff Personal Attendance & Workstation Hub)](#314-portal-karyawan--presensi-mandiri-staff-personal-attendance--workstation-hub)
    - [3.15 Integrasi Model Context Protocol & AI Gateway (MCP Server)](#315-integrasi-model-context-protocol--ai-gateway-mcp-server)
    - [3.16 Komunitas & Manajemen Event UMKM (Community & Event Hub)](#316-komunitas--manajemen-event-umkm-community--event-hub)
+   - [3.17 Studio Generasi AI & Perpustakaan Inspirasi Viral (AI Studio & Viral Inspiration Library)](#317-studio-generasi-ai--perpustakaan-inspirasi-viral-ai-studio--viral-inspiration-library)
 4. [Panduan Rekayasa Developer & AI Agent (Engineering Blueprint)](#4-panduan-rekayasa-developer--ai-agent-engineering-blueprint)
    - [4.1 Struktur 33 Domain Packages DDD](#41-struktur-33-domain-packages-ddd)
    - [4.2 Aturan Scoping Tenant & Proteksi Keamanan](#42-aturan-scoping-tenant--proteksi-keamanan)
@@ -58,6 +59,7 @@
    - [4.27 Implementasi Frontend Mobile App Flutter (mobile_app)](#427-implementasi-frontend-mobile-app-flutter-mobile_app)
    - [4.28 Arsitektur Master Layout Shell v2.0 & Standar Modalisasi Apple HIG](#428-arsitektur-master-layout-shell-v20--standar-modalisasi-apple-hig)
    - [4.29 Arsitektur Community & Event Management (Universal Subscription Access, Geofencing GPS Check-in & Digital Barcode Scanner)](#429-arsitektur-community--event-management-universal-subscription-access-geofencing-gps-check-in--digital-barcode-scanner)
+   - [4.30 Arsitektur COOCA AI Studio Generation, Multi-Provider Rendering & Two-Phase Credit Ledger](#430-arsitektur-cooca-ai-studio-generation-multi-provider-rendering--two-phase-credit-ledger)
 
 ---
 
@@ -300,6 +302,29 @@ Aplikasi ini dirancang untuk dapat dioperasikan secara percaya diri oleh **gener
     - **Presensi Lokasi (GPS Geofencing):** Saat berada di venue acara, peserta cukup membuka tiket dan mengklik "Presensi Lokasi Saat Ini". Sistem mencocokkan koordinat GPS smartphone dengan batas radius venue acara.
     - **Presensi Barcode/QR Code:** Setiap tiket dilengkapi barcode linier dan QR code berbasis grafis tajam SVG. Peserta dapat memindai barcode venue atau panitia memindai tiket peserta di gerbang registrasi.
     - **Manajemen Tiket:** Tab khusus "Tiket Saya" memudahkan peserta melihat riwayat kehadiran, waktu check-in, dan membatalkan pendaftaran jika berhalangan hadir.
+
+### 3.17 Studio Generasi AI & Perpustakaan Inspirasi Viral (AI Studio & Viral Inspiration Library)
+* **Kapan Digunakan?** Saat pemilik usaha ingin membuat materi promosi visual berkualitas tinggi (foto studio produk, poster diskon, banner katalog, konten Instagram Feed/Story, TikTok, dan marketplace) dalam hitungan detik tanpa biaya fotografer mahal.
+* **Fitur Utama bagi Pelaku Usaha:**
+  1. **Perpustakaan Inspirasi Viral Komersial Terkurasi (`/ai-studio/inspiration`):**
+     - Jelajahi ribuan referensi visual iklan yang terbukti viral dan estetis lintas 20 sektor industri (Kuliner F&B, Fashion, Skincare & Kosmetik, Elektronik, Kopi, Retail, dsb).
+     - **Pemberian Atribusi & Lisensi Sah 100%:** Setiap gambar referensi dilengkapi label lisensi komersial terverifikasi (Pexels, Unsplash, Pixabay, CC0) dan nama fotografer. Referensi non-komersial otomatis diblokir sistem agar merchant terlindungi dari tuntutan hukum hak cipta.
+  2. **Pembuatan Proyek Brief Kreatif 1-Klik (`/ai-studio/projects/create`):**
+     - Pilih produk langsung dari katalog usaha Anda. AI secara otomatis membaca nama, deskripsi, kategori, dan foto produk fisik untuk menjaga keaslian kemasan dan logo produk.
+     - Pilih target saluran media sosial (Instagram Feed `1:1`, Instagram Story / TikTok `9:16`, Banner Web `16:9`, atau Shopee/Tokopedia `1:1`).
+     - Pilih preset gaya visual (Minimalist Luxury, Warm Aesthetic, Modern Studio, Vibrant Pop, Commercial Blueprint, Rustic Artisan).
+  3. **Transparansi Prompt & Estimasi Biaya Kredit (Zero-Surprise):**
+     - Sebelum render dieksekusi, sistem menampilkan lembar pratinjau (*Prompt Transparency Sheet*) yang merinci prompt positif, prompt negatif, dan jumlah kuotasi kredit finansial yang dibutuhkan.
+     - Pemilik usaha bebas menyunting prompt secara manual jika ingin menambahkan detail khusus (misal: "tambahkan aksen daun mint segar di sisi kiri").
+  4. **Jaminan Keamanan Saldo Finansial (*Two-Phase Safe Hold*):**
+     - Saldo kredit dipotong sementara (*hold*) saat pembuatan gambar dimulai.
+     - **Garansi 100% Bebas Rugi:** Jika terjadi kegagalan jaringan atau server penyedia AI, saldo kredit Anda otomatis dikembalikan seketika (*auto-release*) tanpa perlu komplain ke customer service.
+  5. **Kanvas Output Live & Integrasi 1-Klik ke Katalog Produk:**
+     - Hasil gambar definisi tinggi tampil pada kanvas interaktif dengan status proses live.
+     - Tombol aksi praktis:
+       - `[ Simpan ke Katalog Produk ]`: Menjadikan gambar hasil AI sebagai foto utama produk baru di toko Anda seketika.
+       - `[ Unduh File Resolusi Penuh ]`: Mengunduh gambar untuk materi iklan atau cetak banner.
+       - `[ Tandai Favorit ]`: Mengarsipkan variasi terbaik ke proyek Anda.
 
 ---
 
@@ -993,5 +1018,48 @@ Repositori Flutter berada di `c:\laragon\www\mobile_app` dengan dukungan multi-p
    - Dashboard KPI event interaktif (Total Events, Total Registrations, Upcoming Events, Attended Rate).
    - CRUD manajemen event lengkap: tanggal mulai/selesai, batas waktu pendaftaran, kuota peserta, nama & alamat lokasi, koordinat GPS (latitude/longitude), dan radius check-in.
    - Roster peserta live dengan status kehadiran (`registered`, `attended`, `cancelled`), scanner kamera panitia, check-in manual cadangan, dan ekspor data hadir format CSV spreadsheet.
+
+---
+
+### 4.30 Arsitektur COOCA AI Studio Generation, Multi-Provider Rendering & Two-Phase Credit Ledger
+
+1. **Arsitektur Two-Phase Atomic Credit Ledger (Pencegahan Double-Spend & Race Condition):**
+   - Transaksi kredit generasi gambar diatur oleh `CreditLedgerService` (`app/Domain/Ai/Studio/Billing/CreditLedgerService.php`) dengan pola *Two-Phase Commit*:
+     1. **Tahap 1 (Reserve Hold):** Saldo tenant dikunci via `lockForUpdate()` dan dipotong sementara (`hold`). Dibuat entri ledger berstatus `held` dengan `idempotency_key` unik (`gen_hold_{uuid}`) guna mencegah *double-spend* akibat klik berulang.
+     2. **Tahap 2A (Settle Hold - Sukses):** Ketika antrean worker menerima respon gambar dari AI provider, hold diselesaikan (`settled`) dan dicatat permanen sebagai pemakaian debit.
+     3. **Tahap 2B (Auto-Release Hold - Gagal):** Apabila provider mengembalikan error (timeout, kuota habis, kebijakan konten, atau jaringan terputus), sistem secara otomatis mengembalikan 100% saldo kredit ke akun tenant (`released`) dan mencatat alasan pembatalan di audit ledger.
+   - Perhitungan kuotasi biaya kredit dikelola terpusat oleh `CostQuoteService` dengan mempertimbangkan rasio aspek (`1:1`, `4:5`, `9:16`, `16:9`), batch count, dan opsi high-resolution upscaling.
+
+2. **Mesin Rekayasa Prompt Multi-Layer & Analisis Vision:**
+   - **Visual Reference Analyzer (`VisualReferenceAnalyzer.php`):** Mengekstrak atribut estetis dari gambar inspirasi referensi: komposisi ruang negatif, pencahayaan studio (*diffused light*, *rim light*), sudut kamera (*eye-level*, *flat-lay*, *macro*), palet warna HSL, dan kata kunci deskriptor gaya.
+   - **Business Asset Analyzer (`BusinessAssetAnalyzer.php`):** Menganalisis katalog produk merchant (nama, kategori, deskripsi, USP produk, dan foto fisik riil) untuk merumuskan instruksi perlindungan aset, memastikan bentuk kemasan, label, dan logo produk tidak terdistorsi.
+   - **Prompt Compiler Service (`PromptCompilerService.php`):** Merakit prompt *model-neutral* berstruktur seimbang (Subjek Utama + Konteks Produk + Struktur Visual Referensi + Pencahayaan & Kamera + Parameter Teknis Provider) serta prompt negatif untuk memfilter cacat visual (tangan berlebih, teks acak, blur, overexposure).
+
+3. **Gerbang Kebijakan Hak Cipta Komersial (*Rights Policy Gate*):**
+   - Diatur oleh `RightsPolicyService` (`app/Domain/Ai/Inspiration/RightsPolicyService.php`).
+   - Setiap item inspirasi visual yang ditautkan ke proyek diverifikasi lisensinya sebelum prompt dikompilasi atau sebelum job generasi dijadwalkan:
+     - **Lisensi Sah:** `cc0`, `public_domain`, `pexels`, `unsplash`, `pixabay`, `cc_by`, `commercial_allowed`.
+     - **Lisensi Terlarang:** `cc_by_nc`, `cc_by_nc_sa`, `cc_by_nc_nd`, `editorial_only`, `all_rights_reserved`, `no_commercial`.
+   - Referensi dengan lisensi non-komersial langsung ditolak dengan melempar `CommercialUseNotAllowedException` yang mengembalikan respon HTTP 422 berlabel `COMMERCIAL_USE_BLOCKED`.
+
+4. **Hardening Keamanan Siber & Proteksi SSRF:**
+   - **SSRF Protection Service (`SsrfProtectionService.php`):** Melindungi sistem dari eksploitasi Server-Side Request Forgery saat mengunduh gambar eksternal (CDN/URL pihak ketiga):
+     - Memvalidasi skema protokol (hanya `http` dan `https`).
+     - Menyaring port ke whitelist aman (80, 443, 8080, 8443).
+     - Resolusi DNS hostname menggunakan `dns_get_record()` untuk mengevaluasi alamat IP riil sebelum koneksi HTTP dibuka.
+     - Memblokir seluruh rentang IP privat/lokal (RFC 1918: `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`), loopback (`127.0.0.0/8`, `::1`), link-local IPv6, dan endpoint metadata cloud provider (`169.254.169.254`, `metadata.google.internal`).
+     - Mengunci redirect (`allow_redirects = false`) agar penyerang tidak dapat melakukan bypass via open-redirect.
+   - **Multi-Tenant Storage Isolation (`AssetStorageManager.php`):** Seluruh file render AI dan aset proyek diisolasi ketat pada direktori privat disk lokal/S3: `bisnis/{business_id}/ai-studio/proyek/{project_id}/...`.
+
+5. **Pekerja Antrean Latar Belakang Asinkron (*Async Job Queue Worker*):**
+   - Orkestrasi siklus hidup pembuatan gambar dijalankan oleh `ProcessImageGenerationJob` (`app/Domain/Ai/Studio/Jobs/ProcessImageGenerationJob.php`).
+   - Mendukung multi-provider adapter melalui `ImageGenerationProviderInterface` (OpenAI DALL-E-3, Ideogram, Flux Pro, Stability AI, Midjourney Proxy).
+   - Pengunduhan gambar hasil render ke disk privat terintegrasi dengan filter SSRF, validasi integritas file, dan pembuatan record `BusinessInspirationGenerationAsset`.
+   - Mengubah status generasi dari `queued` $\rightarrow$ `processing` $\rightarrow$ `succeeded` / `failed` secara atomik dengan pencatatan latency milidetik (`provider_latency_ms`).
+
+6. **Antarmuka Pengguna Bento Apple HIG & Integrasi Katalog 1-Klik:**
+   - Mengadopsi pedoman Apple HIG Bento Grid: kontras tinggi, kartu membulat halus (`rounded-[20px]`), bebas emoji Unicode, dan tipografi `tabular-nums`.
+   - **Alpine.js Canvas Poller:** Kanvas output pada `show.blade.php` melakukan polling status setiap 3 detik ke endpoint `ai-studio.generation.status`. Begitu status berubah menjadi `succeeded`, gambar langsung dirender instan tanpa reload halaman penuh.
+   - **Ekspor 1-Klik ke Katalog Produk (`ai-studio.assets.export-to-catalog`):** Mengizinkan merchant langsung menyalin file gambar render AI ke storage produk publik (`products/{business_id}/...`) dan menyimpannya sebagai produk katalog baru atau foto utama produk yang sudah ada.
 
 

@@ -262,11 +262,11 @@ Rencana ini merinci langkah-langkah implementasi teknis menyeluruh (*end-to-end*
 - [x] **TASK-29:** Tambahkan menu navigasi AI Studio pada sidebar utama `resources/views/layouts/partials/sidebar.blade.php`.
 
 ### Bagian 7: Hardening Keamanan, Pengujian & Dokumentasi
-- [ ] **TASK-30:** Pasang proteksi SSRF pada fetcher URL gambar eksternal di `InspirationSearchService`.
-- [ ] **TASK-31:** Buat automated test `tests/Feature/AiStudio/TenantIsolationTest.php` untuk memverifikasi isolasi multi-tenant data.
-- [ ] **TASK-32:** Buat automated test `tests/Feature/AiStudio/RightsPolicyGateTest.php` untuk memverifikasi pemblokiran lisensi non-komersial.
-- [ ] **TASK-33:** Jalankan seluruh rangkaian pengujian fitur (`php vendor/phpunit/phpunit/phpunit tests/Feature/AiStudio/`) dan pastikan 100% lulus.
-- [ ] **TASK-34:** Perbarui riwayat rekayasa pada `docs/AiWorkHistory.md` dan panduan sistem pada `docs/SYSTEM_GUIDE.md`.
+- [x] **TASK-30:** Pasang proteksi SSRF pada fetcher URL gambar eksternal di `InspirationSearchService` dan `AssetStorageManager` (`SsrfProtectionService.php`).
+- [x] **TASK-31:** Buat automated test `tests/Feature/AiStudio/TenantIsolationTest.php` untuk memverifikasi isolasi multi-tenant data.
+- [x] **TASK-32:** Buat automated test `tests/Feature/AiStudio/RightsPolicyGateTest.php` untuk memverifikasi pemblokiran lisensi non-komersial.
+- [x] **TASK-33:** Jalankan seluruh rangkaian pengujian fitur (`php vendor/phpunit/phpunit/phpunit tests/Feature/AiStudio/`) dan pastikan 100% lulus (41 tests, 175 assertions, 0 errors, 0 failures).
+- [x] **TASK-34:** Perbarui riwayat rekayasa pada `docs/AiWorkHistory.md` dan panduan sistem pada `docs/SYSTEM_GUIDE.md`.
 
 ---
 

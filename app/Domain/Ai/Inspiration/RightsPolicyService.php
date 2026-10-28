@@ -2,11 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Ai\Inspiration\RightsPolicyService;
-
 namespace App\Domain\Ai\Inspiration;
 
-use App\Domain\Ai\Inspiration\Exceptions\CommercialUseNotAllowedException;
+use App\Domain\Ai\Inspiration\CommercialUseNotAllowedException;
 use App\Models\AiStudio\InspirationItem;
 use App\Models\Business;
 
@@ -48,6 +46,10 @@ class RightsPolicyService
         'cc-by-nc-nd',
         'all_rights_reserved',
         'editorial_only',
+        'no_commercial',
+        'non_commercial',
+        'prohibited',
+        'prohibited_by_policy',
         'restricted',
         'unknown',
     ];
@@ -147,15 +149,33 @@ class RightsPolicyService
         }
 
         if ($licenseOrItem instanceof InspirationItem) {
+            // 1. Cek kebijakan sumber
+            if ($licenseOrItem->source !== null && $licenseOrItem->source->policy !== null) {
+                if (! $licenseOrItem->source->policy->allow_commercial_use) {
+                    return 'prohibited_by_policy';
+                }
+            }
+
+            // 2. Cek flag is_commercial_allowed jika ada
+            if (isset($licenseOrItem->is_commercial_allowed) && ! $licenseOrItem->is_commercial_allowed) {
+                return 'prohibited';
+            }
+
+            // 3. Cek kolom license_type eksplisit
+            if (! empty($licenseOrItem->license_type)) {
+                return (string) $licenseOrItem->license_type;
+            }
+
+            // 4. Cek teks kurasi
+            $curatedNotes = (string) ($licenseOrItem->curated_notes ?? '');
+            if (preg_match('/lisensi\s*:\s*([^,\n]+)/i', $curatedNotes, $matches)) {
+                return trim($matches[1]);
+            }
+
             if ($licenseOrItem->source !== null && $licenseOrItem->source->policy !== null) {
                 if ($licenseOrItem->source->policy->allow_commercial_use) {
                     return 'commercial_allowed';
                 }
-            }
-
-            $curatedNotes = (string) ($licenseOrItem->curated_notes ?? '');
-            if (preg_match('/lisensi\s*:\s*([^,\n]+)/i', $curatedNotes, $matches)) {
-                return trim($matches[1]);
             }
 
             return 'commercial_allowed';
