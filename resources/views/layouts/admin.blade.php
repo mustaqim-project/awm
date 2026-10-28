@@ -865,6 +865,19 @@
                         </a>
                     @endif
 
+                    @if ($currentAdmin?->hasPermission('admin.ai_studio.sources') || $currentAdmin?->hasPermission('admin.ai_studio.pricing'))
+                        @php $isActive = request()->routeIs('admin.ai-studio.*'); @endphp
+                        <a href="{{ route('admin.ai-studio.sources.index') }}"
+                            class="group flex items-center justify-between px-2.5 h-[38px] rounded-[11px] transition-all duration-150 {{ $isActive ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25 font-semibold' : 'text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
+                            <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                                <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#AF52DE]/10 text-[#AF52DE] dark:bg-[#AF52DE]/20 dark:text-[#BF5AF2] group-hover:bg-[#AF52DE]/15 group-hover:scale-105' }}">
+                                    <i data-lucide="palette" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#AF52DE] dark:text-[#BF5AF2]' }}" stroke-width="2"></i>
+                                </div>
+                                <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">AI Studio Admin</span>
+                            </div>
+                        </a>
+                    @endif
+
                     @if ($currentAdmin?->hasPermission('admin.settings.view'))
                         @php $isActive = request()->routeIs('admin.settings.*') || request()->routeIs('admin.smtp.*'); @endphp
                         <a href="{{ route('admin.settings.index') }}"

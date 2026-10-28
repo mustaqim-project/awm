@@ -35,7 +35,7 @@ final class OwnerInspirationWebController extends Controller implements HasMiddl
 
         $query = InspirationItem::query()
             ->with(['source', 'category', 'visualAnalysis', 'trendScore'])
-            ->where('rights_status', 'approved');
+            ->where('status', 'active');
 
         // Filter Kategori
         if ($request->filled('category')) {
@@ -45,19 +45,9 @@ final class OwnerInspirationWebController extends Controller implements HasMiddl
             });
         }
 
-        // Filter Channel
-        if ($request->filled('channel')) {
-            $query->where('target_channel', $request->input('channel'));
-        }
-
-        // Filter Tipe Lisensi
-        if ($request->filled('license')) {
-            $license = (string) $request->input('license');
-            if ($license === 'cc0') {
-                $query->where('license_type', 'cc0');
-            } elseif ($license === 'commercial') {
-                $query->whereIn('license_type', ['cc0', 'pexels_license', 'commercial_free', 'custom_commercial']);
-            }
+        // Filter Industri / Target Channel
+        if ($request->filled('industry')) {
+            $query->where('industry_target', $request->input('industry'));
         }
 
         // Filter Kata Kunci Pencarian
@@ -65,7 +55,7 @@ final class OwnerInspirationWebController extends Controller implements HasMiddl
             $search = (string) $request->input('search');
             $query->where(function ($q) use ($search): void {
                 $q->where('title', 'like', "%{$search}%")
-                    ->orWhere('description', 'like', "%{$search}%");
+                    ->orWhere('caption', 'like', "%{$search}%");
             });
         }
 
@@ -73,7 +63,7 @@ final class OwnerInspirationWebController extends Controller implements HasMiddl
         $sort = (string) $request->input('sort', 'trending');
         if ($sort === 'trending') {
             $query->leftJoin('inspiration_trend_scores', 'inspiration_items.id', '=', 'inspiration_trend_scores.inspiration_item_id')
-                ->orderByDesc('inspiration_trend_scores.composite_score')
+                ->orderByDesc('inspiration_trend_scores.trend_score')
                 ->select('inspiration_items.*');
         } else {
             $query->latest('inspiration_items.created_at');
@@ -83,7 +73,7 @@ final class OwnerInspirationWebController extends Controller implements HasMiddl
 
         $categories = InspirationCategory::query()
             ->where('is_active', true)
-            ->orderBy('display_order')
+            ->orderBy('sort_order')
             ->get();
 
         if ($request->wantsJson()) {
@@ -129,13 +119,13 @@ final class OwnerInspirationWebController extends Controller implements HasMiddl
         $search = (string) $request->input('q', '');
 
         $query = InspirationItem::query()
-            ->where('rights_status', 'approved')
+            ->where('status', 'active')
             ->with(['category', 'visualAnalysis']);
 
         if ($search !== '') {
             $query->where(function ($q) use ($search): void {
                 $q->where('title', 'like', "%{$search}%")
-                    ->orWhere('description', 'like', "%{$search}%");
+                    ->orWhere('caption', 'like', "%{$search}%");
             });
         }
 

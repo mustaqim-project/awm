@@ -48,7 +48,7 @@ final class AdminAiStudioSourceController extends Controller implements HasMiddl
 
         // AC-009: Masking ketat kredensial agar rahasia tidak pernah bocor ke antarmuka atau klien
         $sourcesData = $sources->map(function (InspirationSource $source) {
-            $hasCredentials = $source->credentials !== null && $source->credentials->status === 'active';
+            $hasCredentials = $source->credentials->where('status', 'active')->isNotEmpty();
 
             return [
                 'id' => $source->id,
@@ -187,7 +187,7 @@ final class AdminAiStudioSourceController extends Controller implements HasMiddl
                     'api_key' => $validated['api_key'],
                 ],
                 'status' => 'active',
-                'created_by' => (string) auth('admin')->id(),
+                'created_by' => null,
             ]
         );
 

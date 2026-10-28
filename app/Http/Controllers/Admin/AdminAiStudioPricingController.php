@@ -60,9 +60,9 @@ final class AdminAiStudioPricingController extends Controller implements HasMidd
 
         $stats = [
             'total_credits_circulating' => (int) Business::sum('ai_credits_balance'),
-            'total_debits' => (int) AiCreditTransaction::where('type', 'debit')->sum('credits_amount'),
-            'total_topups' => (int) AiCreditTransaction::where('type', 'topup')->sum('credits_amount'),
-            'total_refunds' => (int) AiCreditTransaction::where('type', 'refund')->sum('credits_amount'),
+            'total_debits' => (int) abs(AiCreditTransaction::where('type', 'usage')->sum('amount')),
+            'total_topups' => (int) AiCreditTransaction::where('type', 'topup')->sum('amount'),
+            'total_refunds' => (int) AiCreditTransaction::where('type', 'refund')->sum('amount'),
         ];
 
         if ($request->wantsJson()) {
@@ -99,7 +99,7 @@ final class AdminAiStudioPricingController extends Controller implements HasMidd
             business: $business,
             credits: (int) $validated['credits'],
             idempotencyKey: $idempotencyKey,
-            userId: $adminId !== '' ? $adminId : null,
+            userId: null,
             description: $validated['description'] ?? "Hibah {$validated['credits']} kredit AI Studio oleh Superadmin",
             metadata: [
                 'admin_id' => $adminId,

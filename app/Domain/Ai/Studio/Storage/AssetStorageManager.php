@@ -12,6 +12,7 @@ use App\Models\StorageFile;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use App\Domain\Ai\Studio\Security\SsrfProtectionService;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 use RuntimeException;
@@ -19,6 +20,10 @@ use RuntimeException;
 class AssetStorageManager
 {
     public const DISK = 'public';
+
+    public function __construct(
+        protected SsrfProtectionService $ssrfProtection = new SsrfProtectionService
+    ) {}
 
     /**
      * Simpan output gambar hasil generasi AI ke storage bisnis tenant.
@@ -128,11 +133,9 @@ class AssetStorageManager
             return base64_decode(end($parts));
         }
 
-        // 2. Jika merupakan URL eksternal, lakukan pemeriksaan keamanan SSRF
+        // 2. Jika merupakan URL eksternal, lakukan pemeriksaan keamanan SSRF dan unduh
         if (filter_var($imageUrlOrContent, FILTER_VALIDATE_URL)) {
-            $this->validateSafeUrl($imageUrlOrContent);
-
-            $response = Http::timeout(45)->get($imageUrlOrContent);
+            $response = $this->ssrfProtection->safeGet($imageUrlOrContent, 45);
             if ($response->successful()) {
                 return $response->body();
             }
@@ -149,30 +152,7 @@ class AssetStorageManager
      */
     protected function validateSafeUrl(string $url): void
     {
-        $parsed = parse_url($url);
-        $host = $parsed['host'] ?? '';
-
-        if ($host === '') {
-            throw new InvalidArgumentException('URL gambar tidak valid.');
-        }
-
-        // Cek nama host terlarang
-        if (in_array(strtolower($host), ['localhost', 'metadata.google.internal', 'instance-data'], true)) {
-            throw new InvalidArgumentException('Akses ke host privat diblokir oleh sistem keamanan.');
-        }
-
-        $ip = gethostbyname($host);
-
-        if (! filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
-            // Jika IP adalah loopback atau private
-            if (in_array($ip, ['127.0.0.1', '::1', '0.0.0.0', '169.254.169.254'], true)
-                || str_starts_with($ip, '10.')
-                || str_starts_with($ip, '192.168.')
-                || str_starts_with($ip, '172.')
-            ) {
-                throw new InvalidArgumentException("Akses ke IP privat/lokal ({$ip}) diblokir.");
-            }
-        }
+        $this->ssrfProtection->validateUrl($url);
     }
 
     /**

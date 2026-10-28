@@ -247,19 +247,19 @@ Rencana ini merinci langkah-langkah implementasi teknis menyeluruh (*end-to-end*
 - [x] **TASK-18:** Buat `AssetStorageManager` untuk menyimpan output pada disk privat: `businesses/{business_id}/ai-studio/...`.
 
 ### Bagian 5: Controller & Routing (HTTP & Webhook Layer)
-- [ ] **TASK-19:** Buat `OwnerAiStudioWebController` untuk menangani CRUD proyek, kompilasi prompt, dan pemesanan generasi.
-- [ ] **TASK-20:** Buat `OwnerInspirationWebController` untuk endpoint pencarian dan penjelajahan katalog inspirasi.
-- [ ] **TASK-21:** Buat controller Admin Console `AdminAiStudioSourceController` dan `AdminAiStudioPricingController`.
-- [ ] **TASK-22:** Daftarkan rute lengkap di `routes/owner.php` dan `routes/admin.php` dengan middleware RBAC controller.
+- [x] **TASK-19:** Buat `OwnerAiStudioWebController` untuk menangani CRUD proyek, kompilasi prompt, dan pemesanan generasi.
+- [x] **TASK-20:** Buat `OwnerInspirationWebController` untuk endpoint pencarian dan penjelajahan katalog inspirasi.
+- [x] **TASK-21:** Buat controller Admin Console `AdminAiStudioSourceController` dan `AdminAiStudioPricingController`.
+- [x] **TASK-22:** Daftarkan rute lengkap di `routes/owner.php` dan `routes/admin.php` dengan middleware RBAC controller.
 
 ### Bagian 6: Antarmuka Pengguna Bento Apple HIG (Blade & Alpine.js)
-- [ ] **TASK-23:** Implementasikan `resources/views/app/ai-studio/index.blade.php` (Dashboard, metrik saldo kredit, tombol Buat Baru).
-- [ ] **TASK-24:** Implementasikan `resources/views/app/ai-studio/inspiration/index.blade.php` (Layar A: Masonry grid, filter lisensi & industri).
-- [ ] **TASK-25:** Implementasikan `resources/views/app/ai-studio/create.blade.php` (Layar B: Form brief kreatif, selector produk katalog COOCA).
-- [ ] **TASK-26:** Implementasikan `resources/views/app/ai-studio/prompt-preview.blade.php` (Layar C: Sheet transparansi prompt & kuotasi kredit).
-- [ ] **TASK-27:** Implementasikan `resources/views/app/ai-studio/show.blade.php` (Layar D: Output canvas, status polling, dan tombol aksi 1-klik).
-- [ ] **TASK-28:** Implementasikan antarmuka Admin Console di `resources/views/admin/ai-studio/`.
-- [ ] **TASK-29:** Tambahkan menu navigasi AI Studio pada sidebar utama `resources/views/layouts/partials/sidebar.blade.php`.
+- [x] **TASK-23:** Implementasikan `resources/views/app/ai-studio/index.blade.php` (Dashboard, metrik saldo kredit, tombol Buat Baru).
+- [x] **TASK-24:** Implementasikan `resources/views/app/ai-studio/inspiration/index.blade.php` (Layar A: Masonry grid, filter lisensi & industri).
+- [x] **TASK-25:** Implementasikan `resources/views/app/ai-studio/create.blade.php` (Layar B: Form brief kreatif, selector produk katalog COOCA).
+- [x] **TASK-26:** Implementasikan `resources/views/app/ai-studio/prompt-preview.blade.php` (Layar C: Sheet transparansi prompt & kuotasi kredit).
+- [x] **TASK-27:** Implementasikan `resources/views/app/ai-studio/show.blade.php` (Layar D: Output canvas, status polling, dan tombol aksi 1-klik).
+- [x] **TASK-28:** Implementasikan antarmuka Admin Console di `resources/views/admin/ai-studio/`.
+- [x] **TASK-29:** Tambahkan menu navigasi AI Studio pada sidebar utama `resources/views/layouts/partials/sidebar.blade.php`.
 
 ### Bagian 7: Hardening Keamanan, Pengujian & Dokumentasi
 - [ ] **TASK-30:** Pasang proteksi SSRF pada fetcher URL gambar eksternal di `InspirationSearchService`.

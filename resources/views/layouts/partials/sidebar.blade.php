@@ -710,6 +710,82 @@
                 </div>
             @endif
 
+            {{-- 1.6.5 AI Studio: Generasi Visual & Inspirasi Viral --}}
+            @if (\App\Support\Context::hasPermission('ai_studio.view') || \App\Support\Context::isOwner())
+                <div class="relative group"
+                    @mouseenter="if(sidebarCollapsed) activeFlyout = 'ai-studio'"
+                    @mouseleave="activeFlyout = null">
+                    <a href="{{ route('ai-studio.index') }}" id="tour-nav-ai-studio"
+                        {{ request()->routeIs('ai-studio.*') ? 'aria-current="page"' : '' }}
+                        :title="sidebarCollapsed ? 'AI Studio Visual' : ''"
+                        class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-semibold transition-all active:scale-[0.98] {{ request()->routeIs('ai-studio.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
+                        <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('ai-studio.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
+                            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                        </span>
+                        <div class="flex items-center justify-between flex-1 min-w-0" x-show="!sidebarCollapsed" x-transition.opacity>
+                            <span class="truncate tracking-tight font-bold">AI Studio</span>
+                            <span class="px-1.5 py-0.5 rounded-full text-[10px] font-bold tracking-wider {{ request()->routeIs('ai-studio.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#0A84FF]/20 dark:text-[#0A84FF]' }}">NEW</span>
+                        </div>
+                    </a>
+
+                    @if (request()->routeIs('ai-studio.*'))
+                        <div x-show="!sidebarCollapsed" class="ml-4 pl-3 py-1 space-y-0.5 border-l border-black/10 dark:border-white/10 mt-1 text-[12px]">
+                            <a href="{{ route('ai-studio.index') }}"
+                                class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] font-medium transition-colors {{ request()->routeIs('ai-studio.index') || request()->routeIs('ai-studio.show') ? 'bg-black/5 dark:bg-white/10 text-[#007AFF] dark:text-[#0A84FF] font-bold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.03] dark:hover:bg-white/[0.04]' }}">
+                                <span class="w-1.5 h-1.5 rounded-full {{ request()->routeIs('ai-studio.index') || request()->routeIs('ai-studio.show') ? 'bg-[#007AFF]' : 'bg-black/40 dark:text-white/40' }} shrink-0"></span>
+                                <span class="truncate">Dashboard Proyek</span>
+                            </a>
+                            <a href="{{ route('ai-studio.inspiration.index') }}"
+                                class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] font-medium transition-colors {{ request()->routeIs('ai-studio.inspiration.*') ? 'bg-black/5 dark:bg-white/10 text-[#007AFF] dark:text-[#0A84FF] font-bold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.03] dark:hover:bg-white/[0.04]' }}">
+                                <span class="w-1.5 h-1.5 rounded-full {{ request()->routeIs('ai-studio.inspiration.*') ? 'bg-[#007AFF]' : 'bg-black/40 dark:text-white/40' }} shrink-0"></span>
+                                <span class="truncate">Katalog Inspirasi</span>
+                            </a>
+                            <a href="{{ route('ai-studio.create') }}"
+                                class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] font-medium transition-colors {{ request()->routeIs('ai-studio.create') ? 'bg-black/5 dark:bg-white/10 text-[#007AFF] dark:text-[#0A84FF] font-bold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.03] dark:hover:bg-white/[0.04]' }}">
+                                <span class="w-1.5 h-1.5 rounded-full {{ request()->routeIs('ai-studio.create') ? 'bg-[#007AFF]' : 'bg-black/40 dark:text-white/40' }} shrink-0"></span>
+                                <span class="truncate">Buat Generasi Visual</span>
+                            </a>
+                            <a href="{{ route('ai-studio.credit-history') }}"
+                                class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] font-medium transition-colors {{ request()->routeIs('ai-studio.credit-history') ? 'bg-black/5 dark:bg-white/10 text-[#007AFF] dark:text-[#0A84FF] font-bold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.03] dark:hover:bg-white/[0.04]' }}">
+                                <span class="w-1.5 h-1.5 rounded-full {{ request()->routeIs('ai-studio.credit-history') ? 'bg-[#007AFF]' : 'bg-black/40 dark:text-white/40' }} shrink-0"></span>
+                                <span class="truncate">Ledger & Saldo Kredit</span>
+                            </a>
+                        </div>
+                    @endif
+
+                    {{-- Collapsed Flyout for AI Studio --}}
+                    <div x-show="sidebarCollapsed && activeFlyout === 'ai-studio'" x-transition.opacity
+                        class="sidebar-flyout-wrapper fixed left-[70px] pl-3 -mt-6 z-50 pointer-events-auto"
+                        style="display: none;">
+                        <div class="sidebar-flyout-panel w-60 p-2 rounded-[14px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 shadow-[0_16px_36px_rgba(0,0,0,0.18)] space-y-1 max-h-[85vh] overflow-y-auto overscroll-contain">
+                            <div class="px-2.5 py-1 font-semibold text-xs text-black dark:text-white border-b border-black/5 dark:border-white/10 pb-1.5 mb-1">
+                                AI Studio Visual
+                            </div>
+                            <a href="{{ route('ai-studio.index') }}"
+                                class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('ai-studio.index') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
+                                <i data-lucide="layout-grid" class="w-3.5 h-3.5 {{ request()->routeIs('ai-studio.index') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
+                                <span>Dashboard Proyek</span>
+                            </a>
+                            <a href="{{ route('ai-studio.inspiration.index') }}"
+                                class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('ai-studio.inspiration.*') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
+                                <i data-lucide="compass" class="w-3.5 h-3.5 {{ request()->routeIs('ai-studio.inspiration.*') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
+                                <span>Katalog Inspirasi</span>
+                            </a>
+                            <a href="{{ route('ai-studio.create') }}"
+                                class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('ai-studio.create') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
+                                <i data-lucide="wand-2" class="w-3.5 h-3.5 {{ request()->routeIs('ai-studio.create') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
+                                <span>Generasi Visual Baru</span>
+                            </a>
+                            <a href="{{ route('ai-studio.credit-history') }}"
+                                class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('ai-studio.credit-history') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
+                                <i data-lucide="coins" class="w-3.5 h-3.5 {{ request()->routeIs('ai-studio.credit-history') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
+                                <span>Saldo & Kredit</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
             {{-- 1.7 Pending Approvals Pill --}}
             @php
                 $pendingApprovalCount = $activeBiz && $canAccessApprovals ? \Illuminate\Support\Facades\Cache::remember("tenant_{$activeBiz->id}_pending_approvals_count", 120, fn() => \App\Models\ApprovalRequest::where('business_id', $activeBiz->id)->pending()->count()) : 0;

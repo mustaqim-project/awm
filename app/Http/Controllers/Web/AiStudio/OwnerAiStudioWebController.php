@@ -161,33 +161,59 @@ final class OwnerAiStudioWebController extends Controller implements HasMiddlewa
             'business_id' => $business->id,
             'user_id' => $request->user()?->id,
             'name' => $validated['name'],
-            'target_channel' => $validated['target_channel'],
-            'aspect_ratio' => $validated['aspect_ratio'],
-            'style_preset' => $validated['style_preset'] ?? 'clean_commercial',
-            'custom_notes' => $validated['custom_notes'] ?? null,
+            'target_platform' => $validated['target_channel'] ?? 'instagram',
+            'description' => $validated['custom_notes'] ?? null,
+            'product_id' => $validated['product_id'] ?? null,
+            'inspiration_item_id' => $validated['inspiration_item_id'] ?? null,
             'status' => 'draft',
             'last_activity_at' => now(),
         ]);
 
+        // Simpan versi prompt awal jika ada
+        BusinessInspirationPromptVersion::create([
+            'business_id' => $business->id,
+            'project_id' => $project->id,
+            'version_number' => 1,
+            'positive_prompt' => "Studio visual render of {$validated['name']}",
+            'aspect_ratio' => $validated['aspect_ratio'],
+            'style_preset' => $validated['style_preset'] ?? 'clean_commercial',
+            'prompt_parameters' => [
+                'target_channel' => $validated['target_channel'],
+                'custom_notes' => $validated['custom_notes'] ?? null,
+            ],
+        ]);
+
         // Kaitkan produk katalog tenant jika dipilih
         if (!empty($validated['product_id'])) {
+            $product = Product::find($validated['product_id']);
+            $filePath = $product?->image_path ?? 'catalog/products/placeholder.jpg';
             BusinessInspirationProjectAsset::create([
                 'business_id' => $business->id,
                 'project_id' => $project->id,
-                'asset_type' => 'product',
-                'product_id' => $validated['product_id'],
-                'role' => $validated['role'] ?? 'hero_product',
+                'asset_type' => 'original_product',
+                'file_path' => $filePath,
+                'is_primary' => true,
+                'metadata' => [
+                    'product_id' => $validated['product_id'],
+                    'role' => $validated['role'] ?? 'hero_product',
+                ],
             ]);
         }
 
         // Kaitkan item inspirasi legal jika dipilih
         if (!empty($validated['inspiration_item_id'])) {
+            $inspiration = InspirationItem::find($validated['inspiration_item_id']);
+            $filePath = $inspiration?->canonical_url ?? $inspiration?->thumbnail_url ?? 'inspiration/reference.jpg';
             BusinessInspirationProjectAsset::create([
                 'business_id' => $business->id,
                 'project_id' => $project->id,
-                'asset_type' => 'inspiration_item',
-                'reference_item_id' => $validated['inspiration_item_id'],
-                'role' => 'visual_reference',
+                'asset_type' => 'reference_style',
+                'file_path' => $filePath,
+                'is_primary' => false,
+                'metadata' => [
+                    'inspiration_item_id' => $validated['inspiration_item_id'],
+                    'role' => 'visual_reference',
+                ],
             ]);
         }
 
@@ -242,7 +268,22 @@ final class OwnerAiStudioWebController extends Controller implements HasMiddlewa
         $business = Context::requireBusiness();
 
         try {
-            $compiled = $this->promptCompiler->compile($business, $request->validated());
+            $product = $request->filled('product_id')
+                ? Product::where('business_id', $business->id)->find($request->input('product_id'))
+                : null;
+
+            $reference = $request->filled('inspiration_item_id')
+                ? InspirationItem::find($request->input('inspiration_item_id'))
+                : null;
+
+            $brief = $request->validated();
+
+            $compiled = $this->promptCompiler->compile(
+                business: $business,
+                product: $product,
+                reference: $reference,
+                brief: $brief
+            );
 
             $provider = (string) ($request->input('provider') ?? 'ideogram');
             $modelName = (string) ($request->input('model_name') ?? 'ideogram-v2');
@@ -269,19 +310,19 @@ final class OwnerAiStudioWebController extends Controller implements HasMiddlewa
                 $latestVersion = (int) BusinessInspirationPromptVersion::where('project_id', $project->id)->max('version_number');
 
                 $version = BusinessInspirationPromptVersion::create([
+                    'business_id' => $business->id,
                     'project_id' => $project->id,
                     'version_number' => $latestVersion + 1,
-                    'prompt_text' => $compiled['prompt_text'],
+                    'positive_prompt' => (string) ($compiled['positive_prompt'] ?? $compiled['prompt_text'] ?? ''),
                     'negative_prompt' => $compiled['negative_prompt'] ?? null,
-                    'target_channel' => $compiled['target_channel'] ?? $project->target_channel,
-                    'aspect_ratio' => $compiled['aspect_ratio'] ?? $project->aspect_ratio,
-                    'style_preset' => $compiled['style_preset'] ?? $project->style_preset,
-                    'estimated_credits' => $quote['credit_cost'],
-                    'compiler_meta' => [
+                    'aspect_ratio' => (string) ($request->input('aspect_ratio') ?? '1:1'),
+                    'style_preset' => (string) ($request->input('style_preset') ?? 'clean_commercial'),
+                    'prompt_parameters' => [
                         'compiled_at' => now()->toIso8601String(),
                         'vision_attributes' => $compiled['vision_attributes'] ?? [],
                         'product_attributes' => $compiled['product_attributes'] ?? [],
                         'quote' => $quote,
+                        'estimated_credits' => $quote['credit_cost'],
                     ],
                 ]);
 
@@ -375,11 +416,11 @@ final class OwnerAiStudioWebController extends Controller implements HasMiddlewa
             'error_message' => $generation->error_message,
             'assets' => $generation->assets->map(fn($asset) => [
                 'id' => $asset->id,
-                'url' => $asset->asset_url,
+                'url' => $asset->output_image_url ?? $asset->asset_url,
                 'thumbnail_url' => $asset->thumbnail_url,
                 'width' => $asset->width,
                 'height' => $asset->height,
-                'is_favorite' => $asset->is_favorite,
+                'is_favorite' => $asset->is_selected_favorite,
             ]),
         ]);
     }
@@ -450,12 +491,12 @@ final class OwnerAiStudioWebController extends Controller implements HasMiddlewa
             ->findOrFail($assetId);
 
         $asset->update([
-            'is_favorite' => !$asset->is_favorite,
+            'is_selected_favorite' => !$asset->is_selected_favorite,
         ]);
 
         return response()->json([
             'success' => true,
-            'is_favorite' => $asset->is_favorite,
+            'is_favorite' => $asset->is_selected_favorite,
         ]);
     }
 

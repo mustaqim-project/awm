@@ -8,6 +8,42 @@ use App\Models\Business;
 
 class CostQuoteService
 {
+    public const MODEL_PRICING = [
+        'ideogram-v2' => [
+            'provider' => 'ideogram',
+            'base_cost' => 15,
+            'aspect_ratio_multipliers' => [
+                '1:1' => 1.0,
+                '4:5' => 1.0,
+                '9:16' => 1.25,
+                '16:9' => 1.25,
+            ],
+            'upscale_cost' => 5,
+        ],
+        'dall-e-3' => [
+            'provider' => 'openai',
+            'base_cost' => 20,
+            'aspect_ratio_multipliers' => [
+                '1:1' => 1.0,
+                '4:5' => 1.0,
+                '9:16' => 1.0,
+                '16:9' => 1.0,
+            ],
+            'upscale_cost' => 0,
+        ],
+        'sdxl' => [
+            'provider' => 'stability',
+            'base_cost' => 10,
+            'aspect_ratio_multipliers' => [
+                '1:1' => 1.0,
+                '4:5' => 1.0,
+                '9:16' => 1.2,
+                '16:9' => 1.2,
+            ],
+            'upscale_cost' => 5,
+        ],
+    ];
+
     public function __construct(
         protected CreditLedgerService $creditLedgerService = new CreditLedgerService
     ) {}

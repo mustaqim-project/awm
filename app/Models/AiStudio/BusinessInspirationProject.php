@@ -92,4 +92,9 @@ class BusinessInspirationProject extends Model
     {
         return $this->hasMany(BusinessInspirationGeneration::class, 'project_id')->orderByDesc('created_at');
     }
+
+    public function latestGeneration(): HasOne
+    {
+        return $this->hasOne(BusinessInspirationGeneration::class, 'project_id')->latestOfMany('created_at');
+    }
 }
