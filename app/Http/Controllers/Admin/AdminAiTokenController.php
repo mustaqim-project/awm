@@ -204,7 +204,7 @@ final class AdminAiTokenController extends Controller implements HasMiddleware
         $validated = $request->validate([
             'key_name' => ['required', 'string', 'max:100'],
             'api_key' => ['required', 'string', 'min:8', 'max:1000'],
-            'provider' => ['nullable', 'string', 'in:openai_compatible,anthropic,gemini,openai,openrouter'],
+            'provider' => ['nullable', 'string', 'in:openai_compatible,anthropic,gemini,openai,openrouter,ideogram,stability'],
             'endpoint' => ['nullable', 'string', 'max:500'],
             'model' => ['nullable', 'string', 'max:150'],
             'priority' => ['nullable', 'integer', 'between:1,3'],
@@ -249,7 +249,7 @@ final class AdminAiTokenController extends Controller implements HasMiddleware
         $validated = $request->validate([
             'key_name' => ['required', 'string', 'max:100'],
             'api_key' => ['nullable', 'string', 'min:8', 'max:1000'],
-            'provider' => ['required', 'string', 'in:openai_compatible,anthropic,gemini,openai,openrouter'],
+            'provider' => ['required', 'string', 'in:openai_compatible,anthropic,gemini,openai,openrouter,ideogram,stability'],
             'endpoint' => ['nullable', 'string', 'max:500'],
             'model' => ['nullable', 'string', 'max:150'],
             'priority' => ['nullable', 'integer', 'between:1,3'],

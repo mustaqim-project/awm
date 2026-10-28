@@ -984,11 +984,13 @@
                         </label>
                         <select name="provider" x-model="newKeyForm.provider" @change="onAddKeyProviderChange()" required
                             class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
-                            <option value="openai_compatible">OpenAI Compatible (Custom Tunnel / vLLM / Proxy)</option>
+                            <option value="openai_compatible">OpenAI Compatible (Custom Tunnel / vLLM / Proxy / AI Studio)</option>
+                            <option value="openai">OpenAI Official Direct (DALL-E 3 &amp; GPT - api.openai.com)</option>
                             <option value="anthropic">Anthropic Claude Official (api.anthropic.com)</option>
                             <option value="gemini">Google Gemini Official (Google AI Studio)</option>
-                            <option value="openai">OpenAI Official Direct (api.openai.com)</option>
                             <option value="openrouter">OpenRouter AI Gateway (openrouter.ai)</option>
+                            <option value="ideogram">Ideogram AI Official (api.ideogram.ai - Image Studio)</option>
+                            <option value="stability">Stability AI / Flux Pro (api.stability.ai - Image Studio)</option>
                         </select>
                     </div>
 
@@ -1089,11 +1091,13 @@
                         </label>
                         <select name="provider" x-model="editingKey.provider" @change="onEditKeyProviderChange()" required
                             class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
-                            <option value="openai_compatible">OpenAI Compatible (Custom Tunnel / vLLM / Proxy)</option>
+                            <option value="openai_compatible">OpenAI Compatible (Custom Tunnel / vLLM / Proxy / AI Studio)</option>
+                            <option value="openai">OpenAI Official Direct (DALL-E 3 &amp; GPT - api.openai.com)</option>
                             <option value="anthropic">Anthropic Claude Official (api.anthropic.com)</option>
                             <option value="gemini">Google Gemini Official (Google AI Studio)</option>
-                            <option value="openai">OpenAI Official Direct (api.openai.com)</option>
                             <option value="openrouter">OpenRouter AI Gateway (openrouter.ai)</option>
+                            <option value="ideogram">Ideogram AI Official (api.ideogram.ai - Image Studio)</option>
+                            <option value="stability">Stability AI / Flux Pro (api.stability.ai - Image Studio)</option>
                         </select>
                     </div>
 

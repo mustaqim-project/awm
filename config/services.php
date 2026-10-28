@@ -127,5 +127,10 @@ return [
         'key' => env('TINYMCE_API_KEY', '2a7oruubgvqukc1gach4pq8j3pm4q12ooot480ieevdxu15m'),
     ],
 
+    'openai' => [
+        'api_key' => env('OPENAI_API_KEY', ''),
+        'base_url' => env('OPENAI_BASE_URL', 'https://api.openai.com/v1'),
+    ],
+
 ];
 

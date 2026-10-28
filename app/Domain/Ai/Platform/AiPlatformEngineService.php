@@ -86,6 +86,30 @@ final class AiPlatformEngineService
             'description' => 'Gateway universal ke 200+ model AI (DeepSeek-R1, Llama 3.3, Qwen, Mistral).',
             'format_notes' => 'Format sk-or-v1-... dari openrouter.ai.',
         ],
+        'ideogram' => [
+            'id' => 'ideogram',
+            'name' => 'Ideogram AI Official',
+            'short_name' => 'Ideogram AI',
+            'badge' => 'Ideogram v2',
+            'badge_color' => 'rose',
+            'default_endpoint' => 'https://api.ideogram.ai',
+            'key_prefix' => 'ideo-',
+            'default_model' => 'ideogram-v2',
+            'description' => 'Mendukung Ideogram v2, typography poster, dan render komersial.',
+            'format_notes' => 'API Key dari ideogram.ai/manage-api.',
+        ],
+        'stability' => [
+            'id' => 'stability',
+            'name' => 'Stability AI / Flux Pro',
+            'short_name' => 'Stability / Flux',
+            'badge' => 'Flux Pro',
+            'badge_color' => 'indigo',
+            'default_endpoint' => 'https://api.stability.ai/v2beta',
+            'key_prefix' => 'sk-',
+            'default_model' => 'stable-diffusion-3.5-large',
+            'description' => 'Mendukung SD 3.5 Large, SD 3.5 Turbo, dan Flux Pro.',
+            'format_notes' => 'API Key dari platform.stability.ai.',
+        ],
     ];
 
     public function __construct(
@@ -119,6 +143,14 @@ final class AiPlatformEngineService
 
         if (str_starts_with($trimmedKey, 'sk-proj-') || str_contains($lowerName, 'openai')) {
             return 'openai';
+        }
+
+        if (str_starts_with($trimmedKey, 'ideo-') || str_contains($lowerName, 'ideogram')) {
+            return 'ideogram';
+        }
+
+        if (str_contains($lowerName, 'stability') || str_contains($lowerName, 'flux')) {
+            return 'stability';
         }
 
         return 'openai_compatible';
@@ -794,6 +826,99 @@ final class AiPlatformEngineService
             'key' => (string) $selected['key'],
             'endpoint' => (string) (! empty($selected['endpoint']) ? $selected['endpoint'] : ($meta['default_endpoint'] ?? SystemSetting::get('ai_platform_endpoint', self::DEFAULT_ENDPOINT))),
             'model' => (string) (! empty($selected['model']) ? $selected['model'] : ($meta['default_model'] ?? SystemSetting::get('ai_platform_model', self::DEFAULT_MODEL))),
+        ];
+    }
+
+    /**
+     * Dapatkan seluruh kunci API yang aktif dan memiliki kapabilitas untuk Generasi Gambar (DALL-E, Tunnel, Ideogram, Flux, dsb).
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function getActiveImageKeys(?string $preferredProvider = null): array
+    {
+        $keysPool = $this->getRawKeysPool();
+
+        $activeKeys = array_values(array_filter($keysPool, fn($k) => ($k['is_active'] ?? true) === true && ! empty($k['key'])));
+
+        if (empty($activeKeys)) {
+            return [];
+        }
+
+        if ($preferredProvider !== null && $preferredProvider !== '') {
+            $matched = array_values(array_filter($activeKeys, fn($k) => strtolower((string) ($k['provider'] ?? '')) === strtolower($preferredProvider)));
+            if (! empty($matched)) {
+                return $matched;
+            }
+        }
+
+        // Filter kunci yang kompatibel dengan generasi gambar
+        $imageCompatible = array_values(array_filter($activeKeys, function ($k) {
+            $p = strtolower((string) ($k['provider'] ?? ''));
+            $m = strtolower((string) ($k['model'] ?? ''));
+
+            return in_array($p, ['openai', 'openai_compatible', 'openrouter', 'ideogram', 'stability'], true)
+                || str_contains($m, 'dall-e')
+                || str_contains($m, 'image')
+                || str_contains($m, 'flux')
+                || str_contains($m, 'sd');
+        }));
+
+        return ! empty($imageCompatible) ? $imageCompatible : $activeKeys;
+    }
+
+    /**
+     * Resolusi kunci API generasi gambar berikutnya dari pool database (Round-Robin concurrency & Failover).
+     *
+     * @return array{id: string, key: string, name: string, provider: string, endpoint: string, model: string}|null
+     */
+    public function resolveNextImageKey(?string $preferredProvider = null): ?array
+    {
+        $keys = $this->getActiveImageKeys($preferredProvider);
+
+        if (empty($keys)) {
+            return null;
+        }
+
+        $strategy = SystemSetting::get('ai_platform_rotation_strategy', self::DEFAULT_STRATEGY);
+
+        if ($strategy === 'failover') {
+            usort($keys, function ($a, $b) {
+                $pA = (int) ($a['priority'] ?? 1);
+                $pB = (int) ($b['priority'] ?? 1);
+                if ($pA !== $pB) {
+                    return $pA <=> $pB;
+                }
+                $statA = ($a['status'] ?? 'healthy') === 'healthy' ? 0 : 1;
+                $statB = ($b['status'] ?? 'healthy') === 'healthy' ? 0 : 1;
+
+                return $statA <=> $statB;
+            });
+
+            $lowestPriority = (int) ($keys[0]['priority'] ?? 1);
+            $tierKeys = array_values(array_filter($keys, fn($k) => ((int) ($k['priority'] ?? 1)) === $lowestPriority));
+            $healthyInTier = array_values(array_filter($tierKeys, fn($k) => ($k['status'] ?? 'healthy') === 'healthy'));
+            $selectionPool = ! empty($healthyInTier) ? $healthyInTier : $tierKeys;
+
+            $counter = (int) Cache::increment('ai_platform_image_key_failover_index');
+            $selectedIndex = $counter % count($selectionPool);
+            $selected = $selectionPool[$selectedIndex];
+        } else {
+            // Round-robin balancing antar multiple keys untuk proses gambar konkuren
+            $counter = (int) Cache::increment('ai_platform_image_key_rr_index');
+            $selectedIndex = $counter % count($keys);
+            $selected = $keys[$selectedIndex];
+        }
+
+        $providerName = (string) ($selected['provider'] ?? self::DEFAULT_PROVIDER);
+        $meta = self::PROVIDERS_META[$providerName] ?? self::PROVIDERS_META[self::DEFAULT_PROVIDER];
+
+        return [
+            'id' => (string) ($selected['id'] ?? 'key_' . $selectedIndex),
+            'name' => (string) ($selected['name'] ?? 'Image Generation Key'),
+            'provider' => $providerName,
+            'key' => (string) $selected['key'],
+            'endpoint' => (string) (! empty($selected['endpoint']) ? $selected['endpoint'] : ($meta['default_endpoint'] ?? 'https://api.openai.com/v1')),
+            'model' => (string) (! empty($selected['model']) ? $selected['model'] : 'dall-e-3'),
         ];
     }
 
