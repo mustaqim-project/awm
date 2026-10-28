@@ -200,6 +200,18 @@ final class AiPlatformEngineService
                         $needsResave = true;
                     }
 
+                    $purpose = (string) ($k['purpose'] ?? '');
+                    if ($purpose === '' || ! in_array($purpose, ['chat', 'image', 'all'], true)) {
+                        $provLower = strtolower($provider);
+                        $modLower = strtolower($model);
+                        if (in_array($provLower, ['ideogram', 'stability'], true) || str_contains($modLower, 'dall-e') || str_contains($modLower, 'flux') || str_contains($modLower, 'sd') || str_contains($modLower, 'image')) {
+                            $purpose = 'image';
+                        } else {
+                            $purpose = 'chat';
+                        }
+                        $needsResave = true;
+                    }
+
                     $priority = (int) ($k['priority'] ?? 1);
                     $weight = (int) ($k['weight'] ?? 1);
                     $status = (string) ($k['status'] ?? 'healthy');
@@ -208,6 +220,7 @@ final class AiPlatformEngineService
                         'id' => (string) ($k['id'] ?? ('key_' . Str::random(10))),
                         'name' => $name,
                         'provider' => $provider,
+                        'purpose' => $purpose,
                         'key' => $rawKey,
                         'endpoint' => $endpoint,
                         'model' => $model,
@@ -238,6 +251,7 @@ final class AiPlatformEngineService
                 'id' => 'key_tunnel_primary',
                 'name' => 'Tunnel ABC Primary (Ready)',
                 'provider' => self::DEFAULT_PROVIDER,
+                'purpose' => 'chat',
                 'key' => self::DEFAULT_API_KEY,
                 'endpoint' => self::DEFAULT_ENDPOINT,
                 'model' => self::DEFAULT_MODEL,

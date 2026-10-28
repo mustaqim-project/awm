@@ -156,6 +156,8 @@ final class MultiKeyImageGenerationTest extends TestCase
                 'id' => 'key_active',
                 'name' => 'Key Aktif',
                 'provider' => 'openai',
+                'purpose' => 'image',
+                'model' => 'dall-e-3',
                 'key' => 'sk-proj-active-key',
                 'endpoint' => 'https://api.openai.com/v1',
                 'is_active' => true,
@@ -165,6 +167,8 @@ final class MultiKeyImageGenerationTest extends TestCase
                 'id' => 'key_disabled',
                 'name' => 'Key Nonaktif (Habis Kuota)',
                 'provider' => 'openai',
+                'purpose' => 'image',
+                'model' => 'dall-e-3',
                 'key' => 'sk-proj-disabled-key',
                 'endpoint' => 'https://api.openai.com/v1',
                 'is_active' => false, // Nonaktif!
@@ -178,5 +182,81 @@ final class MultiKeyImageGenerationTest extends TestCase
             $resolved = $this->engineService->resolveNextImageKey();
             $this->assertSame('key_active', $resolved['id']);
         }
+    }
+
+    /**
+     * Memverifikasi bahwa Image Generator secara ketat MENGABAIKAN kunci yang diperuntukkan bagi chatbot.
+     */
+    public function test_image_generator_strictly_ignores_keys_designated_for_chatbot(): void
+    {
+        $pool = [
+            [
+                'id' => 'key_chatbot_only',
+                'name' => 'Kunci Khusus Chatbot',
+                'provider' => 'openai',
+                'purpose' => 'chat', // Khusus chatbot!
+                'key' => 'sk-proj-chatbot-only-key',
+                'endpoint' => 'https://api.openai.com/v1',
+                'is_active' => true,
+                'status' => 'healthy',
+            ],
+            [
+                'id' => 'key_image_dedicated',
+                'name' => 'Kunci Khusus Gambar',
+                'provider' => 'openai',
+                'purpose' => 'image', // Khusus AI Studio!
+                'model' => 'dall-e-3',
+                'key' => 'sk-proj-image-dedicated-key',
+                'endpoint' => 'https://api.openai.com/v1',
+                'is_active' => true,
+                'status' => 'healthy',
+            ],
+        ];
+
+        SystemSetting::set('ai_platform_keys_pool', json_encode($pool), 'ai_engine', true);
+
+        // Generator gambar harus SELALU memilih key_image_dedicated dan TIDAK PERNAH key_chatbot_only
+        for ($i = 0; $i < 3; $i++) {
+            $resolved = $this->engineService->resolveNextImageKey();
+            $this->assertNotNull($resolved);
+            $this->assertSame('key_image_dedicated', $resolved['id']);
+            $this->assertSame('sk-proj-image-dedicated-key', $resolved['key']);
+        }
+    }
+
+    /**
+     * Memverifikasi bahwa fallback OpenAiImageAdapter hanya menggunakan config services.openai_image
+     * dan tidak pernah bocor/mengambil API key chatbot (services.openai).
+     */
+    public function test_image_adapter_fallback_uses_dedicated_image_key_and_never_chatbot_key(): void
+    {
+        // Kosongkan pool di database agar adapter mengandalkan config fallback
+        SystemSetting::set('ai_platform_keys_pool', json_encode([]), 'ai_engine', true);
+
+        // Set API key chatbot, tapi kosongkan image key
+        config([
+            'services.openai.api_key' => 'sk-chatbot-private-key-111111',
+            'services.openai_image.api_key' => null,
+        ]);
+
+        $reflection = new \ReflectionMethod(OpenAiImageAdapter::class, 'resolveActiveKey');
+        $reflection->setAccessible(true);
+
+        $adapter = new OpenAiImageAdapter;
+        $resolved = $reflection->invoke($adapter);
+
+        // Harus NULL karena tidak boleh meminjam/membocorkan key chatbot
+        $this->assertNull($resolved);
+
+        // Sekarang set config dedicated openai_image
+        config([
+            'services.openai_image.api_key' => 'sk-dedicated-image-key-222222',
+            'services.openai_image.base_url' => 'https://api.openai.com/v1',
+            'services.openai_image.model' => 'dall-e-3',
+        ]);
+
+        $resolvedDedicated = $reflection->invoke($adapter);
+        $this->assertNotNull($resolvedDedicated);
+        $this->assertSame('sk-dedicated-image-key-222222', $resolvedDedicated['key']);
     }
 }

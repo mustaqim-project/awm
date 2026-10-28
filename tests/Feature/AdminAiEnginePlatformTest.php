@@ -252,4 +252,88 @@ final class AdminAiEnginePlatformTest extends TestCase
         $this->assertTrue(collect($savedModels)->contains('id', 'cx/gpt-6-astra-xhigh'));
         $this->assertTrue(collect($savedModels)->contains('id', 'cx/gpt-5.4'));
     }
+
+    public function test_chatbot_strictly_ignores_keys_designated_for_image_generation(): void
+    {
+        $service = app(AiPlatformEngineService::class);
+        $pool = [
+            [
+                'id' => 'key_image_studio',
+                'name' => 'API Key Khusus DALL-E 3',
+                'provider' => 'openai',
+                'purpose' => 'image', // Khusus gambar!
+                'model' => 'dall-e-3',
+                'key' => 'sk-image-only-secret-key-12345',
+                'endpoint' => 'https://api.openai.com/v1',
+                'is_active' => true,
+                'status' => 'healthy',
+                'priority' => 1,
+                'weight' => 1,
+            ],
+            [
+                'id' => 'key_chatbot_llm',
+                'name' => 'API Key Khusus Chatbot',
+                'provider' => 'openai',
+                'purpose' => 'chat', // Khusus chatbot!
+                'model' => 'gpt-4o',
+                'key' => 'sk-chatbot-only-secret-key-67890',
+                'endpoint' => 'https://api.openai.com/v1',
+                'is_active' => true,
+                'status' => 'healthy',
+                'priority' => 1,
+                'weight' => 1,
+            ],
+        ];
+
+        SystemSetting::set('ai_platform_keys_pool', json_encode($pool), 'ai_engine', true);
+
+        // Chatbot resolution (resolveNextKey) must strictly pick key_chatbot_llm and ignore key_image_studio
+        for ($i = 0; $i < 3; $i++) {
+            $resolved = $service->resolveNextKey();
+            $this->assertNotNull($resolved);
+            $this->assertSame('key_chatbot_llm', $resolved['id']);
+            $this->assertSame('sk-chatbot-only-secret-key-67890', $resolved['key']);
+        }
+    }
+
+    public function test_superadmin_can_add_and_update_key_with_explicit_purpose(): void
+    {
+        // 1. Add key with purpose 'image'
+        $response = $this->actingAs($this->admin, 'admin')
+            ->post(route('admin.ai-tokens.engine.keys.add'), [
+                'key_name' => 'Midjourney / DALL-E Dedicated Key',
+                'api_key' => 'sk-dedicated-image-studio-key-12345678',
+                'provider' => 'openai',
+                'purpose' => 'image',
+                'model' => 'dall-e-3',
+            ]);
+
+        $response->assertRedirect(route('admin.ai-tokens.index', ['tab' => 'engine']));
+
+        $service = app(AiPlatformEngineService::class);
+        $rawPool = $service->getRawKeysPool();
+        $addedKey = collect($rawPool)->firstWhere('name', 'Midjourney / DALL-E Dedicated Key');
+
+        $this->assertNotNull($addedKey);
+        $this->assertSame('image', $addedKey['purpose']);
+
+        // 2. Update key purpose to 'chat'
+        $updateResponse = $this->actingAs($this->admin, 'admin')
+            ->put(route('admin.ai-tokens.engine.keys.update', $addedKey['id']), [
+                'key_name' => 'Midjourney / DALL-E Dedicated Key (Converted to Chat)',
+                'provider' => 'openai',
+                'purpose' => 'chat',
+                'model' => 'gpt-4o',
+            ]);
+
+        $updateResponse->assertRedirect(route('admin.ai-tokens.index', ['tab' => 'engine']));
+
+        $updatedPool = $service->getRawKeysPool();
+        $updatedKey = collect($updatedPool)->firstWhere('id', $addedKey['id']);
+
+        $this->assertNotNull($updatedKey);
+        $this->assertSame('chat', $updatedKey['purpose']);
+        $this->assertSame('gpt-4o', $updatedKey['model']);
+    }
 }
+
