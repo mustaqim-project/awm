@@ -109,6 +109,8 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
             // Sumber Inspirasi & Lisensi
             Route::get('/sources', [AdminAiStudioSourceController::class, 'index'])->name('sources.index');
             Route::post('/sources', [AdminAiStudioSourceController::class, 'storeSource'])->name('sources.store');
+            Route::post('/sources/sync-all', [AdminAiStudioSourceController::class, 'syncAll'])->name('sources.sync-all');
+            Route::post('/sources/{source}/sync', [AdminAiStudioSourceController::class, 'syncSource'])->name('sources.sync');
             Route::put('/sources/{source}', [AdminAiStudioSourceController::class, 'updateSource'])->name('sources.update');
             Route::post('/sources/{source}/credentials', [AdminAiStudioSourceController::class, 'saveCredentials'])->name('sources.credentials.save');
             Route::post('/sources/{source}/policy', [AdminAiStudioSourceController::class, 'updatePolicy'])->name('sources.policy.update');

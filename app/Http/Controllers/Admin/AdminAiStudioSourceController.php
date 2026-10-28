@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AiStudio\InspirationSource;
 use App\Models\AiStudio\InspirationSourceCredential;
 use App\Models\AiStudio\InspirationSourcePolicy;
+use App\Domain\Ai\Inspiration\Services\InspirationHarvesterService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -31,6 +32,8 @@ final class AdminAiStudioSourceController extends Controller implements HasMiddl
                 'saveCredentials',
                 'updatePolicy',
                 'toggleSource',
+                'syncSource',
+                'syncAll',
             ]),
         ];
     }
@@ -247,5 +250,72 @@ final class AdminAiStudioSourceController extends Controller implements HasMiddl
             'success' => true,
             'is_active' => $source->is_active,
         ]);
+    }
+
+    /**
+     * Memicu sinkronisasi manual satu sumber inspirasi (CopasPrompt / Civitai).
+     */
+    public function syncSource(Request $request, string $sourceId, InspirationHarvesterService $harvester): RedirectResponse|JsonResponse
+    {
+        /** @var InspirationSource $source */
+        $source = InspirationSource::findOrFail($sourceId);
+
+        $limit = (int) ($request->input('limit') ?? 24);
+        $result = $harvester->harvest($source->code, $limit);
+
+        $srcResult = $result['sources'][$source->code] ?? null;
+        $synced = $srcResult['synced'] ?? 0;
+        $status = $srcResult['status'] ?? 'unknown';
+
+        if ($status === 'failed') {
+            $errorMsg = $srcResult['error'] ?? 'Terjadi kesalahan saat menghubungi API sumber.';
+            if ($request->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => "Gagal sinkronisasi {$source->name}: {$errorMsg}",
+                ], 500);
+            }
+            return redirect()->route('admin.ai-studio.sources.index')
+                ->withErrors(['sync' => "Gagal sinkronisasi {$source->name}: {$errorMsg}"]);
+        }
+
+        $msg = "Berhasil menyinkronkan {$synced} item inspirasi baru dari {$source->name}.";
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => $msg,
+                'synced' => $synced,
+                'items_count' => $source->fresh()->items()->count(),
+                'last_synced_at' => $source->fresh()->last_synced_at?->diffForHumans(),
+            ]);
+        }
+
+        return redirect()->route('admin.ai-studio.sources.index')
+            ->with('success', $msg);
+    }
+
+    /**
+     * Memicu sinkronisasi menyeluruh semua sumber aktif (CopasPrompt dan Civitai).
+     */
+    public function syncAll(Request $request, InspirationHarvesterService $harvester): RedirectResponse|JsonResponse
+    {
+        $limit = (int) ($request->input('limit') ?? 24);
+        $result = $harvester->harvest('all', $limit);
+
+        $totalSynced = $result['total_synced'] ?? 0;
+        $msg = "Sinkronisasi selesai. Total {$totalSynced} item inspirasi visual berhasil diperbarui dari seluruh sumber aktif.";
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => $msg,
+                'total_synced' => $totalSynced,
+                'details' => $result['sources'],
+            ]);
+        }
+
+        return redirect()->route('admin.ai-studio.sources.index')
+            ->with('success', $msg);
     }
 }

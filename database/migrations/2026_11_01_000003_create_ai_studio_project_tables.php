@@ -76,7 +76,7 @@ return new class extends Migration
                 $table->timestamps();
 
                 $table->unique(['project_id', 'version_number'], 'insp_project_version_uniq');
-                $table->index(['business_id', 'guardrail_status']);
+                $table->index(['business_id', 'guardrail_status'], 'bip_vers_biz_guardrail_idx');
             });
         }
     }

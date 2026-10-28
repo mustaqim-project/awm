@@ -416,11 +416,11 @@
 <script>
 function aiStudioCreateProject() {
     return {
-        projectName: '',
-        targetChannel: 'instagram',
-        aspectRatio: '1:1',
+        projectName: @json($selectedInspiration ? 'Replikasi - ' . $selectedInspiration->title : ''),
+        targetChannel: '{{ ($selectedInspiration?->visualAnalysis?->suggested_aspect_ratios[0] ?? "") === "9:16" ? "tiktok" : (($selectedInspiration?->visualAnalysis?->suggested_aspect_ratios[0] ?? "") === "16:9" ? "banner" : (($selectedInspiration?->visualAnalysis?->suggested_aspect_ratios[0] ?? "") === "4:5" ? "facebook" : "instagram")) }}',
+        aspectRatio: '{{ $selectedInspiration?->visualAnalysis?->suggested_aspect_ratios[0] ?? "1:1" }}',
         stylePreset: 'clean_commercial',
-        customNotes: '',
+        customNotes: @json($selectedInspiration?->visualAnalysis?->extracted_style_prompt ?? ''),
         selectedProductId: '',
         productRole: 'hero_product',
         selectedInspirationId: '{{ $selectedInspiration?->id ?? "" }}',
