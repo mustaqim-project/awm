@@ -67,11 +67,26 @@ class BusinessAssetAnalyzer
     }
 
     /**
-     * Deteksi tipe kemasan atau wujud produk fisik.
+     * Deteksi tipe kemasan atau wujud produk fisik (termasuk F&B Kuliner & Layanan Jasa).
      */
     protected function detectPackagingType(string $productName, string $category, string $description): array|string
     {
         $corpus = strtolower("{$productName} {$category} {$description}");
+
+        // Kuliner Makanan Berkuah / Mangkok (Bakso, Soto, Mie, Ramen, Rawon, Sop)
+        if (str_contains($corpus, 'bakso') || str_contains($corpus, 'meatball') || str_contains($corpus, 'mie') || str_contains($corpus, 'noodle') || str_contains($corpus, 'soto') || str_contains($corpus, 'rawon') || str_contains($corpus, 'ramen') || str_contains($corpus, 'sop') || str_contains($corpus, 'soup') || str_contains($corpus, 'gulai')) {
+            return 'authentic artisanal steaming ceramic bowl with appetizing glistening broth, succulent handcrafted meatballs, and fresh celery and shallot garnishes';
+        }
+
+        // Kuliner Makanan Piring / Sajian Utama (Nasi, Ayam, Bebek, Sate, Steak, Gorengan, Kuliner)
+        if (str_contains($corpus, 'nasi') || str_contains($corpus, 'ayam') || str_contains($corpus, 'bebek') || str_contains($corpus, 'sate') || str_contains($corpus, 'steak') || str_contains($corpus, 'rendang') || str_contains($corpus, 'kuliner') || str_contains($corpus, 'makanan') || str_contains($corpus, 'fnb') || str_contains($corpus, 'snack') || str_contains($corpus, 'roti') || str_contains($corpus, 'kue') || str_contains($corpus, 'cake')) {
+            return 'curated artisanal ceramic dining plate with mouthwatering gourmet presentation, authentic golden textures, and vibrant culinary garnishes';
+        }
+
+        // Jasa / Layanan Profesional (Cuci Sepatu, Laundry, Salon, Barbershop, Bengkel, Servis, Cleaning)
+        if (str_contains($corpus, 'jasa') || str_contains($corpus, 'service') || str_contains($corpus, 'layanan') || str_contains($corpus, 'cuci') || str_contains($corpus, 'laundry') || str_contains($corpus, 'salon') || str_contains($corpus, 'barber') || str_contains($corpus, 'pangkas') || str_contains($corpus, 'spa') || str_contains($corpus, 'massage') || str_contains($corpus, 'bengkel') || str_contains($corpus, 'servis') || str_contains($corpus, 'cleaning') || str_contains($corpus, 'treatment')) {
+            return 'professional premium service environment with authentic craftsmanship, specialized expert tools, and pristine customer experience setting';
+        }
 
         if (str_contains($corpus, 'botol') || str_contains($corpus, 'bottle') || str_contains($corpus, 'serum') || str_contains($corpus, 'toner') || str_contains($corpus, 'shampoo')) {
             return 'sleek glass bottle with precision dropper/pump';
@@ -81,7 +96,7 @@ class BusinessAssetAnalyzer
             return 'minimalist cosmetic jar with metallic cap';
         }
 
-        if (str_contains($corpus, 'pouch') || str_contains($corpus, 'stand pouch') || str_contains($corpus, 'kopi') || str_contains($corpus, 'coffee') || str_contains($corpus, 'snack') || str_contains($corpus, 'keripik')) {
+        if (str_contains($corpus, 'pouch') || str_contains($corpus, 'stand pouch') || str_contains($corpus, 'kopi') || str_contains($corpus, 'coffee') || str_contains($corpus, 'keripik')) {
             return 'matte kraft or foil stand-up pouch with sealed top';
         }
 
@@ -89,11 +104,11 @@ class BusinessAssetAnalyzer
             return 'rigid premium gift box with clean embossed corners';
         }
 
-        if (str_contains($corpus, 'cup') || str_contains($corpus, 'gelas') || str_contains($corpus, 'minuman') || str_contains($corpus, 'boba') || str_contains($corpus, 'latte')) {
+        if (str_contains($corpus, 'cup') || str_contains($corpus, 'gelas') || str_contains($corpus, 'minuman') || str_contains($corpus, 'boba') || str_contains($corpus, 'latte') || str_contains($corpus, 'tea') || str_contains($corpus, 'jus') || str_contains($corpus, 'juice')) {
             return 'crystal clear beverage cup with refreshing condensation';
         }
 
-        if (str_contains($corpus, 'kaos') || str_contains($corpus, 't-shirt') || str_contains($corpus, 'baju') || str_contains($corpus, 'hoodie') || str_contains($corpus, 'dress')) {
+        if (str_contains($corpus, 'kaos') || str_contains($corpus, 't-shirt') || str_contains($corpus, 'baju') || str_contains($corpus, 'hoodie') || str_contains($corpus, 'dress') || str_contains($corpus, 'hijab') || str_contains($corpus, 'gamis')) {
             return 'folded premium cotton garment with soft natural fabric drape';
         }
 
@@ -129,6 +144,14 @@ class BusinessAssetAnalyzer
     {
         $corpus = strtolower("{$category} {$productName}");
 
+        if (str_contains($corpus, 'bakso') || str_contains($corpus, 'meatball') || str_contains($corpus, 'mie') || str_contains($corpus, 'soto') || str_contains($corpus, 'rawon') || str_contains($corpus, 'ramen') || str_contains($corpus, 'sop')) {
+            return ['delicate rising aromatic steam vapors', 'crisp golden fried shallots', 'fresh lime wedges', 'traditional sambal condiment dish', 'rustic dark wood table surface'];
+        }
+
+        if (str_contains($corpus, 'jasa') || str_contains($corpus, 'service') || str_contains($corpus, 'cuci') || str_contains($corpus, 'laundry') || str_contains($corpus, 'salon') || str_contains($corpus, 'barber') || str_contains($corpus, 'treatment') || str_contains($corpus, 'bengkel')) {
+            return ['impeccably clean specialized professional tools', 'pristine modern workshop or studio counter', 'subtle ambient warm lighting', 'crisp white towels and organized workspace'];
+        }
+
         if (str_contains($corpus, 'kopi') || str_contains($corpus, 'coffee')) {
             return ['scattered roasted coffee beans', 'delicate aromatic steam', 'warm wooden coaster'];
         }
@@ -141,7 +164,7 @@ class BusinessAssetAnalyzer
             return ['fresh natural garnish', 'warm ambient kitchen surface', 'tasteful ceramic plate'];
         }
 
-        if (str_contains($corpus, 'fashion') || str_contains($corpus, 'apparel')) {
+        if (str_contains($corpus, 'fashion') || str_contains($corpus, 'apparel') || str_contains($corpus, 'hijab')) {
             return ['neutral textured linen background', 'geometric minimalist architectural shadows'];
         }
 

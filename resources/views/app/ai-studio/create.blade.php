@@ -97,7 +97,7 @@
     <!-- ========================================== -->
     <!-- 2. MAIN 2-COLUMN BENTO FORM                -->
     <!-- ========================================== -->
-    <form id="projectForm" method="POST" action="{{ route('ai-studio.projects.store') }}">
+    <form id="projectForm" method="POST" action="{{ route('ai-studio.projects.store') }}" enctype="multipart/form-data">
         @csrf
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
@@ -291,88 +291,194 @@
             <!-- RIGHT COLUMN: Source Assets & Reference (5 Cols) -->
             <div class="lg:col-span-5 space-y-5">
 
-                <!-- Bento Card 3: Catalog Product Selection (AC-003, AC-004) -->
+                <!-- Bento Card 3: Objek Produk / Jasa (Katalog atau Upload Mandiri) -->
                 <div class="rounded-[18px] backdrop-blur-md bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 p-5 sm:p-6 space-y-4">
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-black/50 dark:text-white/50 flex items-center gap-2">
-                        <i data-lucide="package" class="w-4 h-4 text-[#34C759]"></i>
-                        <span>3. Tautkan Produk Katalog Bisnis</span>
-                    </h3>
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-black/50 dark:text-white/50 flex items-center gap-2">
+                            <i data-lucide="package" class="w-4 h-4 text-[#34C759]"></i>
+                            <span>3. Objek Produk / Layanan</span>
+                        </h3>
 
-                    <div class="space-y-2">
-                        <select id="productId" name="product_id" x-model="selectedProductId" @change="onProductSelect($event)"
-                            class="w-full px-3.5 py-2.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs sm:text-sm text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
-                            <option value="">-- Tanpa Produk (Materi Grafis Umum / Promo) --</option>
-                            @foreach ($products as $product)
-                                <option value="{{ $product->id }}" data-name="{{ $product->name }}" data-img="{{ $product->image_path }}">
-                                    {{ $product->name }} ({{ $product->code ?: 'SKU' }}) - Rp {{ number_format($product->selling_price, 0, ',', '.') }}
-                                </option>
-                            @endforeach
-                        </select>
-                        <p class="text-[11px] text-black/50 dark:text-white/50">
-                            Produk terpilih akan menjadi fokus utama komposisi foto dan atributnya diintegrasikan ke prompt AI.
-                        </p>
+                        <!-- Tab Switcher: Katalog vs Upload Sendiri -->
+                        <div class="flex p-0.5 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] text-[11px] font-semibold">
+                            <button type="button" @click="productTab = 'catalog'"
+                                class="px-2.5 py-1 rounded-[8px] transition-all"
+                                :class="productTab === 'catalog' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs' : 'text-black/60 dark:text-white/60 hover:text-black'">
+                                Katalog Bisnis
+                            </button>
+                            <button type="button" @click="productTab = 'upload'"
+                                class="px-2.5 py-1 rounded-[8px] transition-all"
+                                :class="productTab === 'upload' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs' : 'text-black/60 dark:text-white/60 hover:text-black'">
+                                Upload Foto Baru
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- TAB A: Pilih dari Katalog Produk & Jasa -->
+                    <div x-show="productTab === 'catalog'" class="space-y-3">
+                        <div class="space-y-1.5">
+                            <label for="productId" class="text-xs font-semibold text-black dark:text-white">Pilih dari Daftar Produk / Jasa</label>
+                            <select id="productId" name="product_id" x-model="selectedProductId" @change="onProductSelect($event)"
+                                class="w-full px-3.5 py-2.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs sm:text-sm text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                <option value="">-- Tanpa Produk (Materi Grafis Umum / Promo) --</option>
+                                @foreach ($products as $product)
+                                    <option value="{{ $product->id }}" data-name="{{ $product->name }}" data-type="{{ $product->type }}" data-img="{{ $product->image_path }}">
+                                        [{{ $product->type === 'service' ? 'JASA' : 'BARANG' }}] {{ $product->name }} ({{ $product->code ?: 'SKU' }}) - Rp {{ number_format($product->selling_price, 0, ',', '.') }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <p class="text-[11px] text-black/50 dark:text-white/50">
+                                Produk terpilih akan menjadi fokus utama komposisi foto dan atributnya diintegrasikan ke prompt AI.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- TAB B: Upload Foto Objek Sendiri Langsung (Bakso, Makanan, Jasa, dsb) -->
+                    <div x-show="productTab === 'upload'" class="space-y-3" style="display: none;">
+                        <div class="space-y-1.5">
+                            <label class="text-xs font-semibold text-black dark:text-white">Nama Produk / Objek / Jasa</label>
+                            <input type="text" name="custom_product_name" x-model="customProductName"
+                                placeholder="Contoh: Bakso Urat Kuah Pedas / Jasa Cuci Sepatu Deep Clean"
+                                class="w-full px-3.5 py-2.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs sm:text-sm text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#34C759]">
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <label class="text-xs font-semibold text-black dark:text-white">Foto Objek / Produk Asli</label>
+                            
+                            <!-- Dropzone Upload Area -->
+                            <div x-show="!customProductPreview"
+                                class="relative border-2 border-dashed border-black/15 dark:border-white/15 hover:border-[#34C759] rounded-[14px] p-4 text-center cursor-pointer transition-colors bg-black/[0.01] hover:bg-[#34C759]/5"
+                                @click="document.getElementById('customProductFileInput').click()">
+                                <input type="file" id="customProductFileInput" name="custom_product_image" accept="image/*" @change="onCustomProductChange($event)" class="sr-only">
+                                <div class="w-10 h-10 mx-auto rounded-full bg-[#34C759]/10 text-[#34C759] flex items-center justify-center mb-2">
+                                    <i data-lucide="camera" class="w-5 h-5"></i>
+                                </div>
+                                <p class="text-xs font-bold text-black dark:text-white">Klik untuk upload foto objek</p>
+                                <p class="text-[11px] text-black/50 dark:text-white/50 mt-0.5">JPG, PNG, atau WebP (Maks. 5MB). Misal foto mangkok bakso asli dari HP.</p>
+                            </div>
+
+                            <!-- Preview Box -->
+                            <div x-show="customProductPreview" class="p-3 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 flex items-center gap-3" style="display: none;">
+                                <img :src="customProductPreview" alt="Preview Objek" class="w-14 h-14 rounded-[10px] object-cover shrink-0 border border-black/10">
+                                <div class="flex-1 min-w-0">
+                                    <h5 class="text-xs font-bold text-black dark:text-white truncate" x-text="customProductName || 'Foto Objek Produk'">Foto Objek Produk</h5>
+                                    <p class="text-[10px] text-[#34C759] font-semibold flex items-center gap-1 mt-0.5">
+                                        <i data-lucide="check-circle" class="w-3 h-3"></i>
+                                        <span>Siap diintegrasikan ke komposisi AI</span>
+                                    </p>
+                                </div>
+                                <button type="button" @click="clearCustomProduct()" class="p-1.5 rounded-full text-black/40 hover:text-red-500 hover:bg-black/5" title="Hapus Gambar">
+                                    <i data-lucide="x" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Role of Product in Asset -->
-                    <div x-show="selectedProductId" class="space-y-1.5 pt-1">
-                        <label class="text-xs font-semibold text-black dark:text-white">Peran Produk dalam Komposisi</label>
+                    <div class="space-y-1.5 pt-1 border-t border-black/5 dark:border-white/5">
+                        <label class="text-xs font-semibold text-black dark:text-white">Peran Objek dalam Komposisi</label>
                         <select name="role" x-model="productRole"
                             class="w-full px-3 py-2 rounded-[10px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                             <option value="hero_product">Produk Utama (Hero Product - Di Tengah &amp; Fokus Tajam)</option>
-                            <option value="packaging">Kemasan / Botol / Box (Fokus pada Desain Packaging)</option>
+                            <option value="packaging">Sajian Mangkok / Piring / Kemasan (Fokus Presentasi Makanan)</option>
                             <option value="logo">Aplikasi Logo &amp; Merk Dagang</option>
                             <option value="supporting">Elemen Pendukung Komposisi</option>
                         </select>
                     </div>
                 </div>
 
-                <!-- Bento Card 4: Legal Reference Inspiration (AC-001, AC-002) -->
+                <!-- Bento Card 4: Referensi Inspirasi Visual (Galeri atau Upload Sendiri) -->
                 <div class="rounded-[18px] backdrop-blur-md bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 p-5 sm:p-6 space-y-4">
                     <div class="flex items-center justify-between">
                         <h3 class="text-xs font-bold uppercase tracking-wider text-black/50 dark:text-white/50 flex items-center gap-2">
                             <i data-lucide="compass" class="w-4 h-4 text-[#FF9500]"></i>
-                            <span>4. Referensi Inspirasi Visual</span>
+                            <span>4. Referensi Gaya Visual</span>
                         </h3>
-                        <a href="{{ route('ai-studio.inspiration.index') }}"
-                            class="text-xs font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline">
-                            Pilih di Galeri &rarr;
-                        </a>
+
+                        <!-- Tab Switcher: Galeri vs Upload Referensi Sendiri -->
+                        <div class="flex p-0.5 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] text-[11px] font-semibold">
+                            <button type="button" @click="referenceTab = 'gallery'"
+                                class="px-2.5 py-1 rounded-[8px] transition-all"
+                                :class="referenceTab === 'gallery' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs' : 'text-black/60 dark:text-white/60 hover:text-black'">
+                                Galeri COOCA
+                            </button>
+                            <button type="button" @click="referenceTab = 'upload'"
+                                class="px-2.5 py-1 rounded-[8px] transition-all"
+                                :class="referenceTab === 'upload' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs' : 'text-black/60 dark:text-white/60 hover:text-black'">
+                                Upload Referensi
+                            </button>
+                        </div>
                     </div>
 
                     <input type="hidden" name="inspiration_item_id" :value="selectedInspirationId">
 
-                    <!-- Selected Reference Display Card -->
-                    @if ($selectedInspiration)
-                        <div x-show="selectedInspirationId" class="p-3 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 flex items-center gap-3">
-                            <img src="{{ $selectedInspiration->thumbnail_url ?: $selectedInspiration->canonical_url }}" alt="{{ $selectedInspiration->title }}"
-                                class="w-14 h-14 rounded-[10px] object-cover shrink-0 border border-black/10">
-                            <div class="flex-1 min-w-0 space-y-0.5">
-                                <h4 class="text-xs font-bold text-black dark:text-white truncate">{{ $selectedInspiration->title }}</h4>
-                                <div class="flex items-center gap-1.5 text-[10px] text-black/50 dark:text-white/50">
-                                    <span class="inline-flex items-center gap-0.5 text-[#34C759] font-semibold">
-                                        <i data-lucide="shield-check" class="w-3 h-3"></i>
-                                        <span>Lisensi Komersial Sah</span>
-                                    </span>
+                    <!-- TAB A: Galeri Template COOCA -->
+                    <div x-show="referenceTab === 'gallery'" class="space-y-3">
+                        @if ($selectedInspiration)
+                            <div x-show="selectedInspirationId" class="p-3 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 flex items-center gap-3">
+                                <img src="{{ $selectedInspiration->thumbnail_url ?: $selectedInspiration->canonical_url }}" alt="{{ $selectedInspiration->title }}"
+                                    class="w-14 h-14 rounded-[10px] object-cover shrink-0 border border-black/10">
+                                <div class="flex-1 min-w-0 space-y-0.5">
+                                    <h4 class="text-xs font-bold text-black dark:text-white truncate">{{ $selectedInspiration->title }}</h4>
+                                    <div class="flex items-center gap-1.5 text-[10px] text-black/50 dark:text-white/50">
+                                        <span class="inline-flex items-center gap-0.5 text-[#34C759] font-semibold">
+                                            <i data-lucide="shield-check" class="w-3 h-3"></i>
+                                            <span>Lisensi Komersial Sah</span>
+                                        </span>
+                                    </div>
                                 </div>
+                                <button type="button" @click="clearInspiration()"
+                                    class="p-1.5 rounded-full text-black/40 dark:text-white/40 hover:text-red-500 hover:bg-black/5 transition-colors"
+                                    title="Hapus Referensi">
+                                    <i data-lucide="x" class="w-4 h-4"></i>
+                                </button>
                             </div>
-                            <button type="button" @click="clearInspiration()"
-                                class="p-1.5 rounded-full text-black/40 dark:text-white/40 hover:text-red-500 hover:bg-black/5 transition-colors"
-                                title="Hapus Referensi">
-                                <i data-lucide="x" class="w-4 h-4"></i>
-                            </button>
+                        @else
+                            <div x-show="!selectedInspirationId" class="p-4 rounded-[14px] border border-dashed border-black/15 dark:border-white/15 text-center space-y-2">
+                                <p class="text-xs text-black/60 dark:text-white/60">
+                                    Pilih template foto produk/makanan dari 197 inspirasi viral terkurasi COOCA.
+                                </p>
+                                <a href="{{ route('ai-studio.inspiration.index') }}"
+                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.07] text-xs font-semibold text-black/80 dark:text-white transition-all">
+                                    <i data-lucide="search" class="w-3.5 h-3.5"></i>
+                                    <span>Pilih di Galeri Inspirasi (197 Template)</span>
+                                </a>
+                            </div>
+                        @endif
+                    </div>
+
+                    <!-- TAB B: Upload Referensi Sendiri (Dari HP / Pinterest) -->
+                    <div x-show="referenceTab === 'upload'" class="space-y-3" style="display: none;">
+                        <div class="space-y-1.5">
+                            <label class="text-xs font-semibold text-black dark:text-white">Foto Gaya / Poster Referensi Anda</label>
+                            
+                            <div x-show="!customReferencePreview"
+                                class="relative border-2 border-dashed border-black/15 dark:border-white/15 hover:border-[#FF9500] rounded-[14px] p-4 text-center cursor-pointer transition-colors bg-black/[0.01] hover:bg-[#FF9500]/5"
+                                @click="document.getElementById('customRefFileInput').click()">
+                                <input type="file" id="customRefFileInput" name="custom_reference_image" accept="image/*" @change="onCustomReferenceChange($event)" class="sr-only">
+                                <div class="w-10 h-10 mx-auto rounded-full bg-[#FF9500]/10 text-[#FF9500] flex items-center justify-center mb-2">
+                                    <i data-lucide="image" class="w-5 h-5"></i>
+                                </div>
+                                <p class="text-xs font-bold text-black dark:text-white">Upload contoh gaya / pencahayaan</p>
+                                <p class="text-[11px] text-black/50 dark:text-white/50 mt-0.5">AI akan meniru komposisi, tone warna, dan pencahayaan foto ini.</p>
+                            </div>
+
+                            <!-- Preview Box -->
+                            <div x-show="customReferencePreview" class="p-3 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 flex items-center gap-3" style="display: none;">
+                                <img :src="customReferencePreview" alt="Preview Referensi" class="w-14 h-14 rounded-[10px] object-cover shrink-0 border border-black/10">
+                                <div class="flex-1 min-w-0">
+                                    <h5 class="text-xs font-bold text-black dark:text-white truncate">Referensi Visual Mandiri</h5>
+                                    <p class="text-[10px] text-[#FF9500] font-semibold flex items-center gap-1 mt-0.5">
+                                        <i data-lucide="sparkles" class="w-3 h-3"></i>
+                                        <span>Gaya &amp; lighting akan diaplikasikan ke produk Anda</span>
+                                    </p>
+                                </div>
+                                <button type="button" @click="clearCustomReference()" class="p-1.5 rounded-full text-black/40 hover:text-red-500 hover:bg-black/5" title="Hapus Gambar">
+                                    <i data-lucide="x" class="w-4 h-4"></i>
+                                </button>
+                            </div>
                         </div>
-                    @else
-                        <div x-show="!selectedInspirationId" class="p-4 rounded-[14px] border border-dashed border-black/15 dark:border-white/15 text-center space-y-2">
-                            <p class="text-xs text-black/60 dark:text-white/60">
-                                Anda belum memilih referensi visual gaya. Anda dapat membuat gambar dari brief murni atau memilih gaya dari katalog.
-                            </p>
-                            <a href="{{ route('ai-studio.inspiration.index') }}"
-                                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.07] text-xs font-semibold text-black/80 dark:text-white transition-all">
-                                <i data-lucide="search" class="w-3.5 h-3.5"></i>
-                                <span>Cari di Katalog Inspirasi</span>
-                            </a>
-                        </div>
-                    @endif
+                    </div>
                 </div>
 
                 <!-- Bento Card 5: Actions & Live Quote Summary -->
@@ -430,6 +536,15 @@ function aiStudioCreateProject() {
         userCredits: {{ $creditsBalance }},
         canAfford: {{ $creditsBalance >= 15 ? 'true' : 'false' }},
 
+        // Objek Produk & Upload State
+        productTab: 'catalog',
+        customProductName: '',
+        customProductPreview: null,
+
+        // Referensi Visual & Upload State
+        referenceTab: 'gallery',
+        customReferencePreview: null,
+
         // Prompt Preview Modal State
         promptModalOpen: false,
         compilingPrompt: false,
@@ -437,6 +552,37 @@ function aiStudioCreateProject() {
         compiledNegativePrompt: '',
         visionAttributes: [],
         quoteCost: 15,
+
+        onCustomProductChange(event) {
+            const file = event.target.files[0];
+            if (file) {
+                this.customProductPreview = URL.createObjectURL(file);
+                if (!this.projectName && this.customProductName) {
+                    this.projectName = 'Fotografi ' + this.customProductName;
+                }
+                this.$nextTick(() => lucide.createIcons());
+            }
+        },
+
+        clearCustomProduct() {
+            this.customProductPreview = null;
+            const input = document.getElementById('customProductFileInput');
+            if (input) input.value = '';
+        },
+
+        onCustomReferenceChange(event) {
+            const file = event.target.files[0];
+            if (file) {
+                this.customReferencePreview = URL.createObjectURL(file);
+                this.$nextTick(() => lucide.createIcons());
+            }
+        },
+
+        clearCustomReference() {
+            this.customReferencePreview = null;
+            const input = document.getElementById('customRefFileInput');
+            if (input) input.value = '';
+        },
 
         onChannelChange(channel) {
             if (channel === 'tiktok') {
@@ -462,7 +608,7 @@ function aiStudioCreateProject() {
             const selectedOpt = select.options[select.selectedIndex];
             if (selectedOpt && selectedOpt.value && !this.projectName) {
                 const prodName = selectedOpt.getAttribute('data-name');
-                this.projectName = 'Fotografi Produk ' + prodName;
+                this.projectName = 'Fotografi ' + prodName;
             }
         },
 
@@ -471,8 +617,12 @@ function aiStudioCreateProject() {
         },
 
         async compileAndPreviewPrompt() {
+            if (!this.projectName && this.customProductName) {
+                this.projectName = 'Fotografi ' + this.customProductName;
+            }
+
             if (!this.projectName) {
-                alert('Silakan masukkan nama proyek terlebih dahulu.');
+                alert('Silakan masukkan nama proyek atau nama produk terlebih dahulu.');
                 document.getElementById('projectName')?.focus();
                 return;
             }
@@ -486,8 +636,9 @@ function aiStudioCreateProject() {
                     aspect_ratio: this.aspectRatio,
                     style_preset: this.stylePreset,
                     custom_notes: this.customNotes,
-                    product_id: this.selectedProductId || null,
-                    inspiration_item_id: this.selectedInspirationId || null,
+                    product_id: this.productTab === 'catalog' ? (this.selectedProductId || null) : null,
+                    custom_product_name: this.productTab === 'upload' ? (this.customProductName || null) : null,
+                    inspiration_item_id: this.referenceTab === 'gallery' ? (this.selectedInspirationId || null) : null,
                     provider: this.selectedProvider,
                     model_name: this.selectedModel,
                 };

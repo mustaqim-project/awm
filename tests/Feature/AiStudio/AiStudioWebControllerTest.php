@@ -23,7 +23,9 @@ use App\Models\User;
 use App\Support\Context;
 use Database\Seeders\RbacSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
@@ -196,6 +198,48 @@ final class AiStudioWebControllerTest extends TestCase
             'business_id' => $this->business->id,
             'asset_type' => 'reference_style',
         ]);
+    }
+
+    public function test_owner_can_create_project_with_custom_uploaded_product_and_reference_images(): void
+    {
+        Storage::fake('public');
+
+        $productFile = UploadedFile::fake()->image('bakso_urat_spesial.jpg', 600, 600);
+        $referenceFile = UploadedFile::fake()->image('moodboard_kuliner.webp', 800, 800);
+
+        $payload = [
+            'name' => 'Visual Promosi Bakso Urat Granat Pedas',
+            'target_channel' => 'instagram',
+            'aspect_ratio' => '1:1',
+            'style_preset' => 'clean_commercial',
+            'custom_notes' => 'Mangkok keramik putih mengepul hangat dengan kuah kaldu berkilau dan taburan seledri',
+            'custom_product_name' => 'Bakso Urat Granat Pedas',
+            'custom_product_image' => $productFile,
+            'custom_reference_image' => $referenceFile,
+            'role' => 'packaging',
+        ];
+
+        $response = $this->actingAs($this->user)
+            ->post(route('ai-studio.projects.store'), $payload);
+
+        $response->assertRedirect();
+
+        $project = BusinessInspirationProject::where('business_id', $this->business->id)
+            ->where('name', 'Visual Promosi Bakso Urat Granat Pedas')
+            ->first();
+
+        $this->assertNotNull($project);
+
+        $productAsset = $project->assets()->where('asset_type', 'original_product')->first();
+        $this->assertNotNull($productAsset);
+        $this->assertEquals('custom_upload', $productAsset->metadata['source'] ?? null);
+        $this->assertEquals('Bakso Urat Granat Pedas', $productAsset->metadata['product_name'] ?? null);
+        $this->assertTrue(Storage::disk('public')->exists($productAsset->file_path));
+
+        $refAsset = $project->assets()->where('asset_type', 'reference_style')->first();
+        $this->assertNotNull($refAsset);
+        $this->assertEquals('custom_upload', $refAsset->metadata['source'] ?? null);
+        $this->assertTrue(Storage::disk('public')->exists($refAsset->file_path));
     }
 
     public function test_owner_can_compile_prompt_and_receive_quote(): void

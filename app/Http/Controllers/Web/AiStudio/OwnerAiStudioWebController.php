@@ -174,10 +174,11 @@ final class OwnerAiStudioWebController extends Controller implements HasMiddlewa
     {
         $business = Context::requireBusiness();
 
-        $products = Product::goods()
-            ->where('business_id', $business->id)
+        // Ambil produk dan layanan jasa aktif milik tenant
+        $products = Product::where('business_id', $business->id)
             ->where('is_active', true)
-            ->select(['id', 'name', 'code', 'selling_price', 'image_path'])
+            ->select(['id', 'name', 'code', 'type', 'selling_price', 'image_path', 'category_id'])
+            ->with('category:id,name')
             ->orderBy('name')
             ->get();
 
@@ -194,7 +195,7 @@ final class OwnerAiStudioWebController extends Controller implements HasMiddlewa
     }
 
     /**
-     * Simpan Proyek Baru & Kaitkan Aset Referensi / Produk.
+     * Simpan Proyek Baru & Kaitkan Aset Referensi / Produk (Katalog atau Upload Sendiri).
      */
     public function store(Request $request): RedirectResponse|JsonResponse
     {
@@ -207,7 +208,10 @@ final class OwnerAiStudioWebController extends Controller implements HasMiddlewa
             'style_preset' => ['nullable', 'string', 'max:50'],
             'custom_notes' => ['nullable', 'string', 'max:1000'],
             'product_id' => ['nullable', 'uuid', Rule::exists('products', 'id')->where('business_id', $business->id)],
+            'custom_product_name' => ['nullable', 'string', 'max:150'],
+            'custom_product_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
             'inspiration_item_id' => ['nullable', 'uuid', 'exists:inspiration_items,id'],
+            'custom_reference_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
             'role' => ['nullable', 'string', 'in:hero_product,packaging,logo,supporting'],
         ]);
 
@@ -234,11 +238,12 @@ final class OwnerAiStudioWebController extends Controller implements HasMiddlewa
             'prompt_parameters' => [
                 'target_channel' => $validated['target_channel'],
                 'custom_notes' => $validated['custom_notes'] ?? null,
+                'custom_product_name' => $validated['custom_product_name'] ?? null,
             ],
         ]);
 
-        // Kaitkan produk katalog tenant jika dipilih
-        if (!empty($validated['product_id'])) {
+        // 1. Kaitkan produk katalog tenant jika dipilih
+        if (! empty($validated['product_id'])) {
             $product = Product::find($validated['product_id']);
             $filePath = $product?->image_path ?? 'catalog/products/placeholder.jpg';
             BusinessInspirationProjectAsset::create([
@@ -248,14 +253,37 @@ final class OwnerAiStudioWebController extends Controller implements HasMiddlewa
                 'file_path' => $filePath,
                 'is_primary' => true,
                 'metadata' => [
+                    'source' => 'catalog_product',
                     'product_id' => $validated['product_id'],
+                    'product_name' => $product?->name,
+                    'role' => $validated['role'] ?? 'hero_product',
+                ],
+            ]);
+        } elseif ($request->hasFile('custom_product_image')) {
+            // 1b. Atau simpan file foto objek/produk yang diupload manual
+            $file = $request->file('custom_product_image');
+            $dir = \App\Domain\Storage\TenantStorage::publicDir($business, 'ai-studio/products');
+            $filePath = $file->store($dir, 'public');
+
+            BusinessInspirationProjectAsset::create([
+                'business_id' => $business->id,
+                'project_id' => $project->id,
+                'asset_type' => 'original_product',
+                'file_path' => $filePath,
+                'original_filename' => $file->getClientOriginalName(),
+                'mime_type' => $file->getMimeType(),
+                'file_size_bytes' => (int) $file->getSize(),
+                'is_primary' => true,
+                'metadata' => [
+                    'source' => 'custom_upload',
+                    'product_name' => $validated['custom_product_name'] ?? $validated['name'],
                     'role' => $validated['role'] ?? 'hero_product',
                 ],
             ]);
         }
 
-        // Kaitkan item inspirasi legal jika dipilih
-        if (!empty($validated['inspiration_item_id'])) {
+        // 2. Kaitkan item inspirasi legal jika dipilih dari galeri
+        if (! empty($validated['inspiration_item_id'])) {
             $inspiration = InspirationItem::find($validated['inspiration_item_id']);
             $filePath = $inspiration?->canonical_url ?? $inspiration?->thumbnail_url ?? 'inspiration/reference.jpg';
             BusinessInspirationProjectAsset::create([
@@ -265,7 +293,29 @@ final class OwnerAiStudioWebController extends Controller implements HasMiddlewa
                 'file_path' => $filePath,
                 'is_primary' => false,
                 'metadata' => [
+                    'source' => 'inspiration_gallery',
                     'inspiration_item_id' => $validated['inspiration_item_id'],
+                    'title' => $inspiration?->title,
+                    'role' => 'visual_reference',
+                ],
+            ]);
+        } elseif ($request->hasFile('custom_reference_image')) {
+            // 2b. Atau simpan file foto referensi visual yang diupload manual
+            $refFile = $request->file('custom_reference_image');
+            $dir = \App\Domain\Storage\TenantStorage::publicDir($business, 'ai-studio/references');
+            $refFilePath = $refFile->store($dir, 'public');
+
+            BusinessInspirationProjectAsset::create([
+                'business_id' => $business->id,
+                'project_id' => $project->id,
+                'asset_type' => 'reference_style',
+                'file_path' => $refFilePath,
+                'original_filename' => $refFile->getClientOriginalName(),
+                'mime_type' => $refFile->getMimeType(),
+                'file_size_bytes' => (int) $refFile->getSize(),
+                'is_primary' => false,
+                'metadata' => [
+                    'source' => 'custom_upload',
                     'role' => 'visual_reference',
                 ],
             ]);
@@ -331,6 +381,9 @@ final class OwnerAiStudioWebController extends Controller implements HasMiddlewa
                 : null;
 
             $brief = $request->validated();
+            if (! empty($brief['custom_product_name'])) {
+                $brief['product_name'] = $brief['custom_product_name'];
+            }
 
             $compiled = $this->promptCompiler->compile(
                 business: $business,

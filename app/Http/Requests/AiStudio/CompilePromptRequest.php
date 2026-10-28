@@ -25,6 +25,8 @@ class CompilePromptRequest extends FormRequest
         return [
             'project_id' => ['nullable', 'uuid', Rule::exists('business_inspiration_projects', 'id')->where('business_id', $businessId)],
             'product_id' => ['nullable', 'uuid', Rule::exists('products', 'id')->where('business_id', $businessId)],
+            'custom_product_name' => ['nullable', 'string', 'max:150'],
+            'name' => ['nullable', 'string', 'max:150'],
             'inspiration_item_id' => ['nullable', 'uuid', 'exists:inspiration_items,id'],
             'target_channel' => ['required', 'string', 'in:instagram,tiktok,shopee,tokopedia,facebook,banner'],
             'aspect_ratio' => ['required', 'string', 'in:1:1,4:5,9:16,16:9'],

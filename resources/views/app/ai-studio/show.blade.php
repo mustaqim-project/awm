@@ -8,8 +8,10 @@
 @php
     $latestGeneration = $project->generations->first();
     $primaryAsset = $latestGeneration?->assets?->first();
-    $attachedProduct = $project->assets->firstWhere('asset_type', 'original_product')?->product;
-    $referenceItem = $project->assets->firstWhere('asset_type', 'reference_style')?->inspirationItem;
+    $attachedProduct = $project->product;
+    $customProductAsset = $project->assets->firstWhere('asset_type', 'original_product');
+    $referenceItem = $project->inspirationItem;
+    $customReferenceAsset = $project->assets->firstWhere('asset_type', 'reference_style');
     $latestPrompt = $project->promptVersions->first();
     $isCurrentlyRendering = $latestGeneration && in_array($latestGeneration->status, ['queued', 'generating', 'processing']);
 @endphp
@@ -251,15 +253,17 @@
         <!-- RIGHT COLUMN: Project Metadata & Asset Context (5 Cols) -->
         <div class="lg:col-span-5 space-y-5">
 
-            <!-- Bento Card: Associated Catalog Product -->
+            <!-- Bento Card: Associated Catalog Product / Custom Upload -->
             <div class="rounded-[18px] backdrop-blur-md bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 p-5 space-y-3">
                 <div class="flex items-center justify-between">
                     <h4 class="text-xs font-bold uppercase tracking-wider text-black/50 dark:text-white/50 flex items-center gap-1.5">
                         <i data-lucide="package" class="w-3.5 h-3.5 text-[#34C759]"></i>
-                        <span>Produk Katalog Terkait</span>
+                        <span>Objek Produk / Layanan Terkait</span>
                     </h4>
                     @if ($attachedProduct)
-                        <span class="text-[10px] font-bold text-[#34C759] bg-[#34C759]/10 px-2 py-0.5 rounded-full">Aktif</span>
+                        <span class="text-[10px] font-bold text-[#34C759] bg-[#34C759]/10 px-2 py-0.5 rounded-full">Katalog Aktif</span>
+                    @elseif ($customProductAsset)
+                        <span class="text-[10px] font-bold text-[#007AFF] bg-[#007AFF]/10 px-2 py-0.5 rounded-full">Upload Mandiri</span>
                     @endif
                 </div>
 
@@ -275,8 +279,18 @@
                         @endif
                         <div class="min-w-0 flex-1">
                             <h5 class="text-xs font-bold text-black dark:text-white truncate">{{ $attachedProduct->name }}</h5>
-                            <p class="text-[11px] text-black/50 dark:text-white/50">SKU: {{ $attachedProduct->code ?: '-' }}</p>
+                            <p class="text-[11px] text-black/50 dark:text-white/50">SKU: {{ $attachedProduct->code ?: '-' }} &bull; {{ $attachedProduct->type === 'service' ? 'Layanan Jasa' : 'Barang' }}</p>
                             <p class="text-xs font-bold text-[#007AFF] dark:text-[#0A84FF]">Rp {{ number_format($attachedProduct->selling_price, 0, ',', '.') }}</p>
+                        </div>
+                    </div>
+                @elseif ($customProductAsset)
+                    <div class="p-3.5 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 flex items-center gap-3">
+                        <img src="{{ asset('storage/' . $customProductAsset->file_path) }}" alt="Foto Produk"
+                            class="w-12 h-12 rounded-[10px] object-cover shrink-0 border border-black/10">
+                        <div class="min-w-0 flex-1">
+                            <h5 class="text-xs font-bold text-black dark:text-white truncate">{{ $customProductAsset->metadata['product_name'] ?? $project->name }}</h5>
+                            <p class="text-[11px] text-black/50 dark:text-white/50">Foto Objek Langsung dari Merchant</p>
+                            <span class="inline-block mt-0.5 text-[10px] text-[#007AFF] font-medium bg-[#007AFF]/10 px-1.5 py-0.5 rounded">Fokus Utama Komposisi</span>
                         </div>
                     </div>
                 @else
@@ -286,7 +300,7 @@
                 @endif
             </div>
 
-            <!-- Bento Card: Reference Style Inspiration -->
+            <!-- Bento Card: Reference Style Inspiration / Custom Reference -->
             <div class="rounded-[18px] backdrop-blur-md bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 p-5 space-y-3">
                 <div class="flex items-center justify-between">
                     <h4 class="text-xs font-bold uppercase tracking-wider text-black/50 dark:text-white/50 flex items-center gap-1.5">
@@ -295,6 +309,8 @@
                     </h4>
                     @if ($referenceItem)
                         <span class="text-[10px] font-bold text-[#34C759] bg-[#34C759]/10 px-2 py-0.5 rounded-full">Legal Sah</span>
+                    @elseif ($customReferenceAsset)
+                        <span class="text-[10px] font-bold text-[#5856D6] bg-[#5856D6]/10 px-2 py-0.5 rounded-full">Referensi Mandiri</span>
                     @endif
                 </div>
 
@@ -304,10 +320,19 @@
                             class="w-12 h-12 rounded-[10px] object-cover shrink-0 border border-black/10">
                         <div class="min-w-0 flex-1">
                             <h5 class="text-xs font-bold text-black dark:text-white truncate">{{ $referenceItem->title }}</h5>
-                            <p class="text-[11px] text-black/50 dark:text-white/50 truncate">Sumber: {{ $referenceItem->source?->name ?? 'Pexels' }}</p>
+                            <p class="text-[11px] text-black/50 dark:text-white/50 truncate">Sumber: {{ $referenceItem->source?->name ?? 'Katalog COOCA' }}</p>
                             <a href="{{ route('ai-studio.inspiration.show', $referenceItem->id) }}" class="text-[11px] font-semibold text-[#007AFF] hover:underline">
                                 Lihat Lembar Atribusi &rarr;
                             </a>
+                        </div>
+                    </div>
+                @elseif ($customReferenceAsset)
+                    <div class="p-3.5 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 flex items-center gap-3">
+                        <img src="{{ asset('storage/' . $customReferenceAsset->file_path) }}" alt="Foto Referensi"
+                            class="w-12 h-12 rounded-[10px] object-cover shrink-0 border border-black/10">
+                        <div class="min-w-0 flex-1">
+                            <h5 class="text-xs font-bold text-black dark:text-white truncate">Gaya Visual Pilihan Sendiri</h5>
+                            <p class="text-[11px] text-black/50 dark:text-white/50">Digunakan sebagai acuan lighting &amp; komposisi</p>
                         </div>
                     </div>
                 @else

@@ -161,6 +161,14 @@ class GenerationOrchestrator
         $product = $project->product()->first();
         $reference = $project->inspirationItem()->first();
 
+        // Dukung custom uploaded product jika tidak memilih dari katalog
+        if ($product === null) {
+            $customProductAsset = $project->assets()->where('asset_type', 'original_product')->first();
+            if ($customProductAsset !== null && ! empty($customProductAsset->metadata['product_name'])) {
+                $options['product_name'] = $customProductAsset->metadata['product_name'];
+            }
+        }
+
         $compiled = $this->promptCompilerService->compile(
             business: $business,
             product: $product,
