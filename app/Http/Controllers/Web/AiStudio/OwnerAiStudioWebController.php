@@ -10,6 +10,8 @@ use App\Domain\Ai\Studio\Billing\CreditLedgerService;
 use App\Domain\Ai\Studio\Compilers\PromptCompilerService;
 use App\Domain\Ai\Studio\Exceptions\InsufficientCreditsException;
 use App\Domain\Ai\Studio\Orchestration\GenerationOrchestrator;
+use App\Domain\Billing\EntitlementService;
+use App\Domain\Payment\TripayService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AiStudio\CompilePromptRequest;
 use App\Http\Requests\AiStudio\DispatchGenerationRequest;
@@ -20,14 +22,19 @@ use App\Models\AiStudio\BusinessInspirationProject;
 use App\Models\AiStudio\BusinessInspirationProjectAsset;
 use App\Models\AiStudio\BusinessInspirationPromptVersion;
 use App\Models\AiStudio\InspirationItem;
+use App\Models\BillingPackage;
 use App\Models\Product;
+use App\Models\SubscriptionPayment;
 use App\Models\Unit;
 use App\Support\Context;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
@@ -35,11 +42,55 @@ use Throwable;
 
 final class OwnerAiStudioWebController extends Controller implements HasMiddleware
 {
+    /**
+     * Konfigurasi Preset Paket Top-Up Kredit AI Studio (UMKM Friendly).
+     */
+    public const TOPUP_TIERS = [
+        'starter' => [
+            'code' => 'starter',
+            'name' => 'Starter Pack',
+            'credits' => 50,
+            'price' => 25000,
+            'formatted_price' => 'Rp 25.000',
+            'badge' => null,
+            'description' => 'Uji coba 3-5 visual katalog produk & materi promosi sosmed.',
+        ],
+        'growth' => [
+            'code' => 'growth',
+            'name' => 'Growth Pack',
+            'credits' => 150,
+            'price' => 65000,
+            'formatted_price' => 'Rp 65.000',
+            'badge' => 'Terpopuler',
+            'description' => 'Photoshoot katalog mingguan & kampanye visual omnichannel.',
+        ],
+        'pro' => [
+            'code' => 'pro',
+            'name' => 'Pro Studio',
+            'credits' => 300,
+            'price' => 120000,
+            'formatted_price' => 'Rp 120.000',
+            'badge' => 'Paling Hemat',
+            'description' => 'Photoshoot katalog lengkap, multi-variasi rasio, & seasonal campaign.',
+        ],
+        'sultan' => [
+            'code' => 'sultan',
+            'name' => 'Sultan Pack',
+            'credits' => 1000,
+            'price' => 350000,
+            'formatted_price' => 'Rp 350.000',
+            'badge' => 'Nilai Terbaik',
+            'description' => 'Kapasitas maksimal untuk studio foto produk e-commerce & agensi.',
+        ],
+    ];
+
     public function __construct(
         private readonly GenerationOrchestrator $orchestrator = new GenerationOrchestrator,
         private readonly PromptCompilerService $promptCompiler = new PromptCompilerService,
         private readonly CostQuoteService $costQuoteService = new CostQuoteService,
         private readonly CreditLedgerService $creditLedgerService = new CreditLedgerService,
+        private readonly TripayService $tripayService = new TripayService,
+        private readonly EntitlementService $entitlementService = new EntitlementService,
     ) {}
 
     /**
@@ -54,10 +105,13 @@ final class OwnerAiStudioWebController extends Controller implements HasMiddlewa
                 'create',
                 'generationStatus',
                 'creditHistory',
+                'topupPackages',
+                'checkTopupStatus',
             ]),
             new Middleware('require.permission:ai_studio.generate', only: [
                 'compilePrompt',
                 'dispatchGeneration',
+                'orderTopup',
             ]),
             new Middleware('require.permission:ai_studio.manage', only: [
                 'store',
@@ -545,5 +599,276 @@ final class OwnerAiStudioWebController extends Controller implements HasMiddlewa
 
         return redirect()->route('ai-studio.index')
             ->with('success', 'Proyek AI Studio berhasil dihapus.');
+    }
+
+    /**
+     * Dapatkan daftar paket top-up kredit AI Studio dan channel pembayaran TriPay aktif.
+     */
+    public function topupPackages(Request $request): JsonResponse
+    {
+        $business = Context::requireBusiness();
+        $dbPackages = BillingPackage::where('type', BillingPackage::TYPE_AI_TOKEN)->active()->get();
+
+        $packages = [];
+        if ($dbPackages->isNotEmpty()) {
+            foreach ($dbPackages as $pkg) {
+                $packages[] = [
+                    'id' => $pkg->id,
+                    'code' => $pkg->code,
+                    'name' => $pkg->name,
+                    'credits' => (int) ($pkg->token_quantity ?? 50),
+                    'price' => (float) $pkg->price,
+                    'formatted_price' => 'Rp ' . number_format((float) $pkg->price, 0, ',', '.'),
+                    'badge' => null,
+                    'description' => $pkg->description ?: "Isi ulang {$pkg->token_quantity} kredit AI Studio.",
+                ];
+            }
+        } else {
+            $packages = array_values(self::TOPUP_TIERS);
+        }
+
+        // Ambil channel pembayaran TriPay aktif
+        $rawChannels = $this->tripayService->getActiveChannels();
+        $paymentChannels = [];
+        $seenQris = false;
+
+        foreach ($rawChannels as $ch) {
+            $code = strtolower((string) ($ch['code'] ?? ''));
+            $isQris = str_contains($code, 'qris') || ($ch['type'] ?? '') === 'qris';
+
+            if ($isQris) {
+                if ($seenQris) {
+                    continue;
+                }
+                $seenQris = true;
+                $paymentChannels[] = [
+                    'code' => 'qris',
+                    'name' => 'QRIS Dinamis',
+                    'group' => 'E-Wallet & QRIS',
+                    'icon_url' => $ch['icon_url'] ?? 'https://tripay.co.id/images/payment-channel/qris.png',
+                    'description' => 'GoPay, OVO, ShopeePay, DANA, BCA, Mandiri, BRImo, dll.',
+                    'is_default' => true,
+                ];
+                continue;
+            }
+
+            if (in_array(strtoupper($code), ['BCAVA', 'BRIVA', 'MANDIRIVA', 'BNIVA', 'PERMATAVA'], true)) {
+                $paymentChannels[] = [
+                    'code' => strtolower($code),
+                    'name' => $ch['name'] ?? strtoupper($code),
+                    'group' => 'Virtual Account',
+                    'icon_url' => $ch['icon_url'] ?? null,
+                    'description' => $ch['description'] ?? 'Transfer Bank / Virtual Account otomatis',
+                    'is_default' => false,
+                ];
+            }
+        }
+
+        if (empty($paymentChannels)) {
+            $paymentChannels = [
+                [
+                    'code' => 'qris',
+                    'name' => 'QRIS Dinamis',
+                    'group' => 'E-Wallet & QRIS',
+                    'icon_url' => 'https://tripay.co.id/images/payment-channel/qris.png',
+                    'description' => 'GoPay, OVO, ShopeePay, DANA, BCA, Mandiri, BRImo, dll.',
+                    'is_default' => true,
+                ],
+                [
+                    'code' => 'bcava',
+                    'name' => 'BCA Virtual Account',
+                    'group' => 'Virtual Account',
+                    'icon_url' => 'https://tripay.co.id/images/payment-channel/bca-va.png',
+                    'description' => 'Transfer via BCA Mobile, KlikBCA, ATM BCA',
+                    'is_default' => false,
+                ],
+                [
+                    'code' => 'briva',
+                    'name' => 'BRI Virtual Account',
+                    'group' => 'Virtual Account',
+                    'icon_url' => 'https://tripay.co.id/images/payment-channel/bri-va.png',
+                    'description' => 'Transfer via BRImo, ATM BRI, Agen BRILink',
+                    'is_default' => false,
+                ],
+                [
+                    'code' => 'mandiriva',
+                    'name' => 'Mandiri Virtual Account',
+                    'group' => 'Virtual Account',
+                    'icon_url' => 'https://tripay.co.id/images/payment-channel/mandiri-va.png',
+                    'description' => 'Transfer via Livin by Mandiri, ATM Mandiri',
+                    'is_default' => false,
+                ],
+            ];
+        }
+
+        return response()->json([
+            'success' => true,
+            'credits_balance' => (int) ($business->ai_credits_balance ?? 0),
+            'packages' => $packages,
+            'payment_channels' => $paymentChannels,
+        ]);
+    }
+
+    /**
+     * Buat pesanan top-up kredit AI Studio dan buat tagihan TriPay otomatis.
+     */
+    public function orderTopup(Request $request): JsonResponse
+    {
+        $business = Context::requireBusiness();
+        $user = $request->user();
+
+        $validated = $request->validate([
+            'tier_code' => ['nullable', 'string', 'max:50'],
+            'package_id' => ['nullable', 'uuid'],
+            'payment_method' => ['required', 'string', 'max:50'],
+        ]);
+
+        $credits = 0;
+        $price = 0.0;
+        $packageName = '';
+        $billingPackageId = null;
+
+        if (!empty($validated['package_id'])) {
+            $pkg = BillingPackage::where('type', BillingPackage::TYPE_AI_TOKEN)->active()->find($validated['package_id']);
+            if (!$pkg) {
+                return response()->json(['success' => false, 'message' => 'Paket top-up tidak ditemukan atau sudah tidak aktif.'], 404);
+            }
+            $billingPackageId = $pkg->id;
+            $credits = (int) ($pkg->token_quantity ?? 50);
+            $price = (float) $pkg->price;
+            $packageName = $pkg->name;
+        } else {
+            $tierCode = strtolower((string) ($validated['tier_code'] ?? 'starter'));
+            if (!isset(self::TOPUP_TIERS[$tierCode])) {
+                $tierCode = 'starter';
+            }
+            $tier = self::TOPUP_TIERS[$tierCode];
+            $credits = (int) $tier['credits'];
+            $price = (float) $tier['price'];
+            $packageName = $tier['name'];
+        }
+
+        $paymentMethod = strtolower(trim((string) $validated['payment_method']));
+
+        // Buat SubscriptionPayment atomik
+        $orderNumber = $this->nextTopupOrderNumber();
+        $payment = SubscriptionPayment::create([
+            'business_id' => $business->id,
+            'user_id' => $user?->id,
+            'payment_type' => 'ai_token',
+            'billing_package_id' => $billingPackageId,
+            'order_number' => $orderNumber,
+            'package_name' => "Top Up AI Studio: {$credits} Kredit ({$packageName})",
+            'plan_code' => 'topup',
+            'cycle' => 'one_time',
+            'amount' => $price,
+            'discount_amount' => 0,
+            'unique_code' => 0,
+            'total_payable' => $price,
+            'topup_quantity' => $credits,
+            'payment_method' => $paymentMethod,
+            'payment_gateway' => SubscriptionPayment::GATEWAY_TRIPAY,
+            'status' => SubscriptionPayment::STATUS_PENDING,
+        ]);
+
+        // Hubungkan ke TriPay Gateway
+        $channelCode = $payment->getTripayChannelCode();
+        $tripayRes = $this->tripayService->createSubscriptionTransaction($payment, $channelCode);
+
+        if ($tripayRes['success'] ?? false) {
+            $payment->update([
+                'payment_gateway' => SubscriptionPayment::GATEWAY_TRIPAY,
+                'gateway_reference' => $tripayRes['reference'] ?? null,
+                'gateway_pay_code' => $tripayRes['pay_code'] ?? null,
+                'gateway_pay_url' => $tripayRes['checkout_url'] ?? null,
+                'gateway_qr_url' => $tripayRes['qr_url'] ?? null,
+                'gateway_qr_string' => $tripayRes['qr_string'] ?? null,
+                'gateway_fee' => (float) ($tripayRes['fee'] ?? 0.0),
+                'gateway_expired_at' => isset($tripayRes['expired_time']) ? Carbon::createFromTimestamp($tripayRes['expired_time']) : now()->addMinutes(15),
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Tagihan pembayaran berhasil dibuat.',
+                'payment' => [
+                    'id' => $payment->id,
+                    'order_number' => $payment->order_number,
+                    'credits' => $credits,
+                    'amount' => $price,
+                    'formatted_amount' => 'Rp ' . number_format($price, 0, ',', '.'),
+                    'payment_method' => $paymentMethod,
+                    'channel_code' => $channelCode,
+                    'qr_url' => $payment->gateway_qr_url,
+                    'qr_string' => $payment->gateway_qr_string,
+                    'pay_code' => $payment->gateway_pay_code,
+                    'checkout_url' => $payment->gateway_pay_url,
+                    'expired_at' => $payment->gateway_expired_at?->toIso8601String(),
+                    'payment_url' => route('billing.payment.show', $payment->id),
+                    'status_url' => route('ai-studio.topup.status', $payment->id),
+                ],
+            ]);
+        }
+
+        $errorMsg = $tripayRes['message'] ?? 'Gagal membuat tagihan via TriPay.';
+        $payment->update(['admin_notes' => 'TriPay Error: ' . $errorMsg]);
+
+        return response()->json([
+            'success' => false,
+            'message' => $errorMsg,
+        ], 502);
+    }
+
+    /**
+     * Cek status pembayaran topup secara live (digunakan polling di modal / UI).
+     */
+    public function checkTopupStatus(SubscriptionPayment $payment): JsonResponse
+    {
+        $business = Context::requireBusiness();
+        abort_unless($payment->business_id === $business->id, 403);
+
+        // Jika belum disetujui, cek apakah sudah dibayar di gateway
+        if (!$payment->isPaid() && $payment->status === SubscriptionPayment::STATUS_PENDING && !empty($payment->gateway_reference)) {
+            $tripayDetail = $this->tripayService->getTransactionDetail($payment->gateway_reference);
+            if ($tripayDetail && strtoupper((string) ($tripayDetail['status'] ?? '')) === 'PAID') {
+                $this->entitlementService->approvePayment(
+                    payment: $payment,
+                    admin: null,
+                    adminNotes: 'Auto-verified on live polling check'
+                );
+                $payment->refresh();
+            }
+        }
+
+        $business->refresh();
+
+        return response()->json([
+            'success' => true,
+            'status' => $payment->status,
+            'is_paid' => $payment->isPaid(),
+            'credits_balance' => (int) ($business->ai_credits_balance ?? 0),
+            'order_number' => $payment->order_number,
+            'qr_url' => $payment->gateway_qr_url,
+            'pay_code' => $payment->gateway_pay_code,
+            'message' => $payment->isPaid() ? 'Pembayaran berhasil! Saldo kredit telah ditambahkan.' : 'Menunggu pembayaran...',
+        ]);
+    }
+
+    /**
+     * Generator nomor pesanan topup unik.
+     */
+    private function nextTopupOrderNumber(): string
+    {
+        $prefix = 'TOP-' . date('Ym') . '-';
+        $latest = DB::table('subscription_payments')
+            ->where('order_number', 'LIKE', $prefix . '%')
+            ->orderByDesc('order_number')
+            ->value('order_number');
+
+        $seq = 1;
+        if ($latest && preg_match('/-(\d+)$/', $latest, $matches)) {
+            $seq = ((int) $matches[1]) + 1;
+        }
+
+        return $prefix . str_pad((string) $seq, 4, '0', STR_PAD_LEFT);
     }
 }

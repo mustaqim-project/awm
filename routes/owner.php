@@ -699,8 +699,11 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
             Route::post('/assets/{asset}/export-to-catalog', [OwnerAiStudioWebController::class, 'exportToCatalog'])->name('assets.export-to-catalog');
             Route::post('/assets/{asset}/toggle-favorite', [OwnerAiStudioWebController::class, 'toggleFavoriteAsset'])->name('assets.toggle-favorite');
 
-            // Riwayat Ledger Kredit Transaksi
+            // Riwayat Ledger Kredit Transaksi & Top-Up
             Route::get('/credit-history', [OwnerAiStudioWebController::class, 'creditHistory'])->name('credit-history');
+            Route::get('/topup-packages', [OwnerAiStudioWebController::class, 'topupPackages'])->name('topup.packages');
+            Route::post('/topup', [OwnerAiStudioWebController::class, 'orderTopup'])->name('topup.order');
+            Route::get('/topup/{payment}/status', [OwnerAiStudioWebController::class, 'checkTopupStatus'])->name('topup.status');
 
             // Penjelajahan Katalog Inspirasi Legal
             Route::get('/inspiration', [OwnerInspirationWebController::class, 'index'])->name('inspiration.index');

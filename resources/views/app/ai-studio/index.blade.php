@@ -39,8 +39,15 @@
                     <i data-lucide="coins" class="w-3 h-3"></i>
                 </span>
                 <span>Saldo Kredit:</span>
-                <span class="font-bold text-[#007AFF] dark:text-[#0A84FF] text-sm">{{ number_format($stats['credits_balance']) }}</span>
+                <span class="font-bold text-[#007AFF] dark:text-[#0A84FF] text-sm" x-text="creditsBalance">{{ number_format($stats['credits_balance']) }}</span>
             </a>
+
+            <!-- Top Up Kredit Trigger -->
+            <button type="button" @click="$dispatch('open-ai-topup-modal')"
+                class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-[12px] bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-xs font-bold shadow-sm shadow-orange-500/20 active:scale-[0.98] transition-all">
+                <i data-lucide="zap" class="w-3.5 h-3.5 fill-white"></i>
+                <span>Top Up Kredit</span>
+            </button>
 
             <!-- Browse Inspiration Button -->
             <a href="{{ route('ai-studio.inspiration.index') }}"
@@ -57,6 +64,28 @@
             </a>
         </div>
     </div>
+
+    <!-- Alert Banner when Monthly Credits are Expended (0 Balance) -->
+    @if ($stats['credits_balance'] <= 0)
+        <div class="p-4 rounded-[16px] bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-red-500/10 border border-orange-500/25 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-[12px] bg-orange-500/15 text-orange-600 dark:text-orange-400 flex items-center justify-center shrink-0">
+                    <i data-lucide="alert-circle" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h4 class="text-xs sm:text-sm font-bold text-black dark:text-white">Kredit Bulanan AI Studio Anda Telah Habis (0 Kredit)</h4>
+                    <p class="text-[11px] sm:text-xs text-black/60 dark:text-white/60">
+                        Top up kredit sekarang via QRIS / Virtual Account untuk melanjutkan render visual katalog produk tanpa hambatan.
+                    </p>
+                </div>
+            </div>
+            <button type="button" @click="$dispatch('open-ai-topup-modal')"
+                class="inline-flex items-center gap-1.5 px-4 py-2 rounded-[12px] bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-xs font-bold shadow-sm shadow-orange-500/20 transition-all shrink-0">
+                <i data-lucide="zap" class="w-3.5 h-3.5 fill-white"></i>
+                <span>Top Up Sekarang</span>
+            </button>
+        </div>
+    @endif
 
     <!-- ========================================== -->
     <!-- 2. BENTO STATS & METRICS GRID             -->
@@ -360,12 +389,16 @@
         </div>
     </div>
 
+    <!-- Top Up Modal Component -->
+    @include('app.ai-studio.partials.topup-modal')
+
 </div>
 
 @push('scripts')
 <script>
 function aiStudioDashboard() {
     return {
+        creditsBalance: {{ (int) ($stats['credits_balance'] ?? 0) }},
         deleteModalOpen: false,
         deleteProjectId: null,
         deleteProjectName: '',
@@ -381,6 +414,11 @@ function aiStudioDashboard() {
 
         init() {
             lucide.createIcons();
+            window.addEventListener('ai-credits-updated', (e) => {
+                if (e.detail && typeof e.detail.credits !== 'undefined') {
+                    this.creditsBalance = e.detail.credits;
+                }
+            });
         }
     };
 }

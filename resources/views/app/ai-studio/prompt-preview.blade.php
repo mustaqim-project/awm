@@ -88,12 +88,16 @@
             </div>
 
             <!-- Balance Sufficiency Warning if needed -->
-            <div x-show="!canAfford" class="p-3.5 rounded-[12px] bg-red-500/10 border border-red-500/20 flex items-center justify-between text-xs text-red-600 dark:text-red-400">
+            <div x-show="!canAfford" class="p-3.5 rounded-[12px] bg-red-500/10 border border-red-500/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-red-600 dark:text-red-400">
                 <div class="flex items-center gap-2">
                     <i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i>
-                    <span>Saldo kredit Anda (<strong x-text="userCredits"></strong>) tidak mencukupi untuk pemesanan ini.</span>
+                    <span>Saldo kredit Anda (<strong x-text="userCredits"></strong>) tidak mencukupi untuk pemesanan ini (dibutuhkan <strong x-text="quoteCost"></strong> kredit).</span>
                 </div>
-                <a href="{{ route('ai-studio.credit-history') }}" class="font-bold underline shrink-0">Top Up</a>
+                <button type="button" @click="$dispatch('open-ai-topup-modal', { required: quoteCost, available: userCredits, message: 'Saldo kredit Anda tidak mencukupi untuk pemesanan ini (' + userCredits + ' dari ' + quoteCost + ' kredit).' })"
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[10px] bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold text-xs shadow-xs transition-all shrink-0">
+                    <i data-lucide="zap" class="w-3 h-3 fill-white"></i>
+                    <span>Top Up Sekarang</span>
+                </button>
             </div>
 
         </div>
