@@ -345,8 +345,27 @@
 
             <!-- Filter Tabs & Search Bar -->
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <!-- Provider Filter Tabs -->
+                <!-- Provider & Purpose Filter Tabs -->
                 <div class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 text-[12px]">
+                    <!-- Purpose Quick Switcher -->
+                    <div class="flex items-center gap-1 p-0.5 rounded-[10px] bg-black/[0.05] dark:bg-white/[0.08] mr-1.5 shrink-0">
+                        <button type="button" @click="purposeFilter = 'all'"
+                            class="px-2.5 py-1 rounded-[8px] text-[11px] font-bold transition-all"
+                            :class="purposeFilter === 'all' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs' : 'text-black/60 dark:text-white/60'">
+                            Semua
+                        </button>
+                        <button type="button" @click="purposeFilter = 'chat'"
+                            class="px-2.5 py-1 rounded-[8px] text-[11px] font-bold transition-all flex items-center gap-1"
+                            :class="purposeFilter === 'chat' ? 'bg-[#007AFF] text-white shadow-xs' : 'text-black/60 dark:text-white/60'">
+                            <span>💬 Chatbot</span>
+                        </button>
+                        <button type="button" @click="purposeFilter = 'image'"
+                            class="px-2.5 py-1 rounded-[8px] text-[11px] font-bold transition-all flex items-center gap-1"
+                            :class="purposeFilter === 'image' ? 'bg-[#AF52DE] text-white shadow-xs' : 'text-black/60 dark:text-white/60'">
+                            <span>🎨 AI Studio</span>
+                        </button>
+                    </div>
+
                     <button type="button" @click="keyFilter = 'all'"
                         class="px-3 py-1.5 rounded-[8px] font-semibold transition-all shrink-0"
                         :class="keyFilter === 'all' 
@@ -441,6 +460,16 @@
                                         'bg-black/5 dark:bg-white/10 text-black/60 dark:text-white/60 border-black/10 dark:border-white/10': k.priority === 3
                                     }">
                                     <span x-text="k.priority === 1 ? 'Tier 1: Utama' : (k.priority === 2 ? 'Tier 2: Cadangan' : 'Tier 3: Fallback')"></span>
+                                </span>
+
+                                <!-- Purpose / Peruntukan Badge -->
+                                <span class="px-2 py-0.5 rounded-[6px] text-[10.5px] font-bold border flex items-center gap-1"
+                                    :class="{
+                                        'bg-[#AF52DE]/10 text-[#AF52DE] dark:text-[#BF5AF2] border-[#AF52DE]/20': k.purpose === 'image',
+                                        'bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF] border-[#007AFF]/20': k.purpose === 'chat' || !k.purpose,
+                                        'bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] border-[#34C759]/20': k.purpose === 'all'
+                                    }">
+                                    <span x-text="k.purpose === 'image' ? '🎨 Khusus Gambar' : (k.purpose === 'all' ? '🌐 Universal' : '💬 Khusus Chatbot')"></span>
                                 </span>
 
                                 <!-- Health / Status Indicator -->
@@ -1017,6 +1046,23 @@
                         </div>
                     </div>
 
+                    <!-- Peruntukan Kunci (Isolasi Chatbot vs Image Generator) -->
+                    <div>
+                        <label class="block text-[12.5px] font-medium text-black/70 dark:text-white/70 mb-1.5 flex items-center justify-between">
+                            <span>Peruntukan Kunci AI (Pemisahan Kuota)</span>
+                            <span class="text-[11px] font-bold text-[#FF9500]">Isolasi Ketat</span>
+                        </label>
+                        <select name="purpose" x-model="newKeyForm.purpose" required
+                            class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                            <option value="chat">💬 Khusus Chatbot &amp; Analisis Teks (WhatsApp CS, Live Chat, Prompts)</option>
+                            <option value="image">🎨 Khusus AI Studio &amp; Generasi Gambar (DALL-E 3, Flux, Visual Studio)</option>
+                            <option value="all">🌐 Universal (Bisa Chatbot &amp; Generasi Gambar)</option>
+                        </select>
+                        <p class="text-[11px] text-black/45 dark:text-white/45 mt-1">
+                            Kunci khusus gambar dipisahkan ketat agar render visual resolusi tinggi tidak mengganggu kuota / rate limit chatbot.
+                        </p>
+                    </div>
+
                     <!-- Token API Key -->
                     <div>
                         <label class="block text-[12.5px] font-medium text-black/70 dark:text-white/70 mb-1.5">
@@ -1122,6 +1168,23 @@
                                 <option value="3">Tier 3: Darurat (Emergency Fallback)</option>
                             </select>
                         </div>
+                    </div>
+
+                    <!-- Peruntukan Kunci (Isolasi Chatbot vs Image Generator) -->
+                    <div>
+                        <label class="block text-[12.5px] font-medium text-black/70 dark:text-white/70 mb-1.5 flex items-center justify-between">
+                            <span>Peruntukan Kunci AI (Pemisahan Kuota)</span>
+                            <span class="text-[11px] font-bold text-[#FF9500]">Isolasi Ketat</span>
+                        </label>
+                        <select name="purpose" x-model="editingKey.purpose" required
+                            class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                            <option value="chat">💬 Khusus Chatbot &amp; Analisis Teks (WhatsApp CS, Live Chat, Prompts)</option>
+                            <option value="image">🎨 Khusus AI Studio &amp; Generasi Gambar (DALL-E 3, Flux, Visual Studio)</option>
+                            <option value="all">🌐 Universal (Bisa Chatbot &amp; Generasi Gambar)</option>
+                        </select>
+                        <p class="text-[11px] text-black/45 dark:text-white/45 mt-1">
+                            Kunci khusus gambar dipisahkan ketat agar render visual resolusi tinggi tidak mengganggu kuota / rate limit chatbot.
+                        </p>
                     </div>
 
                     <!-- Token API Key (Optional Update) -->
@@ -1352,6 +1415,7 @@ function aiEngineConsole(config) {
 
         // Key Filters & Search
         keyFilter: 'all',
+        purposeFilter: 'all',
         keySearch: '',
 
         // Modals
@@ -1364,6 +1428,7 @@ function aiEngineConsole(config) {
         newKeyForm: {
             name: '',
             provider: 'openai_compatible',
+            purpose: 'chat',
             api_key: '',
             endpoint: 'https://r4g77gv.abc-tunnel.us/v1',
             model: 'ag/gemini-3.8-flash-high',
@@ -1376,6 +1441,7 @@ function aiEngineConsole(config) {
             id: '',
             name: '',
             provider: 'openai_compatible',
+            purpose: 'chat',
             api_key: '',
             endpoint: '',
             model: '',
@@ -1431,6 +1497,11 @@ function aiEngineConsole(config) {
 
         filteredKeys() {
             return this.maskedKeys.filter(k => {
+                if (this.purposeFilter !== 'all') {
+                    const p = k.purpose || 'chat';
+                    if (this.purposeFilter === 'chat' && p === 'image') return false;
+                    if (this.purposeFilter === 'image' && p === 'chat') return false;
+                }
                 if (this.keyFilter !== 'all' && k.provider !== this.keyFilter) {
                     return false;
                 }
@@ -1439,6 +1510,7 @@ function aiEngineConsole(config) {
                     return (k.name && k.name.toLowerCase().includes(q)) ||
                            (k.provider && k.provider.toLowerCase().includes(q)) ||
                            (k.model && k.model.toLowerCase().includes(q)) ||
+                           (k.purpose && k.purpose.toLowerCase().includes(q)) ||
                            (k.endpoint && k.endpoint.toLowerCase().includes(q));
                 }
                 return true;
@@ -1452,6 +1524,11 @@ function aiEngineConsole(config) {
             this.newKeyForm.api_key = '';
             this.newKeyForm.priority = 1;
             this.newKeyForm.weight = 1;
+            if (['ideogram', 'stability'].includes(this.newKeyForm.provider)) {
+                this.newKeyForm.purpose = 'image';
+            } else {
+                this.newKeyForm.purpose = 'chat';
+            }
             this.addKeyModalOpen = true;
             this.$nextTick(() => {
                 if (typeof lucide !== 'undefined') lucide.createIcons();
@@ -1464,6 +1541,9 @@ function aiEngineConsole(config) {
                 this.newKeyForm.endpoint = meta.default_endpoint || '';
                 this.newKeyForm.model = meta.default_model || '';
             }
+            if (['ideogram', 'stability'].includes(this.newKeyForm.provider)) {
+                this.newKeyForm.purpose = 'image';
+            }
         },
 
         openEditKeyModal(k) {
@@ -1471,6 +1551,7 @@ function aiEngineConsole(config) {
                 id: k.id,
                 name: k.name,
                 provider: k.provider || 'openai_compatible',
+                purpose: k.purpose || 'chat',
                 endpoint: k.endpoint || '',
                 model: k.model || '',
                 priority: k.priority || 1,

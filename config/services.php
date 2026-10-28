@@ -132,5 +132,13 @@ return [
         'base_url' => env('OPENAI_BASE_URL', 'https://api.openai.com/v1'),
     ],
 
+    // Dedicated configuration for AI Image Generation (DALL-E 3, Flux, etc.)
+    // Dipisahkan secara eksplisit dari API key chatbot untuk isolasi kuota & rate limit.
+    'openai_image' => [
+        'api_key' => env('OPENAI_IMAGE_API_KEY', env('AI_IMAGE_API_KEY', '')),
+        'base_url' => env('OPENAI_IMAGE_BASE_URL', env('AI_IMAGE_BASE_URL', 'https://api.openai.com/v1')),
+        'model' => env('OPENAI_IMAGE_MODEL', 'dall-e-3'),
+    ],
+
 ];
 

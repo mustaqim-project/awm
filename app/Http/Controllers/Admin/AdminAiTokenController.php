@@ -205,6 +205,7 @@ final class AdminAiTokenController extends Controller implements HasMiddleware
             'key_name' => ['required', 'string', 'max:100'],
             'api_key' => ['required', 'string', 'min:8', 'max:1000'],
             'provider' => ['nullable', 'string', 'in:openai_compatible,anthropic,gemini,openai,openrouter,ideogram,stability'],
+            'purpose' => ['nullable', 'string', 'in:chat,image,all'],
             'endpoint' => ['nullable', 'string', 'max:500'],
             'model' => ['nullable', 'string', 'max:150'],
             'priority' => ['nullable', 'integer', 'between:1,3'],
@@ -222,12 +223,14 @@ final class AdminAiTokenController extends Controller implements HasMiddleware
             $validated['endpoint'] ?? null,
             $validated['model'] ?? null,
             (int) ($validated['priority'] ?? 1),
-            (int) ($validated['weight'] ?? 1)
+            (int) ($validated['weight'] ?? 1),
+            $validated['purpose'] ?? null
         );
 
         $adminName = auth('admin')->user()?->name ?? 'Superadmin';
         $providerName = $entry['provider'] ?? 'openai_compatible';
-        Log::info("AUDIT: Admin [{$adminName}] menambahkan API Key baru [{$validated['key_name']}] (Provider: {$providerName}) ke Platform AI Pool.");
+        $purposeLabel = ($entry['purpose'] ?? 'chat') === 'image' ? 'Khusus Gambar (AI Studio)' : (($entry['purpose'] ?? 'chat') === 'all' ? 'Universal' : 'Khusus Chatbot');
+        Log::info("AUDIT: Admin [{$adminName}] menambahkan API Key baru [{$validated['key_name']}] (Provider: {$providerName}, Peruntukan: {$purposeLabel}) ke Platform AI Pool.");
 
         if ($request->expectsJson()) {
             return response()->json([
@@ -238,7 +241,7 @@ final class AdminAiTokenController extends Controller implements HasMiddleware
         }
 
         return redirect()->route('admin.ai-tokens.index', ['tab' => 'engine'])
-            ->with('success', "API Key '{$validated['key_name']}' berhasil ditambahkan ke pool provider {$providerName}.");
+            ->with('success', "API Key '{$validated['key_name']}' ({$purposeLabel}) berhasil ditambahkan ke pool provider {$providerName}.");
     }
 
     /**
@@ -250,6 +253,7 @@ final class AdminAiTokenController extends Controller implements HasMiddleware
             'key_name' => ['required', 'string', 'max:100'],
             'api_key' => ['nullable', 'string', 'min:8', 'max:1000'],
             'provider' => ['required', 'string', 'in:openai_compatible,anthropic,gemini,openai,openrouter,ideogram,stability'],
+            'purpose' => ['nullable', 'string', 'in:chat,image,all'],
             'endpoint' => ['nullable', 'string', 'max:500'],
             'model' => ['nullable', 'string', 'max:150'],
             'priority' => ['nullable', 'integer', 'between:1,3'],
@@ -263,6 +267,7 @@ final class AdminAiTokenController extends Controller implements HasMiddleware
         $updateData = [
             'name' => $validated['key_name'],
             'provider' => $validated['provider'],
+            'purpose' => $validated['purpose'] ?? 'chat',
             'endpoint' => $validated['endpoint'] ?? null,
             'model' => $validated['model'] ?? null,
             'priority' => (int) ($validated['priority'] ?? 1),

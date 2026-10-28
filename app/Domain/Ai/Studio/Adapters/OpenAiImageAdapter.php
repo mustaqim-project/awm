@@ -68,14 +68,15 @@ class OpenAiImageAdapter implements ImageGenerationProviderInterface
             }
         }
 
-        // 3. Fallback ke config/env jika ada
-        $envKey = (string) config('services.openai.api_key', env('OPENAI_API_KEY', ''));
-        if (! empty($envKey)) {
+        // 3. Fallback HANYA ke dedicated environment/config untuk AI Image Generation (OPENAI_IMAGE_API_KEY / AI_IMAGE_API_KEY)
+        // Dipisahkan secara ketat dari API key chatbot (OPENAI_API_KEY) agar kuota dan rate limit terisolasi.
+        $imageKey = (string) config('services.openai_image.api_key', env('OPENAI_IMAGE_API_KEY', env('AI_IMAGE_API_KEY', '')));
+        if (! empty($imageKey)) {
             return [
                 'id' => null,
-                'key' => $envKey,
-                'endpoint' => (string) config('services.openai.base_url', 'https://api.openai.com/v1'),
-                'model' => 'dall-e-3',
+                'key' => $imageKey,
+                'endpoint' => (string) config('services.openai_image.base_url', env('OPENAI_IMAGE_BASE_URL', env('AI_IMAGE_BASE_URL', 'https://api.openai.com/v1'))),
+                'model' => (string) config('services.openai_image.model', env('OPENAI_IMAGE_MODEL', 'dall-e-3')),
             ];
         }
 

@@ -347,6 +347,7 @@ final class AiPlatformEngineService
                 'name' => (string) ($k['name'] ?? 'API Key'),
                 'provider' => $providerKey,
                 'provider_meta' => $meta,
+                'purpose' => (string) ($k['purpose'] ?? 'chat'),
                 'masked_key' => $masked,
                 'endpoint' => (string) ($k['endpoint'] ?? ($meta['default_endpoint'] ?? '')),
                 'model' => (string) ($k['model'] ?? ($meta['default_model'] ?? '')),
@@ -364,6 +365,8 @@ final class AiPlatformEngineService
         }, $keysPool);
 
         $activeKeysCount = count(array_filter($keysPool, fn($k) => ($k['is_active'] ?? true) === true));
+        $chatKeysCount = count(array_filter($keysPool, fn($k) => ($k['is_active'] ?? true) && in_array($k['purpose'] ?? 'chat', ['chat', 'all'], true)));
+        $imageKeysCount = count(array_filter($keysPool, fn($k) => ($k['is_active'] ?? true) && in_array($k['purpose'] ?? 'chat', ['image', 'all'], true)));
         $connectedProvidersCount = count(array_filter($providerStats, fn($p) => $p['is_connected']));
         $totalRoutedRequests = array_sum(array_column($keysPool, 'total_requests'));
         $totalRoutedErrors = array_sum(array_column($keysPool, 'total_errors'));
@@ -380,6 +383,8 @@ final class AiPlatformEngineService
             'masked_keys' => $maskedKeys,
             'total_keys_count' => count($keysPool),
             'active_keys_count' => $activeKeysCount,
+            'chat_keys_count' => $chatKeysCount,
+            'image_keys_count' => $imageKeysCount,
             'available_models' => $availableModels,
             'providers_meta' => self::PROVIDERS_META,
             'providers_stats' => $providerStats,
@@ -422,7 +427,8 @@ final class AiPlatformEngineService
         ?string $endpoint = null,
         ?string $model = null,
         int $priority = 1,
-        int $weight = 1
+        int $weight = 1,
+        ?string $purpose = null
     ): array {
         $sanitizedKey = trim($rawKey, " \t\n\r\0\x0B\"'");
         if (str_starts_with(strtolower($sanitizedKey), 'bearer ')) {
@@ -437,11 +443,23 @@ final class AiPlatformEngineService
 
         $meta = self::PROVIDERS_META[$inferredProvider] ?? self::PROVIDERS_META[self::DEFAULT_PROVIDER];
 
+        // Infer purpose if not specified: 'chat' | 'image' | 'all'
+        if (empty($purpose) || ! in_array($purpose, ['chat', 'image', 'all'], true)) {
+            $provLower = strtolower($inferredProvider);
+            $modLower = strtolower((string) $model);
+            if (in_array($provLower, ['ideogram', 'stability'], true) || str_contains($modLower, 'dall-e') || str_contains($modLower, 'flux') || str_contains($modLower, 'sd') || str_contains($modLower, 'image')) {
+                $purpose = 'image';
+            } else {
+                $purpose = 'chat';
+            }
+        }
+
         $keyId = 'key_' . Str::random(10);
         $newEntry = [
             'id' => $keyId,
             'name' => trim($name) ?: ('Key #' . (count($keysPool) + 1)),
             'provider' => $inferredProvider,
+            'purpose' => $purpose,
             'key' => $sanitizedKey,
             'endpoint' => ! empty($endpoint) ? rtrim(trim($endpoint), '/') : ($meta['default_endpoint'] ?? ''),
             'model' => ! empty($model) ? trim($model) : ($meta['default_model'] ?? ''),
@@ -464,6 +482,7 @@ final class AiPlatformEngineService
             'id' => $keyId,
             'name' => $newEntry['name'],
             'provider' => $inferredProvider,
+            'purpose' => $purpose,
             'masked_key' => $this->maskApiKey($sanitizedKey),
         ];
     }
@@ -506,6 +525,9 @@ final class AiPlatformEngineService
                 }
                 if (isset($data['weight'])) {
                     $item['weight'] = max(1, min(10, (int) $data['weight']));
+                }
+                if (isset($data['purpose']) && in_array($data['purpose'], ['chat', 'image', 'all'], true)) {
+                    $item['purpose'] = $data['purpose'];
                 }
                 if (isset($data['is_active'])) {
                     $item['is_active'] = (bool) $data['is_active'];
@@ -768,8 +790,12 @@ final class AiPlatformEngineService
     {
         $keysPool = $this->getRawKeysPool();
 
-        // Filter active keys
-        $activeKeys = array_values(array_filter($keysPool, fn($k) => ($k['is_active'] ?? true) === true && ! empty($k['key'])));
+        // Filter active keys strictly for Chatbot / Text LLM (exclude keys designated strictly for image generation)
+        $activeKeys = array_values(array_filter($keysPool, function ($k) {
+            $isActive = ($k['is_active'] ?? true) === true && ! empty($k['key']);
+            $purpose = (string) ($k['purpose'] ?? 'chat');
+            return $isActive && $purpose !== 'image';
+        }));
 
         if (empty($activeKeys)) {
             return null;
@@ -830,7 +856,8 @@ final class AiPlatformEngineService
     }
 
     /**
-     * Dapatkan seluruh kunci API yang aktif dan memiliki kapabilitas untuk Generasi Gambar (DALL-E, Tunnel, Ideogram, Flux, dsb).
+     * Dapatkan seluruh kunci API yang aktif dan khusus memiliki kapabilitas untuk Generasi Gambar (DALL-E, Ideogram, Flux, SD, dsb).
+     * Kunci yang khusus diperuntukkan bagi chatbot ('chat') TIDAK PERNAH dikembalikan di sini.
      *
      * @return array<int, array<string, mixed>>
      */
@@ -838,7 +865,35 @@ final class AiPlatformEngineService
     {
         $keysPool = $this->getRawKeysPool();
 
-        $activeKeys = array_values(array_filter($keysPool, fn($k) => ($k['is_active'] ?? true) === true && ! empty($k['key'])));
+        // Filter active keys strictly for AI Image Generation
+        $activeKeys = array_values(array_filter($keysPool, function ($k) {
+            $isActive = ($k['is_active'] ?? true) === true && ! empty($k['key']);
+            if (! $isActive) {
+                return false;
+            }
+
+            $purpose = (string) ($k['purpose'] ?? '');
+
+            // Kunci yang secara eksplisit khusus 'chat' TIDAK BOLEH digunakan image generation
+            if ($purpose === 'chat') {
+                return false;
+            }
+
+            // Kunci yang secara eksplisit 'image' atau 'all' diizinkan
+            if ($purpose === 'image' || $purpose === 'all') {
+                return true;
+            }
+
+            // Fallback untuk data yang belum memiliki kolom purpose
+            $p = strtolower((string) ($k['provider'] ?? ''));
+            $m = strtolower((string) ($k['model'] ?? ''));
+
+            return in_array($p, ['ideogram', 'stability'], true)
+                || str_contains($m, 'dall-e')
+                || str_contains($m, 'image')
+                || str_contains($m, 'flux')
+                || str_contains($m, 'sd');
+        }));
 
         if (empty($activeKeys)) {
             return [];
@@ -851,19 +906,7 @@ final class AiPlatformEngineService
             }
         }
 
-        // Filter kunci yang kompatibel dengan generasi gambar
-        $imageCompatible = array_values(array_filter($activeKeys, function ($k) {
-            $p = strtolower((string) ($k['provider'] ?? ''));
-            $m = strtolower((string) ($k['model'] ?? ''));
-
-            return in_array($p, ['openai', 'openai_compatible', 'openrouter', 'ideogram', 'stability'], true)
-                || str_contains($m, 'dall-e')
-                || str_contains($m, 'image')
-                || str_contains($m, 'flux')
-                || str_contains($m, 'sd');
-        }));
-
-        return ! empty($imageCompatible) ? $imageCompatible : $activeKeys;
+        return $activeKeys;
     }
 
     /**
