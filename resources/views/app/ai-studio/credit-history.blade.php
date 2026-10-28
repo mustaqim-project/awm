@@ -5,7 +5,17 @@
 ])
 
 @section('content')
-<div class="space-y-6 pb-28 sm:pb-32 lg:pb-12" x-data="{ init() { lucide.createIcons(); } }">
+<div class="space-y-6 pb-28 sm:pb-32 lg:pb-12" x-data="{
+    credits: {{ (int) $creditsBalance }},
+    init() {
+        lucide.createIcons();
+        window.addEventListener('ai-credits-updated', (e) => {
+            if (e.detail && typeof e.detail.credits !== 'undefined') {
+                this.credits = e.detail.credits;
+            }
+        });
+    }
+}">
 
     <!-- ========================================== -->
     <!-- 1. BENTO HEADER & COCKPIT                  -->
@@ -32,20 +42,28 @@
             </p>
         </div>
 
-        <!-- Current Balance Bento Pill & Back Action -->
-        <div class="flex items-center gap-3">
+        <!-- Current Balance Bento Pill & Top Up Action -->
+        <div class="flex flex-wrap items-center gap-2.5">
             <div class="p-3.5 rounded-[14px] bg-[#007AFF]/10 dark:bg-[#007AFF]/20 border border-[#007AFF]/20 flex items-center gap-3">
                 <span class="w-9 h-9 rounded-[10px] bg-[#007AFF] text-white flex items-center justify-center shadow-sm">
                     <i data-lucide="wallet" class="w-5 h-5"></i>
                 </span>
                 <div>
                     <span class="text-[11px] font-semibold text-black/60 dark:text-white/60 block">Saldo Kredit Aktif</span>
-                    <span class="text-xl font-black text-[#007AFF] dark:text-[#0A84FF]">{{ number_format($creditsBalance) }}</span>
+                    <span class="text-xl font-black text-[#007AFF] dark:text-[#0A84FF]" x-text="credits">{{ number_format($creditsBalance) }}</span>
                     <span class="text-[10px] text-black/40 dark:text-white/40">kredit</span>
                 </div>
             </div>
+
+            <!-- Top Up Button -->
+            <button type="button" @click="$dispatch('open-ai-topup-modal')"
+                class="inline-flex items-center gap-1.5 px-4 py-3 rounded-[14px] bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-xs font-bold shadow-md shadow-orange-500/20 active:scale-[0.98] transition-all">
+                <i data-lucide="zap" class="w-4 h-4 fill-white"></i>
+                <span>Top Up Kredit</span>
+            </button>
+
             <a href="{{ route('ai-studio.index') }}"
-                class="px-4 py-2.5 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-xs font-semibold text-black/80 dark:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-all">
+                class="px-4 py-3 rounded-[14px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-xs font-semibold text-black/80 dark:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-all">
                 &larr; Studio
             </a>
         </div>
@@ -153,6 +171,9 @@
             </div>
         @endif
     </div>
+
+    <!-- Top Up Modal Component -->
+    @include('app.ai-studio.partials.topup-modal')
 
 </div>
 @endsection

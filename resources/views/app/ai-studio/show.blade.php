@@ -74,6 +74,13 @@
                 <span class="font-bold text-[#007AFF] dark:text-[#0A84FF]" x-text="creditsBalance">{{ number_format($creditsBalance) }}</span>
             </div>
 
+            <!-- Top Up Button -->
+            <button type="button" @click="$dispatch('open-ai-topup-modal')"
+                class="inline-flex items-center gap-1.5 px-3 py-2 rounded-[12px] bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-xs font-bold shadow-sm shadow-orange-500/20 active:scale-[0.98] transition-all">
+                <i data-lucide="zap" class="w-3.5 h-3.5 fill-white"></i>
+                <span>Top Up</span>
+            </button>
+
             <!-- New Generation Button -->
             <button type="button" @click="generationDrawerOpen = true"
                 class="inline-flex items-center gap-2 px-4 py-2 rounded-[12px] bg-[#007AFF] hover:bg-[#0062cc] text-white text-xs font-bold shadow-sm shadow-[#007AFF]/25 transition-all active:scale-[0.98]">
@@ -462,6 +469,15 @@
                 <span class="font-bold text-[#007AFF] text-sm" x-text="dispatchCost + ' Kredit'">15 Kredit</span>
             </div>
 
+            <!-- Insufficient Balance Warning inside Drawer -->
+            <div x-show="creditsBalance < dispatchCost" class="p-3 rounded-[12px] bg-amber-500/10 border border-amber-500/20 flex items-center justify-between text-xs text-amber-700 dark:text-amber-300">
+                <span class="text-[11px]">Saldo kredit Anda (<strong x-text="creditsBalance"></strong>) tidak mencukupi.</span>
+                <button type="button" @click="$dispatch('open-ai-topup-modal', { required: dispatchCost, available: creditsBalance, message: 'Saldo kredit Anda tidak mencukupi untuk render variasi ini.' })"
+                    class="px-2.5 py-1 rounded-[8px] bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold text-[10px] shadow-xs hover:from-amber-600 hover:to-orange-600">
+                    Top Up Sekarang
+                </button>
+            </div>
+
             <!-- Footer Actions -->
             <div class="flex items-center justify-end gap-2 pt-2 border-t border-black/5">
                 <button type="button" @click="generationDrawerOpen = false"
@@ -477,6 +493,9 @@
             </div>
         </div>
     </div>
+
+    <!-- Top Up Modal Component -->
+    @include('app.ai-studio.partials.topup-modal')
 
 </div>
 
@@ -641,6 +660,17 @@ function aiStudioCanvas(config) {
                 const data = await res.json();
 
                 if (!res.ok || !data.success) {
+                    if (res.status === 402 || data.error_code === 'INSUFFICIENT_CREDITS') {
+                        this.generationDrawerOpen = false;
+                        window.dispatchEvent(new CustomEvent('open-ai-topup-modal', {
+                            detail: {
+                                required: data.required || this.dispatchCost,
+                                available: data.available ?? this.creditsBalance,
+                                message: data.message || 'Kredit AI Studio Anda tidak mencukupi untuk memproses render ini.'
+                            }
+                        }));
+                        return;
+                    }
                     throw new Error(data.message || 'Gagal memproses pemesanan generasi.');
                 }
 
@@ -698,6 +728,11 @@ function aiStudioCanvas(config) {
             if (this.isRendering) {
                 this.startPolling();
             }
+            window.addEventListener('ai-credits-updated', (e) => {
+                if (e.detail && typeof e.detail.credits !== 'undefined') {
+                    this.creditsBalance = e.detail.credits;
+                }
+            });
         }
     };
 }

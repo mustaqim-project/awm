@@ -505,5 +505,110 @@ final class AiStudioWebControllerTest extends TestCase
         $pricingResponse->assertOk();
         $pricingResponse->assertViewIs('admin.ai-studio.pricing');
     }
+
+    public function test_merchant_can_fetch_topup_packages(): void
+    {
+        $response = $this->actingAs($this->user)
+            ->getJson(route('ai-studio.topup.packages'));
+
+        $response->assertOk();
+        $response->assertJsonStructure([
+            'success',
+            'credits_balance',
+            'packages',
+            'payment_channels',
+        ]);
+        $response->assertJson(['success' => true]);
+    }
+
+    public function test_merchant_can_order_topup(): void
+    {
+        $response = $this->actingAs($this->user)
+            ->postJson(route('ai-studio.topup.order'), [
+                'tier_code' => 'growth',
+                'payment_method' => 'qris',
+            ]);
+
+        $response->assertOk();
+        $response->assertJsonStructure([
+            'success',
+            'message',
+            'payment' => [
+                'id',
+                'order_number',
+                'credits',
+                'amount',
+                'payment_method',
+                'payment_url',
+                'status_url',
+            ],
+        ]);
+        $this->assertEquals(150, $response->json('payment.credits'));
+        $this->assertDatabaseHas('subscription_payments', [
+            'business_id' => $this->business->id,
+            'payment_type' => 'ai_token',
+            'topup_quantity' => 150,
+        ]);
+    }
+
+    public function test_merchant_can_check_topup_status(): void
+    {
+        $payment = \App\Models\SubscriptionPayment::create([
+            'business_id' => $this->business->id,
+            'user_id' => $this->user->id,
+            'payment_type' => 'ai_token',
+            'order_number' => 'TOP-TEST-0001',
+            'plan_code' => 'topup',
+            'cycle' => 'one_time',
+            'amount' => 65000,
+            'total_payable' => 65000,
+            'topup_quantity' => 150,
+            'payment_method' => 'qris',
+            'payment_gateway' => \App\Models\SubscriptionPayment::GATEWAY_TRIPAY,
+            'status' => \App\Models\SubscriptionPayment::STATUS_PENDING,
+        ]);
+
+        $response = $this->actingAs($this->user)
+            ->getJson(route('ai-studio.topup.status', $payment->id));
+
+        $response->assertOk();
+        $response->assertJson([
+            'success' => true,
+            'status' => \App\Models\SubscriptionPayment::STATUS_PENDING,
+            'is_paid' => false,
+        ]);
+    }
+
+    public function test_approving_topup_payment_adds_credits_to_business(): void
+    {
+        $initialBalance = (int) $this->business->ai_credits_balance;
+
+        $payment = \App\Models\SubscriptionPayment::create([
+            'business_id' => $this->business->id,
+            'user_id' => $this->user->id,
+            'payment_type' => 'ai_token',
+            'order_number' => 'TOP-TEST-0002',
+            'plan_code' => 'topup',
+            'cycle' => 'one_time',
+            'amount' => 65000,
+            'total_payable' => 65000,
+            'topup_quantity' => 150,
+            'payment_method' => 'qris',
+            'payment_gateway' => \App\Models\SubscriptionPayment::GATEWAY_TRIPAY,
+            'status' => \App\Models\SubscriptionPayment::STATUS_PENDING,
+        ]);
+
+        $entitlementService = app(\App\Domain\Billing\EntitlementService::class);
+        $entitlementService->approvePayment($payment, null, 'Test approve topup');
+
+        $this->business->refresh();
+        $this->assertEquals($initialBalance + 150, $this->business->ai_credits_balance);
+
+        $this->assertDatabaseHas('ai_credit_transactions', [
+            'business_id' => $this->business->id,
+            'type' => 'topup',
+            'amount' => 150,
+        ]);
+    }
 }
 
