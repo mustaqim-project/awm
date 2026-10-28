@@ -1570,6 +1570,24 @@ final class EntitlementService
                     'purchased_at' => $purchasedAt,
                     'expires_at' => $purchasedAt->copy()->addDays($expiryDays),
                 ]);
+
+                // Sinkronkan kredit AI Studio ke saldo bisnis secara atomik
+                try {
+                    $creditLedgerService = app(\App\Domain\Ai\Studio\Billing\CreditLedgerService::class);
+                    $creditsToAdd = (int) ($payment->topup_quantity >= 100000 ? max(10, (int) round($payment->topup_quantity / 10000)) : max(1, (int) $payment->topup_quantity));
+                    if ($creditsToAdd > 0) {
+                        $creditLedgerService->topup(
+                            business: $payment->business_id,
+                            credits: $creditsToAdd,
+                            idempotencyKey: 'tripay_topup_' . $payment->id,
+                            userId: $payment->user_id,
+                            description: "Top up kredit AI Studio via Tripay (#{$payment->order_number})",
+                            metadata: ['payment_id' => $payment->id, 'order_number' => $payment->order_number]
+                        );
+                    }
+                } catch (\Throwable $e) {
+                    \Illuminate\Support\Facades\Log::error('[EntitlementService] AI Studio Credit topup sync error: ' . $e->getMessage());
+                }
             } elseif ($payment->payment_type === 'storage') {
                 $owner = $payment->business->users()->wherePivot('role', 'owner')->firstOrFail();
                 OwnerStorageTopup::create([
