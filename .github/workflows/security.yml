@@ -1,0 +1,43 @@
+name: Security Scan
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  strix-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # Required for diff-scope resolution against base branch
+
+      - name: Install Strix CLI
+        run: curl -sSL https://strix.ai/install | bash
+
+      - name: Run Strix Security Review
+        env:
+          STRIX_LLM: ${{ secrets.STRIX_LLM }}
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+        run: |
+          # Headless diff-scoped AI pentest on pull request changes
+          strix -n -t ./ --scan-mode quick --max-budget 10
+
+      - name: Verify Scan Completion
+        run: |
+          run_json=$(ls -t strix_runs/*/run.json 2>/dev/null | head -1)
+          if [ -f "$run_json" ]; then
+            status=$(jq -r .status "$run_json")
+            if [ "$status" != "completed" ]; then
+              echo "Strix run status is '$status' — scan did not finish cleanly. Raise --max-budget if budget exhausted." >&2
+              exit 1
+            fi
+          fi
+
+      - name: Upload SARIF to GitHub Code Scanning
+        if: always()
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: strix_runs

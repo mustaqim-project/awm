@@ -38,13 +38,23 @@ class WindowsConnector implements PrinterConnectorInterface
     {
         $printerName = trim($printer->interface_address);
 
+        // Strict whitelist: Only allow alphanumeric characters, spaces, dashes, dots, underscores, and parentheses (CWE-78 defense)
+        if (! preg_match('/^[a-zA-Z0-9_\-\.\s\(\)\/]{1,150}$/', $printerName)) {
+            return [
+                'connected' => false,
+                'message' => 'Nama antrean printer Windows mengandung karakter tidak valid.',
+            ];
+        }
+
         // Verify if print spooler on Windows recognizes printer name
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
             try {
                 $output = [];
                 $ret = 0;
-                // Check printer existence via wmic or PowerShell
-                @exec('powershell -Command "Get-Printer -Name \'' . addslashes($printerName) . '\' -ErrorAction SilentlyContinue | Select-Object -ExpandProperty PrinterStatus"', $output, $ret);
+                // Safely escape single quotes for PowerShell single-quoted literal (' -> '')
+                $escapedPrinter = str_replace("'", "''", $printerName);
+                $cmd = 'powershell.exe -NoProfile -NonInteractive -Command "$p = Get-Printer -Name \'' . $escapedPrinter . '\' -ErrorAction SilentlyContinue; if ($p) { $p.PrinterStatus }"';
+                @exec($cmd, $output, $ret);
 
                 if ($ret === 0 && !empty($output)) {
                     return [

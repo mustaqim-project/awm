@@ -111,6 +111,20 @@ final class PosPrinterWebController extends Controller
             }
         }
 
+        if ($validated['connection_type'] === 'windows') {
+            if (! preg_match('/^[a-zA-Z0-9_\-\.\s\(\)\/]{1,150}$/', $validated['interface_address'])) {
+                $msg = 'Nama antrean printer Windows hanya boleh berupa karakter alfanumerik, spasi, titik, dan tanda hubung.';
+                if ($request->wantsJson()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => $msg,
+                        'errors' => ['interface_address' => [$msg]],
+                    ], 422);
+                }
+                return back()->withErrors(['interface_address' => $msg])->withInput();
+            }
+        }
+
         if (!empty($validated['is_default'])) {
             // Unset previous defaults for this business/location
             PosPrinter::where('business_id', $business->id)
@@ -192,6 +206,20 @@ final class PosPrinterWebController extends Controller
                 return back()->withErrors([
                     'interface_address' => __('printer.invalid_ip_host'),
                 ])->withInput();
+            }
+        }
+
+        if ($validated['connection_type'] === 'windows') {
+            if (! preg_match('/^[a-zA-Z0-9_\-\.\s\(\)\/]{1,150}$/', $validated['interface_address'])) {
+                $msg = 'Nama antrean printer Windows hanya boleh berupa karakter alfanumerik, spasi, titik, dan tanda hubung.';
+                if ($request->wantsJson()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => $msg,
+                        'errors' => ['interface_address' => [$msg]],
+                    ], 422);
+                }
+                return back()->withErrors(['interface_address' => $msg])->withInput();
             }
         }
 
