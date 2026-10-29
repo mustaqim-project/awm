@@ -61,6 +61,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'customer.otp'       => \App\Http\Middleware\RequireCustomerOtp::class,
             'verified'           => \App\Http\Middleware\EnsureEmailIsVerified::class,
             'mcp.auth'           => \App\Http\Middleware\EnsureMcpTokenValid::class,
+            'ip.block'           => \App\Http\Middleware\CheckBlockedIp::class,
         ]);
         $middleware->prepend(\App\Http\Middleware\EnsureCleanUrl::class);
 
@@ -88,11 +89,13 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->web(append: [
+            \App\Http\Middleware\CheckBlockedIp::class,
             \App\Http\Middleware\WebSecurityHeaders::class,
             \App\Http\Middleware\SetLocaleMiddleware::class,
             SetActiveBusinessContext::class,
         ]);
         $middleware->api(append: [
+            \App\Http\Middleware\CheckBlockedIp::class,
             SecurityHeaders::class,
             SetActiveBusinessContext::class,
         ]);

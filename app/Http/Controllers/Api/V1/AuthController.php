@@ -16,6 +16,7 @@ use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use App\Domain\Mail\DynamicMailConfig;
+use App\Domain\Security\BruteForceProtectionService;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -48,20 +49,65 @@ final class AuthController extends Controller
     }
 
     /**
-     * Handle user login.
+     * Handle user login with brute force protection.
      */
-    public function login(LoginRequest $request): JsonResponse
+    public function login(LoginRequest $request, BruteForceProtectionService $bruteForce): JsonResponse
     {
+        $ip = (string) $request->ip();
+
+        if ($bruteForce->isIpBlocked($ip)) {
+            $remaining = $bruteForce->getRemainingBlockMinutes($ip);
+            return response()->json([
+                'success' => false,
+                'error' => 'IP_TEMPORARILY_BLOCKED',
+                'message' => "Alamat IP Anda diblokir sementara karena terdeteksi aktivitas login mencurigakan berulang kali. Silakan coba lagi dalam {$remaining} menit.",
+                'remaining_minutes' => $remaining,
+            ], Response::HTTP_TOO_MANY_REQUESTS);
+        }
+
         $validated = $request->validated();
+        $email = strtolower(trim($validated['email']));
+
+        if ($bruteForce->isAccountLocked($ip, $email)) {
+            $remaining = $bruteForce->getRemainingAccountLockoutMinutes($ip, $email);
+            return response()->json([
+                'success' => false,
+                'error' => 'ACCOUNT_TEMPORARILY_LOCKED',
+                'message' => "Terlalu banyak percobaan login gagal untuk akun ini. Akses dibatasi selama {$remaining} menit demi keamanan akun.",
+                'remaining_minutes' => $remaining,
+            ], Response::HTTP_TOO_MANY_REQUESTS);
+        }
 
         /** @var User|null $user */
-        $user = User::where('email', $validated['email'])->first();
+        $user = User::where('email', $email)->first();
 
         if ($user === null || ! Hash::check($validated['password'], $user->password)) {
+            $status = $bruteForce->recordFailedAttempt($ip, $email, 'api');
+
+            if ($status['is_blocked']) {
+                return response()->json([
+                    'success' => false,
+                    'error' => 'IP_TEMPORARILY_BLOCKED',
+                    'message' => "Alamat IP Anda diblokir sementara ({$status['remaining_minutes']} menit) karena terdeteksi aktivitas login berulang kali.",
+                    'remaining_minutes' => $status['remaining_minutes'],
+                ], Response::HTTP_TOO_MANY_REQUESTS);
+            }
+
+            if ($status['is_account_locked']) {
+                return response()->json([
+                    'success' => false,
+                    'error' => 'ACCOUNT_TEMPORARILY_LOCKED',
+                    'message' => "Terlalu banyak percobaan login gagal. Akun dikunci sementara untuk IP Anda selama {$status['remaining_minutes']} menit demi keamanan.",
+                    'remaining_minutes' => $status['remaining_minutes'],
+                ], Response::HTTP_TOO_MANY_REQUESTS);
+            }
+
             return response()->json([
                 'message' => 'Invalid email or password.',
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
+
+        $bruteForce->resetAttempts($ip, $email);
 
         $token = $user->createToken('auth_token')->plainTextToken;
 

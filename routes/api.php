@@ -872,13 +872,13 @@ Route::prefix('v1')->group(function (): void {
         Route::delete('/devices/fcm-token', [\App\Http\Controllers\Api\V1\Device\MobileDeviceTokenApiController::class, 'unregisterCustomerToken']);
     });
 
-    // Authentication (Public with 60 req/min rate limit)
+    // Authentication (Public with 60 req/min rate limit, login & forgot-password strictly throttled to 10/min)
     Route::middleware('throttle:60,1')->prefix('auth')->group(function (): void {
         Route::post('/register', [AuthController::class, 'register']);
-        Route::post('/login', [AuthController::class, 'login']);
+        Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:10,1');
         Route::post('/google', [AuthController::class, 'googleLogin']);
-        Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
-        Route::post('/reset-password', [AuthController::class, 'resetPassword']);
+        Route::post('/forgot-password', [AuthController::class, 'forgotPassword'])->middleware('throttle:10,1');
+        Route::post('/reset-password', [AuthController::class, 'resetPassword'])->middleware('throttle:10,1');
     });
 
     // Account Recovery (Public)

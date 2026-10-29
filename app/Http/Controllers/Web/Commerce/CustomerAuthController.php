@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Web\Commerce;
 
+use App\Domain\Security\BruteForceProtectionService;
 use App\Http\Controllers\Controller;
 use App\Models\Business;
 use App\Models\Customer;
@@ -37,10 +38,19 @@ final class CustomerAuthController extends Controller
     }
 
     /**
-     * Authenticate customer with Phone / Email + Password (global identity).
+     * Authenticate customer with Phone / Email + Password (global identity) and brute force protection.
      */
-    public function login(Request $request): RedirectResponse
+    public function login(Request $request, BruteForceProtectionService $bruteForce): RedirectResponse
     {
+        $ip = (string) $request->ip();
+
+        if ($bruteForce->isIpBlocked($ip)) {
+            $remaining = $bruteForce->getRemainingBlockMinutes($ip);
+            return back()->withErrors([
+                'login' => "Alamat IP Anda diblokir sementara karena terdeteksi aktivitas login berulang kali. Silakan coba lagi dalam {$remaining} menit.",
+            ])->withInput($request->only('login', 'remember'));
+        }
+
         $request->validate([
             'login'    => ['required', 'string'],
             'password' => ['required', 'string'],
@@ -54,6 +64,13 @@ final class CustomerAuthController extends Controller
         $remember = $request->boolean('remember');
         $isEmail  = (bool) filter_var($login, FILTER_VALIDATE_EMAIL);
 
+        if ($bruteForce->isAccountLocked($ip, $login)) {
+            $remaining = $bruteForce->getRemainingAccountLockoutMinutes($ip, $login);
+            return back()->withErrors([
+                'login' => "Terlalu banyak percobaan login gagal untuk akun ini. Akses dibatasi selama {$remaining} menit demi keamanan.",
+            ])->withInput($request->only('login', 'remember'));
+        }
+
         $customer = GlobalCustomer::where($isEmail ? 'email' : 'phone', $login)->first();
 
         // Normalize Indonesian phone number (62xxx -> 0xxx)
@@ -66,11 +83,26 @@ final class CustomerAuthController extends Controller
         }
 
         if (! $customer || ! $customer->password || ! Hash::check($password, $customer->password)) {
+            $status = $bruteForce->recordFailedAttempt($ip, $login, 'customer');
+
+            if ($status['is_blocked']) {
+                return back()->withErrors([
+                    'login' => "Alamat IP Anda diblokir sementara ({$status['remaining_minutes']} menit) karena terdeteksi aktivitas login berulang kali.",
+                ])->withInput($request->only('login', 'remember'));
+            }
+
+            if ($status['is_account_locked']) {
+                return back()->withErrors([
+                    'login' => "Terlalu banyak percobaan login gagal. Akun dikunci sementara untuk IP Anda selama {$status['remaining_minutes']} menit.",
+                ])->withInput($request->only('login', 'remember'));
+            }
+
             return back()->withErrors([
                 'login' => 'Nomor WhatsApp / Email atau kata sandi tidak cocok.',
             ])->withInput($request->only('login', 'remember'));
         }
 
+        $bruteForce->resetAttempts($ip, $login);
         Auth::guard('customer')->login($customer, $remember);
         $request->session()->regenerate();
 

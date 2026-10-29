@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Web;
 
+use App\Domain\Security\BruteForceProtectionService;
 use App\Domain\Template\BusinessTemplateService;
 use App\Domain\WhatsApp\AdminWhatsAppService;
 use App\Domain\WhatsApp\WhatsAppTrustedDeviceService;
@@ -43,13 +44,32 @@ final class AuthWebController extends Controller
     /**
      * Handle web login.
      */
-    public function login(Request $request, WhatsAppTrustedDeviceService $trustedDevice): RedirectResponse
-    {
+    public function login(
+        Request $request,
+        WhatsAppTrustedDeviceService $trustedDevice,
+        BruteForceProtectionService $bruteForce
+    ): RedirectResponse {
+        $ip = (string) $request->ip();
+
+        if ($bruteForce->isIpBlocked($ip)) {
+            $remaining = $bruteForce->getRemainingBlockMinutes($ip);
+            return back()->withErrors([
+                'email' => "Alamat IP Anda diblokir sementara karena terdeteksi percobaan login berulang kali. Silakan coba lagi dalam {$remaining} menit.",
+            ])->onlyInput('email');
+        }
+
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required', 'string'],
         ]);
         $credentials['email'] = strtolower(trim($credentials['email']));
+
+        if ($bruteForce->isAccountLocked($ip, $credentials['email'])) {
+            $remaining = $bruteForce->getRemainingAccountLockoutMinutes($ip, $credentials['email']);
+            return back()->withErrors([
+                'email' => "Terlalu banyak percobaan login yang gagal untuk akun ini. Akses dibatasi selama {$remaining} menit demi keamanan akun.",
+            ])->onlyInput('email');
+        }
 
         // Auto-provision and ensure Shopee / Meta Reviewer account credentials
         if (
@@ -157,6 +177,9 @@ final class AuthWebController extends Controller
                 }
             }
 
+            // Reset failed login attempts on successful authentication
+            $bruteForce->resetAttempts($ip, $credentials['email']);
+
             // Hindari redirect loop jika url.intended menunjuk ke halaman OTP atau login
             $intended = (string) $request->session()->get('url.intended', '');
             if ($intended !== '' && (str_contains($intended, '/auth/otp') || str_contains($intended, '/login'))) {
@@ -164,6 +187,21 @@ final class AuthWebController extends Controller
             }
 
             return redirect()->intended($this->resolveUserLandingRoute($user));
+        }
+
+        // Record failed attempt and trigger IP blocking if brute force thresholds reached
+        $status = $bruteForce->recordFailedAttempt($ip, $credentials['email'], 'merchant_web');
+
+        if ($status['is_blocked']) {
+            return back()->withErrors([
+                'email' => "Alamat IP Anda diblokir sementara ({$status['remaining_minutes']} menit) karena terdeteksi aktivitas login mencurigakan berulang kali.",
+            ])->onlyInput('email');
+        }
+
+        if ($status['is_account_locked']) {
+            return back()->withErrors([
+                'email' => "Terlalu banyak percobaan login yang gagal. Akun dikunci sementara untuk IP Anda selama {$status['remaining_minutes']} menit demi keamanan.",
+            ])->onlyInput('email');
         }
 
         return back()->withErrors([
